@@ -2,240 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2F02F6FDBDC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 12:44:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 629506FDCB9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 13:27:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236701AbjEJKoi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 May 2023 06:44:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52134 "EHLO
+        id S236819AbjEJL1v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 May 2023 07:27:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236676AbjEJKod (ORCPT
+        with ESMTP id S236658AbjEJL1u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 May 2023 06:44:33 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFE0D7AA7;
-        Wed, 10 May 2023 03:44:30 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34AAHSs4019002;
-        Wed, 10 May 2023 10:44:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=YIHnMmHMw/x+gAuRqtxvwzS2d+0swEIvuLoxNhcrLiA=;
- b=o434+bksF/9LHUM3OvSrC61c4+B44scZSGjpncQ4pt5+k5KEcOlvvu6Ju5PTsOla0/44
- t1lsXLNJbOOcO5WcGzDQp+N97ejcrruZzTGEEHmBfXWuu9pR7tbOcCX21yer/Ff2tdOC
- YMO+jaHmFMIZPaF6mwm515kyGeMnv6pNwPKs9+3mVvaXQBwkZpmS3LnptgK+o0m55pEs
- YvU51NoxIJP/FyJpG8sboEHlLgPDVcicHwRfOdgWyC8TYjYJ4zRviRdTf0WtjaiLx+FQ
- 6tTCQnP+I6oZZ1pif6wu3pvr9teuLlvlnVvSVKwL9Ym2O5Sk9FDhK90NmHGbvXbkoI0h mg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qg5mprfux-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 10 May 2023 10:44:27 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34AAiRGb014280
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 10 May 2023 10:44:27 GMT
-Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 10 May 2023 03:44:22 -0700
-From:   Devi Priya <quic_devipriy@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
-        <quic_anusha@quicinc.com>, <quic_poovendh@quicinc.com>
-Subject: [PATCH 2/2] arm64: dts: qcom: ipq9574: add support for RDP418 variant
-Date:   Wed, 10 May 2023 16:13:59 +0530
-Message-ID: <20230510104359.16678-3-quic_devipriy@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230510104359.16678-1-quic_devipriy@quicinc.com>
-References: <20230510104359.16678-1-quic_devipriy@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: zlYGBBt4uPtory1UWCjUzR4c76fAgymt
-X-Proofpoint-GUID: zlYGBBt4uPtory1UWCjUzR4c76fAgymt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-10_04,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 phishscore=0 mlxlogscore=999 clxscore=1015
- suspectscore=0 malwarescore=0 mlxscore=0 adultscore=0 lowpriorityscore=0
- impostorscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2304280000 definitions=main-2305100085
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        Wed, 10 May 2023 07:27:50 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3B825FD3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 04:27:26 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-50bd37ca954so67998177a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 04:27:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1683718045; x=1686310045;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pNpH9churWtVNXY067utTn5iZTHhfSH7PNSyN7PmDpo=;
+        b=5F5GRep5g811KAguGtS93rVSUgRHqVtSaY9ywuzMtfzQAQFzM9O2V1CdiwqK5/APC8
+         X5erFFpavgIcTEc8AYANnTCtLQCx+RngQ8uRvC1pIOAfb4cxK79NgyN8eT9tiyhRtkQv
+         GTDz+CKk86o3oGNNgNAoO7vsVMS45C7TPYG/KMcTKNSDewe5SW6DOLXWDvUSaYFkAmYg
+         N4Kp5nVhEfMYz3svQsnxGNAK4k/0PXLqiG1tHhKig7elBHB63DkRzPxP0xY+d8pX5bM3
+         QtvvrAZx8VjUTVo5CgJIQUuf+6gqBwFMOVILvfJLUK7ZwwxE/VW9KMTCssntb4HeWeMv
+         Ehdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683718045; x=1686310045;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=pNpH9churWtVNXY067utTn5iZTHhfSH7PNSyN7PmDpo=;
+        b=apJVL8eUTFcWIcJjMFDuAe5HyUutsboDgY3ledPWxBA5kFrNfrLL31xgFvdIs33lNC
+         cAfXdBUeroNpwvyj3qT5J2Fy9WB0+zmKELxxrrv8k5vQkpHODCEETTWZD21hHauaZ1NV
+         ueXNBcjZcJ78uMF1e7votE0h/KNL3xXip3pPQegSTJ9wZ1wNA0iHr9ohDAIGOEHVJvdN
+         9MdwrYI69Ux3SJU0TT+A1/2ofEiQiPiE9nEBYcDuCfB+I4a5Mp0JdKT84ucMmvfyR8dZ
+         zuGar6vEmlmVbF9wEzA7fZMgDEz+UhLZ6jd25meT/2iebMuNQH/7tNVywTfmeszdXjit
+         3jnA==
+X-Gm-Message-State: AC+VfDw2TlLElJeulwPQXFViJ8LO4z/wC/pPqNMA6cdDk1O3157gi05G
+        q3JSaXOIBwltFbXVN9XeORHh3Q==
+X-Google-Smtp-Source: ACHHUZ7tjOsW38XJxLzNaQXTcPGIml/eKQLTk5/qbm/AqQLokna1fWit8n+3+Gk2VUDLtghCyBe2Sg==
+X-Received: by 2002:a05:6402:27d2:b0:506:71bd:3931 with SMTP id c18-20020a05640227d200b0050671bd3931mr16236880ede.2.1683718045201;
+        Wed, 10 May 2023 04:27:25 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id bc15-20020a056402204f00b0050b2f588db6sm1742156edb.16.2023.05.10.04.27.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 May 2023 04:27:24 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Wed, 10 May 2023 13:27:23 +0200
+Message-Id: <CSIK8F6MTIVE.2K2U2Q1LDA70H@otso>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: pm7250b: make SID configurable
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
+Cc:     "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+X-Mailer: aerc 0.15.1
+References: <20230407-pm7250b-sid-v1-0-fc648478cc25@fairphone.com>
+ <20230407-pm7250b-sid-v1-2-fc648478cc25@fairphone.com>
+ <f52524da-719b-790f-ad2c-0c3f313d9fe9@linaro.org>
+ <CSIE9TYTQUHL.3E769C2Y4RAAO@otso>
+ <c9eea8ec-b289-334c-9c0b-7c992184a265@linaro.org>
+ <CAA8EJpoSpytSTm=y7oPD_SC+0-bd735KEczR1JgMc7RuMZ+A+g@mail.gmail.com>
+ <CSIGK60CQSD8.1Q4SOANJRMASF@otso>
+ <9040e9bb-a16c-0186-edba-da986350340c@linaro.org>
+In-Reply-To: <9040e9bb-a16c-0186-edba-da986350340c@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the initial device tree support for the Reference Design Platform (RDP)
-418 based on IPQ9574 family of SoCs. This patch adds support for Console
-UART, SPI NOR, eMMC and SMPA1 regulator node.
+On Wed May 10, 2023 at 12:05 PM CEST, Krzysztof Kozlowski wrote:
+> On 10/05/2023 10:34, Luca Weiss wrote:
+> > On Wed May 10, 2023 at 10:07 AM CEST, Dmitry Baryshkov wrote:
+> >> On Wed, 10 May 2023 at 09:55, Krzysztof Kozlowski
+> >> <krzysztof.kozlowski@linaro.org> wrote:
+> >>>
+> >>> On 10/05/2023 08:47, Luca Weiss wrote:
+> >>>> Hi Krzysztof,
+> >>>>
+> >>>> On Fri Apr 7, 2023 at 10:27 AM CEST, Krzysztof Kozlowski wrote:
+> >>>>> On 07/04/2023 09:45, Luca Weiss wrote:
+> >>>>>> Like other Qualcomm PMICs the PM7250B can be used on different add=
+resses
+> >>>>>> on the SPMI bus. Use similar defines like the PMK8350 to make this
+> >>>>>> possible.
+> >>>>>>
+> >>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> >>>>>> ---
+> >>>>>>  arch/arm64/boot/dts/qcom/pm7250b.dtsi | 23 ++++++++++++++++------=
+-
+> >>>>>>  1 file changed, 16 insertions(+), 7 deletions(-)
+> >>>>>>
+> >>>>>> diff --git a/arch/arm64/boot/dts/qcom/pm7250b.dtsi b/arch/arm64/bo=
+ot/dts/qcom/pm7250b.dtsi
+> >>>>>> index daa6f1d30efa..eeb476edc79a 100644
+> >>>>>> --- a/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+> >>>>>> +++ b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
+> >>>>>> @@ -7,6 +7,15 @@
+> >>>>>>  #include <dt-bindings/interrupt-controller/irq.h>
+> >>>>>>  #include <dt-bindings/spmi/spmi.h>
+> >>>>>>
+> >>>>>> +/* This PMIC can be configured to be at different SIDs */
+> >>>>>> +#ifndef PM7250B_SID
+> >>>>>> +   #define PM7250B_SID 2
+> >>>>>
+> >>>>> Drop indentation, although anyway I am against this. Please don't b=
+ring
+> >>>>> new patterns of this at least till we settle previous discussion.
+> >>>>>
+> >>>>> https://lore.kernel.org/linux-arm-msm/46658cbb-fff5-e98b-fdad-88fa6=
+83a9c75@linaro.org/
+> >>>>
+> >>>> What's the outcome of the discussion? For this PMIC it's totally eno=
+ugh
+> >>>> to have the SID configurable like in this patch, I don't think this =
+PMIC
+> >>>> will be included twice in a board - at least I'm not aware of such a
+> >>>> configuration.
+> >>>
+> >>> We did not reach consensus and I still disagree with complex macros o=
+r
+> >>> macros depending on order of inclusion.
+> >>
+> >> I still think we should find a way to parametrise PMIC dtsi, however I
+> >> agree with Krzysztof that complex CPP is not a way to go.
+> >=20
+> > What about the macro already used in-tree and proposed with this patch?
+> > I wouldn't say this is a "complex macro" since it's just a single numbe=
+r
+> > being replaced in a few places.
+>
+> Are you talking about the macro to which I responded: "or macros
+> depending on order of inclusion." or something else?
 
-Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
-Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
----
- arch/arm64/boot/dts/qcom/Makefile           |   1 +
- arch/arm64/boot/dts/qcom/ipq9574-rdp418.dts | 124 ++++++++++++++++++++
- 2 files changed, 125 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp418.dts
+I thought you mean with ..
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 4d7789a06186..29c862035861 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -9,6 +9,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c2.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp418.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp433.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-acer-a1-724.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-alcatel-idol347.dtb
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp418.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp418.dts
-new file mode 100644
-index 000000000000..2b093e02637b
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp418.dts
-@@ -0,0 +1,124 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
-+/*
-+ * IPQ9574 RDP418 board device tree source
-+ *
-+ * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+/dts-v1/;
-+
-+#include "ipq9574.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. IPQ9574/AP-AL02-C2";
-+	compatible = "qcom,ipq9574-ap-al02-c2", "qcom,ipq9574";
-+
-+	aliases {
-+		serial0 = &blsp1_uart2;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+};
-+
-+&blsp1_spi0 {
-+	pinctrl-0 = <&spi_0_pins>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+
-+	flash@0 {
-+		compatible = "micron,n25q128a11", "jedec,spi-nor";
-+		reg = <0>;
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		spi-max-frequency = <50000000>;
-+	};
-+};
-+
-+&blsp1_uart2 {
-+	pinctrl-0 = <&uart2_pins>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators {
-+		compatible = "qcom,rpm-mp5496-regulators";
-+
-+		ipq9574_s1: s1 {
-+		/*
-+		 * During kernel bootup, the SoC runs at 800MHz with 875mV set by the bootloaders.
-+		 * During regulator registration, kernel not knowing the initial voltage,
-+		 * considers it as zero and brings up the regulators with minimum supported voltage.
-+		 * Update the regulator-min-microvolt with SVS voltage of 725mV so that
-+		 * the regulators are brought up with 725mV which is sufficient for all the
-+		 * corner parts to operate at 800MHz
-+		 */
-+			regulator-min-microvolt = <725000>;
-+			regulator-max-microvolt = <1075000>;
-+		};
-+	};
-+};
-+
-+&sdhc_1 {
-+	pinctrl-0 = <&sdc_default_state>;
-+	pinctrl-names = "default";
-+	mmc-ddr-1_8v;
-+	mmc-hs200-1_8v;
-+	mmc-hs400-1_8v;
-+	mmc-hs400-enhanced-strobe;
-+	max-frequency = <384000000>;
-+	bus-width = <8>;
-+	status = "okay";
-+};
-+
-+&sleep_clk {
-+	clock-frequency = <32000>;
-+};
-+
-+&tlmm {
-+	sdc_default_state: sdc-default-state {
-+		clk-pins {
-+			pins = "gpio5";
-+			function = "sdc_clk";
-+			drive-strength = <8>;
-+			bias-disable;
-+		};
-+
-+		cmd-pins {
-+			pins = "gpio4";
-+			function = "sdc_cmd";
-+			drive-strength = <8>;
-+			bias-pull-up;
-+		};
-+
-+		data-pins {
-+			pins = "gpio0", "gpio1", "gpio2",
-+			       "gpio3", "gpio6", "gpio7",
-+			       "gpio8", "gpio9";
-+			function = "sdc_data";
-+			drive-strength = <8>;
-+			bias-pull-up;
-+		};
-+
-+		rclk-pins {
-+			pins = "gpio10";
-+			function = "sdc_rclk";
-+			drive-strength = <8>;
-+			bias-pull-down;
-+		};
-+	};
-+
-+	spi_0_pins: spi-0-state {
-+		pins = "gpio11", "gpio12", "gpio13", "gpio14";
-+		function = "blsp0_spi";
-+		drive-strength = <8>;
-+		bias-disable;
-+	};
-+};
-+
-+&xo_board_clk {
-+	clock-frequency = <24000000>;
-+};
--- 
-2.17.1
+> >>> We did not reach consensus and I still disagree with complex macros o=
+r
+> >>> macros depending on order of inclusion.
+
+.. the macros proprosed in the patch you linked (that version that also
+adjusts the labels based on the SID).
+
+I was asking if the patch I sent (with #define PM7250B_SID) would be
+okay to take in at least until the bigger discussion has come to a
+conclusion, since we already have upstream occurances of such a macro so
+it's not a new concept.
+
+Otherwise I'll just carry this patch in my local tree until this
+situation has cleared up.
+
+Regards
+Luca
+
+>
+> Best regards,
+> Krzysztof
 
