@@ -2,177 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 629506FDCB9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 13:27:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9C686FDCEE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 13:39:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236819AbjEJL1v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 May 2023 07:27:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53028 "EHLO
+        id S236924AbjEJLjR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 May 2023 07:39:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236658AbjEJL1u (ORCPT
+        with ESMTP id S236829AbjEJLjO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 May 2023 07:27:50 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3B825FD3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 04:27:26 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-50bd37ca954so67998177a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 04:27:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1683718045; x=1686310045;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pNpH9churWtVNXY067utTn5iZTHhfSH7PNSyN7PmDpo=;
-        b=5F5GRep5g811KAguGtS93rVSUgRHqVtSaY9ywuzMtfzQAQFzM9O2V1CdiwqK5/APC8
-         X5erFFpavgIcTEc8AYANnTCtLQCx+RngQ8uRvC1pIOAfb4cxK79NgyN8eT9tiyhRtkQv
-         GTDz+CKk86o3oGNNgNAoO7vsVMS45C7TPYG/KMcTKNSDewe5SW6DOLXWDvUSaYFkAmYg
-         N4Kp5nVhEfMYz3svQsnxGNAK4k/0PXLqiG1tHhKig7elBHB63DkRzPxP0xY+d8pX5bM3
-         QtvvrAZx8VjUTVo5CgJIQUuf+6gqBwFMOVILvfJLUK7ZwwxE/VW9KMTCssntb4HeWeMv
-         Ehdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683718045; x=1686310045;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=pNpH9churWtVNXY067utTn5iZTHhfSH7PNSyN7PmDpo=;
-        b=apJVL8eUTFcWIcJjMFDuAe5HyUutsboDgY3ledPWxBA5kFrNfrLL31xgFvdIs33lNC
-         cAfXdBUeroNpwvyj3qT5J2Fy9WB0+zmKELxxrrv8k5vQkpHODCEETTWZD21hHauaZ1NV
-         ueXNBcjZcJ78uMF1e7votE0h/KNL3xXip3pPQegSTJ9wZ1wNA0iHr9ohDAIGOEHVJvdN
-         9MdwrYI69Ux3SJU0TT+A1/2ofEiQiPiE9nEBYcDuCfB+I4a5Mp0JdKT84ucMmvfyR8dZ
-         zuGar6vEmlmVbF9wEzA7fZMgDEz+UhLZ6jd25meT/2iebMuNQH/7tNVywTfmeszdXjit
-         3jnA==
-X-Gm-Message-State: AC+VfDw2TlLElJeulwPQXFViJ8LO4z/wC/pPqNMA6cdDk1O3157gi05G
-        q3JSaXOIBwltFbXVN9XeORHh3Q==
-X-Google-Smtp-Source: ACHHUZ7tjOsW38XJxLzNaQXTcPGIml/eKQLTk5/qbm/AqQLokna1fWit8n+3+Gk2VUDLtghCyBe2Sg==
-X-Received: by 2002:a05:6402:27d2:b0:506:71bd:3931 with SMTP id c18-20020a05640227d200b0050671bd3931mr16236880ede.2.1683718045201;
-        Wed, 10 May 2023 04:27:25 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id bc15-20020a056402204f00b0050b2f588db6sm1742156edb.16.2023.05.10.04.27.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 May 2023 04:27:24 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Wed, 10 May 2023 13:27:23 +0200
-Message-Id: <CSIK8F6MTIVE.2K2U2Q1LDA70H@otso>
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: pm7250b: make SID configurable
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
-Cc:     "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Konrad Dybcio" <konrad.dybcio@somainline.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-X-Mailer: aerc 0.15.1
-References: <20230407-pm7250b-sid-v1-0-fc648478cc25@fairphone.com>
- <20230407-pm7250b-sid-v1-2-fc648478cc25@fairphone.com>
- <f52524da-719b-790f-ad2c-0c3f313d9fe9@linaro.org>
- <CSIE9TYTQUHL.3E769C2Y4RAAO@otso>
- <c9eea8ec-b289-334c-9c0b-7c992184a265@linaro.org>
- <CAA8EJpoSpytSTm=y7oPD_SC+0-bd735KEczR1JgMc7RuMZ+A+g@mail.gmail.com>
- <CSIGK60CQSD8.1Q4SOANJRMASF@otso>
- <9040e9bb-a16c-0186-edba-da986350340c@linaro.org>
-In-Reply-To: <9040e9bb-a16c-0186-edba-da986350340c@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Wed, 10 May 2023 07:39:14 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8C0376BC;
+        Wed, 10 May 2023 04:38:55 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34AAnNUX032668;
+        Wed, 10 May 2023 11:38:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=3sGwKKYam5v86mImLzcLB5fvsdPpnSafkRrpMnTr56A=;
+ b=MDEEvWjUtBYXrdX6r1qD1wBmio3FfiNWKUpg1qB/PiB3iqAbQFM0IeDN2JgPnf2BxbgN
+ zXl/IZ/mUC53pGZcKno8OqEirJuPLW8YOTR1P8Q2Ccy1DII1hMEP9hd0KGy74TAET1lC
+ OlGnt9RJNYjcSQnnWXZ5Pe0Ve3HbC7tDuWSH+5wFoxj8EkGlwXErwHhF6cn/y2dV7rqM
+ DQPwW7D3q9nDm9sPO0MdkuqFBSj04HCfdkUVU/ONYJ994fmMwfvNtvKiDLSt2+wJZNwU
+ SpMRJgbWDeRdOtye1IyhYjZZfQHlU4qav7O97OnTvq5nadn98NRDm4fLMrgpwlr1XJ60 PA== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qfuna1jmk-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 10 May 2023 11:38:51 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 34ABclwC020132;
+        Wed, 10 May 2023 11:38:47 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3qdy5bkpvj-1;
+        Wed, 10 May 2023 11:38:47 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 34ABcl1g020122;
+        Wed, 10 May 2023 11:38:47 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 34ABckh3020120;
+        Wed, 10 May 2023 11:38:46 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
+        id 0A5035129; Wed, 10 May 2023 17:08:46 +0530 (+0530)
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     andy.shevchenko@gmail.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, linus.walleij@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        richardcochran@gmail.com, manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: [PATCH v6 0/4] Add pinctrl support for SDX75
+Date:   Wed, 10 May 2023 17:08:41 +0530
+Message-Id: <1683718725-14869-1-git-send-email-quic_rohiagar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: wM9zHwdKnb177XZLwryzBoWPySDPfQDm
+X-Proofpoint-GUID: wM9zHwdKnb177XZLwryzBoWPySDPfQDm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-10_04,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ adultscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0 malwarescore=0
+ suspectscore=0 mlxlogscore=747 mlxscore=0 clxscore=1011 bulkscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305100092
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed May 10, 2023 at 12:05 PM CEST, Krzysztof Kozlowski wrote:
-> On 10/05/2023 10:34, Luca Weiss wrote:
-> > On Wed May 10, 2023 at 10:07 AM CEST, Dmitry Baryshkov wrote:
-> >> On Wed, 10 May 2023 at 09:55, Krzysztof Kozlowski
-> >> <krzysztof.kozlowski@linaro.org> wrote:
-> >>>
-> >>> On 10/05/2023 08:47, Luca Weiss wrote:
-> >>>> Hi Krzysztof,
-> >>>>
-> >>>> On Fri Apr 7, 2023 at 10:27 AM CEST, Krzysztof Kozlowski wrote:
-> >>>>> On 07/04/2023 09:45, Luca Weiss wrote:
-> >>>>>> Like other Qualcomm PMICs the PM7250B can be used on different add=
-resses
-> >>>>>> on the SPMI bus. Use similar defines like the PMK8350 to make this
-> >>>>>> possible.
-> >>>>>>
-> >>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> >>>>>> ---
-> >>>>>>  arch/arm64/boot/dts/qcom/pm7250b.dtsi | 23 ++++++++++++++++------=
--
-> >>>>>>  1 file changed, 16 insertions(+), 7 deletions(-)
-> >>>>>>
-> >>>>>> diff --git a/arch/arm64/boot/dts/qcom/pm7250b.dtsi b/arch/arm64/bo=
-ot/dts/qcom/pm7250b.dtsi
-> >>>>>> index daa6f1d30efa..eeb476edc79a 100644
-> >>>>>> --- a/arch/arm64/boot/dts/qcom/pm7250b.dtsi
-> >>>>>> +++ b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
-> >>>>>> @@ -7,6 +7,15 @@
-> >>>>>>  #include <dt-bindings/interrupt-controller/irq.h>
-> >>>>>>  #include <dt-bindings/spmi/spmi.h>
-> >>>>>>
-> >>>>>> +/* This PMIC can be configured to be at different SIDs */
-> >>>>>> +#ifndef PM7250B_SID
-> >>>>>> +   #define PM7250B_SID 2
-> >>>>>
-> >>>>> Drop indentation, although anyway I am against this. Please don't b=
-ring
-> >>>>> new patterns of this at least till we settle previous discussion.
-> >>>>>
-> >>>>> https://lore.kernel.org/linux-arm-msm/46658cbb-fff5-e98b-fdad-88fa6=
-83a9c75@linaro.org/
-> >>>>
-> >>>> What's the outcome of the discussion? For this PMIC it's totally eno=
-ugh
-> >>>> to have the SID configurable like in this patch, I don't think this =
-PMIC
-> >>>> will be included twice in a board - at least I'm not aware of such a
-> >>>> configuration.
-> >>>
-> >>> We did not reach consensus and I still disagree with complex macros o=
-r
-> >>> macros depending on order of inclusion.
-> >>
-> >> I still think we should find a way to parametrise PMIC dtsi, however I
-> >> agree with Krzysztof that complex CPP is not a way to go.
-> >=20
-> > What about the macro already used in-tree and proposed with this patch?
-> > I wouldn't say this is a "complex macro" since it's just a single numbe=
-r
-> > being replaced in a few places.
->
-> Are you talking about the macro to which I responded: "or macros
-> depending on order of inclusion." or something else?
+Hi,
 
-I thought you mean with ..
+Changes in v6:
+ - Refactoring as per suggestions from Andy to remove msm_function and
+   reusing the pinfunction and pingroup struct with macros as well.
 
-> >>> We did not reach consensus and I still disagree with complex macros o=
-r
-> >>> macros depending on order of inclusion.
+Changes in v5:
+ - Refactor the pinctrl target files based on the new macro and
+   structure defined as suggested by Andy.
 
-.. the macros proprosed in the patch you linked (that version that also
-adjusts the labels based on the SID).
+Changes in v4:
+ - Fixed the bindings check and rebased on linux-next.
 
-I was asking if the patch I sent (with #define PM7250B_SID) would be
-okay to take in at least until the bigger discussion has come to a
-conclusion, since we already have upstream occurances of such a macro so
-it's not a new concept.
+Changes in v3:
+ - Rebased the bindings on linux-next as suggested by Krzysztof.
 
-Otherwise I'll just carry this patch in my local tree until this
-situation has cleared up.
+Changes in v2:
+ - Updated the bindings to clear the bindings check.
 
-Regards
-Luca
+This patch series adds pinctrl bindings and tlmm support for SDX75.
 
->
-> Best regards,
-> Krzysztof
+Thanks,
+Rohit.
+
+Rohit Agarwal (4):
+  dt-bindings: pinctrl: qcom: Add SDX75 pinctrl devicetree compatible
+  pinctrl: qcom: Remove the msm_function struct
+  pinctrl: qcom: Refactor generic qcom pinctrl driver
+  pinctrl: qcom: Add SDX75 pincontrol driver
+
+ .../bindings/pinctrl/qcom,sdx75-tlmm.yaml          |  169 +++
+ drivers/pinctrl/qcom/Kconfig                       |   30 +-
+ drivers/pinctrl/qcom/Makefile                      |    3 +-
+ drivers/pinctrl/qcom/pinctrl-apq8064.c             |  104 +-
+ drivers/pinctrl/qcom/pinctrl-apq8084.c             |  264 ++--
+ drivers/pinctrl/qcom/pinctrl-ipq4019.c             |  104 +-
+ drivers/pinctrl/qcom/pinctrl-ipq5332.c             |  206 ++-
+ drivers/pinctrl/qcom/pinctrl-ipq6018.c             |  260 ++--
+ drivers/pinctrl/qcom/pinctrl-ipq8064.c             |  114 +-
+ drivers/pinctrl/qcom/pinctrl-ipq8074.c             |  240 ++-
+ drivers/pinctrl/qcom/pinctrl-mdm9607.c             |  276 ++--
+ drivers/pinctrl/qcom/pinctrl-mdm9615.c             |   90 +-
+ drivers/pinctrl/qcom/pinctrl-msm.c                 |   13 +-
+ drivers/pinctrl/qcom/pinctrl-msm.h                 |   42 +-
+ drivers/pinctrl/qcom/pinctrl-msm8226.c             |  156 +-
+ drivers/pinctrl/qcom/pinctrl-msm8660.c             |  252 ++-
+ drivers/pinctrl/qcom/pinctrl-msm8909.c             |  268 ++--
+ drivers/pinctrl/qcom/pinctrl-msm8916.c             |  556 ++++---
+ drivers/pinctrl/qcom/pinctrl-msm8953.c             |  424 +++---
+ drivers/pinctrl/qcom/pinctrl-msm8960.c             |  464 +++---
+ drivers/pinctrl/qcom/pinctrl-msm8976.c             |  212 ++-
+ drivers/pinctrl/qcom/pinctrl-msm8994.c             |  564 ++++---
+ drivers/pinctrl/qcom/pinctrl-msm8996.c             |  508 +++----
+ drivers/pinctrl/qcom/pinctrl-msm8998.c             |  380 +++--
+ drivers/pinctrl/qcom/pinctrl-msm8x74.c             |  474 +++---
+ drivers/pinctrl/qcom/pinctrl-qcm2290.c             |  230 ++-
+ drivers/pinctrl/qcom/pinctrl-qcs404.c              |  388 +++--
+ drivers/pinctrl/qcom/pinctrl-qdf2xxx.c             |    6 +-
+ drivers/pinctrl/qcom/pinctrl-qdu1000.c             |  249 ++-
+ drivers/pinctrl/qcom/pinctrl-sa8775p.c             |  308 ++--
+ drivers/pinctrl/qcom/pinctrl-sc7180.c              |  254 ++--
+ drivers/pinctrl/qcom/pinctrl-sc7280.c              |  322 ++--
+ drivers/pinctrl/qcom/pinctrl-sc8180x.c             |  286 ++--
+ drivers/pinctrl/qcom/pinctrl-sc8280xp.c            |  358 +++--
+ drivers/pinctrl/qcom/pinctrl-sdm660.c              |  387 +++--
+ drivers/pinctrl/qcom/pinctrl-sdm670.c              |  284 ++--
+ drivers/pinctrl/qcom/pinctrl-sdm845.c              |  286 ++--
+ drivers/pinctrl/qcom/pinctrl-sdx55.c               |  190 ++-
+ drivers/pinctrl/qcom/pinctrl-sdx65.c               |  194 ++-
+ drivers/pinctrl/qcom/pinctrl-sdx75.c               | 1601 ++++++++++++++++++++
+ drivers/pinctrl/qcom/pinctrl-sm6115.c              |  162 +-
+ drivers/pinctrl/qcom/pinctrl-sm6125.c              |  282 ++--
+ drivers/pinctrl/qcom/pinctrl-sm6350.c              |  296 ++--
+ drivers/pinctrl/qcom/pinctrl-sm6375.c              |  358 +++--
+ drivers/pinctrl/qcom/pinctrl-sm8150.c              |  286 ++--
+ drivers/pinctrl/qcom/pinctrl-sm8250.c              |  258 ++--
+ drivers/pinctrl/qcom/pinctrl-sm8350.c              |  298 ++--
+ drivers/pinctrl/qcom/pinctrl-sm8450.c              |  300 ++--
+ drivers/pinctrl/qcom/pinctrl-sm8550.c              |  320 ++--
+ 49 files changed, 7763 insertions(+), 6313 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdx75-tlmm.yaml
+ create mode 100644 drivers/pinctrl/qcom/pinctrl-sdx75.c
+
+-- 
+2.7.4
 
