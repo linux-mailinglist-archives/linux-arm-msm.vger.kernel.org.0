@@ -2,128 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 70E9B6FD785
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 08:55:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90E006FD7E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 09:10:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236197AbjEJGz5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 May 2023 02:55:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54560 "EHLO
+        id S236395AbjEJHJ7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 May 2023 03:09:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236200AbjEJGzx (ORCPT
+        with ESMTP id S236460AbjEJHJy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 May 2023 02:55:53 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 402895B80
-        for <linux-arm-msm@vger.kernel.org>; Tue,  9 May 2023 23:55:36 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-50bcb4a81ceso12217543a12.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 May 2023 23:55:36 -0700 (PDT)
+        Wed, 10 May 2023 03:09:54 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F9E05264
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 00:09:51 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-50bcae898b2so12263998a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 00:09:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683701735; x=1686293735;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1683702590; x=1686294590;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=GBw2Sqyvf9cbRwd55kMhKh45cDskQ06myM8oAKc/ol0=;
-        b=NyOR4oceBOxsHylgbZwmmbiEW0vMLE9kkHphSodX11FpmzRe5u7ApHWP2gm0+NsQQe
-         wNuqhtiteCO3bZOKccBy6ltEeZWkWsKjJCQ8EahyhTrtaQ9jVDJlsTQFWIx516V+oMHq
-         9CrVIgRhgFNRR+u5rF7SXU3jJ757xUdWbKTxHUcu6dlopFOPDgsRklkTTjMVCxQ3FsSP
-         34ddTEDpGhwS9RwAuVIREw0BJYNdN4OW92m09D1CjY+pVeV6fAiZnoA4LZ3Cg+1cPTNx
-         g7dSBWSBbLDQ313oFxs9//Cyai517wHnaYBF2VspvtmQca6DQo4dahuAxHB15dHad6mF
-         PoYg==
+        bh=BJvf3WnGfiNmFmKHLfiwqmHicsidW15LaCdZqZNR7to=;
+        b=CaBXCo7zlGmZqcb46dpr5dnGUiRLX2GuWsmdUXt/KlWSntoyOknfpMG0/Vilp4leNh
+         ZQNxDXGovRR/jmNIhBVBZAL1ggvoi/MWDP7SGMQTUcO3LIV0vWHcin0oMsAZQSEfs3/W
+         ga/03SxrGNCOzBLAimCOfRBr51ChkvwcjZfu8TRNC7QY8eL20Z6ZTp0HOWXnMJ1uPv2L
+         7FxrL9Z/T0+jLqZsqw88TP3nsPrO3/+yZU7qnZJ6DELwjVGLkjxNOs3QFM7moQVgEsFh
+         oXzCeUPk0FTa/EaV6alI4R8urepPEZm+cDVxzy4P+I6NYdxTraSDR6dA643OR2LM06qj
+         qq3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683701735; x=1686293735;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1683702590; x=1686294590;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GBw2Sqyvf9cbRwd55kMhKh45cDskQ06myM8oAKc/ol0=;
-        b=O7RWEoPnVZbUhw6QlzALRPFiQyGn1FfgkToPGoq6t+mgJ1AqKER7mw7rH7BIlaTIrK
-         uv7XFbWVg72ZMPx9zEf0fpWYF0mFvQZFdCMYXfrglA+lNbZr1yJCC5zB5C2AZ7b98C5x
-         HWUu82y/6gh6ZBlmkbJDPjxtsq8Y6Uplrz7QMgJVUzyDIR+PlDG6lQyKeOGj5VPWDocl
-         9Gb5fX7pHOBrR9Ull25+7lCH4Kl9kYP+KWR04F5u7+HdW4XKyGKsGEmwsFa7T+WXZpAA
-         GmjBiBaBatqPYs5cqPqZYMs8/WV+Ot5VtFpqO6ynkAFRXJOcJHISigOwaC7QvykE+te1
-         nV6w==
-X-Gm-Message-State: AC+VfDyy3DHJz+p2at6qal+YlXHTCPkl4nFPFyaDq8wIHckMNm0TLF3n
-        zcMVdUR6xlqmS1vtGjF+Bbd8Dg==
-X-Google-Smtp-Source: ACHHUZ6f++C50lQ2lBm4wvuCiuGRqyrj6QN7U53NChRqn4x9MlxM9o82i80SlGFs+4dwbPtBWlqoRw==
-X-Received: by 2002:a17:906:9c83:b0:95f:4889:412a with SMTP id fj3-20020a1709069c8300b0095f4889412amr16269448ejc.33.1683701734707;
-        Tue, 09 May 2023 23:55:34 -0700 (PDT)
+        bh=BJvf3WnGfiNmFmKHLfiwqmHicsidW15LaCdZqZNR7to=;
+        b=Nt1w1+IwdR6daj/itmGIoFLwxWnWwvMEFINeCdGe/LSZwmttMb+pRbztF++rofy+vt
+         PdgRbDVotFzJK4RQdSAezifWZb+TIna6R1SkOpM6qVnzKY6PnHL8r12I4/CZaxt1OuFo
+         jMIBT4rJuAMNM11zkjMOnqHWBbWw/bTz3/QH0b5WQH4X3H4+gpLRYug4pge0nWq1594U
+         GWekJNLY0d/pZ7g/erE6L8JXoDIvnC/gllKu2MZHXumMQNdWKlkS1k09OWUSpziHxK1Z
+         Y3I0aT4F23kDbOk1osxoM3Ir01OGrsUCILwphREV+C5RMOwHLr1V7gnxFepNM+h6jejs
+         JzOA==
+X-Gm-Message-State: AC+VfDx9CHPsd8A+lURjY2gJfxYy11ndTgC7s3Sf1Y4lKoq0JlRNKgbm
+        VXRUkrSFzWBQn1M54kUixcklHA==
+X-Google-Smtp-Source: ACHHUZ45V9nWx+xpymCCTDt+xqMHZN//QImYns3SLixe0knjRClRjdgBA/A6jG8Yv/UnrJA85OvrJg==
+X-Received: by 2002:a17:907:8688:b0:96a:3005:61b7 with SMTP id qa8-20020a170907868800b0096a300561b7mr612454ejc.74.1683702589873;
+        Wed, 10 May 2023 00:09:49 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:c175:a0f9:6928:8c9d? ([2a02:810d:15c0:828:c175:a0f9:6928:8c9d])
-        by smtp.gmail.com with ESMTPSA id e2-20020a50fb82000000b00509e3053b66sm1513562edq.90.2023.05.09.23.55.33
+        by smtp.gmail.com with ESMTPSA id w21-20020a170906131500b0096637a19dccsm2277509ejb.210.2023.05.10.00.09.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 May 2023 23:55:34 -0700 (PDT)
-Message-ID: <c9eea8ec-b289-334c-9c0b-7c992184a265@linaro.org>
-Date:   Wed, 10 May 2023 08:55:31 +0200
+        Wed, 10 May 2023 00:09:49 -0700 (PDT)
+Message-ID: <0ffa55bb-9869-f94a-17e8-46530c2d91bd@linaro.org>
+Date:   Wed, 10 May 2023 09:09:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: pm7250b: make SID configurable
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        Andy Gross <agross@kernel.org>,
+Subject: Re: [PATCH 2/3] dt-bindings: clock: qcom,mmcc: define
+ clocks/clock-names for MSM8226
+Content-Language: en-US
+To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230407-pm7250b-sid-v1-0-fc648478cc25@fairphone.com>
- <20230407-pm7250b-sid-v1-2-fc648478cc25@fairphone.com>
- <f52524da-719b-790f-ad2c-0c3f313d9fe9@linaro.org>
- <CSIE9TYTQUHL.3E769C2Y4RAAO@otso>
-Content-Language: en-US
+        Conor Dooley <conor+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Taniya Das <tdas@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+References: <20230509-msm8226-mmcc-parents-v1-0-83a2dfc986ab@z3ntu.xyz>
+ <20230509-msm8226-mmcc-parents-v1-2-83a2dfc986ab@z3ntu.xyz>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CSIE9TYTQUHL.3E769C2Y4RAAO@otso>
+In-Reply-To: <20230509-msm8226-mmcc-parents-v1-2-83a2dfc986ab@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/05/2023 08:47, Luca Weiss wrote:
-> Hi Krzysztof,
+On 09/05/2023 23:16, Luca Weiss wrote:
+> Define clock/clock-names properties of the MMCC device node to be used
+> on MSM8226 platform.
 > 
-> On Fri Apr 7, 2023 at 10:27 AM CEST, Krzysztof Kozlowski wrote:
->> On 07/04/2023 09:45, Luca Weiss wrote:
->>> Like other Qualcomm PMICs the PM7250B can be used on different addresses
->>> on the SPMI bus. Use similar defines like the PMK8350 to make this
->>> possible.
->>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
->>>  arch/arm64/boot/dts/qcom/pm7250b.dtsi | 23 ++++++++++++++++-------
->>>  1 file changed, 16 insertions(+), 7 deletions(-)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/pm7250b.dtsi b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
->>> index daa6f1d30efa..eeb476edc79a 100644
->>> --- a/arch/arm64/boot/dts/qcom/pm7250b.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/pm7250b.dtsi
->>> @@ -7,6 +7,15 @@
->>>  #include <dt-bindings/interrupt-controller/irq.h>
->>>  #include <dt-bindings/spmi/spmi.h>
->>>  
->>> +/* This PMIC can be configured to be at different SIDs */
->>> +#ifndef PM7250B_SID
->>> +	#define PM7250B_SID 2
->>
->> Drop indentation, although anyway I am against this. Please don't bring
->> new patterns of this at least till we settle previous discussion.
->>
->> https://lore.kernel.org/linux-arm-msm/46658cbb-fff5-e98b-fdad-88fa683a9c75@linaro.org/
-> 
-> What's the outcome of the discussion? For this PMIC it's totally enough
-> to have the SID configurable like in this patch, I don't think this PMIC
-> will be included twice in a board - at least I'm not aware of such a
-> configuration.
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
 
-We did not reach consensus and I still disagree with complex macros or
-macros depending on order of inclusion.
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
