@@ -2,116 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 659E26FD872
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 09:44:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BBDC6FD8AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 09:55:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229506AbjEJHoT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 May 2023 03:44:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37902 "EHLO
+        id S236278AbjEJHzW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 May 2023 03:55:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236226AbjEJHoR (ORCPT
+        with ESMTP id S236122AbjEJHzV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 May 2023 03:44:17 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E5B430CB
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 00:44:16 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3f41d087b24so29137675e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 00:44:16 -0700 (PDT)
+        Wed, 10 May 2023 03:55:21 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA6C0E5D
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 00:55:19 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-50bc2feb320so10820972a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 00:55:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683704655; x=1686296655;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BtQPFlqDJgsJOhJjphtgO9KU3wqmiLaUjxsYgolmkNY=;
-        b=QmFEIJOHl50deNQSptWiiSgu6+lK0ojb2twXb2fNfhePK6cEQ7kFaCNqJ1hdmbE7L2
-         l0yYrDfBefzqo90kb1jTg+4kdBDIU/IU6+vqPQkDA5WD8luFJJNjEjMhPW9GxjN0xzmE
-         gW5MiB+sgw1BtTI2qPK7Y2tKcu+897yB8NuQ8b+YhqnZ+QkNYnVVr5YZH7SuzbILaGyF
-         IM8orS0BqOTDyk8uHW8DajyR92lsao4HNqlXNUAZV6VAyZ+G6z0t4t+cpqr3EIJNiVYC
-         Lb2ov029rl3Pt0ZeLKYZ66po39iWUjfQOdbLa1k1QoRt8isQeO4P5XIrLXoW2hG18FkY
-         UY9A==
+        d=linaro.org; s=google; t=1683705318; x=1686297318;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Oob8w8ofobCi5vSBmyGbDt7IQ2Ps/8J6O1qvcfUAdXw=;
+        b=AOIvpkjd/QsRYky8F0xjpBaEpCuRDCwXik8hQIKdGmZTprdNKPydwA7egtHhiHtr+S
+         g2DxMuC5mGadrCd2Y1TRlOVFfNCYW/IFQGSiF0YpDgehbAJxB7YXFk8s6Q58OyZ+8eoz
+         L+Rws7THJpOxpDSnPsTtc653HLV3t1x50t+nz8rPNGQdU8KuprFbPcIU1UTFiVpSnzce
+         z9QeH8IHslagm1hRjPit9r00XaVF/4pP3HFhGCbW9GjU+P0icUPgqqZTGTa9MLnbY6Xc
+         27LBZ7EdR0WEKeShlDHohSrXbBWJcu2B7txNGYADsWsWE0x9f0KJwiM6clU6zNI4CWRa
+         fW0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683704655; x=1686296655;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BtQPFlqDJgsJOhJjphtgO9KU3wqmiLaUjxsYgolmkNY=;
-        b=KJ0Wp2JWSD/zeB4Hp6A0CSU9mVX5pHKGoxNOKmaYAoERmTnXdNAR0g6RrqYkCkwkeK
-         A3OZjXkQF5JrOoaQ5LmWzj9TWPy4HElW42YS3x+ky/nVg4bFhjO1lcDNWg2rQ+9pjEFs
-         1cYBJTlqN78LMnt51aSdygAajrhahp59pqAKM7yq8gbHlfuNKonrUve18kjCTweyelM3
-         Z0iwAOmmZCoOVfyA3J9NsL0FmeK+L2eiJy0AWhH5hyLpm2YFYugZIgwdrCpmhnRKjEZ8
-         eKZhpgSXUGPFXsw+vDNXOc4N5xDIsMt52eJNGZgBWWtLG6KgQCKAn65eFv6wcNynXLMg
-         OYYA==
-X-Gm-Message-State: AC+VfDwX9LCeF1FFzxmEOeYM2yFkkT9JMOrjytJnKasPlZx7cIMq8Rsj
-        cA/StAcRPPa6+q3JJ2kTJ/irYA==
-X-Google-Smtp-Source: ACHHUZ65q8nnPXwnXG297J3KAXm87os0LF1VqdeR3GC8I3QkknH+TG+s0Li9tmLG1xcRm5IYMYXh3g==
-X-Received: by 2002:a7b:c40f:0:b0:3f4:2300:e015 with SMTP id k15-20020a7bc40f000000b003f42300e015mr7651495wmi.5.1683704654737;
-        Wed, 10 May 2023 00:44:14 -0700 (PDT)
-Received: from hackbox.lan ([86.121.163.20])
-        by smtp.gmail.com with ESMTPSA id p5-20020a7bcc85000000b003f4dde07956sm261653wma.42.2023.05.10.00.44.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 May 2023 00:44:14 -0700 (PDT)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Eric Biggers <ebiggers@kernel.org>,
-        Stephen Rothwell <sfr@canb.auug.org.au>
-Subject: [PATCH] soc: qcom: Rename ice to qcom-ice to avoid module name conflict
-Date:   Wed, 10 May 2023 10:44:04 +0300
-Message-Id: <20230510074404.3520340-1-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20221208; t=1683705318; x=1686297318;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Oob8w8ofobCi5vSBmyGbDt7IQ2Ps/8J6O1qvcfUAdXw=;
+        b=VC6M3kvYOaN0ECFMqhb7cmk5EKIAvMcHnGXf1KCKZ9nM8DAIKGiYRvDMNaANi6Inrw
+         zDLIoQKPfv6aBlDjv/7sNLVXEEzFqvOInacRFJcXku0EpVIyqCP44eTJSoOiHA0LuP9G
+         WDbyJzvLB3zES1UyrsObmA95YVPx8NTp8DKy8E8VZyFhd89p10Gdcuy6m9OwTDEAAr5Y
+         8uJCcCxuFehjEr3g7b9nP8Qou7kOAbpu94ldBz9S8dpWbBxanSustX7hqIbXFgf7vqsJ
+         K933yfVsR8Skej1Nf/dkWSIfUgDjaCPD8OO6XlllQI208t+FpL8/QGdSyw1eE3upD+SI
+         3QEg==
+X-Gm-Message-State: AC+VfDwc2PKjzBcmz8OnRbEOP8apWcQ845f57fihfp7UWn+jhGQ2lklI
+        pGbxRNFFNiShZnTxClLVWySVWg==
+X-Google-Smtp-Source: ACHHUZ5golxil0e/W6BJ4TEDUe+sdgf27BzQ05eUIRsCUCgqLSWgzqWxOAj1zjkOs3zNleeaZHYFig==
+X-Received: by 2002:a17:907:70d:b0:94b:d57e:9d4b with SMTP id xb13-20020a170907070d00b0094bd57e9d4bmr13863359ejb.2.1683705318163;
+        Wed, 10 May 2023 00:55:18 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:c175:a0f9:6928:8c9d? ([2a02:810d:15c0:828:c175:a0f9:6928:8c9d])
+        by smtp.gmail.com with ESMTPSA id de9-20020a1709069bc900b0094e6a9c1d24sm2386066ejc.12.2023.05.10.00.55.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 May 2023 00:55:16 -0700 (PDT)
+Message-ID: <7d426635-1d0b-2317-3b45-fb28b068b0da@linaro.org>
+Date:   Wed, 10 May 2023 09:55:15 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2 1/8] dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp: Add
+ ports and orientation-switch
+Content-Language: en-US
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Johan Hovold <johan@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+References: <20230510031930.1996020-1-quic_bjorande@quicinc.com>
+ <20230510031930.1996020-2-quic_bjorande@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230510031930.1996020-2-quic_bjorande@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following error was reported when building x86_64 allmodconfig:
+On 10/05/2023 05:19, Bjorn Andersson wrote:
+> The QMP combo phy can be connected to a TCPM, a USB controller and a
+> DisplayPort controller for handling USB Type-C orientation switching
+> and propagating HPD signals.
+> 
+> Extend the binding to allow these connections to be described.
+> 
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Tested-by: Abel Vesa <abel.vesa@linaro.org>
+> Tested-by: Steev Klimaszewski <steev@kali.org>
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on HDK8450
+> Tested-by: Johan Hovold <johan+linaro@kernel.org>	# X13s
+> ---
+> 
+> Changes since v1:
+> - Corrected port $ref
+> 
 
-error: the following would cause module name conflict:
-  drivers/soc/qcom/ice.ko
-  drivers/net/ethernet/intel/ice/ice.ko
 
-Seems the 'ice' module name is already used by some Intel ethernet
-driver, so lets rename the Qualcomm Inline Crypto Engine (ICE) from
-'ice' to 'qcom-ice' to avoid any kind of errors/confusions.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-Fixes: 2afbf43a4aec ("soc: qcom: Make the Qualcomm UFS/SDCC ICE a dedicated driver")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
-
-The build failure was reported here:
-https://lore.kernel.org/all/20230510111833.17810885@canb.auug.org.au/
-
- drivers/soc/qcom/Makefile              | 2 +-
- drivers/soc/qcom/{ice.c => qcom-ice.c} | 0
- 2 files changed, 1 insertion(+), 1 deletion(-)
- rename drivers/soc/qcom/{ice.c => qcom-ice.c} (100%)
-
-diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-index 0f43a88b4894..30219c164cb0 100644
---- a/drivers/soc/qcom/Makefile
-+++ b/drivers/soc/qcom/Makefile
-@@ -32,4 +32,4 @@ obj-$(CONFIG_QCOM_RPMHPD) += rpmhpd.o
- obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
- obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
- obj-$(CONFIG_QCOM_ICC_BWMON)	+= icc-bwmon.o
--obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= ice.o
-+obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= qcom-ice.o
-diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/qcom-ice.c
-similarity index 100%
-rename from drivers/soc/qcom/ice.c
-rename to drivers/soc/qcom/qcom-ice.c
--- 
-2.34.1
+Best regards,
+Krzysztof
 
