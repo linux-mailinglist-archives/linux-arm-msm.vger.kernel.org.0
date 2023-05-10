@@ -2,205 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECB336FD50D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 06:29:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9DA16FD62D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 May 2023 07:27:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230188AbjEJE3z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 May 2023 00:29:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40066 "EHLO
+        id S235717AbjEJF1V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 10 May 2023 01:27:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbjEJE3x (ORCPT
+        with ESMTP id S235806AbjEJF1R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 May 2023 00:29:53 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 761BF2D54;
-        Tue,  9 May 2023 21:29:52 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1aaf21bb427so48597025ad.1;
-        Tue, 09 May 2023 21:29:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683692992; x=1686284992;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/aM5NY/KUHqYL9w0DdOz9GTnXa2GoHiTuTmams40J5o=;
-        b=mIUX+1c8zSq1vIBaZknShJh4FlsjYTJ8mB8GwjIyTezZGY3MDERW6xFJCHcGtv737r
-         CCsvlVd1moMaNpwtMj1LK+go8Edf5erddvNynXI4FZl93uWPCEIcjGhI1q3GkQDA0B63
-         4VXGplEN2mABJaeCAx+LrZGU4fjrBeIzl8RV4wFPr3CPdMamJl0oeTA47/wDLVfdOvWZ
-         FsCAo8ZNR6XfsHuEcWDNy6KKayZLGs8c79uNY9R0/cj/EO+02I4mxKn+mDYOV7/agcRj
-         deGJWGawp3PGVgQYfGdsq50EQAU1IGHNmYdQrbc3EeAfmU3Hwbxm0c5lxDSpfsvaftLF
-         58mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683692992; x=1686284992;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/aM5NY/KUHqYL9w0DdOz9GTnXa2GoHiTuTmams40J5o=;
-        b=GNJPEJsdr82BiP4iqn873eJi2ZgKbnO7kj+PQbWjvWozBrtP6god6aDOJSrJ0Baxp5
-         fWz1D45Ai0iEqXsA81bOmA9zxf24E9K28A89rDsHVMOvWS0a+bAZ2NboQOyogsFrWwDf
-         Due4cjhNDDFVNrqYbeh+E5FYr2M/1/AyoPXfHlU6EEhJJN9HW9EShzFdbbJmZYd1slw6
-         a4xpuQaGM4NYhSd1Kr1Q/GPhg6xzK4wt2CnGcj7llmt9mrvAp/kibulm4tn1I2GHfTRo
-         IG5Z2l0jqhm1aJtV/aCgSGzvHOVKbwnTNtUsgG32icczVwpkKCpQhfbF3zQefxdhBDVu
-         yKpg==
-X-Gm-Message-State: AC+VfDyVfllJaiTTqO8KzQwB2f7igr33cxteMk3lcUPLhVE+m0jE7cED
-        503TzmETFINgpwScluzp1SY=
-X-Google-Smtp-Source: ACHHUZ5JpzVIN/DIs7qJBXKKpwABHf20uqh5yBLrXKfwPc64fJKRXs3HZO4pKmEoTFgaLV2jXH/5Qw==
-X-Received: by 2002:a17:902:ecc6:b0:1ac:6153:50b1 with SMTP id a6-20020a170902ecc600b001ac615350b1mr14634154plh.39.1683692991790;
-        Tue, 09 May 2023 21:29:51 -0700 (PDT)
-Received: from debian.me (subs32-116-206-28-2.three.co.id. [116.206.28.2])
-        by smtp.gmail.com with ESMTPSA id 21-20020a170902c21500b001ab13f1fa82sm2545706pll.85.2023.05.09.21.29.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 May 2023 21:29:51 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-        id 4C54E106AA3; Wed, 10 May 2023 11:29:48 +0700 (WIB)
-Date:   Wed, 10 May 2023 11:29:48 +0700
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     Hao Zhang <quic_hazha@quicinc.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Wed, 10 May 2023 01:27:17 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8892B5B97;
+        Tue,  9 May 2023 22:27:07 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34A5K1cA012210;
+        Wed, 10 May 2023 05:26:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type; s=qcppdkim1;
+ bh=OBzrTfBelqa+eLXS81DpdWcoyw7ODaoD9+6BGPsVYvk=;
+ b=G84UxILIdTtkVNIzJVNhY3JV9+sT0oFEOaRv65IlE4cIpEBjI0DHriORgTigD/6Z4Xyp
+ TE6LozaV/PVLdS94YkHPasHuqk4Col+dI0GorbsLZwhI3WdE5XzKcUZ7S9ecrOMgitQd
+ ob2TVRNFPyoilmdF/7kln4oKVLNUFfh90OJAj08opPHino21YcrbPMDCZT5nRAiDKdlf
+ MKWLNTDvYu/fVoj6XhB3EQQr50lnMiTEdqDwOYefETK9P/ohBWxQ8dXOiEHOkVxaQZ6Q
+ KO+7KxdNUv/f1fVmKOTap2urGMFfQ/pwVQ6aYOgPP9PPHNAPCsoXiJl2bJBXZ3ZlIC/7 mg== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qfr509h1e-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 10 May 2023 05:26:52 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34A5QpSG010311
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 10 May 2023 05:26:51 GMT
+Received: from stor-berry.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 9 May 2023 22:26:50 -0700
+From:   "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
+To:     <quic_asutoshd@quicinc.com>, <quic_cang@quicinc.com>,
+        <bvanassche@acm.org>, <mani@kernel.org>,
+        <stanley.chu@mediatek.com>, <adrian.hunter@intel.com>,
+        <beanhuo@micron.com>, <avri.altman@wdc.com>,
+        <martin.petersen@oracle.com>
+CC:     <linux-scsi@vger.kernel.org>,
+        "Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
         Andy Gross <agross@kernel.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Jonathan Corbet <corbet@lwn.net>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-doc@vger.kernel.org
-Subject: Re: [PATCH v3 3/3] Documentation: trace: Add documentation for
- Coresight Dummy Trace
-Message-ID: <ZFsdvCuTTEkTm9VA@debian.me>
-References: <20230422073714.38844-1-quic_hazha@quicinc.com>
- <20230422073714.38844-4-quic_hazha@quicinc.com>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alice Chao <alice.chao@mediatek.com>,
+        Arthur Simchaev <Arthur.Simchaev@wdc.com>,
+        "open list" <linux-kernel@vger.kernel.org>,
+        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH v3 6/7] ufs: mcq: Use ufshcd_mcq_poll_cqe_lock() in mcq mode
+Date:   Tue, 9 May 2023 22:24:27 -0700
+Message-ID: <0dfd125ec058aae179119672da46e297c4a3e35e.1683688693.git.quic_nguyenb@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <cover.1683688692.git.quic_nguyenb@quicinc.com>
+References: <cover.1683688692.git.quic_nguyenb@quicinc.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="e2+brUqtxyUTcWFS"
-Content-Disposition: inline
-In-Reply-To: <20230422073714.38844-4-quic_hazha@quicinc.com>
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 0MamCw7altpvIM7JCjnrdUgYMMnSRDQL
+X-Proofpoint-ORIG-GUID: 0MamCw7altpvIM7JCjnrdUgYMMnSRDQL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-10_02,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 mlxscore=0 mlxlogscore=999 bulkscore=0
+ lowpriorityscore=0 malwarescore=0 clxscore=1011 impostorscore=0
+ adultscore=0 phishscore=0 suspectscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305100042
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+In preparation for adding mcq error handler support, update the mcq
+code to use the ufshcd_mcq_poll_cqe_lock() in interrupt context
+instead of using ufshcd_mcq_poll_cqe_nolock(). This is to keep
+synchronization between mcq interrupt and error handler contexts
+because both need to access the mcq hardware in separate contexts.
 
---e2+brUqtxyUTcWFS
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+---
+ drivers/ufs/core/ufs-mcq.c     | 6 +++---
+ drivers/ufs/core/ufshcd-priv.h | 2 --
+ drivers/ufs/core/ufshcd.c      | 2 +-
+ drivers/ufs/host/ufs-qcom.c    | 2 +-
+ include/ufs/ufshcd.h           | 2 +-
+ 5 files changed, 6 insertions(+), 8 deletions(-)
 
-On Sat, Apr 22, 2023 at 03:37:14PM +0800, Hao Zhang wrote:
-> +Introduction
-> +---------------------------
-> +
-> +Coresight Dummy Trace Module is for the specific devices that kernel
-> +don't have permission to access or configure, e.g., CoreSight TPDMs
-> +on Qualcomm platforms. So there need driver to register dummy devices
-> +as Coresight devices. It may also be used to define components that
-> +may not have any programming interfaces (e.g, static links), so that
-> +paths can be established in the driver. Provide Coresight API for
-> +dummy device operations, such as enabling and disabling dummy devices.
-> +Build the Coresight path for dummy sink or dummy source for debugging.
-> +
-> +Config details
-> +---------------------------
-> +
-> +There are two types of nodes, dummy sink and dummy source. The nodes
-> +should be observed at the below coresight path::
-> +
-> +    ``/sys/bus/coresight/devices``.
-> +
-> +e.g.::
-> +
-> +    / $ ls -l /sys/bus/coresight/devices | grep dummy
-> +    dummy0 -> ../../../devices/platform/soc@0/soc@0:dummy_source/dummy0
-> +    dummy1 -> ../../../devices/platform/soc@0/soc@0:dummy_sink/dummy1
+diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
+index 8a5385c..138e174 100644
+--- a/drivers/ufs/core/ufs-mcq.c
++++ b/drivers/ufs/core/ufs-mcq.c
+@@ -284,8 +284,8 @@ static void ufshcd_mcq_process_cqe(struct ufs_hba *hba,
+ 	ufshcd_compl_one_cqe(hba, tag, cqe);
+ }
+ 
+-unsigned long ufshcd_mcq_poll_cqe_nolock(struct ufs_hba *hba,
+-					 struct ufs_hw_queue *hwq)
++static unsigned long ufshcd_mcq_poll_cqe_nolock(struct ufs_hba *hba,
++						struct ufs_hw_queue *hwq)
+ {
+ 	unsigned long completed_reqs = 0;
+ 
+@@ -301,7 +301,6 @@ unsigned long ufshcd_mcq_poll_cqe_nolock(struct ufs_hba *hba,
+ 
+ 	return completed_reqs;
+ }
+-EXPORT_SYMBOL_GPL(ufshcd_mcq_poll_cqe_nolock);
+ 
+ unsigned long ufshcd_mcq_poll_cqe_lock(struct ufs_hba *hba,
+ 				       struct ufs_hw_queue *hwq)
+@@ -314,6 +313,7 @@ unsigned long ufshcd_mcq_poll_cqe_lock(struct ufs_hba *hba,
+ 
+ 	return completed_reqs;
+ }
++EXPORT_SYMBOL_GPL(ufshcd_mcq_poll_cqe_lock);
+ 
+ void ufshcd_mcq_make_queues_operational(struct ufs_hba *hba)
+ {
+diff --git a/drivers/ufs/core/ufshcd-priv.h b/drivers/ufs/core/ufshcd-priv.h
+index 0c034d9..b73245e 100644
+--- a/drivers/ufs/core/ufshcd-priv.h
++++ b/drivers/ufs/core/ufshcd-priv.h
+@@ -71,8 +71,6 @@ void ufshcd_mcq_config_mac(struct ufs_hba *hba, u32 max_active_cmds);
+ void ufshcd_mcq_select_mcq_mode(struct ufs_hba *hba);
+ u32 ufshcd_mcq_read_cqis(struct ufs_hba *hba, int i);
+ void ufshcd_mcq_write_cqis(struct ufs_hba *hba, u32 val, int i);
+-unsigned long ufshcd_mcq_poll_cqe_nolock(struct ufs_hba *hba,
+-					 struct ufs_hw_queue *hwq);
+ struct ufs_hw_queue *ufshcd_mcq_req_to_hwq(struct ufs_hba *hba,
+ 					   struct request *req);
+ unsigned long ufshcd_mcq_poll_cqe_lock(struct ufs_hba *hba,
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 64dc2b2..5e3029ed 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -6811,7 +6811,7 @@ static irqreturn_t ufshcd_handle_mcq_cq_events(struct ufs_hba *hba)
+ 			ufshcd_mcq_write_cqis(hba, events, i);
+ 
+ 		if (events & UFSHCD_MCQ_CQIS_TAIL_ENT_PUSH_STS)
+-			ufshcd_mcq_poll_cqe_nolock(hba, hwq);
++			ufshcd_mcq_poll_cqe_lock(hba, hwq);
+ 	}
+ 
+ 	return IRQ_HANDLED;
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 82d02e7..57f5674 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -1556,7 +1556,7 @@ static irqreturn_t ufs_qcom_mcq_esi_handler(int irq, void *__hba)
+ 	struct ufs_hw_queue *hwq = &hba->uhq[id];
+ 
+ 	ufshcd_mcq_write_cqis(hba, 0x1, id);
+-	ufshcd_mcq_poll_cqe_nolock(hba, hwq);
++	ufshcd_mcq_poll_cqe_lock(hba, hwq);
+ 
+ 	return IRQ_HANDLED;
+ }
+diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
+index 12518c9..a6781b0 100644
+--- a/include/ufs/ufshcd.h
++++ b/include/ufs/ufshcd.h
+@@ -1244,7 +1244,7 @@ void ufshcd_update_evt_hist(struct ufs_hba *hba, u32 id, u32 val);
+ void ufshcd_hba_stop(struct ufs_hba *hba);
+ void ufshcd_schedule_eh_work(struct ufs_hba *hba);
+ void ufshcd_mcq_write_cqis(struct ufs_hba *hba, u32 val, int i);
+-unsigned long ufshcd_mcq_poll_cqe_nolock(struct ufs_hba *hba,
++unsigned long ufshcd_mcq_poll_cqe_lock(struct ufs_hba *hba,
+ 					 struct ufs_hw_queue *hwq);
+ void ufshcd_mcq_enable_esi(struct ufs_hba *hba);
+ void ufshcd_mcq_config_esi(struct ufs_hba *hba, struct msi_msg *msg);
+-- 
+2.7.4
 
-The wording confuses me, so I have to make the improv:
-
----- >8 ----
-diff --git a/Documentation/trace/coresight/coresight-dummy.rst b/Documentat=
-ion/trace/coresight/coresight-dummy.rst
-index 7cb59f080c8892..f0a92669288b0c 100644
---- a/Documentation/trace/coresight/coresight-dummy.rst
-+++ b/Documentation/trace/coresight/coresight-dummy.rst
-@@ -8,27 +8,25 @@ Coresight Dummy Trace Module
-     :Date:     May 2023
-=20
- Introduction
-----------------------------
-+------------
-=20
--Coresight Dummy Trace Module is for the specific devices that kernel
--don't have permission to access or configure, e.g., CoreSight TPDMs
--on Qualcomm platforms. So there need driver to register dummy devices
--as Coresight devices. It may also be used to define components that
--may not have any programming interfaces (e.g, static links), so that
--paths can be established in the driver. Provide Coresight API for
--dummy device operations, such as enabling and disabling dummy devices.
--Build the Coresight path for dummy sink or dummy source for debugging.
-+The Coresight dummy trace module is for the specific devices that kernel d=
-on't
-+have permission to access or configure, e.g., CoreSight TPDMs on Qualcomm
-+platforms. For these devices, a dummy driver is needed to register them as
-+Coresight devices. The module may also be used to define components that m=
-ay
-+not have any programming interfaces (e.g, static links), so that paths can=
- be
-+created in the driver. It provides Coresight API for operations on dummy
-+devices, such as enabling and disabling them. It also provides the Coresig=
-ht
-+dummy sink/source paths for debugging.
-=20
- Config details
-----------------------------
-+--------------
-=20
--There are two types of nodes, dummy sink and dummy source. The nodes
--should be observed at the below coresight path::
-+There are two types of nodes, dummy sink and dummy source. These nodes
-+are available at ``/sys/bus/coresight/devices``.
-=20
--    ``/sys/bus/coresight/devices``.
-+Example output::
-=20
--e.g.::
--
--    / $ ls -l /sys/bus/coresight/devices | grep dummy
-+    $ ls -l /sys/bus/coresight/devices | grep dummy
-     dummy_sink0 -> ../../../devices/platform/soc@0/soc@0:sink/dummy_sink0
-     dummy_source0 -> ../../../devices/platform/soc@0/soc@0:source/dummy_so=
-urce0
-
-Thanks.
-
---=20
-An old man doll... just what I always wanted! - Clara
-
---e2+brUqtxyUTcWFS
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZFsduAAKCRD2uYlJVVFO
-o2TjAQDYYZqIoZ6+z7SOd233T+YD4aMEAQt5d3y8eqQjHBnsGgD9ELC02YzoibPW
-QS5ra91ddWiO98Yu1l05a8zSZPt0DQI=
-=vhHp
------END PGP SIGNATURE-----
-
---e2+brUqtxyUTcWFS--
