@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21EEB6FF3B9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 16:13:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B59B56FF3B8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 16:13:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238218AbjEKONa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 May 2023 10:13:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58298 "EHLO
+        id S233998AbjEKON3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 May 2023 10:13:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237997AbjEKON1 (ORCPT
+        with ESMTP id S237802AbjEKON0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 May 2023 10:13:27 -0400
-Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 227E7A240;
-        Thu, 11 May 2023 07:12:41 -0700 (PDT)
+        Thu, 11 May 2023 10:13:26 -0400
+Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [IPv6:2001:67c:2050:0:465::102])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 271F55BA6;
+        Thu, 11 May 2023 07:12:36 -0700 (PDT)
 Received: from smtp202.mailbox.org (smtp202.mailbox.org [10.196.197.202])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
         (No client certificate requested)
-        by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4QHDNb6kB2z9sZD;
-        Thu, 11 May 2023 16:11:59 +0200 (CEST)
+        by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4QHDNg08npz9sbY;
+        Thu, 11 May 2023 16:12:03 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dylanvanassche.be;
-        s=MBO0001; t=1683814319;
+        s=MBO0001; t=1683814323;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=l2otcDdUshgA/c9L7n2sngTXTgjQKeWeYo6cxQJutfE=;
-        b=VO9CwJzGrBO1Spq63OV3oM5pIeShIfHHKAr8IWzkHKJUP+gGR6ZYeI53x9m7Q5+h8ByFJf
-        v7mvRcPkmBztyE6xxsXnDtU9vHJ9pdfezDSNUA9VBdcYd/w4HBSlxPUyY9euIHJbLW1io8
-        8tm8vau+bxg+/c05UYrtklYN28EHOTkASLv9UZTpNfGkS4tsh/MtPCHJB85QdB88c7RBbn
-        +2mtkrky87rJn6x4I3Db+AzL++HyqDm/3zA98XsfHLFZzFHNWoSwBmKuxx7va5VWwkhhIB
-        29gOMPhPm8Ah01gjkGyLqetyiZDd28nXHS0E2GQDyYYKXJpx7We5PjtNrr79Eg==
+        bh=JNzwKONia1evLN1QC2vRkbgu3RwkxcMWK2mRFNmiqkc=;
+        b=0R1IkmfTtjAXvzhnxT6uWWUGAQ8226GDi5Ej/uL8kAhPBhdvZh+Gnk9pDcL9v4LfLG7hVW
+        cCAEyk54g0Iy8uv0ueo3YLKu+1V7+7ioMbxpN1s3fUxKH2OPMF4GmS8/ladZVHYNTCC1Tp
+        RDai893sH8EM4ZIkBqL71rqcR7Bm8K3yNQoR1tRh0OCIBJapGb7Oc0clSAJ88YrqNmQxeQ
+        XP4xWVJA8lnF7VFYVq8yaCKNPGQ5PMkszfF8FaCYpQmSS2VzXcZUYrd3KASsReg24ABYHc
+        iEDVhn8z9Joj50fap0GG4enynhpnCS049ClijCGwg0vCgIiQxDFzUuPstyh/5A==
 From:   Dylan Van Assche <me@dylanvanassche.be>
 To:     srinivas.kandagatla@linaro.org, amahesh@qti.qualcomm.com,
         arnd@arndb.de, gregkh@linuxfoundation.org
@@ -40,9 +40,9 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         dan.carpenter@linaro.org, Dylan Van Assche <me@dylanvanassche.be>,
         Caleb Connolly <caleb.connolly@linaro.org>
-Subject: [PATCH v4 1/2] misc: fastrpc: support complete DMA pool access to the DSP
-Date:   Thu, 11 May 2023 16:11:45 +0200
-Message-Id: <20230511141146.30465-2-me@dylanvanassche.be>
+Subject: [PATCH v4 2/2] misc: fastrpc: use coherent pool for untranslated Compute Banks
+Date:   Thu, 11 May 2023 16:11:46 +0200
+Message-Id: <20230511141146.30465-3-me@dylanvanassche.be>
 In-Reply-To: <20230511141146.30465-1-me@dylanvanassche.be>
 References: <20230511141146.30465-1-me@dylanvanassche.be>
 MIME-Version: 1.0
@@ -57,53 +57,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To support FastRPC Context Banks which aren't mapped via the SMMU,
-make the whole reserved memory region available to the DSP to allow
-access to coherent buffers.
-
-This is performed by assigning the memory to the DSP via a hypervisor
-call to set the correct permissions for the Virtual Machines on the DSP.
-This is only necessary when a memory region is provided for SLPI DSPs
-so guard this with a domain ID check.
+Use fastrpc_remote_heap_alloc to allocate from the FastRPC device
+instead of the Compute Bank when the session ID is 0. This ensures
+that the allocation is inside the coherent DMA pool which is already
+accessible to the DSP. This is necessary to support FastRPC devices
+which do not have dedicated Compute Banks such as the SLPI on the SDM845.
+The latter uses an allocated CMA region instead of FastRPC Compute Banks.
 
 Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
 Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
 ---
- drivers/misc/fastrpc.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/misc/fastrpc.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index f48466960f1b..1ced553ae959 100644
+index 1ced553ae959..3d47d3d13b5d 100644
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -2231,6 +2231,8 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 	int i, err, domain_id = -1, vmcount;
- 	const char *domain;
- 	bool secure_dsp;
-+	struct device_node *rmem_node;
-+	struct reserved_mem *rmem;
- 	unsigned int vmids[FASTRPC_MAX_VMIDS];
+@@ -939,7 +939,10 @@ static int fastrpc_get_args(u32 kernel, struct fastrpc_invoke_ctx *ctx)
  
- 	err = of_property_read_string(rdev->of_node, "label", &domain);
-@@ -2274,6 +2276,19 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 		}
- 	}
+ 	ctx->msg_sz = pkt_size;
  
-+	rmem_node = of_parse_phandle(rdev->of_node, "memory-region", 0);
-+	if (domain_id == SDSP_DOMAIN_ID && rmem_node) {
-+		rmem = of_reserved_mem_lookup(rmem_node);
-+		if (!rmem) {
-+			err = -EINVAL;
-+			goto fdev_error;
-+		}
-+
-+		qcom_scm_assign_mem(rmem->base, rmem->size, &data->perms,
-+				    data->vmperms, data->vmcount);
-+
-+	}
-+
- 	secure_dsp = !(of_property_read_bool(rdev->of_node, "qcom,non-secure-domain"));
- 	data->secure = secure_dsp;
+-	err = fastrpc_buf_alloc(ctx->fl, dev, pkt_size, &ctx->buf);
++	if (ctx->fl->sctx->sid)
++		err = fastrpc_buf_alloc(ctx->fl, dev, pkt_size, &ctx->buf);
++	else
++		err = fastrpc_remote_heap_alloc(ctx->fl, dev, pkt_size, &ctx->buf);
+ 	if (err)
+ 		return err;
  
 -- 
 2.40.1
