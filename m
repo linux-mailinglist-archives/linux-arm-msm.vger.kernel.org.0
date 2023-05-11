@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD18F6FEAA5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 06:32:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E35B6FEAAC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 06:32:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231621AbjEKEcC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 May 2023 00:32:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53046 "EHLO
+        id S236538AbjEKEc1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 May 2023 00:32:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230472AbjEKEcB (ORCPT
+        with ESMTP id S236019AbjEKEcX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 May 2023 00:32:01 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DB234C28
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 21:31:59 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4ec8133c59eso9203694e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 21:31:59 -0700 (PDT)
+        Thu, 11 May 2023 00:32:23 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52ED14ED1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 21:32:22 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2ac81d2bfbcso87168991fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 21:32:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683779517; x=1686371517;
+        d=linaro.org; s=google; t=1683779540; x=1686371540;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Yz+/Gk20g+rLGD9WBqQz3JvVt45c9RNumBRgkU0bdyw=;
-        b=QG0MOifFqnsIjneoBrIWYEkB/2nJXDTSBP0cl0o54BtRJh+yizHmWQVzo+qwf9UzEg
-         nQABeUsEPpv+lm5vUi3uuUOd+v1r6sw/zK1XbWLPXz30Wn4+XZVZg0mYfQsTwmc3LuCl
-         rXt7nidzgJyhK0MdyS4mIE2+niy/1gRpmOx0I5quBIqYtU65u6h/SoRRu9ryeSQ1ZpQL
-         +FdgYPG4ADtjRdRFxhxdDtkBiHYXhe05BGagFK3Faz3qM7LBn6tD2poemcIbaQBEu1wO
-         mpvkzTxY6Z9rMBY586BaHcV48NBkRpuNaxkUbpa0FcZmMUchPQxd7lDRiQpoKxQBltzX
-         VCVg==
+        bh=/fZFm+JnD3HFWQBsOX43ZNxNVH7brnnd/ur7Hm3Pkxg=;
+        b=CXZF7Z20QEgTREai8N9LOpTty5Bke8VUoaSb4+5TPg7hT50ChZJe5n7yWLr5AYkzcJ
+         NxzoVOV0qfE4O0If5SsIqh2q1xAnlUXPcfnS9a7TLy3FOdXdeUT2yBkV3UgFl18fyJ3E
+         bfgDZwzrzwmh5caYfpbSBmgk+BEcWl2atgdmoOAaKv76cazSNpOQBPj+nvfZtFfrVZz3
+         tW+Y1hMjtMpvYmN3UuiI6cAiDCk0VEepY4O71h37FY09xOXJrttRsC6MjSelRSwiuCJL
+         wJhoz5yvsRSVFpn4PNIAicxgELINAdXwFLRAQHjxvM8AIgG9BCQk5YYzOHxQT6LwLcVY
+         vGAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683779517; x=1686371517;
+        d=1e100.net; s=20221208; t=1683779540; x=1686371540;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Yz+/Gk20g+rLGD9WBqQz3JvVt45c9RNumBRgkU0bdyw=;
-        b=VWZC7Kg0azeqTI9aQDnjHNI4v1ouKXepVljdoaoiOMumYxnf+jzT5qf1hTz5mYbUJb
-         GuziFWMA8yt7amktGrI4m0HrpeCELkKYTF99u9hlnCmeQiYBvPd5XfY3o6bR7K6+n6HY
-         qJqWKwoo83GnIo7t2ag8O1Vt8j41O+5vicTH/Su+p71JZuUacT0drDfNRPtkQy19o2hy
-         7Xzy2eEFdOqHYl7SpCsBLt4V/KYjfUqGRGH/4ul8l3Sd4G1Q1topKMybrUw/O8n22jHL
-         sdUt3fn7yFtcl3jkYj8G9kxb0RV4buPqYxhm0YY9GH/9dqmF3PqMJVvV1RofnEO4zfG+
-         X+pg==
-X-Gm-Message-State: AC+VfDxnHq8uCh0K7NqdZEWbN0BM8VGWLoArNSUpgEZSaN+YiY99tNU/
-        VEpLAWb1jDcxiBRjBANOMMYhSQ==
-X-Google-Smtp-Source: ACHHUZ7gmShjR3g56HV3TeLijQNuVXEg1vd+aF/vlRc2UFIDY5gqky/Jpf/uNjU1oWK+JIQC0IB9Mg==
-X-Received: by 2002:ac2:54a8:0:b0:4ed:b842:3a99 with SMTP id w8-20020ac254a8000000b004edb8423a99mr2683287lfk.59.1683779513330;
-        Wed, 10 May 2023 21:31:53 -0700 (PDT)
+        bh=/fZFm+JnD3HFWQBsOX43ZNxNVH7brnnd/ur7Hm3Pkxg=;
+        b=I/L9Il+MlrgMkapFqHEV4LPuTmrvk5iYIxerz7FAgc7AUbrMOicKpCCJOlMBHBHs4P
+         ny3NBCPnRfk8bnsz88MnYCN3QutdT73SFDcnATC4rf5dkOMP++zlRzDA2UTjCr/NW9Go
+         KF+6qJHJN3gyc5EInBj4Nfqlv7rJWQ//7ymVHJlHVZJdaYKp64zqKhMgn9ayngrtEafd
+         rfG7VnJS/5usU+E3R/IPA79OQ2d6q3UC1S27/qsdHFttN2/qPXgMvzziURpSjR9a4PP2
+         ee4ebAfEwyMoi+IrHpjG5BgbcYbq7gG80LjIIl+cjs+iJmYgjRGY0FRpKnhz9mexWycW
+         v1/w==
+X-Gm-Message-State: AC+VfDzWsQ9IHMTla557VB9Vbv4V4rTagLIKCrd1VVRmKoN8QEbyJE2E
+        D+NZsrNj3ToJ/EaFeHId5Wtcyw==
+X-Google-Smtp-Source: ACHHUZ6apjC2HOcRzLnDFGzNFE7HRyDFwjWl+ULrE2cF5wbMaZ5Aj7O+iD+E7Y4dMT5duaVR9DWVKw==
+X-Received: by 2002:a2e:884e:0:b0:2ac:7304:c94d with SMTP id z14-20020a2e884e000000b002ac7304c94dmr2976098ljj.41.1683779540595;
+        Wed, 10 May 2023 21:32:20 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id m25-20020ac24259000000b004f13ca69dc8sm962020lfl.72.2023.05.10.21.31.52
+        by smtp.gmail.com with ESMTPSA id a6-20020a19f806000000b004db1a7e6decsm966447lff.205.2023.05.10.21.32.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 May 2023 21:31:52 -0700 (PDT)
-Message-ID: <02797bdd-a292-5891-ce73-8a174d62ac7d@linaro.org>
-Date:   Thu, 11 May 2023 07:31:52 +0300
+        Wed, 10 May 2023 21:32:20 -0700 (PDT)
+Message-ID: <f3685a18-7431-dfd5-ce84-f0ad3a21fc57@linaro.org>
+Date:   Thu, 11 May 2023 07:32:19 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
@@ -92,16 +92,15 @@ On 11/05/2023 01:07, Kuogee Hsieh wrote:
 > 
 > changes in v6:
 > -- split patches and keep the function file handles DPU_PINGPONG_DSC bit at this patch
-
-Please correct me if I'm wrong, the overall suggestion was to have 
-actual catalog changes before this patch. However I do not see this 
-feature bit being enabled at all!
-
 > 
 > Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
 >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c | 6 ++++++
 >   1 file changed, 6 insertions(+)
+
+For the patch itself:
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
 > 
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
 > index 79e4576..e7f47a4 100644
