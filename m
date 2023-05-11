@@ -2,135 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 162366FEBA9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 08:19:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE5326FEBB3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 08:22:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236939AbjEKGTg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 May 2023 02:19:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41608 "EHLO
+        id S236662AbjEKGWx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 May 2023 02:22:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236163AbjEKGTf (ORCPT
+        with ESMTP id S236357AbjEKGWw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 May 2023 02:19:35 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 938243A89;
-        Wed, 10 May 2023 23:19:34 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34B6JKtS022130;
-        Thu, 11 May 2023 06:19:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=MFmlOXzWKlh6xmSzF7dgNVpK+OIYZ+my/PD5cZRH0Tk=;
- b=at7kA05jLfwkpUtE+uP0nW2kx43EWJMeQyT8Qpo96asw/C8HlLDHePVoi73bkTVTZ4ir
- QTt4VcbsoD5A7Oeme82hPHWU9/yxmPgpC6XN8Ge7gLtFJxRxXCZgn8nFyYneIBumjkat
- 7jhHv23jkvzeaW3IHczKg3p7NpqdMF1xxbzjRBqlJ9kaue5s8zLG63LrG8d2dCCxLFXQ
- bcOsHT+SCVWQeuODzetRp73SVHWIeW7UXzMbctutoxM35VVy8d+appt3lhoSh0R8G/os
- ayQGVVTAgIDuanu2FeMkk26y+MJiifHUlRdN0Zght5pj7Y0qhTaDnty32vn6ZSsffU2G uw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qggen92k3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 May 2023 06:19:19 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34B6JI98010116
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 May 2023 06:19:18 GMT
-Received: from [10.201.3.182] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 10 May
- 2023 23:19:12 -0700
-Message-ID: <a9437620-6946-16a9-1b13-faaf34fa5d48@quicinc.com>
-Date:   Thu, 11 May 2023 11:49:10 +0530
+        Thu, 11 May 2023 02:22:52 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C1933A82
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 23:22:51 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f00d41df22so45157950e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 23:22:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683786169; x=1686378169;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ok/yWtmx8n4MjOgj7oJyyfHNKdZTN8Sz//bwyuJpfb0=;
+        b=mYB6/+n03E9FXnsSXhKj2JYJw3UuWlXL8ZsRrsdwcXSZiNfRC6aye0Png7zmLh0Fbv
+         s0Z+pr/eSPLY5agYxqFosjFGlGR9ENgftuwfOV+Y8v6bNmRX2IAAb8fFOAQW6ucwK2CO
+         3S4m9nO1gDd+5+dHHBGc/1w5KeZuUk5PTETZMTu7IgdaInBiawe1vKY2veaTWvvdo7wu
+         FF6pEGE8zWizMt2F3KwIOa27O6f6KQtGcXAjhlA/Ue4nx6uZyCuuhrNjJR0Pj7BlpAFl
+         FVgkXRL2ZchbInDGcCu51ZY2C1LKDnBzVL8HfiVMkNK2Yxep9sbiSoNhxfZYUdgwnOV7
+         +dfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683786169; x=1686378169;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ok/yWtmx8n4MjOgj7oJyyfHNKdZTN8Sz//bwyuJpfb0=;
+        b=TKIWX7BtRyMOg+3OxxvKog8BdOMiD7D4XDCncQ2z37CleYCTx1JXfGBWUM5ujqNuZl
+         eRO1dVN7h8KeIqP3F/1Y8Wo+SuLzL5BUEpoMRrTwaHVwc2FQO0swyzN6AceRl9HL/VsV
+         7T4iK2ZjIHAx//2Q4YdSt7EUFjXqmkxxsulA7zqIUj75piGNaf2cXw7TtTiPKSK1tN4A
+         XiDDocBRYMNb/Br772HR1VtdS5ppI5EXLhKjHMK/LgYNnvPMXs24qr/qAoZk8gy9W0HS
+         wLFEq38oR9P6YxyXXmLf3QcYCszXBei6IC34wRic3HKFkhye8YqiQ3i2bRZcE/mx/Mma
+         PfGQ==
+X-Gm-Message-State: AC+VfDw2OKilp5xX4fV1a2EFezdaj8/dWiLwAg8w9EIJBYxTvYsWYtjI
+        +/DnJT0lr5o93Klw6iFLzJ4+VAfakrJnXTbp/9o=
+X-Google-Smtp-Source: ACHHUZ4bMuVr1+zC+aGqt++aokyLQYIrEZcQA+vdJ23/lEOwOplKoLFq54FpiTL6Zu4vSbQq3pXljA==
+X-Received: by 2002:a05:6512:39c7:b0:4e8:5c66:e01e with SMTP id k7-20020a05651239c700b004e85c66e01emr2702538lfu.21.1683786169280;
+        Wed, 10 May 2023 23:22:49 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id y10-20020ac2446a000000b004f24cb9ef14sm988860lfl.47.2023.05.10.23.22.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 May 2023 23:22:48 -0700 (PDT)
+Message-ID: <1b1c29f9-3b11-b06b-3443-7f29acea0896@linaro.org>
+Date:   Thu, 11 May 2023 09:22:47 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v4 4/8] pinctrl: qcom: Add IPQ5018 pinctrl driver
-Content-Language: en-US
-To:     <andy.shevchenko@gmail.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
-        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20230510134121.1232286-1-quic_srichara@quicinc.com>
- <20230510134121.1232286-5-quic_srichara@quicinc.com>
- <ZFupNrdrcsrIFpYq@surfacebook>
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <ZFupNrdrcsrIFpYq@surfacebook>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v7 2/8] drm/display/dsc: add helper to set semi-const
+ parameters
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230329-rfc-msm-dsc-helper-v7-0-df48a2c54421@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v7-2-df48a2c54421@quicinc.com>
+ <tl5zijcxx7326jdgr6lyjptvvvyxosoupz3vekvhex3vnviw5t@3vswzg244tme>
+ <05021e78-6c1a-b4b1-6312-4dd3f1647074@quicinc.com>
+ <7eeac1dd-8cd1-60e7-5dc0-f8f5adc18ffe@linaro.org>
+ <mbiijomkmkrwixpbg2rnpv3hb5y7gnsqqv2rkektgh4xvxig6u@iazy42chd7b5>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <mbiijomkmkrwixpbg2rnpv3hb5y7gnsqqv2rkektgh4xvxig6u@iazy42chd7b5>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8Er7DcdvxmzTkegwCefZsH92-86EqJDQ
-X-Proofpoint-GUID: 8Er7DcdvxmzTkegwCefZsH92-86EqJDQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-10_04,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- clxscore=1011 lowpriorityscore=0 malwarescore=0 spamscore=0 adultscore=0
- suspectscore=0 mlxlogscore=999 impostorscore=0 priorityscore=1501
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305110053
 X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 11/05/2023 09:18, Marijn Suijten wrote:
+> On 2023-05-11 07:26:28, Dmitry Baryshkov wrote:
+>> On 11/05/2023 01:35, Jessica Zhang wrote:
+>>>
+>>>
+>>> On 5/9/2023 11:29 PM, Marijn Suijten wrote:
+>>>> On 2023-05-09 15:06:48, Jessica Zhang wrote:
+>>>>> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>>
+>>>>> Add a helper setting config values which are typically constant across
+>>>>> operating modes (table E-4 of the standard) and mux_word_size (which is
+>>>>> a const according to 3.5.2).
+>>>>>
+>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>>>>
+>>>> Same question about ordering.
+>>>
+>>> Hi Marijn,
+>>>
+>>> This patch was authored by Dmitry and originally part of his DRM DSC
+>>> helpers series [1], but was removed from that series for mergeability
+>>> reasons.
+>>>
+>>> Looking over the kernel documentation, the last Signed-off-by should be
+>>> from the patch submitter [2], so I think my s-o-b tag should be at the
+>>> bottom.
+> 
+> That's true, but I also think the S-o-B at the top should match the
+>   From: author.
+
+I'd say, this is usual, but not the required order of tags.
+
+> 
+>>> As for the order in the previous patch, I can add a duplicate s-o-b
+>>> before Dmitry's so that it reflects the history of the patch.
+>>
+>> I think this is an overkill. Instead you can drop my SOB from the patch
+>> 1. We do not need this level of detail.
+>>
+>> For this patch the ordering of tags is correct.
+> 
+> So indeed, that either means duplicating the S-o-B or dropping it
+> entirely as we do not care that it was part of that series earlier.
+> Dmitry will likely sign this off once again when picking the patches.
+
+Yes.
+
+I'd suggest the following tags:
+
+Patch 1 (Add flatness...):
+From: Jessica
+SOB: Jessica
+
+Patches 2 (add helper to set) and 3 (use DRM DSC helpers):
+From: Dmitry
+SOB: Dmitry
+SOB: Jessica
 
 
-On 5/10/2023 7:54 PM, andy.shevchenko@gmail.com wrote:
-> Wed, May 10, 2023 at 07:11:17PM +0530, Sricharan Ramabadhran kirjoitti:
->> Add pinctrl definitions for the TLMM of IPQ5018.
 > 
-> ...
-> 
->> +#define FUNCTION(fname)			                \
->> +	[msm_mux_##fname] = {		                \
->> +		.name = #fname,				\
->> +		.groups = fname##_groups,               \
->> +		.ngroups = ARRAY_SIZE(fname##_groups),	\
->> +	}
-> 
-> Can you coordinate with Rohit Agarwal <quic_rohiagar@quicinc.com> and use
-> his work [1] which moves the QCom drivers to use struct pingroup and struct
-> pinfunction?
-> 
-> [1]: https://lore.kernel.org/r/1683718725-14869-1-git-send-email-quic_rohiagar@quicinc.com
-> 
+> - Marijn
 
-  ok, will do.
+-- 
+With best wishes
+Dmitry
 
-> ...
-> 
->> +static const struct of_device_id ipq5018_pinctrl_of_match[] = {
->> +	{ .compatible = "qcom,ipq5018-tlmm", },
-> 
->> +	{ },
-> 
-> No comma for the terminator entry.
-> 
-
-  ok.
-
->> +};
-> 
-> Move MODULE_DEVICE_TABLE() here.
-> 
-
-  ok
-
-Regards,
-  Sricharan
