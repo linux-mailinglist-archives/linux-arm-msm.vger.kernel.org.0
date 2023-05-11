@@ -2,124 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F419F6FF723
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 18:26:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5163D6FF74A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 18:30:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238810AbjEKQ00 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 May 2023 12:26:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40328 "EHLO
+        id S238266AbjEKQai (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 May 2023 12:30:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44368 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238561AbjEKQ0Z (ORCPT
+        with ESMTP id S238931AbjEKQaW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 May 2023 12:26:25 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB71E5BA6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 May 2023 09:26:23 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3f4c6c4b425so13852475e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 May 2023 09:26:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20221208.gappssmtp.com; s=20221208; t=1683822382; x=1686414382;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=vF5be2sbBRpbJkglPQmtYdfxdzXzFcyuT/Uqn8tbJs0=;
-        b=3AcKBS2AKkP+hgitbm+wq3uVskTmKG/0vaBTKI0L6vILE+f5VBLOBe0TL8plhGdu7B
-         eZGrsawTX63q6E5lGFY78BmIvUlegj5yP/PWEUT8Ay6yKjoe/vZKeSCHIpKpFgsV+pyQ
-         nIg+08ZJpvfMALLQIqtfPBcMWEsZ3fqeEVRgGQmG/FrneojZRUMDFQYQR2/5rfUwcdae
-         8KDKsoutI4e5thG//4KPHXocQfP8dyqweODPb88V5Ef8WtZcBQvMmThuwHxyfT7bIyQo
-         E4eYfi+ze6IkGD9wXXXMIgPiMdAOnyVEKTQ8F2feJD4ZT7CHLVCiGCH8nYozpX9vjQNq
-         uHNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683822382; x=1686414382;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vF5be2sbBRpbJkglPQmtYdfxdzXzFcyuT/Uqn8tbJs0=;
-        b=XjYhAtmzVYWbLsNoLtWxndgi10cdIfUo+mA15oJV6IiqeLcfOH3WTlPq+z/19WvzBV
-         7Cgv0hM7dH7jPaBg5yWglMAcv3KapfMbUHkr3ijHQohQRr0CKguw/1vZFBtIYqqXM41x
-         D2ikLc34R7VMvNe+6JlkwYNm2zqNW1Hfs73Yovj7yY4gAJUF32UsGINfkvvOxiheHhyK
-         W/H4z4nvDXeIA1p/+xXuqhJTIjRCX/gtvRu4XocDFodPnaeQwrgZmSU7bhGWUgg3J28+
-         3Lp2PFq/1BhPNtBVl3dpnUHNE3tHJgLmfiPc8og16DJQ41xxtetd8UrR2cuN0PN8JIMF
-         PLhg==
-X-Gm-Message-State: AC+VfDyJJsG4neJX9vwD5+xUxEY+Jqym+vZofJWO/3ksLVaLSjc0WnWt
-        qkI3wE1lwJeaVY+Tc/dLcrd7NQ==
-X-Google-Smtp-Source: ACHHUZ71SlSxsCaeilcIYcDc28kvbiCwHxN4BH39zGfpp8GeZyI0S1Zx9G4r3sqDUBDRnZoDtZ+WOw==
-X-Received: by 2002:a05:600c:243:b0:3f4:2b72:eaa9 with SMTP id 3-20020a05600c024300b003f42b72eaa9mr7321645wmj.8.1683822382087;
-        Thu, 11 May 2023 09:26:22 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id f26-20020a7bcd1a000000b003f423f5b659sm13528211wmj.10.2023.05.11.09.26.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 May 2023 09:26:21 -0700 (PDT)
-Message-ID: <40d8c92e-458e-ace9-2fab-6fc3da580221@nexus-software.ie>
-Date:   Thu, 11 May 2023 17:26:20 +0100
+        Thu, 11 May 2023 12:30:22 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDB2519B7;
+        Thu, 11 May 2023 09:30:16 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6D9D060DE1;
+        Thu, 11 May 2023 16:30:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9F5C433EF;
+        Thu, 11 May 2023 16:30:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1683822615;
+        bh=Zs6HS+LhQsL65kXS1dDBGurrU/0i4pxZb2uUlUCbWFU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Ngk3IDFvzbk44ahJBMRCL7/6ykr6qw1ibcNGNb8wKaN7/5TtT9RPwrw+1Rc1KnFKQ
+         IDS3saOhr3E+OZ9r953ZCBbtF01MM1+w8j07vqaL8SyRGxC6/ZW8GaL7ftZzISmKKf
+         qYO49B0k+ukEgB97k/z1o1EVqZHXeOdRqGy3FJO83XNNn0l4cBEiK4PDEB8a2D8ME0
+         DC4BTHewwmy8ZwEVQyBFdTTlBTt0gZtkdGwpa/bJc6aMi5ETQ2kYRSyLrzChlY1fPN
+         oqqBrt8UHg68Nca/Y014wk1mL1qWo+YMNS+nErNX6C2ht3xySw/Zy9JDLj5bgMQzfN
+         xnAuaNfUtNstA==
+Date:   Thu, 11 May 2023 09:33:52 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
+Cc:     agross@kernel.org, konrad.dybcio@linaro.org,
+        linus.walleij@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, richardcochran@gmail.com,
+        manivannan.sadhasivam@linaro.org, andy.shevchenko@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org
+Subject: Re: [PATCH v7 2/4] pinctrl: qcom: Remove the msm_function struct
+Message-ID: <20230511163352.kfjpvagh2rysyelo@ripper>
+References: <1683730825-15668-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1683730825-15668-3-git-send-email-quic_rohiagar@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] arm64: defconfig: enable TYPEC_QCOM_PMIC
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     neil.armstrong@linaro.org, Arnd Bergmann <arnd@arndb.de>,
-        Olof Johansson <olof@lixom.net>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230511135503.198538-1-krzysztof.kozlowski@linaro.org>
- <016ab311-cc66-b1c7-4099-f63e8f3644b8@linaro.org>
- <ca7a8499-0ac9-43d3-45ab-c974b1a2a564@linaro.org>
- <CAA8EJpptzh1w5-WgybEOOa59PTgo5z7CEr5vstWwhH7naBttjw@mail.gmail.com>
-From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
-In-Reply-To: <CAA8EJpptzh1w5-WgybEOOa59PTgo5z7CEr5vstWwhH7naBttjw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1683730825-15668-3-git-send-email-quic_rohiagar@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/05/2023 15:52, Dmitry Baryshkov wrote:
-> On Thu, 11 May 2023 at 17:36, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 11/05/2023 16:14, Neil Armstrong wrote:
->>> On 11/05/2023 15:55, Krzysztof Kozlowski wrote:
->>>> Enable CONFIG_TYPEC_QCOM_PMIC necessary for full USB Type-C support on
->>>> Qualcomm QRD8550 and MT8550 boards.
->>>>
->>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>> ---
->>>>    arch/arm64/configs/defconfig | 1 +
->>>>    1 file changed, 1 insertion(+)
->>>>
->>>> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
->>>> index a24609e14d50..8b6407d2059d 100644
->>>> --- a/arch/arm64/configs/defconfig
->>>> +++ b/arch/arm64/configs/defconfig
->>>> @@ -991,6 +991,7 @@ CONFIG_TYPEC_TCPCI=m
->>>>    CONFIG_TYPEC_FUSB302=m
->>>>    CONFIG_TYPEC_TPS6598X=m
->>>>    CONFIG_TYPEC_HD3SS3220=m
->>>> +CONFIG_TYPEC_QCOM_PMIC=m
->>>>    CONFIG_TYPEC_UCSI=m
->>>>    CONFIG_UCSI_CCG=m
->>>>    CONFIG_TYPEC_MUX_GPIO_SBU=m
->>>
->>> This driver isn't used on SM8550, only CONFIG_TYPEC_UCSI is needed.
->>
->> Indeed, apparently I messed something with config while looking for
->> other options. Patch can be skipped, the driver has no users in upstream
->> (and bindings are still missing :( ).
-> 
-> ... And it will be hopefully removed by landing Bryan's patches.
+On Wed, May 10, 2023 at 08:30:23PM +0530, Rohit Agarwal wrote:
+> Remove the msm_function struct to reuse the generic pinfunction
+> struct. Also, define a generic PINFUNCTION macro that can be used across
+> qcom target specific pinctrl files to avoid code repetition.
 > 
 
-I actually reuse this CONFIG option so I can stack this commit last in 
-the series - it will just switch on the new driver instead.
+Looks nice! No need to carry our own structs for things that has made it
+into the framework.
 
----
-bod
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+
+But, ipq9574.c has made it into linux-next now, so this breaks the build
+of that driver. So please update this patch. And please send the two
+refactoring patches on their own, followed by the SDX75 based on that,
+so we can get those merged quickly, before any other impediments are
+introduced.
+
+Regards,
+Bjorn
