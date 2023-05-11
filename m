@@ -2,163 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 300CC6FF8F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 19:56:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EAAEA6FFAD0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 21:48:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238915AbjEKRzw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 May 2023 13:55:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48322 "EHLO
+        id S239519AbjEKTsh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 May 2023 15:48:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238950AbjEKRzv (ORCPT
+        with ESMTP id S239518AbjEKTsW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 May 2023 13:55:51 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 907568A74
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 May 2023 10:55:14 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f00c33c3d6so10145055e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 May 2023 10:55:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1683827711; x=1686419711;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=I268knal+2KeE9++tXp0D/dHgwY+VJy+gOSFMyEBkyg=;
-        b=H9AMwmvg3R9PRWCnnM9QU6ng7hJoiAwaLqK8VFv7omaksSkAYIiDWf79Ym35HWYgsO
-         fmdFHk0Xgg5XKoVlt0tU0nykMXUsAUhBDThCzr9dHki5XeSsBlPtJpigX0NdUQQxdhVo
-         2dfHBCqDQbPf6RufwlAO44kYTK7h8yTFugmYQ=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683827711; x=1686419711;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=I268knal+2KeE9++tXp0D/dHgwY+VJy+gOSFMyEBkyg=;
-        b=gUAQaAoqyvgrz5Eaj8MsYvuxXEBqcga3BNNUMz7229AckgnHnrJYhA//4EAVRNMcCy
-         9jWOWY572U848DDvEkEKw1eXxG2rdtOKue5wU+Fb2ZMUaXqge4W4b1ZgQAMI/3MI1Miu
-         Gv37PVkjozZ0x7+siQ+GRb8mtyzHcF0v5drHOD0ajcBHZyMp1r7EnGIpoN+pRbGjDyiE
-         hPN+gdXOqR2jR1H0Ednl8yuUlwAfSTTUrMuaRFlU44zX8FHwBudBqXnPivI1cE1S0F18
-         /i7KbxOMzhPwHB0bjf7Mgta2uzs+OnAgHQZTT7LKuYyyq//KHhlcnWBlEV3frK6+zmlF
-         OIwQ==
-X-Gm-Message-State: AC+VfDxYbsQTa3HBzdiMxI8mfvY4luw0go5pW9E1G5mao7B8IeEBveIa
-        BgLpuUoiiakKltgXfrDlxsNIjkCoUcQpDc/KQ9FFlQ==
-X-Google-Smtp-Source: ACHHUZ4h3boit+aKT/Be7LtygqxC+W91LZoG+r5wgMkvlDBMysdL1l3xTVsAf/S8n02qS37aG8H3OMAkJmQTWscQfwA=
-X-Received: by 2002:a2e:875a:0:b0:2ad:996f:5d11 with SMTP id
- q26-20020a2e875a000000b002ad996f5d11mr3402693ljj.28.1683827710964; Thu, 11
- May 2023 10:55:10 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 11 May 2023 10:55:10 -0700
+        Thu, 11 May 2023 15:48:22 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B47F6AD24;
+        Thu, 11 May 2023 12:47:49 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34BJKCvj005540;
+        Thu, 11 May 2023 19:47:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=subject : to : cc :
+ references : from : message-id : date : mime-version : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=GMdMZanCPuIQdAXFLNo3WJTphkoKE1vlUhMHToOgUww=;
+ b=aaCmjPWsPPS0/rMgDhaOhjDwTkK6wDhJdVDs9/rlyi61CzeIhnpwGSvTpbs4mnx6aRIt
+ cQocYxGP75Dqfm4PX2dtsHKdUkg/tgIxMhDSpofNAAIq46EG+XIojMJkHx2ZGe9InPMB
+ CJcRDRFMKNRn0PBTkdaFnWyZ4DzyEzOID/nN8RSNdOzRB6Eu+gWeOBJDCof2OaPfOh8J
+ juT1g6QSFDmhZLzHUKx9sS+A8VUnT7Es3BBhCkDyM48jJ3XHQHrXXtWpzvMPvt+DTeXw
+ WQHC+/11bykeZrchfDERRJ4QOxsevr3hLmp71+DvK+7U5vmXKNPl4i9LTqWE9a4D6Reu WQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qgv1u9pe1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 11 May 2023 19:47:06 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34BJl4Sj030846
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 11 May 2023 19:47:04 GMT
+Received: from [10.50.47.207] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 11 May
+ 2023 12:47:02 -0700
+Subject: Re: [PATCH] accel/qaic: silence some uninitialized variable warnings
+To:     Dan Carpenter <dan.carpenter@linaro.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>
+CC:     Oded Gabbay <ogabbay@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <kernel-janitors@vger.kernel.org>
+References: <d11ee378-7b06-4b5e-b56f-d66174be1ab3@kili.mountain>
+From:   Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+Message-ID: <962011a6-9089-b678-6ac8-ce29b8ffa2fb@quicinc.com>
+Date:   Fri, 12 May 2023 01:16:59 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.10.0
 MIME-Version: 1.0
-In-Reply-To: <20230511154416.67habdpdasy2szvs@ripper>
-References: <1683750665-8764-1-git-send-email-quic_khsieh@quicinc.com>
- <1683750665-8764-2-git-send-email-quic_khsieh@quicinc.com>
- <CAE-0n53ywhgFhJXA9krBo-Ds6ezM0K8n6w0xnVZj+sTJ4qt9cA@mail.gmail.com>
- <6830a829-5b8a-a05a-da6a-5aaaeef23e57@quicinc.com> <20230511154416.67habdpdasy2szvs@ripper>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date:   Thu, 11 May 2023 10:55:10 -0700
-Message-ID: <CAE-0n51Q0crYrELM1GnY5xbBezeOryRa4D5STR7TG_yqz0YOUA@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] drm/msm/dp: enable HDP plugin/unplugged interrupts
- to hpd_enable/disable
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Kuogee Hsieh <quic_khsieh@quicinc.com>, agross@kernel.org,
-        airlied@gmail.com, daniel@ffwll.ch, dianders@chromium.org,
-        dmitry.baryshkov@linaro.org, dri-devel@lists.freedesktop.org,
-        robdclark@gmail.com, sean@poorly.run, vkoul@kernel.org,
-        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <d11ee378-7b06-4b5e-b56f-d66174be1ab3@kili.mountain>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 5zfhe7JIzJ0c6nTCWcOPBlG6meEolwCV
+X-Proofpoint-ORIG-GUID: 5zfhe7JIzJ0c6nTCWcOPBlG6meEolwCV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-11_15,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
+ phishscore=0 mlxlogscore=999 lowpriorityscore=0 bulkscore=0 spamscore=0
+ clxscore=1011 suspectscore=0 adultscore=0 malwarescore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305110167
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2023-05-11 08:44:16)
-> On Wed, May 10, 2023 at 05:39:07PM -0700, Abhinav Kumar wrote:
-> >
-> >
-> > On 5/10/2023 4:55 PM, Stephen Boyd wrote:
-> > > Quoting Kuogee Hsieh (2023-05-10 13:31:04)
-> > > > The internal_hpd flag was introduced to handle external DP HPD derived from GPIO
-> > > > pinmuxed into DP controller.
-> > >
-> > > Was it? It looks more like it was done to differentiate between eDP and
-> > > DP, because internal_hpd is set only if DRM_BRIDGE_OP_HPD is set on the
-> > > bridge and we only set the bridge op if the connector type is DP. The
-> > > assumption looks like if you have DP connector_type, you have the gpio
-> > > pinmuxed for "dp_hot" mode, which isn't exactly true. We don't treat
-> > > that gpio as an irq either, because it isn't. Instead the gpio is muxed
-> > > to the mdss inside the SoC and then that generates an mdss interrupt
-> > > that's combined with non-HPD things like "video ready".
-> > >
-> > > If that all follows, then I don't quite understand why we're setting
-> > > internal_hpd to false at all at runtime. It should be set to true at
-> > > some point, but ideally that point is during probe.
-> > >
-> >
-> > Kuogee had the same thought originally but were not entirely sure of this
-> > part of the commit message in Bjorn's original commit which introduced these
-> > changes.
-> >
-> > "This difference is not appropriately represented by the "is_edp"
-> > boolean, but is properly represented by the frameworks invocation of the
-> > hpd_enable() and hpd_disable() callbacks. Switch the current condition
-> > to rely on these callbacks instead"
-> >
-> > Does this along with below documentation mean we should generate the hpd
-> > interrupts only after hpd_enable callback happens?
-> >
-> > " * Call &drm_bridge_funcs.hpd_enable if implemented and register the given
-> > @cb
-> >  * and @data as hot plug notification callback. From now on the @cb will be
-> >  * called with @data when an output status change is detected by the bridge,
-> >  * until hot plug notification gets disabled with drm_bridge_hpd_disable().
-> > "
-> >
-> > Bjorn, can you please clarify this?
-> >
->
-> We currently have 3 cases:
->
-> 1) DP with GPIO: No downstream drm_bridge are connected, is_edp = false
-> and internal HPD-logic is in used (internal_hpd = true). Power needs to
-> be on at all times etc.
->
-> 2) DP without GPIO: Downstream drm_bridge connected, is_edp = false and
-> internal HPD-logic should not be used/enabled (internal_hpd = false).
-> Power doesn't need to be on unless hpd_notify is invoked to tell us that
-> there's something connected...
->
-> 3) eDP with or without HPD signal and/or HPD gpio. Downstream
-> drm_bridge/panel is connected, is_edp = true and internal HPD logic is
-> short-circuited regardless of the panel providing HPD signal or not.
 
-Oh weird. I thought that the "is_edp" controller on sc7280 didn't have
-HPD hardware in the PHY (phy@aec2a00), hence all the logic to avoid
-using the HPD interrupts and bits there. What is "is_edp" about then?
 
->
->
-> In #1 dp_bridge_hpd_enable() will be invoked to indicate that the DP
-> controller is expected to perform HPD handling. In #2
-> dp_bridge_hpd_enable() will _not_ be invoked, instead some downstream
-> drm_bridge/panel will get the hpd_enable() callback and will be
-> responsible to updating the HPD state of the chain, which will cause
-> hpd_notify to be invoked.
->
->
-> Note that #3 is based entirely on the controller, it has currently no
-> relation to what is attached. It seems reasonable that this is just
-> another case of #2 (perhaps just always reporting
-> connector_status_connected?).
->
+On 5/3/2023 4:11 PM, Dan Carpenter wrote:
+> Smatch complains that these are not initialized if get_cntl_version()
+> fails but we still print them in the debug message.  Not the end of
+> the world, but true enough.  Let's just initialize them to a dummy value
+> to make the checker happy.
+> 
+> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+> ---
+>   drivers/accel/qaic/qaic_drv.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
+> index ff80eb571729..e10e8b603e37 100644
+> --- a/drivers/accel/qaic/qaic_drv.c
+> +++ b/drivers/accel/qaic/qaic_drv.c
+> @@ -263,7 +263,7 @@ static void qaic_destroy_drm_device(struct qaic_device *qdev, s32 partition_id)
+>   static int qaic_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_device_id *id)
+>   {
+>   	struct qaic_device *qdev;
+> -	u16 major, minor;
+> +	u16 major = -1, minor = -1;
+>   	int ret;
+>   
+>   	/*
+> 
 
-Looking at drm_bridge_connector_detect() the default is to consider
-DRM_MODE_CONNECTOR_eDP as connector_status_connected. I wonder if
-panel_bridge_bridge_funcs can gain a 'detect' function and also set
-DRM_BRIDGE_OP_DETECT if the connector_type is DRM_MODE_CONNECTOR_eDP.
+Thank you Dan for the patch.
+
+Reviewed-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+
+I agree with Jeff's comment to sort the variable declaration length wise.
