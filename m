@@ -2,76 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 359316FF48D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 16:36:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4C046FF517
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 16:53:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238607AbjEKOgm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 May 2023 10:36:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53764 "EHLO
+        id S238684AbjEKOxJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 May 2023 10:53:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231608AbjEKOgW (ORCPT
+        with ESMTP id S237719AbjEKOwa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 May 2023 10:36:22 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DBA511B71
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 May 2023 07:35:51 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-50bd37ca954so80123370a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 May 2023 07:35:51 -0700 (PDT)
+        Thu, 11 May 2023 10:52:30 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC1C511639
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 May 2023 07:51:56 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-50db7f0a1b4so5551670a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 May 2023 07:51:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683815749; x=1686407749;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iOXRRdgVUBc+UmzsHGXf7yN0Z8AdVArYJOeUqt52Z8s=;
-        b=o0F8r04z7dsrDucISA3J82RCw6niaUS+pJJAo7xmwkX1Ccb2bb7lZh+rOQUT007bZB
-         fai6JrkbPIP8blc4RZFn3ULrYraWHLrmM1VMbLMXsVuEk7qSCAy96CgPth2sKDo7YhTQ
-         6J0RF+czetA5vQiEDH5hxnUnylDJdfLHp2/ALawr09gZtS0b/+rmnJ0tn2Nq1x0FYKTI
-         rpv+X9nDIHggw3HBPcSN5rFkdNrPGh35kWZCBz1/06XbsleRsRUQxva7vTkJf+spfvXK
-         pcinklyEzsi4E+bTSg4edNRmOfW4G97/qFCau4msJybzZXshktravNR9kfIUHdlvMr3r
-         UGxw==
+        d=linaro.org; s=google; t=1683816715; x=1686408715;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=0sCDEYQ+lAwwMEzBoHzHhTtsRYd3XM3A3Tyzt01HFvA=;
+        b=mtPBUKQsWIlBp4e49W2yOkynlqDVHyfPbTN2fmMgQkVydDzOWHguXHqbQVzF+v+AAy
+         9QG9Bap4DMMbaZTgBgScyK7fzfUv7oi1UazTId8pZ0kF72X6C1Bk0ZRpA/sCRpPSM6c7
+         LlDEOs7ZHM4zxnAbSZk556uDtQxp7ZqwAA+8tw0DMcaG7G0x7WhaQBwIIF65AkErvfYg
+         Wv9iWoNkWV+w5QkB2iR983OxWYQgJP8KCarY1JD74jznB+tX4BNZhQeo0zvS+ztL+5Hg
+         MO1ncCKr8zzLXW6DYTDER1r3r8CUP2eLigJMFOYonulsPfpmApeajTXJYEOaPVN15iwh
+         PDrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683815749; x=1686407749;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iOXRRdgVUBc+UmzsHGXf7yN0Z8AdVArYJOeUqt52Z8s=;
-        b=huwbzr7ZKB/++sTLgJHCDrpfKULVlU289r9u9bD+vfawT1NvloUHi+1Vmk/t7Xp/En
-         Zq8Y14cPUaEWa77vBae6gEEH2r4DC4mvrFmcNsQpZPSbr0iwMv96EN1H/BwKiM11dv46
-         fxafqZiYed5h3ub2pJPlG4+MNL9WSlKWdAZd/EFlSfPn4d9gHfE9OrvBK3jci6P2ZiuX
-         g5mfB8HfGUCLME6QEdiExbd65GqN7e5ZDTEFYVYtJkVyy2P3ZF8DQqFgZbqABFS011s4
-         NIF5jpVGtbZ20Nl2RTNwuXd2XLMT6O3qPKYq4M0Pa2nC8UBXZvsxKqQ04XAk3kBLmBCc
-         vZBw==
-X-Gm-Message-State: AC+VfDzHNlEE1YEQqSOu8Ayo8FI/2kCpOynuh6PLwShtHZj9S6wTyukL
-        XecB4CAXDZeURf5cLjFoDY5ftA==
-X-Google-Smtp-Source: ACHHUZ6RTe5WgSrqyhZeO20u+ewTN7JFmjPjzgfVPZltFPXUrBhP6CUUeKSFP4dzoOQj6ch8B7Xf7w==
-X-Received: by 2002:a17:906:da8c:b0:94a:653b:ba41 with SMTP id xh12-20020a170906da8c00b0094a653bba41mr5166642ejb.15.1683815749483;
-        Thu, 11 May 2023 07:35:49 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:d7cd:1be6:f89d:7218? ([2a02:810d:15c0:828:d7cd:1be6:f89d:7218])
-        by smtp.gmail.com with ESMTPSA id h8-20020a1709060f4800b009600ce4fb53sm4045550ejj.37.2023.05.11.07.35.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 May 2023 07:35:48 -0700 (PDT)
-Message-ID: <ca7a8499-0ac9-43d3-45ab-c974b1a2a564@linaro.org>
-Date:   Thu, 11 May 2023 16:35:47 +0200
+        d=1e100.net; s=20221208; t=1683816715; x=1686408715;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0sCDEYQ+lAwwMEzBoHzHhTtsRYd3XM3A3Tyzt01HFvA=;
+        b=JR/UjMBCBIDTJt2JBQuPWjcoKxyq5cFxVRYsfybnuXNX5YfXBSAjTLBk7H0MNKz5Q/
+         eZlB6snOg32ikKZwa2ZaSkE3c9seut4Gk/I4WeIOIS7+rcLfWvmxhsUX9A9+qZUJ3hbt
+         2Ozokfn8kBPIxuyQ446NWNxaej0N4gmNjmyJo/lU6eKKRRolvuY/7fyTiGaYLqlfIlSP
+         thEWVJ4S8IY40hVNeH7Rxy0qxGC7ygzPPTGfbz71OdE4yXPGA53Veh9eUBT9rX4nGlm6
+         pOJZlA7LXDhvV/y99hx5DI9FA3sKnbPYgpAuDyNSRZowtY9JJxAVKJhOD+rpoH34hMbb
+         +u3w==
+X-Gm-Message-State: AC+VfDx0QyOeaEeetcbiLjfLXqewn0zehfZkJWQoxH4kxZt7coU+JKmm
+        Re1BQZZWPQEkBZWFPQGo/lS2ASmwf3nZA0OXalytdA==
+X-Google-Smtp-Source: ACHHUZ5v+1zYrVOKi/Ghck/qxazn4S4a54LG3s/j3dKBOosBgCgbc+lcxrX3cV6IcluE1NS3v3DGkoZujZK00d/9fp0=
+X-Received: by 2002:a17:907:d09:b0:961:8fcd:53ca with SMTP id
+ gn9-20020a1709070d0900b009618fcd53camr21830645ejc.65.1683816715418; Thu, 11
+ May 2023 07:51:55 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] arm64: defconfig: enable TYPEC_QCOM_PMIC
-Content-Language: en-US
-To:     neil.armstrong@linaro.org, Arnd Bergmann <arnd@arndb.de>,
-        Olof Johansson <olof@lixom.net>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+References: <20230509163712.376117-1-robdclark@gmail.com>
+In-Reply-To: <20230509163712.376117-1-robdclark@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 11 May 2023 17:51:43 +0300
+Message-ID: <CAA8EJppVaCuh1kp7842pHt=5sWSBVaf18fZGC6ifmsQKgGNVSw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] iommu/arm-smmu-qcom: Fix missing adreno_smmu's
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Lepton Wu <lepton@chromium.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230511135503.198538-1-krzysztof.kozlowski@linaro.org>
- <016ab311-cc66-b1c7-4099-f63e8f3644b8@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <016ab311-cc66-b1c7-4099-f63e8f3644b8@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Emma Anholt <emma@anholt.net>,
+        "moderated list:ARM SMMU DRIVERS" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:IOMMU SUBSYSTEM" <iommu@lists.linux.dev>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,35 +81,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/05/2023 16:14, Neil Armstrong wrote:
-> On 11/05/2023 15:55, Krzysztof Kozlowski wrote:
->> Enable CONFIG_TYPEC_QCOM_PMIC necessary for full USB Type-C support on
->> Qualcomm QRD8550 and MT8550 boards.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
->>   arch/arm64/configs/defconfig | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
->> index a24609e14d50..8b6407d2059d 100644
->> --- a/arch/arm64/configs/defconfig
->> +++ b/arch/arm64/configs/defconfig
->> @@ -991,6 +991,7 @@ CONFIG_TYPEC_TCPCI=m
->>   CONFIG_TYPEC_FUSB302=m
->>   CONFIG_TYPEC_TPS6598X=m
->>   CONFIG_TYPEC_HD3SS3220=m
->> +CONFIG_TYPEC_QCOM_PMIC=m
->>   CONFIG_TYPEC_UCSI=m
->>   CONFIG_UCSI_CCG=m
->>   CONFIG_TYPEC_MUX_GPIO_SBU=m
-> 
-> This driver isn't used on SM8550, only CONFIG_TYPEC_UCSI is needed.
+On Tue, 9 May 2023 at 19:37, Rob Clark <robdclark@gmail.com> wrote:
+>
+> From: Rob Clark <robdclark@chromium.org>
+>
+> When the special handling of qcom,adreno-smmu was moved into
+> qcom_smmu_create(), it was overlooked that we didn't have all the
+> required entries in qcom_smmu_impl_of_match.  So we stopped getting
+> adreno_smmu_priv on sc7180, breaking per-process pgtables.
+>
+> Fixes: 30b912a03d91 ("iommu/arm-smmu-qcom: Move the qcom,adreno-smmu check into qcom_smmu_create")
+> Suggested-by: Lepton Wu <lepton@chromium.org>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index d1b296b95c86..760d9c43dbd2 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -496,20 +496,21 @@ static const struct qcom_smmu_match_data qcom_smmu_500_impl0_data = {
+>  /*
+>   * Do not add any more qcom,SOC-smmu-500 entries to this list, unless they need
+>   * special handling and can not be covered by the qcom,smmu-500 entry.
+>   */
+>  static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+>         { .compatible = "qcom,msm8996-smmu-v2", .data = &msm8996_smmu_data },
+>         { .compatible = "qcom,msm8998-smmu-v2", .data = &qcom_smmu_v2_data },
+>         { .compatible = "qcom,qcm2290-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>         { .compatible = "qcom,qdu1000-smmu-500", .data = &qcom_smmu_500_impl0_data  },
+>         { .compatible = "qcom,sc7180-smmu-500", .data = &qcom_smmu_500_impl0_data },
+> +       { .compatible = "qcom,sc7180-smmu-v2", .data = &qcom_smmu_v2_data },
+>         { .compatible = "qcom,sc7280-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>         { .compatible = "qcom,sc8180x-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>         { .compatible = "qcom,sc8280xp-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>         { .compatible = "qcom,sdm630-smmu-v2", .data = &qcom_smmu_v2_data },
+>         { .compatible = "qcom,sdm845-smmu-v2", .data = &qcom_smmu_v2_data },
+>         { .compatible = "qcom,sdm845-smmu-500", .data = &sdm845_smmu_500_data },
+>         { .compatible = "qcom,sm6115-smmu-500", .data = &qcom_smmu_500_impl0_data},
+>         { .compatible = "qcom,sm6125-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>         { .compatible = "qcom,sm6350-smmu-v2", .data = &qcom_smmu_v2_data },
+>         { .compatible = "qcom,sm6350-smmu-500", .data = &qcom_smmu_500_impl0_data },
+> @@ -540,12 +541,14 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+>                 /* Match platform for ACPI boot */
+>                 if (acpi_match_platform_list(qcom_acpi_platlist) >= 0)
+>                         return qcom_smmu_create(smmu, &qcom_smmu_500_impl0_data);
+>         }
+>  #endif
+>
+>         match = of_match_node(qcom_smmu_impl_of_match, np);
+>         if (match)
+>                 return qcom_smmu_create(smmu, match->data);
+>
+> +       WARN_ON(of_device_is_compatible(np, "qcom,adreno-smmu"));
 
-Indeed, apparently I messed something with config while looking for
-other options. Patch can be skipped, the driver has no users in upstream
-(and bindings are still missing :( ).
+Could you please add a comment here, noting the reason? Or maybe we
+should  change that to:
+if (WARN_ON(...))
+  return ERR_PTR(-EINVAL);
 
-Best regards,
-Krzysztof
+> +
+>         return smmu;
+>  }
+> --
+> 2.40.1
+>
 
+
+-- 
+With best wishes
+Dmitry
