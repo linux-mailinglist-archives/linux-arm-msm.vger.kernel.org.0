@@ -2,184 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C7A956FEB70
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 07:59:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBEFC6FEB79
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 08:01:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229589AbjEKF7e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 May 2023 01:59:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60354 "EHLO
+        id S232114AbjEKGBI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 May 2023 02:01:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236642AbjEKF7b (ORCPT
+        with ESMTP id S230205AbjEKGBH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 May 2023 01:59:31 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24A8930C7;
-        Wed, 10 May 2023 22:59:30 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34B4GmGK009238;
-        Thu, 11 May 2023 05:59:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=FhEY+h/GhVElLpNz743SwbvsQx7kkloIQE75pbqZpsk=;
- b=XPo/DCKwzI2YsYURlcqNvMIYa8FN0iuPI/aksFoYidYV4OkJ4Zfo7/TjkoxXh73FrfyW
- L5jkAmulYvpYkQAY5C07XetRl2+G4hDqbhZt4zgyAeZcyGrENApdXTKpWydgVHfvB1XI
- CYspsOMms/fUJbb0bQ+oLZ8jPOl1wo4y2e1M2+Xa49QWA0I746i7jzn9jXgvNOQg0X4J
- 3mipOhfVkOzkxcmYXvwy/D4CDbGpggxJRs3m84HAzzHdpnxJDLSw4ymghgM1RR+dZfX3
- BsAiLix7hzmC7Q6DpCOLH9YOKMNKN7xthKgL7qb3aH/860unQIpVSrVXY/xSsC/tPMad GQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qgett19c6-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 May 2023 05:59:20 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34B5xInG007071
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 May 2023 05:59:18 GMT
-Received: from [10.79.141.17] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 10 May
- 2023 22:59:15 -0700
-Message-ID: <15042631-4012-61bd-11ef-dde378215fed@quicinc.com>
-Date:   Thu, 11 May 2023 11:29:12 +0530
+        Thu, 11 May 2023 02:01:07 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 081E4272A;
+        Wed, 10 May 2023 23:01:07 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 97485635B9;
+        Thu, 11 May 2023 06:01:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5733BC433EF;
+        Thu, 11 May 2023 06:01:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1683784866;
+        bh=DRAyWIVBVl/Vja8Y6YNCq8vTtf3RsA1/UCfLfuH/Fkw=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=Y9PY77s7aH3WeiI0xSgZfJX5Ilh3vZj3S8whWKLJCvf+e8lYVAMIyjS4syhdgraIE
+         u1l1uj7I8p9Hxm/8Q/xkRIXf8Ngic8Ub1478fwReF7MYvqJJwscPtbaKAsOcZVLPYh
+         oN/2t5DVGC6qc5nLfR2W2eZSzWZku0WD2CrXTWgMpgOSleSvlOrOM+nkgQ4nXfSEdk
+         41+Lu1TZq0VNVewY/2q19P4o/wdYQ+t/+XQzeGSAVg+xMVlCqgsDRX6P2cO6a1IPVk
+         zCSqrpRIkaf6yd2s+wZ7Mr+w9Idxv97q+sYwAcvEMM5eR17DBI5CWUj58Omr2prFoF
+         8VxLupA9MmRiw==
+From:   Mark Brown <broonie@kernel.org>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        dianders@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+Cc:     quic_msavaliy@quicinc.com, mka@chromium.org, swboyd@chromium.org,
+        quic_vtanuku@quicinc.com, quic_ptalari@quicinc.com
+In-Reply-To: <1683626496-9685-1-git-send-email-quic_vnivarth@quicinc.com>
+References: <1683626496-9685-1-git-send-email-quic_vnivarth@quicinc.com>
+Subject: Re: [PATCH] spi: spi-geni-qcom: Select FIFO mode for chip select
+Message-Id: <168378486157.333092.4222573391811617519.b4-ty@kernel.org>
+Date:   Thu, 11 May 2023 15:01:01 +0900
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH V6 1/3] dt-bindings: sram: qcom,imem: Add Boot Stat region
- within IMEM
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        "Rajendra Nayak" <quic_rjendra@quicinc.com>
-References: <cover.1683628357.git.quic_schowdhu@quicinc.com>
- <343182748e12b6a4ac57d336405c50e36fc5520c.1683628357.git.quic_schowdhu@quicinc.com>
- <CAA8EJpp2x2OEB2sg+caKmjkDYJp_NJ9mXo85FxTZr-9zRXHNhw@mail.gmail.com>
- <10fa20f9-33d9-a8a8-3fca-f5ff320a6574@quicinc.com>
- <CAA8EJprJfmtFs1dx0uJw0bi1ig2JsCYzH_4BncPop4aO16D2aA@mail.gmail.com>
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-In-Reply-To: <CAA8EJprJfmtFs1dx0uJw0bi1ig2JsCYzH_4BncPop4aO16D2aA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: gGsmcM4e1NmjRTwT613a-cBM5by8uNij
-X-Proofpoint-GUID: gGsmcM4e1NmjRTwT613a-cBM5by8uNij
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-10_04,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- priorityscore=1501 bulkscore=0 impostorscore=0 mlxscore=0
- lowpriorityscore=0 spamscore=0 clxscore=1015 phishscore=0 adultscore=0
- suspectscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2304280000 definitions=main-2305110050
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Mailer: b4 0.13-dev-bfdf5
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/9/2023 6:35 PM, Dmitry Baryshkov wrote:
-> On Tue, 9 May 2023 at 15:21, Souradeep Chowdhury
-> <quic_schowdhu@quicinc.com> wrote:
->>
->>
->>
->> On 5/9/2023 5:05 PM, Dmitry Baryshkov wrote:
->>> On Tue, 9 May 2023 at 13:53, Souradeep Chowdhury
->>> <quic_schowdhu@quicinc.com> wrote:
->>>>
->>>> All Qualcomm bootloaders log useful timestamp information related
->>>> to bootloader stats in the IMEM region. Add the child node within
->>>> IMEM for the boot stat region containing register address and
->>>> compatible string.
->>>
->>> I might have a minor vote here. Is there any reason why you have to
->>> instantiate the device from DT?
->>> It looks like a software interface. Ideally software should not be
->>> described in DT (e.g. this can be instantiated from imem
->>> driver-to-be).
->>> Or we can follow the RPM master-stats approach, where the device is a
->>> top-level device, having handle pointers to the sram regions.
->>
->> This is a dedicated region of IMEM reserved for storing stats related
->> information. So it is represented as a child of IMEM, please
->> refer to Documentation/devicetree/bindings/sram/sram.yaml which
->> follows a similar philosophy. Also since this is a child of IMEM with
->> a specific purpose, does it not warrant a dedicated driver?
+On Tue, 09 May 2023 15:31:36 +0530, Vijaya Krishna Nivarthi wrote:
+> Spi geni driver switches between FIFO and DMA modes based on xfer length.
+> FIFO mode relies on M_CMD_DONE_EN interrupt for completion while DMA mode
+> relies on XX_DMA_DONE.
+> During dynamic switching, if FIFO mode is chosen, FIFO related interrupts
+> are enabled and DMA related interrupts are disabled. And viceversa.
+> Chip select shares M_CMD_DONE_EN interrupt with FIFO to check completion.
+> Now, if a chip select operation is preceded by a DMA xfer, M_CMD_DONE_EN
+> interrupt would have been disabled and hence it will never receive one
+> resulting in timeout.
 > 
-> I do not question a dedicated driver. I was asking about the DT node.
-> Even the mentioned bindings file describes the SRAM regions inside the
-> SRAM, rather than a proper device to be instantiated in the SRAM node.
-> I'd point to the boot_stats discussions (present on the list in the
-> last several months).
-> 
+> [...]
 
-Ack. Will instantiate the device from the parent node in the driver and
-access the stats region to print the boot_stats information.
+Applied to
 
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
->>
->>>
->>>>
->>>> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>>> ---
->>>>    .../devicetree/bindings/sram/qcom,imem.yaml   | 22 +++++++++++++++++++
->>>>    1 file changed, 22 insertions(+)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->>>> index 0548e8e0d30b..bb884c5c8952 100644
->>>> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->>>> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
->>>> @@ -50,6 +50,28 @@ patternProperties:
->>>>        $ref: /schemas/remoteproc/qcom,pil-info.yaml#
->>>>        description: Peripheral image loader relocation region
->>>>
->>>> +  "^stats@[0-9a-f]+$":
->>>> +    type: object
->>>> +    description:
->>>> +      Imem region dedicated for storing timestamps related
->>>> +      information regarding bootstats.
->>>> +
->>>> +    additionalProperties: false
->>>> +
->>>> +    properties:
->>>> +      compatible:
->>>> +        items:
->>>> +          - enum:
->>>> +              - qcom,sm8450-bootstats
->>>> +          - const: qcom,imem-bootstats
->>>> +
->>>> +      reg:
->>>> +        maxItems: 1
->>>> +
->>>> +    required:
->>>> +      - compatible
->>>> +      - reg
->>>> +
->>>>    required:
->>>>      - compatible
->>>>      - reg
->>>> --
->>>> 2.17.1
->>>>
->>>
->>>
-> 
-> 
-> 
+Thanks!
+
+[1/1] spi: spi-geni-qcom: Select FIFO mode for chip select
+      commit: 4c329f5da7cfa366bacfda1328a025dd38951317
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
+
