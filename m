@@ -2,117 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52D816FE9DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 04:33:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DCFC6FEA96
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 06:25:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231183AbjEKCdk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 10 May 2023 22:33:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51932 "EHLO
+        id S232848AbjEKEZB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 May 2023 00:25:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjEKCdj (ORCPT
+        with ESMTP id S231183AbjEKEZA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 10 May 2023 22:33:39 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85CA1136;
-        Wed, 10 May 2023 19:33:37 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34B2Helv012689;
-        Thu, 11 May 2023 02:33:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=4AA3n98gc9v+2QvDZFHA07an/528pf8iT9/Hjg3vocs=;
- b=niFNWGRUI62FKX7ps1HYILcaVLoInC6Iqvh4ZJnknTs+MBmbZl9tt9bZQYqVYgEKg/8Y
- nuPjJhoBMVy6syOl2zzr1L1EZejEtUy3eLz6T0kOF9xvN4WmwC6zUFFDBYA2HFNbBE8M
- g0spYXzbV5UW15BDM9PcYYWP6XjytjTmEds6kY8lRZfRLAUHD2duJbyN4NUyr6aH3D9J
- 0XXX9r+LtlMji9MFBYSJHxKI9ACa2Qpw8I45y0IjHK8PzW0Ku6ZsFKOdXliNEGNYu4bn
- fpusOXIc9u2ouWps5dXNZ+eyhqrEBbp6y9TC2b1qiQQTRzFkPst0wLygVzEZcY7TykIj Xw== 
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qgett0ygd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 May 2023 02:33:30 +0000
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 34B2XRJV005797;
-        Thu, 11 May 2023 02:33:27 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3qdfykpm2g-1;
-        Thu, 11 May 2023 02:33:27 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 34B2XRUw005792;
-        Thu, 11 May 2023 02:33:27 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 34B2XQsF005791;
-        Thu, 11 May 2023 02:33:27 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
-        id F16EA4639; Thu, 11 May 2023 10:33:25 +0800 (CST)
-From:   Qiang Yu <quic_qianyu@quicinc.com>
-To:     mani@kernel.org, quic_jhugo@quicinc.com
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        quic_mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>
-Subject: [PATCH v2] bus: mhi: host: Skip MHI reset if device is in RDDM
-Date:   Thu, 11 May 2023 10:33:24 +0800
-Message-Id: <1683772404-13192-1-git-send-email-quic_qianyu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: S-Q3QvP_uH6CUecUqShdrrYw_48JD0xv
-X-Proofpoint-GUID: S-Q3QvP_uH6CUecUqShdrrYw_48JD0xv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-10_04,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
- priorityscore=1501 bulkscore=0 impostorscore=0 mlxscore=0
- lowpriorityscore=0 spamscore=0 clxscore=1015 phishscore=0 adultscore=0
- suspectscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2304280000 definitions=main-2305110019
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+        Thu, 11 May 2023 00:25:00 -0400
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB9AD3AA7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 21:24:58 -0700 (PDT)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-55dc3431c64so55124807b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 21:24:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683779098; x=1686371098;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=/v2o7ls49FnTnTNSJ27Au9c+VtD4sCvSY3ybyCd3Lu4=;
+        b=eeoHYknxcbkwnZ8hCDz5gx3bxiNnFWDoqIrWCnVvlkhs1ChmzC/QFUaADCNbaB33r5
+         YYay2YbuUdE/rOpgls5gdSuILzj7Z5xrZVLAn4Ddv5p0c7RNOrcPaTEouqTA9Ji0zm2d
+         bO8NpVGGpynQZoQ+RhkmECgBcULnw56nAe/GpC90ihzWCrNDSC7HGnJlV4rgU7qVNyl0
+         PE9RSA32tMxSUuex+2pJW7+th10Ic+alw0EbNsVk3T3dNiSE5OaSyCS48qAm9jcathJs
+         urhmLkOyzJKWkGBlduFQa2vJkJbe9GSrw5NOsXm59XFh63TFMahlbiZvtrRd5NyL0reH
+         HKrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683779098; x=1686371098;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/v2o7ls49FnTnTNSJ27Au9c+VtD4sCvSY3ybyCd3Lu4=;
+        b=O2GRtclmKWwfLFHMMM9dACAjAO+3pjsJdsRUTvWZmf0y4pN9t0JYV3Q3nIAaJ8Ilbj
+         4T9ZiGUMouHw8wxvWUixJDxAu7d0M3aw6Z8ohK6ioG4WxBW2TnZ/BWETJcPDUrFpbmjW
+         5QWqGrzS3KR8b2VK87fKfccVqtOPRPkNpj4CjC1s7CXMQ0U/HvsZj/qbZ/uEpcL+fNV3
+         HnSUh2p89h5r95c/6vXSfrh3XHadJeVonGP9rL6h/eLBP5tzNmcu7U1CD6YNCuxaQH6A
+         BUkJtIym2OpJI4V9NIdOzYWcT9cOwwImzEjRyeiqLbQMfUdRd7pugcRT4z9w0MH80w9D
+         kpDA==
+X-Gm-Message-State: AC+VfDyT93sQ+A/rnbfA4kCYAr8vV9C2jzf9QI15tzMm9FAqkeM709LS
+        cy/FsbS2Zw2dlkT7DbuutFeYWLWYlHzyFRnHYVaeLNEDCtl0bDFf8MU=
+X-Google-Smtp-Source: ACHHUZ5YPRsRTB4EFvjVvnrsLjLx81YxmyrhC4nDgSg6xkcXRaIxM7G1YQLDOL1yvSDdHH63eEjtmu6kAdtiFZtGv/Q=
+X-Received: by 2002:a0d:d401:0:b0:55a:a9b6:6da with SMTP id
+ w1-20020a0dd401000000b0055aa9b606damr21168227ywd.11.1683779097885; Wed, 10
+ May 2023 21:24:57 -0700 (PDT)
+MIME-Version: 1.0
+References: <1683750665-8764-1-git-send-email-quic_khsieh@quicinc.com> <1683750665-8764-2-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1683750665-8764-2-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 11 May 2023 07:24:46 +0300
+Message-ID: <CAA8EJprtQF0x_LCOTrt5bvRnJ+xRz6QxLF6QAP-4Pff6V5TJ2g@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] drm/msm/dp: enable HDP plugin/unplugged interrupts
+ to hpd_enable/disable
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In RDDM EE, device can not process MHI reset issued by host. In case of MHI
-power off, host is issuing MHI reset and polls for it to get cleared until
-it times out. Since this timeout can not be avoided in case of RDDM, skip
-the MHI reset in this scenarios.
+On Wed, 10 May 2023 at 23:31, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+>
+> The internal_hpd flag was introduced to handle external DP HPD derived from GPIO
+> pinmuxed into DP controller. HPD plug/unplug interrupts cannot be enabled until
+> internal_hpd flag is set to true.
+> At both bootup and resume time, the DP driver will enable external DP
+> plugin interrupts and handle plugin interrupt accordingly. Unfortunately
+> dp_bridge_hpd_enable() bridge ops function was called to set internal_hpd
+> flag to true later than where DP driver expected during bootup time.
+>
+> This causes external DP plugin event to not get detected and display stays blank.
+> Move enabling HDP plugin/unplugged interrupts to dp_bridge_hpd_enable()/disable() to
+> set internal_hpd to true along with enabling HPD plugin/unplugged interrupts
+> simultaneously to avoid timing issue during bootup and resume.
+>
+> Fixes: cd198caddea7 ("drm/msm/dp: Rely on hpd_enable/disable callbacks")
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 
-Fixes: a0f5a630668c ("bus: mhi: Move host MHI code to "host" directory")
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
----
-v1->v2: use ~75 columns in commit text,	add Fixes tag
+Thanks for debugging this!
 
- drivers/bus/mhi/host/pm.c | 5 +++++
- 1 file changed, 5 insertions(+)
+However after looking at the driver I think there is more than this.
 
-diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-index 0834590..8a4362d 100644
---- a/drivers/bus/mhi/host/pm.c
-+++ b/drivers/bus/mhi/host/pm.c
-@@ -470,6 +470,10 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
- 
- 	/* Trigger MHI RESET so that the device will not access host memory */
- 	if (!MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
-+		/* Skip MHI RESET if in RDDM state */
-+		if (mhi_cntrl->rddm_image && mhi_get_exec_env(mhi_cntrl) == MHI_EE_RDDM)
-+			goto skip_mhi_reset;
-+
- 		dev_dbg(dev, "Triggering MHI Reset in device\n");
- 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
- 
-@@ -495,6 +499,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
- 		}
- 	}
- 
-+skip_mhi_reset:
- 	dev_dbg(dev,
- 		 "Waiting for all pending event ring processing to complete\n");
- 	mhi_event = mhi_cntrl->mhi_event;
--- 
-2.7.4
+We have several other places gated on internal_hpd flag, where we do
+not have a strict ordering of events.
+I see that dp_hpd_plug_handle() and dp_hpd_unplug_handle() also toggle
+DP_DP_IRQ_HPD_INT_MASK and DP_DP_HPD_REPLUG_INT_MASK depending on
+internal_hpd. Can we toggle all 4 interrupts from the
+hpd_enable/hpd_disable functions? If we can do it, then I think we can
+drop the internal_hpd flag completely.
 
+I went on and checked other places where it is used:
+- dp_hpd_unplug_handle(), guarding DP_DP_HPD_PLUG_INT_MASK toggling. I
+think we can drop these two calls completely. The function is under
+the event_mutex protection, so other events can not interfere.
+- dp_bridge_hpd_notify(). What is the point of this check? If some
+other party informs us of the HPD event, we'd better handle it instead
+of dropping it. Correct?  In other words, I'd prefer seeing the
+hpd_event_thread removal. Instead of that I think that on
+HPD/plug/unplug/etc. IRQ the driver should call into the drm stack,
+then the hpd_notify call should process those events.
+
+
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 27 ++++++++++++++-------------
+>  1 file changed, 14 insertions(+), 13 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 3e13acdf..71aa944 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1088,13 +1088,6 @@ static void dp_display_config_hpd(struct dp_display_private *dp)
+>         dp_display_host_init(dp);
+>         dp_catalog_ctrl_hpd_config(dp->catalog);
+>
+> -       /* Enable plug and unplug interrupts only if requested */
+> -       if (dp->dp_display.internal_hpd)
+> -               dp_catalog_hpd_config_intr(dp->catalog,
+> -                               DP_DP_HPD_PLUG_INT_MASK |
+> -                               DP_DP_HPD_UNPLUG_INT_MASK,
+> -                               true);
+> -
+>         /* Enable interrupt first time
+>          * we are leaving dp clocks on during disconnect
+>          * and never disable interrupt
+> @@ -1396,12 +1389,6 @@ static int dp_pm_resume(struct device *dev)
+>
+>         dp_catalog_ctrl_hpd_config(dp->catalog);
+>
+> -       if (dp->dp_display.internal_hpd)
+> -               dp_catalog_hpd_config_intr(dp->catalog,
+> -                               DP_DP_HPD_PLUG_INT_MASK |
+> -                               DP_DP_HPD_UNPLUG_INT_MASK,
+> -                               true);
+> -
+>         if (dp_catalog_link_is_connected(dp->catalog)) {
+>                 /*
+>                  * set sink to normal operation mode -- D0
+> @@ -1801,15 +1788,29 @@ void dp_bridge_hpd_enable(struct drm_bridge *bridge)
+>  {
+>         struct msm_dp_bridge *dp_bridge = to_dp_bridge(bridge);
+>         struct msm_dp *dp_display = dp_bridge->dp_display;
+> +       struct dp_display_private *dp;
+> +
+> +       dp = container_of(dp_display, struct dp_display_private, dp_display);
+>
+>         dp_display->internal_hpd = true;
+> +       dp_catalog_hpd_config_intr(dp->catalog,
+> +                               DP_DP_HPD_PLUG_INT_MASK |
+> +                               DP_DP_HPD_UNPLUG_INT_MASK,
+> +                               true);
+>  }
+>
+>  void dp_bridge_hpd_disable(struct drm_bridge *bridge)
+>  {
+>         struct msm_dp_bridge *dp_bridge = to_dp_bridge(bridge);
+>         struct msm_dp *dp_display = dp_bridge->dp_display;
+> +       struct dp_display_private *dp;
+> +
+> +       dp = container_of(dp_display, struct dp_display_private, dp_display);
+>
+> +       dp_catalog_hpd_config_intr(dp->catalog,
+> +                               DP_DP_HPD_PLUG_INT_MASK |
+> +                               DP_DP_HPD_UNPLUG_INT_MASK,
+> +                               false);
+>         dp_display->internal_hpd = false;
+>  }
+
+--
+With best wishes
+Dmitry
