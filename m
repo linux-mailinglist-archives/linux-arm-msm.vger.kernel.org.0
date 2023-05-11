@@ -2,50 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AE5A6FEB53
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 07:43:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7A956FEB70
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 07:59:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236948AbjEKFnL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 May 2023 01:43:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53574 "EHLO
+        id S229589AbjEKF7e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 May 2023 01:59:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236848AbjEKFnB (ORCPT
+        with ESMTP id S236642AbjEKF7b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 May 2023 01:43:01 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72CC32724;
-        Wed, 10 May 2023 22:42:56 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34B4xNR2003776;
-        Thu, 11 May 2023 05:42:46 GMT
+        Thu, 11 May 2023 01:59:31 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24A8930C7;
+        Wed, 10 May 2023 22:59:30 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34B4GmGK009238;
+        Thu, 11 May 2023 05:59:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=tqrcFW/Kr4McDM/n3ZZ8jLRl71o2WgEyYzDiI+ikE30=;
- b=FUd0wl+jaMx23QQDD3GgJKgUzRggjSLc7uaLmtnZN67EX2SiFfkdhuiH1vXlCTqqKRMs
- m7FhZov4+925S1s8Th0cWMAQ5G3RTlg73pJJ6yT4rp6MYx1ZmFp7uiNH8UO+BINHThAW
- DFDWjKp33BV62QfBG4HzcS97OKShCGqsQw0sqDBPsj1nfNGNyYDAmyeI2G1YiwRzvilA
- pdZXzVfYY2JVpnE8XjE13QJo6bL/x61GtKc6kAOokMz/sm9lbZwUdEjIMxT8pEwxkRnj
- cqiIwAWreilAN3/+myn6Dt0m9ldpHQ3ZUYVfZCNE78peDA/Pyq5/Rbd9DdOA54CLRpEt sA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qgj140thy-1
+ bh=FhEY+h/GhVElLpNz743SwbvsQx7kkloIQE75pbqZpsk=;
+ b=XPo/DCKwzI2YsYURlcqNvMIYa8FN0iuPI/aksFoYidYV4OkJ4Zfo7/TjkoxXh73FrfyW
+ L5jkAmulYvpYkQAY5C07XetRl2+G4hDqbhZt4zgyAeZcyGrENApdXTKpWydgVHfvB1XI
+ CYspsOMms/fUJbb0bQ+oLZ8jPOl1wo4y2e1M2+Xa49QWA0I746i7jzn9jXgvNOQg0X4J
+ 3mipOhfVkOzkxcmYXvwy/D4CDbGpggxJRs3m84HAzzHdpnxJDLSw4ymghgM1RR+dZfX3
+ BsAiLix7hzmC7Q6DpCOLH9YOKMNKN7xthKgL7qb3aH/860unQIpVSrVXY/xSsC/tPMad GQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qgett19c6-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 May 2023 05:42:45 +0000
+        Thu, 11 May 2023 05:59:20 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34B5gioq023481
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34B5xInG007071
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 11 May 2023 05:42:44 GMT
+        Thu, 11 May 2023 05:59:18 GMT
 Received: from [10.79.141.17] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 10 May
- 2023 22:42:40 -0700
-Message-ID: <d5341357-e0f4-afb1-20db-7c2d926662fe@quicinc.com>
-Date:   Thu, 11 May 2023 11:12:37 +0530
+ 2023 22:59:15 -0700
+Message-ID: <15042631-4012-61bd-11ef-dde378215fed@quicinc.com>
+Date:   Thu, 11 May 2023 11:29:12 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH V6 2/3] soc: qcom: boot_stat: Add Driver Support for Boot
- Stats
+Subject: Re: [PATCH V6 1/3] dt-bindings: sram: qcom,imem: Add Boot Stat region
+ within IMEM
+Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 CC:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
@@ -57,13 +58,12 @@ CC:     Andy Gross <agross@kernel.org>,
         <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
         "Rajendra Nayak" <quic_rjendra@quicinc.com>
 References: <cover.1683628357.git.quic_schowdhu@quicinc.com>
- <35863b47c04c2edd7ae49c57d23682aba6111d4f.1683628357.git.quic_schowdhu@quicinc.com>
- <CAA8EJppkqN6cuYUCC-THb8wb=deRv-01pbS0JgSGf-VXnm8qEg@mail.gmail.com>
- <82fcfc55-2879-2af0-5a91-4e9481d41976@quicinc.com>
- <CAA8EJprKumrq=Zy0gBqSZ9Dga5mZuauCC4U0GpTs0T4YADrSoA@mail.gmail.com>
-Content-Language: en-US
+ <343182748e12b6a4ac57d336405c50e36fc5520c.1683628357.git.quic_schowdhu@quicinc.com>
+ <CAA8EJpp2x2OEB2sg+caKmjkDYJp_NJ9mXo85FxTZr-9zRXHNhw@mail.gmail.com>
+ <10fa20f9-33d9-a8a8-3fca-f5ff320a6574@quicinc.com>
+ <CAA8EJprJfmtFs1dx0uJw0bi1ig2JsCYzH_4BncPop4aO16D2aA@mail.gmail.com>
 From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-In-Reply-To: <CAA8EJprKumrq=Zy0gBqSZ9Dga5mZuauCC4U0GpTs0T4YADrSoA@mail.gmail.com>
+In-Reply-To: <CAA8EJprJfmtFs1dx0uJw0bi1ig2JsCYzH_4BncPop4aO16D2aA@mail.gmail.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -71,20 +71,20 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: RtzTWPkLBjdWOjvtQZgRmx6OQArL97WO
-X-Proofpoint-ORIG-GUID: RtzTWPkLBjdWOjvtQZgRmx6OQArL97WO
+X-Proofpoint-ORIG-GUID: gGsmcM4e1NmjRTwT613a-cBM5by8uNij
+X-Proofpoint-GUID: gGsmcM4e1NmjRTwT613a-cBM5by8uNij
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-05-10_04,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- suspectscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0 mlxlogscore=999
- clxscore=1015 impostorscore=0 priorityscore=1501 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305110047
-X-Spam-Status: No, score=-6.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ priorityscore=1501 bulkscore=0 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 spamscore=0 clxscore=1015 phishscore=0 adultscore=0
+ suspectscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2305110050
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -93,156 +93,88 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5/9/2023 6:31 PM, Dmitry Baryshkov wrote:
-> On Tue, 9 May 2023 at 15:27, Souradeep Chowdhury
+On 5/9/2023 6:35 PM, Dmitry Baryshkov wrote:
+> On Tue, 9 May 2023 at 15:21, Souradeep Chowdhury
 > <quic_schowdhu@quicinc.com> wrote:
 >>
 >>
 >>
->> On 5/9/2023 5:09 PM, Dmitry Baryshkov wrote:
+>> On 5/9/2023 5:05 PM, Dmitry Baryshkov wrote:
 >>> On Tue, 9 May 2023 at 13:53, Souradeep Chowdhury
 >>> <quic_schowdhu@quicinc.com> wrote:
-> 
-> 
->>>> diff --git a/drivers/soc/qcom/boot_stats.c b/drivers/soc/qcom/boot_stats.c
->>>> new file mode 100644
->>>> index 000000000000..ca67b6b5d8eb
->>>> --- /dev/null
->>>> +++ b/drivers/soc/qcom/boot_stats.c
->>>> @@ -0,0 +1,100 @@
->>>> +// SPDX-License-Identifier: GPL-2.0-only
->>>> +/*
->>>> + * Copyright (c) 2013-2019, 2021 The Linux Foundation. All rights reserved.
->>>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
->>>> + */
->>>> +
->>>> +#include <linux/debugfs.h>
->>>> +#include <linux/err.h>
->>>> +#include <linux/io.h>
->>>> +#include <linux/init.h>
->>>> +#include <linux/kernel.h>
->>>> +#include <linux/module.h>
->>>> +#include <linux/of.h>
->>>> +#include <linux/of_address.h>
->>>> +#include <linux/platform_device.h>
->>>> +
->>>> +#define TO_MS(timestamp) ((timestamp * 1000) / 32768)
+>>>>
+>>>> All Qualcomm bootloaders log useful timestamp information related
+>>>> to bootloader stats in the IMEM region. Add the child node within
+>>>> IMEM for the boot stat region containing register address and
+>>>> compatible string.
 >>>
->>> Quoting v4 question, which got no answer:
->>>
->>> Some of the platforms DTs define 32KHz clock instead of 32.768 KHz
->>> What should be the divisor in this case?
+>>> I might have a minor vote here. Is there any reason why you have to
+>>> instantiate the device from DT?
+>>> It looks like a software interface. Ideally software should not be
+>>> described in DT (e.g. this can be instantiated from imem
+>>> driver-to-be).
+>>> Or we can follow the RPM master-stats approach, where the device is a
+>>> top-level device, having handle pointers to the sram regions.
 >>
->> This is the standard divisor used to calculate the pre_abl and abl times
->> across most QCOM SoCs. Can you give an example where the sleep_stat
->> counter has a different frequency?
+>> This is a dedicated region of IMEM reserved for storing stats related
+>> information. So it is represented as a child of IMEM, please
+>> refer to Documentation/devicetree/bindings/sram/sram.yaml which
+>> follows a similar philosophy. Also since this is a child of IMEM with
+>> a specific purpose, does it not warrant a dedicated driver?
 > 
-> Following SoCs declare 37000 as sleep_clk frequency:
-> ipq6018, qdu1000, qru1000, sc7280, sm6125, sm6375, sm8350, sm8450, sm8550.
+> I do not question a dedicated driver. I was asking about the DT node.
+> Even the mentioned bindings file describes the SRAM regions inside the
+> SRAM, rather than a proper device to be instantiated in the SRAM node.
+> I'd point to the boot_stats discussions (present on the list in the
+> last several months).
 > 
-> This might be an error in the dtsi, or might be not.
 
-This sleep_clk is different from the sleep_stats counter of the module 
-power manager(MPM) which is used to log the timestamps. This driver is 
-tested and verified with sm8450(waipio) which uses the same
-frequency(32768).
+Ack. Will instantiate the device from the parent node in the driver and
+access the stats region to print the boot_stats information.
 
 
-> 
 >>
 >>>
+>>>>
+>>>> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+>>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>> ---
+>>>>    .../devicetree/bindings/sram/qcom,imem.yaml   | 22 +++++++++++++++++++
+>>>>    1 file changed, 22 insertions(+)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/sram/qcom,imem.yaml b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+>>>> index 0548e8e0d30b..bb884c5c8952 100644
+>>>> --- a/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+>>>> +++ b/Documentation/devicetree/bindings/sram/qcom,imem.yaml
+>>>> @@ -50,6 +50,28 @@ patternProperties:
+>>>>        $ref: /schemas/remoteproc/qcom,pil-info.yaml#
+>>>>        description: Peripheral image loader relocation region
+>>>>
+>>>> +  "^stats@[0-9a-f]+$":
+>>>> +    type: object
+>>>> +    description:
+>>>> +      Imem region dedicated for storing timestamps related
+>>>> +      information regarding bootstats.
 >>>> +
->>>> +/**
->>>> + *  struct boot_stats - timestamp information related to boot stats
->>>> + *  @abl_start: Time for the starting point of the abl
->>>> + *  @abl_end: Time when the kernel starts loading from abl
->>>> + */
->>>> +struct boot_stats {
->>>> +       u32 abl_start;
->>>> +       u32 abl_end;
->>>> +} __packed;
+>>>> +    additionalProperties: false
 >>>> +
->>>> +struct bs_data {
->>>> +       struct boot_stats __iomem *b_stats;
->>>> +       struct dentry *dbg_dir;
->>>> +};
+>>>> +    properties:
+>>>> +      compatible:
+>>>> +        items:
+>>>> +          - enum:
+>>>> +              - qcom,sm8450-bootstats
+>>>> +          - const: qcom,imem-bootstats
 >>>> +
->>>> +static void populate_boot_stats(char *abl_str, char *pre_abl_str, struct bs_data *drvdata)
->>>> +{
->>>> +        u32 abl_time, pre_abl_time;
+>>>> +      reg:
+>>>> +        maxItems: 1
 >>>> +
->>>> +        abl_time = TO_MS(drvdata->b_stats->abl_end) - TO_MS(drvdata->b_stats->abl_start);
->>>> +        sprintf(abl_str, "%u ms", abl_time);
+>>>> +    required:
+>>>> +      - compatible
+>>>> +      - reg
 >>>> +
->>>> +        pre_abl_time =  TO_MS(drvdata->b_stats->abl_start);
->>>> +        sprintf(pre_abl_str, "%u ms", pre_abl_time);
->>>
->>> Another point from v4:
->>>
->>> It would be better to move the unit to the file name and include just
->>> the number.
->>
->> Clarified from your first comment
->>
->>>
->>>> +}
->>>> +
->>>> +static int boot_stats_probe(struct platform_device *pdev)
->>>> +{
->>>> +       char abl_str[20], pre_abl_str[20], *abl, *pre_abl;
->>>> +       struct device *bootstat_dev = &pdev->dev;
->>>> +       struct bs_data *drvdata;
->>>> +
->>>> +       drvdata = devm_kzalloc(bootstat_dev, sizeof(*drvdata), GFP_KERNEL);
->>>> +       if (!drvdata)
->>>> +               return dev_err_probe(bootstat_dev, -ENOMEM, "failed to allocate memory");
->>>> +       platform_set_drvdata(pdev, drvdata);
->>>> +
->>>> +       drvdata->b_stats = devm_of_iomap(bootstat_dev, bootstat_dev->of_node, 0, NULL);
->>>> +       if (IS_ERR(drvdata->b_stats))
->>>> +               return dev_err_probe(bootstat_dev, PTR_ERR(drvdata->b_stats),
->>>> +                                    "failed to map imem region");
->>>> +
->>>> +       drvdata->dbg_dir = debugfs_create_dir("qcom_boot_stats", NULL);
->>>> +       if (IS_ERR(drvdata->dbg_dir))
->>>> +               return dev_err_probe(bootstat_dev, PTR_ERR(drvdata->dbg_dir),
->>>> +                                    "failed to create debugfs directory");
->>>> +
->>>> +       populate_boot_stats(abl_str, pre_abl_str, drvdata);
->>>> +       abl = abl_str;
->>>> +       pre_abl = pre_abl_str;
->>>> +
->>>> +       debugfs_create_str("pre_abl_time", 0400, drvdata->dbg_dir, (char **)&pre_abl);
->>>> +       debugfs_create_str("abl_time", 0400, drvdata->dbg_dir, (char **)&abl);
->>>> +
->>>> +       return 0;
->>>> +}
->>>> +
->>>> +void boot_stats_remove(struct platform_device *pdev)
->>>> +{
->>>> +       struct bs_data *drvdata = platform_get_drvdata(pdev);
->>>> +
->>>> +       debugfs_remove_recursive(drvdata->dbg_dir);
->>>> +}
->>>> +
->>>> +static const struct of_device_id boot_stats_dt_match[] = {
->>>> +       { .compatible = "qcom,imem-bootstats" },
->>>> +       { }
->>>> +};
->>>> +MODULE_DEVICE_TABLE(of, boot_stats_dt_match);
->>>> +
->>>> +static struct platform_driver boot_stat_driver = {
->>>> +       .probe  = boot_stats_probe,
->>>> +       .remove_new = boot_stats_remove,
->>>> +       .driver = {
->>>> +               .name = "qcom-boot-stats",
->>>> +               .of_match_table = boot_stats_dt_match,
->>>> +       },
->>>> +};
->>>> +module_platform_driver(boot_stat_driver);
->>>> +
->>>> +MODULE_DESCRIPTION("Qualcomm Technologies Inc. Boot Stat driver");
->>>> +MODULE_LICENSE("GPL");
+>>>>    required:
+>>>>      - compatible
+>>>>      - reg
 >>>> --
 >>>> 2.17.1
 >>>>
