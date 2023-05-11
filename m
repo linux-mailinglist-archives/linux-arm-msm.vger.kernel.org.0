@@ -2,298 +2,347 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEAEB6FF1F6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 14:58:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 208816FF223
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 15:08:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237754AbjEKM6Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 May 2023 08:58:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49732 "EHLO
+        id S237987AbjEKNIH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 May 2023 09:08:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237332AbjEKM6X (ORCPT
+        with ESMTP id S231464AbjEKNIE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 May 2023 08:58:23 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94D4B197
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 May 2023 05:58:21 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3f315735514so284195295e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 May 2023 05:58:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683809900; x=1686401900;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=mU6P1e5+4Xl8Bpy2fjdcYeE81cfd4b/6UBOEOmWNG6w=;
-        b=kgx9Gt4BXZh5aRNkCN33QpSN6nItFvh8EUJX9XC62edw0kMW0sMq4sO/fTpPRiS9HQ
-         xr8v2ax803lyFIp7Qo//NYBD4xH5ipWs8BiGsB9fhJ1JXKwhBKip5AkW8W2EnD2ZWLvI
-         SZKne4t8kEEFO5ebEEjSsmgHltZiTg4uiWYGMoAfawnU8oGbUaaitPIBhjOOqtSFsoNA
-         5F/pP53939UA+Wiz3G9BxJrHw2EPxWRhti2CYwsYUvdTetIfsb57a1sqPL91CG9NWwdY
-         ONzIJBzvQpfjYdcJwqrRQdwSjqX36eXJhYTHKEdSPhcR6ipF4h4ZJ59YRzNVSrfvIMKG
-         TKOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683809900; x=1686401900;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mU6P1e5+4Xl8Bpy2fjdcYeE81cfd4b/6UBOEOmWNG6w=;
-        b=Nw7xLvylqD40DInn0pJRjlMD8NGwDKNfIxIkxei9//MYoGbPOhAHOLsBaAmVjTUPdl
-         1KfK4hGlXlQ2ogG3uUXjoMs/kiua5z9x0mERStzR+dwc0hOq/cikO5qbEa7Pyp+m1JDL
-         1PDlDVTkZzxbdGrPIBs3DUv/TFonZfYlV6Hqih0MhBUE920Kp4TOflxBnMmT9acWpCYB
-         +1DcgrjD3wy796vpInzRCQQ9zfD9RNxYgG46fLMLAzGNghW60kTtVafTd3LDaCcO4HVd
-         a06aN68r08SbadZL7EMfEHs9g2CVxEBNYpl9EA+N/jHH2f7fQIFlSRR5IR3FAro2TFhm
-         BBfQ==
-X-Gm-Message-State: AC+VfDxh6l5Uaq1XkI/exDwMGzASeTZALuwRRjS1Z9r5VvopCXtfu732
-        U4Bfs6moEZtzhMd5KOwcf7T2RQ==
-X-Google-Smtp-Source: ACHHUZ5pru7jo+OrktILu9OGEvB3oapcBP6a97zjnrxab9iWoPW9uVlzcCQgeDmLs/AhOTHwp77zKA==
-X-Received: by 2002:adf:e904:0:b0:306:2d81:341d with SMTP id f4-20020adfe904000000b003062d81341dmr18873867wrm.24.1683809899942;
-        Thu, 11 May 2023 05:58:19 -0700 (PDT)
-Received: from linaro.org ([86.121.163.20])
-        by smtp.gmail.com with ESMTPSA id p26-20020a05600c205a00b003f4f1b884b3sm39829wmg.20.2023.05.11.05.58.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 May 2023 05:58:19 -0700 (PDT)
-Date:   Thu, 11 May 2023 15:58:17 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Saravana Kannan <saravanak@google.com>
-Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, mka@chromium.org
-Subject: Re: [PATCH v3 1/2] clk: Add generic sync_state callback for
- disabling unused clocks
-Message-ID: <ZFzmaavGYy4isU7J@linaro.org>
-References: <20221227204528.1899863-1-abel.vesa@linaro.org>
- <ebc257025ebd641e624ef506ea09c800.sboyd@kernel.org>
- <Y/OV3CF0ootyooDJ@linaro.org>
- <Y/OfjbxI1tHYJHNv@linaro.org>
- <CAGETcx_mD3pbAmT5FDZaVAsKb_2PAnrHL8B_6gSR=+a0O4kHfQ@mail.gmail.com>
- <Y/PALlrQpwPlum9M@linaro.org>
- <CAGETcx_TZN3=GKrEf5fy_tA=JnOfw7m-N=+hD=qhe_yRRpngPw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGETcx_TZN3=GKrEf5fy_tA=JnOfw7m-N=+hD=qhe_yRRpngPw@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Thu, 11 May 2023 09:08:04 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E8AF5BA6;
+        Thu, 11 May 2023 06:08:02 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34BAJCLb020252;
+        Thu, 11 May 2023 13:07:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=9PeeTgq03vVFK969qWl3xs+1WsXoKKbi0gI2EhENzdA=;
+ b=Q5iaTwASZQ9SQIbA9I+r0F/iJZ/2gLaRBIL/WME7yQWo71TAgVBxgHGgavh7WxSA2x+I
+ slwBr/ZeYLOssz3piNfgY7JkkVhni4Iv7Fme+NtwXeYtJtvGIpPsazKGmNW818m/UCDq
+ N1GT7vTAORZH8Wui+CBDWsTpJm9XYNlzZ57rXpG8OhVHIyFTjsgKsyysTlSnbtVRQLYL
+ 7P/TR9q5l3TRwMRjA6X67Ir9HQdypyZxVLuzd0HtvukI0Rb5lGpnTA5JoqjUo+ENRMAG
+ mL7zcOW5zQu62+3R6gsXIMv0uBmfA81E5bOAMCfER9v2OA9pBCH3UStR0hqSNwc8tWpR CA== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qgm5m1ntp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 11 May 2023 13:07:39 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 34BD7ZEX013394;
+        Thu, 11 May 2023 13:07:35 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3qdy5bq6qy-1;
+        Thu, 11 May 2023 13:07:35 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 34BD7YBC013387;
+        Thu, 11 May 2023 13:07:34 GMT
+Received: from mdalam-linux.qualcomm.com (mdalam-linux.qualcomm.com [10.201.2.71])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 34BD7Yt6013386;
+        Thu, 11 May 2023 13:07:34 +0000
+Received: by mdalam-linux.qualcomm.com (Postfix, from userid 466583)
+        id BB29612010C1; Thu, 11 May 2023 18:37:33 +0530 (IST)
+From:   Md Sadre Alam <quic_mdalam@quicinc.com>
+To:     mani@kernel.org, miquel.raynal@bootlin.com, richard@nod.at,
+        vigneshr@ti.com, linux-mtd@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_mdalam@quicinc.com,
+        0000-cover-letter.patch@qualcomm.com
+Subject: [PATCH 1/5] mtd: rawnand: qcom: Implement exec_op()
+Date:   Thu, 11 May 2023 18:37:26 +0530
+Message-Id: <20230511130730.28689-1-quic_mdalam@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: jCDqJlVfqWgBPE5pvVWn4K_YETHJxzK8
+X-Proofpoint-ORIG-GUID: jCDqJlVfqWgBPE5pvVWn4K_YETHJxzK8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-11_09,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ bulkscore=0 priorityscore=1501 lowpriorityscore=0 mlxlogscore=999
+ impostorscore=0 phishscore=0 spamscore=0 suspectscore=0 malwarescore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305110113
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-02-21 11:58:24, Saravana Kannan wrote:
-> On Mon, Feb 20, 2023 at 10:47 AM Abel Vesa <abel.vesa@linaro.org> wrote:
-> >
-> > On 23-02-20 09:51:55, Saravana Kannan wrote:
-> > > On Mon, Feb 20, 2023 at 8:28 AM Abel Vesa <abel.vesa@linaro.org> wrote:
-> > > >
-> > > > On 23-02-20 17:46:36, Abel Vesa wrote:
-> > > > > On 23-02-17 21:38:22, Stephen Boyd wrote:
-> > > > > > Quoting Abel Vesa (2022-12-27 12:45:27)
-> > > > > > > There are unused clocks that need to remain untouched by clk_disable_unused,
-> > > > > > > and most likely could be disabled later on sync_state. So provide a generic
-> > > > > > > sync_state callback for the clock providers that register such clocks.
-> > > > > > > Then, use the same mechanism as clk_disable_unused from that generic
-> > > > > > > callback, but pass the device to make sure only the clocks belonging to
-> > > > > > > the current clock provider get disabled, if unused. Also, during the
-> > > > > > > default clk_disable_unused, if the driver that registered the clock has
-> > > > > > > the generic clk_sync_state_disable_unused callback set for sync_state,
-> > > > > > > skip disabling its clocks.
-> > >
-> > > Hi Abel,
-> > >
-> > > We have the day off today, so I'll respond more later. Also, please cc
-> > > me on all sync_state() related patches in the future.
-> > >
-> >
-> > Sure thing.
-> >
-> > > I haven't taken a close look at your series yet, but at a glance it
-> > > seems incomplete.
-> > >
-> > > Any reason you didn't just try to revive my series[1] or nudge me?
-> > > [1]- https://lore.kernel.org/lkml/20210407034456.516204-3-saravanak@google.com/
-> >
-> > This patchset is heavily reworked and much more simpler as it relies
-> > strictly on the sync_state being registered by the clock provider.
-> 
-> It's simpler because it's not complete. It for sure doesn't handle
-> orphan-reparenting. It also doesn't make a lot of sense for only some
-> clock providers registering for sync_state(). If CC-A is feeding a
-> clock signal that's used as a root for clocks in CC-B, then what
-> happens if only CC-B implements sync_state() but CC-A doesn't. The
-> clocks from CC-B are still going to turn off when CC-A turns off its
-> PLL before CC-B registers.
+Implement exec_op() so we can later get rid of the legacy interface
+implementation.
 
-I gave your patchset a try and it breaks the uart for qcom platforms.
-That is because your patchset enables the clock on __clk_core_init and
-does not take into account the fact that 'boot enabled' clocks should be
-left untouched. This also means the orphan-reparenting enabling should
-be dropped as well.
+Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+---
+ drivers/mtd/nand/raw/qcom_nandc.c | 214 +++++++++++++++++++++++++++++-
+ 1 file changed, 213 insertions(+), 1 deletion(-)
 
-As for the second part, related to providers that might not have a
-registered sync_state(), your patchset sets the clock core generic
-one. This is also wrong because it doesn't take into account the fact
-that there might be providers that need to do their own stuff on
-sync_state() and should do that by registering their own implementation
-of it.
+diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+index 72d6168d8a1b..dae460e2aa0b 100644
+--- a/drivers/mtd/nand/raw/qcom_nandc.c
++++ b/drivers/mtd/nand/raw/qcom_nandc.c
+@@ -157,6 +157,7 @@
+ #define	OP_PAGE_PROGRAM_WITH_ECC	0x7
+ #define	OP_PROGRAM_PAGE_SPARE		0x9
+ #define	OP_BLOCK_ERASE			0xa
++#define	OP_CHECK_STATUS			0xc
+ #define	OP_FETCH_ID			0xb
+ #define	OP_RESET_DEVICE			0xd
+ 
+@@ -235,6 +236,7 @@ nandc_set_reg(chip, reg,			\
+  */
+ #define NAND_ERASED_CW_SET		BIT(4)
+ 
++#define MAX_ADDRESS_CYCLE		5
+ /*
+  * This data type corresponds to the BAM transaction which will be used for all
+  * NAND transfers.
+@@ -447,6 +449,29 @@ struct qcom_nand_boot_partition {
+ 	u32 page_size;
+ };
+ 
++/*
++ * Qcom op for each exec_op transfer
++ *
++ * @data_instr:			data instruction pointer
++ * @data_instr_idx:		data instruction index
++ * @rdy_timeout_ms:		wait ready timeout in ms
++ * @rdy_delay_ns:		Additional delay in ns
++ * @addr1_reg:			Address1 register value
++ * @addr2_reg:			Address2 register value
++ * @cmd_reg:			CMD register value
++ * @flag:			flag for misc instruction
++ */
++struct qcom_op {
++	const struct nand_op_instr *data_instr;
++	unsigned int data_instr_idx;
++	unsigned int rdy_timeout_ms;
++	unsigned int rdy_delay_ns;
++	u32 addr1_reg;
++	u32 addr2_reg;
++	u32 cmd_reg;
++	u8 flag;
++};
++
+ /*
+  * NAND chip structure
+  *
+@@ -1517,7 +1542,8 @@ static void pre_command(struct qcom_nand_host *host, int command)
+ 	clear_read_regs(nandc);
+ 
+ 	if (command == NAND_CMD_RESET || command == NAND_CMD_READID ||
+-	    command == NAND_CMD_PARAM || command == NAND_CMD_ERASE1)
++	    command == NAND_CMD_PARAM || command == NAND_CMD_ERASE1 ||
++	    command == NAND_CMD_STATUS)
+ 		clear_bam_transaction(nandc);
+ }
+ 
+@@ -2867,8 +2893,194 @@ static int qcom_nand_attach_chip(struct nand_chip *chip)
+ 	return 0;
+ }
+ 
++static int qcom_op_cmd_mapping(struct qcom_nand_controller *nandc, u8 cmd,
++			       struct qcom_op *q_op)
++{
++	int ret = 0;
++
++	switch (cmd) {
++	case NAND_CMD_RESET:
++		ret = OP_RESET_DEVICE;
++		break;
++	case NAND_CMD_READID:
++		ret = OP_FETCH_ID;
++		break;
++	case NAND_CMD_PARAM:
++		if (nandc->props->qpic_v2)
++			ret = OP_PAGE_READ_ONFI_READ;
++		else
++			ret = OP_PAGE_READ;
++		break;
++	case NAND_CMD_ERASE1:
++	case NAND_CMD_ERASE2:
++		ret = OP_BLOCK_ERASE;
++		break;
++	case NAND_CMD_STATUS:
++		ret = OP_CHECK_STATUS;
++		break;
++	case NAND_CMD_PAGEPROG:
++		ret = OP_PROGRAM_PAGE;
++		break;
++	default:
++		break;
++	}
++
++	return ret;
++}
++
++/* NAND framework ->exec_op() hooks and related helpers */
++static void qcom_parse_instructions(struct nand_chip *chip,
++				    const struct nand_subop *subop,
++					struct qcom_op *q_op)
++{
++	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
++	const struct nand_op_instr *instr = NULL;
++	unsigned int op_id;
++	int i;
++
++	memset(q_op, 0, sizeof(*q_op));
++
++	for (op_id = 0; op_id < subop->ninstrs; op_id++) {
++		unsigned int offset, naddrs;
++		const u8 *addrs;
++
++		instr = &subop->instrs[op_id];
++
++		switch (instr->type) {
++		case NAND_OP_CMD_INSTR:
++			q_op->cmd_reg = qcom_op_cmd_mapping(nandc, instr->ctx.cmd.opcode, q_op);
++			q_op->rdy_delay_ns = instr->delay_ns;
++			break;
++
++		case NAND_OP_ADDR_INSTR:
++			offset = nand_subop_get_addr_start_off(subop, op_id);
++			naddrs = nand_subop_get_num_addr_cyc(subop, op_id);
++			addrs = &instr->ctx.addr.addrs[offset];
++			for (i = 0; i < min(5U, naddrs); i++) {
++				if (i < 4)
++					q_op->addr1_reg |= (u32)addrs[i] << i * 8;
++				else
++					q_op->addr2_reg |= addrs[i];
++			}
++			q_op->rdy_delay_ns = instr->delay_ns;
++			break;
++
++		case NAND_OP_DATA_IN_INSTR:
++			q_op->data_instr = instr;
++			q_op->data_instr_idx = op_id;
++			q_op->rdy_delay_ns = instr->delay_ns;
++			fallthrough;
++		case NAND_OP_DATA_OUT_INSTR:
++			q_op->rdy_delay_ns = instr->delay_ns;
++			break;
++
++		case NAND_OP_WAITRDY_INSTR:
++			q_op->rdy_timeout_ms = instr->ctx.waitrdy.timeout_ms;
++			q_op->rdy_delay_ns = instr->delay_ns;
++			break;
++		}
++	}
++}
++
++static int qcom_read_status_exec(struct nand_chip *chip,
++				 const struct nand_subop *subop)
++{
++	return 0;
++}
++
++static int qcom_erase_cmd_type_exec(struct nand_chip *chip, const struct nand_subop *subop)
++{
++	return 0;
++}
++
++static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_subop *subop)
++{
++	return 0;
++}
++
++static int qcom_read_id_type_exec(struct nand_chip *chip, const struct nand_subop *subop)
++{
++	return 0;
++}
++
++static int qcom_misc_cmd_type_exec(struct nand_chip *chip, const struct nand_subop *subop)
++{
++	return 0;
++}
++
++static int qcom_data_read_type_exec(struct nand_chip *chip, const struct nand_subop *subop)
++{
++	/* currently read_exec_op() return 0 , and all the read operation handle in
++	 * actual API itself
++	 */
++	return 0;
++}
++
++static int qcom_data_write_type_exec(struct nand_chip *chip, const struct nand_subop *subop)
++{
++	/* currently write_exec_op() return 0, and all the write operation handle in
++	 * actual API itself
++	 */
++	struct qcom_op q_op;
++
++	qcom_parse_instructions(chip, subop, &q_op);
++
++	return 0;
++}
++
++static const struct nand_op_parser qcom_op_parser = NAND_OP_PARSER(
++		NAND_OP_PARSER_PATTERN(
++			qcom_misc_cmd_type_exec,
++			NAND_OP_PARSER_PAT_CMD_ELEM(false),
++			NAND_OP_PARSER_PAT_WAITRDY_ELEM(false)),
++		NAND_OP_PARSER_PATTERN(
++			qcom_read_id_type_exec,
++			NAND_OP_PARSER_PAT_CMD_ELEM(false),
++			NAND_OP_PARSER_PAT_ADDR_ELEM(false, MAX_ADDRESS_CYCLE),
++			NAND_OP_PARSER_PAT_DATA_IN_ELEM(false, 8)),
++		NAND_OP_PARSER_PATTERN(
++			qcom_param_page_type_exec,
++			NAND_OP_PARSER_PAT_CMD_ELEM(false),
++			NAND_OP_PARSER_PAT_ADDR_ELEM(false, MAX_ADDRESS_CYCLE),
++			NAND_OP_PARSER_PAT_WAITRDY_ELEM(true),
++			NAND_OP_PARSER_PAT_DATA_IN_ELEM(false, 512)),
++		NAND_OP_PARSER_PATTERN(
++			qcom_read_status_exec,
++			NAND_OP_PARSER_PAT_CMD_ELEM(false),
++			NAND_OP_PARSER_PAT_DATA_IN_ELEM(false, 1)),
++		NAND_OP_PARSER_PATTERN(
++			qcom_erase_cmd_type_exec,
++			NAND_OP_PARSER_PAT_CMD_ELEM(false),
++			NAND_OP_PARSER_PAT_ADDR_ELEM(false, MAX_ADDRESS_CYCLE),
++			NAND_OP_PARSER_PAT_CMD_ELEM(false),
++			NAND_OP_PARSER_PAT_WAITRDY_ELEM(false)),
++		NAND_OP_PARSER_PATTERN(
++			qcom_data_read_type_exec,
++			NAND_OP_PARSER_PAT_CMD_ELEM(false),
++			NAND_OP_PARSER_PAT_ADDR_ELEM(false, MAX_ADDRESS_CYCLE),
++			NAND_OP_PARSER_PAT_CMD_ELEM(false),
++			NAND_OP_PARSER_PAT_WAITRDY_ELEM(true),
++			NAND_OP_PARSER_PAT_DATA_IN_ELEM(false, 2048)),
++		NAND_OP_PARSER_PATTERN(
++			qcom_data_write_type_exec,
++			NAND_OP_PARSER_PAT_CMD_ELEM(true),
++			NAND_OP_PARSER_PAT_ADDR_ELEM(true, MAX_ADDRESS_CYCLE)),
++		);
++
++static int qcom_nand_exec_op(struct nand_chip *chip,
++			     const struct nand_operation *op,
++			bool check_only)
++{
++	if (check_only)
++		return 0;
++
++	return nand_op_parser_exec_op(chip, &qcom_op_parser,
++			op, check_only);
++}
++
+ static const struct nand_controller_ops qcom_nandc_ops = {
+ 	.attach_chip = qcom_nand_attach_chip,
++	.exec_op = qcom_nand_exec_op,
+ };
+ 
+ static void qcom_nandc_unalloc(struct qcom_nand_controller *nandc)
+-- 
+2.17.1
 
-Therefore, I'll respin your patchset and use only the skipping of
-disabling the unused clocks, but I'll drop all the enable on init and orphan
-reparenting changes.
-
-> 
-> Nack for this patch.
-> 
-> Also, unless there's a strong objection, let's go back to my patch
-> please. It's way more well tested and used across different SoCs than
-> this patch. Also, I'm pretty sure the orphan handling is needed for
-> qcom SoC's too.
-> 
-> -Saravana
-> 
-> >
-> > I saw your patchset a few months ago but then forgot about its
-> > existence. That's also why I forgot to nudge you. Sorry about that.
-> >
-> > >
-> > > At the least, I know [1] works on all Android devices (including
-> > > Qualcomm SoCs) released in the past 2-3 years or more. If [1] works
-> > > for you, I'd rather land that after addressing Stephen's comments
-> > > there (I remember them being fairly easy to address comments) instead
-> > > of whipping up a new series that's not as well used. I just got busy
-> > > with other things and addressing more fundamental fw_devlink TODOs
-> > > before getting back to this.
-> > >
-> > > Hi Bjorn,
-> > >
-> > > I see in another reply you've said:
-> > >
-> > > Applied, thanks!
-> > >
-> > > [1/2] clk: Add generic sync_state callback for disabling unused clocks
-> > >       commit: 26b36df7516692292312063ca6fd19e73c06d4e7
-> > > [2/2] clk: qcom: sdm845: Use generic clk_sync_state_disable_unused callback
-> > >       commit: 99c0f7d35c4b204dd95ba50e155f32c99695b445
-> > >
-> > > Where exactly have you applied them? I hope you haven't applied the
-> > > clk.c changes to some tree that goes into 6.3.
-> >
-> > I think it is already part of Bjorn's Qualcomm clocks pull request.
-> >
-> > >
-> > > -Saravana
-> > >
-> > > > > >
-> > > > > > How does that avoid disabling clks randomly in the clk tree? I'm
-> > > > > > concerned about disabling an unused clk in the middle of the tree
-> > > > > > because it doesn't have a driver using sync state, while the clk is the
-> > > > > > parent of an unused clk that is backed by sync state.
-> > > > > >
-> > > > > >    clk A -->  clk B
-> > > > > >
-> > > > > > clk A: No sync state
-> > > > > > clk B: sync state
-> > > > > >
-> > > > > > clk B is left on by the bootloader. __clk_disable_unused(NULL) is called
-> > > > > > from late init. Imagine clk A is the root of the tree.
-> > > > > >
-> > > > > >     clk_disable_unused_subtree(clk_core A)
-> > > > > >       clk_disable_unused_subtree(clk_core B)
-> > > > > >         if (from_sync_state && core->dev != dev)
-> > > > > >           return;
-> > > > > >       ...
-> > > > > >       clk core A->ops->disable()
-> > > > > >
-> > > > > > clk core B is off now?
-> > > > >
-> > > > > Yes, that is correct. But the same thing is happening currently if the
-> > > > > clk_ignore_unused in not specified. At least with this new approach, we
-> > > > > get to leave unused clocks enabled either until sync_state is called or forever.
-> > > > > All the provider has to do is to implement a sync_state callback (or use
-> > > > > the generic one provided). So the provider of clk A would obviously need
-> > > > > a sync state callback registered.
-> > > > >
-> > > > > >
-> > > > > > Also sync_state seems broken right now. I saw mka mentioned that if you
-> > > > > > have a device node enabled in your DT but never enable a driver for it
-> > > > > > in the kernel we'll never get sync_state called. This is another
-> > > > > > problem, but it concerns me that sync_state would make the unused clk
-> > > > > > disabling happen at some random time or not at all.
-> > > > >
-> > > > > Well, the fact that the sync state not being called because a driver for
-> > > > > a consumer device doesn't probe does not really mean it is broken. Just
-> > > > > because the consumer driver hasn't probed yet, doesn't mean it will
-> > > > > not probe later on.
-> > > > >
-> > > >
-> > > > CC'ed Saravana
-> > > >
-> > > > > That aside, rather than going with clk_ignore_unused all the time on
-> > > > > qcom platforms, at least in a perfect scenario (where sync state is
-> > > > > reached for all providers) the clocks get disabled.
-> > > > >
-> > > > > >
-> > > > > > Can the problem be approached more directly? If this is about fixing
-> > > > > > continuous splash screen, then I wonder why we can't list out the clks
-> > > > > > that we know are enabled by the bootloader in some new DT binding, e.g.:
-> > > > > >
-> > > > > >     clock-controller {
-> > > > > >             #clock-cells = <1>;
-> > > > > >             boot-handoff-clocks = <&consumer_device "clock cells for this clk provider">;
-> > > > > >     };
-> > > > > >
-> > > > > > Then mark those as "critical/don't turn off" all the way up the clk tree
-> > > > > > when the clk driver probes by essentially incrementing the
-> > > > > > prepare/enable count but not actually touching the hardware, and when
-> > > > > > the clks are acquired by clk_get() for that device that's using them
-> > > > > > from boot we make the first clk_prepare_enable() do nothing and not
-> > > > > > increment the count at all. We can probably stick some flag into the
-> > > > > > 'struct clk' for this when we create the handle in clk_get() so that the
-> > > > > > prepare and enable functions can special case and skip over.
-> > > > >
-> > > > > Well, that means we need to play whack-a-mole by alsways adding such clocks to
-> > > > > devicetree.
-> > > > >
-> > > > > >
-> > > > > > The sync_state hook operates on a driver level, which is too large when
-> > > > > > you consider that a single clk driver may register hundreds of clks that
-> > > > > > are not related. We want to target a solution at the clk level so that
-> > > > > > any damage from keeping on all the clks provided by the controller is
-> > > > > > limited to just the drivers that aren't probed and ready to handle their
-> > > > > > clks. If sync_state could be called whenever a clk consumer consumes a
-> > > > > > clk it may work? Technically we already have that by the clk_hw_provider
-> > > > > > function but there isn't enough information being passed there, like the
-> > > > > > getting device.
-> > > > >
-> > > > > Actually, from the multitude of clocks registered by one provider, the
-> > > > > ones already explicitely enabled (and obvisously their parents) by thier
-> > > > > consumer are safe. The only ones we need to worry about are the ones that
-> > > > > might be enabled by bootloader and need to remain on. With the sync state
-> > > > > approach, the latter mentioned clocks will either remain on indefinitely
-> > > > > or will be disabled on sync state. The provider driver is the only level
-> > > > > that has a registered sync state callback.
-> > > > >
-> > > > > >
-> > > > > > > diff --git a/include/linux/clk-provider.h b/include/linux/clk-provider.h
-> > > > > > > index 842e72a5348f..cf1adfeaf257 100644
-> > > > > > > --- a/include/linux/clk-provider.h
-> > > > > > > +++ b/include/linux/clk-provider.h
-> > > > > > > @@ -720,6 +720,7 @@ struct clk *clk_register_divider_table(struct device *dev, const char *name,
-> > > > > > >                 void __iomem *reg, u8 shift, u8 width,
-> > > > > > >                 u8 clk_divider_flags, const struct clk_div_table *table,
-> > > > > > >                 spinlock_t *lock);
-> > > > > > > +void clk_sync_state_disable_unused(struct device *dev);
-> > > > > >
-> > > > > > This is a weird place to put this. Why not in the helper functions
-> > > > > > section?
-> > > > >
-> > > > > Sure this can be moved.
-> > > > >
-> > > > > >
-> > > > > > >  /**
-> > > > > > >   * clk_register_divider - register a divider clock with the clock framework
-> > > > > > >   * @dev: device registering this clock
