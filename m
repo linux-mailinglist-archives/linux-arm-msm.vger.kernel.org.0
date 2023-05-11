@@ -2,49 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C4296FEBA5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 08:18:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 162366FEBA9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 May 2023 08:19:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231313AbjEKGSQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 May 2023 02:18:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41178 "EHLO
+        id S236939AbjEKGTg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 May 2023 02:19:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229456AbjEKGSQ (ORCPT
+        with ESMTP id S236163AbjEKGTf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 May 2023 02:18:16 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7C7C3596
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 May 2023 23:18:10 -0700 (PDT)
-Received: from SoMainline.org (unknown [89.205.226.142])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id DFAF32030C;
-        Thu, 11 May 2023 08:18:07 +0200 (CEST)
-Date:   Thu, 11 May 2023 08:18:06 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v7 2/8] drm/display/dsc: add helper to set semi-const
- parameters
-Message-ID: <mbiijomkmkrwixpbg2rnpv3hb5y7gnsqqv2rkektgh4xvxig6u@iazy42chd7b5>
-References: <20230329-rfc-msm-dsc-helper-v7-0-df48a2c54421@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v7-2-df48a2c54421@quicinc.com>
- <tl5zijcxx7326jdgr6lyjptvvvyxosoupz3vekvhex3vnviw5t@3vswzg244tme>
- <05021e78-6c1a-b4b1-6312-4dd3f1647074@quicinc.com>
- <7eeac1dd-8cd1-60e7-5dc0-f8f5adc18ffe@linaro.org>
+        Thu, 11 May 2023 02:19:35 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 938243A89;
+        Wed, 10 May 2023 23:19:34 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34B6JKtS022130;
+        Thu, 11 May 2023 06:19:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=MFmlOXzWKlh6xmSzF7dgNVpK+OIYZ+my/PD5cZRH0Tk=;
+ b=at7kA05jLfwkpUtE+uP0nW2kx43EWJMeQyT8Qpo96asw/C8HlLDHePVoi73bkTVTZ4ir
+ QTt4VcbsoD5A7Oeme82hPHWU9/yxmPgpC6XN8Ge7gLtFJxRxXCZgn8nFyYneIBumjkat
+ 7jhHv23jkvzeaW3IHczKg3p7NpqdMF1xxbzjRBqlJ9kaue5s8zLG63LrG8d2dCCxLFXQ
+ bcOsHT+SCVWQeuODzetRp73SVHWIeW7UXzMbctutoxM35VVy8d+appt3lhoSh0R8G/os
+ ayQGVVTAgIDuanu2FeMkk26y+MJiifHUlRdN0Zght5pj7Y0qhTaDnty32vn6ZSsffU2G uw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qggen92k3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 11 May 2023 06:19:19 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34B6JI98010116
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 11 May 2023 06:19:18 GMT
+Received: from [10.201.3.182] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 10 May
+ 2023 23:19:12 -0700
+Message-ID: <a9437620-6946-16a9-1b13-faaf34fa5d48@quicinc.com>
+Date:   Thu, 11 May 2023 11:49:10 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <7eeac1dd-8cd1-60e7-5dc0-f8f5adc18ffe@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH v4 4/8] pinctrl: qcom: Add IPQ5018 pinctrl driver
+Content-Language: en-US
+To:     <andy.shevchenko@gmail.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
+        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20230510134121.1232286-1-quic_srichara@quicinc.com>
+ <20230510134121.1232286-5-quic_srichara@quicinc.com>
+ <ZFupNrdrcsrIFpYq@surfacebook>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <ZFupNrdrcsrIFpYq@surfacebook>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 8Er7DcdvxmzTkegwCefZsH92-86EqJDQ
+X-Proofpoint-GUID: 8Er7DcdvxmzTkegwCefZsH92-86EqJDQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-10_04,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ clxscore=1011 lowpriorityscore=0 malwarescore=0 spamscore=0 adultscore=0
+ suspectscore=0 mlxlogscore=999 impostorscore=0 priorityscore=1501
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305110053
+X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -53,46 +89,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-11 07:26:28, Dmitry Baryshkov wrote:
-> On 11/05/2023 01:35, Jessica Zhang wrote:
-> > 
-> > 
-> > On 5/9/2023 11:29 PM, Marijn Suijten wrote:
-> >> On 2023-05-09 15:06:48, Jessica Zhang wrote:
-> >>> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>>
-> >>> Add a helper setting config values which are typically constant across
-> >>> operating modes (table E-4 of the standard) and mux_word_size (which is
-> >>> a const according to 3.5.2).
-> >>>
-> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> >>
-> >> Same question about ordering.
-> > 
-> > Hi Marijn,
-> > 
-> > This patch was authored by Dmitry and originally part of his DRM DSC 
-> > helpers series [1], but was removed from that series for mergeability 
-> > reasons.
-> > 
-> > Looking over the kernel documentation, the last Signed-off-by should be 
-> > from the patch submitter [2], so I think my s-o-b tag should be at the 
-> > bottom.
 
-That's true, but I also think the S-o-B at the top should match the
- From: author.
 
-> > As for the order in the previous patch, I can add a duplicate s-o-b 
-> > before Dmitry's so that it reflects the history of the patch.
+On 5/10/2023 7:54 PM, andy.shevchenko@gmail.com wrote:
+> Wed, May 10, 2023 at 07:11:17PM +0530, Sricharan Ramabadhran kirjoitti:
+>> Add pinctrl definitions for the TLMM of IPQ5018.
 > 
-> I think this is an overkill. Instead you can drop my SOB from the patch 
-> 1. We do not need this level of detail.
+> ...
 > 
-> For this patch the ordering of tags is correct.
+>> +#define FUNCTION(fname)			                \
+>> +	[msm_mux_##fname] = {		                \
+>> +		.name = #fname,				\
+>> +		.groups = fname##_groups,               \
+>> +		.ngroups = ARRAY_SIZE(fname##_groups),	\
+>> +	}
+> 
+> Can you coordinate with Rohit Agarwal <quic_rohiagar@quicinc.com> and use
+> his work [1] which moves the QCom drivers to use struct pingroup and struct
+> pinfunction?
+> 
+> [1]: https://lore.kernel.org/r/1683718725-14869-1-git-send-email-quic_rohiagar@quicinc.com
+> 
 
-So indeed, that either means duplicating the S-o-B or dropping it
-entirely as we do not care that it was part of that series earlier.
-Dmitry will likely sign this off once again when picking the patches.
+  ok, will do.
 
-- Marijn
+> ...
+> 
+>> +static const struct of_device_id ipq5018_pinctrl_of_match[] = {
+>> +	{ .compatible = "qcom,ipq5018-tlmm", },
+> 
+>> +	{ },
+> 
+> No comma for the terminator entry.
+> 
+
+  ok.
+
+>> +};
+> 
+> Move MODULE_DEVICE_TABLE() here.
+> 
+
+  ok
+
+Regards,
+  Sricharan
