@@ -2,78 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 13120700C1E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 17:43:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2688700C6B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 17:58:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241914AbjELPnD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 11:43:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58256 "EHLO
+        id S241781AbjELP6H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 11:58:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39404 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241907AbjELPnC (ORCPT
+        with ESMTP id S241557AbjELP6G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 11:43:02 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1627440CF;
-        Fri, 12 May 2023 08:43:02 -0700 (PDT)
-Received: from g550jk.localnet (unknown [62.108.10.64])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 8F364CEE75;
-        Fri, 12 May 2023 15:43:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1683906180; bh=Fid7yfw9t/u6WzqpvkhxPRW/PgqKY+ilcqxq2iSSnso=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=byb3Azt5b60NPc42TTCeq14cYY8E3/f0ATm/iJ5NNlh0zmNouIpxr4JKo9V1VPcub
-         awwwpN65xGFSP1+H9VAg39LNFrTRl9eM5/P15+EwjsBU4ZC2DRFTazF06TjvCwkeVM
-         r1XUuxrIygGXw6fB7o1HRFi0c5eQiBSWfj4lHmx4=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
+        Fri, 12 May 2023 11:58:06 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8522D26BF;
+        Fri, 12 May 2023 08:58:04 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 12E5060B0D;
+        Fri, 12 May 2023 15:58:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B23C433EF;
+        Fri, 12 May 2023 15:58:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1683907083;
+        bh=FK7Hhby4JLOW4/fgG5Gk6nA2uWpoAGql5tWqRblv8eU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=BSWPjv/GAP3zWbwvgdAm8+zU+A+AkJD/D+SJgAUBW9grkDR/WHgbaBuoHijj4XXKr
+         Xpfeqh2ty0xgqjue9XZqKpSzFk9IdmUySOneoENbqmjn8Q7sSrcbaodvBq2NpHreyU
+         UXX7gAgMfLuq0QlySgCkiCcfDaEqM/+/pgTx7xYI/Bnrt16tjMJNV9VrP5bszB2LOh
+         SZVk1WKSduqoZByaPzr1KTkFukwHP1VzKwAQ63X6dfYZChqegjtCu7prw7qcQWCOax
+         /q+GIQfl/BtvYcXsU6XNC7S3oTFZv7MSuLtGlJAq98/nIJFhg5xaiBM6eX9vyiSmbY
+         ZlhohKSGtnjQQ==
+Date:   Fri, 12 May 2023 08:58:01 -0700
+From:   Eric Biggers <ebiggers@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: Add BLSP DMAs for I2C
-Date:   Fri, 12 May 2023 17:42:59 +0200
-Message-ID: <7012043.lOV4Wx5bFT@z3ntu.xyz>
-In-Reply-To: <ee580939-8334-4d86-e01b-54c6fd0b2f42@postmarketos.org>
-References: <20230422-msm8953-blsp-dma-v1-1-0024801bb587@z3ntu.xyz>
- <ee580939-8334-4d86-e01b-54c6fd0b2f42@postmarketos.org>
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Jakub Kicinski <kuba@kernel.org>,
+        manivannan.sadhasivam@linaro.org,
+        Stephen Rothwell <sfr@canb.auug.org.au>
+Subject: Re: [PATCH v2] soc: qcom: Rename ice to qcom_ice to avoid module
+ name conflict
+Message-ID: <20230512155801.GA610@quark.localdomain>
+References: <20230512123632.3024857-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230512123632.3024857-1-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Freitag, 12. Mai 2023 12:14:29 CEST Alexey Minnekhanov wrote:
-> On 22.04.2023 14:39, Luca Weiss wrote:
-> > MSM8953 has two DMA controllers for the various I2C, SPI and UART
-> > busses. Add the nodes and configure all the I2C nodes so that the driver
-> > can use the DMA.
-> > 
-> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > ---
-> > 
-> >   arch/arm64/boot/dts/qcom/msm8953.dtsi | 48
-> >   +++++++++++++++++++++++++++++++++++ 1 file changed, 48 insertions(+)
+On Fri, May 12, 2023 at 03:36:32PM +0300, Abel Vesa wrote:
+> The following error was reported when building x86_64 allmodconfig:
 > 
-> Hello,
+> error: the following would cause module name conflict:
+>   drivers/soc/qcom/ice.ko
+>   drivers/net/ethernet/intel/ice/ice.ko
 > 
->  > arm64: dts: qcom: Add BLSP DMAs for I2C
+> Seems the 'ice' module name is already used by some Intel ethernet
+> driver, so lets rename the Qualcomm Inline Crypto Engine (ICE) from
+> 'ice' to 'qcom_ice' to avoid any kind of errors/confusions.
 > 
-> to all qcom boards? Or only for msm8953? Commit title is unclear.
+> Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+> Fixes: 2afbf43a4aec ("soc: qcom: Make the Qualcomm UFS/SDCC ICE a dedicated driver")
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+> 
+> Changes since v1:
+>  * changed filename from qcom-ice.c to qcom_ice.c (with underscore)
+>    to be in line with other Qcom SoC drivers.
+> 
+>  drivers/soc/qcom/Makefile              | 2 +-
+>  drivers/soc/qcom/{ice.c => qcom_ice.c} | 0
+>  2 files changed, 1 insertion(+), 1 deletion(-)
+>  rename drivers/soc/qcom/{ice.c => qcom_ice.c} (100%)
 
-Right, missed "msm8953: " in the subject ;)
+I'd also prefer that the filename stayed ice.c and just the module was renamed,
+given that this is already in the drivers/soc/qcom/ directory.
 
-Thanks for catching that!
-
-
-
+- Eric
