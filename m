@@ -2,227 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1CE4700FF7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 22:52:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4A39700FFB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 22:53:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239134AbjELUwf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 16:52:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55694 "EHLO
+        id S229799AbjELUxq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 16:53:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55952 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233853AbjELUwe (ORCPT
+        with ESMTP id S229611AbjELUxp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 16:52:34 -0400
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2066.outbound.protection.outlook.com [40.107.93.66])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC34A10EA;
-        Fri, 12 May 2023 13:52:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=cVptgSzBtU85Zr1RVj9Wx/XdCxztyWYv32Q3j5iDyW0f7aJJuh36ATlEX39o+dFLGBwN400feL+DaatKwFn4LnWDx9nzEs7tqXJkCWEJBu/LnP24WDgj/MiQbSfHNI088RRi0PQJHo1wVt/bxVAEIsnWS/iY4VcFxRM8BR9OpsW0LUmP1qFUSKn0Ok6aVEVF22Oxv9PIdoLMV4pUZlUzYqMHHzH6ijoqIvYR/0hfe4Hn7vHGoDHWZz/4gY0uoy4Kpo71oH80gWAZUHRdAt5bfeclq5Fzhfo8EkpTYofsAznIcBFG5I9dg4PRrAv91CGxsrWA91iH6mk3pGcQOHISQg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=efScZjkjmic7la8z/qAlJo5TNkfYpCfcYfV3h4narFE=;
- b=Nz3a9/MV2nEeevJKlSGMR8XplPFHNO25UvOIbbMav26RA/9ZEblAlRSjAcu1k1MmU+XnOTtnTlhzH+9HDoqBDntQph85Hfqd8cXUcOiHBgZxv+SArPNB2zbSD6AHH4re3MYn7jrjdnFBXN3vD1b7fdNPy1G2xZ7Luqzd4FYYUdsUzDwwj1csqZ22MNeQcNyRAALJS8x12YkwGkYekWdGlwEEpQgsVZdXW5VpInRHtsS1HRMeIh+UXB3fWhDpkHRwP14ASgtZwrNGfNHPaPj2yDCqolU7nb8+5aNum65xhK8ecbBsDEVL3J+GuTPBbix2kA2Zhdde1vvaH7DvEo3fSQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=efScZjkjmic7la8z/qAlJo5TNkfYpCfcYfV3h4narFE=;
- b=SXqigWThFFPY4vrs9IpK404+EPyF01qzNa9Csoj4eEgwxTuyPPRZTAQFGyTenmGXexgG16M9jwBL+7Lbp/8HbdXaJf4uKYV+xwNqFNMOhZCT58W63nBb8/ljTFQto63R6sBKkfRzt2d/baqkIq1qiiq5lMH80E1RpQh9k2A/feE2EVPrkAYxfxrczLzWROM+PR/1C8vyh091CyNUi3hsrwWpg4i/+Fm8znKISe0QUKv2/YQpCp567U3ho1G27p4mDj08sWg0ygo11I168mjuHCTBYewBsNnpB8ZW2KwUKGFTO8TdzKZ3Iu3stluauUlK6cSKw/cYUpKT3NNShxuq7A==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by DS0PR12MB8269.namprd12.prod.outlook.com (2603:10b6:8:fd::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6387.20; Fri, 12 May
- 2023 20:52:30 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::f7a7:a561:87e9:5fab]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::f7a7:a561:87e9:5fab%6]) with mapi id 15.20.6387.021; Fri, 12 May 2023
- 20:52:29 +0000
-Date:   Fri, 12 May 2023 17:52:27 -0300
-From:   Jason Gunthorpe <jgg@nvidia.com>
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Dmitry Osipenko <digetx@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Steven Price <steven.price@arm.com>
-Subject: Re: [PATCH 02/20] iommu/terga-gart: Replace set_platform_dma_ops()
- with IOMMU_DOMAIN_PLATFORM
-Message-ID: <ZF6nC7fvmaNZNph3@nvidia.com>
-References: <2-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com>
- <1db712d2-9e33-4183-2766-34e32f170507@arm.com>
- <ZFI/D6mnLKYpdIqx@nvidia.com>
- <1a995f30-31fe-354f-ddfe-e944fa36e7a0@arm.com>
- <ZFJlZ03lswl9uHD0@nvidia.com>
- <ZFJzKQcKNFHdIWqy@orome>
- <ZFKXz/HWFkYOJrgT@nvidia.com>
- <4a5ebc65-a384-a8df-c692-ca114f1a018d@gmail.com>
- <ZF5uKPhpBNioJUwL@nvidia.com>
- <9488a2cc-fbc6-6c1e-58f8-e2e1dc5db579@arm.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9488a2cc-fbc6-6c1e-58f8-e2e1dc5db579@arm.com>
-X-ClientProxiedBy: MWH0EPF00056D05.namprd21.prod.outlook.com
- (2603:10b6:30f:fff2:0:1:0:e) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
+        Fri, 12 May 2023 16:53:45 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 938331FE5;
+        Fri, 12 May 2023 13:53:42 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f00d41df22so55366219e87.1;
+        Fri, 12 May 2023 13:53:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683924821; x=1686516821;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dK9pTU3dCszxfhakIo6H9xZVLUDy3fIcZSz6A27TG8M=;
+        b=FD/zAsysSg3L3OXq9M6zoEHXlfE7Zfisk0oebJg9PxeK9WD3m7uBHxhWl00zt77u+z
+         0tUZ4noCfxhvkE0k3KBAqdr6hd/MIfK7l6RCJC5VXN0uA6dKVGWFLnIKdlHEpNsfYARY
+         N5BPheqRnYf8SWrvmYRPSDLSWEVrx6KNGuVl0Sm7yzG5k+XyxctahUO6aWQyG6j3WcHL
+         TjFAnpxP8mTK2AVe9C1aOf7iAXfQg9+e2lfBpBFMX1bD2A2DQAzihjZRhv1n+/q20MbV
+         iQxoBV3Z5SgOkCWqzEhXleobkJpZw1Wxo2FgVZky9NuWoS5Sf6gx3O6rYux5izXhmZPy
+         w9EA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683924821; x=1686516821;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dK9pTU3dCszxfhakIo6H9xZVLUDy3fIcZSz6A27TG8M=;
+        b=fRVTNlfiLiDtne+VJahvV2rIQ7nmma2LiYl5cTXIG22FRgxQ/IPx8hw23fLylYBS1l
+         /GITN6Pus8wX1xGrB76kCqh4n/UB/fLzFWZlNOJ61wWJs8UxNTumf0swVVAlmV+BHFZi
+         +/+GKzFEklpAFyo/oMjm4jsVT/wJa6UlHpkYnYf+yskTefnp6/g8wwzNuHi3z77Fx9R6
+         lwpVqd2skXDq7Nm8uf4dcuw42K/OcIOdR8REumbWZwr0bHpEXtjcw9DwM7En3XjoC2ma
+         dgvQ4TsJtPfrPbh3XsZIFpBe4riGuXSve7CsBEICJ/Xpw2aNuFs7VVIge72O2craF4C2
+         CUMw==
+X-Gm-Message-State: AC+VfDxUUvj234Hr65zNvhku1e6pctP9DyuQvzqMHCl1DlhYo1F/Dsai
+        H942MTRdPnLc6R6GeX9cWTSuUTrR6EdghdvcQfk=
+X-Google-Smtp-Source: ACHHUZ4QVh0Plexs1KGYcEgkQrE+RKTmMsf2h41mEIoiKb7iyK0IcQzM41HYhHzu7YrAE3Za0Omy3humMqCta3K95Ik=
+X-Received: by 2002:a2e:9355:0:b0:293:4b60:419c with SMTP id
+ m21-20020a2e9355000000b002934b60419cmr3647191ljh.18.1683924820549; Fri, 12
+ May 2023 13:53:40 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|DS0PR12MB8269:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3a442b5c-4d49-4c47-17c9-08db532acce9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: XfdKzJ2+8zMFLBARctyz8DdIysXLM9aMKpNjOZac1bxSiNgys497s2V/XsSuhUVbbRO96dkBv9IAb1PJFnJpiu4G5mV24AH4OfURTW4PR8P03NIARIDbR5NxgKG9jygLjCjYhYLpE9MlvxfdKX1qAZgN4ixmO93hz4G6+MmAsuIsdJ/+XBqKNvOzCwLzk3/dKo5+B2kFFtzlJUhZqd2ahTHkeWIaOHAPEKStgLiuO6J9+DoEOL/AZa9f6dwjE8Z0laBP7vb0Z0JDLWLB+hcQTwmcp8eS9yL7s3jy+DEarU3oi4PHOBSqKP2W1WbJSgwhp6mpiKQ9ppRJHoRSZMVWqx2DCkucW/rngR8FKJfpHBC4qbXUZ8zo2+i/C3NuuEOfmI9B42Lz4OCShGy4S5gk7UUIq5CJIdzIqoYdeLivEyALvQkM17A/UruU09nB5Bq3LDhVjAD3jeW/V4J+gNe0h5j+yA2aYSvqsIrSyUnblUZqCaJ3AtDQCZVMF80Sl6zqxGhWO+x8m9Mb/ZysWcGwnBwSbvqhFDMjYrCRPY06ADYvHZ+sT6IV64fICvIQBClO
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(376002)(346002)(136003)(396003)(366004)(39860400002)(451199021)(7406005)(6506007)(478600001)(26005)(316002)(7416002)(6512007)(83380400001)(41300700001)(66946007)(66476007)(66556008)(54906003)(4326008)(6916009)(38100700002)(6486002)(2616005)(8676002)(86362001)(8936002)(2906002)(36756003)(186003)(5660300002)(53546011);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?iByBEW7V+hdwnnMf3C6nVnRgkFI+mQq0zbKNwjIYdqZdbdt0pPpII+b2NZ2K?=
- =?us-ascii?Q?uelOeKBHNG4MlCvLE9T3GESlLNV7PVy/m1jQf3EAnbaRGKnF0r10UtFLEXXQ?=
- =?us-ascii?Q?+eHes9PpOXuCsebNzzUZtkWcwVqLUwpbt7k7NpfQs6odJoeqRCxtO0erCl2j?=
- =?us-ascii?Q?6TelzDKUUgfrRtfRTFEq0bAMyclv10tgfxl8zxUgBud0NTsSJGMCaNXBVQv8?=
- =?us-ascii?Q?5LdEB5y2QV5sWVU+QabTzPvdttl7kkmeei573TkzeOGTSz8GYCQWxQPksTIr?=
- =?us-ascii?Q?jC0QYbp3VyB+eAAKqJObeivSdsZEHjym/oU8KZV9sR+6+0k4Ad9SZp44do9X?=
- =?us-ascii?Q?GrXZoAi8XrBwbvKQz9q3vFkSjAJaaq7O3zKySndvIGP3hUbmjmxaRCHDd4Xe?=
- =?us-ascii?Q?HnpjleOhS4pJWtasUhLadi3xD0fIh0ys96oND4nG8GnstBK5gX/eG7Tj75af?=
- =?us-ascii?Q?NYnMzogU4yWj59VnTODvKdsieK3tQdB/8NK04NMJgMfpsNNw34R9Zvdz9gOP?=
- =?us-ascii?Q?6QLENxKgZPMs8hfvcFlbh0rvf6zLkZIW2xYxqPm27sYMuY3CLgurU4RPiZbb?=
- =?us-ascii?Q?QQ86fRHduNKPAKyyTBm5k0A5fDiVn29D7Ni/kRaazybhTXKQmJQ81MNzQStn?=
- =?us-ascii?Q?dghiTnXiKjagfoN8u0wo5ug73xrU4G+0LbM1mcel3zgX+/Dlg2PC12Hb/QGh?=
- =?us-ascii?Q?d2ilq5AL+ycIm01MtUW+tvHVXzCOQjpB5UnpndHeCCByWxG0blQaJVVR28Te?=
- =?us-ascii?Q?bju/VVuMnvEYDFsFxX9pqq73XCDohr5UlRfIbwIYk8Uf9Szwt/WleOsgxFZ4?=
- =?us-ascii?Q?a8dz2OtlC4DrMeDM1XPPCCeO+jj/BNy41DSMCxJx5G3vUW+ggBpAtec05gw0?=
- =?us-ascii?Q?pJ+aAJCjx5YQILftcGqK6bN2nbEhsKV+OYuGY0jLnXF51NZDIhTJ3Io8Hxf7?=
- =?us-ascii?Q?SihS84WWE5KDjNph7CYvjB/6k9zR0dIIP2E6+xUrd8iucEENARpVToK6Eu8d?=
- =?us-ascii?Q?smKaUwAQ9vBv2kwKiuZwSGj0YGxPs0UWB78HxJ+Z+NnqXzd6al1M+j07VMVb?=
- =?us-ascii?Q?qCh0CoHRYne0Bc+HBohHWCMZM4d039AayEloEX7SWkC0g6+z++wW0zr9ZyUc?=
- =?us-ascii?Q?0gt/KXTvvMbYRy03UlcrvlOZ9c11yIK1ZgeNejWwbCVohGC6TLer2ValxWp0?=
- =?us-ascii?Q?npdxpRRSNEWG7RxAIFOsrtu5oo6chhrwdPk1ociNsWwKJO8CyqX32FFtG3zN?=
- =?us-ascii?Q?1JusmxYbh7KVap7yBMtD1yhKCM+nkGSH+dEktwpq5/SwkIgIRekxB71CGCaq?=
- =?us-ascii?Q?EYWIV3DECnP1t9bf58pDWSC+eUU6LOTHwvapBn+miyLzCwrlv3fw5ImDyutl?=
- =?us-ascii?Q?FMnc/nhbFhurCvTnWiZeTXcfWoAMqsxpsrt6G49OL8s4kmSpl4cTX4l/goX8?=
- =?us-ascii?Q?ERIWbHmqxSY18iUODcoEyN56wLnYo5dKMygHI0RMxMbPiPWWVNxhIv0X5iBN?=
- =?us-ascii?Q?Nnjkk+oGM8GlyIU5kCVVVL6kYw0bxDpHrvnzCrU2moVgyRP9DabQUBfJKn8W?=
- =?us-ascii?Q?aQxn7NjG6KE4lp9rw6E=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3a442b5c-4d49-4c47-17c9-08db532acce9
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 May 2023 20:52:29.5817
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: J9yW1Skn+kvOBwIRorqSo1+xEPGwoWewzqFjQyIauZ3aPe7npwZ77g+wxw9Dakrd
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8269
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.6
+References: <20230421-fp4-bluetooth-v2-0-3de840d5483e@fairphone.com>
+In-Reply-To: <20230421-fp4-bluetooth-v2-0-3de840d5483e@fairphone.com>
+From:   Luiz Augusto von Dentz <luiz.dentz@gmail.com>
+Date:   Fri, 12 May 2023 13:53:28 -0700
+Message-ID: <CABBYNZJPw=Oxi+J2oA=6aosEZjCBK=u=8HEJywzRJCCrmGnkGA@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] Add WCN3988 Bluetooth support for Fairphone 4
+To:     Luca Weiss <luca.weiss@fairphone.com>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 12, 2023 at 07:12:21PM +0100, Robin Murphy wrote:
-> On 2023-05-12 17:49, Jason Gunthorpe wrote:
-> > On Fri, May 12, 2023 at 05:55:23AM +0300, Dmitry Osipenko wrote:
-> > 
-> > > > > This has occasionally come up in the past and I seem to remember that it
-> > > > > had once been proposed to simply remove tegra-gart and there had been no
-> > > > > objections. Adding Dmitry, if he doesn't have objections to remaving it,
-> > > > > neither do I.
-> > > > 
-> > > > Dmitry, please say yes and I will remove it instead of trying to carry
-> > > > it. The driver is almost 10 years old at this point, I'm skeptical
-> > > > anyone will need it on a 6.2 era kernel..
-> > > 
-> > > You probably missed that support for many of 10 years old Tegra2/3
-> > > devices was added to kernel during last years.
-> > > 
-> > > This GART isn't used by upstream DRM driver, but it's used by downstream
-> > > kernel which uses alternative Tegra DRM driver that works better for
-> > > older hardware.
-> > 
-> > It is kernel policy not to carry code to only support out of tree drivers in
-> > mainline, so it should be removed, thanks
-> 
-> Aww, I was literally in the middle of writing a Friday-afternoon patch to
-> fix it... still need to build-test, but it's really not looking too bad at
-> all:
+Hi Luca,
 
-But we still need some kind of core support to accommodate a domain
-with a mixture of identity and translation. Seems a bit pointless for
-a driver with no in tree user even?
+On Fri, May 12, 2023 at 6:58=E2=80=AFAM Luca Weiss <luca.weiss@fairphone.co=
+m> wrote:
+>
+> Add support in the btqca/hci_qca driver for the WCN3988 and add it to
+> the sm7225 Fairphone 4 devicetree.
+>
+> Devicetree patches go via Qualcomm tree, the rest via their respective
+> trees.
 
-> After that I was going to clean up the force_aperture confusion.
+Just to be sure, patches 1-2 shall be applied to bluetooth-next the
+remaining are going to be handled elsewhere?
 
-Oh I already made a patch to delete it :)
+> --
+> Previously with the RFC version I've had problems before with Bluetooth
+> scanning failing like the following:
+>
+>   [bluetooth]# scan on
+>   Failed to start discovery: org.bluez.Error.InProgress
+>
+>   [  202.371374] Bluetooth: hci0: Opcode 0x200b failed: -16
+>
+> This appears to only happen with driver built-in (=3Dy) when the supporte=
+d
+> local commands list doesn't get updated in the Bluetooth core and
+> use_ext_scan() returning false. I'll try to submit this separately since
+> this now works well enough with =3Dm. But in both cases (=3Dy, =3Dm) it's
+> behaving a bit weirdly before (re-)setting the MAC address with "sudo
+> btmgmt public-addr fo:oo:ba:ar"
+>
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+> Changes in v2:
+> - Add pinctrl & 'tlmm 64' irq to uart node
+> - Pick up tags
+> - Link to v1: https://lore.kernel.org/r/20230421-fp4-bluetooth-v1-0-0430e=
+3a7e0a2@fairphone.com
+>
+> ---
+> Luca Weiss (4):
+>       dt-bindings: net: qualcomm: Add WCN3988
+>       Bluetooth: btqca: Add WCN3988 support
+>       arm64: dts: qcom: sm6350: add uart1 node
+>       arm64: dts: qcom: sm7225-fairphone-fp4: Add Bluetooth
+>
+>  .../bindings/net/bluetooth/qualcomm-bluetooth.yaml |   2 +
+>  arch/arm64/boot/dts/qcom/sm6350.dtsi               |  63 +++++++++++++
+>  arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts  | 103 +++++++++++++++=
+++++++
+>  drivers/bluetooth/btqca.c                          |  13 ++-
+>  drivers/bluetooth/btqca.h                          |  12 ++-
+>  drivers/bluetooth/hci_qca.c                        |  12 +++
+>  6 files changed, 201 insertions(+), 4 deletions(-)
+> ---
+> base-commit: f2fe50eb7ca6b7bc6c63745f5c26f7c6022fcd4a
+> change-id: 20230421-fp4-bluetooth-b36a0e87b9c8
+>
+> Best regards,
+> --
+> Luca Weiss <luca.weiss@fairphone.com>
+>
 
-> TBH I've grown to rather like having this driver around as an
-> exception to prove our abstractions and help make sure they make
-> sense 
 
-Except nobody else seems to know it is here or really understand how
-weird/broken it is compared to the other drivers. We've managed to
-ignore the issues, but I wouldn't say it is helping build
-abstractions.
-
-If we remove this driver then the iommu subsystem has no HW with a
-mixed translation in the iommu_domain and looking forwards I think
-that will be the kind of HW people want to build. The remaining
-GART-like hardware is in arch code.
-
-> not like there aren't plenty of in-tree drivers for hardware even
-> more ancient, obscure and less-used than Tegra20. FWIW I have
-> *20*-year-old hardware at home running an up-to-date mainline-based
-> distro for a practical purpose, but I guess that's considered valid
-> if it says Intel on it? :P
-
-Well, We keep trying to remove stuff across the kernel.. This week I
-heard about removing areas of HIGHMEM support, removing ia64 and even
-some rumbles that it is time to say good bye to ia32 - apparently it
-is now slightly broken. Who knows what will stick in the end but it is
-not just ARM.
-
-Stuff tends to get removed when it stands in the way..
-
-On the other hand stuff with no in-tree user should just be summarily
-deleted. We have enough problems keeping actual ancient used code
-going, the community doesn't need even more work to support some out
-of tree stuff.
-
-Jason
+--=20
+Luiz Augusto von Dentz
