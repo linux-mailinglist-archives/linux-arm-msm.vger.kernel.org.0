@@ -2,52 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BAF8700E22
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 19:53:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 263B0700E3C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 20:00:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237984AbjELRxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 13:53:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48042 "EHLO
+        id S238175AbjELSAy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 14:00:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237651AbjELRxP (ORCPT
+        with ESMTP id S231637AbjELSAt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 13:53:15 -0400
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCE3F8A76;
-        Fri, 12 May 2023 10:53:11 -0700 (PDT)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-        id 07AEB1C0ABB; Fri, 12 May 2023 19:53:10 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
-        t=1683913990;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=b/kgvT3BKXQ+t2ds//F2bD3iB3PjsDiJV+brMHur6RQ=;
-        b=Gi84IBxJBRzfHM5e9b/7a6K9v3L9mPEpuSKEaj51WdZpDxpvECSdAdIBzrxZ4N77agTBMc
-        UiieET9PlbMGij7O6dbIBSKDETWtdJjw9qIFpvKlb/OSMS0IjAK9o0tyIBidgDqRfVPBbG
-        zjbs82Jnh3iyhycUmmvJ2prohxOZAYw=
-Date:   Fri, 12 May 2023 19:53:09 +0200
-From:   Pavel Machek <pavel@ucw.cz>
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>
-Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: power_supply cooling interface
-Message-ID: <ZF59BS77uUpEZK6X@duo.ucw.cz>
-References: <164f2458-fb66-f238-7143-bdbe1e200870@linaro.org>
- <ZF5t5BWqLLEvDdfz@localhost>
- <b1237581-3ece-a358-f1ba-7a3ebb08d8d2@linaro.org>
+        Fri, 12 May 2023 14:00:49 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62A1E180;
+        Fri, 12 May 2023 11:00:44 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34CEeFnm005466;
+        Fri, 12 May 2023 18:00:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=v0CLabRK40BP/swV4W/xCl+v3Mz6OFvMsNI7TIoKhes=;
+ b=cgdgh02ivWhwMFGF5tgZ9B6f1GVGmjg27L2vkNmyEc4hgFqrv3iS01U5vlxuNhCLZrxU
+ 9dLYxH/d6xyTd4Lr5bHa2aZpgcTPbJMZB6LUdToMmOdmA4BNBcJ4I1PQhJUXkKhV37dq
+ LWHTAK/olbe61C4lZGXPqjtDeAczmXHpKEcj3IHoOwVmQbsWdzgjdB5tWBFovZ1FvCZe
+ 0kclsjDDvx8j+V2WrD1DU/7YQg0D3vLr8PTl8hlPUvL0wvYKdqVNhrwaAv+OdwiT1tWK
+ E6Nqt1Mbt4mxbk43d6o8ZP9WA73AzPrxXMryJI0CKLe2U/jmkWe/V/wgz791tOCTrvIp hA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qh5g9anxn-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 12 May 2023 18:00:33 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34CI0W1d002584
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 12 May 2023 18:00:32 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 12 May 2023 11:00:31 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <andersson@kernel.org>
+CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v8 0/8] add DSC 1.2 dpu supports
+Date:   Fri, 12 May 2023 11:00:15 -0700
+Message-ID: <1683914423-17612-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-        protocol="application/pgp-signature"; boundary="+HOYeiAJ9Fpm6NkI"
-Content-Disposition: inline
-In-Reply-To: <b1237581-3ece-a358-f1ba-7a3ebb08d8d2@linaro.org>
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: CMJGFZGKj_UqpuC3zzVzyHZZuecPr_vz
+X-Proofpoint-ORIG-GUID: CMJGFZGKj_UqpuC3zzVzyHZZuecPr_vz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-12_10,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ lowpriorityscore=0 mlxlogscore=999 mlxscore=0 clxscore=1015
+ priorityscore=1501 spamscore=0 impostorscore=0 malwarescore=0
+ suspectscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305120150
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
         T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -56,113 +81,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series adds the DPU side changes to support DSC 1.2 encoder. This
+was validated with both DSI DSC 1.2 panel and DP DSC 1.2 monitor.
+The DSI and DP parts will be pushed later on top of this change.
+This seriel is rebase on [1], [2] and catalog fixes from rev-4 of [3].
 
---+HOYeiAJ9Fpm6NkI
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+[1]: https://patchwork.freedesktop.org/series/116851/
+[2]: https://patchwork.freedesktop.org/series/116615/
+[3]: https://patchwork.freedesktop.org/series/112332/
 
-Hi!
+Abhinav Kumar (2):
+  drm/msm/dpu: add dsc blocks for remaining chipsets in catalog
+  drm/msm/dpu: add DSC 1.2 hw blocks for relevant chipsets
 
-> > > I've been working on a driver for the charger found in most Snapdragon
-> > > 845 phones (the OnePlus 6, SHIFT6mq, PocoPhone F1, etc). I wanted to
-> > > include support for the POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT
-> > > property.
-> > >=20
-> > > My understanding is that it exposes the current limit as a cooling
-> > > device so that userspace (or frameworks like DTPM) can optimise for
-> > > performance in a thermally constrained device by limiting the input
-> > > current and thus reducing the heat generated by the charger circuitry,
-> > > a similar idea was applied on the Pixel C:
-> > > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/co=
-mmit/?id=3Da4496d52b3430cb3c4c16d03cdd5f4ee97ad1241
-> > >=20
-> > > However, reading through the sysfs docs for cooling devices, and
-> > > looking at the implementation in power_supply_core.c, it seems like t=
-he
-> > > behavior here is wrong in a few ways:
-> > >   1. The values should scale from 0: no cooling to max_state: max
-> > > cooling, but the power_supply docs and the only existing implementati=
-on
-> > > (the smbb driver) just export the current_limit, such that increasing
-> > > cur_state would increase the current limit, not decrease it.
-> > >   2. (unsure?)The scale is completely different to most other cooling
-> > > devices, most cooling devices don't seem to have a max state much
-> > > beyond the double digits, but CHARGE_CONTROL_LIMIT is on the scale of
-> > > uA, so approaches like incrementing the cooling state by 1 don't real=
-ly
-> > > work.
-> >=20
-> > Did this get solved somehow?
->=20
-> Thanks for resurrecting the discussion.
->=20
-> > Anyway, I am not sure mW will be useful here, as elsewhere it is mW
-> > thermal and here it is mW from charger. Most of that energy should be
-> > stored in battery, not converted to heat.
->=20
-> I'm not sure to understand the comment. The question is about decreasing =
-the
-> speed of the charge of the battery because the faster it charges the warm=
-er
-> it gets. Doing a fast charge is ok, if the phone is for instance on a tab=
-le
-> doing nothing. But if the environment is hot (a car, a pocket) or there a=
-re
-> other sources of heat on the phone like a game, the temperature of the
-> battery could be too high (or the skin temperature). In this case we have=
- to
-> balance the heat contribution of the different components by reducing the=
-ir
-> performances. The first knob to act on is to reduce the charge speed of t=
-he
-> battery by reducing the delivered power.
+Kuogee Hsieh (6):
+  drm/msm/dpu: add DPU_PINGPONG_DSC feature bit for DPU < 7.0.0
+  drm/msm/dpu: test DPU_PINGPONG_DSC bit before assign DSC ops to
+    PINGPONG
+  drm/msm/dpu: Introduce PINGPONG_NONE to disconnect DSC from PINGPONG
+  drm/msm/dpu: add support for DSC encoder v1.2 engine
+  drm/msm/dpu: separate DSC flush update out of interface
+  drm/msm/dpu: tear down DSC data path when DSC disabled
 
-Understood.
+ drivers/gpu/drm/msm/Makefile                       |   1 +
+ .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    |   7 +
+ .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |  11 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |  14 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |   7 +
+ .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   |  16 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |  14 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |  14 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  59 +++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  31 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  36 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  29 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  10 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c         |  14 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h         |  15 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c     | 382 +++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |   6 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |   7 +-
+ 19 files changed, 649 insertions(+), 27 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c
 
-> For that we need a connection between the thermal framework which monitors
-> the battery temperature and the power supply to reduce the charge speed w=
-hen
-> it is too hot. This connection is the cooling device.
->=20
-> The cooling devices have opaque values where the min and max cooling effe=
-ct
-> vary depending on the implementation (eg. a fan 0/1, a LCD light 0/1023).
+-- 
+2.7.4
 
-Aha, ok.
-
-> Here the power supply has yet another unit (uA) to act on and difficult to
-> translate to a cooling device discrete numbers (that is my
-> understanding).
-
-Well, if you can accept 1000 steps like you do for LCD, all you really
-need is maximum current and then stepping in 1/100 of that.
-
-> With enough components in DTPM, it will be possible to create a generic
-> power cooling device using the unified unit uW with the powercap API.
-
-I was trying to point out trouble with uW: you don't know them in case
-of battery charging.
-
-You know phone is drawing 500mA @ close to 5V (-> 2.5W), but you don't
-really know how much is stored in battery, and how much is turned into
-heat.
-
-But I guess you could approximate that somehow.
-
-BR,								Pavel
-
--- People of Russia, stop Putin before his war on Ukraine
-escalates.
-
---+HOYeiAJ9Fpm6NkI
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZF59BQAKCRAw5/Bqldv6
-8kl6AJoC8T1J06TA7wMVmrT/7qi5p3Qm1QCggd70ihEYrC4+ImG+Zr8jiguNuPw=
-=jTk3
------END PGP SIGNATURE-----
-
---+HOYeiAJ9Fpm6NkI--
