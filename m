@@ -2,124 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 57FE46FFF27
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 05:01:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 90BB5700090
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 08:31:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239814AbjELDB2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 May 2023 23:01:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45360 "EHLO
+        id S240029AbjELGbV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 02:31:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239803AbjELDB0 (ORCPT
+        with ESMTP id S240042AbjELGbG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 May 2023 23:01:26 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B197171E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 May 2023 20:01:23 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3f41dceb93bso45512745e9.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 May 2023 20:01:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683860481; x=1686452481;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wNH+qT+d278L8EuW7+gJj57wNou4ngN3N+y41xL0bJg=;
-        b=bsfwLbTBcF81MZeJ5Eya6UvNOwMn6NFXp1BWVwwh6WeMzLswrcetweYtitBfRV1LJp
-         kqX1FbImeeNtFUS04GbjkFfj/YrFVwqRF22Cyq/SdOkfCAGbnve4GGykWMnzo47LnOdm
-         QvCC2CjXm+ApHY7cqpoa+x4BDadq1gxPbpKZ9g9/6EEUnO4eZ+EbAr68dvWhfyEIWhnF
-         pkCRdkTN03AuRWSyXUi540JrbEbX+n5fQ4tYV+ZClNXxeloLqkJ5vRHPjCWzExCU3Lda
-         uhi0Ezs/upGKHHkPNC1JGdxg58qYjfkQGIweMuDMJF2hL387Ypfxq8HN5yvW1aAq9hnv
-         QI0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683860481; x=1686452481;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wNH+qT+d278L8EuW7+gJj57wNou4ngN3N+y41xL0bJg=;
-        b=ccKOkQ2fhlbX6hi90FUlNwAFJZld1UKqwhUx7J3amfJt8pxHSRlD8pTrTZZf4vPOqu
-         /Sr70R/7UBNVigdIEueemhTxuBCINYsvREckPGGFY5CYPxWlgdSmbyS7EOKBqXAHs/mV
-         TYb6ZUZtG6dchjv4Dx0DHJDYjUQQfa7VESyOSAgqp7Fms+oXAwk1+zER+aUnInVDpOZH
-         MVJb2QzLi0W3ngII5Y7J9nBDy47XCxhWze86uL2Xe9uHF/kzKt54QAVlW5BzB/w60QFi
-         o15HAlsf8G6igk3LqJdByX/3Be6slubPY4fXhkeFWQec74xMOpmqFAwdXPOgMSjZwbuS
-         qHww==
-X-Gm-Message-State: AC+VfDzgmwfc8fA1zZrwliwMkqf1PTQ9LTg+RtirCtWV4vmxYR/rMI6F
-        Fm8CI6vJeiQdur3DxkIWOaXfSg==
-X-Google-Smtp-Source: ACHHUZ44za2uY/t0ZeDVI7Cub+JKSvmiDla/DY0bj3D5erE9BCthF8KD3B45b2eRZNuru7kPL/TL5Q==
-X-Received: by 2002:a5d:6149:0:b0:306:2fd1:a929 with SMTP id y9-20020a5d6149000000b003062fd1a929mr15785049wrt.7.1683860481429;
-        Thu, 11 May 2023 20:01:21 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id w12-20020a05600c474c00b003f07ef4e3e0sm14458610wmo.0.2023.05.11.20.01.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 May 2023 20:01:20 -0700 (PDT)
-Message-ID: <f9904e82-4756-2add-3c7e-e019ce966515@linaro.org>
-Date:   Fri, 12 May 2023 04:01:19 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 00/18] Venus QoL / maintainability fixes
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Fri, 12 May 2023 02:31:06 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CC4A83C8;
+        Thu, 11 May 2023 23:30:40 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34C3n3A8001930;
+        Fri, 12 May 2023 06:30:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : in-reply-to : references : mime-version :
+ content-type; s=qcppdkim1;
+ bh=JYRuveHfxiDDn9lriPtHcUMtt96+XzuPPb00kzOgFlA=;
+ b=XRjPHsUsZguvQchmXKQ9FE2ebiUHw2Z7kanFVEPQO8UzueB029/mrg04RhLmlhbim3ub
+ PjchGS6649A3qoSd7UnGnumv5FUwq62HM4JNlqPk6k9XJv1BMPJMeUrjfQJ1ResxFxOW
+ bMdCBPzg7fLMP7RSvVqy+ND9VLVMbDbFbD5Pp8qHq43fZYYdYR2DxTXff6xGVIyeA+ob
+ Jo2yg8NQ3K7M+MlJ3KOQslIO00+p4ZL+NJkWb1QpYbwyYQTr8v2lKTuNbrPzt5YL3B0l
+ ozvu55UyGpBjw5WfBdve8Qk3JTq2NlNBwd303xOkJt3Q4AB4RUnAIPX8j+kGokFT9qJi nw== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qhayt0m0a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 12 May 2023 06:30:27 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34C6UQAr028463
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 12 May 2023 06:30:26 GMT
+Received: from stor-berry.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Thu, 11 May 2023 23:30:25 -0700
+From:   "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
+To:     <quic_asutoshd@quicinc.com>, <quic_cang@quicinc.com>,
+        <bvanassche@acm.org>, <mani@kernel.org>,
+        <stanley.chu@mediatek.com>, <adrian.hunter@intel.com>,
+        <beanhuo@micron.com>, <avri.altman@wdc.com>,
+        <martin.petersen@oracle.com>
+CC:     <linux-scsi@vger.kernel.org>,
+        "Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Hans Verkuil <hans.verkuil@cisco.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        stable@vger.kernel.org
-References: <20230228-topic-venus-v2-0-d95d14949c79@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230228-topic-venus-v2-0-d95d14949c79@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alice Chao <alice.chao@mediatek.com>,
+        Arthur Simchaev <Arthur.Simchaev@wdc.com>,
+        "open list" <linux-kernel@vger.kernel.org>,
+        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH v5 6/7] ufs: mcq: Use ufshcd_mcq_poll_cqe_lock() in mcq mode
+Date:   Thu, 11 May 2023 23:28:53 -0700
+Message-ID: <15f2844264a3308347d3986f72e6078bcaca5b55.1683872601.git.quic_nguyenb@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <cover.1683872601.git.quic_nguyenb@quicinc.com>
+References: <cover.1683872601.git.quic_nguyenb@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: hx5hNray72V7AAUIQT8lV_K5nG668r2W
+X-Proofpoint-GUID: hx5hNray72V7AAUIQT8lV_K5nG668r2W
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-12_03,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
+ phishscore=0 priorityscore=1501 suspectscore=0 spamscore=0 adultscore=0
+ impostorscore=0 bulkscore=0 malwarescore=0 clxscore=1015
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305120056
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 04/05/2023 09:00, Konrad Dybcio wrote:
-> Tested on 8250, but pretty please test it on your boards too!
+In preparation for adding mcq error handler support, update the mcq
+code to use the ufshcd_mcq_poll_cqe_lock() in interrupt context
+instead of using ufshcd_mcq_poll_cqe_nolock(). This is to keep
+synchronization between mcq interrupt and error handler contexts
+because both need to access the mcq hardware in separate contexts.
 
-What's the definition of test here ?
-
-I ran this
-
-ffplay -codec:video h264_v4l2m2m FantasticFour-ROTSS.mp4
-
-and this
-
-ffplay -codec:video vp8_v4l2m2m /mnt/big-buck-bunny_trailer.webm
-
-on db410c with no errors. Then again I applied and disapplied the 8x8 
-264 fix to that branch and saw no discernable difference so I'm not very 
-confident we have good coverage.
-
-@Stan @Vikash could you give some suggested tests for coverage here ?
-
-@Konrad - get a db410c !
-
-My superficial first-pass on this series looks good but, before giving a 
-Tested-by here, I think we should define a set of coverage tests, run 
-them - the upper end on sm8250 and lower end msm8916 "makes sense to me"
-
-20? different gstreamer tests at different formats and different sizes 
-on our selected platforms db410c, rb5, rb3 I have - also an 820 I 
-haven't booted and an enforce sdm660.
-
-Which tests will we use to validate this series and subsequent series to 
-ensure we don't have more regressions ?
-
+Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
 ---
-bod
+ drivers/ufs/core/ufs-mcq.c     | 6 +++---
+ drivers/ufs/core/ufshcd-priv.h | 2 --
+ drivers/ufs/core/ufshcd.c      | 2 +-
+ drivers/ufs/host/ufs-qcom.c    | 2 +-
+ include/ufs/ufshcd.h           | 2 +-
+ 5 files changed, 6 insertions(+), 8 deletions(-)
+
+diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
+index 63db20b..2efa012 100644
+--- a/drivers/ufs/core/ufs-mcq.c
++++ b/drivers/ufs/core/ufs-mcq.c
+@@ -284,8 +284,8 @@ static void ufshcd_mcq_process_cqe(struct ufs_hba *hba,
+ 	ufshcd_compl_one_cqe(hba, tag, cqe);
+ }
+ 
+-unsigned long ufshcd_mcq_poll_cqe_nolock(struct ufs_hba *hba,
+-					 struct ufs_hw_queue *hwq)
++static unsigned long ufshcd_mcq_poll_cqe_nolock(struct ufs_hba *hba,
++						struct ufs_hw_queue *hwq)
+ {
+ 	unsigned long completed_reqs = 0;
+ 
+@@ -301,7 +301,6 @@ unsigned long ufshcd_mcq_poll_cqe_nolock(struct ufs_hba *hba,
+ 
+ 	return completed_reqs;
+ }
+-EXPORT_SYMBOL_GPL(ufshcd_mcq_poll_cqe_nolock);
+ 
+ unsigned long ufshcd_mcq_poll_cqe_lock(struct ufs_hba *hba,
+ 				       struct ufs_hw_queue *hwq)
+@@ -314,6 +313,7 @@ unsigned long ufshcd_mcq_poll_cqe_lock(struct ufs_hba *hba,
+ 
+ 	return completed_reqs;
+ }
++EXPORT_SYMBOL_GPL(ufshcd_mcq_poll_cqe_lock);
+ 
+ void ufshcd_mcq_make_queues_operational(struct ufs_hba *hba)
+ {
+diff --git a/drivers/ufs/core/ufshcd-priv.h b/drivers/ufs/core/ufshcd-priv.h
+index 80293fd..339ab51 100644
+--- a/drivers/ufs/core/ufshcd-priv.h
++++ b/drivers/ufs/core/ufshcd-priv.h
+@@ -71,8 +71,6 @@ void ufshcd_mcq_config_mac(struct ufs_hba *hba, u32 max_active_cmds);
+ void ufshcd_mcq_select_mcq_mode(struct ufs_hba *hba);
+ u32 ufshcd_mcq_read_cqis(struct ufs_hba *hba, int i);
+ void ufshcd_mcq_write_cqis(struct ufs_hba *hba, u32 val, int i);
+-unsigned long ufshcd_mcq_poll_cqe_nolock(struct ufs_hba *hba,
+-					 struct ufs_hw_queue *hwq);
+ struct ufs_hw_queue *ufshcd_mcq_req_to_hwq(struct ufs_hba *hba,
+ 					   struct request *req);
+ unsigned long ufshcd_mcq_poll_cqe_lock(struct ufs_hba *hba,
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index bcc2ae9..ec07e49 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -6811,7 +6811,7 @@ static irqreturn_t ufshcd_handle_mcq_cq_events(struct ufs_hba *hba)
+ 			ufshcd_mcq_write_cqis(hba, events, i);
+ 
+ 		if (events & UFSHCD_MCQ_CQIS_TAIL_ENT_PUSH_STS)
+-			ufshcd_mcq_poll_cqe_nolock(hba, hwq);
++			ufshcd_mcq_poll_cqe_lock(hba, hwq);
+ 	}
+ 
+ 	return IRQ_HANDLED;
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 82d02e7..57f5674 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -1556,7 +1556,7 @@ static irqreturn_t ufs_qcom_mcq_esi_handler(int irq, void *__hba)
+ 	struct ufs_hw_queue *hwq = &hba->uhq[id];
+ 
+ 	ufshcd_mcq_write_cqis(hba, 0x1, id);
+-	ufshcd_mcq_poll_cqe_nolock(hba, hwq);
++	ufshcd_mcq_poll_cqe_lock(hba, hwq);
+ 
+ 	return IRQ_HANDLED;
+ }
+diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
+index 3c9ecda..dd74896 100644
+--- a/include/ufs/ufshcd.h
++++ b/include/ufs/ufshcd.h
+@@ -1244,7 +1244,7 @@ void ufshcd_update_evt_hist(struct ufs_hba *hba, u32 id, u32 val);
+ void ufshcd_hba_stop(struct ufs_hba *hba);
+ void ufshcd_schedule_eh_work(struct ufs_hba *hba);
+ void ufshcd_mcq_write_cqis(struct ufs_hba *hba, u32 val, int i);
+-unsigned long ufshcd_mcq_poll_cqe_nolock(struct ufs_hba *hba,
++unsigned long ufshcd_mcq_poll_cqe_lock(struct ufs_hba *hba,
+ 					 struct ufs_hw_queue *hwq);
+ void ufshcd_mcq_enable_esi(struct ufs_hba *hba);
+ void ufshcd_mcq_config_esi(struct ufs_hba *hba, struct msi_msg *msg);
+-- 
+2.7.4
+
