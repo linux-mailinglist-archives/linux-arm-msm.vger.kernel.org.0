@@ -2,70 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E65E7700BE3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 17:33:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13120700C1E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 17:43:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241953AbjELPdO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 11:33:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51214 "EHLO
+        id S241914AbjELPnD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 11:43:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58256 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241967AbjELPc7 (ORCPT
+        with ESMTP id S241907AbjELPnC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 11:32:59 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 363D7D2D6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 08:32:38 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3f42b984405so32736225e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 08:32:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1683905556; x=1686497556;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=zdRjXwoE3aSQA5gXBX6EnGzJ4k23uXOffiYXMsRnd04=;
-        b=xlPB94hVfrwAP/mRQrLn9uGgGz9detJ9DWZGhx1hIdhbqQCyXtocp+2KLR6Oa0Xvfo
-         KZdPPFJ4NR0q+bezU+CpXTL4g0uhwLoeJyOsIw/Of0KWKq0TOUA3TOvQD2kKpa8909q8
-         SBPk1MPHiT51IZxM/F670pM6lNEayPdMu6MA9gsv1g+wma3RPgL8Gez6+SdynsnUd8qp
-         YvmoxA0xzOXZ0wc3oBBHWfLnAUR6fan2WljH1RiinqkvQa2hD+mXLAS+A7K7yH3QZseO
-         X2IMIsxvuAWdcSYQnvRSyV1K9/cPpEXugXGLfSver/u17s5EHN5+E3Y8A17WdRsw8HZr
-         zi2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683905556; x=1686497556;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zdRjXwoE3aSQA5gXBX6EnGzJ4k23uXOffiYXMsRnd04=;
-        b=Yfdz7Z876Cz1Om81TVay6TKhm5igWYUhl/y+LkEeyra1nmlp0B3NFEkmzjBaLPVTNT
-         k3PAI2sB4t5adTIdZbnvg1fVTLLCP1V0Shp5xxkihaTz0rfGumlDE8kTIcYvEMu1F5ar
-         hZIXebz4MRrvcvhUw3f2xaICkPuonLI4a5J68p+gOivP4Wkfe9L0uHRF/lgUT1QyCz/A
-         3t578qOi6Kxq4XgiKHmpMfZ0c08Tu/JVeE24ETqRZGzim/AZWDxJGjpreTTzGQEACkMS
-         xOlzSP1UaCaJuPa9glbc+oNsTIpVZuYIC12QN7HziF9xCSpNKc51EaGn2RRdEvmvP92l
-         2Cew==
-X-Gm-Message-State: AC+VfDx3ttqJvYdLhVic+t0Keq4xdtha7rss7rm56La2n5WbmP+65VaX
-        cdv6BUpu2tcivx4Hu2vLwt+M+w==
-X-Google-Smtp-Source: ACHHUZ4+TVYFirpywkjwvQlmpE6BN6sbv1BJPlU7VMtoyaA5BYkDpyoEx9z6K7EPZxOX7qmc3EbXXQ==
-X-Received: by 2002:a5d:594e:0:b0:307:8691:1eae with SMTP id e14-20020a5d594e000000b0030786911eaemr14249014wri.20.1683905555624;
-        Fri, 12 May 2023 08:32:35 -0700 (PDT)
-Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:4c87:5cb4:6fba:6a65])
-        by smtp.gmail.com with ESMTPSA id z8-20020adfec88000000b003062675d4c9sm23636458wrn.39.2023.05.12.08.32.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 May 2023 08:32:34 -0700 (PDT)
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-To:     Bjorn Andersson <andersson@kernel.org>,
+        Fri, 12 May 2023 11:43:02 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1627440CF;
+        Fri, 12 May 2023 08:43:02 -0700 (PDT)
+Received: from g550jk.localnet (unknown [62.108.10.64])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 8F364CEE75;
+        Fri, 12 May 2023 15:43:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1683906180; bh=Fid7yfw9t/u6WzqpvkhxPRW/PgqKY+ilcqxq2iSSnso=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=byb3Azt5b60NPc42TTCeq14cYY8E3/f0ATm/iJ5NNlh0zmNouIpxr4JKo9V1VPcub
+         awwwpN65xGFSP1+H9VAg39LNFrTRl9eM5/P15+EwjsBU4ZC2DRFTazF06TjvCwkeVM
+         r1XUuxrIygGXw6fB7o1HRFi0c5eQiBSWfj4lHmx4=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH] pinctrl: qcom: sa8775p: add the wakeirq map
-Date:   Fri, 12 May 2023 17:32:32 +0200
-Message-Id: <20230512153232.92450-1-brgl@bgdev.pl>
-X-Mailer: git-send-email 2.39.2
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: Add BLSP DMAs for I2C
+Date:   Fri, 12 May 2023 17:42:59 +0200
+Message-ID: <7012043.lOV4Wx5bFT@z3ntu.xyz>
+In-Reply-To: <ee580939-8334-4d86-e01b-54c6fd0b2f42@postmarketos.org>
+References: <20230422-msm8953-blsp-dma-v1-1-0024801bb587@z3ntu.xyz>
+ <ee580939-8334-4d86-e01b-54c6fd0b2f42@postmarketos.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,53 +53,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Freitag, 12. Mai 2023 12:14:29 CEST Alexey Minnekhanov wrote:
+> On 22.04.2023 14:39, Luca Weiss wrote:
+> > MSM8953 has two DMA controllers for the various I2C, SPI and UART
+> > busses. Add the nodes and configure all the I2C nodes so that the driver
+> > can use the DMA.
+> > 
+> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> > ---
+> > 
+> >   arch/arm64/boot/dts/qcom/msm8953.dtsi | 48
+> >   +++++++++++++++++++++++++++++++++++ 1 file changed, 48 insertions(+)
+> 
+> Hello,
+> 
+>  > arm64: dts: qcom: Add BLSP DMAs for I2C
+> 
+> to all qcom boards? Or only for msm8953? Commit title is unclear.
 
-The SA8775P TLMM driver is missing the GPIO-to-wakeup-pin mapping. This
-adds it.
+Right, missed "msm8953: " in the subject ;)
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
----
- drivers/pinctrl/qcom/pinctrl-sa8775p.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+Thanks for catching that!
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-sa8775p.c b/drivers/pinctrl/qcom/pinctrl-sa8775p.c
-index 2ae7cdca65d3..422d72ed1012 100644
---- a/drivers/pinctrl/qcom/pinctrl-sa8775p.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sa8775p.c
-@@ -1491,6 +1491,23 @@ static const struct msm_pingroup sa8775p_groups[] = {
- 	[153] = SDC_QDSD_PINGROUP(sdc1_data, 0x199000, 9, 0),
- };
- 
-+static const struct msm_gpio_wakeirq_map sa8775p_pdc_map[] = {
-+	{ 0, 169 }, { 1, 174 }, { 2, 170 }, { 3, 175 }, { 4, 171 }, { 5, 173 },
-+	{ 6, 172 }, { 7, 182 }, { 10, 220 }, { 11, 213 }, { 12, 221 },
-+	{ 16, 230 }, { 19, 231 }, { 20, 232 }, { 23, 233 }, { 24, 234 },
-+	{ 26, 223 }, { 27, 235 }, { 28, 209 }, { 29, 176 }, { 39, 200 },
-+	{ 31, 201 }, { 32, 212 }, { 35, 177 }, { 36, 178 }, { 39, 184 },
-+	{ 40, 185 }, { 41, 227 }, { 42, 186 }, { 43, 228 }, { 45, 187 },
-+	{ 47, 188 }, { 48, 194 }, { 51, 195 }, { 52, 196 }, { 55, 197 },
-+	{ 56, 198 }, { 57, 236 }, { 58, 192 }, { 59, 193 }, { 72, 179 },
-+	{ 73, 180 }, { 74, 181 }, { 75, 202 }, { 76, 183 }, { 77, 189 },
-+	{ 78, 190 }, { 79, 191 }, { 80, 199 }, { 83, 204 }, { 84, 205 },
-+	{ 85, 229 }, { 86, 206 }, { 89, 207 }, { 91, 208 }, { 94, 214 },
-+	{ 95, 215 }, { 96, 237 }, { 97, 216 }, { 98, 238 }, { 99, 217 },
-+	{ 100, 239 }, { 105, 219 }, { 106, 210 }, { 107, 211 }, { 108, 222 },
-+	{ 109, 203 }, { 145, 225 }, { 146, 226 },
-+};
-+
- static const struct msm_pinctrl_soc_data sa8775p_pinctrl = {
- 	.pins = sa8775p_pins,
- 	.npins = ARRAY_SIZE(sa8775p_pins),
-@@ -1499,6 +1516,8 @@ static const struct msm_pinctrl_soc_data sa8775p_pinctrl = {
- 	.groups = sa8775p_groups,
- 	.ngroups = ARRAY_SIZE(sa8775p_groups),
- 	.ngpios = 150,
-+	.wakeirq_map = sa8775p_pdc_map,
-+	.nwakeirq_map = ARRAY_SIZE(sa8775p_pdc_map),
- };
- 
- static int sa8775p_pinctrl_probe(struct platform_device *pdev)
--- 
-2.39.2
+
 
