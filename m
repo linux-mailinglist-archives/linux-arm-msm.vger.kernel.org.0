@@ -2,86 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B9B66700CFA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 18:25:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E10F5700D37
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 18:44:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233840AbjELQZj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 12:25:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55000 "EHLO
+        id S237188AbjELQn6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 12:43:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229655AbjELQZa (ORCPT
+        with ESMTP id S237182AbjELQn4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 12:25:30 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5401983CD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 09:25:29 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-50bceaf07b8so18574954a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 09:25:29 -0700 (PDT)
+        Fri, 12 May 2023 12:43:56 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1484C30E5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 09:43:55 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f139de8cefso53296614e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 09:43:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683908728; x=1686500728;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zvQk+svCP50HKElKrlCVyAJgzuwb5SdFt55hE/Eiezk=;
-        b=EaWN1rYIfwhZ2E/kWq48ltb87MtkqMX9ZbP2nuz6SIw1KHQy7OsUXIvuZNzURxaIsr
-         Q+hWdqd1GxScSw3+Gk8K0nzdmcpGvow9Oyb4Dh4W1TK7wSvtmSr09fo+saXcey5DXlPU
-         CKWSb/6Lv0ECb5d+qACJvT2O/uV+6oH9ywFjM2hVMdATC8htjq32Wk7dneV1C6+1sJEL
-         Dp+2IqhmsDciECq2WatDBTfycfz/s3xJaCSXtxLfmdC9LrGYMBbuZQHUTwI/inQkPvXm
-         /IkK47r/zbGy5RWewzQj//8F9WyEVIykRRSprLe2R6rXLfBRCwKdbCvp7js413Z7ENP0
-         8Hxg==
+        d=linaro.org; s=google; t=1683909833; x=1686501833;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oQ35jiD0iHCimmXNvqE7wf5xzhSOyJCookuzUyurpLM=;
+        b=LmEGhTe2a0TlygbG0pgEn3ULmATOXb0sCfMtBAEgM5W8HG+6IAO5PVCooWsF9UEups
+         c7QodB3vbWifw2arGdJiSkUy+9wDhkMxw3zwR3IRHGWoootxT9mc7amQycF3LDRUdFHZ
+         jEI3pSuMaamdcLeQJgKQXHIEgGwNg8gQZkxiIzxDAdl4u0/mTwG6yeSwGEC8yR6R2GI6
+         CujVaK1xb9uvKUYlGGTcvPHUuaIOuWkuaT3hGJbbmPAB/upM9nCpfpbRGVRw9EsCrVea
+         obaH884kC3q3FsXANPfe4kS18rAryzP+5Wa/CwJLJhmu1D8Yv+1jd+tsjMJCtcCs1a6N
+         93Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683908728; x=1686500728;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zvQk+svCP50HKElKrlCVyAJgzuwb5SdFt55hE/Eiezk=;
-        b=F8KoV2FuJNRlS+kPRKeMmZVadWpfMvexm4nn5e4JaUz1e3IJ/fKPRSAn0Yp8BzFdhQ
-         tZkECb8IbrkHeDqpMZH+LYZdN3Bns1Y/ztgu7cVMiBjpQWhEyKsYgGuYVwoSN/vBOPSx
-         szAUnSi0v4aQjmKpDNc8gMUuitDdX7cEgaOxgihQZECFwANDdTFdvy6DMwdeQgIeMVD8
-         jnvCqf0RSW/ernf5vtb5Vnqm3qayduZi2PiG7WikBdqPlGKkzun/HeuDAS1QIFPcDu5j
-         h+uxxoftctomqCkBcUzAaczbca/Sxzhp56W9+JuqMPFlLMutl25by8/x5Ambxj1rUqnk
-         vaPg==
-X-Gm-Message-State: AC+VfDz5ZR7whl3VHVaXpaL+KV49+ZFJK5qIHaH3qwCMgRtmObnKINQu
-        GEK67ZPU0sUN9VQyF2mIDsdOmg==
-X-Google-Smtp-Source: ACHHUZ6uXUT0lW+LFVr4KL5Jm5mw4HaigdvvK4SmfDrSMK0reRn9kNg11GffukuojXCHJ+5xydomtA==
-X-Received: by 2002:a50:ed0b:0:b0:50b:d83b:9c61 with SMTP id j11-20020a50ed0b000000b0050bd83b9c61mr20007419eds.32.1683908727795;
-        Fri, 12 May 2023 09:25:27 -0700 (PDT)
-Received: from krzk-bin.. ([2a02:810d:15c0:828:7ede:fc7b:2328:3883])
-        by smtp.gmail.com with ESMTPSA id r23-20020aa7da17000000b00506987c5c71sm4144116eds.70.2023.05.12.09.25.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 May 2023 09:25:27 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Richard Acayan <mailingradian@gmail.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        krishna Lanka <quic_vamslank@quicinc.com>,
-        Iskren Chernev <me@iskren.info>,
-        Martin Botka <martin.botka@somainline.org>,
-        Danila Tikhonov <danila@jiaxyga.com>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: (subset) [PATCH 35/40] dt-bindings: pinctrl: qcom,sm7150-tlmm: simplify with unevaluatedProperties
-Date:   Fri, 12 May 2023 18:25:18 +0200
-Message-Id: <168390871588.209400.11438301358631937951.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230407184546.161168-35-krzysztof.kozlowski@linaro.org>
-References: <20230407184546.161168-1-krzysztof.kozlowski@linaro.org> <20230407184546.161168-35-krzysztof.kozlowski@linaro.org>
+        d=1e100.net; s=20221208; t=1683909833; x=1686501833;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oQ35jiD0iHCimmXNvqE7wf5xzhSOyJCookuzUyurpLM=;
+        b=DoIDii62IJBQP4Q1nnwCzXMrG0L85cjD8qSYe/YmCTvf4gKfYN8/o1fn754oiOr698
+         x8h62t8TsVPyHqAKmfg9MISPLxrK+n8/dPIcU+CE0s9OUOdCDiRymkU33Douf4YLGBwO
+         nZf4NzPiNbsyrRrmnkf8G3YhnKFl6OYOF8h3ShcH5glEBgM9KyTDQJXZrnehsE8PiVI0
+         zvrNcvFHV1FxsSm9nNQfMJBfzTXBSfhYCMK6QcfUh/8MwaMXpLit1iW5EgJGg59HZZjx
+         XZh7F1yTKOUFIiDivcKplIRfRXbvNtlPT52wkuq2dInYpFEsmmq2DMBA/imMgmlzETB9
+         WnRg==
+X-Gm-Message-State: AC+VfDzlShaeu/vyYnwDOP0DGa5PEOVRic/5gxVeUtBzVLgBMbpxBtcQ
+        B7YtlSdxzFYYYYEeuvPjqLSo1g==
+X-Google-Smtp-Source: ACHHUZ6Knr8V9h2tzeBW26Liibmojqhi318dz0i7nIVAWX3Oxrywq7eHYWTvTbXUamXXHscf7fgd4A==
+X-Received: by 2002:a05:6512:3f19:b0:4ec:83fd:1599 with SMTP id y25-20020a0565123f1900b004ec83fd1599mr4095277lfa.33.1683909833320;
+        Fri, 12 May 2023 09:43:53 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id o14-20020a05651238ae00b004f250513215sm1513284lft.198.2023.05.12.09.43.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 12 May 2023 09:43:52 -0700 (PDT)
+Message-ID: <ddb79cfb-8ddd-5ca3-e133-465518e5e973@linaro.org>
+Date:   Fri, 12 May 2023 19:43:51 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v7 0/8] add DSC 1.2 dpu supports
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
+        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1683827607-19193-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1683827607-19193-1-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -90,19 +81,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Fri, 07 Apr 2023 20:45:41 +0200, Krzysztof Kozlowski wrote:
-> All Qualcomm SoC Top Level Mode Multiplexer pin controllers have similar
-> capabilities regarding pin properties, thus we can just accept entire
-> set provided by qcom,tlmm-common.yaml schema.
+On 11/05/2023 20:53, Kuogee Hsieh wrote:
+> This series adds the DPU side changes to support DSC 1.2 encoder. This
+> was validated with both DSI DSC 1.2 panel and DP DSC 1.2 monitor.
+> The DSI and DP parts will be pushed later on top of this change.
+> This seriel is rebase on [1], [2] and catalog fixes from rev-4 of [3].
 > 
-> 
+> [1]: https://patchwork.freedesktop.org/series/116851/
+> [2]: https://patchwork.freedesktop.org/series/116615/
+> [3]: https://patchwork.freedesktop.org/series/112332/
 
-Applied, thanks!
+Please run the series through ./scripts/checkpatch.pl --strict. For this 
+series it reports tons of issues with the mixed indentation, 
+whitespaces, alignment, etc.
 
-[35/40] dt-bindings: pinctrl: qcom,sm7150-tlmm: simplify with unevaluatedProperties
-        https://git.kernel.org/krzk/linux-dt/c/647c16ac7b15fc8fe6ab679690ac2ffe7c53abd3
-
-Best regards,
 -- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+With best wishes
+Dmitry
+
