@@ -2,191 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4C94700E47
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 20:01:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 823C9700E56
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 20:03:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238230AbjELSBC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 14:01:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50798 "EHLO
+        id S230450AbjELSDk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 14:03:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238189AbjELSAz (ORCPT
+        with ESMTP id S232260AbjELSDj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 14:00:55 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EA6E1B4;
-        Fri, 12 May 2023 11:00:54 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34CDhka5007081;
-        Fri, 12 May 2023 18:00:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=0GCtZqMJbHB9WSz+xlE/2FHQ6DTJ+rDjKtLKoU03nC0=;
- b=AdqJEuB1imGuCW/q9Q4sL3OIym7xCSB8C1WAzHegNQSxKMX+UB9N7iINeDtRcpjPhKn5
- Mv4lun1/ILbcPySPR3yqldXI77yb3EAM2gpnYG/wMOF6VJfevPlzk+9dx3VJyiejXb+n
- QoO+ZFnWXOabDU08uob8WLFroQ4NLNhNRSZ0uINwB2h5bRdyMTv0Kb98qOy6Hv1an0Qt
- lobV18asFxi1uLoyO9aDqX6XD9fjUQThD0W8GkBc2gpJkJp/0GrhADc7smVh7PaCtWpp
- uJs1Z1d+CGhnmdxbqwvZufPyClInzqac2XElTKHqRGOnh3aRp0ItJp84A7DAb5DkxjNI TA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qhes21nyw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 12 May 2023 18:00:46 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34CI0jZj005990
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 12 May 2023 18:00:45 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 12 May 2023 11:00:44 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <andersson@kernel.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v8 8/8] drm/msm/dpu: tear down DSC data path when DSC disabled
-Date:   Fri, 12 May 2023 11:00:23 -0700
-Message-ID: <1683914423-17612-9-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1683914423-17612-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1683914423-17612-1-git-send-email-quic_khsieh@quicinc.com>
+        Fri, 12 May 2023 14:03:39 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C22102706
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 11:03:11 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f137dbaa4fso11975655e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 11:03:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1683914588; x=1686506588;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wX35csAzyFHnVisSwqQUmM55/FGS5IjRbvk+3PARSIY=;
+        b=LkIyLmh7YkVvVJ6EY/UaSJfOCHOZ7lrPp1AXhNw+dBTO64ls2762UQMe8Wg75N8uqO
+         etv7DfqD8OdH/pp2S3wkVip4CUpj/yR8ezy/NKnhg1mfOOtBKWC6boc4DDvx1alg2hcZ
+         EXlclIBCqttJZ5IdHJB/W+2DJzWqpJ0U0i6fY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683914588; x=1686506588;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wX35csAzyFHnVisSwqQUmM55/FGS5IjRbvk+3PARSIY=;
+        b=dh9jgxiIkIhsOyeA5nJxjbzcfzS/atY6peXIYXY1YrapUF44EVqTT6Qwbrw6qMeAdm
+         iksPE99qZ7IzXcvbSLFz4WpbibpnrKXiZ5pfxTSDYyiyyGmFQElFPrg8kXnAAnXbVtCi
+         WpUAm7ouVxGrK54ObG01hca1Hl6Aby2EajTPWUWxtUtHXCy1KfSDSFSreEkvBnbdl6we
+         kw8XJYQkwsaSmqcxTJl4nLUvnpyaxjzmOWhl5ciDmeSy4i6KlVUUclMebqeN4BJeO3Ri
+         AQoXqgNI8o5HPiXop9TZu6w31L0wt/SMSAKepExnq3kkaH+6Q0k32V6oQRfSQ02BL5qb
+         WDtg==
+X-Gm-Message-State: AC+VfDzypZRzj0QL5BAy8pi2CqiOyGutYyVbJ0/u5PGvQFA4q52viH6A
+        FQ+249TY1BPCek17g2oun0QHSVgy7rifNOH0PxlvFA==
+X-Google-Smtp-Source: ACHHUZ6PaqBOAHi370NUX7PmynPhgX949UwtsRLRySAJxMzlzmUq+lXxvttUdtc5tbCV15gkYvMmpUGa1Yv56ikLq3U=
+X-Received: by 2002:a05:6512:21a9:b0:4eb:30f9:eeca with SMTP id
+ c9-20020a05651221a900b004eb30f9eecamr3740062lft.28.1683914587723; Fri, 12 May
+ 2023 11:03:07 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 12 May 2023 11:03:07 -0700
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: mYH_mqU_RCiB2YgPgiP6_KqLgw4mY88a
-X-Proofpoint-GUID: mYH_mqU_RCiB2YgPgiP6_KqLgw4mY88a
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-12_10,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- impostorscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 adultscore=0
- mlxscore=0 suspectscore=0 mlxlogscore=975 phishscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
- definitions=main-2305120150
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <CAA8EJpokAoGni7vNwuijs7EvmjCweO3pgChij3Qx3OUkVTVpiQ@mail.gmail.com>
+References: <1683750665-8764-1-git-send-email-quic_khsieh@quicinc.com>
+ <1683750665-8764-2-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJprtQF0x_LCOTrt5bvRnJ+xRz6QxLF6QAP-4Pff6V5TJ2g@mail.gmail.com>
+ <20230511155331.2jmfe7xcs5tihdgb@ripper> <5ef83699-01de-d062-6239-9bb834c70458@linaro.org>
+ <8ac0b5f5-27da-2b28-8f10-b2fca447511a@quicinc.com> <CAA8EJpokAoGni7vNwuijs7EvmjCweO3pgChij3Qx3OUkVTVpiQ@mail.gmail.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date:   Fri, 12 May 2023 11:03:07 -0700
+Message-ID: <CAE-0n51SHQhUJiY=BJp8CQQ1aTAOxeMDr2+NX_vpmjN_cyJJrA@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] drm/msm/dp: enable HDP plugin/unplugged interrupts
+ to hpd_enable/disable
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, dianders@chromium.org, vkoul@kernel.org,
+        daniel@ffwll.ch, airlied@gmail.com, agross@kernel.org,
+        quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
+        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Unset DSC_ACTIVE bit at dpu_hw_ctl_reset_intf_cfg_v1(),
-dpu_encoder_unprep_dsc() and dpu_encoder_dsc_pipe_clr() functions
-to tear down DSC data path if DSC data path was setup previous.
+Quoting Dmitry Baryshkov (2023-05-11 17:54:19)
+> On Fri, 12 May 2023 at 03:16, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+> > 1) DP with GPIO: No downstream drm_bridge are connected, is_edp = false
+> > and internal HPD-logic is in used (internal_hpd = true). Power needs to
+> > be on at all times etc.
+> >
+> > 2) DP without GPIO: Downstream drm_bridge connected, is_edp = false and
+> > internal HPD-logic should not be used/enabled (internal_hpd = false).
+> > Power doesn't need to be on unless hpd_notify is invoked to tell us that
+> > there's something connected...
+> >
+> > - dp_bridge_hpd_notify(). What is the point of this check? <== i have
+> > below two questions,
+> >
+> > 1) can you explain when/what this dp_bridge_hpd_notify() will be called?
+>
+> The call chain is drm_bridge_hpd_notify() ->
+> drm_bridge_connector_hpd_notify() -> .hpd_notify() for all drm_bridge
+> in chain
+>
+> One should add a call to drm_bridge_hpd_notify() when the hotplug
+> event has been detected.
+>
+> Also please note the patch https://patchwork.freedesktop.org/patch/484432/
+>
+> >
+> > 2) is dp_bridge_hpd_notify() only will be called at above case #2? and
+> > it will not be used by case #1?
+>
+> Once the driver calls drm_bridge_hpd_notify() in the hpd path, the
+> hpd_notify callbacks will be called in case#1 too.
+>
+> BTW: I don't see drm_bridge_hpd_notify() or
+> drm_kms_{,connector_}_hotplug_event() HPD notifications in the DP
+> driver at all. This should be fixed.
+>
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 43 +++++++++++++++++++++++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c  |  7 +++++
- 2 files changed, 50 insertions(+)
+Is dp_bridge_hpd_notify() being called by
+drm_helper_probe_single_connector_modes() when the connectors are
+detected?
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 5cae70e..ee999ce 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -1214,6 +1214,44 @@ static void dpu_encoder_virt_atomic_enable(struct drm_encoder *drm_enc,
- 	mutex_unlock(&dpu_enc->enc_lock);
- }
- 
-+static void dpu_encoder_dsc_pipe_clr(struct dpu_encoder_virt *dpu_enc,
-+				     struct dpu_hw_dsc *hw_dsc,
-+				     struct dpu_hw_pingpong *hw_pp)
-+{
-+	struct dpu_encoder_phys *cur_master = dpu_enc->cur_master;
-+	struct dpu_hw_ctl *ctl;
-+
-+	ctl = cur_master->hw_ctl;
-+
-+	if (hw_dsc->ops.dsc_disable)
-+		hw_dsc->ops.dsc_disable(hw_dsc);
-+
-+	if (hw_pp->ops.disable_dsc)
-+		hw_pp->ops.disable_dsc(hw_pp);
-+
-+	if (hw_dsc->ops.dsc_bind_pingpong_blk)
-+		hw_dsc->ops.dsc_bind_pingpong_blk(hw_dsc, PINGPONG_NONE);
-+
-+	if (ctl->ops.update_pending_flush_dsc)
-+		ctl->ops.update_pending_flush_dsc(ctl, hw_dsc->idx);
-+}
-+
-+static void dpu_encoder_unprep_dsc(struct dpu_encoder_virt *dpu_enc)
-+{
-+	/* coding only for 2LM, 2enc, 1 dsc config */
-+	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
-+	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
-+	int i;
-+
-+	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
-+		hw_pp[i] = dpu_enc->hw_pp[i];
-+		hw_dsc[i] = dpu_enc->hw_dsc[i];
-+
-+		if (hw_pp[i] && hw_dsc[i])
-+			dpu_encoder_dsc_pipe_clr(dpu_enc, hw_dsc[i], hw_pp[i]);
-+	}
-+}
-+
- static void dpu_encoder_virt_atomic_disable(struct drm_encoder *drm_enc,
- 					struct drm_atomic_state *state)
- {
-@@ -2090,6 +2128,9 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
- 					phys_enc->hw_pp->merge_3d->idx);
- 	}
- 
-+	if (dpu_enc->dsc)
-+		dpu_encoder_unprep_dsc(dpu_enc);
-+
- 	intf_cfg.stream_sel = 0; /* Don't care value for video mode */
- 	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
- 
-@@ -2101,6 +2142,8 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
- 	if (phys_enc->hw_pp->merge_3d)
- 		intf_cfg.merge_3d = phys_enc->hw_pp->merge_3d->idx;
- 
-+	intf_cfg.dsc = dpu_encoder_helper_get_dsc(phys_enc);
-+
- 	if (ctl->ops.reset_intf_cfg)
- 		ctl->ops.reset_intf_cfg(ctl, &intf_cfg);
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-index f3a50cc..aec3b08 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-@@ -577,6 +577,7 @@ static void dpu_hw_ctl_reset_intf_cfg_v1(struct dpu_hw_ctl *ctx,
- 	u32 intf_active = 0;
- 	u32 wb_active = 0;
- 	u32 merge3d_active = 0;
-+	u32 dsc_active;
- 
- 	/*
- 	 * This API resets each portion of the CTL path namely,
-@@ -606,6 +607,12 @@ static void dpu_hw_ctl_reset_intf_cfg_v1(struct dpu_hw_ctl *ctx,
- 		wb_active &= ~BIT(cfg->wb - WB_0);
- 		DPU_REG_WRITE(c, CTL_WB_ACTIVE, wb_active);
- 	}
-+
-+	if (cfg->dsc) {
-+		dsc_active = DPU_REG_READ(c, CTL_DSC_ACTIVE);
-+		dsc_active &= ~cfg->dsc;
-+		DPU_REG_WRITE(c, CTL_DSC_ACTIVE, dsc_active);
-+	}
- }
- 
- static void dpu_hw_ctl_set_fetch_pipe_active(struct dpu_hw_ctl *ctx,
--- 
-2.7.4
+I see drm_helper_probe_detect() calls connector->funcs->detect() which I
+think calls
+drm_bridge_connector_funcs::drm_bridge_connector_hpd_notify() but I
+haven't confirmed yet. The 'detect' bridge is the DP bridge in msm
+driver
 
+         if (!dp_display->is_edp) {
+                bridge->ops =
+                        DRM_BRIDGE_OP_DETECT |
+
+so if the bridge_connector is being used then I think when fill_modes()
+is called we'll run the detect cycle and call the hpd_notify callbacks
+on the bridge chain.
