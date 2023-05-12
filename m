@@ -2,155 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9671C700DCA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 19:22:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9071700DE1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 19:31:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237914AbjELRWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 13:22:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34846 "EHLO
+        id S237541AbjELRbn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 13:31:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237730AbjELRWo (ORCPT
+        with ESMTP id S229447AbjELRbm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 13:22:44 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7394DA5C2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 10:22:41 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3f42c86543bso33707925e9.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 10:22:41 -0700 (PDT)
+        Fri, 12 May 2023 13:31:42 -0400
+Received: from mail-yb1-xb2f.google.com (mail-yb1-xb2f.google.com [IPv6:2607:f8b0:4864:20::b2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6938E74
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 10:31:40 -0700 (PDT)
+Received: by mail-yb1-xb2f.google.com with SMTP id 3f1490d57ef6-ba6e90e9199so2117122276.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 10:31:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683912160; x=1686504160;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9UKhgFOsFOUm1i3OTVWLnAknbppUMdId4xzOBuxqB5g=;
-        b=NsrIrh96sAJgzY3qNhe7YkUp9L64mLBlPEM+5iW8LDzk9I39y31DPewD3xCHMMaJQ2
-         +YRAzGYFvh8cp6htC5NuIFlUear8IskmNx3hzXPDck6YDKpJbuyAUZ+55VRN1GVA9vcZ
-         XzE3njXU2pJ+dQZ0354V9e1SvJEulycfaQQIJRW+TjlzkNseyXaj32NENUVT7gYYPR2X
-         oBAQ2TVqgKo2QxMKIUzqZmvTQDL0bFDuVALPVYnj3YmXtoLstReyK58oAWWIWukdKWiW
-         amIR1A03HrlUJA13claHV42EVuyQZTFrtuGB8GGqtzn/DoDviaIS8goShNVqNbZX2+Ez
-         h8Hg==
+        d=linaro.org; s=google; t=1683912700; x=1686504700;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=pOBiYL4MwkPBAdAa0oljolb6gFlLduUl+hv8/gzGBww=;
+        b=Ljb2Ic9b8AFxQ3m1p0awPhm6nnq3HpWkJcsg1631eUZzTO/5hnV2HsKfisYyDtDb17
+         V8552imBkDLbXmsjLctugQqCfKAMaR1wmUD2LIEePT6ZNVq93DcGJLaEMO0Tg7q3XRzg
+         T+nmAgGCDQwI673WZ51nYlxKCCAy2VMVN2QaC8MNO1MZB2PKR/oZt4bUuHyFpaovvBTd
+         i1ik1UyIy1Bz/rJ9JxXZVeeRzgUhQXNnk4CVj4XcxqPEUUnuO/i6PmIQbM8+3Zac0zc7
+         0DSoAHA7T0OB84VFnq7RXQfc9uK0QfUBRdYFXUF4fSZnsREIgHwm2mIyXcHRdciVZvUA
+         fy1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683912160; x=1686504160;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9UKhgFOsFOUm1i3OTVWLnAknbppUMdId4xzOBuxqB5g=;
-        b=ZPJxOMdrH5JH87VT51DlS/rMtxrZChyZmFM6DyFpHBF5Xbpb0a0RpJlf2t7gcp6f7j
-         Z2WsN5VUHCWJieN399Yd5Cx+ASY/OHH1ccnOMMPG2BybnXDblNT7enKKBqZ0kkbKL9c/
-         1hban0FFMg70YMC8KHCLmMhhFSAY06QN65blPoCZl/HW7pnBlR9f7wIDg2WdX2DgrisO
-         VgQNSW3IdbFqHzmY4Ln7P12RVssenvA88ZWiaUuVvEsjBG0DOHBVxHxt5kHG7uWc/djS
-         7DLrATcunFY/UrzO2OtHi59tyUojqZjAb5BoJIuMnGzcnbcCprqATEx5ofFymySzLkns
-         dmRA==
-X-Gm-Message-State: AC+VfDyTCAilAk+xm3WYLSp2ODuIqOuRV5Bg0sM44wGCj3Q2FG6o55qQ
-        ocAQMttOy/W/k2kcCnNlvf5pKg==
-X-Google-Smtp-Source: ACHHUZ5s1/DQ3DjzrYlm5BwHrIhd9/mPvWxYqMo2RuhRNAGUtGs21KLLHUD50TpSIaoEUqJUZLveSQ==
-X-Received: by 2002:a7b:c8d9:0:b0:3f4:2174:b284 with SMTP id f25-20020a7bc8d9000000b003f42174b284mr13833496wml.28.1683912159779;
-        Fri, 12 May 2023 10:22:39 -0700 (PDT)
-Received: from ?IPV6:2a05:6e02:1041:c10:5efd:dba0:e7fa:b5bf? ([2a05:6e02:1041:c10:5efd:dba0:e7fa:b5bf])
-        by smtp.googlemail.com with ESMTPSA id 10-20020a05600c024a00b003f423dfc686sm16512777wmj.45.2023.05.12.10.22.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 May 2023 10:22:39 -0700 (PDT)
-Message-ID: <b1237581-3ece-a358-f1ba-7a3ebb08d8d2@linaro.org>
-Date:   Fri, 12 May 2023 19:22:38 +0200
+        d=1e100.net; s=20221208; t=1683912700; x=1686504700;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pOBiYL4MwkPBAdAa0oljolb6gFlLduUl+hv8/gzGBww=;
+        b=ccWXtd8jn8msOviN0QfBiim/y6FATUUv7LgfvWNKmwUlbTAchGcbjwJGldLyXySPjZ
+         DyDPq2R7gpA63jAfEOuIFZcrslprMio8tIAFgroYKYLFoi92xAN0rmfhJn0jF+5/0eET
+         cK9uLNGJxgxyIHVyOSbK3+znmF9YFagr3n8dOcLqiaNXdahjL2uXIL9ZxdlamGWjd8Pi
+         xz7RhsYZiiMA3q95PyxSofA5Gd/sBomJthj4gWsKNy/2X0tZT5UqwwY07rtYC0mFXxUU
+         QRRJOlcCBPNZE2ygc2s24sX/JTOgpBF8MPazvBS4a/VCTtzV9xpW76Hoplfr+kXjGxbt
+         lCdg==
+X-Gm-Message-State: AC+VfDw9psn3PMnrdmSsKIDmptvBIqkhK+1D+xa5r2Cay9suwbPp3Oeo
+        LOnyD5gXT3tc8sAeTJDf8X/3U5mDMQXRWkpL6hwV84/y9glYKcwZ
+X-Google-Smtp-Source: ACHHUZ5QiUFPYw4G5Vzfw9NyzYMR98hObzlMHs6fX4n4VbtBCGWAHhsTIfoiD8WdkQP2k/IguG8OB9exVS+Jukb8ijM=
+X-Received: by 2002:a25:d38c:0:b0:ba6:a813:f19e with SMTP id
+ e134-20020a25d38c000000b00ba6a813f19emr5660000ybf.50.1683912699977; Fri, 12
+ May 2023 10:31:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: power_supply cooling interface
-Content-Language: en-US
-To:     Pavel Machek <pavel@ucw.cz>,
-        Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     Sebastian Reichel <sre@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <164f2458-fb66-f238-7143-bdbe1e200870@linaro.org>
- <ZF5t5BWqLLEvDdfz@localhost>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <ZF5t5BWqLLEvDdfz@localhost>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20230512122134.24339-1-quic_kbajaj@quicinc.com>
+ <20230512122134.24339-5-quic_kbajaj@quicinc.com> <68f9bee2-5a5b-2962-6c3d-e73ade371545@linaro.org>
+In-Reply-To: <68f9bee2-5a5b-2962-6c3d-e73ade371545@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 12 May 2023 20:31:29 +0300
+Message-ID: <CAA8EJppObh3h8sxB_f9SQy7EQ1Gfhe9EbzV=wsUbVNj9PtX=GA@mail.gmail.com>
+Subject: Re: [PATCH v3 04/10] nvmem: qfprom: Add support for secure reading on QDU1000/QRU1000
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Komal Bajaj <quic_kbajaj@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/05/2023 18:48, Pavel Machek wrote:
-> Hi!
-> 
->> I've been working on a driver for the charger found in most Snapdragon
->> 845 phones (the OnePlus 6, SHIFT6mq, PocoPhone F1, etc). I wanted to
->> include support for the POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT
->> property.
->>
->> My understanding is that it exposes the current limit as a cooling
->> device so that userspace (or frameworks like DTPM) can optimise for
->> performance in a thermally constrained device by limiting the input
->> current and thus reducing the heat generated by the charger circuitry,
->> a similar idea was applied on the Pixel C:
->> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a4496d52b3430cb3c4c16d03cdd5f4ee97ad1241
->>
->> However, reading through the sysfs docs for cooling devices, and
->> looking at the implementation in power_supply_core.c, it seems like the
->> behavior here is wrong in a few ways:
->>   1. The values should scale from 0: no cooling to max_state: max
->> cooling, but the power_supply docs and the only existing implementation
->> (the smbb driver) just export the current_limit, such that increasing
->> cur_state would increase the current limit, not decrease it.
->>   2. (unsure?)The scale is completely different to most other cooling
->> devices, most cooling devices don't seem to have a max state much
->> beyond the double digits, but CHARGE_CONTROL_LIMIT is on the scale of
->> uA, so approaches like incrementing the cooling state by 1 don't really
->> work.
-> 
-> Did this get solved somehow?
+On Fri, 12 May 2023 at 20:01, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 12/05/2023 14:21, Komal Bajaj wrote:
+> > Add qfprom driver support for QDU1000/QRU1000 SOCs.
+> >
+> > Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> > ---
+> >  drivers/nvmem/qfprom.c | 5 +++++
+> >  1 file changed, 5 insertions(+)
+> >
+> > diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
+> > index 20662e2d3732..12a7981a8a71 100644
+> > --- a/drivers/nvmem/qfprom.c
+> > +++ b/drivers/nvmem/qfprom.c
+> > @@ -109,6 +109,10 @@ struct qfprom_soc_compatible_data {
+> >       bool secure;
+> >  };
+> >
+> > +static const struct qfprom_soc_compatible_data qdu1000_qfprom = {
+> > +     .secure = true
+> > +};
+> > +
+> >  static const struct nvmem_keepout sc7180_qfprom_keepout[] = {
+> >       {.start = 0x128, .end = 0x148},
+> >       {.start = 0x220, .end = 0x228}
+> > @@ -490,6 +494,7 @@ static int qfprom_probe(struct platform_device *pdev)
+> >
+> >  static const struct of_device_id qfprom_of_match[] = {
+> >       { .compatible = "qcom,qfprom",},
+> > +     { .compatible = "qcom,qdu1000-qfprom", .data = &qdu1000_qfprom},
+> >       { .compatible = "qcom,sc7180-qfprom", .data = &sc7180_qfprom},
+>
+> I have doubts that this is still compatible with qcom,qfprom. It uses
+> entirely different read method. That's why generic fallbacks are bad,
+> one more case to my growing list of awesome examples. :)
 
-Thanks for resurrecting the discussion.
-
-> Anyway, I am not sure mW will be useful here, as elsewhere it is mW
-> thermal and here it is mW from charger. Most of that energy should be
-> stored in battery, not converted to heat.
-
-I'm not sure to understand the comment. The question is about decreasing 
-the speed of the charge of the battery because the faster it charges the 
-warmer it gets. Doing a fast charge is ok, if the phone is for instance 
-on a table doing nothing. But if the environment is hot (a car, a 
-pocket) or there are other sources of heat on the phone like a game, the 
-temperature of the battery could be too high (or the skin temperature). 
-In this case we have to balance the heat contribution of the different 
-components by reducing their performances. The first knob to act on is 
-to reduce the charge speed of the battery by reducing the delivered power.
-
-For that we need a connection between the thermal framework which 
-monitors the battery temperature and the power supply to reduce the 
-charge speed when it is too hot. This connection is the cooling device.
-
-The cooling devices have opaque values where the min and max cooling 
-effect vary depending on the implementation (eg. a fan 0/1, a LCD light 
-0/1023).
-
-Here the power supply has yet another unit (uA) to act on and difficult 
-to translate to a cooling device discrete numbers (that is my 
-understanding).
-
-My suggestion is adding to the power supply the power capping capability 
-using the powercap framework and add it to the DTPM nomenclature.
-
-With enough components in DTPM, it will be possible to create a generic 
-power cooling device using the unified unit uW with the powercap API.
-
+Yes, it looks like it should be 'qcom,qdu1000-qfprom",
+"qcom,scm-qfprom". And possibly a separate driver for scm-qfprom.
 
 
 -- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
-
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
-
+With best wishes
+Dmitry
