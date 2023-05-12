@@ -2,85 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C53F470066F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 13:14:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7ADE7006BA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 13:25:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240853AbjELLOZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 07:14:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39758 "EHLO
+        id S241123AbjELLZy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 07:25:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241028AbjELLOY (ORCPT
+        with ESMTP id S241122AbjELLZx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 07:14:24 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F8C3DD9D
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 04:14:21 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-50bc0117683so17328645a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 04:14:21 -0700 (PDT)
+        Fri, 12 May 2023 07:25:53 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C6D310C0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 04:25:51 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-3062c1e7df8so6600169f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 04:25:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1683890060; x=1686482060;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1683890750; x=1686482750;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ubvb9p88+qXd6VOrp401GthxX4aOEOtnz4kgi/kUzHM=;
-        b=0DxQHN51nTkhDMihJi78b3ohzJMoM2rXRuga1g6tw0P6qNiVS4sVaDavvwMIT5/iJ0
-         Gyd4AtWdLZ5WJxMYmdxWl1sgVyeT/fA1AVb4pnZesPs4GAjkzKCCdzj13wDF3ZGCLXgP
-         /cwdnqPJKz2mPmZYNAhyABgUXcoDYYThXQVYyJUox8JCl4sX4QDb29r863JZZN2x5CeK
-         RKkhhEXl7XohTbmdb9Cms9xaWPK4UYp4HK4gfhE8VTjVlxxug2tdQhjIM10LhFv5XJkL
-         XI+ANWqOR1T7qPIYvtmfC7JKuEzDCWvGXQ5LA0LBl7zQmc0N7GhgzmlhRA3//yPTDNA3
-         znnw==
+        bh=CYeMvzhacTAsEhRnGaiSXOklc6JbdbjUEO+PqKj86EM=;
+        b=dfv2IP6dc/J7G7LCOD6YdSjkGbLk6Ym2enw4dsh2izhdZq4S3jUNgmbNkoOZTGgpVG
+         Vxz4fEDBwar1w40gWofnY1aY1isxVn6EGJviIbfXtsZQScLqUBK5QD1TAtEPdLBg4xpo
+         Cc+7ftFm93pLinp+H+dhQGhU77O4h3oqQ2AF/3x+EoHMPACSlSQCNNbv3VqPU0qJWymA
+         YtvpWoBvdwjOvZ8h7n+H1jgaxhAzlDUg9wd22N2+OIW3YVgNS05lHWaRa5uyL7n1fybQ
+         bmzReIiEy51m8sdNhp6QdFc5dPPKIf9B9uNv7bNVDBUM4Jt3bJ134ACU5AQvVPhSvtHF
+         hWCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683890060; x=1686482060;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ubvb9p88+qXd6VOrp401GthxX4aOEOtnz4kgi/kUzHM=;
-        b=OlP82Gdl6E86Vev3DRMT46tWpvvCUK75mX21s0md58LuU6WdF8gUw7/A3KuZ4A22gC
-         ms2Cqwg+Tkzm4tL6qLSngvEaOEI1QkVM1/AufSKapvmv7IakpbAh8s4u9e0BcuO1oaW9
-         rWbuxQ1uQ6+KNUMlYeMk+dldb4SH2ZDGkDX5N2iO60rKV2tdPSuEX7ryQQNR/fegQoC9
-         tL254kBidjfDgozUND2V5knDh7EGQ5BWYV7qDKeMZ3vBhPzwMAgSeoF0UrQ0LdMj4Aoa
-         WBJcnUYCevlIHVFzA+dIunuGBBRGq9Bw2Cz5msfvd0Lue4WwtTbqDIFxaRZ2JY5sKw19
-         Ixog==
-X-Gm-Message-State: AC+VfDwS/adRUueldwkUZlriM4FskV9b8RbK2ufbGplzXRZYllMB4gwa
-        u1IY2RgeOrKNWYfPbFMZmkl6yQ==
-X-Google-Smtp-Source: ACHHUZ52Czgk88thyOAzAK6r5gc3rGC6RgqVtFaULcxPliXgWW8mW3g/7ugZKJeeCj8A5U/8Lh8yPw==
-X-Received: by 2002:a17:907:a0e:b0:94e:e6b9:fef2 with SMTP id bb14-20020a1709070a0e00b0094ee6b9fef2mr20395577ejc.67.1683890060020;
-        Fri, 12 May 2023 04:14:20 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id l21-20020a1709062a9500b00969f44bbef3sm4734097eje.11.2023.05.12.04.14.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 May 2023 04:14:19 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Fri, 12 May 2023 13:14:18 +0200
-Message-Id: <CSK97HK2XBSR.1Q5K7TUE55HH7@otso>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        "Eric Dumazet" <edumazet@google.com>,
-        "Jakub Kicinski" <kuba@kernel.org>,
-        "Paolo Abeni" <pabeni@redhat.com>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Balakrishna Godavarthi" <bgodavar@codeaurora.org>,
-        "Rocky Liao" <rjliao@codeaurora.org>,
-        "Marcel Holtmann" <marcel@holtmann.org>,
-        "Johan Hedberg" <johan.hedberg@gmail.com>,
-        "Luiz Augusto von Dentz" <luiz.dentz@gmail.com>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-bluetooth@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH RFC 2/4] Bluetooth: btqca: Add WCN3988 support
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Simon Horman" <simon.horman@corigine.com>
-X-Mailer: aerc 0.15.1
-References: <20230421-fp4-bluetooth-v1-0-0430e3a7e0a2@fairphone.com>
- <20230421-fp4-bluetooth-v1-2-0430e3a7e0a2@fairphone.com>
- <ZE+6e7ZxJ2s9DHI1@corigine.com>
-In-Reply-To: <ZE+6e7ZxJ2s9DHI1@corigine.com>
+        d=1e100.net; s=20221208; t=1683890750; x=1686482750;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CYeMvzhacTAsEhRnGaiSXOklc6JbdbjUEO+PqKj86EM=;
+        b=Zd5UwRdaQXZtz2Ac75RzuFj868MPPV7a2y5s7ZAzWHbA/87kSMLffRqyzttq7GPUDz
+         SJSJ1WoRFigzCaJKqHzuNPwM1NkdNqDTnkiARYAos1Zd6+TpJg0ekmKSPfDx+AabdLm4
+         rK/8gSzAy7jzkMaHMohF8YE87HzffBQVlJLe0pXkct2liZScULz49hR/WstJvj4VFEOc
+         9LY26iYeeNn9pzRcbc83n/Oeshg2YovOo6i02TY/TLqcMEm9uhhXyh3FxDWxtaLiQDF3
+         eCFu5Nkq0vR1MIXssiW67hBIshqAMOolOa9gV9v6w8gLRSvnVby9eXpQsaPpk0/4Xtvz
+         6FwA==
+X-Gm-Message-State: AC+VfDzVLSb4Pz9eWsNor3wgNGgHpvNC3CcXEzdhiXQMtqjr92FF5dBb
+        WOkwarT1gjjHkaqEPNRqDV0fjQ==
+X-Google-Smtp-Source: ACHHUZ5/M3ZTfApneO2t4X8QYio6oz00ANSzZfjIz5Npz04E29FdhAnsPQlbM01TQYxvdJJfOHEG8g==
+X-Received: by 2002:a05:6000:510:b0:306:2fab:1f81 with SMTP id a16-20020a056000051000b003062fab1f81mr18570217wrf.21.1683890749922;
+        Fri, 12 May 2023 04:25:49 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id u19-20020a7bc053000000b003f09d7b6e20sm28284207wmc.2.2023.05.12.04.25.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 May 2023 04:25:49 -0700 (PDT)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Vincent Shih <vincent.sunplus@gmail.com>,
+        Anson Huang <Anson.Huang@nxp.com>,
+        Kumar Thella <sthella@codeaurora.org>,
+        Keiji Hayashibara <hayashibara.keiji@socionext.com>,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Peng Fan <peng.fan@oss.nxp.com>
+In-Reply-To: <20230505120814.1057152-1-krzysztof.kozlowski@linaro.org>
+References: <20230505120814.1057152-1-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 1/5] dt-bindings: nvmem: mxs-ocotp: drop unneeded
+ address/size-cells
+Message-Id: <168389074843.55515.5646738672764702598.b4-ty@linaro.org>
+Date:   Fri, 12 May 2023 12:25:48 +0100
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.2
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -91,114 +91,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Simon,
 
-On Mon May 1, 2023 at 3:11 PM CEST, Simon Horman wrote:
-> On Fri, Apr 21, 2023 at 04:11:39PM +0200, Luca Weiss wrote:
-> > Add support for the Bluetooth chip codenamed APACHE which is part of
-> > WCN3988.
-> >=20
-> > The firmware for this chip has a slightly different naming scheme
-> > compared to most others. For ROM Version 0x0200 we need to use
-> > apbtfw10.tlv + apnv10.bin and for ROM version 0x201 apbtfw11.tlv +
-> > apnv11.bin
-> >=20
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > ---
-> >  drivers/bluetooth/btqca.c   | 13 +++++++++++--
-> >  drivers/bluetooth/btqca.h   | 12 ++++++++++--
-> >  drivers/bluetooth/hci_qca.c | 12 ++++++++++++
-> >  3 files changed, 33 insertions(+), 4 deletions(-)
-> >=20
-> > diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-> > index fd0941fe8608..3ee1ef88a640 100644
-> > --- a/drivers/bluetooth/btqca.c
-> > +++ b/drivers/bluetooth/btqca.c
-> > @@ -594,14 +594,20 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t =
-baudrate,
-> >  	/* Firmware files to download are based on ROM version.
-> >  	 * ROM version is derived from last two bytes of soc_ver.
-> >  	 */
-> > -	rom_ver =3D ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f)=
-;
-> > +	if (soc_type =3D=3D QCA_WCN3988)
-> > +		rom_ver =3D ((soc_ver & 0x00000f00) >> 0x05) | (soc_ver & 0x0000000f=
-);
-> > +	else
-> > +		rom_ver =3D ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f=
-);
->
-> Hi Luca,
->
-> perhaps it's just me. But I was wondering if this can be improved on a li=
-ttle.
->
-> * Move the common portion outside of the conditional
-> * And also, I think it's normal to use decimal for shift values.
->
-> e.g.
-> 	unsigned shift;
-> 	...
->
-> 	shift =3D soc_type =3D=3D QCA_WCN3988 ? 5 : 4;
-> 	rom_ver =3D ((soc_ver & 0x00000f00) >> shift) | (soc_ver & 0x0000000f);
->
-> Using some helpers such as GENMASK and FIELD_PREP might also be nice.
+On Fri, 05 May 2023 14:08:10 +0200, Krzysztof Kozlowski wrote:
+> Referenced nvmem.yaml schema already defines address/size-cells, so
+> remove redundant entries and use unevaluatedProperties: false.
+> 
+> 
 
-While I'm not opposed to the idea, I'm not sure it's worth making
-beautiful macros for this since - to my eyes - how the mapping of
-soc_ver to firmware name works is rather obscure since the sources from
-Qualcomm just have a static lookup table of soc_ver to firmware name so
-doing this dynamically like here is different.
+Applied, thanks!
 
-And I haven't looked at other chips that are covered there to see if
-there's a pattern to this, for the most part it seems the original
-formula works for most chips and the one I added works for WCN3988 (and
-the other "APACHE" chips, whatever they are).
+[1/5] dt-bindings: nvmem: mxs-ocotp: drop unneeded address/size-cells
+      commit: 6c1eb69485752935580226a2e39d366625d0fc2a
+[2/5] dt-bindings: nvmem: qcom,qfprom: drop unneeded address/size-cells
+      commit: 426b30ed585c09b9bc6c3d615ed264b2f8d6c56c
+[3/5] dt-bindings: nvmem: qcom,spmi-sdam: drop unneeded address/size-cells
+      commit: 2881bbe70740e663ab29ce7da80d5fb0b9cd9518
+[4/5] dt-bindings: nvmem: socionext,uniphier-efuse: drop unneeded address/size-cells
+      commit: bb7a2f40d77337d9fc5a6e0bf12cc89620b62241
+[5/5] dt-bindings: nvmem: sunplus,sp7021-ocotp: drop unneeded address/size-cells
+      commit: 103066fdb0dedd2dcccd1e0fa4255b9b46b46be5
 
-If a third way is added then I would say for sure this line should be
-made nicer but for now I think it's easier to keep this as I sent it
-because we don't know what the future will hold.
-
->
-> > =20
-> >  	if (soc_type =3D=3D QCA_WCN6750)
-> >  		qca_send_patch_config_cmd(hdev);
-> > =20
-> >  	/* Download rampatch file */
-> >  	config.type =3D TLV_TYPE_PATCH;
-> > -	if (qca_is_wcn399x(soc_type)) {
-> > +	if (soc_type =3D=3D QCA_WCN3988) {
-> > +		snprintf(config.fwname, sizeof(config.fwname),
-> > +			 "qca/apbtfw%02x.tlv", rom_ver);
-> > +	} else if (qca_is_wcn399x(soc_type)) {
-> >  		snprintf(config.fwname, sizeof(config.fwname),
-> >  			 "qca/crbtfw%02x.tlv", rom_ver);
-> >  	} else if (soc_type =3D=3D QCA_QCA6390) {
-> > @@ -636,6 +642,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t ba=
-udrate,
-> >  	if (firmware_name)
-> >  		snprintf(config.fwname, sizeof(config.fwname),
-> >  			 "qca/%s", firmware_name);
-> > +	else if (soc_type =3D=3D QCA_WCN3988)
-> > +		snprintf(config.fwname, sizeof(config.fwname),
-> > +			 "qca/apnv%02x.bin", rom_ver);
-> >  	else if (qca_is_wcn399x(soc_type)) {
-> >  		if (ver.soc_id =3D=3D QCA_WCN3991_SOC_ID) {
->
-> Not strictly related to this patch, but while reviewing this I noticed th=
-at
-> ver.soc_id is __le32 but QCA_WCN3991_SOC_ID is in host byteorder.
->
-> Perhaps a cpu_to_le32() or le32_to_cpu() call is in order here?
-
-Good catch, as you've seen I sent a patch separately to fix that. :)
-
-Regards
-Luca
-
->
-> >  			snprintf(config.fwname, sizeof(config.fwname),
->
-> ...
+Best regards,
+-- 
+Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
