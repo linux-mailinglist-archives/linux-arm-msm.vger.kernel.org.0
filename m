@@ -2,118 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 934E66FFEB8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 04:06:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 984516FFF1A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 04:55:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239562AbjELCGQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 May 2023 22:06:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54194 "EHLO
+        id S239780AbjELCzb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 May 2023 22:55:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233568AbjELCGP (ORCPT
+        with ESMTP id S231229AbjELCza (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 May 2023 22:06:15 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 563321993;
-        Thu, 11 May 2023 19:06:14 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34C1Q4Re024747;
-        Fri, 12 May 2023 02:06:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=k268/CPTFl1nHE3gNz6WaABtB2MSV6qC7WdFBYW5Wmc=;
- b=UmYMKTL+J3O5MGdI8gcoN0D5NBD+BGCr5H5ovkiHYGwuHtaEEuqCSAWwgDQEo5rvYhnZ
- ku4sGLjbhpaR/Z+WbFCVq5R3SqNxx3ZitLKfxNRIyihtwEZKHS1tDm4h48Bnvx+Tq46d
- ammL9bJBk5FwLyoU6AMN/5YJNixbZWxnuFA4kJcYyurEUQNoxH4Bo4MyMR6K/ZcZvcJK
- ox6sBBkhUGYXlAplapUHHb7JH3dqSfmcBtbyYAcrFPFwvy1fNr3kRJA58CDXvrxBsF2E
- I63TMKmb4uZx2nsyK0ie3520k68wW4ane5SUXkg3bcuPLTvnVKZmytvaml7NlyoslBtK gA== 
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qgpfk2xs3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 12 May 2023 02:06:03 +0000
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 34C261xp015509;
-        Fri, 12 May 2023 02:06:01 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 3qdfyku37s-1;
-        Fri, 12 May 2023 02:06:01 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 34C261sY015503;
-        Fri, 12 May 2023 02:06:01 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-        by APTAIPPMTA01.qualcomm.com (PPS) with ESMTP id 34C2610O015476;
-        Fri, 12 May 2023 02:06:01 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
-        id 550E94235; Fri, 12 May 2023 10:06:00 +0800 (CST)
-From:   Qiang Yu <quic_qianyu@quicinc.com>
-To:     mani@kernel.org, quic_jhugo@quicinc.com
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        quic_mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>
-Subject: [PATCH v3] bus: mhi: host: Skip MHI reset if device is in RDDM
-Date:   Fri, 12 May 2023 10:05:58 +0800
-Message-Id: <1683857158-9804-1-git-send-email-quic_qianyu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: z8hE2GqBr6jpQ3gq92NqITSfmrwAOYkl
-X-Proofpoint-GUID: z8hE2GqBr6jpQ3gq92NqITSfmrwAOYkl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-11_19,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 spamscore=0
- suspectscore=0 mlxlogscore=999 lowpriorityscore=0 adultscore=0
- malwarescore=0 priorityscore=1501 bulkscore=0 mlxscore=0 phishscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305120017
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Thu, 11 May 2023 22:55:30 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DA2D10FE;
+        Thu, 11 May 2023 19:55:29 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f26f437b30so1538362e87.1;
+        Thu, 11 May 2023 19:55:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683860128; x=1686452128;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dkOUlUNxiR4Gqj0+EmYuULSRki0JxNp8SsnGkEdjwKw=;
+        b=PpruK/NzGHjzRovvWCYvW7HqDD68KmOoIjPRjVBwwjOl44YKmS9LJw0bJlpO5wCaTK
+         JYQMRTt8PUIg7Tt3sXx/BumOofEX1UyIXH2rVZ7HQ4xk8w/0TIePej2ODQWIhhjMLGCF
+         ObsKQnai0HwA0gxPpanVkllqPWACWFvsyhk8otvSXkxJ7boKNh6rOvhXhhU7XGpKW3yF
+         bnb3jZjGoJuviMp6XaP/FxIe9hwsqI+C+2qQBWPRGsJkiS6fP0ZvUhHR+JTm3yUIwJpq
+         rSKT9UqKx0zvTFuela8XEHqJdseFq2qZbEhMjlCN21nk45Ltut9jjYaQ7C5U84jN7UFH
+         YUlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683860128; x=1686452128;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dkOUlUNxiR4Gqj0+EmYuULSRki0JxNp8SsnGkEdjwKw=;
+        b=SNHFvnD+CBi7k+wKkZwcApgmHUUpAhRhOk1MsquemG3eAdvr0TGMiptNimpA49Yjii
+         WLmRcnKKdvXiBee/qgLZ5cXjox5MPdiXdn4utH9qdn2cWNbGdWgqu++Dh/vyGJ3+xAlw
+         qa/JhZPKDdanrccEGMuHitPFTblufERSv7KunhepPFmA9pXp7XlkYED8VJ4lzQnkx1wa
+         UlTycLHBU2XTMG68cHHe8hD+6YiZxLkLKz1scCt51BNDUC1J4jNksKeI/uigK4+0fUke
+         qcqohiXdg0ihHlctFzwmFdTTVrd2TgYSqt34J4fx/XadIGSDaMzfjoCbdc94l7J3lzaL
+         HPag==
+X-Gm-Message-State: AC+VfDwUgiB7bFmfPd4Dhg2hNPFparvcrQJNwYMUgp+vPMopBhJZlEkk
+        Ce25K+qUKpdHmx0zlqJPtSw=
+X-Google-Smtp-Source: ACHHUZ4dxW4iqzv/N28X1gKcL88SemTjJ65/wtcy0AZdHSmj4XHMTrDxPz8Icvt/RO3sRR4TuYCJgw==
+X-Received: by 2002:ac2:488c:0:b0:4f1:4086:9384 with SMTP id x12-20020ac2488c000000b004f140869384mr3159987lfc.61.1683860127415;
+        Thu, 11 May 2023 19:55:27 -0700 (PDT)
+Received: from [192.168.2.145] (109-252-144-198.dynamic.spd-mgts.ru. [109.252.144.198])
+        by smtp.googlemail.com with ESMTPSA id c26-20020ac244ba000000b004efae490c51sm1285288lfm.240.2023.05.11.19.55.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 May 2023 19:55:26 -0700 (PDT)
+Message-ID: <4a5ebc65-a384-a8df-c692-ca114f1a018d@gmail.com>
+Date:   Fri, 12 May 2023 05:55:23 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 02/20] iommu/terga-gart: Replace set_platform_dma_ops()
+ with IOMMU_DOMAIN_PLATFORM
+Content-Language: en-US
+To:     Jason Gunthorpe <jgg@nvidia.com>,
+        Thierry Reding <thierry.reding@gmail.com>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-tegra@vger.kernel.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Niklas Schnelle <schnelle@linux.ibm.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Kevin Tian <kevin.tian@intel.com>,
+        Nicolin Chen <nicolinc@nvidia.com>,
+        Steven Price <steven.price@arm.com>
+References: <2-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com>
+ <1db712d2-9e33-4183-2766-34e32f170507@arm.com> <ZFI/D6mnLKYpdIqx@nvidia.com>
+ <1a995f30-31fe-354f-ddfe-e944fa36e7a0@arm.com> <ZFJlZ03lswl9uHD0@nvidia.com>
+ <ZFJzKQcKNFHdIWqy@orome> <ZFKXz/HWFkYOJrgT@nvidia.com>
+From:   Dmitry Osipenko <digetx@gmail.com>
+In-Reply-To: <ZFKXz/HWFkYOJrgT@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In RDDM EE, device can not process MHI reset issued by host. In case of MHI
-power off, host is issuing MHI reset and polls for it to get cleared until
-it times out. Since this timeout can not be avoided in case of RDDM, skip
-the MHI reset in this scenarios.
+03.05.2023 20:20, Jason Gunthorpe пишет:
+> On Wed, May 03, 2023 at 04:43:53PM +0200, Thierry Reding wrote:
+> 
+>>> The only thing it does is cause dma-iommu.c in ARM64 to use the
+>>> dma-ranges from OF instead of the domain aperture. sprd has no
+>>> dma-ranges in arch/arm64/boot/dts/sprd.
+>>>
+>>> Further, sprd hard fails any map attempt outside the aperture, so it
+>>> looks like a bug if the OF somehow chooses a wider aperture as
+>>> dma-iommu.c will start failing maps.
+>>
+>> That all sounds odd. of_dma_configure_id() already sets up the DMA mask
+>> based on dma-ranges and the DMA API uses that to restrict what IOVA any
+>> buffers can get mapped to for a given device.
+> 
+> Yes, and after it sets up the mask it also passes that range down like this:
+> 
+>  of_dma_configure_id():
+> 	end = dma_start + size - 1;
+> 	mask = DMA_BIT_MASK(ilog2(end) + 1);
+> 	dev->coherent_dma_mask &= mask;
+> 
+> 	arch_setup_dma_ops(dev, dma_start, size, iommu, coherent);
+> 
+> Which eventually goes to:
+> 
+>  iommu_setup_dma_ops()
+>  iommu_dma_init_domain()
+> 
+> Which then does:
+> 
+> 	if (domain->geometry.force_aperture) {
+> 
+> And if not set uses the dma_start/size parameter as the actual
+> aperture. (!?)
+> 
+> Since sprd does this in the iommu driver:
+> 
+> 	dom->domain.geometry.aperture_start = 0;
+> 	dom->domain.geometry.aperture_end = SZ_256M - 1;
+> 
+> And it is serious about enforcing it during map:
+> 
+> 	unsigned long start = domain->geometry.aperture_start;
+> 	unsigned long end = domain->geometry.aperture_end;
+> 
+> 	if (iova < start || (iova + size) > (end + 1)) {
+> 			return -EINVAL;
+> 
+> We must see the dma_start/size parameter be a subset of the aperture
+> or eventually dma-iommu.c will see map failures.
+> 
+> I can't see how this is can happen, so it looks like omitting
+> force_aperture is a mistake not a deliberate choice. I'll make a patch
+> and see if the SPRD folks have any comment. If there is no reason I
+> can go ahead and purge force_aperture and all the dma_start/size
+> passing through arch_setup_dma_ops().
+> 
+>>> Thus, I propose we just remove the whole thing. All drivers must set
+>>> an aperture and the aperture is the pure HW capability to map an
+>>> IOPTE at that address. ie it reflects the design of the page table
+>>> itself and nothing else.
+>>
+>> Yeah, that sounds reasonable. If the aperture represents what the IOMMU
+>> supports. Together with each device's DMA mask we should have everything
+>> we need.
+> 
+> Arguably we should respect the dma-ranges as well, but I think that
+> should come up from the iommu driver via the get_resv_regions() which
+> is the usual place we return FW originated information.
+> 
+>> For Tegra GART I think there's indeed no use-cases at the moment. Dmitry
+>> had at one point tried to make use of it because it can be helpful on
+>> some of the older devices that were very memory-constrained. That
+>> support never made it upstream because it required significant changes
+>> in various places, if I recall correctly. For anything with a decent
+>> enough amount of RAM, CMA is usually a better option.
+> 
+> So the actual use case of this HW is to linearize buffers? ie it is a
+> general scatter/gather engine?
+> 
+>> This has occasionally come up in the past and I seem to remember that it
+>> had once been proposed to simply remove tegra-gart and there had been no
+>> objections. Adding Dmitry, if he doesn't have objections to remaving it,
+>> neither do I.
+> 
+> Dmitry, please say yes and I will remove it instead of trying to carry
+> it. The driver is almost 10 years old at this point, I'm skeptical
+> anyone will need it on a 6.2 era kernel..
 
-Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state transitions")
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
----
-v1->v2: use ~75 columns in commit text,	add Fixes tag
-v2->v3: update Fixes tag
- 
- drivers/bus/mhi/host/pm.c | 5 +++++
- 1 file changed, 5 insertions(+)
+You probably missed that support for many of 10 years old Tegra2/3
+devices was added to kernel during last years.
 
-diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-index 0834590..8a4362d 100644
---- a/drivers/bus/mhi/host/pm.c
-+++ b/drivers/bus/mhi/host/pm.c
-@@ -470,6 +470,10 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
- 
- 	/* Trigger MHI RESET so that the device will not access host memory */
- 	if (!MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
-+		/* Skip MHI RESET if in RDDM state */
-+		if (mhi_cntrl->rddm_image && mhi_get_exec_env(mhi_cntrl) == MHI_EE_RDDM)
-+			goto skip_mhi_reset;
-+
- 		dev_dbg(dev, "Triggering MHI Reset in device\n");
- 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
- 
-@@ -495,6 +499,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
- 		}
- 	}
- 
-+skip_mhi_reset:
- 	dev_dbg(dev,
- 		 "Waiting for all pending event ring processing to complete\n");
- 	mhi_event = mhi_cntrl->mhi_event;
--- 
-2.7.4
+This GART isn't used by upstream DRM driver, but it's used by downstream
+kernel which uses alternative Tegra DRM driver that works better for
+older hardware.
+
+If it's too much burden to maintain this driver, then feel free to
+remove it and I'll continue maintaining it in downstream myself.
+Otherwise I can test your changes if needed.
 
