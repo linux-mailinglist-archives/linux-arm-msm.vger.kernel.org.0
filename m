@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B05D4700413
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 11:41:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1B84700429
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 11:43:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240300AbjELJlt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 05:41:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38262 "EHLO
+        id S240628AbjELJn5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 05:43:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240389AbjELJlY (ORCPT
+        with ESMTP id S240706AbjELJnW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 05:41:24 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E3E010A0A;
-        Fri, 12 May 2023 02:40:52 -0700 (PDT)
+        Fri, 12 May 2023 05:43:22 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E44212096;
+        Fri, 12 May 2023 02:42:47 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D55A46544D;
-        Fri, 12 May 2023 09:40:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA94C433D2;
-        Fri, 12 May 2023 09:40:50 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C26006544E;
+        Fri, 12 May 2023 09:42:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2264DC433D2;
+        Fri, 12 May 2023 09:42:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683884450;
-        bh=6wecwsHGtZttDNU8OcAsJfy+kOtssm2wkELv1zAQEzs=;
+        s=k20201202; t=1683884535;
+        bh=yqkBQksJWz1nlhMBFkdu1oRQeM3teRj2O0GKq5+R+aM=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=iQYwaoaGhfdBkDq+lQi/1to1xAetsfGYq/Pjx3lb5bH5QBe4l757dl/vBNyHoCsF9
-         0Uk7KBUZkucN4FELY+TZIFCfgPLuP4HZZAAw8GXj5DjCoCY7XHil0o/uV9IrmkdrY5
-         ryfI3fo7FVTLAWnonF83Yu/CLsWhmhsZkOGCXF23CUsZO1LO4rgSE61BuHWKPkWwgI
-         1oUmSxtbR+5ILlU3sh539XUyFgAc81eXMBloLY5C8sVBEK6H7F/o6kUJKewvPoVnhs
-         r9L/0ZXjGNS4ODEJunU2M23RnOM9szjDpGuV4BJW7DMpXAgFhFq5teNf2/gbvCJK5F
-         D+bW91sIss7ZQ==
+        b=o8edDh7r/NmPz6oH0En6zvc+pERhzP/szGDcpodzH8nGrPlczmrOFvRWeJpHd+DBT
+         P+khlYEo+67V5hxKtt+BLWRWtLN6vhkAy1fMdMWikpUGC7Zzj3gSIg8dZCc43iKBcV
+         XWArDtvALWhpxMCQnoEyj7TafjPNNKkdAR162u9GdW4cplUNBuD8vVIurX1BV/KyVn
+         mZ1tvbzhADIYiIiQCpxJNsBpc1wEwGc3o+OGg81UZwzn8xntR7d3NeZg6Ni8OOP4tN
+         fNsE2t+sootR8+Q2f6taAtj4APLe9zrznhWa/893tnMA6/YWPtNSqd29FgmURGhy/R
+         tDy7jy+LavakQ==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1pxPH3-0003D0-VH; Fri, 12 May 2023 11:41:18 +0200
-Date:   Fri, 12 May 2023 11:41:17 +0200
+        id 1pxPIQ-0003Ev-Tz; Fri, 12 May 2023 11:42:42 +0200
+Date:   Fri, 12 May 2023 11:42:42 +0200
 From:   Johan Hovold <johan@kernel.org>
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>
 Cc:     Bjorn Andersson <andersson@kernel.org>,
@@ -50,17 +50,17 @@ Cc:     Bjorn Andersson <andersson@kernel.org>,
         Steev Klimaszewski <steev@kali.org>,
         Neil Armstrong <neil.armstrong@linaro.org>,
         Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH v2 7/8] arm64: dts: qcom: sc8280xp-crd: Add QMP to
+Subject: Re: [PATCH v2 8/8] arm64: dts: qcom: sc8280xp-x13s: Add QMP to
  SuperSpeed graph
-Message-ID: <ZF4JvTxOeW_A5Gnw@hovoldconsulting.com>
+Message-ID: <ZF4KErG3G6Svj5LA@hovoldconsulting.com>
 References: <20230510031930.1996020-1-quic_bjorande@quicinc.com>
- <20230510031930.1996020-8-quic_bjorande@quicinc.com>
+ <20230510031930.1996020-9-quic_bjorande@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230510031930.1996020-8-quic_bjorande@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+In-Reply-To: <20230510031930.1996020-9-quic_bjorande@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -69,14 +69,10 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 09, 2023 at 08:19:29PM -0700, Bjorn Andersson wrote:
-> With support for the QMP combo phy to react to USB Type-C switch events,
-> introduce it as the next hop for the SuperSpeed lanes of the two USB
-> Type-C connectors, and connect the output of the DisplayPort controller
-> to the QMP combo phy.
-> 
-> This allows the TCPM to perform orientation switching of both USB and
-> DisplayPort signals.
+On Tue, May 09, 2023 at 08:19:30PM -0700, Bjorn Andersson wrote:
+> Following the CRD, connect the two QMP phys inbetween the USB Type-C
+> connectors and the DisplayPort controller, to handle orientation
+> switching.
 > 
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > Tested-by: Abel Vesa <abel.vesa@linaro.org>
@@ -86,6 +82,6 @@ On Tue, May 09, 2023 at 08:19:29PM -0700, Bjorn Andersson wrote:
 > ---
 > 
 > Changes since v1:
-> - DP input is port@2
+> - None
 
 Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
