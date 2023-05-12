@@ -2,422 +2,264 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C9016FFDC1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 02:13:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5D826FFDCE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 02:17:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239618AbjELANo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 11 May 2023 20:13:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34700 "EHLO
+        id S239648AbjELARH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 11 May 2023 20:17:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239628AbjELANn (ORCPT
+        with ESMTP id S239624AbjELARE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 11 May 2023 20:13:43 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDFCAE4A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 May 2023 17:13:39 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2ac733b813fso99148541fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 May 2023 17:13:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683850418; x=1686442418;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P347Hf7iyYzkM3saYrQWkx2EDd1BnKEXa+x5POJNVb8=;
-        b=mFeQnVf7VfjOVNxrPnHXmiU5Q9rm7tbMc2JR0YFb5eLl+ZvcA9+QkyT2mn6SQ+gTm4
-         JWVLnWgtRt8SPz2JbFMcI+gcNEgzf5SzT35vrL5b8yj1i5FvHJ7VQh9XciKFwAY2sbf2
-         xF78YBcXg+oSaAhr+xvkJTpn3T7Zws/olnvLrrC/7GQ7oMLjGwJPHKW/AU/x71AFGNFC
-         plk6b2w3hi6Ug3K+LB4E3M+2stxHrE26rJGNVw80l/X1ZWN3npuqtRfLsJuOvHuboicx
-         fgIye68lkA34K36u8Qj6LfXTPr1peDgTfHAdWIj7kjCQiT/SzoUcoyLT52Dudn/LyMSm
-         61tg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683850418; x=1686442418;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=P347Hf7iyYzkM3saYrQWkx2EDd1BnKEXa+x5POJNVb8=;
-        b=NxcoOutd0v4dg+MPG6qPIJ9w9imZ6A4e+LLNmYHaq3+hn3ZY/MEXTsrbO8nDOl8FDd
-         /5HDIhtLqp/fsbAfHw2H05EvK8g7Jm8h6hco1DWqyCaQlZtkYo/tITjokxEeQWSX6ChJ
-         etmZpwGfi8P0qaKKHIEuRiB6yKurJbVj95dQ1wLnGOj1BlP7W9uAg6INchpxk+M5YOlY
-         Ke8vkscX1JeR6iSxJ7qt4azzMMzx6TXMpx0VwWWfyyHcSHRh4DTP250z3bOsi5RkY9bl
-         j0vLzFkqFyKz0Zg0vRfuYfJmQ5LC4evTBbMcx3Lro1WphWvFn52yKLKf26mCokyFwlge
-         zMZA==
-X-Gm-Message-State: AC+VfDyRmDstRjjWvMGf7KqBx0oZraTKLycQY5zyoD7eJmKCWxs5Oxbo
-        eNAZovYv+b2VaiFokmwjUlwnKQ==
-X-Google-Smtp-Source: ACHHUZ6b4Ctx+dB9wGezToRlxGuqD50sYwy8w+yH2eqNl75dXdRMuVN7QkRMg9J29sDSWnngvNt/vw==
-X-Received: by 2002:a2e:990a:0:b0:29d:d0b:7a78 with SMTP id v10-20020a2e990a000000b0029d0d0b7a78mr4132405lji.21.1683850418071;
-        Thu, 11 May 2023 17:13:38 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id p15-20020ac246cf000000b004f13c3cb9ffsm1258109lfo.200.2023.05.11.17.13.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 May 2023 17:13:37 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Georgi Djakov <djakov@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        linux-pm@vger.kernel.org
-Subject: [PATCH v6 4/4] arm64: dts: qcom: msm8996: scale CBF clock according to the CPUfreq
-Date:   Fri, 12 May 2023 03:13:34 +0300
-Message-Id: <20230512001334.2983048-5-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230512001334.2983048-1-dmitry.baryshkov@linaro.org>
-References: <20230512001334.2983048-1-dmitry.baryshkov@linaro.org>
+        Thu, 11 May 2023 20:17:04 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D17A7271B;
+        Thu, 11 May 2023 17:17:02 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34C0Gp5D030211;
+        Fri, 12 May 2023 00:16:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=jSj+NhCwQKjZy4GYJIlA34ECE1KfkQwQTzcR7Ko1TyI=;
+ b=YjxKrPbwEKfziIBfKwrZArch2ZTYryI2MvORjyoYPkH9iwKuaLe+yj9X4heQWPJnlzkV
+ tfLruHMKOj9CfDTQaNf6npjNlDqIjlP2ruJdEJkUBthtAVWg3QWs2Sgw1mNtZpBKjiI6
+ Gge5nuf34u2QsSCldVELB5g088UB5ahsmLAsAaLzK81GSNZd85vOKhMxkMxq4T0VI5Rp
+ sEodNdaoBin/f82a7Mb56tQ/vYG+VKGy5JsgHoL8VGvwuRGfIQL/JACv4u/KYFT2rVzA
+ 5zFdQmfc4rKcFm6t5CaOk/fwYGWkvkA8E9xah7RCOGAqNPo0IWu0vXMW1so/dH+x8Gry Lg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qh24h14rb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 12 May 2023 00:16:51 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34C0GoKG008076
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 12 May 2023 00:16:50 GMT
+Received: from [10.110.12.203] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 11 May
+ 2023 17:16:48 -0700
+Message-ID: <8ac0b5f5-27da-2b28-8f10-b2fca447511a@quicinc.com>
+Date:   Thu, 11 May 2023 17:16:48 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v1 1/2] drm/msm/dp: enable HDP plugin/unplugged interrupts
+ to hpd_enable/disable
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+CC:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <quic_abhinavk@quicinc.com>,
+        <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <marijn.suijten@somainline.org>, <freedreno@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <1683750665-8764-1-git-send-email-quic_khsieh@quicinc.com>
+ <1683750665-8764-2-git-send-email-quic_khsieh@quicinc.com>
+ <CAA8EJprtQF0x_LCOTrt5bvRnJ+xRz6QxLF6QAP-4Pff6V5TJ2g@mail.gmail.com>
+ <20230511155331.2jmfe7xcs5tihdgb@ripper>
+ <5ef83699-01de-d062-6239-9bb834c70458@linaro.org>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <5ef83699-01de-d062-6239-9bb834c70458@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: tdGTkWR988iNGxlCtpmtFJy7_L1naaGi
+X-Proofpoint-ORIG-GUID: tdGTkWR988iNGxlCtpmtFJy7_L1naaGi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-11_19,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 adultscore=0
+ priorityscore=1501 phishscore=0 impostorscore=0 suspectscore=0
+ malwarescore=0 bulkscore=0 mlxscore=0 clxscore=1015 lowpriorityscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305120000
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Turn CBF into the interconnect provider. Scale CBF frequency (bandwidth)
-according to CPU frequencies.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 51 +++++++++++++++++++++++++++
- 1 file changed, 51 insertions(+)
+On 5/11/2023 8:57 AM, Dmitry Baryshkov wrote:
+> On 11/05/2023 18:53, Bjorn Andersson wrote:
+>> On Thu, May 11, 2023 at 07:24:46AM +0300, Dmitry Baryshkov wrote:
+>>> On Wed, 10 May 2023 at 23:31, Kuogee Hsieh <quic_khsieh@quicinc.com> 
+>>> wrote:
+>>>>
+>>>> The internal_hpd flag was introduced to handle external DP HPD 
+>>>> derived from GPIO
+>>>> pinmuxed into DP controller. HPD plug/unplug interrupts cannot be 
+>>>> enabled until
+>>>> internal_hpd flag is set to true.
+>>>> At both bootup and resume time, the DP driver will enable external DP
+>>>> plugin interrupts and handle plugin interrupt accordingly. 
+>>>> Unfortunately
+>>>> dp_bridge_hpd_enable() bridge ops function was called to set 
+>>>> internal_hpd
+>>>> flag to true later than where DP driver expected during bootup time.
+>>>>
+>>>> This causes external DP plugin event to not get detected and 
+>>>> display stays blank.
+>>>> Move enabling HDP plugin/unplugged interrupts to 
+>>>> dp_bridge_hpd_enable()/disable() to
+>>>> set internal_hpd to true along with enabling HPD plugin/unplugged 
+>>>> interrupts
+>>>> simultaneously to avoid timing issue during bootup and resume.
+>>>>
+>>>> Fixes: cd198caddea7 ("drm/msm/dp: Rely on hpd_enable/disable 
+>>>> callbacks")
+>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>>>
+>>> Thanks for debugging this!
+>>>
+>>> However after looking at the driver I think there is more than this.
+>>>
+>>> We have several other places gated on internal_hpd flag, where we do
+>>> not have a strict ordering of events.
+>>> I see that dp_hpd_plug_handle() and dp_hpd_unplug_handle() also toggle
+>>> DP_DP_IRQ_HPD_INT_MASK and DP_DP_HPD_REPLUG_INT_MASK depending on
+>>> internal_hpd. Can we toggle all 4 interrupts from the
+>>> hpd_enable/hpd_disable functions? If we can do it, then I think we can
+>>> drop the internal_hpd flag completely.
+>>>
+>>
+>> Yes, that's what I believe the DRM framework intend us to do.
+>>
+>> The problem, and reason why I didn't do tat in my series, was that in
+>> order to update the INT_MASKs you need to clock the IP-block and that's
+>> done elsewhere.
+>>
+>> So, for the internal_hpd case, it seems appropriate to pm_runtime_get()
+>> in hpd_enable() and unmask the HPD interrupts, and mask the interrupts
+>> and pm_runtime_put() in hpd_disable().
+>>
+>>
+>> But for edp and external HPD-signal we also need to make sure power is
+>> on while something is connected...
+>
+> I think this is already handled by the existing code, see calls to the 
+> dp_display_host_init().
+>
+>>
+>>> I went on and checked other places where it is used:
+>>> - dp_hpd_unplug_handle(), guarding DP_DP_HPD_PLUG_INT_MASK toggling. I
+>>> think we can drop these two calls completely. The function is under
+>>> the event_mutex protection, so other events can not interfere.
+>>> - dp_bridge_hpd_notify(). What is the point of this check? If some
+>>> other party informs us of the HPD event, we'd better handle it instead
+>>> of dropping it. Correct?  In other words, I'd prefer seeing the
+>>> hpd_event_thread removal. Instead of that I think that on
+>>> HPD/plug/unplug/etc. IRQ the driver should call into the drm stack,
+>>> then the hpd_notify call should process those events.
+>>>
+1) DP with GPIO: No downstream drm_bridge are connected, is_edp = false
+and internal HPD-logic is in used (internal_hpd = true). Power needs to
+be on at all times etc.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 2b35cb3f5292..5b006cebe47c 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -8,6 +8,7 @@
- #include <dt-bindings/clock/qcom,mmcc-msm8996.h>
- #include <dt-bindings/clock/qcom,rpmcc.h>
- #include <dt-bindings/interconnect/qcom,msm8996.h>
-+#include <dt-bindings/interconnect/qcom,msm8996-cbf.h>
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/soc/qcom,apr.h>
-@@ -49,6 +50,7 @@ CPU0: cpu@0 {
- 			cpu-idle-states = <&CPU_SLEEP_0>;
- 			capacity-dmips-mhz = <1024>;
- 			clocks = <&kryocc 0>;
-+			interconnects = <&cbf MASTER_CBF_M4M &cbf SLAVE_CBF_M4M>;
- 			operating-points-v2 = <&cluster0_opp>;
- 			#cooling-cells = <2>;
- 			next-level-cache = <&L2_0>;
-@@ -66,6 +68,7 @@ CPU1: cpu@1 {
- 			cpu-idle-states = <&CPU_SLEEP_0>;
- 			capacity-dmips-mhz = <1024>;
- 			clocks = <&kryocc 0>;
-+			interconnects = <&cbf MASTER_CBF_M4M &cbf SLAVE_CBF_M4M>;
- 			operating-points-v2 = <&cluster0_opp>;
- 			#cooling-cells = <2>;
- 			next-level-cache = <&L2_0>;
-@@ -79,6 +82,7 @@ CPU2: cpu@100 {
- 			cpu-idle-states = <&CPU_SLEEP_0>;
- 			capacity-dmips-mhz = <1024>;
- 			clocks = <&kryocc 1>;
-+			interconnects = <&cbf MASTER_CBF_M4M &cbf SLAVE_CBF_M4M>;
- 			operating-points-v2 = <&cluster1_opp>;
- 			#cooling-cells = <2>;
- 			next-level-cache = <&L2_1>;
-@@ -96,6 +100,7 @@ CPU3: cpu@101 {
- 			cpu-idle-states = <&CPU_SLEEP_0>;
- 			capacity-dmips-mhz = <1024>;
- 			clocks = <&kryocc 1>;
-+			interconnects = <&cbf MASTER_CBF_M4M &cbf SLAVE_CBF_M4M>;
- 			operating-points-v2 = <&cluster1_opp>;
- 			#cooling-cells = <2>;
- 			next-level-cache = <&L2_1>;
-@@ -147,91 +152,109 @@ opp-307200000 {
- 			opp-hz = /bits/ 64 <307200000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-422400000 {
- 			opp-hz = /bits/ 64 <422400000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-480000000 {
- 			opp-hz = /bits/ 64 <480000000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-556800000 {
- 			opp-hz = /bits/ 64 <556800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-652800000 {
- 			opp-hz = /bits/ 64 <652800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <384000>;
- 		};
- 		opp-729600000 {
- 			opp-hz = /bits/ 64 <729600000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <460800>;
- 		};
- 		opp-844800000 {
- 			opp-hz = /bits/ 64 <844800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <537600>;
- 		};
- 		opp-960000000 {
- 			opp-hz = /bits/ 64 <960000000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <672000>;
- 		};
- 		opp-1036800000 {
- 			opp-hz = /bits/ 64 <1036800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <672000>;
- 		};
- 		opp-1113600000 {
- 			opp-hz = /bits/ 64 <1113600000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <825600>;
- 		};
- 		opp-1190400000 {
- 			opp-hz = /bits/ 64 <1190400000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <825600>;
- 		};
- 		opp-1228800000 {
- 			opp-hz = /bits/ 64 <1228800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <902400>;
- 		};
- 		opp-1324800000 {
- 			opp-hz = /bits/ 64 <1324800000>;
- 			opp-supported-hw = <0xd>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1056000>;
- 		};
- 		opp-1363200000 {
- 			opp-hz = /bits/ 64 <1363200000>;
- 			opp-supported-hw = <0x2>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1132800>;
- 		};
- 		opp-1401600000 {
- 			opp-hz = /bits/ 64 <1401600000>;
- 			opp-supported-hw = <0xd>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1132800>;
- 		};
- 		opp-1478400000 {
- 			opp-hz = /bits/ 64 <1478400000>;
- 			opp-supported-hw = <0x9>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1190400>;
- 		};
- 		opp-1497600000 {
- 			opp-hz = /bits/ 64 <1497600000>;
- 			opp-supported-hw = <0x04>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1305600>;
- 		};
- 		opp-1593600000 {
- 			opp-hz = /bits/ 64 <1593600000>;
- 			opp-supported-hw = <0x9>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1382400>;
- 		};
- 	};
- 
-@@ -245,136 +268,163 @@ opp-307200000 {
- 			opp-hz = /bits/ 64 <307200000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-403200000 {
- 			opp-hz = /bits/ 64 <403200000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-480000000 {
- 			opp-hz = /bits/ 64 <480000000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-556800000 {
- 			opp-hz = /bits/ 64 <556800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-652800000 {
- 			opp-hz = /bits/ 64 <652800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-729600000 {
- 			opp-hz = /bits/ 64 <729600000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <307200>;
- 		};
- 		opp-806400000 {
- 			opp-hz = /bits/ 64 <806400000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <384000>;
- 		};
- 		opp-883200000 {
- 			opp-hz = /bits/ 64 <883200000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <460800>;
- 		};
- 		opp-940800000 {
- 			opp-hz = /bits/ 64 <940800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <537600>;
- 		};
- 		opp-1036800000 {
- 			opp-hz = /bits/ 64 <1036800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <595200>;
- 		};
- 		opp-1113600000 {
- 			opp-hz = /bits/ 64 <1113600000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <672000>;
- 		};
- 		opp-1190400000 {
- 			opp-hz = /bits/ 64 <1190400000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <672000>;
- 		};
- 		opp-1248000000 {
- 			opp-hz = /bits/ 64 <1248000000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <748800>;
- 		};
- 		opp-1324800000 {
- 			opp-hz = /bits/ 64 <1324800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <825600>;
- 		};
- 		opp-1401600000 {
- 			opp-hz = /bits/ 64 <1401600000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <902400>;
- 		};
- 		opp-1478400000 {
- 			opp-hz = /bits/ 64 <1478400000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <979200>;
- 		};
- 		opp-1555200000 {
- 			opp-hz = /bits/ 64 <1555200000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1056000>;
- 		};
- 		opp-1632000000 {
- 			opp-hz = /bits/ 64 <1632000000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1190400>;
- 		};
- 		opp-1708800000 {
- 			opp-hz = /bits/ 64 <1708800000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1228800>;
- 		};
- 		opp-1785600000 {
- 			opp-hz = /bits/ 64 <1785600000>;
- 			opp-supported-hw = <0xf>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1305600>;
- 		};
- 		opp-1804800000 {
- 			opp-hz = /bits/ 64 <1804800000>;
- 			opp-supported-hw = <0xe>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1305600>;
- 		};
- 		opp-1824000000 {
- 			opp-hz = /bits/ 64 <1824000000>;
- 			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1382400>;
- 		};
- 		opp-1900800000 {
- 			opp-hz = /bits/ 64 <1900800000>;
- 			opp-supported-hw = <0x4>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1305600>;
- 		};
- 		opp-1920000000 {
- 			opp-hz = /bits/ 64 <1920000000>;
- 			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1459200>;
- 		};
- 		opp-1996800000 {
- 			opp-hz = /bits/ 64 <1996800000>;
- 			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1593600>;
- 		};
- 		opp-2073600000 {
- 			opp-hz = /bits/ 64 <2073600000>;
- 			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1593600>;
- 		};
- 		opp-2150400000 {
- 			opp-hz = /bits/ 64 <2150400000>;
- 			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
-+			opp-peak-kBps = <1593600>;
- 		};
- 	};
- 
-@@ -3549,6 +3599,7 @@ cbf: clock-controller@9a11000 {
- 			reg = <0x09a11000 0x10000>;
- 			clocks = <&rpmcc RPM_SMD_XO_A_CLK_SRC>, <&apcs_glb>;
- 			#clock-cells = <0>;
-+			#interconnect-cells = <1>;
- 		};
- 
- 		intc: interrupt-controller@9bc0000 {
--- 
-2.39.2
+2) DP without GPIO: Downstream drm_bridge connected, is_edp = false and
+internal HPD-logic should not be used/enabled (internal_hpd = false).
+Power doesn't need to be on unless hpd_notify is invoked to tell us that
+there's something connected...
 
+- dp_bridge_hpd_notify(). What is the point of this check? <== i have 
+below two questions,
+
+1) can you explain when/what this dp_bridge_hpd_notify() will be called?
+
+2) is dp_bridge_hpd_notify() only will be called at above case #2? and 
+it will not be used by case #1?
+
+
+
+>>
+>> I agree, that seems to be what's expected of us from the DRM framework.
+>>
+>> Regards,
+>> Bjorn
+>>
+>>>
+>>>> ---
+>>>>   drivers/gpu/drm/msm/dp/dp_display.c | 27 ++++++++++++++-------------
+>>>>   1 file changed, 14 insertions(+), 13 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
+>>>> b/drivers/gpu/drm/msm/dp/dp_display.c
+>>>> index 3e13acdf..71aa944 100644
+>>>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>>>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>>>> @@ -1088,13 +1088,6 @@ static void dp_display_config_hpd(struct 
+>>>> dp_display_private *dp)
+>>>>          dp_display_host_init(dp);
+>>>>          dp_catalog_ctrl_hpd_config(dp->catalog);
+>>>>
+>>>> -       /* Enable plug and unplug interrupts only if requested */
+>>>> -       if (dp->dp_display.internal_hpd)
+>>>> -               dp_catalog_hpd_config_intr(dp->catalog,
+>>>> -                               DP_DP_HPD_PLUG_INT_MASK |
+>>>> -                               DP_DP_HPD_UNPLUG_INT_MASK,
+>>>> -                               true);
+>>>> -
+>>>>          /* Enable interrupt first time
+>>>>           * we are leaving dp clocks on during disconnect
+>>>>           * and never disable interrupt
+>>>> @@ -1396,12 +1389,6 @@ static int dp_pm_resume(struct device *dev)
+>>>>
+>>>>          dp_catalog_ctrl_hpd_config(dp->catalog);
+>>>>
+>>>> -       if (dp->dp_display.internal_hpd)
+>>>> -               dp_catalog_hpd_config_intr(dp->catalog,
+>>>> -                               DP_DP_HPD_PLUG_INT_MASK |
+>>>> -                               DP_DP_HPD_UNPLUG_INT_MASK,
+>>>> -                               true);
+>>>> -
+>>>>          if (dp_catalog_link_is_connected(dp->catalog)) {
+>>>>                  /*
+>>>>                   * set sink to normal operation mode -- D0
+>>>> @@ -1801,15 +1788,29 @@ void dp_bridge_hpd_enable(struct drm_bridge 
+>>>> *bridge)
+>>>>   {
+>>>>          struct msm_dp_bridge *dp_bridge = to_dp_bridge(bridge);
+>>>>          struct msm_dp *dp_display = dp_bridge->dp_display;
+>>>> +       struct dp_display_private *dp;
+>>>> +
+>>>> +       dp = container_of(dp_display, struct dp_display_private, 
+>>>> dp_display);
+>>>>
+>>>>          dp_display->internal_hpd = true;
+>>>> +       dp_catalog_hpd_config_intr(dp->catalog,
+>>>> +                               DP_DP_HPD_PLUG_INT_MASK |
+>>>> +                               DP_DP_HPD_UNPLUG_INT_MASK,
+>>>> +                               true);
+>>>>   }
+>>>>
+>>>>   void dp_bridge_hpd_disable(struct drm_bridge *bridge)
+>>>>   {
+>>>>          struct msm_dp_bridge *dp_bridge = to_dp_bridge(bridge);
+>>>>          struct msm_dp *dp_display = dp_bridge->dp_display;
+>>>> +       struct dp_display_private *dp;
+>>>> +
+>>>> +       dp = container_of(dp_display, struct dp_display_private, 
+>>>> dp_display);
+>>>>
+>>>> +       dp_catalog_hpd_config_intr(dp->catalog,
+>>>> +                               DP_DP_HPD_PLUG_INT_MASK |
+>>>> +                               DP_DP_HPD_UNPLUG_INT_MASK,
+>>>> +                               false);
+>>>>          dp_display->internal_hpd = false;
+>>>>   }
+>>>
+>>> -- 
+>>> With best wishes
+>>> Dmitry
+>
