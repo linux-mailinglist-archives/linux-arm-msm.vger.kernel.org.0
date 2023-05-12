@@ -2,101 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EF067001BE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 09:52:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C882E700296
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 10:42:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239991AbjELHwU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 03:52:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53172 "EHLO
+        id S240178AbjELIl6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 04:41:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239562AbjELHwT (ORCPT
+        with ESMTP id S232659AbjELIl5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 03:52:19 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D152AE705;
-        Fri, 12 May 2023 00:52:17 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34C7k6vC011471;
-        Fri, 12 May 2023 07:51:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=nHqs3cbznyy9gdtabZI1rFArHV1FP7rzRz/FpxP3dOg=;
- b=b/0DQr8oGZsAVbXE2Lr6NA3O7EhwIJQ82zpDLU3gkza6le84WwULm2hkB787OClrCv9k
- 6KgAVDQztulgm21zEROEKV4V+AdQtDY6lIqzZNQDWr6u6flXxFBVb4NEwAZqICnaAv4C
- pqVJghb1VLWl8jSMaXeS90LGjdYystxqYZHtESS86Yog7rmKlsDP5ViRyOiA5GoqWFKA
- NkVDZrXCOdj3/rcUylzOc82AbJbd7K+qU5zGuof1jMLGROBEx/V28gJJRPhqJAmeOUi1
- N+ZJ5uV+O7FlLdrEZjmktLE3N5BP00Wyq2fqauofMcDsa7DXvrKIWUQ/NR5nQjQTe0r9 Nw== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qh5g99ck9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 12 May 2023 07:51:46 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34C7piRG011044
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 12 May 2023 07:51:45 GMT
-Received: from [10.253.73.41] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 12 May
- 2023 00:51:37 -0700
-Message-ID: <82aab1d7-0157-983a-5f92-3dcd1e04fe23@quicinc.com>
-Date:   Fri, 12 May 2023 15:51:34 +0800
+        Fri, 12 May 2023 04:41:57 -0400
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C777B3A96;
+        Fri, 12 May 2023 01:41:55 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id 85EC92277E;
+        Fri, 12 May 2023 08:41:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1683880914; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=pWQ1m120kigJP8UI6CyQFrBjDqO1iQT2O49PACRC7NY=;
+        b=mnFQs8mVfueIa/exRdcpKrEU2GTwDYtt4Ut4AUoRyeO2HeCTyXk/NuBpUJdhfuNQ+07Blv
+        iIroG2RhLFmydYDquWy8pwc6KQ5zHj+k8DJG5sOHJufzKhV80f6BcHMxq+YNCYdTPYyT3B
+        QhFfLGHeK/18steKR301Y0RMtv9V/EY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1683880914;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=pWQ1m120kigJP8UI6CyQFrBjDqO1iQT2O49PACRC7NY=;
+        b=lcj89k5WVh2hez+Bd24Oq73UKlKEc85Ivu/B6pfMwNsSbV2OIrZMU8oIFW4VJnpHVuYQFa
+        6E5Ifjx2JsjJbODA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 2CFD213466;
+        Fri, 12 May 2023 08:41:54 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id 3DnrCdL7XWQZKQAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Fri, 12 May 2023 08:41:54 +0000
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     daniel@ffwll.ch, airlied@gmail.com,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        javierm@redhat.com
+Cc:     dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 00/11] drm/fbdev: Remove DRM's helpers for fbdev I/O
+Date:   Fri, 12 May 2023 10:41:41 +0200
+Message-Id: <20230512084152.31233-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 3/3] Documentation: trace: Add documentation for
- Coresight Dummy Trace
-To:     Bagas Sanjaya <bagasdotme@gmail.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        "Paul Walmsley" <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Jonathan Corbet <corbet@lwn.net>
-CC:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        "Yuanfang Zhang" <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        <linux-doc@vger.kernel.org>
-References: <20230422073714.38844-1-quic_hazha@quicinc.com>
- <20230422073714.38844-4-quic_hazha@quicinc.com> <ZFsdvCuTTEkTm9VA@debian.me>
-Content-Language: en-US
-From:   Hao Zhang <quic_hazha@quicinc.com>
-In-Reply-To: <ZFsdvCuTTEkTm9VA@debian.me>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 3FKdG7ONrS4So1yTJqPohs33FvWIO9pQ
-X-Proofpoint-ORIG-GUID: 3FKdG7ONrS4So1yTJqPohs33FvWIO9pQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-12_04,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- lowpriorityscore=0 mlxlogscore=915 mlxscore=0 clxscore=1011
- priorityscore=1501 spamscore=0 impostorscore=0 malwarescore=0
- suspectscore=0 adultscore=0 bulkscore=0 classifier=spam adjust=0
- reason=mlx scancount=1 engine=8.12.0-2304280000
- definitions=main-2305120065
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -105,91 +74,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bagas,
+DRM provides a number of wrappers around fbdev cfb_() sys_(), fb_io_()
+and fb_sys_() helpers. The DRM functions don't provide any additional
+functionality for most DRM drivers. So remove them and call the fbdev
+I/O helpers directly.
 
-On 5/10/2023 12:29 PM, Bagas Sanjaya wrote:
-> On Sat, Apr 22, 2023 at 03:37:14PM +0800, Hao Zhang wrote:
->> +Introduction
->> +---------------------------
->> +
->> +Coresight Dummy Trace Module is for the specific devices that kernel
->> +don't have permission to access or configure, e.g., CoreSight TPDMs
->> +on Qualcomm platforms. So there need driver to register dummy devices
->> +as Coresight devices. It may also be used to define components that
->> +may not have any programming interfaces (e.g, static links), so that
->> +paths can be established in the driver. Provide Coresight API for
->> +dummy device operations, such as enabling and disabling dummy devices.
->> +Build the Coresight path for dummy sink or dummy source for debugging.
->> +
->> +Config details
->> +---------------------------
->> +
->> +There are two types of nodes, dummy sink and dummy source. The nodes
->> +should be observed at the below coresight path::
->> +
->> +    ``/sys/bus/coresight/devices``.
->> +
->> +e.g.::
->> +
->> +    / $ ls -l /sys/bus/coresight/devices | grep dummy
->> +    dummy0 -> ../../../devices/platform/soc@0/soc@0:dummy_source/dummy0
->> +    dummy1 -> ../../../devices/platform/soc@0/soc@0:dummy_sink/dummy1
-> 
-> The wording confuses me, so I have to make the improv:
-> 
-> ---- >8 ----
-> diff --git a/Documentation/trace/coresight/coresight-dummy.rst b/Documentation/trace/coresight/coresight-dummy.rst
-> index 7cb59f080c8892..f0a92669288b0c 100644
-> --- a/Documentation/trace/coresight/coresight-dummy.rst
-> +++ b/Documentation/trace/coresight/coresight-dummy.rst
-> @@ -8,27 +8,25 @@ Coresight Dummy Trace Module
->       :Date:     May 2023
->   
->   Introduction
-> ----------------------------
-> +------------
->   
-> -Coresight Dummy Trace Module is for the specific devices that kernel
-> -don't have permission to access or configure, e.g., CoreSight TPDMs
-> -on Qualcomm platforms. So there need driver to register dummy devices
-> -as Coresight devices. It may also be used to define components that
-> -may not have any programming interfaces (e.g, static links), so that
-> -paths can be established in the driver. Provide Coresight API for
-> -dummy device operations, such as enabling and disabling dummy devices.
-> -Build the Coresight path for dummy sink or dummy source for debugging.
-> +The Coresight dummy trace module is for the specific devices that kernel don't
-> +have permission to access or configure, e.g., CoreSight TPDMs on Qualcomm
-> +platforms. For these devices, a dummy driver is needed to register them as
-> +Coresight devices. The module may also be used to define components that may
-> +not have any programming interfaces (e.g, static links), so that paths can be
-> +created in the driver. It provides Coresight API for operations on dummy
-> +devices, such as enabling and disabling them. It also provides the Coresight
-> +dummy sink/source paths for debugging.
->   
->   Config details
-> ----------------------------
-> +--------------
->   
-> -There are two types of nodes, dummy sink and dummy source. The nodes
-> -should be observed at the below coresight path::
-> +There are two types of nodes, dummy sink and dummy source. These nodes
-> +are available at ``/sys/bus/coresight/devices``.
->   
-> -    ``/sys/bus/coresight/devices``.
-> +Example output::
->   
-> -e.g.::
-> -
-> -    / $ ls -l /sys/bus/coresight/devices | grep dummy
-> +    $ ls -l /sys/bus/coresight/devices | grep dummy
->       dummy_sink0 -> ../../../devices/platform/soc@0/soc@0:sink/dummy_sink0
->       dummy_source0 -> ../../../devices/platform/soc@0/soc@0:source/dummy_source0
-> 
-> Thanks.
-> 
+The DRM fbdev I/O wrappers were originally added because <linux/fb.h>
+does not protect its content with CONFIG_FB. DRM fbdev emulation did
+not build if the the config option had been disabled. This has been
+fixed. For fbdev-generic and i915, the wrappers added support for damage
+handling. But this is better handled within the two callers, as each
+is special in its damage handling.
 
-Thanks for your review and comments, will update it in the next patch 
-series.
+Patches 1 to 8 replace the DRM wrappers in a number of fbdev emulations.
+Patch 9 exports two helpers for damage handling. Patches 10 and 11
+update fbdev-generic and i915 with the help of the exported functions.
+The patches also remove DRM's fbdev I/O helpers, which are now unused.
 
-Thanks,
-Hao
+DRM's fbdev helpers had to select fbdev I/O helpers for I/O and for
+system memory. Each fbdev emulation now selects the correct helpers
+for itself. Depending on the selected DRM drivers, kernel builds will
+now only contain the necessary fbdev I/O helpers and might be slightly
+smaller in size.
+
+Thomas Zimmermann (11):
+  drm/armada: Use regular fbdev I/O helpers
+  drm/exynos: Use regular fbdev I/O helpers
+  drm/gma500: Use regular fbdev I/O helpers
+  drm/radeon: Use regular fbdev I/O helpers
+  drm/fbdev-dma: Use regular fbdev I/O helpers
+  drm/msm: Use regular fbdev I/O helpers
+  drm/omapdrm: Use regular fbdev I/O helpers
+  drm/tegra: Use regular fbdev I/O helpers
+  drm/fb-helper: Export helpers for marking damage areas
+  drm/fbdev-generic: Implement dedicated fbdev I/O helpers
+  drm/i915: Implement dedicated fbdev I/O helpers
+
+ drivers/gpu/drm/Kconfig                       |  27 +-
+ drivers/gpu/drm/Makefile                      |   7 +-
+ drivers/gpu/drm/armada/Kconfig                |   8 +
+ drivers/gpu/drm/armada/Makefile               |   2 +-
+ drivers/gpu/drm/armada/armada_drm.h           |   2 +-
+ drivers/gpu/drm/armada/armada_fbdev.c         |   9 +-
+ drivers/gpu/drm/drm_fb_helper.c               | 233 ++----------------
+ drivers/gpu/drm/drm_fbdev_dma.c               |  12 +-
+ drivers/gpu/drm/drm_fbdev_generic.c           |  47 +++-
+ drivers/gpu/drm/exynos/Kconfig                |   8 +
+ drivers/gpu/drm/exynos/Makefile               |   2 +-
+ drivers/gpu/drm/exynos/exynos_drm_fbdev.c     |  10 +-
+ drivers/gpu/drm/exynos/exynos_drm_fbdev.h     |   2 +-
+ drivers/gpu/drm/gma500/Kconfig                |   8 +
+ drivers/gpu/drm/gma500/Makefile               |   2 +-
+ drivers/gpu/drm/gma500/fbdev.c                |   9 +-
+ drivers/gpu/drm/gma500/psb_drv.h              |   2 +-
+ drivers/gpu/drm/i915/Kconfig                  |   8 +
+ drivers/gpu/drm/i915/Makefile                 |   2 +-
+ .../drm/i915/display/intel_display_debugfs.c  |   2 +-
+ drivers/gpu/drm/i915/display/intel_fbdev.c    |  51 +++-
+ drivers/gpu/drm/i915/display/intel_fbdev.h    |   2 +-
+ drivers/gpu/drm/msm/Kconfig                   |   9 +
+ drivers/gpu/drm/msm/Makefile                  |   2 +-
+ drivers/gpu/drm/msm/msm_drv.h                 |   2 +-
+ drivers/gpu/drm/msm/msm_fbdev.c               |  12 +-
+ drivers/gpu/drm/omapdrm/Kconfig               |   9 +
+ drivers/gpu/drm/omapdrm/Makefile              |   2 +-
+ drivers/gpu/drm/omapdrm/omap_debugfs.c        |   4 +-
+ drivers/gpu/drm/omapdrm/omap_fbdev.c          |  12 +-
+ drivers/gpu/drm/omapdrm/omap_fbdev.h          |   2 +-
+ drivers/gpu/drm/omapdrm/omap_gem.c            |   4 +-
+ drivers/gpu/drm/radeon/Kconfig                |   8 +
+ drivers/gpu/drm/radeon/Makefile               |   2 +-
+ drivers/gpu/drm/radeon/radeon_fbdev.c         |   9 +-
+ drivers/gpu/drm/radeon/radeon_mode.h          |   2 +-
+ drivers/gpu/drm/tegra/Kconfig                 |   9 +
+ drivers/gpu/drm/tegra/Makefile                |   2 +-
+ drivers/gpu/drm/tegra/drm.h                   |   2 +-
+ drivers/gpu/drm/tegra/fbdev.c                 |  11 +-
+ include/drm/drm_fb_helper.h                   |  84 +------
+ include/drm/drm_fbdev_dma.h                   |   2 +-
+ include/drm/drm_fbdev_generic.h               |   2 +-
+ 43 files changed, 264 insertions(+), 382 deletions(-)
+
+
+base-commit: 451e49cfbaa90720149e63f4fa9c7824013c783d
+-- 
+2.40.1
+
