@@ -2,74 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C189F70059D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 12:33:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C53F470066F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 13:14:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240338AbjELKd3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 06:33:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59172 "EHLO
+        id S240853AbjELLOZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 07:14:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240762AbjELKcN (ORCPT
+        with ESMTP id S241028AbjELLOY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 06:32:13 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37CB11FEA
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 03:32:05 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-3062c1e7df8so6555514f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 03:32:05 -0700 (PDT)
+        Fri, 12 May 2023 07:14:24 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F8C3DD9D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 04:14:21 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-50bc0117683so17328645a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 04:14:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683887523; x=1686479523;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cAnpRKsNNsPJR0jiVH1DLgKUN7xjI4mWjdanQOwVOxY=;
-        b=lZAHNBfWwi8nV8+zRKxtT3+FpPIHoW2LILoVRNDytv6RvR7Iz4ZIvKyt4TiSOKPPCG
-         3ZnJRrsTfxN2Dggt48yDOwsYIwDsL28vn2Il6OUbWaooVBOXJds90NFOwYrqiqRw2d9Q
-         zJi/lEgH/wqf8FMPU+bQuL1ini23L/klQ3zdLzcbqyPk9+7O4PE0R3UnWcZMskahvs+4
-         VQpwET4WuCbcTlOzeu+I+Nnx78WJcx5/12OyggCNL9JJW/L/uwLQvdPxdgAKztXfHs1/
-         7Ot4lVUnu6R5HCTmQbgPgNjn+ZeA6CCRVggrX20VZEStRibsxRYjw2Crvqu46LLg52yl
-         wLhg==
+        d=fairphone.com; s=fair; t=1683890060; x=1686482060;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ubvb9p88+qXd6VOrp401GthxX4aOEOtnz4kgi/kUzHM=;
+        b=0DxQHN51nTkhDMihJi78b3ohzJMoM2rXRuga1g6tw0P6qNiVS4sVaDavvwMIT5/iJ0
+         Gyd4AtWdLZ5WJxMYmdxWl1sgVyeT/fA1AVb4pnZesPs4GAjkzKCCdzj13wDF3ZGCLXgP
+         /cwdnqPJKz2mPmZYNAhyABgUXcoDYYThXQVYyJUox8JCl4sX4QDb29r863JZZN2x5CeK
+         RKkhhEXl7XohTbmdb9Cms9xaWPK4UYp4HK4gfhE8VTjVlxxug2tdQhjIM10LhFv5XJkL
+         XI+ANWqOR1T7qPIYvtmfC7JKuEzDCWvGXQ5LA0LBl7zQmc0N7GhgzmlhRA3//yPTDNA3
+         znnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683887524; x=1686479524;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cAnpRKsNNsPJR0jiVH1DLgKUN7xjI4mWjdanQOwVOxY=;
-        b=hPbh52NB25d3aNwGZwT3A0Buz4PyHFDHEELaEHXxRtRn7M1ez9oFp0eh4QWn+cX/gH
-         YSXJZnfrG7IEsz6gS1CVThcA5DQznIy+6dK63g9kVi+9PrC85dyK87DRR/6CSXVZaMiz
-         EXoXO7BVIDiIGEwfrpoOKOdVEcPXAyK/YxcJgYngeIO9BjO20O97YTx2ILgapd6xatmD
-         Cai4T3fHPP4fQIiFzIkpFVbLGYFCHrPahRSZnCukMh/ckgwzEdF7FrqG/ha9dWg4t8mB
-         zy2iUpwyipD/I+siouGE3vSuaSb+XxpNOajIP0wQGsGLJmhzdoyy+hYwE4bgJe+9WQUz
-         h8kQ==
-X-Gm-Message-State: AC+VfDzdRng0aCjx5kb/jN1O9ab0YIVmGxERCcQTOwm/4He8+CFvgWaL
-        JnuOOpPylm8JKKSyA07BHky24Q==
-X-Google-Smtp-Source: ACHHUZ6KyB5gE8dQVR15cHSYE2uY/6ZibWJZByncI+oHcNvoIp1V1QXwTq6TEyhIGwxFHlLKi1xowg==
-X-Received: by 2002:adf:dc10:0:b0:307:8c47:a266 with SMTP id t16-20020adfdc10000000b003078c47a266mr13440421wri.61.1683887523678;
-        Fri, 12 May 2023 03:32:03 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id t25-20020a1c7719000000b003f43f82001asm8234354wmi.31.2023.05.12.03.32.02
+        d=1e100.net; s=20221208; t=1683890060; x=1686482060;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ubvb9p88+qXd6VOrp401GthxX4aOEOtnz4kgi/kUzHM=;
+        b=OlP82Gdl6E86Vev3DRMT46tWpvvCUK75mX21s0md58LuU6WdF8gUw7/A3KuZ4A22gC
+         ms2Cqwg+Tkzm4tL6qLSngvEaOEI1QkVM1/AufSKapvmv7IakpbAh8s4u9e0BcuO1oaW9
+         rWbuxQ1uQ6+KNUMlYeMk+dldb4SH2ZDGkDX5N2iO60rKV2tdPSuEX7ryQQNR/fegQoC9
+         tL254kBidjfDgozUND2V5knDh7EGQ5BWYV7qDKeMZ3vBhPzwMAgSeoF0UrQ0LdMj4Aoa
+         WBJcnUYCevlIHVFzA+dIunuGBBRGq9Bw2Cz5msfvd0Lue4WwtTbqDIFxaRZ2JY5sKw19
+         Ixog==
+X-Gm-Message-State: AC+VfDwS/adRUueldwkUZlriM4FskV9b8RbK2ufbGplzXRZYllMB4gwa
+        u1IY2RgeOrKNWYfPbFMZmkl6yQ==
+X-Google-Smtp-Source: ACHHUZ52Czgk88thyOAzAK6r5gc3rGC6RgqVtFaULcxPliXgWW8mW3g/7ugZKJeeCj8A5U/8Lh8yPw==
+X-Received: by 2002:a17:907:a0e:b0:94e:e6b9:fef2 with SMTP id bb14-20020a1709070a0e00b0094ee6b9fef2mr20395577ejc.67.1683890060020;
+        Fri, 12 May 2023 04:14:20 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id l21-20020a1709062a9500b00969f44bbef3sm4734097eje.11.2023.05.12.04.14.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 May 2023 03:32:03 -0700 (PDT)
-Message-ID: <c4d6ba40-fbcd-3fce-62af-f2b7883a30f6@linaro.org>
-Date:   Fri, 12 May 2023 11:32:02 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] media: venus: only set H264_TRANSFORM_8X8 on supported
- hfi versions
-Content-Language: en-US
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     =?UTF-8?Q?Martin_D=c3=b8rum?= <dorum@noisolation.com>,
-        stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        hverkuil-cisco@xs4all.nl
-References: <5D1EB136-0839-44BF-9F9B-A937237C9C96@noisolation.com>
- <2e61e054-105c-ae22-77b8-a3f41fe3eff0@linaro.org>
-In-Reply-To: <2e61e054-105c-ae22-77b8-a3f41fe3eff0@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Fri, 12 May 2023 04:14:19 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Fri, 12 May 2023 13:14:18 +0200
+Message-Id: <CSK97HK2XBSR.1Q5K7TUE55HH7@otso>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        "Eric Dumazet" <edumazet@google.com>,
+        "Jakub Kicinski" <kuba@kernel.org>,
+        "Paolo Abeni" <pabeni@redhat.com>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Balakrishna Godavarthi" <bgodavar@codeaurora.org>,
+        "Rocky Liao" <rjliao@codeaurora.org>,
+        "Marcel Holtmann" <marcel@holtmann.org>,
+        "Johan Hedberg" <johan.hedberg@gmail.com>,
+        "Luiz Augusto von Dentz" <luiz.dentz@gmail.com>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-bluetooth@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH RFC 2/4] Bluetooth: btqca: Add WCN3988 support
+From:   "Luca Weiss" <luca.weiss@fairphone.com>
+To:     "Simon Horman" <simon.horman@corigine.com>
+X-Mailer: aerc 0.15.1
+References: <20230421-fp4-bluetooth-v1-0-0430e3a7e0a2@fairphone.com>
+ <20230421-fp4-bluetooth-v1-2-0430e3a7e0a2@fairphone.com>
+ <ZE+6e7ZxJ2s9DHI1@corigine.com>
+In-Reply-To: <ZE+6e7ZxJ2s9DHI1@corigine.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,89 +91,114 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/05/2023 17:37, Bryan O'Donoghue wrote:
-> On 14/04/2023 11:12, Martin Dørum wrote:
->> Setting the H264_TRANSFORM_8X8 property only works on HFI versions
->>> =4xx. The code used to unconditionally set the property in
->> venc_set_properties, which meant that initializing the encoder would
->> always fail unless the hfi_version was >=4xx.
->>
->> This patch changes venc_set_properties to only set the
->> H264_TRANSFORM_8X8 property if the hfi version is >=4xx.
->>
->> Signed-off-by: Martin Dørum <dorum@noisolation.com>
->>
->> ---
->>
->> I have an APQ8016-based board. Before this patch, the Venus driver
->> would simply fail with EINVAL when trying to request buffers
->> (VIDIOC_REQBUFS). With this patch, encoding works
->> (tested using gstreamer's v4l2h264enc).
->>
->>   drivers/media/platform/qcom/venus/venc.c | 21 +++++++++++----------
->>   1 file changed, 11 insertions(+), 10 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/venc.c 
->> b/drivers/media/platform/qcom/venus/venc.c
->> index cdb12546c4fa..b3df805a8c9c 100644
->> --- a/drivers/media/platform/qcom/venus/venc.c
->> +++ b/drivers/media/platform/qcom/venus/venc.c
->> @@ -672,16 +672,17 @@ static int venc_set_properties(struct venus_inst 
->> *inst)
->>           if (ret)
->>               return ret;
->>
->> -        ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
->> -        h264_transform.enable_type = 0;
->> -        if (ctr->profile.h264 == V4L2_MPEG_VIDEO_H264_PROFILE_HIGH ||
->> -            ctr->profile.h264 == 
->> V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH)
->> -            h264_transform.enable_type = ctr->h264_8x8_transform;
->> -
->> -        ret = hfi_session_set_property(inst, ptype, &h264_transform);
->> -        if (ret)
->> -            return ret;
->> -
->> +        if (!IS_V1(inst->core) && !IS_V3(inst->core)) {
->> +            ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
->> +            h264_transform.enable_type = 0;
->> +            if (ctr->profile.h264 == 
->> V4L2_MPEG_VIDEO_H264_PROFILE_HIGH ||
->> +                ctr->profile.h264 == 
->> V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH)
->> +                h264_transform.enable_type = ctr->h264_8x8_transform;
->> +
->> +            ret = hfi_session_set_property(inst, ptype, 
->> &h264_transform);
->> +            if (ret)
->> +                return ret;
->> +        }
->>       }
->>
->>       if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
->> -- 
->> 2.34.1
-> 
-> I agree that a Fixes should be added.
-> 
-> Fixes: bfee75f73c37 ("media: venus: venc: add support for 
-> V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM control")
-> 
-> When sending out your V2, please remember to cc -> Hans Verkuil 
-> <hverkuil-cisco@xs4all.nl>
-> 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Hi Simon,
 
-Hey Martin.
+On Mon May 1, 2023 at 3:11 PM CEST, Simon Horman wrote:
+> On Fri, Apr 21, 2023 at 04:11:39PM +0200, Luca Weiss wrote:
+> > Add support for the Bluetooth chip codenamed APACHE which is part of
+> > WCN3988.
+> >=20
+> > The firmware for this chip has a slightly different naming scheme
+> > compared to most others. For ROM Version 0x0200 we need to use
+> > apbtfw10.tlv + apnv10.bin and for ROM version 0x201 apbtfw11.tlv +
+> > apnv11.bin
+> >=20
+> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> > ---
+> >  drivers/bluetooth/btqca.c   | 13 +++++++++++--
+> >  drivers/bluetooth/btqca.h   | 12 ++++++++++--
+> >  drivers/bluetooth/hci_qca.c | 12 ++++++++++++
+> >  3 files changed, 33 insertions(+), 4 deletions(-)
+> >=20
+> > diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+> > index fd0941fe8608..3ee1ef88a640 100644
+> > --- a/drivers/bluetooth/btqca.c
+> > +++ b/drivers/bluetooth/btqca.c
+> > @@ -594,14 +594,20 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t =
+baudrate,
+> >  	/* Firmware files to download are based on ROM version.
+> >  	 * ROM version is derived from last two bytes of soc_ver.
+> >  	 */
+> > -	rom_ver =3D ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f)=
+;
+> > +	if (soc_type =3D=3D QCA_WCN3988)
+> > +		rom_ver =3D ((soc_ver & 0x00000f00) >> 0x05) | (soc_ver & 0x0000000f=
+);
+> > +	else
+> > +		rom_ver =3D ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f=
+);
+>
+> Hi Luca,
+>
+> perhaps it's just me. But I was wondering if this can be improved on a li=
+ttle.
+>
+> * Move the common portion outside of the conditional
+> * And also, I think it's normal to use decimal for shift values.
+>
+> e.g.
+> 	unsigned shift;
+> 	...
+>
+> 	shift =3D soc_type =3D=3D QCA_WCN3988 ? 5 : 4;
+> 	rom_ver =3D ((soc_ver & 0x00000f00) >> shift) | (soc_ver & 0x0000000f);
+>
+> Using some helpers such as GENMASK and FIELD_PREP might also be nice.
 
-I tried verifying the before/after of your patch last night on db410c as 
-@ 
-https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-05-11-venus-check 
+While I'm not opposed to the idea, I'm not sure it's worth making
+beautiful macros for this since - to my eyes - how the mapping of
+soc_ver to firmware name works is rather obscure since the sources from
+Qualcomm just have a static lookup table of soc_ver to firmware name so
+doing this dynamically like here is different.
 
+And I haven't looked at other chips that are covered there to see if
+there's a pattern to this, for the most part it seems the original
+formula works for most chips and the one I added works for WCN3988 (and
+the other "APACHE" chips, whatever they are).
 
-I don't see any difference with h264 playback with or without your patch.
+If a third way is added then I would say for sure this line should be
+made nicer but for now I think it's easier to keep this as I sent it
+because we don't know what the future will hold.
 
-Could you share a command to verify the bug against ?
+>
+> > =20
+> >  	if (soc_type =3D=3D QCA_WCN6750)
+> >  		qca_send_patch_config_cmd(hdev);
+> > =20
+> >  	/* Download rampatch file */
+> >  	config.type =3D TLV_TYPE_PATCH;
+> > -	if (qca_is_wcn399x(soc_type)) {
+> > +	if (soc_type =3D=3D QCA_WCN3988) {
+> > +		snprintf(config.fwname, sizeof(config.fwname),
+> > +			 "qca/apbtfw%02x.tlv", rom_ver);
+> > +	} else if (qca_is_wcn399x(soc_type)) {
+> >  		snprintf(config.fwname, sizeof(config.fwname),
+> >  			 "qca/crbtfw%02x.tlv", rom_ver);
+> >  	} else if (soc_type =3D=3D QCA_QCA6390) {
+> > @@ -636,6 +642,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t ba=
+udrate,
+> >  	if (firmware_name)
+> >  		snprintf(config.fwname, sizeof(config.fwname),
+> >  			 "qca/%s", firmware_name);
+> > +	else if (soc_type =3D=3D QCA_WCN3988)
+> > +		snprintf(config.fwname, sizeof(config.fwname),
+> > +			 "qca/apnv%02x.bin", rom_ver);
+> >  	else if (qca_is_wcn399x(soc_type)) {
+> >  		if (ver.soc_id =3D=3D QCA_WCN3991_SOC_ID) {
+>
+> Not strictly related to this patch, but while reviewing this I noticed th=
+at
+> ver.soc_id is __le32 but QCA_WCN3991_SOC_ID is in host byteorder.
+>
+> Perhaps a cpu_to_le32() or le32_to_cpu() call is in order here?
 
----
-bod
+Good catch, as you've seen I sent a patch separately to fix that. :)
+
+Regards
+Luca
+
+>
+> >  			snprintf(config.fwname, sizeof(config.fwname),
+>
+> ...
+
