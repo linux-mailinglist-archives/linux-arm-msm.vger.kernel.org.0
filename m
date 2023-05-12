@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC508700CF6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 18:25:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9B66700CFA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 18:25:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232552AbjELQZa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 12:25:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54988 "EHLO
+        id S233840AbjELQZj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 12:25:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232182AbjELQZ3 (ORCPT
+        with ESMTP id S229655AbjELQZa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 12:25:29 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C19DE7A88
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 09:25:27 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-50bdd7b229cso18359381a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 09:25:27 -0700 (PDT)
+        Fri, 12 May 2023 12:25:30 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5401983CD
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 09:25:29 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-50bceaf07b8so18574954a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 09:25:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683908726; x=1686500726;
+        d=linaro.org; s=google; t=1683908728; x=1686500728;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=QuFZ6m+fFzgdN2W932Vuy7HHTtN2YUBZfk79Gh44ozY=;
-        b=bhhC80ahk8a5U9h/oCBwm0aL4Hh9+Icp2Y4A1dGkEh6B5gX5MGdiyjxvdfQOWX+SKe
-         nGJyjHgvmVvbRxZK+eTrsp4WXfVIQ/m9he0kjUEKlqRvNs89ugH/d3aLRNUF5qVODq59
-         s1OMnkKB0w2aksdnxoRst2Gn1YyLhttNuzmp8NRKovjghZmEpRLEVEd/oCyu7pOk6vHP
-         l2oiVcW5Q/i3AzQXHMhTvOje/6n2v7OuI3ArlGGhW08l3qUB4Z373GcKjU/+iTG8u+cZ
-         K1fkH2XBFS02E+wKh5ZAyqg5KhcgucuWRQjElAvKY9SFyYFykNWmB3jiF9uEkhAnaUNR
-         K90A==
+        bh=zvQk+svCP50HKElKrlCVyAJgzuwb5SdFt55hE/Eiezk=;
+        b=EaWN1rYIfwhZ2E/kWq48ltb87MtkqMX9ZbP2nuz6SIw1KHQy7OsUXIvuZNzURxaIsr
+         Q+hWdqd1GxScSw3+Gk8K0nzdmcpGvow9Oyb4Dh4W1TK7wSvtmSr09fo+saXcey5DXlPU
+         CKWSb/6Lv0ECb5d+qACJvT2O/uV+6oH9ywFjM2hVMdATC8htjq32Wk7dneV1C6+1sJEL
+         Dp+2IqhmsDciECq2WatDBTfycfz/s3xJaCSXtxLfmdC9LrGYMBbuZQHUTwI/inQkPvXm
+         /IkK47r/zbGy5RWewzQj//8F9WyEVIykRRSprLe2R6rXLfBRCwKdbCvp7js413Z7ENP0
+         8Hxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683908726; x=1686500726;
+        d=1e100.net; s=20221208; t=1683908728; x=1686500728;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=QuFZ6m+fFzgdN2W932Vuy7HHTtN2YUBZfk79Gh44ozY=;
-        b=ci8VnEvRQtTEgM56vQ+UcDsDMt+0k+cpj2+SeJ9Foe++eT5+b111n/FC/xA/XqqigN
-         AMWAseH45DaNAmgiaUaeQWod4P4IZMuZ+2MI/P29BEoK6fX95F9gf2+vKTrl5XukK5Dj
-         Ag6dP4Evs2SsFAaWYWfGDKELi6PAFhvS0PWrmoczD0fBdI8JjnTvOZa9PRmyTtrw3YB3
-         zsHCSInp5LOuwEnNYWFrVD0W9nsFfQRy5DpQUQN2jkihmMHhTukgkobNS0XeFZ1jEWvw
-         S9xCIenZWOPFlgUX7Oh4pNC04/ZUPfTH6v8DOWYNGWwddkBhnYDKDMktu/i73bujWJ9L
-         U8HA==
-X-Gm-Message-State: AC+VfDx5qGbSDNcmy0jIOu8LVs45AWR9onRSopkB1hsKCewkSntc9II8
-        zcNFYmxgZ4E4pkvpStUi9Wpo8g==
-X-Google-Smtp-Source: ACHHUZ5ukyIzzF29iJmPdJuqYE5gu7qtVskWJVRzl1Ruk0i71y9hb0z/dSiJNp8grgNztOIPY34kHg==
-X-Received: by 2002:a05:6402:12d9:b0:50b:d77d:53aa with SMTP id k25-20020a05640212d900b0050bd77d53aamr18905003edx.38.1683908726164;
-        Fri, 12 May 2023 09:25:26 -0700 (PDT)
+        bh=zvQk+svCP50HKElKrlCVyAJgzuwb5SdFt55hE/Eiezk=;
+        b=F8KoV2FuJNRlS+kPRKeMmZVadWpfMvexm4nn5e4JaUz1e3IJ/fKPRSAn0Yp8BzFdhQ
+         tZkECb8IbrkHeDqpMZH+LYZdN3Bns1Y/ztgu7cVMiBjpQWhEyKsYgGuYVwoSN/vBOPSx
+         szAUnSi0v4aQjmKpDNc8gMUuitDdX7cEgaOxgihQZECFwANDdTFdvy6DMwdeQgIeMVD8
+         jnvCqf0RSW/ernf5vtb5Vnqm3qayduZi2PiG7WikBdqPlGKkzun/HeuDAS1QIFPcDu5j
+         h+uxxoftctomqCkBcUzAaczbca/Sxzhp56W9+JuqMPFlLMutl25by8/x5Ambxj1rUqnk
+         vaPg==
+X-Gm-Message-State: AC+VfDz5ZR7whl3VHVaXpaL+KV49+ZFJK5qIHaH3qwCMgRtmObnKINQu
+        GEK67ZPU0sUN9VQyF2mIDsdOmg==
+X-Google-Smtp-Source: ACHHUZ6uXUT0lW+LFVr4KL5Jm5mw4HaigdvvK4SmfDrSMK0reRn9kNg11GffukuojXCHJ+5xydomtA==
+X-Received: by 2002:a50:ed0b:0:b0:50b:d83b:9c61 with SMTP id j11-20020a50ed0b000000b0050bd83b9c61mr20007419eds.32.1683908727795;
+        Fri, 12 May 2023 09:25:27 -0700 (PDT)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:7ede:fc7b:2328:3883])
-        by smtp.gmail.com with ESMTPSA id r23-20020aa7da17000000b00506987c5c71sm4144116eds.70.2023.05.12.09.25.24
+        by smtp.gmail.com with ESMTPSA id r23-20020aa7da17000000b00506987c5c71sm4144116eds.70.2023.05.12.09.25.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 May 2023 09:25:25 -0700 (PDT)
+        Fri, 12 May 2023 09:25:27 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -71,12 +71,12 @@ To:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: (subset) [PATCH 25/40] dt-bindings: pinctrl: qcom,sc8280xp-tlmm: simplify with unevaluatedProperties
-Date:   Fri, 12 May 2023 18:25:17 +0200
-Message-Id: <168390871587.209400.15664181524901122694.b4-ty@linaro.org>
+Subject: Re: (subset) [PATCH 35/40] dt-bindings: pinctrl: qcom,sm7150-tlmm: simplify with unevaluatedProperties
+Date:   Fri, 12 May 2023 18:25:18 +0200
+Message-Id: <168390871588.209400.11438301358631937951.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230407184546.161168-25-krzysztof.kozlowski@linaro.org>
-References: <20230407184546.161168-1-krzysztof.kozlowski@linaro.org> <20230407184546.161168-25-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230407184546.161168-35-krzysztof.kozlowski@linaro.org>
+References: <20230407184546.161168-1-krzysztof.kozlowski@linaro.org> <20230407184546.161168-35-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -91,7 +91,7 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Fri, 07 Apr 2023 20:45:31 +0200, Krzysztof Kozlowski wrote:
+On Fri, 07 Apr 2023 20:45:41 +0200, Krzysztof Kozlowski wrote:
 > All Qualcomm SoC Top Level Mode Multiplexer pin controllers have similar
 > capabilities regarding pin properties, thus we can just accept entire
 > set provided by qcom,tlmm-common.yaml schema.
@@ -100,8 +100,8 @@ On Fri, 07 Apr 2023 20:45:31 +0200, Krzysztof Kozlowski wrote:
 
 Applied, thanks!
 
-[25/40] dt-bindings: pinctrl: qcom,sc8280xp-tlmm: simplify with unevaluatedProperties
-        https://git.kernel.org/krzk/linux-dt/c/aeffc733e66fb40491ff79c1a53ef8cf6390ee13
+[35/40] dt-bindings: pinctrl: qcom,sm7150-tlmm: simplify with unevaluatedProperties
+        https://git.kernel.org/krzk/linux-dt/c/647c16ac7b15fc8fe6ab679690ac2ffe7c53abd3
 
 Best regards,
 -- 
