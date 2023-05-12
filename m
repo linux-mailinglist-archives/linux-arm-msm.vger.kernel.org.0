@@ -2,124 +2,159 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C931700835
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 14:40:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7864070083E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 14:42:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240538AbjELMkh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 08:40:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41732 "EHLO
+        id S240509AbjELMmM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 08:42:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43084 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240401AbjELMkg (ORCPT
+        with ESMTP id S240465AbjELMmL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 08:40:36 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFBD911D93
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 05:40:17 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f415a90215so76170775e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 05:40:17 -0700 (PDT)
+        Fri, 12 May 2023 08:42:11 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A6902703
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 05:42:10 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-1ab1b79d3a7so68760405ad.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 05:42:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683895216; x=1686487216;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wYBrXrkZvtGUdnl+T9M4zNPAIaDpUkdt7BFmY49m2ZI=;
-        b=ZbgA8DY0DZ+xjn65/9QBCA6eVuMjDzEnT5SLZASnCeknNfA1Dz4gRIdPiZAAVpRD8H
-         xJfTgCW62q81Dc7rOigwzeBngfPdRC4Tv013c8bgBNY4jX4x9d5eovBz4OceFNH4NSM0
-         Radzx9jDmt4AQKEWSQfoN4t2cK0VmnKMA3Alw5EOpgFHCAH/MZjcQkTBZszOVutv92q9
-         iLy/3zBfXhFtvC3byTILlU8TKz/sYpm3944ZOmr9DUXtoIjShZnkIKhdzhfprgCP4RNZ
-         SGgYQdZW1cnkzux80fPTKSSLUJjxgcto0akvwtpNqpSxXzn0sMC1hVCpwjltSGOJOKlX
-         ChHw==
+        d=linaro.org; s=google; t=1683895330; x=1686487330;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Qu/58O+9pf0u9+V9v8oS+vJYZNsaPk6xzd+mj1JOqFQ=;
+        b=drUCX9L1rNzpL99T066bzQ1ykR+zm9d4HaTIie5pcv/T2mw5Ob9YeHWALcaqvyJipm
+         YbYg6nOkOr/TKqy9VdNSVeef0wxc7wz6MZqksJJJS1lHnM+TT3uqokc1v1lJo1qZRl1w
+         M00+XxB9j8d3UdiHW/qg0glG01JlDsNSyYTj4baj+RVgYXG6kbaoOIPq83DQjHqPJkv3
+         D26OZlxwl2Etzse2yz9sn+CBOhgz+iG4c/poStueJ0wddzXn9zB5fFRCgFe9S8+TmX7H
+         h+/AVI2MHgQVyfbzdbyWyIGDJKbcScJpCaD/MAqgqNggRxARF5+Z8eGd84vfB/0DoikW
+         6Oyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683895216; x=1686487216;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1683895330; x=1686487330;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wYBrXrkZvtGUdnl+T9M4zNPAIaDpUkdt7BFmY49m2ZI=;
-        b=hHAygtQWGIC36QrJqHEaCZoeGmHTo06hLNyb1hPOrC8ikRshAcB5T6BUX547Cn+44u
-         6CLmqh9FN4N9xLOjHs+I4ne8bmL6c9YqStYIk+vu/67sn/6EqWehAr54UK86NT+S/wnJ
-         hiTZl1PsK3PsMPMArrsSvqosEO0X02A6rGwsJzYDY8/6/mLErDhuYNGZL4JP0nZuKdPT
-         LzShrgLUgvqqZjmE5Etl/91dC8HOWc2j/2rSIhNNopSJciO78e/YJIncB1/kK1yqFf2/
-         1Yt1gTMKNE9U1rj24aa4f2sj9hysz3SwNT7a0r6okpg0en+POagrTIaJthplUPNxIsdC
-         a7DA==
-X-Gm-Message-State: AC+VfDzDlosKpyD3EL6KW69q1Xko3310KIBdC7HgGOVQgBYcMpfH7yqt
-        Zq0DjfbHilUSo5c5NATokmZjTg==
-X-Google-Smtp-Source: ACHHUZ6L5DJx65fZeuAyJ0+FoXdXQimFZJ5rIaK75cbLRr5ODhrE9mGnAkA+JLhc30QRmyWi5WfFbQ==
-X-Received: by 2002:a05:600c:22ca:b0:3f4:2158:2895 with SMTP id 10-20020a05600c22ca00b003f421582895mr12882808wmg.3.1683895216317;
-        Fri, 12 May 2023 05:40:16 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id 21-20020a05600c029500b003f42d8dd7d1sm9274290wmk.7.2023.05.12.05.40.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 May 2023 05:40:15 -0700 (PDT)
-Message-ID: <c6f903e6-ccf2-701f-cfe3-34abacde278b@linaro.org>
-Date:   Fri, 12 May 2023 13:40:14 +0100
+        bh=Qu/58O+9pf0u9+V9v8oS+vJYZNsaPk6xzd+mj1JOqFQ=;
+        b=C6yF4/J2cKUmFXQpj5dTt6AAu4JCHBMDAcN7UftYuCC9QqcZGy6NtuapyJOkWhF4tu
+         hw/mC0xA80gskFV99Otz7QxTF25gYT7gadKmbwQKKPXG9mmcxdD6Kqn57buFsV4798jg
+         tPnHyPmoAsDJjy/bQHDLN43ToR7DL2m3d3sIlrYKLwIX35xKx7yPMJY2YAFF8Y6ewdri
+         7vJswVSaZbAfKLhzY38R7g7ykcIkdHgyQPs96EdQ5LKjzvMpJvg1zpyGnoIAx4uDRJIG
+         OkPLZb8yo8sjqE1mUsITObnZig5c1kpSoLvzAoQ2UPFnq3zIuQMVrCANhB6Ji8uJjdcw
+         cHgw==
+X-Gm-Message-State: AC+VfDyfopEtak/hN5cuVTtVCMdoyMnaBnFp4lveQLS5rUnRSIhmg/H1
+        UYJJVvXJXdLH2o/nhuWa80RA
+X-Google-Smtp-Source: ACHHUZ7QsZqjOg1/Tz1AHBUSyhMYiIoxZXlvNXvnn6SZwWdImt8AJZ6Qwj6TxHJeOv6Sv04r4SlEZQ==
+X-Received: by 2002:a17:902:f547:b0:1ab:bfb:4b6e with SMTP id h7-20020a170902f54700b001ab0bfb4b6emr33563395plf.31.1683895329810;
+        Fri, 12 May 2023 05:42:09 -0700 (PDT)
+Received: from thinkpad ([117.202.185.214])
+        by smtp.gmail.com with ESMTPSA id f10-20020a17090274ca00b001ab28f620d0sm7826980plt.290.2023.05.12.05.42.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 May 2023 05:42:09 -0700 (PDT)
+Date:   Fri, 12 May 2023 18:12:03 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Eric Biggers <ebiggers@kernel.org>,
+        Stephen Rothwell <sfr@canb.auug.org.au>
+Subject: Re: [PATCH] soc: qcom: Rename ice to qcom-ice to avoid module name
+ conflict
+Message-ID: <20230512124203.GA13620@thinkpad>
+References: <20230510074404.3520340-1-abel.vesa@linaro.org>
+ <20230510082555.GA7268@thinkpad>
+ <ZF4otoqwH4sNwF6o@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v1] misc: fastrpc: Reassign memory ownership only for
- remote heap
-Content-Language: en-US
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, ekangupt@qti.qualcomm.com,
-        linux-kernel@vger.kernel.org, bkumar@qti.qualcomm.com,
-        fastrpc.upstream@qti.qualcomm.com, stable <stable@kernel.org>
-References: <1679394100-27119-1-git-send-email-quic_ekangupt@quicinc.com>
- <17185edd-aa6f-386b-4252-0c6eac1ddcfc@linaro.org>
- <ZCQOaMcObl0vYqlg@kroah.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <ZCQOaMcObl0vYqlg@kroah.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZF4otoqwH4sNwF6o@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 29/03/2023 11:09, Greg KH wrote:
-> On Tue, Mar 21, 2023 at 08:53:33PM +0000, Srinivas Kandagatla wrote:
->>
->>
->> On 21/03/2023 10:21, Ekansh Gupta wrote:
->>> The userspace map request for remote heap allocates CMA memory.
->>> The ownership of this memory needs to be reassigned to proper
->>> owners to allow access from the protection domain running on
->>> DSP. This reassigning of ownership is not correct if done for
->>> any other supported flags.
->>>
->>> When any other flag is requested from userspace, fastrpc is
->>> trying to reassign the ownership of memory and this reassignment
->>> is getting skipped for remote heap request which is incorrect.
->>> Add proper flag check to reassign the memory only if remote heap
->>> is requested.
->>>
->>> Fixes: 532ad70c6d44 ("misc: fastrpc: Add mmap request assigning for static PD pool")
->>> Cc: stable <stable@kernel.org>
->>> Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
->>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
->>
->> Thanks for fixing this,  without this fix the code inside if condition was a
->> dead code.
->>
->>
->> Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+On Fri, May 12, 2023 at 02:53:26PM +0300, Abel Vesa wrote:
+> On 23-05-10 13:55:55, Manivannan Sadhasivam wrote:
+> > On Wed, May 10, 2023 at 10:44:04AM +0300, Abel Vesa wrote:
+> > > The following error was reported when building x86_64 allmodconfig:
+> > > 
+> > > error: the following would cause module name conflict:
+> > >   drivers/soc/qcom/ice.ko
+> > >   drivers/net/ethernet/intel/ice/ice.ko
+> > > 
+> > > Seems the 'ice' module name is already used by some Intel ethernet
+> > > driver, so lets rename the Qualcomm Inline Crypto Engine (ICE) from
+> > > 'ice' to 'qcom-ice' to avoid any kind of errors/confusions.
+> > > 
+> > > Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
+> > > Fixes: 2afbf43a4aec ("soc: qcom: Make the Qualcomm UFS/SDCC ICE a dedicated driver")
+> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > > ---
+> > > 
+> > > The build failure was reported here:
+> > > https://lore.kernel.org/all/20230510111833.17810885@canb.auug.org.au/
+> > > 
+> > >  drivers/soc/qcom/Makefile              | 2 +-
+> > >  drivers/soc/qcom/{ice.c => qcom-ice.c} | 0
+> > >  2 files changed, 1 insertion(+), 1 deletion(-)
+> > >  rename drivers/soc/qcom/{ice.c => qcom-ice.c} (100%)
+> > > 
+> > 
+> > You can just rename the module name to "qcom-ice" and still keep the driver name
+> > as "ice" as it is already under "qcom" subdirectory.
+> > 
+> > We do it for other drivers as well.
 > 
-> Are you going to be collecting these and sending them on?  If not,
-> please do.
-Sorry for long delay,
-I will take care of collecting fastrpc patches and send it.
-
---srini
-
-
-
+> Yes, but in this case, it is not worth keeping the file name as is.
 > 
-> thanks,
+
+Since you already have "qcom" as the parent directory name, I don't know how
+adding "qcom" prefix for the drivers in child directory helps. It is required
+for the module name but not for the driver name.
+
+If you look at current qcom soc drivers, then most of them are without prefix
+but _some_ are with prefix. And the later ones doesn't make sense to me,
+
+But I'll leave it to Bjorn to take the call.
+
+- Mani
+
+> I'll send another version of this patch with the filename as qcom_ice.c
+> in order to be inline with the other ones.
 > 
-> greg k-h
+> > 
+> > - Mani
+> > 
+> > > diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
+> > > index 0f43a88b4894..30219c164cb0 100644
+> > > --- a/drivers/soc/qcom/Makefile
+> > > +++ b/drivers/soc/qcom/Makefile
+> > > @@ -32,4 +32,4 @@ obj-$(CONFIG_QCOM_RPMHPD) += rpmhpd.o
+> > >  obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
+> > >  obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
+> > >  obj-$(CONFIG_QCOM_ICC_BWMON)	+= icc-bwmon.o
+> > > -obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= ice.o
+> > > +obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= qcom-ice.o
+> > > diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/qcom-ice.c
+> > > similarity index 100%
+> > > rename from drivers/soc/qcom/ice.c
+> > > rename to drivers/soc/qcom/qcom-ice.c
+> > > -- 
+> > > 2.34.1
+> > > 
+> > 
+> > -- 
+> > மணிவண்ணன் சதாசிவம்
+
+-- 
+மணிவண்ணன் சதாசிவம்
