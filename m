@@ -2,92 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2688700C6B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 17:58:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D43E9700C8D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 18:06:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241781AbjELP6H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 11:58:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39404 "EHLO
+        id S241859AbjELQG2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 12:06:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43988 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241557AbjELP6G (ORCPT
+        with ESMTP id S241966AbjELQG2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 11:58:06 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8522D26BF;
-        Fri, 12 May 2023 08:58:04 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 12E5060B0D;
-        Fri, 12 May 2023 15:58:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B23C433EF;
-        Fri, 12 May 2023 15:58:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683907083;
-        bh=FK7Hhby4JLOW4/fgG5Gk6nA2uWpoAGql5tWqRblv8eU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=BSWPjv/GAP3zWbwvgdAm8+zU+A+AkJD/D+SJgAUBW9grkDR/WHgbaBuoHijj4XXKr
-         Xpfeqh2ty0xgqjue9XZqKpSzFk9IdmUySOneoENbqmjn8Q7sSrcbaodvBq2NpHreyU
-         UXX7gAgMfLuq0QlySgCkiCcfDaEqM/+/pgTx7xYI/Bnrt16tjMJNV9VrP5bszB2LOh
-         SZVk1WKSduqoZByaPzr1KTkFukwHP1VzKwAQ63X6dfYZChqegjtCu7prw7qcQWCOax
-         /q+GIQfl/BtvYcXsU6XNC7S3oTFZv7MSuLtGlJAq98/nIJFhg5xaiBM6eX9vyiSmbY
-         ZlhohKSGtnjQQ==
-Date:   Fri, 12 May 2023 08:58:01 -0700
-From:   Eric Biggers <ebiggers@kernel.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Jakub Kicinski <kuba@kernel.org>,
-        manivannan.sadhasivam@linaro.org,
-        Stephen Rothwell <sfr@canb.auug.org.au>
-Subject: Re: [PATCH v2] soc: qcom: Rename ice to qcom_ice to avoid module
- name conflict
-Message-ID: <20230512155801.GA610@quark.localdomain>
-References: <20230512123632.3024857-1-abel.vesa@linaro.org>
+        Fri, 12 May 2023 12:06:28 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA9A64C12;
+        Fri, 12 May 2023 09:06:26 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34CCmZ1l032495;
+        Fri, 12 May 2023 16:06:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=m7q8RppMGVew27onlmLTY7+KOzuH6c8ILee3vZlACKU=;
+ b=RXWbD5xMarq1JaIEoZs1d71k6RPXne0ETBSlNXx3JzZphTv1CSIx6A9130reU+014E8v
+ 0zKroafgyFwU5vKr6GfLpZ7WuX3gVs81Yj2Qr+j6gTGTQDN/WF51CX3L1Vcaq2wCH0Qj
+ FbRrynxNIEzyoz505VBBYcpxzOl4ZoLaqTuCOXb7mVorABWDkcl5xHqYWqpMKNLZ1czi
+ Hf02Xkw48eNfFjrTVxYqd3MBcjWTPKB6GGNYUdn6FfMXvS0sJnxGzWpEI4LGDduheqv+
+ 3DKlqyP88FHJA45aD1DYjPz20Z4kDF5eFt+Cp1a2Dd/FzGEjDUYEQPrIpNVKYoyuP9yV Rw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qhfww16r8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 12 May 2023 16:06:23 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34CG6Me9016721
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 12 May 2023 16:06:22 GMT
+Received: from [10.216.40.14] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 12 May
+ 2023 09:06:19 -0700
+Message-ID: <3d6cc32a-d538-22c0-677a-285c00ca63d3@quicinc.com>
+Date:   Fri, 12 May 2023 21:32:44 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230512123632.3024857-1-abel.vesa@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH 0/3] Minor updates in the IPQ5332 DTS files
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230412164920.21862-1-quic_kathirav@quicinc.com>
+Content-Language: en-US
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <20230412164920.21862-1-quic_kathirav@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: TwPISFiEyjLxxjKnyJl9X3BsFbQq79WC
+X-Proofpoint-GUID: TwPISFiEyjLxxjKnyJl9X3BsFbQq79WC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-12_10,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ priorityscore=1501 lowpriorityscore=0 mlxlogscore=706 malwarescore=0
+ spamscore=0 clxscore=1015 adultscore=0 mlxscore=0 phishscore=0 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305120133
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 12, 2023 at 03:36:32PM +0300, Abel Vesa wrote:
-> The following error was reported when building x86_64 allmodconfig:
-> 
-> error: the following would cause module name conflict:
->   drivers/soc/qcom/ice.ko
->   drivers/net/ethernet/intel/ice/ice.ko
-> 
-> Seems the 'ice' module name is already used by some Intel ethernet
-> driver, so lets rename the Qualcomm Inline Crypto Engine (ICE) from
-> 'ice' to 'qcom_ice' to avoid any kind of errors/confusions.
-> 
-> Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-> Fixes: 2afbf43a4aec ("soc: qcom: Make the Qualcomm UFS/SDCC ICE a dedicated driver")
-> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> ---
-> 
-> Changes since v1:
->  * changed filename from qcom-ice.c to qcom_ice.c (with underscore)
->    to be in line with other Qcom SoC drivers.
-> 
->  drivers/soc/qcom/Makefile              | 2 +-
->  drivers/soc/qcom/{ice.c => qcom_ice.c} | 0
->  2 files changed, 1 insertion(+), 1 deletion(-)
->  rename drivers/soc/qcom/{ice.c => qcom_ice.c} (100%)
 
-I'd also prefer that the filename stayed ice.c and just the module was renamed,
-given that this is already in the drivers/soc/qcom/ directory.
+On 4/12/2023 10:19 PM, Kathiravan T wrote:
+> Rename the MI01.2 DTS after Reference Design Platform(RDP) number to align
+> with ipq5332-rdp468.dts, add UART1 node and reserve memory for U-boot
+> and SBL to avoid loosing the RAM contents which will be used in post
+> morterm analysis.
+>
+> Bjorn, since these are minor updates, it would be great if you could
+> possibly pick up this series for v6.4.
+>
+> Kathiravan T (3):
+>    arm64: dts: qcom: ipq5332: rename mi01.2 dts to rdp441
+>    arm64: dts: qcom: ipq5332: define UART1
+>    arm64: dts: qcom: ipq5332: add few more reserved memory region
 
-- Eric
+
+Gentle Reminder...
+
+
+>
+>   arch/arm64/boot/dts/qcom/Makefile             |  2 +-
+>   ...{ipq5332-mi01.2.dts => ipq5332-rdp441.dts} |  0
+>   arch/arm64/boot/dts/qcom/ipq5332.dtsi         | 20 +++++++++++++++++++
+>   3 files changed, 21 insertions(+), 1 deletion(-)
+>   rename arch/arm64/boot/dts/qcom/{ipq5332-mi01.2.dts => ipq5332-rdp441.dts} (100%)
+>
