@@ -2,129 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 67BC7700AFA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 17:05:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E65E7700BE3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 17:33:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241698AbjELPFE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 11:05:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52836 "EHLO
+        id S241953AbjELPdO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 11:33:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51214 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241736AbjELPEy (ORCPT
+        with ESMTP id S241967AbjELPc7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 11:04:54 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1974C35B3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 08:04:52 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-965f7bdab6bso1694068666b.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 08:04:52 -0700 (PDT)
+        Fri, 12 May 2023 11:32:59 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 363D7D2D6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 08:32:38 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3f42b984405so32736225e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 08:32:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683903890; x=1686495890;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Izo9VyuS3FYVOaF5kDuL/kD/h+2fgLodxAQ6aVvs7H0=;
-        b=sKyoYjJI3MITFAQvCWjifmcHx6zBpuP0ztPuFznpYfThmM4g0xW4O99Wbgwehrfo6l
-         ii+axgB4VFElG7ydQPiDBK1S147zQN9q5NdLomm5nadH9LrR8FvWrHOsCQp+CkAX3+4k
-         FXhFb1hJR93yOwuvwtRm0qy5VdMYjP5FTlWr1OciXu4KAHGKLCWxtzDAy3g1oqSo/HTt
-         ZYVdq9jk3D9bkee4kFctBMIt2TzyU/vpXhH2r4fcixZoaW0+24Yzh7W/qfIg4lhvkgTz
-         iRZgZeJ36ZUn/iOJCEJFFxb06e9X1/qr357MQjoTpMTFXOuCHQBDQU0Vr3ZnThyooDUG
-         1kJA==
+        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1683905556; x=1686497556;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zdRjXwoE3aSQA5gXBX6EnGzJ4k23uXOffiYXMsRnd04=;
+        b=xlPB94hVfrwAP/mRQrLn9uGgGz9detJ9DWZGhx1hIdhbqQCyXtocp+2KLR6Oa0Xvfo
+         KZdPPFJ4NR0q+bezU+CpXTL4g0uhwLoeJyOsIw/Of0KWKq0TOUA3TOvQD2kKpa8909q8
+         SBPk1MPHiT51IZxM/F670pM6lNEayPdMu6MA9gsv1g+wma3RPgL8Gez6+SdynsnUd8qp
+         YvmoxA0xzOXZ0wc3oBBHWfLnAUR6fan2WljH1RiinqkvQa2hD+mXLAS+A7K7yH3QZseO
+         X2IMIsxvuAWdcSYQnvRSyV1K9/cPpEXugXGLfSver/u17s5EHN5+E3Y8A17WdRsw8HZr
+         zi2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683903890; x=1686495890;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Izo9VyuS3FYVOaF5kDuL/kD/h+2fgLodxAQ6aVvs7H0=;
-        b=NrjARN8/dwygKvxkJrMgqaZ1G06e7WhT6ZShFGh8HfSaWKfmrqClQBEKrkYXBxh2nh
-         z6t1a90SVGtcbBgz/YWfDTrfcwgxxDD9ULxj0pGToz2j8Qs6Ry5D4z9A49SwVYVIJ3vq
-         vdLzg7EYEZi/hAmIkFXwtXDY+l8RdIpzwbw8t7Q+SQlk1GPfdN2DUf1GdIknCUou2Gta
-         dxRiBh8dlF9QfLQWH3dCM7q0BjMXMHmvUdWeJyZDVG79SlPscJBZKJ+FCTNVatQPxIwI
-         4tG5ET/ZJv8sO6MUdhrCzAY+5/mPxXWifHt3SlPlfSXcthP3mFh1ncV2m1o7r8B8LEA6
-         bJnA==
-X-Gm-Message-State: AC+VfDwOeU6SrcpCJRqIZSFqxDN6+Q01a3kZbs3OBm2PtLyAqfpj10qp
-        yE6rLCuahGAKrfR41AQFRq7uMw==
-X-Google-Smtp-Source: ACHHUZ6M194Dg8rWd+r2CKNK1pmDrJfHYbuczNjD43YKU8yr9uviJFXyK7iwoTpVM06NfGGU6TJtHA==
-X-Received: by 2002:a17:907:169f:b0:96a:6723:da47 with SMTP id hc31-20020a170907169f00b0096a6723da47mr6872111ejc.43.1683903890512;
-        Fri, 12 May 2023 08:04:50 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:7ede:fc7b:2328:3883? ([2a02:810d:15c0:828:7ede:fc7b:2328:3883])
-        by smtp.gmail.com with ESMTPSA id hg8-20020a1709072cc800b00932fa67b48fsm5487124ejc.183.2023.05.12.08.04.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 May 2023 08:04:49 -0700 (PDT)
-Message-ID: <67a2f8d6-104b-e7dd-d1b6-3791d5298284@linaro.org>
-Date:   Fri, 12 May 2023 17:04:47 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH RFC 3/4] arm64: dts: qcom: sm6350: add uart1 node
-Content-Language: en-US
-To:     Luca Weiss <luca.weiss@fairphone.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        Rocky Liao <rjliao@codeaurora.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        d=1e100.net; s=20221208; t=1683905556; x=1686497556;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zdRjXwoE3aSQA5gXBX6EnGzJ4k23uXOffiYXMsRnd04=;
+        b=Yfdz7Z876Cz1Om81TVay6TKhm5igWYUhl/y+LkEeyra1nmlp0B3NFEkmzjBaLPVTNT
+         k3PAI2sB4t5adTIdZbnvg1fVTLLCP1V0Shp5xxkihaTz0rfGumlDE8kTIcYvEMu1F5ar
+         hZIXebz4MRrvcvhUw3f2xaICkPuonLI4a5J68p+gOivP4Wkfe9L0uHRF/lgUT1QyCz/A
+         3t578qOi6Kxq4XgiKHmpMfZ0c08Tu/JVeE24ETqRZGzim/AZWDxJGjpreTTzGQEACkMS
+         xOlzSP1UaCaJuPa9glbc+oNsTIpVZuYIC12QN7HziF9xCSpNKc51EaGn2RRdEvmvP92l
+         2Cew==
+X-Gm-Message-State: AC+VfDx3ttqJvYdLhVic+t0Keq4xdtha7rss7rm56La2n5WbmP+65VaX
+        cdv6BUpu2tcivx4Hu2vLwt+M+w==
+X-Google-Smtp-Source: ACHHUZ4+TVYFirpywkjwvQlmpE6BN6sbv1BJPlU7VMtoyaA5BYkDpyoEx9z6K7EPZxOX7qmc3EbXXQ==
+X-Received: by 2002:a5d:594e:0:b0:307:8691:1eae with SMTP id e14-20020a5d594e000000b0030786911eaemr14249014wri.20.1683905555624;
+        Fri, 12 May 2023 08:32:35 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:4c87:5cb4:6fba:6a65])
+        by smtp.gmail.com with ESMTPSA id z8-20020adfec88000000b003062675d4c9sm23636458wrn.39.2023.05.12.08.32.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 May 2023 08:32:34 -0700 (PDT)
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+To:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        netdev@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230421-fp4-bluetooth-v1-0-0430e3a7e0a2@fairphone.com>
- <20230421-fp4-bluetooth-v1-3-0430e3a7e0a2@fairphone.com>
- <8f312ded-8456-eced-85cc-0ae32a0c8bba@linaro.org>
- <CSKDDFPXC6FD.1TAU3XXOSGA0K@otso>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CSKDDFPXC6FD.1TAU3XXOSGA0K@otso>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH] pinctrl: qcom: sa8775p: add the wakeirq map
+Date:   Fri, 12 May 2023 17:32:32 +0200
+Message-Id: <20230512153232.92450-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/05/2023 16:30, Luca Weiss wrote:
-> On Sun Apr 23, 2023 at 12:51 PM CEST, Krzysztof Kozlowski wrote:
->> On 21/04/2023 16:11, Luca Weiss wrote:
->>> Add the node describing uart1 incl. opp table and pinctrl.
->>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
->>>  arch/arm64/boot/dts/qcom/sm6350.dtsi | 63 ++++++++++++++++++++++++++++++++++++
->>>  1 file changed, 63 insertions(+)
->>
->> Please do not send DTS patches for net-next. DTS must go via Qualcomm
->> SoC. Split the series and mention where is the bindings change in DTS
->> patchset.
-> 
-> Sorry, just saw now after already sending v2.
-> 
-> Is this a special rule for linux-bluetooth@ / netdev@? Isn't it easier
-> to keep it together so the status of series can be assessed easier? I've
-> always submitted patches by topic, like input patches + dts patches and
-> it was never mentioned.
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-The rule that DTS must go via Qualcomm SoC (arm-soc) was there always,
-but other maintainers often do not pay attention to this. I don't blame
-them, don't get me wrong. I am just stating the observed actions.
-Usually netdev folks and Greg will take everything you throw at them, so
-for these subsystems it is recommended to split DTS to different patchset.
+The SA8775P TLMM driver is missing the GPIO-to-wakeup-pin mapping. This
+adds it.
 
-For other maintainers it is usually also more useful to split, because
-then they can apply entire patchset with one command, instead of picking
-up specific patches (omitting DTS).
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+---
+ drivers/pinctrl/qcom/pinctrl-sa8775p.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/pinctrl/qcom/pinctrl-sa8775p.c b/drivers/pinctrl/qcom/pinctrl-sa8775p.c
+index 2ae7cdca65d3..422d72ed1012 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sa8775p.c
++++ b/drivers/pinctrl/qcom/pinctrl-sa8775p.c
+@@ -1491,6 +1491,23 @@ static const struct msm_pingroup sa8775p_groups[] = {
+ 	[153] = SDC_QDSD_PINGROUP(sdc1_data, 0x199000, 9, 0),
+ };
+ 
++static const struct msm_gpio_wakeirq_map sa8775p_pdc_map[] = {
++	{ 0, 169 }, { 1, 174 }, { 2, 170 }, { 3, 175 }, { 4, 171 }, { 5, 173 },
++	{ 6, 172 }, { 7, 182 }, { 10, 220 }, { 11, 213 }, { 12, 221 },
++	{ 16, 230 }, { 19, 231 }, { 20, 232 }, { 23, 233 }, { 24, 234 },
++	{ 26, 223 }, { 27, 235 }, { 28, 209 }, { 29, 176 }, { 39, 200 },
++	{ 31, 201 }, { 32, 212 }, { 35, 177 }, { 36, 178 }, { 39, 184 },
++	{ 40, 185 }, { 41, 227 }, { 42, 186 }, { 43, 228 }, { 45, 187 },
++	{ 47, 188 }, { 48, 194 }, { 51, 195 }, { 52, 196 }, { 55, 197 },
++	{ 56, 198 }, { 57, 236 }, { 58, 192 }, { 59, 193 }, { 72, 179 },
++	{ 73, 180 }, { 74, 181 }, { 75, 202 }, { 76, 183 }, { 77, 189 },
++	{ 78, 190 }, { 79, 191 }, { 80, 199 }, { 83, 204 }, { 84, 205 },
++	{ 85, 229 }, { 86, 206 }, { 89, 207 }, { 91, 208 }, { 94, 214 },
++	{ 95, 215 }, { 96, 237 }, { 97, 216 }, { 98, 238 }, { 99, 217 },
++	{ 100, 239 }, { 105, 219 }, { 106, 210 }, { 107, 211 }, { 108, 222 },
++	{ 109, 203 }, { 145, 225 }, { 146, 226 },
++};
++
+ static const struct msm_pinctrl_soc_data sa8775p_pinctrl = {
+ 	.pins = sa8775p_pins,
+ 	.npins = ARRAY_SIZE(sa8775p_pins),
+@@ -1499,6 +1516,8 @@ static const struct msm_pinctrl_soc_data sa8775p_pinctrl = {
+ 	.groups = sa8775p_groups,
+ 	.ngroups = ARRAY_SIZE(sa8775p_groups),
+ 	.ngpios = 150,
++	.wakeirq_map = sa8775p_pdc_map,
++	.nwakeirq_map = ARRAY_SIZE(sa8775p_pdc_map),
+ };
+ 
+ static int sa8775p_pinctrl_probe(struct platform_device *pdev)
+-- 
+2.39.2
 
