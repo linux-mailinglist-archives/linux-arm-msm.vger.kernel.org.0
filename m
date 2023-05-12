@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D344E700385
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 11:22:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E890A7003E1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 11:36:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240026AbjELJWF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 05:22:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51118 "EHLO
+        id S240057AbjELJgy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 05:36:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239963AbjELJWE (ORCPT
+        with ESMTP id S229670AbjELJgw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 05:22:04 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CA87DDA6;
-        Fri, 12 May 2023 02:22:03 -0700 (PDT)
+        Fri, 12 May 2023 05:36:52 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64C0B5FCD;
+        Fri, 12 May 2023 02:36:51 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E5CC365440;
-        Fri, 12 May 2023 09:22:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E743FC433EF;
-        Fri, 12 May 2023 09:22:01 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id EEA3864F4E;
+        Fri, 12 May 2023 09:36:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49013C433EF;
+        Fri, 12 May 2023 09:36:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1683883322;
-        bh=R04Are6haFhQwucOhj2F4qhuwwMNUbEeyjwYPt/f22M=;
+        s=k20201202; t=1683884210;
+        bh=sFzboBVIPgpCAMpaLOZuuYbAaS8obMt0kAlpbkh4Lus=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=shRIZB9hp7oiDFvvFrhaDsw6O4deS791uNEke8YVMdPgxCCG6xXZUAChxhB82JK93
-         8yOdKwvT50V103s1samccfrt0zVl0Jx4vaJS+hyoGvSOf3F34yOPQRAlRrDiZHTHoA
-         Th6Q7xMOYDOLDgTOeZcz6NA1NLyA4uFP+x6x4HzsCxowh63GMRogBg9zx/eo0OaZSQ
-         byqe1ERrbksuMII2dy662LCvCrUUFQjeqeSsDEpBO9rEFSU6ymjOyoMtLvqY8r9spU
-         Cy8OGlthwwI9UOa3Xjuk3XhuJNw0YtkrNAR0mHVa6z6IxASDqEoxYdby3smB1yIqtN
-         ZZc/eNTYnkNxw==
+        b=HUoacoqO9ZEu6OVD9XqX296JFFGvcazTM0Qygj9vWVTL9FaBMQyw+mA3/u9inJ68K
+         LUNfF8oWxpnEg796GF1QXupnsiEEShj1dZWnC1N+VFJ8kEtpx5U2t4mQYDm4QGPSVO
+         VcV231jBkWVigcVZP/Y8yHaBpn8Y6/bkPBQ5vN6IISK5v2kIVyZ5rvtAGgfT4jgWux
+         4Jz/OR5Tnc1ss3hD5d0CuV4dP1wPwkulzN6l3UCS4A/2DxhLqmytlY23Lb746pkgFQ
+         kHkcKH3zTY4RaCgz79U23o0gS1K+WivTaHbP7ixDnGFzS/v5pdB/97GFKVO8vFQEso
+         7hYohFzG67iVg==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1pxOyq-0002uv-HM; Fri, 12 May 2023 11:22:29 +0200
-Date:   Fri, 12 May 2023 11:22:28 +0200
+        id 1pxPDB-00039Y-Ad; Fri, 12 May 2023 11:37:18 +0200
+Date:   Fri, 12 May 2023 11:37:17 +0200
 From:   Johan Hovold <johan@kernel.org>
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>
 Cc:     Vinod Koul <vkoul@kernel.org>,
@@ -47,20 +47,20 @@ Cc:     Vinod Koul <vkoul@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         Abel Vesa <abel.vesa@linaro.org>,
         Steev Klimaszewski <steev@kali.org>,
         Johan Hovold <johan+linaro@kernel.org>
-Subject: Re: [PATCH v2 4/8] phy: qcom-qmp-combo: Introduce orientation
- variable
-Message-ID: <ZF4FVBcnWlvKF_DP@hovoldconsulting.com>
+Subject: Re: [PATCH v2 6/8] phy: qcom-qmp-combo: Introduce drm_bridge
+Message-ID: <ZF4Izb0WHvfSPK9H@hovoldconsulting.com>
 References: <20230510031930.1996020-1-quic_bjorande@quicinc.com>
- <20230510031930.1996020-5-quic_bjorande@quicinc.com>
+ <20230510031930.1996020-7-quic_bjorande@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230510031930.1996020-5-quic_bjorande@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+In-Reply-To: <20230510031930.1996020-7-quic_bjorande@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -69,18 +69,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 09, 2023 at 08:19:26PM -0700, Bjorn Andersson wrote:
-> In multiple places throughout the driver code has been written in
-> prepration for handling of orientation switching.
+On Tue, May 09, 2023 at 08:19:28PM -0700, Bjorn Andersson wrote:
+> The QMP combo PHY sits in an of_graph connected between the DisplayPort
+> controller and a USB Type-C connector (or possibly a redriver).
 > 
-> Introduce a typec_orientation in qmp_combo and fill out the various
-> "placeholders" with the associated logic. By initializing the
-> orientation to "normal" this change has no functional impact, but
-> reduces the size of the upcoming introduction of dynamic orientation
-> switching.
+> The TCPM needs to be able to convey the HPD signal to the DisplayPort
+> controller, but no directly link is provided by DeviceTree so the signal
+> needs to "pass through" the QMP combo phy.
+> 
+> Handle this by introducing a drm_bridge which upon initialization finds
+> the next bridge (i.e. the usb-c-connector) and chain this together. This
+> way HPD changes in the connector will propagate to the DisplayPort
+> driver.
+> 
+> The connector bridge is resolved lazily, as the TCPM is expected to be
+> able to resolve the typec mux and switch at probe time, so the QMP combo
+> phy will probe before the TCPM.
 > 
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 > Tested-by: Abel Vesa <abel.vesa@linaro.org>
 > Tested-by: Steev Klimaszewski <steev@kali.org>
 > Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on HDK8450
@@ -88,39 +97,8 @@ On Tue, May 09, 2023 at 08:19:26PM -0700, Bjorn Andersson wrote:
 > ---
 > 
 > Changes since v1:
-> - X-mas in qmp_combo_configure_dp_mode()
-> 
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 54 +++++++++++++----------
->  1 file changed, 30 insertions(+), 24 deletions(-)
- 
->  static bool qmp_combo_configure_dp_mode(struct qmp_combo *qmp)
->  {
-> +	bool reverse = qmp->orientation == TYPEC_ORIENTATION_REVERSE;
-
-Nit: I still think parentheses around the right-hand side would improve
-readability.
-
-> +	const struct phy_configure_opts_dp *dp_opts = &qmp->dp_opts;
->  	u32 val;
-> -	bool reverse = false;
-
-> @@ -2235,7 +2236,7 @@ static int qmp_v4_configure_dp_phy(struct qmp_combo *qmp)
->  {
->  	const struct phy_configure_opts_dp *dp_opts = &qmp->dp_opts;
->  	u32 bias0_en, drvr0_en, bias1_en, drvr1_en;
-> -	bool reverse = false;
-> +	bool reverse = qmp->orientation == TYPEC_ORIENTATION_REVERSE;
-
-Same here and below.
-
-And maintaining reverse xmas style throughout the driver would be nice
-for consistency too.
-
->  	u32 status;
->  	int ret;
-
-Looks good otherwise:
+> - Wrap DRM-related code in CONFIG_DRM guard
+> - Inroduce DRM-dependencies in Kconfig
+> - Dropped dev_err_probe() usage
 
 Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-
-Johan
