@@ -2,159 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7864070083E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 14:42:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0746F700958
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 15:42:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240509AbjELMmM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 08:42:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43084 "EHLO
+        id S241093AbjELNm2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 09:42:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240465AbjELMmL (ORCPT
+        with ESMTP id S240803AbjELNm2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 08:42:11 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A6902703
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 05:42:10 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-1ab1b79d3a7so68760405ad.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 05:42:10 -0700 (PDT)
+        Fri, 12 May 2023 09:42:28 -0400
+X-Greylist: delayed 11485 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 12 May 2023 06:42:25 PDT
+Received: from mailrelay4-1.pub.mailoutpod2-cph3.one.com (mailrelay4-1.pub.mailoutpod2-cph3.one.com [46.30.211.179])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F7C7132AB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 06:42:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683895330; x=1686487330;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Qu/58O+9pf0u9+V9v8oS+vJYZNsaPk6xzd+mj1JOqFQ=;
-        b=drUCX9L1rNzpL99T066bzQ1ykR+zm9d4HaTIie5pcv/T2mw5Ob9YeHWALcaqvyJipm
-         YbYg6nOkOr/TKqy9VdNSVeef0wxc7wz6MZqksJJJS1lHnM+TT3uqokc1v1lJo1qZRl1w
-         M00+XxB9j8d3UdiHW/qg0glG01JlDsNSyYTj4baj+RVgYXG6kbaoOIPq83DQjHqPJkv3
-         D26OZlxwl2Etzse2yz9sn+CBOhgz+iG4c/poStueJ0wddzXn9zB5fFRCgFe9S8+TmX7H
-         h+/AVI2MHgQVyfbzdbyWyIGDJKbcScJpCaD/MAqgqNggRxARF5+Z8eGd84vfB/0DoikW
-         6Oyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683895330; x=1686487330;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qu/58O+9pf0u9+V9v8oS+vJYZNsaPk6xzd+mj1JOqFQ=;
-        b=C6yF4/J2cKUmFXQpj5dTt6AAu4JCHBMDAcN7UftYuCC9QqcZGy6NtuapyJOkWhF4tu
-         hw/mC0xA80gskFV99Otz7QxTF25gYT7gadKmbwQKKPXG9mmcxdD6Kqn57buFsV4798jg
-         tPnHyPmoAsDJjy/bQHDLN43ToR7DL2m3d3sIlrYKLwIX35xKx7yPMJY2YAFF8Y6ewdri
-         7vJswVSaZbAfKLhzY38R7g7ykcIkdHgyQPs96EdQ5LKjzvMpJvg1zpyGnoIAx4uDRJIG
-         OkPLZb8yo8sjqE1mUsITObnZig5c1kpSoLvzAoQ2UPFnq3zIuQMVrCANhB6Ji8uJjdcw
-         cHgw==
-X-Gm-Message-State: AC+VfDyfopEtak/hN5cuVTtVCMdoyMnaBnFp4lveQLS5rUnRSIhmg/H1
-        UYJJVvXJXdLH2o/nhuWa80RA
-X-Google-Smtp-Source: ACHHUZ7QsZqjOg1/Tz1AHBUSyhMYiIoxZXlvNXvnn6SZwWdImt8AJZ6Qwj6TxHJeOv6Sv04r4SlEZQ==
-X-Received: by 2002:a17:902:f547:b0:1ab:bfb:4b6e with SMTP id h7-20020a170902f54700b001ab0bfb4b6emr33563395plf.31.1683895329810;
-        Fri, 12 May 2023 05:42:09 -0700 (PDT)
-Received: from thinkpad ([117.202.185.214])
-        by smtp.gmail.com with ESMTPSA id f10-20020a17090274ca00b001ab28f620d0sm7826980plt.290.2023.05.12.05.42.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 May 2023 05:42:09 -0700 (PDT)
-Date:   Fri, 12 May 2023 18:12:03 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Abel Vesa <abel.vesa@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Eric Biggers <ebiggers@kernel.org>,
-        Stephen Rothwell <sfr@canb.auug.org.au>
-Subject: Re: [PATCH] soc: qcom: Rename ice to qcom-ice to avoid module name
- conflict
-Message-ID: <20230512124203.GA13620@thinkpad>
-References: <20230510074404.3520340-1-abel.vesa@linaro.org>
- <20230510082555.GA7268@thinkpad>
- <ZF4otoqwH4sNwF6o@linaro.org>
+        d=ravnborg.org; s=rsa1;
+        h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
+         from:date:from;
+        bh=k5+VvPJZto/QysP3qavd+SjTUa8fNKadbzfeW9t/AI0=;
+        b=TJqvyu4TL26/tkosYpSp/vgIA/FnUtfVPwRhGnhgjW6DjR2EqDxNEOmvAvwBfZKcH2qhe5ZzWbxoN
+         vl9N5BPEmc1pURxGI8+aZmV6f9C6ritn1M5jcZIj3pPJZuA3S1AOkIjS1yiXPeErwagvShrsEZyqUb
+         ny0rhwnS6Qnjv9CnpD9VVj+pZOwxypUYCAQPFM1bjrRboPXFg8JlD5LBV5U7YmMft9VzdrWrfEhc4M
+         9pSWZFnApjyq/TOjS7C3GyUSHyzFO+dlUbpJhwVr2Wtr+RX9P9M4MHLSuUsUtJYPmtxSnZpjYozxcA
+         YLVGdYT1rabB1SNFSz74tNDY3uxstiQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed;
+        d=ravnborg.org; s=ed1;
+        h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
+         from:date:from;
+        bh=k5+VvPJZto/QysP3qavd+SjTUa8fNKadbzfeW9t/AI0=;
+        b=LY1+43GjLg7g0v31ddFfMmDZLCnJlWOY0tSmLnD9XCftTZs66g2Q4BG7BWVYXydEmwapLLs/UDcdB
+         BIAoQtOAQ==
+X-HalOne-ID: ad59f563-f0ca-11ed-a5b2-592bb1efe9dc
+Received: from ravnborg.org (2-105-2-98-cable.dk.customer.tdc.net [2.105.2.98])
+        by mailrelay4 (Halon) with ESMTPSA
+        id ad59f563-f0ca-11ed-a5b2-592bb1efe9dc;
+        Fri, 12 May 2023 13:41:21 +0000 (UTC)
+Date:   Fri, 12 May 2023 15:41:20 +0200
+From:   Sam Ravnborg <sam@ravnborg.org>
+To:     Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     daniel@ffwll.ch, airlied@gmail.com,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        javierm@redhat.com, linux-samsung-soc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        linux-tegra@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH 00/11] drm/fbdev: Remove DRM's helpers for fbdev I/O
+Message-ID: <20230512134120.GA1395037@ravnborg.org>
+References: <20230512084152.31233-1-tzimmermann@suse.de>
+ <20230512102954.GA1373384@ravnborg.org>
+ <4cc261d7-ddcd-e1a2-1067-7b8c44e7769d@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZF4otoqwH4sNwF6o@linaro.org>
+In-Reply-To: <4cc261d7-ddcd-e1a2-1067-7b8c44e7769d@suse.de>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 12, 2023 at 02:53:26PM +0300, Abel Vesa wrote:
-> On 23-05-10 13:55:55, Manivannan Sadhasivam wrote:
-> > On Wed, May 10, 2023 at 10:44:04AM +0300, Abel Vesa wrote:
-> > > The following error was reported when building x86_64 allmodconfig:
-> > > 
-> > > error: the following would cause module name conflict:
-> > >   drivers/soc/qcom/ice.ko
-> > >   drivers/net/ethernet/intel/ice/ice.ko
-> > > 
-> > > Seems the 'ice' module name is already used by some Intel ethernet
-> > > driver, so lets rename the Qualcomm Inline Crypto Engine (ICE) from
-> > > 'ice' to 'qcom-ice' to avoid any kind of errors/confusions.
-> > > 
-> > > Reported-by: Stephen Rothwell <sfr@canb.auug.org.au>
-> > > Fixes: 2afbf43a4aec ("soc: qcom: Make the Qualcomm UFS/SDCC ICE a dedicated driver")
-> > > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > > ---
-> > > 
-> > > The build failure was reported here:
-> > > https://lore.kernel.org/all/20230510111833.17810885@canb.auug.org.au/
-> > > 
-> > >  drivers/soc/qcom/Makefile              | 2 +-
-> > >  drivers/soc/qcom/{ice.c => qcom-ice.c} | 0
-> > >  2 files changed, 1 insertion(+), 1 deletion(-)
-> > >  rename drivers/soc/qcom/{ice.c => qcom-ice.c} (100%)
-> > > 
+Hi Thomas,
 > > 
-> > You can just rename the module name to "qcom-ice" and still keep the driver name
-> > as "ice" as it is already under "qcom" subdirectory.
+> > Nice cleanup.
 > > 
-> > We do it for other drivers as well.
+> >  From one of the patches:
+> > 
+> > > +config DRM_ARMADA_FBDEV_EMULATION
+> > > +     bool
+> > > +     depends on DRM_ARMADA
+> > > +     select FB_CFB_COPYAREA
+> > > +     select FB_CFB_FILLRECT
+> > > +     select FB_CFB_IMAGEBLIT
+> > 
+> > This seems like a hard to maintain way to select a few helper functions.
+> > Today we have LD_DEAD_CODE_DATA_ELIMINATION for the configs that care
+> > about size - and that should work here as well.
 > 
-> Yes, but in this case, it is not worth keeping the file name as is.
+> I wasn't too happy about this solution either as it is quite verbose. But I
+> don't want to rely on the linker either. It certainly cannot remove exported
+> symbols.
+I forgot about exported symbols - that makes the idea futile.
+
 > 
-
-Since you already have "qcom" as the parent directory name, I don't know how
-adding "qcom" prefix for the drivers in child directory helps. It is required
-for the module name but not for the driver name.
-
-If you look at current qcom soc drivers, then most of them are without prefix
-but _some_ are with prefix. And the later ones doesn't make sense to me,
-
-But I'll leave it to Bjorn to take the call.
-
-- Mani
-
-> I'll send another version of this patch with the filename as qcom_ice.c
-> in order to be inline with the other ones.
+> But the pattern is very common among the fbdev drivers. We could introduce
+> common Kconfig options in fbdev and selcet those instead. Like this:
 > 
-> > 
-> > - Mani
-> > 
-> > > diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-> > > index 0f43a88b4894..30219c164cb0 100644
-> > > --- a/drivers/soc/qcom/Makefile
-> > > +++ b/drivers/soc/qcom/Makefile
-> > > @@ -32,4 +32,4 @@ obj-$(CONFIG_QCOM_RPMHPD) += rpmhpd.o
-> > >  obj-$(CONFIG_QCOM_RPMPD) += rpmpd.o
-> > >  obj-$(CONFIG_QCOM_KRYO_L2_ACCESSORS) +=	kryo-l2-accessors.o
-> > >  obj-$(CONFIG_QCOM_ICC_BWMON)	+= icc-bwmon.o
-> > > -obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= ice.o
-> > > +obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= qcom-ice.o
-> > > diff --git a/drivers/soc/qcom/ice.c b/drivers/soc/qcom/qcom-ice.c
-> > > similarity index 100%
-> > > rename from drivers/soc/qcom/ice.c
-> > > rename to drivers/soc/qcom/qcom-ice.c
-> > > -- 
-> > > 2.34.1
-> > > 
-> > 
-> > -- 
-> > மணிவண்ணன் சதாசிவம்
+> const FB_IO_HELPERS
+> 	bool
+> 	depends on FB
+> 	select FB_CFB_COPYAREA
+> 	select FB_CFB_FILLRECT
+> 	select FB_CFB_IMAGEBLIT
+> 
+> const FB_SYS_HELPERS
+> 	bool
+> 	depends on FB
+> 	select FB_SYS_COPYAREA
+> 	select FB_SYS_FILLRECT
+> 	select FB_SYS_FOPS
+> 	select FB_SYS_IMAGEBLIT
+> 
+> Apart from DRM, most of the fbdev drivers could use these as well.
+That's a much nicer way to express it - and with this we do not introduce
+the IMO confusing CFB (Color Frame Buffer) abbreviation in every driver.
 
--- 
-மணிவண்ணன் சதாசிவம்
+	Sam
