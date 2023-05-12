@@ -2,85 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4898B700583
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 12:31:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C189F70059D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 12:33:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240399AbjELKbI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 06:31:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57546 "EHLO
+        id S240338AbjELKd3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 06:33:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240338AbjELKbG (ORCPT
+        with ESMTP id S240762AbjELKcN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 06:31:06 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E69FD30E7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 03:31:02 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-3f315712406so316328155e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 03:31:02 -0700 (PDT)
+        Fri, 12 May 2023 06:32:13 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37CB11FEA
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 03:32:05 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-3062c1e7df8so6555514f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 03:32:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683887461; x=1686479461;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=yVyd3nrAFCEpG6TOtlbRSc+LQxBB0GhvmjWrl9ISpYU=;
-        b=v9GCAW88fTPUPCBKonqAIPqDLUbrqAkeqqo489ynO828vcyEIC8G28SCuzGuofwAXt
-         VRnUZmMsz8zVE+snWk7DUGWZaSDiuo2sNfzAI0RFuRiCs/yicv+KSnf4iER0Go/kvPqS
-         55sgNJ7JB2meHoZTBrfdSkBTUo97X4UDuQ8+A2+87R8ZJKAsjcLgtbxZHC61A3et50t9
-         199qzTzykhu7BvtJ+9rgER+DEyOj/Ig0bT3Ke/fNJcscrWmdtCRE/etdMyu7EBsG4NYp
-         vtxRC5hRT6/N8LOirBqS+eW6t7o+BuUA3v/YVg4b8O0h4sjbRu1idCb9cx85HA/qYjcQ
-         a8Vw==
+        d=linaro.org; s=google; t=1683887523; x=1686479523;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cAnpRKsNNsPJR0jiVH1DLgKUN7xjI4mWjdanQOwVOxY=;
+        b=lZAHNBfWwi8nV8+zRKxtT3+FpPIHoW2LILoVRNDytv6RvR7Iz4ZIvKyt4TiSOKPPCG
+         3ZnJRrsTfxN2Dggt48yDOwsYIwDsL28vn2Il6OUbWaooVBOXJds90NFOwYrqiqRw2d9Q
+         zJi/lEgH/wqf8FMPU+bQuL1ini23L/klQ3zdLzcbqyPk9+7O4PE0R3UnWcZMskahvs+4
+         VQpwET4WuCbcTlOzeu+I+Nnx78WJcx5/12OyggCNL9JJW/L/uwLQvdPxdgAKztXfHs1/
+         7Ot4lVUnu6R5HCTmQbgPgNjn+ZeA6CCRVggrX20VZEStRibsxRYjw2Crvqu46LLg52yl
+         wLhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683887461; x=1686479461;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20221208; t=1683887524; x=1686479524;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yVyd3nrAFCEpG6TOtlbRSc+LQxBB0GhvmjWrl9ISpYU=;
-        b=fl+p7wNpz01pECBZ/gl3B9nzWhvXzcTTFwpfSxk58wQ21N9+725Fprhx3fFcCEUv2a
-         BNDQxIvE+ZnKqOOuD/6LH9+aF3ekwvopbBMSPr2Hhh0eoVl6qjXFJJG2Hu0VxdyoF260
-         0dsQfVShQTIi68bo/YsJyLBgQ8WMi1in4wKX8zz+rJ8iacFW8EofoKDPcvXdjxXA5yno
-         7Mma/pe2zDdRfL4vs114z+i7g2QQh3BC/AoZAz2le6BXXch6ab7t5aCn2wzDSqjtURVZ
-         KIH+v4nMNvA4kLeysXtMBMYnYLRxa24xkGbS5yFTXhcWCEzu80q9fO8cp0DUgmuAA37U
-         tHnw==
-X-Gm-Message-State: AC+VfDwK4C0lM31YRjY0b07MLvy1+BAQeWv7dlnwbPjOK8S3CNHD6Xvk
-        VQPZIi5TfMqrEC6a3TCBBOgTuQ==
-X-Google-Smtp-Source: ACHHUZ7FeZJG9jqcVQqpGOX7/7Z98vyZ9jB9cw9ljYRTYKlHyvOfXeTOZPQTqbXNYleD5deGp1b8RQ==
-X-Received: by 2002:adf:ce8c:0:b0:306:2713:f7f with SMTP id r12-20020adfce8c000000b0030627130f7fmr19792716wrn.11.1683887461254;
-        Fri, 12 May 2023 03:31:01 -0700 (PDT)
-Received: from linaro.org ([86.121.163.20])
-        by smtp.gmail.com with ESMTPSA id n3-20020a5d4843000000b003047d5b8817sm22905770wrs.80.2023.05.12.03.30.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 May 2023 03:31:00 -0700 (PDT)
-Date:   Fri, 12 May 2023 13:30:59 +0300
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Saravana Kannan <saravanak@google.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mike Turquette <mturquette@baylibre.com>,
-        linux-clk@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, mka@chromium.org
-Subject: Re: [PATCH v3 1/2] clk: Add generic sync_state callback for
- disabling unused clocks
-Message-ID: <ZF4VY2ngPtg9Xytc@linaro.org>
-References: <20221227204528.1899863-1-abel.vesa@linaro.org>
- <ebc257025ebd641e624ef506ea09c800.sboyd@kernel.org>
- <Y/OV3CF0ootyooDJ@linaro.org>
- <Y/OfjbxI1tHYJHNv@linaro.org>
- <CAGETcx_mD3pbAmT5FDZaVAsKb_2PAnrHL8B_6gSR=+a0O4kHfQ@mail.gmail.com>
- <Y/PALlrQpwPlum9M@linaro.org>
- <CAGETcx_TZN3=GKrEf5fy_tA=JnOfw7m-N=+hD=qhe_yRRpngPw@mail.gmail.com>
- <ZFzmaavGYy4isU7J@linaro.org>
- <CAGETcx8_maXSCmQcU_UE499pwJRLY4E7yydWsxbU91==vgCoFw@mail.gmail.com>
+        bh=cAnpRKsNNsPJR0jiVH1DLgKUN7xjI4mWjdanQOwVOxY=;
+        b=hPbh52NB25d3aNwGZwT3A0Buz4PyHFDHEELaEHXxRtRn7M1ez9oFp0eh4QWn+cX/gH
+         YSXJZnfrG7IEsz6gS1CVThcA5DQznIy+6dK63g9kVi+9PrC85dyK87DRR/6CSXVZaMiz
+         EXoXO7BVIDiIGEwfrpoOKOdVEcPXAyK/YxcJgYngeIO9BjO20O97YTx2ILgapd6xatmD
+         Cai4T3fHPP4fQIiFzIkpFVbLGYFCHrPahRSZnCukMh/ckgwzEdF7FrqG/ha9dWg4t8mB
+         zy2iUpwyipD/I+siouGE3vSuaSb+XxpNOajIP0wQGsGLJmhzdoyy+hYwE4bgJe+9WQUz
+         h8kQ==
+X-Gm-Message-State: AC+VfDzdRng0aCjx5kb/jN1O9ab0YIVmGxERCcQTOwm/4He8+CFvgWaL
+        JnuOOpPylm8JKKSyA07BHky24Q==
+X-Google-Smtp-Source: ACHHUZ6KyB5gE8dQVR15cHSYE2uY/6ZibWJZByncI+oHcNvoIp1V1QXwTq6TEyhIGwxFHlLKi1xowg==
+X-Received: by 2002:adf:dc10:0:b0:307:8c47:a266 with SMTP id t16-20020adfdc10000000b003078c47a266mr13440421wri.61.1683887523678;
+        Fri, 12 May 2023 03:32:03 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id t25-20020a1c7719000000b003f43f82001asm8234354wmi.31.2023.05.12.03.32.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 12 May 2023 03:32:03 -0700 (PDT)
+Message-ID: <c4d6ba40-fbcd-3fce-62af-f2b7883a30f6@linaro.org>
+Date:   Fri, 12 May 2023 11:32:02 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] media: venus: only set H264_TRANSFORM_8X8 on supported
+ hfi versions
+Content-Language: en-US
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     =?UTF-8?Q?Martin_D=c3=b8rum?= <dorum@noisolation.com>,
+        stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        hverkuil-cisco@xs4all.nl
+References: <5D1EB136-0839-44BF-9F9B-A937237C9C96@noisolation.com>
+ <2e61e054-105c-ae22-77b8-a3f41fe3eff0@linaro.org>
+In-Reply-To: <2e61e054-105c-ae22-77b8-a3f41fe3eff0@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAGETcx8_maXSCmQcU_UE499pwJRLY4E7yydWsxbU91==vgCoFw@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -89,127 +78,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23-05-11 17:46:16, Saravana Kannan wrote:
-> On Thu, May 11, 2023 at 5:58 AM Abel Vesa <abel.vesa@linaro.org> wrote:
-> >
-> > On 23-02-21 11:58:24, Saravana Kannan wrote:
-> > > On Mon, Feb 20, 2023 at 10:47 AM Abel Vesa <abel.vesa@linaro.org> wrote:
-> > > >
-> > > > On 23-02-20 09:51:55, Saravana Kannan wrote:
-> > > > > On Mon, Feb 20, 2023 at 8:28 AM Abel Vesa <abel.vesa@linaro.org> wrote:
-> > > > > >
-> > > > > > On 23-02-20 17:46:36, Abel Vesa wrote:
-> > > > > > > On 23-02-17 21:38:22, Stephen Boyd wrote:
-> > > > > > > > Quoting Abel Vesa (2022-12-27 12:45:27)
-> > > > > > > > > There are unused clocks that need to remain untouched by clk_disable_unused,
-> > > > > > > > > and most likely could be disabled later on sync_state. So provide a generic
-> > > > > > > > > sync_state callback for the clock providers that register such clocks.
-> > > > > > > > > Then, use the same mechanism as clk_disable_unused from that generic
-> > > > > > > > > callback, but pass the device to make sure only the clocks belonging to
-> > > > > > > > > the current clock provider get disabled, if unused. Also, during the
-> > > > > > > > > default clk_disable_unused, if the driver that registered the clock has
-> > > > > > > > > the generic clk_sync_state_disable_unused callback set for sync_state,
-> > > > > > > > > skip disabling its clocks.
-> > > > >
-> > > > > Hi Abel,
-> > > > >
-> > > > > We have the day off today, so I'll respond more later. Also, please cc
-> > > > > me on all sync_state() related patches in the future.
-> > > > >
-> > > >
-> > > > Sure thing.
-> > > >
-> > > > > I haven't taken a close look at your series yet, but at a glance it
-> > > > > seems incomplete.
-> > > > >
-> > > > > Any reason you didn't just try to revive my series[1] or nudge me?
-> > > > > [1]- https://lore.kernel.org/lkml/20210407034456.516204-3-saravanak@google.com/
-> > > >
-> > > > This patchset is heavily reworked and much more simpler as it relies
-> > > > strictly on the sync_state being registered by the clock provider.
-> > >
-> > > It's simpler because it's not complete. It for sure doesn't handle
-> > > orphan-reparenting. It also doesn't make a lot of sense for only some
-> > > clock providers registering for sync_state(). If CC-A is feeding a
-> > > clock signal that's used as a root for clocks in CC-B, then what
-> > > happens if only CC-B implements sync_state() but CC-A doesn't. The
-> > > clocks from CC-B are still going to turn off when CC-A turns off its
-> > > PLL before CC-B registers.
-> >
-> > I gave your patchset a try and it breaks the uart for qcom platforms.
-> > That is because your patchset enables the clock on __clk_core_init and
-> > does not take into account the fact that 'boot enabled' clocks should be
-> > left untouched.
+On 02/05/2023 17:37, Bryan O'Donoghue wrote:
+> On 14/04/2023 11:12, Martin Dørum wrote:
+>> Setting the H264_TRANSFORM_8X8 property only works on HFI versions
+>>> =4xx. The code used to unconditionally set the property in
+>> venc_set_properties, which meant that initializing the encoder would
+>> always fail unless the hfi_version was >=4xx.
+>>
+>> This patch changes venc_set_properties to only set the
+>> H264_TRANSFORM_8X8 property if the hfi version is >=4xx.
+>>
+>> Signed-off-by: Martin Dørum <dorum@noisolation.com>
+>>
+>> ---
+>>
+>> I have an APQ8016-based board. Before this patch, the Venus driver
+>> would simply fail with EINVAL when trying to request buffers
+>> (VIDIOC_REQBUFS). With this patch, encoding works
+>> (tested using gstreamer's v4l2h264enc).
+>>
+>>   drivers/media/platform/qcom/venus/venc.c | 21 +++++++++++----------
+>>   1 file changed, 11 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/venc.c 
+>> b/drivers/media/platform/qcom/venus/venc.c
+>> index cdb12546c4fa..b3df805a8c9c 100644
+>> --- a/drivers/media/platform/qcom/venus/venc.c
+>> +++ b/drivers/media/platform/qcom/venus/venc.c
+>> @@ -672,16 +672,17 @@ static int venc_set_properties(struct venus_inst 
+>> *inst)
+>>           if (ret)
+>>               return ret;
+>>
+>> -        ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
+>> -        h264_transform.enable_type = 0;
+>> -        if (ctr->profile.h264 == V4L2_MPEG_VIDEO_H264_PROFILE_HIGH ||
+>> -            ctr->profile.h264 == 
+>> V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH)
+>> -            h264_transform.enable_type = ctr->h264_8x8_transform;
+>> -
+>> -        ret = hfi_session_set_property(inst, ptype, &h264_transform);
+>> -        if (ret)
+>> -            return ret;
+>> -
+>> +        if (!IS_V1(inst->core) && !IS_V3(inst->core)) {
+>> +            ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
+>> +            h264_transform.enable_type = 0;
+>> +            if (ctr->profile.h264 == 
+>> V4L2_MPEG_VIDEO_H264_PROFILE_HIGH ||
+>> +                ctr->profile.h264 == 
+>> V4L2_MPEG_VIDEO_H264_PROFILE_CONSTRAINED_HIGH)
+>> +                h264_transform.enable_type = ctr->h264_8x8_transform;
+>> +
+>> +            ret = hfi_session_set_property(inst, ptype, 
+>> &h264_transform);
+>> +            if (ret)
+>> +                return ret;
+>> +        }
+>>       }
+>>
+>>       if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
+>> -- 
+>> 2.34.1
 > 
-> Those are probably just hacks when we didn't have sync_state(). But
-> sure, we can make sure existing drivers aren't broken if the flag is
-> set.
-
-I probably didn't make myself clear enough here. ANY clock that is
-enabled (HW-wise) before the kernel boots should remain AS IS, that is, no writing
-the enable bit, no reparenting, and so on. This rule applies to the clock itself
-and for all of its parents. This is because, for some clocks, writing the
-enable bit might lead to glitches. UART is just one example. So, please, do not
-try enabling such clocks until the consumer driver does so.
-
+> I agree that a Fixes should be added.
 > 
-> > This also means the orphan-reparenting enabling should
-> > be dropped as well.
+> Fixes: bfee75f73c37 ("media: venus: venc: add support for 
+> V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM control")
 > 
-> No, maybe for boot enabled clocks, but not for all clocks in general.
-> You need this for sync_state() to work correctly for clocks left on at
-> boot but "boot enabled" isn't set.
-
-I think you lost me here. What do you mean by 'this'? If you mean the
-enabling of orphan clocks, then the rule above still applies. It
-doesn't matter if the clock is an orphan one or not. It can be orphan
-from linux point of view, but the actual parent (even if it is not
-registered with the linux clock tree) might still be enabled. This means
-the clock itself will be also enabled. And by enabling them when
-registering, we can have glitches. Therefore, please, do not do this
-either.
-
-The registering of a boot enabled clock should not change/override/touch
-the current state of it in any way!
-
-Stephen, can you confirm this as well?
-
+> When sending out your V2, please remember to cc -> Hans Verkuil 
+> <hverkuil-cisco@xs4all.nl>
 > 
-> > As for the second part, related to providers that might not have a
-> > registered sync_state(), your patchset sets the clock core generic
-> > one. This is also wrong because it doesn't take into account the fact
-> > that there might be providers that need to do their own stuff on
-> > sync_state() and should do that by registering their own implementation
-> > of it.
-> 
-> Right, in which case, they can set theirs or they get the default one.
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-I'm still not sure that defaulting to the clk_sync_state callback is a
-good choice here. I have to think some more about what the impact is for
-providers that do not have any sync_state callback registered currently.
+Hey Martin.
 
-> 
-> > Therefore, I'll respin your patchset and use only the skipping of
-> > disabling the unused clocks, but I'll drop all the enable on init and orphan
-> > reparenting changes.
-> 
-> I think it'll result in a broken patch.
+I tried verifying the before/after of your patch last night on db410c as 
+@ 
+https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/linux-next-23-05-11-venus-check 
 
-Yep, tried that and it doesn't work. What happened was that, because you
-were enabling the 'boot enabled' clocks when registering them (on __clk_core_init),
-the disabling from the sync state needs to be without dropping the enable/prepare
-counts. This is why I think my patchset here is the best alternative he have
-currently, as it does exactly what it is supposed to do, namingly, to leave
-untouched the boot enabled clocks until sync state and then disabling
-them with via clk_disable_unused_subtree which calls the disable and
-unprepare ops without decrementing the prepare and enable counts.
 
-> 
-> Sorry, I've been a bit busy with some other work and I haven't been
-> able to get to the clk_sync_state(). I'll try to rebase it soon and
-> send it out too.
+I don't see any difference with h264 playback with or without your patch.
 
-Well, I already did that and I described above why that won't help.
+Could you share a command to verify the bug against ?
 
-> 
-> -Saravana
+---
+bod
