@@ -2,180 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A43E6700C89
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 18:05:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABAB0700CD8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 18:21:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241932AbjELQFF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 12:05:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43250 "EHLO
+        id S230028AbjELQU7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 12:20:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52878 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241946AbjELQFE (ORCPT
+        with ESMTP id S229624AbjELQU4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 12:05:04 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46C8130CB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 09:05:02 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-965ab8ed1fcso1857766366b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 09:05:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683907501; x=1686499501;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=w0PYOudo3P+JObhGAcVuidrG1Rb2PsNeOuDCShvwBdM=;
-        b=JUtVKq5Krnb6A19hxU2smnPX5rjDEKnJ2/NB8aUU71UHi87917K++0BW7h9vg33KHx
-         HXf1iNcnXkFMyGeh7lSc0+swaiXQmZWJsVN/xboyeusLosYnwYfuymqKsTwZ8pZifGtC
-         SjwVGBqhsfDE5pOzBrgZu61BCA/dp7iTAq/R1qREfuIINlWxIVa3xQpJrjW6jkAbHuaR
-         p5/HnujJf9cYjh5X8qAf4JU29L4UcwNWnSMKl1fOqSQXaEV+j7Wg2Vhk20Dx078mZqlo
-         2sA8Ghl7JoGP/q8ZhNa2ilJ8BFWLH0X24+LU3+7vbgDITnZTlqJl2Mnu5qiFCSCGzBYQ
-         hylw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683907501; x=1686499501;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=w0PYOudo3P+JObhGAcVuidrG1Rb2PsNeOuDCShvwBdM=;
-        b=b8jKLnY/rTsSgPC+IZy2jRCcQc3ZREnqiYUKSd48D39IMfi7QAerOJrezJrh1MWZlK
-         sj756EHDqqOJHSoDTfXsy2bStAe1220Lvo5m1h8SkXwiU6sEVE9as8LR68HWdGlyjp8O
-         w3+7wKeCGHkrwdml9Dx3wPVIlHlWfyaIFVBGZZ/vboKXFDcXw5xHYOyq4Uo/jhHXzk9x
-         jxTJZ6HefqBeB0tc7mOc/1apQXGtW7DVvmxfFeV7o4c9pajlFQRR49avGXY87LBVf1rt
-         dWt+r891HmWozvGJ58n+X6Ba/9vpH8yxQvGy1bdkHzvxjDv2SE5dMTx4JU/vuT3w2+Ot
-         1y9g==
-X-Gm-Message-State: AC+VfDxUDw3DUFXErWqMMUhAifsTsl63wLFpZjAybdyvsOeIPrQkBC0b
-        +6ttgaqwSazQwZi5Kvs2YpiVsQ==
-X-Google-Smtp-Source: ACHHUZ4nQh48nD9diogVXknvtWR0ykPVeneEFht9Gt2ECiN4OYr+m21HACXFlFlkcpqL3sIuO5PivQ==
-X-Received: by 2002:a17:907:1b24:b0:94e:5c28:1c19 with SMTP id mp36-20020a1709071b2400b0094e5c281c19mr24930056ejc.5.1683907500702;
-        Fri, 12 May 2023 09:05:00 -0700 (PDT)
-Received: from krzk-bin.. ([2a02:810d:15c0:828:7ede:fc7b:2328:3883])
-        by smtp.gmail.com with ESMTPSA id d5-20020a50fe85000000b004fbf6b35a56sm4224935edt.76.2023.05.12.09.04.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 May 2023 09:04:59 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Patrick Lai <quic_plai@quicinc.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8550-mtp: add WCD9385 audio-codec
-Date:   Fri, 12 May 2023 18:04:52 +0200
-Message-Id: <20230512160452.206585-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230512160452.206585-1-krzysztof.kozlowski@linaro.org>
-References: <20230512160452.206585-1-krzysztof.kozlowski@linaro.org>
+        Fri, 12 May 2023 12:20:56 -0400
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E8BD7EF5;
+        Fri, 12 May 2023 09:20:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1683908455; x=1715444455;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=6JMhlSI8AcK3kUbPJJDnaUnKRbv4q1hmlIrs1v8cDOE=;
+  b=e0nPajSQXRHCSv62M3dHBiZU7rOpku7gAhRuOJf+2cp8wDJTyrnaiH6F
+   9uFO/0cZXgiA+vC4Q9OrZNComkcVd260APIsoRFnWwviVmuiwgdTYtP5n
+   HpSjnJB1tVqYGR3C91a1staKfZfsWQ2aGQwMjNmFei2grjOYDyj+ScObq
+   JLanEUdQSkp+PcsrId5ZVI5wb0JIZVPDhw+9vSO2Uv9qvs0eXpscqT1mN
+   HiOIkfKYCPkFiwIj45HEnnQ2/LH8pGBxUlUlGfnpDdzFkgtf9TQxeNRQX
+   D1oyke54WkX29oHanTUI7ur7i3E68Ef6ZiBQnrs7hikskn7Kvg3Td+Qqw
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10708"; a="353077815"
+X-IronPort-AV: E=Sophos;i="5.99,269,1677571200"; 
+   d="scan'208";a="353077815"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2023 09:20:54 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10708"; a="765219552"
+X-IronPort-AV: E=Sophos;i="5.99,269,1677571200"; 
+   d="scan'208";a="765219552"
+Received: from lkp-server01.sh.intel.com (HELO dea6d5a4f140) ([10.239.97.150])
+  by fmsmga008.fm.intel.com with ESMTP; 12 May 2023 09:20:51 -0700
+Received: from kbuild by dea6d5a4f140 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1pxVVi-0004y2-2B;
+        Fri, 12 May 2023 16:20:50 +0000
+Date:   Sat, 13 May 2023 00:20:28 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
+        airlied@gmail.com, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, javierm@redhat.com
+Cc:     oe-kbuild-all@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
+        Tomi Valkeinen <tomba@kernel.org>,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        linux-tegra@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [Intel-gfx] [PATCH 07/11] drm/omapdrm: Use regular fbdev I/O
+ helpers
+Message-ID: <202305130058.VuW3nBPS-lkp@intel.com>
+References: <20230512084152.31233-8-tzimmermann@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230512084152.31233-8-tzimmermann@suse.de>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add Qualcomm Aqstic WCD9385 audio codec on two Soundwire interfaces: RX
-and TX.
+Hi Thomas,
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+kernel test robot noticed the following build errors:
 
----
+[auto build test ERROR on 451e49cfbaa90720149e63f4fa9c7824013c783d]
 
-Not tested and not really verified against schematics (no access).
-MTP added based on downstream DTS.
+url:    https://github.com/intel-lab-lkp/linux/commits/Thomas-Zimmermann/drm-armada-Use-regular-fbdev-I-O-helpers/20230512-164432
+base:   451e49cfbaa90720149e63f4fa9c7824013c783d
+patch link:    https://lore.kernel.org/r/20230512084152.31233-8-tzimmermann%40suse.de
+patch subject: [Intel-gfx] [PATCH 07/11] drm/omapdrm: Use regular fbdev I/O helpers
+config: arm-allmodconfig (https://download.01.org/0day-ci/archive/20230513/202305130058.VuW3nBPS-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/f9113ec6815b748d0b917f78527582b8b08deb40
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Thomas-Zimmermann/drm-armada-Use-regular-fbdev-I-O-helpers/20230512-164432
+        git checkout f9113ec6815b748d0b917f78527582b8b08deb40
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/gpu/drm/omapdrm/
 
-Cc: Patrick Lai <quic_plai@quicinc.com>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 56 +++++++++++++++++++++++++
- 1 file changed, 56 insertions(+)
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202305130058.VuW3nBPS-lkp@intel.com/
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index af0381acac25..905a5d3aa400 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -23,6 +23,32 @@ aliases {
- 		serial0 = &uart7;
- 	};
- 
-+	wcd938x: audio-codec {
-+		compatible = "qcom,wcd9385-codec";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&wcd_default>;
-+
-+		qcom,micbias1-microvolt = <1800000>;
-+		qcom,micbias2-microvolt = <1800000>;
-+		qcom,micbias3-microvolt = <1800000>;
-+		qcom,micbias4-microvolt = <1800000>;
-+		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
-+		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
-+		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-+		qcom,rx-device = <&wcd_rx>;
-+		qcom,tx-device = <&wcd_tx>;
-+
-+		reset-gpios = <&tlmm 108 GPIO_ACTIVE_LOW>;
-+
-+		vdd-buck-supply = <&vreg_l15b_1p8>;
-+		vdd-rxtx-supply = <&vreg_l15b_1p8>;
-+		vdd-io-supply = <&vreg_l15b_1p8>;
-+		vdd-mic-bias-supply = <&vreg_bob1>;
-+
-+		#sound-dai-cells = <1>;
-+	};
-+
- 	chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
-@@ -535,6 +561,28 @@ &sleep_clk {
- 	clock-frequency = <32000>;
- };
- 
-+&swr1 {
-+	status = "okay";
-+
-+	/* WCD9385 RX */
-+	wcd_rx: codec@0,4 {
-+		compatible = "sdw20217010d00";
-+		reg = <0 4>;
-+		qcom,rx-port-mapping = <1 2 3 4 5>;
-+	};
-+};
-+
-+&swr2 {
-+	status = "okay";
-+
-+	/* WCD9385 TX */
-+	wcd_tx: codec@0,3 {
-+		compatible = "sdw20217010d00";
-+		reg = <0 3>;
-+		qcom,tx-port-mapping = <1 1 2 3>;
-+	};
-+};
-+
- &tlmm {
- 	gpio-reserved-ranges = <32 8>;
- 
-@@ -565,6 +613,14 @@ sde_te_suspend: sde-te-suspend-state {
- 		drive-strength = <2>;
- 		bias-pull-down;
- 	};
-+
-+	wcd_default: wcd-reset-n-active-state {
-+		pins = "gpio108";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+		output-low;
-+	};
- };
- 
- &uart7 {
+All errors (new ones prefixed by >>):
+
+>> drivers/gpu/drm/omapdrm/omap_fbdev.c:306:6: error: redefinition of 'omap_fbdev_setup'
+     306 | void omap_fbdev_setup(struct drm_device *dev)
+         |      ^~~~~~~~~~~~~~~~
+   In file included from drivers/gpu/drm/omapdrm/omap_fbdev.c:19:
+   drivers/gpu/drm/omapdrm/omap_fbdev.h:17:20: note: previous definition of 'omap_fbdev_setup' with type 'void(struct drm_device *)'
+      17 | static inline void omap_fbdev_setup(struct drm_device *dev)
+         |                    ^~~~~~~~~~~~~~~~
+
+
+vim +/omap_fbdev_setup +306 drivers/gpu/drm/omapdrm/omap_fbdev.c
+
+9e69bcd88e4593 Thomas Zimmermann 2023-04-03  305  
+9e69bcd88e4593 Thomas Zimmermann 2023-04-03 @306  void omap_fbdev_setup(struct drm_device *dev)
+
 -- 
-2.34.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
