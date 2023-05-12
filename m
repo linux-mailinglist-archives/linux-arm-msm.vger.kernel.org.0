@@ -2,125 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55924700340
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 11:02:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4B4A70036B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 11:10:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240375AbjELJCf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 05:02:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38882 "EHLO
+        id S240307AbjELJKa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 05:10:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240337AbjELJCb (ORCPT
+        with ESMTP id S240416AbjELJK3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 05:02:31 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB30D106D1;
-        Fri, 12 May 2023 02:02:20 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34C8F7Um008053;
-        Fri, 12 May 2023 09:02:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=q+WZoz+DZsgB/7N1UzCMfAS06EPg6+8iO2IO/aD/RSA=;
- b=OZOXcjeXU30vli1/PP7uloDILo0LWXKEy9Hqnv1Ka0UkY3y9dmYh9ptwXQs0Fug1NKiQ
- MFK8hHloq1XM0Foo5ec56C0U/kyu0ZPjVCSfuPhTuOdy8Pa0obOaCr7V9y9RNJ4Ky/WE
- fFXysT0MW91oh/N5JWjkM2pMWfGHsi5+FMZgiNBldaEhN0Ap//zXvETpI+ffIhRmxwYn
- AOKzB3QCBn5rU9jdJVLuGOiBEB8GgGAF6bt+bXMm7/TFcKbPRPAFoB+T9uU9FJGMxxG1
- b8Lry+AiHCgLv4UUHdKDhKk+0oVqzapy3XDCW1PJ+6rV4yxk2dYPH5F8TiDXE6aAfBMr Ug== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qhh3905nf-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 12 May 2023 09:02:15 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34C92Deu001205
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 12 May 2023 09:02:13 GMT
-Received: from anusha-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 12 May 2023 02:02:07 -0700
-From:   Anusha Rao <quic_anusha@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <p.zabel@pengutronix.de>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_poovendh@quicinc.com>
-Subject: [PATCH 2/2] arm64: dts: qcom: ipq9574: Enable crypto nodes
-Date:   Fri, 12 May 2023 14:31:34 +0530
-Message-ID: <20230512090134.9811-3-quic_anusha@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230512090134.9811-1-quic_anusha@quicinc.com>
-References: <20230512090134.9811-1-quic_anusha@quicinc.com>
+        Fri, 12 May 2023 05:10:29 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6607D11602;
+        Fri, 12 May 2023 02:10:28 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id EB55865422;
+        Fri, 12 May 2023 09:10:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 252CBC433AC;
+        Fri, 12 May 2023 09:10:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1683882627;
+        bh=kUiWU6lZcVcCsvBfK0GM03OeHi8GVKMv4D/U9jZXzF8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=UdaUzy4bLYXxpoevkE7hgsxmdHDrXE0lz6npy1lCRiSVzZ5p3FZfrKoBYb4gBSg5s
+         qTtNH6dC6+GHQERSnAZ/ArJeX1y3Qw3vZI42MUKvTDkH7XZg6g6x7NrhaPKS0mUFZm
+         WnPZWF7m9co+oPCq0fcTXKQcBHp1wJxAlp1bZhEhgSVVhJK/cWyfNXV+cSAP+xsDCI
+         X5kKY/C2UEmDBInVTBgAv8WoElXXahZYa8KQ4K6cxXINglTj9jA78X7/3KufQtpvAD
+         +UCtzT14GdXJ6Ohk1f4ReTbL4px1jVLnud/wCXPBTt7cmBj0nNf4B6GOy6Yx96PWKC
+         uQ+MHkOMJfxpw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pxOne-0002j6-JQ; Fri, 12 May 2023 11:10:54 +0200
+Date:   Fri, 12 May 2023 11:10:54 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/8] phy: qcom-qmp-combo: Extend phy_mutex to all
+ phy_ops
+Message-ID: <ZF4Cnl9n_bntLKf7@hovoldconsulting.com>
+References: <20230510031930.1996020-1-quic_bjorande@quicinc.com>
+ <20230510031930.1996020-4-quic_bjorande@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: P2s7Oc3PYeDBxdodIOzt7v02-U30Ooe5
-X-Proofpoint-ORIG-GUID: P2s7Oc3PYeDBxdodIOzt7v02-U30Ooe5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-12_06,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 spamscore=0
- priorityscore=1501 malwarescore=0 lowpriorityscore=0 phishscore=0
- suspectscore=0 clxscore=1015 mlxscore=0 impostorscore=0 mlxlogscore=837
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305120075
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230510031930.1996020-4-quic_bjorande@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable crypto support for ipq9574.
+On Tue, May 09, 2023 at 08:19:25PM -0700, Bjorn Andersson wrote:
+> The phy core ensures mutual exclusion across the ops for a given phy,
+> but the upcoming introduction of USB Type-C orientation switching might
+> race with the DisplayPort phy operations. So extend the mutual exclusion
+> to cover the remaining ops as well, to avoid concurrent reconfiguration
+> of the hardware.
+> 
+> Reported-by: Johan Hovold <johan@kernel.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
----
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index fea15f3cf910..3cda5aa8d03c 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -123,6 +123,26 @@
- 			clock-names = "core";
- 		};
- 
-+		cryptobam: dma-controller@704000 {
-+			compatible = "qcom,bam-v1.7.0";
-+			reg = <0x00704000 0x20000>;
-+			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>;
-+			#dma-cells = <1>;
-+			qcom,ee = <1>;
-+			qcom,controlled-remotely;
-+		};
-+
-+		crypto: crypto@73a000 {
-+			compatible = "qcom,crypto-v5.1";
-+			reg = <0x0073a000 0x6000>;
-+			clocks = <&gcc GCC_CRYPTO_AHB_CLK>,
-+				 <&gcc GCC_CRYPTO_AXI_CLK>,
-+				 <&gcc GCC_CRYPTO_CLK>;
-+			clock-names = "iface", "bus", "core";
-+			dmas = <&cryptobam 2>, <&cryptobam 3>;
-+			dma-names = "rx", "tx";
-+		};
-+
- 		tlmm: pinctrl@1000000 {
- 			compatible = "qcom,ipq9574-tlmm";
- 			reg = <0x01000000 0x300000>;
--- 
-2.17.1
-
+Johan
