@@ -2,100 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E10F5700D37
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 18:44:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BEBCD700D50
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 18:48:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237188AbjELQn6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 12:43:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37734 "EHLO
+        id S237227AbjELQsk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 12:48:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42100 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237182AbjELQn4 (ORCPT
+        with ESMTP id S229547AbjELQsj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 12:43:56 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1484C30E5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 09:43:55 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f139de8cefso53296614e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 09:43:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683909833; x=1686501833;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oQ35jiD0iHCimmXNvqE7wf5xzhSOyJCookuzUyurpLM=;
-        b=LmEGhTe2a0TlygbG0pgEn3ULmATOXb0sCfMtBAEgM5W8HG+6IAO5PVCooWsF9UEups
-         c7QodB3vbWifw2arGdJiSkUy+9wDhkMxw3zwR3IRHGWoootxT9mc7amQycF3LDRUdFHZ
-         jEI3pSuMaamdcLeQJgKQXHIEgGwNg8gQZkxiIzxDAdl4u0/mTwG6yeSwGEC8yR6R2GI6
-         CujVaK1xb9uvKUYlGGTcvPHUuaIOuWkuaT3hGJbbmPAB/upM9nCpfpbRGVRw9EsCrVea
-         obaH884kC3q3FsXANPfe4kS18rAryzP+5Wa/CwJLJhmu1D8Yv+1jd+tsjMJCtcCs1a6N
-         93Xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683909833; x=1686501833;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oQ35jiD0iHCimmXNvqE7wf5xzhSOyJCookuzUyurpLM=;
-        b=DoIDii62IJBQP4Q1nnwCzXMrG0L85cjD8qSYe/YmCTvf4gKfYN8/o1fn754oiOr698
-         x8h62t8TsVPyHqAKmfg9MISPLxrK+n8/dPIcU+CE0s9OUOdCDiRymkU33Douf4YLGBwO
-         nZf4NzPiNbsyrRrmnkf8G3YhnKFl6OYOF8h3ShcH5glEBgM9KyTDQJXZrnehsE8PiVI0
-         zvrNcvFHV1FxsSm9nNQfMJBfzTXBSfhYCMK6QcfUh/8MwaMXpLit1iW5EgJGg59HZZjx
-         XZh7F1yTKOUFIiDivcKplIRfRXbvNtlPT52wkuq2dInYpFEsmmq2DMBA/imMgmlzETB9
-         WnRg==
-X-Gm-Message-State: AC+VfDzlShaeu/vyYnwDOP0DGa5PEOVRic/5gxVeUtBzVLgBMbpxBtcQ
-        B7YtlSdxzFYYYYEeuvPjqLSo1g==
-X-Google-Smtp-Source: ACHHUZ6Knr8V9h2tzeBW26Liibmojqhi318dz0i7nIVAWX3Oxrywq7eHYWTvTbXUamXXHscf7fgd4A==
-X-Received: by 2002:a05:6512:3f19:b0:4ec:83fd:1599 with SMTP id y25-20020a0565123f1900b004ec83fd1599mr4095277lfa.33.1683909833320;
-        Fri, 12 May 2023 09:43:53 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id o14-20020a05651238ae00b004f250513215sm1513284lft.198.2023.05.12.09.43.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 May 2023 09:43:52 -0700 (PDT)
-Message-ID: <ddb79cfb-8ddd-5ca3-e133-465518e5e973@linaro.org>
-Date:   Fri, 12 May 2023 19:43:51 +0300
+        Fri, 12 May 2023 12:48:39 -0400
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACF7435A4;
+        Fri, 12 May 2023 09:48:38 -0700 (PDT)
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+        id 0ABE71C0E5D; Fri, 12 May 2023 18:48:37 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
+        t=1683910117;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=xhIVgT0O0B93pxlkxMyET8my5lhvuOBq3pKJv/C7VXs=;
+        b=fvotCbUbQd/0pXRoWixNyMBXDPzPAr56EUm4qGFLweTaQCM/Vl9S0PB7uDY0gtmG5BM98O
+        v98a99AMk2jwgMg9suebDqIR2ANF6zInsuUfw5BUFtFi3ZGUWhde54rHgefwkyft6WMCQ+
+        EM4B5ddRJXY592HcaTPUtAlgaKchkJ0=
+Date:   Fri, 12 May 2023 18:48:36 +0200
+From:   Pavel Machek <pavel@ucw.cz>
+To:     Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     Sebastian Reichel <sre@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: power_supply cooling interface
+Message-ID: <ZF5t5BWqLLEvDdfz@localhost>
+References: <164f2458-fb66-f238-7143-bdbe1e200870@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v7 0/8] add DSC 1.2 dpu supports
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
-        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1683827607-19193-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1683827607-19193-1-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <164f2458-fb66-f238-7143-bdbe1e200870@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/05/2023 20:53, Kuogee Hsieh wrote:
-> This series adds the DPU side changes to support DSC 1.2 encoder. This
-> was validated with both DSI DSC 1.2 panel and DP DSC 1.2 monitor.
-> The DSI and DP parts will be pushed later on top of this change.
-> This seriel is rebase on [1], [2] and catalog fixes from rev-4 of [3].
-> 
-> [1]: https://patchwork.freedesktop.org/series/116851/
-> [2]: https://patchwork.freedesktop.org/series/116615/
-> [3]: https://patchwork.freedesktop.org/series/112332/
+Hi!
 
-Please run the series through ./scripts/checkpatch.pl --strict. For this 
-series it reports tons of issues with the mixed indentation, 
-whitespaces, alignment, etc.
+> I've been working on a driver for the charger found in most Snapdragon
+> 845 phones (the OnePlus 6, SHIFT6mq, PocoPhone F1, etc). I wanted to
+> include support for the POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT
+> property.
+> 
+> My understanding is that it exposes the current limit as a cooling
+> device so that userspace (or frameworks like DTPM) can optimise for
+> performance in a thermally constrained device by limiting the input
+> current and thus reducing the heat generated by the charger circuitry,
+> a similar idea was applied on the Pixel C:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a4496d52b3430cb3c4c16d03cdd5f4ee97ad1241
+> 
+> However, reading through the sysfs docs for cooling devices, and
+> looking at the implementation in power_supply_core.c, it seems like the
+> behavior here is wrong in a few ways:
+>  1. The values should scale from 0: no cooling to max_state: max
+> cooling, but the power_supply docs and the only existing implementation
+> (the smbb driver) just export the current_limit, such that increasing
+> cur_state would increase the current limit, not decrease it.
+>  2. (unsure?)The scale is completely different to most other cooling
+> devices, most cooling devices don't seem to have a max state much
+> beyond the double digits, but CHARGE_CONTROL_LIMIT is on the scale of
+> uA, so approaches like incrementing the cooling state by 1 don't really
+> work.
+
+Did this get solved somehow?
+
+Anyway, I am not sure mW will be useful here, as elsewhere it is mW
+thermal and here it is mW from charger. Most of that energy should be
+stored in battery, not converted to heat.
+
+Best regards,
+							Pavel
 
 -- 
-With best wishes
-Dmitry
-
