@@ -2,81 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CB44700F10
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 20:50:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25716700F29
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 May 2023 21:05:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239177AbjELSun (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 14:50:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60888 "EHLO
+        id S239282AbjELTFq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 15:05:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239176AbjELSum (ORCPT
+        with ESMTP id S231343AbjELTFq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 14:50:42 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF2B959F3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 11:50:40 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f13ef4ad91so12012799e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 11:50:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683917439; x=1686509439;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WuPelm9ba0Xh/ndmXQX20gIsRhFbM+3g133ZmY3Lhg0=;
-        b=Enlk2Rc5iR/dP1dGoqIKkBy+snUvph8LfeT51DEJjZCkVK6SgBwrGYQCBWsfN0HLGH
-         InAIsrU6w/aapZvB4TfpWicXIptFQBGYu/ZjGQaz2nhV0z4n5MB0vlEWd3beRXKFvrcY
-         idTyVZBw+qZ+tD8o8H4iHPWBRG6ct+nXUuH6MDLUJ52c+zhrmmFCZgYTJmtByVJOwDzR
-         aPyGcL7sYbvFmPeyvN3i++wmoPl7XWOqFPhkRYByT/E4i60YihnAY65+Rbrbj4nx2znU
-         queQS6wqW+StPSiMbKo2NdhxQ0pCwFCHBiSkj2vWyoMyIMfkWCM61T27F9bGCHQ/s8kw
-         dHVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683917439; x=1686509439;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WuPelm9ba0Xh/ndmXQX20gIsRhFbM+3g133ZmY3Lhg0=;
-        b=lcIv/jk+RGbeOA3ReM5ZVIfC6cxxvvgBRYmaC6TkVoF3gMSC+Uoc+hBSGiUctpOqA5
-         95vX00RoPAOT+2djLFUb54ZD2oV7dPOLEg+7pKCb0lvyF7/+N852ZoAt4porRxbdRxlv
-         xabUj/QdGFUXzMPQ/vC9atAaI6EMgc+ucNHeYdsdYat1M7Zv0eoGV1jTYJBaGOFnJAVj
-         muMlEIC1iOYdTorEbMRQlX6+xPlPhoUaZB7um/EfBcS2ZvcpX+bRvzMnOV4NGjfD/5Ax
-         8vyEVBOBs77Ux0HX36GmejQdtpEunhEi0LlYsE++s3OScDMsBqZn/gq2xGuf2hbihuk2
-         UyOg==
-X-Gm-Message-State: AC+VfDzXv/8pkv4hg6KPDJMcFACrrLcaJO+hZPH8vRb6YHrLUDtzESgd
-        IB+Ch9hwemXtDIqZMx+Jb7HW+g==
-X-Google-Smtp-Source: ACHHUZ5qix+AfKeOoptSwy0yXk92l+wgnvqFCSAy7TIzE2g53L4ZMCweRzU6C81TkLkrlVytUw2Jzw==
-X-Received: by 2002:a05:6512:390f:b0:4ed:b048:b98a with SMTP id a15-20020a056512390f00b004edb048b98amr4280477lfu.6.1683917438922;
-        Fri, 12 May 2023 11:50:38 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id w16-20020a05651204d000b004d8580b2470sm1559005lfq.225.2023.05.12.11.50.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 May 2023 11:50:38 -0700 (PDT)
-Message-ID: <e3579cea-1764-26ff-ba9d-6eb23a0aaef0@linaro.org>
-Date:   Fri, 12 May 2023 21:50:37 +0300
+        Fri, 12 May 2023 15:05:46 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFE952724;
+        Fri, 12 May 2023 12:05:44 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34CI1Cos012522;
+        Fri, 12 May 2023 19:05:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=jEtN/tDjrIlbzPkhas7R2ZIqBheXt8OE6EPlEKEa16o=;
+ b=R/fuD4MG5mRTKwb0T13uMMFvtvzsSCXwOZBuYj04BsB11pQrZDUnv/SciAQhkAcR+4lV
+ +9Xs3Uh3tIER178kjSdnUMm9mNUuJly71FJraiyPpkjf7JkpEL7SqratDkyDALzYti2a
+ CQPlkTBMsR4Q4XwHDQ3wguWe1xKazairaZaPGBvObovls3HHo2Jj0vAcpc0NpwF/sTzU
+ N5YA6uFUTSULFS4sKrlOcFMiWlbmqMV04585GT10oeCPbYpOTtv9x/wypW+oktMDuGh0
+ bpZgNztNBHadZ98htFdAnCaRApFJZ0aGKyj2JwbKnEDS+fOVN/00gvSFNIRURE9wPlIO kw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qhcj1t255-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 12 May 2023 19:05:34 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34CJ5XAU005680
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 12 May 2023 19:05:33 GMT
+Received: from [10.110.82.209] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 12 May
+ 2023 12:05:32 -0700
+Message-ID: <411b27d1-6c1d-fa7e-111a-ab8f02ab3981@quicinc.com>
+Date:   Fri, 12 May 2023 12:05:32 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
 Subject: Re: [PATCH v8 6/8] drm/msm/dpu: separate DSC flush update out of
  interface
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org
-Cc:     quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-        marijn.suijten@somainline.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <andersson@kernel.org>
+CC:     <quic_sbillaka@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <marijn.suijten@somainline.org>,
+        <quic_jesszhan@quicinc.com>, <freedreno@lists.freedesktop.org>
 References: <1683914423-17612-1-git-send-email-quic_khsieh@quicinc.com>
  <1683914423-17612-7-git-send-email-quic_khsieh@quicinc.com>
  <91f63678-aade-2f42-1311-1bc706ebdc91@linaro.org>
  <5319b87a-9a4c-1786-9ea9-b9015ee56357@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <5319b87a-9a4c-1786-9ea9-b9015ee56357@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <e3579cea-1764-26ff-ba9d-6eb23a0aaef0@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <e3579cea-1764-26ff-ba9d-6eb23a0aaef0@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: nP_9G0c-X7y2JpuvKzZLrSBYDJ7ix7hJ
+X-Proofpoint-ORIG-GUID: nP_9G0c-X7y2JpuvKzZLrSBYDJ7ix7hJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-12_12,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ lowpriorityscore=0 mlxscore=0 adultscore=0 malwarescore=0 mlxlogscore=932
+ priorityscore=1501 bulkscore=0 spamscore=0 clxscore=1015 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305120160
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,77 +90,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/05/2023 21:47, Abhinav Kumar wrote:
-> 
-> 
-> On 5/12/2023 11:21 AM, Dmitry Baryshkov wrote:
->> On 12/05/2023 21:00, Kuogee Hsieh wrote:
->>> Current DSC flush update is piggyback inside dpu_hw_ctl_intf_cfg_v1().
->>> This patch separates DSC flush away from dpu_hw_ctl_intf_cfg_v1() by
->>> adding dpu_hw_ctl_update_pending_flush_dsc_v1() to handle both per
->>> DSC engine and DSC flush bits at same time to make it consistent with
->>> the location of flush programming of other dpu sub blocks.
->>>
->>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 14 ++++++++++++--
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c  | 22 
->>> ++++++++++++++++------
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h  | 10 ++++++++++
->>>   3 files changed, 38 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> index ffa6f04..5cae70e 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> @@ -1834,12 +1834,18 @@ dpu_encoder_dsc_initial_line_calc(struct 
->>> drm_dsc_config *dsc,
->>>       return DIV_ROUND_UP(total_pixels, dsc->slice_width);
->>>   }
->>> -static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_dsc *hw_dsc,
->>> +static void dpu_encoder_dsc_pipe_cfg(struct dpu_encoder_virt *dpu_enc,
->>> +                     struct dpu_hw_dsc *hw_dsc,
->>>                        struct dpu_hw_pingpong *hw_pp,
->>>                        struct drm_dsc_config *dsc,
->>>                        u32 common_mode,
->>>                        u32 initial_lines)
->>>   {
->>> +    struct dpu_encoder_phys *cur_master = dpu_enc->cur_master;
->>> +    struct dpu_hw_ctl *ctl;
->>> +
->>> +    ctl = cur_master->hw_ctl;
+
+
+On 5/12/2023 11:50 AM, Dmitry Baryshkov wrote:
+> On 12/05/2023 21:47, Abhinav Kumar wrote:
 >>
->> Just for my understanding: if we have a bonded DSI @ sdm845, should 
->> both flashes go to the master CTL or each flush should go to the 
->> corresponding CTL?
 >>
+>> On 5/12/2023 11:21 AM, Dmitry Baryshkov wrote:
+>>> On 12/05/2023 21:00, Kuogee Hsieh wrote:
+>>>> Current DSC flush update is piggyback inside dpu_hw_ctl_intf_cfg_v1().
+>>>> This patch separates DSC flush away from dpu_hw_ctl_intf_cfg_v1() by
+>>>> adding dpu_hw_ctl_update_pending_flush_dsc_v1() to handle both per
+>>>> DSC engine and DSC flush bits at same time to make it consistent with
+>>>> the location of flush programming of other dpu sub blocks.
+>>>>
+>>>> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>> ---
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 14 ++++++++++++--
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c  | 22 
+>>>> ++++++++++++++++------
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h  | 10 ++++++++++
+>>>>   3 files changed, 38 insertions(+), 8 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>>> index ffa6f04..5cae70e 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>>> @@ -1834,12 +1834,18 @@ dpu_encoder_dsc_initial_line_calc(struct 
+>>>> drm_dsc_config *dsc,
+>>>>       return DIV_ROUND_UP(total_pixels, dsc->slice_width);
+>>>>   }
+>>>> -static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_dsc *hw_dsc,
+>>>> +static void dpu_encoder_dsc_pipe_cfg(struct dpu_encoder_virt *dpu_enc,
+>>>> +                     struct dpu_hw_dsc *hw_dsc,
+>>>>                        struct dpu_hw_pingpong *hw_pp,
+>>>>                        struct drm_dsc_config *dsc,
+>>>>                        u32 common_mode,
+>>>>                        u32 initial_lines)
+>>>>   {
+>>>> +    struct dpu_encoder_phys *cur_master = dpu_enc->cur_master;
+>>>> +    struct dpu_hw_ctl *ctl;
+>>>> +
+>>>> +    ctl = cur_master->hw_ctl;
+>>>
+>>> Just for my understanding: if we have a bonded DSI @ sdm845, should 
+>>> both flashes go to the master CTL or each flush should go to the 
+>>> corresponding CTL?
+>>>
+>>
+>> Is this question for DSC or just general question about flush?
+>>
+>> I dont see an explicit DSC flush needed in sdm845 at the ctl level.
+>>
+>> If the question is about general flush involving two control paths, we 
+>> need to combine the flushes and they goto the master only. Please 
+>> refer to below part in sde_encoder.c
+> And this is because we have a single CTL to flush on sm8150+, isn't it?
 > 
-> Is this question for DSC or just general question about flush?
+
+For sm8150+, yes there will be only a single CTL to flush even in bonded 
+DSI mode so only one will be flushed.
+
+So, in general, you can refer to the function 
+sde_encoder_phys_needs_single_flush() to decide if it needs 2 flushes or 
+one. That accounts for the DPU rev as well.
+
+>>
+>> 4243     /* for split flush, combine pending flush masks and send to 
+>> master */
+>> 4244     if (pending_flush.pending_flush_mask && sde_enc->cur_master) {
+>> 4245         ctl = sde_enc->cur_master->hw_ctl;
+>> 4246         if (config_changed && ctl->ops.reg_dma_flush)
+>> 4247             ctl->ops.reg_dma_flush(ctl, is_regdma_blocking);
+>> 4248         _sde_encoder_trigger_flush(&sde_enc->base, 
+>> sde_enc->cur_master,
+>> 4249                         &pending_flush,
+>> 4250                         config_changed);
+>> 4251     }
 > 
-> I dont see an explicit DSC flush needed in sdm845 at the ctl level.
 > 
-> If the question is about general flush involving two control paths, we 
-> need to combine the flushes and they goto the master only. Please refer 
-> to below part in sde_encoder.c
-And this is because we have a single CTL to flush on sm8150+, isn't it?
-
-> 
-> 4243     /* for split flush, combine pending flush masks and send to 
-> master */
-> 4244     if (pending_flush.pending_flush_mask && sde_enc->cur_master) {
-> 4245         ctl = sde_enc->cur_master->hw_ctl;
-> 4246         if (config_changed && ctl->ops.reg_dma_flush)
-> 4247             ctl->ops.reg_dma_flush(ctl, is_regdma_blocking);
-> 4248         _sde_encoder_trigger_flush(&sde_enc->base, 
-> sde_enc->cur_master,
-> 4249                         &pending_flush,
-> 4250                         config_changed);
-> 4251     }
-
-
--- 
-With best wishes
-Dmitry
-
