@@ -2,117 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC48070157E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 May 2023 11:09:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0581270158C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 May 2023 11:19:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234083AbjEMJJO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 May 2023 05:09:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51902 "EHLO
+        id S237424AbjEMJTI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 May 2023 05:19:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229653AbjEMJJM (ORCPT
+        with ESMTP id S233950AbjEMJTH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 May 2023 05:09:12 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D666B1FD9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 02:09:10 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2ac836f4447so110956861fa.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 02:09:10 -0700 (PDT)
+        Sat, 13 May 2023 05:19:07 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DD1E3AB5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 02:19:05 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-965e93f915aso1874340466b.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 02:19:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683968949; x=1686560949;
+        d=linaro.org; s=google; t=1683969544; x=1686561544;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0XVnXZFvQEsqa79rEwn5T6CH1CtUAwGaKR7PKUSsQxA=;
-        b=aVMq4tqniH5yF4T4yGJrOBgFXvLGdMrWlb0GBvJH80rQXMatI3bZmWpSRBTq4v4xc+
-         c9CxLS9fN4j4om/4dP+q/JXrFqQ04A2BD4ZxpGV1JqMUIyfDEq1yOtleTo+1N4IrhVIT
-         I36J/Yz0dF5rZPPKr8eYAJBpwrshqL11+ROQowRrKv9Dd9hQbAYsZI0pX9dNJMtymzw3
-         y/6PPRZOwy3vZ3cIc2kybyyBna/Hh9R24QPfsjzszWuBgVWnA/AWgymA6eohTK/JDzYC
-         N29jCrLNs2L4PvGpgpN10k4ZkMBNxwJa7x0UxZ+20gs5y6qt0dcOMJeH8d50Pq6/IZoz
-         5Yzw==
+        bh=/pwslOp1fAGewqJeOjahYE75gGMp1KhOblxxR4rZ8Rg=;
+        b=Rt78OHZ7Pe/GbuBHucM4WxbAdD9tqFQYhEWe/bio9wfsVMMVvczlTF8zehIUQlX+X9
+         HzLuqNJWTAIGGMF7ZJf3S+Q9a4zVGlUIiisk6/+yL+Krxn+uiAjVGskO813sAJwm5HaE
+         eSD3T6uhi4yKh9swvF0S/FWk1d/BfRNmLl+NDiQNU/TWKlhC2P4b3A2t+s95l6PlIobc
+         djOVtctx/Og1r4Jyb18rFfAKpivQAwNki2uHn2TNyvXLQ7exBxnvE514wbyGtDNgxLsN
+         vTW2UdBaKh4iyLToFUeVjWlnbqxxCIabfGba89x2DaYOVkNLk4GJQL1Oc57MgpJjqN6E
+         8yCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683968949; x=1686560949;
+        d=1e100.net; s=20221208; t=1683969544; x=1686561544;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0XVnXZFvQEsqa79rEwn5T6CH1CtUAwGaKR7PKUSsQxA=;
-        b=VCPIvXdrdTTus/J0negDqDhPMp6OC0LetfNRR2UqDIATsRKfI9wLOb88OTKHVSyjQU
-         fwdRBWqw2H/J7wTxzbX1GyqAi9zR2aD081O8Y3lT+Et+s5zujopSoiOiMExAmcEj9eM+
-         3Ma/BQNM6CRv5XvKXm/50sV61MOTcpI39epRMBtUWGcDPyMVnc4SkLZMZ7oy6v7GV0lZ
-         5xmeZ0cmVcYpA3RZHmEVJpXVRkgGGYW0rsdiOQfFp7R9bkyuXf26OItJZV8bEFncKVCy
-         8jw5simNo25g04DsnjOfAKR2zymbpkInymHMuCgjnFxzSKspvBzRChUk3o+6u3zzTFyT
-         vL4Q==
-X-Gm-Message-State: AC+VfDxiVD0TALmKkVToGjXmIm5SuCFc/DiT3JQirX2D9duDi45r4CVL
-        zB0LNqdcPIajWd1QLQeNek/kqwrbTPuaWptpBko=
-X-Google-Smtp-Source: ACHHUZ4lx1tK0JmxHrSwGsh+USwsUSWqrEyW+hhjDwc9ajC0E7CF+X+qUy5/dyk9B2CzwLh4gYGmDg==
-X-Received: by 2002:a2e:2c09:0:b0:2ad:bb53:8b9a with SMTP id s9-20020a2e2c09000000b002adbb538b9amr3370782ljs.20.1683968949108;
-        Sat, 13 May 2023 02:09:09 -0700 (PDT)
-Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id v21-20020a2e87d5000000b002adb10a6620sm1369608ljj.107.2023.05.13.02.09.08
+        bh=/pwslOp1fAGewqJeOjahYE75gGMp1KhOblxxR4rZ8Rg=;
+        b=PK1m4HE0yWT4Vw+YZCGWnMQ3FdmtJX0SszArV/vrClZ54IiosUB6n7U+bPOU/VJtse
+         0wgHB4ndAv6EKYXQJHHicq8Z1qdXzFciiC6Ac84cR52mfdR4lFfKH0oApNRQu3Nv1vdF
+         BgqN6ttqqr+5g4Oqnv9PxhaNpTTbX9pAz+03008mNarN9Lmw8iLq6ViTHsoNmVRJq85U
+         +KlvS78rDDzUv1ABbfsfR3IAbXeb7kzw2ycV/3mlmMQviaYTQ3ytKW6TneS1a2Q42Nud
+         lOF2ffOPL97exe7IOIglXXeWNoVtLq5DTP5pSmAg+REj66H62AdvDgmSojj4TW00KPrR
+         0Geg==
+X-Gm-Message-State: AC+VfDxiSiByKzvFGXh+0ICrYdwwL73dDM3dwiUoX5XdVjSCmAlRYGu8
+        Vteyc8ZYbmLdhsxehxo+tq8Yug==
+X-Google-Smtp-Source: ACHHUZ50SbvUnQQSK4asT+Ddop4n2StwVuTmWGDjFEKe1e3typUUWFWcTe5rvtNXa9yqOpmHnnuTmA==
+X-Received: by 2002:a17:906:db02:b0:94f:128d:63db with SMTP id xj2-20020a170906db0200b0094f128d63dbmr25211619ejb.17.1683969543948;
+        Sat, 13 May 2023 02:19:03 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:1d0:810a:586c:c5ba? ([2a02:810d:15c0:828:1d0:810a:586c:c5ba])
+        by smtp.gmail.com with ESMTPSA id ov17-20020a170906fc1100b0096aa0ca9b5fsm2009519ejb.106.2023.05.13.02.19.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 13 May 2023 02:09:08 -0700 (PDT)
-Message-ID: <f6ecd66b-e207-0ed9-0ff3-1febfdf5bce9@linaro.org>
-Date:   Sat, 13 May 2023 11:09:07 +0200
+        Sat, 13 May 2023 02:19:03 -0700 (PDT)
+Message-ID: <15ac2e1e-819d-9f73-11ab-6e7953913b83@linaro.org>
+Date:   Sat, 13 May 2023 11:19:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: Flush RSC sleep & wake votes
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v3 1/2] dt-bindings: arm: qcom: Add Fxtec Pro1X
 Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+To:     Dang Huynh <danct12@riseup.net>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20230512150425.3171122-1-quic_bjorande@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230512150425.3171122-1-quic_bjorande@quicinc.com>
+References: <20230505-fxtec-pro1x-support-v3-0-0c9c7f58b205@riseup.net>
+ <20230505-fxtec-pro1x-support-v3-1-0c9c7f58b205@riseup.net>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230505-fxtec-pro1x-support-v3-1-0c9c7f58b205@riseup.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 12.05.2023 17:04, Bjorn Andersson wrote:
-> The rpmh driver will cache sleep and wake votes until the cluster
-> power-domain is about to enter idle, to avoid unnecessary writes. So
-> associate the apps_rsc with the cluster pd, so that it can be notified
-> about this event.
+On 13/05/2023 03:05, Dang Huynh wrote:
+> Document F(x)tec Pro1X as a SM6115 device.
 > 
-> Without this, only AMC votes are being commited.
-Ouch.
-
-Should we make this required: in bindings and add it to all
-platforms?
-
-> 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Signed-off-by: Dang Huynh <danct12@riseup.net>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 5 +++++
 
-Konrad
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index 8fa9fbfe5d00..5c68f2182c2f 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -3982,6 +3982,7 @@ apps_rsc: rsc@18200000 {
->  			qcom,tcs-config = <ACTIVE_TCS  2>, <SLEEP_TCS   3>,
->  					  <WAKE_TCS    3>, <CONTROL_TCS 1>;
->  			label = "apps_rsc";
-> +			power-domains = <&CLUSTER_PD>;
->  
->  			apps_bcm_voter: bcm-voter {
->  				compatible = "qcom,bcm-voter";
+This is a friendly reminder during the review process.
+
+It looks like you received a tag and forgot to add it.
+
+If you do not know the process, here is a short explanation:
+Please add Acked-by/Reviewed-by/Tested-by tags when posting new
+versions. However, there's no need to repost patches *only* to add the
+tags. The upstream maintainer will do that for acks received on the
+version they apply.
+
+https://elixir.bootlin.com/linux/v5.17/source/Documentation/process/submitting-patches.rst#L540
+
+If a tag was not added on purpose, please state why and what changed.
+
+
+Best regards,
+Krzysztof
+
