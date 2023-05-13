@@ -2,77 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42D63701551
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 May 2023 10:50:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70709701575
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 May 2023 11:00:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232858AbjEMIum (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 May 2023 04:50:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43398 "EHLO
+        id S235372AbjEMJAD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 May 2023 05:00:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232564AbjEMIul (ORCPT
+        with ESMTP id S237370AbjEMJAB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 May 2023 04:50:41 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4A184C2C
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 01:50:38 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2ac7462d9f1so118808411fa.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 01:50:38 -0700 (PDT)
+        Sat, 13 May 2023 05:00:01 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF3F4EF6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 01:59:59 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2ad9f2926adso64517511fa.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 01:59:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683967837; x=1686559837;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1683968398; x=1686560398;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZA+KVArcmXjb5W6mmCGUzDH85J25BuQco6W+6t2c4RM=;
-        b=jeo/gJrKUI0IM8cpVDGXdRLOySjJYBKq46qyfunJdWGTofoXMFtLlVZNWK5jKIwmrc
-         Jkb4JFU10nJ/S+lKp5mzoj7w5Bi6irzmRwad1/yihy3jGHZCeLIm/plOEkKhHhdqLDeH
-         ZRuz8kJpW7LFknwxpccUDtYFdG5J5k/cSLPJiHe7USy22OaB1dZKsuYw7ohlsOY3OLJy
-         MXWLNhtK6IEUVqv1dI+2w6FLgg92yEBewDVq94eTSMkv7wpnHf793rG1AaEed2mn/lqi
-         8JLF9+RMgPrNyiXLNNoxxKVLP2PyaJijENINQkFT+7TDemICgTeb4MpaxnSdHir7+wVF
-         G0hQ==
+        bh=YV/mnZ4/4r3AbGxzYpTnL7fXn/4PhGDzkVnVht6PIUY=;
+        b=hydG02x8sN3Dc1uuIrMUyEL0Lbr9XO80nlza33L7ih1cLxw/mJf97Bf8dZAljcKrs7
+         HZVxeGdtJxKwBoKaSTNTgpl2Abp0QVtYNe3x3AHzqb0yVJKbKpGXea4xsSZWNEuE6O9i
+         B6TBd8wKi0FO4ehtxmdFpaC4cyTmMrLd+yWJOK7TEhWLwGiaKuCWlGAUt+78urdCs4+S
+         X8vD+wk5DIyELX/JzrJN78k+ekM3nQ0Gp8WHWHCZzWggEMEX1WeN/ibAb/4z9QFWjS4n
+         MmgOY0zYcC/GbWBCohV7VoamXoQQyzBCp+rduT/FWHJvFPYFSXY0PUMUOG/+nE1rDW4Q
+         Wj2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683967837; x=1686559837;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1683968398; x=1686560398;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZA+KVArcmXjb5W6mmCGUzDH85J25BuQco6W+6t2c4RM=;
-        b=OxiIJ2awzooNjULv8qXS4IajQBi1QWhSmM1idUAY8EohefL5NH1kdZZXXD/JFYUW3f
-         pMC8w2ksKu30INSn1Z7VrEWmh+pscZxRJ9p1uy0EGkLi3ipu0t6hiG8Mb748ZUVqcpW2
-         nP1N8OpIn1JqWUMRyNf+XL25H+POwhwHj+AJFlieKfY+5ScUt6GjkQY1QPXTeJ1yBSmQ
-         4eHHegVHgN5hNArxxV4OMNUO6BMtk38bnQzEE/xmgH9X3a7Qy+ZDeMWrd7YbbG9RVVrg
-         6fbO4qYSlkMan1KsK7yVgJofAtprQFPL/sGHax6+3YZpq+84UzD1Zk04rdM47vIFDlCY
-         +94g==
-X-Gm-Message-State: AC+VfDz7ileStub4/sX+09COz1C7VNnus1Fxjp7d+AmjlRZvI5w/qNQ1
-        ztV+puooCeItKL3UA5sZ+nE5Ng==
-X-Google-Smtp-Source: ACHHUZ5l3WP6SXF4/TAtrgwSMcYwjtbVgGIN2dCv9it8ot2NpYp2tlqdQ/CGgy9I7uZ+fnv0945pfA==
-X-Received: by 2002:a05:651c:82:b0:2a8:ba49:a811 with SMTP id 2-20020a05651c008200b002a8ba49a811mr4673879ljq.25.1683967836975;
-        Sat, 13 May 2023 01:50:36 -0700 (PDT)
+        bh=YV/mnZ4/4r3AbGxzYpTnL7fXn/4PhGDzkVnVht6PIUY=;
+        b=fZxdws7VGDP9L0l8fLsDBfBKXiGWjfMWBTiuw8S+ZUd3C+gzY9v6a6HtOvazCtZUJO
+         ShjssqzfZDPzo45xyRK7MKrX5svHusgA+iZxAaD65zkvWO0I7yf0ODM7As0/eEEs8krR
+         29WwYv7EW2Dm4VfrDeU5BflM3AuCZUsX137kIXTJ0vudUxxWCnW2ZhIzRliWOR9o0haU
+         kZhNZ+VmF6l/czT7oy/HQc59xP9KTxdADZOTnsB0F28MrfJjfEx5wKN5+X+8Jfu8pCFO
+         ECmBNQ7nlOi7RWgrCINSSbHyJg17XMOSwglvQoA7m1Erf9OkoJelzMYhlw+r+VF4/u7F
+         HWxg==
+X-Gm-Message-State: AC+VfDwaSqfcGQeAdSuiaEFliLQ6q19QbxPGupO+hWf5gkoQ0m6qHRFZ
+        Amp78r9GlCzT0n1BEYHX5faWoA==
+X-Google-Smtp-Source: ACHHUZ5/oqXsjheRMdwkquVqrIgZ9TCHtwYEIipwgHc9qOwzW5KHHGhiProtciW738juU+Gtz6MOyw==
+X-Received: by 2002:a2e:9bd7:0:b0:2ad:9161:7aca with SMTP id w23-20020a2e9bd7000000b002ad91617acamr5113901ljj.41.1683968397737;
+        Sat, 13 May 2023 01:59:57 -0700 (PDT)
 Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id x15-20020a2e9dcf000000b002adb566dc10sm1316566ljj.129.2023.05.13.01.50.35
+        by smtp.gmail.com with ESMTPSA id y5-20020a2e95c5000000b002addbc16a54sm342220ljh.41.2023.05.13.01.59.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 13 May 2023 01:50:36 -0700 (PDT)
-Message-ID: <ff01b0d2-6e00-40dc-37bc-236c5510aaf5@linaro.org>
-Date:   Sat, 13 May 2023 10:50:34 +0200
+        Sat, 13 May 2023 01:59:57 -0700 (PDT)
+Message-ID: <9c07e0a1-d3a6-03df-87a0-f2bdbac7d8f3@linaro.org>
+Date:   Sat, 13 May 2023 10:59:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH 3/3] ARM: dts: qcom: msm8226: Provide clocks to mmcc node
-To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+Subject: Re: [PATCH v6 2/4] interconnect: add clk-based icc provider support
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Taniya Das <tdas@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20230509-msm8226-mmcc-parents-v1-0-83a2dfc986ab@z3ntu.xyz>
- <20230509-msm8226-mmcc-parents-v1-3-83a2dfc986ab@z3ntu.xyz>
-Content-Language: en-US
+        Taniya Das <quic_tdas@quicinc.com>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        linux-pm@vger.kernel.org
+References: <20230512001334.2983048-1-dmitry.baryshkov@linaro.org>
+ <20230512001334.2983048-3-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230509-msm8226-mmcc-parents-v1-3-83a2dfc986ab@z3ntu.xyz>
+In-Reply-To: <20230512001334.2983048-3-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,42 +88,114 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 9.05.2023 23:16, Luca Weiss wrote:
-> The mmcc needs several clocks that are being used as parents. Provide
-> them in dt.
+On 12.05.2023 02:13, Dmitry Baryshkov wrote:
+> For some devices it is useful to export clocks as interconnect providers,
+> if the clock corresponds to bus bandwidth.
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> For example, on MSM8996 the cluster interconnect clock should be scaled
+> according to the cluster frequencies. Exporting it as an interconnect
+> allows one to properly describe this as the cluster bandwidth
+> requirements.
+> 
+> Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+[...]
+
+> +
+> +	for (i = 0, j = 0; i < num_clocks; i++) {
+> +		qp->clocks[i].clk = data[i].clk;
+> +
+> +		node = icc_node_create(first_id + j);
+> +		if (IS_ERR(node)) {
+> +			ret = PTR_ERR(node);
+> +			goto err;
+> +		}
+> +
+> +		node->name = devm_kasprintf(dev, GFP_KERNEL, "%s_master", data[i].name);
+> +		node->data = &qp->clocks[i];
+> +		icc_node_add(node, provider);
+> +		/* link to the next node, slave */
+> +		icc_link_create(node, first_id + j + 1);
+> +		onecell->nodes[j++] = node;
+> +
+> +		node = icc_node_create(first_id + j);
+> +		if (IS_ERR(node)) {
+> +			ret = PTR_ERR(node);
+> +			goto err;
+> +		}
+> +
+> +		node->name = devm_kasprintf(dev, GFP_KERNEL, "%s_slave", data[i].name);
+> +		/* no data for slave node */
+> +		icc_node_add(node, provider);
+> +		onecell->nodes[j++] = node;
+I'm still not very into using 2 iterators and modifying one
+on the flight, but I don't think I have any other issues with
+this driver..
+
+Some sort of a Mostly-Acked-by tag would be helpful here!
 
 Konrad
->  arch/arm/boot/dts/qcom-msm8226.dtsi | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
-> 
-> diff --git a/arch/arm/boot/dts/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom-msm8226.dtsi
-> index 4dd4e26c73a2..3187b6853445 100644
-> --- a/arch/arm/boot/dts/qcom-msm8226.dtsi
-> +++ b/arch/arm/boot/dts/qcom-msm8226.dtsi
-> @@ -392,6 +392,21 @@ mmcc: clock-controller@fd8c0000 {
->  			#clock-cells = <1>;
->  			#reset-cells = <1>;
->  			#power-domain-cells = <1>;
+> +	}
 > +
-> +			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
-> +				 <&gcc GCC_MMSS_GPLL0_CLK_SRC>,
-> +				 <&gcc GPLL0_VOTE>,
-> +				 <&gcc GPLL1_VOTE>,
-> +				 <&rpmcc RPM_SMD_GFX3D_CLK_SRC>,
-> +				 <0>,
-> +				 <0>;
-> +			clock-names = "xo",
-> +				      "mmss_gpll0_vote",
-> +				      "gpll0_vote",
-> +				      "gpll1_vote",
-> +				      "gfx3d_clk_src",
-> +				      "dsi0pll",
-> +				      "dsi0pllbyte";
->  		};
->  
->  		tlmm: pinctrl@fd510000 {
-> 
+> +	onecell->num_nodes = j;
+> +
+> +	ret = icc_provider_register(provider);
+> +	if (ret)
+> +		goto err;
+> +
+> +	return provider;
+> +
+> +err:
+> +	icc_nodes_remove(provider);
+> +
+> +	return ERR_PTR(ret);
+> +}
+> +
+> +/**
+> + * icc_clk_unregister() - unregister a previously registered clk interconnect provider
+> + * @provider: provider returned by icc_clk_register()
+> + */
+> +void icc_clk_unregister(struct icc_provider *provider)
+> +{
+> +	struct icc_clk_provider *qp = container_of(provider, struct icc_clk_provider, provider);
+> +	int i;
+> +
+> +	icc_provider_deregister(&qp->provider);
+> +	icc_nodes_remove(&qp->provider);
+> +
+> +	for (i = 0; i < qp->num_clocks; i++) {
+> +		struct icc_clk_node *qn = &qp->clocks[i];
+> +
+> +		if (qn->enabled)
+> +			clk_disable_unprepare(qn->clk);
+> +	}
+> +}
+> diff --git a/include/linux/interconnect-clk.h b/include/linux/interconnect-clk.h
+> new file mode 100644
+> index 000000000000..0cd80112bea5
+> --- /dev/null
+> +++ b/include/linux/interconnect-clk.h
+> @@ -0,0 +1,22 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
+> +/*
+> + * Copyright (c) 2023, Linaro Ltd.
+> + */
+> +
+> +#ifndef __LINUX_INTERCONNECT_CLK_H
+> +#define __LINUX_INTERCONNECT_CLK_H
+> +
+> +struct device;
+> +
+> +struct icc_clk_data {
+> +	struct clk *clk;
+> +	const char *name;
+> +};
+> +
+> +struct icc_provider *icc_clk_register(struct device *dev,
+> +				      unsigned int first_id,
+> +				      unsigned int num_clocks,
+> +				      const struct icc_clk_data *data);
+> +void icc_clk_unregister(struct icc_provider *provider);
+> +
+> +#endif
