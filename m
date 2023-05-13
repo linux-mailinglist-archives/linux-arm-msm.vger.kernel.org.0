@@ -2,97 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 15091701665
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 May 2023 13:29:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 916A8701672
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 May 2023 13:35:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237840AbjEML3U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 May 2023 07:29:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52938 "EHLO
+        id S238046AbjEMLfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 May 2023 07:35:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237517AbjEML3T (ORCPT
+        with ESMTP id S232564AbjEMLfS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 May 2023 07:29:19 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4782A2D4F
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 04:29:18 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-50be0d835aaso19252569a12.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 04:29:18 -0700 (PDT)
+        Sat, 13 May 2023 07:35:18 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68CB740F7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 04:35:16 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id 4fb4d7f45d1cf-50bdd7b229cso19689848a12.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 04:35:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683977357; x=1686569357;
+        d=linaro.org; s=google; t=1683977715; x=1686569715;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=rNewWpP+GvEj2PXHB6K/3b6wTSDIQG0EkEwU6jgQeQo=;
-        b=q+zz4WuFUeDnQ814WpwLd5PeEwSdt9wDOQLQg6oc3OAn4TsEcOFt8joc7p4D2oVdr9
-         RGCtgpYuadZinGs/FbPCNIaIVa19Ttw7K9e0ESB6BME3SEVT2sVZnTwULS52lAVhGXBP
-         D8ztSp7SDf25ag4Ng+e6vYPvORuUlyJj7ovRHv8J02er5jCRJTJBEYXACGeUOdB41889
-         rXO5d4ABvFxc9H7e271eDdeIUYQiji5ztGQ0VUSZj98J1jpXWtrIIImAU5UJl1QfJbWL
-         rr7tpiimtNT0sWw7cI45lHjijZ36qCxSoKrc07MPp9N4psD1Inm9gep95oVsMInHy6LZ
-         emjg==
+        bh=0gDDSj6C0iIDbdK2gCsgCH6oSrIVkgIPorcUz+pCF2M=;
+        b=DJCUrHtWoQlHbLsTckrqlgS3zL5vQPCjA4208XdyecCvZN+KBOIj8fbOC5whqqr4Y5
+         PQq8GIvilNdIU9GW0eqAQuskvvDKpaIj44E2QBHhcPivqz8wUB7D38F0nD8MBMSuyebf
+         VcQnxX4rLZzvYuDF2E8jrYbqD4rzndFcc1LBQ477Vdi6Bb38WRdBHgPU010T88QKgKr4
+         FGpbkMQ5ScMpbuxI5Z7YY+izVjQAfsEOCxRkolUS9Svre27x6ActHFNMt+7P13wlz/Ka
+         Fp2pS2an93fKt8cVpZIGPP1RK8XLOgqnhVJB3I37f4kvFACDPw+vW+hOmuIdy/1aYXvO
+         dLKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683977357; x=1686569357;
+        d=1e100.net; s=20221208; t=1683977715; x=1686569715;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=rNewWpP+GvEj2PXHB6K/3b6wTSDIQG0EkEwU6jgQeQo=;
-        b=KMS7n/KnptvT6jHSBsoc7c7KGSktnfI/LR2+TzKM3x3XIXQu/gewrVfoNLOUCSf6xc
-         /wpUc9LSIMEOf23vrDrY2ahLK2CPPx42XuwhtH23IQ91YK5SZPOMh7zIkp93RlSI6K5w
-         YvdN7p/gJZzGvqw4RuEEtKdBpKwpVXsOLj1Ln0Jv6vQquiV2KXu5tdWNdk188r53fy0s
-         eAuyyf6TWPBenYa0QOoKmfKfHcjRJBHsLeYeN/jMFmZkHNcX23Tb2Od8EIUkeKs2Z5VK
-         XPrrQAH/Wi6jxSpCK60CGT59T4ZNPuvEBkMFDTvuCNWVGXH4Mp4OnA868frAyt8pogyS
-         pQVg==
-X-Gm-Message-State: AC+VfDyvQUgBJtTeObcJzfbboTsbKMG6TJkcDyxlkkA4Ja8uNQvSyYMm
-        cdmuTmbjds1/jWJtKExsSu399g==
-X-Google-Smtp-Source: ACHHUZ4zxTbmxyFC1jvKbWdjOOk7lP2nWP61ZL3CmZygSjUd1zsFpqf7tj69dL7vqjJEi+vOaHK3Ig==
-X-Received: by 2002:a17:907:d1c:b0:966:5912:c4b with SMTP id gn28-20020a1709070d1c00b0096659120c4bmr20162276ejc.76.1683977356798;
-        Sat, 13 May 2023 04:29:16 -0700 (PDT)
+        bh=0gDDSj6C0iIDbdK2gCsgCH6oSrIVkgIPorcUz+pCF2M=;
+        b=gO5EgbERsGp3UDX7jGD5DbWVIplhD+L82Ta2chJL4kh+i6CZegTV4xCj6sGGnmirQ1
+         vxxubKbngD8ZcZ8NvjsSgEGfapajEDRmf8VNfBzK/LhR1otukLPulqxyt+zLGo3sy66s
+         Tw3JcwnP73DQ5IbZGbx1lYXgKhuZNV/CTqXX4ZNNGRdDE/NY0aVt93YWd7aO44VFB+Wn
+         kJTrVB7kvnXs9RrlLmVYrEyy4q1+veVH1oZpiDWIdMWRHp9d6Hbyj6z+yNL9J8uH9clC
+         i61FMSfoMykYH3qD+TAk1NJ7tco2jt9jaVMgzjrabaXRMy7jtvqrTlk1TS7fi3dUR4H7
+         H+rw==
+X-Gm-Message-State: AC+VfDyioU0vjWNzN1O3ADiJnO+mREF3b37PsRWOkUyohvCSQXN8r2/r
+        RIkgCyqGHWCgHyIA3k1lXcdEFw==
+X-Google-Smtp-Source: ACHHUZ6D8HfzS/Rgo6Fy8omZ0KRIXeWqKhnd8YQKYPgn6ARSnxHxXzvt+Htcit348UpAH52nZzVqSA==
+X-Received: by 2002:a17:907:3e1b:b0:967:3963:dab8 with SMTP id hp27-20020a1709073e1b00b009673963dab8mr19583104ejc.7.1683977714867;
+        Sat, 13 May 2023 04:35:14 -0700 (PDT)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:a3aa:fd4:f432:676b])
-        by smtp.gmail.com with ESMTPSA id k10-20020a1709067aca00b0096a1ba4e0d1sm5063946ejo.32.2023.05.13.04.29.15
+        by smtp.gmail.com with ESMTPSA id z4-20020a17090655c400b009660449b9a3sm6681416ejp.25.2023.05.13.04.35.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 May 2023 04:29:16 -0700 (PDT)
+        Sat, 13 May 2023 04:35:14 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH] soc: qcom: rpmh-rsc: drop redundant unsigned >=0 comparision
-Date:   Sat, 13 May 2023 13:29:13 +0200
-Message-Id: <20230513112913.176009-1-krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] pinctrl: qcom: sc8180x: gracefully handle missing IO memory resource
+Date:   Sat, 13 May 2023 13:35:10 +0200
+Message-Id: <20230513113510.177666-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Unsigned int "minor" is always >= 0 as reported by Smatch:
+If device was probed with incorrect DT or ACPI tables, the IO memory
+resource would be missing and driver would derefernce NULL pointer in
+sc8180x_pinctrl_add_tile_resources().  Add simplep check if IO memory
+resource was provided to silence Smatch warning:
 
-  drivers/soc/qcom/rpmh-rsc.c:1076 rpmh_rsc_probe() warn: always true condition '(drv->ver.minor >= 0) => (0-u32max >= 0)'
+  drivers/pinctrl/qcom/pinctrl-sc8180x.c:1664 sc8180x_pinctrl_add_tile_resources() error: potentially dereferencing uninitialized 'mres'.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
- drivers/soc/qcom/rpmh-rsc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/qcom/pinctrl-sc8180x.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index f93544f6d796..0dd4363ebac8 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -1073,7 +1073,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
- 	drv->ver.minor = rsc_id & (MINOR_VER_MASK << MINOR_VER_SHIFT);
- 	drv->ver.minor >>= MINOR_VER_SHIFT;
+diff --git a/drivers/pinctrl/qcom/pinctrl-sc8180x.c b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
+index 704a99d2f93c..2fabec096aae 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sc8180x.c
++++ b/drivers/pinctrl/qcom/pinctrl-sc8180x.c
+@@ -1630,7 +1630,8 @@ static const struct msm_pinctrl_soc_data sc8180x_acpi_pinctrl = {
+ static int sc8180x_pinctrl_add_tile_resources(struct platform_device *pdev)
+ {
+ 	int nres_num = pdev->num_resources + ARRAY_SIZE(sc8180x_tiles) - 1;
+-	struct resource *mres, *nres, *res;
++	struct resource *mres = NULL;
++	struct resource *nres, *res;
+ 	int i, ret;
  
--	if (drv->ver.major == 3 && drv->ver.minor >= 0)
-+	if (drv->ver.major == 3)
- 		drv->regs = rpmh_rsc_reg_offset_ver_3_0;
- 	else
- 		drv->regs = rpmh_rsc_reg_offset_ver_2_7;
+ 	/*
+@@ -1657,6 +1658,9 @@ static int sc8180x_pinctrl_add_tile_resources(struct platform_device *pdev)
+ 			*res++ = *r;
+ 	}
+ 
++	if (!mres)
++		return -EINVAL;
++
+ 	/* Append tile memory resources */
+ 	for (i = 0; i < ARRAY_SIZE(sc8180x_tiles); i++, res++) {
+ 		const struct tile_info *info = &sc8180x_tile_info[i];
 -- 
 2.34.1
 
