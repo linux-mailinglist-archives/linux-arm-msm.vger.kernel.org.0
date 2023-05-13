@@ -2,250 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A6EB7012F9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 May 2023 02:27:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D7EE701398
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 May 2023 03:05:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240832AbjEMA1I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 20:27:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41848 "EHLO
+        id S240860AbjEMBFZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 21:05:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240657AbjEMA1G (ORCPT
+        with ESMTP id S229798AbjEMBFY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 20:27:06 -0400
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AF4E2686;
-        Fri, 12 May 2023 17:27:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1683937624; x=1715473624;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=hyUEy74We14AFulU3g1ahmvXwKYZNaHi/+WmwDhbsHI=;
-  b=KV1keR3svbNA/ihlFvWqx8lF9QVJMh7A41s+ZypYd6N0bauXG6PgjbOC
-   HYCsIpBjNXFgDk4tzRJtG2EXwkORRIikhKpjs8MxDmTPLMlma0wFLV7JA
-   AytgCCUAALbPhIaHCX2RInI0DCBzR3KfHx2QUDyH/6JM9K8o+0C59d386
-   cPkjOP0zoRXEf1sQ8tTTD5ActU+51KHt6m0ttew7Nk9s1FNg8MD/RPC+z
-   p7vS8w6/r4G6CGDv6S0QiVHveyi5908Evj74JsgrCP8sO7sft/fyOeRAA
-   afMRiPkfy5WLp3rucikpUhVvrrdliNZCfg5rjbTOpIwXW2ApAod7UFV5r
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10708"; a="437245942"
-X-IronPort-AV: E=Sophos;i="5.99,269,1677571200"; 
-   d="scan'208";a="437245942"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 May 2023 17:27:04 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10708"; a="824529268"
-X-IronPort-AV: E=Sophos;i="5.99,271,1677571200"; 
-   d="scan'208";a="824529268"
-Received: from lkp-server01.sh.intel.com (HELO dea6d5a4f140) ([10.239.97.150])
-  by orsmga004.jf.intel.com with ESMTP; 12 May 2023 17:27:00 -0700
-Received: from kbuild by dea6d5a4f140 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1pxd6B-0005CF-1L;
-        Sat, 13 May 2023 00:26:59 +0000
-Date:   Sat, 13 May 2023 08:26:39 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linus.walleij@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, richardcochran@gmail.com,
-        manivannan.sadhasivam@linaro.org, andy.shevchenko@gmail.com
-Cc:     oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
-        Rohit Agarwal <quic_rohiagar@quicinc.com>
-Subject: Re: [PATCH 1/2] pinctrl: qcom: Remove the msm_function struct
-Message-ID: <202305130813.9ypkiIW0-lkp@intel.com>
-References: <1683892553-19882-2-git-send-email-quic_rohiagar@quicinc.com>
+        Fri, 12 May 2023 21:05:24 -0400
+Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D45862D46;
+        Fri, 12 May 2023 18:05:23 -0700 (PDT)
+Received: from fews01-sea.riseup.net (fews01-sea-pn.riseup.net [10.0.1.109])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mx1.riseup.net (Postfix) with ESMTPS id 4QJ6r300PXzDqnX;
+        Sat, 13 May 2023 01:05:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
+        t=1683939923; bh=2oweJp6Hr+Uo6qwno1dL993aPAf2d22HZWUcT7L58os=;
+        h=From:Subject:Date:To:Cc:From;
+        b=aFZ4xFKvWwfb3+UjG6bgqIAnvXY4vm1bjff6y3ecyAVD4nnbbitNFl5lMYEH37gl7
+         qwEgh01Mk31Lj5BTashTuj5rs6qfPXKxTyddw6zR1SwWCN+N6SOTRhngeiYfLRpwNK
+         OZiERO5MIMZQG/yV1364fhAa4PvdSlYmoNPUCOx0=
+X-Riseup-User-ID: 347695993C9D69120884A090CCC9FD4D1D8B0B1DFFDD83A0621DD0E17CFDD13B
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+         by fews01-sea.riseup.net (Postfix) with ESMTPSA id 4QJ6r02pXhzJp1Q;
+        Sat, 13 May 2023 01:05:20 +0000 (UTC)
+From:   Dang Huynh <danct12@riseup.net>
+Subject: [PATCH v3 0/2] Add F(x)tec Pro1X (QX1050) DTS
+Date:   Sat, 13 May 2023 08:05:03 +0700
+Message-Id: <20230505-fxtec-pro1x-support-v3-0-0c9c7f58b205@riseup.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1683892553-19882-2-git-send-email-quic_rohiagar@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAD/iXmQC/42OwQ7CIBBEf8Vwdg0FaltP/ofxAO1iuVACtME0/
+ XehevFizJ5mM/NmVhLQGwzkcliJx8UEM9ks+PFA+lHaB4IZsiaMMk5rWoNOEXtwfqoShNm5yUd
+ odNMyTUVLsSM5qWRAUF7afizZt9liih+KKCbnUZu0V9/uWY8mxMk/9yVLVb6/S5cK8g2daLgSw
+ xnF1ZuAsztZjKQAF/YHhAEFipLxplWyk/gF2bbtBcST5hghAQAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Dang Huynh <danct12@riseup.net>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1326; i=danct12@riseup.net;
+ h=from:subject:message-id; bh=2oweJp6Hr+Uo6qwno1dL993aPAf2d22HZWUcT7L58os=;
+ b=owEBbQKS/ZANAwAIAWbKt+qkXdeBAcsmYgBkXuJPYW1Oo7TM2wnt1zK96wylKsdme7cuoPo4/
+ 2m/kclmxvSJAjMEAAEIAB0WIQTwmpM8D+AzHlWMpOFmyrfqpF3XgQUCZF7iTwAKCRBmyrfqpF3X
+ geUTD/4qkcikDYp53hXKK6W4c1SoUgBRPCocVD5NgPVX/93Bk1zhZnc7x88vbOwC2gTmbcdq1fB
+ YlO97A6PC9BuBMhVkSDMOr33HmMC3vLx4RpUrz5XZi22yGM2inK90rkWBZ4xu3tCcaoXG519HEK
+ evpyyt0IE5SldxTSjHsrtgJ6vurmJXPeWN8023dES4Ttg9tbPvwwb6Ew8pyeav4OQJihoJkCuBp
+ c3YIBKxY8+/Lx1xFms1AC1ptQqUeArfw7ETZ3Jwk9vcYSg3iv7vfwYqot/EUw8+A0a9itIpva9c
+ YYMjavkmk9flH1Z6Xdwv+CQcearsg5chzpjVLCh6G9GKBYJrpzfyEMmEWVn5QA6srzknJVERJ9d
+ PMkmE46cPLw0ZYqGmCmHHXSoU3HApq8xFvlgdcsF+Spca1MjmiOARhJpR8bBH7ElHngCWp2Zt/3
+ Gifej/UcbdcUQ6P0bbNoWp5F16xHgItECOTROz4t5YtQhhSaJiQvbZjbQpRk4O1Qt9T4HbveaOE
+ a85TMnjwx+t3W2b+v/UZOeXtL5J9CaiLveZpYSuiLg2Y3jwBZdd9ALHtbo9BVaz+N9mM+Ep5tkD
+ //AabAcvQvofWTJS3ZXOrwoksWpjturplk5vROxRCgawinPL1oF6AbKTfF3G7V0v0G2Kog7ILd0
+ 0SOGfJB0bleaVDw==
+X-Developer-Key: i=danct12@riseup.net; a=openpgp;
+ fpr=F09A933C0FE0331E558CA4E166CAB7EAA45DD781
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rohit,
+The F(x)tec Pro1X is a mobile phone released by FX Technologies Ltd
+in 2022.
 
-kernel test robot noticed the following build errors:
+The phone is exactly the same as the Pro1 released in 2019 with some
+changes:
+- MSM8998 -> SM6115
+- Camera button is no longer multistate
+- Only one 48MP back camera
+- A new keyboard layout picked by the community.
 
-[auto build test ERROR on linusw-pinctrl/devel]
-[also build test ERROR on linusw-pinctrl/for-next linus/master v6.4-rc1 next-20230512]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Signed-off-by: Dang Huynh <danct12@riseup.net>
+---
+Changes in v3:
+- Corrected changes from previous version
+- DTS is now licensed under GPL2+ & BSD3 
+- Regulators now uses pm6125_* alias
+- Link to v2: https://lore.kernel.org/r/20230505-fxtec-pro1x-support-v2-0-0ea2378ba9ae@riseup.net
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Rohit-Agarwal/pinctrl-qcom-Remove-the-msm_function-struct/20230512-195910
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl.git devel
-patch link:    https://lore.kernel.org/r/1683892553-19882-2-git-send-email-quic_rohiagar%40quicinc.com
-patch subject: [PATCH 1/2] pinctrl: qcom: Remove the msm_function struct
-config: arm-allyesconfig (https://download.01.org/0day-ci/archive/20230513/202305130813.9ypkiIW0-lkp@intel.com/config)
-compiler: arm-linux-gnueabi-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/3d2ada4f090f8ebd3b604ccb917394e8b30e23f8
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Rohit-Agarwal/pinctrl-qcom-Remove-the-msm_function-struct/20230512-195910
-        git checkout 3d2ada4f090f8ebd3b604ccb917394e8b30e23f8
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
+Changes in v2:
+- Corrected model property in DTS. 
+- Changes requested by Caleb and Krzysztof. 
+- Link to v1: https://lore.kernel.org/r/20230505-fxtec-pro1x-support-v1-1-1d9473b4d6e4@riseup.net
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202305130813.9ypkiIW0-lkp@intel.com/
+---
+Dang Huynh (2):
+      dt-bindings: arm: qcom: Add Fxtec Pro1X
+      arm64: dts: qcom: Add Fxtec Pro1X (QX1050) DTS
 
-All errors (new ones prefixed by >>):
+ Documentation/devicetree/bindings/arm/qcom.yaml |   5 +
+ arch/arm64/boot/dts/qcom/Makefile               |   1 +
+ arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 250 ++++++++++++++++++++++++
+ 3 files changed, 256 insertions(+)
+---
+base-commit: 145e5cddfe8b4bf607510b2dcf630d95f4db420f
+change-id: 20230505-fxtec-pro1x-support-7f782f0480e9
 
->> drivers/pinctrl/qcom/pinctrl-sm7150.c:969:34: error: array type has incomplete element type 'struct msm_function'
-     969 | static const struct msm_function sm7150_functions[] = {
-         |                                  ^~~~~~~~~~~~~~~~
-   In file included from include/linux/container_of.h:5,
-                    from include/linux/list.h:5,
-                    from include/linux/module.h:12,
-                    from drivers/pinctrl/qcom/pinctrl-sm7150.c:7:
-   include/linux/build_bug.h:16:51: error: bit-field '<anonymous>' width not an integer constant
-      16 | #define BUILD_BUG_ON_ZERO(e) ((int)(sizeof(struct { int:(-!!(e)); })))
-         |                                                   ^
-   include/linux/compiler.h:232:33: note: in expansion of macro 'BUILD_BUG_ON_ZERO'
-     232 | #define __must_be_array(a)      BUILD_BUG_ON_ZERO(__same_type((a), &(a)[0]))
-         |                                 ^~~~~~~~~~~~~~~~~
-   include/linux/kernel.h:56:59: note: in expansion of macro '__must_be_array'
-      56 | #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]) + __must_be_array(arr))
-         |                                                           ^~~~~~~~~~~~~~~
-   drivers/pinctrl/qcom/pinctrl-sm7150.c:1236:23: note: in expansion of macro 'ARRAY_SIZE'
-    1236 |         .nfunctions = ARRAY_SIZE(sm7150_functions),
-         |                       ^~~~~~~~~~
-   drivers/pinctrl/qcom/pinctrl-sm7150.c:969:34: warning: 'sm7150_functions' defined but not used [-Wunused-variable]
-     969 | static const struct msm_function sm7150_functions[] = {
-         |                                  ^~~~~~~~~~~~~~~~
-
-
-vim +969 drivers/pinctrl/qcom/pinctrl-sm7150.c
-
-b915395c9e04361 Danila Tikhonov 2023-03-12   968  
-b915395c9e04361 Danila Tikhonov 2023-03-12  @969  static const struct msm_function sm7150_functions[] = {
-b915395c9e04361 Danila Tikhonov 2023-03-12   970  	FUNCTION(gpio),
-b915395c9e04361 Danila Tikhonov 2023-03-12   971  	FUNCTION(adsp_ext),
-b915395c9e04361 Danila Tikhonov 2023-03-12   972  	FUNCTION(agera_pll),
-b915395c9e04361 Danila Tikhonov 2023-03-12   973  	FUNCTION(aoss_cti),
-b915395c9e04361 Danila Tikhonov 2023-03-12   974  	FUNCTION(atest_char),
-b915395c9e04361 Danila Tikhonov 2023-03-12   975  	FUNCTION(atest_tsens),
-b915395c9e04361 Danila Tikhonov 2023-03-12   976  	FUNCTION(atest_tsens2),
-b915395c9e04361 Danila Tikhonov 2023-03-12   977  	FUNCTION(atest_usb1),
-b915395c9e04361 Danila Tikhonov 2023-03-12   978  	FUNCTION(atest_usb2),
-b915395c9e04361 Danila Tikhonov 2023-03-12   979  	FUNCTION(cam_mclk),
-b915395c9e04361 Danila Tikhonov 2023-03-12   980  	FUNCTION(cci_async),
-b915395c9e04361 Danila Tikhonov 2023-03-12   981  	FUNCTION(cci_i2c),
-b915395c9e04361 Danila Tikhonov 2023-03-12   982  	FUNCTION(cci_timer0),
-b915395c9e04361 Danila Tikhonov 2023-03-12   983  	FUNCTION(cci_timer1),
-b915395c9e04361 Danila Tikhonov 2023-03-12   984  	FUNCTION(cci_timer2),
-b915395c9e04361 Danila Tikhonov 2023-03-12   985  	FUNCTION(cci_timer3),
-b915395c9e04361 Danila Tikhonov 2023-03-12   986  	FUNCTION(cci_timer4),
-b915395c9e04361 Danila Tikhonov 2023-03-12   987  	FUNCTION(dbg_out),
-b915395c9e04361 Danila Tikhonov 2023-03-12   988  	FUNCTION(ddr_bist),
-b915395c9e04361 Danila Tikhonov 2023-03-12   989  	FUNCTION(ddr_pxi0),
-b915395c9e04361 Danila Tikhonov 2023-03-12   990  	FUNCTION(ddr_pxi1),
-b915395c9e04361 Danila Tikhonov 2023-03-12   991  	FUNCTION(ddr_pxi2),
-b915395c9e04361 Danila Tikhonov 2023-03-12   992  	FUNCTION(ddr_pxi3),
-b915395c9e04361 Danila Tikhonov 2023-03-12   993  	FUNCTION(edp_hot),
-b915395c9e04361 Danila Tikhonov 2023-03-12   994  	FUNCTION(edp_lcd),
-b915395c9e04361 Danila Tikhonov 2023-03-12   995  	FUNCTION(gcc_gp1),
-b915395c9e04361 Danila Tikhonov 2023-03-12   996  	FUNCTION(gcc_gp2),
-b915395c9e04361 Danila Tikhonov 2023-03-12   997  	FUNCTION(gcc_gp3),
-b915395c9e04361 Danila Tikhonov 2023-03-12   998  	FUNCTION(gp_pdm0),
-b915395c9e04361 Danila Tikhonov 2023-03-12   999  	FUNCTION(gp_pdm1),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1000  	FUNCTION(gp_pdm2),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1001  	FUNCTION(gps_tx),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1002  	FUNCTION(jitter_bist),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1003  	FUNCTION(ldo_en),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1004  	FUNCTION(ldo_update),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1005  	FUNCTION(m_voc),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1006  	FUNCTION(mdp_vsync),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1007  	FUNCTION(mdp_vsync0),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1008  	FUNCTION(mdp_vsync1),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1009  	FUNCTION(mdp_vsync2),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1010  	FUNCTION(mdp_vsync3),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1011  	FUNCTION(mss_lte),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1012  	FUNCTION(nav_pps_in),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1013  	FUNCTION(nav_pps_out),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1014  	FUNCTION(pa_indicator),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1015  	FUNCTION(pci_e),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1016  	FUNCTION(phase_flag),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1017  	FUNCTION(pll_bist),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1018  	FUNCTION(pll_bypassnl),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1019  	FUNCTION(pll_reset),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1020  	FUNCTION(pri_mi2s),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1021  	FUNCTION(pri_mi2s_ws),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1022  	FUNCTION(prng_rosc),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1023  	FUNCTION(qdss_cti),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1024  	FUNCTION(qdss),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1025  	FUNCTION(qlink_enable),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1026  	FUNCTION(qlink_request),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1027  	FUNCTION(qua_mi2s),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1028  	FUNCTION(qup00),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1029  	FUNCTION(qup01),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1030  	FUNCTION(qup02),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1031  	FUNCTION(qup03),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1032  	FUNCTION(qup04),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1033  	FUNCTION(qup10),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1034  	FUNCTION(qup11),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1035  	FUNCTION(qup12),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1036  	FUNCTION(qup13),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1037  	FUNCTION(qup14),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1038  	FUNCTION(qup15),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1039  	FUNCTION(sd_write),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1040  	FUNCTION(sdc40),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1041  	FUNCTION(sdc41),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1042  	FUNCTION(sdc42),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1043  	FUNCTION(sdc43),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1044  	FUNCTION(sdc4_clk),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1045  	FUNCTION(sdc4_cmd),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1046  	FUNCTION(sec_mi2s),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1047  	FUNCTION(ter_mi2s),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1048  	FUNCTION(tgu_ch0),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1049  	FUNCTION(tgu_ch1),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1050  	FUNCTION(tgu_ch2),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1051  	FUNCTION(tgu_ch3),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1052  	FUNCTION(tsif1_clk),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1053  	FUNCTION(tsif1_data),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1054  	FUNCTION(tsif1_en),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1055  	FUNCTION(tsif1_error),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1056  	FUNCTION(tsif1_sync),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1057  	FUNCTION(tsif2_clk),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1058  	FUNCTION(tsif2_data),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1059  	FUNCTION(tsif2_en),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1060  	FUNCTION(tsif2_error),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1061  	FUNCTION(tsif2_sync),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1062  	FUNCTION(uim1_clk),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1063  	FUNCTION(uim1_data),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1064  	FUNCTION(uim1_present),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1065  	FUNCTION(uim1_reset),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1066  	FUNCTION(uim2_clk),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1067  	FUNCTION(uim2_data),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1068  	FUNCTION(uim2_present),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1069  	FUNCTION(uim2_reset),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1070  	FUNCTION(uim_batt),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1071  	FUNCTION(usb_phy),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1072  	FUNCTION(vfr_1),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1073  	FUNCTION(vsense_trigger),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1074  	FUNCTION(wlan1_adc0),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1075  	FUNCTION(wlan1_adc1),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1076  	FUNCTION(wlan2_adc0),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1077  	FUNCTION(wlan2_adc1),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1078  	FUNCTION(wsa_clk),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1079  	FUNCTION(wsa_data),
-b915395c9e04361 Danila Tikhonov 2023-03-12  1080  };
-b915395c9e04361 Danila Tikhonov 2023-03-12  1081  
-
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+Dang Huynh <danct12@riseup.net>
+
