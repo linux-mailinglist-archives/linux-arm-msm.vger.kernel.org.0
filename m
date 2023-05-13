@@ -2,140 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 81A05701980
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 May 2023 21:26:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D78B7019A9
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 May 2023 22:28:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231562AbjEMT0g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 May 2023 15:26:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46098 "EHLO
+        id S229506AbjEMU2q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 May 2023 16:28:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57760 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231506AbjEMT0f (ORCPT
+        with ESMTP id S229502AbjEMU2q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 May 2023 15:26:35 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C0302D72
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 12:26:33 -0700 (PDT)
+        Sat, 13 May 2023 16:28:46 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3694126B5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 13:28:42 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D4C0B3F32D;
-        Sat, 13 May 2023 21:26:28 +0200 (CEST)
-Date:   Sat, 13 May 2023 21:26:26 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 05E023F251;
+        Sat, 13 May 2023 22:28:38 +0200 (CEST)
+Date:   Sat, 13 May 2023 22:28:37 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, dmitry.baryshkov@linaro.org,
-        andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v8 2/8] drm/msm/dpu: add DPU_PINGPONG_DSC feature bit for
- DPU < 7.0.0
-Message-ID: <bzfwgc6akvfvupvro2jz7mi3r6mltftkng3u7oxuyrdztzjqw7@nj3dxbiu4tiz>
-References: <1683914423-17612-1-git-send-email-quic_khsieh@quicinc.com>
- <1683914423-17612-3-git-send-email-quic_khsieh@quicinc.com>
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v10 1/8] drm/display/dsc: Add flatness and initial scale
+ value calculations
+Message-ID: <ezijf6p7wbobl6upky56hb2q2ixhhg5hssesbqtibckqdm4pzr@2k762556kcpe>
+References: <20230329-rfc-msm-dsc-helper-v10-0-4cb21168c227@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v10-1-4cb21168c227@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1683914423-17612-3-git-send-email-quic_khsieh@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <20230329-rfc-msm-dsc-helper-v10-1-4cb21168c227@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-12 11:00:17, Kuogee Hsieh wrote:
+On 2023-05-12 14:32:11, Jessica Zhang wrote:
 > 
-> DPU < 7.0.0 requires the PINGPONG block to be involved during
-> DSC setting up. Since DPU >= 7.0.0, enabling and starting the DSC
-> encoder engine was moved to INTF with the help of the flush mechanism.
-> Add a DPU_PINGPONG_DSC feature bit to restrict the availability of
-> dpu_hw_pp_setup_dsc() and dpu_hw_pp_dsc_{enable,disable}() on the
-> PINGPONG block to DPU < 7.0.0 hardware, as the registers are not
-> available [in the PINGPONG block] on DPU 7.0.0 and higher anymore.
-
-Fwiw I added the brackets in the suggestion as an "up to you to include
-this or not".  Drop the brackets if you think this should be part of the
-sentence.
-
-> Add DPU_PINGPONG_DSC to PINGPONG_SDM845_MASK, PINGPONG_SDM845_TE2_MASK
-> and PINGPONG_SM8150_MASK which is used for all DPU < 7.0 chipsets.
+> Add helpers to calculate det_thresh_flatness and initial_scale_value as
+> these calculations are defined within the DSC spec.
 > 
-> changes in v6:
-> -- split patches and rearrange to keep catalog related files at this patch
-> 
-> changes in v7:
-> -- rewording commit text as suggested at review comments
-> 
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 6 +++---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 4 +++-
->  2 files changed, 6 insertions(+), 4 deletions(-)
+>  include/drm/display/drm_dsc_helper.h | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 82b58c6..78e4bf6 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -76,13 +76,13 @@
->  	(BIT(DPU_DIM_LAYER) | BIT(DPU_MIXER_COMBINED_ALPHA))
+> diff --git a/include/drm/display/drm_dsc_helper.h b/include/drm/display/drm_dsc_helper.h
+> index 0bb0c3afd740..060b22ec02eb 100644
+> --- a/include/drm/display/drm_dsc_helper.h
+> +++ b/include/drm/display/drm_dsc_helper.h
+> @@ -25,5 +25,15 @@ void drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg);
+>  int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg, enum drm_dsc_params_kind kind);
+>  int drm_dsc_compute_rc_parameters(struct drm_dsc_config *vdsc_cfg);
 >  
->  #define PINGPONG_SDM845_MASK \
-> -	(BIT(DPU_PINGPONG_DITHER) | BIT(DPU_PINGPONG_TE))
-> +	(BIT(DPU_PINGPONG_DITHER) | BIT(DPU_PINGPONG_TE) | BIT(DPU_PINGPONG_DSC))
->  
->  #define PINGPONG_SDM845_TE2_MASK \
-> -	(PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE2))
-> +	(PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE2) | BIT(DPU_PINGPONG_DSC))
+> +static inline int drm_dsc_initial_scale_value(const struct drm_dsc_config *dsc)
 
-Don't add it here, this is already in PINGPONG_SDM845_MASK.
+Should this truncate and return u8?
 
->  
->  #define PINGPONG_SM8150_MASK \
-> -	(BIT(DPU_PINGPONG_DITHER))
-> +	(BIT(DPU_PINGPONG_DITHER) | BIT(DPU_PINGPONG_DSC))
->  
->  #define CTL_SC7280_MASK \
->  	(BIT(DPU_CTL_ACTIVE_CFG) | \
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 6ee48f0..dc0a4da 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -144,7 +144,8 @@ enum {
->   * @DPU_PINGPONG_TE2        Additional tear check block for split pipes
->   * @DPU_PINGPONG_SPLIT      PP block supports split fifo
->   * @DPU_PINGPONG_SLAVE      PP block is a suitable slave for split fifo
-> - * @DPU_PINGPONG_DITHER,    Dither blocks
-> + * @DPU_PINGPONG_DITHER     Dither blocks
-> + * @DPU_PINGPONG_DSC        PP ops functions required for DSC
+> +{
+> +	return 8 * dsc->rc_model_size / (dsc->rc_model_size - dsc->initial_offset);
+> +}
+> +
+> +static inline int drm_dsc_flatness_det_thresh(const struct drm_dsc_config *dsc)
 
-Following the other documentation wording:
-
-    PP block supports DSC
-
-Or:
-
-    PP block has DSC enable/disable registers
+Should this return u32?
 
 - Marijn
 
->   * @DPU_PINGPONG_MAX
->   */
->  enum {
-> @@ -153,6 +154,7 @@ enum {
->  	DPU_PINGPONG_SPLIT,
->  	DPU_PINGPONG_SLAVE,
->  	DPU_PINGPONG_DITHER,
-> +	DPU_PINGPONG_DSC,
->  	DPU_PINGPONG_MAX
->  };
+> +{
+> +	return 2 << (dsc->bits_per_component - 8);
+> +}
+> +
+>  #endif /* _DRM_DSC_HELPER_H_ */
 >  
+> 
 > -- 
-> 2.7.4
+> 2.40.1
 > 
