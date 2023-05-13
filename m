@@ -2,117 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E042070164D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 May 2023 13:09:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34A7970165C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 May 2023 13:17:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237639AbjEMLJS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 May 2023 07:09:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47152 "EHLO
+        id S236812AbjEMLRz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 May 2023 07:17:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233804AbjEMLJR (ORCPT
+        with ESMTP id S236911AbjEMLRy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 May 2023 07:09:17 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06F3440E3;
-        Sat, 13 May 2023 04:09:16 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 87CD760B73;
-        Sat, 13 May 2023 11:09:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E93D2C433D2;
-        Sat, 13 May 2023 11:09:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1683976154;
-        bh=uXFoiR1SWFtZOtGgV5o4WxStrNeNIyIJxeYxRx+a7hQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=t5xMjIXx3kXmI5AGZ+OV2hLCDwdg5B4Io7eigd84X5cC9TCmNGEWkD3eFWtpwqfsN
-         IHavtVhWBzvBtYoyMy8qruC3SpuVVoE0fQfF6XwMuzTWqNzIjRYD2Numx1NTD5MZTQ
-         PubhhDESdtazxWt29zBxdGxLLKnhefo0yeOXkqkw=
-Date:   Sat, 13 May 2023 20:04:40 +0900
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     James Clark <james.clark@arm.com>
-Cc:     linux-kernel@vger.kernel.org, linux@roeck-us.net,
-        michal.simek@amd.com, Jonathan.Cameron@huawei.com,
-        Jonathan Corbet <corbet@lwn.net>,
-        Jean Delvare <jdelvare@suse.com>,
-        Anand Ashok Dumbre <anand.ashok.dumbre@xilinx.com>,
-        Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
+        Sat, 13 May 2023 07:17:54 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45C0635AD
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 04:17:52 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-96598a7c5e0so1757120066b.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 04:17:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683976671; x=1686568671;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=euhYG7UmFZ4gFEHsm78E/8ioQyFx2y8WD2YO5H5bfA0=;
+        b=XOzhvH6L5tg0Hjy7q3ga6oI2Takd4P9vhCcWRLiUhKKmUoj4KfpcWXa8NcygVxh93o
+         xXWyW/zgLKWjRk56afPcFKV797KIxLpWO5VtEHIObM+yWL1wcJYOuiY20LXGAYz4UhPN
+         TA53D6aCqdVX1LWb2sKQhj2Cei3lXGY8tnonJZMCimpB03FB0M7GQm0tW+Sn+AbojpJ6
+         vuNWh28WOqX9HTK5ybN/bQ5NZrr7RKvmb1R0TyF5+GAwvPg0gckb5jQMDNpLm4ftDGV1
+         wOn6AV1FHwxttUzpOFMFLFtuywUyjRIrBdPhoizpGws/8+YUPAp2jNO8P2NDN6ee3KXa
+         /I8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683976671; x=1686568671;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=euhYG7UmFZ4gFEHsm78E/8ioQyFx2y8WD2YO5H5bfA0=;
+        b=keTwC0y4SgFGGvy99lo+lxmeSIHYdfblnR6sUIB3DKhZyJLVx4GXBx8idvNESC0fO3
+         N29VmTv7DxGRIAivRjY+ncB/KlO0Sl1McNP9SsnjfhZoLrbuDUYykJCNlHo5Q/5F0IqB
+         EmRh5kllexus/hXKbhx8KjBnMESLqSggSSpST8qtMzr6P4HMqvwALPMWTZ/0kbF+UgaB
+         FoIk5NpTE+aUtbVM9QkSGTLtN9OWnqKFVfpD1W+S8PVoQgWqmYCKMeC+CZeHpxER5R/w
+         kbyiGiAlfnS+sYIR134wqiA+V0qb2+IvE8prF1zzp90Z1WzN8EnvURFRPnwF/TLoluiP
+         oHbw==
+X-Gm-Message-State: AC+VfDwL4HrENM8QMyk9SkT4f45Tint35TK5YbMsaddDgDkE98ok3ZqO
+        l3rSOZhkq/gleX7A06aB/ZSC1A==
+X-Google-Smtp-Source: ACHHUZ5th0INGdsqt6ZfidlIFO302kHwqpR9jUAvSepDZHJpamodKonx+d4oPgAYZ+wZlW5vqZyV4w==
+X-Received: by 2002:a17:907:3d9e:b0:96a:bb6:7309 with SMTP id he30-20020a1709073d9e00b0096a0bb67309mr17167479ejc.62.1683976670739;
+        Sat, 13 May 2023 04:17:50 -0700 (PDT)
+Received: from krzk-bin.. ([2a02:810d:15c0:828:a3aa:fd4:f432:676b])
+        by smtp.gmail.com with ESMTPSA id tk13-20020a170907c28d00b0094f185d82dcsm6580230ejc.21.2023.05.13.04.17.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 13 May 2023 04:17:49 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jiri Slaby <jirislaby@kernel.org>, linux-doc@vger.kernel.org,
-        linux-hwmon@vger.kernel.org, linux-iio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org
-Subject: Re: [PATCH v4 1/4] devres: Provide krealloc_array
-Message-ID: <2023051340-sinuous-darkroom-2497@gregkh>
-References: <20230509094942.396150-1-james.clark@arm.com>
- <20230509094942.396150-2-james.clark@arm.com>
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     kernel test robot <lkp@intel.com>,
+        Dan Carpenter <error27@gmail.com>, stable@vger.kernel.org
+Subject: [PATCH] soc: qcom: icc-bwmon: fix incorrect error code passed to dev_err_probe()
+Date:   Sat, 13 May 2023 13:17:47 +0200
+Message-Id: <20230513111747.132532-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230509094942.396150-2-james.clark@arm.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 09, 2023 at 10:49:38AM +0100, James Clark wrote:
-> There is no krealloc_array equivalent in devres. Users would have to
-> do their own multiplication overflow check so provide one.
-> 
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Signed-off-by: James Clark <james.clark@arm.com>
-> ---
->  Documentation/driver-api/driver-model/devres.rst |  1 +
->  include/linux/device.h                           | 11 +++++++++++
->  2 files changed, 12 insertions(+)
-> 
-> diff --git a/Documentation/driver-api/driver-model/devres.rst b/Documentation/driver-api/driver-model/devres.rst
-> index 4249eb4239e0..8be086b3f829 100644
-> --- a/Documentation/driver-api/driver-model/devres.rst
-> +++ b/Documentation/driver-api/driver-model/devres.rst
-> @@ -364,6 +364,7 @@ MEM
->    devm_kmalloc_array()
->    devm_kmemdup()
->    devm_krealloc()
-> +  devm_krealloc_array()
->    devm_kstrdup()
->    devm_kstrdup_const()
->    devm_kvasprintf()
-> diff --git a/include/linux/device.h b/include/linux/device.h
-> index 472dd24d4823..58f4f5948edb 100644
-> --- a/include/linux/device.h
-> +++ b/include/linux/device.h
-> @@ -223,6 +223,17 @@ static inline void *devm_kcalloc(struct device *dev,
->  {
->  	return devm_kmalloc_array(dev, n, size, flags | __GFP_ZERO);
->  }
-> +static inline __realloc_size(3, 4) void * __must_check
+Pass to dev_err_probe() PTR_ERR from actual dev_pm_opp_find_bw_floor()
+call which failed, instead of previous ret which at this point is 0.
+Failure of dev_pm_opp_find_bw_floor() would result in prematurely ending
+the probe with success.
 
-Shouldn't you have a blank line before this one?
+Fixes smatch warnings:
 
-> +devm_krealloc_array(struct device *dev, void *p, size_t new_n, size_t new_size, gfp_t flags)
-> +{
-> +	size_t bytes;
-> +
-> +	if (unlikely(check_mul_overflow(new_n, new_size, &bytes)))
-> +		return NULL;
-> +
-> +	return devm_krealloc(dev, p, bytes, flags);
-> +}
+  drivers/soc/qcom/icc-bwmon.c:776 bwmon_probe() warn: passing zero to 'dev_err_probe'
+  drivers/soc/qcom/icc-bwmon.c:781 bwmon_probe() warn: passing zero to 'dev_err_probe'
 
-I dislike how we have to keep copying the "real" functions (i.e.
-krealloc_array) into something like this, but I can't think of a better
-way to do it.
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/202305131657.76XeHDjF-lkp@intel.com/
+Cc: <stable@vger.kernel.org>
+Fixes: b9c2ae6cac40 ("soc: qcom: icc-bwmon: Add bandwidth monitoring driver")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-thanks,
+---
 
-greg k-h
+Code was tested previously with smatch. Just this test in smatch is new.
+---
+ drivers/soc/qcom/icc-bwmon.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
+index fd58c5b69897..f65bfeca7ed6 100644
+--- a/drivers/soc/qcom/icc-bwmon.c
++++ b/drivers/soc/qcom/icc-bwmon.c
+@@ -773,12 +773,12 @@ static int bwmon_probe(struct platform_device *pdev)
+ 	bwmon->max_bw_kbps = UINT_MAX;
+ 	opp = dev_pm_opp_find_bw_floor(dev, &bwmon->max_bw_kbps, 0);
+ 	if (IS_ERR(opp))
+-		return dev_err_probe(dev, ret, "failed to find max peak bandwidth\n");
++		return dev_err_probe(dev, PTR_ERR(opp), "failed to find max peak bandwidth\n");
+ 
+ 	bwmon->min_bw_kbps = 0;
+ 	opp = dev_pm_opp_find_bw_ceil(dev, &bwmon->min_bw_kbps, 0);
+ 	if (IS_ERR(opp))
+-		return dev_err_probe(dev, ret, "failed to find min peak bandwidth\n");
++		return dev_err_probe(dev, PTR_ERR(opp), "failed to find min peak bandwidth\n");
+ 
+ 	bwmon->dev = dev;
+ 
+-- 
+2.34.1
+
