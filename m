@@ -2,391 +2,195 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 852B870139F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 May 2023 03:05:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B3A17013DE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 May 2023 04:07:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241258AbjEMBFu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 12 May 2023 21:05:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35408 "EHLO
+        id S241223AbjEMCHM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 12 May 2023 22:07:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241564AbjEMBFq (ORCPT
+        with ESMTP id S232010AbjEMCHL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 12 May 2023 21:05:46 -0400
-Received: from mx1.riseup.net (mx1.riseup.net [198.252.153.129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEEDD9026;
-        Fri, 12 May 2023 18:05:40 -0700 (PDT)
-Received: from fews01-sea.riseup.net (fews01-sea-pn.riseup.net [10.0.1.109])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mx1.riseup.net (Postfix) with ESMTPS id 4QJ6r856t5zDr8G;
-        Sat, 13 May 2023 01:05:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=riseup.net; s=squak;
-        t=1683939940; bh=OY7l7rYNqi9qEr0PvHVynyXqnCQxKhcV6ItU3jS1v4I=;
-        h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-        b=VhnzIm7sIyvh3fkH1DJ4WHRXUwT84QSqMQbhXr3KxlVjJQC6g+oFPqnMATOVImoM6
-         cEIC4y2D+2/V+lv/w+fCoMa87NasaDaEafnB6f6Dp+Gjdkggv1MGhLmAArAQAe3HNa
-         uUpIq2eQS4gWmcQ8LUPhAuxSoNStjUjnZDGG0hVA=
-X-Riseup-User-ID: AE309535D314BDE18FF9B3C3D4D4A34F2E36E5D3C5F1FB583FF8B89F1D24AAA3
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-         by fews01-sea.riseup.net (Postfix) with ESMTPSA id 4QJ6r60SySzJp1Q;
-        Sat, 13 May 2023 01:05:25 +0000 (UTC)
-From:   Dang Huynh <danct12@riseup.net>
-Date:   Sat, 13 May 2023 08:05:05 +0700
-Subject: [PATCH v3 2/2] arm64: dts: qcom: Add Fxtec Pro1X (QX1050) DTS
+        Fri, 12 May 2023 22:07:11 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68703B4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 19:07:09 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-3078fa679a7so7135516f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 May 2023 19:07:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1683943628; x=1686535628;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Ri6DfJJiXodRZE4XO0pCUcvs/5LQusUOoMEf7lrh9AQ=;
+        b=wOd7tExQYofrH35omv+OsDMQMMKOvftHjJXWVYsapMHJGLUqBn8r/xt9bmt/eHciZn
+         N1KNeMl6R7xy9gq39n8u1++Uz/vGjZ5O1jJGUQslNwUO2uGSlVUK9mdZmtQq54SFSXVm
+         5pbpRmaaqWNafZX+S3432StDFVjsQl5I5u/+h+ceWh0OfgjRw7+D8yNwn/7+0Zp5AS1+
+         GCCmHvDmO0Vhzc2PWtVvxQUSbRMiUcgFEgoud8uJaL2eejVcD6oPpByB2R+LQy0RHYdO
+         wOGcq3uvSDb4To1hEDTIHk2UKVRqwzkQDUvGZZmthTGG9oiOzYiKK+Nsdn1zbXzhUj67
+         suWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683943628; x=1686535628;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ri6DfJJiXodRZE4XO0pCUcvs/5LQusUOoMEf7lrh9AQ=;
+        b=VyWdZ9qSuAdygwHQ3xJ0Q1C9KUNojHcepk0i/b67s9fulbwxSfDIYSeD9ijZvXpck1
+         mxCWGPNokqNhc/rN1iUMDAItLMCQoLkwWavkjGfCi0e3YvLASJJTaGAhk6tAHlhf36Mk
+         +9sDv+LYa4Zh87RAa0ZzrxDk/2gKJghyo8+yY7lA1uVESPlDOeeczhVgKbHrhbnsD1/s
+         Llg4QRmDrREhplXhkC/rNG5A3YTodQbVLr1kI1BA6kSmy4wGmDPr/i2XKu2sqH7kiuwe
+         nLCjMWpZAu+NFZcBbThHnDaeMz91NgelxI6BWipASypdgiNbJb+twmm5dxmurdayKmoG
+         xMFw==
+X-Gm-Message-State: AC+VfDwSDaV6pJnHXJWZQjlsBf0q61EsxQ/wQh00Qy1y1cow/2lUoWXZ
+        aFXk0G+2j96N1x8W+KiH/+yEPw==
+X-Google-Smtp-Source: ACHHUZ7kDK0x1ux72xu3F648weOC108BgVQ5USsBi69lf0rCEJA4C82rI2gNWUpO4uZtJsRyDCsRow==
+X-Received: by 2002:a5d:510a:0:b0:304:79c1:725d with SMTP id s10-20020a5d510a000000b0030479c1725dmr18364830wrt.45.1683943627891;
+        Fri, 12 May 2023 19:07:07 -0700 (PDT)
+Received: from [192.168.0.15] (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id r13-20020adfe68d000000b003012030a0c6sm24749701wrm.18.2023.05.12.19.07.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 12 May 2023 19:07:07 -0700 (PDT)
+Message-ID: <008030d3-386d-bed0-ad31-f06b27ba00c5@linaro.org>
+Date:   Sat, 13 May 2023 02:07:06 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: power_supply cooling interface
+To:     Pavel Machek <pavel@ucw.cz>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>
+Cc:     Sebastian Reichel <sre@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+References: <164f2458-fb66-f238-7143-bdbe1e200870@linaro.org>
+ <ZF5t5BWqLLEvDdfz@localhost>
+ <b1237581-3ece-a358-f1ba-7a3ebb08d8d2@linaro.org>
+ <ZF59BS77uUpEZK6X@duo.ucw.cz>
+Content-Language: en-US
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <ZF59BS77uUpEZK6X@duo.ucw.cz>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230505-fxtec-pro1x-support-v3-2-0c9c7f58b205@riseup.net>
-References: <20230505-fxtec-pro1x-support-v3-0-0c9c7f58b205@riseup.net>
-In-Reply-To: <20230505-fxtec-pro1x-support-v3-0-0c9c7f58b205@riseup.net>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Dang Huynh <danct12@riseup.net>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7444; i=danct12@riseup.net;
- h=from:subject:message-id; bh=OY7l7rYNqi9qEr0PvHVynyXqnCQxKhcV6ItU3jS1v4I=;
- b=owEBbQKS/ZANAwAIAWbKt+qkXdeBAcsmYgBkXuJPuNYgTsjZOO5J6HdlFRKsqbus9S6LP0JkG
- XevpPBKRuOJAjMEAAEIAB0WIQTwmpM8D+AzHlWMpOFmyrfqpF3XgQUCZF7iTwAKCRBmyrfqpF3X
- gbviEACzyxH+M1iK8MI0W2GzIZgn8OBOgO0c1BSx46PPJU7MDTWC4MtAP7zdHaXEwJnTVzgamAU
- /po6q2sXFvx3wV8mMxIQtxNIfBShScIFxmCbPK+2idqv5TcL82iD56sroc4xC7pxBUDUeOkhIgt
- pQLYWoBcgp/VFqf5E7dBI5IWq4qrQMu92cwa9/RKmKb45AypFFyzOJfMIs9Qn0TrzRixoYq7M1b
- 0ILg4SPtUc1ioC3he2HGRyms7e/XvUxKfoAAOM7OpvnP3+nHBHt7IsHyeACdVwXO/LdyGJ9WYyK
- 2mohyPg/q1W0uhO9ouFbSrEM968Zb84lyQ34mb894LvO8aemWS+stgmHWbBH8V9BMFM4miBogoE
- 2NG+bwETdN33XZTIuoe7fV7m+obpURWeXIMgp0d+mmbBp/vB1YmqXZN35oY7AcVthu5WVrZtqv0
- lDu+0bZrICWxC7lJ7sSufc9d58+FS+1aZMtai26RDeVpQiVhor5O/uMl7CwFgY0dVJJRO7RHs5z
- VftePxdkQVjvshKvqj7lCE6+zdFpuMknefW6GeB5/ANp3OMxTXvJyhWY1G0HPe0kZssutHBOByG
- 5mzDwbnFMGu6fd/g5UIZNu/h8hWn2orGiNE3oI8rlzG23kLlAn9H1WOiS/ywMi2cr57Ols0GcJZ
- jM95I/9z4EQQrDw==
-X-Developer-Key: i=danct12@riseup.net; a=openpgp;
- fpr=F09A933C0FE0331E558CA4E166CAB7EAA45DD781
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The F(x)tec Pro1X is a mobile phone released by FX Technologies Ltd
-in 2022.
 
-The phone is exactly the same as the Pro1 released in 2019 with some
-changes:
-- MSM8998 -> SM6115
-- Camera button is no longer multistate
-- Only one 48MP back camera
-- A new keyboard layout picked by the community.
 
-This commit has the following features working:
-- Display (using simplefb)
-- UFS
-- Power and volume buttons
-- Pinctrl
-- RPM Regulators
-- USB (Device Mode)
+On 12/05/2023 17:53, Pavel Machek wrote:
+> Hi!
+> 
+>>>> I've been working on a driver for the charger found in most Snapdragon
+>>>> 845 phones (the OnePlus 6, SHIFT6mq, PocoPhone F1, etc). I wanted to
+>>>> include support for the POWER_SUPPLY_PROP_CHARGE_CONTROL_LIMIT
+>>>> property.
+>>>>
+>>>> My understanding is that it exposes the current limit as a cooling
+>>>> device so that userspace (or frameworks like DTPM) can optimise for
+>>>> performance in a thermally constrained device by limiting the input
+>>>> current and thus reducing the heat generated by the charger circuitry,
+>>>> a similar idea was applied on the Pixel C:
+>>>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=a4496d52b3430cb3c4c16d03cdd5f4ee97ad1241
+>>>>
+>>>> However, reading through the sysfs docs for cooling devices, and
+>>>> looking at the implementation in power_supply_core.c, it seems like the
+>>>> behavior here is wrong in a few ways:
+>>>>   1. The values should scale from 0: no cooling to max_state: max
+>>>> cooling, but the power_supply docs and the only existing implementation
+>>>> (the smbb driver) just export the current_limit, such that increasing
+>>>> cur_state would increase the current limit, not decrease it.
+>>>>   2. (unsure?)The scale is completely different to most other cooling
+>>>> devices, most cooling devices don't seem to have a max state much
+>>>> beyond the double digits, but CHARGE_CONTROL_LIMIT is on the scale of
+>>>> uA, so approaches like incrementing the cooling state by 1 don't really
+>>>> work.
+>>>
+>>> Did this get solved somehow?
+>>
+>> Thanks for resurrecting the discussion.
+>>
+>>> Anyway, I am not sure mW will be useful here, as elsewhere it is mW
+>>> thermal and here it is mW from charger. Most of that energy should be
+>>> stored in battery, not converted to heat.
+>>
+>> I'm not sure to understand the comment. The question is about decreasing the
+>> speed of the charge of the battery because the faster it charges the warmer
+>> it gets. Doing a fast charge is ok, if the phone is for instance on a table
+>> doing nothing. But if the environment is hot (a car, a pocket) or there are
+>> other sources of heat on the phone like a game, the temperature of the
+>> battery could be too high (or the skin temperature). In this case we have to
+>> balance the heat contribution of the different components by reducing their
+>> performances. The first knob to act on is to reduce the charge speed of the
+>> battery by reducing the delivered power.
+> 
+> Understood.
+> 
+>> For that we need a connection between the thermal framework which monitors
+>> the battery temperature and the power supply to reduce the charge speed when
+>> it is too hot. This connection is the cooling device.
+>>
+>> The cooling devices have opaque values where the min and max cooling effect
+>> vary depending on the implementation (eg. a fan 0/1, a LCD light 0/1023).
+> 
+> Aha, ok.
+> 
+>> Here the power supply has yet another unit (uA) to act on and difficult to
+>> translate to a cooling device discrete numbers (that is my
+>> understanding).
+> 
+> Well, if you can accept 1000 steps like you do for LCD, all you really
+> need is maximum current and then stepping in 1/100 of that.
+> 
+>> With enough components in DTPM, it will be possible to create a generic
+>> power cooling device using the unified unit uW with the powercap API.
+> 
+> I was trying to point out trouble with uW: you don't know them in case
+> of battery charging.
+> 
+> You know phone is drawing 500mA @ close to 5V (-> 2.5W), but you don't
+> really know how much is stored in battery, and how much is turned into
+> heat.
 
-To get a successful boot run:
+You can know the thermal effect if the charger IC has a temperature
+probe, and use time constant estimates to figure out the power losses.
+> 
+> But I guess you could approximate that somehow.
 
-cat arch/arm64/boot/Image.gz arch/arm64/boot/dts/qcom/\
-sm6115-fxtec-pro1x.dtb  > .Image.gz-dtb
+Also knowing the rough efficiency of the switching converter under the
+circumstances (current limited? proportion of input current going to the
+battery? voltage? battery voltage?)
 
-mkbootimg --kernel .Image.gz-dtb \
---ramdisk initrd.img \
---base 0x0 \
---kernel_offset 0x8000 \
---ramdisk_offset 0x1000000 \
---second_offset 0xf00000 \
---tags_offset 0x100 \
---pagesize 4096 \
---cmdline "CMDLINE HERE" \
--o qx1050-boot.img
+I can attest to charging losses being a pretty significant heat source,
+at least on the phones I've owned.
 
-fastboot flash boot qx1050-boot.img
-fastboot erase dtbo
-fastboot reboot
+It gets tricky with phones that use charge pumps (e.g. OnePlus/Oppo VOOC
+charging) to offload the thermal losses to the wall charger. Some
+devices also have 2 or more battery cells, enabling them to be charged
+in parallel for greater efficiency from a PD charger at 9V. My OnePlus 9
+gets noticeably hotter when charging at 5V@3A compared to 9V@2A.
 
-Signed-off-by: Dang Huynh <danct12@riseup.net>
----
- arch/arm64/boot/dts/qcom/Makefile               |   1 +
- arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts | 250 ++++++++++++++++++++++++
- 2 files changed, 251 insertions(+)
+Most SDM845 devices use "parallel charging" with two discrete charger
+ICs (one in the PMIC, one external i2c), effectively allowing for much
+higher input current and much greater efficiency.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index d42c59572ace..e311ba675f35 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -174,6 +174,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-shift-axolotl.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm4250-oneplus-billie2.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm6115-fxtec-pro1x.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6115p-lenovo-j606f.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-xiaomi-laurel-sprout.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-new file mode 100644
-index 000000000000..3ce9875e932c
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm6115-fxtec-pro1x.dts
-@@ -0,0 +1,250 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
-+/*
-+ * Copyright (c) 2023, Dang Huynh <danct12@riseup.net>
-+ */
-+
-+/dts-v1/;
-+
-+#include "sm6115.dtsi"
-+#include "pm6125.dtsi"
-+#include <dt-bindings/arm/qcom,ids.h>
-+
-+/ {
-+	model = "F(x)tec Pro1X (QX1050)";
-+	compatible = "fxtec,pro1x", "qcom,sm6115";
-+	chassis-type = "handset";
-+
-+	qcom,msm-id = <QCOM_ID_SM6115 0x10000>;
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		framebuffer0: framebuffer@5c000000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0x0 0x5c000000 0x0 (1080 * 2160 * 4)>;
-+			width = <1080>;
-+			height = <2160>;
-+			stride = <(1080 * 4)>;
-+			format = "a8r8g8b8";
-+			clocks = <&gcc GCC_DISP_HF_AXI_CLK>;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&vol_up_n>;
-+		pinctrl-names = "default";
-+
-+		key-volume-up {
-+			label = "Volume Up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&pm6125_gpios 5 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			gpio-key,wakeup;
-+		};
-+	};
-+};
-+
-+&dispcc {
-+	/* HACK: disable until a panel driver is ready to retain simplefb */
-+	status = "disabled";
-+};
-+
-+&pm6125_gpios {
-+	vol_up_n: vol-up-n-state {
-+		pins = "gpio5";
-+		function = "normal";
-+		power-source = <0>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
-+&pon_pwrkey {
-+	status = "okay";
-+};
-+
-+&pon_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
-+&rpm_requests {
-+	regulators-0 {
-+		compatible = "qcom,rpm-pm6125-regulators";
-+
-+		pm6125_s6a: s6 {
-+			regulator-min-microvolt = <304000>;
-+			regulator-max-microvolt = <1456000>;
-+		};
-+
-+		pm6125_s7a: s7 {
-+			regulator-min-microvolt = <1280000>;
-+			regulator-max-microvolt = <2040000>;
-+		};
-+
-+		pm6125_s8a: s8 {
-+			regulator-min-microvolt = <1064000>;
-+			regulator-max-microvolt = <1304000>;
-+		};
-+
-+		pm6125_l1a: l1 {
-+			regulator-min-microvolt = <952000>;
-+			regulator-max-microvolt = <1152000>;
-+		};
-+
-+		pm6125_l4a: l4 {
-+			regulator-min-microvolt = <488000>;
-+			regulator-max-microvolt = <1000000>;
-+		};
-+
-+		pm6125_l5a: l5 {
-+			regulator-min-microvolt = <1648000>;
-+			regulator-max-microvolt = <3056000>;
-+		};
-+
-+		pm6125_l6a: l6 {
-+			regulator-min-microvolt = <576000>;
-+			regulator-max-microvolt = <656000>;
-+		};
-+
-+		pm6125_l7a: l7 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1304000>;
-+		};
-+
-+		pm6125_l8a: l8 {
-+			regulator-min-microvolt = <400000>;
-+			regulator-max-microvolt = <728000>;
-+		};
-+
-+		pm6125_l9a: l9 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2000000>;
-+		};
-+
-+		pm6125_l10a: l10 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1904000>;
-+		};
-+
-+		pm6125_l11a: l11 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1952000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		pm6125_l12a: l12 {
-+			regulator-min-microvolt = <1624000>;
-+			regulator-max-microvolt = <1984000>;
-+		};
-+
-+		pm6125_l13a: l13 {
-+			regulator-min-microvolt = <1504000>;
-+			regulator-max-microvolt = <1952000>;
-+		};
-+
-+		pm6125_l14a: l14 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1904000>;
-+		};
-+
-+		pm6125_l15a: l15 {
-+			regulator-min-microvolt = <2920000>;
-+			regulator-max-microvolt = <3232000>;
-+		};
-+
-+		pm6125_l16a: l16 {
-+			regulator-min-microvolt = <1704000>;
-+			regulator-max-microvolt = <1904000>;
-+		};
-+
-+		pm6125_l17a: l17 {
-+			regulator-min-microvolt = <1152000>;
-+			regulator-max-microvolt = <1384000>;
-+		};
-+
-+		pm6125_l18a: l18 {
-+			regulator-min-microvolt = <1104000>;
-+			regulator-max-microvolt = <1312000>;
-+		};
-+
-+		pm6125_l19a: l19 {
-+			regulator-min-microvolt = <1624000>;
-+			regulator-max-microvolt = <3304000>;
-+		};
-+
-+		pm6125_l20a: l20 {
-+			regulator-min-microvolt = <1624000>;
-+			regulator-max-microvolt = <3304000>;
-+		};
-+
-+		pm6125_l21a: l21 {
-+			regulator-min-microvolt = <2400000>;
-+			regulator-max-microvolt = <3600000>;
-+		};
-+
-+		pm6125_l22a: l22 {
-+			regulator-min-microvolt = <2952000>;
-+			regulator-max-microvolt = <3304000>;
-+		};
-+
-+		pm6125_l23a: l23 {
-+			regulator-min-microvolt = <3200000>;
-+			regulator-max-microvolt = <3400000>;
-+		};
-+
-+		pm6125_l24a: l24 {
-+			regulator-min-microvolt = <2704000>;
-+			regulator-max-microvolt = <3600000>;
-+			regulator-allow-set-load;
-+		};
-+	};
-+};
-+
-+&sleep_clk {
-+	clock-frequency = <32764>;
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <0 4>, <14 4>;
-+};
-+
-+&ufs_mem_hc {
-+	vcc-supply = <&pm6125_l24a>;
-+	vcc-max-microamp = <600000>;
-+	vccq2-supply = <&pm6125_l11a>;
-+	vccq2-max-microamp = <600000>;
-+	status = "okay";
-+};
-+
-+&ufs_mem_phy {
-+	vdda-phy-supply = <&pm6125_l4a>;
-+	vdda-pll-supply = <&pm6125_l12a>;
-+	vddp-ref-clk-supply = <&pm6125_l18a>;
-+	status = "okay";
-+};
-+
-+&usb {
-+	status = "okay";
-+};
-+
-+&usb_dwc3 {
-+	maximum-speed = "high-speed";
-+	dr_mode = "peripheral";
-+};
-+
-+&usb_hsphy {
-+	vdd-supply = <&pm6125_l4a>;
-+	vdda-pll-supply = <&pm6125_l12a>;
-+	vdda-phy-dpdm-supply = <&pm6125_l15a>;
-+	status = "okay";
-+};
-+
-+&xo_board {
-+	clock-frequency = <19200000>;
-+};
+Can these be modeled well via DTPM? As I don't think the existing PSY
+subsystem has a nice way to deal with this, and I don't think it's
+sensible to offload all of that to userspace.
+
+> 
+> BR,								Pavel
+> 
+> -- People of Russia, stop Putin before his war on Ukraine
+> escalates.
 
 -- 
-2.40.1
-
+Kind Regards,
+Caleb (they/them)
