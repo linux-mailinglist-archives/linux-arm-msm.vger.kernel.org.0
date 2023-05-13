@@ -2,121 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34A7970165C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 May 2023 13:17:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15091701665
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 May 2023 13:29:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236812AbjEMLRz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 13 May 2023 07:17:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49862 "EHLO
+        id S237840AbjEML3U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 13 May 2023 07:29:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236911AbjEMLRy (ORCPT
+        with ESMTP id S237517AbjEML3T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 13 May 2023 07:17:54 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45C0635AD
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 04:17:52 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-96598a7c5e0so1757120066b.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 04:17:52 -0700 (PDT)
+        Sat, 13 May 2023 07:29:19 -0400
+Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4782A2D4F
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 04:29:18 -0700 (PDT)
+Received: by mail-ed1-x534.google.com with SMTP id 4fb4d7f45d1cf-50be0d835aaso19252569a12.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 13 May 2023 04:29:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1683976671; x=1686568671;
+        d=linaro.org; s=google; t=1683977357; x=1686569357;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=euhYG7UmFZ4gFEHsm78E/8ioQyFx2y8WD2YO5H5bfA0=;
-        b=XOzhvH6L5tg0Hjy7q3ga6oI2Takd4P9vhCcWRLiUhKKmUoj4KfpcWXa8NcygVxh93o
-         xXWyW/zgLKWjRk56afPcFKV797KIxLpWO5VtEHIObM+yWL1wcJYOuiY20LXGAYz4UhPN
-         TA53D6aCqdVX1LWb2sKQhj2Cei3lXGY8tnonJZMCimpB03FB0M7GQm0tW+Sn+AbojpJ6
-         vuNWh28WOqX9HTK5ybN/bQ5NZrr7RKvmb1R0TyF5+GAwvPg0gckb5jQMDNpLm4ftDGV1
-         wOn6AV1FHwxttUzpOFMFLFtuywUyjRIrBdPhoizpGws/8+YUPAp2jNO8P2NDN6ee3KXa
-         /I8A==
+        bh=rNewWpP+GvEj2PXHB6K/3b6wTSDIQG0EkEwU6jgQeQo=;
+        b=q+zz4WuFUeDnQ814WpwLd5PeEwSdt9wDOQLQg6oc3OAn4TsEcOFt8joc7p4D2oVdr9
+         RGCtgpYuadZinGs/FbPCNIaIVa19Ttw7K9e0ESB6BME3SEVT2sVZnTwULS52lAVhGXBP
+         D8ztSp7SDf25ag4Ng+e6vYPvORuUlyJj7ovRHv8J02er5jCRJTJBEYXACGeUOdB41889
+         rXO5d4ABvFxc9H7e271eDdeIUYQiji5ztGQ0VUSZj98J1jpXWtrIIImAU5UJl1QfJbWL
+         rr7tpiimtNT0sWw7cI45lHjijZ36qCxSoKrc07MPp9N4psD1Inm9gep95oVsMInHy6LZ
+         emjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683976671; x=1686568671;
+        d=1e100.net; s=20221208; t=1683977357; x=1686569357;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=euhYG7UmFZ4gFEHsm78E/8ioQyFx2y8WD2YO5H5bfA0=;
-        b=keTwC0y4SgFGGvy99lo+lxmeSIHYdfblnR6sUIB3DKhZyJLVx4GXBx8idvNESC0fO3
-         N29VmTv7DxGRIAivRjY+ncB/KlO0Sl1McNP9SsnjfhZoLrbuDUYykJCNlHo5Q/5F0IqB
-         EmRh5kllexus/hXKbhx8KjBnMESLqSggSSpST8qtMzr6P4HMqvwALPMWTZ/0kbF+UgaB
-         FoIk5NpTE+aUtbVM9QkSGTLtN9OWnqKFVfpD1W+S8PVoQgWqmYCKMeC+CZeHpxER5R/w
-         kbyiGiAlfnS+sYIR134wqiA+V0qb2+IvE8prF1zzp90Z1WzN8EnvURFRPnwF/TLoluiP
-         oHbw==
-X-Gm-Message-State: AC+VfDwL4HrENM8QMyk9SkT4f45Tint35TK5YbMsaddDgDkE98ok3ZqO
-        l3rSOZhkq/gleX7A06aB/ZSC1A==
-X-Google-Smtp-Source: ACHHUZ5th0INGdsqt6ZfidlIFO302kHwqpR9jUAvSepDZHJpamodKonx+d4oPgAYZ+wZlW5vqZyV4w==
-X-Received: by 2002:a17:907:3d9e:b0:96a:bb6:7309 with SMTP id he30-20020a1709073d9e00b0096a0bb67309mr17167479ejc.62.1683976670739;
-        Sat, 13 May 2023 04:17:50 -0700 (PDT)
+        bh=rNewWpP+GvEj2PXHB6K/3b6wTSDIQG0EkEwU6jgQeQo=;
+        b=KMS7n/KnptvT6jHSBsoc7c7KGSktnfI/LR2+TzKM3x3XIXQu/gewrVfoNLOUCSf6xc
+         /wpUc9LSIMEOf23vrDrY2ahLK2CPPx42XuwhtH23IQ91YK5SZPOMh7zIkp93RlSI6K5w
+         YvdN7p/gJZzGvqw4RuEEtKdBpKwpVXsOLj1Ln0Jv6vQquiV2KXu5tdWNdk188r53fy0s
+         eAuyyf6TWPBenYa0QOoKmfKfHcjRJBHsLeYeN/jMFmZkHNcX23Tb2Od8EIUkeKs2Z5VK
+         XPrrQAH/Wi6jxSpCK60CGT59T4ZNPuvEBkMFDTvuCNWVGXH4Mp4OnA868frAyt8pogyS
+         pQVg==
+X-Gm-Message-State: AC+VfDyvQUgBJtTeObcJzfbboTsbKMG6TJkcDyxlkkA4Ja8uNQvSyYMm
+        cdmuTmbjds1/jWJtKExsSu399g==
+X-Google-Smtp-Source: ACHHUZ4zxTbmxyFC1jvKbWdjOOk7lP2nWP61ZL3CmZygSjUd1zsFpqf7tj69dL7vqjJEi+vOaHK3Ig==
+X-Received: by 2002:a17:907:d1c:b0:966:5912:c4b with SMTP id gn28-20020a1709070d1c00b0096659120c4bmr20162276ejc.76.1683977356798;
+        Sat, 13 May 2023 04:29:16 -0700 (PDT)
 Received: from krzk-bin.. ([2a02:810d:15c0:828:a3aa:fd4:f432:676b])
-        by smtp.gmail.com with ESMTPSA id tk13-20020a170907c28d00b0094f185d82dcsm6580230ejc.21.2023.05.13.04.17.49
+        by smtp.gmail.com with ESMTPSA id k10-20020a1709067aca00b0096a1ba4e0d1sm5063946ejo.32.2023.05.13.04.29.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 13 May 2023 04:17:49 -0700 (PDT)
+        Sat, 13 May 2023 04:29:16 -0700 (PDT)
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     kernel test robot <lkp@intel.com>,
-        Dan Carpenter <error27@gmail.com>, stable@vger.kernel.org
-Subject: [PATCH] soc: qcom: icc-bwmon: fix incorrect error code passed to dev_err_probe()
-Date:   Sat, 13 May 2023 13:17:47 +0200
-Message-Id: <20230513111747.132532-1-krzysztof.kozlowski@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] soc: qcom: rpmh-rsc: drop redundant unsigned >=0 comparision
+Date:   Sat, 13 May 2023 13:29:13 +0200
+Message-Id: <20230513112913.176009-1-krzysztof.kozlowski@linaro.org>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Pass to dev_err_probe() PTR_ERR from actual dev_pm_opp_find_bw_floor()
-call which failed, instead of previous ret which at this point is 0.
-Failure of dev_pm_opp_find_bw_floor() would result in prematurely ending
-the probe with success.
+Unsigned int "minor" is always >= 0 as reported by Smatch:
 
-Fixes smatch warnings:
+  drivers/soc/qcom/rpmh-rsc.c:1076 rpmh_rsc_probe() warn: always true condition '(drv->ver.minor >= 0) => (0-u32max >= 0)'
 
-  drivers/soc/qcom/icc-bwmon.c:776 bwmon_probe() warn: passing zero to 'dev_err_probe'
-  drivers/soc/qcom/icc-bwmon.c:781 bwmon_probe() warn: passing zero to 'dev_err_probe'
-
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/r/202305131657.76XeHDjF-lkp@intel.com/
-Cc: <stable@vger.kernel.org>
-Fixes: b9c2ae6cac40 ("soc: qcom: icc-bwmon: Add bandwidth monitoring driver")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
 ---
+ drivers/soc/qcom/rpmh-rsc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Code was tested previously with smatch. Just this test in smatch is new.
----
- drivers/soc/qcom/icc-bwmon.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
-index fd58c5b69897..f65bfeca7ed6 100644
---- a/drivers/soc/qcom/icc-bwmon.c
-+++ b/drivers/soc/qcom/icc-bwmon.c
-@@ -773,12 +773,12 @@ static int bwmon_probe(struct platform_device *pdev)
- 	bwmon->max_bw_kbps = UINT_MAX;
- 	opp = dev_pm_opp_find_bw_floor(dev, &bwmon->max_bw_kbps, 0);
- 	if (IS_ERR(opp))
--		return dev_err_probe(dev, ret, "failed to find max peak bandwidth\n");
-+		return dev_err_probe(dev, PTR_ERR(opp), "failed to find max peak bandwidth\n");
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index f93544f6d796..0dd4363ebac8 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -1073,7 +1073,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+ 	drv->ver.minor = rsc_id & (MINOR_VER_MASK << MINOR_VER_SHIFT);
+ 	drv->ver.minor >>= MINOR_VER_SHIFT;
  
- 	bwmon->min_bw_kbps = 0;
- 	opp = dev_pm_opp_find_bw_ceil(dev, &bwmon->min_bw_kbps, 0);
- 	if (IS_ERR(opp))
--		return dev_err_probe(dev, ret, "failed to find min peak bandwidth\n");
-+		return dev_err_probe(dev, PTR_ERR(opp), "failed to find min peak bandwidth\n");
- 
- 	bwmon->dev = dev;
- 
+-	if (drv->ver.major == 3 && drv->ver.minor >= 0)
++	if (drv->ver.major == 3)
+ 		drv->regs = rpmh_rsc_reg_offset_ver_3_0;
+ 	else
+ 		drv->regs = rpmh_rsc_reg_offset_ver_2_7;
 -- 
 2.34.1
 
