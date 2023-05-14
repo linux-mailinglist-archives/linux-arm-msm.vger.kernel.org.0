@@ -2,113 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DD7D701F5E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 May 2023 22:01:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8101B701FA9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 May 2023 23:11:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230205AbjENUBb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 May 2023 16:01:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52062 "EHLO
+        id S230123AbjENVLN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 May 2023 17:11:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43080 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbjENUBa (ORCPT
+        with ESMTP id S229585AbjENVLM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 May 2023 16:01:30 -0400
-X-Greylist: delayed 74 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sun, 14 May 2023 13:01:29 PDT
-Received: from smtprelay02.ispgateway.de (smtprelay02.ispgateway.de [80.67.18.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73C6C135
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 May 2023 13:01:29 -0700 (PDT)
-Received: from [92.206.161.29] (helo=note-book.lan)
-        by smtprelay02.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <git@apitzsch.eu>)
-        id 1pyHs3-0004fW-9E; Sun, 14 May 2023 21:59:07 +0200
-From:   =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-Date:   Sun, 14 May 2023 21:58:26 +0200
-Subject: [PATCH] arm64: dts: qcom: msm8916-longcheer-l8910: Add front flash
- LED
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20230514-x5_front_flash-v1-1-3979c8498efa@apitzsch.eu>
-X-B4-Tracking: v=1; b=H4sIAGE9YWQC/x2N0QqDMAwAf0XyvIKNCtt+ZQxJa7oGtjoSGYL47
- 6s+HsdxGxirsMG92UD5JyZzqeAvDcRM5cVOpsqALXbt4Hu3DmPSuSxjepNlF/31xoihwzRBjQI
- Zu6BUYj6yD9nCeoivcpL1PD2e+/4HhH9Ac3kAAAA=
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Sun, 14 May 2023 17:11:12 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32A5D10D9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 May 2023 14:11:07 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 15EEE3EF03;
+        Sun, 14 May 2023 23:11:04 +0200 (CEST)
+Date:   Sun, 14 May 2023 23:11:00 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Stephan Gerhold <stephan@gerhold.net>,
-        =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-X-Mailer: b4 0.12.2
-X-Df-Sender: YW5kcmVAYXBpdHpzY2guZXU=
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v10 2/8] drm/display/dsc: add helper to set semi-const
+ parameters
+Message-ID: <yfb77nwhufoaosbf7z5zutqm76ofd72ikqinumc7uoonghhcji@5s6jk6slt6ev>
+References: <20230329-rfc-msm-dsc-helper-v10-0-4cb21168c227@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v10-2-4cb21168c227@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230329-rfc-msm-dsc-helper-v10-2-4cb21168c227@quicinc.com>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-l8910 uses OCP8110 flash LED driver. Add it to the device tree.
+On 2023-05-12 14:32:12, Jessica Zhang wrote:
+> 
+> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> Add a helper setting config values which are typically constant across
+> operating modes (table E-4 of the standard) and mux_word_size (which is
+> a const according to 3.5.2).
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> ---
+>  drivers/gpu/drm/display/drm_dsc_helper.c | 22 ++++++++++++++++++++++
+>  include/drm/display/drm_dsc_helper.h     |  1 +
+>  2 files changed, 23 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/display/drm_dsc_helper.c b/drivers/gpu/drm/display/drm_dsc_helper.c
+> index 65e810a54257..b9c4e10ced41 100644
+> --- a/drivers/gpu/drm/display/drm_dsc_helper.c
+> +++ b/drivers/gpu/drm/display/drm_dsc_helper.c
+> @@ -270,6 +270,28 @@ void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_payload,
+>  }
+>  EXPORT_SYMBOL(drm_dsc_pps_payload_pack);
+>  
+> +/**
+> + * drm_dsc_set_const_params() - Set DSC parameters considered typically
+> + * constant across operation modes
+> + *
+> + * @vdsc_cfg:
+> + * DSC Configuration data partially filled by driver
 
-Tested-by: Stephan Gerhold <stephan@gerhold.net>
-Signed-off-by: André Apitzsch <git@apitzsch.eu>
----
- .../boot/dts/qcom/msm8916-longcheer-l8910.dts      | 23 ++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+Nit: could have been on one line in the strange event that this has to
+be resent.
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
-index b79e80913af9..81cebac117f1 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
-@@ -20,6 +20,21 @@ chosen {
- 		stdout-path = "serial0";
- 	};
- 
-+	flash-led-controller {
-+		compatible = "ocs,ocp8110";
-+		enable-gpios = <&msmgpio 49 GPIO_ACTIVE_HIGH>;
-+		flash-gpios = <&msmgpio 119 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&camera_front_flash_default>;
-+
-+		flash_led: led {
-+			function = LED_FUNCTION_FLASH;
-+			color = <LED_COLOR_ID_WHITE>;
-+			flash-max-timeout-us = <250000>;
-+		};
-+	};
-+
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 
-@@ -246,6 +261,14 @@ button_backlight_default: button-backlight-default-state {
- 		bias-disable;
- 	};
- 
-+	camera_front_flash_default: camera-front-flash-default-state {
-+		pins = "gpio49", "gpio119";
-+		function = "gpio";
-+
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	gpio_keys_default: gpio-keys-default-state {
- 		pins = "gpio107";
- 		function = "gpio";
+- Marijn
 
----
-base-commit: 533c54547153d46c0bf99ac0e396bed71f760c03
-change-id: 20230514-x5_front_flash-c189e22b32fd
-
-Best regards,
--- 
-André Apitzsch <git@apitzsch.eu>
-
+> + */
+> +void drm_dsc_set_const_params(struct drm_dsc_config *vdsc_cfg)
+> +{
+<snip>
