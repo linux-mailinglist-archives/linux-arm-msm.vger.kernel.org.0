@@ -2,30 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99D2D701D26
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 May 2023 13:54:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FD43701D75
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 May 2023 14:41:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233033AbjENLy1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 May 2023 07:54:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49964 "EHLO
+        id S231630AbjENMl1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 May 2023 08:41:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230339AbjENLy0 (ORCPT
+        with ESMTP id S229585AbjENMl0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 May 2023 07:54:26 -0400
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 246981FCA;
-        Sun, 14 May 2023 04:54:25 -0700 (PDT)
-Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
-        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-        id 1pyAIu-0006tG-Qg; Sun, 14 May 2023 13:54:20 +0200
-Message-ID: <83a92f91-f126-94e8-a7ef-3da0298c0d4f@leemhuis.info>
-Date:   Sun, 14 May 2023 13:54:20 +0200
+        Sun, 14 May 2023 08:41:26 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 625791995
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 May 2023 05:41:25 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3f42d937d2eso37999155e9.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 May 2023 05:41:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684068084; x=1686660084;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cynUrOqdkWITH+5SSziuXYTSPapfq2lw8vhoI55n8Xo=;
+        b=J5GzqF1QT0T7YOO0bd27+68MuQ/9HbiQmzKGgSrtzcna9dWqD5//yCDwtHZZlhsV3W
+         zIUgsGdhIo4aoKmt8456jKo+VwRYv9BVKI/Z2KEnIeBICtX6pXw99ftRMR1kJFObTi+E
+         JjPyyDha2SQrgd78YyMxfOfhkIWs4XQfekRrosuiQ6nYiw6PVWk1UHVfnvGAAj2HIgGG
+         arihh5MjWVohb9RnPMxytD5kDBr6IW12+HWC2bR0NMys4P0o9hGDykFPnH4ZJsSL5Sc+
+         tVi939CyvTSjbuY30Cu1fxj/UzOWd5gPfrIXyQDHTy8C4RJ6lCwKTNx3zmi3a2Buybyp
+         o6HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684068084; x=1686660084;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cynUrOqdkWITH+5SSziuXYTSPapfq2lw8vhoI55n8Xo=;
+        b=Dg9s3VofWxHIPaLalNfVpoJ7nqu/R5eOZiUc/BnaOh7Y3aHM+qVibgk1RD5U9rWDeT
+         UbmGdnQMLQ4pqIjIyNxzb1SX8ahvIp5+S6o9aFc/q0PoOae7ZNAARcd6MuZ/j/U1sEQa
+         L+ePm6w/qYDaoyA9fuQPFKJWcOvnuOJzGnHe5qygsEuGiHX130iKOb5uAwfF0GNvyBUa
+         O7PQ00ULcdFC9fERQjgpKLi5PDaWhJHZRCSmVDfQUWmdfOeGJkLSs0ZewTReQJkT6qND
+         jmAwuuH3liJ2ntX2ndaQKIts0wWWPDZVNB/DftNchw3Hmy6SGy7eVAw0i7NbSD2ZXHTz
+         RPow==
+X-Gm-Message-State: AC+VfDy9aSJ7E8TAw/p8PeMjq9YNPI5LJDAgUU+e/bHB7fMsRz4flVlh
+        2OqX0F7pLX8s27GP5dy3iemSsA==
+X-Google-Smtp-Source: ACHHUZ5v2c/Lw+UdKikQE0IAnGR2AyU+5LcRlbP33uYNDyiIM3X4STlCRE4ltv3M4pafF+VlU6Disg==
+X-Received: by 2002:a1c:6a0d:0:b0:3f4:23d4:e48 with SMTP id f13-20020a1c6a0d000000b003f423d40e48mr16977737wmc.23.1684068083830;
+        Sun, 14 May 2023 05:41:23 -0700 (PDT)
+Received: from [192.168.0.15] (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id i7-20020a05600c290700b003f4ecf1fcbcsm9693192wmd.22.2023.05.14.05.41.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 14 May 2023 05:41:23 -0700 (PDT)
+Message-ID: <552345c5-b1e9-41f6-f275-b6eeeb51df25@linaro.org>
+Date:   Sun, 14 May 2023 12:41:22 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
+ Thunderbird/102.9.1
 Subject: Re: [PATCH] regulator: qcom-rpmh: Revert "regulator: qcom-rpmh: Use
  PROBE_FORCE_SYNCHRONOUS"
-Content-Language: en-US, de-DE
+Content-Language: en-US
 To:     Amit Pundir <amit.pundir@linaro.org>,
         Douglas Anderson <dianders@chromium.org>
 Cc:     Mark Brown <broonie@kernel.org>,
@@ -34,36 +66,26 @@ Cc:     Mark Brown <broonie@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Linux kernel regressions list <regressions@lists.linux.dev>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20230324063357.1.Ifdf3625a3c5c9467bd87bfcdf726c884ad220a35@changeid>
  <CAMi1Hd1avQDcDQf137m2auz2znov4XL8YGrLZsw5edb-NtRJRw@mail.gmail.com>
-From:   "Linux regression tracking #adding (Thorsten Leemhuis)" 
-        <regressions@leemhuis.info>
-Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
 In-Reply-To: <CAMi1Hd1avQDcDQf137m2auz2znov4XL8YGrLZsw5edb-NtRJRw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1684065265;a8bf9056;
-X-HE-SMSGID: 1pyAIu-0006tG-Qg
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[CCing the regression list, as it should be in the loop for regressions:
-https://docs.kernel.org/admin-guide/reporting-regressions.html]
 
-[TLDR: I'm adding this report to the list of tracked Linux kernel
-regressions; the text you find below is based on a few templates
-paragraphs you might have encountered already in similar form.
-See link in footer if these mails annoy you.]
 
-On 13.05.23 20:08, Amit Pundir wrote:
+On 13/05/2023 18:08, Amit Pundir wrote:
 > On Fri, 24 Mar 2023 at 19:05, Douglas Anderson <dianders@chromium.org> wrote:
 >>
 >> This reverts commit 58973046c1bf ("regulator: qcom-rpmh: Use
@@ -80,36 +102,55 @@ On 13.05.23 20:08, Amit Pundir wrote:
 > AOSP do not make use of rootwait, IIRC, but it is added by the
 > bootloader anyway. And the device fails to boot AOSP regardless of
 > "rootwait" bootarg being present or not.
+
+Could you try applying this diff to enable some log spam and let me know
+what you get? I'm keen to try and figure this one out. My mail client
+might crunch this a bit so I have pasted it here too
+https://p.calebs.dev/ab74b7@raw
+
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index f93544f6d796..67859f1bdb28 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -653,11 +653,23 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const
+struct tcs_request *msg)
+
+        spin_lock_irqsave(&drv->lock, flags);
+
++       dev_info(drv->dev, "%s: %p tcs->type=%d state=%d, "
++               "wait_for_compl=%d, num_cmds=%d\n",
++               __func__, msg, tcs->type, msg->state,
++               msg->wait_for_compl, msg->num_cmds);
++       for (int i = 0; i < msg->num_cmds; i++)
++               dev_info(drv->dev, "%s: %p cmd[%d] "
++                       "addr=0x%x data=0x%x\n", __func__,
++                       msg, i, msg->cmds[i].addr, msg->cmds[i].data);
++
+        /* Wait forever for a free tcs. It better be there eventually! */
+        wait_event_lock_irq(drv->tcs_wait,
+                            (tcs_id = claim_tcs_for_req(drv, tcs, msg))
+>= 0,
+                            drv->lock);
+
++       dev_info(drv->dev, "%s: %px GOT TCS! %d\n",
++               __func__, msg, tcs_id);
++
+        tcs->req[tcs_id - tcs->offset] = msg;
+        set_bit(tcs_id, drv->tcs_in_use);
+        if (msg->state == RPMH_ACTIVE_ONLY_STATE && tcs->type !=
+ACTIVE_TCS) {
+
 > 
 > FWIW I do not see this regression on RB5 (QRB5165/SM8250) running the
 > same set of AOSP images.
-
-Thanks for the report. To be sure the issue doesn't fall through the
-cracks unnoticed, I'm adding it to regzbot, the Linux kernel regression
-tracking bot:
-
-#regzbot ^introduced ad44ac082fd
-#regzbot title regulator: qcom-rpmh: Dragonboard 845c broken due to
-asynchronous probe
-#regzbot ignore-activity
-
-This isn't a regression? This issue or a fix for it are already
-discussed somewhere else? It was fixed already? You want to clarify when
-the regression started to happen? Or point out I got the title or
-something else totally wrong? Then just reply and tell me -- ideally
-while also telling regzbot about it, as explained by the page listed in
-the footer of this mail.
-
-Developers: When fixing the issue, remember to add 'Link:' tags pointing
-to the report (the parent of this mail). See page linked in footer for
-details.
-
-Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
---
-Everything you wanna know about Linux kernel regression tracking:
-https://linux-regtracking.leemhuis.info/about/#tldr
-That page also explains what to do if mails like this annoy you.
-
+> 
+> Regards,
+> Amit Pundir
+> 
+> 
+> 
+> 
+>>
 >> Fixes: 58973046c1bf ("regulator: qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS")
 >> Cc: Marek Szyprowski <m.szyprowski@samsung.com>
 >> Signed-off-by: Douglas Anderson <dianders@chromium.org>
@@ -134,3 +175,7 @@ That page also explains what to do if mails like this annoy you.
 >> --
 >> 2.40.0.348.gf938b09366-goog
 >>
+
+-- 
+Kind Regards,
+Caleb (they/them)
