@@ -2,89 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB7BB701FDA
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 May 2023 23:30:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97690701FDE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 May 2023 23:31:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229964AbjENVaI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 May 2023 17:30:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48996 "EHLO
+        id S229708AbjENVbt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 May 2023 17:31:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49602 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229708AbjENVaG (ORCPT
+        with ESMTP id S229710AbjENVbr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 May 2023 17:30:06 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5466F1993
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 May 2023 14:29:53 -0700 (PDT)
+        Sun, 14 May 2023 17:31:47 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC39BE5E
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 May 2023 14:31:46 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 959193F324;
-        Sun, 14 May 2023 23:29:50 +0200 (CEST)
-Date:   Sun, 14 May 2023 23:29:49 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id CE6F23F250;
+        Sun, 14 May 2023 23:31:44 +0200 (CEST)
+Date:   Sun, 14 May 2023 23:31:43 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v10 8/8] drm/msm/dsi: update hdisplay calculation for
- dsi_timing_setup
-Message-ID: <5jqvxyy7ixfpwzepgseqwwz5elyn2qhxa4qdwhxcw7xbkvle4l@rijv4uq5wsb7>
-References: <20230329-rfc-msm-dsc-helper-v10-0-4cb21168c227@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v10-8-4cb21168c227@quicinc.com>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, dmitry.baryshkov@linaro.org,
+        andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 0/8] add DSC 1.2 dpu supports
+Message-ID: <h6vc4delvatto3vyyho5io3ebs2yhmgrchnxcprca56my6fflb@4fcb334sdmpn>
+References: <1683914423-17612-1-git-send-email-quic_khsieh@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230329-rfc-msm-dsc-helper-v10-8-4cb21168c227@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <1683914423-17612-1-git-send-email-quic_khsieh@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-12 14:32:18, Jessica Zhang wrote:
-> 
-> hdisplay for compressed images should be calculated as bytes_per_slice *
-> slice_count. Thus, use MSM DSC helper to calculate hdisplay for
-> dsi_timing_setup instead of directly using mode->hdisplay.
+Asked this before: change the title to "DPU support" (capital "DPU",
+singular "support") if this series keeps being resent.
 
-As mentioned in review on an earlier revision, is there any sort of
-clarification you can provide here to explain the cases where
-hdisplay!=bytes_per_line?  That goes a long way towards justifying this
-change.  Thanks!
+On 2023-05-12 11:00:15, Kuogee Hsieh wrote:
+> 
+> This series adds the DPU side changes to support DSC 1.2 encoder. This
+> was validated with both DSI DSC 1.2 panel and DP DSC 1.2 monitor.
+> The DSI and DP parts will be pushed later on top of this change.
+> This seriel is rebase on [1], [2] and catalog fixes from rev-4 of [3].
+
+series*
+
+rebased*
+
+Also I think it's not just the catalog fixes but everything now, because
+we were both touching HW block implementations?
 
 - Marijn
 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> [1]: https://patchwork.freedesktop.org/series/116851/
+> [2]: https://patchwork.freedesktop.org/series/116615/
+> [3]: https://patchwork.freedesktop.org/series/112332/
 > 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 9eeda018774e..739f62643cc5 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -952,7 +952,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->  		 * pulse width same
->  		 */
->  		h_total -= hdisplay;
-> -		hdisplay /= 3;
-> +		hdisplay = msm_dsc_get_bytes_per_line(msm_host->dsc) / 3;
->  		h_total += hdisplay;
->  		ha_end = ha_start + hdisplay;
->  	}
+> Abhinav Kumar (2):
+>   drm/msm/dpu: add dsc blocks for remaining chipsets in catalog
+>   drm/msm/dpu: add DSC 1.2 hw blocks for relevant chipsets
+> 
+> Kuogee Hsieh (6):
+>   drm/msm/dpu: add DPU_PINGPONG_DSC feature bit for DPU < 7.0.0
+>   drm/msm/dpu: test DPU_PINGPONG_DSC bit before assign DSC ops to
+>     PINGPONG
+>   drm/msm/dpu: Introduce PINGPONG_NONE to disconnect DSC from PINGPONG
+>   drm/msm/dpu: add support for DSC encoder v1.2 engine
+>   drm/msm/dpu: separate DSC flush update out of interface
+>   drm/msm/dpu: tear down DSC data path when DSC disabled
+> 
+>  drivers/gpu/drm/msm/Makefile                       |   1 +
+>  .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    |   7 +
+>  .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |  11 +
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |  14 +
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |   7 +
+>  .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   |  16 +
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |  14 +
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |  14 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  59 +++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  31 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  36 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  29 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  10 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c         |  14 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h         |  15 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c     | 382 +++++++++++++++++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   3 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |   6 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |   7 +-
+>  19 files changed, 649 insertions(+), 27 deletions(-)
+>  create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c
 > 
 > -- 
-> 2.40.1
+> 2.7.4%%
 > 
