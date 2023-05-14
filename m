@@ -2,79 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FD43701D75
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 May 2023 14:41:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95BEC701E5A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 May 2023 19:01:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231630AbjENMl1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 May 2023 08:41:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37898 "EHLO
+        id S229894AbjENRBm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 May 2023 13:01:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229585AbjENMl0 (ORCPT
+        with ESMTP id S229635AbjENRBl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 May 2023 08:41:26 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 625791995
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 May 2023 05:41:25 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3f42d937d2eso37999155e9.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 May 2023 05:41:25 -0700 (PDT)
+        Sun, 14 May 2023 13:01:41 -0400
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F68635B5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 May 2023 10:01:40 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-55a2691637bso173907467b3.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 May 2023 10:01:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684068084; x=1686660084;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cynUrOqdkWITH+5SSziuXYTSPapfq2lw8vhoI55n8Xo=;
-        b=J5GzqF1QT0T7YOO0bd27+68MuQ/9HbiQmzKGgSrtzcna9dWqD5//yCDwtHZZlhsV3W
-         zIUgsGdhIo4aoKmt8456jKo+VwRYv9BVKI/Z2KEnIeBICtX6pXw99ftRMR1kJFObTi+E
-         JjPyyDha2SQrgd78YyMxfOfhkIWs4XQfekRrosuiQ6nYiw6PVWk1UHVfnvGAAj2HIgGG
-         arihh5MjWVohb9RnPMxytD5kDBr6IW12+HWC2bR0NMys4P0o9hGDykFPnH4ZJsSL5Sc+
-         tVi939CyvTSjbuY30Cu1fxj/UzOWd5gPfrIXyQDHTy8C4RJ6lCwKTNx3zmi3a2Buybyp
-         o6HQ==
+        d=linaro.org; s=google; t=1684083699; x=1686675699;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=2UHE6KlW9JyEYO4rMr/i63nT9UiBXdbXXzrRs9yxmkU=;
+        b=RPKTeggauu5yKDq3wGbtAgtozDUWB6aA+Niak68nX+2zDqgRHObtdkLgGG+ZS2s62q
+         AQM5/zSZhEl6sm9upmDn+HR9bAEO/uu3Ori8BkiQDeEv7r58e46h6gLcP7/IPJpbuQhS
+         ICnC6i6cT2fqe8mNqWMod+M5DcSyf0ddQN+1s6p/UHwwJmxZa9a0M/PG4KqWgFRqukFY
+         NT7QlCB+4sUJCU5ujJMlS5tJWvLjyWj1FtHwYgK9qlwe6z1A6SFU3NydcxRDYXb04rvc
+         9EUeFGRjjaW0qh9gLJ3Zbp/vQ4tJSA1Pw7oM6NDFfOosBrCvWyBHnHvEWe7qOjCmd45S
+         b6BQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684068084; x=1686660084;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cynUrOqdkWITH+5SSziuXYTSPapfq2lw8vhoI55n8Xo=;
-        b=Dg9s3VofWxHIPaLalNfVpoJ7nqu/R5eOZiUc/BnaOh7Y3aHM+qVibgk1RD5U9rWDeT
-         UbmGdnQMLQ4pqIjIyNxzb1SX8ahvIp5+S6o9aFc/q0PoOae7ZNAARcd6MuZ/j/U1sEQa
-         L+ePm6w/qYDaoyA9fuQPFKJWcOvnuOJzGnHe5qygsEuGiHX130iKOb5uAwfF0GNvyBUa
-         O7PQ00ULcdFC9fERQjgpKLi5PDaWhJHZRCSmVDfQUWmdfOeGJkLSs0ZewTReQJkT6qND
-         jmAwuuH3liJ2ntX2ndaQKIts0wWWPDZVNB/DftNchw3Hmy6SGy7eVAw0i7NbSD2ZXHTz
-         RPow==
-X-Gm-Message-State: AC+VfDy9aSJ7E8TAw/p8PeMjq9YNPI5LJDAgUU+e/bHB7fMsRz4flVlh
-        2OqX0F7pLX8s27GP5dy3iemSsA==
-X-Google-Smtp-Source: ACHHUZ5v2c/Lw+UdKikQE0IAnGR2AyU+5LcRlbP33uYNDyiIM3X4STlCRE4ltv3M4pafF+VlU6Disg==
-X-Received: by 2002:a1c:6a0d:0:b0:3f4:23d4:e48 with SMTP id f13-20020a1c6a0d000000b003f423d40e48mr16977737wmc.23.1684068083830;
-        Sun, 14 May 2023 05:41:23 -0700 (PDT)
-Received: from [192.168.0.15] (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
-        by smtp.gmail.com with ESMTPSA id i7-20020a05600c290700b003f4ecf1fcbcsm9693192wmd.22.2023.05.14.05.41.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 14 May 2023 05:41:23 -0700 (PDT)
-Message-ID: <552345c5-b1e9-41f6-f275-b6eeeb51df25@linaro.org>
-Date:   Sun, 14 May 2023 12:41:22 +0000
+        d=1e100.net; s=20221208; t=1684083699; x=1686675699;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2UHE6KlW9JyEYO4rMr/i63nT9UiBXdbXXzrRs9yxmkU=;
+        b=AvcuK2RrbWbUm05OZLMEFZjlwnlf3ftGer3XvMvMAvA4b158YhHS/77tj8l7p8msRG
+         7gAvi3P1zXVefBpUKK18wY/eNlTa+X68kSV0HDE7rhlafnr7GFVx96x3ojRZcAYUO8VO
+         NCAk8zhCZzgTBgVis0ndrtDqSrrrAY1BgPFmzFB+v95p3cOSijymshr2W81S+6W87pJF
+         05ormZGIflkir/su6FLx8MFGClPkjEXt7GSmUrClC21+4OK1xqxSZhPE3xPHrDPtRQvy
+         hRxA0NNoz/v5VXF97ao8B8LBEtlRkkRooRM3d90wixBFwfVe7mugVvwdqK1l+MUV+yRm
+         Na5A==
+X-Gm-Message-State: AC+VfDw976Nwl3Bvr92SZXxIsPtBDJvLULX/Kjqdbr3dTmesQ3Rm4WMV
+        89MOb8FC0cf8lU+cf/5SJTiVIXqX59S/Ix6uTTYkxQ==
+X-Google-Smtp-Source: ACHHUZ6CIWv7Cilknh4FESFfjsUlP+18hc9999+7vuxr0cmZZf09oa3qy8n/zP5ZyAmBRAUuuyuzlPz6QAxgVJIsHeE=
+X-Received: by 2002:a81:4985:0:b0:55a:577f:eff9 with SMTP id
+ w127-20020a814985000000b0055a577feff9mr29769040ywa.28.1684083699008; Sun, 14
+ May 2023 10:01:39 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH] regulator: qcom-rpmh: Revert "regulator: qcom-rpmh: Use
- PROBE_FORCE_SYNCHRONOUS"
-Content-Language: en-US
-To:     Amit Pundir <amit.pundir@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>
-Cc:     Mark Brown <broonie@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Andy Gross <agross@kernel.org>,
+References: <20230321011821.635977-1-dmitry.baryshkov@linaro.org>
+ <20230321011821.635977-3-dmitry.baryshkov@linaro.org> <ea7af397-1840-f15b-6f56-2d0559b8be4d@quicinc.com>
+In-Reply-To: <ea7af397-1840-f15b-6f56-2d0559b8be4d@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sun, 14 May 2023 20:01:28 +0300
+Message-ID: <CAA8EJppbXavJCT4ErBoW2cBjRoabFK58UQ39T6h96Ovm8yMdEQ@mail.gmail.com>
+Subject: Re: [RFC PATCH v2 02/13] drm/msm/dpu: take plane rotation into
+ account for wide planes
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230324063357.1.Ifdf3625a3c5c9467bd87bfcdf726c884ad220a35@changeid>
- <CAMi1Hd1avQDcDQf137m2auz2znov4XL8YGrLZsw5edb-NtRJRw@mail.gmail.com>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <CAMi1Hd1avQDcDQf137m2auz2znov4XL8YGrLZsw5edb-NtRJRw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,99 +74,101 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat, 13 May 2023 at 01:12, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 3/20/2023 6:18 PM, Dmitry Baryshkov wrote:
+> > Take into account the plane rotation and flipping when calculating src
+> > positions for the wide plane parts.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> Do we need to have a fixes tag for this? This means we dont consider
+> rotation while calculating src position today which is a bug?
+
+Hmm, I thought that I had a check forbidding rotation with the current
+approach, but I don't see it. Most probably I thought about it and
+then forgot to add it.
+The proper fix should be to disallow it for static SSPP case. I'll
+include the patch into v3.
+
+>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 27 ++++++++++++++---------
+> >   1 file changed, 17 insertions(+), 10 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > index 2e63eb0a2f3f..d43e04fc4578 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+> > @@ -887,16 +887,6 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+> >               return -EINVAL;
+> >       }
+> >
+> > -     pipe_cfg->src_rect = new_plane_state->src;
+> > -
+> > -     /* state->src is 16.16, src_rect is not */
+> > -     pipe_cfg->src_rect.x1 >>= 16;
+> > -     pipe_cfg->src_rect.x2 >>= 16;
+> > -     pipe_cfg->src_rect.y1 >>= 16;
+> > -     pipe_cfg->src_rect.y2 >>= 16;
+> > -
+> > -     pipe_cfg->dst_rect = new_plane_state->dst;
+> > -
+> >       fb_rect.x2 = new_plane_state->fb->width;
+> >       fb_rect.y2 = new_plane_state->fb->height;
+> >
+> > @@ -912,6 +902,15 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+> >
+> >       max_linewidth = pdpu->catalog->caps->max_linewidth;
+> >
+> > +     /* state->src is 16.16, src_rect is not */
+> > +     drm_rect_fp_to_int(&pipe_cfg->src_rect, &new_plane_state->src);
+> > +
+> > +     pipe_cfg->dst_rect = new_plane_state->dst;
+> > +
+> > +     drm_rect_rotate(&pipe_cfg->src_rect,
+> > +                     new_plane_state->fb->width, new_plane_state->fb->height,
+> > +                     new_plane_state->rotation);
+> > +
+> >       if (drm_rect_width(&pipe_cfg->src_rect) > max_linewidth) {
+> >               /*
+> >                * In parallel multirect case only the half of the usual width
+> > @@ -959,6 +958,14 @@ static int dpu_plane_atomic_check(struct drm_plane *plane,
+> >               r_pipe_cfg->dst_rect.x1 = pipe_cfg->dst_rect.x2;
+> >       }
+> >
+> > +     drm_rect_rotate_inv(&pipe_cfg->src_rect,
+> > +                         new_plane_state->fb->width, new_plane_state->fb->height,
+> > +                         new_plane_state->rotation);
+> > +     if (r_pipe->sspp)
+>
+> Dont you need to check for if (r_pipe_cfg) here and not if
+> (r_pipe->sspp) because parameter you are passing is the r_pipe_cfg to
+> drm_rect_rotate_inv().
+
+Of course not. r_pipe_cfg is a pointer to the field in pstate. We know
+that it can not be NULL.
+
+>
+> So we rotated the pipe_cfg once, then rotated_inv it to restore the
+> rectangle to its original state, but r_pipe_cfg's rectangle was never
+> rotated as it was not allocated before this function so it will remain
+> in inverse rotated state now right?
+
+No. r_pipe_cfg is set beforehand to the half of the rotated pipe_cfg.
+
+> > +             drm_rect_rotate_inv(&r_pipe_cfg->src_rect,
+> > +                                 new_plane_state->fb->width, new_plane_state->fb->height,
+> > +                                 new_plane_state->rotation);
+> > +
+> >       ret = dpu_plane_atomic_check_pipe(pdpu, pipe, pipe_cfg, fmt);
+> >       if (ret)
+> >               return ret;
 
 
-On 13/05/2023 18:08, Amit Pundir wrote:
-> On Fri, 24 Mar 2023 at 19:05, Douglas Anderson <dianders@chromium.org> wrote:
->>
->> This reverts commit 58973046c1bf ("regulator: qcom-rpmh: Use
->> PROBE_FORCE_SYNCHRONOUS"). Further digging into the problems that
->> prompted the us to switch to synchronous probe showed that the root
->> cause was a missing "rootwait" in the kernel command line
->> arguments. Let's reinstate asynchronous probe.
-> 
-> Hi, the asynchronous probe is broken on Dragonboard 845c (SDM845)
-> running AOSP (Android Open Source Project) with v6.4-rc1
-> https://bugs.linaro.org/show_bug.cgi?id=5975.
-> Can we please go back to synchronous probe.
-> 
-> AOSP do not make use of rootwait, IIRC, but it is added by the
-> bootloader anyway. And the device fails to boot AOSP regardless of
-> "rootwait" bootarg being present or not.
 
-Could you try applying this diff to enable some log spam and let me know
-what you get? I'm keen to try and figure this one out. My mail client
-might crunch this a bit so I have pasted it here too
-https://p.calebs.dev/ab74b7@raw
-
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index f93544f6d796..67859f1bdb28 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -653,11 +653,23 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const
-struct tcs_request *msg)
-
-        spin_lock_irqsave(&drv->lock, flags);
-
-+       dev_info(drv->dev, "%s: %p tcs->type=%d state=%d, "
-+               "wait_for_compl=%d, num_cmds=%d\n",
-+               __func__, msg, tcs->type, msg->state,
-+               msg->wait_for_compl, msg->num_cmds);
-+       for (int i = 0; i < msg->num_cmds; i++)
-+               dev_info(drv->dev, "%s: %p cmd[%d] "
-+                       "addr=0x%x data=0x%x\n", __func__,
-+                       msg, i, msg->cmds[i].addr, msg->cmds[i].data);
-+
-        /* Wait forever for a free tcs. It better be there eventually! */
-        wait_event_lock_irq(drv->tcs_wait,
-                            (tcs_id = claim_tcs_for_req(drv, tcs, msg))
->= 0,
-                            drv->lock);
-
-+       dev_info(drv->dev, "%s: %px GOT TCS! %d\n",
-+               __func__, msg, tcs_id);
-+
-        tcs->req[tcs_id - tcs->offset] = msg;
-        set_bit(tcs_id, drv->tcs_in_use);
-        if (msg->state == RPMH_ACTIVE_ONLY_STATE && tcs->type !=
-ACTIVE_TCS) {
-
-> 
-> FWIW I do not see this regression on RB5 (QRB5165/SM8250) running the
-> same set of AOSP images.
-> 
-> Regards,
-> Amit Pundir
-> 
-> 
-> 
-> 
->>
->> Fixes: 58973046c1bf ("regulator: qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS")
->> Cc: Marek Szyprowski <m.szyprowski@samsung.com>
->> Signed-off-by: Douglas Anderson <dianders@chromium.org>
->> ---
->>
->>  drivers/regulator/qcom-rpmh-regulator.c | 2 +-
->>  1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
->> index 903032b2875f..4826d60e5d95 100644
->> --- a/drivers/regulator/qcom-rpmh-regulator.c
->> +++ b/drivers/regulator/qcom-rpmh-regulator.c
->> @@ -1462,7 +1462,7 @@ MODULE_DEVICE_TABLE(of, rpmh_regulator_match_table);
->>  static struct platform_driver rpmh_regulator_driver = {
->>         .driver = {
->>                 .name = "qcom-rpmh-regulator",
->> -               .probe_type = PROBE_FORCE_SYNCHRONOUS,
->> +               .probe_type = PROBE_PREFER_ASYNCHRONOUS,
->>                 .of_match_table = of_match_ptr(rpmh_regulator_match_table),
->>         },
->>         .probe = rpmh_regulator_probe,
->> --
->> 2.40.0.348.gf938b09366-goog
->>
-
--- 
-Kind Regards,
-Caleb (they/them)
+--
+With best wishes
+Dmitry
