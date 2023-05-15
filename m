@@ -2,52 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2749470275B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 10:39:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B0157027CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 11:05:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233887AbjEOIjA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 04:39:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55766 "EHLO
+        id S229523AbjEOJFI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 05:05:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229752AbjEOIi7 (ORCPT
+        with ESMTP id S238839AbjEOJE7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 04:38:59 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A941C11F;
-        Mon, 15 May 2023 01:38:58 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34F6Bg1E025364;
-        Mon, 15 May 2023 08:38:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=30vfg2gUjXCO7Iilww/cuZYL0d/96lf2URufFIPhtJk=;
- b=MMcR2Ti/PAPiSA5mdx/1vfkb6huZRiTkAJRDKhW6YLYWUgbBxorB4OsccoGVpFcgvYyy
- 1Vl19HySVGhqV+kIQlXreqwXTHI5QoKwpm/L84bV0XqjHJoKfqLVWxSPNjm4EkeX1IYS
- w8vmakqRAolQfKBsFgMwLD/GMcM24w4TIRR9XmxpJoSCV4AuJlePECYz9MyMsViF5JwQ
- NJVQrpeB7fJNmVhRgVI+Ds1XgvCGp7h7s8aqeIh57lCCGNSixCDRr4LUEZTY2FZ/rcvr
- ajNwHbXg8fKeZ3cx12yR12uL/gKeK/LqvJgMcUTLZDp5jZ3CwSBMp9EvN6QiZm6aqy1K mQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qj1vr35ba-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 15 May 2023 08:38:54 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34F8crIH013977
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 15 May 2023 08:38:53 GMT
-Received: from [10.214.230.142] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 15 May
- 2023 01:38:49 -0700
-Message-ID: <10136d1e-8ac7-45b8-caa5-3a9aed523ab3@quicinc.com>
-Date:   Mon, 15 May 2023 14:08:45 +0530
+        Mon, 15 May 2023 05:04:59 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C5BDC9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 02:04:57 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-96adcb66f37so413925866b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 02:04:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684141495; x=1686733495;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=1e7xyhKbSUAtL/71OLze3JqXZR39ywi21V8nEPRiV68=;
+        b=MgrbJuPSda7/FkfizR4/3Rn0sQfPc3PH2digK9QUZv2bZ042i8f4m24og7HQejhAiZ
+         TcWng0vCnqHgKU3qfEwkq/uySuYn7dLwXbPeeGr8I4gEzyaIiOBRodAcvdNrTg5qBTM/
+         7GA8aiRO/orCzS2aVyrOus/FXdrWZ0K5wOmVkZmu3lpJt3lyY9KApDW5uqt/O7J76Uy5
+         db7C3o8bgPfVefXXLIUht9qMnt5lBOA/Jj9+RzMOlvDsXrZvcRDcKmQ5ISEPu03TeYkt
+         /bstflZYkyJdPf/VqkorhrdaFpiq+X1NoDFj90Q6fwiLgw5Adml0LBvakLNwuxBTlmnH
+         +Ufg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684141495; x=1686733495;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1e7xyhKbSUAtL/71OLze3JqXZR39ywi21V8nEPRiV68=;
+        b=kqmaJDmCgNz2XY4loghryHHXuEfVGW47CcXqXY6XiD9NZrvMRFnCURG0F8+be44sd/
+         dZUKqzjb9B3cidjm7cCfmSTe8xnHyNAecBKkQnWHQN3cqshrS5ZflpiryVGlWbPl/qjn
+         GG+MnblFSabEsiwh24GOG8/wW4O3NUAsW+MBTwujLtZ2HSnaZ5g73CXf4mzCzwlT6IkI
+         tXwfnSVrH9UdKhCK04FmUdvDMBTl8zCjvGkOd8bjl5IpVNkc9U8xjOrew+fev71oXTDv
+         a0ujzkoCFjbn0ZTIRMfVUBrRlbd6A/mWBJCVbasLw+aaGQ7Wq1CjM6CNdn0hoICVR6uh
+         5W0w==
+X-Gm-Message-State: AC+VfDzh4GLKsaWMBHet6fZeZwJHxE579MYgUZ5jzQ9JJobPqv8VL6Sx
+        E1QXJI3eutakGuw3wJmtWYrDMNT2NKX/SVsvygN9+Q==
+X-Google-Smtp-Source: ACHHUZ6/arwWykTMjW8t+mn8sE98dIyHPxmoftrOdRUms9psWi0+scmOgQUrHXIQ4Gm7LEJOfzX26w==
+X-Received: by 2002:a17:907:842:b0:94e:c8c:42ec with SMTP id ww2-20020a170907084200b0094e0c8c42ecmr27657027ejb.20.1684141495477;
+        Mon, 15 May 2023 02:04:55 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:6470:25b8:7c2d:1992? ([2a02:810d:15c0:828:6470:25b8:7c2d:1992])
+        by smtp.gmail.com with ESMTPSA id ml17-20020a170906cc1100b009661484e84esm9245894ejb.191.2023.05.15.02.04.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 May 2023 02:04:54 -0700 (PDT)
+Message-ID: <ec7dcbbb-7e9e-04bb-930a-0b96acbd4aed@linaro.org>
+Date:   Mon, 15 May 2023 11:04:53 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v3 07/10] dt-bindings: arm: msm: Add LLCC compatible for
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v3 02/10] dt-bindings: nvmem: qfprom: Add compatible for
  QDU1000/QRU1000
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
@@ -55,62 +66,52 @@ To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
 References: <20230512122134.24339-1-quic_kbajaj@quicinc.com>
- <20230512122134.24339-8-quic_kbajaj@quicinc.com>
- <c9e37cb2-75f7-e335-05ac-01197a9ba14c@linaro.org>
-From:   Komal Bajaj <quic_kbajaj@quicinc.com>
-In-Reply-To: <c9e37cb2-75f7-e335-05ac-01197a9ba14c@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+ <20230512122134.24339-3-quic_kbajaj@quicinc.com>
+ <4766aabc-9b03-3241-82e3-8c4799ea7978@linaro.org>
+ <ec2f0259-9d57-7125-7df8-c773b60e8c72@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <ec2f0259-9d57-7125-7df8-c773b60e8c72@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ys1yC9ITtZVzF8aVkRJrH1jeCsC_SzLc
-X-Proofpoint-ORIG-GUID: ys1yC9ITtZVzF8aVkRJrH1jeCsC_SzLc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-15_05,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- adultscore=0 bulkscore=0 clxscore=1015 impostorscore=0 mlxlogscore=670
- lowpriorityscore=0 malwarescore=0 phishscore=0 suspectscore=0 spamscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305150074
 X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 15/05/2023 09:08, Komal Bajaj wrote:
+> 
+> 
+> On 5/12/2023 10:26 PM, Krzysztof Kozlowski wrote:
+>> On 12/05/2023 14:21, Komal Bajaj wrote:
+>>> Document the QFPROM on QDU1000/QRU1000 SOCs.
+>>>
+>>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+>>> ---
+>>>   Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 1 +
+>>>   1 file changed, 1 insertion(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+>>> index 8d8503dd934b..59082f6e8c9f 100644
+>>> --- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+>>> +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+>>> @@ -26,6 +26,7 @@ properties:
+>>>             - qcom,msm8996-qfprom
+>>>             - qcom,msm8998-qfprom
+>>>             - qcom,qcs404-qfprom
+>>> +          - qcom,qdu1000-qfprom
+>> Above qcs, to keep alphabetical order.
+> qdu alphatecially comes after qcs, right? Did I misinterpret your comment?
 
+Ups...
 
-On 5/13/2023 2:59 PM, Krzysztof Kozlowski wrote:
-> On 12/05/2023 14:21, Komal Bajaj wrote:
->> Add LLCC compatible for QDU1000/QRU1000 SoCs.
->>
->> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-> Use subject prefixes matching the subsystem (which you can get for
-> example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
-> your patch is touching). In this case - cache: qcom,llcc: - and drop
-> redundant parts in subject.
->
-> With subject fixes:
-Okay, will do that.
-
-Thanks,
-Komal
->
->
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->
-> Best regards,
-> Krzysztof
->
+Best regards,
+Krzysztof
 
