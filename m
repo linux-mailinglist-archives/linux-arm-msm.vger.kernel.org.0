@@ -2,111 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 828CE702DFB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 15:21:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7A35702E42
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 15:36:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242240AbjEONVn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 09:21:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37642 "EHLO
+        id S242173AbjEONgv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 09:36:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49658 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242288AbjEONVX (ORCPT
+        with ESMTP id S242071AbjEONgt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 09:21:23 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 604F6359E;
-        Mon, 15 May 2023 06:20:52 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-64ab2a37812so19867281b3a.1;
-        Mon, 15 May 2023 06:20:52 -0700 (PDT)
+        Mon, 15 May 2023 09:36:49 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02DED100
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 06:36:47 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f42d937d2eso44394005e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 06:36:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684156851; x=1686748851;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=556nYuO56WZTzYwwksX3EP6QHKSVQy372C8veZxpPPA=;
-        b=TqGmbn24ScTKY9syGDRQQ8o0eYzQLlcRl7NpSw5ExsiKGCaDFSrONJXJ7c06twh565
-         vTHfQwc/1UBLDbzfExMCdgTQBGgNGHnznYVo0Wh+T9fE/Jh0b76ZIQFZziGRh3/c+TNN
-         eEUmVF3x0tVnFmlQevJ/UGKyYLg1rynC1s7UKmIJS9mYmAqtNA8dsU2k+ybl8PPH9z+0
-         Rqk+O/hCu9YKk+jd3CVUE+PuQy85mPDDqAvCwGEeXYCO18AYl+X7jA+H1DxrLEUP1JR4
-         FK1DlCh2mjC6quS5nP34k7q/jp1tZsH5buF9ULKWfWA08StyywSaDyODaThFnZyFHD7T
-         qZhg==
+        d=linaro.org; s=google; t=1684157805; x=1686749805;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q2xgyQVWHt/6tApzbX0nWPINQCiJrrfNOvPZU3dO2Lw=;
+        b=e/OqZuy/AcxkiFeBLLxBQpZTAPCSI7zGUvTgyy9jCLXqMz7dYJLF64RktUBPzKLsSM
+         Pim3lbXWHGzcdukwAAFdnf/Xu6rKINCIygtC/xwgL5lQniHVgN3sHUwJsRD8LezAc1W2
+         CjOxyLU2TjvNPsfRWXHeiV5XHPp41p3nFyE+2fDJtpz40rsBLoAD3k4hYKvM35KS6Qw4
+         kNIFE4uMrW24vCYjtsdFFmLDk5lTbVylsouB0aoJPwLYiXYxOdWnpDRcDY5hgMyHRxQ5
+         eondmeQunJd4RBr3rWwyrh/LH8ec0fbh3JMYxTWuztps1DqDY62iDlb5pgebiDwDBC8c
+         QgrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684156851; x=1686748851;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=556nYuO56WZTzYwwksX3EP6QHKSVQy372C8veZxpPPA=;
-        b=HjhaEoKR2aTuYrONhVreFF3f5ExBBFp3kcFTdJMlaHFkXIvIhI+z1KENi+P4Hun4DN
-         XEmMqAKTymydP6MTY38x3T9HzWtdxPKdlivy8FhhvJnopTwX737z15NdfrKYn52nxNnf
-         SicqDa+CvbNnt/cpym7citz01LTuK0q8t1Rhtwq9tGk0z1kgjYll9HdXAVZ9jzIT9pDB
-         /6mhDkhw5ORfhFDaKVhZR33gvMoAvlD9S6a+U1mNlfMmi43r72T/NJHAQObvnqYkNSst
-         dPxuVcwvT0LVvs9ruYFkw0KB6EobGa3m1XTulPBg1blXLZh31OysnVVuXAIbUxc/sTuX
-         RK5A==
-X-Gm-Message-State: AC+VfDwnLMm0Xn2oDGG9PSeurRAiFr93okK0ZpLdnn4FM73ycWIMc2l5
-        FVQZcZhRI80k1sEmg6pI1OA=
-X-Google-Smtp-Source: ACHHUZ4P7TMRD9U4yfQrRyTpKk/rdXv7hryKTuWdmyx2JL+gPpfogckaAf3qyMxD4IYH+bHMD7YxRQ==
-X-Received: by 2002:a05:6a20:441c:b0:101:6908:2b03 with SMTP id ce28-20020a056a20441c00b0010169082b03mr26423003pzb.25.1684156851046;
-        Mon, 15 May 2023 06:20:51 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id m10-20020aa7900a000000b006414c3ba8a3sm12147098pfo.177.2023.05.15.06.20.50
+        d=1e100.net; s=20221208; t=1684157805; x=1686749805;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Q2xgyQVWHt/6tApzbX0nWPINQCiJrrfNOvPZU3dO2Lw=;
+        b=A/GZXD+21MBNbM213RNxxkOgemUbd3OccchQv/CWWxgqvKEB9zGzI/Fe6vPQyY0OKM
+         U91cAzGboVcqRqgQ/iOmlSV9jQ2Bj1XtPvW16Ham0bu75m2bI4JufndCcO7brx1SEvtH
+         p9Qb7cC91Ees0JHswLLMQHJ7SIWexdf8cMikXRBgmZjcse9vqZHa2xoEYWXS7JthOk8s
+         uBKfKJ4eCbgKFjOGXkZ4RfeQuXOExBlzTtuNiegLszsTBr2/Ue7cqrcpblAXgL+43L8W
+         oWjyJCTeJCranEfrph2KP4ZuHkSMfpdXBAeowPBIeivbcbE55iJ3g0S9wEmmdEK27QcY
+         Mn7Q==
+X-Gm-Message-State: AC+VfDzsD2tNCU5CRzb4GWG9x0UwzsA8vhVtMPreTBC+LFwHJmxEeC6m
+        TTwrzk8PxoHhgj9fMP1bR/oapg==
+X-Google-Smtp-Source: ACHHUZ7ombrmXYdqB3tsVKXUSjUAWvC6CUbZnEg7OKxG/YuPpOkswlpgvjwzRJHIixwi3bA7LSFElw==
+X-Received: by 2002:a5d:68c1:0:b0:306:28fa:16a7 with SMTP id p1-20020a5d68c1000000b0030628fa16a7mr26764807wrw.43.1684157805476;
+        Mon, 15 May 2023 06:36:45 -0700 (PDT)
+Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id o17-20020a5d4091000000b003078a3f3a24sm28856634wrp.114.2023.05.15.06.36.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 May 2023 06:20:50 -0700 (PDT)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date:   Mon, 15 May 2023 06:20:49 -0700
-From:   Guenter Roeck <linux@roeck-us.net>
-To:     Tom Rix <trix@redhat.com>
-Cc:     bryan.odonoghue@linaro.org, heikki.krogerus@linux.intel.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        gregkh@linuxfoundation.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] usb: typec: qcom: set pm8150b_typec_res
- storage-class-specifier to static
-Message-ID: <a1d0c542-0e77-4ccc-b509-66daf1941b21@roeck-us.net>
-References: <20230515114043.3452010-1-trix@redhat.com>
+        Mon, 15 May 2023 06:36:44 -0700 (PDT)
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     linux@roeck-us.net, heikki.krogerus@linux.intel.com,
+        gregkh@linuxfoundation.org, andersson@kernel.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        luca.weiss@fairphone.com, lujianhua000@gmail.com,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Cc:     konrad.dybcio@linaro.org, caleb.connolly@linaro.org,
+        bryan.odonoghue@linaro.org, subbaram@quicinc.com,
+        jackp@quicinc.com, robertom@qti.qualcomm.com
+Subject: [PATCH v8 00/11] Add Qualcomm PMIC TPCM support 
+Date:   Mon, 15 May 2023 14:36:32 +0100
+Message-Id: <20230515133643.3621656-1-bryan.odonoghue@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230515114043.3452010-1-trix@redhat.com>
-X-Spam-Status: No, score=-1.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 15, 2023 at 07:40:43AM -0400, Tom Rix wrote:
-> smatch reports
-> drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c:323:29: warning: symbol
->   'pm8150b_typec_res' was not declared. Should it be static?
-> 
-> This variable is only used in its defining file, so it should be static
-> 
-> Signed-off-by: Tom Rix <trix@redhat.com>
+Bootable tree
+Link: https://git.codelinaro.org/bryan.odonoghue/kernel/-/tree/usb-next-23-05-14-qcom-wrapper-typec-mux-bjorn
 
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+V8:
+- Makes pm8150b_typec::status = disabled by default - bod
+- Greg merged the TCPM description and driver to usb-next so two patches less now.
+  I've rebased this series on to usb-next using "--base=auto"
+  All of the kernel robot dts/yaml checks should now pass against usb-next / a4422ff221429c600c3dc5d0394fb3738b89d040
 
-Guenter
+V7:
+- Adds R/B to "dt-bindings: phy: qcom,sc7180-qmp-usb3-dp-phy: Add input and output ports" - Krzysztof
+- Fixes indicated, adds R/B to "dt-bindings: usb: Add Qualcomm PMIC Type-C" - Krzysztof
+- Fixes indicated, adds R/B to "usb: typec: qcom: Add Qualcomm PMIC Type-C driver" - Guenter
+- Fixes indicated, adds R/B to "usb: typec: qcom: Add Qualcomm PMIC Type-C driver" - Caleb
+- Adds R/B to "arm64: dts: qcom: sm8250: Define ports for qmpphy orientation-switching" - Konrad
+- Adds R/B to "arm64: dts: qcom: qrb5165-rb5: Switch on Type-C VBUS boost" - Konrad
+- Fixes indicated, adds R/B to "arm64: dts: qcom: qrb5165-rb5: Switch on basic TCPM" - Jianhua, Konrad
+- Connector ports/endpoints left inside of connector
+  Documentation/devicetree/bindings/connector/usb-connector.yaml - Jianhua
+- dwc3_role_switch_in -> usb_1_dwc3_role_switch_in
+  qmpphy_typec_mux_in -> usb_1_qmpphy_typec_mux_in
+  Both ports/endpoints defined inside of pm8150b dtsi - Konrad
 
-> ---
->  drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> index 191458ce4a06..937e855a6c4c 100644
-> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec.c
-> @@ -320,7 +320,7 @@ static struct pmic_typec_port_resources pm8150b_port_res = {
->  	.nr_irqs = 7,
->  };
->  
-> -struct pmic_typec_resources pm8150b_typec_res = {
-> +static struct pmic_typec_resources pm8150b_typec_res = {
->  	.pdphy_res = &pm8150b_pdphy_res,
->  	.port_res = &pm8150b_port_res,
->  };
-> -- 
-> 2.27.0
-> 
+  I modified the name of both so that the port/endpoint would be directly
+  adjacent to the containing node in the dtsi file for code locality/readbility - bod
+
+- Fixes newline indicated "arm64: dts: qcom: qrb5165-rb5: Switch on TCPM usb-role-switching for usb_1" - Jianhua, Konrad
+- Fixes newline indicated "arm64: dts: qcom: qrb5165-rb5: Switch on TCPM orientation-switch for usb_1_qmpphy" - Jianhua, Konrad
+
+- connector
+  I have left the connector defintion and its ports/endpoints in the platform dts
+
+  The reason for this
+  a) Prior art e.g. arch/arm64/boot/dts/qcom/sc8280xp*
+  b) The connector is really a non-SoC/PMIC component its something that is defined
+     for your platform.
+
+  I'm open to further debate on this topic:
+  Link: https://imgflip.com/i/7kw6ck
+
+- port@1 -> port@1 "arm64: dts: qcom: qrb5165-rb5: Switch on TCPM orientation-switch for usb_1_qmpphy" - Jianhua
+
+- OF: graph: no port node found in /soc@0/spmi@c440000/pmic@2/typec@1500
+
+  I left this as-is since the DT model we want is to connect the connector directly to
+  the PHY for orientation or controller for data-role switching
+
+  I similarly didn't put this hack in place to remove the warning but "it would work"
+
+V6:
+ - I'm dropping the previous V1-V6 log because the text is getting too long
+   here's a link to the previous cover letter instead
+   Link: https://lore.kernel.org/linux-arm-msm/20230501121111.1058190-1-bryan.odonoghue@linaro.org/
+
+
+Bryan O'Donoghue (11):
+  dt-bindings: regulator: qcom,usb-vbus-regulator: Mark reg as required
+  dt-bindings: regulator: qcom,usb-vbus-regulator: Mark
+    regulator-*-microamp required
+  dt-bindings: phy: qcom,sc7180-qmp-usb3-dp-phy: Add orientation-switch
+    as optional
+  dt-bindings: phy: qcom,sc7180-qmp-usb3-dp-phy: Add input and output
+    ports
+  dt-bindings: mfd: qcom,spmi-pmic: Add typec to SPMI device types
+  arm64: dts: qcom: sm8250: Define ports for qmpphy
+    orientation-switching
+  arm64: dts: qcom: pm8150b: Add a TCPM description
+  arm64: dts: qcom: qrb5165-rb5: Switch on Type-C VBUS boost
+  arm64: dts: qcom: qrb5165-rb5: Switch on basic TCPM
+  arm64: dts: qcom: qrb5165-rb5: Switch on TCPM usb-role-switching for
+    usb_1
+  arm64: dts: qcom: qrb5165-rb5: Switch on TCPM orientation-switch for
+    usb_1_qmpphy
+
+ .../bindings/mfd/qcom,spmi-pmic.yaml          |  4 ++
+ .../phy/qcom,sc7180-qmp-usb3-dp-phy.yaml      | 44 +++++++++++++++
+ .../regulator/qcom,usb-vbus-regulator.yaml    | 10 +++-
+ arch/arm64/boot/dts/qcom/pm8150b.dtsi         | 40 +++++++++++++
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts      | 56 ++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          | 18 ++++++
+ 6 files changed, 170 insertions(+), 2 deletions(-)
+
+
+base-commit: a4422ff221429c600c3dc5d0394fb3738b89d040
+-- 
+2.39.2
+
