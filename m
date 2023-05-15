@@ -2,58 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0555703DED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 21:56:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04030703E1D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 22:07:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244998AbjEOT4H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 15:56:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53120 "EHLO
+        id S244704AbjEOUHo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 16:07:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244989AbjEOT4F (ORCPT
+        with ESMTP id S244496AbjEOUHn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 15:56:05 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2182E100EB;
-        Mon, 15 May 2023 12:56:00 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Mon, 15 May 2023 16:07:43 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD2C010E53
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 13:07:40 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9CBEF631F3;
-        Mon, 15 May 2023 19:55:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99CDC4339B;
-        Mon, 15 May 2023 19:55:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684180559;
-        bh=INkfx3982UDfhbh2ERXdH+2k7xJotsdpjMphfR9pqUQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Ycqe2tn2RXiA4rL0/kWU/4KhewpOuYpAD92QeBNCdOuVcsupo5JxGjUEJHxfunykm
-         LT2hNk/tanAvxfGGSAeo4BysVDbZ10TcinWqXkALy+dtCjsi51eNuKtq1wxQIL3Fib
-         L+m12XxoIfXGXWula59KQVV/+sx6qfpk7HlBdTbjYTwEU0gY4Tc1fXuIcvUduGK2iU
-         CC9xEhu8eCqCY8foYcAeLzMosyWE0X6zq0uff3QSmZUDM2ixW+a5OCQWfwwZYAwIXn
-         TymM1mnncz0/sFP08foKcwh4Gufo1fFDTo6e8nNs7aQJXCpopdnWCg6zEBV9RZbnGA
-         n9iLjKm1xaI4Q==
-Date:   Mon, 15 May 2023 12:59:49 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     linux@roeck-us.net, heikki.krogerus@linux.intel.com,
-        gregkh@linuxfoundation.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, luca.weiss@fairphone.com,
-        lujianhua000@gmail.com, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        konrad.dybcio@linaro.org, caleb.connolly@linaro.org,
-        subbaram@quicinc.com, jackp@quicinc.com, robertom@qti.qualcomm.com,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v8 04/11] dt-bindings: phy: qcom,sc7180-qmp-usb3-dp-phy:
- Add input and output ports
-Message-ID: <20230515195949.yemdw4n2pquive2r@ripper>
-References: <20230515133643.3621656-1-bryan.odonoghue@linaro.org>
- <20230515133643.3621656-5-bryan.odonoghue@linaro.org>
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id AB1311F9A7;
+        Mon, 15 May 2023 22:07:37 +0200 (CEST)
+Date:   Mon, 15 May 2023 22:07:36 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, dmitry.baryshkov@linaro.org,
+        andersson@kernel.org, quic_jesszhan@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 1/8] drm/msm/dpu: add dsc blocks for remaining
+ chipsets in catalog
+Message-ID: <u47xthqfjxpbbzjbvnrz4qa2f2m3aip4iose7cwuhzg4raf7db@qxbos7u55wko>
+References: <1683914423-17612-1-git-send-email-quic_khsieh@quicinc.com>
+ <1683914423-17612-2-git-send-email-quic_khsieh@quicinc.com>
+ <4tmuqrz3du7pwwih3gzp6zveyfvwxj3meeksgxkbg2v5mdtyu3@e5xxuoe64rvv>
+ <69538f77-ff08-c3ce-3d4a-9f7250ee2505@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230515133643.3621656-5-bryan.odonoghue@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+In-Reply-To: <69538f77-ff08-c3ce-3d4a-9f7250ee2505@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -62,94 +53,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 15, 2023 at 02:36:36PM +0100, Bryan O'Donoghue wrote:
-> Add a ports declaration which is optional containing two port@
-> declarations.
+On 2023-05-15 11:20:02, Abhinav Kumar wrote:
 > 
-> port@0 to receive an orientation-switch message from the Type-C port or
-> redriver
 > 
-> port@1 to subsequently transmit the orientation-switch on once the PHY has
-> finished doing its orientation turn-around.
 > 
-> If ports is declared the input port port@0 is mandatory but the output
-> port@1 is optional.
+> On 5/14/2023 2:39 PM, Marijn Suijten wrote:
+> > DSC*, and mention 1.1 explicitly (since this skips the 1.2 blocks, while
+> > the series is clearly aimed at 1.1...).  This was done for the DSC 1.2
+> > HW block patch after all.
+> > 
+> > in catalog -> to catalog
+> > 
+> > But it's just two platforms, you can fit MSM8998 and SC8180X in the
+> > title.
+> > 
+> > On 2023-05-12 11:00:16, Kuogee Hsieh wrote:
+> >>
+> >> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> >>
+> >> There are some platforms has DSC blocks but it is not declared at catalog.
+> > 
+> > Some platforms have DSC blocks which have not yet been declared in the
+> > catalog.*
+> > 
+> >> For completeness, this patch adds DSC blocks for platforms which missed
+> >> them.
+> > 
+> > Drop "this patch":
+> > 
+> >      Complete DSC 1.1 support for all platforms by adding the missing
+> >      blocks to MSM8998 and SC8180X.
+> > 
+> >>
+> >> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> >> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >> ---
+> >>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h |  7 +++++++
+> >>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h | 11 +++++++++++
+> > 
+> > How about SC7180, and any other DPU 6.x revision?
+> > 
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> ---
->  .../phy/qcom,sc7180-qmp-usb3-dp-phy.yaml      | 38 +++++++++++++++++++
->  1 file changed, 38 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
-> index d307343388888..c370b9cd58c2e 100644
-> --- a/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
-> +++ b/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
-> @@ -65,6 +65,25 @@ properties:
->      description: Flag the port as possible handler of orientation switching
->      type: boolean
->  
-> +  ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +    description: OF graph bindings that model incoming orientation-switch and
-> +      outgoing orientation-switch messages. An example of an incoming
-> +      orientation-switch message might come form a Type-C connector or a USB
-> +      redriver. An example of an output would be a DisplayPort controller.
+> Will let kuogee respond to the other nits. There is no DSC in sc7180 / 
+> sm6115 / qcm2290. So this patch is complete.
 
-Orientation switching is just one of the uses of this graph, and each
-port is both input and output of different signals (orientation switch,
-altmode switch, hot plug signals, signal path).
+Thank you for checking as I didn't have the DTS close (and it seems
+SC7180 would have supported this, but no).  I did check other SoCs in
+the DPU 6.x range that are currently floating in my tree and on the
+list, which do need their DSC 1.1 block added (both a single block at
+0x81000 downstream, 0x80000 upstream), if you can in a resend Konrad:
 
+DPU 6.4 in SM6350: https://lore.kernel.org/linux-arm-msm/20230411-topic-straitlagoon_mdss-v3-6-9837d6b3516d@linaro.org/
+DPU 6.9 in SM6375: https://lore.kernel.org/linux-arm-msm/20230411-topic-straitlagoon_mdss-v3-8-9837d6b3516d@linaro.org/
 
-How about aligning this version of the QMP binding with the proposed
-binding for 8280xp here:
-https://lore.kernel.org/linux-arm-msm/20230515032743.400170-2-quic_bjorande@quicinc.com/
+Thanks!
 
-Perhaps we could put some of this in a separate yaml and include that?
-
-Regards,
-Bjorn
-
-> +
-> +    properties:
-> +      port@0:
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +        description: Type-C mux orientation-switch input.
-> +
-> +      port@1:
-> +        $ref: /schemas/graph.yaml#/properties/port
-> +        description: PHY orientation-switch output.
-> +
-> +    required:
-> +      - port@0
-> +
->    resets:
->      items:
->        - description: reset of phy block.
-> @@ -279,4 +298,23 @@ examples:
->              #clock-cells = <1>;
->              #phy-cells = <0>;
->          };
-> +
-> +        ports {
-> +            #address-cells = <1>;
-> +            #size-cells = <0>;
-> +
-> +            port@0 {
-> +                reg = <0>;
-> +                qmpphy_typec_mux_in: endpoint {
-> +                    remote-endpoint = <&pmic_typec_mux_out>;
-> +                };
-> +            };
-> +
-> +            port@1 {
-> +                reg = <1>;
-> +                qmpphy_typec_mux_out: endpoint {
-> +                    remote-endpoint = <&dp_typec_mux_in>;
-> +                };
-> +            };
-> +        };
->      };
-> -- 
-> 2.39.2
-> 
+- Marijn
