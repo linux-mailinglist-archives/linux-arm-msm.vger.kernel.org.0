@@ -2,74 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B797702E62
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 15:37:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 53A6E702FAC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 16:27:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242383AbjEONhI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 09:37:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50232 "EHLO
+        id S240168AbjEOO07 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 10:26:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242360AbjEONhG (ORCPT
+        with ESMTP id S239826AbjEOO06 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 09:37:06 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94E6E199F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 06:37:00 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3f450815d0bso62605505e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 06:37:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684157819; x=1686749819;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3aLrbkfYK1T8L/pww+3+UJGfuSXtltlajZdwftVgkQc=;
-        b=BnikwaqXfHdIuZS2cIM3Om/ecj6nLAfiOLyEaauLoE4A6R/CXRLwvoJn+JXPkhx/lG
-         O/CRhu3bjLTFRqvYSMq2/4yMO1PAzsa19HbWWvnKvl0MJ3agppjqtc16K8JaaCgC+5K2
-         Avq5L6zan2cr3EMNBkNMDrRcX/aBlsd/ZbJCqpk7rspDZFfdphu59pu70/lrevRLPmA0
-         bGb90myeoure8/AvcT+MXbh+rGt4Y1EQnRD3YYu/Qvz7j1k30TxggQq1UihaQ/d8zKRh
-         1g6jdD3yJTjM64QG0UfRKud4TYLIqi8c6y7Qh9tHEHndUqfLyCFt2iGSwlNoesKTEMPs
-         PHag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684157819; x=1686749819;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3aLrbkfYK1T8L/pww+3+UJGfuSXtltlajZdwftVgkQc=;
-        b=N1R58ZFpl9zFNYigUv1rpbjbK5T4V0gnwP3LkD3v0SFEOUoYDNvrbgE2VdXTkazhIG
-         SJhZ0QnnajTP5ehOHOtFUilfIBsSEsUNLQg7xjB6HXQkCwy4zwmvD2DSvcfGEkAJmikr
-         1r9RUltCiBW1GgO4+0ItuCZKEVz3r7pyFRo+yN7N7GanCnjQQoLjbdyMkPxsQMeCXPKI
-         dHSuG1p5l4AKLH81LbXVbEJ5tr2uySMERparKgyFHsgOX9R9Fw/2megFlI4LzOuUvxNO
-         KKwrv7NevQqpj8KZSzRQwA2pGfdguZuLc8dQzceCzNrGohjw28OocolgKXjJOoJ3N29e
-         Dpkg==
-X-Gm-Message-State: AC+VfDzB7hy0pbobhUCmWy6TDcOrpR+27dTdSlbfna02mNA93SlJgpxO
-        +EhDIMuJy7hhPp0sNRwzMPVcFw==
-X-Google-Smtp-Source: ACHHUZ7oRl/buvDQZ+RQ5GbsstJk9HNPMo1h33o5zQFneFBK+k3QHszvPczoryrclzRYZrEDhnxfWw==
-X-Received: by 2002:a1c:f703:0:b0:3f1:979f:a733 with SMTP id v3-20020a1cf703000000b003f1979fa733mr25294002wmh.31.1684157819440;
-        Mon, 15 May 2023 06:36:59 -0700 (PDT)
-Received: from sagittarius-a.chello.ie (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id o17-20020a5d4091000000b003078a3f3a24sm28856634wrp.114.2023.05.15.06.36.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 May 2023 06:36:59 -0700 (PDT)
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     linux@roeck-us.net, heikki.krogerus@linux.intel.com,
-        gregkh@linuxfoundation.org, andersson@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        luca.weiss@fairphone.com, lujianhua000@gmail.com,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Cc:     konrad.dybcio@linaro.org, caleb.connolly@linaro.org,
-        bryan.odonoghue@linaro.org, subbaram@quicinc.com,
-        jackp@quicinc.com, robertom@qti.qualcomm.com
-Subject: [PATCH v8 11/11] arm64: dts: qcom: qrb5165-rb5: Switch on TCPM orientation-switch for usb_1_qmpphy
-Date:   Mon, 15 May 2023 14:36:43 +0100
-Message-Id: <20230515133643.3621656-12-bryan.odonoghue@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230515133643.3621656-1-bryan.odonoghue@linaro.org>
-References: <20230515133643.3621656-1-bryan.odonoghue@linaro.org>
+        Mon, 15 May 2023 10:26:58 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25F3F135;
+        Mon, 15 May 2023 07:26:57 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BBF8961E81;
+        Mon, 15 May 2023 14:26:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D68C433EF;
+        Mon, 15 May 2023 14:26:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1684160816;
+        bh=4klK1qNnVxB9VfQGKW5xcLuUT3JrqtA3WFCXNlPR5e8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Y8YKV4IgdgV4lOeVqUT5MbcKSF2/d+kFXL7BLrJXBxqcCm+40pTxVruHXP0OHxxRW
+         3dIyFDUnm5Hm2qwawyPPQwGed1/NLtySpC9Vbz86T3KeUZbVULTB1k7fWLn3iG17CF
+         yh/6gzcDXUBtO4R2ljTfPuP3C3zf8TtdJ0veNFVnrHk/aTKUO7faG3lOiuZmknjNp7
+         nHuyNNVHyhvLkCAbZr08qMT4xL3mymeQByZehe0Lv3zU1PZQDCLevdLoHCx3ijgcue
+         4ATlI1OMmjBLivdmEaxYLxdH+A7Vde8VD+Tnjqkth6N35rUadBPbKNV2sBvKrW/huy
+         +g4LZZUlyTobw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pyZA5-0002JU-BO; Mon, 15 May 2023 16:26:53 +0200
+Date:   Mon, 15 May 2023 16:26:53 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
+        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
+        ahalaney@redhat.com
+Subject: Re: [PATCH v8 7/9] arm64: dts: qcom: sc8280xp: Add multiport
+ controller node for SC8280
+Message-ID: <ZGJBLUsPcbsxj989@hovoldconsulting.com>
+References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
+ <20230514054917.21318-8-quic_kriskura@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230514054917.21318-8-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,57 +71,106 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Switch on USB orientation-switching for usb_1_qmp via TCPM. Detecting the
-orientation switch is required to get the PHY to reset and bring-up the PHY
-with the CC lines set to the appropriate lane.
+On Sun, May 14, 2023 at 11:19:15AM +0530, Krishna Kurapati wrote:
+> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
+> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
+> platforms.
+> 
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 66 ++++++++++++++++++++++++++
+>  1 file changed, 66 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index 8fa9fbfe5d00..50f6a8424537 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -3133,6 +3133,72 @@ usb_1_role_switch: endpoint {
+>  			};
+>  		};
+>  
+> +		usb_2: usb@a4f8800 {
 
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 11 +++++++++++
- arch/arm64/boot/dts/qcom/sm8250.dtsi     |  1 +
- 2 files changed, 12 insertions(+)
+As I believe someone already pointed out, this node is not in sort order
+(i.e. it should go before usb@a6f8800).
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index 580ed63c6fb54..9b314c390e3f8 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -1294,6 +1294,11 @@ &usb_1_qmpphy {
- 
- 	vdda-phy-supply = <&vreg_l9a_1p2>;
- 	vdda-pll-supply = <&vreg_l18a_0p92>;
-+	orientation-switch;
-+};
-+
-+&usb_1_qmpphy_typec_mux_in {
-+	remote-endpoint = <&pm8150b_typec_mux_out>;
- };
- 
- &usb_2 {
-@@ -1378,6 +1383,12 @@ pm8150b_role_switch_out: endpoint {
- 					remote-endpoint = <&usb_1_dwc3_role_switch_in>;
- 				};
- 			};
-+			port@1 {
-+				reg = <1>;
-+				pm8150b_typec_mux_out: endpoint {
-+					remote-endpoint = <&usb_1_qmpphy_typec_mux_in>;
-+				};
-+			};
- 		};
- 	};
- };
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index b9f55a9ef89f8..f538216f3704f 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -3588,6 +3588,7 @@ ports {
- 
- 				port@0 {
- 					reg = <0>;
-+					usb_1_qmpphy_typec_mux_in: endpoint {};
- 				};
- 
- 				port@1 {
--- 
-2.39.2
+> +			compatible = "qcom,sc8280xp-dwc3-mp", "qcom,dwc3";
+> +			reg = <0 0x0a4f8800 0 0x400>;
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
+> +
+> +			clocks = <&gcc GCC_CFG_NOC_USB3_MP_AXI_CLK>,
+> +				 <&gcc GCC_USB30_MP_MASTER_CLK>,
+> +				 <&gcc GCC_AGGRE_USB3_MP_AXI_CLK>,
+> +				 <&gcc GCC_USB30_MP_SLEEP_CLK>,
+> +				 <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
+> +				 <&gcc GCC_AGGRE_USB_NOC_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_USB_NOC_NORTH_AXI_CLK>,
+> +				 <&gcc GCC_AGGRE_USB_NOC_SOUTH_AXI_CLK>,
+> +				 <&gcc GCC_SYS_NOC_USB_AXI_CLK>;
+> +			clock-names = "cfg_noc", "core", "iface", "sleep", "mock_utmi",
+> +				      "noc_aggr", "noc_aggr_north", "noc_aggr_south", "noc_sys";
+> +
+> +			assigned-clocks = <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
+> +					  <&gcc GCC_USB30_MP_MASTER_CLK>;
+> +			assigned-clock-rates = <19200000>, <200000000>;
+> +
+> +			interrupts-extended = <&pdc 127 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 126 IRQ_TYPE_EDGE_RISING>,
+> +					      <&pdc 16 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 857 IRQ_TYPE_LEVEL_HIGH>,
+> +					      <&intc GIC_SPI 856 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			interrupt-names = "dp_hs_phy_irq",
+> +					  "dm_hs_phy_irq",
+> +					  "ss_phy_irq",
+> +					  "pwr_event_1",
+> +					  "pwr_event_2",
+> +					  "pwr_event_3",
+> +					  "pwr_event_4";
+> +
+> +			power-domains = <&gcc USB30_MP_GDSC>;
+> +			required-opps = <&rpmhpd_opp_nom>;
+> +
+> +			resets = <&gcc GCC_USB30_MP_BCR>;
+> +
+> +			interconnects = <&aggre1_noc MASTER_USB3_1 0 &mc_virt SLAVE_EBI1 0>,
+> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_1 0>;
 
+This is not the correct interconnect master and slave; it should be
+MASTER_USB3_MP and SLAVE_USB3_MP.
+
+> +			interconnect-names = "usb-ddr", "apps-usb";
+
+Looks like 'wakeup-source' is missing here too.
+
+> +
+> +			status = "disabled";
+> +
+> +			usb_2_dwc3: usb@a400000 {
+> +				compatible = "snps,dwc3";
+> +				reg = <0 0x0a400000 0 0xcd00>;
+> +				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+> +				iommus = <&apps_smmu 0x800 0x0>;
+> +				phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>,
+> +					<&usb_2_hsphy1>, <&usb_2_qmpphy1>,
+> +					<&usb_2_hsphy2>,
+> +					<&usb_2_hsphy3>;
+> +				phy-names = "usb2-port0", "usb3-port0",
+> +						"usb2-port1", "usb3-port1",
+> +						"usb2-port2",
+> +						"usb2-port3";
+
+The phys and phy-names continuation lines above are still not aligned.
+
+> +			};
+> +		};
+> +
+>  		mdss0: display-subsystem@ae00000 {
+>  			compatible = "qcom,sc8280xp-mdss";
+>  			reg = <0 0x0ae00000 0 0x1000>;
+
+Johan
