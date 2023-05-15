@@ -2,57 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DD82702C07
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 13:57:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D2AE702C1B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 13:58:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241666AbjEOL5D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 07:57:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53202 "EHLO
+        id S241695AbjEOL6H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 07:58:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241667AbjEOL4N (ORCPT
+        with ESMTP id S241705AbjEOL5s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 07:56:13 -0400
+        Mon, 15 May 2023 07:57:48 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E3133AAE;
-        Mon, 15 May 2023 04:52:21 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A77A40E3;
+        Mon, 15 May 2023 04:55:00 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 261DA62250;
-        Mon, 15 May 2023 11:52:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C9DC433EF;
-        Mon, 15 May 2023 11:52:20 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9C729614A2;
+        Mon, 15 May 2023 11:54:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04E4CC433D2;
+        Mon, 15 May 2023 11:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684151540;
-        bh=Cx0m8x2Mhqcbhl9YWvPjb4YVogzNRjcf/Utt/v0UfWU=;
+        s=k20201202; t=1684151699;
+        bh=kh1kY/KhPkOpkYVPUCfFY3w8ObJ/nJNgBlNa4gelO4c=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LoYBJJXk7CZp5oKEZA5udpnT3rNMSbJEkfWCbjTyFmnhfNDxLxW1BX798rikxsA7u
-         EAF5eNYF5/DJDJg2mGnlECbFu3Gw1nf/d9nC1sOQE8I3AH4l1JG4lcvJssD7CeI680
-         fe7OEEb7KihZHIOihJLB7vh/bk3HFxJf5IVGcp9ZIQYNChgc3USc2CO3lWnCh6sA2q
-         +0K5V1oC1qQeFB0AdDs8Qgt6YMYG2W0WprbNA73gyzFcywkpn7ckJ6+XPl34tiRFOa
-         Kwf9j6lmHr8gQcBC/CjOSsh00XagIMC+Fsi1lISurYg15VbmR0s8WGt3mEV370jKIQ
-         6pXmOjd6RX5Rw==
+        b=hzgQWD7bVW5NZ64o0Hk29zdp3hNcGMVcH3Xa3KVWNAvNhDg0DgjqbeV7p882MNW5/
+         i8bJq5rZmUCotx1A6xgE1J4bajAIFLQEw0lXLOHxFz5G/28admhEttNQqoSRfka7R8
+         41AgS7KCXXJTWWC0hQmndSenHynLhjQ/IA29MHJ3IrTzvwB2uQQYs7GZ2nxSysEX3o
+         DQ/3CSjqhMxtRobrbSZ5Z1zfsKjtVFHta++1YYxoAQVNQ9gV3qWzUc+gcro6wDLBp9
+         9Inf0rxksfRRcSP/Go3YsGbLmDGnsWbURx+ddNo4WY9bhlVmMlf3wLOildNBOPTUj1
+         PLGDB7MN12mVQ==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1pyWkT-0003yW-2Y; Mon, 15 May 2023 13:52:17 +0200
-Date:   Mon, 15 May 2023 13:52:17 +0200
+        id 1pyWn2-00040G-FC; Mon, 15 May 2023 13:54:56 +0200
+Date:   Mon, 15 May 2023 13:54:56 +0200
 From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: Flush RSC sleep & wake votes
-Message-ID: <ZGIc8SPNy0oqCqjR@hovoldconsulting.com>
+Message-ID: <ZGIdkHn6bVbln5uy@hovoldconsulting.com>
 References: <20230512150425.3171122-1-quic_bjorande@quicinc.com>
+ <f6ecd66b-e207-0ed9-0ff3-1febfdf5bce9@linaro.org>
+ <20230515023828.jqrrqkit5ygovimp@ripper>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230512150425.3171122-1-quic_bjorande@quicinc.com>
+In-Reply-To: <20230515023828.jqrrqkit5ygovimp@ripper>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -63,32 +65,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 12, 2023 at 08:04:25AM -0700, Bjorn Andersson wrote:
-> The rpmh driver will cache sleep and wake votes until the cluster
-> power-domain is about to enter idle, to avoid unnecessary writes. So
-> associate the apps_rsc with the cluster pd, so that it can be notified
-> about this event.
+On Sun, May 14, 2023 at 07:38:28PM -0700, Bjorn Andersson wrote:
+> On Sat, May 13, 2023 at 11:09:07AM +0200, Konrad Dybcio wrote:
+> > 
+> > 
+> > On 12.05.2023 17:04, Bjorn Andersson wrote:
+> > > The rpmh driver will cache sleep and wake votes until the cluster
+> > > power-domain is about to enter idle, to avoid unnecessary writes. So
+> > > associate the apps_rsc with the cluster pd, so that it can be notified
+> > > about this event.
+> > > 
+> > > Without this, only AMC votes are being commited.
+> > Ouch.
+> > 
+> > Should we make this required: in bindings and add it to all
+> > platforms?
+> > 
 > 
-> Without this, only AMC votes are being commited.
+> I though this was an optimization and in the absence of this callback
+> the driver would just write out wake and sleep sets as well. But per the
+> current implementation (and perhaps some underlying cause?) it is indeed
+> required, if you care about power consumption.
+> 
+> > > 
+> > > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > > ---
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+> > 
+> 
+> The Fixes sounds reasonable.
 
-I'm sure I'm missing some details here, but from reading (and tracing)
-the code it looks like the cached votes are still being flushed albeit
-via rpmh_rsc_cpu_pm_callback() as the individual CPUs go down.
-
-There wasn't really any obvious motivation in the series adding support
-for the cluster domain as to why the new mechanism is preferred (e.g. if
-this is an actual fix or just an optimisation done to align with
-downstream):
-
-	https://lore.kernel.org/all/20221018152837.619426-1-ulf.hansson@linaro.org/
-
-Either way, this appears to work as intended even if it does not in
-itself have any significant effect on the X13s power consumption (in
-idle or suspend).
-
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Note that support for the cluster domain was not added until 6.2 and
+commit 25092e6100ac ("soc: qcom: rpmh-rsc: Attach RSC to cluster PM
+domain") while support for sc8280xp went into 5.19 IIRC.
 
 Johan
