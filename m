@@ -2,192 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D46A770223D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 05:29:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1EFD70224F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 05:31:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238101AbjEOD3D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 May 2023 23:29:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37486 "EHLO
+        id S239106AbjEODbJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 May 2023 23:31:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238536AbjEOD23 (ORCPT
+        with ESMTP id S233364AbjEODai (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 May 2023 23:28:29 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E93EF19B1;
-        Sun, 14 May 2023 20:28:01 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34F2cvue001477;
-        Mon, 15 May 2023 03:27:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=zIUGijYb1Blds7i6WYuJatyyN/SaPhyTorY0aWcUgT8=;
- b=iTKNKZj1hys/j8VpC+EPg1X1E0sT0cKY/VRmgpdV4QRB74r3n/razzfPW1XMcz44NAVO
- oYA39O9QdWXU2S2fFFmozZGGq+C9Nm/n+sTaVPoWjUhf7L12vJfb48DIV9QH4YuSdT8g
- dLuWnleTpt/8K4uR5VKV1w/n5ShBPJd9Z8gE0jH4WRxNUngyEx8Kf+Ykyzg4hMopy25O
- 8eeuJd/O7jXEsVXB9EDoxQlrBTcXciXVAk1Vdbum2T1ESb8ibjITP/nVUIhNd+Vqhzlq
- 7SbWG/MdSkT5n6TMj0TkUttSRkfT5ptHiWK4qUPrSCDZ1oKfoxyPqoafpxs5r4sDWJsO 4g== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qj3qw2h8s-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 15 May 2023 03:27:52 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34F3RpmZ030269
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 15 May 2023 03:27:51 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Sun, 14 May 2023 20:27:51 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Johan Hovold <johan@kernel.org>
-CC:     Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v3 8/8] arm64: dts: qcom: sc8280xp-x13s: Add QMP to SuperSpeed graph
-Date:   Sun, 14 May 2023 20:27:43 -0700
-Message-ID: <20230515032743.400170-9-quic_bjorande@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230515032743.400170-1-quic_bjorande@quicinc.com>
-References: <20230515032743.400170-1-quic_bjorande@quicinc.com>
+        Sun, 14 May 2023 23:30:38 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82D2B3582;
+        Sun, 14 May 2023 20:29:18 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C91D061767;
+        Mon, 15 May 2023 03:29:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90139C433D2;
+        Mon, 15 May 2023 03:29:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1684121357;
+        bh=mFyHyYBGiXN1K9UO9Pw2FXSpQ31xV2ioqkh4L9zAoCo=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=OctG4n3vOZ/qdMJYg+AxNaxA/Lf29+v5mU1v009UDwsdLgU9IbEYzN68/RWHSmqgB
+         7deGRycR3ohMupjvzjQGrAW8qVJQfyNXe8lKnVZteSQCoe6FjIOHFdcWR6k3VhdKXx
+         dZUzbhgQapLrfPS3gsL6yO9h/EKEwSbxcw33GPdPj9x6wlql6Yl+FloxuOC30EeM4B
+         PHn5TbFQdPp9mfan05ncS4oEVdHL+BIBJxVm3XrMhe6PkBACrMLb45oxM64I6hgV4K
+         dpu7+Hac/bRf/MKieXDG7juFZf+5ozYiIJeMolpCgJKttApLRP0TsLyohDy/JCnmpK
+         uuXwPkVQPIL0g==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     linux-kernel@vger.kernel.org, Andrew Halaney <ahalaney@redhat.com>
+Cc:     konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, agross@kernel.org
+Subject: Re: [PATCH v6 0/2] Add EMAC3 support for sa8540p-ride (devicetree bits)
+Date:   Sun, 14 May 2023 20:32:56 -0700
+Message-Id: <168412158454.1260758.12334402333318173153.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230501205105.2518373-1-ahalaney@redhat.com>
+References: <20230501205105.2518373-1-ahalaney@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 4Ar03X-RTx8Hwyh1oGnhYZpKEbGyZbUd
-X-Proofpoint-GUID: 4Ar03X-RTx8Hwyh1oGnhYZpKEbGyZbUd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-15_01,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
- adultscore=0 impostorscore=0 bulkscore=0 suspectscore=0 priorityscore=1501
- mlxscore=0 spamscore=0 lowpriorityscore=0 mlxlogscore=999 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
- definitions=main-2305150028
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Following the CRD, connect the two QMP phys inbetween the USB Type-C
-connectors and the DisplayPort controller, to handle orientation
-switching.
+On Mon, 1 May 2023 15:51:03 -0500, Andrew Halaney wrote:
+> This is a forward port / upstream refactor of code delivered
+> downstream by Qualcomm over at [0] to enable the DWMAC5 based
+> implementation called EMAC3 on the sa8540p-ride dev board.
+> 
+> From what I can tell with the board schematic in hand,
+> as well as the code delivered, the main changes needed are:
+> 
+> [...]
 
-Tested-by: Abel Vesa <abel.vesa@linaro.org>
-Tested-by: Steev Klimaszewski <steev@kali.org>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on HDK8450
-Tested-by: Johan Hovold <johan+linaro@kernel.org>	# X13s
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
+Applied, thanks!
 
-Changes since v2:
-- None
+[1/2] arm64: dts: qcom: sc8280xp: Add ethernet nodes
+      commit: b405d8d500e59e1edc51d934a766ea6127e1e69d
+[2/2] arm64: dts: qcom: sa8540p-ride: Add ethernet nodes
+      commit: 57827e87be5447559cc3495567349ff002a6b33a
 
-Changes since v1:
-- None
-
- .../qcom/sc8280xp-lenovo-thinkpad-x13s.dts    | 28 ++++++++++++++++---
- 1 file changed, 24 insertions(+), 4 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index bdcba719fc38..5ae057ad6438 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -106,7 +106,7 @@ port@1 {
- 					reg = <1>;
- 
- 					pmic_glink_con0_ss: endpoint {
--						remote-endpoint = <&mdss0_dp0_out>;
-+						remote-endpoint = <&usb_0_qmpphy_out>;
- 					};
- 				};
- 
-@@ -141,7 +141,7 @@ port@1 {
- 					reg = <1>;
- 
- 					pmic_glink_con1_ss: endpoint {
--						remote-endpoint = <&mdss0_dp1_out>;
-+						remote-endpoint = <&usb_1_qmpphy_out>;
- 					};
- 				};
- 
-@@ -528,7 +528,7 @@ &mdss0_dp0 {
- 
- &mdss0_dp0_out {
- 	data-lanes = <0 1>;
--	remote-endpoint = <&pmic_glink_con0_ss>;
-+	remote-endpoint = <&usb_0_qmpphy_dp_in>;
- };
- 
- &mdss0_dp1 {
-@@ -537,7 +537,7 @@ &mdss0_dp1 {
- 
- &mdss0_dp1_out {
- 	data-lanes = <0 1>;
--	remote-endpoint = <&pmic_glink_con1_ss>;
-+	remote-endpoint = <&usb_1_qmpphy_dp_in>;
- };
- 
- &mdss0_dp3 {
-@@ -1114,9 +1114,19 @@ &usb_0_qmpphy {
- 	vdda-phy-supply = <&vreg_l9d>;
- 	vdda-pll-supply = <&vreg_l4d>;
- 
-+	orientation-switch;
-+
- 	status = "okay";
- };
- 
-+&usb_0_qmpphy_dp_in {
-+	remote-endpoint = <&mdss0_dp0_out>;
-+};
-+
-+&usb_0_qmpphy_out {
-+	remote-endpoint = <&pmic_glink_con0_ss>;
-+};
-+
- &usb_0_role_switch {
- 	remote-endpoint = <&pmic_glink_con0_hs>;
- };
-@@ -1141,9 +1151,19 @@ &usb_1_qmpphy {
- 	vdda-phy-supply = <&vreg_l4b>;
- 	vdda-pll-supply = <&vreg_l3b>;
- 
-+	orientation-switch;
-+
- 	status = "okay";
- };
- 
-+&usb_1_qmpphy_dp_in {
-+	remote-endpoint = <&mdss0_dp1_out>;
-+};
-+
-+&usb_1_qmpphy_out {
-+	remote-endpoint = <&pmic_glink_con1_ss>;
-+};
-+
- &usb_1_role_switch {
- 	remote-endpoint = <&pmic_glink_con1_hs>;
- };
+Best regards,
 -- 
-2.25.1
-
+Bjorn Andersson <andersson@kernel.org>
