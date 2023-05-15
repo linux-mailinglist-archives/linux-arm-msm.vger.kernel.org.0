@@ -2,130 +2,220 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 955AD703120
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 17:10:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C228703199
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 17:32:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241911AbjEOPKB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 11:10:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54568 "EHLO
+        id S242423AbjEOPcg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 11:32:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242237AbjEOPJl (ORCPT
+        with ESMTP id S242417AbjEOPcf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 11:09:41 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 924172690;
-        Mon, 15 May 2023 08:09:37 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34FEffb6026948;
-        Mon, 15 May 2023 15:08:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=tmBm5azAOb5kbBws6PC7/dIyELMT20nqPNDHR9qtfO0=;
- b=GBtmyJq8nHbHMRuWjKIXT40k+HNrA5mJjOy6Vhh6UCeRF46InSlQoLcydj10LWdI5EtX
- wCPk1pdFBpu2egc8EDHuSVceFTrCgk+pZYfwudypFjf/JinJKq3Dl1xpFly/Y9A1er+m
- Ihfu+HNH6lp25SAz8lRvFcykD6Pq7ZkEwxq0H17BU9smO6Jy7BcGw8AxJvUwyZ2v07y3
- za9ECrxPQXH277fm3sfRv62YwO1F3R/CM/wIqgA3AsSZDdJQscElu4k349t7e3eK5LKE
- XW/ZWAsBcx2YMAqG6nvjjm50ozAj3b5yJLIL5y5fnQ8yckfHKkBWtruzV0519+AXqGxP dg== 
+        Mon, 15 May 2023 11:32:35 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 175DA1BC9;
+        Mon, 15 May 2023 08:32:34 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34FEeUK2031390;
+        Mon, 15 May 2023 15:32:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=TAlD90dXc/rktBgVfR0wgp7XrmKmHudrO7IIMnPdVCY=;
+ b=jfVn5FLRS/gJf/o4lOwCdG5kRegH6joXBAwmYNvPivsZPI6OlefdvNfj814FOTXoLOKz
+ oohk30kyzILjjuWXixNbmOTvmVeSY1cGDJWrwmXgWF70yYl/4UK6kt8DvU6PEjTGu/EZ
+ ux0sUWiL1bW6ksdv6PW0q3sxsuyzl69G7ik7GlYNyFhmq6i3o13xvbipbGSdaGWkOAZr
+ dlpDT9m+w/ZM5JjMkGPKCrm5562BxKwQTsjWomueNro+Nt2vbl3+lSgamH5s7YYPQ6nE
+ wBvVSQnT2mcz/2SeE2pqz1zvdU4745j3mMH9U9rd445nqqL9Avj/0KE80TEZ6oUK4lag dw== 
 Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qkjt9gwdr-1
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qkgq6s9vm-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 15 May 2023 15:08:42 +0000
+        Mon, 15 May 2023 15:32:23 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34FF8ei4018951
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34FFWMJM014623
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 15 May 2023 15:08:40 GMT
-Received: from anusha-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Mon, 15 May 2023 08:08:33 -0700
-From:   Anusha Rao <quic_anusha@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <thara.gopinath@gmail.com>,
-        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <p.zabel@pengutronix.de>,
-        <bhupesh.sharma@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-crypto@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
-        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_arajkuma@quicinc.com>, <quic_poovendh@quicinc.com>
-Subject: [PATCH V2 4/4] arm64: dts: qcom: ipq9574: Enable crypto nodes
-Date:   Mon, 15 May 2023 20:37:22 +0530
-Message-ID: <20230515150722.12196-5-quic_anusha@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230515150722.12196-1-quic_anusha@quicinc.com>
-References: <20230515150722.12196-1-quic_anusha@quicinc.com>
+        Mon, 15 May 2023 15:32:22 GMT
+Received: from [10.216.35.75] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 15 May
+ 2023 08:32:15 -0700
+Message-ID: <d14567fd-0576-55bb-40c0-442e060c28ba@quicinc.com>
+Date:   Mon, 15 May 2023 21:02:13 +0530
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v8 7/9] arm64: dts: qcom: sc8280xp: Add multiport
+ controller node for SC8280
+To:     Johan Hovold <johan@kernel.org>
+CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Andy Gross" <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>, <quic_wcheng@quicinc.com>,
+        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
+        <ahalaney@redhat.com>
+References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
+ <20230514054917.21318-8-quic_kriskura@quicinc.com>
+ <ZGJBLUsPcbsxj989@hovoldconsulting.com>
+Content-Language: en-US
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <ZGJBLUsPcbsxj989@hovoldconsulting.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: -zgjZTHhgzLvbAZWV46XmRQIeWRWeCmS
-X-Proofpoint-ORIG-GUID: -zgjZTHhgzLvbAZWV46XmRQIeWRWeCmS
+X-Proofpoint-ORIG-GUID: nmyNzzX9rv7MTM0Z_ompwG15xsGzBiTW
+X-Proofpoint-GUID: nmyNzzX9rv7MTM0Z_ompwG15xsGzBiTW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-15_11,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=854
- clxscore=1015 bulkscore=0 suspectscore=0 lowpriorityscore=0 adultscore=1
- priorityscore=1501 malwarescore=0 impostorscore=0 mlxscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
- definitions=main-2305150124
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+ definitions=2023-05-15_12,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999 clxscore=1015
+ lowpriorityscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
+ adultscore=0 mlxscore=0 bulkscore=0 spamscore=0 phishscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305150128
+X-Spam-Status: No, score=-6.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable crypto support for ipq9574.
 
-Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
----
- Changes in V2:
-	- Removed the deprecated compatible 'qcom,crypto-v5.1' and
-	  added SoC specific compatible string.
 
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+On 5/15/2023 7:56 PM, Johan Hovold wrote:
+> On Sun, May 14, 2023 at 11:19:15AM +0530, Krishna Kurapati wrote:
+>> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
+>> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
+>> platforms.
+>>
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 66 ++++++++++++++++++++++++++
+>>   1 file changed, 66 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> index 8fa9fbfe5d00..50f6a8424537 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> @@ -3133,6 +3133,72 @@ usb_1_role_switch: endpoint {
+>>   			};
+>>   		};
+>>   
+>> +		usb_2: usb@a4f8800 {
+> 
+> As I believe someone already pointed out, this node is not in sort order
+> (i.e. it should go before usb@a6f8800).
+> 
+Hi Johan,
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index fea15f3cf910..6e52d35a6a15 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -123,6 +123,26 @@
- 			clock-names = "core";
- 		};
- 
-+		cryptobam: dma-controller@704000 {
-+			compatible = "qcom,bam-v1.7.0";
-+			reg = <0x00704000 0x20000>;
-+			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>;
-+			#dma-cells = <1>;
-+			qcom,ee = <1>;
-+			qcom,controlled-remotely;
-+		};
-+
-+		crypto: crypto@73a000 {
-+			compatible = "qcom,ipq9574-qce", "qcom,ipq4019-qce", "qcom,qce";
-+			reg = <0x0073a000 0x6000>;
-+			clocks = <&gcc GCC_CRYPTO_AHB_CLK>,
-+				 <&gcc GCC_CRYPTO_AXI_CLK>,
-+				 <&gcc GCC_CRYPTO_CLK>;
-+			clock-names = "iface", "bus", "core";
-+			dmas = <&cryptobam 2>, <&cryptobam 3>;
-+			dma-names = "rx", "tx";
-+		};
-+
- 		tlmm: pinctrl@1000000 {
- 			compatible = "qcom,ipq9574-tlmm";
- 			reg = <0x01000000 0x300000>;
--- 
-2.17.1
+   I missed that message, but since I named it usb_2, so I placed it in 
+order after usb_1. Hope that is fine !!
 
+>> +			compatible = "qcom,sc8280xp-dwc3-mp", "qcom,dwc3";
+>> +			reg = <0 0x0a4f8800 0 0x400>;
+>> +			#address-cells = <2>;
+>> +			#size-cells = <2>;
+>> +			ranges;
+>> +
+>> +			clocks = <&gcc GCC_CFG_NOC_USB3_MP_AXI_CLK>,
+>> +				 <&gcc GCC_USB30_MP_MASTER_CLK>,
+>> +				 <&gcc GCC_AGGRE_USB3_MP_AXI_CLK>,
+>> +				 <&gcc GCC_USB30_MP_SLEEP_CLK>,
+>> +				 <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
+>> +				 <&gcc GCC_AGGRE_USB_NOC_AXI_CLK>,
+>> +				 <&gcc GCC_AGGRE_USB_NOC_NORTH_AXI_CLK>,
+>> +				 <&gcc GCC_AGGRE_USB_NOC_SOUTH_AXI_CLK>,
+>> +				 <&gcc GCC_SYS_NOC_USB_AXI_CLK>;
+>> +			clock-names = "cfg_noc", "core", "iface", "sleep", "mock_utmi",
+>> +				      "noc_aggr", "noc_aggr_north", "noc_aggr_south", "noc_sys";
+>> +
+>> +			assigned-clocks = <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
+>> +					  <&gcc GCC_USB30_MP_MASTER_CLK>;
+>> +			assigned-clock-rates = <19200000>, <200000000>;
+>> +
+>> +			interrupts-extended = <&pdc 127 IRQ_TYPE_EDGE_RISING>,
+>> +					      <&pdc 126 IRQ_TYPE_EDGE_RISING>,
+>> +					      <&pdc 16 IRQ_TYPE_LEVEL_HIGH>,
+>> +					      <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
+>> +					      <&intc GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
+>> +					      <&intc GIC_SPI 857 IRQ_TYPE_LEVEL_HIGH>,
+>> +					      <&intc GIC_SPI 856 IRQ_TYPE_LEVEL_HIGH>;
+>> +
+>> +			interrupt-names = "dp_hs_phy_irq",
+>> +					  "dm_hs_phy_irq",
+>> +					  "ss_phy_irq",
+>> +					  "pwr_event_1",
+>> +					  "pwr_event_2",
+>> +					  "pwr_event_3",
+>> +					  "pwr_event_4";
+>> +
+>> +			power-domains = <&gcc USB30_MP_GDSC>;
+>> +			required-opps = <&rpmhpd_opp_nom>;
+>> +
+>> +			resets = <&gcc GCC_USB30_MP_BCR>;
+>> +
+>> +			interconnects = <&aggre1_noc MASTER_USB3_1 0 &mc_virt SLAVE_EBI1 0>,
+>> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_1 0>;
+> 
+> This is not the correct interconnect master and slave; it should be
+> MASTER_USB3_MP and SLAVE_USB3_MP.
+> 
+Thanks for pointing it out. I need to check how it was working all these 
+days. (Probably since both of them vote for the same NOC, it didn't show 
+any affect)
+>> +			interconnect-names = "usb-ddr", "apps-usb";
+> 
+> Looks like 'wakeup-source' is missing here too.
+> 
+
+I believe this property was added to enable wakeup from system suspend 
+in host mode. I didn't add this property as currently I don't need to 
+support wakeup. If any requirement comes in future, then I might need to 
+add dp/dm interrupts (if any) for other ports as well and then need to 
+change driver code to enable/disable them on suspend/resume.
+
+>> +
+>> +			status = "disabled";
+>> +
+>> +			usb_2_dwc3: usb@a400000 {
+>> +				compatible = "snps,dwc3";
+>> +				reg = <0 0x0a400000 0 0xcd00>;
+>> +				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
+>> +				iommus = <&apps_smmu 0x800 0x0>;
+>> +				phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>,
+>> +					<&usb_2_hsphy1>, <&usb_2_qmpphy1>,
+>> +					<&usb_2_hsphy2>,
+>> +					<&usb_2_hsphy3>;
+>> +				phy-names = "usb2-port0", "usb3-port0",
+>> +						"usb2-port1", "usb3-port1",
+>> +						"usb2-port2",
+>> +						"usb2-port3";
+> 
+> The phys and phy-names continuation lines above are still not aligned.
+> 
+Missed it. Will fix it in next version.
+
+Thanks,
+Krishna,
+>> +			};
+>> +		};
+>> +
+>>   		mdss0: display-subsystem@ae00000 {
+>>   			compatible = "qcom,sc8280xp-mdss";
+>>   			reg = <0 0x0ae00000 0 0x1000>;
+> 
+> Johan
