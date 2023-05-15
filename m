@@ -2,394 +2,317 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD93C702960
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 11:44:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E8357702993
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 11:53:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240571AbjEOJoe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 05:44:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48802 "EHLO
+        id S239726AbjEOJxK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 05:53:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240552AbjEOJoS (ORCPT
+        with ESMTP id S240906AbjEOJwa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 05:44:18 -0400
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [IPv6:2001:67c:2178:6::1c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE1F4229;
-        Mon, 15 May 2023 02:41:00 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id 3B6CF21D38;
-        Mon, 15 May 2023 09:40:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1684143639; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=x/ukCFzbN07fn8ALvdz1hMDvC2v9v6ch1Yiaceo0YOo=;
-        b=Jx+lBh8GYrGyDI/X7iciwc7luLhdvN4bzVFkRuUqKuQm606adqkzJb4JBWWzuEAmEwub6X
-        l64210xks++BezoYsvKRRnVIJTSjmvEDFjCOpQPR4HYG6KrYz5dFhfd6Ru+tekXjHBQbeg
-        d9DP0um/s+0ZbC6lLLj21ACWqfQjoWE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1684143639;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=x/ukCFzbN07fn8ALvdz1hMDvC2v9v6ch1Yiaceo0YOo=;
-        b=iv3Q59R2N8CIeokEPkJq8DE1uD56ygCZlgDnnH7d+RejKamfGu2K3dVxksiau9B3RerW1M
-        s2magME+htFYNBCA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id CF7A4138FE;
-        Mon, 15 May 2023 09:40:38 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id mBiqMRb+YWTeTwAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Mon, 15 May 2023 09:40:38 +0000
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-To:     daniel@ffwll.ch, airlied@gmail.com,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        javierm@redhat.com, sam@ravnborg.org
-Cc:     dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
-        <ville.syrjala@linux.intel.com>
-Subject: [PATCH v2 12/12] drm/i915: Implement dedicated fbdev I/O helpers
-Date:   Mon, 15 May 2023 11:40:33 +0200
-Message-Id: <20230515094033.2133-13-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230515094033.2133-1-tzimmermann@suse.de>
-References: <20230515094033.2133-1-tzimmermann@suse.de>
+        Mon, 15 May 2023 05:52:30 -0400
+Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 309BF26B0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 02:51:39 -0700 (PDT)
+Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-55af4277904so186101637b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 02:51:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684144297; x=1686736297;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=IF6RYhi9196ABKVQuykto9HSRX1UUNxAVL8RwbebD6Y=;
+        b=sL8H4oQe5XjWXMsicnXlIlhqp+6Cqc1VH3jd+E2QPvjxjnzEICur1g0y3vq9Gac8c6
+         lQgwUGSgMMcoXvNSGe9Q+Dlxi0sa7t38U3OO2LWXxraPi41oLlNjiINIKquBHEpCx/9Y
+         rPWvhzUffBEWis4dvDBrW1+Lbd3DI3kYPzm8eM8qKbqk9mBq5MfqyyaufUJd9+AY932x
+         fzCgQdilG0ljG1+DX1LATkCYF5ONMY15CEYldT4wwSXNxcDVS1ET3s+SQMoIrV9dLecE
+         vLpChenSJffNxxKWPk2o8lfMRTqJx8n8JBk6TZoXDiAwgqJRgHYjd92miZIM+WgN47Pu
+         POeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684144297; x=1686736297;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IF6RYhi9196ABKVQuykto9HSRX1UUNxAVL8RwbebD6Y=;
+        b=Yqtco4HHNpAgsJd6XDw+dwb3KzSeLZZor7vcguFEf75JYIHP7U1vehi2LzNl2iPbq4
+         OUXkFrlkmS4Yif0x9Qf0wfvRPAuvCad0jnxB5xdZBJt2R9bButRzxRxrZ5ewSIX4zMK7
+         mTB36sv4xAW8WBD8NBB46tCuuSQgwbZ0MyU5DqmQs2Io4LTs5T0ftrRWRCFxew/R4+3z
+         ejKdQ2Evfq2HqIgWrqparOlmqt03IYxO8suhhEgzkRaLGu08lsveNJI3GVa7rBY6aXJS
+         Pp5Bck/dp/GFkcryjqB9jmHbRSIybOLwcvmjTKv3vQY4zW3kV8f3R0EeplX+zC2lpfbc
+         10IA==
+X-Gm-Message-State: AC+VfDznWHQQRhJJ5Qx6CmA3sHdBS7G1lFSI+qQt00JQmhtYLoqSkCSy
+        OdUjpbfJWYKmh2dnAxGvOwKFIIZOqE+P6cn6WiGd+g==
+X-Google-Smtp-Source: ACHHUZ61RyajDItskrYu6z17N6xzCcMJCJ9wzZmcXym4gZ2NR7VnuAiYU0EkS7VmIsqXJ7Tacga8wHRHyCgX8tkF9EQ=
+X-Received: by 2002:a81:658a:0:b0:55d:8768:4081 with SMTP id
+ z132-20020a81658a000000b0055d87684081mr29351285ywb.7.1684144297357; Mon, 15
+ May 2023 02:51:37 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20230421124938.21974-1-quic_devipriy@quicinc.com>
+ <20230421124938.21974-5-quic_devipriy@quicinc.com> <CAA8EJppyro1wM3KmDU3DVjKCqXH5+KaNoT_7ObVuuYNMoZKpoA@mail.gmail.com>
+ <a220e00d-0559-35d5-80e9-7e11e566851a@quicinc.com> <e7b4afde-2cd7-0ab5-8a15-446173b42c40@linaro.org>
+ <97315104-d9cc-27f8-8c52-b99080179269@quicinc.com>
+In-Reply-To: <97315104-d9cc-27f8-8c52-b99080179269@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 15 May 2023 12:51:26 +0300
+Message-ID: <CAA8EJpqrza+r3bygJh=TmNuNYUFspqvuV7gDFb5-QZcs4j3Dbg@mail.gmail.com>
+Subject: Re: [PATCH V3 4/6] arm64: dts: qcom: ipq9574: Add PCIe PHYs and
+ controller nodes
+To:     Devi Priya <quic_devipriy@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, mani@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-clk@vger.kernel.org, quic_srichara@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_ipkumar@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Implement dedicated fbdev helpers for framebuffer I/O instead
-of using DRM's helpers. i915 was the only caller of the DRM
-helpers, so remove them from the helper module.
+On Mon, 15 May 2023 at 12:36, Devi Priya <quic_devipriy@quicinc.com> wrote:
+>
+>
+>
+> On 5/8/2023 5:10 PM, Dmitry Baryshkov wrote:
+> > On 08/05/2023 13:53, Devi Priya wrote:
+> >>
+> >>
+> >> On 4/22/2023 5:49 AM, Dmitry Baryshkov wrote:
+> >>> On Fri, 21 Apr 2023 at 15:50, Devi Priya <quic_devipriy@quicinc.com>
+> >>> wrote:
+> >>>>
+> >>>> Add PCIe0, PCIe1, PCIe2, PCIe3 (and corresponding PHY) devices
+> >>>> found on IPQ9574 platform. The PCIe0 & PCIe1 are 1-lane Gen3
+> >>>> host whereas PCIe2 & PCIe3 are 2-lane Gen3 host.
+> >>>>
+> >>>> Co-developed-by: Anusha Rao <quic_anusha@quicinc.com>
+> >>>> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+> >>>> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> >>>> ---
+> >>>>   Changes in V3:
+> >>>>          - Fixed up the PCI I/O port ranges
+> >>>>
+> >>>>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 375
+> >>>> +++++++++++++++++++++++++-
+> >>>>   1 file changed, 370 insertions(+), 5 deletions(-)
+> >>>>
+> >>>> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> >>>> b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> >>>> index e757b57957cf..953a839a1141 100644
+> >>>> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> >>>> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> >>>> @@ -6,8 +6,8 @@
+> >>>>    * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights
+> >>>> reserved.
+> >>>>    */
+> >>>>
+> >>>> -#include <dt-bindings/interrupt-controller/arm-gic.h>
+> >>>>   #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
+> >>>> +#include <dt-bindings/interrupt-controller/arm-gic.h>
+> >>>>   #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
+> >>>>
+> >>>>   / {
+> >>>> @@ -116,6 +116,58 @@
+> >>>>                  #size-cells = <1>;
+> >>>>                  ranges = <0 0 0 0xffffffff>;
+> >>>>
+> >>>> +               pcie0_phy: phy@84000 {
+> >>>> +                       compatible =
+> >>>> "qcom,ipq9574-qmp-gen3x1-pcie-phy";
+> >>>> +                       reg = <0x00084000 0x1000>;
+> >>>> +
+> >>>> +                       clocks = <&gcc GCC_PCIE0_AUX_CLK>,
+> >>>> +                                <&gcc GCC_PCIE0_AHB_CLK>,
+> >>>> +                                <&gcc GCC_ANOC_PCIE0_1LANE_M_CLK>,
+> >>>> +                                <&gcc GCC_SNOC_PCIE0_1LANE_S_CLK>,
+> >>>> +                                <&gcc GCC_PCIE0_PIPE_CLK>;
+> >>>> +                       clock-names = "aux", "cfg_ahb", "anoc_lane",
+> >>>> "snoc_lane", "pipe";
+> >>>> +
+> >>>> +                       assigned-clocks = <&gcc GCC_PCIE0_AUX_CLK>;
+> >>>> +                       assigned-clock-rates = <20000000>;
+> >>>> +
+> >>>> +                       resets = <&gcc GCC_PCIE0_PHY_BCR>,
+> >>>> +                                <&gcc GCC_PCIE0PHY_PHY_BCR>;
+> >>>> +                       reset-names = "phy", "common";
+> >>>> +
+> >>>> +                       #clock-cells = <0>;
+> >>>> +                       clock-output-names = "gcc_pcie0_pipe_clk_src";
+> >>>> +
+> >>>> +                       #phy-cells = <0>;
+> >>>> +                       status = "disabled";
+> >>>> +
+> >>>> +               };
+> >>>> +
+> >>>> +               pcie2_phy: phy@8c000 {
+> >>>> +                       compatible =
+> >>>> "qcom,ipq9574-qmp-gen3x2-pcie-phy";
+> >>>> +                       reg = <0x0008c000 0x2000>;
+> >>>> +
+> >>>> +                       clocks = <&gcc GCC_PCIE2_AUX_CLK>,
+> >>>> +                                <&gcc GCC_PCIE2_AHB_CLK>,
+> >>>> +                                <&gcc GCC_ANOC_PCIE2_2LANE_M_CLK>,
+> >>>> +                                <&gcc GCC_SNOC_PCIE2_2LANE_S_CLK>,
+> >>>> +                                <&gcc GCC_PCIE2_PIPE_CLK>;
+> >>>> +                       clock-names = "aux", "cfg_ahb", "anoc_lane",
+> >>>> "snoc_lane", "pipe";
+> >>>> +
+> >>>> +                       assigned-clocks = <&gcc GCC_PCIE2_AUX_CLK>;
+> >>>> +                       assigned-clock-rates = <20000000>;
+> >>>> +
+> >>>> +                       resets = <&gcc GCC_PCIE2_PHY_BCR>,
+> >>>> +                                <&gcc GCC_PCIE2PHY_PHY_BCR>;
+> >>>> +                       reset-names = "phy", "common";
+> >>>> +
+> >>>> +                       #clock-cells = <0>;
+> >>>> +                       clock-output-names = "gcc_pcie2_pipe_clk_src";
+> >>>> +
+> >>>> +                       #phy-cells = <0>;
+> >>>> +                       status = "disabled";
+> >>>> +
+> >>>> +               };
+> >>>> +
+> >>>>                  rng: rng@e3000 {
+> >>>>                          compatible = "qcom,prng-ee";
+> >>>>                          reg = <0x000e3000 0x1000>;
+> >>>> @@ -123,6 +175,58 @@
+> >>>>                          clock-names = "core";
+> >>>>                  };
+> >>>>
+> >>>> +               pcie3_phy: phy@f4000 {
+> >>>> +                       compatible =
+> >>>> "qcom,ipq9574-qmp-gen3x2-pcie-phy";
+> >>>> +                       reg = <0x000f4000 0x2000>;
+> >>>> +
+> >>>> +                       clocks = <&gcc GCC_PCIE3_AUX_CLK>,
+> >>>> +                                <&gcc GCC_PCIE3_AHB_CLK>,
+> >>>> +                                <&gcc GCC_ANOC_PCIE3_2LANE_M_CLK>,
+> >>>> +                                <&gcc GCC_SNOC_PCIE3_2LANE_S_CLK>,
+> >>>> +                                <&gcc GCC_PCIE3_PIPE_CLK>;
+> >>>> +                       clock-names = "aux", "cfg_ahb", "anoc_lane",
+> >>>> "snoc_lane", "pipe";
+> >>>> +
+> >>>> +                       assigned-clocks = <&gcc GCC_PCIE3_AUX_CLK>;
+> >>>> +                       assigned-clock-rates = <20000000>;
+> >>>> +
+> >>>> +                       resets = <&gcc GCC_PCIE3_PHY_BCR>,
+> >>>> +                                <&gcc GCC_PCIE3PHY_PHY_BCR>;
+> >>>> +                       reset-names = "phy", "common";
+> >>>> +
+> >>>> +                       #clock-cells = <0>;
+> >>>> +                       clock-output-names = "gcc_pcie3_pipe_clk_src";
+> >>>> +
+> >>>> +                       #phy-cells = <0>;
+> >>>> +                       status = "disabled";
+> >>>> +
+> >>>> +               };
+> >>>> +
+> >>>> +               pcie1_phy: phy@fc000 {
+> >>>> +                       compatible =
+> >>>> "qcom,ipq9574-qmp-gen3x1-pcie-phy";
+> >>>> +                       reg = <0x000fc000 0x1000>;
+> >>>> +
+> >>>> +                       clocks = <&gcc GCC_PCIE1_AUX_CLK>,
+> >>>> +                                <&gcc GCC_PCIE1_AHB_CLK>,
+> >>>> +                                <&gcc GCC_ANOC_PCIE1_1LANE_M_CLK>,
+> >>>> +                                <&gcc GCC_SNOC_PCIE1_1LANE_S_CLK>,
+> >>>> +                                <&gcc GCC_PCIE1_PIPE_CLK>;
+> >>>> +                       clock-names = "aux", "cfg_ahb", "anoc_lane",
+> >>>> "snoc_lane", "pipe";
+> >>>> +
+> >>>> +                       assigned-clocks = <&gcc GCC_PCIE1_AUX_CLK>;
+> >>>> +                       assigned-clock-rates = <20000000>;
+> >>>> +
+> >>>> +                       resets = <&gcc GCC_PCIE1_PHY_BCR>,
+> >>>> +                                <&gcc GCC_PCIE1PHY_PHY_BCR>;
+> >>>> +                       reset-names = "phy", "common";
+> >>>> +
+> >>>> +                       #clock-cells = <0>;
+> >>>> +                       clock-output-names = "gcc_pcie1_pipe_clk_src";
+> >>>> +
+> >>>> +                       #phy-cells = <0>;
+> >>>> +                       status = "disabled";
+> >>>> +
+> >>>> +               };
+> >>>> +
+> >>>>                  tlmm: pinctrl@1000000 {
+> >>>>                          compatible = "qcom,ipq9574-tlmm";
+> >>>>                          reg = <0x01000000 0x300000>;
+> >>>> @@ -146,10 +250,10 @@
+> >>>>                          reg = <0x01800000 0x80000>;
+> >>>>                          clocks = <&xo_board_clk>,
+> >>>>                                   <&sleep_clk>,
+> >>>> -                                <0>,
+> >>>> -                                <0>,
+> >>>> -                                <0>,
+> >>>> -                                <0>,
+> >>>> +                                <&pcie0_phy>,
+> >>>> +                                <&pcie1_phy>,
+> >>>> +                                <&pcie2_phy>,
+> >>>> +                                <&pcie3_phy>,
+> >>>>                                   <0>;
+> >>>>                          #clock-cells = <1>;
+> >>>>                          #reset-cells = <1>;
+> >>>> @@ -478,6 +582,267 @@
+> >>>>                                  status = "disabled";
+> >>>>                          };
+> >>>>                  };
+> >>>> +
+> >>>> +               pcie1: pci@10000000 {
+> >>>> +                       compatible = "qcom,pcie-ipq9574";
+> >>>> +                       reg =  <0x10000000 0xf1d>,
+> >>>> +                              <0x10000F20 0xa8>,
+> >>>> +                              <0x10001000 0x1000>,
+> >>>> +                              <0x000F8000 0x4000>,
+> >>>> +                              <0x10100000 0x1000>;
+> >>>> +                       reg-names = "dbi", "elbi", "atu", "parf",
+> >>>> "config";
+> >>>> +                       device_type = "pci";
+> >>>> +                       linux,pci-domain = <2>;
+> >>>> +                       bus-range = <0x00 0xff>;
+> >>>> +                       num-lanes = <1>;
+> >>>> +                       #address-cells = <3>;
+> >>>> +                       #size-cells = <2>;
+> >>>> +
+> >>>> +                       ranges = <0x01000000 0x0 0x00000000
+> >>>> 0x10200000 0x0 0x100000>,  /* I/O */
+> >>>> +                                <0x02000000 0x0 0x10300000
+> >>>> 0x10300000 0x0 0x7d00000>; /* MEM */
+> >>>> +
+> >>>> +                       #interrupt-cells = <1>;
+> >>>> +                       interrupt-map-mask = <0 0 0 0x7>;
+> >>>> +                       interrupt-map = <0 0 0 1 &intc 0 35
+> >>>> IRQ_TYPE_LEVEL_HIGH>, /* int_a */
+> >>>> +                                       <0 0 0 2 &intc 0 49
+> >>>> IRQ_TYPE_LEVEL_HIGH>, /* int_b */
+> >>>> +                                       <0 0 0 3 &intc 0 84
+> >>>> IRQ_TYPE_LEVEL_HIGH>, /* int_c */
+> >>>> +                                       <0 0 0 4 &intc 0 85
+> >>>> IRQ_TYPE_LEVEL_HIGH>; /* int_d */
+> >>>> +
+> >>>
+> >>> No iommu-map?
+> >> We do not enable the IOMMU stage1 translation for PCIe and the registers
+> >> have secure access only from TrustZone (It enables only stage2 for
+> >> Access control)
+> >
+> > So, no SMMU protection for PCIe transactions? This sounds like a step
+> > backwards.
+> Yes, we are not using stage1 translations.
 
-v2:
-	* use FB_IO_HELPERS options
+We = software or we = hardware? If there is a hardware interface to
+SMMU, please describe it here.
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: "Ville Syrjälä" <ville.syrjala@linux.intel.com>
----
- drivers/gpu/drm/Kconfig                    |   3 -
- drivers/gpu/drm/drm_fb_helper.c            | 107 ---------------------
- drivers/gpu/drm/i915/Kconfig               |   1 +
- drivers/gpu/drm/i915/display/intel_fbdev.c |  51 ++++++++--
- include/drm/drm_fb_helper.h                |  39 --------
- 5 files changed, 46 insertions(+), 155 deletions(-)
-
-diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
-index 92a782827b7b..bb2e48cc6cd6 100644
---- a/drivers/gpu/drm/Kconfig
-+++ b/drivers/gpu/drm/Kconfig
-@@ -133,9 +133,6 @@ config DRM_FBDEV_EMULATION
- 	bool "Enable legacy fbdev support for your modesetting driver"
- 	depends on DRM_KMS_HELPER
- 	depends on FB=y || FB=DRM_KMS_HELPER
--	select FB_CFB_FILLRECT
--	select FB_CFB_COPYAREA
--	select FB_CFB_IMAGEBLIT
- 	select FRAMEBUFFER_CONSOLE if !EXPERT
- 	select FRAMEBUFFER_CONSOLE_DETECT_PRIMARY if FRAMEBUFFER_CONSOLE
- 	default y
-diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
-index ba0a808f14ee..5927896ad8f6 100644
---- a/drivers/gpu/drm/drm_fb_helper.c
-+++ b/drivers/gpu/drm/drm_fb_helper.c
-@@ -729,113 +729,6 @@ void drm_fb_helper_deferred_io(struct fb_info *info, struct list_head *pagerefli
- }
- EXPORT_SYMBOL(drm_fb_helper_deferred_io);
- 
--/**
-- * drm_fb_helper_cfb_read - Implements struct &fb_ops.fb_read for I/O memory
-- * @info: fb_info struct pointer
-- * @buf: userspace buffer to read from framebuffer memory
-- * @count: number of bytes to read from framebuffer memory
-- * @ppos: read offset within framebuffer memory
-- *
-- * Returns:
-- * The number of bytes read on success, or an error code otherwise.
-- */
--ssize_t drm_fb_helper_cfb_read(struct fb_info *info, char __user *buf,
--			       size_t count, loff_t *ppos)
--{
--	return fb_io_read(info, buf, count, ppos);
--}
--EXPORT_SYMBOL(drm_fb_helper_cfb_read);
--
--/**
-- * drm_fb_helper_cfb_write - Implements struct &fb_ops.fb_write for I/O memory
-- * @info: fb_info struct pointer
-- * @buf: userspace buffer to write to framebuffer memory
-- * @count: number of bytes to write to framebuffer memory
-- * @ppos: write offset within framebuffer memory
-- *
-- * Returns:
-- * The number of bytes written on success, or an error code otherwise.
-- */
--ssize_t drm_fb_helper_cfb_write(struct fb_info *info, const char __user *buf,
--				size_t count, loff_t *ppos)
--{
--	struct drm_fb_helper *helper = info->par;
--	loff_t pos = *ppos;
--	ssize_t ret;
--	struct drm_rect damage_area;
--
--	ret = fb_io_write(info, buf, count, ppos);
--	if (ret <= 0)
--		return ret;
--
--	if (helper->funcs->fb_dirty) {
--		drm_fb_helper_memory_range_to_clip(info, pos, ret, &damage_area);
--		drm_fb_helper_damage(helper, damage_area.x1, damage_area.y1,
--				     drm_rect_width(&damage_area),
--				     drm_rect_height(&damage_area));
--	}
--
--	return ret;
--}
--EXPORT_SYMBOL(drm_fb_helper_cfb_write);
--
--/**
-- * drm_fb_helper_cfb_fillrect - wrapper around cfb_fillrect
-- * @info: fbdev registered by the helper
-- * @rect: info about rectangle to fill
-- *
-- * A wrapper around cfb_fillrect implemented by fbdev core
-- */
--void drm_fb_helper_cfb_fillrect(struct fb_info *info,
--				const struct fb_fillrect *rect)
--{
--	struct drm_fb_helper *helper = info->par;
--
--	cfb_fillrect(info, rect);
--
--	if (helper->funcs->fb_dirty)
--		drm_fb_helper_damage(helper, rect->dx, rect->dy, rect->width, rect->height);
--}
--EXPORT_SYMBOL(drm_fb_helper_cfb_fillrect);
--
--/**
-- * drm_fb_helper_cfb_copyarea - wrapper around cfb_copyarea
-- * @info: fbdev registered by the helper
-- * @area: info about area to copy
-- *
-- * A wrapper around cfb_copyarea implemented by fbdev core
-- */
--void drm_fb_helper_cfb_copyarea(struct fb_info *info,
--				const struct fb_copyarea *area)
--{
--	struct drm_fb_helper *helper = info->par;
--
--	cfb_copyarea(info, area);
--
--	if (helper->funcs->fb_dirty)
--		drm_fb_helper_damage(helper, area->dx, area->dy, area->width, area->height);
--}
--EXPORT_SYMBOL(drm_fb_helper_cfb_copyarea);
--
--/**
-- * drm_fb_helper_cfb_imageblit - wrapper around cfb_imageblit
-- * @info: fbdev registered by the helper
-- * @image: info about image to blit
-- *
-- * A wrapper around cfb_imageblit implemented by fbdev core
-- */
--void drm_fb_helper_cfb_imageblit(struct fb_info *info,
--				 const struct fb_image *image)
--{
--	struct drm_fb_helper *helper = info->par;
--
--	cfb_imageblit(info, image);
--
--	if (helper->funcs->fb_dirty)
--		drm_fb_helper_damage(helper, image->dx, image->dy, image->width, image->height);
--}
--EXPORT_SYMBOL(drm_fb_helper_cfb_imageblit);
--
- /**
-  * drm_fb_helper_set_suspend - wrapper around fb_set_suspend
-  * @fb_helper: driver-allocated fbdev helper, can be NULL
-diff --git a/drivers/gpu/drm/i915/Kconfig b/drivers/gpu/drm/i915/Kconfig
-index e4f4d2e3fdfe..01b5a8272a27 100644
---- a/drivers/gpu/drm/i915/Kconfig
-+++ b/drivers/gpu/drm/i915/Kconfig
-@@ -17,6 +17,7 @@ config DRM_I915
- 	select DRM_KMS_HELPER
- 	select DRM_PANEL
- 	select DRM_MIPI_DSI
-+	select FB_IO_HELPERS if DRM_FBDEV_EMULATION
- 	select RELAY
- 	select I2C
- 	select I2C_ALGOBIT
-diff --git a/drivers/gpu/drm/i915/display/intel_fbdev.c b/drivers/gpu/drm/i915/display/intel_fbdev.c
-index aab1ae74a8f7..64aeacef703d 100644
---- a/drivers/gpu/drm/i915/display/intel_fbdev.c
-+++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
-@@ -28,6 +28,7 @@
- #include <linux/console.h>
- #include <linux/delay.h>
- #include <linux/errno.h>
-+#include <linux/fb.h>
- #include <linux/init.h>
- #include <linux/kernel.h>
- #include <linux/mm.h>
-@@ -84,6 +85,20 @@ static void intel_fbdev_invalidate(struct intel_fbdev *ifbdev)
- 	intel_frontbuffer_invalidate(to_frontbuffer(ifbdev), ORIGIN_CPU);
- }
- 
-+static ssize_t intel_fbdev_fb_write(struct fb_info *info, const char __user *buf,
-+				    size_t count, loff_t *ppos)
-+{
-+	struct drm_fb_helper *helper = info->par;
-+	loff_t pos = *ppos;
-+	ssize_t ret;
-+
-+	ret = fb_io_write(info, buf, count, ppos);
-+	if (ret > 0)
-+		drm_fb_helper_damage_range(helper, pos, ret);
-+
-+	return ret;
-+}
-+
- static int intel_fbdev_set_par(struct fb_info *info)
- {
- 	struct intel_fbdev *ifbdev = to_intel_fbdev(info->par);
-@@ -121,6 +136,30 @@ static int intel_fbdev_pan_display(struct fb_var_screeninfo *var,
- 	return ret;
- }
- 
-+static void intel_fbdev_fb_fillrect(struct fb_info *info, const struct fb_fillrect *rect)
-+{
-+	struct drm_fb_helper *helper = info->par;
-+
-+	cfb_fillrect(info, rect);
-+	drm_fb_helper_damage(helper, rect->dx, rect->dy, rect->width, rect->height);
-+}
-+
-+static void intel_fbdev_fb_copyarea(struct fb_info *info, const struct fb_copyarea *area)
-+{
-+	struct drm_fb_helper *helper = info->par;
-+
-+	cfb_copyarea(info, area);
-+	drm_fb_helper_damage(helper, area->dx, area->dy, area->width, area->height);
-+}
-+
-+static void intel_fbdev_fb_imageblit(struct fb_info *info, const struct fb_image *image)
-+{
-+	struct drm_fb_helper *helper = info->par;
-+
-+	cfb_imageblit(info, image);
-+	drm_fb_helper_damage(helper, image->dx, image->dy, image->width, image->height);
-+}
-+
- static int intel_fbdev_mmap(struct fb_info *info, struct vm_area_struct *vma)
- {
- 	struct intel_fbdev *fbdev = to_intel_fbdev(info->par);
-@@ -134,13 +173,13 @@ static const struct fb_ops intelfb_ops = {
- 	.owner = THIS_MODULE,
- 	DRM_FB_HELPER_DEFAULT_OPS,
- 	.fb_set_par = intel_fbdev_set_par,
--	.fb_read = drm_fb_helper_cfb_read,
--	.fb_write = drm_fb_helper_cfb_write,
--	.fb_fillrect = drm_fb_helper_cfb_fillrect,
--	.fb_copyarea = drm_fb_helper_cfb_copyarea,
--	.fb_imageblit = drm_fb_helper_cfb_imageblit,
--	.fb_pan_display = intel_fbdev_pan_display,
-+	.fb_read = fb_io_read,
-+	.fb_write = intel_fbdev_fb_write,
- 	.fb_blank = intel_fbdev_blank,
-+	.fb_pan_display = intel_fbdev_pan_display,
-+	.fb_fillrect = intel_fbdev_fb_fillrect,
-+	.fb_copyarea = intel_fbdev_fb_copyarea,
-+	.fb_imageblit = intel_fbdev_fb_imageblit,
- 	.fb_mmap = intel_fbdev_mmap,
- };
- 
-diff --git a/include/drm/drm_fb_helper.h b/include/drm/drm_fb_helper.h
-index e3240d749a43..15f03d8fb5cd 100644
---- a/include/drm/drm_fb_helper.h
-+++ b/include/drm/drm_fb_helper.h
-@@ -259,18 +259,6 @@ void drm_fb_helper_damage_range(struct drm_fb_helper *helper, off_t off, size_t
- 
- void drm_fb_helper_deferred_io(struct fb_info *info, struct list_head *pagereflist);
- 
--ssize_t drm_fb_helper_cfb_read(struct fb_info *info, char __user *buf,
--			       size_t count, loff_t *ppos);
--ssize_t drm_fb_helper_cfb_write(struct fb_info *info, const char __user *buf,
--				size_t count, loff_t *ppos);
--
--void drm_fb_helper_cfb_fillrect(struct fb_info *info,
--				const struct fb_fillrect *rect);
--void drm_fb_helper_cfb_copyarea(struct fb_info *info,
--				const struct fb_copyarea *area);
--void drm_fb_helper_cfb_imageblit(struct fb_info *info,
--				 const struct fb_image *image);
--
- void drm_fb_helper_set_suspend(struct drm_fb_helper *fb_helper, bool suspend);
- void drm_fb_helper_set_suspend_unlocked(struct drm_fb_helper *fb_helper,
- 					bool suspend);
-@@ -386,33 +374,6 @@ static inline int drm_fb_helper_defio_init(struct drm_fb_helper *fb_helper)
- 	return -ENODEV;
- }
- 
--static inline ssize_t drm_fb_helper_cfb_read(struct fb_info *info, char __user *buf,
--					     size_t count, loff_t *ppos)
--{
--	return -ENODEV;
--}
--
--static inline ssize_t drm_fb_helper_cfb_write(struct fb_info *info, const char __user *buf,
--					      size_t count, loff_t *ppos)
--{
--	return -ENODEV;
--}
--
--static inline void drm_fb_helper_cfb_fillrect(struct fb_info *info,
--					      const struct fb_fillrect *rect)
--{
--}
--
--static inline void drm_fb_helper_cfb_copyarea(struct fb_info *info,
--					      const struct fb_copyarea *area)
--{
--}
--
--static inline void drm_fb_helper_cfb_imageblit(struct fb_info *info,
--					       const struct fb_image *image)
--{
--}
--
- static inline void drm_fb_helper_set_suspend(struct drm_fb_helper *fb_helper,
- 					     bool suspend)
- {
 -- 
-2.40.1
-
+With best wishes
+Dmitry
