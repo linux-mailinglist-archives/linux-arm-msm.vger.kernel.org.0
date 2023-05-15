@@ -2,115 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F39D4702D90
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 15:08:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B480702D9B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 15:09:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242282AbjEONI0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 09:08:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53740 "EHLO
+        id S241686AbjEONJ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 09:09:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242194AbjEONIL (ORCPT
+        with ESMTP id S242236AbjEONJD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 09:08:11 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82DF51FF7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 06:07:39 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id d75a77b69052e-3f52d303bcdso9549511cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 06:07:39 -0700 (PDT)
+        Mon, 15 May 2023 09:09:03 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 304D41FDB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 06:08:31 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2ac78bb48eeso133729331fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 06:08:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ziepe.ca; s=google; t=1684156049; x=1686748049;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=r52VsGt7pCD5MqwU7Iz5hhf7etBKNWqtKNN+QQL4Wbs=;
-        b=c+5jOYw/nbV0ulxcZUPP/BwmGfGabE0GudFc4Pxot2MDSxnZOMjQBHanidAXv8AN4s
-         wCtL4vKPT/NQuQtyRosfY1v+Cc4PX94PKhH/K4vGQkh8BXrOSCykMzDtIWTaHdinMTlL
-         GTd1vPbd7jdhMb9Xp18vHEaSJ5oykF8Q18Co+JrFWfrSsGa06ytgp5MPhg2lAuMcBHY9
-         +cXuTSEKaaD6FCDHfVc+wlq2TFUxcMNkM8xdx//DfRqBb1wXlbXwUaZ0w2XcKKmJCXYm
-         rNhNdyMFvde5Wj2WqbjDnUEci9/JLzGroYUlyOEdGT2Q14DOTFUq69HjSZo3vkt1aQ7q
-         pxiA==
+        d=linaro.org; s=google; t=1684156107; x=1686748107;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EMAqsaRGOuH7aYnu9nF76xwuBcyGBSccLe/oQdd/lGw=;
+        b=JQTXjdx1hCdZUu+TFRm45msNEhraalF81tGPSZhDWxwCQ3XyZOjheYW3t9bEd5Ssvd
+         kryCXE44qP98GV1rn3pCKweQ/7fZ8x6TDFwxsnmWkCwMZ8UxJ7Hn0Fy/pY3rkZmxa8q6
+         pa07hkSetrYv73pYjUdvCzjhToFezTMB7jiqLZE4qF7DX0xANEek8Zpdj5Vh5tcjbUL3
+         rn4jUo4TM9FsarFgiUYAJEmQZDMNrAfOT9R5Ap7CvoGJ/buqzuaY2roguD3v1TU5/oTL
+         IrHVRMfcopik32CZ4UZiydLqPdfuadn9RJ0GpZyaqrkcL6leSRoVyIhjraTrEIxabzs6
+         GYRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684156049; x=1686748049;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=r52VsGt7pCD5MqwU7Iz5hhf7etBKNWqtKNN+QQL4Wbs=;
-        b=CGV9kNk/cbmKFB97cW6NSpJY3Wn8U7ptc1YEVSkE9hNHguYhrjhi9lN3juRj7Q8w//
-         5U/uDbJ4J5LxRbkqVDktfanC5c2DPp8/5gK6S1TVVEpkXJsZ2PQpShJI/auFBmJV97UU
-         mlkOQ1XIuzOdU8uexqGwrIjF4Lc/co4bJX6ClRA8dt6HojT2wa81COUTLazwUCPpZ5K3
-         VHeACPG67T5a9J07XNIQZcah2tShcHfpVri6VkO4A2SMdwdvuL1KWiyDh2hDuAPFc8c1
-         i5f605HUahJDtTfySm5LXSKwY33b09p4Jx9Do0L4dx2eiCRyJQEx40YzDR43nsAXvjJx
-         8iTA==
-X-Gm-Message-State: AC+VfDwbeu8swCGl/cwiTEkJc6RcFmFeChpzGxwsHDVM0PRQBwkZ5oA1
-        wfB5yCzmpMbJdS7vkYM3xTCRKQ==
-X-Google-Smtp-Source: ACHHUZ6oq1rgsxAhha/L8rTgUYSyK7wV0xG3BSAlCLbWHRWP4j4vcs+gZ2cT74Vr/sFz2mlpsmeCpA==
-X-Received: by 2002:ac8:7f44:0:b0:3f3:928a:eae2 with SMTP id g4-20020ac87f44000000b003f3928aeae2mr42158943qtk.4.1684156049337;
-        Mon, 15 May 2023 06:07:29 -0700 (PDT)
-Received: from ziepe.ca (hlfxns017vw-142-68-25-194.dhcp-dynamic.fibreop.ns.bellaliant.net. [142.68.25.194])
-        by smtp.gmail.com with ESMTPSA id n27-20020ac81e1b000000b003e388264753sm5328251qtl.65.2023.05.15.06.07.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 May 2023 06:07:28 -0700 (PDT)
-Received: from jgg by wakko with local (Exim 4.95)
-        (envelope-from <jgg@ziepe.ca>)
-        id 1pyXvD-000xlt-MR;
-        Mon, 15 May 2023 10:07:27 -0300
-Date:   Mon, 15 May 2023 10:07:27 -0300
-From:   Jason Gunthorpe <jgg@ziepe.ca>
-To:     Niklas Schnelle <schnelle@linux.ibm.com>,
-        Robin Murphy <robin.murphy@arm.com>
-Cc:     Joerg Roedel <joro@8bytes.org>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Will Deacon <will@kernel.org>,
-        Wenjia Zhang <wenjia@linux.ibm.com>,
-        Gerd Bayer <gbayer@linux.ibm.com>,
-        Julian Ruess <julianr@linux.ibm.com>,
-        Pierre Morel <pmorel@linux.ibm.com>,
-        Alexandra Winter <wintera@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        iommu@lists.linux.dev, asahi@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-doc@vger.kernel.org
-Subject: Re: [PATCH v9 5/6] iommu/dma: Allow a single FQ in addition to
- per-CPU FQs
-Message-ID: <ZGIuj2pRjOPffqZZ@ziepe.ca>
-References: <20230310-dma_iommu-v9-0-65bb8edd2beb@linux.ibm.com>
- <20230310-dma_iommu-v9-5-65bb8edd2beb@linux.ibm.com>
+        d=1e100.net; s=20221208; t=1684156107; x=1686748107;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EMAqsaRGOuH7aYnu9nF76xwuBcyGBSccLe/oQdd/lGw=;
+        b=YyXnHxCpv5RD2mVl61kPb+3JIhA9GP2XxKBwNZCfrsxlF87cTzSvBe2IwXBEU5mDlM
+         +ir0mnSgO+MfiYkkpPX0NLOhLAlc6IbQk3HShzTLcU0l1WNl49eDzXatMZ0u0yCJZYXo
+         z90JH1KMOeBvw8kZDLY517VwpwhH9onSp+5MGSbe9UvwrSHMBwgChmOvHjXRQhZC6E08
+         qIlwznSmOhXtH6pHn8HspPIQUkeD8T8+QaqI1MqTJiJo7lQVdmjONXNK0t8gi7lqFlde
+         P1tt1uJsLabVEhOgQLygBGsDnzekOm3bvzOazdK5jkN3B51SMDWC/GRTET2quu3mklQ0
+         QZ3A==
+X-Gm-Message-State: AC+VfDyLxcXwTnKRq5Rc6cP/UkndUK2zNjJ6rHybHViNNBULlMmW706b
+        khXjA7cGgU4FKuAf0LTZnblrTw==
+X-Google-Smtp-Source: ACHHUZ7zwalfNArzw+7IOQn064/xa9HFIy8HjiMQsWu/M/XrbnInS9+7HLAQOFdS6mksjTcLvTKBGA==
+X-Received: by 2002:a05:6512:11e7:b0:4ec:8e7e:46f1 with SMTP id p7-20020a05651211e700b004ec8e7e46f1mr5740935lfs.66.1684156106951;
+        Mon, 15 May 2023 06:08:26 -0700 (PDT)
+Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
+        by smtp.gmail.com with ESMTPSA id g24-20020a19ee18000000b004ee85d1444esm2587628lfb.208.2023.05.15.06.08.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 May 2023 06:08:26 -0700 (PDT)
+Message-ID: <68c3f24f-99a2-ad7c-9371-33ccaf5740dd@linaro.org>
+Date:   Mon, 15 May 2023 15:08:24 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230310-dma_iommu-v9-5-65bb8edd2beb@linux.ibm.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm8550: Add video clock controller
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230509161218.11979-1-quic_jkona@quicinc.com>
+ <20230509161218.11979-5-quic_jkona@quicinc.com>
+ <7faf4c16-98ff-f27d-d1fd-3058370c06f5@linaro.org>
+ <CAA8EJpo1iMj90BPc6gYngSrJqd8WWArRndgbcVg1fYBKBpVfAQ@mail.gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <CAA8EJpo1iMj90BPc6gYngSrJqd8WWArRndgbcVg1fYBKBpVfAQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -119,26 +86,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 15, 2023 at 11:15:55AM +0200, Niklas Schnelle wrote:
 
-> +/**
-> + * struct dma_iommu_options - Options for dma-iommu
-> + *
-> + * @flags: Flag bits for enabling/disabling dma-iommu settings
-> + *
-> + * This structure is intended to provide IOMMU drivers a way to influence the
-> + * behavior of the dma-iommu DMA API implementation. This allows optimizing for
-> + * example for a virtualized environment with slow IOTLB flushes.
-> + */
-> +struct dma_iommu_options {
-> +#define IOMMU_DMA_OPTS_PER_CPU_QUEUE	(0L << 0)
-> +#define IOMMU_DMA_OPTS_SINGLE_QUEUE	(1L << 0)
-> +	u64	flags;
-> +};
 
-You need to hash it out with robin if we do something like this or use
-more untyped caps as he put in this series:
+On 15.05.2023 14:57, Dmitry Baryshkov wrote:
+> On Mon, 15 May 2023 at 15:28, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>>
+>>
+>> On 9.05.2023 18:12, Jagadeesh Kona wrote:
+>>> Add device node for video clock controller on Qualcomm SM8550 platform.
+>>>
+>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+>>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>>> ---
+>>>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 12 ++++++++++++
+>>>  1 file changed, 12 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>>> index 6e9bad8f6f33..e67e7c69dae6 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>>> @@ -7,6 +7,7 @@
+>>>  #include <dt-bindings/clock/qcom,sm8550-gcc.h>
+>>>  #include <dt-bindings/clock/qcom,sm8550-tcsr.h>
+>>>  #include <dt-bindings/clock/qcom,sm8550-dispcc.h>
+>>> +#include <dt-bindings/clock/qcom,sm8550-videocc.h>
+>>>  #include <dt-bindings/dma/qcom-gpi.h>
+>>>  #include <dt-bindings/gpio/gpio.h>
+>>>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>>> @@ -759,6 +760,17 @@ gcc: clock-controller@100000 {
+>>>                                <&usb_dp_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
+>>>               };
+>>>
+>>> +             videocc: clock-controller@aaf0000 {
+>> This node should be moved down. Nodes with unit addresses
+>> should be sorted alphanumerically.
+>>
+>>> +                     compatible = "qcom,sm8550-videocc";
+>>> +                     reg = <0 0x0aaf0000 0 0x10000>;
+>>> +                     clocks = <&bi_tcxo_div2>, <&gcc GCC_VIDEO_AHB_CLK>;
+>> One per line, please
+>>
+>> Also, any reason the XO clock does not come from RPMhCC?
+> 
+> bi_tcxo_div_2 is an RPMhCC clock with the fixed divider.
+Hm, I don't see it neither on -next or in this patchset..
 
-https://lore.kernel.org/linux-iommu/cover.1683233867.git.robin.murphy@arm.com/
-
-Jason
+Konrad
+> 
+>>
+>> Konrad
+>>> +                     power-domains = <&rpmhpd SM8550_MMCX>;
+>>> +                     required-opps = <&rpmhpd_opp_low_svs>;
+>>> +                     #clock-cells = <1>;
+>>> +                     #reset-cells = <1>;
+>>> +                     #power-domain-cells = <1>;
+>>> +             };
+>>> +
+>>>               ipcc: mailbox@408000 {
+>>>                       compatible = "qcom,sm8550-ipcc", "qcom,ipcc";
+>>>                       reg = <0 0x00408000 0 0x1000>;
+> 
+> 
+> 
