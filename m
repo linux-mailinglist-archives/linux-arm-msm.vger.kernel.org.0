@@ -2,51 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E114702154
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 04:02:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5E767021B3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 04:28:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231948AbjEOCCV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 May 2023 22:02:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51010 "EHLO
+        id S234444AbjEOC2v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 May 2023 22:28:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39318 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229929AbjEOCCV (ORCPT
+        with ESMTP id S237971AbjEOC2s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 May 2023 22:02:21 -0400
+        Sun, 14 May 2023 22:28:48 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 547401712;
-        Sun, 14 May 2023 19:02:20 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 489BE19BE;
+        Sun, 14 May 2023 19:28:15 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E1669612CE;
-        Mon, 15 May 2023 02:02:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A953EC433EF;
-        Mon, 15 May 2023 02:02:18 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B030661DAF;
+        Mon, 15 May 2023 02:16:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DDD7C433A0;
+        Mon, 15 May 2023 02:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684116139;
-        bh=470fg0q4D5l5QNjkmRtxrTZcLO4hXnPzfSgt/4ivIys=;
+        s=k20201202; t=1684117009;
+        bh=4BY0lMs9sfv6UZLqV2INWTuZMr7qywgOSBpnpI+KUTY=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=VTK06w2OktkUrbd2ZPfQR+xgFpM2DwmpYkOJXxAEKGp/yT7jWweLbS6O49PlIylUi
-         +921FesY9ScyHPS1CCBCQfDft3VfFl+yIQ9NQ+ZCO0Q7hxa0dfFdPV9hizq2GsAdki
-         1gcqQMEQ/xewIazTFbHuRG7XjCKzKroT4jEJMRD0oL6JjRJpEqcpvaE+LT7VU7KN6W
-         Mk7Lf2lUnhjH3FcWWQ8kQZ3SSfxazCTKlR88HU4oTIN1TNBxCZ+ONNHhoIc2zPdNIi
-         /oRJ+dcBRu5sVsTSYc0CyhkjG6mHroEo3Oy2CiL17Hs+jTWMT9nXoLQZ+whxO2P1QX
-         m+BfOdA+tXUtA==
-Date:   Sun, 14 May 2023 19:06:11 -0700
+        b=IpZcxfWw723lqm23ztb4WFTnvYT+IhL7AlF5GXQ6QI4ZjKL5o7lOj1KCDlTWJuAco
+         B8QLFpqXRR/CI2eMq8LAWdufdzAoAX24gUBaw6uZsCmZDSRcG6QR0OKvvO5vCdmwz4
+         fplQZmC5fB3gT+hs4IdAShG24dC+d01StjcRIVBnWRjHi/4OAQQxIf8fVosH2hyaOV
+         FZ8WuCJiMykUW6//oi06sub5ZVoXc8PFsoE0oyALEw0DaJz9HZ0rKxy0MGLBjwwDY7
+         6SOJHuDJyBCfSt8jFamX2rbXyrmjvUW55Mw1ESao4aszxmQI3bZ9A1KNzq5Hp8vDUl
+         AkYdxo6t/1INw==
+Date:   Sun, 14 May 2023 19:20:41 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] clk: qcom: restrict drivers per ARM/ARM64
-Message-ID: <20230515020611.bahv3hk5jma7fwzi@ripper>
-References: <20230514114711.18258-1-krzysztof.kozlowski@linaro.org>
+To:     Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
+        Anjelique Melendez <quic_amelende@quicinc.com>,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Luca Weiss <luca@z3ntu.xyz>,
+        linux-leds@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] leds: qcom-lpg: Fix PWM period limits
+Message-ID: <20230515022041.4i2w36vubzggpdt6@ripper>
+References: <20230512165524.3367443-1-quic_bjorande@quicinc.com>
+ <cab829ec-5763-1352-618a-adad8c01227d@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230514114711.18258-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <cab829ec-5763-1352-618a-adad8c01227d@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -57,18 +60,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, May 14, 2023 at 01:47:11PM +0200, Krzysztof Kozlowski wrote:
-> There is no point to allow selecting clock controller drivers for
-> Qualcomm ARMv7 SoCs when building ARM64 kernel, and vice versa.  This
-> makes kernel configuration more difficult as many do not remember the
-> Qualcomm SoCs model names/numbers.  No features should be lost because:
-> 1. There won't be a single image for ARMv7 and ARMv8/9 SoCs.
-> 2. Newer ARMv8/9 SoCs won't be running in arm32 emulation mode.
+On Sat, May 13, 2023 at 10:09:49AM +0000, Caleb Connolly wrote:
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
+> On 12/05/2023 16:55, Bjorn Andersson wrote:
+> > The introduction of high resolution PWM support moved the parenthesis of
+> > the divisions in the calculation of min and max period. The result in
+> > both divisions is in most cases truncation to 0, which limits the period
+> > to the range of [0, 0].
+> 
+> Huh, TIL C gives multiplication and division the same precedence when
+> deciding order of operations.
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+There where no explicit parenthesis in the original implementation. So
+I guess it would be more correct to state that parenthesis was
+introduced around part of the expression?
+
+Let me know if you think the wording matters and you would prefer me to
+rewrite it.
 
 Regards,
 Bjorn
+
+> > 
+> > Both numerators (and denominators) are within 64 bits, so the whole
+> > expression can be put directly into the div64_u64, instead of doing it
+> > partially.
+> > 
+> > Fixes: b00d2ed37617 ("leds: rgb: leds-qcom-lpg: Add support for high resolution PWM")
+> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> 
+> Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+> > ---
+> > 
+> > This fixes the regression in v6.4-rc1.
+> > 
+> >  drivers/leds/rgb/leds-qcom-lpg.c | 8 ++++----
+> >  1 file changed, 4 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+> > index c9cea797a697..7287fadc00df 100644
+> > --- a/drivers/leds/rgb/leds-qcom-lpg.c
+> > +++ b/drivers/leds/rgb/leds-qcom-lpg.c
+> > @@ -312,14 +312,14 @@ static int lpg_calc_freq(struct lpg_channel *chan, uint64_t period)
+> >  		max_res = LPG_RESOLUTION_9BIT;
+> >  	}
+> >  
+> > -	min_period = (u64)NSEC_PER_SEC *
+> > -			div64_u64((1 << pwm_resolution_arr[0]), clk_rate_arr[clk_len - 1]);
+> > +	min_period = div64_u64((u64)NSEC_PER_SEC * (1 << pwm_resolution_arr[0]),
+> > +			       clk_rate_arr[clk_len - 1]);
+> >  	if (period <= min_period)
+> >  		return -EINVAL;
+> >  
+> >  	/* Limit period to largest possible value, to avoid overflows */
+> > -	max_period = (u64)NSEC_PER_SEC * max_res * LPG_MAX_PREDIV *
+> > -			div64_u64((1 << LPG_MAX_M), 1024);
+> > +	max_period = div64_u64((u64)NSEC_PER_SEC * max_res * LPG_MAX_PREDIV * (1 << LPG_MAX_M),
+> > +			       1024);
+> >  	if (period > max_period)
+> >  		period = max_period;
+> >  
+> 
+> -- 
+> Kind Regards,
+> Caleb (they/them)
