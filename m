@@ -2,193 +2,449 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D7BCA7021C4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 04:36:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02EA77021F9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 05:03:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238183AbjEOCgn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 14 May 2023 22:36:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43810 "EHLO
+        id S234111AbjEODDS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 14 May 2023 23:03:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234596AbjEOCgk (ORCPT
+        with ESMTP id S231910AbjEODDP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 14 May 2023 22:36:40 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEFB110F3;
-        Sun, 14 May 2023 19:36:38 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 48A6460F57;
-        Mon, 15 May 2023 02:36:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 513FEC433EF;
-        Mon, 15 May 2023 02:36:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684118197;
-        bh=/3QYM4VEPV59xXf0yiNFF12gZIjhplj+fBoVniSTVlI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SBbOMyIVfhwdlx2H4ZEXI5ZammVxYzyeWCXo9vJHdL44ZwgYRMuXEO2zvmLIOBpke
-         8sVvOHWKNTMWNTpC4Ei5FB4iJXMgfGV+N6llX85Lka3t5OEyftSz2ZaBZbMbynW8ey
-         7HG2GOl/WbgS8B22kf8aAf/uq5jpZ3jWpyOU67qU0lLFpd2lb9SBA5Abpwsyy9eCzB
-         TlQ/fFsMzLrQqWaR1dASY4mlYLreITVuUj/0PIdKLApDurV8r1OxKmAxbULqgD07P3
-         Y5i01Lbn5u/y3UkwZuK9iwLVbloFI9PaLrupQTbgzcRwL/1LGXgiVco0XByqbszlN7
-         yErzO/6OabAPA==
-Date:   Sun, 14 May 2023 19:40:29 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com
-Subject: Re: [PATCH v8 0/9] Add multiport support for DWC3 controllers
-Message-ID: <20230515024029.3s7bm5iiktzcfzy2@ripper>
-References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
+        Sun, 14 May 2023 23:03:15 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23A3110EC;
+        Sun, 14 May 2023 20:03:09 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34F1kuZm022680;
+        Mon, 15 May 2023 03:03:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=ajijvsob/QwEH7R/GGz8I5T/SCsAUDM7CeE9pzCNMU4=;
+ b=JQTKh7kkcek7oh6hMLRBlJ4ETaBMiKqf/BnKaHPGZlbAPTdzPCDVtPXmGS43VZ4C7T7Q
+ 0xfwZ/y0EhPck1bl6q41/VIxktISNdoo1R5pFZJX+T5wbVORBeqyrThCfHyYj1589ojF
+ +mPAZy9mkcHPgYPxiefwdO44E7G507w6g1zLSwz4c+32zqcnTTPU7sA0rW/Sq2EpaUSk
+ y9IRVXDvR5zWAo4wodrwtnqsUE7akWyrGegig7NBclwY2HDAuvg32X0Y4MVw8NMSTSRW
+ bayjl+p3cUNENnVntWObJXkDIvCfFE/i7OkFYDZrsJoqOCmkyq2iMaeodIk5m0Wl2wZm XQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qj2sb2kjq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 03:03:03 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34F3329b009555
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 03:03:02 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Sun, 14 May 2023 20:03:02 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+CC:     Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+Subject: [PATCH 1/3] drm/msm/dp: Drop now unused dp_hpd module
+Date:   Sun, 14 May 2023 20:02:54 -0700
+Message-ID: <20230515030256.300104-1-quic_bjorande@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230514054917.21318-1-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: O2pUAAKOeGJ1PBydVIUeCemZ7fRPVf0F
+X-Proofpoint-ORIG-GUID: O2pUAAKOeGJ1PBydVIUeCemZ7fRPVf0F
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-14_18,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ priorityscore=1501 lowpriorityscore=0 adultscore=0 malwarescore=0
+ spamscore=0 bulkscore=0 impostorscore=0 clxscore=1011 mlxscore=0
+ phishscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2305150024
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, May 14, 2023 at 11:19:08AM +0530, Krishna Kurapati wrote:
-> Currently the DWC3 driver supports only single port controller which
-> requires at most two PHYs ie HS and SS PHYs. There are SoCs that has
-> DWC3 controller with multiple ports that can operate in host mode.
-> Some of the port supports both SS+HS and other port supports only HS
-> mode.
-> 
-> This change primarily refactors the Phy logic in core driver to allow
-> multiport support with Generic Phy's.
-> 
-> Chananges have been tested on  QCOM SoC SA8295P which has 4 ports (2
-> are HS+SS capable and 2 are HS only capable).
-> 
+The dp_hpd module is a remnant from the downstream design and is now
+completely unused. Drop it and all references to it.
 
-I'm able to detect my USB stick on all 4 ports on the sa8295p adp.
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+---
+ drivers/gpu/drm/msm/dp/dp_debug.c   |  8 ++-
+ drivers/gpu/drm/msm/dp/dp_debug.h   | 12 ++---
+ drivers/gpu/drm/msm/dp/dp_display.c | 35 +------------
+ drivers/gpu/drm/msm/dp/dp_hpd.c     | 67 -------------------------
+ drivers/gpu/drm/msm/dp/dp_hpd.h     | 78 -----------------------------
+ drivers/gpu/drm/msm/dp/dp_panel.h   |  1 -
+ 6 files changed, 11 insertions(+), 190 deletions(-)
+ delete mode 100644 drivers/gpu/drm/msm/dp/dp_hpd.c
+ delete mode 100644 drivers/gpu/drm/msm/dp/dp_hpd.h
 
-Tested-by: Bjorn Andersson <andersson@kernel.org>
+diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c b/drivers/gpu/drm/msm/dp/dp_debug.c
+index 5e35033ba3e4..cdd72474197b 100644
+--- a/drivers/gpu/drm/msm/dp/dp_debug.c
++++ b/drivers/gpu/drm/msm/dp/dp_debug.c
+@@ -21,7 +21,6 @@
+ struct dp_debug_private {
+ 	struct dentry *root;
+ 
+-	struct dp_usbpd *usbpd;
+ 	struct dp_link *link;
+ 	struct dp_panel *panel;
+ 	struct drm_connector *connector;
+@@ -232,14 +231,14 @@ static void dp_debug_init(struct dp_debug *dp_debug, struct drm_minor *minor)
+ }
+ 
+ struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
+-		struct dp_usbpd *usbpd, struct dp_link *link,
+-		struct drm_connector *connector, struct drm_minor *minor)
++			      struct dp_link *link, struct drm_connector *connector,
++			      struct drm_minor *minor)
+ {
+ 	struct dp_debug_private *debug;
+ 	struct dp_debug *dp_debug;
+ 	int rc;
+ 
+-	if (!dev || !panel || !usbpd || !link) {
++	if (!dev || !panel || !link) {
+ 		DRM_ERROR("invalid input\n");
+ 		rc = -EINVAL;
+ 		goto error;
+@@ -252,7 +251,6 @@ struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
+ 	}
+ 
+ 	debug->dp_debug.debug_en = false;
+-	debug->usbpd = usbpd;
+ 	debug->link = link;
+ 	debug->panel = panel;
+ 	debug->dev = dev;
+diff --git a/drivers/gpu/drm/msm/dp/dp_debug.h b/drivers/gpu/drm/msm/dp/dp_debug.h
+index 8c0d0b5178fd..d99ef4532c9c 100644
+--- a/drivers/gpu/drm/msm/dp/dp_debug.h
++++ b/drivers/gpu/drm/msm/dp/dp_debug.h
+@@ -32,7 +32,6 @@ struct dp_debug {
+  *
+  * @dev: device instance of the caller
+  * @panel: instance of panel module
+- * @usbpd: instance of usbpd module
+  * @link: instance of link module
+  * @connector: double pointer to display connector
+  * @minor: pointer to drm minor number after device registration
+@@ -42,9 +41,9 @@ struct dp_debug {
+  * for debugfs input to be communicated with existing modules
+  */
+ struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
+-		struct dp_usbpd *usbpd, struct dp_link *link,
+-		struct drm_connector *connector,
+-		struct drm_minor *minor);
++			      struct dp_link *link,
++			      struct drm_connector *connector,
++			      struct drm_minor *minor);
+ 
+ /**
+  * dp_debug_put()
+@@ -59,8 +58,9 @@ void dp_debug_put(struct dp_debug *dp_debug);
+ 
+ static inline
+ struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
+-		struct dp_usbpd *usbpd, struct dp_link *link,
+-		struct drm_connector *connector, struct drm_minor *minor)
++			      struct dp_link *link,
++			      struct drm_connector *connector,
++			      struct drm_minor *minor)
+ {
+ 	return ERR_PTR(-EINVAL);
+ }
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 0477263bb55c..4df52ad2b462 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -14,7 +14,6 @@
+ 
+ #include "msm_drv.h"
+ #include "msm_kms.h"
+-#include "dp_hpd.h"
+ #include "dp_parser.h"
+ #include "dp_power.h"
+ #include "dp_catalog.h"
+@@ -92,7 +91,6 @@ struct dp_display_private {
+ 	struct platform_device *pdev;
+ 	struct dentry *root;
+ 
+-	struct dp_usbpd   *usbpd;
+ 	struct dp_parser  *parser;
+ 	struct dp_power   *power;
+ 	struct dp_catalog *catalog;
+@@ -102,7 +100,6 @@ struct dp_display_private {
+ 	struct dp_ctrl    *ctrl;
+ 	struct dp_debug   *debug;
+ 
+-	struct dp_usbpd_cb usbpd_cb;
+ 	struct dp_display_mode dp_mode;
+ 	struct msm_dp dp_display;
+ 
+@@ -493,11 +490,6 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
+ 	return dp_display_process_hpd_high(dp);
+ }
+ 
+-static int dp_display_usbpd_disconnect_cb(struct device *dev)
+-{
+-	return 0;
+-}
+-
+ static int dp_display_notify_disconnect(struct device *dev)
+ {
+ 	struct dp_display_private *dp = dev_get_dp_display_private(dev);
+@@ -582,13 +574,9 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
+ 
+ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
+ {
+-	struct dp_usbpd *hpd = dp->usbpd;
+ 	u32 state;
+ 	int ret;
+ 
+-	if (!hpd)
+-		return 0;
+-
+ 	mutex_lock(&dp->event_mutex);
+ 
+ 	state =  dp->hpd_state;
+@@ -649,12 +637,8 @@ static void dp_display_handle_plugged_change(struct msm_dp *dp_display,
+ 
+ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+ {
+-	struct dp_usbpd *hpd = dp->usbpd;
+ 	u32 state;
+ 
+-	if (!hpd)
+-		return 0;
+-
+ 	mutex_lock(&dp->event_mutex);
+ 
+ 	state = dp->hpd_state;
+@@ -767,24 +751,10 @@ static int dp_init_sub_modules(struct dp_display_private *dp)
+ {
+ 	int rc = 0;
+ 	struct device *dev = &dp->pdev->dev;
+-	struct dp_usbpd_cb *cb = &dp->usbpd_cb;
+ 	struct dp_panel_in panel_in = {
+ 		.dev = dev,
+ 	};
+ 
+-	/* Callback APIs used for cable status change event */
+-	cb->configure  = dp_display_usbpd_configure_cb;
+-	cb->disconnect = dp_display_usbpd_disconnect_cb;
+-	cb->attention  = dp_display_usbpd_attention_cb;
+-
+-	dp->usbpd = dp_hpd_get(dev, cb);
+-	if (IS_ERR(dp->usbpd)) {
+-		rc = PTR_ERR(dp->usbpd);
+-		DRM_ERROR("failed to initialize hpd, rc = %d\n", rc);
+-		dp->usbpd = NULL;
+-		goto error;
+-	}
+-
+ 	dp->parser = dp_parser_get(dp->pdev);
+ 	if (IS_ERR(dp->parser)) {
+ 		rc = PTR_ERR(dp->parser);
+@@ -1544,9 +1514,8 @@ void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
+ 	dp = container_of(dp_display, struct dp_display_private, dp_display);
+ 	dev = &dp->pdev->dev;
+ 
+-	dp->debug = dp_debug_get(dev, dp->panel, dp->usbpd,
+-					dp->link, dp->dp_display.connector,
+-					minor);
++	dp->debug = dp_debug_get(dev, dp->panel, dp->link,
++				 dp->dp_display.connector, minor);
+ 	if (IS_ERR(dp->debug)) {
+ 		rc = PTR_ERR(dp->debug);
+ 		DRM_ERROR("failed to initialize debug, rc = %d\n", rc);
+diff --git a/drivers/gpu/drm/msm/dp/dp_hpd.c b/drivers/gpu/drm/msm/dp/dp_hpd.c
+deleted file mode 100644
+index db98a1d431eb..000000000000
+--- a/drivers/gpu/drm/msm/dp/dp_hpd.c
++++ /dev/null
+@@ -1,67 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0-only
+-/*
+- * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
+- */
+-
+-#define pr_fmt(fmt)	"[drm-dp] %s: " fmt, __func__
+-
+-#include <linux/slab.h>
+-#include <linux/device.h>
+-
+-#include "dp_hpd.h"
+-
+-/* DP specific VDM commands */
+-#define DP_USBPD_VDM_STATUS	0x10
+-#define DP_USBPD_VDM_CONFIGURE	0x11
+-
+-/* USBPD-TypeC specific Macros */
+-#define VDM_VERSION		0x0
+-#define USB_C_DP_SID		0xFF01
+-
+-struct dp_hpd_private {
+-	struct device *dev;
+-	struct dp_usbpd_cb *dp_cb;
+-	struct dp_usbpd dp_usbpd;
+-};
+-
+-int dp_hpd_connect(struct dp_usbpd *dp_usbpd, bool hpd)
+-{
+-	int rc = 0;
+-	struct dp_hpd_private *hpd_priv;
+-
+-	hpd_priv = container_of(dp_usbpd, struct dp_hpd_private,
+-					dp_usbpd);
+-
+-	if (!hpd_priv->dp_cb || !hpd_priv->dp_cb->configure
+-				|| !hpd_priv->dp_cb->disconnect) {
+-		pr_err("hpd dp_cb not initialized\n");
+-		return -EINVAL;
+-	}
+-	if (hpd)
+-		hpd_priv->dp_cb->configure(hpd_priv->dev);
+-	else
+-		hpd_priv->dp_cb->disconnect(hpd_priv->dev);
+-
+-	return rc;
+-}
+-
+-struct dp_usbpd *dp_hpd_get(struct device *dev, struct dp_usbpd_cb *cb)
+-{
+-	struct dp_hpd_private *dp_hpd;
+-
+-	if (!cb) {
+-		pr_err("invalid cb data\n");
+-		return ERR_PTR(-EINVAL);
+-	}
+-
+-	dp_hpd = devm_kzalloc(dev, sizeof(*dp_hpd), GFP_KERNEL);
+-	if (!dp_hpd)
+-		return ERR_PTR(-ENOMEM);
+-
+-	dp_hpd->dev = dev;
+-	dp_hpd->dp_cb = cb;
+-
+-	dp_hpd->dp_usbpd.connect = dp_hpd_connect;
+-
+-	return &dp_hpd->dp_usbpd;
+-}
+diff --git a/drivers/gpu/drm/msm/dp/dp_hpd.h b/drivers/gpu/drm/msm/dp/dp_hpd.h
+deleted file mode 100644
+index 8feec5aa5027..000000000000
+--- a/drivers/gpu/drm/msm/dp/dp_hpd.h
++++ /dev/null
+@@ -1,78 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0-only */
+-/*
+- * Copyright (c) 2012-2020, The Linux Foundation. All rights reserved.
+- */
+-
+-#ifndef _DP_HPD_H_
+-#define _DP_HPD_H_
+-
+-//#include <linux/usb/usbpd.h>
+-
+-#include <linux/types.h>
+-#include <linux/device.h>
+-
+-enum plug_orientation {
+-	ORIENTATION_NONE,
+-	ORIENTATION_CC1,
+-	ORIENTATION_CC2,
+-};
+-
+-/**
+- * struct dp_usbpd - DisplayPort status
+- *
+- * @orientation: plug orientation configuration
+- * @low_pow_st: low power state
+- * @adaptor_dp_en: adaptor functionality enabled
+- * @multi_func: multi-function preferred
+- * @usb_config_req: request to switch to usb
+- * @exit_dp_mode: request exit from displayport mode
+- * @hpd_irq: Change in the status since last message
+- * @alt_mode_cfg_done: bool to specify alt mode status
+- * @debug_en: bool to specify debug mode
+- * @connect: simulate disconnect or connect for debug mode
+- */
+-struct dp_usbpd {
+-	enum plug_orientation orientation;
+-	bool low_pow_st;
+-	bool adaptor_dp_en;
+-	bool multi_func;
+-	bool usb_config_req;
+-	bool exit_dp_mode;
+-	bool hpd_irq;
+-	bool alt_mode_cfg_done;
+-	bool debug_en;
+-
+-	int (*connect)(struct dp_usbpd *dp_usbpd, bool hpd);
+-};
+-
+-/**
+- * struct dp_usbpd_cb - callback functions provided by the client
+- *
+- * @configure: called by usbpd module when PD communication has
+- * been completed and the usb peripheral has been configured on
+- * dp mode.
+- * @disconnect: notify the cable disconnect issued by usb.
+- * @attention: notify any attention message issued by usb.
+- */
+-struct dp_usbpd_cb {
+-	int (*configure)(struct device *dev);
+-	int (*disconnect)(struct device *dev);
+-	int (*attention)(struct device *dev);
+-};
+-
+-/**
+- * dp_hpd_get() - setup hpd module
+- *
+- * @dev: device instance of the caller
+- * @cb: struct containing callback function pointers.
+- *
+- * This function allows the client to initialize the usbpd
+- * module. The module will communicate with HPD module.
+- */
+-struct dp_usbpd *dp_hpd_get(struct device *dev, struct dp_usbpd_cb *cb);
+-
+-int dp_hpd_register(struct dp_usbpd *dp_usbpd);
+-void dp_hpd_unregister(struct dp_usbpd *dp_usbpd);
+-int dp_hpd_connect(struct dp_usbpd *dp_usbpd, bool hpd);
+-
+-#endif /* _DP_HPD_H_ */
+diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+index 45208b45eb53..ed1030e17e1b 100644
+--- a/drivers/gpu/drm/msm/dp/dp_panel.h
++++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+@@ -10,7 +10,6 @@
+ 
+ #include "dp_aux.h"
+ #include "dp_link.h"
+-#include "dp_hpd.h"
+ 
+ struct edid;
+ 
+-- 
+2.39.2
 
-Thanks,
-Bjorn
-
-> Changes in v8:
-> Reorganised code in patch-5
-> Fixed nitpicks in code according to comments received on v7
-> Fixed indentation in DT patches
-> Added drive strength for pinctrl nodes in SA8295 DT
-> 
-> Changes in v7:
-> Added power event irq's for Multiport controller.
-> Udpated commit text for patch-9 (adding DT changes for enabling first
-> port of multiport controller on sa8540-ride).
-> Fixed check-patch warnings for driver code.
-> Fixed DT binding errors for changes in snps,dwc3.yaml
-> Reabsed code on top of usb-next
-> 
-> Changes in v6:
-> Updated comments in code after.
-> Updated variables names appropriately as per review comments.
-> Updated commit text in patch-2 and added additional info as per review
-> comments.
-> The patch header in v5 doesn't have "PATHCH v5" notation present. Corrected
-> it in this version.
-> 
-> Changes in v5:
-> Added DT support for first port of Teritiary USB controller on SA8540-Ride
-> Added support for reading port info from XHCI Extended Params registers.
-> 
-> Changes in RFC v4:
-> Added DT support for SA8295p.
-> 
-> Changes in RFC v3:
-> Incase any PHY init fails, then clear/exit the PHYs that
-> are already initialized.
-> 
-> Changes in RFC v2:
-> Changed dwc3_count_phys to return the number of PHY Phandles in the node.
-> This will be used now in dwc3_extract_num_phys to increment num_usb2_phy 
-> and num_usb3_phy.
-> 
-> Added new parameter "ss_idx" in dwc3_core_get_phy_ny_node and changed its
-> structure such that the first half is for HS-PHY and second half is for
-> SS-PHY.
-> 
-> In dwc3_core_get_phy, for multiport controller, only if SS-PHY phandle is
-> present, pass proper SS_IDX else pass -1.
-> 
-> Link to v7: https://lore.kernel.org/all/20230501143445.3851-1-quic_kriskura@quicinc.com/
-> Link to v6: https://lore.kernel.org/all/20230405125759.4201-1-quic_kriskura@quicinc.com/
-> Link to v5: https://lore.kernel.org/all/20230310163420.7582-1-quic_kriskura@quicinc.com/
-> Link to RFC v4: https://lore.kernel.org/all/20230115114146.12628-1-quic_kriskura@quicinc.com/
-> Link to RFC v3: https://lore.kernel.org/all/1654709787-23686-1-git-send-email-quic_harshq@quicinc.com/#r
-> Link to RFC v2: https://lore.kernel.org/all/1653560029-6937-1-git-send-email-quic_harshq@quicinc.com/#r
-> 
-> Test results:
-> 
-> Bus 3/4 represent multiport controller having 4 HS ports and 2 SS ports.
-> 
-> / # dmesg |grep hub
-> [    0.029029] usbcore: registered new interface driver hub
-> [    1.372812] hub 1-0:1.0: USB hub found
-> [    1.389142] hub 1-0:1.0: 1 port detected
-> [    1.414721] hub 2-0:1.0: USB hub found
-> [    1.427669] hub 2-0:1.0: 1 port detected
-> [    2.931465] hub 3-0:1.0: USB hub found
-> [    2.935340] hub 3-0:1.0: 4 ports detected
-> [    2.948721] hub 4-0:1.0: USB hub found
-> [    2.952604] hub 4-0:1.0: 2 ports detected
-> / #
-> / # lsusb
-> Bus 003 Device 001: ID 1d6b:0002
-> Bus 001 Device 001: ID 1d6b:0002
-> Bus 003 Device 005: ID 0b0e:0300
-> Bus 003 Device 002: ID 046d:c077
-> Bus 004 Device 001: ID 1d6b:0003
-> Bus 002 Device 001: ID 1d6b:0003
-> Bus 003 Device 004: ID 03f0:0024
-> Bus 003 Device 003: ID 046d:c016
-> 
-> Krishna Kurapati (9):
->   dt-bindings: usb: qcom,dwc3: Add bindings for SC8280 Multiport
->   dt-bindings: usb: Add bindings for multiport properties on DWC3
->     controller
->   usb: dwc3: core: Access XHCI address space temporarily to read port
->     info
->   usb: dwc3: core: Skip setting event buffers for host only controllers
->   usb: dwc3: core: Refactor PHY logic to support Multiport Controller
->   usb: dwc3: qcom: Add multiport controller support for qcom wrapper
->   arm64: dts: qcom: sc8280xp: Add multiport controller node for SC8280
->   arm64: dts: qcom: sa8295p: Enable tertiary controller and its 4 USB
->     ports
->   arm64: dts: qcom: sa8540-ride: Enable first port of tertiary usb
->     controller
-> 
->  .../devicetree/bindings/usb/qcom,dwc3.yaml    |  22 +
->  .../devicetree/bindings/usb/snps,dwc3.yaml    |  13 +-
->  arch/arm64/boot/dts/qcom/sa8295p-adp.dts      |  52 +++
->  arch/arm64/boot/dts/qcom/sa8540p-ride.dts     |  22 +
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi        |  66 +++
->  drivers/usb/dwc3/core.c                       | 389 +++++++++++++++---
->  drivers/usb/dwc3/core.h                       |  28 +-
->  drivers/usb/dwc3/drd.c                        |  13 +-
->  drivers/usb/dwc3/dwc3-qcom.c                  |  28 +-
->  9 files changed, 543 insertions(+), 90 deletions(-)
-> 
-> -- 
-> 2.40.0
-> 
