@@ -2,142 +2,260 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 05A12702819
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 11:16:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8EF1E702838
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 11:22:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239520AbjEOJQu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 05:16:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54172 "EHLO
+        id S238763AbjEOJWf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 05:22:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57540 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239553AbjEOJPj (ORCPT
+        with ESMTP id S229603AbjEOJWA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 05:15:39 -0400
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCF643583
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 02:12:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1684141929; x=1715677929;
-  h=from:to:cc:subject:in-reply-to:references:date:
-   message-id:mime-version;
-  bh=dhM3m8vOuQXUzo4VYwSqzWC32+ahxslyhibsQL5kqac=;
-  b=nF4GQu+oGFtXWGq9WHOcsZlQI5jBI5M96KV4/z0llwHMLmYZ69DIzHDv
-   7RA14yocLl8yPce9epiKp7HXRPXlg021ugN2wPyF18fm+c86QLW+CuDl0
-   Yv/DQCS74fPuZm3oSdNpPqREnDWM+EoY0tFMKx2w7RTULzDyKGOc+kmZE
-   jkx6KO3ScFX06WOlSfbGav8uqu7wGbhkJETrIO7q89zIxOmrZEPe8S6GP
-   1QMjQGCBIQePVvqLz4kDuKGz3huowmc5ZM1L7tN/BMyHQNjL1xDJwjPZG
-   y3rWje7unJC7jcE2iC536TsFN6IVn5D+FMcReiyBSoEF6UtgzRAezSF18
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10710"; a="437489748"
-X-IronPort-AV: E=Sophos;i="5.99,276,1677571200"; 
-   d="scan'208";a="437489748"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2023 02:12:09 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10710"; a="812870323"
-X-IronPort-AV: E=Sophos;i="5.99,276,1677571200"; 
-   d="scan'208";a="812870323"
-Received: from lveltman-mobl.ger.corp.intel.com (HELO localhost) ([10.252.42.56])
-  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2023 02:12:04 -0700
-From:   Jani Nikula <jani.nikula@linux.intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Suraj Kandpal <suraj.kandpal@intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v5 0/8] drm/i915: move DSC RC tables to drm_dsc_helper.c
-In-Reply-To: <20230504153511.4007320-1-dmitry.baryshkov@linaro.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <20230504153511.4007320-1-dmitry.baryshkov@linaro.org>
-Date:   Mon, 15 May 2023 12:12:02 +0300
-Message-ID: <871qjij6vx.fsf@intel.com>
+        Mon, 15 May 2023 05:22:00 -0400
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CEBC35B3;
+        Mon, 15 May 2023 02:17:18 -0700 (PDT)
+Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34F97bmd000806;
+        Mon, 15 May 2023 09:16:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : subject : date :
+ message-id : content-type : to : cc : content-transfer-encoding :
+ mime-version; s=pp1; bh=ka0qjy6unHncNjzpsf8Pyt9B+1j1Jy6uYBWZb2IJP/U=;
+ b=rHO3MFrHkG5ppeOiy4+KHZgKHwvvqmf3OwBAlh25wnbwnW0TBizDizdjYbc4uFd6x3kh
+ jZo6q5bTBZAc9o+K0nEBxwRivBxnwxx7ufjwao4ixyIQBGfiQGF6pVWF+bjZwNPIjyAK
+ yWcjxWDGA2qbaR+LZXmxKkStx/h2EXloAnzK9pw96wpgDOGf+BJ6LQoUqlDFprPfWgPZ
+ UE8RG1u02XkGS1Dxbc3oqyFc0HoIdHgfnGKJcP1q8GqoSBN3wv6JhMDGG1o7Vn0yT3xM
+ F2Bi7e4norUTRZA8FOZvDuEKk4oUOnf4a6HkK+aFKwl6yxmsHYDrPxnkaBBOzV1d2H+c lQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qkd3mrpv3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 09:16:23 +0000
+Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 34F97tad002590;
+        Mon, 15 May 2023 09:16:22 GMT
+Received: from ppma06ams.nl.ibm.com (66.31.33a9.ip4.static.sl-reverse.com [169.51.49.102])
+        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qkd3mrps4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 09:16:22 +0000
+Received: from pps.filterd (ppma06ams.nl.ibm.com [127.0.0.1])
+        by ppma06ams.nl.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 34F40vhA024749;
+        Mon, 15 May 2023 09:16:17 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+        by ppma06ams.nl.ibm.com (PPS) with ESMTPS id 3qj1tdryam-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 09:16:17 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com [10.20.54.103])
+        by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 34F9GEeN27460148
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Mon, 15 May 2023 09:16:14 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 10EF820043;
+        Mon, 15 May 2023 09:16:14 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 215B720040;
+        Mon, 15 May 2023 09:16:13 +0000 (GMT)
+Received: from tuxmaker.boeblingen.de.ibm.com (unknown [9.152.85.9])
+        by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+        Mon, 15 May 2023 09:16:13 +0000 (GMT)
+From:   Niklas Schnelle <schnelle@linux.ibm.com>
+Subject: [PATCH v9 0/6] iommu/dma: s390 DMA API conversion and optimized
+ IOTLB flushing
+Date:   Mon, 15 May 2023 11:15:50 +0200
+Message-Id: <20230310-dma_iommu-v9-0-65bb8edd2beb@linux.ibm.com>
+Content-Type: text/plain; charset="utf-8"
+X-B4-Tracking: v=1; b=H4sIAEb4YWQC/22Oy2rDMBBFfyVonTF6uVay6n+UUGR5XA3oESTbp
+ AT/e5RsAqWzO8PMuffOKhbCys6HOyu4UaWcGpyOB+a8TT8INDVmkkvFleAwRftNOcYVeuTauF6
+ ZDz2wdj/aijAWm5xvH2kNoS2vBWe6vQK+Lo3nkiMsvqB9a6XkopdtOmGEUVqDgOp8whDwM1Bab
+ x2NsXM5PmM81SWX31fjzTy9/5XbDHCQSg/TPOI02PmP6LLv+wNyj3CL/QAAAA==
+To:     Joerg Roedel <joro@8bytes.org>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Will Deacon <will@kernel.org>,
+        Wenjia Zhang <wenjia@linux.ibm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>
+Cc:     Gerd Bayer <gbayer@linux.ibm.com>,
+        Julian Ruess <julianr@linux.ibm.com>,
+        Pierre Morel <pmorel@linux.ibm.com>,
+        Alexandra Winter <wintera@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Niklas Schnelle <schnelle@linux.ibm.com>,
+        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux.dev, asahi@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        linux-doc@vger.kernel.org
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5841;
+ i=schnelle@linux.ibm.com; h=from:subject:message-id;
+ bh=wR8vKH9qzWb5+M2sVnSQXIDDqBuHODWYlv/cdDQr+oY=;
+ b=owGbwMvMwCH2Wz534YHOJ2GMp9WSGFISf0T8jV8/cWugurCKfBPHqoteMmysdem3fGdIpwbfD
+ bnz7cGmjlIWBjEOBlkxRZZFXc5+6wqmmO4J6u+AmcPKBDKEgYtTACZipcvwmyV23c/nmVkLbjXs
+ NzndkrHF9FTL1hvH/3j/1g9LbWa785bhf6Ss1SUJJvf27aL6D7+809DbfiSGNzbjxM0AVfXpohN
+ f8AEA
+X-Developer-Key: i=schnelle@linux.ibm.com; a=openpgp;
+ fpr=9DB000B2D2752030A5F72DDCAFE43F15E8C26090
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: R5kdhGb_6k2meXm9AjMLBJogm9_V8b81
+X-Proofpoint-ORIG-GUID: J80AmfSVEo9tob-DBy4iTRwQJAGNiujj
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-15_06,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 suspectscore=0
+ adultscore=0 mlxlogscore=999 bulkscore=0 malwarescore=0 clxscore=1011
+ mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305150078
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 04 May 2023, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> Other platforms (msm) will benefit from sharing the DSC config setup
-> functions. This series moves parts of static DSC config data from the
-> i915 driver to the common helpers to be used by other drivers.
->
-> Note: the RC parameters were cross-checked against config files found in
-> DSC model 2021062, 20161212 (and 20150914). The first patch modifies
-> tables according to those config files, while preserving parameter
-> values using the code. I have not changed one of the values in the
-> pre-SCR config file as it clearly looks like a typo in the config file,
-> considering the table E in DSC 1.1 and in the DSC 1.1 SCR.
+Hi All,
 
-As I believe I've said before, I think it's fine to merge these either
-via drm-intel or drm-misc. Which do you prefer?
+This patch series converts s390's PCI support from its platform specific DMA
+API implementation in arch/s390/pci/pci_dma.c to the common DMA IOMMU layer.
+The conversion itself is done in patches 3-4 with patch 2 providing the final
+necessary IOMMU driver improvement to handle s390's special IOTLB flush
+out-of-resource indication in virtualized environments. Patches 1-2 may be
+applied independently. The conversion itself only touches the s390 IOMMU driver
+and s390 arch code moving over remaining functions from the s390 DMA API
+implementation. No changes to common code are necessary.
 
-BR,
-Jani.
+After patch 4 the basic conversion is done and on our partitioning machine
+hypervisor LPAR performance matches or exceeds the existing code. When running
+under z/VM or KVM however, performance plummets to about half of the existing
+code due to a much higher rate of IOTLB flushes for unmapped pages. Due to the
+hypervisors use of IOTLB flushes to synchronize their shadow tables these are
+very expensive and minimizing them is key for regaining the performance loss.
 
+To this end patches 5-6 add a new, single queue, IOTLB flushing scheme as
+an alternative to the existing per-CPU flush queues. Introducing an alternative
+scheme was also suggested by Robin Murphy[1]. In the previous RFC of this
+conversion Robin suggested reusing more of the existing queuing logic which
+I incorporated since v2. The single queue mode is introduced in patch
+5 together with a new dma_iommu_options struct and tune_dma_iommu callback in
+IOMMU ops which allows IOMMU drivers to switch to a single flush queue.
 
+Then patch 6 enables variable queue sizes using power of 2 queue sizes and
+shift/mask to keep performance as close to the existing code as possible. The
+variable queue size and a variable timeout are added to the dma_iommu_options
+struct and utilized by s390 in the z/VM and KVM guest cases. As it is
+implemented in common code the single queue IOTLB flushing scheme can of course
+be used by other platforms with expensive IOTLB flushes. Particularly
+virtio-iommu may be a candidate.
 
->
-> Chances since v4:
-> - Rebased on top of drm-intel-next
-> - Cut the first 8 patches of the series to ease merging. The rest of the
->   patches will go afterwards.
->
-> Chances since v3:
-> - Rebased on top of drm-intel-next
-> - Dropped the msm patch to make patchset fully mergeable through
->   drm-intel
-> - Made drm_dsc_set_const_params() ignore rc_model_size, picked up
->   drm_dsc_set_initial_scale_value() patch by Jessica and switched
->   intel_vdsc.c to use those two helpers.
-> - Added a patch to make i915 actually use rc_tgt_offset_high,
->   rc_tgt_offset_low and rc_edge_factor from struct drm_dsc_config.
->
-> Chances since v2:
-> - Rebased on top of drm-intel-next
->
-> Chances since v1:
-> - Made drm_dsc_rc_buf_thresh static rather than exporting it
-> - Switched drm_dsc_rc_buf_thresh loop to use ARRAY_SIZE. Added
->   BUILD_BUG_ON's to be sure that array sizes are correct
-> - Fixed rc_parameters_data indentation to be logical and tidy
-> - Fixed drm_dsc_setup_rc_params() kerneldoc
-> - Added a clause to drm_dsc_setup_rc_params() to verify bpp and bpc
->   being set.
-> - Fixed range_bpg_offset programming in calculate_rc_params()
-> - Fixed bpp vs bpc bug in intel_dsc_compute_params()
-> - Added FIXME comment next to the customizations in
->   intel_dsc_compute_params().
->
-> Dmitry Baryshkov (8):
->   drm/i915/dsc: change DSC param tables to follow the DSC model
->   drm/i915/dsc: move rc_buf_thresh values to common helper
->   drm/i915/dsc: move DSC tables to DRM DSC helper
->   drm/i915/dsc: stop using interim structure for calculated params
->   drm/display/dsc: use flat array for rc_parameters lookup
->   drm/display/dsc: split DSC 1.2 and DSC 1.1 (pre-SCR) parameters
->   drm/display/dsc: include the rest of pre-SCR parameters
->   drm/display/dsc: add YCbCr 4:2:2 and 4:2:0 RC parameters
->
->  drivers/gpu/drm/display/drm_dsc_helper.c  | 986 ++++++++++++++++++++++
->  drivers/gpu/drm/i915/display/intel_vdsc.c | 443 ++--------
->  include/drm/display/drm_dsc_helper.h      |   9 +
->  3 files changed, 1042 insertions(+), 396 deletions(-)
+In a previous version I verified that the new scheme does work on my x86_64
+Ryzen workstation by locally modifying iommu_subsys_init() to default to the
+single queue mode and verifying its use via "/sys/.../iommu_group/type". I did
+not find problems with an AMD GPU, Intel NIC (with SR-IOV and KVM
+pass-through), NVMes or any on board peripherals.
 
+This code is also available in the b4/dma_iommu topic branch of my
+git.kernel.org repository[3] with tags the version sent.
+
+NOTE: Due to the large drop in performance I think we should not merge the DMA
+API conversion (patch 4) until we have a more suited IOVA flushing scheme
+with similar improvements as the proposed changes.
+
+Best regards,
+Niklas
+
+[0] https://lore.kernel.org/linux-iommu/20221109142903.4080275-1-schnelle@linux.ibm.com/
+[1] https://lore.kernel.org/linux-iommu/3e402947-61f9-b7e8-1414-fde006257b6f@arm.com/
+[2] https://lore.kernel.org/linux-iommu/a8e778da-7b41-a6ba-83c3-c366a426c3da@arm.com/
+[3] https://git.kernel.org/pub/scm/linux/kernel/git/niks/linux.git/
+
+---
+Changes in v9:
+- Rebased on v6.4-rc2
+- Re-ordered iommu_group_store_type() to allow passing the device to
+  iommu_dma_init_fq()
+- Link to v8: https://lore.kernel.org/r/20230310-dma_iommu-v8-0-2347dfbed7af@linux.ibm.com
+
+---
+Niklas Schnelle (6):
+      s390/ism: Set DMA coherent mask
+      iommu: Allow .iotlb_sync_map to fail and handle s390's -ENOMEM return
+      s390/pci: prepare is_passed_through() for dma-iommu
+      s390/pci: Use dma-iommu layer
+      iommu/dma: Allow a single FQ in addition to per-CPU FQs
+      iommu/dma: Make flush queue sizes and timeout driver configurable
+
+ Documentation/admin-guide/kernel-parameters.txt |   9 +-
+ arch/s390/include/asm/pci.h                     |   7 -
+ arch/s390/include/asm/pci_clp.h                 |   3 +
+ arch/s390/include/asm/pci_dma.h                 | 119 +---
+ arch/s390/pci/Makefile                          |   2 +-
+ arch/s390/pci/pci.c                             |  22 +-
+ arch/s390/pci/pci_bus.c                         |   5 -
+ arch/s390/pci/pci_debug.c                       |  12 +-
+ arch/s390/pci/pci_dma.c                         | 735 ------------------------
+ arch/s390/pci/pci_event.c                       |  17 +-
+ arch/s390/pci/pci_sysfs.c                       |  19 +-
+ drivers/iommu/Kconfig                           |   4 +-
+ drivers/iommu/amd/iommu.c                       |   5 +-
+ drivers/iommu/apple-dart.c                      |   5 +-
+ drivers/iommu/dma-iommu.c                       | 191 ++++--
+ drivers/iommu/dma-iommu.h                       |   4 +-
+ drivers/iommu/intel/iommu.c                     |   5 +-
+ drivers/iommu/iommu.c                           |  38 +-
+ drivers/iommu/msm_iommu.c                       |   5 +-
+ drivers/iommu/mtk_iommu.c                       |   5 +-
+ drivers/iommu/s390-iommu.c                      | 435 +++++++++++++-
+ drivers/iommu/sprd-iommu.c                      |   5 +-
+ drivers/iommu/sun50i-iommu.c                    |   4 +-
+ drivers/iommu/tegra-gart.c                      |   5 +-
+ drivers/s390/net/ism_drv.c                      |   2 +-
+ include/linux/iommu.h                           |  29 +-
+ 26 files changed, 682 insertions(+), 1010 deletions(-)
+---
+base-commit: f1fcbaa18b28dec10281551dfe6ed3a3ed80e3d6
+change-id: 20230310-dma_iommu-5e048c538647
+
+Best regards,
 -- 
-Jani Nikula, Intel Open Source Graphics Center
+Niklas Schnelle
+Linux on Z Development
+
+IBM Deutschland Research & Development GmbH
+Vorsitzender des Aufsichtsrats: Gregor Pillen
+Geschäftsführung: David Faller
+Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht Stuttgart, HRB 243294
+IBM Data Privacy Statement - https://www.ibm.com/privacy 
+
