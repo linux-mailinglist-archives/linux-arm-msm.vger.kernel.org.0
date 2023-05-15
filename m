@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 04030703E1D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 22:07:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37591703E45
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 22:11:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244704AbjEOUHo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 16:07:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56538 "EHLO
+        id S243164AbjEOULh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 16:11:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58624 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244496AbjEOUHn (ORCPT
+        with ESMTP id S245176AbjEOUL2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 16:07:43 -0400
+        Mon, 15 May 2023 16:11:28 -0400
 Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD2C010E53
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 13:07:40 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04F8F11B6B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 13:11:05 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id AB1311F9A7;
-        Mon, 15 May 2023 22:07:37 +0200 (CEST)
-Date:   Mon, 15 May 2023 22:07:36 +0200
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1D5C01F9B2;
+        Mon, 15 May 2023 22:11:03 +0200 (CEST)
+Date:   Mon, 15 May 2023 22:11:01 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         dri-devel@lists.freedesktop.org, robdclark@gmail.com,
         sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
         vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, dmitry.baryshkov@linaro.org,
-        andersson@kernel.org, quic_jesszhan@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v8 1/8] drm/msm/dpu: add dsc blocks for remaining
- chipsets in catalog
-Message-ID: <u47xthqfjxpbbzjbvnrz4qa2f2m3aip4iose7cwuhzg4raf7db@qxbos7u55wko>
+        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 5/8] drm/msm/dpu: add support for DSC encoder v1.2
+ engine
+Message-ID: <pialfld7v3azuochoynb37wqp3mroewa64c7rhcpnii277te5q@pso5q7dhyfqk>
 References: <1683914423-17612-1-git-send-email-quic_khsieh@quicinc.com>
- <1683914423-17612-2-git-send-email-quic_khsieh@quicinc.com>
- <4tmuqrz3du7pwwih3gzp6zveyfvwxj3meeksgxkbg2v5mdtyu3@e5xxuoe64rvv>
- <69538f77-ff08-c3ce-3d4a-9f7250ee2505@quicinc.com>
+ <1683914423-17612-6-git-send-email-quic_khsieh@quicinc.com>
+ <41243dc6-eb9d-dea6-f945-cb1f6594a2a4@linaro.org>
+ <w6uswjuf7fiorrplqzhrpg3vrjbbdd3bgaxej5l6ez3pebn3d5@ytuxhim25j6q>
+ <1fd8fd48-9a0a-774c-1366-ea4c893f3b25@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <69538f77-ff08-c3ce-3d4a-9f7250ee2505@quicinc.com>
+In-Reply-To: <1fd8fd48-9a0a-774c-1366-ea4c893f3b25@quicinc.com>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
@@ -53,59 +53,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-15 11:20:02, Abhinav Kumar wrote:
+On 2023-05-15 10:46:48, Kuogee Hsieh wrote:
+<snip>
+> > Friendly request to strip/snip unneeded context (as done in this reply)
+> > to make it easier to spot the conversation, and replies to it.
+> >
+> > - Marijn
 > 
+> Thanks for suggestion.
 > 
+> How can I do that?
 > 
-> On 5/14/2023 2:39 PM, Marijn Suijten wrote:
-> > DSC*, and mention 1.1 explicitly (since this skips the 1.2 blocks, while
-> > the series is clearly aimed at 1.1...).  This was done for the DSC 1.2
-> > HW block patch after all.
-> > 
-> > in catalog -> to catalog
-> > 
-> > But it's just two platforms, you can fit MSM8998 and SC8180X in the
-> > title.
-> > 
-> > On 2023-05-12 11:00:16, Kuogee Hsieh wrote:
-> >>
-> >> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> >>
-> >> There are some platforms has DSC blocks but it is not declared at catalog.
-> > 
-> > Some platforms have DSC blocks which have not yet been declared in the
-> > catalog.*
-> > 
-> >> For completeness, this patch adds DSC blocks for platforms which missed
-> >> them.
-> > 
-> > Drop "this patch":
-> > 
-> >      Complete DSC 1.1 support for all platforms by adding the missing
-> >      blocks to MSM8998 and SC8180X.
-> > 
-> >>
-> >> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> >> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >> ---
-> >>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h |  7 +++++++
-> >>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h | 11 +++++++++++
-> > 
-> > How about SC7180, and any other DPU 6.x revision?
-> > 
+> just manually delete unneeded context?
 > 
-> Will let kuogee respond to the other nits. There is no DSC in sc7180 / 
-> sm6115 / qcm2290. So this patch is complete.
+> Or are they other way (tricks) to do it automatically?
 
-Thank you for checking as I didn't have the DTS close (and it seems
-SC7180 would have supported this, but no).  I did check other SoCs in
-the DPU 6.x range that are currently floating in my tree and on the
-list, which do need their DSC 1.1 block added (both a single block at
-0x81000 downstream, 0x80000 upstream), if you can in a resend Konrad:
-
-DPU 6.4 in SM6350: https://lore.kernel.org/linux-arm-msm/20230411-topic-straitlagoon_mdss-v3-6-9837d6b3516d@linaro.org/
-DPU 6.9 in SM6375: https://lore.kernel.org/linux-arm-msm/20230411-topic-straitlagoon_mdss-v3-8-9837d6b3516d@linaro.org/
-
-Thanks!
+Fortunately, no: it is up to you to decide what context is relevant,
+which is typically the text (and/or diff snippets) you are replying to.
 
 - Marijn
