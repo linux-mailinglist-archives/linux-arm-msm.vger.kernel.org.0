@@ -2,76 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0230C702A00
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 12:05:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 990DA702A48
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 12:16:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240953AbjEOKFm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 06:05:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40064 "EHLO
+        id S240509AbjEOKQW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 06:16:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241215AbjEOKFN (ORCPT
+        with ESMTP id S241037AbjEOKQN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 06:05:13 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8199E1FE4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 03:04:27 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2ad714536cfso105122291fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 03:04:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684145064; x=1686737064;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KxrM2kkTlI57HpsOdAUD12smB/KhTYxaGhBNIwmCl6s=;
-        b=Wph6tLIeb7qIkq1vDskAhPNWxniqXrEnzEHdmGRxynD3fChA0v7l+E+VcpH9fdlPPp
-         9FRpIzT/RLW1+mxbVj6JUbEv0dcEzUPEZVjsZKGLK1d3A8a1mRrIKdwgjJeur6+GnX3V
-         9RIJNrruC56lqquqerDH1wCjZ2bEt/hC+vOA7LwjNpK/E2jVKiKbO08XN9W3oB4LsuW3
-         jjgWlGLwVWgQ1jig2jgqOHsi6xoSZ+S4m/P5DZ6Zs1TpvGY1sDASBrzzBlseknFjpfx4
-         /ZU4XdXmLdyhGmUTS7EislPHjcuahGqEe0o5AJILHL9qODqgxWQPgJkqU0qx/+l1lX1F
-         HtqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684145064; x=1686737064;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KxrM2kkTlI57HpsOdAUD12smB/KhTYxaGhBNIwmCl6s=;
-        b=G0/bnkmNP8dx1sd/sny3pitlP5my+A2r/heeJzawdeP0ECVlY9V12IU3xjlF5pj4GP
-         X8wM8z+NwmErkB2dUNjTgPy+b+vcLf5BssNX7EtGLym/hkYbEkfjLEN0XLDA5zPpnJFh
-         hVGPat8QOOIMus3/k2OGq7pA4v3ZuXGK1bx8y/+oPviqnw07zoW2VCU+1NQCxo/XrfIo
-         s/Y6dyVIc81bRM5RjqnKDhpzlNU7NqQ7ZzmqNSlY2k4h+S8q1YYQQK0a+84fiCHyPf/1
-         u6+TzekJHnDiFhWCJp9tZ+aXdTLM3AKsGeb2t0vRmXDOSI0tm6AEwvr/vIqH8ArXH74W
-         NvxA==
-X-Gm-Message-State: AC+VfDwlP+4ciVeothFoigqcddVPqxvxQpeIPw0vKtaQBrHABiFfCAkf
-        f+oj4JeMmzLfxNPEgkbh3ZJggw==
-X-Google-Smtp-Source: ACHHUZ58gHyFeZh/4ypWE5HjND53MM46JwEfAFYUu43QztBVc6abPKjvZwDFe0TOWT+xUSrBdp4qmA==
-X-Received: by 2002:a2e:870d:0:b0:2a8:e480:a3c8 with SMTP id m13-20020a2e870d000000b002a8e480a3c8mr6860380lji.44.1684145064252;
-        Mon, 15 May 2023 03:04:24 -0700 (PDT)
-Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id v4-20020a197404000000b004f01ae1e63esm2543124lfe.272.2023.05.15.03.04.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 May 2023 03:04:23 -0700 (PDT)
-Message-ID: <0a031f87-ba9a-120f-6331-a15872e23e73@linaro.org>
-Date:   Mon, 15 May 2023 12:04:22 +0200
+        Mon, 15 May 2023 06:16:13 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5022E19A4;
+        Mon, 15 May 2023 03:15:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1684145543; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=tkq67o77DSOOySalWTFkTuGf6/bIN0Ir8zF6vP9mkPpNAoqFAC0AbUvaN1UiVyeq5X
+    m59+lbX0YZ5Li9Py3kJ5yv3u0P0o2YKIQKW6L7CzSd9iAM3/paDE9ccrT06Z7UbEeyiP
+    LUc41qIXch8Ha9fEYE5k8aVOdjYI+mMdeP6xHsTMYSr0A7XUwO1F0l6D1eLJvaidnkqm
+    HqwN0LmfWr8JVqSRwGVYweVq5vyY72H+jv9b9jkkymT7XJ8rTqGYlLlhMuziSep/JqXO
+    a0+lhq2Xen28B6j2e6KWvLMeL+aCoYHkYxpJ4X0OC8sMpb6mB8PYdrv4wG7CyGYWs353
+    bYmw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1684145543;
+    s=strato-dkim-0002; d=strato.com;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=zv1egBp4VF43Uy3k9TsxyBgv1FbKom8ab/az0E+stOE=;
+    b=m5KM5ma7u2oxMFenubqzXEFUOIsly0xnM+EAEzJInltm7jGhdSP/nVhOohPfHANop2
+    1q2Bvv5ee/7dhM3u65oTLgReJ/8T/tVW6VSiTFIqL6rAb3+Q6xeHICp33TJq+x3kS0Vo
+    7f83pTQFaSrIAwCZKzYSLPXm+8ntjpYv0M/OsE12xttETNWstg9jwSMHF/kG9CqyitwF
+    Vnh3HpvndrtVAolzcpnWehz+cGSWGl9lW16ETMcbHPbhqbbHn1YDjncUkEa5Uvs3m8dd
+    vgbvu/zH/miiku6yP3z7mjcrY/c0C0CzJOzL9vQHkRU1/0MelGkCMi+AskGR60S6rFQD
+    KzTA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1684145543;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=zv1egBp4VF43Uy3k9TsxyBgv1FbKom8ab/az0E+stOE=;
+    b=imfAJaU/zyCIj2aNmPHz+L0wMpozqF4Kf0qRiMUbyl6cxspTG6BvDfetN7+zUAcgar
+    uW3tBTZGlugGeFhFKTVTgLDoWghi+sGxtr8SmiS2lDvyM/jGJloI76G3+8gBCntHn/Lh
+    4rcSYau61EKSwfLu9NnrNAdb9uD3pHIHx4cbZvywF+tQyyyvGK0BSy+KLelwxxWDTJVY
+    CgznmnZnLpLoaH+Q1uYtdSRn5jlbRyeUWrsvlehe2ttumpSKCMIO+2xyJn9COB0YP2Eb
+    MRIaXIEOk0x5yavD6NNLecKG2Gd3sUFVUT+nlGoG8ptBFKOHk0pReUViYkMr9AX6+mfJ
+    0raA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1684145543;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=zv1egBp4VF43Uy3k9TsxyBgv1FbKom8ab/az0E+stOE=;
+    b=73WOrUXfKDQ/beydx/HNIClkP/a39K12oD4b+YJigg6F4OLW1QjxVN6v7Z2a64biwI
+    4ukV4J9P0bsa2OXseuAg==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn8u4ly9TY="
+Received: from [192.168.244.3]
+    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
+    with ESMTPSA id j6420az4FACN1JF
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 15 May 2023 12:12:23 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH 0/5] of: reserved_mem: Provide more control about
+ allocation behavior
+Date:   Mon, 15 May 2023 12:12:15 +0200
+Message-Id: <20230510-dt-resv-bottom-up-v1-0-3bf68873dbed@gerhold.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] soc: qcom: rpmh-rsc: drop redundant unsigned >=0
- comparision
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230513112913.176009-1-krzysztof.kozlowski@linaro.org>
- <c6bcbf6b-2fa0-a6bb-a44c-6b0bd84e194f@linaro.org>
- <df82a955-9de9-5c53-fe59-059273ced83d@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <df82a955-9de9-5c53-fe59-059273ced83d@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-B4-Tracking: v=1; b=H4sIAH8FYmQC/x2NQQrDIBAAvxL23AW11IZ+pfSgcW32EA27NhRC/
+ l7T4zAMs4OSMCk8hh2ENlaupYO9DDDNobwJOXUGZ9zV3KzB1FBIN4y1tbrgZ0U/prvN2Xs3Zuh
+ dDEoYJZRpPsslaCM5xSqU+fufPV/H8QMeIu6gfAAAAA==
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        devicetree@vger.kernel.org, devicetree-spec@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>
+X-Mailer: b4 0.12.2
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,32 +92,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Provide more control about the allocation behavior for dynamically 
+allocated reserved memory by adding a "alloc-bottom-up" and 
+"alloc-top-down" option and by making the allocation order 
+deterministic.
 
+The motivation for this patch series are the many different reserved 
+firmware regions on Qualcomm platforms. Currently it is often necessary 
+to duplicate them into each board DT, because minor differences for 
+some of the firmware regions (e.g. the firmware size) requires shifting
+the base address of all following firmware regions as well.
 
-On 15.05.2023 12:03, Krzysztof Kozlowski wrote:
-> On 15/05/2023 11:36, Konrad Dybcio wrote:
->>
->>
->> On 13.05.2023 13:29, Krzysztof Kozlowski wrote:
->>> Unsigned int "minor" is always >= 0 as reported by Smatch:
->>>
->>>   drivers/soc/qcom/rpmh-rsc.c:1076 rpmh_rsc_probe() warn: always true condition '(drv->ver.minor >= 0) => (0-u32max >= 0)'
->>>
->>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> ---
->> I can see how it made sense from a human POV, but then it still
->> does with the right hand side removed..
-> 
-> I would argue that for human it does not make sense. Why checking minor
-> for >=0? Even if minor ver could be negative (error case?), what would
-> that mean in that context? major ver == 3 but minor == ERRNO, so we will
-> have drv->regs == 2.7?
-I'd say that's just a direct natural-to-computer-language translation of
-"above version 3.0", but yeah it does not really make sense to check
-for negative versions..
+I propose describing the actual requirements (size, alignment, 
+alloc-ranges) instead and allocating the reserved regions at runtime. 
+This allows defining only the actual device-specific part in the board 
+DT and having everything else shared in the SoC.dtsi.
 
-Konrad
-> 
-> Best regards,
-> Krzysztof
-> 
+The series starts with two minor additions to the of_reserved_mem code. 
+The last two patches are examples that are meant to show the motivation
+more clearly for the MSM8916 SoC. PATCH 4/5 shows the current (static) 
+approach, then PATCH 5/5 switches to the dynamic allocation based on
+the first 3 patches.
+
+If the first 3 patches are accepted I would send the full MSM8916 DT
+changes in a separate series.
+
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+Stephan Gerhold (5):
+      dt-bindings: reserved-memory: Add alloc-{bottom-up,top-down}
+      of: reserved_mem: Implement alloc-{bottom-up,top-down}
+      of: reserved_mem: Use stable allocation order
+      [RFC] arm64: dts: qcom: msm8916: Enable modem on two phones
+      [RFC] arm64: dts: qcom: msm8916: Reserve firmware memory dynamically
+
+ .../bindings/reserved-memory/reserved-memory.yaml  | 39 ++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts           | 13 +++++++
+ .../boot/dts/qcom/msm8916-longcheer-l8150.dts      | 31 ++++++++++++++--
+ .../boot/dts/qcom/msm8916-samsung-serranove.dts    | 21 +++++++++++
+ arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi          | 29 ++++++++-------
+ arch/arm64/boot/dts/qcom/msm8916.dtsi              | 42 ++++++++++++++++------
+ drivers/of/of_reserved_mem.c                       | 14 +++++++-
+ 7 files changed, 163 insertions(+), 26 deletions(-)
+---
+base-commit: 715abedee4cd660ad390659aefa7482f05275bbd
+change-id: 20230510-dt-resv-bottom-up-68d71ff6628f
+
+Best regards,
+-- 
+Stephan Gerhold <stephan@gerhold.net>
+
