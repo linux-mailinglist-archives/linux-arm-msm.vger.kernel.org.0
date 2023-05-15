@@ -2,159 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AD90702596
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 09:01:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 681F57025B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 09:09:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238767AbjEOHBJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 03:01:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58326 "EHLO
+        id S239182AbjEOHJW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 03:09:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35724 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238149AbjEOHBH (ORCPT
+        with ESMTP id S236289AbjEOHJV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 03:01:07 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F31A6B6;
-        Mon, 15 May 2023 00:01:01 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 71833612B4;
-        Mon, 15 May 2023 07:01:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9242C4339B;
-        Mon, 15 May 2023 07:00:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684134060;
-        bh=B6gZLaOczooVV49cVdQgxVZpzjPdFzf9quJfF9D6WF4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nLKwlOc8aSY4mMyC+OZTSbNu1d4vsoi+MtOkqpid4XLA6AZnPPnPkBGJUAWErFvCl
-         PkuoksEnXkYZe71koSsZaWk+jSAJGn2YTYeNqDuKJsC/YlAo2Ef0gz1t7VH1VD17bw
-         qWDzO33PhPc/wGVMyhfBUJaChzPDES+ZmKOR818zrRrGRywsdWtRx5vkIbqdmEYpob
-         W5Kl7SF2/Nugi0us+sMMptAql/seF/T0MeTsbip2ue89So3/7Ntub9hP7FFHRhish4
-         Xn/vGT7LJWXG98lzb99NXb1YVt8/daMckAOwAo2+1l7/DL8puiiQ6GDQjOBtK4K/9O
-         4gheg6/TuWQbw==
-Date:   Mon, 15 May 2023 12:30:53 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     lpieralisi@kernel.org, kw@linux.com, kishon@kernel.org,
-        bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 0/7] Add support for MHI Endpoint function driver
-Message-ID: <20230515070053.GE5143@thinkpad>
-References: <20230314044623.10254-1-manivannan.sadhasivam@linaro.org>
+        Mon, 15 May 2023 03:09:21 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F137E60;
+        Mon, 15 May 2023 00:09:20 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34F6b2xS016937;
+        Mon, 15 May 2023 07:09:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ezrCAq5SGgSWhAp9SRpG6vrj+OTqUnkKuCr9XJhQ4O0=;
+ b=n2JK+xqZ6dIz4xdmXCxXzfZLj8zHycxo+luyV5NVXyheEBSGAx8WY7qHw4GPCG8r4hMY
+ 5FJMujOLpLLN6afrhe8r+K5RJ5K8MC18zTBuFTjp1Rw9bcQxxM7cxDFKInCg7BRR5dcD
+ jGbUv5kfDcGoPYDgsVwqQ/Txx5KkVqAvZMn+bjYXIlinBNmRXvGB23KRzzqxty5pPsPc
+ iXtpOkrZ+dLLSfScrq0Li1/K9hI99+cqBpo1SATeMiPmePwWEK2cT9t5CvIz9fbs7R7n
+ MrKN4CHe8q1C/XIBpqEZt0K49CUAfXV2TQwbG3eRnjhslXF/9TUa96y543z4Z0rsIqgV WA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qj2sb3002-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 07:09:17 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34F79BNP031427
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 07:09:11 GMT
+Received: from [10.214.230.142] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 15 May
+ 2023 00:08:34 -0700
+Message-ID: <ec2f0259-9d57-7125-7df8-c773b60e8c72@quicinc.com>
+Date:   Mon, 15 May 2023 12:38:30 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230314044623.10254-1-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v3 02/10] dt-bindings: nvmem: qfprom: Add compatible for
+ QDU1000/QRU1000
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <devicetree@vger.kernel.org>
+References: <20230512122134.24339-1-quic_kbajaj@quicinc.com>
+ <20230512122134.24339-3-quic_kbajaj@quicinc.com>
+ <4766aabc-9b03-3241-82e3-8c4799ea7978@linaro.org>
+From:   Komal Bajaj <quic_kbajaj@quicinc.com>
+In-Reply-To: <4766aabc-9b03-3241-82e3-8c4799ea7978@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: I6ESg3VsdIqBlSYt16-dXym-YIxc5fF4
+X-Proofpoint-ORIG-GUID: I6ESg3VsdIqBlSYt16-dXym-YIxc5fF4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-15_04,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=896
+ priorityscore=1501 lowpriorityscore=0 adultscore=0 malwarescore=0
+ spamscore=0 bulkscore=0 impostorscore=0 clxscore=1015 mlxscore=0
+ phishscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2305150064
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 14, 2023 at 10:16:16AM +0530, Manivannan Sadhasivam wrote:
-> Hello,
-> 
-> This series adds support for Modem Host Interface (MHI) Endpoint function
-> driver and few updates to the PCI endpoint core.
-> 
-> MHI
-> ===
-> 
-> MHI is the communication protocol used by the host machines to control and
-> communicate with the Qualcomm modems/WLAN devices over any high speed physical
-> bus like PCIe. In Linux kernel, MHI is modeled as a bus driver [1] and there
-> are two instances of MHI used in a typical setup.
-> 
-> 1. MHI host - MHI implementation for the host machines like x86/ARM64.
-> 2. MHI Endpoint - MHI implementation for the endpoint devices like modems.
-> 
-> MHI EPF
-> =======
-> 
-> The MHI Endpoint function driver (MHI EPF) is used on the MHI endpoint devices
-> like modems. The MHI EPF driver sits in between the PCIe EP and MHI EP bus and
-> carries out all of the PCIe related activities like BAR config, PCIe Event
-> handling, MMIO read/write etc,... for the MHI EP bus.
-> 
-> Below is the simple representation of the setup:
-> 
-> 
->                  +----------------------------------------------------+
->                  |                  Endpoint CPU                      |                   
->                  |                                                    |
-> +------------+   |   +------------+   +-----------+   +-----------+   |
-> |            |   |   |            |   |           |   |           |   |
-> |            |   |   |   MHI EP   |   |           |   |           |   | PCIe Bus
-> |  Modem DSP +---+---+    Bus     +---+  MHI EPF  +---+  PCIe EP  +---+---------
-> |            |   |   |            |   |           |   |           |   |
-> |            |   |   |            |   |           |   |           |   |
-> +------------+   |   +------------+   +-----------+   +-----------+   |
->                  |                                                    |
->                  |                                                    |
->                  +----------------------------------------------------+
-> 
-> The data packets will be read from the Modem DSP by the MHI stack and will be
-> transmitted to the host machine over PCIe bus with the help of MHI EPF driver.
-> 
-> Test setup
-> ==========
-> 
-> This series has been tested on Snapdragon X55 modem a.k.a SDX55 connected to
-> the ARM64 host machine.
-> 
 
-Lorenzo, gentle ping on this series.
 
-- Mani
+On 5/12/2023 10:26 PM, Krzysztof Kozlowski wrote:
+> On 12/05/2023 14:21, Komal Bajaj wrote:
+>> Document the QFPROM on QDU1000/QRU1000 SOCs.
+>>
+>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+>> ---
+>>   Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+>> index 8d8503dd934b..59082f6e8c9f 100644
+>> --- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+>> +++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
+>> @@ -26,6 +26,7 @@ properties:
+>>             - qcom,msm8996-qfprom
+>>             - qcom,msm8998-qfprom
+>>             - qcom,qcs404-qfprom
+>> +          - qcom,qdu1000-qfprom
+> Above qcs, to keep alphabetical order.
+qdu alphatecially comes after qcs, right? Did I misinterpret your comment?
+>
+> That's a new patch? Nothing in changelog suggested it...
+Yes, that is a new patch from v2. Will mention in cover letter in the 
+next patch.
 
-> Thanks,
-> Mani
-> 
-> [1] https://www.kernel.org/doc/html/latest/mhi/mhi.html
-> 
-> Changes in v3:
-> 
-> * Fixed the probe function of EPF_VNTB driver
-> 
-> Changes in v2:
-> 
-> * Rebased on top of v6.3-rc1
-> * Switched to the new callback interface for passing events from EPC to EPF
-> * Dropped one patch related to notifier
-> 
-> Manivannan Sadhasivam (7):
->   PCI: endpoint: Pass EPF device ID to the probe function
->   PCI: endpoint: Warn and return if EPC is started/stopped multiple
->     times
->   PCI: endpoint: Add linkdown notifier support
->   PCI: endpoint: Add BME notifier support
->   PCI: qcom-ep: Add support for Link down notification
->   PCI: qcom-ep: Add support for BME notification
->   PCI: endpoint: Add PCI Endpoint function driver for MHI bus
-> 
->  drivers/pci/controller/dwc/pcie-qcom-ep.c     |   2 +
->  drivers/pci/endpoint/functions/Kconfig        |  10 +
->  drivers/pci/endpoint/functions/Makefile       |   1 +
->  drivers/pci/endpoint/functions/pci-epf-mhi.c  | 454 ++++++++++++++++++
->  drivers/pci/endpoint/functions/pci-epf-ntb.c  |   3 +-
->  drivers/pci/endpoint/functions/pci-epf-test.c |   2 +-
->  drivers/pci/endpoint/functions/pci-epf-vntb.c |   2 +-
->  drivers/pci/endpoint/pci-ep-cfs.c             |   3 +
->  drivers/pci/endpoint/pci-epc-core.c           |  52 ++
->  drivers/pci/endpoint/pci-epf-core.c           |   8 +-
->  include/linux/pci-epc.h                       |   2 +
->  include/linux/pci-epf.h                       |   8 +-
->  12 files changed, 540 insertions(+), 7 deletions(-)
->  create mode 100644 drivers/pci/endpoint/functions/pci-epf-mhi.c
-> 
-> -- 
-> 2.25.1
-> 
+Thanks,
+Komal
+>
+> Best regards,
+> Krzysztof
+>
 
--- 
-மணிவண்ணன் சதாசிவம்
