@@ -2,80 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CFBEC703208
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 17:58:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79ED87031F3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 17:56:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242524AbjEOP6s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 11:58:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59460 "EHLO
+        id S242451AbjEOP4j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 11:56:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57186 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229590AbjEOP6j (ORCPT
+        with ESMTP id S240381AbjEOP4g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 11:58:39 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E36E271E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 08:58:03 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3f4271185daso86567905e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 08:58:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684166281; x=1686758281;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=gYtOy4X/SWVzvtmwiAJl8YrjSQxYxSnNOPbDK5E9sfc=;
-        b=hI5KlthvwUnK0xWgSyEOI4NK8WuvC+Hxg3TQLRZXd74eSuJggTd0LIdtnEFxPUWF55
-         8On504gwd5R8T+8GLpXUceeM3WkPu2h7raFdEiuFoW8q0IhXdX4LUgMEr+zOhKX7EuMZ
-         2zMRXjsmY/zliq7uiwwpvP7L8cCM4UI8pAFILWdKERDJrBrDt8iqMMagrxHOfvm7E2CI
-         7Ft425F6hTJTOxBVjwHwrDRa3wO95YapeTLVOZkRIG8gm0n7kPj3KP+PryqhdMpz6zsh
-         CI8VH/r7QKiFBCArIBp7cncz8CXPZxivMm7gQkP6q+C4v2jXH7ZNQK3FO6+2OyFNcsio
-         /M5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684166281; x=1686758281;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gYtOy4X/SWVzvtmwiAJl8YrjSQxYxSnNOPbDK5E9sfc=;
-        b=Z9HV58ZfGZAp8UftAeLrM180StE/ZDoWh2iM9Hg55tlgMJGg9hCT2tmhXWfoO9S9HH
-         iW2xLa8ca2p6MPwT5sgcxcJCGMXMq/5KffsYbdntPYnw+rBiCMuqopirQZ+vzpshD2Qt
-         1RYMgJP59JUlFAsVOAyf+8BQ+X+Tj7r1NJenJz1sOR/6+nRy/0TYaE7a+I8GC1RPh+ri
-         Xp3yMLjAC394LXur4Mti3nkO+uh9OmCtL7abaurKUXj3gZD/6p1SLyhf8/ni8kgy/cpK
-         pbLgoLX54Xm/PdpIfNDUmG0/ojsFB0yhU1hvZc2unmUb/627T9slOiw0J58GwvEek/aA
-         m1EQ==
-X-Gm-Message-State: AC+VfDwaidSh5YWLwe5pVIwlumxybe9A53iAr4tbRVADHw+Hx+VJfkgh
-        O3yLAP990N5UFwZGaOgHzG+hnQ==
-X-Google-Smtp-Source: ACHHUZ6LGBi+JJJTo0FxjkmBflSLX3OI2MNzvwlnqVBh4HuhgaI0WcfGQkU27sgsWtHHwpeAVSZLQg==
-X-Received: by 2002:a05:600c:2055:b0:3f1:806a:83d5 with SMTP id p21-20020a05600c205500b003f1806a83d5mr22140786wmg.20.1684166281603;
-        Mon, 15 May 2023 08:58:01 -0700 (PDT)
-Received: from [192.168.0.15] (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
-        by smtp.gmail.com with ESMTPSA id v2-20020a1cf702000000b003f32f013c3csm37540400wmh.6.2023.05.15.08.58.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 May 2023 08:58:01 -0700 (PDT)
-Message-ID: <fd4276f6-f54b-3455-1263-8a8d534f0bda@linaro.org>
-Date:   Mon, 15 May 2023 15:57:59 +0000
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH 2/5] arm64: dts: qcom: qrb4210-rb2: Enable display out
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mon, 15 May 2023 11:56:36 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62FBB269E;
+        Mon, 15 May 2023 08:56:35 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id F4118626B0;
+        Mon, 15 May 2023 15:56:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A757CC433EF;
+        Mon, 15 May 2023 15:56:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1684166194;
+        bh=gu+ydarCRlEs2VjQSr0Soe43GhQ1R5KtJVWUwjvAws8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Jz9bzODQ973EzPkNR+kvX2P3hHKtRBVp/oAQm1vcbVqXCPrDe7bBX9YlJWt5stq1l
+         vWYzHl8znPYDrQdegSnByza0XLSGF+tyriUfXONfLjgSvECt8GE/tXYBrJzGFmr3Uu
+         Sn3KmACh88rI7O9K0cAt4nPgFkIsOr39fDxoWyOKZGPgrKnlnvR/hetLMzwE8qM6Gm
+         D27bIVc3H0DxKLrKGnNDxoHdSUOYJSkj+SF3+rRf3i+tod8PwudxLhXiXg7TBaWqb/
+         rSKc+dI2dXztOHLXhuUmZ42P8+Nhu6QV0MEPLMEueUsHbh0mxnEM3q1BgyK9ObONix
+         l9N1Rnsd2n6fA==
+Date:   Mon, 15 May 2023 09:00:26 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Amit Pundir <amit.pundir@linaro.org>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230515-topic-rb2-bits-v1-0-a52d154a639d@linaro.org>
- <20230515-topic-rb2-bits-v1-2-a52d154a639d@linaro.org>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20230515-topic-rb2-bits-v1-2-a52d154a639d@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH] Revert "regulator: qcom-rpmh: Revert "regulator:
+ qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS""
+Message-ID: <20230515160026.ynqsgu4wvsqxnj2h@ripper>
+References: <20230515145323.1693044-1-amit.pundir@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230515145323.1693044-1-amit.pundir@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,52 +61,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 15/05/2023 13:04, Konrad Dybcio wrote:
-> The RB2 has a HDMI output via an LT9611UXC bridge. Set it up.
+On Mon, May 15, 2023 at 08:23:23PM +0530, Amit Pundir wrote:
+> This reverts commit ad44ac082fdff7ee57fe125432f7d9d7cb610a23.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> This patch restores the synchronous probing for
+> qcom-rpmh-regulator because asynchronous probing broke
+> Dragonboard 845c (SDM845) running AOSP. UFSHC fail to
+> initialize properly and DB845c fails to boot regardless
+> of "rootwait" bootarg being present or not
+> https://bugs.linaro.org/show_bug.cgi?id=5975.
+> 
+
+Looking at the first attachment, I would suggest that UFS fails because
+it's not able to get hold of its regulators, just as any other device
+with supplies would.
+
+The typical cause for rpmh timeouts is that you're no longer able to
+talk to the rpmh. Could you please attempt to trace the system and see
+what's happening in parallel that would cause such issue.
+
+Also note that such issues often also results in UFS timeouts, which
+results in the familiar UFS debug dumps.
+
+
+In the second log, the system crashes 51 seconds after rpmh probes,
+around the time where other sync_state is happening. This too would seem
+related to missing resource votes, but I would expect being a separate
+issue.
+
+PS. this is a patch in the regulator code, but I don't see Mark in the
+recipients list...
+
+Regards,
+Bjorn
+
+> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 88 +++++++++++++++++++++++++++++++-
->  1 file changed, 87 insertions(+), 1 deletion(-)
+>  drivers/regulator/qcom-rpmh-regulator.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> index 80c6b59c8ff6..9b539720f05d 100644
-> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-
-[...]
-> @@ -312,11 +385,24 @@ &sleep_clk {
->  };
->  
->  &tlmm {
-> -	gpio-reserved-ranges = <37 5>, <43 2>, <47 1>,
-> +	gpio-reserved-ranges = <43 2>, <47 1>,
-
-Is this intentional?
->  			       <49 1>, <52 1>, <54 1>,
->  			       <56 3>, <61 2>, <64 1>,
->  			       <68 1>, <72 8>, <96 1>;
->  
-> +	lt9611_rst_pin: lt9611-rst-state {
-> +		pins = "gpio41";
-> +		function = "gpio";
-> +		input-disable;
-> +		output-high;
-> +	};
-> +
-> +	lt9611_irq_pin: lt9611-irq-state {
-> +		pins = "gpio46";
-> +		function = "gpio";
-> +		bias-disable;
-> +	};
-> +
->  	sdc2_card_det_n: sd-card-det-n-state {
->  		pins = "gpio88";
->  		function = "gpio";
+> diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+> index b0a58c62b1e2..30659922b0aa 100644
+> --- a/drivers/regulator/qcom-rpmh-regulator.c
+> +++ b/drivers/regulator/qcom-rpmh-regulator.c
+> @@ -1517,7 +1517,7 @@ MODULE_DEVICE_TABLE(of, rpmh_regulator_match_table);
+>  static struct platform_driver rpmh_regulator_driver = {
+>  	.driver = {
+>  		.name = "qcom-rpmh-regulator",
+> -		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
+> +		.probe_type = PROBE_FORCE_SYNCHRONOUS,
+>  		.of_match_table	= of_match_ptr(rpmh_regulator_match_table),
+>  	},
+>  	.probe = rpmh_regulator_probe,
+> -- 
+> 2.25.1
 > 
-
--- 
-Kind Regards,
-Caleb (they/them)
