@@ -2,46 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7934704151
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 01:13:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A60D7704196
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 01:59:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245573AbjEOXNv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 19:13:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59202 "EHLO
+        id S234514AbjEOX7h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 19:59:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245527AbjEOXNu (ORCPT
+        with ESMTP id S245369AbjEOX7g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 19:13:50 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D83C7D91;
-        Mon, 15 May 2023 16:13:49 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 8D3793F7AF;
-        Tue, 16 May 2023 01:07:33 +0200 (CEST)
-Date:   Tue, 16 May 2023 01:07:32 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, dmitry.baryshkov@linaro.org,
-        andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v9 8/8] drm/msm/dpu: tear down DSC data path when DSC
- disabled
-Message-ID: <2kdnvgatumhjzycr574ilbounzus7z2chviemoai3ps7yip6s6@gg3mq7apxqna>
-References: <1684185928-24195-1-git-send-email-quic_khsieh@quicinc.com>
- <1684185928-24195-9-git-send-email-quic_khsieh@quicinc.com>
+        Mon, 15 May 2023 19:59:36 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 097309EEF;
+        Mon, 15 May 2023 16:59:01 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34FNk8UF024568;
+        Mon, 15 May 2023 23:58:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=nAMCF1gYuyIfX1PgjiNKxjS5tTdu7TEIr8ePFUwCunQ=;
+ b=BaJ/cg8jnSnaug6ZWN2KUlzPvYcpnBvhT4mYEWT4qryVOpcEOmreX3k71tnVHds5tZ4d
+ 4d4n7rLgfgfltV9kNZET+6fXX+3+rpjaj3bYdy4fexjwdh09b5YEWA/oG/Ctu2i8hQir
+ vVWTqUfHmtHZbxZpOec6/sktOEfe3WO4bXb6f6QnKhPhdSVMvqWuP9R4PaEUtrlEpZmF
+ qK9o/Ct5ksd1gQIBkZ0yhv4h4YFP9canRaCuddawl5Dx7qDZ7KSpSPwNgEBAse/1DE3C
+ CbCBAMmlM0730IkRE93ocRjSORkI9clHifiYRAHoXpLiPSFYUJ4mOdVl2UbNxLzn4R3X rQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qkjscsw4m-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 23:58:19 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34FNwI78012820
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 23:58:18 GMT
+Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 15 May
+ 2023 16:58:17 -0700
+Message-ID: <1ad576b0-196b-bfe1-1bc4-a41d51b27300@quicinc.com>
+Date:   Mon, 15 May 2023 16:58:17 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1684185928-24195-9-git-send-email-quic_khsieh@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [PATCH v8 7/8] drm/msm/dpu: add DSC 1.2 hw blocks for relevant
+ chipsets
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+CC:     <vkoul@kernel.org>, <quic_sbillaka@quicinc.com>,
+        <andersson@kernel.org>, <freedreno@lists.freedesktop.org>,
+        <dianders@chromium.org>, <dri-devel@lists.freedesktop.org>,
+        <swboyd@chromium.org>, <agross@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <quic_jesszhan@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>, <sean@poorly.run>,
+        <linux-kernel@vger.kernel.org>
+References: <1683914423-17612-1-git-send-email-quic_khsieh@quicinc.com>
+ <1683914423-17612-8-git-send-email-quic_khsieh@quicinc.com>
+ <cmoqfe5nunreajdvu2vk3ztwkbjesivgejjoi2wmsxske5gq3q@lr25iuwmuevb>
+ <ccef1e88-5c38-0759-523a-c957854697ef@quicinc.com>
+ <y2whfntyo2rbrg3taazjdw5sijle6k6swzl4uutcxm6tmuayh4@uxdur74uasua>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <y2whfntyo2rbrg3taazjdw5sijle6k6swzl4uutcxm6tmuayh4@uxdur74uasua>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: mxk5HrCiMys8Zz7WuKlinz9kT9ShAEnQ
+X-Proofpoint-ORIG-GUID: mxk5HrCiMys8Zz7WuKlinz9kT9ShAEnQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-15_20,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ mlxlogscore=999 clxscore=1015 priorityscore=1501 lowpriorityscore=0
+ malwarescore=0 spamscore=0 impostorscore=0 suspectscore=0 phishscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305150197
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -50,147 +90,195 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Tear down DSC datapath* on encoder cleanup*
 
-On 2023-05-15 14:25:28, Kuogee Hsieh wrote:
+
+On 5/15/2023 3:23 PM, Marijn Suijten wrote:
+> On 2023-05-15 15:03:46, Abhinav Kumar wrote:
+>> On 5/15/2023 2:21 PM, Marijn Suijten wrote:
+>>> On 2023-05-12 11:00:22, Kuogee Hsieh wrote:
+>>>>
+>>>> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>>>
+>>>> Add DSC 1.2 hardware blocks to the catalog with necessary sub-block and
+>>>> feature flag information.  Each display compression engine (DCE) contains
+>>>> dual hard slice DSC encoders so both share same base address but with
+>>>> its own different sub block address.
+>>>
+>>> Can we have an explanation of hard vs soft slices in some commit message
+>>> and/or code documentation?
+>>>
+>>
+>> Not in this one. It wont look appropriate. I would rather remove "hard"
+>> to avoid confusion.
 > 
-> Unset DSC_ACTIVE bit at dpu_hw_ctl_reset_intf_cfg_v1(),
-> dpu_encoder_unprep_dsc() and dpu_encoder_dsc_pipe_clr() functions
-> to tear down DSC data path if DSC data path was setup previous.
+> That is totally fine, let's remove it instead.
 > 
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 43 +++++++++++++++++++++++++++++
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c  |  7 +++++
->  2 files changed, 50 insertions(+)
+> <snip>
+>>>> +	DSC_BLK_1_2("dce_0", DSC_0, 0x80000, 0x100, 0, dsc_sblk_0),
+>>>
+>>> Downstream says that the size is 0x10 (and 0x100 for the enc sblk, 0x10
+>>> for the ctl sblk).  This simply fills it up to the start of the enc sblk
+>>> so that we can see all registers in the dump?  After all only
+>>> DSC_CMN_MAIN_CNF is defined in the main register space, so 0x10 is
+>>> adequate.
+>>>
+>>
+>> .len today is always only for the dump. and yes even here we have only
+>> 0x100 for the enc and 0x10 for the ctl.
+>>
+>> +static const struct dpu_dsc_sub_blks dsc_sblk_0 = {
+>> +	.enc = {.base = 0x100, .len = 0x100},
+>> +	.ctl = {.base = 0xF00, .len = 0x10},
+>> +};
+>>
+>> The issue here is that, the dpu snapshot does not handle sub_blk parsing
+>> today. Its a to-do item. So for that reason, 0x100 was used here to
+>> atleast get the full encoder dumps.
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 5cae70e..ee999ce 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -1214,6 +1214,44 @@ static void dpu_encoder_virt_atomic_enable(struct drm_encoder *drm_enc,
->  	mutex_unlock(&dpu_enc->enc_lock);
->  }
->  
-> +static void dpu_encoder_dsc_pipe_clr(struct dpu_encoder_virt *dpu_enc,
-
-I'd have passed hw_ctl directly.
-
-> +				     struct dpu_hw_dsc *hw_dsc,
-> +				     struct dpu_hw_pingpong *hw_pp)
-> +{
-> +	struct dpu_encoder_phys *cur_master = dpu_enc->cur_master;
-> +	struct dpu_hw_ctl *ctl;
-> +
-> +	ctl = cur_master->hw_ctl;
-> +
-> +	if (hw_dsc->ops.dsc_disable)
-> +		hw_dsc->ops.dsc_disable(hw_dsc);
-> +
-> +	if (hw_pp->ops.disable_dsc)
-> +		hw_pp->ops.disable_dsc(hw_pp);
-> +
-> +	if (hw_dsc->ops.dsc_bind_pingpong_blk)
-> +		hw_dsc->ops.dsc_bind_pingpong_blk(hw_dsc, PINGPONG_NONE);
-> +
-> +	if (ctl->ops.update_pending_flush_dsc)
-> +		ctl->ops.update_pending_flush_dsc(ctl, hw_dsc->idx);
-> +}
-> +
-> +static void dpu_encoder_unprep_dsc(struct dpu_encoder_virt *dpu_enc)
-> +{
-> +	/* coding only for 2LM, 2enc, 1 dsc config */
-> +	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
-> +	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
-> +	int i;
-> +
-> +	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
-> +		hw_pp[i] = dpu_enc->hw_pp[i];
-> +		hw_dsc[i] = dpu_enc->hw_dsc[i];
-> +
-> +		if (hw_pp[i] && hw_dsc[i])
-> +			dpu_encoder_dsc_pipe_clr(dpu_enc, hw_dsc[i], hw_pp[i]);
-> +	}
-> +}
-
-Define these two functions right above
-dpu_encoder_helper_phys_cleanup(), or right next to
-dpu_encoder_prep_dsc() and dpu_encoder_dsc_pipe_cfg(), intead of
-splitting dpu_encoder_virt_atomic_{en,dis}able() at a random point in
-this file.
-
-> +
->  static void dpu_encoder_virt_atomic_disable(struct drm_encoder *drm_enc,
->  					struct drm_atomic_state *state)
->  {
-> @@ -2090,6 +2128,9 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
->  					phys_enc->hw_pp->merge_3d->idx);
->  	}
->  
-> +	if (dpu_enc->dsc)
-> +		dpu_encoder_unprep_dsc(dpu_enc);
-> +
->  	intf_cfg.stream_sel = 0; /* Don't care value for video mode */
->  	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
-
-Here.
-
->  
-> @@ -2101,6 +2142,8 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
->  	if (phys_enc->hw_pp->merge_3d)
->  		intf_cfg.merge_3d = phys_enc->hw_pp->merge_3d->idx;
->  
-> +	intf_cfg.dsc = dpu_encoder_helper_get_dsc(phys_enc);
-
-Since this is assigned unconditionally, can you assign this right below
-where intf_cfg.mode_3d is assigned so that we have a static and a
-conditional part?
-
-> +
->  	if (ctl->ops.reset_intf_cfg)
->  		ctl->ops.reset_intf_cfg(ctl, &intf_cfg);
->  
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index f3a50cc..aec3b08 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -577,6 +577,7 @@ static void dpu_hw_ctl_reset_intf_cfg_v1(struct dpu_hw_ctl *ctx,
->  	u32 intf_active = 0;
->  	u32 wb_active = 0;
->  	u32 merge3d_active = 0;
-> +	u32 dsc_active;
-
-Any idea why the others are zero-assigned above for no reason (no need
-to clean that up in this patch)?
-
->  
->  	/*
->  	 * This API resets each portion of the CTL path namely,
-> @@ -606,6 +607,12 @@ static void dpu_hw_ctl_reset_intf_cfg_v1(struct dpu_hw_ctl *ctx,
->  		wb_active &= ~BIT(cfg->wb - WB_0);
->  		DPU_REG_WRITE(c, CTL_WB_ACTIVE, wb_active);
->  	}
-> +
-> +	if (cfg->dsc) {
-> +		dsc_active = DPU_REG_READ(c, CTL_DSC_ACTIVE);
-
-Do we really need to read it back?  dpu_hw_ctl_intf_cfg_v1() doesn't
-read it back either and plainly writes cfg->dsc.  If we always have a
-complete overview of what DSC's are enabled/active for this CTL (which
-we have), this could just be written to 0.
-
-But let's leave that now and discuss this separately, as the above does
-the same for merge_3d, intf and wb.
-
-- Marijn
-
-> +		dsc_active &= ~cfg->dsc;
-> +		DPU_REG_WRITE(c, CTL_DSC_ACTIVE, dsc_active);
-> +	}
->  }
->  
->  static void dpu_hw_ctl_set_fetch_pipe_active(struct dpu_hw_ctl *ctx,
-> -- 
-> 2.7.4
+> But then you don't see the ENC block?  It starts at 0x100 (or 0x200) so
+> then the length should be longer... it should in fact depend on even/odd
+> DCE then?
 > 
+
+You are right that the length should be longer. It should be 0x29c then 
+and ctl blocks will not be included anyway.
+
+The fundamental issue which remains despite increasing the length will 
+be that the two blocks will print duplicate information. So dce_0_0 and 
+dce_0_1 will print the same information twice as the base address is the 
+same.
+
+Odd/even DCE intelligence is not there in these macros and will be an 
+overkill to just support the dump.
+
+So overall, I dont think any of it is a good solution yet.
+
+I think the best way to do this will be to add sub-block parsing support 
+to the DPU devcoredump.
+
+So what will happen is similar to downstream design in sde_dbg, when a 
+block has sub-blocks we will respect the sub-block's len and not the 
+parent block's as that will be more accurate.
+
+If 0x29c is going to help the cause till then we can change it.
+
+>>
+>>>> +	DSC_BLK_1_2("dce_0", DSC_1, 0x80000, 0x100, 0, dsc_sblk_1),
+>>>
+>>> Should we add an extra suffix to the name to indicate which hard-slice
+>>> DSC encoder it is?  i.e. "dce_0_0" and "dce_0_1" etc?
+>>
+>> Ok, that should be fine. We can add it.
+> 
+> Great, thanks!
+> 
+>>>> +	DSC_BLK_1_2("dce_1", DSC_2, 0x81000, 0x100, BIT(DPU_DSC_NATIVE_422_EN), dsc_sblk_0),
+>>>> +	DSC_BLK_1_2("dce_1", DSC_3, 0x81000, 0x100, BIT(DPU_DSC_NATIVE_422_EN), dsc_sblk_1),
+>>>
+>>
+>>> See comment below about loose BIT() in features.
+>>
+>> Responded below.
+>>>
+>>>> +};
+>>>> +
+>>>>    static const struct dpu_intf_cfg sm8350_intf[] = {
+>>>>    	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
+>>>>    			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+>>>> @@ -215,6 +227,8 @@ const struct dpu_mdss_cfg dpu_sm8350_cfg = {
+>>>>    	.dspp = sm8350_dspp,
+>>>>    	.pingpong_count = ARRAY_SIZE(sm8350_pp),
+>>>>    	.pingpong = sm8350_pp,
+>>>> +	.dsc = sm8350_dsc,
+>>>> +	.dsc_count = ARRAY_SIZE(sm8350_dsc),
+>>>
+>>> Count goes first **everywhere else**, let's not break consistency here.
+>>>
+>>
+>> the order of DSC entries is swapped for all chipsets. Please refer to
+>> dpu_sc8180x_cfg, dpu_sm8250_cfg etc.
+> 
+> Thanks for confirming that this is not the case in a followup mail :)
+> 
+>> So if you are talking about consistency, this is actually consistent
+>> with whats present in other chipsets.
+>>
+>> If you are very particular about this, then once this lands, you can
+>> change the order for all of them in another change.
+>>
+>> Same answer for all swap comments.
+> <snip>
+>>>> +/*
+>>>> + * NOTE: Each display compression engine (DCE) contains dual hard
+>>>> + * slice DSC encoders so both share same base address but with
+>>>> + * its own different sub block address.
+>>>> + */
+>>>> +#define DSC_BLK_1_2(_name, _id, _base, _len, _features, _sblk) \
+>>>
+>>> There are no address values here so this comment doesn't seem very
+>>> useful, and it is already duplicated on every DSC block array, where the
+>>> duplication is more visible.  Drop the comment here?
+>>>
+>>
+>> _base is the address. So base address. Does that clarify things?
+> 
+> This is referring to the NOTE: comment above.  There's _base as address
+> here, yes, but there's no context here that it'll be used in duplicate
+> fashion, unlike the SoC catalog files.  The request is to just drop it
+> here as it adds no value.
+>
+
+The duplication is there. the base is same for both the entries with dce_0.
+
++static const struct dpu_dsc_cfg sc8280xp_dsc[] = {
++	DSC_BLK_1_2("dce_0", DSC_0, 0x80000, 0x100, 0, dsc_sblk_0),
++	DSC_BLK_1_2("dce_0", DSC_1, 0x80000, 0x100, 0, dsc_sblk_1),
+
+Both the blks use 0x80000 as base address and the note is just telling that.
+
+>>>> +	{\
+>>>> +	.name = _name, .id = _id, \
+>>>> +	.base = _base, .len = _len, \
+>>>
+>>> The len is always 0x100 (downstream says 0x10), should we hardcode it
+>>> here and drop _len?  We can always add it back if a future revision
+>>> starts changing it, but that's not the case currently.
+>>>
+>>>> +	.features = BIT(DPU_DSC_HW_REV_1_2) | _features, \
+>>>
+>>> We don't willy-nilly append bits like that: should there be global
+>>> feature flags?
+>>
+>> So this approach is actually better. This macro is a DSC_1_2 macro so it
+>> will have the 1.2 feature flag and other features like native_422
+>> support of that encoder are ORed on top of it. Nothing wrong with this.
+> 
+> I agree it is better, but we seem to be very selective in whether to
+> stick to the "old" principles in DPU versus applying a new pattern that
+> isn't used elsewhere yet (i.e. your request to _not_ shuffle the order
+> of .dsc and .dsc_count assignment to match other .x and .x_count, and do
+> that in a future patch instead).  If we want to be consistent
+> everywhere, these should be #defines that we'll flatten out in a
+> followup if at all.
+> 
+
+Yes, if it the order was already swapped, then we could have maintained 
+it for this patch and cleaned all of them up together. Nothing wrong in 
+that approach.
+
+But I already clarified that was a mistake. The order of dsc and 
+dsc_count is not swapped so I agreed to do that here. So where is the 
+inconsistency?
+
+>>> Or is this the start of a new era where we expand those defines in-line
+>>> and drop them altogether?  I'd much prefer that but we should first
+>>> align on this direction (and then also make the switch globally in a
+>>> followup).
+>>>
+>>
+>> Its case by case. No need to generalize.
+>>
+>> In this the feature flag ORed with the base feature flag of DSC_1_2
+>> makes it more clear.
+> 
+> - Marijn
