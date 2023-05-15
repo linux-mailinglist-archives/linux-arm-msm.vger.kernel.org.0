@@ -2,136 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 968007028A3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 11:32:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9714D7029B2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 11:56:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232353AbjEOJcs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 05:32:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38342 "EHLO
+        id S237954AbjEOJ4y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 05:56:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230091AbjEOJcr (ORCPT
+        with ESMTP id S239965AbjEOJ4b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 05:32:47 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2F511BD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 02:32:45 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f2510b2b98so10242615e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 02:32:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684143164; x=1686735164;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kL96h2tqkNFwcSW2y3vEwRRRBP7d2GAr46VUhlv3Hr8=;
-        b=sh5khvKPLIZlLhYC9YBG6EKZnB4UGlPNvQ5MgeOjfutwSwD88Tp2Fn4gdRrqvNdE8Y
-         3f5EhRG7XeguLt7IMvBFYLjan5FCTVMjGu4VeQuZPCi152nZ0543hXrfO6h6AAVPC7Gg
-         e717katOTER+htDtBnmLzoyL1uSbocTjtA/K0fqtydFAJVjFrrfeNUjx54Do4sRDa3x6
-         WiQqt72Ck6qGvO88AKYtScMoR/9i4g3vhFKSyayN+QOs1lJvUFdcT+YdmVKAXliSz5aM
-         EVtHzy8WDqjbuvcTUUTdSXKmLA7+/mnFmFZwUFWNjhQGka7eG2XY1oj2FgcbCnwApyo2
-         UP/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684143164; x=1686735164;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kL96h2tqkNFwcSW2y3vEwRRRBP7d2GAr46VUhlv3Hr8=;
-        b=lkcPRXcuJzy/tY0ywX4JkNEmIRjQ0HX/KASCW3COf6kLttNfalxnr0Plx5QxSehnPn
-         5zMaQJqRmB3PFqrmY5dUMDWRgSwe8iMoCXU9SKHe3D2XYl4rjy8BTVnzCLIJKfKj8sXT
-         iKT6bJZm3nH2UcLpL75Vi78dmtIPOWl0JDZagSYkAGoHPxCRc24iYmwqHLXjJggXsKd8
-         +IY2qj+6vJNTcHa4l6YvfsU1GWkFScBaTutahwL+92hXhaXP0DgE0nURkfN4Hztn1k18
-         mhQaTpjmFdvzljzWxE1E8+H5pUGl6zthCYcT/Ocv5fSebw0NVicFhU4Wn7XEnzHYL6rM
-         vgdg==
-X-Gm-Message-State: AC+VfDxZQ66nMjIJEYy80yof6Q59+Y1R5NvZkZjtdclG/LfE8ezzrHTM
-        NZNeRZFpqcoyalDfR1W2hq7aSQ==
-X-Google-Smtp-Source: ACHHUZ7KG9ZxMNEt7xHG9G/ZmJMhzXz86/mOQ91rfFFn6qdkMaQSIKKnUr76qMuQdVDvoj65xNKaMA==
-X-Received: by 2002:ac2:44b8:0:b0:4dd:9fd8:3a36 with SMTP id c24-20020ac244b8000000b004dd9fd83a36mr5473230lfm.1.1684143163939;
-        Mon, 15 May 2023 02:32:43 -0700 (PDT)
-Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id i22-20020a056512007600b004ece331c830sm2538803lfo.206.2023.05.15.02.32.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 May 2023 02:32:43 -0700 (PDT)
-Message-ID: <80047944-b155-d1fb-2959-4354d4f0a829@linaro.org>
-Date:   Mon, 15 May 2023 11:32:42 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2] pinctrl: qcom: sa8775p: add the wakeirq map
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Mon, 15 May 2023 05:56:31 -0400
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 869A41BE5;
+        Mon, 15 May 2023 02:56:26 -0700 (PDT)
+Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34F9kL9E004814;
+        Mon, 15 May 2023 09:55:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=c69QNR7lfIqB6FKiUIhsojT+MsFH8qH65PiA7hty3/w=;
+ b=XedJ+r9zfgtSzDIB4eSrPCYm0wWx4qeblaLActQ5QVrHh2HEZP56wPCN6nRfdD4hHuiP
+ EhfoiT0R911OpM43d3K1kk0me4DLgXWV8s+zqgbHPChfQ3FYX4z+56AT5PA4aVx+B9K3
+ S2qnW7+htzYKc4tFSAOQn6w6QayRbwJWQ5RN51Dqjzw/xNYJQr+c0ErxHoNskgUl8DFd
+ yHHBmnlnMxV8YENBqZIFU66wF7Pf9Kv8sUifi612DboAhSZ7gyThFuv1UtnbRg8omvaJ
+ FcXo0FBL1z6F1hLhK8K2P8bnpEOnHfIw7A8h7ehhYGnNcX/9/f9uXq9zPPOPPG4PGrtc 6g== 
+Received: from pps.reinject (localhost [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qkd3mswqh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 09:55:53 +0000
+Received: from m0353727.ppops.net (m0353727.ppops.net [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 34F9bqmA009076;
+        Mon, 15 May 2023 09:55:51 GMT
+Received: from ppma05fra.de.ibm.com (6c.4a.5195.ip4.static.sl-reverse.com [149.81.74.108])
+        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qkd3mswp5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 09:55:51 +0000
+Received: from pps.filterd (ppma05fra.de.ibm.com [127.0.0.1])
+        by ppma05fra.de.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 34F8Tiqw000411;
+        Mon, 15 May 2023 09:33:32 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+        by ppma05fra.de.ibm.com (PPS) with ESMTPS id 3qj264rtm2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 09:33:32 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com [10.20.54.100])
+        by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 34F9XTPL45744626
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Mon, 15 May 2023 09:33:29 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id E664720040;
+        Mon, 15 May 2023 09:33:28 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 413B62004B;
+        Mon, 15 May 2023 09:33:26 +0000 (GMT)
+Received: from [9.171.65.23] (unknown [9.171.65.23])
+        by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+        Mon, 15 May 2023 09:33:26 +0000 (GMT)
+Message-ID: <670b01819f6f875364abaafa4accad9fa92e6177.camel@linux.ibm.com>
+Subject: Re: [PATCH v8 0/6] iommu/dma: s390 DMA API conversion and optimized
+ IOTLB flushing
+From:   Niklas Schnelle <schnelle@linux.ibm.com>
+To:     Christoph Hellwig <hch@infradead.org>
+Cc:     Joerg Roedel <joro@8bytes.org>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Will Deacon <will@kernel.org>,
+        Wenjia Zhang <wenjia@linux.ibm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>,
+        Gerd Bayer <gbayer@linux.ibm.com>,
+        Julian Ruess <julianr@linux.ibm.com>,
+        Pierre Morel <pmorel@linux.ibm.com>,
+        Alexandra Winter <wintera@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
         Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230515092515.180920-1-brgl@bgdev.pl>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230515092515.180920-1-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux.dev, asahi@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        linux-doc@vger.kernel.org
+Date:   Mon, 15 May 2023 11:33:25 +0200
+In-Reply-To: <ZF5NRls92rhmzV7B@infradead.org>
+References: <20230310-dma_iommu-v8-0-2347dfbed7af@linux.ibm.com>
+         <ZF5NRls92rhmzV7B@infradead.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.1 (3.48.1-1.fc38) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: bs2KpFYuwoCp6-aBJBUXDadSE7HNCIPx
+X-Proofpoint-ORIG-GUID: d9-xVIyzWKoF0UTrrDTDDfGL5QDVi9C0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-15_06,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 suspectscore=0
+ adultscore=0 mlxlogscore=999 bulkscore=0 malwarescore=0 clxscore=1011
+ mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305150082
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 2023-05-12 at 07:29 -0700, Christoph Hellwig wrote:
+> On Fri, Mar 10, 2023 at 05:07:45PM +0100, Niklas Schnelle wrote:
+> > Hi All,
+> >=20
+> > This patch series converts s390's PCI support from its platform specifi=
+c DMA
+> > API implementation in arch/s390/pci/pci_dma.c to the common DMA IOMMU l=
+ayer.
+> > The conversion itself is done in patches 3-4 with patch 2 providing the=
+ final
+> > necessary IOMMU driver improvement to handle s390's special IOTLB flush
+> > out-of-resource indication in virtualized environments. Patches 1-2 may=
+ be
+> > applied independently. The conversion itself only touches the s390 IOMM=
+U driver
+> > and s390 arch code moving over remaining functions from the s390 DMA AP=
+I
+> > implementation. No changes to common code are necessary.
+>=20
+> It looks like this still hasn't made it upstream as of 6.4-rc1.  What's
+> holding this series up?
+>=20
 
+I think with all the IOMMUFD work going on this got starved out of
+reviewer resources. I didn't have any open todos but I guess there is
+still some review needed around how the IOMMU driver tells the dma-
+iommu that it expects IOTLB flushes to be slow requiring a larger
+single flush queue. There was also a small conflict with commit
+49a22aae7d9c ("iommu: Replace device_lock() with group->mutex") that
+prevented this from applying to current upstream so I've just now sent
+out a v9 rebased on v6.4-rc2.
 
-On 15.05.2023 11:25, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> The SA8775P TLMM driver is missing the GPIO-to-wakeup-pin mapping. This
-> adds it.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
-> v1 -> v2:
-> - fix the 30->200 mapping
-> 
->  drivers/pinctrl/qcom/pinctrl-sa8775p.c | 19 +++++++++++++++++++
->  1 file changed, 19 insertions(+)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sa8775p.c b/drivers/pinctrl/qcom/pinctrl-sa8775p.c
-> index 2ae7cdca65d3..6ea0197b36c6 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sa8775p.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sa8775p.c
-> @@ -1491,6 +1491,23 @@ static const struct msm_pingroup sa8775p_groups[] = {
->  	[153] = SDC_QDSD_PINGROUP(sdc1_data, 0x199000, 9, 0),
->  };
->  
-> +static const struct msm_gpio_wakeirq_map sa8775p_pdc_map[] = {
-> +	{ 0, 169 }, { 1, 174 }, { 2, 170 }, { 3, 175 }, { 4, 171 }, { 5, 173 },
-> +	{ 6, 172 }, { 7, 182 }, { 10, 220 }, { 11, 213 }, { 12, 221 },
-> +	{ 16, 230 }, { 19, 231 }, { 20, 232 }, { 23, 233 }, { 24, 234 },
-> +	{ 26, 223 }, { 27, 235 }, { 28, 209 }, { 29, 176 }, { 30, 200 },
-> +	{ 31, 201 }, { 32, 212 }, { 35, 177 }, { 36, 178 }, { 39, 184 },
-> +	{ 40, 185 }, { 41, 227 }, { 42, 186 }, { 43, 228 }, { 45, 187 },
-> +	{ 47, 188 }, { 48, 194 }, { 51, 195 }, { 52, 196 }, { 55, 197 },
-> +	{ 56, 198 }, { 57, 236 }, { 58, 192 }, { 59, 193 }, { 72, 179 },
-> +	{ 73, 180 }, { 74, 181 }, { 75, 202 }, { 76, 183 }, { 77, 189 },
-> +	{ 78, 190 }, { 79, 191 }, { 80, 199 }, { 83, 204 }, { 84, 205 },
-> +	{ 85, 229 }, { 86, 206 }, { 89, 207 }, { 91, 208 }, { 94, 214 },
-> +	{ 95, 215 }, { 96, 237 }, { 97, 216 }, { 98, 238 }, { 99, 217 },
-> +	{ 100, 239 }, { 105, 219 }, { 106, 210 }, { 107, 211 }, { 108, 222 },
-> +	{ 109, 203 }, { 145, 225 }, { 146, 226 },
-> +};
-> +
->  static const struct msm_pinctrl_soc_data sa8775p_pinctrl = {
->  	.pins = sa8775p_pins,
->  	.npins = ARRAY_SIZE(sa8775p_pins),
-> @@ -1499,6 +1516,8 @@ static const struct msm_pinctrl_soc_data sa8775p_pinctrl = {
->  	.groups = sa8775p_groups,
->  	.ngroups = ARRAY_SIZE(sa8775p_groups),
->  	.ngpios = 150,
-> +	.wakeirq_map = sa8775p_pdc_map,
-> +	.nwakeirq_map = ARRAY_SIZE(sa8775p_pdc_map),
->  };
->  
->  static int sa8775p_pinctrl_probe(struct platform_device *pdev)
+Thanks,
+Niklas
