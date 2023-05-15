@@ -2,89 +2,289 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2270703E71
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 22:18:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CAF9B703EA1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 22:29:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244176AbjEOUS2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 16:18:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40012 "EHLO
+        id S243061AbjEOU3d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 16:29:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245335AbjEOUSX (ORCPT
+        with ESMTP id S240909AbjEOU3c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 16:18:23 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C987B10E6D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 13:18:00 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 077BC1F987;
-        Mon, 15 May 2023 22:17:06 +0200 (CEST)
-Date:   Mon, 15 May 2023 22:17:04 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, dmitry.baryshkov@linaro.org,
-        andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v8 5/8] drm/msm/dpu: add support for DSC encoder v1.2
- engine
-Message-ID: <p475xm34vecvxeidwx5ztbk7wzvpeefw2mfzsfz47fgaftwocg@f7l2ku63yfww>
-References: <1683914423-17612-1-git-send-email-quic_khsieh@quicinc.com>
- <1683914423-17612-6-git-send-email-quic_khsieh@quicinc.com>
- <mxdr37vle6x4wvidyh2tc5w77oqve556ogk4nu47efdjbstz6i@vz5hkydgie5g>
- <08b4b6b3-1401-c2dc-0270-c8f7d538ed9c@quicinc.com>
+        Mon, 15 May 2023 16:29:32 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B44886B6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 13:29:31 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34FJLnZT026627;
+        Mon, 15 May 2023 20:29:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=54MEuekPaSusawEzK869z4HJqcYaW+vxC8zoGzjQGu8=;
+ b=Z5CSFB45PxwDb4Xt2+B0710x/0miPgx5tT5ey0FOHKOdOLHz/HUoGRggnaOJPVS4BFaL
+ 4y0MmGzdSb+If7RxFimkhgq9uPG/b8+m18NPl+wXG8lguZzNyTS7Gpl4d4uVGbYl3qVy
+ QYTzNKiJ0klAxC1rjwKGWHMRxH5q848DY98CX/G+5yjsC6T36Y2Xw80RbYdQ+w8oZB5a
+ AP9IRUDutxp+dSJ6HKLiXY2LiKNnIdxb3Qo6bJzm/vufmV4X09Ep3HYneWjvXlfYg3OU
+ +MVaueJ57nq+DqblmuiFrm3dCxqFdCKoWRMB7QeyqG03SOGQj1C9dICruuDZ9cPBpExa NA== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qkkq99dxt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 20:29:25 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34FKTOIr002783
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 20:29:24 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 15 May
+ 2023 13:29:22 -0700
+Message-ID: <0e8a8af5-5ab8-c1b9-e08d-909072cc9b76@quicinc.com>
+Date:   Mon, 15 May 2023 13:29:21 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <08b4b6b3-1401-c2dc-0270-c8f7d538ed9c@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v10 4/8] drm/msm: Add MSM-specific DSC helper methods
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+CC:     <freedreno@lists.freedesktop.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        "Daniel Vetter" <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230329-rfc-msm-dsc-helper-v10-0-4cb21168c227@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v10-4-4cb21168c227@quicinc.com>
+ <kx3be4c2okye2ts4rzy4j4ltnveixf7v4rxp5v4tl2irvevg6t@c5tuelunmn4c>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <kx3be4c2okye2ts4rzy4j4ltnveixf7v4rxp5v4tl2irvevg6t@c5tuelunmn4c>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: QoH3VRNLDjn4r0moH4iS3h5iw6POqj-Q
+X-Proofpoint-ORIG-GUID: QoH3VRNLDjn4r0moH4iS3h5iw6POqj-Q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-15_18,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
+ mlxlogscore=875 spamscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ mlxscore=0 adultscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305150169
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-15 10:06:33, Kuogee Hsieh wrote:
-<snip>
-> >> +static inline int _dsc_calc_ob_max_addr(struct dpu_hw_dsc *hw_dsc, int num_ss)
-> > Can you write out "ob" fully?
-> >
-> > These don't need to be marked "inline", same below.
 
-Please add newlines around your reply, like I did here, to make it
-easier to spot them in the context.  As asked in another thread, shorten
-the original message around it if it's not relevant for your reply
-message (see <snip> bits).
 
-> are you means all functions in this file doe snot to be marked as inline?
+On 5/14/2023 2:25 PM, Marijn Suijten wrote:
+> On 2023-05-12 14:32:14, Jessica Zhang wrote:
+>>
+>> Introduce MSM-specific DSC helper methods, as some calculations are
+>> common between DP and DSC.
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/msm_dsc_helper.h | 65 ++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 65 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/msm/msm_dsc_helper.h b/drivers/gpu/drm/msm/msm_dsc_helper.h
+>> new file mode 100644
+>> index 000000000000..0d2a097b428d
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/msm/msm_dsc_helper.h
+>> @@ -0,0 +1,65 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/*
+>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved
+>> + */
+>> +
+>> +#ifndef MSM_DSC_HELPER_H_
+>> +#define MSM_DSC_HELPER_H_
+>> +
+>> +#include <linux/bug.h>
+>> +#include <linux/math.h>
+>> +#include <drm/display/drm_dsc_helper.h>
+>> +
+>> +/*
+>> + * Helper methods for MSM specific DSC calculations that are common between timing engine,
+>> + * DSI, and DP.
+>> + */
+> 
+> Isn't this more common to have directly below the copyright statement,
+> above the includes?
 
-https://www.kernel.org/doc/local/inline.html
+Hi Marijn,
 
-In general, inline is fine for math functions that are small and useful
-to be inlined (and functions in headers that get compiled multiple times
-but need to be deduplicated when all the objects are linked together).
-It has no sensible meaning on callback functions (of which their pointer
-get assigned to a struct member), however.
+Acked.
 
-In DPU1 for example, only dpu_hw_ctl.c erroneously does this for
-callbacks (and this patch, but I presume you'll fix this up in v9).
+> 
+>> +
+>> +/**
+>> + * msm_dsc_get_bpp_int() - get bits per pixel integer value
+>> + * @dsc: Pointer to drm dsc config struct
+>> + * Returns: BPP integer value
+>> + */
+>> +static inline int msm_dsc_get_bpp_int(struct drm_dsc_config *dsc)
+> 
+> Const, as requested elsewhere.  But this function is not used anywhere
+> in any of the series (because we replaced the usages with more sensible
+> member accesses like slice_chunk_size).
 
-> >> +{
-> >> +	int max_addr = 2400 / num_ss;
-> > ss -> slice (or subslice), right?
-> ...
-> slice (softslice)
+Acked.
 
-Thanks if you can fix this up in v9!
+I would prefer to keep this helper so that we have a way to easily get 
+BPP information from the DRM DSC config in the future, but if you'd 
+prefer we add this helper then, I'm also ok with that.
 
-- Marijn
+> 
+>> +{
+>> +	WARN_ON_ONCE(dsc->bits_per_pixel & 0xf);
+>> +	return dsc->bits_per_pixel >> 4;
+>> +}
+>> +
+>> +/**
+>> + * msm_dsc_get_slice_per_intf() - get number of slices per interface
+>> + * @dsc: Pointer to drm dsc config struct
+>> + * @intf_width: interface width
+> 
+> Width of the interface (to query), *in pixels*
 
-<snip>
+Acked.
+
+> 
+>> + * Returns: Integer representing the slice per interface
+> 
+> the *number of slices* per interface.
+> 
+> Also, the returned value applies specifically to *the given interface*
+> (width).
+
+Acked.
+
+> 
+>> + */
+>> +static inline int msm_dsc_get_slice_per_intf(struct drm_dsc_config *dsc, int intf_width)
+> 
+> Const pointer.
+> 
+> Also: sliceS_per_intf?  It's pluiral in the docs too.
+> 
+> Should the argument and return value be u32, to match the uses?  Same
+> for everything below.
+
+Acked.
+
+> 
+>> +{
+>> +	return DIV_ROUND_UP(intf_width, dsc->slice_width);
+>> +}
+>> +
+>> +/**
+>> + * msm_dsc_get_bytes_per_line() - Calculate bytes per line
+> 
+> Calculate -> (lowecase) get
+> (to match all the other helpers in this file)
+
+Acked.
+
+> 
+>> + * @dsc: Pointer to drm dsc config struct
+>> + * Returns: Integer value representing pclk per interface
+>> + *
+>> + * Note: This value will then be passed along to DSI and DP for some more
+>> + * calculations. This is because DSI and DP divide the pclk_per_intf value
+>> + * by different values depending on if widebus is enabled.
+> 
+> Can you elaborate what this "note" is trying to tell users of this
+> function?  That they should not use bytes_per_line raw?  That it doesn't
+> actually represent bytes_per_line if the extra calculations mentioned
+> here are not applied?
+
+The latter -- this method is used for calculating the pclk for DSI and 
+DP. While it does get the raw bytes_per_line, there are some extra 
+calculations needed before it can be set as the pclk_rate. These "extra 
+calculations" are different between DP and DSI.
+
+For more context, please refer to the earlier revisions of this patch 
+and the usage of the helper in dsi_host.c
+
+> 
+>> + */
+>> +static inline int msm_dsc_get_bytes_per_line(struct drm_dsc_config *dsc)
+> 
+> const, return u32.
+
+Acked.
+
+> 
+>> +{
+>> +	return dsc->slice_count * dsc->slice_chunk_size;
+> 
+> This is a u8 times a u16.  Could it overflow a u16 and should we hence
+> cast one of the expressions to u32 first?
+
+Acked.
+
+> 
+>> +}
+>> +
+>> +/**
+>> + * msm_dsc_get_bytes_per_intf() - get total bytes per interface
+>> + * @dsc: Pointer to drm dsc config struct
+>> + * @intf_width: interface width
+>> + * Returns: u32 value representing bytes per interface
+> 
+> Nit: no need to repeat the type, I think?  Just "number of bytes per
+> interface" is more concise.
+
+Acked.
+
+> 
+>> + */
+>> +static inline u32 msm_dsc_get_bytes_per_intf(struct drm_dsc_config *dsc, int intf_width)
+> 
+> And one more const.  
+
+Acked.
+
+> Not sure that this helper is useful though: it is
+> only used where msm_dsc_get_slice_per_intf() was already called, so it
+> makes more sense to the reader to just multiply slice_per_intf by
+> slice_chunk_size than to defer to an opaque helper.
+
+I would prefer to keep this as a helper as this math is common between 
+DP and DSI, and I believe the name of the helper accurately reflects 
+what is being calculated.
+
+If there's any confusion with the name of the method, I am open to 
+suggestions.
+
+Thanks,
+
+Jessica Zhang
+
+> 
+> - Marijn
+> 
+>> +{
+>> +	return dsc->slice_chunk_size * msm_dsc_get_slice_per_intf(dsc, intf_width);
+>> +}
+>> +
+>> +#endif /* MSM_DSC_HELPER_H_ */
+>>
+>> -- 
+>> 2.40.1
+>>
