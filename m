@@ -2,177 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45B14703036
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 16:42:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4AD8E703059
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 16:43:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241829AbjEOOm1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 10:42:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35600 "EHLO
+        id S229568AbjEOOnr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 10:43:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241699AbjEOOm0 (ORCPT
+        with ESMTP id S242044AbjEOOna (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 10:42:26 -0400
-Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAF411999
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 07:42:23 -0700 (PDT)
-Received: by mail-qk1-x732.google.com with SMTP id af79cd13be357-7576deacbd6so533928285a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 07:42:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684161743; x=1686753743;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=iGP3XVEPwqBcsiq4Qh1PUJ4CILfdBcete8YdPUejdVE=;
-        b=mMk/z7Qq2iRZWbgMwCyhrQf42Qszvo1Qzj7a4TXk/wxFV6HA6q20axWlvgBpAX/jyk
-         dH1PxFVCXhhwpOABKXTgHD4FOfZjWu6cFyORgt5fcLpxh68vEpc1hImnk3Nd5aKImBgn
-         XlZMqS7Sin+ectt4rA0z5eawTDPcxBftF7jOZbYts5uHNz+jlweJu67p4b7NZCmazjmk
-         4wQAUBqsafXReEQmcoCMxdMN47PUAPIqTbtUzF47pygZsTvs/O/cgvv8vfxTxVRHmke4
-         x9cmddcEbvuA75S1eorYTkSSVKrTtcjdE73eRk0QNpAAZ2O9N8Nj9M8o0odx+U39MRnb
-         tMWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684161743; x=1686753743;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iGP3XVEPwqBcsiq4Qh1PUJ4CILfdBcete8YdPUejdVE=;
-        b=W5CiOklGcNxk97aSIkr5P5VPokctKpJjByZGE19W4ClYooeKY23yWe7Lqzy85oK58t
-         eDkZgRSx0CsVoowgDGiGV5SMkyZmHY3wEzhrQpuKK25nTWNHzQoL/6Yu4A1rZYJyWnwA
-         s5/JEczOlQRCNP7Aty1B9l4u2uUeXoMVDnSF4sMRPxs6xpDNHCH1x/bCQUYVfdIfM6z0
-         nuXXH3EqHOJ2t24ZEVGH8FnNMku+1U9TzL0dKQM0tQMH8xD3V6pBRBjCSZD6BJGogbXG
-         um1IKzYF5KrreGLsxwE20cqje6s8FvTiNDH6jGjKV3BQ8TQFZpki8NT2A+p+qnsXtLpi
-         AYtQ==
-X-Gm-Message-State: AC+VfDwH5rugO/+Qpa7VIXdmpBYsOglYkG/QsEB6q/zS0oZWbbN7AVfz
-        tvb0eY/n8X1q/o+yFUYTlUJXAGm7IbC72I/1x0VPvA==
-X-Google-Smtp-Source: ACHHUZ4CjCTZxDvePqq/jYehFEnF54Va9KfaqiuEQZ0ysjNvjRIGMUDXuMqCfgTSk/8rkZFLKlf8VUCx7fNrkXVSuRc=
-X-Received: by 2002:a05:6214:401c:b0:5f1:5ed3:dd82 with SMTP id
- kd28-20020a056214401c00b005f15ed3dd82mr47494329qvb.48.1684161742789; Mon, 15
- May 2023 07:42:22 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230324063357.1.Ifdf3625a3c5c9467bd87bfcdf726c884ad220a35@changeid>
- <CAMi1Hd1avQDcDQf137m2auz2znov4XL8YGrLZsw5edb-NtRJRw@mail.gmail.com> <552345c5-b1e9-41f6-f275-b6eeeb51df25@linaro.org>
-In-Reply-To: <552345c5-b1e9-41f6-f275-b6eeeb51df25@linaro.org>
-From:   Amit Pundir <amit.pundir@linaro.org>
-Date:   Mon, 15 May 2023 20:11:46 +0530
-Message-ID: <CAMi1Hd05z8uBotO4vs7Ropmt7W2gSA__tTu_=X1t0mze7bXrhg@mail.gmail.com>
-Subject: Re: [PATCH] regulator: qcom-rpmh: Revert "regulator: qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS"
-To:     Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     Douglas Anderson <dianders@chromium.org>,
-        Mark Brown <broonie@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mon, 15 May 2023 10:43:30 -0400
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B78A02D67;
+        Mon, 15 May 2023 07:43:24 -0700 (PDT)
+Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34FEdfW2001912;
+        Mon, 15 May 2023 14:42:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
+ from : to : cc : date : in-reply-to : references : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=3xmrodnLEt3plr6PfR2NiDKXpK4TnrjIaL6sDzQ/7GU=;
+ b=q+a2WxQK3J7w6NJiJUphIIf9ajPoK7dLJYqI+t2yd270W7CmFhfqcxPQ4sLDs8I3yoHG
+ pxet7qhizsDe49r5qacnn0up7txnPYLcrU93fC8Bm+i3aeBN80Ggy2bsIoIYrG+r6kUc
+ J1XYXBbpdTFIkOMbNS2Hzs4i6D8uAWoosggxD2ywApVOUoB3k+0BLdM34/EKgjTr0v0I
+ M1Qugs2xEIxBRanx3Lb4zTEg+aHcUy6ykjy9rtQaZ1BfcKCrOV62c4cgy2n4HHtWIcJg
+ tOJu+la3PVYmFqjAttTuVrNtJHuyBkPyuDeqcvdGca4YJcbHej4ZLYZBslN6wQePhEil xg== 
+Received: from pps.reinject (localhost [127.0.0.1])
+        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qkpes0q07-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 14:42:47 +0000
+Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 34FEe63m005221;
+        Mon, 15 May 2023 14:42:46 GMT
+Received: from ppma01fra.de.ibm.com (46.49.7a9f.ip4.static.sl-reverse.com [159.122.73.70])
+        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qkpes0pvy-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 14:42:46 +0000
+Received: from pps.filterd (ppma01fra.de.ibm.com [127.0.0.1])
+        by ppma01fra.de.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 34FD2VOD016196;
+        Mon, 15 May 2023 14:42:43 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+        by ppma01fra.de.ibm.com (PPS) with ESMTPS id 3qj264rxmt-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 14:42:42 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
+        by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 34FEgdw220447944
+        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Mon, 15 May 2023 14:42:39 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id 4949420043;
+        Mon, 15 May 2023 14:42:39 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+        by IMSVA (Postfix) with ESMTP id DF9C920040;
+        Mon, 15 May 2023 14:42:36 +0000 (GMT)
+Received: from [9.171.65.23] (unknown [9.171.65.23])
+        by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+        Mon, 15 May 2023 14:42:36 +0000 (GMT)
+Message-ID: <a2a9a2bdb431d7611588a9f9bdca64856ac56139.camel@linux.ibm.com>
+Subject: Re: [PATCH v9 5/6] iommu/dma: Allow a single FQ in addition to
+ per-CPU FQs
+From:   Niklas Schnelle <schnelle@linux.ibm.com>
+To:     Jason Gunthorpe <jgg@ziepe.ca>, Robin Murphy <robin.murphy@arm.com>
+Cc:     Joerg Roedel <joro@8bytes.org>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Will Deacon <will@kernel.org>,
+        Wenjia Zhang <wenjia@linux.ibm.com>,
+        Gerd Bayer <gbayer@linux.ibm.com>,
+        Julian Ruess <julianr@linux.ibm.com>,
+        Pierre Morel <pmorel@linux.ibm.com>,
+        Alexandra Winter <wintera@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+        Yong Wu <yong.wu@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux.dev, asahi@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        linux-doc@vger.kernel.org
+Date:   Mon, 15 May 2023 16:42:36 +0200
+In-Reply-To: <ZGIuj2pRjOPffqZZ@ziepe.ca>
+References: <20230310-dma_iommu-v9-0-65bb8edd2beb@linux.ibm.com>
+         <20230310-dma_iommu-v9-5-65bb8edd2beb@linux.ibm.com>
+         <ZGIuj2pRjOPffqZZ@ziepe.ca>
 Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLACK autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Evolution 3.48.1 (3.48.1-1.fc38) 
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: gNuxWXJsmokdhsaD92T6yUFS_UMSNhrG
+X-Proofpoint-ORIG-GUID: me_7t4m8_jWebgWrnvUvQ84qdxzJLwc5
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-15_11,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ clxscore=1015 phishscore=0 spamscore=0 mlxscore=0 suspectscore=0
+ mlxlogscore=596 bulkscore=0 impostorscore=0 lowpriorityscore=0
+ malwarescore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2305150121
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 14 May 2023 at 18:11, Caleb Connolly <caleb.connolly@linaro.org> wrote:
->
->
->
-> On 13/05/2023 18:08, Amit Pundir wrote:
-> > On Fri, 24 Mar 2023 at 19:05, Douglas Anderson <dianders@chromium.org> wrote:
-> >>
-> >> This reverts commit 58973046c1bf ("regulator: qcom-rpmh: Use
-> >> PROBE_FORCE_SYNCHRONOUS"). Further digging into the problems that
-> >> prompted the us to switch to synchronous probe showed that the root
-> >> cause was a missing "rootwait" in the kernel command line
-> >> arguments. Let's reinstate asynchronous probe.
-> >
-> > Hi, the asynchronous probe is broken on Dragonboard 845c (SDM845)
-> > running AOSP (Android Open Source Project) with v6.4-rc1
-> > https://bugs.linaro.org/show_bug.cgi?id=5975.
-> > Can we please go back to synchronous probe.
-> >
-> > AOSP do not make use of rootwait, IIRC, but it is added by the
-> > bootloader anyway. And the device fails to boot AOSP regardless of
-> > "rootwait" bootarg being present or not.
->
-> Could you try applying this diff to enable some log spam and let me know
-> what you get? I'm keen to try and figure this one out. My mail client
-> might crunch this a bit so I have pasted it here too
-> https://p.calebs.dev/ab74b7@raw
+On Mon, 2023-05-15 at 10:07 -0300, Jason Gunthorpe wrote:
+> On Mon, May 15, 2023 at 11:15:55AM +0200, Niklas Schnelle wrote:
+>=20
+> > +/**
+> > + * struct dma_iommu_options - Options for dma-iommu
+> > + *
+> > + * @flags: Flag bits for enabling/disabling dma-iommu settings
+> > + *
+> > + * This structure is intended to provide IOMMU drivers a way to influe=
+nce the
+> > + * behavior of the dma-iommu DMA API implementation. This allows optim=
+izing for
+> > + * example for a virtualized environment with slow IOTLB flushes.
+> > + */
+> > +struct dma_iommu_options {
+> > +#define IOMMU_DMA_OPTS_PER_CPU_QUEUE	(0L << 0)
+> > +#define IOMMU_DMA_OPTS_SINGLE_QUEUE	(1L << 0)
+> > +	u64	flags;
+> > +};
+>=20
+> You need to hash it out with robin if we do something like this or use
+> more untyped caps as he put in this series:
+>=20
+> https://lore.kernel.org/linux-iommu/cover.1683233867.git.robin.murphy@arm=
+.com/
+>=20
+> Jason
 
-These prints add just enough delay for the UFS probe to succeed that I
-can't reproduce the failure anymore.
+Ok. I do wonder how to best represent this as a capability.
+Semantically I think a capability needs to be something positive i.e.
+while IOMMU_CAP_EXPENSIVE_FLUSH would technically work having slow
+IOTLB flushes really isn't a capability. So the best I can think of is
+maybe IOMMU_CAP_SHADOW_ON_FLUSH. It's a bit specific but does convey
+that the IOTLB flush does more than dropping hardware caches where the
+main cost is the then empty TLB not the operation itself. Or maybe to
+keep thing separate one would have to add capabilities for the existing
+users IOMMU_CAP_HW_FLUSH and IOMMU_CAP_CONCURRENT_FLUSH.
 
->
-> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-> index f93544f6d796..67859f1bdb28 100644
-> --- a/drivers/soc/qcom/rpmh-rsc.c
-> +++ b/drivers/soc/qcom/rpmh-rsc.c
-> @@ -653,11 +653,23 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const
-> struct tcs_request *msg)
->
->         spin_lock_irqsave(&drv->lock, flags);
->
-> +       dev_info(drv->dev, "%s: %p tcs->type=%d state=%d, "
-> +               "wait_for_compl=%d, num_cmds=%d\n",
-> +               __func__, msg, tcs->type, msg->state,
-> +               msg->wait_for_compl, msg->num_cmds);
-> +       for (int i = 0; i < msg->num_cmds; i++)
-> +               dev_info(drv->dev, "%s: %p cmd[%d] "
-> +                       "addr=0x%x data=0x%x\n", __func__,
-> +                       msg, i, msg->cmds[i].addr, msg->cmds[i].data);
-> +
->         /* Wait forever for a free tcs. It better be there eventually! */
->         wait_event_lock_irq(drv->tcs_wait,
->                             (tcs_id = claim_tcs_for_req(drv, tcs, msg))
-> >= 0,
->                             drv->lock);
->
-> +       dev_info(drv->dev, "%s: %px GOT TCS! %d\n",
-> +               __func__, msg, tcs_id);
-> +
->         tcs->req[tcs_id - tcs->offset] = msg;
->         set_bit(tcs_id, drv->tcs_in_use);
->         if (msg->state == RPMH_ACTIVE_ONLY_STATE && tcs->type !=
-> ACTIVE_TCS) {
->
-> >
-> > FWIW I do not see this regression on RB5 (QRB5165/SM8250) running the
-> > same set of AOSP images.
-> >
-> > Regards,
-> > Amit Pundir
-> >
-> >
-> >
-> >
-> >>
-> >> Fixes: 58973046c1bf ("regulator: qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS")
-> >> Cc: Marek Szyprowski <m.szyprowski@samsung.com>
-> >> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> >> ---
-> >>
-> >>  drivers/regulator/qcom-rpmh-regulator.c | 2 +-
-> >>  1 file changed, 1 insertion(+), 1 deletion(-)
-> >>
-> >> diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-> >> index 903032b2875f..4826d60e5d95 100644
-> >> --- a/drivers/regulator/qcom-rpmh-regulator.c
-> >> +++ b/drivers/regulator/qcom-rpmh-regulator.c
-> >> @@ -1462,7 +1462,7 @@ MODULE_DEVICE_TABLE(of, rpmh_regulator_match_table);
-> >>  static struct platform_driver rpmh_regulator_driver = {
-> >>         .driver = {
-> >>                 .name = "qcom-rpmh-regulator",
-> >> -               .probe_type = PROBE_FORCE_SYNCHRONOUS,
-> >> +               .probe_type = PROBE_PREFER_ASYNCHRONOUS,
-> >>                 .of_match_table = of_match_ptr(rpmh_regulator_match_table),
-> >>         },
-> >>         .probe = rpmh_regulator_probe,
-> >> --
-> >> 2.40.0.348.gf938b09366-goog
-> >>
->
-> --
-> Kind Regards,
-> Caleb (they/them)
+Not sure though. It does feel more clunky than the tuning op I added
+and maybe instead these mechanisms should co-exist. After all even
+though the IOTLB flushes with shadowing are expensive they still
+benefit from the flush queue just with more entries and less
+parallelism.
+
+Thanks,
+Niklas
