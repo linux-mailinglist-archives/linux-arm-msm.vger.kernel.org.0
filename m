@@ -2,159 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C95B702431
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 08:12:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6923870252C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 08:46:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232916AbjEOGMk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 02:12:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47582 "EHLO
+        id S240033AbjEOGq3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 02:46:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230190AbjEOGMj (ORCPT
+        with ESMTP id S229765AbjEOGq2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 02:12:39 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30985E48
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 May 2023 23:12:36 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-965ddb2093bso1822026866b.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 May 2023 23:12:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1684131154; x=1686723154;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QGQqACAtxVd3+isW2epC7gqLpY6OemSJdFuWDlSDAdc=;
-        b=VUc3hbcjytBj5aTVCffVk+cmWgl6blwmePp6+3rczcJaGu4QLTZ0qWlyBAvP8l/k7y
-         20twm51yI1qkSxUBEuauDH5oBvO0P6wxXVBki6CP3aEpKsAxMypaaj/uswQmZx6+MUYl
-         ezpYGl3X4dEk/uyOBBNDutb119Oti+A0eXGpPKY/qSfUFLzPYPMxthNGF9/rwd+y20yg
-         O24bpj8rpuhaQitTP5hiR23SbapVIxOcxD3Q1naes4IBlDwrBcBu4vHEVGSfrJNJIjEP
-         bgGOdLf3fPs3QEz5yGRIqYkw+IjNYfi6mS82GB7KJyc7fdWBP6wdhUH+NdrLKTONPFtj
-         HPOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684131154; x=1686723154;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QGQqACAtxVd3+isW2epC7gqLpY6OemSJdFuWDlSDAdc=;
-        b=H88rYOgBFZXVMx3iz7Ik7QaUVTNquR1bfm+Sq9bzJWCe8Bv8sTJ364Pa/rTJrjNg30
-         tdU3R64kXAPRKZFcCdqOFfnClmluelXWzr6hl5MORC5ACH6RgPzu2o4rJBzd2RZC0WUH
-         YjTxHNd6CYO2aRi9SWVtjMaBmfJeOyn89mmxvofoIoW7Y8CDC4fxx+9l3OcXX1ZMzC/9
-         kyd4C2ciqgGcooz/80C34wqYCH7/8XSK7ECX2TR0ZOyuIQ7CWKqdkEinsmu3mcIXxMqM
-         l0hJmx8eA+cfW0nLRqVDs6sG4ZZSga+gOQgWIi7jOoKlMlQrpVIRkhoamwS6+XSBO4iN
-         uXxA==
-X-Gm-Message-State: AC+VfDwdQW1pnBv2KRaDNCnsNa0x+vSQ+4bGJYkxkAceTYEt93uHVHAu
-        qXE/dGFw/1vgyxyQYOYqLWthrw==
-X-Google-Smtp-Source: ACHHUZ6VdyzxojOvlJcM3eGCjirMUeOR1VFBmDIxIiphgjub9RZOGHgCoqUyr8RlkVy6ccA25FFuqA==
-X-Received: by 2002:a17:907:7e99:b0:96a:2dd7:2ef9 with SMTP id qb25-20020a1709077e9900b0096a2dd72ef9mr17702781ejc.39.1684131154628;
-        Sun, 14 May 2023 23:12:34 -0700 (PDT)
-Received: from localhost (k10064.upc-k.chello.nl. [62.108.10.64])
-        by smtp.gmail.com with ESMTPSA id q10-20020a1709064cca00b0096b524b160asm337851ejt.82.2023.05.14.23.12.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 14 May 2023 23:12:34 -0700 (PDT)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date:   Mon, 15 May 2023 08:12:33 +0200
-Message-Id: <CSMMO2ZBOS6Y.3SAQOHDLW68ME@otso>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        "Eric Dumazet" <edumazet@google.com>,
-        "Jakub Kicinski" <kuba@kernel.org>,
-        "Paolo Abeni" <pabeni@redhat.com>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        "Marcel Holtmann" <marcel@holtmann.org>,
-        "Johan Hedberg" <johan.hedberg@gmail.com>,
-        "Andy Gross" <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        "Conor Dooley" <conor+dt@kernel.org>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, <netdev@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-bluetooth@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v2 0/4] Add WCN3988 Bluetooth support for Fairphone 4
-From:   "Luca Weiss" <luca.weiss@fairphone.com>
-To:     "Luiz Augusto von Dentz" <luiz.dentz@gmail.com>
-X-Mailer: aerc 0.15.1
-References: <20230421-fp4-bluetooth-v2-0-3de840d5483e@fairphone.com>
- <CABBYNZJPw=Oxi+J2oA=6aosEZjCBK=u=8HEJywzRJCCrmGnkGA@mail.gmail.com>
-In-Reply-To: <CABBYNZJPw=Oxi+J2oA=6aosEZjCBK=u=8HEJywzRJCCrmGnkGA@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Mon, 15 May 2023 02:46:28 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FFB8D3;
+        Sun, 14 May 2023 23:46:27 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34F6eXLl011183;
+        Mon, 15 May 2023 06:46:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=+3YRgdCc5OGUZgyve6jYjpoLDxZPaQXG3x9Z0SG9BLY=;
+ b=fKYCAQIX0op7k4mpEbax1O2BK1EeZSY8SBhS7E4UChwHvrpZ+zMh+CuHNtiacVL/R7CF
+ pKoIsC/TqKLCNJCsb+2fDZiDqvpue67jPokHtSNb4H2P0+KlIg02GCLZm0jMkR+CaL68
+ wxG1NjamXQpgiGEwCQBDwYyyXrR6tp2Du2btOvr1YbRTJOY4mXazxh1RIW5uT6t+V4Bw
+ kbnSdlOk8URdCM3XcgP4860JGutRvN8UzwscooxO4j9uJVVVgfeEhUxmpSnJJ+D1KXaE
+ BUPqD24aRAXdMPL9ITIugwCqsbpZxQA7XbX4jOKSMXM0J26pwURyR6EdycXJPXKwrQXc Ig== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qj3udjv2r-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 06:46:17 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 34F6kDU6012956;
+        Mon, 15 May 2023 06:46:13 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3qj3mkc3bn-1;
+        Mon, 15 May 2023 06:46:13 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 34F6kCEP012944;
+        Mon, 15 May 2023 06:46:13 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 34F6kCHh012942;
+        Mon, 15 May 2023 06:46:12 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
+        id F0DCA5102; Mon, 15 May 2023 12:16:11 +0530 (+0530)
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linus.walleij@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, richardcochran@gmail.com,
+        manivannan.sadhasivam@linaro.org, andy.shevchenko@gmail.com
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        netdev@vger.kernel.org, Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: [PATCH v2 0/2] Refactor the pinctrl driver
+Date:   Mon, 15 May 2023 12:16:08 +0530
+Message-Id: <1684133170-18540-1-git-send-email-quic_rohiagar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: aLuswpEGb6M7OH6GTJ6l2J1KFH5a3m8u
+X-Proofpoint-ORIG-GUID: aLuswpEGb6M7OH6GTJ6l2J1KFH5a3m8u
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-15_04,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 clxscore=1015 suspectscore=0 adultscore=0 mlxlogscore=437
+ mlxscore=0 phishscore=0 spamscore=0 bulkscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305150060
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri May 12, 2023 at 10:53 PM CEST, Luiz Augusto von Dentz wrote:
-> Hi Luca,
->
-> On Fri, May 12, 2023 at 6:58=E2=80=AFAM Luca Weiss <luca.weiss@fairphone.=
-com> wrote:
-> >
-> > Add support in the btqca/hci_qca driver for the WCN3988 and add it to
-> > the sm7225 Fairphone 4 devicetree.
-> >
-> > Devicetree patches go via Qualcomm tree, the rest via their respective
-> > trees.
->
-> Just to be sure, patches 1-2 shall be applied to bluetooth-next the
-> remaining are going to be handled elsewhere?
+Hi,
 
-Sounds good.
+Changes in v2:
+ - Added changes for SM7150 as well.
 
->
-> > --
-> > Previously with the RFC version I've had problems before with Bluetooth
-> > scanning failing like the following:
-> >
-> >   [bluetooth]# scan on
-> >   Failed to start discovery: org.bluez.Error.InProgress
-> >
-> >   [  202.371374] Bluetooth: hci0: Opcode 0x200b failed: -16
-> >
-> > This appears to only happen with driver built-in (=3Dy) when the suppor=
-ted
-> > local commands list doesn't get updated in the Bluetooth core and
-> > use_ext_scan() returning false. I'll try to submit this separately sinc=
-e
-> > this now works well enough with =3Dm. But in both cases (=3Dy, =3Dm) it=
-'s
-> > behaving a bit weirdly before (re-)setting the MAC address with "sudo
-> > btmgmt public-addr fo:oo:ba:ar"
-> >
-> > Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> > ---
-> > Changes in v2:
-> > - Add pinctrl & 'tlmm 64' irq to uart node
-> > - Pick up tags
-> > - Link to v1: https://lore.kernel.org/r/20230421-fp4-bluetooth-v1-0-043=
-0e3a7e0a2@fairphone.com
-> >
-> > ---
-> > Luca Weiss (4):
-> >       dt-bindings: net: qualcomm: Add WCN3988
-> >       Bluetooth: btqca: Add WCN3988 support
-> >       arm64: dts: qcom: sm6350: add uart1 node
-> >       arm64: dts: qcom: sm7225-fairphone-fp4: Add Bluetooth
-> >
-> >  .../bindings/net/bluetooth/qualcomm-bluetooth.yaml |   2 +
-> >  arch/arm64/boot/dts/qcom/sm6350.dtsi               |  63 +++++++++++++
-> >  arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts  | 103 +++++++++++++=
-++++++++
-> >  drivers/bluetooth/btqca.c                          |  13 ++-
-> >  drivers/bluetooth/btqca.h                          |  12 ++-
-> >  drivers/bluetooth/hci_qca.c                        |  12 +++
-> >  6 files changed, 201 insertions(+), 4 deletions(-)
-> > ---
-> > base-commit: f2fe50eb7ca6b7bc6c63745f5c26f7c6022fcd4a
-> > change-id: 20230421-fp4-bluetooth-b36a0e87b9c8
-> >
-> > Best regards,
-> > --
-> > Luca Weiss <luca.weiss@fairphone.com>
-> >
+This series refactor the target specific pinctrl driver for qcom
+by reusing the generic pinfunction struct, pingroup struct and the defined
+macros to avoid code repetition.
+The series is rebased on linux-next and based on all the review and
+comments from different versions of [1].
+
+[1] https://lore.kernel.org/linux-arm-msm/1681966915-15720-1-git-send-email-quic_rohiagar@quicinc.com/
+
+Thanks,
+Rohit.
+
+Rohit Agarwal (2):
+  pinctrl: qcom: Remove the msm_function struct
+  pinctrl: qcom: Refactor generic qcom pinctrl driver
+
+ drivers/pinctrl/qcom/pinctrl-apq8064.c  | 104 +++---
+ drivers/pinctrl/qcom/pinctrl-apq8084.c  | 264 ++++++++-------
+ drivers/pinctrl/qcom/pinctrl-ipq4019.c  | 104 +++---
+ drivers/pinctrl/qcom/pinctrl-ipq5332.c  | 206 ++++++------
+ drivers/pinctrl/qcom/pinctrl-ipq6018.c  | 260 +++++++--------
+ drivers/pinctrl/qcom/pinctrl-ipq8064.c  | 114 +++----
+ drivers/pinctrl/qcom/pinctrl-ipq8074.c  | 240 +++++++-------
+ drivers/pinctrl/qcom/pinctrl-ipq9574.c  | 176 +++++-----
+ drivers/pinctrl/qcom/pinctrl-mdm9607.c  | 276 ++++++++--------
+ drivers/pinctrl/qcom/pinctrl-mdm9615.c  |  90 +++--
+ drivers/pinctrl/qcom/pinctrl-msm.c      |  13 +-
+ drivers/pinctrl/qcom/pinctrl-msm.h      |  42 ++-
+ drivers/pinctrl/qcom/pinctrl-msm8226.c  | 156 +++++----
+ drivers/pinctrl/qcom/pinctrl-msm8660.c  | 252 +++++++-------
+ drivers/pinctrl/qcom/pinctrl-msm8909.c  | 268 ++++++++-------
+ drivers/pinctrl/qcom/pinctrl-msm8916.c  | 556 ++++++++++++++++---------------
+ drivers/pinctrl/qcom/pinctrl-msm8953.c  | 424 ++++++++++++------------
+ drivers/pinctrl/qcom/pinctrl-msm8960.c  | 464 +++++++++++++-------------
+ drivers/pinctrl/qcom/pinctrl-msm8976.c  | 212 ++++++------
+ drivers/pinctrl/qcom/pinctrl-msm8994.c  | 564 ++++++++++++++++----------------
+ drivers/pinctrl/qcom/pinctrl-msm8996.c  | 508 ++++++++++++++--------------
+ drivers/pinctrl/qcom/pinctrl-msm8998.c  | 380 +++++++++++----------
+ drivers/pinctrl/qcom/pinctrl-msm8x74.c  | 474 +++++++++++++--------------
+ drivers/pinctrl/qcom/pinctrl-qcm2290.c  | 230 +++++++------
+ drivers/pinctrl/qcom/pinctrl-qcs404.c   | 388 +++++++++++-----------
+ drivers/pinctrl/qcom/pinctrl-qdf2xxx.c  |   6 +-
+ drivers/pinctrl/qcom/pinctrl-qdu1000.c  | 249 +++++++-------
+ drivers/pinctrl/qcom/pinctrl-sa8775p.c  | 308 +++++++++--------
+ drivers/pinctrl/qcom/pinctrl-sc7180.c   | 254 +++++++-------
+ drivers/pinctrl/qcom/pinctrl-sc7280.c   | 322 +++++++++---------
+ drivers/pinctrl/qcom/pinctrl-sc8180x.c  | 286 ++++++++--------
+ drivers/pinctrl/qcom/pinctrl-sc8280xp.c | 358 ++++++++++----------
+ drivers/pinctrl/qcom/pinctrl-sdm660.c   | 387 +++++++++++-----------
+ drivers/pinctrl/qcom/pinctrl-sdm670.c   | 284 ++++++++--------
+ drivers/pinctrl/qcom/pinctrl-sdm845.c   | 286 ++++++++--------
+ drivers/pinctrl/qcom/pinctrl-sdx55.c    | 190 ++++++-----
+ drivers/pinctrl/qcom/pinctrl-sdx65.c    | 194 ++++++-----
+ drivers/pinctrl/qcom/pinctrl-sm6115.c   | 162 +++++----
+ drivers/pinctrl/qcom/pinctrl-sm6125.c   | 282 ++++++++--------
+ drivers/pinctrl/qcom/pinctrl-sm6350.c   | 296 ++++++++---------
+ drivers/pinctrl/qcom/pinctrl-sm6375.c   | 358 ++++++++++----------
+ drivers/pinctrl/qcom/pinctrl-sm7150.c   | 247 +++++++-------
+ drivers/pinctrl/qcom/pinctrl-sm8150.c   | 286 ++++++++--------
+ drivers/pinctrl/qcom/pinctrl-sm8250.c   | 258 +++++++--------
+ drivers/pinctrl/qcom/pinctrl-sm8350.c   | 298 ++++++++---------
+ drivers/pinctrl/qcom/pinctrl-sm8450.c   | 300 +++++++++--------
+ drivers/pinctrl/qcom/pinctrl-sm8550.c   | 320 +++++++++---------
+ 47 files changed, 6175 insertions(+), 6521 deletions(-)
+
+-- 
+2.7.4
 
