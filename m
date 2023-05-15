@@ -2,69 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 821A6703C27
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 20:12:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A2552703C3A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 20:15:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245090AbjEOSMa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 14:12:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44760 "EHLO
+        id S242319AbjEOSPC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 14:15:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52550 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245095AbjEOSLz (ORCPT
+        with ESMTP id S245205AbjEOSOo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 14:11:55 -0400
+        Mon, 15 May 2023 14:14:44 -0400
 Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B2E527F9A
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 11:09:07 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-55c939fb24dso120941317b3.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 11:09:07 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD65B1C053
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 11:12:21 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-55a829411b5so120981087b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 11:12:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684174111; x=1686766111;
+        d=linaro.org; s=google; t=1684174341; x=1686766341;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ro8tmlMGAw+gcvacmTcSTaJjQF8eWJk6fA6Unv/Jk28=;
-        b=ZiF16qVzHpH1+nrMbvksLWNYUu/EwpDqaweGBrTdItutk6MJ5koNhu/n4KBpJirsY7
-         rr0nYXeQ8KqGCeAraXCDpI4H93jRoRFQpUbBsT8ksrSR1DsM/YfA4OVtZFgdHHnOMIad
-         53STU/PWwGPnCyeRBcCTiFltMl66f3ZLZ+6PTBYeEKm+cYrApG4APn60WgzDta0YH18r
-         ZsOPXMNazF/kFRifnVHszo3CqDy3V7XRyFP9LYAO0DWznx1qTon9/9DC+i/r/VDh2XSF
-         yg/gKWEB6oDusL/SNmU5T+wqJYQHau//BzlYUXr3xFyxoMF+MclXrfNqQNUgTTvEK10x
-         KcUQ==
+        bh=UG/nFHajbw6yGBJ4fCskpIHD7pUkyYFl7ARQwWR7+5g=;
+        b=e4wwH+a1K8FA8UbtOQBmqfe6jF7c6u1C5D92koHM17o1iBgPKALC6S9in/UrMcNEH1
+         FC1jlwEpdp3FvhUppF2bixpI8LPEmwn1Bc2Z2hWFRjqF25FInk9kRfh4WbNFjU/jM3ZW
+         ZeLLoIykVvZq3vorbIYg/PjMkB2w1noBVIiqYelQEH4eWa/bhMNR36h3s8IQF268FzT7
+         gYlZdWF56fc7grjcjJeHLrXzSMi4UKEyMJouQBz7BbJ/of1qdvV+DIDVDNaQJ+cG60lX
+         TBXSFkBQcnSzuUjOKNg/YykesABAjk0KEQLsL5AepFZtoICaUKqkpwYLSJlk3bRwLr9u
+         kkTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684174111; x=1686766111;
+        d=1e100.net; s=20221208; t=1684174341; x=1686766341;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Ro8tmlMGAw+gcvacmTcSTaJjQF8eWJk6fA6Unv/Jk28=;
-        b=OjcIVDJ9TQQGNNE7jNujT8vEu1tXogfhqA4nWKwAzeZpqHdkD7ntk6K2sL3Bx7DPHx
-         1Kr6ro0OXUDIqZgH4o0/2ulkmsKom9HpKFbVAB2E6uOi8MJeNdKNHJmrpCqztmtR4nc+
-         ifQPhd7Y15j7LazFYR0t2Q70kFjW8FZTl+vKxQhldcn0r7/EPEqzM9+/tX0Iz6iAXVox
-         cGFwkraGDyT+9jJ/pFo/nHjyE4a5jcz6+VOO5Ba2JCwinM28DVwDTsZS2Hwo7MlNCTBP
-         ZbJ0kH6QNqiCUcQtX+0kYRkOR+X7zwAulaN88qOceLHHY4ukEv0V8QgigQPXmjsDjXME
-         2/BA==
-X-Gm-Message-State: AC+VfDy3i2JyFqaz1/PL6cedKPp6qisr0easyAdRhe1D49yOCckFNZa1
-        pzl3Qd2Ngsqsj7RdPgVfmS9AT0czEJouPGUKtPznUg==
-X-Google-Smtp-Source: ACHHUZ6Z4HjdtsvLUTBfEEJpcucb/2KcKAXw85OfHM0Szwvs5toBGa3MOzyeUX7rMhZxYpj5F9J4fR4ysvAAMC1yXxQ=
-X-Received: by 2002:a81:8a05:0:b0:55a:30f3:119 with SMTP id
- a5-20020a818a05000000b0055a30f30119mr32369437ywg.35.1684174111398; Mon, 15
- May 2023 11:08:31 -0700 (PDT)
+        bh=UG/nFHajbw6yGBJ4fCskpIHD7pUkyYFl7ARQwWR7+5g=;
+        b=PSsJi84QurMhZ95rTK7kzCyQ4W4bbBzbXtscr7jcY/qUqbRchIklAAnQHUD+Y+42qC
+         7aax2Q0ftp+i9cjQB1eJmilSWusj6fnNguIxZ1RrDkFiSUCrqO+jSTg0kxV8EBBOjbym
+         be1wGum9tvTh/2vyGb3CTsDKUvbD7DAHbI17fzk3ENvYHQP/iyYMCvF3Q6Z1Y4KV6Y/V
+         8zjzKxHyPtvm8JlBHBUQ9fYh4jyORjJLsFaEqWPQX47VBNUWnKB/ER5kF9i30w5djn+P
+         DWxF9hVin8E4RpeWv7ThHv8h1FW2e4ZSQbhx+OU+QctsNPMiigszDVsybeZfIkLjmreu
+         n3OA==
+X-Gm-Message-State: AC+VfDz4kMoI+lVZmeRh4Mpk9mfVr9uN7gvyIfTKJm09UH4SffPTbznZ
+        w5SB+R3qsVGjSWY+ImGsBl7b0AwkUX6Nben9/iz/cQ==
+X-Google-Smtp-Source: ACHHUZ5Je4xHDAe5fAqetLKWX9Q5WA/cboHR794VQTukqIEajO+ASQg+ec6Wn/TrZhVsOgwuhlftAuFikK2s7X/3scM=
+X-Received: by 2002:a81:8605:0:b0:559:d97c:6fd6 with SMTP id
+ w5-20020a818605000000b00559d97c6fd6mr32416639ywf.21.1684174341008; Mon, 15
+ May 2023 11:12:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <1683914423-17612-1-git-send-email-quic_khsieh@quicinc.com>
- <1683914423-17612-6-git-send-email-quic_khsieh@quicinc.com>
- <41243dc6-eb9d-dea6-f945-cb1f6594a2a4@linaro.org> <w6uswjuf7fiorrplqzhrpg3vrjbbdd3bgaxej5l6ez3pebn3d5@ytuxhim25j6q>
- <1fd8fd48-9a0a-774c-1366-ea4c893f3b25@quicinc.com>
-In-Reply-To: <1fd8fd48-9a0a-774c-1366-ea4c893f3b25@quicinc.com>
+References: <20230509161218.11979-1-quic_jkona@quicinc.com>
+ <20230509161218.11979-5-quic_jkona@quicinc.com> <7faf4c16-98ff-f27d-d1fd-3058370c06f5@linaro.org>
+ <CAA8EJpo1iMj90BPc6gYngSrJqd8WWArRndgbcVg1fYBKBpVfAQ@mail.gmail.com> <68c3f24f-99a2-ad7c-9371-33ccaf5740dd@linaro.org>
+In-Reply-To: <68c3f24f-99a2-ad7c-9371-33ccaf5740dd@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 15 May 2023 21:08:20 +0300
-Message-ID: <CAA8EJpqKRJ0nqQMDXdcSYEZapsKfxAsevcKnWPcsEVv+9P05fg@mail.gmail.com>
-Subject: Re: [PATCH v8 5/8] drm/msm/dpu: add support for DSC encoder v1.2 engine
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+Date:   Mon, 15 May 2023 21:12:10 +0300
+Message-ID: <CAA8EJprfVJxaGT80OxX6HXP5E8yCmpA3K82CL5JQdS923w7whQ@mail.gmail.com>
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm8550: Add video clock controller
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -76,46 +77,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 15 May 2023 at 20:47, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
+On Mon, 15 May 2023 at 16:08, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
 >
 >
-> On 5/14/2023 2:46 PM, Marijn Suijten wrote:
-> > On 2023-05-12 21:19:19, Dmitry Baryshkov wrote:
-> > <snip.
-> >>> +static inline void dpu_hw_dsc_bind_pingpong_blk_1_2(struct dpu_hw_dsc *hw_dsc,
-> >>> +                                               const enum dpu_pingpong pp)
-> >>> +{
-> >>> +   struct dpu_hw_blk_reg_map *hw;
-> >>> +   const struct dpu_dsc_sub_blks *sblk;
-> >>> +   int mux_cfg = 0xf; /* Disabled */
-> >>> +
-> >>> +   hw = &hw_dsc->hw;
-> >>> +
-> >>> +   sblk = hw_dsc->caps->sblk;
-> >>> +
-> >>> +   if (pp)
-> >>> +           mux_cfg = (pp - PINGPONG_0) & 0x7;
-> >> Do we need an unbind support here like we do for the DSC 1.1?
+>
+> On 15.05.2023 14:57, Dmitry Baryshkov wrote:
+> > On Mon, 15 May 2023 at 15:28, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
 > >>
-> >>> +
-> >>> +   DPU_REG_WRITE(hw, sblk->ctl.base + DSC_CTL, mux_cfg);
-> >>> +}
-> > <snip>
+> >>
+> >>
+> >> On 9.05.2023 18:12, Jagadeesh Kona wrote:
+> >>> Add device node for video clock controller on Qualcomm SM8550 platform.
+> >>>
+> >>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+> >>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> >>> ---
+> >>>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 12 ++++++++++++
+> >>>  1 file changed, 12 insertions(+)
+> >>>
+> >>> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> >>> index 6e9bad8f6f33..e67e7c69dae6 100644
+> >>> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> >>> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> >>> @@ -7,6 +7,7 @@
+> >>>  #include <dt-bindings/clock/qcom,sm8550-gcc.h>
+> >>>  #include <dt-bindings/clock/qcom,sm8550-tcsr.h>
+> >>>  #include <dt-bindings/clock/qcom,sm8550-dispcc.h>
+> >>> +#include <dt-bindings/clock/qcom,sm8550-videocc.h>
+> >>>  #include <dt-bindings/dma/qcom-gpi.h>
+> >>>  #include <dt-bindings/gpio/gpio.h>
+> >>>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+> >>> @@ -759,6 +760,17 @@ gcc: clock-controller@100000 {
+> >>>                                <&usb_dp_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
+> >>>               };
+> >>>
+> >>> +             videocc: clock-controller@aaf0000 {
+> >> This node should be moved down. Nodes with unit addresses
+> >> should be sorted alphanumerically.
+> >>
+> >>> +                     compatible = "qcom,sm8550-videocc";
+> >>> +                     reg = <0 0x0aaf0000 0 0x10000>;
+> >>> +                     clocks = <&bi_tcxo_div2>, <&gcc GCC_VIDEO_AHB_CLK>;
+> >> One per line, please
+> >>
+> >> Also, any reason the XO clock does not come from RPMhCC?
 > >
-> > Friendly request to strip/snip unneeded context (as done in this reply)
-> > to make it easier to spot the conversation, and replies to it.
-> >
-> > - Marijn
->
-> Thanks for suggestion.
->
-> How can I do that?
->
-> just manually delete unneeded context?
->
-> Or are they other way (tricks) to do it automatically?
+> > bi_tcxo_div_2 is an RPMhCC clock with the fixed divider.
+> Hm, I don't see it neither on -next or in this patchset..
 
-No automation can deduce what is irrelevant to the mail. So we do this manually.
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/arch/arm64/boot/dts/qcom/sm8550.dtsi?h=next-20230515#n41
 
 -- 
 With best wishes
