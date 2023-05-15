@@ -2,260 +2,268 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DD070704004
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 23:43:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3100970400F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 23:52:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245630AbjEOVnz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 17:43:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38458 "EHLO
+        id S243404AbjEOVwh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 17:52:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245631AbjEOVnx (ORCPT
+        with ESMTP id S243395AbjEOVwg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 17:43:53 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F37E37DAA;
-        Mon, 15 May 2023 14:43:40 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Mon, 15 May 2023 17:52:36 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 318B4A275;
+        Mon, 15 May 2023 14:52:33 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 908C66153D;
-        Mon, 15 May 2023 21:43:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88361C4339E;
-        Mon, 15 May 2023 21:43:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684187020;
-        bh=b+pXr4Hrxo2j7GrVI2Y1r49la08BF7ssH996PN0WsJw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YoiPYmWfQxUh4yS2f9BOVWk4MJtIqlqiw0TaU1DxI8jJitoIaE3iWpUKUB83n8lSF
-         Lf5e/onvs8yvVj8g1eYGgmEUA2SptH8QRh7dCUYpygfQGEcNo9n887hfKBxC83o6kl
-         M7ouOIlsUVU9TC3wVRt/GZgtJRTABw/sDSu8UFUAnolgZNTgfqs8k1FwZsspMpGVnb
-         cpacoB+hmpZ141HUzvcJFYqMoXsGadxNrcs7H0yOYZD4kD4SpXoGKBpbsTd9zsSloS
-         ZIpI1Uj1EDEqYRxxOyTHIPT4e5+bX18jBW2LVQ86YTO+nOJ1U3HSfruX426QZzigMI
-         GkoHNgtRaUYBg==
-Date:   Mon, 15 May 2023 14:47:30 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com
-Subject: Re: [PATCH v8 5/9] usb: dwc3: core: Refactor PHY logic to support
- Multiport Controller
-Message-ID: <20230515214730.epeelsnp3bznssr5@ripper>
-References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-6-quic_kriskura@quicinc.com>
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 7E5223F327;
+        Mon, 15 May 2023 23:52:31 +0200 (CEST)
+Date:   Mon, 15 May 2023 23:52:30 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, dmitry.baryshkov@linaro.org,
+        andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v8 6/8] drm/msm/dpu: separate DSC flush update out of
+ interface
+Message-ID: <r5rbbaz5gms5d2wdheuvqoij4ld5qiyz2kxrjjqkpyzy4v2zdq@44q2zgkrxpgt>
+References: <1683914423-17612-1-git-send-email-quic_khsieh@quicinc.com>
+ <1683914423-17612-7-git-send-email-quic_khsieh@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230514054917.21318-6-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <1683914423-17612-7-git-send-email-quic_khsieh@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, May 14, 2023 at 11:19:13AM +0530, Krishna Kurapati wrote:
-> Currently the DWC3 driver supports only single port controller
-> which requires at most one HS and one SS PHY.
+On 2023-05-12 11:00:21, Kuogee Hsieh wrote:
 > 
-> But the DWC3 USB controller can be connected to multiple ports and
-> each port can have their own PHYs. Each port of the multiport
-> controller can either be HS+SS capable or HS only capable
-> Proper quantification of them is required to modify GUSB2PHYCFG
-> and GUSB3PIPECTL registers appropriately.
-> 
-> Add support for detecting, obtaining and configuring phy's supported
-> by a multiport controller and limit the max number of ports
-> supported to 4.
-> 
-> Co-developed-by: Harsh Agarwal <quic_harshq@quicinc.com>
+> Current DSC flush update is piggyback inside dpu_hw_ctl_intf_cfg_v1().
 
-Please include Harsh's signed-off-by as well here, to clarify that you
-both certify the origin of this patch.
+Can you rewrite "is piggyback"?  Something like "Currently DSC flushing
+happens during interface configuration".  And it's intf configuration
+**on the CTL**, which makes this extra confusing.
 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> This patch separates DSC flush away from dpu_hw_ctl_intf_cfg_v1() by
+
+Drop "This patch".  Then, separates -> Separate
+
+> adding dpu_hw_ctl_update_pending_flush_dsc_v1() to handle both per
+> DSC engine and DSC flush bits at same time to make it consistent with
+
+Make that per-DSC with a hyphen.
+
+> the location of flush programming of other dpu sub blocks.
+
+DPU sub-blocks.
+
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/usb/dwc3/core.c | 266 ++++++++++++++++++++++++++++++----------
->  drivers/usb/dwc3/core.h |  11 +-
->  drivers/usb/dwc3/drd.c  |  13 +-
->  3 files changed, 213 insertions(+), 77 deletions(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 14 ++++++++++++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c  | 22 ++++++++++++++++------
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h  | 10 ++++++++++
+>  3 files changed, 38 insertions(+), 8 deletions(-)
 > 
-> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-[..]
-> @@ -744,22 +777,38 @@ static int dwc3_phy_setup(struct dwc3 *dwc)
->  static int dwc3_phy_init(struct dwc3 *dwc)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index ffa6f04..5cae70e 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -1834,12 +1834,18 @@ dpu_encoder_dsc_initial_line_calc(struct drm_dsc_config *dsc,
+>  	return DIV_ROUND_UP(total_pixels, dsc->slice_width);
+>  }
+>  
+> -static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_dsc *hw_dsc,
+> +static void dpu_encoder_dsc_pipe_cfg(struct dpu_encoder_virt *dpu_enc,
+
+Why not pass hw_ctl directly?  The other blocks are directly passed as
+well, and the caller already has cur_master.  Otherwise we might as well
+inline the for loops.  Same question for the new _clr call added in
+patch 8/8.
+
+> +				     struct dpu_hw_dsc *hw_dsc,
+>  				     struct dpu_hw_pingpong *hw_pp,
+>  				     struct drm_dsc_config *dsc,
+>  				     u32 common_mode,
+>  				     u32 initial_lines)
 >  {
->  	int ret;
-> +	int i;
-> +	int j;
->  
->  	usb_phy_init(dwc->usb2_phy);
->  	usb_phy_init(dwc->usb3_phy);
->  
-> -	ret = phy_init(dwc->usb2_generic_phy);
-> -	if (ret < 0)
-> -		goto err_shutdown_usb3_phy;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = phy_init(dwc->usb2_generic_phy[i]);
-> +		if (ret < 0) {
-> +			/* clean up prior initialized HS PHYs */
-> +			for (j = 0; j < i; j++)
-> +				phy_exit(dwc->usb2_generic_phy[j]);
-> +			goto err_shutdown_usb3_phy;
-
-The idiomatic form is to goto err_exit_usb2_phy and let it phy_exit()
-from i - 1 to 0. That would avoid duplicating this snippet.
-
-> +		}
-> +	}
->  
-> -	ret = phy_init(dwc->usb3_generic_phy);
-> -	if (ret < 0)
-> -		goto err_exit_usb2_phy;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-
-When you call dwc3_ss_phy_setup() the index refer to port0, port1... but
-when you refer to the phys you consistently loops over num_usb2_ports.
-
-The only case I can think of where this would be useful is if it's not
-the first N ports that are SS-capable (e.g. port0 and port can do SS).
-
-If this is the case, is it correct that this should not be reflected in
-the index passed to e.g. dwc3_ss_phy_setup()?
-
-If this is not the case, could you please transition these SS-related
-loops to iterate over usb3_generic_phy[0..num_usb3_ports)?
-
-> +		ret = phy_init(dwc->usb3_generic_phy[i]);
-> +		if (ret < 0) {
-> +			/* clean up prior initialized SS PHYs */
-> +			for (j = 0; j < i; j++)
-> +				phy_exit(dwc->usb3_generic_phy[j]);
-> +			goto err_exit_usb2_phy;
-
-For the purpose of symmetry, same suggestion as above. phy_exit() i - 1
-through 0, then reset j to dwc->num_usb2_ports and fall through to
-err_exit_usb2_phy.
-
-> +		}
-> +	}
->  
->  	return 0;
->  
->  err_exit_usb2_phy:
-> -	phy_exit(dwc->usb2_generic_phy);
-> +	for (i = 0; i < dwc->num_usb2_ports; i++)
-> +		phy_exit(dwc->usb2_generic_phy[i]);
+> +	struct dpu_encoder_phys *cur_master = dpu_enc->cur_master;
+> +	struct dpu_hw_ctl *ctl;
 > +
->  err_shutdown_usb3_phy:
->  	usb_phy_shutdown(dwc->usb3_phy);
->  	usb_phy_shutdown(dwc->usb2_phy);
-> @@ -769,8 +818,12 @@ static int dwc3_phy_init(struct dwc3 *dwc)
-[..]
->  static int dwc3_phy_power_on(struct dwc3 *dwc)
->  {
->  	int ret;
-> +	int i;
-> +	int j;
->  
->  	usb_phy_set_suspend(dwc->usb2_phy, 0);
->  	usb_phy_set_suspend(dwc->usb3_phy, 0);
->  
-> -	ret = phy_power_on(dwc->usb2_generic_phy);
-> -	if (ret < 0)
-> -		goto err_suspend_usb3_phy;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = phy_power_on(dwc->usb2_generic_phy[i]);
-> +		if (ret < 0) {
-> +			/* Turn off prior ON'ed HS Phy's */
-> +			for (j = 0; j < i; j++)
-> +				phy_power_off(dwc->usb2_generic_phy[j]);
-> +			goto err_suspend_usb3_phy;
+> +	ctl = cur_master->hw_ctl;
 
-As above, I'd prefer that you don't duplicate the phy_power_off() loop.
+Assign this directly at declaration, just like cur_master (but
+irrelevant if you pass this directly instead).
 
-> +		}
-> +	}
+> +
+>  	if (hw_dsc->ops.dsc_config)
+>  		hw_dsc->ops.dsc_config(hw_dsc, dsc, common_mode, initial_lines);
 >  
-> -	ret = phy_power_on(dwc->usb3_generic_phy);
-> -	if (ret < 0)
-> -		goto err_power_off_usb2_phy;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = phy_power_on(dwc->usb3_generic_phy[i]);
-> +		if (ret < 0) {
-> +			/* Turn of prior ON'ed SS Phy's */
-> +			for (j = 0; j < i; j++)
-> +				phy_power_off(dwc->usb3_generic_phy[j]);
-> +			goto err_power_off_usb2_phy;
-> +		}
-> +	}
+> @@ -1854,6 +1860,9 @@ static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_dsc *hw_dsc,
 >  
->  	return 0;
-[..]
-> +static int dwc3_get_multiport_phys(struct dwc3 *dwc)
+>  	if (hw_pp->ops.enable_dsc)
+>  		hw_pp->ops.enable_dsc(hw_pp);
+> +
+> +	if (ctl->ops.update_pending_flush_dsc)
+> +		ctl->ops.update_pending_flush_dsc(ctl, hw_dsc->idx);
+>  }
+>  
+>  static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
+> @@ -1898,7 +1907,8 @@ static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
+>  	initial_lines = dpu_encoder_dsc_initial_line_calc(dsc, enc_ip_w);
+>  
+>  	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
+> -		dpu_encoder_dsc_pipe_cfg(hw_dsc[i], hw_pp[i], dsc, dsc_common_mode, initial_lines);
+> +		dpu_encoder_dsc_pipe_cfg(dpu_enc, hw_dsc[i], hw_pp[i], dsc,
+> +					 dsc_common_mode, initial_lines);
+>  }
+>  
+>  void dpu_encoder_prepare_for_kickoff(struct drm_encoder *drm_enc)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> index 4f7cfa9..f3a50cc 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> @@ -139,6 +139,11 @@ static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
+>  				CTL_DSPP_n_FLUSH(dspp - DSPP_0),
+>  				ctx->pending_dspp_flush_mask[dspp - DSPP_0]);
+>  		}
+> +
+> +	if (ctx->pending_flush_mask & BIT(DSC_IDX))
+> +		DPU_REG_WRITE(&ctx->hw, CTL_DSC_FLUSH,
+> +			      ctx->pending_dsc_flush_mask);
+
+When are we setting this to zero again?
+
+Same question for the other masks, only the global pending_flush_mask
+and pending_dspp_flush_mask are reset in dpu_hw_ctl_clear_pending_flush.
+
+> +
+>  	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
+>  }
+>  
+> @@ -285,6 +290,13 @@ static void dpu_hw_ctl_update_pending_flush_merge_3d_v1(struct dpu_hw_ctl *ctx,
+>  	ctx->pending_flush_mask |= BIT(MERGE_3D_IDX);
+>  }
+>  
+> +static void dpu_hw_ctl_update_pending_flush_dsc_v1(struct dpu_hw_ctl *ctx,
+> +						   enum dpu_dsc dsc_num)
 > +{
-> +	int ret;
-> +	struct device *dev = dwc->dev;
-> +	int i;
-> +	char phy_name[11];
-
-It would be prettier if you sorted these lines by length, longest
-first...
-
-[..]
-> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-> index d3401963bc27..84f6303922aa 100644
-> --- a/drivers/usb/dwc3/core.h
-> +++ b/drivers/usb/dwc3/core.h
-> @@ -35,6 +35,9 @@
+> +	ctx->pending_dsc_flush_mask |= BIT(dsc_num - DSC_0);
+> +	ctx->pending_flush_mask |= BIT(DSC_IDX);
+> +}
+> +
+>  static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl *ctx,
+>  	enum dpu_dspp dspp, u32 dspp_sub_blk)
+>  {
+> @@ -502,9 +514,6 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
+>  	if ((test_bit(DPU_CTL_VM_CFG, &ctx->caps->features)))
+>  		mode_sel = CTL_DEFAULT_GROUP_ID  << 28;
 >  
->  #define DWC3_MSG_MAX	500
+> -	if (cfg->dsc)
+> -		DPU_REG_WRITE(&ctx->hw, CTL_DSC_FLUSH, cfg->dsc);
+> -
+>  	if (cfg->intf_mode_sel == DPU_CTL_MODE_SEL_CMD)
+>  		mode_sel |= BIT(17);
 >  
-> +/* Number of ports supported by a multiport controller */
-> +#define MAX_PORTS_SUPPORTED	4
+> @@ -524,10 +533,8 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
+>  	if (cfg->merge_3d)
+>  		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
+>  			      BIT(cfg->merge_3d - MERGE_3D_0));
 
-I think it would be preferred to prefix this DWC3_ (so perhaps just
-DWC3_MAX_PORTS, to keep it shorter)
+Can we have a newline here?
 
-Regards,
-Bjorn
+> -	if (cfg->dsc) {
+> -		DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
+
+Found the reason why this patch (as one of the few) is needed to get
+display working on my SM8150/SM8250 devices: the semantic change is that
+BIT() was missing around DSC_IDX here.
+(It wasn't hampering SDM845 because it doesn't have a configurable
+ crossbar, i.e. DPU_CTL_ACTIVE_CFG)
+
+Manually reverting this patch and adding BIT() indeed also fixes the
+issue.
+
+This semantic change should be documented in the description and with a
+Fixes: (and Reported-by:?), or as a separate preliminary patch for
+clarity.
+
+> +	if (cfg->dsc)
+>  		DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
+> -	}
+>  }
+>  
+>  static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
+> @@ -630,6 +637,9 @@ static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
+>  		ops->update_pending_flush_merge_3d =
+>  			dpu_hw_ctl_update_pending_flush_merge_3d_v1;
+>  		ops->update_pending_flush_wb = dpu_hw_ctl_update_pending_flush_wb_v1;
+> +
+
+And while adding a newline above, drop the one here.
+
+> +		ops->update_pending_flush_dsc =
+> +			dpu_hw_ctl_update_pending_flush_dsc_v1;
+>  	} else {
+>  		ops->trigger_flush = dpu_hw_ctl_trigger_flush;
+>  		ops->setup_intf_cfg = dpu_hw_ctl_intf_cfg;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> index 6292002..d4869a0 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+> @@ -158,6 +158,15 @@ struct dpu_hw_ctl_ops {
+>  		enum dpu_dspp blk, u32 dspp_sub_blk);
+>  
+>  	/**
+> +	 * OR in the given flushbits to the cached pending_(dsc_)flush_mask
+> +	 * No effect on hardware
+> +	 * @ctx       : ctl path ctx pointer
+> +	 * @blk       : interface block index
+
+Can you drop the spaces before the colon (:)?  That's wrong and will be
+fixed elsewhere later.
+
+> +	 */
+> +	void (*update_pending_flush_dsc)(struct dpu_hw_ctl *ctx,
+> +					 enum dpu_dsc blk);
+
+Indent with a single tab to match the rest.
 
 > +
->  /* Define XHCI Extcap register offsets for getting multiport info */
->  #define XHCI_HCC_PARAMS_OFFSET	0x10
->  #define DWC3_XHCI_HCSPARAMS1	0x04
-> @@ -1038,8 +1041,8 @@ struct dwc3_scratchpad_array {
->   * @usb3_phy: pointer to USB3 PHY
->   * @num_usb2_ports: number of usb2 ports.
->   * @num_usb3_ports: number of usb3 ports.
-> - * @usb2_generic_phy: pointer to USB2 PHY
-> - * @usb3_generic_phy: pointer to USB3 PHY
-> + * @usb2_generic_phy: pointer to array of USB2 PHY
-> + * @usb3_generic_phy: pointer to array of USB3 PHY
->   * @phys_ready: flag to indicate that PHYs are ready
->   * @ulpi: pointer to ulpi interface
->   * @ulpi_ready: flag to indicate that ULPI is initialized
-> @@ -1178,8 +1181,8 @@ struct dwc3 {
->  	u8			num_usb2_ports;
->  	u8			num_usb3_ports;
->  
-> -	struct phy		*usb2_generic_phy;
-> -	struct phy		*usb3_generic_phy;
-> +	struct phy		*usb2_generic_phy[MAX_PORTS_SUPPORTED];
-> +	struct phy		*usb3_generic_phy[MAX_PORTS_SUPPORTED];
->  
->  	bool			phys_ready;
+> +	/**
+>  	 * Write the value of the pending_flush_mask to hardware
+>  	 * @ctx       : ctl path ctx pointer
+>  	 */
+> @@ -245,6 +254,7 @@ struct dpu_hw_ctl {
+>  	u32 pending_wb_flush_mask;
+>  	u32 pending_merge_3d_flush_mask;
+>  	u32 pending_dspp_flush_mask[DSPP_MAX - DSPP_0];
+> +	u32 pending_dsc_flush_mask;
 
+Don't forget to add this to the doc-comment, or did you skip it by
+intention because pending_merge_3d_flush_mask and
+pending_dspp_flush_mask are missing as well?
+
+- Marijn
+
+>  
+>  	/* ops */
+>  	struct dpu_hw_ctl_ops ops;
+> -- 
+> 2.7.4
+> 
