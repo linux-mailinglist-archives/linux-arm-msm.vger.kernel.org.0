@@ -2,175 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 53A6E702FAC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 16:27:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 098A8702FB9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 16:30:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240168AbjEOO07 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 10:26:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53416 "EHLO
+        id S239182AbjEOOas (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 10:30:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239826AbjEOO06 (ORCPT
+        with ESMTP id S232072AbjEOOar (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 10:26:58 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25F3F135;
-        Mon, 15 May 2023 07:26:57 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BBF8961E81;
-        Mon, 15 May 2023 14:26:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D68C433EF;
-        Mon, 15 May 2023 14:26:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684160816;
-        bh=4klK1qNnVxB9VfQGKW5xcLuUT3JrqtA3WFCXNlPR5e8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Y8YKV4IgdgV4lOeVqUT5MbcKSF2/d+kFXL7BLrJXBxqcCm+40pTxVruHXP0OHxxRW
-         3dIyFDUnm5Hm2qwawyPPQwGed1/NLtySpC9Vbz86T3KeUZbVULTB1k7fWLn3iG17CF
-         yh/6gzcDXUBtO4R2ljTfPuP3C3zf8TtdJ0veNFVnrHk/aTKUO7faG3lOiuZmknjNp7
-         nHuyNNVHyhvLkCAbZr08qMT4xL3mymeQByZehe0Lv3zU1PZQDCLevdLoHCx3ijgcue
-         4ATlI1OMmjBLivdmEaxYLxdH+A7Vde8VD+Tnjqkth6N35rUadBPbKNV2sBvKrW/huy
-         +g4LZZUlyTobw==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pyZA5-0002JU-BO; Mon, 15 May 2023 16:26:53 +0200
-Date:   Mon, 15 May 2023 16:26:53 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
+        Mon, 15 May 2023 10:30:47 -0400
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B50E11D;
+        Mon, 15 May 2023 07:30:45 -0700 (PDT)
+Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-51f1b6e8179so9069157a12.3;
+        Mon, 15 May 2023 07:30:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684161045; x=1686753045;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=wnZ9D21xzUPORZdBoaAd712UMhIWRfvjN7BdaMIkqdk=;
+        b=jsjrWitfOWbVsXPs6B5Lia8wkg2dLmz6o1d406QcFVfo+pyvuvyJUDtrVrDpo/x51a
+         iUa7DRKHwe+Y2TYOh6H7L7rJBd8pZRgLa3kotBIFD06zze2ApQWxZrM2yzbSsnqGdws3
+         hB1E9KHVnknZjM8apmNiuBCAODD+L13Fcr5+7UOnasTmc5gVCqNDJJok5hG9lTQFzSsI
+         47Y0FVm+ddZICgDFbREMkvMQ/ZcCD3jE5hkRDfNFpaYibHWTOrI7kTQRxbZCp4MVl3Uh
+         vapTVORVVlzm24Z4RNvraER4YgtSeUjYDoCIpROMsN47KKOZBGd7rtydXTkojkexyeLA
+         DKpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684161045; x=1686753045;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wnZ9D21xzUPORZdBoaAd712UMhIWRfvjN7BdaMIkqdk=;
+        b=klMGzvTej/i1u0QCh2QwlwfA2BdG+I0RMfjeeOH6Mi9uQPVWGD1GRvDXpU2klQlfGG
+         CwNySVrpj3R5T0RoZcpmnmlkuR7ZUMOjPDgoGP9l3EhYotT8JuhG1XhKj62aeAToHuMh
+         FTH8eioBVscCA5CZLNsCAUHa3UnOHu2AOAj5fK4W5AKKlpHxUg+EKDC3kaFbuo/ZnGnT
+         kYO98xgk6RFZJ7T4uXNk14mhzUFiy6W17mUaz7JTuLKeccCb5LLI2pJTOOTBd8IpMoCL
+         udJxOuSjff7waKy8xhwo2eRm8IpGjdZ3z6r6i1X6O6Eyf1y/k4BqBpZVDA8vUq33clJE
+         pRLQ==
+X-Gm-Message-State: AC+VfDyvRK9W/jMceZlnPiR3iuPCA2GrhJuh43UWvZNEXiqRHJe4QKDM
+        aGxwyiqfxebxIgSlVDXVfWY=
+X-Google-Smtp-Source: ACHHUZ4nzYaFbPRfq7KOx4sRIQWnNBXWBHnP0pDxZJRMeUoSpyIWQjFgCTyi+zlwTFFGBymq4HyWYw==
+X-Received: by 2002:a05:6a20:7fa3:b0:ef:f558:b76 with SMTP id d35-20020a056a207fa300b000eff5580b76mr42340931pzj.5.1684161044688;
+        Mon, 15 May 2023 07:30:44 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
+        by smtp.gmail.com with ESMTPSA id e4-20020aa78244000000b0064928cb5f03sm2590440pfn.69.2023.05.15.07.30.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 May 2023 07:30:44 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Christopher Healy <healych@amazon.com>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        amd-gfx@lists.freedesktop.org (open list:RADEON and AMDGPU DRM DRIVERS),
+        Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
         Bjorn Andersson <andersson@kernel.org>,
+        Chia-I Wu <olvaffe@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Guchun Chen <guchun.chen@amd.com>,
+        Jim Cromie <jim.cromie@gmail.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com
-Subject: Re: [PATCH v8 7/9] arm64: dts: qcom: sc8280xp: Add multiport
- controller node for SC8280
-Message-ID: <ZGJBLUsPcbsxj989@hovoldconsulting.com>
-References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-8-quic_kriskura@quicinc.com>
+        Lijo Lazar <lijo.lazar@amd.com>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-doc@vger.kernel.org (open list:DOCUMENTATION),
+        linux-kernel@vger.kernel.org (open list),
+        Mario Limonciello <mario.limonciello@amd.com>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        =?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
+        Peter Maucher <bellosilicio@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Shashank Sharma <shashank.sharma@amd.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+        YiPeng Chai <YiPeng.Chai@amd.com>
+Subject: [PATCH v4 0/9] drm: fdinfo memory stats
+Date:   Mon, 15 May 2023 07:30:07 -0700
+Message-Id: <20230515143023.801167-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230514054917.21318-8-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, May 14, 2023 at 11:19:15AM +0530, Krishna Kurapati wrote:
-> Add USB and DWC3 node for tertiary port of SC8280 along with multiport
-> IRQ's and phy's. This will be used as a base for SA8295P and SA8295-Ride
-> platforms.
-> 
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 66 ++++++++++++++++++++++++++
->  1 file changed, 66 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index 8fa9fbfe5d00..50f6a8424537 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -3133,6 +3133,72 @@ usb_1_role_switch: endpoint {
->  			};
->  		};
->  
-> +		usb_2: usb@a4f8800 {
+From: Rob Clark <robdclark@chromium.org>
 
-As I believe someone already pointed out, this node is not in sort order
-(i.e. it should go before usb@a6f8800).
+Similar motivation to other similar recent attempt[1].  But with an
+attempt to have some shared code for this.  As well as documentation.
 
-> +			compatible = "qcom,sc8280xp-dwc3-mp", "qcom,dwc3";
-> +			reg = <0 0x0a4f8800 0 0x400>;
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +
-> +			clocks = <&gcc GCC_CFG_NOC_USB3_MP_AXI_CLK>,
-> +				 <&gcc GCC_USB30_MP_MASTER_CLK>,
-> +				 <&gcc GCC_AGGRE_USB3_MP_AXI_CLK>,
-> +				 <&gcc GCC_USB30_MP_SLEEP_CLK>,
-> +				 <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
-> +				 <&gcc GCC_AGGRE_USB_NOC_AXI_CLK>,
-> +				 <&gcc GCC_AGGRE_USB_NOC_NORTH_AXI_CLK>,
-> +				 <&gcc GCC_AGGRE_USB_NOC_SOUTH_AXI_CLK>,
-> +				 <&gcc GCC_SYS_NOC_USB_AXI_CLK>;
-> +			clock-names = "cfg_noc", "core", "iface", "sleep", "mock_utmi",
-> +				      "noc_aggr", "noc_aggr_north", "noc_aggr_south", "noc_sys";
-> +
-> +			assigned-clocks = <&gcc GCC_USB30_MP_MOCK_UTMI_CLK>,
-> +					  <&gcc GCC_USB30_MP_MASTER_CLK>;
-> +			assigned-clock-rates = <19200000>, <200000000>;
-> +
-> +			interrupts-extended = <&pdc 127 IRQ_TYPE_EDGE_RISING>,
-> +					      <&pdc 126 IRQ_TYPE_EDGE_RISING>,
-> +					      <&pdc 16 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&intc GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&intc GIC_SPI 857 IRQ_TYPE_LEVEL_HIGH>,
-> +					      <&intc GIC_SPI 856 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			interrupt-names = "dp_hs_phy_irq",
-> +					  "dm_hs_phy_irq",
-> +					  "ss_phy_irq",
-> +					  "pwr_event_1",
-> +					  "pwr_event_2",
-> +					  "pwr_event_3",
-> +					  "pwr_event_4";
-> +
-> +			power-domains = <&gcc USB30_MP_GDSC>;
-> +			required-opps = <&rpmhpd_opp_nom>;
-> +
-> +			resets = <&gcc GCC_USB30_MP_BCR>;
-> +
-> +			interconnects = <&aggre1_noc MASTER_USB3_1 0 &mc_virt SLAVE_EBI1 0>,
-> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_1 0>;
+It is probably a bit UMA-centric, I guess devices with VRAM might want
+some placement stats as well.  But this seems like a reasonable start.
 
-This is not the correct interconnect master and slave; it should be
-MASTER_USB3_MP and SLAVE_USB3_MP.
+Basic gputop support: https://patchwork.freedesktop.org/series/116236/
+And already nvtop support: https://github.com/Syllo/nvtop/pull/204
 
-> +			interconnect-names = "usb-ddr", "apps-usb";
+I've combined the separate series to add comm/cmdline override onto
+the end of this, simply out of convenience (they would otherwise
+conflict in a bunch of places).
 
-Looks like 'wakeup-source' is missing here too.
+v2: Extend things to allow for multiple regions other than just system
+    "memory", make drm_show_memory_stats() a helper so that, drivers
+    can use it or not based on their needs (but in either case, re-
+    use drm_print_memory_stats()
+v3: Docs fixes
+v4: use u64 for drm_memory_stats, small docs update and collected
+    Tvrtko's a-b
 
-> +
-> +			status = "disabled";
-> +
-> +			usb_2_dwc3: usb@a400000 {
-> +				compatible = "snps,dwc3";
-> +				reg = <0 0x0a400000 0 0xcd00>;
-> +				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
-> +				iommus = <&apps_smmu 0x800 0x0>;
-> +				phys = <&usb_2_hsphy0>, <&usb_2_qmpphy0>,
-> +					<&usb_2_hsphy1>, <&usb_2_qmpphy1>,
-> +					<&usb_2_hsphy2>,
-> +					<&usb_2_hsphy3>;
-> +				phy-names = "usb2-port0", "usb3-port0",
-> +						"usb2-port1", "usb3-port1",
-> +						"usb2-port2",
-> +						"usb2-port3";
+[1] https://patchwork.freedesktop.org/series/112397/
 
-The phys and phy-names continuation lines above are still not aligned.
+Rob Clark (9):
+  drm/docs: Fix usage stats typos
+  drm: Add common fdinfo helper
+  drm/msm: Switch to fdinfo helper
+  drm/amdgpu: Switch to fdinfo helper
+  drm: Add fdinfo memory stats
+  drm/msm: Add memory stats to fdinfo
+  drm/doc: Relax fdinfo string constraints
+  drm/fdinfo: Add comm/cmdline override fields
+  drm/msm: Wire up comm/cmdline override for fdinfo
 
-> +			};
-> +		};
-> +
->  		mdss0: display-subsystem@ae00000 {
->  			compatible = "qcom,sc8280xp-mdss";
->  			reg = <0 0x0ae00000 0 0x1000>;
+ Documentation/gpu/drm-usage-stats.rst      | 101 ++++++++++----
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c    |   3 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_fdinfo.c |  16 +--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_fdinfo.h |   2 +-
+ drivers/gpu/drm/drm_file.c                 | 147 +++++++++++++++++++++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c    |  24 +++-
+ drivers/gpu/drm/msm/msm_drv.c              |  15 ++-
+ drivers/gpu/drm/msm/msm_gem.c              |  15 +++
+ drivers/gpu/drm/msm/msm_gpu.c              |   2 -
+ drivers/gpu/drm/msm/msm_gpu.h              |  10 ++
+ include/drm/drm_drv.h                      |   7 +
+ include/drm/drm_file.h                     |  51 +++++++
+ include/drm/drm_gem.h                      |  32 +++++
+ 13 files changed, 378 insertions(+), 47 deletions(-)
 
-Johan
+-- 
+2.40.1
+
