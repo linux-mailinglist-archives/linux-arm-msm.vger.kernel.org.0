@@ -2,183 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4AD8E703059
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 16:43:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63248703099
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 16:53:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229568AbjEOOnr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 10:43:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36888 "EHLO
+        id S237257AbjEOOxc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 10:53:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242044AbjEOOna (ORCPT
+        with ESMTP id S239987AbjEOOxb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 10:43:30 -0400
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B78A02D67;
-        Mon, 15 May 2023 07:43:24 -0700 (PDT)
-Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34FEdfW2001912;
-        Mon, 15 May 2023 14:42:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=3xmrodnLEt3plr6PfR2NiDKXpK4TnrjIaL6sDzQ/7GU=;
- b=q+a2WxQK3J7w6NJiJUphIIf9ajPoK7dLJYqI+t2yd270W7CmFhfqcxPQ4sLDs8I3yoHG
- pxet7qhizsDe49r5qacnn0up7txnPYLcrU93fC8Bm+i3aeBN80Ggy2bsIoIYrG+r6kUc
- J1XYXBbpdTFIkOMbNS2Hzs4i6D8uAWoosggxD2ywApVOUoB3k+0BLdM34/EKgjTr0v0I
- M1Qugs2xEIxBRanx3Lb4zTEg+aHcUy6ykjy9rtQaZ1BfcKCrOV62c4cgy2n4HHtWIcJg
- tOJu+la3PVYmFqjAttTuVrNtJHuyBkPyuDeqcvdGca4YJcbHej4ZLYZBslN6wQePhEil xg== 
-Received: from pps.reinject (localhost [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qkpes0q07-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 15 May 2023 14:42:47 +0000
-Received: from m0353726.ppops.net (m0353726.ppops.net [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 34FEe63m005221;
-        Mon, 15 May 2023 14:42:46 GMT
-Received: from ppma01fra.de.ibm.com (46.49.7a9f.ip4.static.sl-reverse.com [159.122.73.70])
-        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qkpes0pvy-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 15 May 2023 14:42:46 +0000
-Received: from pps.filterd (ppma01fra.de.ibm.com [127.0.0.1])
-        by ppma01fra.de.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 34FD2VOD016196;
-        Mon, 15 May 2023 14:42:43 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
-        by ppma01fra.de.ibm.com (PPS) with ESMTPS id 3qj264rxmt-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 15 May 2023 14:42:42 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com [10.20.54.102])
-        by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 34FEgdw220447944
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Mon, 15 May 2023 14:42:39 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 4949420043;
-        Mon, 15 May 2023 14:42:39 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id DF9C920040;
-        Mon, 15 May 2023 14:42:36 +0000 (GMT)
-Received: from [9.171.65.23] (unknown [9.171.65.23])
-        by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
-        Mon, 15 May 2023 14:42:36 +0000 (GMT)
-Message-ID: <a2a9a2bdb431d7611588a9f9bdca64856ac56139.camel@linux.ibm.com>
-Subject: Re: [PATCH v9 5/6] iommu/dma: Allow a single FQ in addition to
- per-CPU FQs
-From:   Niklas Schnelle <schnelle@linux.ibm.com>
-To:     Jason Gunthorpe <jgg@ziepe.ca>, Robin Murphy <robin.murphy@arm.com>
-Cc:     Joerg Roedel <joro@8bytes.org>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Will Deacon <will@kernel.org>,
-        Wenjia Zhang <wenjia@linux.ibm.com>,
-        Gerd Bayer <gbayer@linux.ibm.com>,
-        Julian Ruess <julianr@linux.ibm.com>,
-        Pierre Morel <pmorel@linux.ibm.com>,
-        Alexandra Winter <wintera@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
+        Mon, 15 May 2023 10:53:31 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2598C173E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 07:53:30 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-64ab2a37812so20568259b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 07:53:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684162409; x=1686754409;
+        h=content-transfer-encoding:author:mime-version:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1+hNvGE7q4jXvKF3ZUYBMyXuwdC9NQPYtizzZFk0+BI=;
+        b=Tqc9WcFsmQJ38bWa2mqZUYIIu4WW0P1I1N9S1Pcn26m4cY1fdE4X5gAEtVd708XhZ5
+         e7B9GvTmwQ4Kdp5hrmw4dExINB1pD6xBfPMZbLnKooED5aeImtqamYNsaK208yYEFEKH
+         t8LSSwnPQxx8PHLLwgt0jJv/657WOunaaBXQjx+p0LsearZTOFGnVbhTobbwfKXtCLE8
+         zX8vvmf/TbZHQkQMZDppCJX5OEmdckWFKLJR0G/j8aocrg/1M3iOHqWTmiwwLCNDO1Ih
+         qXyzyLTn2MQBIQxl4y5VStGJuInOC6kgkGJFxJVHM5UgLZwjBBdfWv1v5NZ86+zy6L12
+         gPNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684162409; x=1686754409;
+        h=content-transfer-encoding:author:mime-version:message-id:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1+hNvGE7q4jXvKF3ZUYBMyXuwdC9NQPYtizzZFk0+BI=;
+        b=hG81n8oKR/H8vSmglVHIL0CaV2I05fkzP/15USlRJEeZ1K9lMI/jLENq4dFys92LYg
+         D8CUWfVSIr2dyq053p6CzPyeVq5hWXS91WtGFxM/0JYff7rnqzvwvT5ZseTIzyZALvnj
+         YpMDNvWRd3zOU0Ll9OR3sHgaFf+xSjPPVLVjwK2tfHviViMwhPWOCwJqNj6R4X0ZrNgS
+         MuAJ1wyg7RSbJ7pNFM8wUn+ItN8X8GYrS9j7tMn8DoK/FTxwuAp3DsrYGS5MHDIdKg0o
+         ONUTPytpUrefz9QFF4NwQRUWoS22ltommeD0vOhX7FmeJ2u7ggt3S1FnkpHt+QS5b3CF
+         xxCQ==
+X-Gm-Message-State: AC+VfDzuJMqrHJyOjPa6PA7c3DYpQAVaBpSR6Di2c/RxGiutpBqgB3va
+        I5K4qRcv4g/nQ1LxNI8MrKEgQg==
+X-Google-Smtp-Source: ACHHUZ5kA3m+Je8244vgLI1qkECu84qFhEq/Osu5+zhAxuk+eXyhdEkFpleZ2nyWwpREbo4N2K+4og==
+X-Received: by 2002:a17:903:294c:b0:1a9:6604:2b1b with SMTP id li12-20020a170903294c00b001a966042b1bmr31503842plb.20.1684162409562;
+        Mon, 15 May 2023 07:53:29 -0700 (PDT)
+Received: from localhost.localdomain ([49.207.50.231])
+        by smtp.gmail.com with ESMTPSA id p20-20020a170902a41400b0019719f752c5sm5433228plq.59.2023.05.15.07.53.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 May 2023 07:53:29 -0700 (PDT)
+From:   Amit Pundir <amit.pundir@linaro.org>
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>
+Cc:     Marek Szyprowski <m.szyprowski@samsung.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        iommu@lists.linux.dev, asahi@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-doc@vger.kernel.org
-Date:   Mon, 15 May 2023 16:42:36 +0200
-In-Reply-To: <ZGIuj2pRjOPffqZZ@ziepe.ca>
-References: <20230310-dma_iommu-v9-0-65bb8edd2beb@linux.ibm.com>
-         <20230310-dma_iommu-v9-5-65bb8edd2beb@linux.ibm.com>
-         <ZGIuj2pRjOPffqZZ@ziepe.ca>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.48.1 (3.48.1-1.fc38) 
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: gNuxWXJsmokdhsaD92T6yUFS_UMSNhrG
-X-Proofpoint-ORIG-GUID: me_7t4m8_jWebgWrnvUvQ84qdxzJLwc5
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Subject: [PATCH] Revert "regulator: qcom-rpmh: Revert "regulator: qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS""
+Date:   Mon, 15 May 2023 20:23:23 +0530
+Message-Id: <20230515145323.1693044-1-amit.pundir@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-15_11,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- clxscore=1015 phishscore=0 spamscore=0 mlxscore=0 suspectscore=0
- mlxlogscore=596 bulkscore=0 impostorscore=0 lowpriorityscore=0
- malwarescore=0 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2304280000 definitions=main-2305150121
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Author: Amit Pundir <amit.pundir@linaro.org>
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 2023-05-15 at 10:07 -0300, Jason Gunthorpe wrote:
-> On Mon, May 15, 2023 at 11:15:55AM +0200, Niklas Schnelle wrote:
->=20
-> > +/**
-> > + * struct dma_iommu_options - Options for dma-iommu
-> > + *
-> > + * @flags: Flag bits for enabling/disabling dma-iommu settings
-> > + *
-> > + * This structure is intended to provide IOMMU drivers a way to influe=
-nce the
-> > + * behavior of the dma-iommu DMA API implementation. This allows optim=
-izing for
-> > + * example for a virtualized environment with slow IOTLB flushes.
-> > + */
-> > +struct dma_iommu_options {
-> > +#define IOMMU_DMA_OPTS_PER_CPU_QUEUE	(0L << 0)
-> > +#define IOMMU_DMA_OPTS_SINGLE_QUEUE	(1L << 0)
-> > +	u64	flags;
-> > +};
->=20
-> You need to hash it out with robin if we do something like this or use
-> more untyped caps as he put in this series:
->=20
-> https://lore.kernel.org/linux-iommu/cover.1683233867.git.robin.murphy@arm=
-.com/
->=20
-> Jason
+This reverts commit ad44ac082fdff7ee57fe125432f7d9d7cb610a23.
 
-Ok. I do wonder how to best represent this as a capability.
-Semantically I think a capability needs to be something positive i.e.
-while IOMMU_CAP_EXPENSIVE_FLUSH would technically work having slow
-IOTLB flushes really isn't a capability. So the best I can think of is
-maybe IOMMU_CAP_SHADOW_ON_FLUSH. It's a bit specific but does convey
-that the IOTLB flush does more than dropping hardware caches where the
-main cost is the then empty TLB not the operation itself. Or maybe to
-keep thing separate one would have to add capabilities for the existing
-users IOMMU_CAP_HW_FLUSH and IOMMU_CAP_CONCURRENT_FLUSH.
+This patch restores the synchronous probing for
+qcom-rpmh-regulator because asynchronous probing broke
+Dragonboard 845c (SDM845) running AOSP. UFSHC fail to
+initialize properly and DB845c fails to boot regardless
+of "rootwait" bootarg being present or not
+https://bugs.linaro.org/show_bug.cgi?id=5975.
 
-Not sure though. It does feel more clunky than the tuning op I added
-and maybe instead these mechanisms should co-exist. After all even
-though the IOTLB flushes with shadowing are expensive they still
-benefit from the flush queue just with more entries and less
-parallelism.
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+---
+ drivers/regulator/qcom-rpmh-regulator.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
-Niklas
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index b0a58c62b1e2..30659922b0aa 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -1517,7 +1517,7 @@ MODULE_DEVICE_TABLE(of, rpmh_regulator_match_table);
+ static struct platform_driver rpmh_regulator_driver = {
+ 	.driver = {
+ 		.name = "qcom-rpmh-regulator",
+-		.probe_type = PROBE_PREFER_ASYNCHRONOUS,
++		.probe_type = PROBE_FORCE_SYNCHRONOUS,
+ 		.of_match_table	= of_match_ptr(rpmh_regulator_match_table),
+ 	},
+ 	.probe = rpmh_regulator_probe,
+-- 
+2.25.1
+
