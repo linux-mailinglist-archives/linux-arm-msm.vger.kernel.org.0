@@ -2,443 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5EF8702A42
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 12:16:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68FFB702A21
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 12:14:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241015AbjEOKQR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 06:16:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50098 "EHLO
+        id S240112AbjEOKOA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 06:14:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240574AbjEOKQL (ORCPT
+        with ESMTP id S238353AbjEOKN7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 06:16:11 -0400
-X-Greylist: delayed 177 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 15 May 2023 03:15:34 PDT
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 849C71720;
-        Mon, 15 May 2023 03:15:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1684145545; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=AVNObnpCebT2dn9dpdOekcEmluZb2EBW4sKZD6jFw/NAVDirkVYJ82rz19Vjn5aAGh
-    Z1graIDVHSBvFIDTW7U7rIFOllPtXIoFDjS0HnhZ9ruIYTYRyM8S4iW20W1sui75ruIn
-    kmrVY1fvBNxANYwcvrDjc7vsRw/buDWjpqqP5AYAME6wPLgDOaKdaaf/TFaAyMES+eWH
-    R03OAYcDSws9he0qbBX4GuBdSCLg82+TJ3+69UhyPbkiDvZgTAmIsMksCdIfQmYyyBGD
-    9IfAs7xwvGtgwP4tpO9wk2n1CNVmf/tW5fWrwBrTkUlQ1tbvQdnagJ06IQFCtWZo/Lao
-    ed9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1684145545;
-    s=strato-dkim-0002; d=strato.com;
-    h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
-    From:Subject:Sender;
-    bh=PG1/HhYRt67ZjjvC3b/0RRaBqAYMx2ZNVcQFqLHzqRo=;
-    b=p747C66IiskdjUifiSHaiWrLKw14UypkT3bRPBuwm6G4M480pvY2afWQ9sJGRryx0a
-    YnIgQOvzhV/bYqlf74HUEvPreAlU9HxeocCDEB5mbQAA34dnvjwg06O7QBsjxXi+P0UQ
-    FF5pZCFIMjVdhetycfMzf/KtYLUxC7H0qcYbHRfQVljjM9z/MakPP/3i6V8VLwCJrTKG
-    KYCGgQaSphbbL1eACnbQZdtsUAx3g+viHkPkjr5J9vEzy4erAkWg8048/AtmCf1OgsxZ
-    VrSyVNyTAe96640kbB6dz4J4X2EpTJyqZu5vwq8XuOKPhOKZHmgBgBnthc5oKtUSnkfE
-    DUrA==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1684145545;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
-    From:Subject:Sender;
-    bh=PG1/HhYRt67ZjjvC3b/0RRaBqAYMx2ZNVcQFqLHzqRo=;
-    b=e6GsGuerdYL8cTjyPg0uxiNq163vL1fxE+X9VM7QMXjZ44YbW3lqpUfuvqcemzZSG4
-    HQyIv0Xv+GVTB5g6ydUvhrIXxJ43/GAPC3FjVJpRf7BfnYurtUk4tOH3zS6CkwUea/Kh
-    Y15Iwgt3viuWbRfA3D4mBmkVfZuoHVaB+yKMnx0iBJNUX/xERZaB8n5GGPS14oMwoHm5
-    wehaN2YWsnfFUu25vWoSBZZKO9ERbXPgsQY7EQ+l/PzwA7TnHzKYxWig73mMTSeaxhRY
-    FCNALeXZkQ3Xu3SgV9wPJijoIBeevmlhzXVGF026xnjybXWC/sXXin5FLefE8sRZMfQH
-    imPw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1684145545;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
-    From:Subject:Sender;
-    bh=PG1/HhYRt67ZjjvC3b/0RRaBqAYMx2ZNVcQFqLHzqRo=;
-    b=0XaHEr06/C9yX8Cr6qL0DbAi7kImA8Lndmyn+KVE2yj7oUVzbVuPmKljvDZAul9y8x
-    MItCmQ6Xf7BHmyH1z6BQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn8u4ly9TY="
-Received: from [192.168.244.3]
-    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
-    with ESMTPSA id j6420az4FACP1JK
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 15 May 2023 12:12:25 +0200 (CEST)
-From:   Stephan Gerhold <stephan@gerhold.net>
-Date:   Mon, 15 May 2023 12:12:20 +0200
-Subject: [PATCH RFC 5/5] arm64: dts: qcom: msm8916: Reserve firmware memory
- dynamically
+        Mon, 15 May 2023 06:13:59 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4237F13E;
+        Mon, 15 May 2023 03:13:58 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34F9BAlc019247;
+        Mon, 15 May 2023 10:13:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=tyxOOd++tn6u/tO3C84eUNqvzBUsntMNJVOCKx6j1nc=;
+ b=W+giTwEPa2txCBgedR7Pg3cA9vWhS7QY2ssUjGnysPXiJhr60UxVLMz7J4dOcoVhy8Hu
+ 1CNMgOT6oWVg+6+SNW5U1ioVnH5+VNQVfejCrU7QpRHZ714vkmO4h9yRIwJyTaSZA1WV
+ bgQvQ2/rkCu49HkbdA7CQj0PEcQLxpwzLG4mfzRhrOSLlCGnTOSDXYqaH15k1Y0Cs/t1
+ RZfRzCou9TtfJvhJS2BwOud46PEUTenC297Ejs+Bmt8j0RDucSX1eBuu4pnm1uOh7A/y
+ kSTmoSuOaxLsfQOCVj6y3vtvgz4vAcCyvjsva1I3AAH3qj17lIPslhPH1qPlOG8MrOUk hQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qj3qw38v5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 10:13:52 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34FADpeC027683
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 10:13:51 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Mon, 15 May 2023 03:13:45 -0700
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <amitk@kernel.org>,
+        <thara.gopinath@gmail.com>, <rafael@kernel.org>,
+        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Subject: [PATCH v3 0/4] Enable IPQ9574 TSENS support
+Date:   Mon, 15 May 2023 15:43:31 +0530
+Message-ID: <cover.1684140883.git.quic_varada@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230510-dt-resv-bottom-up-v1-5-3bf68873dbed@gerhold.net>
-References: <20230510-dt-resv-bottom-up-v1-0-3bf68873dbed@gerhold.net>
-In-Reply-To: <20230510-dt-resv-bottom-up-v1-0-3bf68873dbed@gerhold.net>
-To:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        devicetree@vger.kernel.org, devicetree-spec@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Stephan Gerhold <stephan@gerhold.net>
-X-Mailer: b4 0.12.2
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: dUda5Y6pTIsirtHdm2nGL2ZNWPuNRz-K
+X-Proofpoint-GUID: dUda5Y6pTIsirtHdm2nGL2ZNWPuNRz-K
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-15_07,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ adultscore=0 impostorscore=0 bulkscore=0 suspectscore=0 priorityscore=1501
+ mlxscore=0 spamscore=0 lowpriorityscore=0 mlxlogscore=798 clxscore=1015
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305150088
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DO NOT APPLY - this is just an example to show the motivation for the
-patch series. For clarity only some of the device trees are updated.
+This patch set enables tsens in IPQ9574
 
-Most of the reserved firmware memory on MSM8916 can be relocated when
-respecting the required alignment. To avoid having to precompute the
-reserved memory regions in every board DT, describe the actual
-requirements (size, alignment, alloc-ranges) using the dynamic reserved
-memory allocation. Use the new "alloc-bottom-up" option to allocate the
-memory contiguously to the other reserved memory regions.
+Depends on
+	https://lore.kernel.org/linux-arm-msm/20230406061314.10916-1-quic_devipriy@quicinc.com/
+[v3]:
+	Fix make DT_CHECKER_FLAGS=-m dt_binding_check and make dtbs_check errors
 
-This approach has several advantages:
+[v2]:
+	Drop the driver change (https://lore.kernel.org/lkml/b45d33d38a334aabbd52c83b0d6028af1f4c74c8.1682682753.git.quic_varada@quicinc.com/)
+	since the tsens device is compatible with 8074's tsens
+	and use 8074's compatible itself
 
- 1. We can define "templates" for the reserved memory regions in
-    msm8916.dtsi and keep only device-specific details in the board DT.
-    This is useful for the "mpss" region size for example, which varies
-    from device to device. It is no longer necessary to redefine all
-    firmware regions to shift their addresses.
+	Rename clusterX nodes as cpussX
 
- 2. When some of the functionality (e.g. WiFi, Bluetooth, modem) is not
-    enabled or needed for a device, the reserved memory can stay
-    disabled, freeing up the unused reservation for Linux.
+[v1]:
+	Fix DT node names
 
- 3. Devices with special requirements for one of the firmware regions
-    are handled automatically. For example, msm8916-longcheer-l8150
-    has non-relocatable "wcnss" firmware that must be loaded exactly
-    at address 0x8b600000. When this is defined as a static region,
-    the other dynamic allocations automatically adjust to a different
-    place with suitable alignment.
+[v0]:
+	Initial patch introducing TSENS support
 
-All in all this approach significantly reduces the boilerplate necessary
-to define the different firmware regions, and makes it easier to enable
-functionality on the different devices.
+Praveenkumar I (1):
+  dt-bindings: thermal: tsens: Add ipq9574 compatible
 
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
- arch/arm64/boot/dts/qcom/apq8016-sbc.dts           | 13 +++++++
- .../boot/dts/qcom/msm8916-longcheer-l8150.dts      | 36 +++++++++----------
- .../boot/dts/qcom/msm8916-samsung-serranove.dts    | 41 +++++++++------------
- arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi          | 29 ++++++++-------
- arch/arm64/boot/dts/qcom/msm8916.dtsi              | 42 ++++++++++++++++------
- 5 files changed, 96 insertions(+), 65 deletions(-)
+Varadarajan Narayanan (3):
+  dt-bindings: thermal: tsens: Fix "make dtbs_check" error
+  arm64: dts: qcom: ipq9574: add tsens node
+  arm64: dts: qcom: ipq9574: add thermal zone nodes
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-index 59860a2223b8..534fc9b2f816 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-@@ -310,6 +310,10 @@ &lpass {
- 	status = "okay";
- };
- 
-+&mba_mem {
-+	status = "okay";
-+};
-+
- &mdss {
- 	status = "okay";
- };
-@@ -320,6 +324,11 @@ &mpss {
- 	firmware-name = "qcom/apq8016/mba.mbn", "qcom/apq8016/modem.mbn";
- };
- 
-+&mpss_mem {
-+	status = "okay";
-+	size = <0x0 0x2b00000>;
-+};
-+
- &pm8916_resin {
- 	status = "okay";
- 	linux,code = <KEY_VOLUMEDOWN>;
-@@ -418,6 +427,10 @@ &wcnss_iris {
- 	compatible = "qcom,wcn3620";
- };
- 
-+&wcnss_mem {
-+	status = "okay";
-+};
-+
- /* Enable CoreSight */
- &cti0 { status = "okay"; };
- &cti1 { status = "okay"; };
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-index 4a5eab06c18b..2d2bf255b315 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-@@ -29,29 +29,12 @@ chosen {
- 	 * fixed address and all other firmware regions are moved to a fitting place.
- 	 */
- 	reserved-memory {
--		/delete-node/ mpss@86800000;
--		/delete-node/ wcnss@89300000;
--		/delete-node/ venus@89900000;
-+		/delete-node/ wcnss;
- 
- 		wcnss_mem: wcnss@8b600000 {
- 			reg = <0x0 0x8b600000 0x0 0x600000>;
- 			no-map;
- 		};
--
--		venus_mem: venus@8bc00000 {
--			reg = <0x0 0x8bc00000 0x0 0x500000>;
--			no-map;
--		};
--
--		mpss_mem: mpss@8ec00000 {
--			reg = <0x0 0x8ec00000 0x0 0x5000000>;
--			no-map;
--		};
--
--		gps_mem: gps@93c00000 {
--			reg = <0x0 0x93c00000 0x0 0x200000>;
--			no-map;
--		};
- 	};
- 
- 	gpio-keys {
-@@ -241,10 +224,23 @@ &blsp1_uart2 {
- 	status = "okay";
- };
- 
-+&gps_mem {
-+	status = "okay";
-+};
-+
-+&mba_mem {
-+	status = "okay";
-+};
-+
- &mpss {
- 	status = "okay";
- };
- 
-+&mpss_mem {
-+	status = "okay";
-+	size = <0x0 0x5000000>;
-+};
-+
- &pm8916_resin {
- 	status = "okay";
- 	linux,code = <KEY_VOLUMEDOWN>;
-@@ -294,6 +290,10 @@ &wcnss_iris {
- 	compatible = "qcom,wcn3620";
- };
- 
-+&wcnss_mem {
-+	status = "okay";
-+};
-+
- &smd_rpm_regulators {
- 	vdd_l1_l2_l3-supply = <&pm8916_s3>;
- 	vdd_l4_l5_l6-supply = <&pm8916_s4>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-index 25ad098b1503..82402689b414 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-@@ -36,35 +36,11 @@ chosen {
- 	};
- 
- 	reserved-memory {
--		/delete-node/ mpss@86800000;
--		/delete-node/ wcnss@89300000;
--		/delete-node/ venus@89900000;
--
- 		/* Additional memory used by Samsung firmware modifications */
- 		tz-apps@85500000 {
- 			reg = <0x0 0x85500000 0x0 0xb00000>;
- 			no-map;
- 		};
--
--		mpss_mem: mpss@86800000 {
--			reg = <0x0 0x86800000 0x0 0x5a00000>;
--			no-map;
--		};
--
--		gps_mem: gps@8c200000 {
--			reg = <0x0 0x8c200000 0x0 0x200000>;
--			no-map;
--		};
--
--		wcnss_mem: wcnss@8c400000 {
--			reg = <0x0 0x8c400000 0x0 0x600000>;
--			no-map;
--		};
--
--		venus_mem: venus@8ca00000 {
--			reg = <0x0 0x8ca00000 0x0 0x500000>;
--			no-map;
--		};
- 	};
- 
- 	gpio-keys {
-@@ -287,10 +263,23 @@ &blsp1_uart2 {
- 	status = "okay";
- };
- 
-+&gps_mem {
-+	status = "okay";
-+};
-+
-+&mba_mem {
-+	status = "okay";
-+};
-+
- &mpss {
- 	status = "okay";
- };
- 
-+&mpss_mem {
-+	status = "okay";
-+	size = <0x0 0x5a00000>;
-+};
-+
- &pm8916_resin {
- 	status = "okay";
- 	linux,code = <KEY_VOLUMEDOWN>;
-@@ -348,6 +337,10 @@ &wcnss_iris {
- 	compatible = "qcom,wcn3660b";
- };
- 
-+&wcnss_mem {
-+	status = "okay";
-+};
-+
- &smd_rpm_regulators {
- 	vdd_l1_l2_l3-supply = <&pm8916_s3>;
- 	vdd_l4_l5_l6-supply = <&pm8916_s4>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi b/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
-index 50bae6f214f1..ec073cfbb435 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
-@@ -16,18 +16,6 @@ chosen {
- 		stdout-path = "serial0";
- 	};
- 
--	reserved-memory {
--		mpss_mem: mpss@86800000 {
--			reg = <0x0 0x86800000 0x0 0x5500000>;
--			no-map;
--		};
--
--		gps_mem: gps@8bd00000 {
--			reg = <0x0 0x8bd00000 0x0 0x200000>;
--			no-map;
--		};
--	};
--
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 
-@@ -91,10 +79,23 @@ &gcc {
- 	clocks = <&xo_board>, <&sleep_clk>, <0>, <0>, <0>, <0>, <0>;
- };
- 
-+&gps_mem {
-+	status = "okay";
-+};
-+
-+&mba_mem {
-+	status = "okay";
-+};
-+
- &mpss {
- 	status = "okay";
- };
- 
-+&mpss_mem {
-+	status = "okay";
-+	size = <0x0 0x5500000>;
-+};
-+
- &pm8916_usbin {
- 	status = "okay";
- };
-@@ -126,6 +127,10 @@ &wcnss_iris {
- 	compatible = "qcom,wcn3620";
- };
- 
-+&wcnss_mem {
-+	status = "okay";
-+};
-+
- &smd_rpm_regulators {
- 	vdd_l1_l2_l3-supply = <&pm8916_s3>;
- 	vdd_l4_l5_l6-supply = <&pm8916_s4>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 7e0fa37a3adf..bc072a0e4d4f 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -78,24 +78,44 @@ rfsa@867e0000 {
- 			no-map;
- 		};
- 
--		mpss_mem: mpss@86800000 {
--			reg = <0x0 0x86800000 0x0 0x2b00000>;
-+		mpss_mem: mpss {
-+			/* size is device-specific */
-+			alignment = <0x0 0x400000>;
-+			alloc-ranges = <0x0 0x86800000 0x0 0x10000000>;
-+			alloc-bottom-up;
- 			no-map;
-+			status = "disabled";
- 		};
--
--		wcnss_mem: wcnss@89300000 {
--			reg = <0x0 0x89300000 0x0 0x600000>;
-+		gps_mem: gps {
-+			size = <0x0 0x200000>;
-+			alignment = <0x0 0x100000>;
-+			alloc-ranges = <0x0 0x86800000 0x0 0x10000000>;
-+			alloc-bottom-up;
- 			no-map;
-+			status = "disabled";
- 		};
--
--		venus_mem: venus@89900000 {
--			reg = <0x0 0x89900000 0x0 0x600000>;
-+		mba_mem: mba {
-+			size = <0x0 0x100000>;
-+			alignment = <0x0 0x100000>;
-+			alloc-ranges = <0x0 0x86800000 0x0 0x10000000>;
-+			alloc-bottom-up;
- 			no-map;
-+			status = "disabled";
- 		};
--
--		mba_mem: mba@8ea00000 {
-+		wcnss_mem: wcnss {
-+			size = <0x0 0x600000>;
-+			alignment = <0x0 0x100000>;
-+			alloc-ranges = <0x0 0x86800000 0x0 0x10000000>;
-+			alloc-bottom-up;
-+			no-map;
-+			status = "disabled";
-+		};
-+		venus_mem: venus {
-+			size = <0x0 0x500000>;
-+			alignment = <0x0 0x100000>;
-+			alloc-ranges = <0x0 0x86800000 0x0 0x10000000>;
-+			alloc-bottom-up;
- 			no-map;
--			reg = <0 0x8ea00000 0 0x100000>;
- 		};
- 	};
- 
+ .../devicetree/bindings/thermal/qcom-tsens.yaml    |  15 +-
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi              | 217 +++++++++++++++++++++
+ 2 files changed, 230 insertions(+), 2 deletions(-)
 
 -- 
-2.40.1
+2.7.4
 
