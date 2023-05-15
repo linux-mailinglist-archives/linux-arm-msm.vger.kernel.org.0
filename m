@@ -2,99 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 24CB7703282
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 18:14:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CA437032DE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 May 2023 18:26:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242602AbjEOQO0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 12:14:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47668 "EHLO
+        id S242639AbjEOQ0e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 12:26:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242605AbjEOQOR (ORCPT
+        with ESMTP id S242501AbjEOQ0d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 12:14:17 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1240C269E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 09:14:14 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-965ac4dd11bso2594288066b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 09:14:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684167252; x=1686759252;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Lzf2gQIO3En4Gs0Mh5AfyCqX7dywHK4HYcVjkIaq3so=;
-        b=TSqr+ffAlzvuGvpEA4CTOd58GeZUwZVJ/nBj4cDGwx46gij8iCrQNtfdpK+uXhpxjA
-         t43n6oe6Fi0K5dJOotXKN/2BDqLfB9atzvVsJX+IkL8DnUXPvNTdYACXXPRkCgMw+0fi
-         D1wqp8uKwWYne/KCREG71B+LRPeU6OK0CHEpmKOa+VTX1fQzAuZJKrlA0N4cBfYVjKvc
-         1HH2hcBOq2AWATPJtUUvMifEGfJuA85oRAj1tQ9K7U74h56NVFX1lz61yS7mLkLGElZo
-         Ifjikb/39YgSjjRirKbjZqrFMy5jndjixiAA8SH4Nh7W2kE1jl9hftH18nUb4pySF6+C
-         N1iA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684167252; x=1686759252;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Lzf2gQIO3En4Gs0Mh5AfyCqX7dywHK4HYcVjkIaq3so=;
-        b=SHycpTmFxpm5UynixJHeSaqb9/bBc4gN0jpfVJWcrJFKc9EdEV2vhkgyIkJBpoIwkA
-         t9xRTa3yGkMcafQgEjiZJFa5YEGLE1EcpKphFqss2wN0Nb7g/iKPa0lP4oV21+XsNY8h
-         Mgu70ghRSsNUS1DArnWCdne7SVTarYKdLS41aQ1bvs6dgMZ4hlW13VP7UyPAfpCBdLiE
-         pZD8BCcWOw2mUewkLZoKSLgPlXjRy3xS4u1NxFqoGgzU9ZfCUinykeyLJuAQTNT8kknv
-         rI8Is9d/FzeWiTsn24Ss5GRjmWG2VPUdAI8ZvlJVfa2V9aOKiviitEJ/LEi32oqJ8mBq
-         ompg==
-X-Gm-Message-State: AC+VfDyX60Abbqk9tL8KCiapFYi1j4gUizBKRurkvEL+/I5yHWeijwlZ
-        boKdhNWdVv21Rhl8R3z3eJrVjQ==
-X-Google-Smtp-Source: ACHHUZ7yO73Qb93V66px0wxMXJT8l+wrPngwT+FKgR+3uDKmcWjxlK63+UxcCrAq5PIPtziJvH+3cA==
-X-Received: by 2002:a17:907:368b:b0:95f:2065:83c0 with SMTP id bi11-20020a170907368b00b0095f206583c0mr33674583ejc.62.1684167252532;
-        Mon, 15 May 2023 09:14:12 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:6470:25b8:7c2d:1992? ([2a02:810d:15c0:828:6470:25b8:7c2d:1992])
-        by smtp.gmail.com with ESMTPSA id ib8-20020a1709072c6800b0094f67ea6598sm9747712ejc.193.2023.05.15.09.14.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 May 2023 09:14:12 -0700 (PDT)
-Message-ID: <53d76eb1-f474-fd1c-f1c7-9997c0d6cd3e@linaro.org>
-Date:   Mon, 15 May 2023 18:14:10 +0200
+        Mon, 15 May 2023 12:26:33 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE67A2136;
+        Mon, 15 May 2023 09:26:29 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34FEdtd7028319;
+        Mon, 15 May 2023 16:26:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=41opc/0UrQd/HOm8o9Kr2RoTJPOV3lSeWNpIRjNplSw=;
+ b=J11sgL98b0XZeK5XnnfKT+Ml2Zx/IWGgySJPLbvh4t83ki+c+AGQzk4KbVqAlku6RdUf
+ s6Er41Bqp7aCiF+x1i+8IJx/UJQWbt1W+8rIN7Ckyctir0e+LD5cTPt5cIAzOmmH8Z4q
+ n9oXav3V2JNxLLdZILa7ftP4LetBwTX7F0/nLY3k533dZswH/J6XdxR4qogvtwzwCU5d
+ 9eqZ5ePQNdqcGQeaPS3Db5c3fiafxdk95SeJxulTqpxqQmGdUMAZVTi4Yog9qpQslG+D
+ iCDH0uRuZ0YTKzc5zAr1YcLMKAybi4J+1bkp6c/1Lt301Dng4mbHuDwqmvC6wAWnhlFT CQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qkgq6se8p-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 16:26:10 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34FGQ9gS014052
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 15 May 2023 16:26:09 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Mon, 15 May 2023 09:26:09 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
+        "Anjelique Melendez" <quic_amelende@quicinc.com>
+CC:     =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, <linux-leds@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>
+Subject: [PATCH v2] leds: qcom-lpg: Fix PWM period limits
+Date:   Mon, 15 May 2023 09:26:04 -0700
+Message-ID: <20230515162604.649203-1-quic_bjorande@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH V2 1/4] dt-bindings: clock: Add crypto clock and reset
- definitions
-Content-Language: en-US
-To:     Anusha Rao <quic_anusha@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        thara.gopinath@gmail.com, herbert@gondor.apana.org.au,
-        davem@davemloft.net, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org, p.zabel@pengutronix.de,
-        bhupesh.sharma@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-crypto@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
-        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
-        quic_arajkuma@quicinc.com, quic_poovendh@quicinc.com
-References: <20230515150722.12196-1-quic_anusha@quicinc.com>
- <20230515150722.12196-2-quic_anusha@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230515150722.12196-2-quic_anusha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 1_n6mVl2ihmA9SLfs40B1k1h90FUV1-y
+X-Proofpoint-GUID: 1_n6mVl2ihmA9SLfs40B1k1h90FUV1-y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-15_14,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=790 clxscore=1011
+ lowpriorityscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
+ adultscore=0 mlxscore=0 bulkscore=0 spamscore=0 phishscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305150137
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/05/2023 17:07, Anusha Rao wrote:
-> Add crypto clock and reset ID definitions for ipq9574.
-> 
-> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-> ---
+The introduction of high resolution PWM support changed the order of the
+operations in the calculation of min and max period. The result in both
+divisions is in most cases a truncation to 0, which limits the period to
+the range of [0, 0].
 
+Both numerators (and denominators) are within 64 bits, so the whole
+expression can be put directly into the div64_u64, instead of doing it
+partially.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: b00d2ed37617 ("leds: rgb: leds-qcom-lpg: Add support for high resolution PWM")
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+Tested-by: Steev Klimaszewski <steev@kali.org>
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+---
 
-Best regards,
-Krzysztof
+Changes since v1:
+- Reworded first sentence to express that it's the order and not the
+  previously non-existent parenthesis that changed...
+- Picked up review tags.
+
+ drivers/leds/rgb/leds-qcom-lpg.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+index c9cea797a697..7287fadc00df 100644
+--- a/drivers/leds/rgb/leds-qcom-lpg.c
++++ b/drivers/leds/rgb/leds-qcom-lpg.c
+@@ -312,14 +312,14 @@ static int lpg_calc_freq(struct lpg_channel *chan, uint64_t period)
+ 		max_res = LPG_RESOLUTION_9BIT;
+ 	}
+ 
+-	min_period = (u64)NSEC_PER_SEC *
+-			div64_u64((1 << pwm_resolution_arr[0]), clk_rate_arr[clk_len - 1]);
++	min_period = div64_u64((u64)NSEC_PER_SEC * (1 << pwm_resolution_arr[0]),
++			       clk_rate_arr[clk_len - 1]);
+ 	if (period <= min_period)
+ 		return -EINVAL;
+ 
+ 	/* Limit period to largest possible value, to avoid overflows */
+-	max_period = (u64)NSEC_PER_SEC * max_res * LPG_MAX_PREDIV *
+-			div64_u64((1 << LPG_MAX_M), 1024);
++	max_period = div64_u64((u64)NSEC_PER_SEC * max_res * LPG_MAX_PREDIV * (1 << LPG_MAX_M),
++			       1024);
+ 	if (period > max_period)
+ 		period = max_period;
+ 
+-- 
+2.25.1
 
