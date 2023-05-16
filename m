@@ -2,72 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 647CD705917
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 22:48:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57A58705920
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 22:50:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229867AbjEPUsp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 16:48:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59214 "EHLO
+        id S229550AbjEPUui (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 16:50:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59960 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229721AbjEPUso (ORCPT
+        with ESMTP id S229780AbjEPUuh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 16:48:44 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75FE53C38
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 13:48:42 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id d2e1a72fcca58-6439bbc93b6so10363472b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 13:48:42 -0700 (PDT)
+        Tue, 16 May 2023 16:50:37 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C47B3AB9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 13:50:35 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id 41be03b00d2f7-53404873a19so2527880a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 13:50:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1684270122; x=1686862122;
+        d=chromium.org; s=google; t=1684270235; x=1686862235;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qKaehGbAc8k6lY0qnWn8D9TG/mOHGPGNlxmLWsJ8N2Y=;
-        b=m6g7gvRdMU7jCzC8ARN7/pLJ8/l0HGcYN/ecQrFL8r6qefKpx+LlryT1s0VBLOvMZ/
-         8NGvHStpsS98vJ+5X8QuR+LLHskGF4taS+69JCYVhI4JGkbJjHZiVnom/4YDXAnLj1P4
-         OLWTwUgV6aPnyWwNie4y3u1jK4ODcfvyk3iII=
+        bh=zQwO1AW86ZZMLv1I226cO+hnWHW8xIqRy3E2TLcdclA=;
+        b=fFhG9M9BqB2Jhhucg0HrxXSX2VDAxo8VMXPAmarNkjhKXtKNnIKwpdr5CJY72A6B3n
+         I7Ups187ntxJFuKWvFdd4ZS3604bvLbMPjDvPhSmshRWSMvI9fNpZDE1Jzg7WhICSmZq
+         IlXhZj1G/aY1nBpyMbqOO7qk3Nj2BP+W4FP7g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684270122; x=1686862122;
+        d=1e100.net; s=20221208; t=1684270235; x=1686862235;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qKaehGbAc8k6lY0qnWn8D9TG/mOHGPGNlxmLWsJ8N2Y=;
-        b=SZ4Kqrh0r5dIOf2VNaoUCaKOAadyt6fqwW4e3MAbK4J33RG5HWhdwBQBqJhvm6TrdL
-         Q0WQ6XsQ9sA1NGKpNJUOfDK1CmeTuWOwvs1rlePu4CGJn8V0IQP6JFfQf91vqRcQiBs4
-         eFTsicxJViCNn0pwSJnY0RkLdvAnHvSMQisv++hPrwHP/bzsvEvIPMwFj9IQXMhxnYuv
-         Lo6wi9NnPZ6DJIso9/9PAiABy4jYbsWDwqMS/OdfbVHflE1Hi72mh6tmrM84GXhcmz2E
-         yv/99IQRqlpaKLtHInreHFo2BdDfhlFVJaaeWMkor+YTd7IiZQixBx0cE/cxA/EnweB4
-         QWpg==
-X-Gm-Message-State: AC+VfDzf3o7W3WElhr+jaRaBUCOEePLRCGByDUpozbeS71XxGOqYyRQJ
-        /RlghlLkmfcolRzjEHzdsu92ZA==
-X-Google-Smtp-Source: ACHHUZ5ctGEO5DTWH2umfiLzjQSQOYpVnHxq7Fzxd0iVp6cTAQyPJzA4ndkUWCok1pjUTqLN+PoZKQ==
-X-Received: by 2002:a05:6a00:189a:b0:646:7234:cbfc with SMTP id x26-20020a056a00189a00b006467234cbfcmr43536436pfh.27.1684270121976;
-        Tue, 16 May 2023 13:48:41 -0700 (PDT)
+        bh=zQwO1AW86ZZMLv1I226cO+hnWHW8xIqRy3E2TLcdclA=;
+        b=U+IkE+XqHp6gn8vLKM0PrHFxWa/UBONwmxIHcthURE5O2AhH3F4Uh2DgoZALOlauD5
+         CwJuhs6Mruk8X1DSVMEqgq1duV0dqcmbwxqb/6mAfYejYgSaHPUGesRv/hd7xHlup+iH
+         0HEWSXR6DUn5saMQ3Oxh1XtUIwNyT1VO2HUYb9/FKMypedw87Ud+BbUSfBnrH2ZyA2tI
+         jzVcqBJVVXlsfx7do7fuITevXgr8cHtjWSKiNEwrsFMpjO7rr1mzqZxqchevL/9sfIoE
+         dwOqOUOIvEpiofccPr6zobKEmtHblSP18mB5aB6sSbpXjxwQ4/5FSLn5RqW9f7An+/B8
+         rzWg==
+X-Gm-Message-State: AC+VfDxQWuaMZaO1Z2fj2PIYUqQinKhLIa68qEEHZyiiMP/WAbW2ED1E
+        Ar257iMZ1+SpENceudYaZLpSmA==
+X-Google-Smtp-Source: ACHHUZ7zbSTqF2+Ctw96wBfV5FayFZLDDyPrQ785jpE1+sute7vYZzIO1eBBcnyFwmB5G5I0TAFTNA==
+X-Received: by 2002:a05:6a20:7d97:b0:ff:e60c:ee93 with SMTP id v23-20020a056a207d9700b000ffe60cee93mr43232036pzj.26.1684270235098;
+        Tue, 16 May 2023 13:50:35 -0700 (PDT)
 Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id p24-20020a62ab18000000b0063b5776b073sm13857047pff.117.2023.05.16.13.48.40
+        by smtp.gmail.com with ESMTPSA id i13-20020aa7908d000000b0063f2e729127sm14237746pfa.144.2023.05.16.13.50.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 May 2023 13:48:40 -0700 (PDT)
-Date:   Tue, 16 May 2023 13:48:39 -0700
+        Tue, 16 May 2023 13:50:34 -0700 (PDT)
+Date:   Tue, 16 May 2023 13:50:33 -0700
 From:   Kees Cook <keescook@chromium.org>
-To:     Luca Stefani <luca.stefani.ge1@gmail.com>
-Cc:     Mukesh Ojha <quic_mojha@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, corbet@lwn.net,
-        tony.luck@intel.com, gpiccoli@igalia.com, catalin.marinas@arm.com,
-        will@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        robh+dt@kernel.org, linus.walleij@linaro.org,
-        linux-gpio@vger.kernel.org, srinivas.kandagatla@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org,
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        corbet@lwn.net, tony.luck@intel.com, gpiccoli@igalia.com,
+        catalin.marinas@arm.com, will@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, robh+dt@kernel.org,
+        linus.walleij@linaro.org, linux-gpio@vger.kernel.org,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-hardening@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, linux-doc@vger.kernel.org
-Subject: Re: [PATCH v3 09/18] soc: qcom: Add qcom's pstore minidump driver
- support
-Message-ID: <202305161347.80204C1A0E@keescook>
+Subject: Re: [PATCH v3 12/18] soc: qcom: Register pstore frontend region with
+ minidump
+Message-ID: <202305161349.7306F11199@keescook>
 References: <1683133352-10046-1-git-send-email-quic_mojha@quicinc.com>
- <1683133352-10046-10-git-send-email-quic_mojha@quicinc.com>
- <e25723bf-be85-b458-a84c-1a45392683bb@gmail.com>
+ <1683133352-10046-13-git-send-email-quic_mojha@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e25723bf-be85-b458-a84c-1a45392683bb@gmail.com>
+In-Reply-To: <1683133352-10046-13-git-send-email-quic_mojha@quicinc.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -78,74 +77,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 09, 2023 at 06:06:26PM +0200, Luca Stefani wrote:
+On Wed, May 03, 2023 at 10:32:26PM +0530, Mukesh Ojha wrote:
+> Since qcom_pstore_minidump driver creates platform device
+> for qualcomm devices, so it knows the physical addresses
+> of the frontend region now. Let's register the regions
+> with qcom_minidump driver.
 > 
-> On 03/05/23 19:02, Mukesh Ojha wrote:
-> > This driver was inspired from the fact pstore ram region should be
-> > fixed and boot firmware need to have awarness about this region,
-> > so that it will be persistent across boot. But, there are many
-> > QCOM SoC which does not support warm boot from hardware but they
-> > have minidump support from the software, and for them, there is
-> > no need of this pstore ram region to be fixed, but at the same
-> > time have interest in the pstore frontends. So, this driver
-> > get the dynamic reserved region from the ram and register the
-> > ramoops platform device.
-> > 
-> >   +---------+     +---------+   +--------+     +---------+
-> >   | console |     | pmsg    |   | ftrace |     | dmesg   |
-> >   +---------+     +---------+   +--------+     +---------+
-> >         |             |             |              |
-> >         |             |             |              |
-> >         +------------------------------------------+
-> >                            |
-> >                           \ /
-> >                    +----------------+
-> >              (1)   |pstore frontends|
-> >                    +----------------+
-> >                            |
-> >                           \ /
-> >                   +------------------- +
-> >              (2)  | pstore backend(ram)|
-> >                   +--------------------+
-> >                            |
-> >                           \ /
-> >                   +--------------------+
-> >              (3)  |qcom_pstore_minidump|
-> >                   +--------------------+
-> >                            |
-> >                           \ /
-> >                     +---------------+
-> >              (4)    | qcom_minidump |
-> >                     +---------------+
-> > 
-> > This driver will route all the pstore front data to the stored
-> > in qcom pstore reserved region and the reason of showing an
-> > arrow from (3) to (4) as qcom_pstore_minidump driver will register
-> > all the available frontends region with qcom minidump driver
-> > in upcoming patch.
-> > 
-> > Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
 > [...]
-> > +static struct qcom_ramoops_config default_ramoops_config = {
-> > +	.mem_type = 2,
-> > +	.record_size = 0x0,
-> > +	.console_size = 0x200000,
-> > +	.ftrace_size = 0x0,
-> > +	.pmsg_size = 0x0,
-> > +};
-> 
-> This is effectively hard-cording the configuration of ramoops.
-> 
-> Since the memory range is dynamic and by itself doesn't impose any
-> limitation this should be configurable in the device-tree, like a standard
-> ramoops entry backed by a memory range.
-> 
-> I think this should provide the same interface/knobs as pstore-ram does,
-> unless there's some known limitations to minidump, in which case those
-> should be expressed.
+> +	strlcpy(md_region->name, name, sizeof(md_region->name));
 
-Yeah, I had the same thought reading this myself. Beyond that, it looks
-fine as a way to let pstore know about a new RAM backend.
+nitpick throughout: Please use strscpy()
+
+https://github.com/KSPP/linux/issues/89
 
 -Kees
 
