@@ -2,77 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C110704F88
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 15:41:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51707704F96
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 15:42:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233692AbjEPNlM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 09:41:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51586 "EHLO
+        id S233721AbjEPNma (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 09:42:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233689AbjEPNlL (ORCPT
+        with ESMTP id S233728AbjEPNm0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 09:41:11 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD03E49CC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 06:41:03 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f50020e0f8so27588935e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 06:41:03 -0700 (PDT)
+        Tue, 16 May 2023 09:42:26 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3FA05B9E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 06:42:21 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-3090408e09bso2966033f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 06:42:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684244462; x=1686836462;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :to:content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Pi52h4BwbyrvN/UFSfSTrTKE7cXA4CH95lTEYcAxXFI=;
-        b=giOtGLEEfJCagK7Rug5WXqi4WKzgSfeHJwKdHxs9AfpiffCA0F853lNyAIXbEkSNhC
-         oS90RbBPSF5JztJHvPO2Fz7Nfj8TmS2tEMfiGm2uvvtvJWsm9ewZBE0T0sal73G6K4U2
-         XdIFLhn11NzKWHU8L7OxgDsMTEx/fLra2AZchQc+NWFB8Dt3D/XSTooSf2DQ93Ux2gu6
-         3J3V2KrByG+tjW/eJ3OsU3qsNAVtIM5W7T+wacHntBr/rSkeHW6a9MPMOQgiDcuQR6bx
-         q/7yubfyReY+5FwCyvZ8+d06PPyaMFdT//BaWnzDdSwUVuBIW24AphARg06i81RhVCWr
-         RozQ==
+        d=linaro.org; s=google; t=1684244540; x=1686836540;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RIvTcNlwAmPNpObBbfvPw1SrNayKQmgyhgtXRTbsW0o=;
+        b=x9+y61j4a/rAqAPb1vGX/7FNSeS8qKNMAkz5A+EfN2PlplrNAb/IRWBIMaEIZ3cPJI
+         QV75FLyklyjKqWPSxT8eq7Jh00z3BEhRFKWlLjnoXgH43+L/NhvEgUdROmkwTPN/isql
+         TBIALmXNNjepZplPEpN9J4QaiP88m12Yb81TkDLmdSLCHI7Le8roh5vofYHC8Z1lAJVn
+         3e/b0VHr/3BhisQZXuYE2xHzasHy8RHY0UOtKa9lVNvj3xD77VDo/qtEjGdUsd1qThGj
+         e4a9cQOpdrOn7epnbZpSY4/nD3KOzTH2hcRKr0pi04OvJ3UAaYVRx4yrZdA+8BxMxv1Y
+         kyXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684244462; x=1686836462;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :to:content-language:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Pi52h4BwbyrvN/UFSfSTrTKE7cXA4CH95lTEYcAxXFI=;
-        b=bVaQP3yrb5/3W9EKg1JJLV5cnSeYYYttYKbdgQhJkCBsc4NC1CvLFZ7//8Y5YtgDTB
-         FciIRZoDkky6FFsqHYFKyMnXrxItqf5siCaUOIozWann8AVYJZoS1sabdlFsG6hDcLeu
-         OE+EeOQPRJfgJW+iBWQvDRcTduUQHE2U2KyLM3/Y892c21vAJU/EGh3Niifp2LEhj4Gb
-         iCE3sEjXl3vFn8o6BSCoURM+82+oLsNTQO/B0ZCC+zBzT1KSx8K7sJUFe89ei1G7ys9W
-         AHJesgHOcE0SZ2Izi/OuFpMbthNjdHxQVPeZYsJ1SHscDi2eiPLIAITONQd/Yq3Lg7s5
-         IbrA==
-X-Gm-Message-State: AC+VfDzixQSfobBfOZ6bGcpsHSkvgAEPdDwOoGEHaVwu8HY518j0tSZL
-        I91HkODbVjzIA58DQj2urFoFqQ==
-X-Google-Smtp-Source: ACHHUZ4sAY7KhOuQSLuY70WCNRujQd68fSqdKJsRuMmYQ9ieu+JhsUY9pR3vwmATgb0JkCiF9y/icw==
-X-Received: by 2002:a05:6000:114b:b0:307:8a39:555f with SMTP id d11-20020a056000114b00b003078a39555fmr24009097wrx.17.1684244462091;
-        Tue, 16 May 2023 06:41:02 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:86be:97a:a043:77a8? ([2a01:e0a:982:cbb0:86be:97a:a043:77a8])
-        by smtp.gmail.com with ESMTPSA id u9-20020adfed49000000b0030647449730sm2672349wro.74.2023.05.16.06.41.01
+        d=1e100.net; s=20221208; t=1684244540; x=1686836540;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RIvTcNlwAmPNpObBbfvPw1SrNayKQmgyhgtXRTbsW0o=;
+        b=LbSUFFLLTtNFuN6zjyaZnAupV6CYE0KguVxU7Ua6F5znc3qTgdFruCVnHNajjcbS6u
+         U6pWbhVu0V86OwIQjNCqM6XSyfC430MVz222tfRfL0hQJpjs//5SfV4E2swjNi33Hp3w
+         s8bXwO6ded3+oG4SCp3cE79wGnck2Bfoim4hNLCuFNVTTF6zyQjXoFsKAYP1s2WxnQe8
+         S6TJ2YAYQrO5XHe6kCpPsCff0xVf/TI9iih1Lk71jvcdxUQ7/vQJNkWl84hmF/p+M7ql
+         rF6oQn+fgLNMYxMP/n/JGX1YBP9Z/r44nJYoesGDYpuPupUHfTfJWMIDKgypo5DaqtOe
+         yYbQ==
+X-Gm-Message-State: AC+VfDymv6g0QqkPPjCokTU4rbECmeJYyWxNHf9pKwv/sr2UHgFY/tZY
+        UbhIxSE1I2l3wumImVe9w2YcQQ==
+X-Google-Smtp-Source: ACHHUZ6Qej44yGCIdrpInYjzHIJscOEjjkfM4eL+VuKHu1Ub2WB/gSILNqOM8VjDJvJ/EH6SR69hPg==
+X-Received: by 2002:a5d:43c4:0:b0:2f0:2dfe:e903 with SMTP id v4-20020a5d43c4000000b002f02dfee903mr29013651wrr.69.1684244540172;
+        Tue, 16 May 2023 06:42:20 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id v17-20020adff691000000b00307c0afc030sm2761242wrp.4.2023.05.16.06.42.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 May 2023 06:41:01 -0700 (PDT)
-Message-ID: <14b029a3-dffa-7d4f-688a-fdb9bad585b1@linaro.org>
-Date:   Tue, 16 May 2023 15:41:00 +0200
+        Tue, 16 May 2023 06:42:19 -0700 (PDT)
+Message-ID: <d244f5f3-a4a0-c9ac-2f78-49baeb8ef3d3@linaro.org>
+Date:   Tue, 16 May 2023 14:42:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8550-qrd: add USB OTG
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 1/3] dt-bindings: clock: qcom,gcc-sm8250: add missing
+ bi_tcxo_ao clock
 Content-Language: en-US
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Taniya Das <tdas@codeaurora.org>,
+        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-References: <20230516133011.108093-1-krzysztof.kozlowski@linaro.org>
- <20230516133011.108093-2-krzysztof.kozlowski@linaro.org>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <20230516133011.108093-2-krzysztof.kozlowski@linaro.org>
+Cc:     Rob Herring <robh@kernel.org>
+References: <20230516105241.30091-1-krzysztof.kozlowski@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230516105241.30091-1-krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,13 +88,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/05/2023 15:30, Krzysztof Kozlowski wrote:
-> Add missing parts of USB stack to enable USB OTG mode.  The QRD8550
-> comes with one USB Type-C port.
+On 16/05/2023 11:52, Krzysztof Kozlowski wrote:
+> The initial SM8250 GCC driver added in commit 3e5770921a88 ("clk: qcom:
+> gcc: Add global clock controller driver for SM8250") already consumed it
+> on the clock.  This fixes warnings like:
 > 
+>    sm8250-xiaomi-elish-csot.dtb: clock-controller@100000: clock-names: ['bi_tcxo', 'bi_tcxo_ao', 'sleep_clk'] is too long
+> 
+> Fixes: 98394efb48f5 ("dt-bindings: clock: Add SM8250 GCC clock bindings")
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Acked-by: Rob Herring <robh@kernel.org>
+> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
 > ---
->   arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 52 ++++++++++++++++++++++++-
->   1 file changed, 51 insertions(+), 1 deletion(-)
+> 
+> Changes in v2:
+> 1. Re-word commit msg and fixes tag (Konrad)
+> 2. Add tags
+> ---
+>   Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml
+> index b752542ee20c..ead6665b9a45 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml
+> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml
+> @@ -23,11 +23,13 @@ properties:
+>     clocks:
+>       items:
+>         - description: Board XO source
+> +      - description: Board active XO source
+>         - description: Sleep clock source
+>   
+>     clock-names:
+>       items:
+>         - const: bi_tcxo
+> +      - const: bi_tcxo_ao
+>         - const: sleep_clk
+>   
+>   required:
+> @@ -47,8 +49,9 @@ examples:
+>         compatible = "qcom,gcc-sm8250";
+>         reg = <0x00100000 0x1f0000>;
+>         clocks = <&rpmhcc RPMH_CXO_CLK>,
+> +               <&rpmhcc RPMH_CXO_CLK_A>,
+>                  <&sleep_clk>;
+> -      clock-names = "bi_tcxo", "sleep_clk";
+> +      clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
+>         #clock-cells = <1>;
+>         #reset-cells = <1>;
+>         #power-domain-cells = <1>;
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+LGTM
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
