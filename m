@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B3B3270463D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 09:23:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D0DC704655
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 09:27:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231273AbjEPHXq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 03:23:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56972 "EHLO
+        id S231328AbjEPH1r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 03:27:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231271AbjEPHXn (ORCPT
+        with ESMTP id S231320AbjEPH1n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 03:23:43 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F5C33C39;
-        Tue, 16 May 2023 00:23:41 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id 98e67ed59e1d1-24e5d5782edso12779521a91.0;
-        Tue, 16 May 2023 00:23:41 -0700 (PDT)
+        Tue, 16 May 2023 03:27:43 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60AE111C;
+        Tue, 16 May 2023 00:27:41 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-64395e741fcso14245429b3a.2;
+        Tue, 16 May 2023 00:27:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684221821; x=1686813821;
+        d=gmail.com; s=20221208; t=1684222061; x=1686814061;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=f2Ewl+pzg/EYDV9r41yW9nhxUrQsVL1ApvJ69sMnczM=;
-        b=VQkVb+02i1KNhzRkzyci+tox0yM++34UNlwgqEx8OxnHHIB684ZDNdWovTy5hFMJ/b
-         42oE6l5qGNqwcaWjs+hcKcY6vrROIuoiuLl3KN5dmULOYVFPkWuiv/DKL5+gzwdG7Ajc
-         3s8rEs2S65LHobPaciEXG4HgU+LMDCPI2kQU5AUQY3QEaGYjmPOKrVeGR68Vo+slZ1cn
-         wU80uJBr9kiONoRiT4m/bCaSMgkMip/tKkRIQ225fHy99civYxw3t8ZSKQCFzilA33lp
-         EEVi/mZvIFA6BIHel8L16Xf00chCPqgOeiuad91ItHrfCqMJ0y9eG0HEOkZmw7Y00HxQ
-         a4Eg==
+        bh=sMkkuioWkC+udXRloS+HK40vtfIEidS3uoOdvaB5NUg=;
+        b=WiDWT2zI2xlQvDkBOyqZDLIiQ+/FbhgU3cgCIgCAKHDrRdhRg3kGM02F3deXcEbHXo
+         yjnzuyxgn4H5yyy4sDf9sfL1wWfh7wWLV1evTmc7L01WpgYzRmbZO9mnRkUzWXeOKXQf
+         4bIqpkaiNA3uSn35cxCG+YRzMVbjDzbU5M27v4wdqho+lp+aTla4Z+7xiKOxrrfyrurd
+         EP5Y8u5KaaOHgiVjpNvPx+XQG5zYl0JprYnafva1fV+xwhS0D0kJlBz92iO/Goj+NCAl
+         s3a5onKS+8xBItoWEOMzbeu7zkXk5piLEdcH11iSuijIv5pJzFA/b0P7aRxGpm+figaR
+         n/3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684221821; x=1686813821;
+        d=1e100.net; s=20221208; t=1684222061; x=1686814061;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=f2Ewl+pzg/EYDV9r41yW9nhxUrQsVL1ApvJ69sMnczM=;
-        b=XnHAjco8JJIa4ORZAwFi55fSLftBKGOm7NaHVz5cqtw8Hp4TGHdxSeuuH5HHibf8Us
-         FVAjbdMQGxYSRc4vgLWaHyzs3lOMZWv0tCvsoxva/tRNP5cZ2CvwSNH8nY+N7+mDrEhL
-         EL/ZUAVwGfspgly/859IB9b0B+SvnSOvXBLGlHirL3eN3OBhqj7B/zUJ7eGoWyeIekNr
-         ULS4toBHfnm+imITPGeRea+JZisF4NgAFOexG7k1Wu8ysNxWaa3NTayI7zPLVPkRLRK7
-         3sPoQbJK8k0oMB7frF6pMgW/ZcKH6vf6Nqsef0FnvIYEW/uGOxll68NqR/PZueaIA73l
-         9K3g==
-X-Gm-Message-State: AC+VfDy8gdQzXLomZCccz+IDntpTOlbWIqBeCSFkxcMHbabLazWAhOTA
-        RYnse0ufGxany/oJ3/qodjo=
-X-Google-Smtp-Source: ACHHUZ4QF2JwPYLHFWHCVTLi2c0EzFmHWCbSSwBGXI/vFZK+Deo05KCNHg8C3rqdvl6/JlCBlnXrgw==
-X-Received: by 2002:a17:90b:1e4b:b0:24e:1f5:2e05 with SMTP id pi11-20020a17090b1e4b00b0024e01f52e05mr37999296pjb.13.1684221820806;
-        Tue, 16 May 2023 00:23:40 -0700 (PDT)
+        bh=sMkkuioWkC+udXRloS+HK40vtfIEidS3uoOdvaB5NUg=;
+        b=UHN+NLe5fNDRC/2KNLTd88LIikKeYZvMB4HJkdhOB6KxvUvN7AVSlI4AsvC6KPpWXO
+         6pAHa0M2u4CfMY85geT5gGP0ECagSTWiWdWePD55togzHkSbhdTUNm0UzFXYX0Uz0bKe
+         owV74usILk7W3+0wu0vt2iK/v+YMoQZO4fh8GbUC+zH4bgkYHPd7fbThDWprwUbJKbPt
+         pjdWdMKZoFrPo4jkmT8Tbwc6Hu4pIpZftyz71YNRjMkBkf5kUOaZG8DcldRIDV4ldupL
+         Pihjj2jc9TzJI0XI51rUP9eMFbEoGeNNdyAMZW0NSw4NvVMWkb/eBmaIBGu7+BbrLMoW
+         L5tw==
+X-Gm-Message-State: AC+VfDzKJkkR5bwbAi/a3F+77O9k+//x3ytcvCzuSNVfqrALX8q2ZEE0
+        T/Y9zXaVzMIyZiTXCcuVFOA=
+X-Google-Smtp-Source: ACHHUZ74rnoX13f+ip9crIOWfq+6SjW8iqq3ldmHjj2wBSe350Z+Ops2E1y7tLdOMQ+xPt34CGZlcg==
+X-Received: by 2002:a05:6a00:14ce:b0:640:f313:efba with SMTP id w14-20020a056a0014ce00b00640f313efbamr49839859pfu.19.1684222060775;
+        Tue, 16 May 2023 00:27:40 -0700 (PDT)
 Received: from Gentoo (n220246252240.netvigator.com. [220.246.252.240])
-        by smtp.gmail.com with ESMTPSA id fz5-20020a17090b024500b00252d960a8dfsm933923pjb.16.2023.05.16.00.23.37
+        by smtp.gmail.com with ESMTPSA id d22-20020aa78e56000000b00646e7d2b5a7sm12689091pfr.112.2023.05.16.00.27.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 May 2023 00:23:40 -0700 (PDT)
-Date:   Tue, 16 May 2023 15:23:33 +0800
+        Tue, 16 May 2023 00:27:40 -0700 (PDT)
+Date:   Tue, 16 May 2023 15:27:34 +0800
 From:   Jianhua Lu <lujianhua000@gmail.com>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -61,15 +61,16 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-Subject: Re: [RESEND,PATCH 1/3] arm64: dts: qcom: sm8250-xiaomi-elish-boe:
- fix panel compatible
-Message-ID: <ZGMvdfY28gNofo2C@Gentoo>
+Subject: Re: [RESEND,PATCH 3/3] arm64: dts: qcom: sm8250-xiaomi-elish: remove
+ redundant empty line
+Message-ID: <ZGMwZiPI3eCGdoS8@Gentoo>
 References: <20230516062657.28616-1-lujianhua000@gmail.com>
- <912d7db5-3bb2-cbc6-ed98-eb1dd40f9fbd@linaro.org>
+ <20230516062657.28616-3-lujianhua000@gmail.com>
+ <95f257ae-0b9d-a002-7074-a476fbc5bc98@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <912d7db5-3bb2-cbc6-ed98-eb1dd40f9fbd@linaro.org>
+In-Reply-To: <95f257ae-0b9d-a002-7074-a476fbc5bc98@linaro.org>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
         FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
@@ -80,23 +81,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 16, 2023 at 09:01:35AM +0200, Krzysztof Kozlowski wrote:
+On Tue, May 16, 2023 at 09:11:28AM +0200, Krzysztof Kozlowski wrote:
 > On 16/05/2023 08:26, Jianhua Lu wrote:
-> > From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > 
-> > The bindings expect "novatek,nt36523" fallback in the panel compatible:
-> > 
-> >   sm8250-xiaomi-elish-boe.dtb: panel@0: compatible: ['xiaomi,elish-boe-nt36523'] is too shor
+> > Remove a redundant empty line introduced by
+> >   commit 51c4c2bd6f31 ("arm64: dts: qcom: sm8250-xiaomi-elish-boe: Add mdss and dsi panel")
+> 
+> So you resent my patches just to add a comment? Not even as a dependency
+> of something? Please, no.
+
+Acked, I will split this patch to new series.
+> 
 > > 
 > > Fixes: 51c4c2bd6f31 ("arm64: dts: qcom: sm8250-xiaomi-elish-boe: Add mdss and dsi panel")
-> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> > Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
 > 
-> I think there is no need to resend my patches. They are marked in
-> patchwork. Unless I am not responsive to something, please rather avoid
-> doing that.
+> It's not a bug. Drop fixes tag.
 
 Acked
+> 
 > 
 > Best regards,
 > Krzysztof
