@@ -2,90 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 127B0705A0F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 23:59:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82CA3705A7E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 00:20:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229457AbjEPV7k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 17:59:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42304 "EHLO
+        id S229616AbjEPWUq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 18:20:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229454AbjEPV7j (ORCPT
+        with ESMTP id S229534AbjEPWUp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 17:59:39 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F51810EC;
-        Tue, 16 May 2023 14:59:38 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34GKRlO9013008;
-        Tue, 16 May 2023 21:59:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=6WBOdrp4MoRntPk4JTak4XppU+MY2+sHrZfFMGMjML8=;
- b=DMf+dTPgQgntwEMgqi6ZG+LAhviXPqdFnX6AnIf3JQ5vJ6gWdm34k4EmRFZgL7DkXnLG
- aHVU06r3oI/jq/YHbe6N/28+yDgALEibdjQXmh7wFAaLiii8fce4CjKSqjuAxdn0a67I
- EsuvAPvdXkWreMjBBb5/oI3dZeXcmPlVFxCgtl5KZFF6TksPi19qTzNo1Q1Vdw5bBcom
- gjYaPVDehvbETKzIAcck0PO29ZDCVKBvkkiVUDqKmdVae5HZVhbZFM94iHlfms8Y0lTg
- 0wlQIrAEGPVX9fm6xEUO6c9JE6+50ZTKBN5tmEzHytsmy9VUjFAoyGjcf75B2t+1pSxG 4A== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qm36n21s9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 21:58:53 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34GLwqZF022335
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 21:58:52 GMT
-Received: from [10.110.39.6] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 16 May
- 2023 14:58:51 -0700
-Message-ID: <db728b45-473a-e088-7296-160d93d79e0b@quicinc.com>
-Date:   Tue, 16 May 2023 14:58:51 -0700
+        Tue, 16 May 2023 18:20:45 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6A6B59E0;
+        Tue, 16 May 2023 15:20:44 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1ae408f4d1aso1593895ad.0;
+        Tue, 16 May 2023 15:20:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684275644; x=1686867644;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=IeZwhtVSqAG6iHIQ8IUXqbVYn2+osulTFj6IZpAkURA=;
+        b=Hgdp6nAntZmrpqBDhdk7E0rc6dat30noUIDD+YKei7fPL4Wo6aL9d0ZJpZbplRH5N6
+         Pd7nyDkiAo9c4HmdojDLo6C+h3ssKd+H97R4Shk70DuWn6qCC/JqGqERqIsIhZgG23YQ
+         guqdrq5wh2D6b+wK3N+eL9YA33on0DesQXmZ1LEnnlSJBp0CrkHvw1Y4TYEZzAXxcU7h
+         ETVFJz0nm9KmvFzWpWutpUJGvgZHYvhqKbaYzQZCTWo00i8Of7FqL7mBHftk8Eto6BxW
+         OjomwIOY4wf1RqIORCghEwEbOBe/DOcw+fZPfFVg2kiAh/WbjNNeYB1RHy62EqfQiACx
+         6HsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684275644; x=1686867644;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IeZwhtVSqAG6iHIQ8IUXqbVYn2+osulTFj6IZpAkURA=;
+        b=lUDDTBntQJmp4REt2H8QByoDaD7YSJuISplVFU+8gZH27e4dnas9Pe9PPhzC1FIt/E
+         MewOMcsSWMZcSy2NGc40YFby+wlhCLhMUwNQcArbjCKqxiwkRIVEpHX4m66/hHeH6j+N
+         dN5Zj9+LrQIynNygb4NBpyW1Au2FoBlp+wAKLMirAxFQw6h8eFVPTn7JdcQBZUkQNYMo
+         BBhPZjrsOj3iMDaYvpj6tPq4Y4iW1Se8ozy0z5qJKmaNETXhBtxEt+0KQ+D93MgUBRL7
+         0gPAS8VpbAeEzMWkQei3VqAITDU0wpIIyaeZR6XRTERxhgv6VdUp5w2ELTLkAbeBGYS7
+         2u3Q==
+X-Gm-Message-State: AC+VfDzAwR7KczJXE0rJSLWJbeXFiMlWx9SlQ6TuygxBE2SY76Fao0Ck
+        lnTd3tHuJ/fM6wmnYqErE4o=
+X-Google-Smtp-Source: ACHHUZ4nzvdM64wv1Iwhf7a6uwcd+WXdrvGPTYoGMcH7eUawy/TgM0s5yLdILJA8XRWrw1sQeBpvfg==
+X-Received: by 2002:a17:902:9005:b0:1ad:eb16:35e2 with SMTP id a5-20020a170902900500b001adeb1635e2mr12415779plp.66.1684275643949;
+        Tue, 16 May 2023 15:20:43 -0700 (PDT)
+Received: from localhost ([2a00:79e1:abd:4a00:61b:48ed:72ab:435b])
+        by smtp.gmail.com with ESMTPSA id bf12-20020a170902b90c00b001ac95be5081sm15963062plb.307.2023.05.16.15.20.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 May 2023 15:20:43 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org, iommu@lists.linux-foundation.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        Rob Clark <robdclark@chromium.org>, stable@vger.kernel.org,
+        Lepton Wu <lepton@chromium.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        linux-arm-kernel@lists.infradead.org (moderated list:ARM SMMU DRIVERS),
+        iommu@lists.linux.dev (open list:IOMMU SUBSYSTEM),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v4 1/2] iommu/arm-smmu-qcom: Fix missing adreno_smmu's
+Date:   Tue, 16 May 2023 15:20:36 -0700
+Message-Id: <20230516222039.907690-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH V6 1/3] dt-bindings: sram: qcom,imem: Add Boot Stat region
- within IMEM
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>
-CC:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <cover.1683628357.git.quic_schowdhu@quicinc.com>
- <343182748e12b6a4ac57d336405c50e36fc5520c.1683628357.git.quic_schowdhu@quicinc.com>
- <CAA8EJpp2x2OEB2sg+caKmjkDYJp_NJ9mXo85FxTZr-9zRXHNhw@mail.gmail.com>
- <7d397e67-5d56-4975-98af-1ac9746c07f4@app.fastmail.com>
- <CAA8EJpoMGyAJBTw1-=+NT=ysy+cpc4EpJSv1SABJVh2BscdJ+g@mail.gmail.com>
-From:   Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <CAA8EJpoMGyAJBTw1-=+NT=ysy+cpc4EpJSv1SABJVh2BscdJ+g@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 06qlANEolpxD5bkS0wOaTIjr0rpYHE67
-X-Proofpoint-ORIG-GUID: 06qlANEolpxD5bkS0wOaTIjr0rpYHE67
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-16_12,2023-05-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=999
- spamscore=0 suspectscore=0 priorityscore=1501 malwarescore=0 phishscore=0
- bulkscore=0 impostorscore=0 mlxscore=0 adultscore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
- definitions=main-2305160186
-X-Spam-Status: No, score=-5.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -93,70 +83,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/16/2023 12:17 PM, Dmitry Baryshkov wrote:
-> On Tue, 16 May 2023 at 11:16, Arnd Bergmann <arnd@arndb.de> wrote:
->>
->> On Tue, May 9, 2023, at 13:35, Dmitry Baryshkov wrote:
->>> On Tue, 9 May 2023 at 13:53, Souradeep Chowdhury
->>> <quic_schowdhu@quicinc.com> wrote:
->>>>
->>>> All Qualcomm bootloaders log useful timestamp information related
->>>> to bootloader stats in the IMEM region. Add the child node within
->>>> IMEM for the boot stat region containing register address and
->>>> compatible string.
->>>
->>> I might have a minor vote here. Is there any reason why you have to
->>> instantiate the device from DT?
->>> It looks like a software interface. Ideally software should not be
->>> described in DT (e.g. this can be instantiated from imem
->>> driver-to-be).
->>
->> There is nothing wrong with describing firmware in DT, if that
->> firmware is part of the platform, we do that for a lot of
->> other bits of firmware.
->>
->> However, in this specific case, many things are wrong with the
->> implementation, and neither the DT binding nor the driver
->> makes sense to me in its current state.
->>
->>>> +  "^stats@[0-9a-f]+$":
->>>> +    type: object
->>>> +    description:
->>>> +      Imem region dedicated for storing timestamps related
->>>> +      information regarding bootstats.
->>>> +
->>>> +    additionalProperties: false
->>>> +
->>>> +    properties:
->>>> +      compatible:
->>>> +        items:
->>>> +          - enum:
->>>> +              - qcom,sm8450-bootstats
->>>> +          - const: qcom,imem-bootstats
->>>> +
->>>> +      reg:
->>>> +        maxItems: 1
->>
->> If I understand this right, this "qcom,imem-bootstats"
->> device serves as an indirection to store additional
->> properties of the system in a memory area, but the description
->> of that area is more complex than its contents, which
->> makes no sense to me.
->>
->> Just create a binding for a firmware node in the devicetree
->> itself, and put the values in properties of that. The first
->> stage firmware can still use the same interface, but the
->> actual loader that assembles the DT can get it out of that
->> and store it in the properties. With that done, there is also
->> no need for a kernel driver, as userspace can just get the
->> values from /sys/firmware/devicetree/ directly.
-> 
-> This sounds good, except the always-present issue of the devices which
-> have already been released. Usually we can not expect a bootloader
-> update for these devices.
+From: Rob Clark <robdclark@chromium.org>
 
-Valid point. I don't expect current SOCs supported at upstream to update 
-with the newer bootloader having this feature done through bootloader.
+When the special handling of qcom,adreno-smmu was moved into
+qcom_smmu_create(), it was overlooked that we didn't have all the
+required entries in qcom_smmu_impl_of_match.  So we stopped getting
+adreno_smmu_priv on sc7180, breaking per-process pgtables.
 
----Trilok Soni
+Fixes: 30b912a03d91 ("iommu/arm-smmu-qcom: Move the qcom,adreno-smmu check into qcom_smmu_create")
+Cc: <stable@vger.kernel.org>
+Suggested-by: Lepton Wu <lepton@chromium.org>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index d1b296b95c86..ec743a9ec67a 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -496,20 +496,21 @@ static const struct qcom_smmu_match_data qcom_smmu_500_impl0_data = {
+ /*
+  * Do not add any more qcom,SOC-smmu-500 entries to this list, unless they need
+  * special handling and can not be covered by the qcom,smmu-500 entry.
+  */
+ static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+ 	{ .compatible = "qcom,msm8996-smmu-v2", .data = &msm8996_smmu_data },
+ 	{ .compatible = "qcom,msm8998-smmu-v2", .data = &qcom_smmu_v2_data },
+ 	{ .compatible = "qcom,qcm2290-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,qdu1000-smmu-500", .data = &qcom_smmu_500_impl0_data  },
+ 	{ .compatible = "qcom,sc7180-smmu-500", .data = &qcom_smmu_500_impl0_data },
++	{ .compatible = "qcom,sc7180-smmu-v2", .data = &qcom_smmu_v2_data },
+ 	{ .compatible = "qcom,sc7280-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,sc8180x-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,sc8280xp-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,sdm630-smmu-v2", .data = &qcom_smmu_v2_data },
+ 	{ .compatible = "qcom,sdm845-smmu-v2", .data = &qcom_smmu_v2_data },
+ 	{ .compatible = "qcom,sdm845-smmu-500", .data = &sdm845_smmu_500_data },
+ 	{ .compatible = "qcom,sm6115-smmu-500", .data = &qcom_smmu_500_impl0_data},
+ 	{ .compatible = "qcom,sm6125-smmu-500", .data = &qcom_smmu_500_impl0_data },
+ 	{ .compatible = "qcom,sm6350-smmu-v2", .data = &qcom_smmu_v2_data },
+ 	{ .compatible = "qcom,sm6350-smmu-500", .data = &qcom_smmu_500_impl0_data },
+@@ -540,12 +541,21 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+ 		/* Match platform for ACPI boot */
+ 		if (acpi_match_platform_list(qcom_acpi_platlist) >= 0)
+ 			return qcom_smmu_create(smmu, &qcom_smmu_500_impl0_data);
+ 	}
+ #endif
+ 
+ 	match = of_match_node(qcom_smmu_impl_of_match, np);
+ 	if (match)
+ 		return qcom_smmu_create(smmu, match->data);
+ 
++	/*
++	 * If you hit this WARN_ON() you are missing an entry in the
++	 * qcom_smmu_impl_of_match[] table, and GPU per-process page-
++	 * tables will be broken.
++	 */
++	WARN(of_device_is_compatible(np, "qcom,adreno-smmu"),
++	     "Missing qcom_smmu_impl_of_match entry for: %s",
++	     dev_name(smmu->dev));
++
+ 	return smmu;
+ }
+-- 
+2.40.1
 
