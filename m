@@ -2,88 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 80BBA704790
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 10:16:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A23A670479B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 10:20:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231582AbjEPIQi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 04:16:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40218 "EHLO
+        id S231531AbjEPIUN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 04:20:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230510AbjEPIQh (ORCPT
+        with ESMTP id S231741AbjEPIUH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 04:16:37 -0400
+        Tue, 16 May 2023 04:20:07 -0400
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F117E40C1;
-        Tue, 16 May 2023 01:16:36 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4123040DE;
+        Tue, 16 May 2023 01:19:59 -0700 (PDT)
 Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-        by mailout.nyi.internal (Postfix) with ESMTP id 6AE155C00EE;
-        Tue, 16 May 2023 04:16:36 -0400 (EDT)
+        by mailout.nyi.internal (Postfix) with ESMTP id AE00A5C01BA;
+        Tue, 16 May 2023 04:19:58 -0400 (EDT)
 Received: from imap51 ([10.202.2.101])
-  by compute6.internal (MEProxy); Tue, 16 May 2023 04:16:36 -0400
+  by compute6.internal (MEProxy); Tue, 16 May 2023 04:19:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
         :cc:content-type:content-type:date:date:from:from:in-reply-to
         :in-reply-to:message-id:mime-version:references:reply-to:sender
-        :subject:subject:to:to; s=fm3; t=1684224996; x=1684311396; bh=Mn
-        K6iy6XdAXRsa/af1YZKd1tr76Wc4HEowjhsQQ4kQ0=; b=LVWtbtimYv0Ar/butY
-        GH8qfTP1xWieWIV5sHR3BjErTXKhb3rCiXg54Cri1QbYyL8eT0kiF+ZUQL+VmX7o
-        mk1IFaOAsJ1xcL/FnoqHu/m09YwlT/fQYuwXIN0d/TW75SkT6OpODU6yruMKCcI2
-        zrd00ACenAfLrI2xtGZp1o1vZfv2Ne/F5jM/nfx+lC6kv4uYzVhNRBUAQNZ65AVr
-        9q+w2iGMAYsxXFPwa7lRIYaWawqwDWxI2g0/AJ741bAMKIkdZGgIsvP39fN7YhjC
-        BOZT67/JvCVbkucsJKjK5emdnB18t8NPXUSPicVfPt495I3qwAezbxvmZq6kG1xF
-        43QQ==
+        :subject:subject:to:to; s=fm3; t=1684225198; x=1684311598; bh=/z
+        Oa7snEU3Cp/EeHjqLX2PpkdorLY7kygrSpj6S6YOk=; b=FAEydWB/kiSkfeXIOD
+        C2AI0MFMwa0AYMof78OjMTcYRKAP28pWtvKNzwid6BnCvSevEWC3/X/QcSfCToU2
+        F8fM4azm9lKq0wQdollznwHX9js7QB0amVRvWJXk7mG1LkAd8o7kGrGI8fk2tEeZ
+        exJQgaODPo2NsBmZF/pKpB9Gyy1kAlotpa55UwkZyueem1xlfhrZ+PEcIGMC+A77
+        riNyhuPPl71MicJaiHVQxKRalo+MAvEWzeIGA/A/OIsiweKXxqevwTRF4NikIax8
+        o+rB21JmmlqVaK7yALgrAZFtviAahN3F77kzKxqUa3+OtzaYWlo5NQp+ss7gne2P
+        Tugw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:cc:content-type:content-type:date:date
         :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
         :message-id:mime-version:references:reply-to:sender:subject
         :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; t=1684224996; x=1684311396; bh=MnK6iy6XdAXRs
-        a/af1YZKd1tr76Wc4HEowjhsQQ4kQ0=; b=XCNF9vd62Tr/FSJt9fD7YyLg6b309
-        UeRFRepstQvOHBEBtOD3UkaKZIZJQqAhiw5etK2LIyOiBPHWjSUkymXNgVn2jGQA
-        yrrhON9HeeMdmIcbx8ywDc1EBQvsLdedY8ZvhWWhfmHLg5XDEYS94wNqW68AhJPP
-        d9KIV1Tec6Ms6fqcF0qIzIou8J7dwF+3kqAg9hI0YFKtiPhI/gvOssAd8ugkavYY
-        6f2w4eLc6GlF83R2Z5d0EWpd9JFy/RozTyn1a6Cm4kf5uvMmZVb4XgMJf2f+gyx0
-        +CYghhDBhWFOdopNNyVywqn1d2BXnikduJU0FEoWhiYFFkS+I8ce+emMg==
-X-ME-Sender: <xms:4ztjZJ5SXx_PKnFtakjvWkyXcNlT_jKXXImLrMfcxESmQE-a1JVpgQ>
-    <xme:4ztjZG49bnV1uYmlvGEkB2MHqUqk-EaJ89Og0pQuqAVibMRdw6q2rQ20ZhIuVByMD
-    MzlMO4Ud0fLwIu7BBk>
+        :x-sasl-enc; s=fm1; t=1684225198; x=1684311598; bh=/zOa7snEU3Cp/
+        EeHjqLX2PpkdorLY7kygrSpj6S6YOk=; b=VltTvEGRgjkVrCYFHjhqv2JcrnYA7
+        kP0az0DvZdTVRJLCMLhRmW6O08T9CK14RBrcsI/BbiYtuXs6huZtYcYlin9jptyb
+        AmKhBcnnxqT3oYbX6Ix2PVuDT02mrdTLdIHAFdmu0WvVuUsIQ2SWPWpkN5Y0anZX
+        yGcvTDX00c4J1Ouhhnj/89TKEff/ADZ62lk0+Hsr1BYmSi0hrymazgSQXAeo761K
+        0bHl46u533+x6spAOzsA700NilOdNIKEn0lwR2Ce5nKF2Q+Zwpy6I+bp3fLyODf0
+        NtJWxwJhrGPB3sJqLaDipf8DvVqw9ktQUvIoqmHYd6pNybxu4e9xOOzFg==
+X-ME-Sender: <xms:rjxjZHA3ZBSUC6pJ6khnKwcOIKP_T2E1Nss8bKbTOrpBF-FXzqthMw>
+    <xme:rjxjZNhWsDux6uOEcNPk-P_PapV_y8eefOjBJPXMiub7KwVUH7uoDKGXApAxtwgnA
+    7GYOQVHaQLhKl5nGhU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeehledgtddvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehr
     nhguuceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrth
     htvghrnhepffehueegteeihfegtefhjefgtdeugfegjeelheejueethfefgeeghfektdek
-    teffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprg
+    teffnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomheprg
     hrnhgusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:4ztjZAdU6QcOE-FHTCJ6-AYjOJqjclmiZKCls3-Az-imCAhqQga3Ew>
-    <xmx:4ztjZCJ9Ls2yWvGHXi3IvkzKh4Z4dkUXXukKgjesC33ncrXXl5jfnA>
-    <xmx:4ztjZNKX0zSi8C9rSSYU4u3iwjXKKAdeCSmLoqjYGnUkE6AiTaG7xA>
-    <xmx:5DtjZKDCdyz5ZPOABpBgt6kpiA2AJO1WWlwjrxWsOfWdB-sfo98Jmw>
+X-ME-Proxy: <xmx:rjxjZClimy6GdniBJuKdmUJqBYPygwhVeL3IWa9UBP8fDvCvQ-lmTg>
+    <xmx:rjxjZJwNCcOjLVr10PC90SADQIcpe6Gra6LMabaRzHQMPDahQwxL0Q>
+    <xmx:rjxjZMS3KD0MvXxmy_wAPCcBx-IWioDQLomYiSfYEHJqdlrHPRosmQ>
+    <xmx:rjxjZF_NLF-hxcK4Xfjgya5Ol92jUCGM3bs3V6lkvs3IT6TU5z7uwQ>
 Feedback-ID: i56a14606:Fastmail
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
-        id C4D55B60086; Tue, 16 May 2023 04:16:35 -0400 (EDT)
+        id 7C615B60086; Tue, 16 May 2023 04:19:58 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.9.0-alpha0-415-gf2b17fe6c3-fm-20230503.001-gf2b17fe6
 Mime-Version: 1.0
-Message-Id: <7d397e67-5d56-4975-98af-1ac9746c07f4@app.fastmail.com>
-In-Reply-To: <CAA8EJpp2x2OEB2sg+caKmjkDYJp_NJ9mXo85FxTZr-9zRXHNhw@mail.gmail.com>
+Message-Id: <3faa9bf7-b42c-4951-8103-9ea2fe02eac1@app.fastmail.com>
+In-Reply-To: <35863b47c04c2edd7ae49c57d23682aba6111d4f.1683628357.git.quic_schowdhu@quicinc.com>
 References: <cover.1683628357.git.quic_schowdhu@quicinc.com>
- <343182748e12b6a4ac57d336405c50e36fc5520c.1683628357.git.quic_schowdhu@quicinc.com>
- <CAA8EJpp2x2OEB2sg+caKmjkDYJp_NJ9mXo85FxTZr-9zRXHNhw@mail.gmail.com>
-Date:   Tue, 16 May 2023 10:16:15 +0200
+ <35863b47c04c2edd7ae49c57d23682aba6111d4f.1683628357.git.quic_schowdhu@quicinc.com>
+Date:   Tue, 16 May 2023 10:19:38 +0200
 From:   "Arnd Bergmann" <arnd@arndb.de>
-To:     "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        "Souradeep Chowdhury" <quic_schowdhu@quicinc.com>
-Cc:     "Andy Gross" <agross@kernel.org>,
+To:     "Souradeep Chowdhury" <quic_schowdhu@quicinc.com>,
+        "Andy Gross" <agross@kernel.org>,
         "Konrad Dybcio" <konrad.dybcio@somainline.org>,
         "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
         "Bjorn Andersson" <andersson@kernel.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        "Rob Herring" <robh+dt@kernel.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         "Sibi Sankar" <quic_sibis@quicinc.com>,
         "Rajendra Nayak" <quic_rjendra@quicinc.com>
-Subject: Re: [PATCH V6 1/3] dt-bindings: sram: qcom,imem: Add Boot Stat region within
- IMEM
+Subject: Re: [PATCH V6 2/3] soc: qcom: boot_stat: Add Driver Support for Boot Stats
 Content-Type: text/plain
 X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
@@ -96,59 +93,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 9, 2023, at 13:35, Dmitry Baryshkov wrote:
-> On Tue, 9 May 2023 at 13:53, Souradeep Chowdhury
-> <quic_schowdhu@quicinc.com> wrote:
->>
->> All Qualcomm bootloaders log useful timestamp information related
->> to bootloader stats in the IMEM region. Add the child node within
->> IMEM for the boot stat region containing register address and
->> compatible string.
+On Tue, May 9, 2023, at 12:52, Souradeep Chowdhury wrote:
+> All of Qualcomm's proprietary Android boot-loaders capture boot time
+> stats, like the time when the bootloader started execution and at what
+> point the bootloader handed over control to the kernel etc. in the IMEM
+> region. This information is captured in a specific format by this driver
+> by mapping a structure to the IMEM memory region and then accessing the
+> members of the structure to show the information within debugfs file.
+> This information is useful in verifying if the existing boot KPIs have
+> regressed or not. The information is shown in milliseconds, a sample
+> log from sm8450(waipio) device is as follows:-
 >
-> I might have a minor vote here. Is there any reason why you have to
-> instantiate the device from DT?
-> It looks like a software interface. Ideally software should not be
-> described in DT (e.g. this can be instantiated from imem
-> driver-to-be).
+> /sys/kernel/debug/qcom_boot_stats # cat abl_time
+> 17898 ms
+> /sys/kernel/debug/qcom_boot_stats # cat pre_abl_time
+> 2879 ms
+>
+> The Module Power Manager(MPM) sleep counter starts ticking at the PBL
+> stage and the timestamp generated by the sleep counter is logged by
+> the Qualcomm proprietary bootloader(ABL) at two points-> First when it
+> starts execution which is logged here as "pre_abl_time" and the second
+> when it is about to load the kernel logged as "abl_time". Documentation
+> details are also added in Documentation/ABI/testing/debugfs-driver-bootstat
+>
+> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+> ---
+>  .../ABI/testing/debugfs-driver-bootstat       |  17 +++
+>  drivers/soc/qcom/Kconfig                      |  10 ++
+>  drivers/soc/qcom/Makefile                     |   1 +
+>  drivers/soc/qcom/boot_stats.c                 | 100 ++++++++++++++++++
 
-There is nothing wrong with describing firmware in DT, if that
-firmware is part of the platform, we do that for a lot of
-other bits of firmware.
+As mentioned in my reply to the binding, I don't think this should
+be a driver at all. On top of that, even if it was a driver, it is
+clearly not a "soc" driver since nothing in it has any relevance to
+the hardware, rather than the first-stage loader, and drivers/soc/
+drivers should never have their own user space interface either.
 
-However, in this specific case, many things are wrong with the
-implementation, and neither the DT binding nor the driver
-makes sense to me in its current state.
-
->> +  "^stats@[0-9a-f]+$":
->> +    type: object
->> +    description:
->> +      Imem region dedicated for storing timestamps related
->> +      information regarding bootstats.
->> +
->> +    additionalProperties: false
->> +
->> +    properties:
->> +      compatible:
->> +        items:
->> +          - enum:
->> +              - qcom,sm8450-bootstats
->> +          - const: qcom,imem-bootstats
->> +
->> +      reg:
->> +        maxItems: 1
-
-If I understand this right, this "qcom,imem-bootstats"
-device serves as an indirection to store additional
-properties of the system in a memory area, but the description
-of that area is more complex than its contents, which
-makes no sense to me.
-
-Just create a binding for a firmware node in the devicetree
-itself, and put the values in properties of that. The first
-stage firmware can still use the same interface, but the
-actual loader that assembles the DT can get it out of that
-and store it in the properties. With that done, there is also
-no need for a kernel driver, as userspace can just get the
-values from /sys/firmware/devicetree/ directly.
-
-      Arnd
+       Arnd
