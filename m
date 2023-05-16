@@ -2,209 +2,224 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CF60704EC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 15:07:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A54C5704EF7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 15:13:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233481AbjEPNHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 09:07:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51206 "EHLO
+        id S233532AbjEPNNj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 09:13:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233540AbjEPNHN (ORCPT
+        with ESMTP id S233139AbjEPNNf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 09:07:13 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFC106590
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 06:06:44 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-50bc25f0c7dso25337778a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 06:06:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684242403; x=1686834403;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=y5v71FLoqMz+RUxDIpAMnXyAxgkejquVbG/xCAcbJdU=;
-        b=M3FPgcFsAiM2X5YXNkTxJ2ewxrvUjaCL4p9om+mGfL2xhkjHLJjW/D8eoqyLBd4B1q
-         VKQNDqz1BqtmFk33x5ddKE/YkFg/ZmEJ83nEKDwfa8BQ6rQLHd+TZJhqbqHQcb/VonPQ
-         mmaRwInfCCyDulO9t3XuXwxQhuZwGV5l0rwuQz0+lpPFIPirRQ2N1iZ2S7dqd29GvcLQ
-         nEEziAPrxXY4ZXYjYEdZTxM56Ayh6UBG7+pvxs7UcHBMWzvERXkg9rApldZDCA9MSM4b
-         FO4GnMOwpJNV/Wd9IBsUAxQW5Q9OAxU6vZmMYLzzLT/dl0tFATkXvUK4rXU7qSYVH2HZ
-         HPKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684242403; x=1686834403;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=y5v71FLoqMz+RUxDIpAMnXyAxgkejquVbG/xCAcbJdU=;
-        b=Y6C1LA7TnEIEd1wLriRsVhIJtgpIErnfHgHEwHpodgQCeRsPEMmdPXGver7w8u3Yeq
-         USmRNIA1eykABRXQje3KIH7OiNqnMm310YcplXp7ByY2yPniz5SDGrHynjcIRL5g/R3W
-         C5/kk+eJ0T/7VWDCrqs6mKicNc+2UFHLjWu8EmfwhMiOYMEGwPTcpFzWFS1CGPgwKCrw
-         Ymm9UxLj2jX7U8LQI7JnSFPBVQX7rLpuqMuZePLfsAm3CmVziCM8GMYNFEaDXFOwk0NJ
-         OGdfi/fYZ1qwArwewzpi+tIgEy2NLSNCT8oHtiYmZdQEKjPa8j0JLzCVTc8u/xxuuf6R
-         UBxw==
-X-Gm-Message-State: AC+VfDzcEYOByb8AMwubmgxyNdQBKn3bQBuCz+wHAwX9lWvOQR0usa1b
-        15al7PYq8UyIynzpXfZ3DrYJdw==
-X-Google-Smtp-Source: ACHHUZ5go4YGvwMvuHkX/P2nKXUI6kO6rJj/HD94dK8KJ24a7KSOeuUBx0cQE4d1WftX21i+qsvZFg==
-X-Received: by 2002:a17:907:9444:b0:969:e304:7a22 with SMTP id dl4-20020a170907944400b00969e3047a22mr24064513ejc.18.1684242402864;
-        Tue, 16 May 2023 06:06:42 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:77d1:16a1:abe1:84fc? ([2a02:810d:15c0:828:77d1:16a1:abe1:84fc])
-        by smtp.gmail.com with ESMTPSA id bu2-20020a170906a14200b0096654fdbe34sm11074552ejb.142.2023.05.16.06.06.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 May 2023 06:06:42 -0700 (PDT)
-Message-ID: <1999753b-ceee-d66c-9a48-cbcbb8e6236e@linaro.org>
-Date:   Tue, 16 May 2023 15:06:40 +0200
+        Tue, 16 May 2023 09:13:35 -0400
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8770B6585;
+        Tue, 16 May 2023 06:13:06 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id 261CB1FE6D;
+        Tue, 16 May 2023 13:13:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1684242785; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=ogdt9jSbi0tvxD4d3F6VeNsH8BYjTttGkeT43PALy5E=;
+        b=wYGJ6+OnghGS2a+yu/AjPwtJV17WnSvQQCiAnSED73wvJV7x0V5FddzCwSJryuKnOToMut
+        cUWvNND+TVir4jApxrF4N4dFhQvfglinuNu0lbjcDS9jJNxFRmBHqe1gEBO4yoKD1tsDtq
+        hxiePLzY8LITkzD+iySVZ3hYhjKhQgo=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1684242785;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=ogdt9jSbi0tvxD4d3F6VeNsH8BYjTttGkeT43PALy5E=;
+        b=+R5i2rwoPF/2rMlRCY+3hyEXs0TvhAHXyIwKUnOtGJ+MIkPvnYpWXa8+/R+Hr2vtCBo/oZ
+        Rs3QdcTwPZRcXeBQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id B3544138F5;
+        Tue, 16 May 2023 13:13:04 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id 3RSvKmCBY2SzQAAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Tue, 16 May 2023 13:13:04 +0000
+Message-ID: <297a1808-f36a-1bbb-8a7e-dd41c5ee2a7b@suse.de>
+Date:   Tue, 16 May 2023 15:13:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 2/4] dt-bindings: thermal: tsens: Add ipq9574
- compatible
+ Thunderbird/102.10.1
+Subject: Re: [PATCH v2 02/12] drm/armada: Use regular fbdev I/O helpers
 Content-Language: en-US
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
-        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Praveenkumar I <quic_ipkumar@quicinc.com>
-References: <cover.1684140883.git.quic_varada@quicinc.com>
- <37adcf5d8d545a076e8ed971a4fb6c6c2833ef3c.1684140883.git.quic_varada@quicinc.com>
- <b7e749ff-f4f0-0e61-9aae-876db4278fbc@linaro.org>
- <20230516120426.GA1679@varda-linux.qualcomm.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230516120426.GA1679@varda-linux.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+To:     "Russell King (Oracle)" <linux@armlinux.org.uk>,
+        Sam Ravnborg <sam@ravnborg.org>
+Cc:     daniel@ffwll.ch, airlied@gmail.com,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        javierm@redhat.com, linux-samsung-soc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        linux-tegra@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230515094033.2133-1-tzimmermann@suse.de>
+ <20230515094033.2133-3-tzimmermann@suse.de>
+ <20230515175544.GB1745913@ravnborg.org>
+ <ZGJ0QIQrF/a0Wkri@shell.armlinux.org.uk>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+In-Reply-To: <ZGJ0QIQrF/a0Wkri@shell.armlinux.org.uk>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------2T0MthFqqog40rzw0G3raXj4"
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/05/2023 14:04, Varadarajan Narayanan wrote:
-> On Mon, May 15, 2023 at 06:10:29PM +0200, Krzysztof Kozlowski wrote:
->> On 15/05/2023 12:13, Varadarajan Narayanan wrote:
->>> From: Praveenkumar I <quic_ipkumar@quicinc.com>
->>>
->>> Qualcomm IPQ9574 has tsens v2.3.1 block, which is similar to IPQ8074 tsens.
->>>
->>> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
->>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
->>> ---
->>> [v3]:
->>> 	Fix dt_binding_check & dtbs_check errors (Used
->>> 	Documentation/devicetree/bindings/display/allwinner,sun4i-a10-tcon.yaml
->>> 	as reference/example)
->>>
->>> 	Drop 'Acked-by: Rob Herring' as suggested in review
->>>
->>> [v2]:
->>> 	Thanks to Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> 	for the tip to make qcom,ipq8074-tsens as fallback.
->>> ---
->>>  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 13 +++++++++++--
->>>  1 file changed, 11 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->>> index d9aa54c..57e3908 100644
->>> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->>> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->>> @@ -19,6 +19,11 @@ description: |
->>>  properties:
->>>    compatible:
->>>      oneOf:
->>> +      - const: qcom,tsens-v0_1
->>> +      - const: qcom,tsens-v1
->>> +      - const: qcom,tsens-v2
->>
->> Nope, these are not correct.
->>
->>> +      - const: qcom,ipq8074-tsens
->>
->> Also nope, this is already there.
->>
->>> +
->>>        - description: msm8960 TSENS based
->>>          items:
->>>            - enum:
->>> @@ -66,8 +71,10 @@ properties:
->>>            - const: qcom,tsens-v2
->>>
->>>        - description: v2 of TSENS with combined interrupt
->>> -        enum:
->>> -          - qcom,ipq8074-tsens
->>
->> Why?
->>
->>> +        items:
->>> +          - enum:
->>> +              - qcom,ipq9574-tsens
->>> +          - const: qcom,ipq8074-tsens
-> 
-> Without changing it like this either dtbs_check or
-> dt_binding_check kept failing.
-> 
-> 	- description: v2 of TSENS with combined interrupt
-> 	  enum:
-> 	    - qcom,ipq8074-tsens
-> 	    - qcom,ipq9574-tsens
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------2T0MthFqqog40rzw0G3raXj4
+Content-Type: multipart/mixed; boundary="------------VmgaSFKk8JQLm74FK1PaEpjV";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: "Russell King (Oracle)" <linux@armlinux.org.uk>,
+ Sam Ravnborg <sam@ravnborg.org>
+Cc: daniel@ffwll.ch, airlied@gmail.com, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, javierm@redhat.com, linux-samsung-soc@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+ linux-tegra@vger.kernel.org, freedreno@lists.freedesktop.org,
+ linux-arm-kernel@lists.infradead.org
+Message-ID: <297a1808-f36a-1bbb-8a7e-dd41c5ee2a7b@suse.de>
+Subject: Re: [PATCH v2 02/12] drm/armada: Use regular fbdev I/O helpers
+References: <20230515094033.2133-1-tzimmermann@suse.de>
+ <20230515094033.2133-3-tzimmermann@suse.de>
+ <20230515175544.GB1745913@ravnborg.org>
+ <ZGJ0QIQrF/a0Wkri@shell.armlinux.org.uk>
+In-Reply-To: <ZGJ0QIQrF/a0Wkri@shell.armlinux.org.uk>
 
-But we do not talk about this... Look, I commented out under specific
-hunks which are not correct. Not under the hunk which is correct.
+--------------VmgaSFKk8JQLm74FK1PaEpjV
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-> 
-> dtbs_check gave this kind of error
-> 	['qcom,ipq9574-tsens', 'qcom,ipq8074-tsens'] is too long
-> 
-> After changing it like in https://elixir.bootlin.com/linux/v6.3-rc6/source/Documentation/devicetree/bindings/sound/nvidia,tegra210-ope.yaml#L31
-> 
-> 	- description: v2 of TSENS with combined interrupt
-> 	  const: qcom,ipq8074-tsens
-> 	  - enum:
-> 	      - qcom,ipq9574-tsens
-> 	  - const: qcom,ipq8074-tsens
-> 
-> dt_binding_check gives the following error
-> 
-> 	Documentation/devicetree/bindings/thermal/qcom-tsens.yaml:70:9: did not find expected key
+SGkNCg0KQW0gMTUuMDUuMjMgdW0gMjA6MDQgc2NocmllYiBSdXNzZWxsIEtpbmcgKE9yYWNs
+ZSk6DQo+IE9uIE1vbiwgTWF5IDE1LCAyMDIzIGF0IDA3OjU1OjQ0UE0gKzAyMDAsIFNhbSBS
+YXZuYm9yZyB3cm90ZToNCj4+IEhpIFRob21hcywNCj4+DQo+PiBPbiBNb24sIE1heSAxNSwg
+MjAyMyBhdCAxMTo0MDoyM0FNICswMjAwLCBUaG9tYXMgWmltbWVybWFubiB3cm90ZToNCj4+
+PiBVc2UgdGhlIHJlZ3VsYXIgZmJkZXYgaGVscGVycyBmb3IgZnJhbWVidWZmZXIgSS9PIGlu
+c3RlYWQgb2YgRFJNJ3MNCj4+PiBoZWxwZXJzLiBBcm1hZGEgZG9lcyBub3QgdXNlIGRhbWFn
+ZSBoYW5kbGluZywgc28gRFJNJ3MgZmJkZXYgaGVscGVycw0KPj4+IGFyZSBtZXJlIHdyYXBw
+ZXJzIGFyb3VuZCB0aGUgZmJkZXYgY29kZS4NCj4+Pg0KPj4+IEJ5IHVzaW5nIGZiZGV2IGhl
+bHBlcnMgZGlyZWN0bHkgd2l0aGluIGVhY2ggRFJNIGZiZGV2IGVtdWxhdGlvbiwNCj4+PiB3
+ZSBjYW4gZXZlbnR1YWxseSByZW1vdmUgRFJNJ3Mgd3JhcHBlciBmdW5jdGlvbnMgZW50aXJl
+bHkuDQo+Pj4NCj4+PiB2MjoNCj4+PiAJKiB1c2UgRkJfSU9fSEVMUEVSUyBvcHRpb24NCj4+
+Pg0KPj4+IFNpZ25lZC1vZmYtYnk6IFRob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBz
+dXNlLmRlPg0KPj4+IENjOiBSdXNzZWxsIEtpbmcgPGxpbnV4QGFybWxpbnV4Lm9yZy51az4N
+Cj4+PiAtLS0NCj4+PiAgIGRyaXZlcnMvZ3B1L2RybS9hcm1hZGEvS2NvbmZpZyAgICAgICAg
+fCAxICsNCj4+PiAgIGRyaXZlcnMvZ3B1L2RybS9hcm1hZGEvYXJtYWRhX2ZiZGV2LmMgfCA5
+ICsrKystLS0tLQ0KPj4+ICAgMiBmaWxlcyBjaGFuZ2VkLCA1IGluc2VydGlvbnMoKyksIDUg
+ZGVsZXRpb25zKC0pDQo+Pj4NCj4+PiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9ncHUvZHJtL2Fy
+bWFkYS9LY29uZmlnIGIvZHJpdmVycy9ncHUvZHJtL2FybWFkYS9LY29uZmlnDQo+Pj4gaW5k
+ZXggZjVjNjZkODliYTk5Li41YWZhZGUyNWUyMTcgMTAwNjQ0DQo+Pj4gLS0tIGEvZHJpdmVy
+cy9ncHUvZHJtL2FybWFkYS9LY29uZmlnDQo+Pj4gKysrIGIvZHJpdmVycy9ncHUvZHJtL2Fy
+bWFkYS9LY29uZmlnDQo+Pj4gQEAgLTMsNiArMyw3IEBAIGNvbmZpZyBEUk1fQVJNQURBDQo+
+Pj4gICAJdHJpc3RhdGUgIkRSTSBzdXBwb3J0IGZvciBNYXJ2ZWxsIEFybWFkYSBTb0NzIg0K
+Pj4+ICAgCWRlcGVuZHMgb24gRFJNICYmIEhBVkVfQ0xLICYmIEFSTSAmJiBNTVUNCj4+PiAg
+IAlzZWxlY3QgRFJNX0tNU19IRUxQRVINCj4+PiArCXNlbGVjdCBGQl9JT19IRUxQRVJTIGlm
+IERSTV9GQkRFVl9FTVVMQVRJT04NCj4+PiAgIAloZWxwDQo+Pj4gICAJICBTdXBwb3J0IHRo
+ZSAiTENEIiBjb250cm9sbGVycyBmb3VuZCBvbiB0aGUgTWFydmVsbCBBcm1hZGEgNTEwDQo+
+Pj4gICAJICBkZXZpY2VzLiAgVGhlcmUgYXJlIHR3byBjb250cm9sbGVycyBvbiB0aGUgZGV2
+aWNlLCBlYWNoIGNvbnRyb2xsZXINCj4+PiBkaWZmIC0tZ2l0IGEvZHJpdmVycy9ncHUvZHJt
+L2FybWFkYS9hcm1hZGFfZmJkZXYuYyBiL2RyaXZlcnMvZ3B1L2RybS9hcm1hZGEvYXJtYWRh
+X2ZiZGV2LmMNCj4+PiBpbmRleCAwYTVmZDFhYTg2ZWIuLjZjM2JiYWY1MzU2OSAxMDA2NDQN
+Cj4+PiAtLS0gYS9kcml2ZXJzL2dwdS9kcm0vYXJtYWRhL2FybWFkYV9mYmRldi5jDQo+Pj4g
+KysrIGIvZHJpdmVycy9ncHUvZHJtL2FybWFkYS9hcm1hZGFfZmJkZXYuYw0KPj4+IEBAIC01
+LDYgKzUsNyBAQA0KPj4+ICAgICovDQo+Pj4gICANCj4+PiAgICNpbmNsdWRlIDxsaW51eC9l
+cnJuby5oPg0KPj4+ICsjaW5jbHVkZSA8bGludXgvZmIuaD4NCj4+PiAgICNpbmNsdWRlIDxs
+aW51eC9rZXJuZWwuaD4NCj4+PiAgICNpbmNsdWRlIDxsaW51eC9tb2R1bGUuaD4NCj4+PiAg
+IA0KPj4+IEBAIC0zNCwxMSArMzUsOSBAQCBzdGF0aWMgdm9pZCBhcm1hZGFfZmJkZXZfZmJf
+ZGVzdHJveShzdHJ1Y3QgZmJfaW5mbyAqaW5mbykNCj4+PiAgIHN0YXRpYyBjb25zdCBzdHJ1
+Y3QgZmJfb3BzIGFybWFkYV9mYl9vcHMgPSB7DQo+Pj4gICAJLm93bmVyCQk9IFRISVNfTU9E
+VUxFLA0KPj4+ICAgCURSTV9GQl9IRUxQRVJfREVGQVVMVF9PUFMsDQo+Pj4gLQkuZmJfcmVh
+ZAk9IGRybV9mYl9oZWxwZXJfY2ZiX3JlYWQsDQo+Pj4gLQkuZmJfd3JpdGUJPSBkcm1fZmJf
+aGVscGVyX2NmYl93cml0ZSwNCj4+IEkgaGFkIGV4cGVjdGVkIHRvIHNlZQ0KPj4gLmZiX3Jl
+YWQgPSBmYl9pb19yZWFkLA0KPj4NCj4+IEJ1dCBtYXliZSB0aGlzIG9ubHkgdXNlZCB3aGVu
+IHVzaW5nIGRhbWFnZSBoYW5kbGluZz8NCj4+DQo+PiBMaWtld2lzZSBmb3IgZHJtX2ZiX2hl
+bHBlcl9jZmJfd3JpdGUuDQo+Pg0KPj4gPz8NCj4+DQo+Pj4gLQkuZmJfZmlsbHJlY3QJPSBk
+cm1fZmJfaGVscGVyX2NmYl9maWxscmVjdCwNCj4+PiAtCS5mYl9jb3B5YXJlYQk9IGRybV9m
+Yl9oZWxwZXJfY2ZiX2NvcHlhcmVhLA0KPj4+IC0JLmZiX2ltYWdlYmxpdAk9IGRybV9mYl9o
+ZWxwZXJfY2ZiX2ltYWdlYmxpdCwNCj4+PiArCS5mYl9maWxscmVjdAk9IGNmYl9maWxscmVj
+dCwNCj4+PiArCS5mYl9jb3B5YXJlYQk9IGNmYl9jb3B5YXJlYSwNCj4+PiArCS5mYl9pbWFn
+ZWJsaXQJPSBjZmJfaW1hZ2VibGl0LA0KPj4NCj4+IFRoaXMgcGFydCBpcyBhcyBleHBlY3Rl
+ZC4NCj4gDQo+IFdlbGwsIHRvIG1lIGl0IGxvb2tzIGxpa2UgdGhpcyBoYXMgZ29uZSB0aHJv
+dWdoIGFuIGVudGlyZSBjaXJjdWxhciBzZXQNCj4gb2YgcmV2aXNpb25zOg0KPiANCj4gY29t
+bWl0IGU4YjcwZTRkZDdiNWRhZDdjMjM3OWRlNmUwODUxNTg3YmY4NmJmZDYNCj4gQXV0aG9y
+OiBBcmNoaXQgVGFuZWphIDxhcmNoaXR0QGNvZGVhdXJvcmEub3JnPg0KPiBEYXRlOiAgIFdl
+ZCBKdWwgMjIgMTQ6NTg6MDQgMjAxNSArMDUzMA0KPiANCj4gICAgICBkcm0vYXJtYWRhOiBV
+c2UgbmV3IGRybV9mYl9oZWxwZXIgZnVuY3Rpb25zDQo+IA0KPiAtICAgICAgIC5mYl9maWxs
+cmVjdCAgICA9IGNmYl9maWxscmVjdCwNCj4gLSAgICAgICAuZmJfY29weWFyZWEgICAgPSBj
+ZmJfY29weWFyZWEsDQo+IC0gICAgICAgLmZiX2ltYWdlYmxpdCAgID0gY2ZiX2ltYWdlYmxp
+dCwNCj4gKyAgICAgICAuZmJfZmlsbHJlY3QgICAgPSBkcm1fZmJfaGVscGVyX2NmYl9maWxs
+cmVjdCwNCj4gKyAgICAgICAuZmJfY29weWFyZWEgICAgPSBkcm1fZmJfaGVscGVyX2NmYl9j
+b3B5YXJlYSwNCj4gKyAgICAgICAuZmJfaW1hZ2VibGl0ICAgPSBkcm1fZmJfaGVscGVyX2Nm
+Yl9pbWFnZWJsaXQsDQo+IA0KPiBjb21taXQgOTgzNzgwOTE4Yzc1OWZkYmJmMGJmMDMzZTcw
+MWJiZmY3NWQyYWYyMw0KPiBBdXRob3I6IFRob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFu
+bkBzdXNlLmRlPg0KPiBEYXRlOiAgIFRodSBOb3YgMyAxNjoxNDo0MCAyMDIyICswMTAwDQo+
+IA0KPiAgICAgIGRybS9mYi1oZWxwZXI6IFBlcmZvcm0gYWxsIGZiZGV2IEkvTyB3aXRoIHRo
+ZSBzYW1lIGltcGxlbWVudGF0aW9uDQo+IA0KPiArICAgICAgIC5mYl9yZWFkICAgICAgICA9
+IGRybV9mYl9oZWxwZXJfY2ZiX3JlYWQsDQo+ICsgICAgICAgLmZiX3dyaXRlICAgICAgID0g
+ZHJtX2ZiX2hlbHBlcl9jZmJfd3JpdGUsDQo+IA0KPiBhbmQgbm93IGVmZmVjdGl2ZWx5IHRo
+b3NlIHR3byBjaGFuZ2VzIGFyZSBiZWluZyByZXZlcnRlZCwgc28gd2UnZA0KPiBub3cgYmUg
+YmFjayB0byB0aGUgcHJlLUp1bHkgMjAxNSBzdGF0ZSBvZiBhZmZhaXJzLiBBcyBJIGJlbGll
+dmUNCj4gdGhlIGZiZGV2IGxheWVyIGhhcyBiZWVuIHN0YWJsZSwgdGhpcyBjaGFuZ2UgbWVy
+ZWx5IHJldmVydHMgdGhlDQo+IGRyaXZlciBiYWNrIHRvIHdoYXQgaXQgb25jZSB3YXMuDQoN
+Ck5vdCBxdWl0ZS4gT25lIGxvbmctc3RhbmRpbmcgcHJvYmxlbSBoYXMgYmVlbiB0aGF0IGZi
+ZGV2IGRvZXMgbm90IA0KcHJvdGVjdCBpdHMgcHVibGljIGludGVyZmFjZXMgd2l0aCBDT05G
+SUdfRkIuIElmIGZiZGV2IGhhZCBiZWVuIA0KZGlzYWJsZWQsIERSTSBkcml2ZXJzIGNvdWxk
+IG5vIGxvbmdlciBiZSBsaW5rZWQvbG9hZGVkLiBEUk0gd3JhcHBlcnMgDQpzb2x2ZWQgdGhp
+cy4gVGhlIGlzc3VlIGhhcyByZWNlbnRseSBiZWVuIGZpeGVkIGZvciBhbGwgb2YgRFJNLiBE
+Uk0gZG9lcyANCm5vdCBidWlsZCBpdCdzIGZiZGV2IGVtdWxhdGlvbiBpZiBDT05GSUdfRkIg
+aGFzIGJlZW4gZGlzYWJsZWQuDQoNCkFub3RoZXIgdGhpbmcgd2FzIHRoYXQgdGhlIG9yaWdp
+bmFsIERSTSB3cmFwcGVycyBtaWdodCBoYXZlIGJlZW4gDQpkaWZmZXJlbnQgZnJvbSBmYmRl
+didzIEkvTyBoZWxwZXJzIGluIHN1YnRsZSB3YXlzLiBCdXQgbm93IHRoZXkgYXJlIA0Kc2lt
+cGxlIHdyYXBwZXJzIGFyb3VuZCB0aGVpciBmYmRldiBjb3VudGVycGFydHM7IHBsdXMgdGhl
+IG9wdGlvbiBvZiANCmFkZGl0aW9uYWwgZGFtYWdlIGhhbmRsaW5nLiAgQnV0IHN1Y2ggZGFt
+YWdlIGhhbmRsaW5nIGlzIGJldHRlciANCmltcGxlbWVudGVkIGJ5IHRoZSBkcml2ZXIgaXRz
+ZWxmLiBUaGUgdHdvIGNhc2VzIHRoYXQgcmVxdWlyZSBpdCwgaTkxNSANCmFuZCBmYmRldi1n
+ZW5lcmljLCBhcmUgZGlmZmVyZW50IGVub3VnaCB0aGF0IGVhY2ggc2hvdWxkIHByb2JhYmx5
+IGhhdmUgDQppdCdzIG93biBjb2RlLg0KDQpCZXN0IHJlZ2FyZHMNClRob21hcw0KDQo+IA0K
+DQotLSANClRob21hcyBaaW1tZXJtYW5uDQpHcmFwaGljcyBEcml2ZXIgRGV2ZWxvcGVyDQpT
+VVNFIFNvZnR3YXJlIFNvbHV0aW9ucyBHZXJtYW55IEdtYkgNCkZyYW5rZW5zdHJhc3NlIDE0
+NiwgOTA0NjEgTnVlcm5iZXJnLCBHZXJtYW55DQpHRjogSXZvIFRvdGV2LCBBbmRyZXcgTXll
+cnMsIEFuZHJldyBNY0RvbmFsZCwgQm91ZGllbiBNb2VybWFuDQpIUkIgMzY4MDkgKEFHIE51
+ZXJuYmVyZykNCg==
 
-Because it is not even valid syntax.
+--------------VmgaSFKk8JQLm74FK1PaEpjV--
 
-> 
-> and dtbs_check gives
-> 
-> 	./Documentation/devicetree/bindings/thermal/qcom-tsens.yaml:70:9: [error] syntax error: expected <block end>, but found '-' (syntax)
-> 	  CHKDT   Documentation/devicetree/bindings/processed-schema.json
-> 	./Documentation/devicetree/bindings/clock/qcom,gcc-ipq8064.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/thermal/qcom-tsens.yaml
-> 	./Documentation/devicetree/bindings/clock/qcom,gcc-apq8064.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/thermal/qcom-tsens.yaml
-> 	./Documentation/devicetree/bindings/thermal/qcom-tsens.yaml:70:9: did not find expected key
-> 	  SCHEMA  Documentation/devicetree/bindings/processed-schema.json
-> 	/local/mnt/workspace/varada/v3/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml: ignoring, error parsing file
-> 
-> If i change it like below,
-> 
-> 	- description: v2 of TSENS with combined interrupt
-> 	  enum:
-> 	    - qcom,ipq9574-tsens
-> 	  - const: qcom,ipq8074-tsens
-> 
-> dt_binding_check and dtbs_check gives same error as above.
-> 
-> Looked around and found Documentation/devicetree/bindings/display/allwinner,sun4i-a10-tcon.yaml
-> which seemed to do something similar to what is wanted in this
-> case. Hence changed qcom-tsens.yaml similar to the allwinner yaml
-> file. After which dt_binding_check and dtbs_check passed. Please
-> let me know if there is a better way to solve this. Will go with
+--------------2T0MthFqqog40rzw0G3raXj4
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
-Changing one valid syntax to another valid syntax is not related to the
-patch. If you think such change as reasonable, please split it, but to
-me it does not look justified. As for actual change, so adding new
-compatible, it's not really related to the others. Why you cannot add
-the proper list (so the only valid hunk) and that's it?
+-----BEGIN PGP SIGNATURE-----
 
-Best regards,
-Krzysztof
+wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmRjgWAFAwAAAAAACgkQlh/E3EQov+AP
+jRAAwwKH9s/OU5FEOdFhofJdQds0AENMzHbfz4wwkve69TDD5BypitQp2nS84xFHvd7AZK2K2S/J
+ZQPOQQ5TJHpC1PfYRstQtN4l/Db0E3P3xFYhjgdIUxa/B/ICiB1zrLcl/N8gvrXm81DCiZonTJzP
+WPJGhQV+VQwjc06//ynbyeRtrxLUar6ZPBscBtmKo1vPmpbgeAj7AonyPKE7YuiHL5dmSgIdS0/h
+fr393sm9KwhdKHFpnQAcsrabAUCu4+T10EcYWeJXjNYQvi5ptbVMoyjV+1MySeOTne+IJ21LoTNP
+oXJ3v8BJd+w9xm6vdfnhIkhlXi5cAIZjAMA65984bERd3PygsKYLzYOtm7XsKE34ZGcUfOCyTBwu
+f4MMGt8toM22ToQJg29meHpceO7oWOY7HzpOrfnRXqkW+bdZdBkn3OJVWu5T1QhShnUKriyNN0zu
+GmiCTFZUSrRI75V+UHK8I86LZGbUwoLdHWizBWBh7ZFsTYyYSh375LmtV8Iplxl7+Y9viYcxkBO2
+USfeCw3mgNGcxtAeCX1KrkD0SvW24izC8/Wh8469Mfw/WD+gKgpQXPJSe4ot18mRzXcEQDUij34Z
+sAN3+oVetyb+9Qi5F303/SwUGkvhfTD2vIINJzUGvJxvqJOy4lDX8xdjDxjgEIY+6NCgf01diiYC
+qTE=
+=XZcT
+-----END PGP SIGNATURE-----
 
+--------------2T0MthFqqog40rzw0G3raXj4--
