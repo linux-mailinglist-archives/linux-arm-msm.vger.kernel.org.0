@@ -2,88 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D890705B42
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 01:22:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10C07705B47
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 01:22:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229829AbjEPXWl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 19:22:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57728 "EHLO
+        id S231218AbjEPXWu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 19:22:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229799AbjEPXWi (ORCPT
+        with ESMTP id S231373AbjEPXWt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 19:22:38 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A7B95275
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 16:22:34 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2ac82b07eb3so86091fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 16:22:34 -0700 (PDT)
+        Tue, 16 May 2023 19:22:49 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BCC7769D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 16:22:46 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f14f266b72so166877e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 16:22:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684279353; x=1686871353;
+        d=linaro.org; s=google; t=1684279365; x=1686871365;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=F0lqRcsSsQH0bBfoyNKX+3AOqI8xO1VZEspaatlK78k=;
-        b=uA7/LYKh5HNBNHXQxR6NRDVGEgME5E/5oAkzu0StP2gjzSumdlZ5g/rL//IZqzjU2A
-         +gViSD7O4lfppe164q8n3Xky20BhzZGAf9iDiwAoTUlqsRsCx4UDh6Y/4F2Pbhdlqr7y
-         yYeUOjhEnhKVEUFdeF5UPkS2h3e5qRfnS4HxxaJ5HaIUa+T1kYHvOhBXJczw9/U8vjEa
-         hDN85Ae1svLt7wJIHQffrL0BDY/BTIN9Q+HdpgaykIIQbVNyGHRd8tDHTu7LnyBvKsIg
-         aZw8IXL3rbqbK4RVyIEKRlyjXcgTXQjY6UuJ/rLJ0hPQ0Z1PI90sjmJFeIddz1YMZvjs
-         ypXw==
+        bh=7VAhpo92jN54Fe2L3yyfkmVB4msq33PbAZ9pt+KT4z8=;
+        b=PEjKzkKFwg9DhWnkbxJIppl3GBnbkXu3XtMQpwJuourIFZZZmC5fiZnifNiPLMTCjU
+         SnbTkokLPCSXFA37zY/8Rv7xKY/0oKMGKzm7Ly/pA25Sm8ULpecPptiYZgAMj3aeZKO9
+         h764fhx/OgSu/GsW2Mj5DHnkceGTUY3fSuSI+xY/2m+1cEtiR2gvu/MgGSz1SsTuhKkA
+         VdQ81FC9pEQb7QmaXuFANifFA0ywpBkaZCIEX5lUBjf/5PWaOGpJfwJr86AEpL48qjdl
+         V4EweawUNHyM8ZbYHrPS7nKv7hg384jkBl140aRR32GLgB3E1TJB+KTdrUDGueSmvCZj
+         G/rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684279353; x=1686871353;
+        d=1e100.net; s=20221208; t=1684279365; x=1686871365;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=F0lqRcsSsQH0bBfoyNKX+3AOqI8xO1VZEspaatlK78k=;
-        b=F1s86oeWd/EcPnnzdufynLJ/Pn2jE5YxuNMb3sN9hFBNwmy4Db1aG5e0PA0pWFJBU6
-         2e+7IT4AOldRsQroDkWOPfsXhtSMxiANzjKiOhXGxgah269B1yGrS1rxQPe/AJxMWJTd
-         J4v2s7+QOvxCjmg4hDHIj/awWjUQNEW221nlrxXUDIp3jReuTvwbPLOadq11rXeBtVWG
-         ME3guhAj/i5ILyX4aUXKwIu2nujrEFhd19QaBE07zMtTqyaIhXSUTbKq41oIet5Rg5Fc
-         DjbqKAWLqI6H5pC9DUudkQE8UMDhgEHORF7dnosV8AgyEdIApQ0sxuuZLI83Uns/9GKa
-         Ya3w==
-X-Gm-Message-State: AC+VfDw97WTI/2XGCX2dD4b+vVPhNDrLVyb2nvmQNPhB80GOfB+MV/UY
-        2N7GUKkKm32YFTKS3JQjpWxQwg==
-X-Google-Smtp-Source: ACHHUZ6pKQ/IyOU0B/3fMGnHOQ5asgHXtu0mkqxW5VGYBRoXChUBKHyVyTbPwB9oD8Q/wqE0YYfidg==
-X-Received: by 2002:a2e:8851:0:b0:2ac:8e69:c06d with SMTP id z17-20020a2e8851000000b002ac8e69c06dmr9126360ljj.49.1684279352762;
-        Tue, 16 May 2023 16:22:32 -0700 (PDT)
+        bh=7VAhpo92jN54Fe2L3yyfkmVB4msq33PbAZ9pt+KT4z8=;
+        b=RdOz9UmIKPy4/9HNmN7l1TdOTyMgxOE0PNEIlLltxQsxCBzWSiezN96J4GmDjYmqDd
+         HVoVzA7FeRtzPZx3J609BxqdoFlKLazZZ5W1ofSNrPmtguYXZUttB9LiqUeYgRD0GWFK
+         ZrYAXouEGeAtpmNbquIiQlfausxwbhLvJWi9HWOmN4wdxCMGmjBUceoPpffdlclgep23
+         DXyUYD3B4NtJX2MxENK3mzUDT6kSDcJKyksTnz/2Q7x2KscZ15rn9qZn4DgfKWTJ1e3J
+         vWT8r+1Zc1Dlawy9Ul7z54dvrS37efviwjZ5HTEWi+v9G7ikUzlgQgW10K/+lUMWYTBs
+         rKqw==
+X-Gm-Message-State: AC+VfDxR1BcVHtnKlMdLAD+1zA3ehb74RqrX17R8mGvH4rQyL/djbTmM
+        bD7gaBDVr59xISOIUnYcMx27eA==
+X-Google-Smtp-Source: ACHHUZ6ZLHWS6AxNdvby7Rx3xUbbWtDDyrWiA8gw73Uk9O49w5tJDuZUC7wwOX77tlraOpnpmbnTBQ==
+X-Received: by 2002:ac2:46f6:0:b0:4f3:7b1b:ff7b with SMTP id q22-20020ac246f6000000b004f37b1bff7bmr3043742lfo.9.1684279364857;
+        Tue, 16 May 2023 16:22:44 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id e4-20020a2e9e04000000b002aecfa8c58bsm1321531ljk.40.2023.05.16.16.22.32
+        by smtp.gmail.com with ESMTPSA id z12-20020a19f70c000000b004db3d57c3a8sm3119886lfe.96.2023.05.16.16.22.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 May 2023 16:22:32 -0700 (PDT)
-Message-ID: <fdd07b5b-a3f5-0cbf-0d71-602d0b3b9847@linaro.org>
-Date:   Wed, 17 May 2023 02:22:31 +0300
+        Tue, 16 May 2023 16:22:44 -0700 (PDT)
+Message-ID: <aec4f825-482a-5e8f-66e1-d74b218e1a8d@linaro.org>
+Date:   Wed, 17 May 2023 02:22:43 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
-Subject: Re: [PATCH v4 1/2] iommu/arm-smmu-qcom: Fix missing adreno_smmu's
+Subject: Re: [PATCH v4 2/2] drm/msm: Be more shouty if per-process pgtables
+ aren't working
 Content-Language: en-GB
 To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
         iommu@lists.linux-foundation.org
 Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Will Deacon <will@kernel.org>,
-        Rob Clark <robdclark@chromium.org>, stable@vger.kernel.org,
-        Lepton Wu <lepton@chromium.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        "moderated list:ARM SMMU DRIVERS" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "open list:IOMMU SUBSYSTEM" <iommu@lists.linux.dev>,
+        Rob Clark <robdclark@chromium.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         open list <linux-kernel@vger.kernel.org>
 References: <20230516222039.907690-1-robdclark@gmail.com>
+ <20230516222039.907690-2-robdclark@gmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230516222039.907690-1-robdclark@gmail.com>
+In-Reply-To: <20230516222039.907690-2-robdclark@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -93,19 +87,13 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 17/05/2023 01:20, Rob Clark wrote:
 > From: Rob Clark <robdclark@chromium.org>
 > 
-> When the special handling of qcom,adreno-smmu was moved into
-> qcom_smmu_create(), it was overlooked that we didn't have all the
-> required entries in qcom_smmu_impl_of_match.  So we stopped getting
-> adreno_smmu_priv on sc7180, breaking per-process pgtables.
+> Otherwise it is not always obvious if a dt or iommu change is causing us
+> to fall back to global pgtable.
 > 
-> Fixes: 30b912a03d91 ("iommu/arm-smmu-qcom: Move the qcom,adreno-smmu check into qcom_smmu_create")
-> Cc: <stable@vger.kernel.org>
-> Suggested-by: Lepton Wu <lepton@chromium.org>
 > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
+>   drivers/gpu/drm/msm/msm_iommu.c | 7 ++++++-
+>   1 file changed, 6 insertions(+), 1 deletion(-)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
