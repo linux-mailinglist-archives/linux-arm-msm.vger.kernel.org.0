@@ -2,139 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A9987050B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 16:28:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 030A9705109
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 16:42:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233848AbjEPO2k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 10:28:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39378 "EHLO
+        id S233119AbjEPOm4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 10:42:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233913AbjEPO2h (ORCPT
+        with ESMTP id S229664AbjEPOmx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 10:28:37 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4A861BC6;
-        Tue, 16 May 2023 07:28:34 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34GCAecw004449;
-        Tue, 16 May 2023 14:28:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=RMFXA7ZudVjHyZ4kH0k4IsYmxdb+amxND9ev4TL+PJg=;
- b=i/5efG5oQ5S2n9dcGNFeOm50w+dd95BVSdWs0r2Rtt0DZE1wBsIXyA3+CBQQLoEa/2/S
- Vw0TlhR4RHyjdzJ3HIK/5SIWg0+NyXvG9CjoCpE8sqvjKK9A8BwNIRe04llJ4P0+/uea
- 2Hdql0k7wyPUwOVqSCrLHoIJwSdAdnX3hv6vdWUtUa3bWd7YhKXuwmLKqzm/MxU5wkuy
- lMsyXvkUlaHdnHmMXoLiuw4iPqd2j2JORBwsLa5rSBvwkcVRio51LQdCXtvy2i/UB+e3
- w7VV4qY4c1t22DOv0szZ6PfHXTXqIFqrcFml2evPj8cF8NqLSSUcygoCHRoby15jLm8K dw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qm1x096x7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 14:28:23 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34GESL02026238
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 14:28:22 GMT
-Received: from [10.216.35.75] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 16 May
- 2023 07:28:14 -0700
-Message-ID: <52b5c1ac-ac69-2ca7-1bf4-01b1f53b1634@quicinc.com>
-Date:   Tue, 16 May 2023 19:58:10 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v8 4/9] usb: dwc3: core: Skip setting event buffers for
- host only controllers
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Tue, 16 May 2023 10:42:53 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91F3B2738;
+        Tue, 16 May 2023 07:42:52 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2F23762FB5;
+        Tue, 16 May 2023 14:42:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712C2C433EF;
+        Tue, 16 May 2023 14:42:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1684248171;
+        bh=HN7cB36mHJDr+coVuUiXg1w8lrdjqdRHhxGR7d6sEJ8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=iZ2ctJAP1LQY+anh1SdRlopJRSkOyxtbGd1UVXLaaavt0OPmxn8ywTWx/g0SAPctR
+         LQnJIjURUF/XoA6jcIokWYljB3eH6Uz62xreUUfKI/tG2X4uBl+uGsX7z8Z9DeQdPF
+         43YX1WEcYI8r9BMVSBSluw+GVgKEFXE1o2HosMO4dJNnyPn2AFS6unOOEENv9+4aDh
+         zEqo8AJrdhUYqSz59uZYPRNsvh9nd0VhSn7aknURCLpSonSJtMJj1vM0wr880iXmzl
+         aSMy9/420LwjmjFd7Pcg0Wg2sASy72dllh7adGy5kZxueWUXDMvIM2gJ8KT7ZTgEyV
+         0XOHN2cFxA1kA==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pyvt5-0000jm-K6; Tue, 16 May 2023 16:42:51 +0200
+Date:   Tue, 16 May 2023 16:42:51 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_wcheng@quicinc.com>,
-        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
-        <ahalaney@redhat.com>
+        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
+        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
+        ahalaney@redhat.com
+Subject: Re: [PATCH v8 7/9] arm64: dts: qcom: sc8280xp: Add multiport
+ controller node for SC8280
+Message-ID: <ZGOWayVsjhR2Y0cN@hovoldconsulting.com>
 References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-5-quic_kriskura@quicinc.com>
- <ZGN0W0YbIjzmQnH1@hovoldconsulting.com>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZGN0W0YbIjzmQnH1@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: THSS0IZNn5baN6Z7Bij_d4pFBAaLOwkV
-X-Proofpoint-GUID: THSS0IZNn5baN6Z7Bij_d4pFBAaLOwkV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-16_07,2023-05-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 mlxlogscore=999 bulkscore=0 mlxscore=0 impostorscore=0
- spamscore=0 adultscore=0 phishscore=0 clxscore=1015 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305160121
-X-Spam-Status: No, score=-5.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+ <20230514054917.21318-8-quic_kriskura@quicinc.com>
+ <ZGJBLUsPcbsxj989@hovoldconsulting.com>
+ <d14567fd-0576-55bb-40c0-442e060c28ba@quicinc.com>
+ <ZGNgyo8ZRcC26W5l@hovoldconsulting.com>
+ <a22a3fe6-7bb1-9b47-9a14-41d957f178f3@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a22a3fe6-7bb1-9b47-9a14-41d957f178f3@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/16/2023 5:47 PM, Johan Hovold wrote:
-> On Sun, May 14, 2023 at 11:19:12AM +0530, Krishna Kurapati wrote:
->> On some SoC's like SA8295P where the tertiary controller is host-only
->> capable, GEVTADDRHI/LO, GEVTSIZ, GEVTCOUNT registers are not accessible.
->> Trying to setup them up during core_init leads to a crash.
->>
->> For DRD/Peripheral supported controllers, event buffer setup is done
->> again in gadget_pullup. Skip setup or cleanup of event buffers if
->> controller is host-only capable.
->>
->> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->> ---
->>   drivers/usb/dwc3/core.c | 10 ++++++++++
->>   1 file changed, 10 insertions(+)
->>
->> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
->> index e983aef1fb93..46192d08d1b6 100644
->> --- a/drivers/usb/dwc3/core.c
->> +++ b/drivers/usb/dwc3/core.c
->> @@ -505,6 +505,11 @@ static int dwc3_alloc_event_buffers(struct dwc3 *dwc, unsigned int length)
->>   int dwc3_event_buffers_setup(struct dwc3 *dwc)
->>   {
->>   	struct dwc3_event_buffer	*evt;
->> +	unsigned int			hw_mode;
->> +
->> +	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
->> +	if (hw_mode == DWC3_GHWPARAMS0_MODE_HOST)
->> +		return 0;
->>   
->>   	evt = dwc->ev_buf;
+On Tue, May 16, 2023 at 07:54:00PM +0530, Krishna Kurapati PSSNV wrote:
 > 
-> How about adding this check to dwc3_alloc_event_buffers() instead as
-> there should be no need to allocate buffer that you never use?
 > 
-> Then you can just check dwc->ev_buf here and elsewhere.
+> On 5/16/2023 4:24 PM, Johan Hovold wrote:
+> > On Mon, May 15, 2023 at 09:02:13PM +0530, Krishna Kurapati PSSNV wrote:
+> >> On 5/15/2023 7:56 PM, Johan Hovold wrote:
+> >>> On Sun, May 14, 2023 at 11:19:15AM +0530, Krishna Kurapati wrote:
+> > 
+> >>>> @@ -3133,6 +3133,72 @@ usb_1_role_switch: endpoint {
+> >>>>    			};
+> >>>>    		};
+> >>>>    
+> >>>> +		usb_2: usb@a4f8800 {
+> >>>
+> >>> As I believe someone already pointed out, this node is not in sort order
+> >>> (i.e. it should go before usb@a6f8800).
+> > 
+> >>     I missed that message, but since I named it usb_2, so I placed it in
+> >> order after usb_1. Hope that is fine !!
+> > 
+> > No, the nodes should be sorted by unit address so you need to move it.
+> > 
 > 
+> Sure, in that case will put it in between usb_0 and usb_1 nodes.
 
-Thanks for this idea. We can save 4096 bytes from being allocated this 
-way. Will get this in next version.
+No, it goes before usb_0 on sc8280xp.
 
-Regards,
-Krishna,
+           usb_2: usb@a4f8800 {
+           usb_0: usb@a6f8800 {
+           usb_1: usb@a8f8800 {
+
+> >>>> +			interrupts-extended = <&pdc 127 IRQ_TYPE_EDGE_RISING>,
+> >>>> +					      <&pdc 126 IRQ_TYPE_EDGE_RISING>,
+> >>>> +					      <&pdc 16 IRQ_TYPE_LEVEL_HIGH>,
+> >>>> +					      <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
+> >>>> +					      <&intc GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
+> >>>> +					      <&intc GIC_SPI 857 IRQ_TYPE_LEVEL_HIGH>,
+> >>>> +					      <&intc GIC_SPI 856 IRQ_TYPE_LEVEL_HIGH>;
+> >>>> +
+> >>>> +			interrupt-names = "dp_hs_phy_irq",
+> >>>> +					  "dm_hs_phy_irq",
+> >>>> +					  "ss_phy_irq",
+> >>>> +					  "pwr_event_1",
+> >>>> +					  "pwr_event_2",
+> >>>> +					  "pwr_event_3",
+> >>>> +					  "pwr_event_4";
+> > 
+> >>>> +			interconnect-names = "usb-ddr", "apps-usb";
+> >>>
+> >>> Looks like 'wakeup-source' is missing here too.
+> >>>
+> >>
+> >> I believe this property was added to enable wakeup from system suspend
+> >> in host mode. I didn't add this property as currently I don't need to
+> >> support wakeup. If any requirement comes in future, then I might need to
+> >> add dp/dm interrupts (if any) for other ports as well and then need to
+> >> change driver code to enable/disable them on suspend/resume.
+> > 
+> > If there are dp/dm/ss interrupts per ports then those need to be defined
+> > in the binding and devicetree from the start.
+> > 
+> > Similar for 'wakeup-source' which indicates that the controller *can* be
+> > used to wakeup the system from suspend (which those pdc interrupts
+> > indicates).
+> > 
+> > Remember that the devicetree is supposed to describe the hardware, and
+> > which features are currently supported in some version of software is
+> > mostly irrelevant.
+
+> Can I take this up as a separate series (Wakeup support for multiport) 
+> once this series is merged. If I am adding interrupts for other ports, I 
+> can add driver code to handle those interrupts as well.
+
+Nope. You can possibly add driver support later, but the binding and
+dtsi need to be correct from the start (and it may be easier to do it
+all at once).
+
+Johan
