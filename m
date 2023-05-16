@@ -2,90 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 77B69704E6D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 14:59:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D221704E78
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 15:00:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233230AbjEPM7Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 08:59:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43076 "EHLO
+        id S232200AbjEPNAJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 09:00:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43974 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232966AbjEPM7X (ORCPT
+        with ESMTP id S233461AbjEPNAB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 08:59:23 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 989C25248;
-        Tue, 16 May 2023 05:59:01 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34GBJqJU003802;
-        Tue, 16 May 2023 12:57:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ooIszafhZntFwAFrRjm+YK/b9Svr96m9RF4ZndvUYGQ=;
- b=i7GGjjh0fv+QPXFP6cwv0q9yKvXiuAjH2LuT/XlPi7DNou94D9/LKiucip0FwvOXEupe
- zus59nguv9Yn6JHXN2N4ZckCh/RsRcm/ySazFtA1e0p8U1kKJlpusSNfvjdhoDfgluLX
- KRieEmo5joSr58Kb7YFXjeiAKrCHAZ1Q7m4X040AW4KJGi2+0LuMFTdYFB3hwfwl8hfM
- ZjHqEZTkPpcaorjqsXjr1vY7pPYwOs1V9t9I8gNSOt4BoS9gjjbtvHuIyBkO0cu8dhOo
- joS1CO8oSx6SDSIrWaeEDbFemdYyRaQJn8vCz6Yb1ihBvxTufwzwXTHbcGW3Qd0mM3A6 bQ== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qkkde321x-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 12:57:42 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34GCvf7Q013666
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 12:57:42 GMT
-Received: from [10.252.212.215] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 16 May
- 2023 05:57:36 -0700
-Message-ID: <049c7e3e-eaf2-0253-bf5b-83b9e8f949ab@quicinc.com>
-Date:   Tue, 16 May 2023 18:27:33 +0530
+        Tue, 16 May 2023 09:00:01 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DCFD59F2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 05:59:34 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4eff4ea8e39so16176320e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 05:59:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684241969; x=1686833969;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RyX6rQJR1BZQe9Yc57Xp/rJrQBCXKFM6w6ZuIQmIOyk=;
+        b=vms5vFb83wjTEUFScjnZ39oGL9tY2MRnQCrmiM+Z9r8mbDubZnpRtiI94iw7RQHBiG
+         NQlmg0NnQK5UWCHQAo7xRz5Bc228a9R01ftilJ6IUT2lUm5XaaUNSQ7OHnjcBvRofMEx
+         DGSsneyG3NEoZzAE3kgVBc0ixpS/9nduEN/bFcMq8BwFjTY3Z6bTTX1rSe0gM9EpFiut
+         DySc6CxiBo/ZSeaiwij+VNx4FBjDaKaRNnar8q8HgHujQln+VWp3L75DJgnMTrvIWeXj
+         1zkAMj7IT0v7Ktd0k0c/MGkTFc20GDtFYo3o8TvPg0zX+03jq1aybpoUMCqea/zXSymx
+         6MTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684241969; x=1686833969;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RyX6rQJR1BZQe9Yc57Xp/rJrQBCXKFM6w6ZuIQmIOyk=;
+        b=db60Ey9E3DRXmJ+uZnPJXmjMZEKskhF385uuD0ia4Nv4SYUJngsvhiYYt1couH3vW6
+         geil/2e5qKp/waRyEaYVMGymVDewsz41X0hAhX2xSTLeRwe5y2ip9ZpUCMgjlmaG1kri
+         2Aph9aPE+rcaE+bvcboi4tEMFEahXrThggtK/a99B3pUP2jX2b0ojhkMI8+ApsmxDv/L
+         TFluOvxKKMxmPz7NV9bdjhuGtr/6qNvVkarcuuBvWGx3MJIJob1MHrAqblEzUvWYafIl
+         Dm8Hu65xf1Vtng2bYmIbC+j0l7m2jmJcZsPqW5UnJSlGDf5g3YbhQMMcp+IwZ5VNyt8J
+         gN0A==
+X-Gm-Message-State: AC+VfDyZd/NFErcu62Xm3gg3IfOPrWQjxzlpsc7xIeyWtkswzfFWfh8U
+        dIcidemIa2I6ijDL5lMTByO8hA==
+X-Google-Smtp-Source: ACHHUZ5jrcPyi1Sklbq+EVgE6AzuXgiM/acWnd8fwfuhTH5xW6E3kNQ1fnoEjsH+AEPeI1ou78pHOA==
+X-Received: by 2002:ac2:5dc4:0:b0:4ef:6ed9:7af2 with SMTP id x4-20020ac25dc4000000b004ef6ed97af2mr7847544lfq.8.1684241968852;
+        Tue, 16 May 2023 05:59:28 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id c9-20020ac244a9000000b004f387d97dafsm360065lfm.147.2023.05.16.05.59.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 May 2023 05:59:28 -0700 (PDT)
+Message-ID: <19853086-3486-54e9-7926-e6eb9fc0d243@linaro.org>
+Date:   Tue, 16 May 2023 15:59:27 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
-Subject: Re: [PATCH v2 00/18] Venus QoL / maintainability fixes
-Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Hans Verkuil <hans.verkuil@cisco.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>
-CC:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        "Marijn Suijten" <marijn.suijten@somainline.org>,
-        <stable@vger.kernel.org>
-References: <20230228-topic-venus-v2-0-d95d14949c79@linaro.org>
- <f9904e82-4756-2add-3c7e-e019ce966515@linaro.org>
-From:   Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <f9904e82-4756-2add-3c7e-e019ce966515@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v5 0/8] drm/i915: move DSC RC tables to drm_dsc_helper.c
+To:     Jani Nikula <jani.nikula@linux.intel.com>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Suraj Kandpal <suraj.kandpal@intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
+        dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+References: <20230504153511.4007320-1-dmitry.baryshkov@linaro.org>
+ <871qjij6vx.fsf@intel.com>
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <871qjij6vx.fsf@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: qUj_6eWhD4UKgMSzasX94rUMbBJsya9s
-X-Proofpoint-ORIG-GUID: qUj_6eWhD4UKgMSzasX94rUMbBJsya9s
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-16_06,2023-05-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 suspectscore=0 bulkscore=0 clxscore=1015 impostorscore=0
- mlxscore=0 mlxlogscore=653 malwarescore=0 spamscore=0 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305160108
-X-Spam-Status: No, score=-5.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -94,57 +87,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 15/05/2023 12:12, Jani Nikula wrote:
+> On Thu, 04 May 2023, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
+>> Other platforms (msm) will benefit from sharing the DSC config setup
+>> functions. This series moves parts of static DSC config data from the
+>> i915 driver to the common helpers to be used by other drivers.
+>>
+>> Note: the RC parameters were cross-checked against config files found in
+>> DSC model 2021062, 20161212 (and 20150914). The first patch modifies
+>> tables according to those config files, while preserving parameter
+>> values using the code. I have not changed one of the values in the
+>> pre-SCR config file as it clearly looks like a typo in the config file,
+>> considering the table E in DSC 1.1 and in the DSC 1.1 SCR.
+> 
+> As I believe I've said before, I think it's fine to merge these either
+> via drm-intel or drm-misc. Which do you prefer?
 
-On 5/12/2023 8:31 AM, Bryan O'Donoghue wrote:
-> On 04/05/2023 09:00, Konrad Dybcio wrote:
->> Tested on 8250, but pretty please test it on your boards too!
-> 
-> What's the definition of test here ?
-> 
-> I ran this
-> 
-> ffplay -codec:video h264_v4l2m2m FantasticFour-ROTSS.mp4
-> 
-> and this
-> 
-> ffplay -codec:video vp8_v4l2m2m /mnt/big-buck-bunny_trailer.webm
-> 
-> on db410c with no errors. Then again I applied and disapplied the 8x8 264 fix to
-> that branch and saw no discernable difference so I'm not very confident we have
-> good coverage.
-> 
-> @Stan @Vikash could you give some suggested tests for coverage here ?
-
-I could think of below test aspects for this series
-1. Suspend Resume
-2. Concurrency test
-3. Module load -> video usecase -> module unload -> module load -> video
-usecase. This would ensure video firmware is reloaded and functional.
-4. Video playback and encode for all supported resolution and codecs.
-5. In general, video playback with more test content.
-
-I would be testing the series with stability test suite on CrOS. That would be
-either on sc7180 or sc7280 setup.
-
-Konrad, you can post the new version as one patch needs to be dropped. Test can
-be done on the new version. There are few patches in the series pending review,
-which can be done in parallel.
-
--Vikash
+No strong preference. Maybe drm-misc would be easier for us to 
+back-merge it into msm/next. Otherwise it is up to you.
 
 > 
-> @Konrad - get a db410c !
+> BR,
+> Jani.
 > 
-> My superficial first-pass on this series looks good but, before giving a
-> Tested-by here, I think we should define a set of coverage tests, run them - the
-> upper end on sm8250 and lower end msm8916 "makes sense to me"
 > 
-> 20? different gstreamer tests at different formats and different sizes on our
-> selected platforms db410c, rb5, rb3 I have - also an 820 I haven't booted and an
-> enforce sdm660.
 > 
-> Which tests will we use to validate this series and subsequent series to ensure
-> we don't have more regressions ?
+>>
+>> Chances since v4:
+>> - Rebased on top of drm-intel-next
+>> - Cut the first 8 patches of the series to ease merging. The rest of the
+>>    patches will go afterwards.
+>>
+>> Chances since v3:
+>> - Rebased on top of drm-intel-next
+>> - Dropped the msm patch to make patchset fully mergeable through
+>>    drm-intel
+>> - Made drm_dsc_set_const_params() ignore rc_model_size, picked up
+>>    drm_dsc_set_initial_scale_value() patch by Jessica and switched
+>>    intel_vdsc.c to use those two helpers.
+>> - Added a patch to make i915 actually use rc_tgt_offset_high,
+>>    rc_tgt_offset_low and rc_edge_factor from struct drm_dsc_config.
+>>
+>> Chances since v2:
+>> - Rebased on top of drm-intel-next
+>>
+>> Chances since v1:
+>> - Made drm_dsc_rc_buf_thresh static rather than exporting it
+>> - Switched drm_dsc_rc_buf_thresh loop to use ARRAY_SIZE. Added
+>>    BUILD_BUG_ON's to be sure that array sizes are correct
+>> - Fixed rc_parameters_data indentation to be logical and tidy
+>> - Fixed drm_dsc_setup_rc_params() kerneldoc
+>> - Added a clause to drm_dsc_setup_rc_params() to verify bpp and bpc
+>>    being set.
+>> - Fixed range_bpg_offset programming in calculate_rc_params()
+>> - Fixed bpp vs bpc bug in intel_dsc_compute_params()
+>> - Added FIXME comment next to the customizations in
+>>    intel_dsc_compute_params().
+>>
+>> Dmitry Baryshkov (8):
+>>    drm/i915/dsc: change DSC param tables to follow the DSC model
+>>    drm/i915/dsc: move rc_buf_thresh values to common helper
+>>    drm/i915/dsc: move DSC tables to DRM DSC helper
+>>    drm/i915/dsc: stop using interim structure for calculated params
+>>    drm/display/dsc: use flat array for rc_parameters lookup
+>>    drm/display/dsc: split DSC 1.2 and DSC 1.1 (pre-SCR) parameters
+>>    drm/display/dsc: include the rest of pre-SCR parameters
+>>    drm/display/dsc: add YCbCr 4:2:2 and 4:2:0 RC parameters
+>>
+>>   drivers/gpu/drm/display/drm_dsc_helper.c  | 986 ++++++++++++++++++++++
+>>   drivers/gpu/drm/i915/display/intel_vdsc.c | 443 ++--------
+>>   include/drm/display/drm_dsc_helper.h      |   9 +
+>>   3 files changed, 1042 insertions(+), 396 deletions(-)
 > 
-> ---
-> bod
+
+-- 
+With best wishes
+Dmitry
+
