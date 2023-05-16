@@ -2,50 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 25BA7705086
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 16:25:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A9987050B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 16:28:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231624AbjEPOZN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 10:25:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33788 "EHLO
+        id S233848AbjEPO2k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 10:28:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233193AbjEPOZM (ORCPT
+        with ESMTP id S233913AbjEPO2h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 10:25:12 -0400
+        Tue, 16 May 2023 10:28:37 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CE4E3AAC;
-        Tue, 16 May 2023 07:25:11 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34GCsb0f024518;
-        Tue, 16 May 2023 14:24:48 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4A861BC6;
+        Tue, 16 May 2023 07:28:34 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34GCAecw004449;
+        Tue, 16 May 2023 14:28:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=KpRE1csAVuXzEj5oc+bxW0enVxw63SFFuPVKJiVWLLQ=;
- b=Tfo1Af8XaaG0r2hzo5zE3nb2SV0GaYMp1cQDKnTuXl87IIDyik61JsGp/naFTBknDZYa
- lNEYA9deZBG1XzGhi5u1wXJMAExGbFDQFVCra64zkkk8j/9ONE8ySnnXeIuyPlZpYDtn
- X5fF4iqfzNOYuri3DTXeIxkZgLP5p2dcpHfcrLXWytreEU/Lem/2kBXgOaO1IbCoPRNE
- q1hFmdyBalyYqgtryqHrpHKyIUt9cXiajhdoM3hEY0weYZ5Lt7NOsmvzqx1j7sFtNuBU
- WEli9Q7FymBhlLjSC02zCugcqu4mC9iutvllwIp2sIDkfrQ2MiGoZ1x4V7QpjByRYFYr 8Q== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qkjr03c3e-1
+ bh=RMFXA7ZudVjHyZ4kH0k4IsYmxdb+amxND9ev4TL+PJg=;
+ b=i/5efG5oQ5S2n9dcGNFeOm50w+dd95BVSdWs0r2Rtt0DZE1wBsIXyA3+CBQQLoEa/2/S
+ Vw0TlhR4RHyjdzJ3HIK/5SIWg0+NyXvG9CjoCpE8sqvjKK9A8BwNIRe04llJ4P0+/uea
+ 2Hdql0k7wyPUwOVqSCrLHoIJwSdAdnX3hv6vdWUtUa3bWd7YhKXuwmLKqzm/MxU5wkuy
+ lMsyXvkUlaHdnHmMXoLiuw4iPqd2j2JORBwsLa5rSBvwkcVRio51LQdCXtvy2i/UB+e3
+ w7VV4qY4c1t22DOv0szZ6PfHXTXqIFqrcFml2evPj8cF8NqLSSUcygoCHRoby15jLm8K dw== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qm1x096x7-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 14:24:47 +0000
+        Tue, 16 May 2023 14:28:23 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34GEOBZg017798
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34GESL02026238
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 14:24:11 GMT
+        Tue, 16 May 2023 14:28:22 GMT
 Received: from [10.216.35.75] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 16 May
- 2023 07:24:04 -0700
-Message-ID: <a22a3fe6-7bb1-9b47-9a14-41d957f178f3@quicinc.com>
-Date:   Tue, 16 May 2023 19:54:00 +0530
+ 2023 07:28:14 -0700
+Message-ID: <52b5c1ac-ac69-2ca7-1bf4-01b1f53b1634@quicinc.com>
+Date:   Tue, 16 May 2023 19:58:10 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH v8 7/9] arm64: dts: qcom: sc8280xp: Add multiport
- controller node for SC8280
+Subject: Re: [PATCH v8 4/9] usb: dwc3: core: Skip setting event buffers for
+ host only controllers
+Content-Language: en-US
 To:     Johan Hovold <johan@kernel.org>
 CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -62,13 +63,10 @@ CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
         <ahalaney@redhat.com>
 References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-8-quic_kriskura@quicinc.com>
- <ZGJBLUsPcbsxj989@hovoldconsulting.com>
- <d14567fd-0576-55bb-40c0-442e060c28ba@quicinc.com>
- <ZGNgyo8ZRcC26W5l@hovoldconsulting.com>
-Content-Language: en-US
+ <20230514054917.21318-5-quic_kriskura@quicinc.com>
+ <ZGN0W0YbIjzmQnH1@hovoldconsulting.com>
 From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZGNgyo8ZRcC26W5l@hovoldconsulting.com>
+In-Reply-To: <ZGN0W0YbIjzmQnH1@hovoldconsulting.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -76,15 +74,15 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: uZWQqd-1KyYXCuNO1nPojX54hMLRsWcK
-X-Proofpoint-GUID: uZWQqd-1KyYXCuNO1nPojX54hMLRsWcK
+X-Proofpoint-ORIG-GUID: THSS0IZNn5baN6Z7Bij_d4pFBAaLOwkV
+X-Proofpoint-GUID: THSS0IZNn5baN6Z7Bij_d4pFBAaLOwkV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-05-16_07,2023-05-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1015
- spamscore=0 malwarescore=0 phishscore=0 suspectscore=0 mlxscore=0
- priorityscore=1501 mlxlogscore=344 adultscore=0 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 mlxlogscore=999 bulkscore=0 mlxscore=0 impostorscore=0
+ spamscore=0 adultscore=0 phishscore=0 clxscore=1015 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2304280000 definitions=main-2305160121
 X-Spam-Status: No, score=-5.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
@@ -98,71 +96,45 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5/16/2023 4:24 PM, Johan Hovold wrote:
-> On Mon, May 15, 2023 at 09:02:13PM +0530, Krishna Kurapati PSSNV wrote:
->> On 5/15/2023 7:56 PM, Johan Hovold wrote:
->>> On Sun, May 14, 2023 at 11:19:15AM +0530, Krishna Kurapati wrote:
-> 
->>>> @@ -3133,6 +3133,72 @@ usb_1_role_switch: endpoint {
->>>>    			};
->>>>    		};
->>>>    
->>>> +		usb_2: usb@a4f8800 {
->>>
->>> As I believe someone already pointed out, this node is not in sort order
->>> (i.e. it should go before usb@a6f8800).
-> 
->>     I missed that message, but since I named it usb_2, so I placed it in
->> order after usb_1. Hope that is fine !!
-> 
-> No, the nodes should be sorted by unit address so you need to move it.
-> 
-
-Sure, in that case will put it in between usb_0 and usb_1 nodes.
-
->>>> +			interrupts-extended = <&pdc 127 IRQ_TYPE_EDGE_RISING>,
->>>> +					      <&pdc 126 IRQ_TYPE_EDGE_RISING>,
->>>> +					      <&pdc 16 IRQ_TYPE_LEVEL_HIGH>,
->>>> +					      <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
->>>> +					      <&intc GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
->>>> +					      <&intc GIC_SPI 857 IRQ_TYPE_LEVEL_HIGH>,
->>>> +					      <&intc GIC_SPI 856 IRQ_TYPE_LEVEL_HIGH>;
->>>> +
->>>> +			interrupt-names = "dp_hs_phy_irq",
->>>> +					  "dm_hs_phy_irq",
->>>> +					  "ss_phy_irq",
->>>> +					  "pwr_event_1",
->>>> +					  "pwr_event_2",
->>>> +					  "pwr_event_3",
->>>> +					  "pwr_event_4";
-> 
->>>> +			interconnect-names = "usb-ddr", "apps-usb";
->>>
->>> Looks like 'wakeup-source' is missing here too.
->>>
+On 5/16/2023 5:47 PM, Johan Hovold wrote:
+> On Sun, May 14, 2023 at 11:19:12AM +0530, Krishna Kurapati wrote:
+>> On some SoC's like SA8295P where the tertiary controller is host-only
+>> capable, GEVTADDRHI/LO, GEVTSIZ, GEVTCOUNT registers are not accessible.
+>> Trying to setup them up during core_init leads to a crash.
 >>
->> I believe this property was added to enable wakeup from system suspend
->> in host mode. I didn't add this property as currently I don't need to
->> support wakeup. If any requirement comes in future, then I might need to
->> add dp/dm interrupts (if any) for other ports as well and then need to
->> change driver code to enable/disable them on suspend/resume.
+>> For DRD/Peripheral supported controllers, event buffer setup is done
+>> again in gadget_pullup. Skip setup or cleanup of event buffers if
+>> controller is host-only capable.
+>>
+>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+>> ---
+>>   drivers/usb/dwc3/core.c | 10 ++++++++++
+>>   1 file changed, 10 insertions(+)
+>>
+>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+>> index e983aef1fb93..46192d08d1b6 100644
+>> --- a/drivers/usb/dwc3/core.c
+>> +++ b/drivers/usb/dwc3/core.c
+>> @@ -505,6 +505,11 @@ static int dwc3_alloc_event_buffers(struct dwc3 *dwc, unsigned int length)
+>>   int dwc3_event_buffers_setup(struct dwc3 *dwc)
+>>   {
+>>   	struct dwc3_event_buffer	*evt;
+>> +	unsigned int			hw_mode;
+>> +
+>> +	hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
+>> +	if (hw_mode == DWC3_GHWPARAMS0_MODE_HOST)
+>> +		return 0;
+>>   
+>>   	evt = dwc->ev_buf;
 > 
-> If there are dp/dm/ss interrupts per ports then those need to be defined
-> in the binding and devicetree from the start.
+> How about adding this check to dwc3_alloc_event_buffers() instead as
+> there should be no need to allocate buffer that you never use?
 > 
-> Similar for 'wakeup-source' which indicates that the controller *can* be
-> used to wakeup the system from suspend (which those pdc interrupts
-> indicates).
+> Then you can just check dwc->ev_buf here and elsewhere.
 > 
-> Remember that the devicetree is supposed to describe the hardware, and
-> which features are currently supported in some version of software is
-> mostly irrelevant.
-> 
-> Johan
 
-Can I take this up as a separate series (Wakeup support for multiport) 
-once this series is merged. If I am adding interrupts for other ports, I 
-can add driver code to handle those interrupts as well.
+Thanks for this idea. We can save 4096 bytes from being allocated this 
+way. Will get this in next version.
 
 Regards,
 Krishna,
