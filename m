@@ -2,76 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A7EB7057AE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 21:43:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD751705886
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 22:16:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229604AbjEPTnX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 15:43:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37836 "EHLO
+        id S230083AbjEPUQ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 16:16:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229460AbjEPTnX (ORCPT
+        with ESMTP id S229568AbjEPUQx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 15:43:23 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0557DC49;
-        Tue, 16 May 2023 12:43:01 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34GIatK0026336;
-        Tue, 16 May 2023 19:42:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=gTTMdHgGaHY74r3+9Co7IUUVET6Ym2vBbJIGXgiiyc8=;
- b=Oi+6PW4BueM8mVhU8frLIWTLos4RQZR9EnZSJr47lG8JrCVK6TIwwq5q8AT8X1QSbQOY
- LiB/PLJrtk3EX6WPJZ1HKUaXoaFfIcDdvQ+htZvhW8kLVphDHuCPR82yIG6gNN6hDFQP
- cZG78SNUGozzPrh9vzHgid1HdqbJHakVWF1rYs9o0Cgir1Rs/vw2eRduV2LivTEC2zZ2
- OxVdF0XcebKL4Zv0+65E3ZkTDnKPOKnsjKKGez2RGZgjhffxyCIEjjfeoaBSlkr43mX8
- PMGYxJrrlxogyv/UJdBy/aFz8iPa2xeb2hFcXIqzHJNmXYx2VKGicoRo1Q6I4/k+qWGT tQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qmcc60gve-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 19:42:31 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34GJgUet023368
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 19:42:30 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 16 May
- 2023 12:42:29 -0700
-Message-ID: <08763c37-38b0-5964-67f0-95f70a0685e9@quicinc.com>
-Date:   Tue, 16 May 2023 13:42:28 -0600
+        Tue, 16 May 2023 16:16:53 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60EFE1BE;
+        Tue, 16 May 2023 13:16:46 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E9BD763D86;
+        Tue, 16 May 2023 20:16:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F241FC433D2;
+        Tue, 16 May 2023 20:16:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1684268205;
+        bh=TX21/LnZTnFYt/KzhqOgAcDna4xbf0dO5gIfq+6X2d0=;
+        h=Date:From:To:Cc:Subject:From;
+        b=CPkZpwmAyljr5hYRCZp41+IlxyJGnUUUY2PFiF8wDiKwZlCtSQKCOXwYYENGVaQOc
+         kvHM0N4e7sd4jRj4SgVz4Or7IWVEZSpj3dKPvEBPPbqIRMKkapVb/VK6dVHdir8CGJ
+         Tape4j6t+vE1wKyXLHUPVZaF4P574p+OSCURexJrpvkzU0lqOp6hlJ1WXcBJW4rJig
+         MqsWP57fV+6O+HUmAoW5JTGb2UtsyCIXdQDqZdQY8/Q0THfo8oQj5vvCq2WmKognTY
+         inkeYx7MhkBfJZYpqb1EfecGvUzuYE2cpc16bIEGu5FMyouEuCR/PZNwdrxc+TsgDf
+         lXKzkYBdIN+8Q==
+Date:   Tue, 16 May 2023 14:17:32 -0600
+From:   "Gustavo A. R. Silva" <gustavoars@kernel.org>
+To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        linux-hardening@vger.kernel.org
+Subject: [PATCH][next] media: venus: Replace one-element arrays with
+ flexible-array members
+Message-ID: <ZGPk3PpvYzjD1+0/@work>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v3] bus: mhi: host: Skip MHI reset if device is in RDDM
-Content-Language: en-US
-To:     Qiang Yu <quic_qianyu@quicinc.com>, <mani@kernel.org>
-CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <quic_mrana@quicinc.com>
-References: <1683857158-9804-1-git-send-email-quic_qianyu@quicinc.com>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <1683857158-9804-1-git-send-email-quic_qianyu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8PS3bYOKLfuVHtZ0Ea3cf2TWol6xErNT
-X-Proofpoint-ORIG-GUID: 8PS3bYOKLfuVHtZ0Ea3cf2TWol6xErNT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-16_12,2023-05-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- phishscore=0 suspectscore=0 mlxscore=0 bulkscore=0 adultscore=0
- mlxlogscore=999 malwarescore=0 lowpriorityscore=0 clxscore=1015
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305160166
-X-Spam-Status: No, score=-5.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,16 +60,115 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/11/2023 8:05 PM, Qiang Yu wrote:
-> In RDDM EE, device can not process MHI reset issued by host. In case of MHI
-> power off, host is issuing MHI reset and polls for it to get cleared until
-> it times out. Since this timeout can not be avoided in case of RDDM, skip
-> the MHI reset in this scenarios.
-> 
-> Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state transitions")
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+One-element arrays are deprecated, and we are replacing them with flexible
+array members instead. So, replace one-element arrays with flexible-array
+members in multiple structures, and refactor the rest of the code,
+accordingly.
 
-I believe Mani will want you to CC stable.
+This helps with the ongoing efforts to tighten the FORTIFY_SOURCE
+routines on memcpy() and help us make progress towards globally
+enabling -fstrict-flex-arrays=3 [1].
 
-Assuming that
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+This results in no differences in binary output.
+
+Link: https://github.com/KSPP/linux/issues/79
+Link: https://github.com/KSPP/linux/issues/291
+Link: https://gcc.gnu.org/pipermail/gcc-patches/2022-October/602902.html [1]
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+---
+ drivers/media/platform/qcom/venus/hfi_msgs.c |  4 ++--
+ drivers/media/platform/qcom/venus/hfi_msgs.h | 14 +++++++-------
+ 2 files changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
+index df96db3761a7..6efd78606d9b 100644
+--- a/drivers/media/platform/qcom/venus/hfi_msgs.c
++++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
+@@ -233,7 +233,7 @@ static void hfi_sys_init_done(struct venus_core *core, struct venus_inst *inst,
+ 		goto done;
+ 	}
+ 
+-	rem_bytes = pkt->hdr.size - sizeof(*pkt) + sizeof(u32);
++	rem_bytes = pkt->hdr.size - sizeof(*pkt);
+ 	if (rem_bytes <= 0) {
+ 		/* missing property data */
+ 		error = HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
+@@ -434,7 +434,7 @@ static void hfi_session_init_done(struct venus_core *core,
+ 	if (!IS_V1(core))
+ 		goto done;
+ 
+-	rem_bytes = pkt->shdr.hdr.size - sizeof(*pkt) + sizeof(u32);
++	rem_bytes = pkt->shdr.hdr.size - sizeof(*pkt);
+ 	if (rem_bytes <= 0) {
+ 		error = HFI_ERR_SESSION_INSUFFICIENT_RESOURCES;
+ 		goto done;
+diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.h b/drivers/media/platform/qcom/venus/hfi_msgs.h
+index 510513697335..8c2e17b0d36f 100644
+--- a/drivers/media/platform/qcom/venus/hfi_msgs.h
++++ b/drivers/media/platform/qcom/venus/hfi_msgs.h
+@@ -50,7 +50,7 @@ struct hfi_msg_event_notify_pkt {
+ 	u32 event_id;
+ 	u32 event_data1;
+ 	u32 event_data2;
+-	u32 ext_event_data[1];
++	u32 ext_event_data[];
+ };
+ 
+ struct hfi_msg_event_release_buffer_ref_pkt {
+@@ -63,7 +63,7 @@ struct hfi_msg_sys_init_done_pkt {
+ 	struct hfi_pkt_hdr hdr;
+ 	u32 error_type;
+ 	u32 num_properties;
+-	u32 data[1];
++	u32 data[];
+ };
+ 
+ struct hfi_msg_sys_pc_prep_done_pkt {
+@@ -81,7 +81,7 @@ struct hfi_msg_session_init_done_pkt {
+ 	struct hfi_session_hdr_pkt shdr;
+ 	u32 error_type;
+ 	u32 num_properties;
+-	u32 data[1];
++	u32 data[];
+ };
+ 
+ struct hfi_msg_session_end_done_pkt {
+@@ -228,7 +228,7 @@ struct hfi_msg_session_parse_sequence_header_done_pkt {
+ 	struct hfi_session_hdr_pkt shdr;
+ 	u32 error_type;
+ 	u32 num_properties;
+-	u32 data[1];
++	u32 data[];
+ };
+ 
+ struct hfi_msg_session_property_info_pkt {
+@@ -247,7 +247,7 @@ struct hfi_msg_session_release_buffers_done_pkt {
+ 	struct hfi_session_hdr_pkt shdr;
+ 	u32 error_type;
+ 	u32 num_buffers;
+-	u32 buffer_info[1];
++	u32 buffer_info[];
+ };
+ 
+ struct hfi_msg_sys_debug_pkt {
+@@ -256,7 +256,7 @@ struct hfi_msg_sys_debug_pkt {
+ 	u32 msg_size;
+ 	u32 time_stamp_hi;
+ 	u32 time_stamp_lo;
+-	u8 msg_data[1];
++	u8 msg_data[];
+ };
+ 
+ struct hfi_msg_sys_coverage_pkt {
+@@ -264,7 +264,7 @@ struct hfi_msg_sys_coverage_pkt {
+ 	u32 msg_size;
+ 	u32 time_stamp_hi;
+ 	u32 time_stamp_lo;
+-	u8 msg_data[1];
++	u8 msg_data[];
+ };
+ 
+ struct venus_core;
+-- 
+2.34.1
+
