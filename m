@@ -2,57 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D940F705408
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 18:36:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 606C9705416
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 18:39:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229915AbjEPQga (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 12:36:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38170 "EHLO
+        id S229928AbjEPQj2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 12:39:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231140AbjEPQg3 (ORCPT
+        with ESMTP id S229813AbjEPQj1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 12:36:29 -0400
-Received: from mail-yw1-x112a.google.com (mail-yw1-x112a.google.com [IPv6:2607:f8b0:4864:20::112a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C97C0270F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 09:36:01 -0700 (PDT)
-Received: by mail-yw1-x112a.google.com with SMTP id 00721157ae682-559eae63801so211064207b3.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 09:36:01 -0700 (PDT)
+        Tue, 16 May 2023 12:39:27 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73EE419C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 09:39:25 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-561a7d96f67so8723467b3.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 09:39:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684254959; x=1686846959;
+        d=linaro.org; s=google; t=1684255164; x=1686847164;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=nUqoo5bjeKJlYi2oGD1rSQMIBmkcsF3eXC4Lmw5WR0s=;
-        b=tmc2DdGZ5r6gRx4okAnJUowOGY2CLCp37vwDqsCXEk3bQk4NVA3a6YlY3gSaJhH31V
-         mD0h4MjO8U+8JHe4yxwpKCHOrp9HduqfrDVspvG5NQZxZo2G/xB1bibkcbNOP/4BuD2q
-         1DcKISbYNa8AL+Y2YYdPaRWiDjpzrBezMWnXWA51sqirs7TU86TKaVakVLTMBzdXuS9n
-         vi5Ve+OtMFtaOn8S3dFVkxA4E8Q+O2r+ygYAM48krbdySTeJseFf5koak1N0V1/al1eQ
-         Z2d0hOtZ7/NkNNnnSMOPq2vbR4+Irmht3aftJ4f4bnClAIYHleGc50nUx+vyBcAej5gR
-         YNvQ==
+        bh=1tlt94OaDFj/ZPE0ZO+qPKHDjqmrvLyTlpCpvY+Yp/8=;
+        b=KgRz9ZygaysakM45E2aeQy6Z2DT7UQhYmbkwTrDEtDRBwiRNJ35O4+ZI1T5c9yXorr
+         9uprslbLq3XDu+47l1yO7bS9LHQXU4dH+96CRjuY0F335XohNM4ZrWs4/DeOuapS9vQB
+         vIjR1eez9wbL35MXR5DbnGfQalTwyw0o+sIwSrsG6eNQjd3c+gi440d1awO7k3FbdgbG
+         f6RaYuGklMq/Hwy+8OZNG+orcKwe4I0xi52JFAUkTx4+9NL3VpQ4eav1ODh2Ez1/3bMR
+         KewsK9il5iiBYgMvOU75io3a0tHC9NLNe1bCIaY7e40wzIh3hnaXDg8KMLYmdCpEiPPF
+         v3/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684254959; x=1686846959;
+        d=1e100.net; s=20221208; t=1684255164; x=1686847164;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=nUqoo5bjeKJlYi2oGD1rSQMIBmkcsF3eXC4Lmw5WR0s=;
-        b=Px6hqlKVeHQuZwIeg4c2tfilRMnEQrlEbQL50Vir++WxqhO/3purSwc95RIS0WJSKu
-         xWiNFmB+Zbja3cJpxHwE6ILMHSg4E6N6SUKuthcsTWUMS86RjRI4PH61gIS2QxJCwGCH
-         ryeiRZlB34NDRkJll4TsPCBsfbo0k3M8YStu3iz+MDCo+PviCFd/iXLIeGDU8cofAHlF
-         F6qZ22L0VToAyq94cHZMRIXr9+IJEHEyXx8NCljs96o8oq/qWq4bk2N+f4y5Xr0+7uaW
-         rkAM2liw8NRgfPhQqL/iOYvge3i8HMguiA/on+7uHwhR1x71iCTtpK/sAcLnfEc2QrTC
-         oE4w==
-X-Gm-Message-State: AC+VfDy+kVjhTxtmJ080C8J1IpUBNPfRJ//4bRE5OaXseUHMTtpa3hEP
-        b49QGLgibOdJgPPivm2EBaUenzxkJ+hoZs3XLQAVVQ==
-X-Google-Smtp-Source: ACHHUZ6nLiOUFrgZPvTxj8H8fMwSWbbPUhw8KejfU95u7EUG7Y3tlcIKRYWg1Otz3aP8vvO/C6WyVY+Bz/EEJ8uFd/o=
-X-Received: by 2002:a81:c312:0:b0:559:d103:d5c8 with SMTP id
- r18-20020a81c312000000b00559d103d5c8mr33917480ywk.31.1684254959496; Tue, 16
- May 2023 09:35:59 -0700 (PDT)
+        bh=1tlt94OaDFj/ZPE0ZO+qPKHDjqmrvLyTlpCpvY+Yp/8=;
+        b=dSh+O6maMlyc/XR3rz2z46adlxkbC7GXSV/DLi3699X0bjtg3mTHxKrGQWyAAy9Jnl
+         sVL+mlzTnZWE+ofoCmd8Xw5ywalVfvhW7YkqfxYvFOX3/+wDh6W22bo8rjRmzndwmNv2
+         7ehDQPCvelhhdZxB+imiqZXljgIUhRwNypiQ2uLXxV0B5hwE0sNx4FGmLIK4F0fkFT+6
+         1tTtXBu4Di8g7PF7Nsmb73aTGf+dku7JnXGS9HdLGKfvlp9sfpFJVQdeJE+FA/1LDPgA
+         bMfT5exIGK3RaERiMfgLh7BZ3KpNFqidfKi3s8wTTpeZ8HHYDefeOeKmnTrn+9DOke+V
+         DNDw==
+X-Gm-Message-State: AC+VfDwIaCeWdEVytCrvdNe7Su4CQewu1cFGmHIBzPd7OHdR7xawyqTZ
+        HFXh9qMNkzj5CwFcwSoqpVUAbZhZb1oz+2kENLn7ew==
+X-Google-Smtp-Source: ACHHUZ4mmJtwKkLjDQeoqGQG6jQ/Y1c9GvB1EOKt0pluOwZJgkSgm/apT/cIYLDsmH+PXxZbg6tthKN+REeqPnno1Qc=
+X-Received: by 2002:a81:48c6:0:b0:55a:3ce9:dc3d with SMTP id
+ v189-20020a8148c6000000b0055a3ce9dc3dmr35407967ywa.13.1684255164629; Tue, 16
+ May 2023 09:39:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230516154539.238655-1-krzysztof.kozlowski@linaro.org> <20230516154539.238655-3-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230516154539.238655-3-krzysztof.kozlowski@linaro.org>
+References: <20230516133011.108093-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230516133011.108093-1-krzysztof.kozlowski@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 16 May 2023 19:35:48 +0300
-Message-ID: <CAA8EJpoTd4avVHK4kjJTpq91UvNLS1tdA_s4=nX_gtkWAY_Jvw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: sm8550-qrd: add display and panel
+Date:   Tue, 16 May 2023 19:39:13 +0300
+Message-ID: <CAA8EJpoTgseo3j_5Ab7cQs3ZZZymALpRqpuWGPyKpTEbXR-Cqw@mail.gmail.com>
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8550-qrd: add PCIe0
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -73,123 +73,64 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 16 May 2023 at 18:46, Krzysztof Kozlowski
+On Tue, 16 May 2023 at 16:30, Krzysztof Kozlowski
 <krzysztof.kozlowski@linaro.org> wrote:
 >
-> Enable Display Subsystem with Visionox VTDR6130 Panel (same as on
-> MTP8550).
+> Add PCIe0 nodes used with WCN7851 device.  The PCIe1 is not connected,
+> thus skip pcie_1_phy_aux_clk input clock to GCC.
 >
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->
 > ---
->
-> Context in the patch depends on:
-> 1. https://lore.kernel.org/linux-arm-msm/20230516133011.108093-1-krzysztof.kozlowski@linaro.org/T/#t
-> 2. https://lore.kernel.org/linux-arm-msm/20230512160452.206585-1-krzysztof.kozlowski@linaro.org/
->
-> Changes in v2:
-> 1. dispcc is enabled in DTSI.
-> 2. Re-order pinctrl and regulators.
-> 3. Drop mdp.
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-A small question below.
-
-> ---
->  arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 68 +++++++++++++++++++++++++
->  1 file changed, 68 insertions(+)
+>  arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 32 +++++++++++++++++++++++++
+>  1 file changed, 32 insertions(+)
 >
 > diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-> index 30b36a149125..ade6ba53ae6b 100644
+> index ccc58e6b45bd..e7a2bc5d788b 100644
 > --- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
 > +++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-> @@ -431,6 +431,46 @@ &gcc {
->                  <&usb_dp_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
+> @@ -385,6 +385,38 @@ vreg_l3g_1p2: ldo3 {
+>         };
 >  };
 >
-> +&mdss {
+> +&gcc {
+> +       clocks = <&bi_tcxo_div2>, <&sleep_clk>,
+> +                <&pcie0_phy>,
+> +                <&pcie1_phy>,
+> +                <0>,
+> +                <&ufs_mem_phy 0>,
+> +                <&ufs_mem_phy 1>,
+> +                <&ufs_mem_phy 2>,
+> +                <&usb_dp_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
+> +};
+
+Is there any reason to disable the PCIe1 PHY AUX clock here? I mean,
+the PCIe1 is still enabled in the hardware.
+
+> +
+> +&pcie_1_phy_aux_clk {
+> +       status = "disabled";
+> +};
+> +
+> +&pcie0 {
+> +       wake-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
+> +       perst-gpios = <&tlmm 94 GPIO_ACTIVE_LOW>;
+> +
+> +       pinctrl-0 = <&pcie0_default_state>;
+> +       pinctrl-names = "default";
+> +
 > +       status = "okay";
 > +};
 > +
-> +&mdss_dsi0 {
-> +       vdda-supply = <&vreg_l3e_1p2>;
-> +       status = "okay";
+> +&pcie0_phy {
+> +       vdda-phy-supply = <&vreg_l1e_0p88>;
+> +       vdda-pll-supply = <&vreg_l3e_1p2>;
 > +
-> +       panel@0 {
-> +               compatible = "visionox,vtdr6130";
-> +               reg = <0>;
-> +
-> +               pinctrl-0 = <&sde_dsi_active>, <&sde_te_active>;
-> +               pinctrl-1 = <&sde_dsi_suspend>, <&sde_te_suspend>;
-> +               pinctrl-names = "default", "sleep";
-> +
-> +               vci-supply = <&vreg_l13b_3p0>;
-> +               vdd-supply = <&vreg_l11b_1p2>;
-> +               vddio-supply = <&vreg_l12b_1p8>;
-> +
-> +               reset-gpios = <&tlmm 133 GPIO_ACTIVE_LOW>;
-> +
-> +               port {
-> +                       panel0_in: endpoint {
-> +                               remote-endpoint = <&mdss_dsi0_out>;
-> +                       };
-> +               };
-> +       };
-> +};
-> +
-> +&mdss_dsi0_out {
-> +       remote-endpoint = <&panel0_in>;
-> +       data-lanes = <0 1 2 3>;
-> +};
-> +
-> +&mdss_dsi0_phy {
-> +       vdds-supply = <&vreg_l1e_0p88>;
 > +       status = "okay";
 > +};
 > +
->  &pcie_1_phy_aux_clk {
->         status = "disabled";
+>  &qupv3_id_0 {
+>         status = "okay";
 >  };
-> @@ -532,6 +572,34 @@ wcd_tx: codec@0,3 {
->  &tlmm {
->         gpio-reserved-ranges = <32 8>;
->
-> +       sde_dsi_active: sde-dsi-active-state {
-> +               pins = "gpio133";
-> +               function = "gpio";
-> +               drive-strength = <8>;
-> +               bias-disable;
-> +       };
-> +
-> +       sde_dsi_suspend: sde-dsi-suspend-state {
-> +               pins = "gpio133";
-> +               function = "gpio";
-> +               drive-strength = <2>;
-> +               bias-pull-down;
-> +       };
-> +
-> +       sde_te_active: sde-te-active-state {
-> +               pins = "gpio86";
-> +               function = "mdp_vsync";
-> +               drive-strength = <2>;
-> +               bias-pull-down;
-> +       };
-> +
-> +       sde_te_suspend: sde-te-suspend-state {
-> +               pins = "gpio86";
-> +               function = "mdp_vsync";
-> +               drive-strength = <2>;
-> +               bias-pull-down;
-> +       };
-
-Do we really need the suspend states for reset and TE pins? Especially
-for the TE pin, where the only difference is the drive strength.
-
-> +
->         wcd_default: wcd-reset-n-active-state {
->                 pins = "gpio108";
->                 function = "gpio";
 > --
 > 2.34.1
 >
