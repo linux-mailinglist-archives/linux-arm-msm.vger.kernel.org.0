@@ -2,69 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5796C704276
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 02:53:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 551C6704285
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 02:55:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343534AbjEPAxR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 20:53:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34722 "EHLO
+        id S243061AbjEPAz0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 20:55:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35830 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245426AbjEPAxQ (ORCPT
+        with ESMTP id S245192AbjEPAzZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 20:53:16 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E274B19B9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 17:53:14 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f14ec8d72aso13492639e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 17:53:14 -0700 (PDT)
+        Mon, 15 May 2023 20:55:25 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B37BBC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 17:55:23 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2ad714536cfso114803901fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 17:55:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684198393; x=1686790393;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KYFefbvAKdLmrbtQItz+DnXN4dowsh1ByYhd/wrlwx8=;
-        b=dc7sSrVJMUw9cOgswSUDasLW3hkuinDUDvdNb9MNaQNVwnP7p5zcZLrMbEXG0mdUWr
-         jGita/R09PX3T194MxU+M2DvarG3QEMhNOUhxg/tXO2sP8/od1HOYhlWL6AK7ZTUlFOa
-         hgjs5iZka+yyKfehTHBtwWwSqkGUwTTXRHuMNbZBWwbUVVimcvMT9YnZI6+NPk0d/Dhq
-         lJJjRc59bL8OVqLyP6rxbMxj/e4ETAGEAjDiRnmcaXanjGU9QOEq3VrqSFDG5qBEZ0Tu
-         zeLFrulKFmbElAVFRLJ3VosylMYl2KQhbQK9+fRraToo+KSJOP7+uXwonJvFPkomuVB2
-         DGtw==
+        d=linaro.org; s=google; t=1684198521; x=1686790521;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UjwcRaJlCzCEpC45Q3lrZNiqWX2wV3fmSeCUq6aK9MU=;
+        b=Eo1bPVLTcSa18AkqgwZmOmq7tjqPDPdxiE83ZBG2GU5u4NrU+XEFduTdSrbNsH6hwy
+         eoZ4ytNQkjRYgnuUmKW0+TZjZoNyijblWZeGkNtjDU7iEVc73XnEcGWPWk+arKMwq6qc
+         Z/PHZs+u+WPRT8c4bhMa2rkxxi4iU0vGKui6bRRvdSd6CGouscdYDnEcB7v/F+4SjNah
+         OvzY/ou8HuF6vb9UBKcY0IgbQ5M/9vptGHCcMPsZA3KgAybfnR+5OHcgCjTeYQWwmZmo
+         R1vRoBdhj48woi56J9AFy/VinBxAZVvMD9tzHejyUvWC5IpgwEjHe7A9Fd85EEM+7ubC
+         kiQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684198393; x=1686790393;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KYFefbvAKdLmrbtQItz+DnXN4dowsh1ByYhd/wrlwx8=;
-        b=ads9lhfAiOKHamh/+P9MCqoy23DSZ1bl8htQuc5iD0v3S6xjZkV/at6w4Rn2PrDvOJ
-         KPgCgHI7XBXrPx8avKTceeRE2gZi5wfEYi/1FiXDThqbcNYQBEx1NUY9NurnuFcU8yeQ
-         IsfqARfoliqGfVPmpFpLnz0P2Pn58WQXCrhrLae2Q3chvdGK08NnYTxQhRQ3w2epH3aS
-         1sEN3Kzw99ZtSFPveqKpOKg/eCB+c3b1xv1ezaQK0gurqIDtgG0yZvl5Zj4w7o0DWXVC
-         GIJek4UFF0e1Xv2ltwhQzgoGnUhDEh5eVw4E1YRb3F2aCV7pi3/JQ1uVNd2iZlFOnPCC
-         pSTw==
-X-Gm-Message-State: AC+VfDyaLlbgIpoNCr9ZraYtoBEHty/vJo2j4+dueBl63F4h9hCWLZYQ
-        mc4oocPoCnqXBcYeX8hZlG30aEGeSz/dhGzd+58=
-X-Google-Smtp-Source: ACHHUZ4K3kdNas3Da/ObcCzJysW9zSfE4h4RKYaEWW0toEqCW5bCFUEaL93+bkKo96Lj1tJ+NMSSNA==
-X-Received: by 2002:ac2:4d03:0:b0:4f2:391f:e9a3 with SMTP id r3-20020ac24d03000000b004f2391fe9a3mr8692936lfi.3.1684198392906;
-        Mon, 15 May 2023 17:53:12 -0700 (PDT)
-Received: from localhost.localdomain (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id 17-20020ac25691000000b004ec88128dc4sm2812286lfr.68.2023.05.15.17.53.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 May 2023 17:53:12 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, andersson@kernel.org,
-        agross@kernel.org, krzysztof.kozlowski+dt@linaro.org
-Cc:     marijn.suijten@somainline.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm8450: Add missing RPMhPD OPP levels
-Date:   Tue, 16 May 2023 02:53:06 +0200
-Message-Id: <20230516005306.952821-1-konrad.dybcio@linaro.org>
-X-Mailer: git-send-email 2.40.1
+        d=1e100.net; s=20221208; t=1684198521; x=1686790521;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UjwcRaJlCzCEpC45Q3lrZNiqWX2wV3fmSeCUq6aK9MU=;
+        b=cQdSY4Sw/HJwHFNIEYSH9LZJLJx+vsqQ/GlO1508n3ROoJPQHk+OXmKVWumIF4Vkui
+         iGsUpfes23Tl5oyOjnitFXJH8bCIBI6rdOYtdOKp6irQosc24rCdTR5rBMB55XeUHP5K
+         W/whCm1B61w0AJvPLiM55x4DDEpXW2SG6PjlgoVmIWdPFajZvCNgwVbrR1zSXMs/zo6n
+         x1LGlM+J4Xz0eOJjaM3gqNZel3bhfKr17cYvAzoPKjkWdTvRDCoburXUeP2aTRa5eckk
+         8JAxN6RQkB62G/3bA2dzPjNU50r5h0qWcKQeNAnD5zBHjPnNTo1EArTvEr8IjRD/90uF
+         HEvw==
+X-Gm-Message-State: AC+VfDzZk3gF5fdHpp7d5Qasm+eAsPfIRVR1lN+3cx2goccQLaVadms9
+        OarA46EFfNPNdkQxpxTcIMUe0w==
+X-Google-Smtp-Source: ACHHUZ4uObSf76PIKmze2hfEFu3fRFKJ1GwNFdHpG6uo+NrROdw/IsCoRGcd500n4VePoEgEmwJDRg==
+X-Received: by 2002:a2e:98c3:0:b0:2ac:6038:ece5 with SMTP id s3-20020a2e98c3000000b002ac6038ece5mr7751117ljj.49.1684198521047;
+        Mon, 15 May 2023 17:55:21 -0700 (PDT)
+Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
+        by smtp.gmail.com with ESMTPSA id q22-20020ac24a76000000b004f2509b87cesm2777036lfp.107.2023.05.15.17.55.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 May 2023 17:55:20 -0700 (PDT)
+Message-ID: <e6890e88-8c1d-18ca-50b3-b9b077e7eec9@linaro.org>
+Date:   Tue, 16 May 2023 02:55:19 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: ipq5332: rename mi01.2 dts to
+ rdp441
+Content-Language: en-US
+To:     Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230412164920.21862-1-quic_kathirav@quicinc.com>
+ <20230412164920.21862-2-quic_kathirav@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230412164920.21862-2-quic_kathirav@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -73,70 +78,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We need more granularity for things like the GPU. Add the missing levels.
 
-This unfortunately requires some re-indexing, resulting in an ugly diff.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+On 12.04.2023 18:49, Kathiravan T wrote:
+> To align with ipq5332-rdp468.dts, lets rename the mi01.2 dts as well to
+> ipq5332-rdp441.dts.
+> 
+> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> ---
+If the name property is supposed to stay as-is:
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index b4fc6abf8d8a..d3ac5644232b 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -4195,31 +4195,43 @@ rpmhpd_opp_low_svs: opp4 {
- 						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
- 					};
- 
--					rpmhpd_opp_svs: opp5 {
-+					rpmhpd_opp_low_svs_l1: opp5 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_L1>;
-+					};
-+
-+					rpmhpd_opp_svs: opp6 {
- 						opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
- 					};
- 
--					rpmhpd_opp_svs_l1: opp6 {
-+					rpmhpd_opp_svs_l0: opp7 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_SVS_L0>;
-+					};
-+
-+					rpmhpd_opp_svs_l1: opp8 {
- 						opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
- 					};
- 
--					rpmhpd_opp_nom: opp7 {
-+					rpmhpd_opp_svs_l2: opp9 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
-+					};
-+
-+					rpmhpd_opp_nom: opp10 {
- 						opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
- 					};
- 
--					rpmhpd_opp_nom_l1: opp8 {
-+					rpmhpd_opp_nom_l1: opp11 {
- 						opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
- 					};
- 
--					rpmhpd_opp_nom_l2: opp9 {
-+					rpmhpd_opp_nom_l2: opp12 {
- 						opp-level = <RPMH_REGULATOR_LEVEL_NOM_L2>;
- 					};
- 
--					rpmhpd_opp_turbo: opp10 {
-+					rpmhpd_opp_turbo: opp13 {
- 						opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
- 					};
- 
--					rpmhpd_opp_turbo_l1: opp11 {
-+					rpmhpd_opp_turbo_l1: opp14 {
- 						opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
- 					};
- 				};
--- 
-2.40.1
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
+Konrad
+>  arch/arm64/boot/dts/qcom/Makefile                               | 2 +-
+>  .../boot/dts/qcom/{ipq5332-mi01.2.dts => ipq5332-rdp441.dts}    | 0
+>  2 files changed, 1 insertion(+), 1 deletion(-)
+>  rename arch/arm64/boot/dts/qcom/{ipq5332-mi01.2.dts => ipq5332-rdp441.dts} (100%)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index e0e2def48470..42736c46203c 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -3,7 +3,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
+> -dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-mi01.2.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp441.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp468.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
+> similarity index 100%
+> rename from arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts
+> rename to arch/arm64/boot/dts/qcom/ipq5332-rdp441.dts
