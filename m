@@ -2,86 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 042687042B9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 03:16:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7BED7042B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 03:16:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229506AbjEPBQd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 21:16:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43916 "EHLO
+        id S229483AbjEPBQb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 21:16:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbjEPBQc (ORCPT
+        with ESMTP id S229460AbjEPBQb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 21:16:32 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDA5B10EA
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 18:16:31 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34G1999e025157;
-        Tue, 16 May 2023 01:16:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=tHUeHBWVOJAsrOXY6KdpQSqU9/3eHh4UjM0dtkhYnAo=;
- b=dbZdDkb6DVGeqqq+sdGUhGlvoCFQfgXUNb2pdVPzZjdnnN0C4yzF5rI8/AwiZA9rRJBg
- 8JRzW/sWUd9FkXBbmhJU8/p/QYs6Vn48ls4T72rg6cRXOtAOuAFmB5AkT5zlQgLtrLpb
- wqpSIID5uy3T2Y6h/fNFVnNvk7xBGZaCgurhRZERwGz11oVKGQ5n7PlqIx6PEEXNC15H
- YWqkXeb+QNIc7osAM7xzHPvgrw6bkX7gk9+RljuzaVx5N9OSgpXBw6KycZ/urKIaRdH8
- Kk/+uOTFW2R4myTTvcmccWUYVKD287VyV+WWs9J4ij4ug4sf6SB1N9nyrtB/jgWPqUrL +A== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qj3qw55qn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 01:16:24 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34G1GOLJ024826
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 01:16:24 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 15 May
- 2023 18:16:23 -0700
-Message-ID: <8a321c11-17b1-157d-ccd0-d313b38d1cca@quicinc.com>
-Date:   Mon, 15 May 2023 18:16:23 -0700
+        Mon, 15 May 2023 21:16:31 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A36C610EA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 18:16:29 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2ac78bb48eeso141082921fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 18:16:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684199788; x=1686791788;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HhKJ9K8sXPUHNu8qgCXbMx2ph04nrQv3JOCNnJ3r0tc=;
+        b=Zin4aDiiD4dr5lMMf7axMkePl2KMRXRtEnqdqfxlifKpRjXquUxHpqqEL814lrzSYs
+         7Pg+/C1a1TOGSIgSbEavUT9A/qURTYxy98faWggMB1v77BiQv9cReT3igi6XZviir7NO
+         bPyV4MvvzMqIeqa/cy7d0IipDRz9Nb9iZ6XSwQ62gWdis8nipTDQgat4LCLmhbmlUsYU
+         RjML3cBiFSb25Qcpcqye1jWvh4b8ngCTPvb15CmVSuNGH3wFznjQ70tYL7q39Dk5AOjM
+         H89CS17IysRyxxB3TE268OPO/7sKnr8GJZR56JgGGoFMVDJ3aBZGo0yIrj8nhbUUo4mM
+         YxOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684199788; x=1686791788;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HhKJ9K8sXPUHNu8qgCXbMx2ph04nrQv3JOCNnJ3r0tc=;
+        b=d+LCd3SlIIwink38xYS0/GDk7zWNw2vw5YzbdT0DohfTPQXVcow9RGwd9srqKFSo7w
+         3oCEu7yMOV//JEgHuLTlbyVxoVSNVwHJ5asX32i72712eP7+Cl/O0pUdOERs6PytpaaA
+         cyy0BNGHc76MWF0QdmwYoPwLrxCYOECCuTh1bwqoZhQYCRcV9UDnekNCeOK/5G8dplzH
+         cXUNvAvHhsl05F9rJp7kS8LeASuIy0U9pXOPeQ7r9EmkxGAIdfVio2XPLOG9s4aMOOId
+         f1YJE8zh1nghR5smnIZGk8CW+pf7WZjtmfeQNgAAJa8gdOrRmVD0PjFntYnPPzyDE/4L
+         mZqw==
+X-Gm-Message-State: AC+VfDx4+CiSUZqLcUIhQIFiZIwAZ5TA3rSoYLPZEyFQEd4egBM+r4k3
+        MrYiCYEfw0QDbLGni3xjR7uNWA==
+X-Google-Smtp-Source: ACHHUZ7FF4CwV/cjiS18zH9a4OjJ2CQEvHfXtMS7xd3A0Bop7xeqC+uSDo35dCJW1pJ+xQThi+u7Sg==
+X-Received: by 2002:a05:651c:212:b0:2ac:8c5e:e151 with SMTP id y18-20020a05651c021200b002ac8c5ee151mr7562822ljn.31.1684199787856;
+        Mon, 15 May 2023 18:16:27 -0700 (PDT)
+Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
+        by smtp.gmail.com with ESMTPSA id h4-20020a2e9ec4000000b002a8c32fd2f3sm3989061ljk.89.2023.05.15.18.16.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 May 2023 18:16:27 -0700 (PDT)
+Message-ID: <4e62a790-192c-90b6-76dc-193dc52cc996@linaro.org>
+Date:   Tue, 16 May 2023 03:16:25 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v10 4/8] drm/msm: Add MSM-specific DSC helper methods
+Subject: Re: [PATCH v3 1/2] iommu/arm-smmu-qcom: Fix missing adreno_smmu's
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     <freedreno@lists.freedesktop.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230329-rfc-msm-dsc-helper-v10-0-4cb21168c227@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v10-4-4cb21168c227@quicinc.com>
- <kx3be4c2okye2ts4rzy4j4ltnveixf7v4rxp5v4tl2irvevg6t@c5tuelunmn4c>
- <0e8a8af5-5ab8-c1b9-e08d-909072cc9b76@quicinc.com>
- <4cbqbu47vcshskl4npyzos5r7gxipjbbzyfvdfx7fenfh4mzmx@jj6lrysp35du>
- <a5a56711-3607-407c-aa8f-aed39a41fb73@linaro.org>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <a5a56711-3607-407c-aa8f-aed39a41fb73@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: ZOj5-mJhooBc2i231yTSzdDhV4gRNcKo
-X-Proofpoint-GUID: ZOj5-mJhooBc2i231yTSzdDhV4gRNcKo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-15_21,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
- adultscore=0 impostorscore=0 bulkscore=0 suspectscore=0 priorityscore=1501
- mlxscore=0 spamscore=0 lowpriorityscore=0 mlxlogscore=948 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
- definitions=main-2305160008
-X-Spam-Status: No, score=-6.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
+        iommu@lists.linux-foundation.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Lepton Wu <lepton@chromium.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        "moderated list:ARM SMMU DRIVERS" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "open list:IOMMU SUBSYSTEM" <iommu@lists.linux.dev>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20230511145908.597683-1-robdclark@gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230511145908.597683-1-robdclark@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -92,47 +91,73 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5/15/2023 3:07 PM, Dmitry Baryshkov wrote:
-> On 16/05/2023 01:01, Marijn Suijten wrote:
->> On 2023-05-15 13:29:21, Jessica Zhang wrote:
->> <snip>
->>>> Const, as requested elsewhere.  But this function is not used anywhere
->>>> in any of the series (because we replaced the usages with more sensible
->>>> member accesses like slice_chunk_size).
->>>
->>> Acked.
->>>
->>> I would prefer to keep this helper so that we have a way to easily get
->>> BPP information from the DRM DSC config in the future, but if you'd
->>> prefer we add this helper then, I'm also ok with that.
->>
->> The inverse helper is available ad DSC_BPP in drm_dsc_helper.c.  Perhaps
->> we can move the two variants to the header and define them uniformly?
->> This isn't MSM-specific it seems (i.e. the format supports fractional
->> bpp but no RC parameters appear to be defined for such a format yet).
+On 11.05.2023 16:59, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
 > 
-> I think DSC_BPP was removed (around v2 or v3 if I read changelog 
-> correctly).
-
-Hi Dmitry,
-
-That's correct, we did have a DSC_BPP macro with the same functionality 
-as msm_dsc_get_bpp_int, but it was renamed in v2 to msm_dsc_get_bpp_int 
-(there's a typo in the changelog... I will correct that in the next 
-revision).
-
-However, I do see a DSC_BPP macro in drm_dsc_helper.c that has a 
-different functionality.
-
-Thanks,
-
-Jessica Zhang
-
+> When the special handling of qcom,adreno-smmu was moved into
+> qcom_smmu_create(), it was overlooked that we didn't have all the
+> required entries in qcom_smmu_impl_of_match.  So we stopped getting
+> adreno_smmu_priv on sc7180, breaking per-process pgtables.
 > 
-> As for the fraction-point BPP, I think AMD supports .5 bpp granularity, 
-> see drivers/gpu/drm/amd/display/dc/dml/dsc/qp_tables.h
+> Fixes: 30b912a03d91 ("iommu/arm-smmu-qcom: Move the qcom,adreno-smmu check into qcom_smmu_create")
+> Suggested-by: Lepton Wu <lepton@chromium.org>
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
 > 
-> -- 
-> With best wishes
-> Dmitry
-> 
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> index d1b296b95c86..66e191773099 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+> @@ -496,20 +496,21 @@ static const struct qcom_smmu_match_data qcom_smmu_500_impl0_data = {
+>  /*
+>   * Do not add any more qcom,SOC-smmu-500 entries to this list, unless they need
+>   * special handling and can not be covered by the qcom,smmu-500 entry.
+>   */
+>  static const struct of_device_id __maybe_unused qcom_smmu_impl_of_match[] = {
+>  	{ .compatible = "qcom,msm8996-smmu-v2", .data = &msm8996_smmu_data },
+>  	{ .compatible = "qcom,msm8998-smmu-v2", .data = &qcom_smmu_v2_data },
+>  	{ .compatible = "qcom,qcm2290-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>  	{ .compatible = "qcom,qdu1000-smmu-500", .data = &qcom_smmu_500_impl0_data  },
+>  	{ .compatible = "qcom,sc7180-smmu-500", .data = &qcom_smmu_500_impl0_data },
+> +	{ .compatible = "qcom,sc7180-smmu-v2", .data = &qcom_smmu_v2_data },
+>  	{ .compatible = "qcom,sc7280-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>  	{ .compatible = "qcom,sc8180x-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>  	{ .compatible = "qcom,sc8280xp-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>  	{ .compatible = "qcom,sdm630-smmu-v2", .data = &qcom_smmu_v2_data },
+>  	{ .compatible = "qcom,sdm845-smmu-v2", .data = &qcom_smmu_v2_data },
+>  	{ .compatible = "qcom,sdm845-smmu-500", .data = &sdm845_smmu_500_data },
+>  	{ .compatible = "qcom,sm6115-smmu-500", .data = &qcom_smmu_500_impl0_data},
+>  	{ .compatible = "qcom,sm6125-smmu-500", .data = &qcom_smmu_500_impl0_data },
+>  	{ .compatible = "qcom,sm6350-smmu-v2", .data = &qcom_smmu_v2_data },
+>  	{ .compatible = "qcom,sm6350-smmu-500", .data = &qcom_smmu_500_impl0_data },
+> @@ -540,12 +541,18 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
+>  		/* Match platform for ACPI boot */
+>  		if (acpi_match_platform_list(qcom_acpi_platlist) >= 0)
+>  			return qcom_smmu_create(smmu, &qcom_smmu_500_impl0_data);
+>  	}
+>  #endif
+>  
+>  	match = of_match_node(qcom_smmu_impl_of_match, np);
+>  	if (match)
+>  		return qcom_smmu_create(smmu, match->data);
+>  
+> +	/* If you hit this WARN_ON() you are missing an entry in the
+> +	 * qcom_smmu_impl_of_match[] table, and GPU per-process page-
+> +	 * tables will be broken.
+> +	 */
+Nit: I think people generally do
+/*
+ * 
+
+but I'm not the maintainer
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc: <stable@vger.kernel.org>
+
+Konrad
+> +	WARN_ON(of_device_is_compatible(np, "qcom,adreno-smmu"));
+> +
+>  	return smmu;
+>  }
