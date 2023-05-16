@@ -2,94 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DF1FB705123
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 16:45:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 261D2705142
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 16:52:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232834AbjEPOpI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 10:45:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51824 "EHLO
+        id S233990AbjEPOwb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 10:52:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57478 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232526AbjEPOpG (ORCPT
+        with ESMTP id S233744AbjEPOwa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 10:45:06 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D97E83DF;
-        Tue, 16 May 2023 07:45:03 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34GDKPAI007867;
-        Tue, 16 May 2023 14:44:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=a66RdhzMiuCQlbgmd3Rn1qanxZdGGnJc62BISmsrkTA=;
- b=ArbyPhLi1cUCATlWlyiHj7oCFuzB0T/7eT7wCcz4yCUwPsu+JEowMovapbNL342teOju
- dFKb8j5f2SbrW7cV8npe/TTGWgUKJA2NDEWA1HX4ExeSHQVlEHBUpYnB376OeHeKinYc
- CsUHtCTx58swALbJGwPTcxVjnqPSWPZJeGFj3QEJ/mKpnU/Hqs9Kcce1vPiXcLHOC+/U
- CEI0ltjC0qDsLR4ybAWaxEutsCKI7pgzVb2iJ55/gTrYvH4oMfzJLysvBs4OFrdN+iel
- EDWDUVMmfDbYs6T4CQzHT1EO6YG7oXKjqWhXyhltjyNqZj5yKU/GIK6D5pgt2X0NOrxa Xw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qm74p8psj-1
+        Tue, 16 May 2023 10:52:30 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3006469A;
+        Tue, 16 May 2023 07:52:25 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34GAwHYf021057;
+        Tue, 16 May 2023 14:52:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=cS6keh+ltSovX/L8dX3BnR7xI850/xqyaCWbsp3VE5g=;
+ b=SlRb9lozjrl6dUa1QvczmBpHqgt9aj59NftdTD5X84fSq5CmaUxIBviINng5dFhJjBEu
+ MgJJsKZOcCehtse4krrUsQWKsLScMWdiflSoIBHOsbz2DzgZMqPfuY5xcJKBjT9scDDj
+ CBlo81odvm/iFB0F4yrm/yjqCd1PC5tToJNeEFBmi9cwc2sqEWyg+NRYJc4gLQ3RvZLd
+ 2ubdS61wqs5CNlsCFjx0L8FaQhJ5E8Hyo/wErdAkBksNz3lf3c6/RccA71nVVU6ZwSAT
+ VLJ2YzlW+1yk5cn8lotZd6I/2RPuAIjf/hQVuk9t6jwHhORanwDshGpP3tsasy4YY9ML ow== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qm36n15p0-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 14:44:52 +0000
+        Tue, 16 May 2023 14:52:21 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34GEipSI020927
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34GEqK9o019996
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 14:44:51 GMT
-Received: from [10.216.35.75] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 16 May
- 2023 07:44:44 -0700
-Message-ID: <0ef2018d-6747-bf41-0cce-002dcb4bc369@quicinc.com>
-Date:   Tue, 16 May 2023 20:14:41 +0530
+        Tue, 16 May 2023 14:52:20 GMT
+Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 16 May 2023 07:52:16 -0700
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Kathiravan T <quic_kathirav@quicinc.com>
+Subject: [PATCH V2] arm64: dts: qcom: ipq9574: add few device nodes
+Date:   Tue, 16 May 2023 20:22:00 +0530
+Message-ID: <20230516145200.12648-1-quic_kathirav@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v8 7/9] arm64: dts: qcom: sc8280xp: Add multiport
- controller node for SC8280
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_wcheng@quicinc.com>,
-        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
-        <ahalaney@redhat.com>
-References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-8-quic_kriskura@quicinc.com>
- <ZGJBLUsPcbsxj989@hovoldconsulting.com>
- <d14567fd-0576-55bb-40c0-442e060c28ba@quicinc.com>
- <ZGNgyo8ZRcC26W5l@hovoldconsulting.com>
- <a22a3fe6-7bb1-9b47-9a14-41d957f178f3@quicinc.com>
- <ZGOWayVsjhR2Y0cN@hovoldconsulting.com>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZGOWayVsjhR2Y0cN@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1nROiWRbNECSjQ70YuNnF8CTQUBMNI7S
-X-Proofpoint-ORIG-GUID: 1nROiWRbNECSjQ70YuNnF8CTQUBMNI7S
+X-Proofpoint-GUID: 732vHGg4khfx29aRWxYIxObkb-gaFmBc
+X-Proofpoint-ORIG-GUID: 732vHGg4khfx29aRWxYIxObkb-gaFmBc
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-05-16_07,2023-05-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0 mlxscore=0
- phishscore=0 malwarescore=0 impostorscore=0 adultscore=0
- priorityscore=1501 bulkscore=0 mlxlogscore=439 suspectscore=0
- clxscore=1015 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305160123
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxlogscore=799
+ spamscore=0 suspectscore=0 priorityscore=1501 malwarescore=0 phishscore=0
+ bulkscore=0 impostorscore=0 mlxscore=0 adultscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305160124
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -98,88 +76,294 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add QUP(SPI / I2C) peripheral, PRNG, WDOG and the remaining UART nodes.
+While at it, enable the SPI NOR in RDP433 board.
 
+Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+---
+Changes since V1:
+	- Dropped the WDT binding patch, since it is already part of
+	  linux-next
+	- Rebased on the below series
+	  https://lore.kernel.org/linux-arm-msm/75a408c2-3d41-95a3-5c48-a68c84ba4f57@quicinc.com/T/#t
 
-On 5/16/2023 8:12 PM, Johan Hovold wrote:
-> On Tue, May 16, 2023 at 07:54:00PM +0530, Krishna Kurapati PSSNV wrote:
->>
->>
->> On 5/16/2023 4:24 PM, Johan Hovold wrote:
->>> On Mon, May 15, 2023 at 09:02:13PM +0530, Krishna Kurapati PSSNV wrote:
->>>> On 5/15/2023 7:56 PM, Johan Hovold wrote:
->>>>> On Sun, May 14, 2023 at 11:19:15AM +0530, Krishna Kurapati wrote:
->>>
->>>>>> @@ -3133,6 +3133,72 @@ usb_1_role_switch: endpoint {
->>>>>>     			};
->>>>>>     		};
->>>>>>     
->>>>>> +		usb_2: usb@a4f8800 {
->>>>>
->>>>> As I believe someone already pointed out, this node is not in sort order
->>>>> (i.e. it should go before usb@a6f8800).
->>>
->>>>      I missed that message, but since I named it usb_2, so I placed it in
->>>> order after usb_1. Hope that is fine !!
->>>
->>> No, the nodes should be sorted by unit address so you need to move it.
->>>
->>
->> Sure, in that case will put it in between usb_0 and usb_1 nodes.
-> 
-> No, it goes before usb_0 on sc8280xp.
-> 
->             usb_2: usb@a4f8800 {
->             usb_0: usb@a6f8800 {
->             usb_1: usb@a8f8800 {
-> 
->>>>>> +			interrupts-extended = <&pdc 127 IRQ_TYPE_EDGE_RISING>,
->>>>>> +					      <&pdc 126 IRQ_TYPE_EDGE_RISING>,
->>>>>> +					      <&pdc 16 IRQ_TYPE_LEVEL_HIGH>,
->>>>>> +					      <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
->>>>>> +					      <&intc GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
->>>>>> +					      <&intc GIC_SPI 857 IRQ_TYPE_LEVEL_HIGH>,
->>>>>> +					      <&intc GIC_SPI 856 IRQ_TYPE_LEVEL_HIGH>;
->>>>>> +
->>>>>> +			interrupt-names = "dp_hs_phy_irq",
->>>>>> +					  "dm_hs_phy_irq",
->>>>>> +					  "ss_phy_irq",
->>>>>> +					  "pwr_event_1",
->>>>>> +					  "pwr_event_2",
->>>>>> +					  "pwr_event_3",
->>>>>> +					  "pwr_event_4";
->>>
->>>>>> +			interconnect-names = "usb-ddr", "apps-usb";
->>>>>
->>>>> Looks like 'wakeup-source' is missing here too.
->>>>>
->>>>
->>>> I believe this property was added to enable wakeup from system suspend
->>>> in host mode. I didn't add this property as currently I don't need to
->>>> support wakeup. If any requirement comes in future, then I might need to
->>>> add dp/dm interrupts (if any) for other ports as well and then need to
->>>> change driver code to enable/disable them on suspend/resume.
->>>
->>> If there are dp/dm/ss interrupts per ports then those need to be defined
->>> in the binding and devicetree from the start.
->>>
->>> Similar for 'wakeup-source' which indicates that the controller *can* be
->>> used to wakeup the system from suspend (which those pdc interrupts
->>> indicates).
->>>
->>> Remember that the devicetree is supposed to describe the hardware, and
->>> which features are currently supported in some version of software is
->>> mostly irrelevant.
-> 
->> Can I take this up as a separate series (Wakeup support for multiport)
->> once this series is merged. If I am adding interrupts for other ports, I
->> can add driver code to handle those interrupts as well.
-> 
-> Nope. You can possibly add driver support later, but the binding and
-> dtsi need to be correct from the start (and it may be easier to do it
-> all at once).
-> 
+ arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts |  21 ++
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi       | 203 ++++++++++++++++++++
+ 2 files changed, 224 insertions(+)
 
-Ok, will add this in v9.
+diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+index 2ce8e09e7565..7be578017bf7 100644
+--- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
++++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
+@@ -29,6 +29,20 @@
+ 	status = "okay";
+ };
+ 
++&blsp1_spi0 {
++	pinctrl-0 = <&spi_0_pins>;
++	pinctrl-names = "default";
++	status = "okay";
++
++	flash@0 {
++		compatible = "micron,n25q128a11", "jedec,spi-nor";
++		reg = <0>;
++		#address-cells = <1>;
++		#size-cells = <1>;
++		spi-max-frequency = <50000000>;
++	};
++};
++
+ &sdhc_1 {
+ 	pinctrl-0 = <&sdc_default_state>;
+ 	pinctrl-names = "default";
+@@ -77,6 +91,13 @@
+ 			bias-pull-down;
+ 		};
+ 	};
++
++	spi_0_pins: spi-0-state {
++		pins = "gpio11", "gpio12", "gpio13", "gpio14";
++		function = "blsp0_spi";
++		drive-strength = <8>;
++		bias-disable;
++	};
+ };
+ 
+ &xo_board_clk {
+diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+index ccf70bafabab..7ebd777ae09b 100644
+--- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+@@ -116,6 +116,13 @@
+ 		#size-cells = <1>;
+ 		ranges = <0 0 0 0xffffffff>;
+ 
++		rng: rng@e3000 {
++			compatible = "qcom,prng-ee";
++			reg = <0x000e3000 0x1000>;
++			clocks = <&gcc GCC_PRNG_AHB_CLK>;
++			clock-names = "core";
++		};
++
+ 		tlmm: pinctrl@1000000 {
+ 			compatible = "qcom,ipq9574-tlmm";
+ 			reg = <0x01000000 0x300000>;
+@@ -178,6 +185,36 @@
+ 			status = "disabled";
+ 		};
+ 
++		blsp_dma: dma-controller@7884000 {
++			compatible = "qcom,bam-v1.7.0";
++			reg = <0x07884000 0x2b000>;
++			interrupts = <GIC_SPI 238 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "bam_clk";
++			#dma-cells = <1>;
++			qcom,ee = <0>;
++		};
++
++		blsp1_uart0: serial@78af000 {
++			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
++			reg = <0x078af000 0x200>;
++			interrupts = <GIC_SPI 107 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_UART1_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			status = "disabled";
++		};
++
++		blsp1_uart1: serial@78b0000 {
++			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
++			reg = <0x078b0000 0x200>;
++			interrupts = <GIC_SPI 108 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_UART2_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			status = "disabled";
++		};
++
+ 		blsp1_uart2: serial@78b1000 {
+ 			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
+ 			reg = <0x078b1000 0x200>;
+@@ -188,6 +225,164 @@
+ 			status = "disabled";
+ 		};
+ 
++		blsp1_uart3: serial@78b2000 {
++			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
++			reg = <0x078b2000 0x200>;
++			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_UART4_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			status = "disabled";
++		};
++
++		blsp1_uart4: serial@78b3000 {
++			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
++			reg = <0x078b3000 0x200>;
++			interrupts = <GIC_SPI 308 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_UART5_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			status = "disabled";
++		};
++
++		blsp1_uart5: serial@78b4000 {
++			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
++			reg = <0x078b4000 0x200>;
++			interrupts = <GIC_SPI 309 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_UART6_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			status = "disabled";
++		};
++
++		blsp1_spi0: spi@78b5000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x078b5000 0x600>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_QUP1_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp_dma 12>, <&blsp_dma 13>;
++			dma-names = "tx", "rx";
++			status = "disabled";
++		};
++
++		blsp1_i2c1: i2c@78b6000 {
++			compatible = "qcom,i2c-qup-v2.2.1";
++			reg = <0x078b6000 0x600>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_QUP2_I2C_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp_dma 14>, <&blsp_dma 15>;
++			dma-names = "tx", "rx";
++			status = "disabled";
++		};
++
++		blsp1_spi1: spi@78b6000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x078b6000 0x600>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_QUP2_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp_dma 14>, <&blsp_dma 15>;
++			dma-names = "tx", "rx";
++			status = "disabled";
++		};
++
++		blsp1_i2c2: i2c@78b7000 {
++			compatible = "qcom,i2c-qup-v2.2.1";
++			reg = <0x078b7000 0x600>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_QUP3_I2C_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp_dma 16>, <&blsp_dma 17>;
++			dma-names = "tx", "rx";
++			status = "disabled";
++		};
++
++		blsp1_spi2: spi@78b7000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x078b7000 0x600>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_QUP3_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp_dma 16>, <&blsp_dma 17>;
++			dma-names = "tx", "rx";
++			status = "disabled";
++		};
++
++		blsp1_i2c3: i2c@78b8000 {
++			compatible = "qcom,i2c-qup-v2.2.1";
++			reg = <0x078b8000 0x600>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_QUP4_I2C_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp_dma 18>, <&blsp_dma 19>;
++			dma-names = "tx", "rx";
++			status = "disabled";
++		};
++
++		blsp1_spi3: spi@78b8000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x078b8000 0x600>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>;
++			spi-max-frequency = <50000000>;
++			clocks = <&gcc GCC_BLSP1_QUP4_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp_dma 18>, <&blsp_dma 19>;
++			dma-names = "tx", "rx";
++			status = "disabled";
++		};
++
++		blsp1_i2c4: i2c@78b9000 {
++			compatible = "qcom,i2c-qup-v2.2.1";
++			reg = <0x078b9000 0x600>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 299 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_QUP5_I2C_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp_dma 20>, <&blsp_dma 21>;
++			dma-names = "tx", "rx";
++			status = "disabled";
++		};
++
++		blsp1_spi4: spi@78b9000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x078b9000 0x600>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 299 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_QUP5_SPI_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp_dma 20>, <&blsp_dma 21>;
++			dma-names = "tx", "rx";
++			status = "disabled";
++		};
++
+ 		intc: interrupt-controller@b000000 {
+ 			compatible = "qcom,msm-qgic2";
+ 			reg = <0x0b000000 0x1000>,  /* GICD */
+@@ -220,6 +415,14 @@
+ 			};
+ 		};
+ 
++		watchdog: watchdog@b017000 {
++			compatible = "qcom,apss-wdt-ipq9574", "qcom,kpss-wdt";
++			reg = <0x0b017000 0x1000>;
++			interrupts = <GIC_SPI 3 IRQ_TYPE_EDGE_RISING>;
++			clocks = <&sleep_clk>;
++			timeout-sec = <30>;
++		};
++
+ 		timer@b120000 {
+ 			compatible = "arm,armv7-timer-mem";
+ 			reg = <0x0b120000 0x1000>;
+-- 
+2.17.1
 
-Regards,
-Krishna,
