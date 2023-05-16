@@ -2,70 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 91D94704291
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 03:02:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B0C99704296
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 03:07:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245509AbjEPBC5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 21:02:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38362 "EHLO
+        id S245531AbjEPBHR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 21:07:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39298 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237423AbjEPBCz (ORCPT
+        with ESMTP id S245443AbjEPBHR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 21:02:55 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A24749D1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 18:02:53 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2ac7de2b72fso146764501fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 18:02:53 -0700 (PDT)
+        Mon, 15 May 2023 21:07:17 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5565E55BD
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 18:07:13 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2ac770a99e2so143510281fa.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 18:07:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684198972; x=1686790972;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=d+Ous+MJZLPb5QBlrHWCjDLD3iSm+23cAOMnPeUb78o=;
-        b=QyMHzf78j0uSzY2MRe0Z8f1VpS1F9zbGD6KnpEHPk6oBjZx/FyZTtURhgpqoTk9rtF
-         sUEAaeWr7B/pGPFyn81y6rYiuhBbK6Sk53K2QCHDyTe6DgAniLqZjRu4qiQt9IksZQe1
-         JNSe4PsVAYFu5tP+LB+9ZaEBAhJRJIGt5iithaMexM8Flz/XobhF7hRkJqaMTDgX6pcW
-         RjZ2+Ln8RpY/0KoOCEYZDczbGLtoUuW2/m7aFkqpf91XiRzPfBBuqz0QNZc01BQJR2BT
-         YN1Inc9ymyCw/OnliWZY4y4jOrTc7sRK7JjPKS8WQ0OJgJyebcBdACAD4Bi2jR6K4nBH
-         A0SA==
+        d=linaro.org; s=google; t=1684199231; x=1686791231;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=CM/lSevDv8XjzRTSjTzIIM/SCKVVJzi2LgwGYfmNjT4=;
+        b=NXAOh1IEio1Nx7BVRPjfwhLwEzJ0sHFCTGlM5p35PDwC66xXC1HZIkS9SjPwN0UxVK
+         rsu2y0SlKjL+V26zo9r+5k0GKJv6ZYuLZjhJr+LIkEXaVSq6DLR8z+vTdl88VdpcTI0x
+         NaFOsjBmSoA9oyVq6yvZSodqwXcVaTAj83gaFGRbrsB0NW5srpsN2BmC1ursaaqioEg4
+         9TcvUp2c3sA/gpI/WlL66bq05xUTQXBkoSPsqvKelnCeKaKTiqVvZ208SvI2OuvBHBiO
+         59QU+AxgMCYS2tkjPqxubB9tMyZtxFyQjLlUWMfAa+m11coDm3eiIRyN6HcClVDFJqyl
+         j1Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684198972; x=1686790972;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:to
-         :content-language:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1684199231; x=1686791231;
+        h=content-transfer-encoding:in-reply-to:from:references:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=d+Ous+MJZLPb5QBlrHWCjDLD3iSm+23cAOMnPeUb78o=;
-        b=TaQ6rzZqDiFrq/0i7cctnFbzNUTNhsm7pQlHdpHxC6s3IRsTipH4Iwwu/9VG1pgp1E
-         wUoGvmMpxKnFwZGoQP+QWYXCl0AwT1Gh37p7vfw+eAXCRSWzLs47KVOamtF0EPvDu9hA
-         Ed1AWoqRC8xinrr88nISUTvPY/sKfkxihhp/AFuKiWPbbVukes8ClSaMBXe+IvKUsldU
-         rSrqvq5Yt22xG5So1iXk9YmqGQB2SDQ2DUJkZz1L5X8DBAuWpwt0c5NYBDGcnCsM+1tz
-         5XCOJJwJHv0fJF9nBAK1HD5g+LXqoKAL77J9A+VkwoDIKq7MDOeuWXhkVKMDu1nad+xP
-         jp6w==
-X-Gm-Message-State: AC+VfDxkJF42cEYo1ItcuCHWqF9Q2BHiKpIl9srm8Mz1K0gJrmc0istn
-        TQD1U7Teb6frMwfe+gAtGsSBZSbcMMN6bgSsWoE=
-X-Google-Smtp-Source: ACHHUZ46y8IfHELqwhyCq5Pz8SXT3inLl6MkJEtA/vr1tv/TuWe26ewHjgChUG8asVnI0uq0RFp9LQ==
-X-Received: by 2002:a2e:9053:0:b0:2a8:bf74:61cc with SMTP id n19-20020a2e9053000000b002a8bf7461ccmr7774354ljg.26.1684198971725;
-        Mon, 15 May 2023 18:02:51 -0700 (PDT)
+        bh=CM/lSevDv8XjzRTSjTzIIM/SCKVVJzi2LgwGYfmNjT4=;
+        b=jgoS/tp/W6Hsax/EGYqjarzfyhUzYSFm49Jm5pCqRGa1HjpSzgwGXMHnQQ8IBPC3hm
+         FnZ4ZCEDO4xzC2lp/GMIJlAyZi/OfcZxEp1XQE6kcSB66WpZKeXNgO95mxhWNtl0xkqY
+         LRWL3OuoEiOlaznxQO7F1lLaSuDq/YcjL1mHrY7z/d+YzTxmiyPLWPsfCR7eIzXznlse
+         7FluYMBds8Qjna+DoO9hSlzOTdU5UtR+UVJeMk6p2c8Pzlg+kgNTYAg10CFiF+ij3ju1
+         DkBMN6i8HgOTRWv5izzanzXjcEQZWwD+wKvBNkfaoA7goM19g8mlbKq9zXt2Snud1wCm
+         6rnw==
+X-Gm-Message-State: AC+VfDzvwXAykVQThXIJ2T/3fY2slObb3P0YFdn/y2Xk1niQwYqspgl3
+        Vd8jOZZ6gahCg5RZ/ePBD0xETQ==
+X-Google-Smtp-Source: ACHHUZ40Ce3BmZXcXMME5urWr0CG8SeU1US+J4EHGbJPzj0vNXzvxEi/rHPtUFcRAGA9cJ4SfWaLhg==
+X-Received: by 2002:a2e:8618:0:b0:2ad:9acb:484e with SMTP id a24-20020a2e8618000000b002ad9acb484emr7898066lji.49.1684199231595;
+        Mon, 15 May 2023 18:07:11 -0700 (PDT)
 Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id w9-20020a05651203c900b004f14ae5ded8sm2782401lfp.28.2023.05.15.18.02.50
+        by smtp.gmail.com with ESMTPSA id a15-20020a056512020f00b004ecad67a925sm2837994lfo.66.2023.05.15.18.07.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 May 2023 18:02:51 -0700 (PDT)
-Message-ID: <e7478064-9b08-0eac-9c43-a235a0d45a90@linaro.org>
-Date:   Tue, 16 May 2023 03:02:50 +0200
+        Mon, 15 May 2023 18:07:11 -0700 (PDT)
+Message-ID: <e77647ec-4f77-541e-3df4-264c4f4f1bf7@linaro.org>
+Date:   Tue, 16 May 2023 03:07:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
+Subject: Re: [PATCH v3 1/4] dt-bindings: thermal: tsens: Fix "make dtbs_check"
+ error
 Content-Language: en-US
-To:     Kathiravan T <quic_kathirav@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230412164920.21862-1-quic_kathirav@quicinc.com>
- <20230412164920.21862-4-quic_kathirav@quicinc.com>
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, amitk@kernel.org, thara.gopinath@gmail.com,
+        rafael@kernel.org, daniel.lezcano@linaro.org, rui.zhang@intel.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <cover.1684140883.git.quic_varada@quicinc.com>
+ <72707b76a717b410b06ed7fcc854314104f5f845.1684140883.git.quic_varada@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: ipq5332: add few more reserved
- memory region
-In-Reply-To: <20230412164920.21862-4-quic_kathirav@quicinc.com>
+In-Reply-To: <72707b76a717b410b06ed7fcc854314104f5f845.1684140883.git.quic_varada@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,56 +83,50 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 12.04.2023 18:49, Kathiravan T wrote:
-> In IPQ SoCs, U-boot will collect the system RAM contents upon crash for
-> the post morterm
-s/post morterm/post-mortem ; s/the//
+On 15.05.2023 12:13, Varadarajan Narayanan wrote:
+> While verifying make dtbs_check for ipq9574, qcm2290-tsens and
+> sm6375-tsens threw the following errors.
+> 	['qcom,qcm2290-tsens', 'qcom,tsens-v2'] is too long
+> 	...
+> 	['qcom,sm6375-tsens', 'qcom,tsens-v2'] is too long
+> 
+> Fix them by adding their entries.
+> 
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+https://lore.kernel.org/linux-arm-msm/20230314-topic-2290_compats-v1-6-47e26c3c0365@linaro.org/
+https://lore.kernel.org/linux-arm-msm/20230303-topic-sm6375_features0_dts-v2-1-708b8191f7eb@linaro.org/
 
- analysis. If we don't reserve the memory region used by
-> U-boot, obviously linux will consume it and upon next boot on crash, uboot
-> will be loaded in the same region, which will lead to loose
-s/loose/loss
+These never got picked up..
 
-some of the
-> data, sometimes we may miss out critical information.
-So.. is it used to store crash data, or do you load u-boot there?
-
-Or is there some software running at a higher exception level that
-collects the dumps and stores it to this region?
-
-Are these regions only used for some sort of crashdump colection?
-If so, they could get some more specific names, e.g. uboot-crashdump
-or so.
+I'll bump them.
 
 Konrad
-So lets reserve the
-> region used by the U-boot.
-> 
-> Similarly SBL copies some data into the reserved region and it will be
-> used in the crash scenario. So reserve 1MB for SBL as well> 
-> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> [v3]:
+> 	Fix the following 'make dtbs_check' error
+> 		['qcom,qcm2290-tsens', 'qcom,tsens-v2'] is too long
+> 		['qcom,sm6375-tsens', 'qcom,tsens-v2'] is too long
 > ---
->  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+>  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> index c32217530b41..aec60840a2f0 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> @@ -114,6 +114,16 @@
->  		#size-cells = <2>;
->  		ranges;
->  
-> +		uboot@4a100000 {
-> +			reg = <0x0 0x4a100000 0x0 0x400000>;
-> +			no-map;
-> +		};
-> +
-> +		sbl@4a500000 {
-> +			reg = <0x0 0x4a500000 0x0 0x100000>;
-> +			no-map;
-> +		};
-> +
->  		tz_mem: tz@4a600000 {
->  			reg = <0x0 0x4a600000 0x0 0x200000>;
->  			no-map;
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> index d1ec963..d9aa54c 100644
+> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> @@ -48,6 +48,7 @@ properties:
+>                - qcom,msm8953-tsens
+>                - qcom,msm8996-tsens
+>                - qcom,msm8998-tsens
+> +              - qcom,qcm2290-tsens
+>                - qcom,sc7180-tsens
+>                - qcom,sc7280-tsens
+>                - qcom,sc8180x-tsens
+> @@ -56,6 +57,7 @@ properties:
+>                - qcom,sdm845-tsens
+>                - qcom,sm6115-tsens
+>                - qcom,sm6350-tsens
+> +              - qcom,sm6375-tsens
+>                - qcom,sm8150-tsens
+>                - qcom,sm8250-tsens
+>                - qcom,sm8350-tsens
