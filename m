@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7912A704354
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 04:21:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB39070436B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 04:31:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229575AbjEPCVk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 22:21:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43980 "EHLO
+        id S229619AbjEPCbw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 22:31:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229519AbjEPCVj (ORCPT
+        with ESMTP id S229468AbjEPCbv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 22:21:39 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9162D4C31;
-        Mon, 15 May 2023 19:21:38 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34G20Z3T003134;
-        Tue, 16 May 2023 02:19:29 GMT
+        Mon, 15 May 2023 22:31:51 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE4CA1BF8;
+        Mon, 15 May 2023 19:31:49 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34G1mxYY009691;
+        Tue, 16 May 2023 02:31:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=LiMbVFgnG1PzMz6t/NP0aA0ihJ+GRrYRu08HhKni1nM=;
- b=H/Ojax+A2FC/br0M3kQnFdV9mhPQztpIQfYrmA29e+XvCKb8NGyrsrZZcy8mngZF0hyN
- bIf5hq3/rH+qqpc/kHiNXJmDuLoHK+tY9mxpoaz86kLPVcE7Xbn5rFXrI9v6DqDnzuXN
- Gg1SPFVrry37ZsRkG/0Fo36tAU2QrZvYOz+v24+VZCE0hVj3klbRudP6+MLDU1vNETqQ
- T+YqVS2+ZalziZIcQJdVKjLHtZLGgBipRgh6Ii40GbiJoyYeDz9lWPVnL1XGkT83URor
- zoepB8lCf9qbe2g7cqeRVm0ngrpTeDNRkY6jzEouJfmq+tt7ePPEnjiZDv5dXbjqSWkf DA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qkkde1xeq-1
+ bh=Fuk41sHbqTHDg5aGbAaI4Rg6atxO8QhIBm3tURHrnwo=;
+ b=UyxDgo9Nmz5gsjotE/8rIe6jGSmKyCqqV3bIGnf6VpQiC9kDqphtpVo9+MjgSgsZWT2A
+ SyJX88r9IXj44fS5W7BnzQksaqrboQ6zZCO321QzBNtyTXjZti5447z5dxCvseLSp8bf
+ VW0LkS47/4K3G2K84R3lovwjiFb0Sz8WqaN9/FHN8aWXQoCELYFDD6han8pMCvlUSoAh
+ x5MWkwILj8Cjc+gf3BpNCppKodrZ/k5Ks1ne4wpHLUB5klpfsL+n56u4tDD/i+fgP6wE
+ 6q5gW3+xutRwxERqZDtVAOJoIXK/dh17wniSG4KAtaeMC4NFITiNACtmr6CjtOarIq/f uw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qkjsct42a-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 02:19:29 +0000
+        Tue, 16 May 2023 02:31:38 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34G2JS61012632
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34G2VbEh021856
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 02:19:28 GMT
+        Tue, 16 May 2023 02:31:37 GMT
 Received: from [10.216.35.75] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 15 May
- 2023 19:19:19 -0700
-Message-ID: <bc347624-4539-4a3a-9399-9b4e272cdb32@quicinc.com>
-Date:   Tue, 16 May 2023 07:49:14 +0530
+ 2023 19:31:30 -0700
+Message-ID: <5a7f993e-9340-825f-e8ea-833d4e0a0c2d@quicinc.com>
+Date:   Tue, 16 May 2023 08:01:27 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.9.1
-Subject: Re: [PATCH v8 6/9] usb: dwc3: qcom: Add multiport controller support
- for qcom wrapper
+Subject: Re: [PATCH v8 5/9] usb: dwc3: core: Refactor PHY logic to support
+ Multiport Controller
 Content-Language: en-US
 To:     Bjorn Andersson <andersson@kernel.org>
 CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
@@ -62,10 +62,10 @@ CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
         <ahalaney@redhat.com>
 References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-7-quic_kriskura@quicinc.com>
- <20230515222730.7snn2i33gkg6ctd2@ripper>
+ <20230514054917.21318-6-quic_kriskura@quicinc.com>
+ <20230515214730.epeelsnp3bznssr5@ripper>
 From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <20230515222730.7snn2i33gkg6ctd2@ripper>
+In-Reply-To: <20230515214730.epeelsnp3bznssr5@ripper>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -73,20 +73,20 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: B6f2WW032P7KSqQfW5i-uJ1ZII0SbsV2
-X-Proofpoint-ORIG-GUID: B6f2WW032P7KSqQfW5i-uJ1ZII0SbsV2
+X-Proofpoint-GUID: Va31c8gg17FH3_JEXT8JMRE63trQEstp
+X-Proofpoint-ORIG-GUID: Va31c8gg17FH3_JEXT8JMRE63trQEstp
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-05-15_21,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 suspectscore=0 bulkscore=0 clxscore=1015 impostorscore=0
- mlxscore=0 mlxlogscore=999 malwarescore=0 spamscore=0 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305160018
-X-Spam-Status: No, score=-6.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
+ mlxlogscore=999 clxscore=1015 priorityscore=1501 lowpriorityscore=0
+ malwarescore=0 spamscore=0 impostorscore=0 suspectscore=0 phishscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305160019
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -95,90 +95,227 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5/16/2023 3:57 AM, Bjorn Andersson wrote:
-> On Sun, May 14, 2023 at 11:19:14AM +0530, Krishna Kurapati wrote:
->> QCOM SoC SA8295P's tertiary quad port controller supports 2 HS+SS
->> ports and 2 HS only ports. Add support for configuring PWR_EVENT_IRQ's
->> for all the ports during suspend/resume.
+On 5/16/2023 3:17 AM, Bjorn Andersson wrote:
+> On Sun, May 14, 2023 at 11:19:13AM +0530, Krishna Kurapati wrote:
+>> Currently the DWC3 driver supports only single port controller
+>> which requires at most one HS and one SS PHY.
 >>
+>> But the DWC3 USB controller can be connected to multiple ports and
+>> each port can have their own PHYs. Each port of the multiport
+>> controller can either be HS+SS capable or HS only capable
+>> Proper quantification of them is required to modify GUSB2PHYCFG
+>> and GUSB3PIPECTL registers appropriately.
+>>
+>> Add support for detecting, obtaining and configuring phy's supported
+>> by a multiport controller and limit the max number of ports
+>> supported to 4.
+>>
+>> Co-developed-by: Harsh Agarwal <quic_harshq@quicinc.com>
+> 
+> Please include Harsh's signed-off-by as well here, to clarify that you
+> both certify the origin of this patch.
+> 
 >> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 >> ---
->>   drivers/usb/dwc3/dwc3-qcom.c | 28 ++++++++++++++++++++++------
->>   1 file changed, 22 insertions(+), 6 deletions(-)
+>>   drivers/usb/dwc3/core.c | 266 ++++++++++++++++++++++++++++++----------
+>>   drivers/usb/dwc3/core.h |  11 +-
+>>   drivers/usb/dwc3/drd.c  |  13 +-
+>>   3 files changed, 213 insertions(+), 77 deletions(-)
 >>
->> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
->> index 959fc925ca7c..7a9bce66295d 100644
->> --- a/drivers/usb/dwc3/dwc3-qcom.c
->> +++ b/drivers/usb/dwc3/dwc3-qcom.c
->> @@ -37,7 +37,10 @@
->>   #define PIPE3_PHYSTATUS_SW			BIT(3)
->>   #define PIPE_UTMI_CLK_DIS			BIT(8)
->>   
->> -#define PWR_EVNT_IRQ_STAT_REG			0x58
->> +#define PWR_EVNT_IRQ1_STAT_REG			0x58
->> +#define PWR_EVNT_IRQ2_STAT_REG			0x1dc
->> +#define PWR_EVNT_IRQ3_STAT_REG			0x228
->> +#define PWR_EVNT_IRQ4_STAT_REG			0x238
->>   #define PWR_EVNT_LPM_IN_L2_MASK			BIT(4)
->>   #define PWR_EVNT_LPM_OUT_L2_MASK		BIT(5)
->>   
->> @@ -93,6 +96,13 @@ struct dwc3_qcom {
->>   	struct icc_path		*icc_path_apps;
->>   };
->>   
->> +static u32 pwr_evnt_irq_stat_reg_offset[4] = {
->> +			PWR_EVNT_IRQ1_STAT_REG,
->> +			PWR_EVNT_IRQ2_STAT_REG,
->> +			PWR_EVNT_IRQ3_STAT_REG,
->> +			PWR_EVNT_IRQ4_STAT_REG,
-> 
-> Seems to be excessive indentation of these...
-> 
-> Can you also please confirm that these should be counted starting at 1 -
-> given that you otherwise talk about port0..N-1?
-> 
-Hi Bjorn,
-
-   I am fine with either way. Since this just denoted 4 different ports, 
-I named them starting with 1. Either ways, we will run through array 
-from (0-3), so we must be fine.
-
->> +};
->> +
->>   static inline void dwc3_qcom_setbits(void __iomem *base, u32 offset, u32 val)
+>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> [..]
+>> @@ -744,22 +777,38 @@ static int dwc3_phy_setup(struct dwc3 *dwc)
+>>   static int dwc3_phy_init(struct dwc3 *dwc)
 >>   {
->>   	u32 reg;
->> @@ -413,13 +423,16 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
->>   {
->>   	u32 val;
->>   	int i, ret;
->> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+>>   	int ret;
+>> +	int i;
+>> +	int j;
 >>   
->>   	if (qcom->is_suspended)
->>   		return 0;
+>>   	usb_phy_init(dwc->usb2_phy);
+>>   	usb_phy_init(dwc->usb3_phy);
 >>   
->> -	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
->> -	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
->> -		dev_err(qcom->dev, "HS-PHY not in L2\n");
+>> -	ret = phy_init(dwc->usb2_generic_phy);
+>> -	if (ret < 0)
+>> -		goto err_shutdown_usb3_phy;
+>> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
+>> +		ret = phy_init(dwc->usb2_generic_phy[i]);
+>> +		if (ret < 0) {
+>> +			/* clean up prior initialized HS PHYs */
+>> +			for (j = 0; j < i; j++)
+>> +				phy_exit(dwc->usb2_generic_phy[j]);
+>> +			goto err_shutdown_usb3_phy;
+> 
+> The idiomatic form is to goto err_exit_usb2_phy and let it phy_exit()
+> from i - 1 to 0. That would avoid duplicating this snippet.
+> 
+>> +		}
+>> +	}
+>>   
+>> -	ret = phy_init(dwc->usb3_generic_phy);
+>> -	if (ret < 0)
+>> -		goto err_exit_usb2_phy;
 >> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
 > 
-> In the event that the dwc3 core fails to acquire or enable e.g. clocks
-> its drvdata will be NULL. If you then hit a runtime pm transition in the
-> dwc3-qcom glue you will dereference NULL here. (You can force this issue
-> by e.g. returning -EINVAL from dwc3_clk_enable()).
+> When you call dwc3_ss_phy_setup() the index refer to port0, port1... but
+> when you refer to the phys you consistently loops over num_usb2_ports.
 > 
-> So if you're peaking into qcom->dwc3 you need to handle the fact that
-> dwc might be NULL, here and in resume below.
+> The only case I can think of where this would be useful is if it's not
+> the first N ports that are SS-capable (e.g. port0 and port can do SS).
 > 
-Thanks for catching this. You are right, there were instances where the 
-we saw probe for dwc3 being deferred while the probe for dwc3-qcom was 
-still successful [1]. In this case, if the dwc3 probe never happened and 
-system tries to enter suspend, we might hit a NULL pointer dereference.
+> If this is the case, is it correct that this should not be reflected in
+> the index passed to e.g. dwc3_ss_phy_setup()?
+> 
+> If this is not the case, could you please transition these SS-related
+> loops to iterate over usb3_generic_phy[0..num_usb3_ports)?
 
-I will fix this in v9.
+Hi Bjorn,
 
-[1]: 
-https://patchwork.kernel.org/project/linux-usb/patch/1657809067-25815-1-git-send-email-quic_kriskura@quicinc.com/
+  The reason why I used num_usb2_ports here and num_usb3_ports in 
+ss_phy_setup is that, there may be cases where not the ones in the 
+beginning but the last few ports of multiport controller are SS capable. 
+In that case trying to keep track of them and accordingly executing phy 
+operations is difficult. Instead since all ports are atleast HS capable 
+and calling a Phy op on a non-existent SS Phy is still harmless as the 
+phy pointer is NULL and phy op's return 0.
 
-Regards,
+Coming to ss_phy_setup, we need to modify the GUSB3PIPECTL registers 
+which are same as number of ss ports present. And modifying these 
+registers whether or not the Phy is used is completely fine as it is 
+done even in today's code (dwc3_phy_setup). In this case, if there are 2 
+SS Phy's we need to loop over and modify GUSB3PIPECTL(0) and 
+GUSB3PIPECTL(1) and so we need to use num_usb3_ports.
+
+For the above two reasons I used num_usb2_ports wherever I did phy 
+operations and num_usb3_ports wherever GUSB3PIPECTL is being modified 
+like I did in dwc3_core_init as well.
+
+> 
+>> +		ret = phy_init(dwc->usb3_generic_phy[i]);
+>> +		if (ret < 0) {
+>> +			/* clean up prior initialized SS PHYs */
+>> +			for (j = 0; j < i; j++)
+>> +				phy_exit(dwc->usb3_generic_phy[j]);
+>> +			goto err_exit_usb2_phy;
+> 
+> For the purpose of symmetry, same suggestion as above. phy_exit() i - 1
+> through 0, then reset j to dwc->num_usb2_ports and fall through to
+> err_exit_usb2_phy.
+
+I will try to set i/j to proper values to cleanup code appropriately. 
+But isn't this fine for now as I don't want to make too many changes in 
+next version. I will make sure to cleanup this section in a separate 
+patch after this series if that is fine.
+
+>> +		}
+>> +	}
+>>   
+>>   	return 0;
+>>   
+>>   err_exit_usb2_phy:
+>> -	phy_exit(dwc->usb2_generic_phy);
+>> +	for (i = 0; i < dwc->num_usb2_ports; i++)
+>> +		phy_exit(dwc->usb2_generic_phy[i]);
+>> +
+>>   err_shutdown_usb3_phy:
+>>   	usb_phy_shutdown(dwc->usb3_phy);
+>>   	usb_phy_shutdown(dwc->usb2_phy);
+>> @@ -769,8 +818,12 @@ static int dwc3_phy_init(struct dwc3 *dwc)
+> [..]
+>>   static int dwc3_phy_power_on(struct dwc3 *dwc)
+>>   {
+>>   	int ret;
+>> +	int i;
+>> +	int j;
+>>   
+>>   	usb_phy_set_suspend(dwc->usb2_phy, 0);
+>>   	usb_phy_set_suspend(dwc->usb3_phy, 0);
+>>   
+>> -	ret = phy_power_on(dwc->usb2_generic_phy);
+>> -	if (ret < 0)
+>> -		goto err_suspend_usb3_phy;
+>> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
+>> +		ret = phy_power_on(dwc->usb2_generic_phy[i]);
+>> +		if (ret < 0) {
+>> +			/* Turn off prior ON'ed HS Phy's */
+>> +			for (j = 0; j < i; j++)
+>> +				phy_power_off(dwc->usb2_generic_phy[j]);
+>> +			goto err_suspend_usb3_phy;
+> 
+> As above, I'd prefer that you don't duplicate the phy_power_off() loop.
+> 
+>> +		}
+>> +	}
+>>   
+>> -	ret = phy_power_on(dwc->usb3_generic_phy);
+>> -	if (ret < 0)
+>> -		goto err_power_off_usb2_phy;
+>> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
+>> +		ret = phy_power_on(dwc->usb3_generic_phy[i]);
+>> +		if (ret < 0) {
+>> +			/* Turn of prior ON'ed SS Phy's */
+>> +			for (j = 0; j < i; j++)
+>> +				phy_power_off(dwc->usb3_generic_phy[j]);
+>> +			goto err_power_off_usb2_phy;
+>> +		}
+>> +	}
+>>   
+>>   	return 0;
+> [..]
+>> +static int dwc3_get_multiport_phys(struct dwc3 *dwc)
+>> +{
+>> +	int ret;
+>> +	struct device *dev = dwc->dev;
+>> +	int i;
+>> +	char phy_name[11];
+> 
+> It would be prettier if you sorted these lines by length, longest
+> first...
+> 
+Sure, will fix this nit.
+
+> [..]
+>> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
+>> index d3401963bc27..84f6303922aa 100644
+>> --- a/drivers/usb/dwc3/core.h
+>> +++ b/drivers/usb/dwc3/core.h
+>> @@ -35,6 +35,9 @@
+>>   
+>>   #define DWC3_MSG_MAX	500
+>>   
+>> +/* Number of ports supported by a multiport controller */
+>> +#define MAX_PORTS_SUPPORTED	4
+> 
+> I think it would be preferred to prefix this DWC3_ (so perhaps just
+> DWC3_MAX_PORTS, to keep it shorter)
+
+Sure, will fix this nit.
+
+Thanks,
 Krishna,
+> 
+>> +
+>>   /* Define XHCI Extcap register offsets for getting multiport info */
+>>   #define XHCI_HCC_PARAMS_OFFSET	0x10
+>>   #define DWC3_XHCI_HCSPARAMS1	0x04
+>> @@ -1038,8 +1041,8 @@ struct dwc3_scratchpad_array {
+>>    * @usb3_phy: pointer to USB3 PHY
+>>    * @num_usb2_ports: number of usb2 ports.
+>>    * @num_usb3_ports: number of usb3 ports.
+>> - * @usb2_generic_phy: pointer to USB2 PHY
+>> - * @usb3_generic_phy: pointer to USB3 PHY
+>> + * @usb2_generic_phy: pointer to array of USB2 PHY
+>> + * @usb3_generic_phy: pointer to array of USB3 PHY
+>>    * @phys_ready: flag to indicate that PHYs are ready
+>>    * @ulpi: pointer to ulpi interface
+>>    * @ulpi_ready: flag to indicate that ULPI is initialized
+>> @@ -1178,8 +1181,8 @@ struct dwc3 {
+>>   	u8			num_usb2_ports;
+>>   	u8			num_usb3_ports;
+>>   
+>> -	struct phy		*usb2_generic_phy;
+>> -	struct phy		*usb3_generic_phy;
+>> +	struct phy		*usb2_generic_phy[MAX_PORTS_SUPPORTED];
+>> +	struct phy		*usb3_generic_phy[MAX_PORTS_SUPPORTED];
+>>   
+>>   	bool			phys_ready;
+> 
