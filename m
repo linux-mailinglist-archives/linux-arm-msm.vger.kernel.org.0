@@ -2,146 +2,273 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E487704ABD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 12:34:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E767704AE3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 12:41:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232024AbjEPKej (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 06:34:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33874 "EHLO
+        id S232295AbjEPKl0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 06:41:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231710AbjEPKeg (ORCPT
+        with ESMTP id S232147AbjEPKlZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 06:34:36 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 164EC5BA3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 03:34:01 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-50bc5197d33so25381580a12.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 03:34:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684233231; x=1686825231;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/s/b8eaU43q5xbDT+IsLyN9R6gUY2onB35bWiqiQfVQ=;
-        b=FVMvEJiPqhOQXhjXOb99WFShalGrKAuerHvbyeTpR2Z4/BzvjQwkO24qDPKoKmbrQx
-         0r71drMY3DWM54icVAz8ygeowkiUqGp2ztytda6/chM9Jj7Rk4eNvojd6B6ZlJ+NY2eJ
-         +aZoKwBszbw1XcxpIYehiuWjrX4HVKlAPBr4mKYSRiZlJ9skj+V4NTwp9NAEoBTqiIy0
-         ujCexKgDeDCm9MRQTCHrK2m5lsknNwbnSHNeeT6dXVmUGQEhiVEEHdJhRKFFddmu/e9t
-         RTV4raAUnkEFd0ecqc7JdyyS8XOimQxxLSr1FNPHKultErO4MwnKis0eGOEhlm2a8FIe
-         /fyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684233231; x=1686825231;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/s/b8eaU43q5xbDT+IsLyN9R6gUY2onB35bWiqiQfVQ=;
-        b=jcBoi+LjKSM5l5TAEFZCqe8IeznRYilMFb2OZp7CsZo67ejDKtSl0s7ybSaFCYLVdt
-         XVoLSB9vA/OrqDEaO7bFPUE2c06j/jJH345/iLAgl3ijazsLuZ3XzYoP02QBCZnoMqjn
-         Nm/4grpHUoUp5f9sUvLREbUz7mf9e3hJc8EJz4lxuQ8bWJTJVjGVnbm9rvsqJxwoYVmP
-         Sn5RiMCBfdbeBx5jZJz0L4+yqu2Gsf+/Ywn1Zb3RlWN5Vp2Wnq6rzWOXH9uTG1kWWAS4
-         845W0DH67k9Izt3/TarmZqVL6YajCACIdWZkN1e0Orx91jMliVFKDhzD/Ihkr6VCVTav
-         uC9g==
-X-Gm-Message-State: AC+VfDz8fvkdC4LuM0x4HfW12+diDGKsRvyK77cc+x9/N2juzbcr1q46
-        luIxHlMBv9rsESYZHa0JnbZROg==
-X-Google-Smtp-Source: ACHHUZ4E3loLNCVYpl/4ZNNE0tRB5XJnXmJHiqEn+7ptHeyKvrhzAdzam7JlqLZxnX2qqTeB7gnauA==
-X-Received: by 2002:a50:ed0b:0:b0:50b:d83b:9c61 with SMTP id j11-20020a50ed0b000000b0050bd83b9c61mr27778560eds.32.1684233230993;
-        Tue, 16 May 2023 03:33:50 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:77d1:16a1:abe1:84fc? ([2a02:810d:15c0:828:77d1:16a1:abe1:84fc])
-        by smtp.gmail.com with ESMTPSA id n21-20020aa7c695000000b0050bdd7fafd8sm8262403edq.29.2023.05.16.03.33.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 May 2023 03:33:50 -0700 (PDT)
-Message-ID: <3af2f676-66fb-1c10-372f-4fcf6f7d733e@linaro.org>
-Date:   Tue, 16 May 2023 12:33:49 +0200
+        Tue, 16 May 2023 06:41:25 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7413B8;
+        Tue, 16 May 2023 03:41:23 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34G8tMBT026512;
+        Tue, 16 May 2023 10:41:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=sOGIW5SY1jcVbILOphjbfZnYoGe3ie9TUAS295QSTGU=;
+ b=hU8ZZ9u9NmkxnPIkjVfVqKZo6hmIlGdB1pwXOlu7xgXDsxucBV3z3oXsRytes4UarRRs
+ KysUbaOO1MGK3FQ89faL+L+cD4ohxyPgbb7P71yg3rqiYrAKC4o7Jm0H8YJDR4gb3mgv
+ EbYsAU13TLZzbBDN5WYwc+s6RM0/Mck3UqzbNxXu5tFRuz43eVyDwCot90cEY9lIDfa2
+ 0MAwT7dyFH3WZ/sAonigd6IMKD5T4tVvIM8p006ayCYztJDwG96BvuXTLHTSAWIAjRbr
+ fLQkJQOlldWiGP1IXewjQ7rRTcqNLSeaZFQ6CZkdZ/SP2p/vFciHGVT9M9ueTkryCCIN /Q== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qm1x08qwv-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 16 May 2023 10:41:19 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34GAfIm4011929
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 16 May 2023 10:41:19 GMT
+Received: from tjiang-gv.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 16 May 2023 03:41:16 -0700
+From:   Tim Jiang <quic_tjiang@quicinc.com>
+To:     <marcel@holtmann.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-bluetooth@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_tjiang@quicinc.com>,
+        <quic_bgodavar@quicinc.com>, <quic_hemantg@quicinc.com>,
+        <mka@chromium.org>
+Subject: [PATCH v3] Bluetooth: hci_qca: Add support for Qualcomm Bluetooth SoC QCA2066
+Date:   Tue, 16 May 2023 18:41:02 +0800
+Message-ID: <20230516104102.30775-1-quic_tjiang@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v4 4/5] dt-bindings: iommu: arm,smmu: enable clocks for
- sa8775p Adreno SMMU
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230417125844.400782-1-brgl@bgdev.pl>
- <20230417125844.400782-5-brgl@bgdev.pl>
- <CAMRc=MeWEs7AoZSNWS9bZO=_12U5944VBq0ixrY2rx2h2=OOfw@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAMRc=MeWEs7AoZSNWS9bZO=_12U5944VBq0ixrY2rx2h2=OOfw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: OSwEu7e2klFIcN00nfcY5LWvqYjrvlSX
+X-Proofpoint-GUID: OSwEu7e2klFIcN00nfcY5LWvqYjrvlSX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-16_04,2023-05-16_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 mlxlogscore=999 bulkscore=0 mlxscore=0 impostorscore=0
+ spamscore=0 adultscore=0 phishscore=0 clxscore=1011 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305160090
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/05/2023 12:07, Bartosz Golaszewski wrote:
-> On Mon, Apr 17, 2023 at 2:58 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
->>
->> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>
->> The GPU SMMU will require the clocks property to be set so put the
->> relevant compatible into the adreno if-then block.
->>
->> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->> ---
->>  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 6 ++++--
->>  1 file changed, 4 insertions(+), 2 deletions(-)
->>
->> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
->> index ba677d401e24..53bed0160be8 100644
->> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
->> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
->> @@ -79,6 +79,7 @@ properties:
->>        - description: Qcom Adreno GPUs implementing "qcom,smmu-500" and "arm,mmu-500"
->>          items:
->>            - enum:
->> +              - qcom,sa8775p-smmu-500
->>                - qcom,sc7280-smmu-500
->>                - qcom,sm6115-smmu-500
->>                - qcom,sm6125-smmu-500
->> @@ -331,7 +332,9 @@ allOf:
->>        properties:
->>          compatible:
->>            contains:
->> -            const: qcom,sc7280-smmu-500
->> +            enum:
->> +              - qcom,sa8775p-smmu-500
->> +              - qcom,sc7280-smmu-500
->>      then:
->>        properties:
->>          clock-names:
->> @@ -413,7 +416,6 @@ allOf:
->>                - nvidia,smmu-500
->>                - qcom,qcm2290-smmu-500
->>                - qcom,qdu1000-smmu-500
->> -              - qcom,sa8775p-smmu-500
->>                - qcom,sc7180-smmu-500
->>                - qcom,sc8180x-smmu-500
->>                - qcom,sc8280xp-smmu-500
->> --
->> 2.37.2
->>
-> 
-> Gentle ping for a review and a pick up. The DT patches that use this
-> schema are in next now so check_dtbs will now fail.
+This patch adds support for QCA2066 firmware patch and nvm downloading.
 
-I assume this is not for me, as you got my tag in v2, which I repeated
-in v3.
+Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
+---
+ drivers/bluetooth/btqca.c   | 77 ++++++++++++++++++++++++++++++++++++-
+ drivers/bluetooth/btqca.h   |  4 ++
+ drivers/bluetooth/hci_qca.c |  8 +++-
+ 3 files changed, 87 insertions(+), 2 deletions(-)
 
-Best regards,
-Krzysztof
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index fd0941fe8608..bd028387cd02 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -205,6 +205,48 @@ static int qca_send_reset(struct hci_dev *hdev)
+ 	return 0;
+ }
+ 
++static int qca_read_fw_board_id(struct hci_dev *hdev, u16 *bid)
++{
++	u8 cmd;
++	struct sk_buff *skb;
++	struct edl_event_hdr *edl;
++	int err = 0;
++	int bid_len;
++
++	bt_dev_dbg(hdev, "QCA read board ID");
++
++	cmd = EDL_GET_BID_REQ_CMD;
++	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CMD_LEN,
++				&cmd, 0, HCI_INIT_TIMEOUT);
++	if (IS_ERR(skb)) {
++		err = PTR_ERR(skb);
++		bt_dev_err(hdev, "Reading QCA board ID failed (%d)", err);
++		return err;
++	}
++
++	edl = skb_pull_data(skb, sizeof(*edl));
++	if (!edl) {
++		bt_dev_err(hdev, "QCA read board ID with no header");
++		err = -EILSEQ;
++		goto out;
++	}
++
++	if (edl->cresp != EDL_CMD_REQ_RES_EVT ||
++	    edl->rtype != EDL_GET_BID_REQ_CMD) {
++		bt_dev_err(hdev, "QCA Wrong packet: %d %d", edl->cresp, edl->rtype);
++		err = -EIO;
++		goto out;
++	}
++
++	bid_len = edl->data[0];
++	*bid = (edl->data[1] << 8) + edl->data[2];
++	bt_dev_info(hdev, "%s: bid len = %x, bid = %x", __func__, bid_len, *bid);
++
++out:
++	kfree_skb(skb);
++	return err;
++}
++
+ int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
+ {
+ 	struct sk_buff *skb;
+@@ -574,6 +616,30 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
+ }
+ EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
+ 
++static void qca_generate_nvm_name(struct hci_dev *hdev, char *fwname,
++		   size_t max_size, struct qca_btsoc_version ver, u16 bid)
++{
++	u8 rom_ver = 0;
++	u32 soc_ver;
++	const char *variant;
++
++	soc_ver = get_soc_ver(ver.soc_id, ver.rom_ver);
++	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
++
++	if ((ver.soc_id & 0x0000ff00) == QCA_HSP_GF_SOC_ID)  /* hsp gf chip */
++		variant = "g";
++	else
++		variant = "";
++
++	if (bid == 0x0)
++		snprintf(fwname, max_size, "qca/hpnv%02x%s.bin", rom_ver, variant);
++	else
++		snprintf(fwname, max_size, "qca/hpnv%02x%s.%x",
++				rom_ver, variant, bid);
++
++	bt_dev_info(hdev, "%s: nvm name is %s", __func__, fwname);
++}
++
+ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
+ 		   const char *firmware_name)
+@@ -582,6 +648,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 	int err;
+ 	u8 rom_ver = 0;
+ 	u32 soc_ver;
++	u16 boardid = 0;
+ 
+ 	bt_dev_dbg(hdev, "QCA setup on UART");
+ 
+@@ -604,6 +671,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 	if (qca_is_wcn399x(soc_type)) {
+ 		snprintf(config.fwname, sizeof(config.fwname),
+ 			 "qca/crbtfw%02x.tlv", rom_ver);
++	} else if (soc_type == QCA_QCA2066) {
++		snprintf(config.fwname, sizeof(config.fwname),
++			 "qca/hpbtfw%02x.tlv", rom_ver);
+ 	} else if (soc_type == QCA_QCA6390) {
+ 		snprintf(config.fwname, sizeof(config.fwname),
+ 			 "qca/htbtfw%02x.tlv", rom_ver);
+@@ -631,6 +701,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 	/* Give the controller some time to get ready to receive the NVM */
+ 	msleep(10);
+ 
++	if (soc_type == QCA_QCA2066)
++		qca_read_fw_board_id(hdev, &boardid);
++
+ 	/* Download NVM configuration */
+ 	config.type = TLV_TYPE_NVM;
+ 	if (firmware_name)
+@@ -644,7 +717,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 			snprintf(config.fwname, sizeof(config.fwname),
+ 				 "qca/crnv%02x.bin", rom_ver);
+ 		}
+-	}
++	} else if (soc_type == QCA_QCA2066)
++		qca_generate_nvm_name(hdev, config.fwname, sizeof(config.fwname),
++				ver, boardid);
+ 	else if (soc_type == QCA_QCA6390)
+ 		snprintf(config.fwname, sizeof(config.fwname),
+ 			 "qca/htnv%02x.bin", rom_ver);
+diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
+index b884095bcd9d..7c9b3464ae4a 100644
+--- a/drivers/bluetooth/btqca.h
++++ b/drivers/bluetooth/btqca.h
+@@ -13,6 +13,7 @@
+ #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
+ #define EDL_GET_BUILD_INFO_CMD		(0x20)
+ #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
++#define EDL_GET_BID_REQ_CMD		(0x23)
+ #define EDL_PATCH_CONFIG_CMD		(0x28)
+ #define MAX_SIZE_PER_TLV_SEGMENT	(243)
+ #define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
+@@ -48,6 +49,8 @@
+ 
+ #define QCA_FW_BUILD_VER_LEN		255
+ 
++#define QCA_HSP_GF_SOC_ID		0x1200
++
+ 
+ enum qca_baudrate {
+ 	QCA_BAUDRATE_115200 	= 0,
+@@ -145,6 +148,7 @@ enum qca_btsoc_type {
+ 	QCA_WCN3990,
+ 	QCA_WCN3998,
+ 	QCA_WCN3991,
++	QCA_QCA2066,
+ 	QCA_QCA6390,
+ 	QCA_WCN6750,
+ 	QCA_WCN6855,
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 1b064504b388..ec24ce451568 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1729,7 +1729,7 @@ static int qca_setup(struct hci_uart *hu)
+ 	bt_dev_info(hdev, "setting up %s",
+ 		qca_is_wcn399x(soc_type) ? "wcn399x" :
+ 		(soc_type == QCA_WCN6750) ? "wcn6750" :
+-		(soc_type == QCA_WCN6855) ? "wcn6855" : "ROME/QCA6390");
++		(soc_type == QCA_WCN6855) ? "wcn6855" : "ROME/QCA6390/QCA2066");
+ 
+ 	qca->memdump_state = QCA_MEMDUMP_IDLE;
+ 
+@@ -1874,6 +1874,11 @@ static const struct qca_device_data qca_soc_data_qca6390 __maybe_unused = {
+ 	.num_vregs = 0,
+ };
+ 
++static const struct qca_device_data qca_soc_data_qca2066 = {
++	.soc_type = QCA_QCA2066,
++	.num_vregs = 0,
++};
++
+ static const struct qca_device_data qca_soc_data_wcn6750 __maybe_unused = {
+ 	.soc_type = QCA_WCN6750,
+ 	.vregs = (struct qca_vreg []) {
+@@ -2364,6 +2369,7 @@ static const struct of_device_id qca_bluetooth_of_match[] = {
+ 	{ .compatible = "qcom,wcn3998-bt", .data = &qca_soc_data_wcn3998},
+ 	{ .compatible = "qcom,wcn6750-bt", .data = &qca_soc_data_wcn6750},
+ 	{ .compatible = "qcom,wcn6855-bt", .data = &qca_soc_data_wcn6855},
++	{ .compatible = "qcom,qca2066-bt", .data = &qca_soc_data_qca2066},
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, qca_bluetooth_of_match);
+-- 
+2.17.1
 
