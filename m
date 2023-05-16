@@ -2,91 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB39070436B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 04:31:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2851F704408
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 05:38:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229619AbjEPCbw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 22:31:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48306 "EHLO
+        id S229662AbjEPDib (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 23:38:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbjEPCbv (ORCPT
+        with ESMTP id S229552AbjEPDia (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 22:31:51 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE4CA1BF8;
-        Mon, 15 May 2023 19:31:49 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34G1mxYY009691;
-        Tue, 16 May 2023 02:31:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Fuk41sHbqTHDg5aGbAaI4Rg6atxO8QhIBm3tURHrnwo=;
- b=UyxDgo9Nmz5gsjotE/8rIe6jGSmKyCqqV3bIGnf6VpQiC9kDqphtpVo9+MjgSgsZWT2A
- SyJX88r9IXj44fS5W7BnzQksaqrboQ6zZCO321QzBNtyTXjZti5447z5dxCvseLSp8bf
- VW0LkS47/4K3G2K84R3lovwjiFb0Sz8WqaN9/FHN8aWXQoCELYFDD6han8pMCvlUSoAh
- x5MWkwILj8Cjc+gf3BpNCppKodrZ/k5Ks1ne4wpHLUB5klpfsL+n56u4tDD/i+fgP6wE
- 6q5gW3+xutRwxERqZDtVAOJoIXK/dh17wniSG4KAtaeMC4NFITiNACtmr6CjtOarIq/f uw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qkjsct42a-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 02:31:38 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34G2VbEh021856
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 02:31:37 GMT
-Received: from [10.216.35.75] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 15 May
- 2023 19:31:30 -0700
-Message-ID: <5a7f993e-9340-825f-e8ea-833d4e0a0c2d@quicinc.com>
-Date:   Tue, 16 May 2023 08:01:27 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v8 5/9] usb: dwc3: core: Refactor PHY logic to support
- Multiport Controller
+        Mon, 15 May 2023 23:38:30 -0400
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2042.outbound.protection.outlook.com [40.107.101.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BAC5559A;
+        Mon, 15 May 2023 20:38:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=m0FvGGW54jgRo4nxM5k10clxNDWVXcPKd0jP5yxGzF5avp09VddXRZU4bCr0H9zsnuH4DEPq0oPHtPIC08wF++wiMQyzQeasXQxklNkvqy4RXv/I0FbYO1rcifUzOtnkXxCp4ityIElnLsjzChKznUc4pnUylebIWB3Np5XBBSM826hbuCN3nA2tuEXZ6NjOe6WcJJuSzxPM4tNRjD3ytMaW1i9jRLI9YBaqX+fU5CdYPfXrPMrp049pz3GixQGxOySBN8KbYp9yxjLwzzbi6NaaR6/UGkpPdTILiMYdNbfbsrL//G4ruQOme3hKqQZdb+7NAwx8PtWNSXvCtV9Wqg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+GB2PhSJ+EdxaTDSJq+dy3tP4nGt87W3Tq9b7WvLXKE=;
+ b=gbmdUJovEjsLl9LC3bz4IlejU9lKAUpzLH479iq89QQ5d9w9Z/bzy1s7C07LqM29phnvxAPBWYTBchGqYQvr82Ct8XYODJug6GPXEpe1UjS6YKAL8GNd3iy1cjxy8UHWloOR3gWboyLeFVCvfcZnRjgX8O/5PuU95lgKRJ+JhsSX2MVP8/bSzhvxgnHFhKtjOPDaevh7yPcj79HFldYPhkJe7MngDAfocUoYZaQyQNN93dVUqT9nCAPPycBImMFyTP7qDd+mfbNdjylfUef5bi3mdwltqBifqmygifjrp7FlSe+aG+BMAK3Tim+VY5yi/mJBT0sYD7kLcpGc4hkrUw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=+GB2PhSJ+EdxaTDSJq+dy3tP4nGt87W3Tq9b7WvLXKE=;
+ b=LZnRf0RVaIlN0tK1TNpJN2VxHkEDEg2+woiWjH3r9GZK0zHAYq7HjmDT0wUIg/znTzVVCX2radBnPwIOtBJv1y2jVqD2J7tEm05K6UdZc90ZsQNRVWcu48KPvigRmqUOhyJl+Aip4s/FK9daOcgrbL/zBflx5YqcrKyeTWhkgFg=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BL1PR12MB5827.namprd12.prod.outlook.com (2603:10b6:208:396::19)
+ by MW4PR12MB7484.namprd12.prod.outlook.com (2603:10b6:303:212::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6387.33; Tue, 16 May
+ 2023 03:38:26 +0000
+Received: from BL1PR12MB5827.namprd12.prod.outlook.com
+ ([fe80::e7a5:8627:717a:d6f9]) by BL1PR12MB5827.namprd12.prod.outlook.com
+ ([fe80::e7a5:8627:717a:d6f9%6]) with mapi id 15.20.6387.030; Tue, 16 May 2023
+ 03:38:25 +0000
+Message-ID: <ff522b83-d84a-d76e-0317-e8ca55fb82b8@amd.com>
+Date:   Tue, 16 May 2023 09:08:13 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101
+ Thunderbird/96.0
+Subject: Re: [PATCH v3 7/7] PCI: endpoint: Add PCI Endpoint function driver
+ for MHI bus
 Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rob Herring" <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_wcheng@quicinc.com>,
-        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
-        <ahalaney@redhat.com>
-References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-6-quic_kriskura@quicinc.com>
- <20230515214730.epeelsnp3bznssr5@ripper>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <20230515214730.epeelsnp3bznssr5@ripper>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Kishon VijayAbraham I <kvijayab@amd.com>
+Cc:     lpieralisi@kernel.org, kw@linux.com, kishon@kernel.org,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20230314044623.10254-1-manivannan.sadhasivam@linaro.org>
+ <20230314044623.10254-8-manivannan.sadhasivam@linaro.org>
+ <d25fdf75-e1fe-b83b-cb9c-ec0fb62f9254@amd.com>
+ <20230515113647.GA42703@thinkpad>
+From:   Kishon Vijay Abraham I <Kishon.vijayabraham@amd.com>
+In-Reply-To: <20230515113647.GA42703@thinkpad>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Va31c8gg17FH3_JEXT8JMRE63trQEstp
-X-Proofpoint-ORIG-GUID: Va31c8gg17FH3_JEXT8JMRE63trQEstp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-15_21,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- mlxlogscore=999 clxscore=1015 priorityscore=1501 lowpriorityscore=0
- malwarescore=0 spamscore=0 impostorscore=0 suspectscore=0 phishscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305160019
-X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+X-ClientProxiedBy: PN0PR01CA0029.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:4e::14) To BL1PR12MB5827.namprd12.prod.outlook.com
+ (2603:10b6:208:396::19)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5827:EE_|MW4PR12MB7484:EE_
+X-MS-Office365-Filtering-Correlation-Id: 86052c3e-9c10-489f-9359-08db55bf0160
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: KAShmMiUss5/2ZvIcbeOTnL9G7cDi2zJYRjfFZhanCo4pLCZZ+mr7W8fku4Rjgvez0FHoNRn166SKHLFKXiO5/uLEMynUqXH/dhqbXhqIYXhNCuG2izS2LyZdHRuU8hCSMy3BAuW/7XSUr3OPzTLMswJ/7aisDAqnCztXx/AyNB3oTn0lG14Skzcglh9yOm9iEohjEbvIDphLikNuBaQxsEdx0kEKKZoQbeINarc8nBoDcBbhiqda/nqFWuaBrG9mQOhIC51kvEiL8q8Zl+rxFyuMNgKnIgXamJFhtAAkKILvyY/CA4H6POoQwieYeQFDHmJB7+OYkV2OPf4PkXI6sDW9U7/++tRQQrlDJj4t7fxeH8drop6/dtiey6Cpkhgy9IJAq1TGJ9yVSzRyxFqAK5tdx3EPdgn1jWqN6GSrlid0Dbl0ur5YpEDlDod3LHNQtfIxVLZs0uVAYltNmhepQd9IqSRJoyjpnUTiljoHfQY1yRkD3zUEwxk+z77mlNCA/3VUq0xXyc6EyxLEttypz/psQs79eHE3kMrn80gQJQ514pvShUVoNETPNt4e4Ifghwm2xuDMGCssjOHYe3UgLxh93DlOuh9lNhsLjYKghEApJsh+Wl6LsJmPa8VUoWpqOiOBoDjgKp8RXli0HRaSA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR12MB5827.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(376002)(136003)(346002)(366004)(39860400002)(396003)(451199021)(478600001)(6486002)(6666004)(2616005)(6512007)(26005)(6506007)(110136005)(186003)(53546011)(2906002)(36756003)(4326008)(6636002)(66476007)(66556008)(66946007)(38100700002)(41300700001)(5660300002)(8676002)(8936002)(31696002)(316002)(86362001)(31686004)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bUNmQWY5YmNPb2hnT3Rnb0RCNVF1MUx4cE1sTTAvbDZpSWVrVjA4VFRlcGtI?=
+ =?utf-8?B?dVZBcEdJSGovbnRsTmVQTGNoTUZ2TkNHc3EyTzcvc1hjeE9IbGR4TlFqSEMw?=
+ =?utf-8?B?TWhYMGdNRzdyeHRJR0RwMVZBUjQwQmFrV1p4anM2VFdDOEdzRWF1YnlOWGhF?=
+ =?utf-8?B?a0NXNVF2NGs0REJNd28wNUNVNzFrUXcvU1hSaG05Z1JidVhhbHp3aFlIYzBx?=
+ =?utf-8?B?RUxxU05zci9NN3ZRZURCUmNMZ0ZCVDluUy9pMVFyS3llcFJScGJCNk82NzBC?=
+ =?utf-8?B?d3IrWGkxQUhaVXhBOHBOTENxSnZPTWJZemo5M3ExOTkrYlEwaWFjdEo1MkFa?=
+ =?utf-8?B?MncvS1U3T1FyZU9UaUJHNHA1czFuSFhCWmpHcGplRlFCSTg5cnJrN0FXQXVU?=
+ =?utf-8?B?NWlqVTloUEFWc3p4TGhWc29qcGdBek1xLy9ieG5xZjliOHhLaGtvUkxIVnpF?=
+ =?utf-8?B?V3lZQWI2K0JoSHJJbG1YZUVsYlpjalZiWDBrNm5oZTZvdmRlazQwa1VUemJk?=
+ =?utf-8?B?ZlRqZWdSMkVuQnowQUsxdFVRaXNwU2tyU2xmRkI3TkgwbVVueUtWWitianoz?=
+ =?utf-8?B?aXhzTXgvTW01YXM1Uzc5Nk5LNEhoZUo2SHdDUGVhMldQZHRsNlU5NGdlNk9o?=
+ =?utf-8?B?Z01qdjZUUHN3TnZiTmVwQ3VUYXlPb2dlTUY2N09SWUNCc2hWYkNxYlEyck0w?=
+ =?utf-8?B?azNPczYxTnVBb0hxeFdGQWlVd2xuN0plampnMmNsZnpXbVhJZklWMkMwMVl2?=
+ =?utf-8?B?RmNJT3FwWHU1aG9nTDkvRE1iaTBHZmtDSTlMYXN3SGVWY2dUekEzZ28ycjJl?=
+ =?utf-8?B?QVFhOWdKQ0NwbDBaYmJjOE9pSlg5a3diRkdWbHdOTTdjYUZwNmszelBYUis3?=
+ =?utf-8?B?U2tnVC96QVdBU1RoVlZhanp5QWFhRXZUcmZUU2ZzLzlKZ1dvTk1pYTFnUTVi?=
+ =?utf-8?B?SkU1bXBXcXNRMnpiU2hjeFVRdXhYZHVZaEh4ZytvYjBGcXVjYkkzejVYTDFq?=
+ =?utf-8?B?Z2t4T1dLeDRpd2ZBZFlpeHVWQlA4US9jQ1BXYXdXRS9UOGFYd3B5VVV5MWhK?=
+ =?utf-8?B?VGIrai9FMzBWSDErMUlITzJZcDZvUDZCZ1VBSHJIQzV6NGlYK3BDeVhIUmhh?=
+ =?utf-8?B?TTQ0eEVJc3M0VURqME5VRUU2SVVSK2ZPZzFSNmxzT0lXSVJ1dklHUDRNN2xa?=
+ =?utf-8?B?dUVWMEVTemd6NHF6Y0FRTU9CZ1hxRFdBb1F4dWJlMjRnd282M2JwTWlwSy9L?=
+ =?utf-8?B?STk1UWlHM1lDSE1obE9ycE0vVGRWY2tER2gxK1Q2OXZwOFN5dUdabFVxSkcz?=
+ =?utf-8?B?RzU5TUE5ZlRuNGo3djd5NFBIMFlGUHpRQysvQVpSTUlFY1dqaTA1VzN6YjFD?=
+ =?utf-8?B?S3ZiWWNVOERjTldGWmh1eUY0bjZ0YVFYbmJnQXJiZ0hOaTU3RG12SUdFV3Vs?=
+ =?utf-8?B?QXg4K3VwV29ZTEZMQTNWV0dsS0djeGFmZFViOUJDckM2a0hyVjJCMzREeTM1?=
+ =?utf-8?B?YTVCK20rcXlydGZDQlJib1JzV1BUdXJKVlBIYmswT0JpM2E2TXlqbTRVNmtz?=
+ =?utf-8?B?ZDNNR1dHUDVsRHZwdnRFVDdlVWJlUXQxSGRVdzJwa1BIeTNDbmJtRWFTOFZ6?=
+ =?utf-8?B?ZkhaRE5qNEZtWmdwZmVYZ1IwenN1dTQ3V0RWN0QraWxFN3VTYUJPTGtKeFI5?=
+ =?utf-8?B?aHZMbkFYaldTYSsxSlJUNGtNVU5qNWc2MzFVblVJUnd6UU9kQXlybVZ6K3dH?=
+ =?utf-8?B?bHJrbnNJMUwxSjMyK0g0WkxKQVpXeU1leDBNU2NKYTBMNFVSRnhHMHIxQ0xQ?=
+ =?utf-8?B?TE9BSkNMc1Z5MEV5VVFvdVF1RUZ2UWlDb1NiYXYvTU9JcFdrd1lEai9oSXZE?=
+ =?utf-8?B?cXpuSncvRXE2UXQ3dmoyQ0VvZVpDSWVnN1hUVGZ5MmNqR3c3cGpSS2FLemNN?=
+ =?utf-8?B?Y0lVM2MzQnZVdWVzYVBsNVRVRGxpckVRUW5HaUZTdDQ3MTVldFZJRDR1V05D?=
+ =?utf-8?B?NGhlMG9UTDRmUHh1RU1ydzZrS3VBWkVEZG5RNHhHMmZnZWFPS3IxLzBDRDVv?=
+ =?utf-8?B?VXdaV3BQWVlqM1E3Z1NiaVpHdjlYeGhNb3V5RCtpdXMvQklZN2JvcHJ4YXFv?=
+ =?utf-8?Q?w34FtOWf05RWqfXLXmvddZP4w?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 86052c3e-9c10-489f-9359-08db55bf0160
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5827.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 May 2023 03:38:25.7301
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: bI6Tt8J8qLOdsiwJ3FVOEzTyb7vkW4usvxW61ixm50587il6YxTPJS4IdH7YuDYYJ4cg0okHQHxvy6W0McVsxg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7484
+X-Spam-Status: No, score=-4.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -95,227 +133,111 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5/16/2023 3:17 AM, Bjorn Andersson wrote:
-> On Sun, May 14, 2023 at 11:19:13AM +0530, Krishna Kurapati wrote:
->> Currently the DWC3 driver supports only single port controller
->> which requires at most one HS and one SS PHY.
+On 5/15/2023 5:06 PM, Manivannan Sadhasivam wrote:
+> Hi Kishon,
+> 
+> On Mon, May 15, 2023 at 01:37:28PM +0530, Kishon VijayAbraham I wrote:
+>> Hi Manivannan,
 >>
->> But the DWC3 USB controller can be connected to multiple ports and
->> each port can have their own PHYs. Each port of the multiport
->> controller can either be HS+SS capable or HS only capable
->> Proper quantification of them is required to modify GUSB2PHYCFG
->> and GUSB3PIPECTL registers appropriately.
+>> On 3/14/2023 10:16 AM, Manivannan Sadhasivam wrote:
+>>> Add PCI Endpoint driver for the Qualcomm MHI (Modem Host Interface) bus.
+>>> The driver implements the MHI function over PCI in the endpoint device
+>>> such as SDX55 modem. The MHI endpoint function driver acts as a
+>>> controller driver for the MHI Endpoint stack and carries out all PCI
+>>> related activities like mapping the host memory using iATU, triggering
+>>> MSIs etc...
+>>>
+>>> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+>>> ---
+>>>    drivers/pci/endpoint/functions/Kconfig       |  10 +
+>>>    drivers/pci/endpoint/functions/Makefile      |   1 +
+>>>    drivers/pci/endpoint/functions/pci-epf-mhi.c | 454 +++++++++++++++++++
+>>>    3 files changed, 465 insertions(+)
+>>>    create mode 100644 drivers/pci/endpoint/functions/pci-epf-mhi.c
+>>>
+>>> diff --git a/drivers/pci/endpoint/functions/Kconfig b/drivers/pci/endpoint/functions/Kconfig
+>>> index 9fd560886871..f5171b4fabbe 100644
+>>> --- a/drivers/pci/endpoint/functions/Kconfig
+>>> +++ b/drivers/pci/endpoint/functions/Kconfig
+>>> @@ -37,3 +37,13 @@ config PCI_EPF_VNTB
+>>>    	  between PCI Root Port and PCIe Endpoint.
+>>>    	  If in doubt, say "N" to disable Endpoint NTB driver.
+>>> +
+>>> +config PCI_EPF_MHI
+>>> +	tristate "PCI Endpoint driver for MHI bus"
+>>> +	depends on PCI_ENDPOINT && MHI_BUS_EP
+>>> +	help
+>>> +	   Enable this configuration option to enable the PCI Endpoint
+>>> +	   driver for Modem Host Interface (MHI) bus in Qualcomm Endpoint
+>>> +	   devices such as SDX55.
+>>> +
+>>> +	   If in doubt, say "N" to disable Endpoint driver for MHI bus.
+>>> diff --git a/drivers/pci/endpoint/functions/Makefile b/drivers/pci/endpoint/functions/Makefile
+>>> index 5c13001deaba..696473fce50e 100644
+>>> --- a/drivers/pci/endpoint/functions/Makefile
+>>> +++ b/drivers/pci/endpoint/functions/Makefile
+>>> @@ -6,3 +6,4 @@
+>>>    obj-$(CONFIG_PCI_EPF_TEST)		+= pci-epf-test.o
+>>>    obj-$(CONFIG_PCI_EPF_NTB)		+= pci-epf-ntb.o
+>>>    obj-$(CONFIG_PCI_EPF_VNTB) 		+= pci-epf-vntb.o
+>>> +obj-$(CONFIG_PCI_EPF_MHI)		+= pci-epf-mhi.o
+>>> diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+>>> new file mode 100644
+>>> index 000000000000..03e7f42663b3
+>>> --- /dev/null
+>>> +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+>> .
+>> .
+>> <snip>
+>> .
+>> .
+>>> +static int pci_epf_mhi_link_up(struct pci_epf *epf)
+>>> +{
+>>> +	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
+>>> +	const struct pci_epf_mhi_ep_info *info = epf_mhi->info;
+>>> +	struct mhi_ep_cntrl *mhi_cntrl = &epf_mhi->mhi_cntrl;
+>>> +	struct pci_epc *epc = epf->epc;
+>>> +	struct device *dev = &epf->dev;
+>>> +	int ret;
+>>> +
+>>> +	mhi_cntrl->mmio = epf_mhi->mmio;
+>>> +	mhi_cntrl->irq = epf_mhi->irq;
+>>> +	mhi_cntrl->mru = info->mru;
+>>> +
+>>> +	/* Assign the struct dev of PCI EP as MHI controller device */
+>>> +	mhi_cntrl->cntrl_dev = epc->dev.parent;
+>>> +	mhi_cntrl->raise_irq = pci_epf_mhi_raise_irq;
+>>> +	mhi_cntrl->alloc_map = pci_epf_mhi_alloc_map;
+>>> +	mhi_cntrl->unmap_free = pci_epf_mhi_unmap_free;
+>>> +	mhi_cntrl->read_from_host = pci_epf_mhi_read_from_host;
+>>> +	mhi_cntrl->write_to_host = pci_epf_mhi_write_to_host;
+>>> +
+>>> +	/* Register the MHI EP controller */
+>>> +	ret = mhi_ep_register_controller(mhi_cntrl, info->config);
+>>> +	if (ret) {
+>>> +		dev_err(dev, "Failed to register MHI EP controller: %d\n", ret);
+>>> +		return ret;
+>>> +	}
 >>
->> Add support for detecting, obtaining and configuring phy's supported
->> by a multiport controller and limit the max number of ports
->> supported to 4.
+>> Any reason for delaying registration with MHI bus till link up? Since after
+>> linkup, the host can start using the device, this should be doing minimal
+>> stuff IMHO. Or is there further handshake between the host side MHI driver
+>> and the endpoint side MHI driver?
 >>
->> Co-developed-by: Harsh Agarwal <quic_harshq@quicinc.com>
 > 
-> Please include Harsh's signed-off-by as well here, to clarify that you
-> both certify the origin of this patch.
-> 
->> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->> ---
->>   drivers/usb/dwc3/core.c | 266 ++++++++++++++++++++++++++++++----------
->>   drivers/usb/dwc3/core.h |  11 +-
->>   drivers/usb/dwc3/drd.c  |  13 +-
->>   3 files changed, 213 insertions(+), 77 deletions(-)
->>
->> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-> [..]
->> @@ -744,22 +777,38 @@ static int dwc3_phy_setup(struct dwc3 *dwc)
->>   static int dwc3_phy_init(struct dwc3 *dwc)
->>   {
->>   	int ret;
->> +	int i;
->> +	int j;
->>   
->>   	usb_phy_init(dwc->usb2_phy);
->>   	usb_phy_init(dwc->usb3_phy);
->>   
->> -	ret = phy_init(dwc->usb2_generic_phy);
->> -	if (ret < 0)
->> -		goto err_shutdown_usb3_phy;
->> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
->> +		ret = phy_init(dwc->usb2_generic_phy[i]);
->> +		if (ret < 0) {
->> +			/* clean up prior initialized HS PHYs */
->> +			for (j = 0; j < i; j++)
->> +				phy_exit(dwc->usb2_generic_phy[j]);
->> +			goto err_shutdown_usb3_phy;
-> 
-> The idiomatic form is to goto err_exit_usb2_phy and let it phy_exit()
-> from i - 1 to 0. That would avoid duplicating this snippet.
-> 
->> +		}
->> +	}
->>   
->> -	ret = phy_init(dwc->usb3_generic_phy);
->> -	if (ret < 0)
->> -		goto err_exit_usb2_phy;
->> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> 
-> When you call dwc3_ss_phy_setup() the index refer to port0, port1... but
-> when you refer to the phys you consistently loops over num_usb2_ports.
-> 
-> The only case I can think of where this would be useful is if it's not
-> the first N ports that are SS-capable (e.g. port0 and port can do SS).
-> 
-> If this is the case, is it correct that this should not be reflected in
-> the index passed to e.g. dwc3_ss_phy_setup()?
-> 
-> If this is not the case, could you please transition these SS-related
-> loops to iterate over usb3_generic_phy[0..num_usb3_ports)?
+> Yes, there are further handshakes required between ep and host before the host
+> can start using MHI and this is done during mhi_ep_power_up(). Moreover,
+> registering the controller during link_up event allows us to do cleanup properly
+> when the link goes down.
 
-Hi Bjorn,
+Thank you for clarifying!
 
-  The reason why I used num_usb2_ports here and num_usb3_ports in 
-ss_phy_setup is that, there may be cases where not the ones in the 
-beginning but the last few ports of multiport controller are SS capable. 
-In that case trying to keep track of them and accordingly executing phy 
-operations is difficult. Instead since all ports are atleast HS capable 
-and calling a Phy op on a non-existent SS Phy is still harmless as the 
-phy pointer is NULL and phy op's return 0.
+For the entire series:
 
-Coming to ss_phy_setup, we need to modify the GUSB3PIPECTL registers 
-which are same as number of ss ports present. And modifying these 
-registers whether or not the Phy is used is completely fine as it is 
-done even in today's code (dwc3_phy_setup). In this case, if there are 2 
-SS Phy's we need to loop over and modify GUSB3PIPECTL(0) and 
-GUSB3PIPECTL(1) and so we need to use num_usb3_ports.
-
-For the above two reasons I used num_usb2_ports wherever I did phy 
-operations and num_usb3_ports wherever GUSB3PIPECTL is being modified 
-like I did in dwc3_core_init as well.
-
+Reviewed-by: Kishon Vijay Abraham I <kishon@kernel.org>
 > 
->> +		ret = phy_init(dwc->usb3_generic_phy[i]);
->> +		if (ret < 0) {
->> +			/* clean up prior initialized SS PHYs */
->> +			for (j = 0; j < i; j++)
->> +				phy_exit(dwc->usb3_generic_phy[j]);
->> +			goto err_exit_usb2_phy;
-> 
-> For the purpose of symmetry, same suggestion as above. phy_exit() i - 1
-> through 0, then reset j to dwc->num_usb2_ports and fall through to
-> err_exit_usb2_phy.
-
-I will try to set i/j to proper values to cleanup code appropriately. 
-But isn't this fine for now as I don't want to make too many changes in 
-next version. I will make sure to cleanup this section in a separate 
-patch after this series if that is fine.
-
->> +		}
->> +	}
->>   
->>   	return 0;
->>   
->>   err_exit_usb2_phy:
->> -	phy_exit(dwc->usb2_generic_phy);
->> +	for (i = 0; i < dwc->num_usb2_ports; i++)
->> +		phy_exit(dwc->usb2_generic_phy[i]);
->> +
->>   err_shutdown_usb3_phy:
->>   	usb_phy_shutdown(dwc->usb3_phy);
->>   	usb_phy_shutdown(dwc->usb2_phy);
->> @@ -769,8 +818,12 @@ static int dwc3_phy_init(struct dwc3 *dwc)
-> [..]
->>   static int dwc3_phy_power_on(struct dwc3 *dwc)
->>   {
->>   	int ret;
->> +	int i;
->> +	int j;
->>   
->>   	usb_phy_set_suspend(dwc->usb2_phy, 0);
->>   	usb_phy_set_suspend(dwc->usb3_phy, 0);
->>   
->> -	ret = phy_power_on(dwc->usb2_generic_phy);
->> -	if (ret < 0)
->> -		goto err_suspend_usb3_phy;
->> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
->> +		ret = phy_power_on(dwc->usb2_generic_phy[i]);
->> +		if (ret < 0) {
->> +			/* Turn off prior ON'ed HS Phy's */
->> +			for (j = 0; j < i; j++)
->> +				phy_power_off(dwc->usb2_generic_phy[j]);
->> +			goto err_suspend_usb3_phy;
-> 
-> As above, I'd prefer that you don't duplicate the phy_power_off() loop.
-> 
->> +		}
->> +	}
->>   
->> -	ret = phy_power_on(dwc->usb3_generic_phy);
->> -	if (ret < 0)
->> -		goto err_power_off_usb2_phy;
->> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
->> +		ret = phy_power_on(dwc->usb3_generic_phy[i]);
->> +		if (ret < 0) {
->> +			/* Turn of prior ON'ed SS Phy's */
->> +			for (j = 0; j < i; j++)
->> +				phy_power_off(dwc->usb3_generic_phy[j]);
->> +			goto err_power_off_usb2_phy;
->> +		}
->> +	}
->>   
->>   	return 0;
-> [..]
->> +static int dwc3_get_multiport_phys(struct dwc3 *dwc)
->> +{
->> +	int ret;
->> +	struct device *dev = dwc->dev;
->> +	int i;
->> +	char phy_name[11];
-> 
-> It would be prettier if you sorted these lines by length, longest
-> first...
-> 
-Sure, will fix this nit.
-
-> [..]
->> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
->> index d3401963bc27..84f6303922aa 100644
->> --- a/drivers/usb/dwc3/core.h
->> +++ b/drivers/usb/dwc3/core.h
->> @@ -35,6 +35,9 @@
->>   
->>   #define DWC3_MSG_MAX	500
->>   
->> +/* Number of ports supported by a multiport controller */
->> +#define MAX_PORTS_SUPPORTED	4
-> 
-> I think it would be preferred to prefix this DWC3_ (so perhaps just
-> DWC3_MAX_PORTS, to keep it shorter)
-
-Sure, will fix this nit.
-
-Thanks,
-Krishna,
-> 
->> +
->>   /* Define XHCI Extcap register offsets for getting multiport info */
->>   #define XHCI_HCC_PARAMS_OFFSET	0x10
->>   #define DWC3_XHCI_HCSPARAMS1	0x04
->> @@ -1038,8 +1041,8 @@ struct dwc3_scratchpad_array {
->>    * @usb3_phy: pointer to USB3 PHY
->>    * @num_usb2_ports: number of usb2 ports.
->>    * @num_usb3_ports: number of usb3 ports.
->> - * @usb2_generic_phy: pointer to USB2 PHY
->> - * @usb3_generic_phy: pointer to USB3 PHY
->> + * @usb2_generic_phy: pointer to array of USB2 PHY
->> + * @usb3_generic_phy: pointer to array of USB3 PHY
->>    * @phys_ready: flag to indicate that PHYs are ready
->>    * @ulpi: pointer to ulpi interface
->>    * @ulpi_ready: flag to indicate that ULPI is initialized
->> @@ -1178,8 +1181,8 @@ struct dwc3 {
->>   	u8			num_usb2_ports;
->>   	u8			num_usb3_ports;
->>   
->> -	struct phy		*usb2_generic_phy;
->> -	struct phy		*usb3_generic_phy;
->> +	struct phy		*usb2_generic_phy[MAX_PORTS_SUPPORTED];
->> +	struct phy		*usb3_generic_phy[MAX_PORTS_SUPPORTED];
->>   
->>   	bool			phys_ready;
+> - Mani
+>   
+>> Thanks,
+>> Kishon
 > 
