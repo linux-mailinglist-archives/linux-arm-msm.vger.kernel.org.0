@@ -2,120 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 135DD704CD9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 13:47:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A936F704D13
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 13:54:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233162AbjEPLrp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 07:47:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42348 "EHLO
+        id S233136AbjEPLyQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 07:54:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232985AbjEPLrX (ORCPT
+        with ESMTP id S232831AbjEPLyL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 07:47:23 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 331026EB5;
-        Tue, 16 May 2023 04:46:58 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34G8MmFe014488;
-        Tue, 16 May 2023 11:46:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=4sXNlRFfEYIg3g2wW+XdOecyhySORZ87PfGa+R3D5b0=;
- b=YainjyosbfKsmKAMN84gkKawb/Zf87sq+1uhGUhgs/ARFHaRVJQkcNvYwt0JcVgD2tt9
- SFZQtW7GN2qqQuCBgMWOnkIyIFsNOKseSRNvnCyS2GOuo3QM9Uv2qjrqpiNVYMBEQN0+
- mAOMnr2GpfHuaEsWva7k12VHvGl9ZvJQOsx3bRL0VKSXIMHycb/CdL2REnrsCu1zEZjH
- efBkA11DasTdtoJ2f4x62az4qOFKkgpU+Z7eWbA63Wh9c5SI5AZQbFfrq4N1B5OUdMnS
- UjPgptYRCd4E6BydZGfE0ah2xpXO6UqFk5gqPE6on10n5FYIxZxLbmv/Hf5iNSEE427N 7Q== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qm1x08v4k-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 11:46:42 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34GBkfQO026400
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 16 May 2023 11:46:41 GMT
-Received: from win-platform-upstream01.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 16 May 2023 04:46:35 -0700
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
-        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <robimarko@gmail.com>,
-        <andy.shevchenko@gmail.com>, <quic_srichara@quicinc.com>
-Subject: [PATCH V5 8/8] arm64: defconfig: Enable IPQ5018 SoC base configs
-Date:   Tue, 16 May 2023 17:15:23 +0530
-Message-ID: <20230516114523.3266419-9-quic_srichara@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230516114523.3266419-1-quic_srichara@quicinc.com>
-References: <20230516114523.3266419-1-quic_srichara@quicinc.com>
+        Tue, 16 May 2023 07:54:11 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2183259D3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 04:54:06 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2ac7462d9f1so151111711fa.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 04:54:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684238044; x=1686830044;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gz5kKmiOfXAcKsAlxUYavA5LbDAi6qhoE5G5VoFPO9s=;
+        b=h/1LSu/9s77FwMlN7hi6f2oUheCtw7s0IR1I0Qq0Y31lVxF6mCZbY7jebDyzY2ti/M
+         Pz5ES0soZKO9B39n0sLH1wDmpjTdftTmYESn6tD7eQkYfYEeD/m0H37xoEIfKwoV9PEg
+         1NTatl9/201TlPAEyMmVNezrqxPZxK/IyPgmX+9eLcMKTbmwc8fjkXtYNAb7dLJULktd
+         4WDb+qScMcTM+luEeZehZoA9JuQHVCtqm/HaR9f9oqb0iMI8KvthX4rsXzOObo3L8Of0
+         dAeyz1lKZtXltfKzq0QoDw5nSVAkBu4KSSjjwrxP7QCRqBaYpj0DpCMv4F0c1gpsmAuw
+         4/CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684238044; x=1686830044;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Gz5kKmiOfXAcKsAlxUYavA5LbDAi6qhoE5G5VoFPO9s=;
+        b=QsYXTl918ZjpO5d7UR01Tr6LFZHhmpt+5SKkwEsGJs8KhRuH6gjIIYuHXpWWo5pL/P
+         g4Thd9pCM1aHackxxIb4GklbmNnND+tT+SAScgKWokhjcdiuHiMKFsmHW3NoKeSIZaw7
+         qYmbbrIf9Z/HBlghgUNuBXiIqGT5bfsfxGbI4BG2b/xw225pYfjtQyVAlcA/FLfydVaY
+         UAhYr7CFjQU/nFJZH0/kvZUXkijJ7JOAnyYK6pCFHqRTp8gx/D+hGGuXbQo7+DcnOJVH
+         a7VjgB23Ui4S5BB9dLU7MJsbIxlt7bCDG+0nE492xIFOkkq+Z3nBm3RTzhqIJb2jaf0j
+         2UMg==
+X-Gm-Message-State: AC+VfDxW+IqLeb2gfuctcXCeyIQ7pnKwhSaiHTZ0s7Zz3wA+mKcilzW/
+        N57TM4YshYe+iGWmdZS2Tv/NgQ==
+X-Google-Smtp-Source: ACHHUZ6yGJievvZYzPFOsVMaPVCMKT+sajWSgiNdjAKea4aIlNrC6udu7OSL1RDb2+m0vP/WFw6X/A==
+X-Received: by 2002:ac2:4948:0:b0:4f2:4d6c:b30b with SMTP id o8-20020ac24948000000b004f24d6cb30bmr6483164lfi.68.1684238044368;
+        Tue, 16 May 2023 04:54:04 -0700 (PDT)
+Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
+        by smtp.gmail.com with ESMTPSA id z13-20020a056512376d00b004f019d3eab4sm2951410lft.23.2023.05.16.04.54.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 May 2023 04:54:03 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH RESEND 0/2] Lost tsens compatibles
+Date:   Tue, 16 May 2023 13:53:57 +0200
+Message-Id: <20230516-topic-lost_tsens_bindings-v1-0-99715746ddb1@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: yEx9SKq_CxFhXixlXd36OFV9qB_poc97
-X-Proofpoint-GUID: yEx9SKq_CxFhXixlXd36OFV9qB_poc97
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-16_04,2023-05-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 mlxlogscore=885 bulkscore=0 mlxscore=0 impostorscore=0
- spamscore=0 adultscore=0 phishscore=0 clxscore=1015 malwarescore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305160100
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANVuY2QC/x2NywqDMBBFf0Vm3YBGamnXddtFu5QieYw6ECaSS
+ aUg/ntDl+fCuWcHwUQocKt2SLiRUOQCzakCtxieUZEvDLrWbX1uOpXjSk6FKHnMgiyjJfbEsyh
+ 99Z3F1l8mbaD41ggqmwy7pTzwJ4Qyrgkn+v6DAzz7V/+4w/s4flR1y/2IAAAA
+To:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1684238042; l=721;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=n5yXbBFORwHOEllWFZQWAf441tVemcqAG65GCzT9zeA=;
+ b=hNWgAGZcXD6QrWP/hlpl2bX8nqAXs8IgTBXAGf2E5JrxFc2E3mxL9NtBLd7oCTA3D1XQp7JiS
+ CavjQCPmFJ7CUdRU7mufJMORQSrnxvheuAsTXv5bYMjpDrOzuy1ki24
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enables clk & pinctrl related configs
+Resending what's been lost in the following series:
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+https://lore.kernel.org/linux-arm-msm/f7f38099-f183-d7b6-f542-1bdac6652a77@linaro.org/
+https://lore.kernel.org/linux-arm-msm/20230314-topic-2290_compats-v1-0-47e26c3c0365@linaro.org/
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- [v5] Added Reviewed by
+Konrad Dybcio (2):
+      dt-bindings: thermal: tsens: Add QCM2290
+      dt-bindings: thermal: tsens: Add compatible for SM6375
 
- arch/arm64/configs/defconfig | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
+---
+base-commit: 885df05bf634d589fbf030c3751614eaa453fb5d
+change-id: 20230516-topic-lost_tsens_bindings-29d6be3d7f2a
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index a24609e14d50..8bf0ef77f375 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -553,6 +553,7 @@ CONFIG_PINCTRL_IMX8ULP=y
- CONFIG_PINCTRL_IMX93=y
- CONFIG_PINCTRL_MSM=y
- CONFIG_PINCTRL_IPQ8074=y
-+CONFIG_PINCTRL_IPQ5018=y
- CONFIG_PINCTRL_IPQ5332=y
- CONFIG_PINCTRL_IPQ6018=y
- CONFIG_PINCTRL_IPQ9574=y
-@@ -1154,6 +1155,8 @@ CONFIG_QCOM_CLK_APCC_MSM8996=y
- CONFIG_QCOM_CLK_SMD_RPM=y
- CONFIG_QCOM_CLK_RPMH=y
- CONFIG_IPQ_GCC_5332=y
-+CONFIG_IPQ_APSS_5018=y
-+CONFIG_IPQ_GCC_5018=y
- CONFIG_IPQ_GCC_6018=y
- CONFIG_IPQ_GCC_8074=y
- CONFIG_IPQ_GCC_9574=y
+Best regards,
 -- 
-2.34.1
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
