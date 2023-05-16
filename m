@@ -2,42 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 00CCE704B28
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 12:54:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27512704B3B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 12:59:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231913AbjEPKyR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 06:54:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47784 "EHLO
+        id S232482AbjEPK72 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 06:59:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231773AbjEPKyQ (ORCPT
+        with ESMTP id S232493AbjEPK71 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 06:54:16 -0400
+        Tue, 16 May 2023 06:59:27 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C60EE2D4E;
-        Tue, 16 May 2023 03:54:03 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60E80269E;
+        Tue, 16 May 2023 03:59:26 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5AF8863269;
-        Tue, 16 May 2023 10:54:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B79E3C433EF;
-        Tue, 16 May 2023 10:54:02 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id F2EF9637A8;
+        Tue, 16 May 2023 10:59:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 537F2C433A1;
+        Tue, 16 May 2023 10:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684234442;
-        bh=paHYLnFWTcB7RJB+E5stDQFsNxE2riSRbIlNnygHpvA=;
+        s=k20201202; t=1684234765;
+        bh=yDmK+yqmw45YeEHbaYn9dnovKktdTaUHwUWKWnf+bvI=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=n2O/Hu5c0ODvDcCEzcHaiTdrBnK6A5nlfO8sespVz1X5CFmVnstH7yV1zHBuxhOgl
-         ytyfdKQww5QNpmJmddMfW2guobnDKeSOnaSp6FFfzrIO5bTc7Pjj8xfr4PRWvM0BH4
-         dLjB0Gn31EFsQel5tyNr1CS+Vo6mjlEawCEDpxDoZSTiMPH1/toZarYL6sslLPNiIw
-         78ngRpFnCjNd8/iSihpd/CnJynHRYds3QxYQEXRftcEvF7C3hbL77R5GETnnqF7Hzc
-         gj9rUpJfCStYaehCaCX2oyaqhy/MZm9uQ3WY+0UM24rOpraeTEaxo8PVM2lRTThW7Q
-         ImrlYEzkjBptw==
+        b=bvXo2R8S6qRD1bQKYuYZ04HLpI1ksEuzsg+rpZmri3v3a9+gCuBZxGOd4QXqKQ14V
+         fgmOz48UwQQ3jZO15kMAemtllIgyXdW4iQbvGbfn6tOKogR6HtF2yxs6Gm98TkRlqq
+         CRinpSOteh0tJE3RejzjoZuvuyMUJe07OeqgUuXwPA6X1gxqXSusILtkdZCPKXBFvC
+         2xozd+HOcNynrI/IzZoteICLXk2bVSwvDpPUrfo4Z4REaU5MCSHBsqUgW+T+NhffOr
+         2DrFo66AZZ03iLpRTmVt0jb/JGWS4k98btDmfMyZYooXGnPrF+92jhEmlUh6xrQd2g
+         FRz1GuQassKMw==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1pysJe-0007ix-CP; Tue, 16 May 2023 12:54:02 +0200
-Date:   Tue, 16 May 2023 12:54:02 +0200
+        id 1pysOr-0007lt-7D; Tue, 16 May 2023 12:59:25 +0200
+Date:   Tue, 16 May 2023 12:59:25 +0200
 From:   Johan Hovold <johan@kernel.org>
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
 Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Philipp Zabel <p.zabel@pengutronix.de>,
@@ -52,17 +52,15 @@ Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
         quic_jackp@quicinc.com, quic_harshq@quicinc.com,
         ahalaney@redhat.com
-Subject: Re: [PATCH v8 7/9] arm64: dts: qcom: sc8280xp: Add multiport
- controller node for SC8280
-Message-ID: <ZGNgyo8ZRcC26W5l@hovoldconsulting.com>
+Subject: Re: [PATCH v8 1/9] dt-bindings: usb: qcom,dwc3: Add bindings for
+ SC8280 Multiport
+Message-ID: <ZGNiDVq1duvyZBUB@hovoldconsulting.com>
 References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-8-quic_kriskura@quicinc.com>
- <ZGJBLUsPcbsxj989@hovoldconsulting.com>
- <d14567fd-0576-55bb-40c0-442e060c28ba@quicinc.com>
+ <20230514054917.21318-2-quic_kriskura@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d14567fd-0576-55bb-40c0-442e060c28ba@quicinc.com>
+In-Reply-To: <20230514054917.21318-2-quic_kriskura@quicinc.com>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -73,60 +71,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 15, 2023 at 09:02:13PM +0530, Krishna Kurapati PSSNV wrote:
-> On 5/15/2023 7:56 PM, Johan Hovold wrote:
-> > On Sun, May 14, 2023 at 11:19:15AM +0530, Krishna Kurapati wrote:
-
-> >> @@ -3133,6 +3133,72 @@ usb_1_role_switch: endpoint {
-> >>   			};
-> >>   		};
-> >>   
-> >> +		usb_2: usb@a4f8800 {
-> > 
-> > As I believe someone already pointed out, this node is not in sort order
-> > (i.e. it should go before usb@a6f8800).
-
->    I missed that message, but since I named it usb_2, so I placed it in 
-> order after usb_1. Hope that is fine !!
-
-No, the nodes should be sorted by unit address so you need to move it.
-
-> >> +			interrupts-extended = <&pdc 127 IRQ_TYPE_EDGE_RISING>,
-> >> +					      <&pdc 126 IRQ_TYPE_EDGE_RISING>,
-> >> +					      <&pdc 16 IRQ_TYPE_LEVEL_HIGH>,
-> >> +					      <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
-> >> +					      <&intc GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
-> >> +					      <&intc GIC_SPI 857 IRQ_TYPE_LEVEL_HIGH>,
-> >> +					      <&intc GIC_SPI 856 IRQ_TYPE_LEVEL_HIGH>;
-> >> +
-> >> +			interrupt-names = "dp_hs_phy_irq",
-> >> +					  "dm_hs_phy_irq",
-> >> +					  "ss_phy_irq",
-> >> +					  "pwr_event_1",
-> >> +					  "pwr_event_2",
-> >> +					  "pwr_event_3",
-> >> +					  "pwr_event_4";
-
-> >> +			interconnect-names = "usb-ddr", "apps-usb";
-> > 
-> > Looks like 'wakeup-source' is missing here too.
-> > 
+On Sun, May 14, 2023 at 11:19:09AM +0530, Krishna Kurapati wrote:
+> Add the compatible string for SC8280 Multiport USB controller from
+> Qualcomm.
 > 
-> I believe this property was added to enable wakeup from system suspend 
-> in host mode. I didn't add this property as currently I don't need to 
-> support wakeup. If any requirement comes in future, then I might need to 
-> add dp/dm interrupts (if any) for other ports as well and then need to 
-> change driver code to enable/disable them on suspend/resume.
+> There are 4 power event irq interrupts supported by this controller
+> (one for each port of multiport). Added all the 4 as non-optional
+> interrupts for SC8280XP-MP
+> 
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+> ---
+>  .../devicetree/bindings/usb/qcom,dwc3.yaml    | 22 +++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+ 
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,sc8280xp-dwc3-mp
+> +    then:
+> +      properties:
+> +        interrupts:
+> +          maxItems: 7
+> +        interrupt-names:
+> +          items:
+> +            - const: dp_hs_phy_irq
+> +            - const: dm_hs_phy_irq
+> +            - const: ss_phy_irq
 
-If there are dp/dm/ss interrupts per ports then those need to be defined
-in the binding and devicetree from the start.
+I assume that these are only for the first port, and that you need to
+define these interrupts also for ports 2-4.
 
-Similar for 'wakeup-source' which indicates that the controller *can* be
-used to wakeup the system from suspend (which those pdc interrupts
-indicates).
-
-Remember that the devicetree is supposed to describe the hardware, and
-which features are currently supported in some version of software is
-mostly irrelevant.
+> +            - const: pwr_event_1
+> +            - const: pwr_event_2
+> +            - const: pwr_event_3
+> +            - const: pwr_event_4
+> +
+>  additionalProperties: false
+>  
+>  examples:
 
 Johan
