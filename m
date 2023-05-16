@@ -2,74 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BB8970516B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 17:02:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 734AC705181
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 17:05:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234079AbjEPPCZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 11:02:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33266 "EHLO
+        id S233721AbjEPPFY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 11:05:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233950AbjEPPCR (ORCPT
+        with ESMTP id S233394AbjEPPFX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 11:02:17 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A57CE59E5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 08:02:15 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-50c8d87c775so19870536a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 08:02:15 -0700 (PDT)
+        Tue, 16 May 2023 11:05:23 -0400
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2946B5FD4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 08:05:22 -0700 (PDT)
+Received: by mail-pg1-x52a.google.com with SMTP id 41be03b00d2f7-52cb78647ecso9034959a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 08:05:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684249334; x=1686841334;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VePVeWeMN4U523V4h2u5VAkH2pemNZtifrJeB9imluE=;
-        b=tHUblVWXjbga/qyXdtscen1tQezhSIXXVDcOhHoYCWA8pD+7Ch8fNZrlCR6OyBxGoL
-         P47/t4DREklIq5kERQ8XdLUcTUHnnIxxCFthqIXt/qw3b8VwDt/0umoWi1C/f5sysnQs
-         GKx2jUgHj4NvB2L4Sw8xmGzEI5JCh2X1NNU0t6GJbdwB3GhPOWbdANoP3Vn8zKmvzQ6U
-         1sCwX9ZoxY6MotNdE9zuO0fQPDWqielOVTjcf10m4Cb9TMoe/hWBi8L+r93oNWbv5g0n
-         nagoRYaQk2E4XhGlehnUuCY8iWoMF5AIQvWPKdILKn/VrS+Llm9OLO7efFUs4uLMp7z8
-         VrYw==
+        d=linaro.org; s=google; t=1684249521; x=1686841521;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7txPToyylLXj/XeurHwXRxqGzvOp+rd7gJyEEX+n+mc=;
+        b=PvT7igHMLEj8zD6P4R7JabDlBcl9puACGqWkd8D8L68rJbLbFTpSBEMtOs0zB59ssb
+         cwjEa6KM18yUWqFIYkxkUO61wBCI8ZTekcW8mvyjgjaKeoJ+XU5mE7hndRPUGjyVbXRZ
+         R0B1qiyVjs69DTDnP+z0TUxs6neB2P7iGxhFn41NVpfS6qPLX9eewNgjvDduIhiMv/vx
+         MlO27RMkw12+Ff8Lg+HGQWMtVF8LkP6+//0JEpYkhiQr/Z0FVnlPRrBPPwk7HszsfFsl
+         HSo0eKqsvH32V7tdH0JrFgJ6U97ERr2FiSm4vU6MGx5YK8A3TM/MAHrZNB28/T9RoBQC
+         BcNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684249334; x=1686841334;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VePVeWeMN4U523V4h2u5VAkH2pemNZtifrJeB9imluE=;
-        b=fur7Uj7heA6i4a4ePuSiZ1wJcsmjlfzAwhU/x+zXpGoBh4jEfm24E/M6O+0wUTv6aO
-         yM1Z9y5Wm+KyYq9Rz6r355pimT5vH9i/tbZ2wqYDDLB8hM+NGwvWpRIj/GdCqfRumqFD
-         J/zBj7T0qivLVrZ1tgR4SmjLVl24GUv227tkrbIxiEMYUAhx49TNFHo5B8fd+5vam136
-         XNhGUUr3OZf63Xf6aax8vSwPfkoSJrscaNVbEB8mQ978yQzV9TrZonxYp/zL7LceQMpj
-         cm7Bb167a5/HJQQn/Od6LyzOkj6Id+zHDOEPb8T46RE1jA69tkAEA682xVz3XvZ69eNE
-         jZcQ==
-X-Gm-Message-State: AC+VfDzUEGIrgCN0AgSodA8SPbUUnpOoZ5FPohzZKOQDOCJ4Vujy6b38
-        3niyxVglP9hefQ/3X9fOkZl7tA==
-X-Google-Smtp-Source: ACHHUZ5VH9AGY5veDnFd4MlMOrguGe+tiiK2Z58ztuVDR7pEcisRKFXyJPLhKkTJ6Zzsc1k7+szcEA==
-X-Received: by 2002:a17:907:961d:b0:966:6056:a7c1 with SMTP id gb29-20020a170907961d00b009666056a7c1mr32801710ejc.74.1684249333756;
-        Tue, 16 May 2023 08:02:13 -0700 (PDT)
-Received: from krzk-bin.. ([2a02:810d:15c0:828:77d1:16a1:abe1:84fc])
-        by smtp.gmail.com with ESMTPSA id q24-20020a170906541800b0096aa7d25a65sm6361810ejo.23.2023.05.16.08.02.12
+        d=1e100.net; s=20221208; t=1684249521; x=1686841521;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7txPToyylLXj/XeurHwXRxqGzvOp+rd7gJyEEX+n+mc=;
+        b=dlen8pOGxZkzmNtokzuiu89FUq85rBCcHY3jMLqorw0htkNW3YJTj9Kk0lig+dCC6T
+         8wMKsc2nQmf8FVgpMh/3KKSCYEwjda6iZH84kwvtOCX9ebXzw11OXfyAWjYyV7iWMa6a
+         vnm8SlB9FcipqGSTThhf+fzJWa6eVtLK0DQMRqjR2UB2Z+o0Ct1xH8OmPm1kpshpWPrf
+         qGzMRAVmcGzYQ/MPADSjMUvUXDxYVXhrkuoRyltZZi+1fdF999oZUqjv8elRzDBH4jMN
+         YOAMKppEC/e3MSswR8Y8CzS5FPcWuz9pF7lAH82qd96I6ZB9WV2dknt0/Y6LCe0zzGcL
+         /11g==
+X-Gm-Message-State: AC+VfDzXhrntDbezZWLKhNZZLy1Rq+YMJXLOXDeoz2iuhqc9S2AE1a4Q
+        jXjiBhaElZdo8KTr+gMO2HrDFIyb9m1FD4GrFtc=
+X-Google-Smtp-Source: ACHHUZ7OlVfboY2rOaNjd3FbvEe5wJbXRpyzeqvDCudGA3Geq+oEtvj4mUoMHww3/5QfIIX3lMwX4g==
+X-Received: by 2002:a05:6a20:7d82:b0:103:4c5d:667a with SMTP id v2-20020a056a207d8200b001034c5d667amr27948776pzj.4.1684249520825;
+        Tue, 16 May 2023 08:05:20 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c60:6bed:72cf:f5c9:ba94:6b85])
+        by smtp.gmail.com with ESMTPSA id h1-20020a654801000000b005302682a668sm12817164pgs.17.2023.05.16.08.05.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 May 2023 08:02:13 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Fenglin Wu <quic_fenglinw@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Neil Armstrong <neil.armstrong@linaro.org>,
-        "Signed-off-by : Abel Vesa" <abel.vesa@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: sm8550-qrd: add flash LEDs
-Date:   Tue, 16 May 2023 17:02:02 +0200
-Message-Id: <20230516150202.188655-3-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230516150202.188655-1-krzysztof.kozlowski@linaro.org>
-References: <20230516150202.188655-1-krzysztof.kozlowski@linaro.org>
+        Tue, 16 May 2023 08:05:20 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-phy@lists.infradead.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        andersson@kernel.org, bhupesh.sharma@linaro.org,
+        bhupesh.linux@gmail.com, krzysztof.kozlowski@linaro.org,
+        robh+dt@kernel.org, konrad.dybcio@linaro.org, kishon@kernel.org,
+        vkoul@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        dmitry.baryshkov@linaro.org
+Subject: [PATCH v11 0/4] Enable USB SS qmp phy for Qualcomm SM6115 SoC
+Date:   Tue, 16 May 2023 20:35:07 +0530
+Message-Id: <20230516150511.2346357-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,62 +74,81 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable PM8550 PMIC flash LED controller and add two flash LEDs using
-four current outputs.
+Changes since v10:
+-----------------
+- v10 can be seen here: https://lore.kernel.org/lkml/20230502053534.1240553-4-bhupesh.sharma@linaro.org/
+- Rebased on phy/next, as Vinod was seeing rebasing issues with v9 while
+  applying.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Changes since v9:
+-----------------
+- v9 can be seen here: https://lore.kernel.org/linux-arm-msm/20230501192432.1220727-1-bhupesh.sharma@linaro.org/
+- Addressed review comments from Dmitry on v9, regarding register size
+  and pcs_misc offset handling. Also collected his R-Bs.
 
----
+Changes since v8:
+-----------------
+- v8 can be seen here: https://lore.kernel.org/linux-arm-msm/20230410171010.2561393-1-bhupesh.sharma@linaro.org/
+- Added driver change for new bindings used for sm6115 / qcm2290
+  devices.
 
-Context in the patch depends on:
-https://lore.kernel.org/linux-arm-msm/20230516133011.108093-1-krzysztof.kozlowski@linaro.org/T/#t
----
- arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+Changes since v7:
+-----------------
+- v7 can be seen here: https://lore.kernel.org/linux-arm-msm/20230409200934.2329297-1-bhupesh.sharma@linaro.org/
+- Addressed review comments from Dmitry and added "pipe clk".
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-index 88b7d3ecdbc9..30b36a149125 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-@@ -5,6 +5,7 @@
- 
- /dts-v1/;
- 
-+#include <dt-bindings/leds/common.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include "sm8550.dtsi"
- #include "pm8010.dtsi"
-@@ -451,6 +452,30 @@ &pcie0_phy {
- 	status = "okay";
- };
- 
-+&pm8550_flash {
-+	status = "okay";
-+
-+	led-0 {
-+		function = LED_FUNCTION_FLASH;
-+		color = <LED_COLOR_ID_YELLOW>;
-+		led-sources = <1>, <4>;
-+		led-max-microamp = <500000>;
-+		flash-max-microamp = <2000000>;
-+		flash-max-timeout-us = <1280000>;
-+		function-enumerator = <0>;
-+	};
-+
-+	led-1 {
-+		function = LED_FUNCTION_FLASH;
-+		color = <LED_COLOR_ID_WHITE>;
-+		led-sources = <2>, <3>;
-+		led-max-microamp = <500000>;
-+		flash-max-microamp = <2000000>;
-+		flash-max-timeout-us = <1280000>;
-+		function-enumerator = <1>;
-+	};
-+};
-+
- &pm8550b_eusb2_repeater {
- 	vdd18-supply = <&vreg_l15b_1p8>;
- 	vdd3-supply = <&vreg_l5b_3p1>;
+Changes since v6:
+-----------------
+- v6 can be seen here: https://lore.kernel.org/linux-arm-msm/20230407061122.2036838-1-bhupesh.sharma@linaro.org/
+- Addressed review comments from Bjorn and Dmitry and dropped old bindings in this
+  version.
+
+Changes since v5:
+-----------------
+- v5 can be seen here: https://lore.kernel.org/linux-arm-msm/20230405191633.1864671-1-bhupesh.sharma@linaro.org/
+- Addressed review comments from Dmitry and made [PATCH 1/2] compatible with his 
+  'split away legacy USB+DP code' series:
+  <https://patchwork.kernel.org/project/linux-phy/cover/20230324215550.1966809-1-dmitry.baryshkov@linaro.org>
+
+Changes since v4:
+-----------------
+- v4 can be seen here: https://lore.kernel.org/linux-arm-msm/20230401154725.1059563-1-bhupesh.sharma@linaro.org/ 
+- Collected Krzysztof's Ack for [PATCH 1/2].
+- Added more descriptive commit logs as per Dmitry's comments on v4.
+
+Changes since v3:
+-----------------
+- v3 can be seen here: https://lore.kernel.org/linux-arm-msm/20221215094532.589291-4-bhupesh.sharma@linaro.org/
+- Fixed v4 as per the downstream driver code: https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/heads/android-msm-bramble-4.19-android11-qpr1/qcom/bengal-usb.dtsi#296
+
+This patchset adds the support for USB SS qmp phy for Qualcomm SM6115
+SoC. For the previous versions of this patch there were conversations
+on irc as to whether this was a 'qcom,usb-ssphy-qmp-usb3-or-dp' or a
+'qcom,usb-ssphy-qmp-dp-combo' as per downstream code and hardware
+documentation.
+
+But after a careful look at downstream dtsi (see [1]) it appears that
+this indeed is a 'qcom,usb-ssphy-qmp-usb3-or-dp' phy and not a
+'dp-combo' phy.
+
+[1]. https://android.googlesource.com/kernel/msm-extra/devicetree/+/refs/heads/android-msm-bramble-4.19-android11-qpr1/qcom/bengal-usb.dtsi#296
+
+Bhupesh Sharma (4):
+  dt-bindings: phy: qcom,qmp-usb: Drop legacy bindings and move to newer
+    one (SM6115 & QCM2290)
+  phy: qcom-qmp-usb: add support for updated qcm2290 / sm6115 binding
+  arm64: dts: qcom: sm6115: Add USB SS qmp phy node
+  arm64: dts: qcom: qrb4210-rb2: Enable USB node
+
+ .../phy/qcom,msm8996-qmp-usb3-phy.yaml        | 27 -------------
+ .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   | 38 +++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts      | 24 ++++++++++++
+ .../boot/dts/qcom/sm4250-oneplus-billie2.dts  |  3 ++
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          | 29 +++++++++++++-
+ .../boot/dts/qcom/sm6115p-lenovo-j606f.dts    |  3 ++
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 22 +++++++++++
+ 7 files changed, 117 insertions(+), 29 deletions(-)
+
 -- 
-2.34.1
+2.38.1
 
