@@ -2,144 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51707704F96
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 15:42:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57307704FCA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 15:50:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233721AbjEPNma (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 09:42:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53450 "EHLO
+        id S233484AbjEPNus (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 09:50:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233728AbjEPNm0 (ORCPT
+        with ESMTP id S232940AbjEPNus (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 09:42:26 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3FA05B9E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 06:42:21 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-3090408e09bso2966033f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 06:42:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684244540; x=1686836540;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RIvTcNlwAmPNpObBbfvPw1SrNayKQmgyhgtXRTbsW0o=;
-        b=x9+y61j4a/rAqAPb1vGX/7FNSeS8qKNMAkz5A+EfN2PlplrNAb/IRWBIMaEIZ3cPJI
-         QV75FLyklyjKqWPSxT8eq7Jh00z3BEhRFKWlLjnoXgH43+L/NhvEgUdROmkwTPN/isql
-         TBIALmXNNjepZplPEpN9J4QaiP88m12Yb81TkDLmdSLCHI7Le8roh5vofYHC8Z1lAJVn
-         3e/b0VHr/3BhisQZXuYE2xHzasHy8RHY0UOtKa9lVNvj3xD77VDo/qtEjGdUsd1qThGj
-         e4a9cQOpdrOn7epnbZpSY4/nD3KOzTH2hcRKr0pi04OvJ3UAaYVRx4yrZdA+8BxMxv1Y
-         kyXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684244540; x=1686836540;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RIvTcNlwAmPNpObBbfvPw1SrNayKQmgyhgtXRTbsW0o=;
-        b=LbSUFFLLTtNFuN6zjyaZnAupV6CYE0KguVxU7Ua6F5znc3qTgdFruCVnHNajjcbS6u
-         U6pWbhVu0V86OwIQjNCqM6XSyfC430MVz222tfRfL0hQJpjs//5SfV4E2swjNi33Hp3w
-         s8bXwO6ded3+oG4SCp3cE79wGnck2Bfoim4hNLCuFNVTTF6zyQjXoFsKAYP1s2WxnQe8
-         S6TJ2YAYQrO5XHe6kCpPsCff0xVf/TI9iih1Lk71jvcdxUQ7/vQJNkWl84hmF/p+M7ql
-         rF6oQn+fgLNMYxMP/n/JGX1YBP9Z/r44nJYoesGDYpuPupUHfTfJWMIDKgypo5DaqtOe
-         yYbQ==
-X-Gm-Message-State: AC+VfDymv6g0QqkPPjCokTU4rbECmeJYyWxNHf9pKwv/sr2UHgFY/tZY
-        UbhIxSE1I2l3wumImVe9w2YcQQ==
-X-Google-Smtp-Source: ACHHUZ6Qej44yGCIdrpInYjzHIJscOEjjkfM4eL+VuKHu1Ub2WB/gSILNqOM8VjDJvJ/EH6SR69hPg==
-X-Received: by 2002:a5d:43c4:0:b0:2f0:2dfe:e903 with SMTP id v4-20020a5d43c4000000b002f02dfee903mr29013651wrr.69.1684244540172;
-        Tue, 16 May 2023 06:42:20 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id v17-20020adff691000000b00307c0afc030sm2761242wrp.4.2023.05.16.06.42.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 May 2023 06:42:19 -0700 (PDT)
-Message-ID: <d244f5f3-a4a0-c9ac-2f78-49baeb8ef3d3@linaro.org>
-Date:   Tue, 16 May 2023 14:42:18 +0100
+        Tue, 16 May 2023 09:50:48 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 005E5193;
+        Tue, 16 May 2023 06:50:46 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34GDJqU1009636;
+        Tue, 16 May 2023 13:50:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=X9gwxQr/tw5gPqEr1p2tZ3sy6Xl/TEE6xQ3YJK5FPdc=;
+ b=gHLImuCSJvCw9qWt6ylEd31TvjyXWiApdmsdaZCsZ6XRYxdGyt/uiqG5Bj+xsd0DfBeQ
+ K3u9DwjRof4eyKVHQfzA2/1dbsQawSGxvz8HtBA9xrtlzK6PI0XfR4M5tGKWhkactZSf
+ /vHG03klnl0g0DoclRsQcXRBLi+XRdHpRN8+O531tHbHBsyAdAUVGjWRIP+K+/T1GyrN
+ 31ulUH+Hv2XgBT5fFSKQ5n8T69gDOw7OXlCs06+4M9ModemH5awKnpRbJe0Oz0kTiJva
+ nkmqhKUcnZxB+Li4iG5lqIHqwrKyURNgbJdOcUP2H1b9HEHDrTBJV8kZF9giIxcRfV55 GA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qkwmj1jsy-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 16 May 2023 13:50:43 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34GDoffT010690
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 16 May 2023 13:50:41 GMT
+Received: from devipriy-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 16 May 2023 06:50:37 -0700
+From:   Devi Priya <quic_devipriy@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
+        <quic_anusha@quicinc.com>
+Subject: [PATCH 0/2] Add initial support for RDP449 of IPQ9574 family
+Date:   Tue, 16 May 2023 19:20:11 +0530
+Message-ID: <20230516135013.3547-1-quic_devipriy@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 1/3] dt-bindings: clock: qcom,gcc-sm8250: add missing
- bi_tcxo_ao clock
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Venkata Narendra Kumar Gutta <vnkgutta@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Rob Herring <robh@kernel.org>
-References: <20230516105241.30091-1-krzysztof.kozlowski@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230516105241.30091-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: DUsWyftJU4K8Sx5U3MHwrNTr61rhDylV
+X-Proofpoint-ORIG-GUID: DUsWyftJU4K8Sx5U3MHwrNTr61rhDylV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-16_06,2023-05-16_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ bulkscore=0 impostorscore=0 mlxlogscore=691 clxscore=1015 spamscore=0
+ lowpriorityscore=0 adultscore=0 malwarescore=0 suspectscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305160115
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/05/2023 11:52, Krzysztof Kozlowski wrote:
-> The initial SM8250 GCC driver added in commit 3e5770921a88 ("clk: qcom:
-> gcc: Add global clock controller driver for SM8250") already consumed it
-> on the clock.  This fixes warnings like:
-> 
->    sm8250-xiaomi-elish-csot.dtb: clock-controller@100000: clock-names: ['bi_tcxo', 'bi_tcxo_ao', 'sleep_clk'] is too long
-> 
-> Fixes: 98394efb48f5 ("dt-bindings: clock: Add SM8250 GCC clock bindings")
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Acked-by: Rob Herring <robh@kernel.org>
-> Reviewed-by: Stephen Boyd <sboyd@kernel.org>
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> ---
-> 
-> Changes in v2:
-> 1. Re-word commit msg and fixes tag (Konrad)
-> 2. Add tags
-> ---
->   Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml
-> index b752542ee20c..ead6665b9a45 100644
-> --- a/Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml
-> +++ b/Documentation/devicetree/bindings/clock/qcom,gcc-sm8250.yaml
-> @@ -23,11 +23,13 @@ properties:
->     clocks:
->       items:
->         - description: Board XO source
-> +      - description: Board active XO source
->         - description: Sleep clock source
->   
->     clock-names:
->       items:
->         - const: bi_tcxo
-> +      - const: bi_tcxo_ao
->         - const: sleep_clk
->   
->   required:
-> @@ -47,8 +49,9 @@ examples:
->         compatible = "qcom,gcc-sm8250";
->         reg = <0x00100000 0x1f0000>;
->         clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +               <&rpmhcc RPMH_CXO_CLK_A>,
->                  <&sleep_clk>;
-> -      clock-names = "bi_tcxo", "sleep_clk";
-> +      clock-names = "bi_tcxo", "bi_tcxo_ao", "sleep_clk";
->         #clock-cells = <1>;
->         #reset-cells = <1>;
->         #power-domain-cells = <1>;
+Add the initial device tree support for the Reference Design
+Platform(RDP) 449 based on IPQ9574 family of SoCs. This patch series adds
+support for Console UART, SPI NOR and SMPA1 regulator node.
 
-LGTM
+The series depends on the below patch sets which adds support for
+SPI NOR and SMPA1 regulator nodes.
+https://lore.kernel.org/linux-arm-msm/20230329053726.14860-3-quic_kathirav@quicinc.com/
+https://lore.kernel.org/linux-arm-msm/20230407155727.20615-1-quic_devipriy@quicinc.com/
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Devi Priya (2):
+  dt-bindings: arm: qcom: document AL02-C6 board based on IPQ9574 family
+  arm64: dts: qcom: ipq9574: add support for RDP449 variant
+
+ .../devicetree/bindings/arm/qcom.yaml         |  2 +
+ arch/arm64/boot/dts/qcom/Makefile             |  1 +
+ arch/arm64/boot/dts/qcom/ipq9574-rdp449.dts   | 80 +++++++++++++++++++
+ 3 files changed, 83 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp449.dts
+
+-- 
+2.17.1
+
