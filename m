@@ -2,138 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E48E704765
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 10:08:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EBA2704750
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 10:05:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231343AbjEPIIa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 04:08:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35068 "EHLO
+        id S231552AbjEPIFk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 04:05:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231363AbjEPIIZ (ORCPT
+        with ESMTP id S231553AbjEPIFg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 04:08:25 -0400
-X-Greylist: delayed 600 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 16 May 2023 01:08:23 PDT
-Received: from bee.tesarici.cz (bee.tesarici.cz [IPv6:2a03:3b40:fe:2d4::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 002A43C12;
-        Tue, 16 May 2023 01:08:23 -0700 (PDT)
-Received: from meshulam.tesarici.cz (dynamic-2a00-1028-83b8-1e7a-4427-cc85-6706-c595.ipv6.o2.cz [IPv6:2a00:1028:83b8:1e7a:4427:cc85:6706:c595])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by bee.tesarici.cz (Postfix) with ESMTPSA id 022691617A9;
-        Tue, 16 May 2023 09:58:20 +0200 (CEST)
-Authentication-Results: mail.tesarici.cz; dmarc=fail (p=none dis=none) header.from=tesarici.cz
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tesarici.cz; s=mail;
-        t=1684223901; bh=vgp/F7g/spz90YI9EAe5zEYmTaqdHJkzRNoRv0QNyqo=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-        b=PiKtJUDXeLIXLILtSnIYL0BWgkz+1wtz3Skq/knjoFpezpja2UdK19+qCjZ7PudN3
-         Y30ABlU9VOPl9n8xKjK5pH/3a8JiDL195rF6HNNpdMHP6wArDy70+Zi6x/LxqQIQlu
-         ibT19G77KLEtOH9rfxVy+qRNl4Bzq6+qxaP4382xqIziuSKvlMU3p8RupyFg5U5W/o
-         tFWS2oTyGYyMLRjdnCK2qeWtiHho1mdvnndZuLvLV1+H80+qAAYo8Pq83ef4A8xA4R
-         +bQXyF5Kf4JJ/L0goFRsCBPLCj0g5AtWa0385zU9r4oMTsoeg4N3n8jhCgkY5fSenZ
-         tDBAOVxUZcDdg==
-Date:   Tue, 16 May 2023 09:58:19 +0200
-From:   Petr =?UTF-8?B?VGVzYcWZw61r?= <petr@tesarici.cz>
-To:     Niklas Schnelle <schnelle@linux.ibm.com>
-Cc:     Joerg Roedel <joro@8bytes.org>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Will Deacon <will@kernel.org>,
-        Wenjia Zhang <wenjia@linux.ibm.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Jason Gunthorpe <jgg@ziepe.ca>,
-        Gerd Bayer <gbayer@linux.ibm.com>,
-        Julian Ruess <julianr@linux.ibm.com>,
-        Pierre Morel <pmorel@linux.ibm.com>,
-        Alexandra Winter <wintera@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        iommu@lists.linux.dev, asahi@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-doc@vger.kernel.org
-Subject: Re: [PATCH v9 1/6] s390/ism: Set DMA coherent mask
-Message-ID: <20230516095819.78442f09@meshulam.tesarici.cz>
-In-Reply-To: <20230310-dma_iommu-v9-1-65bb8edd2beb@linux.ibm.com>
-References: <20230310-dma_iommu-v9-0-65bb8edd2beb@linux.ibm.com>
-        <20230310-dma_iommu-v9-1-65bb8edd2beb@linux.ibm.com>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-suse-linux-gnu)
+        Tue, 16 May 2023 04:05:36 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CB64469F;
+        Tue, 16 May 2023 01:05:34 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34G6WjNS030536;
+        Tue, 16 May 2023 08:05:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=E4kETU/bgdAp48Vc9CYxxz7aGuqStSJykDGqUXfAonI=;
+ b=aRygt18pL6e80ousW2e+32Ap9xA54kxrdsps4c7NBrdNfLVXcxi/Q+EMO1Ti7CInRhnI
+ Dr9Lzz87NCvDmgQR74G2HfnX/YW/oDXjxpZSgT+cO66KcF/JSEjkAKDTplAm56/aWfAH
+ QvwFSnRYEBJlTFxcFVqBUnxqCkSiZCPEabA4aQKcgL06YfX6x/q+KEOct2HcRWAUJXKz
+ 1gPEYwZfD4r+RnXjnF2fwnOvCB7BV6HcrvsW5fSRPw+pEsoRK35JaBX5ejblTYJwxMLp
+ wlIHLN2gAPeP7dqDCYdl3iQXbrR/ByaR1rc+N2TUjWnHmD8B0WLaUGzdr3w4t3wkfbaU nA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qkt9w15ds-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 16 May 2023 08:05:15 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34G85Epx027068
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 16 May 2023 08:05:14 GMT
+Received: from [10.216.33.161] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 16 May
+ 2023 01:05:06 -0700
+Message-ID: <99213d31-c0a1-e0ce-d58d-36f392ad9095@quicinc.com>
+Date:   Tue, 16 May 2023 13:35:03 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH V2 1/4] dt-bindings: clock: Add crypto clock and reset
+ definitions
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <thara.gopinath@gmail.com>, <herbert@gondor.apana.org.au>,
+        <davem@davemloft.net>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <p.zabel@pengutronix.de>, <linux-arm-msm@vger.kernel.org>,
+        <linux-crypto@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_poovendh@quicinc.com>
+References: <20230515150722.12196-1-quic_anusha@quicinc.com>
+ <20230515150722.12196-2-quic_anusha@quicinc.com>
+ <4f68a71f-b9ea-7240-8d82-5578b9a94fbc@linaro.org>
+From:   Anusha Canchi <quic_anusha@quicinc.com>
+In-Reply-To: <4f68a71f-b9ea-7240-8d82-5578b9a94fbc@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 4k1sACSEcNOzNnaTTx6WQDLgcRvAss42
+X-Proofpoint-ORIG-GUID: 4k1sACSEcNOzNnaTTx6WQDLgcRvAss42
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-16_02,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxscore=0
+ adultscore=0 bulkscore=0 impostorscore=0 clxscore=1015 spamscore=0
+ priorityscore=1501 mlxlogscore=999 suspectscore=0 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305160069
+X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 15 May 2023 11:15:51 +0200
-Niklas Schnelle <schnelle@linux.ibm.com> wrote:
 
-> A future change will convert the DMA API implementation from the
-> architecture specific arch/s390/pci/pci_dma.c to using the common code
-> drivers/iommu/dma-iommu.c which the utilizes the same IOMMU hardware
-> through the s390-iommu driver. Unlike the s390 specific DMA API this
-> requires devices to correctly call set the coherent mask to be allowed
-> to use IOVAs >2^32 in dma_alloc_coherent(). This was however not done
-> for ISM devices. ISM requires such addresses since currently the DMA
-> aperture for PCI devices starts at 2^32 and all calls to
-> dma_alloc_coherent() would thus fail.
-> 
-> Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-> Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-> Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-> ---
->  drivers/s390/net/ism_drv.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/s390/net/ism_drv.c b/drivers/s390/net/ism_drv.c
-> index 8acb9eba691b..1399b5dc646c 100644
-> --- a/drivers/s390/net/ism_drv.c
-> +++ b/drivers/s390/net/ism_drv.c
-> @@ -660,7 +660,7 @@ static int ism_probe(struct pci_dev *pdev, const struct pci_device_id *id)
->  	if (ret)
->  		goto err_disable;
->  
-> -	ret = dma_set_mask(&pdev->dev, DMA_BIT_MASK(64));
-> +	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
 
-Ah. I love this change. I have already wondered a few times if the
-coherent DMA mask for this device may actually be different from
-dma_mask. Now I know. ;-)
+On 5/16/2023 1:15 PM, Bhupesh Sharma wrote:
+>
+> On 5/15/23 8:37 PM, Anusha Rao wrote:
+>> Add crypto clock and reset ID definitions for ipq9574.
+>>
+>> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+>> ---
+>>   Changes in V2:
+>>     - Separated out the clock/reset binding changes to a new patch.
+>>
+>>   include/dt-bindings/clock/qcom,ipq9574-gcc.h | 4 ++++
+>>   include/dt-bindings/reset/qcom,ipq9574-gcc.h | 1 +
+>>   2 files changed, 5 insertions(+)
+>>
+>> diff --git a/include/dt-bindings/clock/qcom,ipq9574-gcc.h 
+>> b/include/dt-bindings/clock/qcom,ipq9574-gcc.h
+>> index 5a2961bfe893..86790efa10f0 100644
+>> --- a/include/dt-bindings/clock/qcom,ipq9574-gcc.h
+>> +++ b/include/dt-bindings/clock/qcom,ipq9574-gcc.h
+>> @@ -210,4 +210,8 @@
+>>   #define GCC_SNOC_PCIE1_1LANE_S_CLK            201
+>>   #define GCC_SNOC_PCIE2_2LANE_S_CLK            202
+>>   #define GCC_SNOC_PCIE3_2LANE_S_CLK            203
+>> +#define CRYPTO_CLK_SRC                    204
+>
+> For uniformity, please use GCC_ prefix int the above define as well.
+> Also make the similar changes at the places where this CLOCK_SRC macro 
+> is used.
+Sure, will update in the next spin.
 
-Thanks!
+Thanks,
+Anusha
+>
+> Thanks,
+> Bhupesh
+>
+>> +#define GCC_CRYPTO_CLK 205
+>> +#define GCC_CRYPTO_AXI_CLK                206
+>> +#define GCC_CRYPTO_AHB_CLK                207
+>>   #endif
+>> diff --git a/include/dt-bindings/reset/qcom,ipq9574-gcc.h 
+>> b/include/dt-bindings/reset/qcom,ipq9574-gcc.h
+>> index d01dc6a24cf1..c709d103673d 100644
+>> --- a/include/dt-bindings/reset/qcom,ipq9574-gcc.h
+>> +++ b/include/dt-bindings/reset/qcom,ipq9574-gcc.h
+>> @@ -160,5 +160,6 @@
+>>   #define GCC_WCSS_Q6_BCR                        151
+>>   #define GCC_WCSS_Q6_TBU_BCR                    152
+>>   #define GCC_TCSR_BCR                        153
+>> +#define GCC_CRYPTO_BCR                        154
+>>     #endif
 
-Petr T
