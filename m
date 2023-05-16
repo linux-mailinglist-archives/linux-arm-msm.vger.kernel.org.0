@@ -2,83 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D221704E78
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 15:00:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D2B0704EA4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 15:05:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232200AbjEPNAJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 09:00:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43974 "EHLO
+        id S232958AbjEPNFI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 09:05:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233461AbjEPNAB (ORCPT
+        with ESMTP id S233425AbjEPNEq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 09:00:01 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DCFD59F2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 05:59:34 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4eff4ea8e39so16176320e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 05:59:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684241969; x=1686833969;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RyX6rQJR1BZQe9Yc57Xp/rJrQBCXKFM6w6ZuIQmIOyk=;
-        b=vms5vFb83wjTEUFScjnZ39oGL9tY2MRnQCrmiM+Z9r8mbDubZnpRtiI94iw7RQHBiG
-         NQlmg0NnQK5UWCHQAo7xRz5Bc228a9R01ftilJ6IUT2lUm5XaaUNSQ7OHnjcBvRofMEx
-         DGSsneyG3NEoZzAE3kgVBc0ixpS/9nduEN/bFcMq8BwFjTY3Z6bTTX1rSe0gM9EpFiut
-         DySc6CxiBo/ZSeaiwij+VNx4FBjDaKaRNnar8q8HgHujQln+VWp3L75DJgnMTrvIWeXj
-         1zkAMj7IT0v7Ktd0k0c/MGkTFc20GDtFYo3o8TvPg0zX+03jq1aybpoUMCqea/zXSymx
-         6MTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684241969; x=1686833969;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RyX6rQJR1BZQe9Yc57Xp/rJrQBCXKFM6w6ZuIQmIOyk=;
-        b=db60Ey9E3DRXmJ+uZnPJXmjMZEKskhF385uuD0ia4Nv4SYUJngsvhiYYt1couH3vW6
-         geil/2e5qKp/waRyEaYVMGymVDewsz41X0hAhX2xSTLeRwe5y2ip9ZpUCMgjlmaG1kri
-         2Aph9aPE+rcaE+bvcboi4tEMFEahXrThggtK/a99B3pUP2jX2b0ojhkMI8+ApsmxDv/L
-         TFluOvxKKMxmPz7NV9bdjhuGtr/6qNvVkarcuuBvWGx3MJIJob1MHrAqblEzUvWYafIl
-         Dm8Hu65xf1Vtng2bYmIbC+j0l7m2jmJcZsPqW5UnJSlGDf5g3YbhQMMcp+IwZ5VNyt8J
-         gN0A==
-X-Gm-Message-State: AC+VfDyZd/NFErcu62Xm3gg3IfOPrWQjxzlpsc7xIeyWtkswzfFWfh8U
-        dIcidemIa2I6ijDL5lMTByO8hA==
-X-Google-Smtp-Source: ACHHUZ5jrcPyi1Sklbq+EVgE6AzuXgiM/acWnd8fwfuhTH5xW6E3kNQ1fnoEjsH+AEPeI1ou78pHOA==
-X-Received: by 2002:ac2:5dc4:0:b0:4ef:6ed9:7af2 with SMTP id x4-20020ac25dc4000000b004ef6ed97af2mr7847544lfq.8.1684241968852;
-        Tue, 16 May 2023 05:59:28 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id c9-20020ac244a9000000b004f387d97dafsm360065lfm.147.2023.05.16.05.59.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 May 2023 05:59:28 -0700 (PDT)
-Message-ID: <19853086-3486-54e9-7926-e6eb9fc0d243@linaro.org>
-Date:   Tue, 16 May 2023 15:59:27 +0300
+        Tue, 16 May 2023 09:04:46 -0400
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [IPv6:2001:67c:2178:6::1c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D24583A9C;
+        Tue, 16 May 2023 06:04:25 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id 6A0A121CD4;
+        Tue, 16 May 2023 13:03:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1684242233; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=7MYn1TIkHwneNzd3IUFWyvJO6ujcXL9z7oe8mMJjl9I=;
+        b=rIS29l2tl1/rMbpZezKb+W7BXqoiArjaYsN5ryXaIiA5rilS5d4S6hznjNZlz1sXUV+VFC
+        msk7yo4qSVRpee24pFWY575z6vxyKarUaLo1JWYVePf8+xE9NyZFqG44XtpW6ua3fG7gGS
+        qiXR1WEsjqP0O5bO4lEY+utWv0ykpLw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1684242233;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=7MYn1TIkHwneNzd3IUFWyvJO6ujcXL9z7oe8mMJjl9I=;
+        b=78N1hjwcL7ApVsl7Ktj5ecxO0Vs4iwZZYGyfUz7ydDZT8pCXnR9/QqhdP4lVVNfisi7p6R
+        WNZjj49SATigS/DQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 0ACE0138F9;
+        Tue, 16 May 2023 13:03:53 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id F0pMATl/Y2TuOwAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Tue, 16 May 2023 13:03:53 +0000
+Message-ID: <72d1535b-45ee-1556-d97f-6d3dfdcd7ed4@suse.de>
+Date:   Tue, 16 May 2023 15:03:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v5 0/8] drm/i915: move DSC RC tables to drm_dsc_helper.c
-To:     Jani Nikula <jani.nikula@linux.intel.com>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Suraj Kandpal <suraj.kandpal@intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>,
-        dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20230504153511.4007320-1-dmitry.baryshkov@linaro.org>
- <871qjij6vx.fsf@intel.com>
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <871qjij6vx.fsf@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+ Thunderbird/102.10.1
+Subject: Re: [PATCH v2 02/12] drm/armada: Use regular fbdev I/O helpers
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     daniel@ffwll.ch, airlied@gmail.com,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        javierm@redhat.com, linux-samsung-soc@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        Russell King <linux@armlinux.org.uk>,
+        dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        linux-tegra@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230515094033.2133-1-tzimmermann@suse.de>
+ <20230515094033.2133-3-tzimmermann@suse.de>
+ <20230515175544.GB1745913@ravnborg.org>
+Content-Language: en-US
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+In-Reply-To: <20230515175544.GB1745913@ravnborg.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------TF15ECY1lmCvOkLrbIq0MhSY"
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,80 +81,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/05/2023 12:12, Jani Nikula wrote:
-> On Thu, 04 May 2023, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
->> Other platforms (msm) will benefit from sharing the DSC config setup
->> functions. This series moves parts of static DSC config data from the
->> i915 driver to the common helpers to be used by other drivers.
->>
->> Note: the RC parameters were cross-checked against config files found in
->> DSC model 2021062, 20161212 (and 20150914). The first patch modifies
->> tables according to those config files, while preserving parameter
->> values using the code. I have not changed one of the values in the
->> pre-SCR config file as it clearly looks like a typo in the config file,
->> considering the table E in DSC 1.1 and in the DSC 1.1 SCR.
-> 
-> As I believe I've said before, I think it's fine to merge these either
-> via drm-intel or drm-misc. Which do you prefer?
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------TF15ECY1lmCvOkLrbIq0MhSY
+Content-Type: multipart/mixed; boundary="------------x19kmCONrIOVY1mx13KTewaz";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: Sam Ravnborg <sam@ravnborg.org>
+Cc: daniel@ffwll.ch, airlied@gmail.com, maarten.lankhorst@linux.intel.com,
+ mripard@kernel.org, javierm@redhat.com, linux-samsung-soc@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+ Russell King <linux@armlinux.org.uk>, dri-devel@lists.freedesktop.org,
+ amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+ freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org
+Message-ID: <72d1535b-45ee-1556-d97f-6d3dfdcd7ed4@suse.de>
+Subject: Re: [PATCH v2 02/12] drm/armada: Use regular fbdev I/O helpers
+References: <20230515094033.2133-1-tzimmermann@suse.de>
+ <20230515094033.2133-3-tzimmermann@suse.de>
+ <20230515175544.GB1745913@ravnborg.org>
+In-Reply-To: <20230515175544.GB1745913@ravnborg.org>
 
-No strong preference. Maybe drm-misc would be easier for us to 
-back-merge it into msm/next. Otherwise it is up to you.
+--------------x19kmCONrIOVY1mx13KTewaz
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-> 
-> BR,
-> Jani.
-> 
-> 
-> 
->>
->> Chances since v4:
->> - Rebased on top of drm-intel-next
->> - Cut the first 8 patches of the series to ease merging. The rest of the
->>    patches will go afterwards.
->>
->> Chances since v3:
->> - Rebased on top of drm-intel-next
->> - Dropped the msm patch to make patchset fully mergeable through
->>    drm-intel
->> - Made drm_dsc_set_const_params() ignore rc_model_size, picked up
->>    drm_dsc_set_initial_scale_value() patch by Jessica and switched
->>    intel_vdsc.c to use those two helpers.
->> - Added a patch to make i915 actually use rc_tgt_offset_high,
->>    rc_tgt_offset_low and rc_edge_factor from struct drm_dsc_config.
->>
->> Chances since v2:
->> - Rebased on top of drm-intel-next
->>
->> Chances since v1:
->> - Made drm_dsc_rc_buf_thresh static rather than exporting it
->> - Switched drm_dsc_rc_buf_thresh loop to use ARRAY_SIZE. Added
->>    BUILD_BUG_ON's to be sure that array sizes are correct
->> - Fixed rc_parameters_data indentation to be logical and tidy
->> - Fixed drm_dsc_setup_rc_params() kerneldoc
->> - Added a clause to drm_dsc_setup_rc_params() to verify bpp and bpc
->>    being set.
->> - Fixed range_bpg_offset programming in calculate_rc_params()
->> - Fixed bpp vs bpc bug in intel_dsc_compute_params()
->> - Added FIXME comment next to the customizations in
->>    intel_dsc_compute_params().
->>
->> Dmitry Baryshkov (8):
->>    drm/i915/dsc: change DSC param tables to follow the DSC model
->>    drm/i915/dsc: move rc_buf_thresh values to common helper
->>    drm/i915/dsc: move DSC tables to DRM DSC helper
->>    drm/i915/dsc: stop using interim structure for calculated params
->>    drm/display/dsc: use flat array for rc_parameters lookup
->>    drm/display/dsc: split DSC 1.2 and DSC 1.1 (pre-SCR) parameters
->>    drm/display/dsc: include the rest of pre-SCR parameters
->>    drm/display/dsc: add YCbCr 4:2:2 and 4:2:0 RC parameters
->>
->>   drivers/gpu/drm/display/drm_dsc_helper.c  | 986 ++++++++++++++++++++++
->>   drivers/gpu/drm/i915/display/intel_vdsc.c | 443 ++--------
->>   include/drm/display/drm_dsc_helper.h      |   9 +
->>   3 files changed, 1042 insertions(+), 396 deletions(-)
-> 
+SGkNCg0KQW0gMTUuMDUuMjMgdW0gMTk6NTUgc2NocmllYiBTYW0gUmF2bmJvcmc6DQo+IEhp
+IFRob21hcywNCj4gDQo+IE9uIE1vbiwgTWF5IDE1LCAyMDIzIGF0IDExOjQwOjIzQU0gKzAy
+MDAsIFRob21hcyBaaW1tZXJtYW5uIHdyb3RlOg0KPj4gVXNlIHRoZSByZWd1bGFyIGZiZGV2
+IGhlbHBlcnMgZm9yIGZyYW1lYnVmZmVyIEkvTyBpbnN0ZWFkIG9mIERSTSdzDQo+PiBoZWxw
+ZXJzLiBBcm1hZGEgZG9lcyBub3QgdXNlIGRhbWFnZSBoYW5kbGluZywgc28gRFJNJ3MgZmJk
+ZXYgaGVscGVycw0KPj4gYXJlIG1lcmUgd3JhcHBlcnMgYXJvdW5kIHRoZSBmYmRldiBjb2Rl
+Lg0KPj4NCj4+IEJ5IHVzaW5nIGZiZGV2IGhlbHBlcnMgZGlyZWN0bHkgd2l0aGluIGVhY2gg
+RFJNIGZiZGV2IGVtdWxhdGlvbiwNCj4+IHdlIGNhbiBldmVudHVhbGx5IHJlbW92ZSBEUk0n
+cyB3cmFwcGVyIGZ1bmN0aW9ucyBlbnRpcmVseS4NCj4+DQo+PiB2MjoNCj4+IAkqIHVzZSBG
+Ql9JT19IRUxQRVJTIG9wdGlvbg0KPj4NCj4+IFNpZ25lZC1vZmYtYnk6IFRob21hcyBaaW1t
+ZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPg0KPj4gQ2M6IFJ1c3NlbGwgS2luZyA8bGlu
+dXhAYXJtbGludXgub3JnLnVrPg0KPj4gLS0tDQo+PiAgIGRyaXZlcnMvZ3B1L2RybS9hcm1h
+ZGEvS2NvbmZpZyAgICAgICAgfCAxICsNCj4+ICAgZHJpdmVycy9ncHUvZHJtL2FybWFkYS9h
+cm1hZGFfZmJkZXYuYyB8IDkgKysrKy0tLS0tDQo+PiAgIDIgZmlsZXMgY2hhbmdlZCwgNSBp
+bnNlcnRpb25zKCspLCA1IGRlbGV0aW9ucygtKQ0KPj4NCj4+IGRpZmYgLS1naXQgYS9kcml2
+ZXJzL2dwdS9kcm0vYXJtYWRhL0tjb25maWcgYi9kcml2ZXJzL2dwdS9kcm0vYXJtYWRhL0tj
+b25maWcNCj4+IGluZGV4IGY1YzY2ZDg5YmE5OS4uNWFmYWRlMjVlMjE3IDEwMDY0NA0KPj4g
+LS0tIGEvZHJpdmVycy9ncHUvZHJtL2FybWFkYS9LY29uZmlnDQo+PiArKysgYi9kcml2ZXJz
+L2dwdS9kcm0vYXJtYWRhL0tjb25maWcNCj4+IEBAIC0zLDYgKzMsNyBAQCBjb25maWcgRFJN
+X0FSTUFEQQ0KPj4gICAJdHJpc3RhdGUgIkRSTSBzdXBwb3J0IGZvciBNYXJ2ZWxsIEFybWFk
+YSBTb0NzIg0KPj4gICAJZGVwZW5kcyBvbiBEUk0gJiYgSEFWRV9DTEsgJiYgQVJNICYmIE1N
+VQ0KPj4gICAJc2VsZWN0IERSTV9LTVNfSEVMUEVSDQo+PiArCXNlbGVjdCBGQl9JT19IRUxQ
+RVJTIGlmIERSTV9GQkRFVl9FTVVMQVRJT04NCj4+ICAgCWhlbHANCj4+ICAgCSAgU3VwcG9y
+dCB0aGUgIkxDRCIgY29udHJvbGxlcnMgZm91bmQgb24gdGhlIE1hcnZlbGwgQXJtYWRhIDUx
+MA0KPj4gICAJICBkZXZpY2VzLiAgVGhlcmUgYXJlIHR3byBjb250cm9sbGVycyBvbiB0aGUg
+ZGV2aWNlLCBlYWNoIGNvbnRyb2xsZXINCj4+IGRpZmYgLS1naXQgYS9kcml2ZXJzL2dwdS9k
+cm0vYXJtYWRhL2FybWFkYV9mYmRldi5jIGIvZHJpdmVycy9ncHUvZHJtL2FybWFkYS9hcm1h
+ZGFfZmJkZXYuYw0KPj4gaW5kZXggMGE1ZmQxYWE4NmViLi42YzNiYmFmNTM1NjkgMTAwNjQ0
+DQo+PiAtLS0gYS9kcml2ZXJzL2dwdS9kcm0vYXJtYWRhL2FybWFkYV9mYmRldi5jDQo+PiAr
+KysgYi9kcml2ZXJzL2dwdS9kcm0vYXJtYWRhL2FybWFkYV9mYmRldi5jDQo+PiBAQCAtNSw2
+ICs1LDcgQEANCj4+ICAgICovDQo+PiAgIA0KPj4gICAjaW5jbHVkZSA8bGludXgvZXJybm8u
+aD4NCj4+ICsjaW5jbHVkZSA8bGludXgvZmIuaD4NCj4+ICAgI2luY2x1ZGUgPGxpbnV4L2tl
+cm5lbC5oPg0KPj4gICAjaW5jbHVkZSA8bGludXgvbW9kdWxlLmg+DQo+PiAgIA0KPj4gQEAg
+LTM0LDExICszNSw5IEBAIHN0YXRpYyB2b2lkIGFybWFkYV9mYmRldl9mYl9kZXN0cm95KHN0
+cnVjdCBmYl9pbmZvICppbmZvKQ0KPj4gICBzdGF0aWMgY29uc3Qgc3RydWN0IGZiX29wcyBh
+cm1hZGFfZmJfb3BzID0gew0KPj4gICAJLm93bmVyCQk9IFRISVNfTU9EVUxFLA0KPj4gICAJ
+RFJNX0ZCX0hFTFBFUl9ERUZBVUxUX09QUywNCj4+IC0JLmZiX3JlYWQJPSBkcm1fZmJfaGVs
+cGVyX2NmYl9yZWFkLA0KPj4gLQkuZmJfd3JpdGUJPSBkcm1fZmJfaGVscGVyX2NmYl93cml0
+ZSwNCj4gSSBoYWQgZXhwZWN0ZWQgdG8gc2VlDQo+IC5mYl9yZWFkID0gZmJfaW9fcmVhZCwN
+Cj4gDQo+IEJ1dCBtYXliZSB0aGlzIG9ubHkgdXNlZCB3aGVuIHVzaW5nIGRhbWFnZSBoYW5k
+bGluZz8NCg0KZmJfaW9fcmVhZCgpIGFuZCBmYl9pb193cml0ZSgpIGFyZSB0aGUgZGVmYXVs
+dCBpbXBsZW1lbnRhdGlvbnMuIFRoZXkgYXJlIA0KY2FsbGVkIHdoZW4gbm8gY2FsbGJhY2sg
+aGFzIGJlZW4gc2V0LiAgQWxsIHRoZSBvdGhlciBmYmRldiBkcml2ZXJzIGxlYXZlIA0KdGhl
+bSBvdXQsIHNvIEkga2VwdCB0aGlzIHBhdHRlcm4gZm9yIHRoZSBEUk0gc2lkZSBhcyB3ZWxs
+Lg0KDQpCZXN0IHJlZ2FyZHMNClRob21hcw0KDQo+IA0KPiBMaWtld2lzZSBmb3IgZHJtX2Zi
+X2hlbHBlcl9jZmJfd3JpdGUuDQo+IA0KPiA/Pw0KPiANCj4+IC0JLmZiX2ZpbGxyZWN0CT0g
+ZHJtX2ZiX2hlbHBlcl9jZmJfZmlsbHJlY3QsDQo+PiAtCS5mYl9jb3B5YXJlYQk9IGRybV9m
+Yl9oZWxwZXJfY2ZiX2NvcHlhcmVhLA0KPj4gLQkuZmJfaW1hZ2VibGl0CT0gZHJtX2ZiX2hl
+bHBlcl9jZmJfaW1hZ2VibGl0LA0KPj4gKwkuZmJfZmlsbHJlY3QJPSBjZmJfZmlsbHJlY3Qs
+DQo+PiArCS5mYl9jb3B5YXJlYQk9IGNmYl9jb3B5YXJlYSwNCj4+ICsJLmZiX2ltYWdlYmxp
+dAk9IGNmYl9pbWFnZWJsaXQsDQo+IA0KPiBUaGlzIHBhcnQgaXMgYXMgZXhwZWN0ZWQuDQo+
+IA0KPiAJU2FtDQo+IA0KPj4gICAJLmZiX2Rlc3Ryb3kJPSBhcm1hZGFfZmJkZXZfZmJfZGVz
+dHJveSwNCj4+ICAgfTsNCj4+ICAgDQo+PiAtLSANCj4+IDIuNDAuMQ0KDQotLSANClRob21h
+cyBaaW1tZXJtYW5uDQpHcmFwaGljcyBEcml2ZXIgRGV2ZWxvcGVyDQpTVVNFIFNvZnR3YXJl
+IFNvbHV0aW9ucyBHZXJtYW55IEdtYkgNCkZyYW5rZW5zdHJhc3NlIDE0NiwgOTA0NjEgTnVl
+cm5iZXJnLCBHZXJtYW55DQpHRjogSXZvIFRvdGV2LCBBbmRyZXcgTXllcnMsIEFuZHJldyBN
+Y0RvbmFsZCwgQm91ZGllbiBNb2VybWFuDQpIUkIgMzY4MDkgKEFHIE51ZXJuYmVyZykNCg==
 
--- 
-With best wishes
-Dmitry
 
+--------------x19kmCONrIOVY1mx13KTewaz--
+
+--------------TF15ECY1lmCvOkLrbIq0MhSY
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmRjfzgFAwAAAAAACgkQlh/E3EQov+Bq
+dg//T0j2i9jbhRq04m2fkfiIt0eqsth1P5X3bkq7j9vcF0WEoiRSH9KNs0ZoDcgGyPVG9WKKbg9H
+/BJ4pBhHlw2H2TZjEvnnUDl7KXpXGwL789twD6P1ypBFXFm5zVuwjxcnnHxNEo5A0x8NzfqOnai0
+b29/fs3AnpcOjJx2tbztSdlmOWGI9UfygHCOVQgM9mtqzXyC779NJjfu90vttEZy22RvfebXDl6A
+2bdMz9fvtvq9oz/NT6NuKPNs7q2JnqdGcrjQlbJ8LnMZAs43mRAuLTuDQvCQ5uNTdcaHL0k5eA/p
+eW1rfs84MkiFIHw4WJ94hnfRQIIws0lt/RIbVEJLRNgc8RGP9LboMIP93K6+Y6rUMIrAw6IKnQAe
+jbXXluwuEjwyuGPwMqQWohH/Xs6RokSdD467EROMkjqa6XJGRiBGk7CLSkRIUU/bmbdEjCCLlzaq
+8P1gUsl7hzQaQoc72fROJoKHTEhhbNcYbXEuFL3SUflQaT+yWYRMSncco3+2+XMixJGNjhed7V1/
+MVjX6z6dNXShnpZ211j0KV7z+qAnxnHdArBWSGb/6bXN5c7IhMXvt1Iq+Gbe4mx9GFdYjcEriyUe
+Bj4O71YUHumZ9bl4YFWQumrLLT5IpT08/tLYCetynpz7mw7BNCdENjjCTNxq5XBHnhy0eLYxbZY5
+g1c=
+=6j7r
+-----END PGP SIGNATURE-----
+
+--------------TF15ECY1lmCvOkLrbIq0MhSY--
