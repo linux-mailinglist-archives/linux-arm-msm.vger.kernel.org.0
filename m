@@ -2,109 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 467A3705584
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 19:57:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38CF37055BB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 20:12:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232007AbjEPR4x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 13:56:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46328 "EHLO
+        id S229574AbjEPSMq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 14:12:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232083AbjEPR4t (ORCPT
+        with ESMTP id S229551AbjEPSMn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 13:56:49 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30B199B;
-        Tue, 16 May 2023 10:56:45 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B906463625;
-        Tue, 16 May 2023 17:56:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9498FC433D2;
-        Tue, 16 May 2023 17:56:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684259804;
-        bh=7ULD3yxJaogVlKiE5g0T5dzK9aiAn4kF1SV1cudf0a0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SAyDZvq3aI7/IDGeV2SK+xROv4K/jTU2+ZB3sCeAk+zcBLZcL0uYl7DxSR6UkmAbc
-         GiL70Fl1igazasLe7Nfh1eye/vhD7JlpTfEwFNZa4V3mJ7oWobs3KJAybvXJUm9Z1s
-         jmqTpuxy/tY3W9o/cVEo2kiZ1ONxXb6ZX3MTypvUR7cVMr2kykDqZgrrAQO0fn0BK7
-         +bi2nP6QdG1CyxxfjVNbIRJ9UZ5OX2/Tqf04H+Q2pzva0bfJi1FstVkdad04QkvTNF
-         DQVh1PrLL/V+pmjguWD+nhXThIs7nitRkmHAwu9uwJ2r5hL9SVV0HT/H3jT/f/tTql
-         zJ9h3Yz63kG0A==
-Date:   Tue, 16 May 2023 23:26:39 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Baoquan He <bhe@redhat.com>
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-        schnelle@linux.ibm.com, linux-s390@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org
-Subject: Re: [PATCH RESEND 2/2] dmaengine: make QCOM_HIDMA depend on HAS_IOMEM
-Message-ID: <ZGPD1wELeXafPJ/T@matsya>
-References: <20230506111628.712316-1-bhe@redhat.com>
- <20230506111628.712316-3-bhe@redhat.com>
+        Tue, 16 May 2023 14:12:43 -0400
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52F76AD01
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 11:12:36 -0700 (PDT)
+Received: by mail-qk1-x732.google.com with SMTP id af79cd13be357-75766bf7c60so611462185a.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 11:12:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684260755; x=1686852755;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/51qZoBKoWvqhRdHDJ3zf60Mtxm0FPSvObeb2MuphQg=;
+        b=utKO6x8hMlRvPLUDZNlGIPqWTHo4SRh0ysOIx5RAtDZIS9Z3pfTRPZ1oNemrpfDfQ1
+         hhv0HwHYM5laKMIFeJUR0JZKsn7HCcKVluoGazwjjqxohAQlVUaLQd+rz3qolUfjCyar
+         QV2hHK9VX5Fji8y08JA/iE8T5E2K2WOubl9A0QlZUS8EkgeA/KV1jJa/MMNssZ+kBFuL
+         TZp62dXnDgMuNnqh3kqsqnaLYRLFjInIzA95HXVD9UC6MOQ65704C02iG/ROD6gMKiFw
+         Z/rVfxY3JeynBtxRfWc3WidF39q1vUtWak7tRO0gF8raoCgsqBDq888baVdtRMjrqNAm
+         ohyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684260755; x=1686852755;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/51qZoBKoWvqhRdHDJ3zf60Mtxm0FPSvObeb2MuphQg=;
+        b=CSv0WLkHJCgz/CoFt4jj5opYsecAyu5hmfYnrL8XpP0efzz0oDNRR3x3YoJ62blps8
+         zI7k6yTDJ9PVhGLwKJ9dsxM+0PL2mWYWDsZduII+Ee8hIvTBQoPGMGFl27++f5UJa8Rj
+         MRZ7F6/PkCHjVEe9ZpY6xf9gJ5SBelTpBPH47pKqh6tY+eCn13rdf+tiR+cufReOVLgP
+         5U5nUziomh1yqU+fERkpWAXb5lgW70CfL/7YTBiX68MSHJRUEkbr+jKDkXF7MJNKISi7
+         HFFkUsZdylK+dvrAwQH7RFBYHyT2EyC7R1nmh8mo6A6rfpvta6aIpJuQ8Eu4Vt7mI6N0
+         owoQ==
+X-Gm-Message-State: AC+VfDzIXzJbHA01vqhXWeHaDDDZihEXH6RLO4YxyV5TKfNIlmF/tw7o
+        v66D4x7/kHvDmR/qGBkfS+wQWhpmBPVAfTbHVcPyrQ==
+X-Google-Smtp-Source: ACHHUZ6+0z2An4TnM+LfxQolPm6bsi9QmwTbeQmiWnzdzuUz8m92/LFdYSupeJkqCo1YfXgfheStW1NDZM+A3OoMHhw=
+X-Received: by 2002:a05:6214:caa:b0:61b:6c88:4bd3 with SMTP id
+ s10-20020a0562140caa00b0061b6c884bd3mr70597809qvs.47.1684260755334; Tue, 16
+ May 2023 11:12:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230506111628.712316-3-bhe@redhat.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230324063357.1.Ifdf3625a3c5c9467bd87bfcdf726c884ad220a35@changeid>
+ <CAMi1Hd1avQDcDQf137m2auz2znov4XL8YGrLZsw5edb-NtRJRw@mail.gmail.com>
+ <552345c5-b1e9-41f6-f275-b6eeeb51df25@linaro.org> <CAMi1Hd05z8uBotO4vs7Ropmt7W2gSA__tTu_=X1t0mze7bXrhg@mail.gmail.com>
+ <CAD=FV=VSFDe445WEVTHXxU1WS_HGUV5jR5E8_Vgd4eyhn3rHyA@mail.gmail.com>
+In-Reply-To: <CAD=FV=VSFDe445WEVTHXxU1WS_HGUV5jR5E8_Vgd4eyhn3rHyA@mail.gmail.com>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Tue, 16 May 2023 23:41:58 +0530
+Message-ID: <CAMi1Hd28FJUjB8A-9YF7xpKOzSyNWXX3qung4aDjpLBhOvw_eA@mail.gmail.com>
+Subject: Re: [PATCH] regulator: qcom-rpmh: Revert "regulator: qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS"
+To:     Doug Anderson <dianders@chromium.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Saravana Kannan <saravanak@google.com>
+Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06-05-23, 19:16, Baoquan He wrote:
-> On s390 systems (aka mainframes), it has classic channel devices for
-> networking and permanent storage that are currently even more common
-> than PCI devices. Hence it could have a fully functional s390 kernel
-> with CONFIG_PCI=n, then the relevant iomem mapping functions
-> [including ioremap(), devm_ioremap(), etc.] are not available.
-> 
-> Here let QCOM_HIDMA depend on HAS_IOMEM so that it won't be built to
-> cause below compiling error if PCI is unset.
+On Mon, 15 May 2023 at 20:33, Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Mon, May 15, 2023 at 7:42=E2=80=AFAM Amit Pundir <amit.pundir@linaro.o=
+rg> wrote:
+> >
+> > On Sun, 14 May 2023 at 18:11, Caleb Connolly <caleb.connolly@linaro.org=
+> wrote:
+> > >
+> > >
+> > >
+> > > On 13/05/2023 18:08, Amit Pundir wrote:
+> > > > On Fri, 24 Mar 2023 at 19:05, Douglas Anderson <dianders@chromium.o=
+rg> wrote:
+> > > >>
+> > > >> This reverts commit 58973046c1bf ("regulator: qcom-rpmh: Use
+> > > >> PROBE_FORCE_SYNCHRONOUS"). Further digging into the problems that
+> > > >> prompted the us to switch to synchronous probe showed that the roo=
+t
+> > > >> cause was a missing "rootwait" in the kernel command line
+> > > >> arguments. Let's reinstate asynchronous probe.
+> > > >
+> > > > Hi, the asynchronous probe is broken on Dragonboard 845c (SDM845)
+> > > > running AOSP (Android Open Source Project) with v6.4-rc1
+> > > > https://bugs.linaro.org/show_bug.cgi?id=3D5975.
+> > > > Can we please go back to synchronous probe.
+> > > >
+> > > > AOSP do not make use of rootwait, IIRC, but it is added by the
+> > > > bootloader anyway. And the device fails to boot AOSP regardless of
+> > > > "rootwait" bootarg being present or not.
+> > >
+> > > Could you try applying this diff to enable some log spam and let me k=
+now
+> > > what you get? I'm keen to try and figure this one out. My mail client
+> > > might crunch this a bit so I have pasted it here too
+> > > https://p.calebs.dev/ab74b7@raw
+> >
+> > These prints add just enough delay for the UFS probe to succeed that I
+> > can't reproduce the failure anymore.
+>
+> I'd prefer doing at least a little debugging before jumping to a
+> revert. From looking at your dmesg [1], it looks as if the async probe
+> is allowing RPMH to probe at the same time as "qcom-vadc-common".
+> That's something that talks on the SPMI bus and is (potentially)
+> talking to the same PMICs that RPMH-regulator is, right? I'm by no
+> means an expert on how Qualcomm's PMICs work, but it seems plausible
+> that the "qcom-vadc-common" is somehow causing problems and screwing
+> up RPMH. Does that seem plausible to you?
+>
+> If so, one interesting way to track it down would be to move around
+> delays. Put ~500ms sleep at the _end_ of vadc_probe(). Presumably that
+> _won't_ fix the problem. Now put a ~500ms sleep at the beginning of
+> vadc_probe(). Maybe that will fix the problem? If so, you can move the
+> delay around to narrow down the conflict. My wild guess would be that
+> vadc_reset() could be throwing things for a loop?
+>
+> If the above doesn't work, maybe we could add more tracing / printouts
+> to see what is probing at the same time as RPMH?
 
-I have 2/2 patch here, where is patch 1 of 2..?
+Tried out a few changes today but none of them worked or were
+effective enough to debug this crash further, other than setting
+fw_devlink=3Dpermissive.
 
-> 
-> --------------------------------------------------------
-> ld: drivers/dma/qcom/hidma.o: in function `hidma_probe':
-> hidma.c:(.text+0x4b46): undefined reference to `devm_ioremap_resource'
-> ld: hidma.c:(.text+0x4b9e): undefined reference to `devm_ioremap_resource'
-> make[1]: *** [scripts/Makefile.vmlinux:35: vmlinux] Error 1
-> make: *** [Makefile:1264: vmlinux] Error 2
-> 
-> Signed-off-by: Baoquan He <bhe@redhat.com>
-> Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <andersson@kernel.org>
-> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: dmaengine@vger.kernel.org
-> ---
->  drivers/dma/qcom/Kconfig | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/dma/qcom/Kconfig b/drivers/dma/qcom/Kconfig
-> index 3f926a653bd8..ace75d7b835a 100644
-> --- a/drivers/dma/qcom/Kconfig
-> +++ b/drivers/dma/qcom/Kconfig
-> @@ -45,6 +45,7 @@ config QCOM_HIDMA_MGMT
->  
->  config QCOM_HIDMA
->  	tristate "Qualcomm Technologies HIDMA Channel support"
-> +	depends on HAS_IOMEM
->  	select DMA_ENGINE
->  	help
->  	  Enable support for the Qualcomm Technologies HIDMA controller.
-> -- 
-> 2.34.1
+Adding more tracing / prints (BOOTTIME_TRACING and
+FUNCTION_GRAPH_TRACER) didn't work and didn't help in reproducing the
+crash either. They added just enough delay to boot the device
+successfully everytime.
 
--- 
-~Vinod
+I tried to reason with the kernel modules which gets loaded before and
+after the qcom-rpmh-regulator (QCOM_REBOOT_MODE, QCOM_PON, IIO/VADC,
+SPMI_PMIC* etc) as suggested, but I run into the same crash even if I
+disable those driver modules. So I don't think that the other driver
+modules which gets loaded at around the same time as
+qcom-rpmh-regulator by default have any impact on this failure.
+
+The only way I can boot successfully everytime is if I boot with
+fw_devlink=3Dpermissive bootarg. So I'll have to check if there is any
+new dependency which got added recently in DT or somewhere else that
+is causing this breakage.
+
+Regards,
+Amit Pundir
+
+>
+>
+> [1] https://bugs.linaro.org/attachment.cgi?id=3D1135
