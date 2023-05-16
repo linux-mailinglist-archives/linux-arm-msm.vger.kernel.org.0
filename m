@@ -2,126 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95A72704A07
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 12:06:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F108B704A0D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 12:08:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232224AbjEPKGv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 06:06:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38220 "EHLO
+        id S231308AbjEPKH6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 06:07:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232236AbjEPKGt (ORCPT
+        with ESMTP id S232397AbjEPKH5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 06:06:49 -0400
-Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com [IPv6:2607:f8b0:4864:20::e35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B7C41984
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 03:06:45 -0700 (PDT)
-Received: by mail-vs1-xe35.google.com with SMTP id ada2fe7eead31-434839b4544so4200728137.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 03:06:45 -0700 (PDT)
+        Tue, 16 May 2023 06:07:57 -0400
+Received: from mail-ua1-x931.google.com (mail-ua1-x931.google.com [IPv6:2607:f8b0:4864:20::931])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FB8C1A5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 03:07:55 -0700 (PDT)
+Received: by mail-ua1-x931.google.com with SMTP id a1e0cc1a2514c-77d171a7a71so7928083241.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 03:07:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1684231605; x=1686823605;
+        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1684231674; x=1686823674;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KJ5WDN3DjxlHoC+PKB9u34xmvDgAcgwNKb6XXaL35hE=;
-        b=Ay2WSygufTNGqJabs/hjybJoiCVEv5RB7deFGPO2wuiw82jcAjVGUPAk7ujp74Cuwu
-         zPXb72C8QBKF6Z3bSsQpMYRTjwdtJ+jE1UNHEWSZUewTFbOXNqz9T8RmhhQ1RA948NTi
-         5GvtNQaSjGhivq/iCXdWUD1gIWv5ptIbZ5juMHuSYaMHMVf1425SHrm7sFVnRpyeFJ0o
-         toJIl/DVnGigxkUyyN076kaX+jqR5MjeCpcrE1kdrI8I/himhE/tgyxC3g9+6UdMl3BZ
-         0npZtA+DUJoELA8vd1lEIwieaoV+WP/feF++QWavd6HdEp55kVcfjGX+ry4DbheKCLtT
-         I47A==
+        bh=Pf1n0pD+n5MYVam+kfSL7HSK5MrACb9JW8pF1eQ2LGo=;
+        b=aR3e0MslIm56+9BVhw/O42CM0v7nBYlMQn8YxDa+8IHb2GwMiTb2FzShi9VDKR9w3I
+         H8DV4w4Q723mYdY9W7YICfhfwPjPgAx0v/pNEPJuQmltD2Pben9lDerEL2xu0AU5QHSR
+         Cuzo5gVD8RPDLQZoRuNI8EIEmwPZfkAgkDQMOy471NIAmeL/QIoo9Wuesfy7XNpGuPBf
+         EAmVLdEN1/oKPwbeXczcJ9/ukGbQ2U6oM9mVBad40pV7HcFTwj8Ks+yvetHaxqYDaIX2
+         qsenxZPdXT1wbjs0sae9HaBcwOljRmrOJTyd8xckw3ycdzx/eIjGfGa07uQ+DIe1k3/a
+         KYBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684231605; x=1686823605;
+        d=1e100.net; s=20221208; t=1684231674; x=1686823674;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KJ5WDN3DjxlHoC+PKB9u34xmvDgAcgwNKb6XXaL35hE=;
-        b=VJyeWr1KyFIjhKHU6khA/Wsv6T3+MQizEo/7ovWyPQTvWFoQubltKnk2qhJNQyWhuQ
-         /kaUE0aNOl1SDkdyLOfvDpZRtnkwiMqNVnxeW6YD2SdrZA16jQi0jGkTdc8+vN18zjWP
-         KFxLylEFZb8Y3patgRhLIIR+FZu92O8PXwRjDVSyrZLuExLLYOa6IjAZnN+kB6mscaP1
-         PFz3jM2SgI0sHBuaHU+6rm3KUHboSBcR96T+k+WK2NVYbiIBCyDXIKgNqJzN9SjLG/Sy
-         Rd2xiz7UZotwCI7z9ZxHnPKFpgBfZmDAeU2+sAh6KDeRXavefBRdoE3MQAdjrpk2x6ca
-         hMOw==
-X-Gm-Message-State: AC+VfDy724dw0yPz4KypGicKwWaruqCUM5R/Vz82mpiTqJ7+RFHDAOGg
-        UCzDDZYUK0qBvdwfB0lg+bzBztGwS2OUV3/MR5Z5kQ==
-X-Google-Smtp-Source: ACHHUZ40MVTgx2lo2t3GLhWu3fMQszo4IcN1i2bu2E0cau1DdmwzovAd8/IssRIkFf3sD6YNFEWt3bJl0EHQ5B+V28M=
-X-Received: by 2002:a05:6102:534:b0:42e:3b16:8695 with SMTP id
- m20-20020a056102053400b0042e3b168695mr14042762vsa.3.1684231604875; Tue, 16
- May 2023 03:06:44 -0700 (PDT)
+        bh=Pf1n0pD+n5MYVam+kfSL7HSK5MrACb9JW8pF1eQ2LGo=;
+        b=RwaFXwr38PL5Q6QclmrKBHYp3q1A7Rnv8kx6XkIRXIKIlP/94e0kFpP9IG52pAvXRK
+         005Ak5PXtyaKRviZ+NoIBGzYCfD9kEuJwl/NRzSlmCyrqqdIgt/p24GuMkk3wI5vdg6e
+         UADlGevbPsLzS7wJ598rPM6N6uEQ3gf8+HlsrmXf6fc1qVxvsXz+Gyp8G0sdfGHA95LD
+         vH2H8jbc9QeEx4rsOTr1YFLVTOoHoYwQddyDLZ46ur4SEeyrhHVA2VomhNOw+p5W6Lus
+         Qyz7g4lTmz1O77eGkLo4+YdEbBSnRWxfh7Q12o20v2dtVsIuZVV11zi9Cm1yN6f63jog
+         YzAg==
+X-Gm-Message-State: AC+VfDxDwH3xt4NHEaYGE5Hkp2krSucESdcHDgC6MO+MQVuYO5/dzLnJ
+        j/+xUs2bfSCKWJGZRto2V3ULGEFJaxx+8kmeuINDtw==
+X-Google-Smtp-Source: ACHHUZ62QV9pMpzCO0AROQEprP4TH6H8ax3OjCq3ta/uh7Pbk1SUR74lHaEb7zlSIjedrPSgk33a48qsw/2iZaC/zaM=
+X-Received: by 2002:a1f:e601:0:b0:44f:d211:2df3 with SMTP id
+ d1-20020a1fe601000000b0044fd2112df3mr13694504vkh.13.1684231674434; Tue, 16
+ May 2023 03:07:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230411130446.401440-1-brgl@bgdev.pl> <20230411130446.401440-2-brgl@bgdev.pl>
-In-Reply-To: <20230411130446.401440-2-brgl@bgdev.pl>
+References: <20230417125844.400782-1-brgl@bgdev.pl> <20230417125844.400782-5-brgl@bgdev.pl>
+In-Reply-To: <20230417125844.400782-5-brgl@bgdev.pl>
 From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Tue, 16 May 2023 12:06:34 +0200
-Message-ID: <CAMRc=MdDct0UzJPpOTuKHmm23Jc529NwkBWJJmXfeevpkQaSxQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/5] dt-bindings: ufs: qcom: add compatible for sa8775p
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
+Date:   Tue, 16 May 2023 12:07:43 +0200
+Message-ID: <CAMRc=MeWEs7AoZSNWS9bZO=_12U5944VBq0ixrY2rx2h2=OOfw@mail.gmail.com>
+Subject: Re: [PATCH v4 4/5] dt-bindings: iommu: arm,smmu: enable clocks for
+ sa8775p Adreno SMMU
+To:     Sebastian Reichel <sre@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        Bart Van Assche <bvanassche@acm.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-scsi@vger.kernel.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 11, 2023 at 3:04=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl>=
+On Mon, Apr 17, 2023 at 2:58=E2=80=AFPM Bartosz Golaszewski <brgl@bgdev.pl>=
  wrote:
 >
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 >
-> Add the compatible string for the UFS on sa8775p platforms.
+> The GPU SMMU will require the clocks property to be set so put the
+> relevant compatible into the adreno if-then block.
 >
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > ---
->  Documentation/devicetree/bindings/ufs/qcom,ufs.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  Documentation/devicetree/bindings/iommu/arm,smmu.yaml | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 >
-> diff --git a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml b/Docume=
-ntation/devicetree/bindings/ufs/qcom,ufs.yaml
-> index c5a06c048389..b1c00424c2b0 100644
-> --- a/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/qcom,ufs.yaml
-> @@ -26,6 +26,7 @@ properties:
->            - qcom,msm8994-ufshc
->            - qcom,msm8996-ufshc
->            - qcom,msm8998-ufshc
-> +          - qcom,sa8775p-ufshc
->            - qcom,sc8280xp-ufshc
->            - qcom,sdm845-ufshc
->            - qcom,sm6350-ufshc
-> @@ -105,6 +106,7 @@ allOf:
+> diff --git a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml b/Docu=
+mentation/devicetree/bindings/iommu/arm,smmu.yaml
+> index ba677d401e24..53bed0160be8 100644
+> --- a/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> +++ b/Documentation/devicetree/bindings/iommu/arm,smmu.yaml
+> @@ -79,6 +79,7 @@ properties:
+>        - description: Qcom Adreno GPUs implementing "qcom,smmu-500" and "=
+arm,mmu-500"
+>          items:
+>            - enum:
+> +              - qcom,sa8775p-smmu-500
+>                - qcom,sc7280-smmu-500
+>                - qcom,sm6115-smmu-500
+>                - qcom,sm6125-smmu-500
+> @@ -331,7 +332,9 @@ allOf:
+>        properties:
+>          compatible:
 >            contains:
->              enum:
->                - qcom,msm8998-ufshc
-> +              - qcom,sa8775p-ufshc
->                - qcom,sc8280xp-ufshc
->                - qcom,sm8250-ufshc
->                - qcom,sm8350-ufshc
+> -            const: qcom,sc7280-smmu-500
+> +            enum:
+> +              - qcom,sa8775p-smmu-500
+> +              - qcom,sc7280-smmu-500
+>      then:
+>        properties:
+>          clock-names:
+> @@ -413,7 +416,6 @@ allOf:
+>                - nvidia,smmu-500
+>                - qcom,qcm2290-smmu-500
+>                - qcom,qdu1000-smmu-500
+> -              - qcom,sa8775p-smmu-500
+>                - qcom,sc7180-smmu-500
+>                - qcom,sc8180x-smmu-500
+>                - qcom,sc8280xp-smmu-500
 > --
 > 2.37.2
 >
 
-Bjorn,
-
-Are you picking this one up as well or should it go through Rob's tree?
+Gentle ping for a review and a pick up. The DT patches that use this
+schema are in next now so check_dtbs will now fail.
 
 Bart
