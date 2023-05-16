@@ -2,74 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B10B97042EA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 03:31:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AF967042FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 03:39:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229524AbjEPBbu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 15 May 2023 21:31:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53262 "EHLO
+        id S229486AbjEPBjH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 15 May 2023 21:39:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57814 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229448AbjEPBbt (ORCPT
+        with ESMTP id S229697AbjEPBjG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 15 May 2023 21:31:49 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 828101BD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 18:31:47 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2ad9f2926adso91788411fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 18:31:47 -0700 (PDT)
+        Mon, 15 May 2023 21:39:06 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52ACA49F5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 18:39:05 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f13ef4ad91so16128834e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 May 2023 18:39:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684200706; x=1686792706;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=linaro.org; s=google; t=1684201143; x=1686793143;
+        h=content-transfer-encoding:in-reply-to:from:cc:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=OcXwAN+isoQ/mFzkihbW/wozjleZFihqA4ZCS2Bjuo4=;
-        b=zKnXAmMfvexSrZm7W8TMgsPtCn5QEHM5aBJoXPKD4qrX72JMnv2T9AOFwf0aFc7K9C
-         gSEauFpNJFoWR6hXeYqQVacHaOLQ4+tFoqQJIasrEvmRJQoWPfRlsJ6afyGsQ8XSPcK/
-         /0UuoIlcekhAY6kKVnoQoOKTsJdVXPpcKQ4snBB6RZfk+rkgDKzK4Fga5rCSybB+8G0P
-         TOIA+n+O39JO67Dpj5gqEUbMWxeOsFGnrat1jWpKTZiDC5n+LUgME8qDR2SZSuld/ouh
-         pdTFhqNhErSuXg8yvjcalR2iKOLHNPQkaExdz6F5InCuETDVtqQt+082+N9hjT+YAD+H
-         HyQg==
+        bh=EEd2VNamh1i6jf7PkiHXJC0cUQGs4JXzfDvZf2SFrsY=;
+        b=fzN2hqaAGe1KyV8sUYflKtQl3IPGSaX0LiupKOi8VqGUk53LwWoZw2uOFBv1iBHiiY
+         ygaxcokdSmP2NFtMaiiUN3/nlrpfgJi36uNoagsv8tFNb8zDo2lBhhV1RtvftwOPV9Xz
+         p8drDmaNxSbx5xoVvNzds54Unq8mGx+Mm+G6gD/t/hbfW/Ws8HIMZuTJ2YLd/AxMjSW+
+         KuE3mR/PJvUlC+1svaDlCJilolhc+nk38qlgTKEfZRASOp4R+hELK366WGREHqHwwN7h
+         xoxURRgYiR882yxLt+3lYoIrB04GgQmZaNd/G1OteyrbMv3Yk+2i685LjP7WYRGPMc8G
+         64DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684200706; x=1686792706;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=1e100.net; s=20221208; t=1684201143; x=1686793143;
+        h=content-transfer-encoding:in-reply-to:from:cc:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OcXwAN+isoQ/mFzkihbW/wozjleZFihqA4ZCS2Bjuo4=;
-        b=XpneojZm/B7X4bjfFA60z7u386Ax8KlXmA20eCbC65rD5961wsEQFQyjzGdV63logn
-         sKsv5WKnafCsNyodhH+mVXSFOTtzcKAT03ueuRqz4l0hH9uCU1ruwFD2R1WQS2GviVLI
-         YwPx6aEd2D/4XLXgoTV2Cq4D6LGdBzHmP5PZ2nHJaUlRNyfuRY9fW+NAY8ekQYWDRnOm
-         4815z0ONb0zyc4smvqYkvibc1D6qmMKL9RzVTvEUMCI1/tu1WtmbUJ++1helgcdWa22/
-         COBHLVvShAqKICcSHlZpm2jn/Lb3L8uTXgZsPTK9PtXH5pIz0ARQGK1Y8Q3l8v+oAben
-         Pggw==
-X-Gm-Message-State: AC+VfDyNWO2k5icjyC2XJGLtho4vJBgM5sEsrHOchWqCIaO0CRfJy22Z
-        LJ8ykUi7+YV5Vd3KQ+b6QwMLJg==
-X-Google-Smtp-Source: ACHHUZ4yNX4QWy0thWooKiccgAyqi3lrT98efHiZrzU8iVjPCnQrM5Xx71XXDYz3DeXa5St6j6kQJg==
-X-Received: by 2002:a19:550d:0:b0:4ec:a4b4:4731 with SMTP id n13-20020a19550d000000b004eca4b44731mr6949601lfe.68.1684200705829;
-        Mon, 15 May 2023 18:31:45 -0700 (PDT)
+        bh=EEd2VNamh1i6jf7PkiHXJC0cUQGs4JXzfDvZf2SFrsY=;
+        b=cV8Y53vlHI8nsrwm7ohiPVM/SfcvK1AMPBOyHd/8asCbFy5cFDFPi020ytFI/oKi6B
+         7ETfUiPtBl9ob7SDDMi7g0Nc59xT1DmQNFDtYeJye2yvpeV4mpp3ii0ywavIlig+10fy
+         pLZJgFyxhG2la1Qazi0k7bFlhuGp0T2XDwIJYdRUUHr6TitYG2ZFVmZQS6G75kkLb7dq
+         lJxiWwRBfRXZwRkaTcdHSDa3s3bPWon9MKLxB61kRve5FNvH4LIsg/3ePXfr0EsUwkpG
+         8uvs7bV+5yNJn0hRQAzP6CSrvI8w5UkB9B8q8ywOt6zt9v1xXO42tIs9CsCVpPRVgDGB
+         +vOg==
+X-Gm-Message-State: AC+VfDy8IRcb6WWBuDEHc4smLttyI17FMjIBNHfnfx7HExQYY3FmqM5X
+        LGRoRaT/64DWAGZF3kBhkYbmig==
+X-Google-Smtp-Source: ACHHUZ6fpj4cg0RPG98p6BQpabeODsCHDUgNJuiOzcslPL8r/crEfJmYtontwB5v0f+wE7768UWM0Q==
+X-Received: by 2002:a19:750b:0:b0:4f2:5007:bd7f with SMTP id y11-20020a19750b000000b004f25007bd7fmr6730952lfe.36.1684201143600;
+        Mon, 15 May 2023 18:39:03 -0700 (PDT)
 Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id b7-20020ac24107000000b004f253f6d4d0sm2813502lfi.223.2023.05.15.18.31.44
+        by smtp.gmail.com with ESMTPSA id i22-20020a056512007600b004ece331c830sm2797419lfo.206.2023.05.15.18.39.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 May 2023 18:31:45 -0700 (PDT)
-Message-ID: <de735250-5661-0011-0650-a925b528463b@linaro.org>
-Date:   Tue, 16 May 2023 03:31:44 +0200
+        Mon, 15 May 2023 18:39:03 -0700 (PDT)
+Message-ID: <2f24af7e-058a-5a70-f3ad-99ff4f0ed0a5@linaro.org>
+Date:   Tue, 16 May 2023 03:39:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [RESEND PATCH] soundwire: qcom: drop unused struct qcom_swrm_ctrl
- members
+Subject: Re: [PATCH] drm/msm/a6xx: don't set IO_PGTABLE_QUIRK_ARM_OUTER_WBWA
+ with coherent SMMU
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+References: <20230410185226.3240336-1-dmitry.baryshkov@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org
-References: <20230515132000.399745-1-krzysztof.kozlowski@linaro.org>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, David Heidelberg <david@ixit.cz>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230515132000.399745-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230410185226.3240336-1-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-5.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,31 +84,38 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 15.05.2023 15:20, Krzysztof Kozlowski wrote:
-> Drop unused members from the driver state container: struct qcom_swrm_ctrl.
+On 10.04.2023 20:52, Dmitry Baryshkov wrote:
+> If the Adreno SMMU is dma-coherent, allocation will fail unless we
+> disable IO_PGTABLE_QUIRK_ARM_OUTER_WBWA. Skip setting this quirk for the
+> coherent SMMUs (like we have on sm8350 platform).
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Fixes: 54af0ceb7595 ("arm64: dts: qcom: sm8350: add GPU, GMU, GPU CC and SMMU nodes")
+> Reported-by: David Heidelberg <david@ixit.cz>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Tested-by: David Heidelberg <david@ixit.cz>
 > ---
+Also required for SM8450 (and others)
+
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Tested-by: Konrad Dybcio <konrad.dybcio@linaro.org> # SM8450 HDK
+
+Cc: <stable@vger.kernel.org>
 
 Konrad
->  drivers/soundwire/qcom.c | 3 ---
->  1 file changed, 3 deletions(-)
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-> index aad5942e5980..ab1098ec56e6 100644
-> --- a/drivers/soundwire/qcom.c
-> +++ b/drivers/soundwire/qcom.c
-> @@ -187,12 +187,9 @@ struct qcom_swrm_ctrl {
->  #endif
->  	struct completion broadcast;
->  	struct completion enumeration;
-> -	struct work_struct slave_work;
->  	/* Port alloc/free lock */
->  	struct mutex port_lock;
->  	struct clk *hclk;
-> -	u8 wr_cmd_id;
-> -	u8 rd_cmd_id;
->  	int irq;
->  	unsigned int version;
->  	int wake_irq;
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 2942d2548ce6..f74495dcbd96 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1793,7 +1793,8 @@ a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
+>  	 * This allows GPU to set the bus attributes required to use system
+>  	 * cache on behalf of the iommu page table walker.
+>  	 */
+> -	if (!IS_ERR_OR_NULL(a6xx_gpu->htw_llc_slice))
+> +	if (!IS_ERR_OR_NULL(a6xx_gpu->htw_llc_slice) &&
+> +	    !device_iommu_capable(&pdev->dev, IOMMU_CAP_CACHE_COHERENCY))
+>  		quirks |= IO_PGTABLE_QUIRK_ARM_OUTER_WBWA;
+>  
+>  	return adreno_iommu_create_address_space(gpu, pdev, quirks);
