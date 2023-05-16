@@ -2,74 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A8B127056E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 21:17:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74D91705704
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 May 2023 21:24:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229641AbjEPTR3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 15:17:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45194 "EHLO
+        id S229565AbjEPTYm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 15:24:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229496AbjEPTR2 (ORCPT
+        with ESMTP id S229539AbjEPTYl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 15:17:28 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C627DA7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 12:17:27 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-561b65b34c4so5674937b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 12:17:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684264646; x=1686856646;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=NznzujyOJyNbnjSaoz9CRaFsnChHQPszQ2ixGOczZrc=;
-        b=NwMpZ+r4QJ/cUpYDi0gsuyYSS0blzpn4/pHjC7ud/sM1GUt6nG4ke/JtOgCZKKMsBn
-         Qw9SlDRtgA+Jj9QXPYeNgmfot9rAgXeYa53Yi2QCO69sI6BAS1UOhccVAlg8dQ2NjfjH
-         2rXoN18JNZcaiAeHnyduMOTQ+aFdzBby7mAgHBdszpwtmRWi1IEbnq28UTQ0zYXrvIwr
-         rgNb3hejJXpwyCTgjaVuFHkPzsW1k/pplmbbiPTUeoi7Pp8KbjGEKVPU9Toti2s3T4f1
-         CjlUO/hi9Tu5zIVnhiqz5Z3keeJ9LZgviTE9u2YE5jYO7xfDiUODLEJaz/xQVPg8Lafh
-         xm7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684264646; x=1686856646;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NznzujyOJyNbnjSaoz9CRaFsnChHQPszQ2ixGOczZrc=;
-        b=eN09T/bcKKJwMnXxvtkANJXpoVXFbxYMztQ0WcqsiquiQTNLTe23NxXvzI/78Ivs6K
-         txKytm1R1jEmyDV+QKjCNsB4vb/csA+XzfZuEPH0ySfHT1D3TwHnKvqn3StI+c9JzD53
-         wbFKfP0cfn8C1RsbaDcMUE6FXbfWNyI1uaUUE/d/OsoBjO++0dB1rMGxiNKeBVgY83/B
-         7Q8/vBQRTRz6EX+zAHbw5EZlrKGri4MKaw92WBdicxqHMEy2v3tEXE0HMqyalpW7aaHb
-         A8WfPKocNKEypD5lMAG18Mr9HTic9adpjWT3pfvACYxcxqXaEXt4vPScP+Sk6Qro9B2E
-         NnvQ==
-X-Gm-Message-State: AC+VfDw0X4GO3MRG3xh6eYDIvIuZFrnnRi/HcbQmbiW3kvbXqayEdlzP
-        WFmY7wOwdLZw4poOOddVyxoBpJ7VPGTshcadoQKJmA==
-X-Google-Smtp-Source: ACHHUZ4fN6ZvOHVMrjpM38dbrTF0vq9ndvGzrrcTvQuObM37IZqpp9d3swNrt6OnWc5xKOZXJLqNXPG/9NwnyDG/1d0=
-X-Received: by 2002:a81:c214:0:b0:561:8c2f:d050 with SMTP id
- z20-20020a81c214000000b005618c2fd050mr2528895ywc.15.1684264646646; Tue, 16
- May 2023 12:17:26 -0700 (PDT)
+        Tue, 16 May 2023 15:24:41 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66C914C3C;
+        Tue, 16 May 2023 12:24:40 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34GJOaId006175;
+        Tue, 16 May 2023 19:24:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=8vviqZhmlTEEOY5Xhpd6Q0/A7Ui0Wl7KPzyxgmh5lsc=;
+ b=WYDQcjGouc1wq/j0YLbugNDu5j1nZ5mVejPI/AZ1jP9jj3i6apdCCgYa8PjC1cbFWbQM
+ TMe+7xUipwtrPkbxY9jfMgp353YPo7qQUo1vgJkE0w2wUnf0lBMIQYvNFYdt3QYCihd4
+ XRhQuWlRzrXfJwOVfZLzSeITe2zAZ6BTGmEtkqmDXn3dcXtBIwbSJoswi9ypJJroowqU
+ PZ+9rQsC0A8O7WQ8u4yxwBAT9DYQ0xm5jvBz5r1XL+jz2aKZter9sQyUnw+Ukpu/ZtHn
+ wYw0Crc3LrhhBeApjhFhlb8o6SMvglvL+c8WMieTFun9AlUT+9ktkk4jdHJS3Jz/j7bv dg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qme0m88cj-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 16 May 2023 19:24:35 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34GJOYAV001293
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 16 May 2023 19:24:34 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 16 May
+ 2023 12:24:33 -0700
+Message-ID: <e31ec9bc-7b18-8711-2b63-b3fb4177abcb@quicinc.com>
+Date:   Tue, 16 May 2023 13:24:33 -0600
 MIME-Version: 1.0
-References: <cover.1683628357.git.quic_schowdhu@quicinc.com>
- <343182748e12b6a4ac57d336405c50e36fc5520c.1683628357.git.quic_schowdhu@quicinc.com>
- <CAA8EJpp2x2OEB2sg+caKmjkDYJp_NJ9mXo85FxTZr-9zRXHNhw@mail.gmail.com> <7d397e67-5d56-4975-98af-1ac9746c07f4@app.fastmail.com>
-In-Reply-To: <7d397e67-5d56-4975-98af-1ac9746c07f4@app.fastmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 16 May 2023 22:17:15 +0300
-Message-ID: <CAA8EJpoMGyAJBTw1-=+NT=ysy+cpc4EpJSv1SABJVh2BscdJ+g@mail.gmail.com>
-Subject: Re: [PATCH V6 1/3] dt-bindings: sram: qcom,imem: Add Boot Stat region
- within IMEM
-To:     Arnd Bergmann <arnd@arndb.de>
-Cc:     Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] accel/qaic: silence some uninitialized variable warnings
+Content-Language: en-US
+To:     Dan Carpenter <dan.carpenter@linaro.org>
+CC:     Oded Gabbay <ogabbay@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        <kernel-janitors@vger.kernel.org>
+References: <d11ee378-7b06-4b5e-b56f-d66174be1ab3@kili.mountain>
+ <2d1fb58f-f98b-ba17-65e9-9ea4b467102a@quicinc.com>
+ <d4c73c29-b604-4b0c-92bb-000369b0a5d7@kili.mountain>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <d4c73c29-b604-4b0c-92bb-000369b0a5d7@kili.mountain>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 5G8ovkwBvnpcHAJ343cCXZs5G7-5UddB
+X-Proofpoint-ORIG-GUID: 5G8ovkwBvnpcHAJ343cCXZs5G7-5UddB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-16_11,2023-05-16_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 suspectscore=0 phishscore=0 malwarescore=0 bulkscore=0
+ spamscore=0 adultscore=0 mlxlogscore=856 mlxscore=0 lowpriorityscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305160163
+X-Spam-Status: No, score=-5.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,67 +82,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 16 May 2023 at 11:16, Arnd Bergmann <arnd@arndb.de> wrote:
->
-> On Tue, May 9, 2023, at 13:35, Dmitry Baryshkov wrote:
-> > On Tue, 9 May 2023 at 13:53, Souradeep Chowdhury
-> > <quic_schowdhu@quicinc.com> wrote:
-> >>
-> >> All Qualcomm bootloaders log useful timestamp information related
-> >> to bootloader stats in the IMEM region. Add the child node within
-> >> IMEM for the boot stat region containing register address and
-> >> compatible string.
-> >
-> > I might have a minor vote here. Is there any reason why you have to
-> > instantiate the device from DT?
-> > It looks like a software interface. Ideally software should not be
-> > described in DT (e.g. this can be instantiated from imem
-> > driver-to-be).
->
-> There is nothing wrong with describing firmware in DT, if that
-> firmware is part of the platform, we do that for a lot of
-> other bits of firmware.
->
-> However, in this specific case, many things are wrong with the
-> implementation, and neither the DT binding nor the driver
-> makes sense to me in its current state.
->
-> >> +  "^stats@[0-9a-f]+$":
-> >> +    type: object
-> >> +    description:
-> >> +      Imem region dedicated for storing timestamps related
-> >> +      information regarding bootstats.
-> >> +
-> >> +    additionalProperties: false
-> >> +
-> >> +    properties:
-> >> +      compatible:
-> >> +        items:
-> >> +          - enum:
-> >> +              - qcom,sm8450-bootstats
-> >> +          - const: qcom,imem-bootstats
-> >> +
-> >> +      reg:
-> >> +        maxItems: 1
->
-> If I understand this right, this "qcom,imem-bootstats"
-> device serves as an indirection to store additional
-> properties of the system in a memory area, but the description
-> of that area is more complex than its contents, which
-> makes no sense to me.
->
-> Just create a binding for a firmware node in the devicetree
-> itself, and put the values in properties of that. The first
-> stage firmware can still use the same interface, but the
-> actual loader that assembles the DT can get it out of that
-> and store it in the properties. With that done, there is also
-> no need for a kernel driver, as userspace can just get the
-> values from /sys/firmware/devicetree/ directly.
+On 5/10/2023 10:48 AM, Dan Carpenter wrote:
+> On Wed, May 10, 2023 at 08:57:03AM -0600, Jeffrey Hugo wrote:
+>> On 5/3/2023 4:41 AM, Dan Carpenter wrote:
+>>> Smatch complains that these are not initialized if get_cntl_version()
+>>> fails but we still print them in the debug message.  Not the end of
+>>> the world, but true enough.  Let's just initialize them to a dummy value
+>>> to make the checker happy.
+>>>
+>>> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+>>
+>> Thanks for the cleanup.
+>>
+>> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+>>
+>> Could use a fixes tag
+> 
+> The fixes tag thing could have gone either way.  It's really minor.
+> 
+>> and also I'd prefer to maintain the style of sorting
+>> the variable declaration lines by line length.  Given the minor nature of
+>> these nits, I plan to address them.
+> 
+> Thanks!
 
-This sounds good, except the always-present issue of the devices which
-have already been released. Usually we can not expect a bootloader
-update for these devices.
+Pushed to drm-misc-fixes
 
--- 
-With best wishes
-Dmitry
+-Jeff
