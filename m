@@ -2,86 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51AD070606D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 08:50:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA64F70608D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 09:00:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229510AbjEQGua (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 02:50:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33060 "EHLO
+        id S229682AbjEQHAz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 03:00:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbjEQGu3 (ORCPT
+        with ESMTP id S229448AbjEQHAy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 02:50:29 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07AE1F9;
-        Tue, 16 May 2023 23:50:28 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34H6Uogf015953;
-        Wed, 17 May 2023 06:50:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=xjEHHe3G4oxpB5wTQRg3eTNM6AlEMH3zCXXumh2MKPA=;
- b=mdf7RlFiid6VuCbzv+gs8fqs0Njt9p6punb93Dfn95bUQHEJihquvFwi5PbzKFRYA6nF
- /1hSrSvK1ggpec6ZJrDNJ8zP+eXMLjLH+iYOlwADJuGlPrpirSADjJpHlnayKKErR0KH
- Zr2Ohhpq9TXSzkGoklnvaPVUNecnYsWEYGYwRU69sc48SeSu0/E4ni4xOs1ap7i/TR4z
- 8eAx+sjGAmsxhDMqd2h4Q8ELw8D2ubpQxrUrLHYrASG1FOk+iCyGAG+ytZt7FA/1YUfw
- SLhWZX71LXpIoAlNPOlcvoFbchhqk9bnvGAy5/JgFV1irF4ihu0H9W63E6glj2uZZg12 JQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qmrvhr4xf-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 17 May 2023 06:50:10 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34H6o9OR032120
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 17 May 2023 06:50:09 GMT
-Received: from [10.216.22.19] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 16 May
- 2023 23:50:03 -0700
-Message-ID: <4db69d3e-9aee-a0cd-aabd-88aaf7c6b210@quicinc.com>
-Date:   Wed, 17 May 2023 12:19:59 +0530
+        Wed, 17 May 2023 03:00:54 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 553EA1988
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 00:00:53 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-510b56724caso6614093a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 00:00:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684306852; x=1686898852;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JAjF1NXEM4zGYNUukISUAOQ2ax8auRzyW2rSkhWnq7Q=;
+        b=hdRkNFTlt7MrqcSUjSKPfU+olaNsYieuYS0HQkLfFKT5mhZcveQN8ic4Jt2GSaG6oJ
+         PF5liBhs0A1D97/MnvEFJLvkmaVF0rL4AvEU7NiBtKDVhto2H8jpZRlb1Vmg+cAddNm8
+         KESA/O5auVtRs3Yt0+aNA/zUT7NzWf3Zw4JhO+PBDpbFCmdqwWf0VQ4mGI/OkNz5vfYd
+         lk2s1bYCEZJXGh1/OYzNvQPzTgOwJFQi8V9qk3i2i3fQeOICBa/O5vve1bjy+eyj7qUr
+         t4XtJirJHyajJiOvfDzNrSmx9/3vcvmbhbOyWtVPBptzAOMFHXxlwTuJlwugdDt0Zucx
+         pykA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684306852; x=1686898852;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JAjF1NXEM4zGYNUukISUAOQ2ax8auRzyW2rSkhWnq7Q=;
+        b=QoYVQqrBmGPgybCuzTnqNqWJ6lB53hH3liNaguLKUtq4KhJSZEkOeBpRq3MD5poX8F
+         KIpH7CqzHnrPEtQD3ZXjgtR2Qq6qpF0cmUPZMgG63vU9n9Q7sw5JB+DPpCxM7sh+t/Sh
+         NrYKx/R/Pdr+2Xupot+a9cpDfg0cFx1WjaSVVAQAUF5mRJH7gVZIzjrGztNlyKXDBHMG
+         CaanXAAoI5tGEP/tFJRldu+2DZYBaEeB3yPU2Wzwrr60/sNf5XdeGq2ksRLGJmKqI3ny
+         qoW42RxU9iGB9RLxvCrK/4zxjfP0ex1d76Di7d9yVEicMaNqbpVVJNkN6tfRzZR9fmft
+         AwoQ==
+X-Gm-Message-State: AC+VfDzJGPBEqmld1o0IZFJ85HfcGLlMmlOgNJq3yFP3K75ZQynnprFy
+        C7zi4buUdpSGZyELqh13gBVhRQ==
+X-Google-Smtp-Source: ACHHUZ6BjmcvhdPU38ZrpUfAaHbkeuBu2xxSZvXzuVAHV3S1jyt12w+dX7YUyco99giSrFC0CW/q6A==
+X-Received: by 2002:a17:907:3f0e:b0:96a:316f:8aaa with SMTP id hq14-20020a1709073f0e00b0096a316f8aaamr920201ejc.37.1684306851695;
+        Wed, 17 May 2023 00:00:51 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:c9ff:4c84:dd21:568d? ([2a02:810d:15c0:828:c9ff:4c84:dd21:568d])
+        by smtp.gmail.com with ESMTPSA id mm10-20020a170906cc4a00b00960005e09a3sm11866796ejb.61.2023.05.17.00.00.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 May 2023 00:00:51 -0700 (PDT)
+Message-ID: <cfba78d7-e563-4544-00f3-0991b91eb1f3@linaro.org>
+Date:   Wed, 17 May 2023 09:00:49 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH V5 4/8] pinctrl: qcom: Add IPQ5018 pinctrl driver
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v3 2/4] dt-bindings: thermal: tsens: Add ipq9574
+ compatible
 Content-Language: en-US
-To:     Andy Shevchenko <andy.shevchenko@gmail.com>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
-        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <robimarko@gmail.com>
-References: <20230516114523.3266419-1-quic_srichara@quicinc.com>
- <20230516114523.3266419-5-quic_srichara@quicinc.com>
- <02d1f821-4b1f-e4f2-0732-026f9b0b7ed9@quicinc.com>
- <CAHp75VdLm7o83x9keZEUv9pDK2ZkWkQtMcLU148KyHZgf_6VUw@mail.gmail.com>
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-In-Reply-To: <CAHp75VdLm7o83x9keZEUv9pDK2ZkWkQtMcLU148KyHZgf_6VUw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: bUQbkQsSindQLwb6I5TtEpsnLVCPUJN3
-X-Proofpoint-GUID: bUQbkQsSindQLwb6I5TtEpsnLVCPUJN3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-16_14,2023-05-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=743
- impostorscore=0 adultscore=0 mlxscore=0 suspectscore=0 clxscore=1015
- spamscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305170056
-X-Spam-Status: No, score=-5.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
+        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Praveenkumar I <quic_ipkumar@quicinc.com>
+References: <cover.1684140883.git.quic_varada@quicinc.com>
+ <37adcf5d8d545a076e8ed971a4fb6c6c2833ef3c.1684140883.git.quic_varada@quicinc.com>
+ <b7e749ff-f4f0-0e61-9aae-876db4278fbc@linaro.org>
+ <20230516120426.GA1679@varda-linux.qualcomm.com>
+ <1999753b-ceee-d66c-9a48-cbcbb8e6236e@linaro.org>
+ <20230517055726.GA3165@varda-linux.qualcomm.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230517055726.GA3165@varda-linux.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -90,42 +86,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/16/2023 10:23 PM, Andy Shevchenko wrote:
-> On Tue, May 16, 2023 at 2:58 PM Sricharan Ramabadhran
-> <quic_srichara@quicinc.com> wrote:
->> On 5/16/2023 5:15 PM, Sricharan Ramabadhran wrote:
+On 17/05/2023 07:57, Varadarajan Narayanan wrote:
+> Part-1 is adding the 'const' entries at the beginning i.e.
 > 
-> ...
+> 	+      - const: qcom,tsens-v0_1
+> 	+      - const: qcom,tsens-v1
+> 	+      - const: qcom,tsens-v2
+> 	+      - const: qcom,ipq8074-tsens
 > 
->>>    [v5] Rebased patch on top of "Add pinctrl support for SDX75" series
->>>         and fixed other comments from andy.shevchenko@gmail.com
->>>
->>     I rebased this on top of [1] series. But if that takes time to merge,
->>     can i post this without that dependency and get this merged ?
->>
->> [1] https://lore.kernel.org/r/1683718725-14869-1-git-send-email-
->>      quic_rohiagar@quicinc.com
+> Part-2 is changing from one valid syntax to another i.e.
 > 
-> First of all, please remove so-o long context which is not related _at
-> all_ in this conversation right now.
+> 	+        items:
+> 	+          - enum:
+> 	+              - qcom,ipq9574-tsens
+> 	+          - const: qcom,ipq8074-tsens
 > 
+> Without both of the above changes, either or both of dtbs_check
+> & dt_binding_check fails. So, it is not possible to just add the
+> "valid hunk" (part-2) alone.
 
-   ok
-
-> Regarding your question, you need to talk to the respective
-> maintainers how to proceed. The best is that all stakeholders pull an
-> immutable branch/tag with that series applied from pin control
-> maintainer (Linus W) and your series on top of that.
+Of course it is. All schema files work like that...
 > 
-   Sure, I have anyways posted V6 on top of that series already.
-   From [1], Linus already applied that and my V6 applied/works
-   fine on top of that. So it should be all fine.
+> If having both part-1 and part-2 in the same patch is not
+> acceptable, shall I split them into two patches? Please let me know.
 
+No, hunk one is not justified.
 
-   [1] 
-https://lore.kernel.org/netdev/CACRpkdbu95hkFWJtCKoUXCyLfS2hxUywD41iF45ZtgKzqjXAJw@mail.gmail.com/T/
+Best regards,
+Krzysztof
 
-Regards,
-  Sricharan
