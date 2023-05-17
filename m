@@ -2,577 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FD19705BB1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 02:07:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE226705BB0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 02:07:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229571AbjEQAHz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 20:07:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44138 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231452AbjEQAHy (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S231461AbjEQAHy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 16 May 2023 20:07:54 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DE0D12F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 17:07:50 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2acb6571922so477591fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 17:07:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684282069; x=1686874069;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+q2gmi1ljTC+zDMhD6x6/zklE7QXISAdxRvRN+Q/rnw=;
-        b=XBRog8aPnMdT7yB12P6G8KEhvgSa9SU7xIgEv2AiSQ8rl+lPIiFUB6b0vpCqJKP6lI
-         /VesZbCC353tuDd6owDUSn1azUpU06HvwPZJOqrQ6d4ZGzdGiUFVF6QBzemaZ0swX2FL
-         pcerBiMBZ+37b57r5WWWXEI4beY5uZMShlXaPJBrhvTr37+cG/lA0Gq6VyCHJfl4whwL
-         tNM9/0o/iJ5Gt7C3zUwXvqSz+/Rc1tOv8LqGhCW0/OGvfn9uYuCNaaXACk3l7JoPWC1K
-         1RGVUCt2isjE39MYOhJbjKJSgRmwzvxM/YcL1wQvsbbNtlASS3ElJC+GnfO+AdU49oW+
-         wosQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684282069; x=1686874069;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+q2gmi1ljTC+zDMhD6x6/zklE7QXISAdxRvRN+Q/rnw=;
-        b=T2g95To563NzBmFQJRHhNCBUFfAvQn+XMZ1AoKii4/lGAnjGHm3sPPdJysMe7DtEWR
-         g9R9/Ob4/mKTKuruxKW+mPdwCK9Zho7Kj5BuLq3sDkAGA2HQ8PlVt7gXDa9sQVxAibke
-         6Qq7yViTvHLsUz6nWvYDAKEUh7AAn+PLxkZRQD1/VVgXwHhxQBAan7PG0c3TdH11OKFo
-         W7uJUYEztEsOHxKXu0w3s9AdJ/4vaTRi+wNV2WaGsNrP+wn9x7vm35J5rNH/YqzKz0X2
-         79Z/5dYBRDHXa6ypMCT5ZIZ7BO1mdE5PsX/o2ZJHhWZ+d8eD6jdqIUtsvmjGaJPUEPn0
-         zWWg==
-X-Gm-Message-State: AC+VfDzwjfWd98fi0wOgp2yP/o3pjMsM2ee5AtwNkEmP+8R7TMI6f+J4
-        q8gnsEUxwyJZnvbq3oM0DbcOQw==
-X-Google-Smtp-Source: ACHHUZ7wJNM4i+rKWbk1M6xsbThadfjWeryTO6CkRs27KOTZM6Ip+iJo7bmU2zcVLGKDdYeVcl1E5g==
-X-Received: by 2002:a2e:b164:0:b0:2a8:ddb0:baa6 with SMTP id a4-20020a2eb164000000b002a8ddb0baa6mr9206068ljm.4.1684282069209;
-        Tue, 16 May 2023 17:07:49 -0700 (PDT)
-Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id y22-20020a2e9d56000000b002ac71095b61sm4214858ljj.64.2023.05.16.17.07.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 May 2023 17:07:48 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     David Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Suraj Kandpal <suraj.kandpal@intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
-        <ville.syrjala@linux.intel.com>, dri-devel@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v6 8/8] drm/display/dsc: add YCbCr 4:2:2 and 4:2:0 RC parameters
-Date:   Wed, 17 May 2023 03:07:40 +0300
-Message-Id: <20230517000740.2102599-9-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230517000740.2102599-1-dmitry.baryshkov@linaro.org>
-References: <20230517000740.2102599-1-dmitry.baryshkov@linaro.org>
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44136 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229571AbjEQAHx (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 16 May 2023 20:07:53 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAAF31B5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 17:07:52 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34GNgdID010932;
+        Wed, 17 May 2023 00:07:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=4SMVEAH1zC9rMwo82eLAdC4vZTdlbhje86lZmHbv0UE=;
+ b=l3LRabwmjg4VtY4jqEgTtP9E/WeKfVva0S7d8v5JT5a9hQXrvI1OGK7+R9KCheCmrA8Z
+ cqYYbF8XPPGvKtEo24SEVMevANDvkrJ7J69na8ZhcIJsWBsPV4QSNQSixPNr1Toi2ucu
+ nvylOhizlX4O9QF35n5HR9Tu4Z8lShBW/IH6QlXJu50AXg4911TU7ivXQaNJxLqvUhAm
+ oQkQ3tPifBeV7Qv+3LzWq1ZRuA65r38Ui7WJClscT+FG+A+xYrI3MpXiYfdohoAGpVpa
+ OsfxVNePdAwFFCqw+29QgaEo1yZIgh1+IiRuon/2aNFtobvlWQZYAFdfBq2ruDBS8jew Sw== 
+Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qkkq9ccs0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 17 May 2023 00:07:45 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34H07iTL020007
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 17 May 2023 00:07:44 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 16 May
+ 2023 17:07:43 -0700
+Message-ID: <4c24babe-3983-6406-75a4-eaa432cf39c3@quicinc.com>
+Date:   Tue, 16 May 2023 17:07:43 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v10 4/8] drm/msm: Add MSM-specific DSC helper methods
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <freedreno@lists.freedesktop.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        "Daniel Vetter" <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230329-rfc-msm-dsc-helper-v10-0-4cb21168c227@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v10-4-4cb21168c227@quicinc.com>
+ <kx3be4c2okye2ts4rzy4j4ltnveixf7v4rxp5v4tl2irvevg6t@c5tuelunmn4c>
+ <0e8a8af5-5ab8-c1b9-e08d-909072cc9b76@quicinc.com>
+ <4cbqbu47vcshskl4npyzos5r7gxipjbbzyfvdfx7fenfh4mzmx@jj6lrysp35du>
+ <a5a56711-3607-407c-aa8f-aed39a41fb73@linaro.org>
+ <v4qix3bdxj3ykmjsokzrtubozdqh2fnh4mevpiz6v2y63csjb7@hddxgbi4yjgn>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <v4qix3bdxj3ykmjsokzrtubozdqh2fnh4mevpiz6v2y63csjb7@hddxgbi4yjgn>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: j2yDsnACBkLjXsngOe5nJ45W-2p_9AI1
+X-Proofpoint-ORIG-GUID: j2yDsnACBkLjXsngOe5nJ45W-2p_9AI1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-16_13,2023-05-16_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 suspectscore=0
+ mlxlogscore=863 spamscore=0 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ mlxscore=0 adultscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305160203
+X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Include RC parameters for YCbCr 4:2:2 and 4:2:0 configurations.
 
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/display/drm_dsc_helper.c | 450 +++++++++++++++++++++++
- include/drm/display/drm_dsc_helper.h     |   2 +
- 2 files changed, 452 insertions(+)
 
-diff --git a/drivers/gpu/drm/display/drm_dsc_helper.c b/drivers/gpu/drm/display/drm_dsc_helper.c
-index 6d9bf9ce543b..44876a715e5a 100644
---- a/drivers/gpu/drm/display/drm_dsc_helper.c
-+++ b/drivers/gpu/drm/display/drm_dsc_helper.c
-@@ -748,6 +748,450 @@ static const struct rc_parameters_data rc_parameters_1_2_444[] = {
- 	{ /* sentinel */ }
- };
- 
-+/*
-+ * Selected Rate Control Related Parameter Recommended Values for 4:2:2 from
-+ * DSC v1.2, v1.2a, v1.2b
-+ *
-+ * Cross-checked against C Model releases: DSC_model_20161212 and 20210623
-+ */
-+static const struct rc_parameters_data rc_parameters_1_2_422[] = {
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 8,
-+		{ 512, 15, 6144, 3, 12, 11, 11, {
-+			{ 0, 4, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
-+			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
-+			{ 3, 9, -8 }, { 3, 10, -10 }, { 5, 10, -10 }, { 5, 11, -12 },
-+			{ 5, 11, -12 }, { 9, 12, -12 }, { 12, 13, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 10,
-+		{ 512, 15, 6144, 7, 16, 15, 15, {
-+			{ 0, 8, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 5, 10, -2 },
-+			{ 7, 11, -4 }, { 7, 11, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
-+			{ 7, 13, -8 }, { 7, 14, -10 }, { 9, 14, -10 }, { 9, 15, -12 },
-+			{ 9, 15, -12 }, { 13, 16, -12 }, { 16, 17, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 12,
-+		{ 512, 15, 6144, 11, 20, 19, 19, {
-+			{ 0, 12, 2 }, { 4, 12, 0 }, { 9, 13, 0 }, { 9, 14, -2 },
-+			{ 11, 15, -4 }, { 11, 15, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
-+			{ 11, 17, -8 }, { 11, 18, -10 }, { 13, 18, -10 },
-+			{ 13, 19, -12 }, { 13, 19, -12 }, { 17, 20, -12 },
-+			{ 20, 21, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 14,
-+		{ 512, 15, 6144, 15, 24, 23, 23, {
-+			{ 0, 12, 2 }, { 5, 13, 0 }, { 11, 15, 0 }, { 12, 17, -2 },
-+			{ 15, 19, -4 }, { 15, 19, -6 }, { 15, 19, -8 }, { 15, 20, -8 },
-+			{ 15, 21, -8 }, { 15, 22, -10 }, { 17, 22, -10 },
-+			{ 17, 23, -12 }, { 17, 23, -12 }, { 21, 24, -12 },
-+			{ 24, 25, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 16,
-+		{ 512, 15, 6144, 19, 28, 27, 27, {
-+			{ 0, 12, 2 }, { 6, 14, 0 }, { 13, 17, 0 }, { 15, 20, -2 },
-+			{ 19, 23, -4 }, { 19, 23, -6 }, { 19, 23, -8 }, { 19, 24, -8 },
-+			{ 19, 25, -8 }, { 19, 26, -10 }, { 21, 26, -10 },
-+			{ 21, 27, -12 }, { 21, 27, -12 }, { 25, 28, -12 },
-+			{ 28, 29, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(7), .bpc = 8,
-+		{ 410, 15, 5632, 3, 12, 11, 11, {
-+			{ 0, 3, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 2, 6, -2 },
-+			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
-+			{ 3, 9, -8 }, { 3, 9, -10 }, { 5, 10, -10 }, { 5, 10, -10 },
-+			{ 5, 11, -12 }, { 7, 11, -12 }, { 11, 12, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(7), .bpc = 10,
-+		{ 410, 15, 5632, 7, 16, 15, 15, {
-+			{ 0, 7, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 6, 10, -2 },
-+			{ 7, 11, -4 }, { 7, 11, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
-+			{ 7, 13, -8 }, { 7, 13, -10 }, { 9, 14, -10 }, { 9, 14, -10 },
-+			{ 9, 15, -12 }, { 11, 15, -12 }, { 15, 16, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(7), .bpc = 12,
-+		{ 410, 15, 5632, 11, 20, 19, 19, {
-+			{ 0, 11, 2 }, { 4, 12, 0 }, { 9, 13, 0 }, { 10, 14, -2 },
-+			{ 11, 15, -4 }, { 11, 15, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
-+			{ 11, 17, -8 }, { 11, 17, -10 }, { 13, 18, -10 },
-+			{ 13, 18, -10 }, { 13, 19, -12 }, { 15, 19, -12 },
-+			{ 19, 20, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(7), .bpc = 14,
-+		{ 410, 15, 5632, 15, 24, 23, 23, {
-+			{ 0, 11, 2 }, { 5, 13, 0 }, { 11, 15, 0 }, { 13, 18, -2 },
-+			{ 15, 19, -4 }, { 15, 19, -6 }, { 15, 19, -8 }, { 15, 20, -8 },
-+			{ 15, 21, -8 }, { 15, 21, -10 }, { 17, 22, -10 },
-+			{ 17, 22, -10 }, { 17, 23, -12 }, { 19, 23, -12 },
-+			{ 23, 24, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(7), .bpc = 16,
-+		{ 410, 15, 5632, 19, 28, 27, 27, {
-+			{ 0, 11, 2 }, { 6, 14, 0 }, { 13, 17, 0 }, { 16, 20, -2 },
-+			{ 19, 23, -4 }, { 19, 23, -6 }, { 19, 23, -8 }, { 19, 24, -8 },
-+			{ 19, 25, -8 }, { 19, 25, -10 }, { 21, 26, -10 },
-+			{ 21, 26, -10 }, { 21, 27, -12 }, { 23, 27, -12 },
-+			{ 27, 28, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 8,
-+		{ 341, 15, 2048, 3, 12, 11, 11, {
-+			{ 0, 2, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
-+			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
-+			{ 3, 8, -8 }, { 3, 9, -10 }, { 5, 9, -10 }, { 5, 9, -12 },
-+			{ 5, 9, -12 }, { 7, 10, -12 }, { 10, 11, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 10,
-+		{ 341, 15, 2048, 7, 16, 15, 15, {
-+			{ 0, 2, 2 }, { 2, 5, 0 }, { 3, 7, 0 }, { 4, 8, -2 },
-+			{ 6, 9, -4 }, { 7, 10, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
-+			{ 7, 12, -8 }, { 7, 13, -10 }, { 9, 13, -10 }, { 9, 13, -12 },
-+			{ 9, 13, -12 }, { 11, 14, -12 }, { 14, 15, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 12,
-+		{ 341, 15, 2048, 11, 20, 19, 19, {
-+			{ 0, 6, 2 }, { 4, 9, 0 }, { 7, 11, 0 }, { 8, 12, -2 },
-+			{ 10, 13, -4 }, { 11, 14, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
-+			{ 11, 16, -8 }, { 11, 17, -10 }, { 13, 17, -10 },
-+			{ 13, 17, -12 }, { 13, 17, -12 }, { 15, 18, -12 },
-+			{ 18, 19, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 14,
-+		{ 341, 15, 2048, 15, 24, 23, 23, {
-+			{ 0, 6, 2 }, { 7, 10, 0 }, { 9, 13, 0 }, { 11, 16, -2 },
-+			{ 14, 17, -4 }, { 15, 18, -6 }, { 15, 19, -8 }, { 15, 20, -8 },
-+			{ 15, 20, -8 }, { 15, 21, -10 }, { 17, 21, -10 },
-+			{ 17, 21, -12 }, { 17, 21, -12 }, { 19, 22, -12 },
-+			{ 22, 23, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 16,
-+		{ 341, 15, 2048, 19, 28, 27, 27, {
-+			{ 0, 6, 2 }, { 6, 11, 0 }, { 11, 15, 0 }, { 14, 18, -2 },
-+			{ 18, 21, -4 }, { 19, 22, -6 }, { 19, 23, -8 }, { 19, 24, -8 },
-+			{ 19, 24, -8 }, { 19, 25, -10 }, { 21, 25, -10 },
-+			{ 21, 25, -12 }, { 21, 25, -12 }, { 23, 26, -12 },
-+			{ 26, 27, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(10), .bpc = 8,
-+		{ 273, 15, 2048, 3, 12, 11, 11, {
-+			{ 0, 0, 10 }, { 0, 1, 8 }, { 0, 1, 6 }, { 0, 2, 4 },
-+			{ 1, 2, 2 }, { 1, 3, 0 }, { 1, 3, -2 }, { 2, 4, -4 },
-+			{ 2, 5, -6 }, { 3, 5, -8 }, { 4, 6, -10 }, { 4, 7, -10 },
-+			{ 5, 7, -12 }, { 7, 8, -12 }, { 8, 9, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(10), .bpc = 10,
-+		{ 273, 15, 2048, 7, 16, 15, 15, {
-+			{ 0, 2, 10 }, { 2, 5, 8 }, { 3, 5, 6 }, { 4, 6, 4 },
-+			{ 5, 6, 2 }, { 5, 7, 0 }, { 5, 7, -2 }, { 6, 8, -4 },
-+			{ 6, 9, -6 }, { 7, 9, -8 }, { 8, 10, -10 }, { 8, 11, -10 },
-+			{ 9, 11, -12 }, { 11, 12, -12 }, { 12, 13, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(10), .bpc = 12,
-+		{ 273, 15, 2048, 11, 20, 19, 19, {
-+			{ 0, 4, 10 }, { 2, 7, 8 }, { 4, 9, 6 }, { 6, 11, 4 },
-+			{ 9, 11, 2 }, { 9, 11, 0 }, { 9, 12, -2 }, { 10, 12, -4 },
-+			{ 11, 13, -6 }, { 11, 13, -8 }, { 12, 14, -10 },
-+			{ 13, 15, -10 }, { 13, 15, -12 }, { 15, 16, -12 },
-+			{ 16, 17, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(10), .bpc = 14,
-+		{ 273, 15, 2048, 15, 24, 23, 23, {
-+			{ 0, 4, 10 }, { 3, 8, 8 }, { 6, 11, 6 }, { 9, 14, 4 },
-+			{ 13, 15, 2 }, { 13, 15, 0 }, { 13, 16, -2 }, { 14, 16, -4 },
-+			{ 15, 17, -6 }, { 15, 17, -8 }, { 16, 18, -10 },
-+			{ 17, 19, -10 }, { 17, 19, -12 }, { 19, 20, -12 },
-+			{ 20, 21, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(10), .bpc = 16,
-+		{ 273, 15, 2048, 19, 28, 27, 27, {
-+			{ 0, 4, 10 }, { 4, 9, 8 }, { 8, 13, 6 }, { 12, 17, 4 },
-+			{ 17, 19, 2 }, { 17, 20, 0 }, { 17, 20, -2 }, { 18, 20, -4 },
-+			{ 19, 21, -6 }, { 19, 21, -8 }, { 20, 22, -10 },
-+			{ 21, 23, -10 }, { 21, 23, -12 }, { 23, 24, -12 },
-+			{ 24, 25, -12 }
-+			}
-+		}
-+	},
-+	{ /* sentinel */ }
-+};
-+
-+/*
-+ * Selected Rate Control Related Parameter Recommended Values for 4:2:2 from
-+ * DSC v1.2, v1.2a, v1.2b
-+ *
-+ * Cross-checked against C Model releases: DSC_model_20161212 and 20210623
-+ */
-+static const struct rc_parameters_data rc_parameters_1_2_420[] = {
-+	{
-+		.bpp = DSC_BPP(4), .bpc = 8,
-+		{ 512, 12, 6144, 3, 12, 11, 11, {
-+			{ 0, 4, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
-+			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
-+			{ 3, 9, -8 }, { 3, 10, -10 }, { 5, 10, -10 }, { 5, 11, -12 },
-+			{ 5, 11, -12 }, { 9, 12, -12 }, { 12, 13, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(4), .bpc = 10,
-+		{ 512, 12, 6144, 7, 16, 15, 15, {
-+			{ 0, 8, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 5, 10, -2 },
-+			{ 7, 11, -4 }, { 7, 11, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
-+			{ 7, 13, -8 }, { 7, 14, -10 }, { 9, 14, -10 }, { 9, 15, -12 },
-+			{ 9, 15, -12 }, { 13, 16, -12 }, { 16, 17, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(4), .bpc = 12,
-+		{ 512, 12, 6144, 11, 20, 19, 19, {
-+			{ 0, 12, 2 }, { 4, 12, 0 }, { 9, 13, 0 }, { 9, 14, -2 },
-+			{ 11, 15, -4 }, { 11, 15, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
-+			{ 11, 17, -8 }, { 11, 18, -10 }, { 13, 18, -10 },
-+			{ 13, 19, -12 }, { 13, 19, -12 }, { 17, 20, -12 },
-+			{ 20, 21, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(4), .bpc = 14,
-+		{ 512, 12, 6144, 15, 24, 23, 23, {
-+			{ 0, 12, 2 }, { 5, 13, 0 }, { 11, 15, 0 }, { 12, 17, -2 },
-+			{ 15, 19, -4 }, { 15, 19, -6 }, { 15, 19, -8 }, { 15, 20, -8 },
-+			{ 15, 21, -8 }, { 15, 22, -10 }, { 17, 22, -10 },
-+			{ 17, 23, -12 }, { 17, 23, -12 }, { 21, 24, -12 },
-+			{ 24, 25, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(4), .bpc = 16,
-+		{ 512, 12, 6144, 19, 28, 27, 27, {
-+			{ 0, 12, 2 }, { 6, 14, 0 }, { 13, 17, 0 }, { 15, 20, -2 },
-+			{ 19, 23, -4 }, { 19, 23, -6 }, { 19, 23, -8 }, { 19, 24, -8 },
-+			{ 19, 25, -8 }, { 19, 26, -10 }, { 21, 26, -10 },
-+			{ 21, 27, -12 }, { 21, 27, -12 }, { 25, 28, -12 },
-+			{ 28, 29, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(5), .bpc = 8,
-+		{ 410, 15, 5632, 3, 12, 11, 11, {
-+			{ 0, 3, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 2, 6, -2 },
-+			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
-+			{ 3, 9, -8 }, { 3, 9, -10 }, { 5, 10, -10 }, { 5, 10, -10 },
-+			{ 5, 11, -12 }, { 7, 11, -12 }, { 11, 12, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(5), .bpc = 10,
-+		{ 410, 15, 5632, 7, 16, 15, 15, {
-+			{ 0, 7, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 6, 10, -2 },
-+			{ 7, 11, -4 }, { 7, 11, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
-+			{ 7, 13, -8 }, { 7, 13, -10 }, { 9, 14, -10 }, { 9, 14, -10 },
-+			{ 9, 15, -12 }, { 11, 15, -12 }, { 15, 16, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(5), .bpc = 12,
-+		{ 410, 15, 5632, 11, 20, 19, 19, {
-+			{ 0, 11, 2 }, { 4, 12, 0 }, { 9, 13, 0 }, { 10, 14, -2 },
-+			{ 11, 15, -4 }, { 11, 15, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
-+			{ 11, 17, -8 }, { 11, 17, -10 }, { 13, 18, -10 },
-+			{ 13, 18, -10 }, { 13, 19, -12 }, { 15, 19, -12 },
-+			{ 19, 20, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(5), .bpc = 14,
-+		{ 410, 15, 5632, 15, 24, 23, 23, {
-+			{ 0, 11, 2 }, { 5, 13, 0 }, { 11, 15, 0 }, { 13, 18, -2 },
-+			{ 15, 19, -4 }, { 15, 19, -6 }, { 15, 19, -8 }, { 15, 20, -8 },
-+			{ 15, 21, -8 }, { 15, 21, -10 }, { 17, 22, -10 },
-+			{ 17, 22, -10 }, { 17, 23, -12 }, { 19, 23, -12 },
-+			{ 23, 24, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(5), .bpc = 16,
-+		{ 410, 15, 5632, 19, 28, 27, 27, {
-+			{ 0, 11, 2 }, { 6, 14, 0 }, { 13, 17, 0 }, { 16, 20, -2 },
-+			{ 19, 23, -4 }, { 19, 23, -6 }, { 19, 23, -8 }, { 19, 24, -8 },
-+			{ 19, 25, -8 }, { 19, 25, -10 }, { 21, 26, -10 },
-+			{ 21, 26, -10 }, { 21, 27, -12 }, { 23, 27, -12 },
-+			{ 27, 28, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 8,
-+		{ 341, 15, 2048, 3, 12, 11, 11, {
-+			{ 0, 2, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
-+			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
-+			{ 3, 8, -8 }, { 3, 9, -10 }, { 5, 9, -10 }, { 5, 9, -12 },
-+			{ 5, 9, -12 }, { 7, 10, -12 }, { 10, 12, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 10,
-+		{ 341, 15, 2048, 7, 16, 15, 15, {
-+			{ 0, 2, 2 }, { 2, 5, 0 }, { 3, 7, 0 }, { 4, 8, -2 },
-+			{ 6, 9, -4 }, { 7, 10, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
-+			{ 7, 12, -8 }, { 7, 13, -10 }, { 9, 13, -10 }, { 9, 13, -12 },
-+			{ 9, 13, -12 }, { 11, 14, -12 }, { 14, 15, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 12,
-+		{ 341, 15, 2048, 11, 20, 19, 19, {
-+			{ 0, 6, 2 }, { 4, 9, 0 }, { 7, 11, 0 }, { 8, 12, -2 },
-+			{ 10, 13, -4 }, { 11, 14, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
-+			{ 11, 16, -8 }, { 11, 17, -10 }, { 13, 17, -10 },
-+			{ 13, 17, -12 }, { 13, 17, -12 }, { 15, 18, -12 },
-+			{ 18, 19, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 14,
-+		{ 341, 15, 2048, 15, 24, 23, 23, {
-+			{ 0, 6, 2 }, { 7, 10, 0 }, { 9, 13, 0 }, { 11, 16, -2 },
-+			{ 14, 17, -4 }, { 15, 18, -6 }, { 15, 19, -8 }, { 15, 20, -8 },
-+			{ 15, 20, -8 }, { 15, 21, -10 }, { 17, 21, -10 },
-+			{ 17, 21, -12 }, { 17, 21, -12 }, { 19, 22, -12 },
-+			{ 22, 23, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(6), .bpc = 16,
-+		{ 341, 15, 2048, 19, 28, 27, 27, {
-+			{ 0, 6, 2 }, { 6, 11, 0 }, { 11, 15, 0 }, { 14, 18, -2 },
-+			{ 18, 21, -4 }, { 19, 22, -6 }, { 19, 23, -8 }, { 19, 24, -8 },
-+			{ 19, 24, -8 }, { 19, 25, -10 }, { 21, 25, -10 },
-+			{ 21, 25, -12 }, { 21, 25, -12 }, { 23, 26, -12 },
-+			{ 26, 27, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 8,
-+		{ 256, 15, 2048, 3, 12, 11, 11, {
-+			{ 0, 0, 10 }, { 0, 1, 8 }, { 0, 1, 6 }, { 0, 2, 4 },
-+			{ 1, 2, 2 }, { 1, 3, 0 }, { 1, 3, -2 }, { 2, 4, -4 },
-+			{ 2, 5, -6 }, { 3, 5, -8 }, { 4, 6, -10 }, { 4, 7, -10 },
-+			{ 5, 7, -12 }, { 7, 8, -12 }, { 8, 9, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 10,
-+		{ 256, 15, 2048, 7, 16, 15, 15, {
-+			{ 0, 2, 10 }, { 2, 5, 8 }, { 3, 5, 6 }, { 4, 6, 4 },
-+			{ 5, 6, 2 }, { 5, 7, 0 }, { 5, 7, -2 }, { 6, 8, -4 },
-+			{ 6, 9, -6 }, { 7, 9, -8 }, { 8, 10, -10 }, { 8, 11, -10 },
-+			{ 9, 11, -12 }, { 11, 12, -12 }, { 12, 13, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 12,
-+		{ 256, 15, 2048, 11, 20, 19, 19, {
-+			{ 0, 4, 10 }, { 2, 7, 8 }, { 4, 9, 6 }, { 6, 11, 4 },
-+			{ 9, 11, 2 }, { 9, 11, 0 }, { 9, 12, -2 }, { 10, 12, -4 },
-+			{ 11, 13, -6 }, { 11, 13, -8 }, { 12, 14, -10 },
-+			{ 13, 15, -10 }, { 13, 15, -12 }, { 15, 16, -12 },
-+			{ 16, 17, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 14,
-+		{ 256, 15, 2048, 15, 24, 23, 23, {
-+			{ 0, 4, 10 }, { 3, 8, 8 }, { 6, 11, 6 }, { 9, 14, 4 },
-+			{ 13, 15, 2 }, { 13, 15, 0 }, { 13, 16, -2 }, { 14, 16, -4 },
-+			{ 15, 17, -6 }, { 15, 17, -8 }, { 16, 18, -10 },
-+			{ 17, 19, -10 }, { 17, 19, -12 }, { 19, 20, -12 },
-+			{ 20, 21, -12 }
-+			}
-+		}
-+	},
-+	{
-+		.bpp = DSC_BPP(8), .bpc = 16,
-+		{ 256, 15, 2048, 19, 28, 27, 27, {
-+			{ 0, 4, 10 }, { 4, 9, 8 }, { 8, 13, 6 }, { 12, 17, 4 },
-+			{ 17, 19, 2 }, { 17, 20, 0 }, { 17, 20, -2 }, { 18, 20, -4 },
-+			{ 19, 21, -6 }, { 19, 21, -8 }, { 20, 22, -10 },
-+			{ 21, 23, -10 }, { 21, 23, -12 }, { 23, 24, -12 },
-+			{ 24, 25, -12 }
-+			}
-+		}
-+	},
-+	{ /* sentinel */ }
-+};
-+
- static const struct rc_parameters *get_rc_params(const struct rc_parameters_data *rc_parameters,
- 						 u16 dsc_bpp,
- 						 u8 bits_per_component)
-@@ -790,6 +1234,12 @@ int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg, enum drm_dsc_params
- 	case DRM_DSC_1_1_PRE_SCR:
- 		data = rc_parameters_pre_scr;
- 		break;
-+	case DRM_DSC_1_2_422:
-+		data = rc_parameters_1_2_422;
-+		break;
-+	case DRM_DSC_1_2_420:
-+		data = rc_parameters_1_2_420;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-diff --git a/include/drm/display/drm_dsc_helper.h b/include/drm/display/drm_dsc_helper.h
-index 66eac7276d04..fc2104415dcb 100644
---- a/include/drm/display/drm_dsc_helper.h
-+++ b/include/drm/display/drm_dsc_helper.h
-@@ -13,6 +13,8 @@
- enum drm_dsc_params_type {
- 	DRM_DSC_1_2_444,
- 	DRM_DSC_1_1_PRE_SCR, /* legacy params from DSC 1.1 */
-+	DRM_DSC_1_2_422,
-+	DRM_DSC_1_2_420,
- };
- 
- void drm_dsc_dp_pps_header_init(struct dp_sdp_header *pps_header);
--- 
-2.39.2
+On 5/16/2023 3:49 PM, Marijn Suijten wrote:
+> On 2023-05-16 01:07:05, Dmitry Baryshkov wrote:
+>>
+>> On 16/05/2023 01:01, Marijn Suijten wrote:
+>>> On 2023-05-15 13:29:21, Jessica Zhang wrote:
+>>> <snip>
+>>>>> Const, as requested elsewhere.  But this function is not used anywhere
+>>>>> in any of the series (because we replaced the usages with more sensible
+>>>>> member accesses like slice_chunk_size).
+>>>>
+>>>> Acked.
+>>>>
+>>>> I would prefer to keep this helper so that we have a way to easily get
+>>>> BPP information from the DRM DSC config in the future, but if you'd
+>>>> prefer we add this helper then, I'm also ok with that.
+>>>
+>>> The inverse helper is available ad DSC_BPP in drm_dsc_helper.c.  Perhaps
+>>> we can move the two variants to the header and define them uniformly?
+>>> This isn't MSM-specific it seems (i.e. the format supports fractional
+>>> bpp but no RC parameters appear to be defined for such a format yet).
+>>
+>> I think DSC_BPP was removed (around v2 or v3 if I read changelog correctly).
+> 
+> Seems like it was removed at some point indeed, and now the helper file
+> picked up an identically named DSC_BPP macro but with the inverse
+> implementation :) - at least it's a *.c file.
+> 
+> Perhaps we can make it more consistent by defining both ways with
+> concise macros in a header.
 
+The changes in this series don't touch DSC_BPP so I think moving that 
+might be a change for another time, but I can at least move 
+msm_dsc_get_bpp_int to drm_dsc_helper.h.
+
+Thanks,
+
+Jessica Zhang
+
+> 
+>> As for the fraction-point BPP, I think AMD supports .5 bpp granularity,
+>> see drivers/gpu/drm/amd/display/dc/dml/dsc/qp_tables.h
+> 
+> That won't use the helper then.
+> 
+>> With best wishes
+>> Dmitry
+> 
+> - Marijn
