@@ -2,124 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 515CC706F03
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 19:06:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 544C1706F16
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 19:11:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229695AbjEQRGb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 13:06:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52548 "EHLO
+        id S229560AbjEQRLE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 13:11:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55636 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229560AbjEQRGa (ORCPT
+        with ESMTP id S229449AbjEQRLD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 13:06:30 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B42DD7A95
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 10:06:28 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f24d8440c9so305511e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 10:06:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684343187; x=1686935187;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=og0hsJoXEFVx3efB5FODxK2pf896iJgKo0hqpFS+xEk=;
-        b=Izd4OfR/cZVVa6jm16BXFsbMImZWXXer2Qnu+k8jmmXOhm7jTLrV2Rgxkdbaw+7rcy
-         2kNKLL8SWU2mMVafy4Bq0184tqik++4c3B2gE9C5+oEK+zylzBZ04VevNCscg0saGdxI
-         DCZ1PJefFBXyI1pL05Vx6lv+woXpn9U8FBAQ2fiDon9iX52ud83lQfK59gzyR0LjTviZ
-         UIUozbsPgA2VE4zJbNPXXAeXu/8vEkRNZLn5RL/OT87Tj43cfIy3vLr7p6U7o9GW0Hyo
-         jAEKPPsQYTQQmDww8+4GXZFda3KL58envD0I4h2H6Ixv6PMmUgkCvSHvY2GwIUp7XE+z
-         +BIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684343187; x=1686935187;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=og0hsJoXEFVx3efB5FODxK2pf896iJgKo0hqpFS+xEk=;
-        b=YQaXVGFxR6KRGQfEGR6s7OQ+oA9EN22Bv285rybiihfbY+lCAyF8QniePyhxqw4QPz
-         Df2Ly5V9pzuBdVLK/i4PoMqbKNxUUmgAKTA0xP7i/TFMB7xxjrm2a0LzgzqjvSK1Yjd6
-         eY1vsGZvnxJG1I1V+s8Fj4Npo+lCXgB8P4iHYSc5DPx6kTSEVO0uF9spchk+E/EMZtF/
-         uZ2KIefS4lwEF+p8PFwyip0s9YDO7WKNOufi6TewRKpfPeTfT5Lfc9d06pJkwoJKS72i
-         jBP8otRCmr7D8lXLeoqi9TA5f+oyFmbv5rZRWk1qFvVucOFvSMTuqA1uvjZth2LhSRVG
-         GDNg==
-X-Gm-Message-State: AC+VfDy8u3Poje4g+Kg5MH5ZejjlnxAUgJoYV6MoZ5EVT5uM1yY2yILJ
-        QaPQiRoJkCtILyW1aeZFAnB27g==
-X-Google-Smtp-Source: ACHHUZ4+gFI5gTsdKetBT14w02XAkJZ7Borindj8eNyRbJ33kzcsirKSsUL0VBKNNxmGI8y3E15c8A==
-X-Received: by 2002:a19:7413:0:b0:4f3:77f9:2bbe with SMTP id v19-20020a197413000000b004f377f92bbemr73382lfe.3.1684343186992;
-        Wed, 17 May 2023 10:06:26 -0700 (PDT)
-Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id q29-20020ac2515d000000b004f392625952sm455063lfd.26.2023.05.17.10.06.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 May 2023 10:06:26 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 17 May 2023 19:06:13 +0200
-Subject: [PATCH] arm64: dts: qcom: sm6375-pdx225: Fix remoteproc firmware
- paths
+        Wed, 17 May 2023 13:11:03 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC6C4198E;
+        Wed, 17 May 2023 10:11:02 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34HER0rV005335;
+        Wed, 17 May 2023 17:10:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=6q0xArWpEZhT4d+9ngBTBg23xYZkBDXNGbPrCv/UF5o=;
+ b=KdezF0FyvbncMVobwMtegc5q1dTxViZnRhGmGcY6hlJItNZVXeMZNl/aid2gEbskgR0s
+ fp5BeLPE9aayGA8hyAG8N6rgHNC6UX0CqxKatExsXkAVRYfQOsqzkHhmt3aZ2pT+8XD4
+ JOCIB+CwnJvCWP7sGFhMFQVayFsUcfCPMMaHPd1+jxUlSkrSU7Zi6heq/jPK+Hc6D/32
+ ZFolJMIroUT6+Ax0iGvc0P+XfZObVH4FHRvrHOM3FRAvzqKzJ2DYD5XnqPq7hLfScHrn
+ iTGdj4PN5UYOE7n3codfpDDmwlrJmWWAqc2LHXDrFB+m1mMSyAoGRSCAH9ueoEqRlRKH qQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qmbk7b5ey-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 17 May 2023 17:10:34 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34HHAXIU025352
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 17 May 2023 17:10:33 GMT
+Received: from [10.110.32.16] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 17 May
+ 2023 10:10:32 -0700
+Message-ID: <8e4bde65-fe66-853b-8b87-f3b230a384df@quicinc.com>
+Date:   Wed, 17 May 2023 10:10:25 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2] accel/qaic: initialize ret variable to 0
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>, <trix@redhat.com>,
+        <ogabbay@kernel.org>, <nathan@kernel.org>,
+        <ndesaulniers@google.com>, <jacek.lawrynowicz@linux.intel.com>,
+        <stanislaw.gruszka@linux.intel.com>, <quic_pkanojiy@quicinc.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, <llvm@lists.linux.dev>
+References: <20230517165605.16770-1-quic_jhugo@quicinc.com>
+Content-Language: en-US
+From:   Carl Vanderlip <quic_carlv@quicinc.com>
+In-Reply-To: <20230517165605.16770-1-quic_jhugo@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230517-topic-murray-fwname-v1-1-923e87312249@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAIQJZWQC/x2NywqDQAwAf0VybsBV+vyV0kN2N9aARslqH4j/3
- tDjDAyzQWETLnCrNjB+SZFJHcKhgtSTPhklO0NTN219DGdcplkSjqsZfbF7K42MmdP1cuKQY2j
- By0iFMRpp6r3VdRhczsadfP6r+2PffxP0gBp6AAAA
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1684343185; l=1166;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=DTVsdGoGsh/nIq5nmbWuoZKZZThDi5uvXuBGVZaqfOk=;
- b=zN13rcZUGWPTLDGX8vkBcLaA7svDsokxyXOsHA+XZXuc2mhqHEGDb6p/uszwyuKLw+eT167sO
- rsMTu/Pr9QGDLzZN1HTAUMCVkiO5A9AjH9rat51mUg8HOXP4tt57mb2
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: O9dRqlgI_OB5q-Zuwbc59rWGZDx8R7un
+X-Proofpoint-ORIG-GUID: O9dRqlgI_OB5q-Zuwbc59rWGZDx8R7un
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-17_02,2023-05-17_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1011
+ adultscore=0 priorityscore=1501 mlxlogscore=999 bulkscore=0 suspectscore=0
+ impostorscore=0 phishscore=0 lowpriorityscore=0 mlxscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305170140
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-They were previously missing the SoC name. Fix it.
+On 5/17/2023 9:56 AM, Jeffrey Hugo wrote:
+> From: Tom Rix <trix@redhat.com>
+> 
+> clang static analysis reports
+> drivers/accel/qaic/qaic_data.c:610:2: warning: Undefined or garbage
+>    value returned to caller [core.uninitialized.UndefReturn]
+>          return ret;
+>          ^~~~~~~~~~
+> 
+>>From a code analysis of the function, the ret variable is only set some
+> of the time but is always returned.  This suggests ret can return
+> uninitialized garbage. However BO allocation will ensure ret is always
+> set in reality.
+> 
+> Initialize ret to 0 to silence the warning.
+> 
+> Fixes: ff13be830333 ("accel/qaic: Add datapath")
+> Signed-off-by: Tom Rix <trix@redhat.com>
+> [jhugo: Reword commit text]
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> ---
+>   drivers/accel/qaic/qaic_data.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+> index 8ab26e64b231..e42c1f9ffff8 100644
+> --- a/drivers/accel/qaic/qaic_data.c
+> +++ b/drivers/accel/qaic/qaic_data.c
+> @@ -591,7 +591,7 @@ static int qaic_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struc
+>   	struct qaic_bo *bo = to_qaic_bo(obj);
+>   	unsigned long offset = 0;
+>   	struct scatterlist *sg;
+> -	int ret;
+> +	int ret = 0;
+>   
+>   	if (obj->import_attach)
+>   		return -EINVAL;
 
-Fixes: a2ad207c412b ("arm64: dts: qcom: sm6375-pdx225: Enable ADSP & CDSP")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-index 8220e6f44117..b2f1bb1d58e9 100644
---- a/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-+++ b/arch/arm64/boot/dts/qcom/sm6375-sony-xperia-murray-pdx225.dts
-@@ -178,12 +178,12 @@ &qupv3_id_1 {
- };
- 
- &remoteproc_adsp {
--	firmware-name = "qcom/Sony/murray/adsp.mbn";
-+	firmware-name = "qcom/sm6375/Sony/murray/adsp.mbn";
- 	status = "okay";
- };
- 
- &remoteproc_cdsp {
--	firmware-name = "qcom/Sony/murray/cdsp.mbn";
-+	firmware-name = "qcom/sm6375/Sony/murray/cdsp.mbn";
- 	status = "okay";
- };
- 
+LGTM
 
----
-base-commit: 065efa589871e93b6610c70c1e9de274ef1f1ba2
-change-id: 20230517-topic-murray-fwname-dec986e1db13
-
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
-
+Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
