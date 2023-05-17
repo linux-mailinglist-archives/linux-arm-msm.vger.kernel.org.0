@@ -2,136 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 318B97068B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 14:55:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9391F706990
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 15:20:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231823AbjEQMzt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 08:55:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37130 "EHLO
+        id S231373AbjEQNUC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 09:20:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231824AbjEQMzt (ORCPT
+        with ESMTP id S231905AbjEQNTw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 08:55:49 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22CAF3A96;
-        Wed, 17 May 2023 05:55:48 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 97194646E5;
-        Wed, 17 May 2023 12:55:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF82CC433EF;
-        Wed, 17 May 2023 12:55:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684328147;
-        bh=OshEcCgqyCd6Vr8QO9lsuA2mBoImzQptY5WxrVyFoQ8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZVGgrubvDIlaWDmqwmFS5RWOvMppbm2iacK4PpAC8A7GhZrgQFMlZ5IZJiEoeHiiz
-         HDeqB6UCfRXKzi1Klk1g7kznHCecDqRwCrCrW7sZuDY+mphIUeyf3oSO7D2xnf3Qr9
-         aZPj1nBZ7fjKM24MHvA5CW/suDrBe8vjBKkKuGvDjRY55u2+51O7ikg0RGQAZvxMOz
-         0+zFXnu7I3Ek9MuaG89DXooIzEeKAisja/sn7eSuGhdx7uVQk/Yq1SCzWN3X8qx3ut
-         fZTwISsllmIDWw6kcZnUxaNsS8K+/Z51oPW6XtEusztcXCol4OPUv3mBIyYDdb3ZIW
-         TvleSeiBc4XCA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pzGh0-0004dk-Te; Wed, 17 May 2023 14:55:47 +0200
-Date:   Wed, 17 May 2023 14:55:46 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com
-Subject: Re: [PATCH v8 1/9] dt-bindings: usb: qcom,dwc3: Add bindings for
- SC8280 Multiport
-Message-ID: <ZGTO0soREEs4wxee@hovoldconsulting.com>
-References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-2-quic_kriskura@quicinc.com>
- <ZGNiDVq1duvyZBUB@hovoldconsulting.com>
- <f2f8c7bf-6d1d-7890-a8b1-0e27969e63f6@quicinc.com>
- <ZGS-FymhdA_zOQmj@hovoldconsulting.com>
- <fc6e3e2c-1573-c9e6-0aa1-b14aa18ac393@quicinc.com>
+        Wed, 17 May 2023 09:19:52 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C1D0210C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 06:19:50 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2ac770a99e2so7533221fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 06:19:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684329588; x=1686921588;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OODF9wHSCYG54VVweDgKeLp3U0OSPmTomqN20PFs+v4=;
+        b=c5F8lWdA8er+GioAFIIpWBSM+ENoKEBZFRo2n0NaOgnPJbtvms2bBc0l9oKHrFJY6w
+         sj2XTPTXQPpA8DorFvErDfm3RmX+HDb1YjCC3Oa9nlzI+fyS8YfHm6s2kvZW0W61E1wz
+         HLqGS2WAw2KpT6TOmNLVptCCIih/GCvMrCrdhRiTF4/GxaOSO9G3Bbc4oW/Fep0tzELs
+         8jg09OzywpT6NuWVtYt49ts+nHv57Y8/uF+Dok47j11MBGN3yyvtMCexSsI8BlUjwyEB
+         bF/bWOv8toDKj0DyHdnHpdbQ6aYMA6xrCBpPWugS9pTzqu50c3HfabyUcSKZcHnqc3Oq
+         aB+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684329588; x=1686921588;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OODF9wHSCYG54VVweDgKeLp3U0OSPmTomqN20PFs+v4=;
+        b=dOHRbCqwj+eaE4585wQ80ZecwTI0Tv3RpirKVP+zVz2RFpbudppXF1wTK137jqe0Ur
+         +fXw0uHNWSGE2LFj6/n+RIB5meZ3vKWEqBCTFz2Et2mgJedc/nQeaduOB9eG/Ew2z5qo
+         BqeB+Bi9uo/5AnLhCgMDX8tkF2Au9R53/RtVSE4kl8IZvGpOHcYBYWKJ48UAHdTpSQIe
+         wvnTNrF0CEgBemSkNumiKSNdfUZ9v1MA6xbkecLi8MFuAIttdJ3YGwPpIbt1EKy/McyB
+         uQT9bem1Q5StuoKh5UaQE4rsiyQ5g+kCxeSNovrat93t12y2eg/iClwL3mUo/AUSMr+u
+         cM8A==
+X-Gm-Message-State: AC+VfDyLqBQSrDVs4B0+vODMZb/NcMNZ1qhK7CO0WhQvjEViR487SqXH
+        pW/X+OkTiG0OZwxEPzPhi0cIyA==
+X-Google-Smtp-Source: ACHHUZ5YHoV1sc0sDvIJe7GzTEZBYcyI9a8bSVuSNOj6PyJTPckaEaNmb5LBIlmjq+pwlCJRL81pGg==
+X-Received: by 2002:a2e:9cda:0:b0:2ac:dd01:e169 with SMTP id g26-20020a2e9cda000000b002acdd01e169mr9624045ljj.40.1684329588536;
+        Wed, 17 May 2023 06:19:48 -0700 (PDT)
+Received: from [10.167.154.1] ([2a00:f41:c93:874f:be7b:fb6c:26f9:307c])
+        by smtp.gmail.com with ESMTPSA id f7-20020a2e9187000000b002adadef95c0sm3007457ljg.124.2023.05.17.06.19.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 May 2023 06:19:48 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/3] More RPMhPD levels + sm8550
+Date:   Wed, 17 May 2023 15:19:42 +0200
+Message-Id: <20230517-topic-kailua-rpmhpd-v1-0-cd3013d051a6@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fc6e3e2c-1573-c9e6-0aa1-b14aa18ac393@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAG7UZGQC/x2N0QrCMAwAf2Xk2cDWbij+iviQpdEGa1fSTYSxf
+ 7f4eAfH7VDFVCpcux1MPlp1yQ2GUwccKT8FNTQG1zvfT8MZ16Uo44s0bYRW3rEEDG7kkSd/YU/
+ Qypmq4GyUObY2byk1WUwe+v2vbvfj+AHfoVmsegAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1684329587; l=899;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=aDhFrmJ9bpodLJ2PsX/rq6abMHr5lkvazPml98G0+2E=;
+ b=s2gQuNI95KZ6KxdNWjb+ZtlvuHxijBCqBeKkr6RxKItkZLr6qS+aXsAxza3TpJgErX/mIbiCC
+ 6xTku+nd/M2CnadFzvyjhvBZMX+dtjcjfFERToU9fJs1bF5FtkB42X6
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 17, 2023 at 05:49:13PM +0530, Krishna Kurapati PSSNV wrote:
-> On 5/17/2023 5:14 PM, Johan Hovold wrote:
-> > On Wed, May 17, 2023 at 04:40:11PM +0530, Krishna Kurapati PSSNV wrote:
-> >> On 5/16/2023 4:29 PM, Johan Hovold wrote:
-> >>> On Sun, May 14, 2023 at 11:19:09AM +0530, Krishna Kurapati wrote:
-> > 
-> >>>> +        interrupts:
-> >>>> +          maxItems: 7
-> >>>> +        interrupt-names:
-> >>>> +          items:
-> >>>> +            - const: dp_hs_phy_irq
-> >>>> +            - const: dm_hs_phy_irq
-> >>>> +            - const: ss_phy_irq
-> >>>
-> >>> I assume that these are only for the first port, and that you need to
-> >>> define these interrupts also for ports 2-4.
-> > 
-> >>    I wanted to add them when wakeup-source is enabled but since you
-> >> mentioned that these must be added now and driver support can be added
-> >> later, I will make a patch separately for this in v9.
-> > 
-> >>    Can I use the following notation for the new interrupts ?
-> >>
-> >> dp_hs_port2_irq
-> >> dm_hs_port2_irq
-> >> dp_hs_port3_irq
-> >> dm_hs_port3_irq
-> >> dp_hs_port4_irq
-> >> dm_hs_port4_irq
-> >>
-> >>
-> >> That way the interrupt names for first port will be same as ones for
-> >> single port.
-> > 
-> > For consistency, I'd say: use the same scheme also for port1. Perhaps
-> > "port" is unnecessary too.
-> > 
-> > And since these are getting new names, you can drop the redundant "_irq"
-> > suffix as you did for the power-event lines.
+Bring in missing RPMhPd levels from downstream and add ones we'll
+need for GPU on SM8550.
 
->    The reason I wanted to mark it as dp_hs_portX_irq is to keep code 
-> changes to driver simple. The existing code to read current IRQ's can 
-> stay as it. Only need to add changes for reading IRQ's of new ports.
+Patch 1 adds the missing ones with an easy-to-read diff, patch 2
+reformats the block and patch 3 adds the necessary levels to 8550 dt.
 
-I understand why you want to do it this way, but again, the devicetree
-binding is supposed to be hardware description that is independent from
-any particular implementation.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (3):
+      dt-bindings: power: qcom,rpmpd: add missing RPMH levels
+      dt-bindings: power: qcom,rpmpd: Format RPMh levels better
+      arm64: dts: qcom: sm8550: Add missing RPMhPD OPP levels
 
-This is also why I said that it may be preferable/easier to just
-implement wakeup for MP from the start.
- 
-> > For example:
-> > 
-> > 	pwr_event_1
-> > 	dp_hs_phy_1
-> > 	dm_hs_phy_1
-> > 	ss_phy_1
-> > 	...
+ arch/arm64/boot/dts/qcom/sm8550.dtsi   | 36 +++++++++++++++++++++++++-------
+ include/dt-bindings/power/qcom-rpmpd.h | 38 +++++++++++++++++++++-------------
+ 2 files changed, 52 insertions(+), 22 deletions(-)
+---
+base-commit: 065efa589871e93b6610c70c1e9de274ef1f1ba2
+change-id: 20230517-topic-kailua-rpmhpd-d24c4c538c3a
 
-Johan
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
