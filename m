@@ -2,152 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A52B705CD8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 04:11:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 888D0705D03
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 04:19:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231668AbjEQCLf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 22:11:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34242 "EHLO
+        id S231838AbjEQCS7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 22:18:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230131AbjEQCLe (ORCPT
+        with ESMTP id S231830AbjEQCS6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 22:11:34 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B37CA3A9D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 19:11:32 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f2510b2b98so271438e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 19:11:32 -0700 (PDT)
+        Tue, 16 May 2023 22:18:58 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21F65171E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 19:18:56 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f24ddf514eso335168e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 19:18:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684289491; x=1686881491;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qaRPWIuvvo3gKtUu4wmte+gXSZRNUUE3b0hTHt7FVeI=;
-        b=qcc6+LY33iYMdnoWxQl0Nw3hnx8hftcEH6+291YxF+99TCvNIgIT9Vs1tRqlgy6SLp
-         NVAAkS3CXbxRYLfFun9TckrjqOY5WkGg90oS+nFoKUXPnKcFkoImqLT88o4noosnA6iU
-         qQOYLKfPXE1MGARk5WcEaEUy+IdeOKExF+FbZUTSSBXsK1BHsSfUdkRwbtgvtqmZZ4c1
-         Q4FdREnV9yVxHwc+GURkCulGJgftPo9056ZZ1V7LkLDQHFwZVmaZuUCqTHgzzWbLTQZv
-         ZDB6FJUr67rq/Ir2IPL585KDnLh1Bnob4EgFdNDI6nrg5uB1fnKtbg4I9VoUmp18rNE4
-         NGTA==
+        d=linaro.org; s=google; t=1684289934; x=1686881934;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=mNuleyZz00TgZy2qn9synoHafBsS2EGKwJDZ0wTnRXM=;
+        b=wFt5R7uDlqCI5juBKjX+HKH9IfSSpOtP+J8cGttpl+kx1YOeolIo/0xujf9T2Lu9/z
+         UOHQHgNVtpDL0K1bD1bO9m7qhGojRCjzmhkWmt9vYXvYG1eNGv5GlCL48Bh41EKWEFz5
+         k7ykRUfIqNK68ZEH1kdgLGSJ7mCEui24q1BKZegkkubVFvG14N9DO13T98s7irDJp7hu
+         SO3m7MnSXvtWqMWPX8xHnkdcsrZuSCWhxlMvZ8/0NNu8JeiAFjMVYrma7P8VSEBKN6Bs
+         tznYeWjDF5GmDjH+kEyUOpv8Une0WYmzOdajRFlwsRbJJ9aALF/f7oX+MgMWByMiRHl2
+         UC9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684289491; x=1686881491;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qaRPWIuvvo3gKtUu4wmte+gXSZRNUUE3b0hTHt7FVeI=;
-        b=aG3r9LepZ9TVhB2aTx0JnPmOd+4r4Zv1yXHKflvfxVlaQ7bL8aHzL8EtMAsLK1QHA2
-         Y0GTlL/2Ai9eTz+Kw9s/rPviOIbE3yA/P33gtO3pu2hka39Hsozcx8LzOB17dQY7bUAz
-         7/tXphF00PUR4D9N3/2VrfzPxEd2l8kyQWYG62bkgr5geM5lD3xTyXRL/Wvm0uPnWyos
-         8qU9Z0B+k30cgVOghgFgnN01Sp8pQLDPMXj1i/IH6m7Nv+LttMatsuacxDKOZBi5AmCN
-         P+bvH0x0zQsXZRud9a+kNFHoFqn/N+1PhNqPZ5sU4i13ORqeDYg4YpHiI5YaAgYodHM/
-         xheQ==
-X-Gm-Message-State: AC+VfDy13aA1S1LyhqImK3CmhzwPhQ9VVrRFA61sSjWiiSvJV1IlxdUn
-        KzGL0IbF9y+mqqwGEGVyiDpFaA==
-X-Google-Smtp-Source: ACHHUZ7+kHgnJiIdvaT/l2mo2jQRgHMKRqrizkhRNDelJvR9JTYZeGG7PdtVSV0XIuy4BZmDR8l7FA==
-X-Received: by 2002:a05:6512:11ec:b0:4ef:d482:9c91 with SMTP id p12-20020a05651211ec00b004efd4829c91mr7811176lfs.47.1684289490905;
-        Tue, 16 May 2023 19:11:30 -0700 (PDT)
-Received: from [192.168.58.94] (public-gprs529629.centertel.pl. [31.61.188.30])
-        by smtp.gmail.com with ESMTPSA id j4-20020a19f504000000b004f25ca0be7fsm2951942lfb.291.2023.05.16.19.11.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 May 2023 19:11:30 -0700 (PDT)
-Message-ID: <8f9ca4a1-26ee-cd37-6c15-abdc832d77b3@linaro.org>
-Date:   Wed, 17 May 2023 04:11:28 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH][next] media: venus: hfi_cmds: Replace fake flex-array
- with flexible-array member
-Content-Language: en-US
-To:     "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-References: <ZGQn63U4IeRUiJWb@work>
+        d=1e100.net; s=20221208; t=1684289934; x=1686881934;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mNuleyZz00TgZy2qn9synoHafBsS2EGKwJDZ0wTnRXM=;
+        b=iz7Tr4AM2Yb5FP6D9jbrZIvyJ3lyYt8+/nbwIxHCvC3qL51Jr2DQP0+MXXTkgDR6/h
+         eq7DXmFXdDwT11+ecScq79+FfsRtCBF8fw0i6uBFQVNlWXUfZW4RgNbkRlVrcTlwt0DE
+         jKv6sDiod/VsgDDdSkj5Qy/f6qqoJMjNAW8//mPWSxYN45Z1NJO0BekIXCoemivX6IW1
+         jrlGujZ2Sjimc0Ro8012yO2/V3iCuetwLup538rUqPSxmz2u91+//aUwu9PdJDCXg/Wb
+         Ufa9FNkDdYCd3F02QVic3d8KJSJakH0BEUJEfL8CzN8wtshdnpvBE2D7kSK/EyZLyoPW
+         3YWA==
+X-Gm-Message-State: AC+VfDxRXQtwmm8IddQ9d0KJlyUBuRbe6PmA376Ocgvo/B5JuwjyBdjl
+        CBpubTBqscg1sE6PnweaGsB7eg==
+X-Google-Smtp-Source: ACHHUZ6cEKZjZPUZ/A7OWo1caIo/qBlIBx0j9UNQtzWqioi710Vj/oDKmPKMVJcUqZkxhQD12mvNug==
+X-Received: by 2002:ac2:4302:0:b0:4ec:7b87:931a with SMTP id l2-20020ac24302000000b004ec7b87931amr7146198lfh.13.1684289934402;
+        Tue, 16 May 2023 19:18:54 -0700 (PDT)
+Received: from [10.167.154.1] (public-gprs529629.centertel.pl. [31.61.188.30])
+        by smtp.gmail.com with ESMTPSA id z22-20020a2e9656000000b002af01da6c67sm384232ljh.32.2023.05.16.19.18.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 May 2023 19:18:53 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZGQn63U4IeRUiJWb@work>
-Content-Type: text/plain; charset=UTF-8
+Subject: [PATCH 0/2] Fix SM8550 LLCC
+Date:   Wed, 17 May 2023 04:18:48 +0200
+Message-Id: <20230517-topic-kailua-llcc-v1-0-d57bd860c43e@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-B4-Tracking: v=1; b=H4sIAIg5ZGQC/x2N0QqDMAwAf0XyvIDtmMJ+ZewhjamGhSrtHAPx3
+ xf2eAfHHdCkqjS4dwdU+WjTtTiESwe8UJkFdXKG2MdrfwsjvtdNGV+kthOaMaPkMExjTIGzgHe
+ JmmCqVHjxsuxmLrcqWb//0eN5nj+8SliMeAAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        "Borislav Petkov (AMD)" <bp@alien8.de>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1684289932; l=772;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=APGnRrrr5TbZrxKPg7ottygde1n4pWblpcQNvgATuUM=;
+ b=QqJiuyxuIU2wwBiPeU0LPVL5yZhYWg10sWC/fxGSUrG8eTyLzdW8cI1aUqEGGcTbJfnJQ442h
+ b773B2EGunpDDVuqB3ErDHeXQG8bbjTtcxQfZYnKDEWKtgjhmFkJnzV
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+LLCC was recently untangled as far as register regions go [1], but
+SM8550 was omitted. Fix it.
 
+[1] https://lore.kernel.org/all/20230314080443.64635-1-manivannan.sadhasivam@linaro.org/
 
-On 17.05.2023 03:03, Gustavo A. R. Silva wrote:
-> One-element arrays are deprecated, and we are replacing them with flexible
-> array members instead. So, replace one-element arrays with flexible-array
-> members in struct hfi_sys_set_resource_pkt, and refactor the rest of
-> the code, accordingly.
-> 
-> This helps with the ongoing efforts to tighten the FORTIFY_SOURCE
-> routines on memcpy() and help us make progress towards globally
-> enabling -fstrict-flex-arrays=3 [1].
-> 
-> The only binary differences seen before/after changes are the
-> following:
-> 
->      17ba:      mov    %rbx,%rdi
->      17bd:      call   17c2 <pkt_sys_set_resource+0x42>
->                         17be: R_X86_64_PLT32    __tsan_write4-0x4
-> -    17c2:      movl   $0x14,(%rbx)
-> +    17c2:      movl   $0x10,(%rbx)
->      17c8:      lea    0x4(%rbx),%rdi
->      17cc:      call   17d1 <pkt_sys_set_resource+0x51>
->                         17cd: R_X86_64_PLT32    __tsan_write4-0x4
-> 
-> which is expected once this accounts for the following line of code
-> at  drivers/media/platform/qcom/venus/hfi_cmds.c:73
-> 
-> 73         pkt->hdr.size = sizeof(*pkt);
-> 
-> and as *pkt is of type struct hfi_sys_set_resource_pkt, sizeof(*pkt) is
-> reduced by 4 bytes, due to the flex-array transformation.
-> 
-> Link: https://github.com/KSPP/linux/issues/79
-> Link: https://github.com/KSPP/linux/issues/293
-> Link: https://gcc.gnu.org/pipermail/gcc-patches/2022-October/602902.html [1]
-> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-> ---
->  drivers/media/platform/qcom/venus/hfi_cmds.c | 2 +-
->  drivers/media/platform/qcom/venus/hfi_cmds.h | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-> index 3f74d518ad08..7c82e212434e 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-> @@ -83,7 +83,7 @@ int pkt_sys_set_resource(struct hfi_sys_set_resource_pkt *pkt, u32 id, u32 size,
->  		res->size = size;
->  		res->mem = addr;
->  		pkt->resource_type = HFI_RESOURCE_OCMEM;
-> -		pkt->hdr.size += sizeof(*res) - sizeof(u32);
-> +		pkt->hdr.size += sizeof(*res);
->  		break;
->  	}
->  	case VIDC_RESOURCE_NONE:
-> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.h b/drivers/media/platform/qcom/venus/hfi_cmds.h
-> index ba74d03eb9cd..dd9c5066442d 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_cmds.h
-> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.h
-> @@ -56,7 +56,7 @@ struct hfi_sys_set_resource_pkt {
->  	struct hfi_pkt_hdr hdr;
->  	u32 resource_handle;
->  	u32 resource_type;
-> -	u32 resource_data[1];
-> +	u32 resource_data[];
-Would making this an u32* be a better resolution?
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (2):
+      dt-bindings: cache: qcom,llcc: Fix SM8550 description
+      arm64: dts: qcom: sm8550: Use the correct LLCC register scheme
 
-Konrad
->  };
->  
->  struct hfi_sys_release_resource_pkt {
+ Documentation/devicetree/bindings/cache/qcom,llcc.yaml |  1 +
+ arch/arm64/boot/dts/qcom/sm8550.dtsi                   | 11 +++++++++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
+---
+base-commit: 885df05bf634d589fbf030c3751614eaa453fb5d
+change-id: 20230517-topic-kailua-llcc-ef16d72b1cfe
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
