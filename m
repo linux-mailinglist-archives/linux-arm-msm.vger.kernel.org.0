@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 38F58705F8B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 07:44:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 283FE705F90
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 07:47:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232048AbjEQFok (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 01:44:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50354 "EHLO
+        id S231963AbjEQFrn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 01:47:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229661AbjEQFoj (ORCPT
+        with ESMTP id S229661AbjEQFrm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 01:44:39 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C326A12C;
-        Tue, 16 May 2023 22:44:37 -0700 (PDT)
+        Wed, 17 May 2023 01:47:42 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2A2835A5;
+        Tue, 16 May 2023 22:47:41 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5C6EA64210;
-        Wed, 17 May 2023 05:44:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA49C433D2;
-        Wed, 17 May 2023 05:44:32 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4791D63187;
+        Wed, 17 May 2023 05:47:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E7E9C433D2;
+        Wed, 17 May 2023 05:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684302276;
-        bh=y0d8c7JHw2wpy/qWzjtP6uVBTXCtCjSwgfLQ0ts2oxY=;
+        s=k20201202; t=1684302460;
+        bh=xR894eWuJz83yxJe9tbqmIXVG1V/4uvTog4qdhGWcaI=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=H+D1YgcWPSQdgt+/MbZxEAEKNX4M3rWfwmeRL5J/WkKppz1UjfcqImSad4JZVqbLo
-         l4fizq6B08eU/nBQr1MSOqlICrM12tpPUSlhiTVKtvCwpRIkIbSTMWpLDISaDT5S5k
-         3PtYAaD9ZY3Ry/EOre+sdoFrp0A0scK+ejvyB5bNQfcRRTCLPUvRyXlQRyYPs2s2+U
-         8GJb8EEfT6Av11IV44By6GM7M1vLuyF2AA7wy90r9hgQT+YX8wHdL6SWZfNC4pZvlv
-         uTEBowPbEadt+wIIuHWIraybEbUIi8qvZFULLSH78w51VC++q2tV1ByC9q30nlyQQz
-         FeMuKZka1MavQ==
-Date:   Wed, 17 May 2023 11:14:28 +0530
+        b=XrhhT3AnRbI0I07t98bjVU82LZ2EvHZa+PKkwawUCODVBN6QhkOhCNINquKKvzp7q
+         +8FVczXtKd5z3N+THXAaGaYHjBvTdhTxl9fKR99jGnclI30jGco7ldU0sWAwx9QNeo
+         D1igt8vNV+KVX1QM5V7HwZpKkqkQbou9R99OE2K5QNjiZN5Yj7cik54EIHXZCKAFmb
+         LgKrDnAtpWwtfNBkYGJIylvycaX8dE3ImhyZHQgPdYaEBZ3Y0Jr4JQTn6PEfGtiwl4
+         y9TpPXC2xcvAAA+pVU2r/fBMTRv/kMqORIA5liwfABVmx5CoMq+vq9JFP9JtHRMR1R
+         97s1RSJticdrQ==
+Date:   Wed, 17 May 2023 11:17:31 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -45,17 +45,18 @@ Cc:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: cache: qcom,llcc: Fix SM8550 description
-Message-ID: <20230517054428.GH4868@thinkpad>
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: sm8550: Use the correct LLCC
+ register scheme
+Message-ID: <20230517054731.GI4868@thinkpad>
 References: <20230517-topic-kailua-llcc-v1-0-d57bd860c43e@linaro.org>
- <20230517-topic-kailua-llcc-v1-1-d57bd860c43e@linaro.org>
+ <20230517-topic-kailua-llcc-v1-2-d57bd860c43e@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230517-topic-kailua-llcc-v1-1-d57bd860c43e@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <20230517-topic-kailua-llcc-v1-2-d57bd860c43e@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -64,42 +65,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 17, 2023 at 04:18:49AM +0200, Konrad Dybcio wrote:
-> SM8550 (LLCCv4.1) has 4 register regions, this was not described
-> between its addition and the restructurization that happened in
-> the commit referenced in the fixes tag.
+On Wed, May 17, 2023 at 04:18:50AM +0200, Konrad Dybcio wrote:
+> During the ABI-breaking (for good reasons) conversion of the LLCC
+> register description, SM8550 was not taken into account, resulting
+> in LLCC being broken on any kernel containing the patch referenced
+> in the fixes tag.
 > 
-> Fix it.
+> Fix it by describing the regions properly.
 > 
-> Fixes: 43aa006e074c ("dt-bindings: arm: msm: Fix register regions used for LLCC banks")
+> Fixes: ee13b5008707 ("qcom: llcc/edac: Fix the base address used for accessing LLCC banks")
 
-I'm not sure if the Fixes tag should point to the patch adding SM8550 support or
-the restructuring patch.
+Same comment about the Fixes tag.
 
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-But the change LGTM!
+I do not have access to the SM8550 documentation to confirm the base address but
+I hope that it has been taken care of.
 
 Acked-by: Manivannan Sadhasivam <mani@kernel.org>
 
 - Mani
 
 > ---
->  Documentation/devicetree/bindings/cache/qcom,llcc.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
 > 
-> diff --git a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
-> index d8b91944180a..44892aa589fd 100644
-> --- a/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
-> +++ b/Documentation/devicetree/bindings/cache/qcom,llcc.yaml
-> @@ -129,6 +129,7 @@ allOf:
->                - qcom,sm8250-llcc
->                - qcom,sm8350-llcc
->                - qcom,sm8450-llcc
-> +              - qcom,sm8550-llcc
->      then:
->        properties:
->          reg:
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index 6e9bad8f6f33..70ae7e2e900a 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -3762,9 +3762,16 @@ gem_noc: interconnect@24100000 {
+>  
+>  		system-cache-controller@25000000 {
+>  			compatible = "qcom,sm8550-llcc";
+> -			reg = <0 0x25000000 0 0x800000>,
+> +			reg = <0 0x25000000 0 0x200000>,
+> +			      <0 0x25200000 0 0x200000>,
+> +			      <0 0x25400000 0 0x200000>,
+> +			      <0 0x25600000 0 0x200000>,
+>  			      <0 0x25800000 0 0x200000>;
+> -			reg-names = "llcc_base", "llcc_broadcast_base";
+> +			reg-names = "llcc0_base",
+> +				    "llcc1_base",
+> +				    "llcc2_base",
+> +				    "llcc3_base",
+> +				    "llcc_broadcast_base";
+>  			interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
+>  		};
+>  
 > 
 > -- 
 > 2.40.1
