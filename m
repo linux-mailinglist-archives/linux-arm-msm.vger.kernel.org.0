@@ -2,73 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D816706280
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 10:14:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B02170628D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 10:15:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229587AbjEQIOg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 04:14:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37226 "EHLO
+        id S229942AbjEQIPZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 04:15:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229506AbjEQIOf (ORCPT
+        with ESMTP id S229836AbjEQIPX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 04:14:35 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DECA910C3;
-        Wed, 17 May 2023 01:14:33 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 71AF663AE6;
-        Wed, 17 May 2023 08:14:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D4CC4339E;
-        Wed, 17 May 2023 08:14:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684311272;
-        bh=hQk2V61WT0ZjwjBD2C1jC1NdNjkBIK/8T3va0d3Yt14=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=J1xp/Wh7+3wfQfMWt44YSKyN469bd+w+tMQvSbLbM7YduzmOMeTvzNWLJ1wOke2WO
-         UIyGUxhMzohW1yPdTrzHkYhM13UOZo8YA0VTfb0+VnOaTcyw8MV9pznKxtJI5Fco7c
-         dNQj9RSzsGXdZx6CroVHj12FKUFpVzaWAGGXnz4y2RChBOLkspNMCHkIAa1komDI39
-         XF9E5OR1To0i87muELit2gX31C9X3bJLB+vcRW8Gzr509IKOwHGNbzn1W/Wb52SBOG
-         ck3zxBFWzvtYYGpqP05ykHMi+RLQ7tBeLxKFlb/h8EVxcQxWzEisf7SCqD75hzXbCu
-         UUfqXiyF+Q/aw==
-Date:   Wed, 17 May 2023 13:44:28 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-phy@lists.infradead.org, agross@kernel.org,
-        linux-kernel@vger.kernel.org, andersson@kernel.org,
-        bhupesh.linux@gmail.com, krzysztof.kozlowski@linaro.org,
-        robh+dt@kernel.org, konrad.dybcio@linaro.org, kishon@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org
-Subject: Re: [PATCH v11 0/4] Enable USB SS qmp phy for Qualcomm SM6115 SoC
-Message-ID: <ZGSM5FHG8Ln2t0G7@matsya>
-References: <20230516150511.2346357-1-bhupesh.sharma@linaro.org>
+        Wed, 17 May 2023 04:15:23 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A74C3AAD
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 01:15:19 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-96622bca286so78776766b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 01:15:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684311317; x=1686903317;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cEe5FsJ/vwnENYwLAm7Rnaraj/b22HuPaXqzWSqjWEc=;
+        b=AldKz2t3x6SeZni7O0UeJvok2PBlQ75nnUFErAixCYwRxGPOgLgYJdNycoXO6okk0M
+         kHWwmYkjJug7tSPeX3f7R0Vf7Pg6sTGr5i4jNIzLSpJOKbuPAirUjIA01XpyRydk7DzY
+         54wLBQOd6a+bFFwKCY+/wlX/YttddYELPmqznUui/qZjJfCvD+KC4UFvh9+ecT1alRoZ
+         XbzP3iUIZcLJ2XzGQ7dDBE1axXjfEQvHhESnOtm/LXLy4NVa+txhT7mIc4fQ3Ej+ScHJ
+         xlnP24D9EakmKBRsccuqlETmXs7pjU1ZRHmpna+7v/PtdTGwWfZf2XVV8fn9iz2UWIDl
+         WeXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684311317; x=1686903317;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cEe5FsJ/vwnENYwLAm7Rnaraj/b22HuPaXqzWSqjWEc=;
+        b=fix7rDvX68QD4wqshVC2HId8wkDz1tetlwK3ZYN8Dywj9KvtHQd6vtO6ZJdq+V8nKL
+         7xT5n7HwhzGuCzIWF3l1o8w44dUwhmD04ikN2BdZ01S6qvem//gpqu39/fgnhGFdQHhZ
+         mSGLZrg7yY315Zv7x+8i2u5N5506NZlLNUbcg2xQ7vwcZ/JcmkoARPdwZRsIozIXKHlV
+         elT66zwEZA2iktY12ZzAePkD3xqNA4xSwBV4GWtXFaglZBc5l9jKOStXy3We9v351OKF
+         bY5gY46PhT+z4aZ93plwGNuCDfwA9HzFdQuCZJYEjFuv346Ya6v3o0Z0kJ4xu8PMqGw7
+         O3oA==
+X-Gm-Message-State: AC+VfDx9NMtjhxilHokBGmzmhOMCVibUaSRZq8B4DQXeeCDHJ/Zjjdl0
+        WwH96JfV+alx+lXfmOOmRPZ+YA==
+X-Google-Smtp-Source: ACHHUZ6gRO9CPqhoqv2ttZfqInxP1k1DHikZHSV6X47AFfVd7gqcPWGHfGjXXhM4cr/lhIS+cnO1Kw==
+X-Received: by 2002:a17:907:9285:b0:966:484a:3350 with SMTP id bw5-20020a170907928500b00966484a3350mr28458711ejc.35.1684311317473;
+        Wed, 17 May 2023 01:15:17 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:c9ff:4c84:dd21:568d? ([2a02:810d:15c0:828:c9ff:4c84:dd21:568d])
+        by smtp.gmail.com with ESMTPSA id z13-20020a17090674cd00b0096ae152115bsm6040064ejl.175.2023.05.17.01.15.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 May 2023 01:15:16 -0700 (PDT)
+Message-ID: <af3164f1-314f-7e05-738b-808b2ea899c9@linaro.org>
+Date:   Wed, 17 May 2023 10:15:15 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230516150511.2346357-1-bhupesh.sharma@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: sm8550-qrd: add PCIe0
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230516133011.108093-1-krzysztof.kozlowski@linaro.org>
+ <CAA8EJpoTgseo3j_5Ab7cQs3ZZZymALpRqpuWGPyKpTEbXR-Cqw@mail.gmail.com>
+ <2e6f282c-33d9-7f96-0338-c4fd457d04fa@linaro.org>
+ <CAA8EJpq0x=H_SirdOwwhuiU7b1GPhP6-3xgR9PTQ_b2HYinMzQ@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAA8EJpq0x=H_SirdOwwhuiU7b1GPhP6-3xgR9PTQ_b2HYinMzQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16-05-23, 20:35, Bhupesh Sharma wrote:
+On 16/05/2023 19:15, Dmitry Baryshkov wrote:
+> On Tue, 16 May 2023 at 19:43, Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> On 16/05/2023 18:39, Dmitry Baryshkov wrote:
+>>> On Tue, 16 May 2023 at 16:30, Krzysztof Kozlowski
+>>> <krzysztof.kozlowski@linaro.org> wrote:
+>>>>
+>>>> Add PCIe0 nodes used with WCN7851 device.  The PCIe1 is not connected,
+>>>> thus skip pcie_1_phy_aux_clk input clock to GCC.
+>>>>
+>>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>> ---
+>>>>  arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 32 +++++++++++++++++++++++++
+>>>>  1 file changed, 32 insertions(+)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+>>>> index ccc58e6b45bd..e7a2bc5d788b 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+>>>> +++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+>>>> @@ -385,6 +385,38 @@ vreg_l3g_1p2: ldo3 {
+>>>>         };
+>>>>  };
+>>>>
+>>>> +&gcc {
+>>>> +       clocks = <&bi_tcxo_div2>, <&sleep_clk>,
+>>>> +                <&pcie0_phy>,
+>>>> +                <&pcie1_phy>,
+>>>> +                <0>,
+>>>> +                <&ufs_mem_phy 0>,
+>>>> +                <&ufs_mem_phy 1>,
+>>>> +                <&ufs_mem_phy 2>,
+>>>> +                <&usb_dp_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
+>>>> +};
+>>>
+>>> Is there any reason to disable the PCIe1 PHY AUX clock here? I mean,
+>>> the PCIe1 is still enabled in the hardware.
+>>
+>> I was thinking about this. The AUX clock seems to be an external clock,
+>> although I could not find it in schematics. I assume that on QRD8550 it
+>> could be missing, if it is really external. OTOH, downstream DTS did not
+>> seem to care...
 > 
-> This patchset adds the support for USB SS qmp phy for Qualcomm SM6115
-> SoC. For the previous versions of this patch there were conversations
-> on irc as to whether this was a 'qcom,usb-ssphy-qmp-usb3-or-dp' or a
-> 'qcom,usb-ssphy-qmp-dp-combo' as per downstream code and hardware
-> documentation.
+> I might be completely wrong here, but I think that AUX clock is yet
+> another clock provided by the PHY to the GCC, which we were just
+> ignoring for now. For example, for sm8450 we have <0> there. I don't
+> see it as an external clock, so I think it is internal to the SoC.
 
-Applied patch 1,2
+Hm, in that case it would make sense to keep it here. It's frequency,
+with some safe choice, could also go to DTSI.
 
-Thanks
+Best regards,
+Krzysztof
 
--- 
-~Vinod
