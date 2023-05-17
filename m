@@ -2,125 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ACFFF7073D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 23:15:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1B077073E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 23:18:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230160AbjEQVP1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 17:15:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53266 "EHLO
+        id S229805AbjEQVSK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 17:18:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230035AbjEQVPC (ORCPT
+        with ESMTP id S229642AbjEQVSJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 17:15:02 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D30A9032
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:14:52 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2ad1ba5dff7so12943541fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:14:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684358092; x=1686950092;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=X7g4tYUCSnADCqdupnI6ZWhiqSVw5byFBn9Ee75pCtk=;
-        b=E70vNCXLDgz8mutLEzPTMRQPL9zsJYV2fbpYj2M9dCTgYwOFO86MzzSOaBIs8f//uR
-         Wl6Sddh65UrrQ9bi1I3USM79J3FwISK2S2d/rwj2SJ86QzCkYLlyEcxYXRZsB8nZYDz2
-         I5OIZ8RcLE/oMqurn9GkHpDfyNda6FmpN7L8Z+zrXCmOt3V0oHkYCiAlSs+mcRgRANdR
-         gTSwLnqvvhfWbVmsmqr4wwn3rDF1H2Q0WD4/fFS4upF4wyKqUJjkGyX+ysINOeTpbldT
-         ZE1jrzRzhxDzTn+sdZQcnv38T6bUGICzLOMgqkvNBKqP5cAfXqihCj+UaJGbO6KNIRKu
-         H+xQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684358092; x=1686950092;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=X7g4tYUCSnADCqdupnI6ZWhiqSVw5byFBn9Ee75pCtk=;
-        b=YWK1bKtwKjGu6ShghkDle+ahDgmY/TPl2iHB52y9YOETtUyJ6VJ7ERcrtP9XoA7pbN
-         vuEK6KbPLT/v6DLw9rOoNWjLGmHM5ZqidT8sdWM0zkyqaM5ZCxK1zd50/GkkQTORsFWa
-         bv6faB8ic/whmOmH8OUrxf8ELayYTnNVWNFwhGr+SAJShjbXsGpW0G5I102yZLgivQi8
-         pAuBIYNcIO2b9gDTw2iyqEODcA30sH+uuhZiWHlvw3byfhavAGE7XoVuFAqG5X67jo8u
-         VD/t/gZwyRTD5fLCfWtuu2eBjGKAzgUSiXMyutvRVx48pWtB+Rn+jOvdigr912ygH83J
-         7fSg==
-X-Gm-Message-State: AC+VfDy5TyRcWonZoeHp1MeKNnLs5zJ3oupIL75uBmkCtssfWTQ5+s1M
-        lYG87UyrsnhdJ51ULVj73CewZw==
-X-Google-Smtp-Source: ACHHUZ4JykT444pZCOuyCI+MvVKcjXoebBsi9OFSJTqQZdNYJXrAjL8SsQhQYwuadF7y0/w3lznuTQ==
-X-Received: by 2002:a2e:8782:0:b0:2a8:adf6:b0e2 with SMTP id n2-20020a2e8782000000b002a8adf6b0e2mr10150800lji.13.1684358091922;
-        Wed, 17 May 2023 14:14:51 -0700 (PDT)
-Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id l5-20020a2e8345000000b002ac88e29049sm4781142ljh.43.2023.05.17.14.14.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 May 2023 14:14:51 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 17 May 2023 23:14:30 +0200
-Subject: [PATCH v3 17/17] media: venus: hfi_venus: Restrict writing
- SCIACMDARG3 to Venus V1/V2
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230228-topic-venus-v3-17-6092ae43b58f@linaro.org>
-References: <20230228-topic-venus-v3-0-6092ae43b58f@linaro.org>
-In-Reply-To: <20230228-topic-venus-v3-0-6092ae43b58f@linaro.org>
-To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Hans Verkuil <hans.verkuil@cisco.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>
-Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
+        Wed, 17 May 2023 17:18:09 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 609A17ED5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:17:45 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 08A3B3F7F8;
+        Wed, 17 May 2023 23:15:38 +0200 (CEST)
+Date:   Wed, 17 May 2023 23:15:36 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1684358064; l=1033;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=aCglDZnAfwj5KEsWFEt+s9yuCbYnCkOVxbgN1N7xiwc=;
- b=9kC+UvZMPpwn1xet5596Txb/EcLZKO4oPkdMyS+SXZGJBhMVAfM3Zmy8uJu5Y1I6f9uZO5/I8
- L4T/MfdnDifDjMHFSXqopWzGLq2PZe2OeV03NsW6iq+zTN9g7bl70Mp
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v11 2/9] drm/display/dsc: add helper to set semi-const
+ parameters
+Message-ID: <zdu5ygvokqjdcqzeajt5dpsxrpf5j3ine3grjf7mvmu4he25vj@qywiv5kyon45>
+References: <20230329-rfc-msm-dsc-helper-v11-0-30270e1eeac3@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v11-2-30270e1eeac3@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230329-rfc-msm-dsc-helper-v11-2-30270e1eeac3@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This write was last present on msm-3.10, which means before HFI3XX
-platforms were introduced. Guard it with an appropriate if condition.
+On 2023-05-17 11:51:11, Jessica Zhang wrote:
+> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> Add a helper setting config values which are typically constant across
+> operating modes (table E-4 of the standard) and mux_word_size (which is
+> a const according to 3.5.2).
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> ---
+>  drivers/gpu/drm/display/drm_dsc_helper.c | 22 ++++++++++++++++++++++
+>  include/drm/display/drm_dsc_helper.h     |  1 +
+>  2 files changed, 23 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/display/drm_dsc_helper.c b/drivers/gpu/drm/display/drm_dsc_helper.c
+> index 65e810a54257..b9c4e10ced41 100644
+> --- a/drivers/gpu/drm/display/drm_dsc_helper.c
+> +++ b/drivers/gpu/drm/display/drm_dsc_helper.c
+> @@ -270,6 +270,28 @@ void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_payload,
+>  }
+>  EXPORT_SYMBOL(drm_dsc_pps_payload_pack);
+>  
+> +/**
+> + * drm_dsc_set_const_params() - Set DSC parameters considered typically
+> + * constant across operation modes
+> + *
+> + * @vdsc_cfg:
+> + * DSC Configuration data partially filled by driver
+> + */
+> +void drm_dsc_set_const_params(struct drm_dsc_config *vdsc_cfg)
+> +{
+> +	if (!vdsc_cfg->rc_model_size)
+> +		vdsc_cfg->rc_model_size = DSC_RC_MODEL_SIZE_CONST;
+> +	vdsc_cfg->rc_edge_factor = DSC_RC_EDGE_FACTOR_CONST;
+> +	vdsc_cfg->rc_tgt_offset_high = DSC_RC_TGT_OFFSET_HI_CONST;
+> +	vdsc_cfg->rc_tgt_offset_low = DSC_RC_TGT_OFFSET_LO_CONST;
+> +
+> +	if (vdsc_cfg->bits_per_component <= 10)
+> +		vdsc_cfg->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
+> +	else
+> +		vdsc_cfg->mux_word_size = DSC_MUX_WORD_SIZE_12_BPC;
+> +}
+> +EXPORT_SYMBOL(drm_dsc_set_const_params);
+> +
+>  /* From DSC_v1.11 spec, rc_parameter_Set syntax element typically constant */
+>  static const u16 drm_dsc_rc_buf_thresh[] = {
+>  	896, 1792, 2688, 3584, 4480, 5376, 6272, 6720, 7168, 7616,
+> diff --git a/include/drm/display/drm_dsc_helper.h b/include/drm/display/drm_dsc_helper.h
+> index 528dfb5e25fc..ea99b0b90674 100644
+> --- a/include/drm/display/drm_dsc_helper.h
+> +++ b/include/drm/display/drm_dsc_helper.h
+> @@ -21,6 +21,7 @@ void drm_dsc_dp_pps_header_init(struct dp_sdp_header *pps_header);
+>  int drm_dsc_dp_rc_buffer_size(u8 rc_buffer_block_size, u8 rc_buffer_size);
+>  void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_sdp,
+>  			      const struct drm_dsc_config *dsc_cfg);
+> +void drm_dsc_set_const_params(struct drm_dsc_config *vdsc_cfg);
+>  void drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg);
+>  int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg, enum drm_dsc_params_kind kind);
 
-Does not seem to have any adverse effects on at least SM8250.
+Dmitry changed this to `type` in "drm/i915: move DSC RC tables to
+drm_dsc_helper.c" v6/7, hope that's not going to give context conflicts
+on a strict apply/merge.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/media/platform/qcom/venus/hfi_venus.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+- Marijn
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index 105d49fb72be..9a8aa3d8e0f3 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -462,7 +462,8 @@ static int venus_boot_core(struct venus_hfi_device *hdev)
- 	}
- 
- 	writel(mask_val, wrapper_base + WRAPPER_INTR_MASK);
--	writel(1, cpu_cs_base + CPU_CS_SCIACMDARG3);
-+	if (IS_V1(hdev->core))
-+		writel(1, cpu_cs_base + CPU_CS_SCIACMDARG3);
- 
- 	writel(BIT(VIDC_CTRL_INIT_CTRL_SHIFT), cpu_cs_base + VIDC_CTRL_INIT);
- 	while (!ctrl_status && count < max_tries) {
-
--- 
-2.40.1
-
+>  int drm_dsc_compute_rc_parameters(struct drm_dsc_config *vdsc_cfg);
+> 
+> -- 
+> 2.40.1
+> 
