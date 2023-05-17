@@ -2,66 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3D2B706AED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 16:19:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D31C706AF6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 16:21:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231591AbjEQOSm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 10:18:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44654 "EHLO
+        id S230221AbjEQOVB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 10:21:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231449AbjEQOSl (ORCPT
+        with ESMTP id S231222AbjEQOU7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 10:18:41 -0400
-Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com [IPv6:2607:f8b0:4864:20::f34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8F225FDA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 07:18:35 -0700 (PDT)
-Received: by mail-qv1-xf34.google.com with SMTP id 6a1803df08f44-61b5a653df7so6817016d6.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 07:18:35 -0700 (PDT)
+        Wed, 17 May 2023 10:20:59 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4AE610D4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 07:20:55 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id d2e1a72fcca58-643bb9cdd6eso817152b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 07:20:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1684333113; x=1686925113;
+        d=chromium.org; s=google; t=1684333254; x=1686925254;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PeihledOH06fF9rXlghvkbkJKeeeuSIzbFVA64CPmJo=;
-        b=BJhF72OgxhA9w3gBY1guoV959YY4b6jgV78Tac/3G6eOxbRWJ7ICg7D2u+p4Yzqp9Y
-         ubxGJ0Ped7udr+Dubp4BEg6gZPHQqLg17dT+HAfGhFygU+HV2PjrohHQmtBG2n5fjcDr
-         59/5XG0QVYs36f7QdVwQIBWVREzsqq3Mzjx4E=
+        bh=DVbyxkleaOeqg6x7EeLWzwlHXoN22FqfQL6T24R3rHU=;
+        b=JwKiMTj2ld2/EHyOOXs0nrGZ4xqAnVoejr6abI4OYcak3aBe18Rupk2empr2xwj/iX
+         AALbx/I8CVbYaxj4tYN2mpdM/rBh6H6A7h5PDEjVzk8jmSMyJ8+PfLlklA138Zk/sTwT
+         jK63e8sqiw2Q5QLp4dKPvtWL4Pa12DH8TSOgQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684333113; x=1686925113;
+        d=1e100.net; s=20221208; t=1684333254; x=1686925254;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PeihledOH06fF9rXlghvkbkJKeeeuSIzbFVA64CPmJo=;
-        b=JgMMu3Z2idFBsn+BUAP7y8VIrYCs+rSFeqPPuaNiE5T9u6zQlgWbOdP1QLcOvY/TA6
-         ptyhGAGyI/spoT5DEnfsZ/zDjKlmVAIIWDDFwSW6S8LB1afmhq5g+Z8t1QIMZ5rMpkxY
-         TQ8xezIiCohdUOj1yElrVggnjl/7VkezRvXiIGHMfLSxHmyVVEPYGaKIybrwhqsgmB8e
-         4vhhDs/ORBmfoOTOCig83i/kdc8cI7Ox9OPKWeywEI7/tixybIF6h95uy6dbgUhsP9V9
-         joNtW11vX2K5i0oWXt/VpZQtMp9pFktKEB3yk0sS2aTPYa12PDdNtbZWb4qZOFloM/+E
-         hU2w==
-X-Gm-Message-State: AC+VfDxhX3vXXPRoZoyoheRnTjbyReQLG28yvyHIMr4138Gk6C5J7wDE
-        y3bwg/6LlnPvcPf4cL8rAILDWx4msqzlyqLcibk=
-X-Google-Smtp-Source: ACHHUZ73vN4mRhxY4JpW8LrCok2Iwhu/YTRPcegqmxcnrdOE34HiMevl4UgeQwOnGGFqo1d94YIfZw==
-X-Received: by 2002:ad4:5ecf:0:b0:61b:5c2a:f299 with SMTP id jm15-20020ad45ecf000000b0061b5c2af299mr70112417qvb.21.1684333113102;
-        Wed, 17 May 2023 07:18:33 -0700 (PDT)
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com. [209.85.160.172])
-        by smtp.gmail.com with ESMTPSA id f3-20020a0caa83000000b0061b745ebb78sm6376191qvb.110.2023.05.17.07.18.30
+        bh=DVbyxkleaOeqg6x7EeLWzwlHXoN22FqfQL6T24R3rHU=;
+        b=WqGTJndnbbf/SKle0ftuBhOssfQhRN/k9ykow08G6PdF5SuFc7JezEFZCKfWFRXYeS
+         AbNsS3H7nRzAh4qyE7bHc8x1ufmxc599+BUGcRn0FNsnIV3FcBgonX7sUQs4h2bt5NTo
+         Bejd3qfw1Q2Nl2Z/LaZp77ZZHtc5Ev+daY9EyFABqqjJetH5yVfSvO1S2ITzJak7Rabb
+         JJ35T5wzEw+lz3N4eeECdP4wg0L8h56OLWK6Uuv9Ph/QWkUwh7JxybBydbdl6crC9Jub
+         E0g9eLu3xce5wGB4AeyhZmJC5OTmW6aAscCN89pMaPgG69J8Fo9tmZ01lk4agLQMEM3r
+         v+5g==
+X-Gm-Message-State: AC+VfDwgBn92M03D5JmgPvyGAh/eL3UGZwuUpDoQcsA5LSJA3n1MKW1m
+        bEL3B/cfPhyIUO2If1p5UO5Q3BA/o7sB9XwTJuE=
+X-Google-Smtp-Source: ACHHUZ503+RS8g+H3PWgB6nWg3lkjfO+pO0I/UFWiGvmWOwk6MsDq6LlStlcJebd76Vb+iJwC6veXw==
+X-Received: by 2002:a05:6a21:6d9a:b0:104:4558:b412 with SMTP id wl26-20020a056a216d9a00b001044558b412mr25128951pzb.25.1684333254206;
+        Wed, 17 May 2023 07:20:54 -0700 (PDT)
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com. [209.85.214.180])
+        by smtp.gmail.com with ESMTPSA id k3-20020aa790c3000000b00640f1e4a811sm15300471pfk.22.2023.05.17.07.20.53
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 May 2023 07:18:31 -0700 (PDT)
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-3f396606ab0so187131cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 07:18:30 -0700 (PDT)
-X-Received: by 2002:a05:622a:1892:b0:3ef:a55:7f39 with SMTP id
- v18-20020a05622a189200b003ef0a557f39mr358230qtc.12.1684333109945; Wed, 17 May
- 2023 07:18:29 -0700 (PDT)
+        Wed, 17 May 2023 07:20:53 -0700 (PDT)
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-1ac65ab7432so175495ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 07:20:53 -0700 (PDT)
+X-Received: by 2002:a17:902:ea06:b0:1aa:ea22:8043 with SMTP id
+ s6-20020a170902ea0600b001aaea228043mr299829plg.7.1684333252521; Wed, 17 May
+ 2023 07:20:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <1684325894-30252-1-git-send-email-quic_vnivarth@quicinc.com> <1684325894-30252-2-git-send-email-quic_vnivarth@quicinc.com>
-In-Reply-To: <1684325894-30252-2-git-send-email-quic_vnivarth@quicinc.com>
+References: <1684325894-30252-1-git-send-email-quic_vnivarth@quicinc.com> <1684325894-30252-3-git-send-email-quic_vnivarth@quicinc.com>
+In-Reply-To: <1684325894-30252-3-git-send-email-quic_vnivarth@quicinc.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 17 May 2023 07:18:17 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Xbx9h3B1u5NcK7XeEKWC30pn=AWYToqYbAs+oNrV+7Ww@mail.gmail.com>
-Message-ID: <CAD=FV=Xbx9h3B1u5NcK7XeEKWC30pn=AWYToqYbAs+oNrV+7Ww@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] soc: qcom: geni-se: Add interfaces
- geni_se_tx_init_dma() and geni_se_rx_init_dma()
+Date:   Wed, 17 May 2023 07:20:40 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Wi9d0W5pRs9gGGDtjPPNfC5L0wL9YCpfDtFKyQyCONPg@mail.gmail.com>
+Message-ID: <CAD=FV=Wi9d0W5pRs9gGGDtjPPNfC5L0wL9YCpfDtFKyQyCONPg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] spi: spi-geni-qcom: Do not do DMA map/unmap inside
+ driver, use framework instead
 To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         broonie@kernel.org, linux-arm-msm@vger.kernel.org,
@@ -73,7 +73,7 @@ Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,21 +85,36 @@ Hi,
 On Wed, May 17, 2023 at 5:18=E2=80=AFAM Vijaya Krishna Nivarthi
 <quic_vnivarth@quicinc.com> wrote:
 >
-> The geni_se_xx_dma_prep() interfaces necessarily do DMA mapping before
-> initiating DMA transfers. This is not suitable for spi where framework
-> is expected to handle map/unmap.
+> The spi geni driver in SE DMA mode, unlike GSI DMA, is not making use of
+> DMA mapping functionality available in the framework.
+> The driver does mapping internally which makes dma buffer fields availabl=
+e
+> in spi_transfer struct superfluous while requiring additional members in
+> spi_geni_master struct.
 >
-> Expose new interfaces geni_se_xx_init_dma() which do only DMA transfer.
+> Conform to the design by having framework handle map/unmap and do only
+> DMA transfer in the driver; this also simplifies code a bit.
 >
+> Fixes: e5f0dfa78ac7 ("spi: spi-geni-qcom: Add support for SE DMA mode")
+
+I'm not 100% sure I'd tag it as a fix. It's certainly a cleanup that
+was asked for when thuat patch was landed, but technically it doesn't
+fix any known problems. In any case, I'll leave it to Mark to decide
+if he's happy with the fixes tag and to remove it if he sees fit. IMO
+no need to re-post the patch either way.
+
+
+> Suggested-by: Douglas Anderson <dianders@chromium.org>
 > Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
 > ---
 > v1 -> v2:
-> - interfaces to take dma address as argument instead of its pointer
+> - pass dma address to new geni interfaces instead of pointer
+> - set max_dma_len as per HPG
+> - remove expendable local variables
 > ---
->  drivers/soc/qcom/qcom-geni-se.c  | 67 +++++++++++++++++++++++++++++-----=
+>  drivers/spi/spi-geni-qcom.c | 103 +++++++++++++++++++++-----------------=
 ------
->  include/linux/soc/qcom/geni-se.h |  4 +++
->  2 files changed, 53 insertions(+), 18 deletions(-)
+>  1 file changed, 50 insertions(+), 53 deletions(-)
 
 Mark and Bjorn will have to coordinate how they want to land this,
 since normally patch #1 would go through the Qualcomm tree and patch
