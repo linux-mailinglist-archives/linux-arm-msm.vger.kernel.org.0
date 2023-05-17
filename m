@@ -2,424 +2,255 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 66C55705DD1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 05:11:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D874705DD6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 05:14:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232414AbjEQDLz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 23:11:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48018 "EHLO
+        id S229533AbjEQDO3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 23:14:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232447AbjEQDLW (ORCPT
+        with ESMTP id S231517AbjEQDO1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 23:11:22 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51BD51BF6;
-        Tue, 16 May 2023 20:11:15 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34H2qki3031180;
-        Wed, 17 May 2023 03:11:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ZfZldtV00oMqJfRNaBglSCNdTe6CxYY9T6fSsvVe/eo=;
- b=ckYlXMUxLVAzlK7d2LJz0y6MPOnb3XAcQJwn71D6npszIKec4pQOwNN9XkOIgGdU4R8m
- zXmI+A/bzxpF/QPP3saMEzjn6fRr3Dn6fP09gYGB7Kaxzm6LiJafksWnvFDosce5MvV3
- zxsbeIdrqP/hDh6AngZKJ98l78T7GvZibI2Y7sT6Lt0L7f0rCfyL0lgn+5A+nsbOGlxz
- iPXlECKTU7ERY0YSUTKqFW5lbwFxhNudln8WpsWgiEFn5WAFX+jKvLT0OLQ0Dqnegd0g
- Bv6o/Zis72CFj73+2LSNV3Oqyv7lor6q/SaQQ7Oj1uAbqzV8NVIX4C3ECtKNBtSPl+Pi Sg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qmbk79ceg-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 17 May 2023 03:11:03 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34H3Asx9007178
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 17 May 2023 03:10:54 GMT
-Received: from [10.216.35.75] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 16 May
- 2023 20:10:48 -0700
-Message-ID: <cacc5813-404a-c2ef-e768-20f2acd696d9@quicinc.com>
-Date:   Wed, 17 May 2023 08:40:45 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v8 3/9] usb: dwc3: core: Access XHCI address space
- temporarily to read port info
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-To:     Johan Hovold <johan@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_wcheng@quicinc.com>,
-        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
-        <ahalaney@redhat.com>
-References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-4-quic_kriskura@quicinc.com>
- <ZGNy6FvVrBjYmorz@hovoldconsulting.com>
- <b2954b92-8b12-700a-af50-b914af7b0ace@quicinc.com>
+        Tue, 16 May 2023 23:14:27 -0400
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F3F1510C6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 20:14:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1684293264; x=1715829264;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=lm5tv/p1ymnr5FikxNCWGCuw4zPIhxip021aWj+PSFE=;
+  b=M9Xa2viGd4/+Uh3g5qnavNUOYoI4k9xPQjsc+Dh/1XdkzDF7b/9t9STy
+   PMiVr+6UZwXvpT/8dccKxgS5k6/Xoar3j0kEn81H3fJaeVynZpSoyJdsX
+   L5S7EJC0nXN/FEw4vKb5qOrXrV+yq5VxsYQXUkaE/B3WW0QPJe55NACLi
+   zcwgKjVmC3CO1/ERjEh/7lyd6/rfoWNLEXFBL4NHel+yzTIRAHlS2l0UZ
+   709K+kWcoaZ9rBmoIQSqchNZ8RGhycixQoc+nmalwNjAacA5IuAqlWS5l
+   pqJQywZfGQffP2fxuDgirrimv+C20x87uXgoeF/GFUEsnZpb7f8036Bzc
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10712"; a="331264652"
+X-IronPort-AV: E=Sophos;i="5.99,280,1677571200"; 
+   d="scan'208";a="331264652"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 May 2023 20:14:18 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10712"; a="771304130"
+X-IronPort-AV: E=Sophos;i="5.99,280,1677571200"; 
+   d="scan'208";a="771304130"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+  by fmsmga004.fm.intel.com with ESMTP; 16 May 2023 20:14:18 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.23; Tue, 16 May 2023 20:14:18 -0700
+Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.23; Tue, 16 May 2023 20:14:17 -0700
+Received: from fmsedg601.ED.cps.intel.com (10.1.192.135) by
+ fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.23 via Frontend Transport; Tue, 16 May 2023 20:14:17 -0700
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (104.47.55.171)
+ by edgegateway.intel.com (192.55.55.70) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.23; Tue, 16 May 2023 20:14:17 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=DeGTij/g0njtzSbDEKiAy2+WH2pfOdBYTxqtJdZIL9mPUsg1K9pXYpRtXWMVZMipablPXceXHCU5MUNZV297W9LOdXsnXgA4XNlKH+MERHW4SMERKOF/bsOra6BBSYRavXfKms8qadjRDwsrwHDA7PFs8nF4Y72XZa6HNUxVcBGCmSdesj6XkkZSBvswMQhgo7BGKmOvxvJwc+Q7pglIFUx70Y7TrdlSwyyBB2o3C0AG2XHdX+etmQiSfmn0VKJiRz6VqGtUSyTrnQC2Taux518lKJrEpSoc1Y1RpIzyCogiDd4VPsKWxK55vLMjC/6t905ctYnWlRovbaVqIQEUfA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lm5tv/p1ymnr5FikxNCWGCuw4zPIhxip021aWj+PSFE=;
+ b=bu/fpFDyYsBAXeUgx1c1dkJ0xFdMu7wWrV9snb542JgGubDDedT8141AiYtmIvdPhuC2y7YqcnP5W/Mi31qhNeFkibpu28p44/qBMq3QeDjL4F5NHadkWGN2k50mmgHKrOo8s7ftRWtAA9CoEfXfYrypOE9MY+sIw1vWStxAfMUEKa5HWaSCJrqYnVS7DHvLf0v/Uy3pqa+13U93rY0JjlIWgi9chm2RMoG8jtuFiaUtETNbK1KyoIX5MwuTe+tqmkKHXnfJFefWvGJgCUiKU9/I1PDQv7bY5xBMWFF/mEwV4jrVEfQBrtUxiqYuUc3279stXZLa27JJ1yZjhW0XwQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from SN7PR11MB6750.namprd11.prod.outlook.com (2603:10b6:806:266::21)
+ by SA1PR11MB7109.namprd11.prod.outlook.com (2603:10b6:806:2ba::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6387.33; Wed, 17 May
+ 2023 03:14:10 +0000
+Received: from SN7PR11MB6750.namprd11.prod.outlook.com
+ ([fe80::3c34:3b9d:4abf:d93c]) by SN7PR11MB6750.namprd11.prod.outlook.com
+ ([fe80::3c34:3b9d:4abf:d93c%3]) with mapi id 15.20.6387.030; Wed, 17 May 2023
+ 03:14:10 +0000
+From:   "Kandpal, Suraj" <suraj.kandpal@intel.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        "Vivi, Rodrigo" <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
+        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        =?utf-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
+Subject: RE: [Freedreno] [PATCH v5 6/8] drm/display/dsc: split DSC 1.2 and DSC
+ 1.1 (pre-SCR) parameters
+Thread-Topic: [Freedreno] [PATCH v5 6/8] drm/display/dsc: split DSC 1.2 and
+ DSC 1.1 (pre-SCR) parameters
+Thread-Index: AQHZfp4YcDsmrD/BuE6hnamqa8oWkK9dTRCggABbqICAADTTIA==
+Date:   Wed, 17 May 2023 03:14:10 +0000
+Message-ID: <SN7PR11MB6750C44FC84BA19033B720DAE37E9@SN7PR11MB6750.namprd11.prod.outlook.com>
+References: <20230504153511.4007320-1-dmitry.baryshkov@linaro.org>
+ <20230504153511.4007320-7-dmitry.baryshkov@linaro.org>
+ <SN7PR11MB6750F3758BA9B176904C449BE3799@SN7PR11MB6750.namprd11.prod.outlook.com>
+ <12082d1c-4ff2-5ca6-fdaa-2fad6bd06e84@linaro.org>
+In-Reply-To: <12082d1c-4ff2-5ca6-fdaa-2fad6bd06e84@linaro.org>
+Accept-Language: en-US
 Content-Language: en-US
-In-Reply-To: <b2954b92-8b12-700a-af50-b914af7b0ace@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BVyr8UUyyVeryjXvGK61Tlq_KYVW82Zl
-X-Proofpoint-ORIG-GUID: BVyr8UUyyVeryjXvGK61Tlq_KYVW82Zl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-16_14,2023-05-16_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- adultscore=0 priorityscore=1501 mlxlogscore=999 bulkscore=0 suspectscore=0
- impostorscore=0 phishscore=0 lowpriorityscore=0 mlxscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
- definitions=main-2305170025
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SN7PR11MB6750:EE_|SA1PR11MB7109:EE_
+x-ms-office365-filtering-correlation-id: 9ee2697c-5d23-4486-341c-08db5684c86e
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: tDEL5590D6KxA8vx0mwKslzml6EVm965ZRa2Kq5xz85Iz2+YdYBc57Scx3QXY8kKA6f1bBw9FSO1Xev+cOiYv/VvQW5jrwuQ9HDyXr0Xi/GLUQmyPicFEKDgFknJ3yo3F+L+Rrmn7Sa0P2jntbqDRcmyCLLZ6Pam8cXh/l7OVJcSI8LTnJw9Vt3vZqkNgPcrAGtzuqq+//pwFUU/eO/wakgslHL7A+dC60N4o5BONS7wBQ1bNEHyLAu3kXSFD6I5oSgH/IikzVs2EYX+DcIgVMSRlGjWjKbCtzV97X5pVAZBIADCZo+F3aQonFKQutRSeby/OaonD78J4Qgm9b42Qa6xwwZfJsHqNEuICIGzBr8MjvcNOFlLSBGkSLkDl1/RDqt+I04hYlBNW+rvLVpiBmCVXPLvfdCKLO02Oww/zUxz9dlTY1Zq/VIX8yM66SKg9Ahk5Xf8FPgt0+OGBG1VOylntPYkwodfkoDU0Bxzxli5m/E9sjaI6VaBP5Ip8Sm/iAYKslj1aXPLlmM+q6M4dfJ2IRj/kRr9AyNBWHYpnT+1LKsdzMfAcvmWNV24niiesVfgEd+yKhcJeFEVdrqrvVi5gFL39NYnN9wIA2qUeSnwXiqcJ7Hf9cbiAmlurSbT
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN7PR11MB6750.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(39860400002)(366004)(136003)(396003)(346002)(376002)(451199021)(33656002)(7696005)(38070700005)(55016003)(66574015)(83380400001)(122000001)(53546011)(9686003)(38100700002)(26005)(6506007)(921005)(186003)(82960400001)(86362001)(110136005)(54906003)(7416002)(52536014)(2906002)(41300700001)(8676002)(5660300002)(316002)(8936002)(4326008)(64756008)(76116006)(66556008)(66446008)(66476007)(66946007)(71200400001)(478600001);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?NDFORWQ0NGFqNjJxL3ViN094Yll1VVc1ZkdkRllwL3lteGJTVUpFVTc3N2Vp?=
+ =?utf-8?B?TENxWGNSMi96dC9tVmRJSjF3cjN2dm9SNFVIaXZiS09ENGxoSDRHVkRKUFRa?=
+ =?utf-8?B?N3JrN0NMMjNkbTEyVWZLZVdvMEorSVFBMUpXR1B1ZFplbHA4MUYyVnc5K3FU?=
+ =?utf-8?B?Q2Z0ZWF3SldVS0FnOU00YmtZRGI3c29KaXVMMzR1NFhBUkpHK2JqNEhhdE56?=
+ =?utf-8?B?dWZIQTM4cm5tQXJ4NnNCeXlyTkNrbkhLZU1XVUpWeUU4QUR6czZzelRKdnJ6?=
+ =?utf-8?B?TTBZUmI2NHgvcDFpd1UwTGJSV2xXK0VtN3F6V2lBQTVJRjhTVUtCUVlES00z?=
+ =?utf-8?B?K3V5QzdLSmRLYmR6U0gzRXRJd0lBT3hHWGlQRUlEL1lQU0xSNU8xUmg0UnpK?=
+ =?utf-8?B?SDdpanp5U1dieGEvVWN6YklXbys5Wlh4Ymc1NDA5ZkFOSWR5Y29sLzlzZElT?=
+ =?utf-8?B?UUhrM2htVWZUeThxUndLcTJ6STlweTlSMVJmdG9jYnNPYW5pM1o4MHdTUjFN?=
+ =?utf-8?B?YzJ1ZzFndHRvaDEyVWFCTCtVM3dsYit0R1MxeXpnOGRzMzZnbXdLL1FZaHkw?=
+ =?utf-8?B?VU0yTkRWOC82QldNdUFyR1ZqR1RoTHFkS01oQjdrUllJZFhhVml2eXhEM0tm?=
+ =?utf-8?B?N0M0RmZ3TmpKODN4cWRwY29DR0xIUWo5VGNaOUN2RitBMkwyZEV3bjhzRU56?=
+ =?utf-8?B?T2NmMExSR2NWd0tGWEdOQ0s0cnRZTG1SVkpUM20xTFhxTFl6RTJEWmRqTVNB?=
+ =?utf-8?B?OGx3NEoxSVcyREowalhZdDRuWUdvVjM0NDJySXRQUHJva0VIS2VpejdlSmV0?=
+ =?utf-8?B?Tk1ybmZkUGxOS2VEM2hJaFVyNXRTV1JBNjUrbGFjTzFUbU9GUDBTblFYdUl2?=
+ =?utf-8?B?S0hzWTRKVytXTHVGdWp6ci9rZDJwVGsrZWRGQ0lDQlgyVFRXbmxaNThZUkJr?=
+ =?utf-8?B?OGVhTXIyd0dFbTNxa1dLZjMySUExMkhXKzVvR09nR2IxMU11RTZEZkZyM2tt?=
+ =?utf-8?B?Qit6SVA2b2d2SEJDc2xpVFhzZFZrK0VtVE0yV1BEREt1Z0lEZ2xKNEtxRzM0?=
+ =?utf-8?B?eU1Jd0VXUzhSa2ZWQzEwY3g0UWNoQWZCNGRxNmdGdXNmcm1zbExjVmsxVHlh?=
+ =?utf-8?B?OVh1VTJUTlJHM2RxNDRzZWgvTnJDdnZGUFRlWmJsYjlPSGVlTitSaCtucStn?=
+ =?utf-8?B?TlNQa2QwQVNCK3RuMHB3ZVdZbnQ1TmpMT1NaVVE3VzNMYjg1K3RPOVZVN1FW?=
+ =?utf-8?B?SGlsejlqUG1FU2s1WmtyeXNJa0FwbmYvRXFUc2xkbEY4Y0tXOWJVSEFTYmpP?=
+ =?utf-8?B?bExDbTlvT01FQ2FaSmt4NzZaQnozTXZPeXRGSitvL1RYSHdtU0xDak1KUDUx?=
+ =?utf-8?B?RExObUtDaGxmckQrVUxHNjMvSkNMSmYvcTk1ZmVodFlteUVuUGptWkZqcFUx?=
+ =?utf-8?B?Tm83YUJXUzJrMFBydXRwZTBHQ0U4OXRmU3pkZVFHQk1VbWdUWHJxZHdOUFQ3?=
+ =?utf-8?B?TkJNejAraUo1Wm5wYXZMOVRTT01hOFd2K0hKMjU3YVAwcjg4Q1ZQcC9PMHVO?=
+ =?utf-8?B?ZTBvTWZoazM2ZUE4OERyV0VneE1EWXVKby9ydE5lbFpsMEU5bUhSY2hHN0U2?=
+ =?utf-8?B?MGlDVkFwT1hBQWpsbkgrNjVNV1NxaVlia3FTMlJWYWlzOWdoei9NZFpuQjNa?=
+ =?utf-8?B?a0ZDcDYxUSswSTh5Z3VTTVJTeTB1bWNCbWwrMkl4WHlMcnlhRG5YTngrMXhj?=
+ =?utf-8?B?ekdVUXNPWk1vVDZkdGh2S1ZsZlZ2S2dwaDlDZFd4Z3RxYlNrampNWk80Zk0x?=
+ =?utf-8?B?YUdhWEtPclVOL0xIaENBNWZPc2FvcGJIaDdWb3RLUUJCVnNkcGtZK0dtTTY3?=
+ =?utf-8?B?MzVjb3BLU2w3ajlvYnpnRExaYWI0YnRSYXJIeWZBQ1ZMdm1MSTg2WlRtMXdY?=
+ =?utf-8?B?ZFFqb2dRbytFVFJMbURDdkk5T2Y3WTlxaXVzL3VaeXY2OE5PdWtqVTY0Ti9D?=
+ =?utf-8?B?bWxDSUdCNnc5aHEwNTJDaDQveFJPSzRlTDVxWDNKWUNrUjQxbS8xWVVQLzZQ?=
+ =?utf-8?B?dllLQ2pUSDRodWo1MVBEcDY1dFRnT0ZNMU9SVkx6TU9uZ0lONHFCa25SUXpl?=
+ =?utf-8?Q?xViXm1ISrFKs1yfDVqvC6cfRy?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SN7PR11MB6750.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9ee2697c-5d23-4486-341c-08db5684c86e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 May 2023 03:14:10.1251
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: nLrI4uJNbOiKxA9x+CN8UAZYbpB4jDbR99jmRJiq1ZrkF6QCEtjW7vNGwHOF8/kcX/I4GOCger/egMAa2U5a/g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB7109
+X-OriginatorOrg: intel.com
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/16/2023 8:32 PM, Krishna Kurapati PSSNV wrote:
-> 
-> 
-> On 5/16/2023 5:41 PM, Johan Hovold wrote:
->> On Sun, May 14, 2023 at 11:19:11AM +0530, Krishna Kurapati wrote:
->>> Currently host-only capable DWC3 controllers support Multiport.
->>> Temporarily map XHCI address space for host-only controllers and parse
->>> XHCI Extended Capabilities registers to read number of usb2 ports and
->>> usb3 ports present on multiport controller. Each USB Port is at least HS
->>> capable.
->>>
->>> The port info for usb2 and usb3 phy are identified as num_usb2_ports
->>> and num_usb3_ports. The intention is as follows:
->>>
->>> Wherever we need to perform phy operations like:
->>>
->>> LOOP_OVER_NUMBER_OF_AVAILABLE_PORTS()
->>> {
->>>     phy_set_mode(dwc->usb2_generic_phy[i], PHY_MODE_USB_HOST);
->>>     phy_set_mode(dwc->usb3_generic_phy[i], PHY_MODE_USB_HOST);
->>> }
->>>
->>> If number of usb2 ports is 3, loop can go from index 0-2 for
->>> usb2_generic_phy. If number of usb3-ports is 2, we don't know for sure,
->>> if the first 2 ports are SS capable or some other ports like (2 and 3)
->>> are SS capable. So instead, num_usb2_ports is used to loop around all
->>> phy's (both hs and ss) for performing phy operations. If any
->>> usb3_generic_phy turns out to be NULL, phy operation just bails out.
->>>
->>> num_usb3_ports is used to modify GUSB3PIPECTL registers while setting up
->>> phy's as we need to know how many SS capable ports are there for this.
->>>
->>> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
->>> ---
->>>   drivers/usb/dwc3/core.c | 113 ++++++++++++++++++++++++++++++++++++++++
->>>   drivers/usb/dwc3/core.h |  17 +++++-
->>>   2 files changed, 129 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
->>> index 0beaab932e7d..e983aef1fb93 100644
->>> --- a/drivers/usb/dwc3/core.c
->>> +++ b/drivers/usb/dwc3/core.c
->>> @@ -1767,6 +1767,104 @@ static int dwc3_get_clocks(struct dwc3 *dwc)
->>>       return 0;
->>>   }
->>> +/**
->>> + * dwc3_xhci_find_next_ext_cap - Find the offset of the extended 
->>> capabilities
->>> + *                    with capability ID id.
->>> + *
->>> + * @base:    PCI MMIO registers base address.
->>> + * @start:    address at which to start looking, (0 or HCC_PARAMS to 
->>> start at
->>> + *        beginning of list)
->>> + * @id:        Extended capability ID to search for, or 0 for the next
->>> + *        capability
->>> + *
->>> + * Returns the offset of the next matching extended capability 
->>> structure.
->>> + * Some capabilities can occur several times, e.g., the 
->>> XHCI_EXT_CAPS_PROTOCOL,
->>> + * and this provides a way to find them all.
->>> + */
->>> +static int dwc3_xhci_find_next_ext_cap(void __iomem *base, u32 
->>> start, int id)
->>> +{
->>> +    u32 val;
->>> +    u32 next;
->>> +    u32 offset;
->>> +
->>> +    offset = start;
->>> +    if (!start || start == XHCI_HCC_PARAMS_OFFSET) {
->>> +        val = readl(base + XHCI_HCC_PARAMS_OFFSET);
->>> +        if (val == ~0)
->>> +            return 0;
->>> +        offset = XHCI_HCC_EXT_CAPS(val) << 2;
->>> +        if (!offset)
->>> +            return 0;
->>> +    }
->>> +    do {
->>> +        val = readl(base + offset);
->>> +        if (val == ~0)
->>> +            return 0;
->>> +        if (offset != start && (id == 0 || XHCI_EXT_CAPS_ID(val) == 
->>> id))
->>> +            return offset;
->>> +
->>> +        next = XHCI_EXT_CAPS_NEXT(val);
->>> +        offset += next << 2;
->>> +    } while (next);
->>> +
->>> +    return 0;
->>> +}
->>
->> You should not make another copy of xhci_find_next_ext_cap(), but rather
->> use it directly.
->>
->> We already have drivers outside of usb/host using this function so it
->> should be fine to do the same for now:
->>
->>     #include "../host/xhci-ext-caps.h"
->>
-> Hi Johan,
-> 
->    This was the approach which we followed when we first introduced the 
-> patch [1]. But Thinh suggested to duplicate code so that we can avoid 
-> any dependency on xhci (which seems to be right). So since its just one 
-> function, I duplicated it here.
-> 
-Hi Thinh,
-
-   Would like to know your opinion here on how to proceed further.
-
-Regards,
-Krishna,
-> 
->>> +static int dwc3_read_port_info(struct dwc3 *dwc)
->>> +{
->>> +    void __iomem        *regs;
->>
->> Call this one 'base' instead.
->>
->>> +    u32            offset;
->>> +    u32            temp;
->>
->> I see that the xhci driver use 'temp' for this, but I'd prefer 'val'.
->>
->>> +    u8            major_revision;
->>> +    int            ret = 0;
->>> +
->>> +    /*
->>> +     * Remap xHCI address space to access XHCI ext cap regs,
->>> +     * since it is needed to get port info.
->>> +     */
->>> +    regs = ioremap(dwc->xhci_resources[0].start,
->>> +                resource_size(&dwc->xhci_resources[0]));
->>> +    if (IS_ERR(regs))
->>> +        return PTR_ERR(regs);
->>> +
->>> +    offset = dwc3_xhci_find_next_ext_cap(regs, 0,
->>> +                    XHCI_EXT_CAPS_PROTOCOL);
->>> +    while (offset) {
->>
->> This would be better implemented as a do-while loop (cf.
->> xdbc_reset_debug_port()).
->>
->>> +        temp = readl(regs + offset);
->>> +        major_revision = XHCI_EXT_PORT_MAJOR(temp);
->>> +
->>> +        temp = readl(regs + offset + 0x08);
->>
->> We should try to avoid magic constants, but I see that we already have
->> cases accessing these fields like this.
->>
->>> +        if (major_revision == 0x03) {
->>> +            dwc->num_usb3_ports += XHCI_EXT_PORT_COUNT(temp);
->>> +        } else if (major_revision <= 0x02) {
->>> +            dwc->num_usb2_ports += XHCI_EXT_PORT_COUNT(temp);
->>> +        } else {
->>> +            dev_err(dwc->dev,
->>> +                "Unrecognized port major revision %d\n", 
->>> major_revision);
->>
->> Please add a line break after the string.
->>
->> Perhaps this should be handles as in xhci core by simply warning and
->> continuing instead.
->>
-> I broke the loop and went to unmap as we are not sure what values would 
-> be read. Any use of continuing ?
-> 
->>> +            ret = -EINVAL;
->>> +            goto unmap_reg;
->>> +        }
->>> +
->>> +        offset = dwc3_xhci_find_next_ext_cap(regs, offset,
->>> +                        XHCI_EXT_CAPS_PROTOCOL);
->>> +    }
->>> +
->>> +    temp = readl(regs + DWC3_XHCI_HCSPARAMS1);
->>> +    if (HCS_MAX_PORTS(temp) != (dwc->num_usb3_ports + 
->>> dwc->num_usb2_ports)) {
->>> +        dev_err(dwc->dev,
->>> +            "Mismatched reported MAXPORTS (%d)\n", 
->>> HCS_MAX_PORTS(temp));
->>> +        ret = -EINVAL;
->>> +        goto unmap_reg;
->>> +    }
->>
->> Not sure this is needed either.
->>
->> Could this risk regressing platforms which does not have currently have
->> all PHYs described in DT?
->>
-> No, it doesn't. AFAIK, this only tells how many ports are present as per 
-> the core consultant configuration of the device. I tried to explain what 
-> would happen incase phy's are not present in DT in [2] & [3].
-> 
->> You do however need to make sure that both num_usb<n>_ports is no larger
->> than MAX_PORTS_SUPPORTED to avoid memory corruption when you're adding
->> fixed sized arrays for the PHYs later in the series.
->>
->>> +
->>> +    dev_dbg(dwc->dev,
->>> +        "hs-ports: %d ss-ports: %d\n", dwc->num_usb2_ports, 
->>> dwc->num_usb3_ports);
->>
->> Use %u for unsigned values.
->>
->> And please try to stay within 80 columns.
->>
-> Thanks for catching this potential bug. Will add that if check as well 
-> in v9.
-> 
->>> +
->>> +unmap_reg:
->>> +    iounmap(regs);
->>> +    return ret;
->>> +}
->>> +
->>>   static int dwc3_probe(struct platform_device *pdev)
->>>   {
->>>       struct device        *dev = &pdev->dev;
->>> @@ -1774,6 +1872,7 @@ static int dwc3_probe(struct platform_device 
->>> *pdev)
->>>       void __iomem        *regs;
->>>       struct dwc3        *dwc;
->>>       int            ret;
->>> +    unsigned int        hw_mode;
->>>       dwc = devm_kzalloc(dev, sizeof(*dwc), GFP_KERNEL);
->>>       if (!dwc)
->>> @@ -1843,6 +1942,20 @@ static int dwc3_probe(struct platform_device 
->>> *pdev)
->>>               goto err_disable_clks;
->>>       }
->>> +    /*
->>> +     * Currently DWC3 controllers that are host-only capable
->>> +     * support Multiport
->>
->> Are you missing an "only" after "Currently" above?
->> > Please add a full stop.
->>
->>> +     */
->>> +    hw_mode = DWC3_GHWPARAMS0_MODE(dwc->hwparams.hwparams0);
->>> +    if (hw_mode == DWC3_GHWPARAMS0_MODE_HOST) {
->>> +        ret = dwc3_read_port_info(dwc);
->>> +        if (ret)
->>> +            goto err_disable_clks;
->>> +    } else {
->>> +        dwc->num_usb2_ports = 1;
->>> +        dwc->num_usb3_ports = 1;
->>> +    }
->>> +
->>>       spin_lock_init(&dwc->lock);
->>>       mutex_init(&dwc->mutex);
->>> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
->>> index d56457c02996..d3401963bc27 100644
->>> --- a/drivers/usb/dwc3/core.h
->>> +++ b/drivers/usb/dwc3/core.h
->>> @@ -35,6 +35,17 @@
->>>   #define DWC3_MSG_MAX    500
->>> +/* Define XHCI Extcap register offsets for getting multiport info */
->>> +#define XHCI_HCC_PARAMS_OFFSET    0x10
->>> +#define DWC3_XHCI_HCSPARAMS1    0x04
->>> +#define XHCI_EXT_CAPS_PROTOCOL    2
->>> +#define XHCI_HCC_EXT_CAPS(x)    (((x) >> 16) & 0xffff)
->>> +#define XHCI_EXT_CAPS_ID(x)     (((x) >> 0) & 0xff)
->>> +#define XHCI_EXT_CAPS_NEXT(x)   (((x) >> 8) & 0xff)
->>> +#define XHCI_EXT_PORT_MAJOR(x)  (((x) >> 24) & 0xff)
->>> +#define XHCI_EXT_PORT_COUNT(x)  (((x) >> 8) & 0xff)
->>> +#define HCS_MAX_PORTS(x)        (((x) >> 24) & 0x7f)
->>> +
->>
->> You should use the xhci defines instead of these copies too.
->>
->>>   /* Global constants */
->>>   #define DWC3_PULL_UP_TIMEOUT    500    /* ms */
->>>   #define DWC3_BOUNCE_SIZE    1024    /* size of a superspeed bulk */
->>> @@ -1025,6 +1036,8 @@ struct dwc3_scratchpad_array {
->>>    * @usb_psy: pointer to power supply interface.
->>>    * @usb2_phy: pointer to USB2 PHY
->>>    * @usb3_phy: pointer to USB3 PHY
->>> + * @num_usb2_ports: number of usb2 ports.
->>> + * @num_usb3_ports: number of usb3 ports.
->>
->> Use upper case "USBn" and drop the full stops for consistency.
->>
->> Please move these after the PHY structures.
->>
->>>    * @usb2_generic_phy: pointer to USB2 PHY
->>>    * @usb3_generic_phy: pointer to USB3 PHY
->>>    * @phys_ready: flag to indicate that PHYs are ready
->>> @@ -1162,6 +1175,9 @@ struct dwc3 {
->>>       struct usb_phy        *usb2_phy;
->>>       struct usb_phy        *usb3_phy;
->>> +    u8            num_usb2_ports;
->>> +    u8            num_usb3_ports;
->>> +
->>>       struct phy        *usb2_generic_phy;
->>>       struct phy        *usb3_generic_phy;
->>> @@ -1649,5 +1665,4 @@ static inline int dwc3_ulpi_init(struct dwc3 *dwc)
->>>   static inline void dwc3_ulpi_exit(struct dwc3 *dwc)
->>>   { }
->>>   #endif
->>> -
->>
->> This is an unrelated change that should be dropped.
->>
->>>   #endif /* __DRIVERS_USB_DWC3_CORE_H */
->>
->> Johan
-> 
-> [1]: 
-> https://lore.kernel.org/all/20230310163420.7582-3-quic_kriskura@quicinc.com/
-> 
-> [2]: 
-> https://lore.kernel.org/all/4eb26a54-148b-942f-01c6-64e66541de8b@quicinc.com/
-> 
-> [3]: 
-> https://lore.kernel.org/all/966c1001-6d64-9163-0c07-96595156fc8c@quicinc.com/
-> 
-> Thanks for the review and comments 🙂. Will make sure to fix them in v9.
-> 
-> Regards,
-> Krishna,
+DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRG1pdHJ5IEJhcnlzaGtv
+diA8ZG1pdHJ5LmJhcnlzaGtvdkBsaW5hcm8ub3JnPg0KPiBTZW50OiBXZWRuZXNkYXksIE1heSAx
+NywgMjAyMyA1OjMzIEFNDQo+IFRvOiBLYW5kcGFsLCBTdXJhaiA8c3VyYWoua2FuZHBhbEBpbnRl
+bC5jb20+OyBEYXZpZCBBaXJsaWUNCj4gPGFpcmxpZWRAZ21haWwuY29tPjsgRGFuaWVsIFZldHRl
+ciA8ZGFuaWVsQGZmd2xsLmNoPjsgSmFuaSBOaWt1bGENCj4gPGphbmkubmlrdWxhQGxpbnV4Lmlu
+dGVsLmNvbT47IEpvb25hcyBMYWh0aW5lbg0KPiA8am9vbmFzLmxhaHRpbmVuQGxpbnV4LmludGVs
+LmNvbT47IFZpdmksIFJvZHJpZ28gPHJvZHJpZ28udml2aUBpbnRlbC5jb20+Ow0KPiBUdnJ0a28g
+VXJzdWxpbiA8dHZydGtvLnVyc3VsaW5AbGludXguaW50ZWwuY29tPjsgUm9iIENsYXJrDQo+IDxy
+b2JkY2xhcmtAZ21haWwuY29tPjsgQWJoaW5hdiBLdW1hciA8cXVpY19hYmhpbmF2a0BxdWljaW5j
+LmNvbT47DQo+IFNlYW4gUGF1bCA8c2VhbkBwb29ybHkucnVuPjsgTWFyaWpuIFN1aWp0ZW4NCj4g
+PG1hcmlqbi5zdWlqdGVuQHNvbWFpbmxpbmUub3JnPg0KPiBDYzogbGludXgtYXJtLW1zbUB2Z2Vy
+Lmtlcm5lbC5vcmc7IGludGVsLWdmeEBsaXN0cy5mcmVlZGVza3RvcC5vcmc7DQo+IGZyZWVkcmVu
+b0BsaXN0cy5mcmVlZGVza3RvcC5vcmc7IGRyaS1kZXZlbEBsaXN0cy5mcmVlZGVza3RvcC5vcmc7
+IFZpbGxlDQo+IFN5cmrDpGzDpCA8dmlsbGUuc3lyamFsYUBsaW51eC5pbnRlbC5jb20+DQo+IFN1
+YmplY3Q6IFJlOiBbRnJlZWRyZW5vXSBbUEFUQ0ggdjUgNi84XSBkcm0vZGlzcGxheS9kc2M6IHNw
+bGl0IERTQyAxLjIgYW5kDQo+IERTQyAxLjEgKHByZS1TQ1IpIHBhcmFtZXRlcnMNCj4gDQo+IE9u
+IDE2LzA1LzIwMjMgMjE6NDYsIEthbmRwYWwsIFN1cmFqIHdyb3RlOg0KPiA+Pg0KPiA+PiBUaGUg
+YXJyYXkgb2YgcmNfcGFyYW1ldGVycyBjb250YWlucyBhIG1peHR1cmUgb2YgcGFyYW1ldGVycyBm
+cm9tIERTQw0KPiA+PiAxLjEgYW5kIERTQyAxLjIgc3RhbmRhcmRzLiBTcGxpdCB0aGVzZSB0b3cg
+Y29uZmlndXJhdGlvbiBhcnJheXMgaW4NCj4gPj4gcHJlcGFyYXRpb24gdG8gYWRkaW5nIG1vcmUg
+Y29uZmlndXJhdGlvbiBkYXRhLg0KPiA+Pg0KPiA+DQo+ID4gSGkgLA0KPiA+IE5lZWRlZCB0byBh
+ZGQgc29tZSBtb3JlIGNvbW1lbnRzIGFwYXJ0IGZyb20gdGhlIHByZXZpb3VzIG9uZXMNCj4gYWxy
+ZWFkeQ0KPiA+IGdpdmVuDQo+ID4NCj4gDQo+IFtza2lwcGVkXQ0KPiANCj4gDQo+ID4+IGRpZmYg
+LS1naXQgYS9kcml2ZXJzL2dwdS9kcm0vaTkxNS9kaXNwbGF5L2ludGVsX3Zkc2MuYw0KPiA+PiBi
+L2RyaXZlcnMvZ3B1L2RybS9pOTE1L2Rpc3BsYXkvaW50ZWxfdmRzYy5jDQo+ID4+IGluZGV4IGQ0
+MzQwYjE4YzE4ZC4uYmQ5MTE2ZDJjZDc2IDEwMDY0NA0KPiA+PiAtLS0gYS9kcml2ZXJzL2dwdS9k
+cm0vaTkxNS9kaXNwbGF5L2ludGVsX3Zkc2MuYw0KPiA+PiArKysgYi9kcml2ZXJzL2dwdS9kcm0v
+aTkxNS9kaXNwbGF5L2ludGVsX3Zkc2MuYw0KPiA+PiBAQCAtMjI2LDcgKzIyNiwxNSBAQCBpbnQg
+aW50ZWxfZHNjX2NvbXB1dGVfcGFyYW1zKHN0cnVjdA0KPiA+PiBpbnRlbF9jcnRjX3N0YXRlICpw
+aXBlX2NvbmZpZykNCj4gPj4gICAJaWYgKERJU1BMQVlfVkVSKGRldl9wcml2KSA+PSAxMykgew0K
+PiA+PiAgIAkJY2FsY3VsYXRlX3JjX3BhcmFtcyh2ZHNjX2NmZyk7DQo+ID4+ICAgCX0gZWxzZSB7
+DQo+ID4+IC0JCXJldCA9IGRybV9kc2Nfc2V0dXBfcmNfcGFyYW1zKHZkc2NfY2ZnKTsNCj4gPj4g
+KwkJaWYgKChjb21wcmVzc2VkX2JwcCA9PSA4IHx8DQo+ID4+ICsJCSAgICAgY29tcHJlc3NlZF9i
+cHAgPT0gMTIpICYmDQo+ID4+ICsJCSAgICAodmRzY19jZmctPmJpdHNfcGVyX2NvbXBvbmVudCA9
+PSA4IHx8DQo+ID4+ICsJCSAgICAgdmRzY19jZmctPmJpdHNfcGVyX2NvbXBvbmVudCA9PSAxMCB8
+fA0KPiA+PiArCQkgICAgIHZkc2NfY2ZnLT5iaXRzX3Blcl9jb21wb25lbnQgPT0gMTIpKQ0KPiA+
+PiArCQkJcmV0ID0gZHJtX2RzY19zZXR1cF9yY19wYXJhbXModmRzY19jZmcsDQo+ID4+IERSTV9E
+U0NfMV8xX1BSRV9TQ1IpOw0KPiA+PiArCQllbHNlDQo+ID4+ICsJCQlyZXQgPSBkcm1fZHNjX3Nl
+dHVwX3JjX3BhcmFtcyh2ZHNjX2NmZywNCj4gPj4gRFJNX0RTQ18xXzJfNDQ0KTsNCj4gPj4gKw0K
+PiA+DQo+ID4gSSBkbyBub3QgdGhpbmsgdGhpcyBraW5kIG9mIGFzc2lnbm1lbnQgd29ya3MgYXMg
+eW91IHdpbGwgYWxzbyBiZQ0KPiA+IGFkZGluZw0KPiA+IERSTV9EU0NfMV8yXzQyMiBhbmQgRFJN
+X0RTQ18xXzJfNDIwIGluIGZ1cnRoZXIgcGF0Y2hlcyBhbmQgQUZBSUNTDQo+ID4gVGhlcmUgaXMg
+bm8gd2hlcmUgaW4gcGF0Y2ggOCB0aGF0IHlvdSBoYXZlIGFjY291bnRlZCBmb3Igd2hlbiA0MjIg
+b3IgNDIwDQo+IHdpbGwgYmUgdXNlZC4NCj4gPiBNYXliZSB5b3UgY2FuIGFkZCBhbiBpZiBjYXNl
+IGluc2lkZSB0aGUgZWxzZSBibG9jayB0byBjaGVjaw0KPiA+IHBpcGVfY29uZmlnLT5vdXRwdXRf
+Zm9ybWF0IHRvIHBhc3MgdGhlIHJjX3BhcmFtX2RhdGEgaW4gcGF0Y2ggOA0KPiANCj4gSSBkb24n
+dCB0aGluayB0aGlzIGlzIG5lY2Vzc2FyeSBmb3Igbm93LiBUaGUgZHJpdmVyIGRvZXNuJ3Qgc3Vw
+cG9ydCBZVVYgNDIyLg0KPiBUaGUgWVVWIDQyMCBpcyBzdXBwb3J0ZWQgb25seSBmb3IgRElTUExB
+WV9WRVIoZGV2X3ByaXYpID49IDE0LCBob3dldmVyDQo+IHRoZXNlIGhlbHBlcnMgYXJlIG9ubHkg
+dXNlZCBmb3IgRElTUExBWV9WRVIoZGV2X3ByaXYpIDwgMTMuDQo+IA0KPiBJIGRpZCBub3QgbW92
+ZSBSQyBjYWxjdWxhdGlvbiB0byBkcm1fZHNjX2hlbHBlcnMuYyAoeWV0ID8pLCB3aGljaCBpcyB1
+c2VkIGZvcg0KPiBESVNQTEFZX1ZFUiA+PSAxMy4NCg0KSG1tLiBJIHNlZSBJJ2xsIHdvcmsgb24g
+aXQgb25jZSB0aGlzIHBhdGNoIHNlcmllcyBpcyBtZXJnZWQNCg0KUmVnYXJkcywNClN1cmFqIEth
+bmRwYWwNCj4gDQo+ID4NCj4gPiBSZWdhcmRzLA0KPiA+IFN1cmFqIEthbmRwYWwNCj4gPj4gICAJ
+CWlmIChyZXQpDQo+ID4+ICAgCQkJcmV0dXJuIHJldDsNCj4gPj4NCj4gPj4gZGlmZiAtLWdpdCBh
+L2luY2x1ZGUvZHJtL2Rpc3BsYXkvZHJtX2RzY19oZWxwZXIuaA0KPiA+PiBiL2luY2x1ZGUvZHJt
+L2Rpc3BsYXkvZHJtX2RzY19oZWxwZXIuaA0KPiA+PiBpbmRleCAxNjgxNzkxZjY1YTUuLmM2MzRi
+YjI5MzVkMyAxMDA2NDQNCj4gPj4gLS0tIGEvaW5jbHVkZS9kcm0vZGlzcGxheS9kcm1fZHNjX2hl
+bHBlci5oDQo+ID4+ICsrKyBiL2luY2x1ZGUvZHJtL2Rpc3BsYXkvZHJtX2RzY19oZWxwZXIuaA0K
+PiA+PiBAQCAtMTAsMTIgKzEwLDE3IEBADQo+ID4+DQo+ID4+ICAgI2luY2x1ZGUgPGRybS9kaXNw
+bGF5L2RybV9kc2MuaD4NCj4gPj4NCj4gPj4gK2VudW0gZHJtX2RzY19wYXJhbXNfa2luZCB7DQo+
+ID4+ICsJRFJNX0RTQ18xXzJfNDQ0LA0KPiA+PiArCURSTV9EU0NfMV8xX1BSRV9TQ1IsIC8qIGxl
+Z2FjeSBwYXJhbXMgZnJvbSBEU0MgMS4xICovIH07DQo+ID4+ICsNCj4gPj4gICB2b2lkIGRybV9k
+c2NfZHBfcHBzX2hlYWRlcl9pbml0KHN0cnVjdCBkcF9zZHBfaGVhZGVyICpwcHNfaGVhZGVyKTsN
+Cj4gPj4gaW50DQo+ID4+IGRybV9kc2NfZHBfcmNfYnVmZmVyX3NpemUodTggcmNfYnVmZmVyX2Js
+b2NrX3NpemUsIHU4DQo+ID4+IHJjX2J1ZmZlcl9zaXplKTsgdm9pZCBkcm1fZHNjX3Bwc19wYXls
+b2FkX3BhY2soc3RydWN0DQo+ID4+IGRybV9kc2NfcGljdHVyZV9wYXJhbWV0ZXJfc2V0ICpwcHNf
+c2RwLA0KPiA+PiAgIAkJCSAgICAgIGNvbnN0IHN0cnVjdCBkcm1fZHNjX2NvbmZpZyAqZHNjX2Nm
+Zyk7ICB2b2lkDQo+ID4+IGRybV9kc2Nfc2V0X3JjX2J1Zl90aHJlc2goc3RydWN0IGRybV9kc2Nf
+Y29uZmlnICp2ZHNjX2NmZyk7IC1pbnQNCj4gPj4gZHJtX2RzY19zZXR1cF9yY19wYXJhbXMoc3Ry
+dWN0IGRybV9kc2NfY29uZmlnICp2ZHNjX2NmZyk7DQo+ID4+ICtpbnQgZHJtX2RzY19zZXR1cF9y
+Y19wYXJhbXMoc3RydWN0IGRybV9kc2NfY29uZmlnICp2ZHNjX2NmZywgZW51bQ0KPiA+PiArZHJt
+X2RzY19wYXJhbXNfa2luZCBraW5kKTsNCj4gPj4gICBpbnQgZHJtX2RzY19jb21wdXRlX3JjX3Bh
+cmFtZXRlcnMoc3RydWN0IGRybV9kc2NfY29uZmlnICp2ZHNjX2NmZyk7DQo+ID4+DQo+ID4+ICAg
+I2VuZGlmIC8qIF9EUk1fRFNDX0hFTFBFUl9IXyAqLw0KPiA+PiAtLQ0KPiA+PiAyLjM5LjINCj4g
+Pg0KPiANCj4gLS0NCj4gV2l0aCBiZXN0IHdpc2hlcw0KPiBEbWl0cnkNCg0K
