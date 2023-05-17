@@ -2,86 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A92EE7072DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 22:19:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92AEA7072F6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 22:25:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229643AbjEQUTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 16:19:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49558 "EHLO
+        id S229453AbjEQUZH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 16:25:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229614AbjEQUTC (ORCPT
+        with ESMTP id S229505AbjEQUZG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 16:19:02 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50AA31FE1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 13:19:01 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34HJKGl4002429;
-        Wed, 17 May 2023 20:18:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=cDtBtSPO2m9+QGF6t2wQqLOiOlZIFU0Nj123Ytq4ZaE=;
- b=R37ura42qDsvM4qvFLm7GePbtEaujNoytEYv+GD6TsLgo5+Ks2IxJrAb0giKMKQ9vMO5
- 2LjoULPYQjCbKPLS5oYfUJb7nQO/Df5fUtw90OaeXk5wnHcXUj/XMSNTHpNTuozT27QJ
- vENAq0SdX2UmXkbrn4ApY51xEzScdpXAPtUbztDS1FWVr1V6ILGmJdSOacxqYKzt09vp
- EeE3a5ETd/Xh2amTwE/sDL3EvVGwwnmgv3dPhr2IiR8xKhnhLmr5KdQLo+3qNy6sd08u
- e4V2Ssx7ZXcuccP884QgY5dYPJlt7xjy8edM8/Cj8ZPlDi/0AGQkWGxQTcXCQDsOGo1v lw== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qmnypj871-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 17 May 2023 20:18:54 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34HKIrtB030404
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 17 May 2023 20:18:53 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 17 May
- 2023 13:18:53 -0700
-Message-ID: <19b52c51-e12c-668a-9f43-6875523628b0@quicinc.com>
-Date:   Wed, 17 May 2023 13:18:52 -0700
+        Wed, 17 May 2023 16:25:06 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B87C7D89
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 13:25:04 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2af0eb50b4aso7651501fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 13:25:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684355103; x=1686947103;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=9e0TlWFJ4jnKLP48QttQ1EhOBYVUZ/hqG3PCu64KDjk=;
+        b=Nm5Z48j4L7l8aONmFdB0bPU503Vez21R0xjklG6FwEm856DgC0jTlLh+LlXqicg9qu
+         4QiujrQQnAlQmpGznZRLaJS0taDoMnPZF0fgC593g6VuQpcatPf44UBi+XCH2pFTvlX2
+         BC2ORFGHCscs4pmVjFlnUMH4E62Ct1kBs/t0HnljUAZMpgH3Y1zGadvgLslKTGJSO1Fh
+         cwKFiji4dhv5uhD+JJ+BkPgOCwIMJ9CpQgVWzJiohylg3lr0ZloBKQIepl1KEjkKxbxc
+         58fIpFL6oCDH/jROlikNU312tkq1IHEJUIE6DbHep1CHdHAyhU326KvOo9K9d+6NhEZL
+         Z7ig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684355103; x=1686947103;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=9e0TlWFJ4jnKLP48QttQ1EhOBYVUZ/hqG3PCu64KDjk=;
+        b=LyNohKL2StyxQ4gpR+KKE8BwWyYtPZXtU/BW0OKjPGQJks7+Fqc1hxb+1ln0nRQVIS
+         CTe+wxX2lr8MDDlk6EoOdB8TD42Mri3uC5NCR56JfBYPylmBntNgGEpBVddLzdbwgvRW
+         NnOz0P+/lNdd3wZe7Ip346FfI+890XGuT9qYxkXMDaVmJ7svtYTQhGQqpgp+l081KtM+
+         nIDFGUhsJA8Wsc1sfoM5rm3KZ2yrujv6xmGbBiCC4xUqHAnvTmlV6sbbPFogLEg/g4o7
+         C2CgtHmjpdWbTthiuwsytb5BxvBiGEIHr2ncAHQ4vGilk8LCmtge0Nec+Sb1XyJnacr2
+         IY2w==
+X-Gm-Message-State: AC+VfDwFYB8h/G2NBIRg8XSnvxE+dc+PMMO1bnqx1HffHLmW9I4c4bE+
+        D0qlH/ADEFIjG9/3ImYIsGnbTg==
+X-Google-Smtp-Source: ACHHUZ6AK0LriX0PjEwJvvd7rb1hrYTCrIWnDjpQQbNIWK8Yk/0ibBUzwrlcrCwrjv2/dIYoYawb3g==
+X-Received: by 2002:a2e:7a13:0:b0:2a6:1682:3a1e with SMTP id v19-20020a2e7a13000000b002a616823a1emr9930406ljc.31.1684355102763;
+        Wed, 17 May 2023 13:25:02 -0700 (PDT)
+Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
+        by smtp.gmail.com with ESMTPSA id s23-20020a2e9c17000000b002ad90280503sm4079780lji.138.2023.05.17.13.25.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 May 2023 13:25:02 -0700 (PDT)
+Message-ID: <763ab7b6-9e97-a2ee-2d49-5b666ca63941@linaro.org>
+Date:   Wed, 17 May 2023 22:25:00 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v11 8/9] drm/msm/dsi: Use MSM and DRM DSC helper methods
+Subject: Re: [PATCH v2 00/18] Venus QoL / maintainability fixes
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-CC:     <freedreno@lists.freedesktop.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230329-rfc-msm-dsc-helper-v11-0-30270e1eeac3@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v11-8-30270e1eeac3@quicinc.com>
- <l5caompoxuarl3fxhpv37xmpahprvwn2w6mg2y4tla5uitckmf@ytytt7wivfs7>
- <xpfpp7aiy4i7girzqgvdjsthwwtewn4ffzugqp4xgkcqhgor4x@hlarb2cu5xsr>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <xpfpp7aiy4i7girzqgvdjsthwwtewn4ffzugqp4xgkcqhgor4x@hlarb2cu5xsr>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Hans Verkuil <hans.verkuil@cisco.com>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>
+Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        stable@vger.kernel.org
+References: <20230228-topic-venus-v2-0-d95d14949c79@linaro.org>
+ <f9904e82-4756-2add-3c7e-e019ce966515@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <f9904e82-4756-2add-3c7e-e019ce966515@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: vroVp-SidwajqRLcEyg1HZTrPeprq1GP
-X-Proofpoint-ORIG-GUID: vroVp-SidwajqRLcEyg1HZTrPeprq1GP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-17_04,2023-05-17_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- phishscore=0 adultscore=0 suspectscore=0 spamscore=0 impostorscore=0
- bulkscore=0 mlxlogscore=999 malwarescore=0 clxscore=1015 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305170168
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -90,83 +92,45 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5/17/2023 12:25 PM, Marijn Suijten wrote:
-> On 2023-05-17 21:13:36, Marijn Suijten wrote:
->>
->> On 2023-05-17 11:51:17, Jessica Zhang wrote:
->>>
->>> Use MSM and DRM DSC helper methods to configure DSC for DSI.
->>>
->>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
->>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>> ---
->>>   drivers/gpu/drm/msm/dsi/dsi_host.c | 7 ++++---
->>>   1 file changed, 4 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>> index 74d38f90398a..b21108948061 100644
->>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>> @@ -28,6 +28,7 @@
->>>   #include "dsi.xml.h"
->>>   #include "sfpb.xml.h"
->>>   #include "dsi_cfg.h"
->>> +#include "msm_dsc_helper.h"
->>>   #include "msm_kms.h"
->>>   #include "msm_gem.h"
->>>   #include "phy/dsi_phy.h"
->>> @@ -848,7 +849,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
->>>   	/* first calculate dsc parameters and then program
->>>   	 * compress mode registers
->>>   	 */
->>> -	slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
->>> +	slice_per_intf = msm_dsc_get_slices_per_intf(dsc, hdisplay);
->>>   
->>>   	/*
->>>   	 * If slice_count is greater than slice_per_intf
->>> @@ -858,7 +859,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
->>>   	if (dsc->slice_count > slice_per_intf)
->>>   		dsc->slice_count = 1;
->>>   
->>> -	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
->>> +	total_bytes_per_intf = dsc->slice_count * slice_per_intf;
->>
->> Oh no, this line shouldn't have changed.  Besides not conforming to the
->> "use MSM and DRM DSC helper methods" title, this is now no longer
->> computing the bytes that we were in v10.  Was this tested?
+On 12.05.2023 05:01, Bryan O'Donoghue wrote:
+> On 04/05/2023 09:00, Konrad Dybcio wrote:
+>> Tested on 8250, but pretty please test it on your boards too!
 > 
-> Regarding testing, it probably goes unnoticed easily because of only
-> being used in eol_byte_num = total_bytes_per_intf % 3: on hdisplay=1096
-> and slice_count=slice_per_intf=2 both result in eol_byte_num=1 :)
-
-Hi Marijn,
-
-Acked. Will change this to slice_chunk_size.
-
-Thanks,
-
-Jessica Zhang
+> What's the definition of test here ?
+> 
+> I ran this
+> 
+> ffplay -codec:video h264_v4l2m2m FantasticFour-ROTSS.mp4
+> 
+> and this
+> 
+> ffplay -codec:video vp8_v4l2m2m /mnt/big-buck-bunny_trailer.webm
+> 
+> on db410c with no errors. Then again I applied and disapplied the 8x8 264 fix to that branch and saw no discernable difference so I'm not very confident we have good coverage.
+I don't think we have any coverage at all, especially considering
+there were 1 or 2 patches fixing vdec not working at all in the past
+few months.. Maybe CrOS has some internal pipelines for this.
 
 > 
-> - Marijn
+> @Stan @Vikash could you give some suggested tests for coverage here ?
 > 
->>
->> - Marijn
->>
->>>   
->>>   	eol_byte_num = total_bytes_per_intf % 3;
->>>   	pkt_per_line = slice_per_intf / dsc->slice_count;
->>> @@ -1759,7 +1760,7 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
->>>   		return ret;
->>>   	}
->>>   
->>> -	dsc->initial_scale_value = 32;
->>> +	dsc->initial_scale_value = drm_dsc_initial_scale_value(dsc);
->>>   	dsc->line_buf_depth = dsc->bits_per_component + 1;
->>>   
->>>   	return drm_dsc_compute_rc_parameters(dsc);
->>>
->>> -- 
->>> 2.40.1
->>>
+> @Konrad - get a db410c !
+Don't think they're even made anymore!
+
+> 
+> My superficial first-pass on this series looks good but, before giving a Tested-by here, I think we should define a set of coverage tests, run them - the upper end on sm8250 and lower end msm8916 "makes sense to me"
+> 
+> 20? different gstreamer tests at different formats and different sizes on our selected platforms db410c, rb5, rb3 I have - also an 820 I haven't booted and an enforce sdm660.
+> 
+> Which tests will we use to validate this series and subsequent series to ensure we don't have more regressions ?
+Personally I've done:
+
+- boot and check if venus still probes and doesn't shout in dmesg
+- decode and re-encode a H264 file
+
+which is far from perfect..
+
+Konrad
+> 
+> ---
+> bod
