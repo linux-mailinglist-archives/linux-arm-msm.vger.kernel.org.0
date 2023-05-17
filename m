@@ -2,125 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 274BD706EA1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 18:51:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CE69706EDE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 18:56:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229616AbjEQQuc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 12:50:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40626 "EHLO
+        id S229487AbjEQQ4x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 12:56:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229825AbjEQQuY (ORCPT
+        with ESMTP id S229452AbjEQQ4w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 12:50:24 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3866E55B5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:50:23 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2af12685274so2682861fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:50:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684342222; x=1686934222;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CoLKDA4nls3CGbrXvxh61SjvP4v8d9SGkB682PI8Y9w=;
-        b=i1dbxqi1eNd4Yl7qbKa/DzCua/Zv8bljh0np7sIKjpbnORXCN9UsIhb5KLwUY+3dBD
-         u3QBbSJoeQafLR5qSuG5M56upGulM+buDf5h6zXgu6IJ/+z9q21Pc4Bh06H2v0pzwbhE
-         yysaAAtLWODaCtqxXB/SZ4cRvzh51IFPxZCyiECJ9CianawcNL6GfVVPvTqSDkChueop
-         sx73h9FNmjFTg9uXTkJr3CFgFEodDdOPEK5UN2HIdTHfxVD6iSTXT3KdPrHm1j8NZHqT
-         jEUZzg3jTxcRCBziiaA3RJUytD4cQN0zjblIst5AZJQCrV4VLjV+Ma8G2xOLMeoh1+4o
-         /4jA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684342222; x=1686934222;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CoLKDA4nls3CGbrXvxh61SjvP4v8d9SGkB682PI8Y9w=;
-        b=Bj/IGVv09wWAEIGYPMSpZCBI1n/o5qs7I0qphLWvX5y++XsHN/C1K2qqDunbMZEaVY
-         zLgYc3m6g4GhmwQwoHOurQ6NRzDHFmaEexvwG8N6DUh9j4PymzNjy9VJm0Lh3bTFIvPe
-         Uia8PFctDF04j1ZBITNiRGZwIOCLxE8b5DyOulEyf/NxA6vTyNN0uZ6Wy5qQyznt1kJH
-         zRzzLfaIDDLi7RlcSYthY9b98XAdlhNtk2BNEkLunbusWjI0IZhsiTeBnjlMrTCnojh1
-         u3uZ9JtPEj1ZwKSEgCC4GN/oAl4C9iG54yxpFW7ChFffimpgWLuX8zz+Imz6BF9R9c3P
-         kRUQ==
-X-Gm-Message-State: AC+VfDz0No+hH67T62YoXmMwCux5iQLOgGJHCrNMRVofyfhX6wMG85IL
-        Wp7P3cUN5nCY54F38ppjZXIIkg==
-X-Google-Smtp-Source: ACHHUZ4jLbe6d4GH4iLPsue2yFWhS8POeGWQvmRFqujlYCuVRms6eu9CsVJJf+zBSskasB3XfoOD2w==
-X-Received: by 2002:a2e:a408:0:b0:2ac:6f6f:ff63 with SMTP id p8-20020a2ea408000000b002ac6f6fff63mr11229311ljn.47.1684342222724;
-        Wed, 17 May 2023 09:50:22 -0700 (PDT)
-Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id g6-20020a2e9cc6000000b002af0e9abaf6sm159224ljj.131.2023.05.17.09.50.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 May 2023 09:50:22 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 17 May 2023 18:50:13 +0200
-Subject: [PATCH 6/6] drm/msm/a6xx: Fix up GMU region reservations
+        Wed, 17 May 2023 12:56:52 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB1011BD0;
+        Wed, 17 May 2023 09:56:50 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34HGVB3I000606;
+        Wed, 17 May 2023 16:56:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=XughtEUspHfgU669yLfCX1SyL04SgRLhqAMGwN/BM2Y=;
+ b=C61BbnKU+JzQHa3bHhf75+ebiV7CRZjKiD7VCuczrUP0uZoKzyLwZl7tQiZ0tgaYcoH0
+ nRuQi2H2ovIWPX+yGCTPYa6RTjymtht7WgrJfvGWn0O7eWvP61lRtOq8lWBenEtMqOgT
+ YGx1LWxCO3Nj/Pj2E9AyJrj/r1nmjfFDSGn8DmpQSSGBd5xpCSGNbdNX656KtPXkMCWt
+ TO+F/jPY7HaLOCjp+MMngBSSM8oFkiYDEAfak5oz/LAQEwL4bqkor9XckVSqcrJgqYDj
+ +6pde4MqgqHnOx4nRCA0eneTsINcWV4lU0CHQhaNOzx+8o6exZbrYQp522fDPp/z7I0/ VA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qmbk7b4b9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 17 May 2023 16:56:31 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34HGuUkU002903
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 17 May 2023 16:56:30 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Wed, 17 May 2023 09:56:29 -0700
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+To:     <trix@redhat.com>, <ogabbay@kernel.org>, <nathan@kernel.org>,
+        <ndesaulniers@google.com>, <jacek.lawrynowicz@linux.intel.com>,
+        <quic_carlv@quicinc.com>, <stanislaw.gruszka@linux.intel.com>,
+        <quic_pkanojiy@quicinc.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, <llvm@lists.linux.dev>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: [PATCH v2] accel/qaic: initialize ret variable to 0
+Date:   Wed, 17 May 2023 10:56:05 -0600
+Message-ID: <20230517165605.16770-1-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230517-topic-a7xx_prep-v1-6-7a964f2e99c2@linaro.org>
-References: <20230517-topic-a7xx_prep-v1-0-7a964f2e99c2@linaro.org>
-In-Reply-To: <20230517-topic-a7xx_prep-v1-0-7a964f2e99c2@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1684342212; l=1342;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=btUFgb1HmX4JzaeMKMcU2R1/tETWRJTF/5M21P54ufE=;
- b=2iOzY8M2I2x7twxabI/OJXdaVxfB9SkZvzqmhiZsOvaZVWXV/x0sZHjUtqXXsmMTWRk4wRQQM
- 64+sM1IyjWSAs6uhXWBqPJWO2gwmSn1SumxzfMpgnd2I0KV4SOOH3kn
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: IagSNZbJVzCCjD0k8azwN8yeQiIQfR7F
+X-Proofpoint-ORIG-GUID: IagSNZbJVzCCjD0k8azwN8yeQiIQfR7F
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-17_02,2023-05-17_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1011
+ adultscore=0 priorityscore=1501 mlxlogscore=999 bulkscore=0 suspectscore=0
+ impostorscore=0 phishscore=0 lowpriorityscore=0 mlxscore=0 spamscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305170138
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Change the order of region allocations to make the addresses match
-downstream. This shouldn't matter very much, but helps eliminate one
-more difference when comparing register accesses.
+From: Tom Rix <trix@redhat.com>
 
-Also, make the log region 16K long. That's what it is, unconditionally
-on A6xx and A7xx.
+clang static analysis reports
+drivers/accel/qaic/qaic_data.c:610:2: warning: Undefined or garbage
+  value returned to caller [core.uninitialized.UndefReturn]
+        return ret;
+        ^~~~~~~~~~
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+From a code analysis of the function, the ret variable is only set some
+of the time but is always returned.  This suggests ret can return
+uninitialized garbage. However BO allocation will ensure ret is always
+set in reality.
+
+Initialize ret to 0 to silence the warning.
+
+Fixes: ff13be830333 ("accel/qaic: Add datapath")
+Signed-off-by: Tom Rix <trix@redhat.com>
+[jhugo: Reword commit text]
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/accel/qaic/qaic_data.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 8004b582e45f..386c81e1a2f3 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1614,13 +1614,13 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
- 			goto err_memory;
- 	}
+diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+index 8ab26e64b231..e42c1f9ffff8 100644
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -591,7 +591,7 @@ static int qaic_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struc
+ 	struct qaic_bo *bo = to_qaic_bo(obj);
+ 	unsigned long offset = 0;
+ 	struct scatterlist *sg;
+-	int ret;
++	int ret = 0;
  
--	/* Allocate memory for for the HFI queues */
--	ret = a6xx_gmu_memory_alloc(gmu, &gmu->hfi, SZ_16K, 0, "hfi");
-+	/* Allocate memory for the GMU log region */
-+	ret = a6xx_gmu_memory_alloc(gmu, &gmu->log, SZ_16K, 0, "log");
- 	if (ret)
- 		goto err_memory;
- 
--	/* Allocate memory for the GMU log region */
--	ret = a6xx_gmu_memory_alloc(gmu, &gmu->log, SZ_4K, 0, "log");
-+	/* Allocate memory for for the HFI queues */
-+	ret = a6xx_gmu_memory_alloc(gmu, &gmu->hfi, SZ_16K, 0, "hfi");
- 	if (ret)
- 		goto err_memory;
- 
-
+ 	if (obj->import_attach)
+ 		return -EINVAL;
 -- 
 2.40.1
 
