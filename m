@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A9C8A7073EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 23:19:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 120127073EE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 23:19:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229885AbjEQVTK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 17:19:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58338 "EHLO
+        id S229618AbjEQVTL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 17:19:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229561AbjEQVTF (ORCPT
+        with ESMTP id S229956AbjEQVTH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 17:19:05 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CEBE9023
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:18:40 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id d2e1a72fcca58-64388cf3263so928328b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:18:40 -0700 (PDT)
+        Wed, 17 May 2023 17:19:07 -0400
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35B027DA3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:18:45 -0700 (PDT)
+Received: by mail-pf1-x42c.google.com with SMTP id d2e1a72fcca58-64d139e0d67so11303b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:18:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684358293; x=1686950293;
+        d=linaro.org; s=google; t=1684358298; x=1686950298;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/foJvy2H11hs5U0azHSnrQ7t4rS3XX0dM/KWP8Ep2ME=;
-        b=Th60rWvh2iNisgtghM6ZzEq9K0EkgEr4VXi3UlJyUyiP+460PFZ5JqtkZK3BGSvoTH
-         K/WWkEN4lkHF1N1DhYEIZuvJyKLDgPYVP4gGU4guA0fqzj3dC5GbZfK549hMUtWRXalT
-         fT9Ou4y9cO1PL7TG6RA7IDohMOS3DsLW2tCg4llfTOZ4xBBkB6vUN/p4Vbg4teMs7KSu
-         3ilkh4td/bBuHntwo6d/JCNgsAj7NuI72hbuNPpal8JPyLDpTOxyNoesFNcctHJp6qUk
-         ysLmYetj/28I4Q3c/9uQNjVULqMSqq0xrjSM9E3bgpM2iIquXeZ8CXltJFavolf/eAFF
-         ckqw==
+        bh=Q9+WkMxaCFyRvz0ZQf19zyMmoq6vin0MgQ/wuGkS8c8=;
+        b=bV7CpqoXWuNQqlxJQEUuHy5yHUGj+DQhue+ANh59IgumWtxISkQAYNuJBeLQy21CNn
+         1hn9LwbNitAPTKlJv1X2U5lEUTlm73y0K/4Idn0MuAMOAgrgw2+8e7mp0fkfuwk1w4ym
+         9FjpNrtPd5pY/NZZ7b33P5U0WuOVOHUu+M/PfXJYGauRs2RD72pyJ/tTXY5zzjIcNGHj
+         wuIxeqVqFSrnveWFJTVmQXVHfxx2lVi9ZXApbK1l9p2TW6HYUvhyeWzj1uDt6ALa69oT
+         6VI+PjEBefyOIj4LCqhMHNSPnjEo6AjOwMhp3CXFHZjBT6+2qKK+uJDjA4C39OxAMPcZ
+         h6VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684358293; x=1686950293;
+        d=1e100.net; s=20221208; t=1684358298; x=1686950298;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/foJvy2H11hs5U0azHSnrQ7t4rS3XX0dM/KWP8Ep2ME=;
-        b=Zj+gEr0xbY4yOcxxnvTQcLgBUgLe2E6dhouECCl9QflhQlB4stBUSbDmWxBTmsbRiC
-         s7T8P9unRPWWEWcFI6t+t4G/PNeWC873R5nqPspk+ZKxf3enwRfQjIjrqcRT66ZPdxtm
-         vx7ELS9q+Sesb8MIiGMc6Nay3RMa8gdO95XbWWJpLQCfu2J4I+CC8G1egOV15WJqGYD7
-         eOXATCWfK3/3Oq1+UZXRQrWdbkfbNTidXGpRpVJmfNhRLVQafFo2ERm7doCS4PU1kuBW
-         QeQ/cb+SLW8LMEYSoPVKuQidQtfyZjf7lhseL85cQjM0GIlGG+XlXixnr/UBTTJI206F
-         DMHg==
-X-Gm-Message-State: AC+VfDzTTn+XuKV8W+IBjAXv0yi/RzjTk6OGttOukPdNXvYA0qM9qTy7
-        cJvkGlAQOOkjVNxT/jTxxBAeiaWjrNd7IjWDmoc=
-X-Google-Smtp-Source: ACHHUZ6yw7WIHip5dqJcUZxgerTW+/OJRBY0G1K6ZjqYzK9H3Gmq6HfpJEcdVnlBedsu0lLoLPtqvQ==
-X-Received: by 2002:a05:6a00:1908:b0:646:59e4:9514 with SMTP id y8-20020a056a00190800b0064659e49514mr1434833pfi.7.1684358293326;
-        Wed, 17 May 2023 14:18:13 -0700 (PDT)
+        bh=Q9+WkMxaCFyRvz0ZQf19zyMmoq6vin0MgQ/wuGkS8c8=;
+        b=lwsM0XwgflWCmhZY/g4VA3eQUy6TjGiYwkqPUk/B8J32GdpjwAE5DKAnfnuRi9YZZ+
+         bjVQvhzlVKAxaTvtSx56vqcNaJmjSRuzrNkzqYC8sAK43tUGdrx18SwSCLoKddkG5KNP
+         KMCFGwPF+Cs4ztrzs9MUsU2b403sqzMI2sdA08reiCaTVVn5uTF0lvf9XtvOWqQVwcF/
+         8rixdfYGzLGAinJoPhK5rJU710x9VLy6TbXg/wRRhKBLboCYoqQjM9WhPGvWqeyNnjTU
+         QbyYUYWaW/6L/JHLdx7pB5WxqzT44PD3/48Eg7Z0bV+Dqxz0M5CK59QahaWCyGNPcFuu
+         5T6A==
+X-Gm-Message-State: AC+VfDz3U2bAODzb6iv4MfYQiXJi4HxkOJhjvR+C3iADqi6nV9bXpgTh
+        QhOvTdfQmZLkJTag+ea0+rmAxtPCUU2V3MJpknU=
+X-Google-Smtp-Source: ACHHUZ45gEUCvskwkuAPB9ALTbFYRXtXCtNEJ7JJ9uOPKvh/xudi3JWJeMW3u5y1tRMOmtcTH8o4MA==
+X-Received: by 2002:a05:6a00:2d1c:b0:643:b489:246d with SMTP id fa28-20020a056a002d1c00b00643b489246dmr1695144pfb.3.1684358297860;
+        Wed, 17 May 2023 14:18:17 -0700 (PDT)
 Received: from localhost.localdomain ([2401:4900:1c60:6bed:7a51:340a:a439:1b87])
-        by smtp.gmail.com with ESMTPSA id n18-20020aa79052000000b0064cb6206463sm4359210pfo.85.2023.05.17.14.18.09
+        by smtp.gmail.com with ESMTPSA id n18-20020aa79052000000b0064cb6206463sm4359210pfo.85.2023.05.17.14.18.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 May 2023 14:18:13 -0700 (PDT)
+        Wed, 17 May 2023 14:18:17 -0700 (PDT)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-usb@vger.kernel.org
@@ -57,11 +57,10 @@ Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
         bhupesh.sharma@linaro.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org,
-        quic_schowdhu@quicinc.com, gregkh@linuxfoundation.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH v6 1/6] usb: misc: eud: Fix eud sysfs path (use 'qcom_eud')
-Date:   Thu, 18 May 2023 02:47:51 +0530
-Message-Id: <20230517211756.2483552-2-bhupesh.sharma@linaro.org>
+        quic_schowdhu@quicinc.com, gregkh@linuxfoundation.org
+Subject: [PATCH v6 2/6] dt-bindings: soc: qcom: eud: Add SM6115 / SM4250 support
+Date:   Thu, 18 May 2023 02:47:52 +0530
+Message-Id: <20230517211756.2483552-3-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20230517211756.2483552-1-bhupesh.sharma@linaro.org>
 References: <20230517211756.2483552-1-bhupesh.sharma@linaro.org>
@@ -77,33 +76,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The eud sysfs enablement path is currently mentioned in the
-Documentation as:
-  /sys/bus/platform/drivers/eud/.../enable
+Add dt-bindings for EUD found on Qualcomm SM6115 / SM4250 SoC.
 
-Instead it should be:
-  /sys/bus/platform/drivers/qcom_eud/.../enable
+On this SoC (and derivatives) the enable bit inside 'tcsr_check_reg'
+needs to be set first to 'enable' the eud module.
 
-Fix the same.
+So, update the dt-bindings to accommodate the third register
+property (TCSR Base) required by the driver on these SoCs.
 
-Fixes: 9a1bf58ccd44 ("usb: misc: eud: Add driver support for Embedded USB Debugger(EUD)")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Acked-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- Documentation/ABI/testing/sysfs-driver-eud | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../bindings/soc/qcom/qcom,eud.yaml           | 42 +++++++++++++++++--
+ 1 file changed, 39 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/ABI/testing/sysfs-driver-eud b/Documentation/ABI/testing/sysfs-driver-eud
-index 83f3872182a4..2bab0db2d2f0 100644
---- a/Documentation/ABI/testing/sysfs-driver-eud
-+++ b/Documentation/ABI/testing/sysfs-driver-eud
-@@ -1,4 +1,4 @@
--What:		/sys/bus/platform/drivers/eud/.../enable
-+What:		/sys/bus/platform/drivers/qcom_eud/.../enable
- Date:           February 2022
- Contact:        Souradeep Chowdhury <quic_schowdhu@quicinc.com>
- Description:
+diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+index f2c5ec7e6437..9c64b5d9504f 100644
+--- a/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
++++ b/Documentation/devicetree/bindings/soc/qcom/qcom,eud.yaml
+@@ -18,12 +18,16 @@ properties:
+     items:
+       - enum:
+           - qcom,sc7280-eud
++          - qcom,sm6115-eud
+       - const: qcom,eud
+ 
+   reg:
+-    items:
+-      - description: EUD Base Register Region
+-      - description: EUD Mode Manager Register
++    minItems: 2
++    maxItems: 3
++
++  reg-names:
++    minItems: 2
++    maxItems: 3
+ 
+   interrupts:
+     description: EUD interrupt
+@@ -52,6 +56,38 @@ required:
+ 
+ additionalProperties: false
+ 
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sc7280-eud
++    then:
++      properties:
++        reg:
++          maxItems: 2
++        reg-names:
++          items:
++            - const: eud-base
++            - const: eud-mode-mgr
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,sm6115-eud
++    then:
++      properties:
++        reg:
++          maxItems: 3
++        reg-names:
++          items:
++            - const: eud-base
++            - const: eud-mode-mgr
++            - const: tcsr-base
++
+ examples:
+   - |
+     eud@88e0000 {
 -- 
 2.38.1
 
