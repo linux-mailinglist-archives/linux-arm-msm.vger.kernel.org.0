@@ -2,125 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 544C1706F16
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 19:11:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B853C706F33
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 19:18:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229560AbjEQRLE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 13:11:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55636 "EHLO
+        id S229512AbjEQRSN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 13:18:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbjEQRLD (ORCPT
+        with ESMTP id S229550AbjEQRSL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 13:11:03 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC6C4198E;
-        Wed, 17 May 2023 10:11:02 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34HER0rV005335;
-        Wed, 17 May 2023 17:10:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=6q0xArWpEZhT4d+9ngBTBg23xYZkBDXNGbPrCv/UF5o=;
- b=KdezF0FyvbncMVobwMtegc5q1dTxViZnRhGmGcY6hlJItNZVXeMZNl/aid2gEbskgR0s
- fp5BeLPE9aayGA8hyAG8N6rgHNC6UX0CqxKatExsXkAVRYfQOsqzkHhmt3aZ2pT+8XD4
- JOCIB+CwnJvCWP7sGFhMFQVayFsUcfCPMMaHPd1+jxUlSkrSU7Zi6heq/jPK+Hc6D/32
- ZFolJMIroUT6+Ax0iGvc0P+XfZObVH4FHRvrHOM3FRAvzqKzJ2DYD5XnqPq7hLfScHrn
- iTGdj4PN5UYOE7n3codfpDDmwlrJmWWAqc2LHXDrFB+m1mMSyAoGRSCAH9ueoEqRlRKH qQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qmbk7b5ey-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 17 May 2023 17:10:34 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34HHAXIU025352
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 17 May 2023 17:10:33 GMT
-Received: from [10.110.32.16] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 17 May
- 2023 10:10:32 -0700
-Message-ID: <8e4bde65-fe66-853b-8b87-f3b230a384df@quicinc.com>
-Date:   Wed, 17 May 2023 10:10:25 -0700
+        Wed, 17 May 2023 13:18:11 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9BB7272B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 10:18:06 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f26f437b30so1313489e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 10:18:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684343885; x=1686935885;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=t/W+xyRZOrFaXXUosMsho+Wtkn3dRl1nHYsHDumTX8E=;
+        b=M7E8jA+AmNT97OdIY8EZEME/eE+/AXzah9OG3V8PaBGWJidzVYSF79fCHwsuldXoEW
+         3wVSO7Pe4WzDijxQujtsuoTQFfCyLlAVfYjPn4s0+18O3QY5mga3S5tAt6SC8I4bMZrJ
+         OeC0ztHE27ts2V4VdqDV6AK/zAFJ+oMde7kJbDBkuVMXBr9aAWumVVbtWOxpVoDjm7gP
+         dwocPRjQB6ttH9S2QDR+xLBBKpZ+lJMb2Tm0seZVVK1YzEHdbqpDAWfcxHZ7um/TcF1c
+         xXeKo9YrExNsV4ek9RCSFvP5fKVLXHZKOP38BHUoFgWjNEqFoVvdQ1dAxUUqHqQPRzA1
+         38YQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684343885; x=1686935885;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=t/W+xyRZOrFaXXUosMsho+Wtkn3dRl1nHYsHDumTX8E=;
+        b=Ro+29Fx7v8KbA+o/cRWlSJbVdflFv4muskN8IYKdpdtALTgAGHvoz+OQJOkMZ9hywv
+         zOL16/FgmG7oVMNccV/1cZpOx8oopn0pKHzDVjCTYmM8OYFoQv1pnYP0sIbGJFLZyYDI
+         JmvskLLrCaKCf9duRu8JI9VX/ltjboNyxt6r4vlLaUl5UwI3dj3nfOJ9K8yhr3x9FQgV
+         ZK26y3Gidu82ZtxFybRD1EiqxjS5e7pAwWeBlH2+QiZneCTMuBxYYxZqKSTc3SYHrzHb
+         TLi3MxLJZSHbjqt0rleB4ec/6wuFBPbugixTwY8HwuJSLTLAqeWC7QxYn8t6H+fjy1mU
+         xYnw==
+X-Gm-Message-State: AC+VfDzL4aPfAN+CqzcfgHS96eIPm5SOXjg8JYyvroTbmj3iz5ksFNVX
+        AqD9Y5tV3VmclJfEkIZbwoOTRQ==
+X-Google-Smtp-Source: ACHHUZ7qL3cLZD9LGj91BXwss6hJFPqDLP8pRWU4pQowx5XVm0GxnZn5iAX20K55cchMNdGFcvo7wg==
+X-Received: by 2002:a05:6512:75:b0:4ec:8816:f4fc with SMTP id i21-20020a056512007500b004ec8816f4fcmr481324lfo.6.1684343885003;
+        Wed, 17 May 2023 10:18:05 -0700 (PDT)
+Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
+        by smtp.gmail.com with ESMTPSA id j18-20020ac24552000000b004f140788184sm1038284lfm.289.2023.05.17.10.18.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 May 2023 10:18:04 -0700 (PDT)
+Message-ID: <f6a491ce-57ad-66c8-8fa2-933bf208adac@linaro.org>
+Date:   Wed, 17 May 2023 19:18:01 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v2] accel/qaic: initialize ret variable to 0
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>, <trix@redhat.com>,
-        <ogabbay@kernel.org>, <nathan@kernel.org>,
-        <ndesaulniers@google.com>, <jacek.lawrynowicz@linux.intel.com>,
-        <stanislaw.gruszka@linux.intel.com>, <quic_pkanojiy@quicinc.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <linux-kernel@vger.kernel.org>, <llvm@lists.linux.dev>
-References: <20230517165605.16770-1-quic_jhugo@quicinc.com>
+Subject: Re: [PATCH][next] media: venus: hfi_cmds: Replace fake flex-array
+ with flexible-array member
 Content-Language: en-US
-From:   Carl Vanderlip <quic_carlv@quicinc.com>
-In-Reply-To: <20230517165605.16770-1-quic_jhugo@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
+References: <ZGQn63U4IeRUiJWb@work>
+ <8f9ca4a1-26ee-cd37-6c15-abdc832d77b3@linaro.org>
+In-Reply-To: <8f9ca4a1-26ee-cd37-6c15-abdc832d77b3@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: O9dRqlgI_OB5q-Zuwbc59rWGZDx8R7un
-X-Proofpoint-ORIG-GUID: O9dRqlgI_OB5q-Zuwbc59rWGZDx8R7un
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-17_02,2023-05-17_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1011
- adultscore=0 priorityscore=1501 mlxlogscore=999 bulkscore=0 suspectscore=0
- impostorscore=0 phishscore=0 lowpriorityscore=0 mlxscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
- definitions=main-2305170140
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/17/2023 9:56 AM, Jeffrey Hugo wrote:
-> From: Tom Rix <trix@redhat.com>
-> 
-> clang static analysis reports
-> drivers/accel/qaic/qaic_data.c:610:2: warning: Undefined or garbage
->    value returned to caller [core.uninitialized.UndefReturn]
->          return ret;
->          ^~~~~~~~~~
-> 
->>From a code analysis of the function, the ret variable is only set some
-> of the time but is always returned.  This suggests ret can return
-> uninitialized garbage. However BO allocation will ensure ret is always
-> set in reality.
-> 
-> Initialize ret to 0 to silence the warning.
-> 
-> Fixes: ff13be830333 ("accel/qaic: Add datapath")
-> Signed-off-by: Tom Rix <trix@redhat.com>
-> [jhugo: Reword commit text]
-> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> ---
->   drivers/accel/qaic/qaic_data.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-> index 8ab26e64b231..e42c1f9ffff8 100644
-> --- a/drivers/accel/qaic/qaic_data.c
-> +++ b/drivers/accel/qaic/qaic_data.c
-> @@ -591,7 +591,7 @@ static int qaic_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struc
->   	struct qaic_bo *bo = to_qaic_bo(obj);
->   	unsigned long offset = 0;
->   	struct scatterlist *sg;
-> -	int ret;
-> +	int ret = 0;
->   
->   	if (obj->import_attach)
->   		return -EINVAL;
 
 
-LGTM
+On 17.05.2023 04:11, Konrad Dybcio wrote:
+> 
+> 
+> On 17.05.2023 03:03, Gustavo A. R. Silva wrote:
+>> One-element arrays are deprecated, and we are replacing them with flexible
+>> array members instead. So, replace one-element arrays with flexible-array
+>> members in struct hfi_sys_set_resource_pkt, and refactor the rest of
+>> the code, accordingly.
+>>
+>> This helps with the ongoing efforts to tighten the FORTIFY_SOURCE
+>> routines on memcpy() and help us make progress towards globally
+>> enabling -fstrict-flex-arrays=3 [1].
+>>
+>> The only binary differences seen before/after changes are the
+>> following:
+>>
+>>      17ba:      mov    %rbx,%rdi
+>>      17bd:      call   17c2 <pkt_sys_set_resource+0x42>
+>>                         17be: R_X86_64_PLT32    __tsan_write4-0x4
+>> -    17c2:      movl   $0x14,(%rbx)
+>> +    17c2:      movl   $0x10,(%rbx)
+>>      17c8:      lea    0x4(%rbx),%rdi
+>>      17cc:      call   17d1 <pkt_sys_set_resource+0x51>
+>>                         17cd: R_X86_64_PLT32    __tsan_write4-0x4
+>>
+>> which is expected once this accounts for the following line of code
+>> at  drivers/media/platform/qcom/venus/hfi_cmds.c:73
+>>
+>> 73         pkt->hdr.size = sizeof(*pkt);
+>>
+>> and as *pkt is of type struct hfi_sys_set_resource_pkt, sizeof(*pkt) is
+>> reduced by 4 bytes, due to the flex-array transformation.
+>>
+>> Link: https://github.com/KSPP/linux/issues/79
+>> Link: https://github.com/KSPP/linux/issues/293
+>> Link: https://gcc.gnu.org/pipermail/gcc-patches/2022-October/602902.html [1]
+>> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+>> ---
+>>  drivers/media/platform/qcom/venus/hfi_cmds.c | 2 +-
+>>  drivers/media/platform/qcom/venus/hfi_cmds.h | 2 +-
+>>  2 files changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+>> index 3f74d518ad08..7c82e212434e 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
+>> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+>> @@ -83,7 +83,7 @@ int pkt_sys_set_resource(struct hfi_sys_set_resource_pkt *pkt, u32 id, u32 size,
+>>  		res->size = size;
+>>  		res->mem = addr;
+>>  		pkt->resource_type = HFI_RESOURCE_OCMEM;
+>> -		pkt->hdr.size += sizeof(*res) - sizeof(u32);
+>> +		pkt->hdr.size += sizeof(*res);
+>>  		break;
+>>  	}
+>>  	case VIDC_RESOURCE_NONE:
+>> diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.h b/drivers/media/platform/qcom/venus/hfi_cmds.h
+>> index ba74d03eb9cd..dd9c5066442d 100644
+>> --- a/drivers/media/platform/qcom/venus/hfi_cmds.h
+>> +++ b/drivers/media/platform/qcom/venus/hfi_cmds.h
+>> @@ -56,7 +56,7 @@ struct hfi_sys_set_resource_pkt {
+>>  	struct hfi_pkt_hdr hdr;
+>>  	u32 resource_handle;
+>>  	u32 resource_type;
+>> -	u32 resource_data[1];
+>> +	u32 resource_data[];
+> Would making this an u32* be a better resolution?
+Nevermind, I overthought this by thinking in the terms of its size
+and not the data within the struct...
 
-Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+Maybe struct_size could be used instead of subtracting sizeof(u32)
+though?
+
+Konrad
+> 
+> Konrad
+>>  };
+>>  
+>>  struct hfi_sys_release_resource_pkt {
