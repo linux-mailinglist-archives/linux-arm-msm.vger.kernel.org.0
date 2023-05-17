@@ -2,63 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 47062705BE5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 02:19:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28E51705C23
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 03:02:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231393AbjEQATp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 20:19:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48094 "EHLO
+        id S229799AbjEQBCx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 21:02:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229638AbjEQATp (ORCPT
+        with ESMTP id S229635AbjEQBCx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 20:19:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B872136
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 17:18:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1684282734;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=fAWA1BLnS6OZoKpUWNVEQYD1QFUo+cJ+dgpIwEFG8vQ=;
-        b=MyKNlXGC4lLrsgqQZYBSCeq2R2EJhlFeyansotgpO/+ZclrpYBkaDI37GGK9doMDSe/1y/
-        f1pFHuluczWb8GWyBAQuVluCnMXMH0JC8k48ONbygBT39+5XFPjbfnSxAyjBAf4NpEvlWx
-        zFPPjG3G/kE2lNOhp0hVuCZMe/dcU00=
-Received: from mimecast-mx02.redhat.com (mx3-rdu2.redhat.com
- [66.187.233.73]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-630-xSYMGA7rM6C5pLqfMBrTEw-1; Tue, 16 May 2023 20:18:51 -0400
-X-MC-Unique: xSYMGA7rM6C5pLqfMBrTEw-1
-Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com [10.11.54.7])
-        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        Tue, 16 May 2023 21:02:53 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4557E1BFD;
+        Tue, 16 May 2023 18:02:52 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B3A533810B05;
-        Wed, 17 May 2023 00:18:50 +0000 (UTC)
-Received: from localhost (ovpn-12-79.pek2.redhat.com [10.72.12.79])
-        by smtp.corp.redhat.com (Postfix) with ESMTPS id 02B2A1410DD5;
-        Wed, 17 May 2023 00:18:49 +0000 (UTC)
-Date:   Wed, 17 May 2023 08:18:46 +0800
-From:   Baoquan He <bhe@redhat.com>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org,
-        schnelle@linux.ibm.com, linux-s390@vger.kernel.org,
+        by dfw.source.kernel.org (Postfix) with ESMTPS id DB20264073;
+        Wed, 17 May 2023 01:02:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF893C433EF;
+        Wed, 17 May 2023 01:02:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1684285371;
+        bh=nVMhlmmUXfL1NdxdVCdqZzrzgKQ9uLWQHIfd1j3SZzA=;
+        h=Date:From:To:Cc:Subject:From;
+        b=AMP3rdH1zjSserQL0c9yAZPalpvwfhgz/4bMBrVqJE2dS6Ln6f/w24UpmFrinkwaG
+         MOW9rbW8RAsq4t6F+zAId0LrfuI/Fc3EcDNvhMYPjiu+RcI0rbEmkdy7fqZiSRsx6I
+         TQp1QqVq6YAKat7pbiwEp0AvhX2B6xZUB5+9pe2jiQYe+NCJKjK2XhGGpakPwJ2qbr
+         GJQnJRk5u78PDtRIVhh4P8Z0wXTNe37uc5cn8rZsoytD27gs7/ijuQz21G530mkx1u
+         Pd5HjfJJVLAdUxX8a1guhBCKCoeMRuxccDt5LheXXoWdLYXVvR64bnUGEK8QVO2VQQ
+         5ydG6NC7cR25g==
+Date:   Tue, 16 May 2023 19:03:39 -0600
+From:   "Gustavo A. R. Silva" <gustavoars@kernel.org>
+To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org
-Subject: Re: [PATCH RESEND 2/2] dmaengine: make QCOM_HIDMA depend on HAS_IOMEM
-Message-ID: <ZGQdZhutT+lUdily@MiWiFi-R3L-srv>
-References: <20230506111628.712316-1-bhe@redhat.com>
- <20230506111628.712316-3-bhe@redhat.com>
- <ZGPD1wELeXafPJ/T@matsya>
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
+        linux-hardening@vger.kernel.org
+Subject: [PATCH][next] media: venus: hfi_cmds: Replace fake flex-array with
+ flexible-array member
+Message-ID: <ZGQn63U4IeRUiJWb@work>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZGPD1wELeXafPJ/T@matsya>
-X-Scanned-By: MIMEDefang 3.1 on 10.11.54.7
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -66,66 +60,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/16/23 at 11:26pm, Vinod Koul wrote:
-> On 06-05-23, 19:16, Baoquan He wrote:
-> > On s390 systems (aka mainframes), it has classic channel devices for
-> > networking and permanent storage that are currently even more common
-> > than PCI devices. Hence it could have a fully functional s390 kernel
-> > with CONFIG_PCI=n, then the relevant iomem mapping functions
-> > [including ioremap(), devm_ioremap(), etc.] are not available.
-> > 
-> > Here let QCOM_HIDMA depend on HAS_IOMEM so that it won't be built to
-> > cause below compiling error if PCI is unset.
-> 
-> I have 2/2 patch here, where is patch 1 of 2..?
+One-element arrays are deprecated, and we are replacing them with flexible
+array members instead. So, replace one-element arrays with flexible-array
+members in struct hfi_sys_set_resource_pkt, and refactor the rest of
+the code, accordingly.
 
-It's here, thanks for check.
-https://lore.kernel.org/all/20230506111628.712316-2-bhe@redhat.com/T/#u
+This helps with the ongoing efforts to tighten the FORTIFY_SOURCE
+routines on memcpy() and help us make progress towards globally
+enabling -fstrict-flex-arrays=3 [1].
 
-I used get_maintainer to get reivewers list, seems your contact is only
-put in 2/2 patch. I also sent to lkml, linux-mm and s390 mailing list,
-so the whole series can be seen in any of the ML.
+The only binary differences seen before/after changes are the
+following:
 
-Thanks
-Baoquan
+     17ba:      mov    %rbx,%rdi
+     17bd:      call   17c2 <pkt_sys_set_resource+0x42>
+                        17be: R_X86_64_PLT32    __tsan_write4-0x4
+-    17c2:      movl   $0x14,(%rbx)
++    17c2:      movl   $0x10,(%rbx)
+     17c8:      lea    0x4(%rbx),%rdi
+     17cc:      call   17d1 <pkt_sys_set_resource+0x51>
+                        17cd: R_X86_64_PLT32    __tsan_write4-0x4
 
-> 
-> > 
-> > --------------------------------------------------------
-> > ld: drivers/dma/qcom/hidma.o: in function `hidma_probe':
-> > hidma.c:(.text+0x4b46): undefined reference to `devm_ioremap_resource'
-> > ld: hidma.c:(.text+0x4b9e): undefined reference to `devm_ioremap_resource'
-> > make[1]: *** [scripts/Makefile.vmlinux:35: vmlinux] Error 1
-> > make: *** [Makefile:1264: vmlinux] Error 2
-> > 
-> > Signed-off-by: Baoquan He <bhe@redhat.com>
-> > Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
-> > Cc: Andy Gross <agross@kernel.org>
-> > Cc: Bjorn Andersson <andersson@kernel.org>
-> > Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > Cc: Vinod Koul <vkoul@kernel.org>
-> > Cc: linux-arm-msm@vger.kernel.org
-> > Cc: dmaengine@vger.kernel.org
-> > ---
-> >  drivers/dma/qcom/Kconfig | 1 +
-> >  1 file changed, 1 insertion(+)
-> > 
-> > diff --git a/drivers/dma/qcom/Kconfig b/drivers/dma/qcom/Kconfig
-> > index 3f926a653bd8..ace75d7b835a 100644
-> > --- a/drivers/dma/qcom/Kconfig
-> > +++ b/drivers/dma/qcom/Kconfig
-> > @@ -45,6 +45,7 @@ config QCOM_HIDMA_MGMT
-> >  
-> >  config QCOM_HIDMA
-> >  	tristate "Qualcomm Technologies HIDMA Channel support"
-> > +	depends on HAS_IOMEM
-> >  	select DMA_ENGINE
-> >  	help
-> >  	  Enable support for the Qualcomm Technologies HIDMA controller.
-> > -- 
-> > 2.34.1
-> 
-> -- 
-> ~Vinod
-> 
+which is expected once this accounts for the following line of code
+at  drivers/media/platform/qcom/venus/hfi_cmds.c:73
+
+73         pkt->hdr.size = sizeof(*pkt);
+
+and as *pkt is of type struct hfi_sys_set_resource_pkt, sizeof(*pkt) is
+reduced by 4 bytes, due to the flex-array transformation.
+
+Link: https://github.com/KSPP/linux/issues/79
+Link: https://github.com/KSPP/linux/issues/293
+Link: https://gcc.gnu.org/pipermail/gcc-patches/2022-October/602902.html [1]
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+---
+ drivers/media/platform/qcom/venus/hfi_cmds.c | 2 +-
+ drivers/media/platform/qcom/venus/hfi_cmds.h | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+index 3f74d518ad08..7c82e212434e 100644
+--- a/drivers/media/platform/qcom/venus/hfi_cmds.c
++++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+@@ -83,7 +83,7 @@ int pkt_sys_set_resource(struct hfi_sys_set_resource_pkt *pkt, u32 id, u32 size,
+ 		res->size = size;
+ 		res->mem = addr;
+ 		pkt->resource_type = HFI_RESOURCE_OCMEM;
+-		pkt->hdr.size += sizeof(*res) - sizeof(u32);
++		pkt->hdr.size += sizeof(*res);
+ 		break;
+ 	}
+ 	case VIDC_RESOURCE_NONE:
+diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.h b/drivers/media/platform/qcom/venus/hfi_cmds.h
+index ba74d03eb9cd..dd9c5066442d 100644
+--- a/drivers/media/platform/qcom/venus/hfi_cmds.h
++++ b/drivers/media/platform/qcom/venus/hfi_cmds.h
+@@ -56,7 +56,7 @@ struct hfi_sys_set_resource_pkt {
+ 	struct hfi_pkt_hdr hdr;
+ 	u32 resource_handle;
+ 	u32 resource_type;
+-	u32 resource_data[1];
++	u32 resource_data[];
+ };
+ 
+ struct hfi_sys_release_resource_pkt {
+-- 
+2.34.1
 
