@@ -2,78 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30F2A70703F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 19:59:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A9F7707054
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 20:01:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229630AbjEQR7N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 13:59:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38392 "EHLO
+        id S229772AbjEQSBV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 14:01:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229684AbjEQR7B (ORCPT
+        with ESMTP id S229721AbjEQSBU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 13:59:01 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E68C5588
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 10:58:49 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-96652cb7673so172076566b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 10:58:49 -0700 (PDT)
+        Wed, 17 May 2023 14:01:20 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01C202D5A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 11:01:11 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-965f7bdab6bso202262666b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 11:01:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684346328; x=1686938328;
+        d=linaro.org; s=google; t=1684346469; x=1686938469;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=3xY1JCEQxcvzs0PmRIIYxSLiWCMdSU7/ohWJm/hG6xo=;
-        b=KuyZ4BSpveQ66Kj7PM9d4+h4kwrBu5OJuEFatgNtyCQxJbCrA33RS+HKUUfws2z2yU
-         +WXpdgic2ft5KJk0W1KKD6XP7dwINh0nosE8QQ4i9Tp5LJtGZYy4uUI6fE+1nAvfcU+o
-         2j2rpSCIO6agggEbsMJhMRDL3Akee8twxUB218bO0ucZey7pAQYG2xH2e8tgl1rzpinU
-         xmtToOaPD8k+6GeWkb7YNCguTws3pUz+oau8dNv6yLNvUO5qY5omMuqezVb7jZ4HqSkr
-         PMTNzChR21QGqeQHQF/dduKl0qvYYYrgY8Wz2aM0RgDJIiunkfFEFEstSdAJ7wTDqcKK
-         pW/w==
+        bh=VPjH+AyIlGHtcYsMCoD8SjkZqBgLcEDJmRre38IR4fs=;
+        b=m45d4S0F3TH37O+Gj63MF73tYqlxMelat9CME2f4e/lla5QOkzkmD+fq8tvAnDj1/f
+         5fIMbxuuygLE5OscAlgwVZbh7O8cWmg3d1j+40whh7jeEsLyPjX+X8E8gHc4EGczfnVk
+         3MLQmxr5+6nmnuEdbmgFu262RZcoGA1iaOtWpebAtB+0NakFNNCGw0IqGrHETxpAkRQm
+         gqgom7gHtbjw6TmjEmbWw+4cMR3SOrKD1c++tSZYivqmteixmS7LmevAFoP4HV9AZW6z
+         lb7+cOT+qV/+mbqDliGaKgo84Mh7lvja/WxWddTKcn2GVtp7B8DmazUjNQ8Z7cHRja+O
+         zAqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684346328; x=1686938328;
+        d=1e100.net; s=20221208; t=1684346469; x=1686938469;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3xY1JCEQxcvzs0PmRIIYxSLiWCMdSU7/ohWJm/hG6xo=;
-        b=bXlLfHbPBeC5Gl8f0etcmXON+WksQEQ/Y3AxgFQuXWJ0J2inqfV0xAW2HhFl1NRIOf
-         q6kO3GSgPiIxV4sE05w+QEiT6ZU+bojhutT0agQ6nXVyfGR2aKXzbUNRsBOBIdQ6voAk
-         AhFE6mZ+7FO/aCJfqeiBF9hYPeQwfunB6G4fn+JiQTE9SmB2EggBKPEal5xeEPGEp5Vb
-         pYJkyflnspoBM+YiFWpZxVKx1Mq+2vj211NUVCy/8PZTBvuMw4Z5uyYLR1Mg55N1KI2R
-         /r1jmbu256U+RA1nw4jAIbKfMUMv2uy5BN5uDM5UFIX7bLe9oU4FgWrroasuKd//r09l
-         pcXQ==
-X-Gm-Message-State: AC+VfDzhQyvfhkT4kut+lQn7JVkq8f/Ss6iLojWnU7egZ+V0HaBTvChv
-        +EjMndw/zaDN9zvRRjNJ+iJuIw==
-X-Google-Smtp-Source: ACHHUZ4+I04w2oCouHmiraoxQ9cnEQIU0CDJVo5wdeZ/CokqQoACA/pFV0LqPYEBUzSYqDjhdWBRjg==
-X-Received: by 2002:a17:906:9749:b0:96f:1b96:6147 with SMTP id o9-20020a170906974900b0096f1b966147mr1208654ejy.55.1684346327721;
-        Wed, 17 May 2023 10:58:47 -0700 (PDT)
+        bh=VPjH+AyIlGHtcYsMCoD8SjkZqBgLcEDJmRre38IR4fs=;
+        b=XUjg35N1E+wGeuxuhq5fQPrIbHWEw2AptCeDvo2OfJahZiGThaZoyUlKyiwgForE8z
+         8GLkBdtYkhG9QEhJ4IZjVK0igj0FXOUWW2mzKQu8++7/nMYnW7qNWp1ThkfZXzrY/7nv
+         J01joEg7sCDBeT1JeXTpZAq3Df+eLzFMpnkugviRDh84nqtpR4BBBGtdy73+J7GrSRWM
+         wRnKjfnN84rU+b7D+EZOvtY6++OQsZHJQcxQGs2Cz1AKms8M5oouMXgfyMpsnAGHVEmt
+         2t6g2ZxH+9ez1OON1+zPLvDbLwRW7UMTgqJPrZf9QQP2OmIs7Ofkg1m/R+IcmqeF3GZv
+         0LVw==
+X-Gm-Message-State: AC+VfDyqMhP7hfRyqesYUoxoZc5s1CnXo2aN2W1AqhopYUsZ9AOOrLzz
+        T/raIg5T9XvgCckXQ4UFt2vRtw==
+X-Google-Smtp-Source: ACHHUZ4g2WtZ5hlvOmXPEF17atv8bVoLgjz7HOHZ3CGenXQf5HRVcvc35O4CYw6HgWqI7/aDgDBmYQ==
+X-Received: by 2002:a17:907:2da9:b0:94f:247d:44d2 with SMTP id gt41-20020a1709072da900b0094f247d44d2mr38652805ejc.5.1684346469404;
+        Wed, 17 May 2023 11:01:09 -0700 (PDT)
 Received: from ?IPV6:2a02:810d:15c0:828:c9ff:4c84:dd21:568d? ([2a02:810d:15c0:828:c9ff:4c84:dd21:568d])
-        by smtp.gmail.com with ESMTPSA id ay20-20020a056402203400b00502689a06b2sm9632296edb.91.2023.05.17.10.58.46
+        by smtp.gmail.com with ESMTPSA id d21-20020a170906c21500b00965fdb90801sm12672206ejz.153.2023.05.17.11.01.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 May 2023 10:58:47 -0700 (PDT)
-Message-ID: <3239db1b-3ade-8881-e05b-2e69a7d5f287@linaro.org>
-Date:   Wed, 17 May 2023 19:58:46 +0200
+        Wed, 17 May 2023 11:01:08 -0700 (PDT)
+Message-ID: <904b0fad-16ec-6633-fee9-60c24e9daf14@linaro.org>
+Date:   Wed, 17 May 2023 20:01:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH 1/4] dt-bindings: clock: Add Qcom SM8450 GPUCC
+Subject: Re: [PATCH v11 1/4] dt-bindings: phy: qcom,qmp-usb: Drop legacy
+ bindings and move to newer one (SM6115 & QCM2290)
 Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230517-topic-waipio-gpucc-v1-0-4f40e282af1d@linaro.org>
- <20230517-topic-waipio-gpucc-v1-1-4f40e282af1d@linaro.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-phy@lists.infradead.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        andersson@kernel.org, bhupesh.linux@gmail.com, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org, kishon@kernel.org, vkoul@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, dmitry.baryshkov@linaro.org
+References: <20230516150511.2346357-1-bhupesh.sharma@linaro.org>
+ <20230516150511.2346357-2-bhupesh.sharma@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230517-topic-waipio-gpucc-v1-1-4f40e282af1d@linaro.org>
+In-Reply-To: <20230516150511.2346357-2-bhupesh.sharma@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,78 +81,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/05/2023 18:40, Konrad Dybcio wrote:
-> Add device tree bindings for the graphics clock controller on Qualcomm
-> Technology Inc's SM8450 SoCs.
+On 16/05/2023 17:05, Bhupesh Sharma wrote:
+> 'qcom,msm8996-qmp-usb3-phy.yaml' defines bindings for several PHYs
+> which predate USB -> USB+DP migration. Since SM6115 and QCM2290
+> nodes for USB QMP phy are being added to dtsi files by followup patches,
+> move these bindings instead to the newer style
+> 'qcom,sc8280xp-qmp-usb3-uni-phy.yaml' file.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  .../bindings/clock/qcom,sm8450-gpucc.yaml          | 73 ++++++++++++++++++++++
->  include/dt-bindings/clock/qcom,sm8450-gpucc.h      | 48 ++++++++++++++
->  include/dt-bindings/reset/qcom,sm8450-gpucc.h      | 20 ++++++
->  3 files changed, 141 insertions(+)
+> Since no device trees use these bindings presently, so we have no ABI breakages
+> with this patch.
 > 
-> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml
-> new file mode 100644
-> index 000000000000..ad913b2daf0c
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-gpucc.yaml
-> @@ -0,0 +1,73 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/clock/qcom,sm8450-gpucc.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Graphics Clock & Reset Controller on SM8450
-> +
-> +maintainers:
-> +  - Konrad Dybcio <konrad.dybcio@linaro.org>
-> +
-> +description: |
-> +  Qualcomm graphics clock control module provides the clocks, resets and power
-> +  domains on Qualcomm SoCs.
-> +
-> +  See also::
-> +    include/dt-bindings/clock/qcom,sm8450-gpucc.h
-> +    include/dt-bindings/reset/qcom,sm8450-gpucc.h
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,sm8450-gpucc
-> +
-> +  clocks:
-> +    items:
-> +      - description: Board XO source
-> +      - description: GPLL0 main branch source
-> +      - description: GPLL0 div branch source
-> +
-> +  '#clock-cells':
-> +    const: 1
-> +
-> +  '#reset-cells':
-> +    const: 1
-> +
-> +  '#power-domain-cells':
-> +    const: 1
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 
-If there is going to be new version:
-
-Keep the same order as in properties:, so if reg is not second there,
-neither should be here.
-
-In any case:
 
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
 
 Best regards,
 Krzysztof
