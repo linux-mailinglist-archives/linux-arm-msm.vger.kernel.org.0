@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A7BB707409
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 23:20:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4161670740C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 23:21:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229468AbjEQVUL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 17:20:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58576 "EHLO
+        id S229770AbjEQVV1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 17:21:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230169AbjEQVTp (ORCPT
+        with ESMTP id S229578AbjEQVV0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 17:19:45 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66DC3D2D7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:19:24 -0700 (PDT)
+        Wed, 17 May 2023 17:21:26 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D507E61B3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:20:53 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id DCC363F805;
-        Wed, 17 May 2023 23:18:41 +0200 (CEST)
-Date:   Wed, 17 May 2023 23:18:40 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 828873F6B3;
+        Wed, 17 May 2023 23:19:44 +0200 (CEST)
+Date:   Wed, 17 May 2023 23:19:43 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Jessica Zhang <quic_jesszhan@quicinc.com>
 Cc:     freedreno@lists.freedesktop.org,
@@ -33,68 +33,138 @@ Cc:     freedreno@lists.freedesktop.org,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
         linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v11 3/9] drm/display/dsc: Add drm_dsc_get_bpp_int helper
-Message-ID: <yrkishznoq5zyyu5mqutnzfx3rsrwq373zij2nzajjhf3yyw4f@bml6t4qjkjj6>
+Subject: Re: [PATCH v11 4/9] drm/msm/dsi: use DRM DSC helpers for DSC setup
+Message-ID: <l6sqloieycjla32a7mgchdmlccczzukl7hiqpy7spfyxg4q6y2@x5dph6s3nguw>
 References: <20230329-rfc-msm-dsc-helper-v11-0-30270e1eeac3@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v11-3-30270e1eeac3@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v11-4-30270e1eeac3@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230329-rfc-msm-dsc-helper-v11-3-30270e1eeac3@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230329-rfc-msm-dsc-helper-v11-4-30270e1eeac3@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-17 11:51:12, Jessica Zhang wrote:
-> Add helper to get the integer value of drm_dsc_config.bits_per_pixel
+On 2023-05-17 11:51:13, Jessica Zhang wrote:
+> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
+> Use new DRM DSC helpers to setup DSI DSC configuration. The
+> initial_scale_value needs to be adjusted according to the standard, but
+> this is a separate change.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 
-Seems fine, but folks might request to make int->integer to make it more
-clear that it returns the integer part, and/or add the commit body to a
-documentation comment.
-
-Similarly I wonder if we should add a constructor too that can be used
-in RC table creation and panel drivers.
+Nothing changed since v10 so it should have been finde to pick up my
+r-b [1]?
 
 Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
+[1]: https://lore.kernel.org/linux-arm-msm/6f3v5xmv66yw7mxecwqbrj6mxlfos3cwosb6xqs7hjbgrjgfqz@acm27l7qot5f/
 
 - Marijn
 
 > ---
->  include/drm/display/drm_dsc_helper.h | 7 +++++++
->  1 file changed, 7 insertions(+)
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 61 +++++---------------------------------
+>  1 file changed, 8 insertions(+), 53 deletions(-)
 > 
-> diff --git a/include/drm/display/drm_dsc_helper.h b/include/drm/display/drm_dsc_helper.h
-> index ea99b0b90674..b7956830cab9 100644
-> --- a/include/drm/display/drm_dsc_helper.h
-> +++ b/include/drm/display/drm_dsc_helper.h
-> @@ -9,6 +9,7 @@
->  #define DRM_DSC_HELPER_H_
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 961689a255c4..74d38f90398a 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -1731,28 +1731,9 @@ static int dsi_host_parse_lane_data(struct msm_dsi_host *msm_host,
+>  	return -EINVAL;
+>  }
 >  
->  #include <drm/display/drm_dsc.h>
-> +#include <linux/bug.h>
->  
->  enum drm_dsc_params_kind {
->  	DRM_DSC_1_2_444,
-> @@ -26,6 +27,12 @@ void drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg);
->  int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg, enum drm_dsc_params_kind kind);
->  int drm_dsc_compute_rc_parameters(struct drm_dsc_config *vdsc_cfg);
->  
-> +static inline u32 drm_dsc_get_bpp_int(const struct drm_dsc_config *dsc)
-> +{
-> +	WARN_ON_ONCE(dsc->bits_per_pixel & 0xf);
-> +	return dsc->bits_per_pixel >> 4;
-> +}
-> +
->  static inline u8 drm_dsc_initial_scale_value(const struct drm_dsc_config *dsc)
+> -static u32 dsi_dsc_rc_buf_thresh[DSC_NUM_BUF_RANGES - 1] = {
+> -	0x0e, 0x1c, 0x2a, 0x38, 0x46, 0x54, 0x62,
+> -	0x69, 0x70, 0x77, 0x79, 0x7b, 0x7d, 0x7e
+> -};
+> -
+> -/* only 8bpc, 8bpp added */
+> -static char min_qp[DSC_NUM_BUF_RANGES] = {
+> -	0, 0, 1, 1, 3, 3, 3, 3, 3, 3, 5, 5, 5, 7, 13
+> -};
+> -
+> -static char max_qp[DSC_NUM_BUF_RANGES] = {
+> -	4, 4, 5, 6, 7, 7, 7, 8, 9, 10, 11, 12, 13, 13, 15
+> -};
+> -
+> -static char bpg_offset[DSC_NUM_BUF_RANGES] = {
+> -	2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -12, -12, -12
+> -};
+> -
+>  static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc_config *dsc)
 >  {
->  	return 8 * dsc->rc_model_size / (dsc->rc_model_size - dsc->initial_offset);
+> -	int i;
+> -	u16 bpp = dsc->bits_per_pixel >> 4;
+> +	int ret;
+>  
+>  	if (dsc->bits_per_pixel & 0xf) {
+>  		DRM_DEV_ERROR(&msm_host->pdev->dev, "DSI does not support fractional bits_per_pixel\n");
+> @@ -1764,49 +1745,23 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
+>  		return -EOPNOTSUPP;
+>  	}
+>  
+> -	dsc->rc_model_size = 8192;
+> -	dsc->first_line_bpg_offset = 12;
+> -	dsc->rc_edge_factor = 6;
+> -	dsc->rc_tgt_offset_high = 3;
+> -	dsc->rc_tgt_offset_low = 3;
+>  	dsc->simple_422 = 0;
+>  	dsc->convert_rgb = 1;
+>  	dsc->vbr_enable = 0;
+>  
+> -	/* handle only bpp = bpc = 8 */
+> -	for (i = 0; i < DSC_NUM_BUF_RANGES - 1 ; i++)
+> -		dsc->rc_buf_thresh[i] = dsi_dsc_rc_buf_thresh[i];
+> +	drm_dsc_set_const_params(dsc);
+> +	drm_dsc_set_rc_buf_thresh(dsc);
+>  
+> -	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
+> -		dsc->rc_range_params[i].range_min_qp = min_qp[i];
+> -		dsc->rc_range_params[i].range_max_qp = max_qp[i];
+> -		/*
+> -		 * Range BPG Offset contains two's-complement signed values that fill
+> -		 * 8 bits, yet the registers and DCS PPS field are only 6 bits wide.
+> -		 */
+> -		dsc->rc_range_params[i].range_bpg_offset = bpg_offset[i] & DSC_RANGE_BPG_OFFSET_MASK;
+> +	/* handle only bpp = bpc = 8, pre-SCR panels */
+> +	ret = drm_dsc_setup_rc_params(dsc, DRM_DSC_1_1_PRE_SCR);
+> +	if (ret) {
+> +		DRM_DEV_ERROR(&msm_host->pdev->dev, "could not find DSC RC parameters\n");
+> +		return ret;
+>  	}
+>  
+> -	dsc->initial_offset = 6144;		/* Not bpp 12 */
+> -	if (bpp != 8)
+> -		dsc->initial_offset = 2048;	/* bpp = 12 */
+> -
+> -	if (dsc->bits_per_component <= 10)
+> -		dsc->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
+> -	else
+> -		dsc->mux_word_size = DSC_MUX_WORD_SIZE_12_BPC;
+> -
+> -	dsc->initial_xmit_delay = 512;
+>  	dsc->initial_scale_value = 32;
+> -	dsc->first_line_bpg_offset = 12;
+>  	dsc->line_buf_depth = dsc->bits_per_component + 1;
+>  
+> -	/* bpc 8 */
+> -	dsc->flatness_min_qp = 3;
+> -	dsc->flatness_max_qp = 12;
+> -	dsc->rc_quant_incr_limit0 = 11;
+> -	dsc->rc_quant_incr_limit1 = 11;
+> -
+>  	return drm_dsc_compute_rc_parameters(dsc);
+>  }
+>  
 > 
 > -- 
 > 2.40.1
