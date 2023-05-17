@@ -2,131 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51F35705BD5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 02:09:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47062705BE5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 02:19:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231506AbjEQAJ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 16 May 2023 20:09:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44864 "EHLO
+        id S231393AbjEQATp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 16 May 2023 20:19:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231500AbjEQAJ0 (ORCPT
+        with ESMTP id S229638AbjEQATp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 16 May 2023 20:09:26 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DA531B5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 17:09:22 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f00d41df22so7403955e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 17:09:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684282160; x=1686874160;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=agnI71DeqMEcuH4UFBI4XPgWdUIXdzUdwTpLk6XuB60=;
-        b=xDdOoYoImw2jitgueQG4b+g9UFSnySQeghPko2OyUMkayUrF4n0cYdTKI+Nj3dA/4q
-         mAtzoqp5UEK1Uhc86bGzKO7iUuKfYr6vr9bvEMNPugMIrQ1rtYhlR6cRAAe14g4cXlPs
-         3tAxRUJQQsAh30tNFjcCfBlGUyjP6MWnY6WGW4612Q1oM7cqsfxRlKH/x7bg8XV/0ZLV
-         27juqKqGxNVUOdgBNEYhoOyQ5UM9vePYPWUp78DueO0klgqDb8nVQWzGZHHXwgQN36In
-         K4hJgeJv3SUu1FdPzoMSW88Qdkzzt8/4A+PrPa9zyDGwiLGco1b3hMuKyubz1nr6gGat
-         OA6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684282160; x=1686874160;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=agnI71DeqMEcuH4UFBI4XPgWdUIXdzUdwTpLk6XuB60=;
-        b=ENiIBL2wVnuZvSENgYX/Di02FRICsYeWtMiydSb0h+bhWsgVmpdTKCFxTlc7h06cQq
-         7MZOfdsdj8DdlouXIjWy9njovESJ8pVNdGJuQ+tJ1ZbrMXCBqwGzZNGHlu985yZOi/Zr
-         GZL8RnfEyUlMFmF/ViCIrXR9LKQ+kPlDjnfcDK+iqnyK1t0kn96M9oqw3ziCNwJqHLJX
-         IuQ4NW2PrgTI2dZ9wMubbcvFRj1NuBGFAQO3lipUUYkXgSvPwCzhDlq0Os1aa0brAkGS
-         DhTM1V/7Aax6pt7UAQN9RZtiNEFGCyHrD2I+X2fl6ph+NMcE223WO4+/0vN2krkvN3A+
-         fehg==
-X-Gm-Message-State: AC+VfDyrpjdle6YHMtA+PjqvT7mUXAoexhuRwuzvVBC/a7Kgk7wOIqDG
-        wGjoaZzq7D0Zik5nVC8Bh/Lg+A==
-X-Google-Smtp-Source: ACHHUZ5q46LuyMAjzi0XfU8G7oWj0poNR12qZe/fqLFOIq8cSZKm65x3MnH3Y0Y+WHkzPyVLEJ1Vdw==
-X-Received: by 2002:a05:6512:21c3:b0:4ed:d5ce:7dea with SMTP id d3-20020a05651221c300b004edd5ce7deamr86140lft.27.1684282160195;
-        Tue, 16 May 2023 17:09:20 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id y13-20020ac2420d000000b004efedad4604sm3131749lfh.18.2023.05.16.17.09.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 May 2023 17:09:19 -0700 (PDT)
-Message-ID: <bd10673e-806d-4a4f-32e1-c709a757ba02@linaro.org>
-Date:   Wed, 17 May 2023 03:09:19 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH V6 2/3] soc: qcom: boot_stat: Add Driver Support for Boot
- Stats
-Content-Language: en-GB
-To:     Arnd Bergmann <arnd@arndb.de>,
-        Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Tue, 16 May 2023 20:19:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44B872136
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 17:18:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1684282734;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=fAWA1BLnS6OZoKpUWNVEQYD1QFUo+cJ+dgpIwEFG8vQ=;
+        b=MyKNlXGC4lLrsgqQZYBSCeq2R2EJhlFeyansotgpO/+ZclrpYBkaDI37GGK9doMDSe/1y/
+        f1pFHuluczWb8GWyBAQuVluCnMXMH0JC8k48ONbygBT39+5XFPjbfnSxAyjBAf4NpEvlWx
+        zFPPjG3G/kE2lNOhp0hVuCZMe/dcU00=
+Received: from mimecast-mx02.redhat.com (mx3-rdu2.redhat.com
+ [66.187.233.73]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-630-xSYMGA7rM6C5pLqfMBrTEw-1; Tue, 16 May 2023 20:18:51 -0400
+X-MC-Unique: xSYMGA7rM6C5pLqfMBrTEw-1
+Received: from smtp.corp.redhat.com (int-mx07.intmail.prod.int.rdu2.redhat.com [10.11.54.7])
+        (using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        by mimecast-mx02.redhat.com (Postfix) with ESMTPS id B3A533810B05;
+        Wed, 17 May 2023 00:18:50 +0000 (UTC)
+Received: from localhost (ovpn-12-79.pek2.redhat.com [10.72.12.79])
+        by smtp.corp.redhat.com (Postfix) with ESMTPS id 02B2A1410DD5;
+        Wed, 17 May 2023 00:18:49 +0000 (UTC)
+Date:   Wed, 17 May 2023 08:18:46 +0800
+From:   Baoquan He <bhe@redhat.com>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-mm@kvack.org,
+        schnelle@linux.ibm.com, linux-s390@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <cover.1683628357.git.quic_schowdhu@quicinc.com>
- <35863b47c04c2edd7ae49c57d23682aba6111d4f.1683628357.git.quic_schowdhu@quicinc.com>
- <3faa9bf7-b42c-4951-8103-9ea2fe02eac1@app.fastmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <3faa9bf7-b42c-4951-8103-9ea2fe02eac1@app.fastmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org
+Subject: Re: [PATCH RESEND 2/2] dmaengine: make QCOM_HIDMA depend on HAS_IOMEM
+Message-ID: <ZGQdZhutT+lUdily@MiWiFi-R3L-srv>
+References: <20230506111628.712316-1-bhe@redhat.com>
+ <20230506111628.712316-3-bhe@redhat.com>
+ <ZGPD1wELeXafPJ/T@matsya>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZGPD1wELeXafPJ/T@matsya>
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.7
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/05/2023 11:19, Arnd Bergmann wrote:
-> On Tue, May 9, 2023, at 12:52, Souradeep Chowdhury wrote:
->> All of Qualcomm's proprietary Android boot-loaders capture boot time
->> stats, like the time when the bootloader started execution and at what
->> point the bootloader handed over control to the kernel etc. in the IMEM
->> region. This information is captured in a specific format by this driver
->> by mapping a structure to the IMEM memory region and then accessing the
->> members of the structure to show the information within debugfs file.
->> This information is useful in verifying if the existing boot KPIs have
->> regressed or not. The information is shown in milliseconds, a sample
->> log from sm8450(waipio) device is as follows:-
->>
->> /sys/kernel/debug/qcom_boot_stats # cat abl_time
->> 17898 ms
->> /sys/kernel/debug/qcom_boot_stats # cat pre_abl_time
->> 2879 ms
->>
->> The Module Power Manager(MPM) sleep counter starts ticking at the PBL
->> stage and the timestamp generated by the sleep counter is logged by
->> the Qualcomm proprietary bootloader(ABL) at two points-> First when it
->> starts execution which is logged here as "pre_abl_time" and the second
->> when it is about to load the kernel logged as "abl_time". Documentation
->> details are also added in Documentation/ABI/testing/debugfs-driver-bootstat
->>
->> Signed-off-by: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
->> ---
->>   .../ABI/testing/debugfs-driver-bootstat       |  17 +++
->>   drivers/soc/qcom/Kconfig                      |  10 ++
->>   drivers/soc/qcom/Makefile                     |   1 +
->>   drivers/soc/qcom/boot_stats.c                 | 100 ++++++++++++++++++
+On 05/16/23 at 11:26pm, Vinod Koul wrote:
+> On 06-05-23, 19:16, Baoquan He wrote:
+> > On s390 systems (aka mainframes), it has classic channel devices for
+> > networking and permanent storage that are currently even more common
+> > than PCI devices. Hence it could have a fully functional s390 kernel
+> > with CONFIG_PCI=n, then the relevant iomem mapping functions
+> > [including ioremap(), devm_ioremap(), etc.] are not available.
+> > 
+> > Here let QCOM_HIDMA depend on HAS_IOMEM so that it won't be built to
+> > cause below compiling error if PCI is unset.
 > 
-> As mentioned in my reply to the binding, I don't think this should
-> be a driver at all. On top of that, even if it was a driver, it is
-> clearly not a "soc" driver since nothing in it has any relevance to
-> the hardware, rather than the first-stage loader, and drivers/soc/
-> drivers should never have their own user space interface either.
+> I have 2/2 patch here, where is patch 1 of 2..?
 
-I suppose that we should add a proper driver for imem rather than always 
-using it through syscon.
+It's here, thanks for check.
+https://lore.kernel.org/all/20230506111628.712316-2-bhe@redhat.com/T/#u
 
--- 
-With best wishes
-Dmitry
+I used get_maintainer to get reivewers list, seems your contact is only
+put in 2/2 patch. I also sent to lkml, linux-mm and s390 mailing list,
+so the whole series can be seen in any of the ML.
+
+Thanks
+Baoquan
+
+> 
+> > 
+> > --------------------------------------------------------
+> > ld: drivers/dma/qcom/hidma.o: in function `hidma_probe':
+> > hidma.c:(.text+0x4b46): undefined reference to `devm_ioremap_resource'
+> > ld: hidma.c:(.text+0x4b9e): undefined reference to `devm_ioremap_resource'
+> > make[1]: *** [scripts/Makefile.vmlinux:35: vmlinux] Error 1
+> > make: *** [Makefile:1264: vmlinux] Error 2
+> > 
+> > Signed-off-by: Baoquan He <bhe@redhat.com>
+> > Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+> > Cc: Andy Gross <agross@kernel.org>
+> > Cc: Bjorn Andersson <andersson@kernel.org>
+> > Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
+> > Cc: Vinod Koul <vkoul@kernel.org>
+> > Cc: linux-arm-msm@vger.kernel.org
+> > Cc: dmaengine@vger.kernel.org
+> > ---
+> >  drivers/dma/qcom/Kconfig | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/drivers/dma/qcom/Kconfig b/drivers/dma/qcom/Kconfig
+> > index 3f926a653bd8..ace75d7b835a 100644
+> > --- a/drivers/dma/qcom/Kconfig
+> > +++ b/drivers/dma/qcom/Kconfig
+> > @@ -45,6 +45,7 @@ config QCOM_HIDMA_MGMT
+> >  
+> >  config QCOM_HIDMA
+> >  	tristate "Qualcomm Technologies HIDMA Channel support"
+> > +	depends on HAS_IOMEM
+> >  	select DMA_ENGINE
+> >  	help
+> >  	  Enable support for the Qualcomm Technologies HIDMA controller.
+> > -- 
+> > 2.34.1
+> 
+> -- 
+> ~Vinod
+> 
 
