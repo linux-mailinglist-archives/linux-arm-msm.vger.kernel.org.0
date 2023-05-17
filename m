@@ -2,209 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E186D7067F3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 14:22:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86F28706813
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 14:28:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231431AbjEQMWJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 08:22:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37486 "EHLO
+        id S231642AbjEQM2C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 08:28:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230230AbjEQMWI (ORCPT
+        with ESMTP id S231499AbjEQM2B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 08:22:08 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ADFC10E3;
-        Wed, 17 May 2023 05:22:06 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34HAfIQO026608;
-        Wed, 17 May 2023 12:21:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=VH3BAU8yMCKUjeIJzmvqNEkSoCKB5EctEPu7seW1iaw=;
- b=CSqdyTbSCXRGkh1UvjXRXWjkFt/wy8IbjVpKF4siZf9oWz5xzGQtOxNRA/fS5Ttx8hHK
- 2xrW1rxXW6zZ+2WdAKnfPsxPYoeX3wGK6aBr2LnlgEfpd4oJ01khEGkTVz6lx9GBxWUt
- 0Z/ROvCL3NjGsJJPhzlB/yfjz4tzMT5fMkrCxlN2APDaJmIMM9zmuF0kUosq47ytlw2V
- 88eUfPHFciaU33oEN1jkDBe/DED/5OT0vaXoSgN41EbIxew5WpAjFAQhyKZPOZ9tRNmA
- AzGezx+1HhPltwG+XXFkahIapqw/mO3LgCs4bJNIB6KffQZsVLPz0ZXVyPGpoUP0T9oA bA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qmjadhfwh-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 17 May 2023 12:21:57 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34HCLuoU032384
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 17 May 2023 12:21:56 GMT
-Received: from [10.216.29.70] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 17 May
- 2023 05:21:49 -0700
-Message-ID: <82a8c414-bfa8-5066-fb68-1ac117b76c4e@quicinc.com>
-Date:   Wed, 17 May 2023 17:51:45 +0530
+        Wed, 17 May 2023 08:28:01 -0400
+Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9733110;
+        Wed, 17 May 2023 05:27:59 -0700 (PDT)
+Received: from [141.14.220.45] (g45.guest.molgen.mpg.de [141.14.220.45])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits))
+        (No client certificate requested)
+        (Authenticated sender: pmenzel)
+        by mx.molgen.mpg.de (Postfix) with ESMTPSA id 93F7C61E4052B;
+        Wed, 17 May 2023 14:27:45 +0200 (CEST)
+Message-ID: <506df7b0-6ffb-c829-0c82-89a52f0b0892@molgen.mpg.de>
+Date:   Wed, 17 May 2023 14:27:45 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH v8 3/9] usb: dwc3: core: Access XHCI address space
- temporarily to read port info
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v3] Bluetooth: hci_qca: Add support for Qualcomm Bluetooth
+ SoC QCA2066
+To:     Tim Jiang <quic_tjiang@quicinc.com>
+Cc:     marcel@holtmann.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Balakrishna Godavarthi <quic_bgodavar@quicinc.com>,
+        Hemant Gupta <quic_hemantg@quicinc.com>, mka@chromium.org
+References: <20230516104102.30775-1-quic_tjiang@quicinc.com>
+ <3ef9259f-f778-d18c-6fc6-97aab9e9f9fc@molgen.mpg.de>
+ <d3582e14e5204a7895ce34bcbf994533@quicinc.com>
 Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-CC:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Andy Gross" <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_wcheng@quicinc.com>,
-        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
-        <ahalaney@redhat.com>
-References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-4-quic_kriskura@quicinc.com>
- <ZGNy6FvVrBjYmorz@hovoldconsulting.com>
- <b2954b92-8b12-700a-af50-b914af7b0ace@quicinc.com>
- <ZGSDr08h3Go1Dk8C@hovoldconsulting.com>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZGSDr08h3Go1Dk8C@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: IGMLd6dNygQmYRaaa3mNHUlReZRUdCyB
-X-Proofpoint-GUID: IGMLd6dNygQmYRaaa3mNHUlReZRUdCyB
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-17_02,2023-05-17_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=999 spamscore=0 mlxscore=0 malwarescore=0 phishscore=0
- adultscore=0 clxscore=1015 priorityscore=1501 suspectscore=0 bulkscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305170101
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+From:   Paul Menzel <pmenzel@molgen.mpg.de>
+In-Reply-To: <d3582e14e5204a7895ce34bcbf994533@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-5.6 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Dear Tim,
 
 
-On 5/17/2023 1:05 PM, Johan Hovold wrote:
+Am 17.05.23 um 04:46 schrieb Tim Jiang (QUIC):
+> Paul :
+>    Thanks for comments, please see inline comments.
 
->>> You should not make another copy of xhci_find_next_ext_cap(), but rather
->>> use it directly.
->>>
->>> We already have drivers outside of usb/host using this function so it
->>> should be fine to do the same for now:
->>>
->>> 	#include "../host/xhci-ext-caps.h"
-> 
->>     This was the approach which we followed when we first introduced the
->> patch [1]. But Thinh suggested to duplicate code so that we can avoid
->> any dependency on xhci (which seems to be right). So since its just one
->> function, I duplicated it here.
-> 
-> Ok, fair enough. I still think we should not be duplicating the
-> xhci definitions like this even if we were to copy the helper to avoid
-> any future dependencies on xhci (it's currently an inline function,
-> which is also not very nice).
-> 
-> I'll take closer look at the rest of the series as there are a few more
-> of these layering violations which we should try to avoid.
-> 
->>>> +	offset = dwc3_xhci_find_next_ext_cap(regs, 0,
->>>> +					XHCI_EXT_CAPS_PROTOCOL);
->>>> +	while (offset) {
-> 
->>>> +		temp = readl(regs + offset);
->>>> +		major_revision = XHCI_EXT_PORT_MAJOR(temp);
->>>> +
->>>> +		temp = readl(regs + offset + 0x08);
-> 
->>>> +		if (major_revision == 0x03) {
->>>> +			dwc->num_usb3_ports += XHCI_EXT_PORT_COUNT(temp);
->>>> +		} else if (major_revision <= 0x02) {
->>>> +			dwc->num_usb2_ports += XHCI_EXT_PORT_COUNT(temp);
->>>> +		} else {
->>>> +			dev_err(dwc->dev,
->>>> +				"Unrecognized port major revision %d\n", major_revision);
-> 
->>> Perhaps this should be handles as in xhci core by simply warning and
->>> continuing instead.
->>>
->> I broke the loop and went to unmap as we are not sure what values would
->> be read. Any use of continuing ?
-> 
-> Mostly to align with xhci core which currently handles this case. It
-> would not not work unless you get rid of the max-ports check below
-> though.
->   
->>>> +			ret = -EINVAL;
->>>> +			goto unmap_reg;
->>>> +		}
->>>> +
->>>> +		offset = dwc3_xhci_find_next_ext_cap(regs, offset,
->>>> +						XHCI_EXT_CAPS_PROTOCOL);
->>>> +	}
->>>> +
->>>> +	temp = readl(regs + DWC3_XHCI_HCSPARAMS1);
->>>> +	if (HCS_MAX_PORTS(temp) != (dwc->num_usb3_ports + dwc->num_usb2_ports)) {
->>>> +		dev_err(dwc->dev,
->>>> +			"Mismatched reported MAXPORTS (%d)\n", HCS_MAX_PORTS(temp));
->>>> +		ret = -EINVAL;
->>>> +		goto unmap_reg;
->>>> +	}
->>>
->>> Not sure this is needed either.
->>>
->>> Could this risk regressing platforms which does not have currently have
->>> all PHYs described in DT?
->>>
->> No, it doesn't. AFAIK, this only tells how many ports are present as per
->> the core consultant configuration of the device. I tried to explain what
->> would happen incase phy's are not present in DT in [2] & [3].
-> 
-> Right, whether the PHYs are described in DT is not directly related to
-> this.
-> 
-> As long as HCS_MAX_PORTS by definition (assumption) is always
-> (dwc->num_usb3_ports + dwc->num_usb2_ports) any such machines would
-> continue to work.
-> 
-> But if you want to catch machines where this assumption does not hold,
-> you could also end up regressing machines which have so far been working
-> despite these numbers not adding up.
-> 
-> That may be acceptable, but I'm still not sure what the value of this
-> check is (e.g. as xhci core will handle basic sanity checks like usb2 +
-> usb3 <= max_ports).
-> 
+Thank you for your reply. (It’d be great, if you used an email client, 
+that can properly quote/cite like Mozilla Thunderbird.)
 
-Hi Johan,
+> -----Original Message-----
+> From: Paul Menzel <pmenzel@molgen.mpg.de>
+> Sent: Tuesday, May 16, 2023 7:00 PM
 
-   Thanks for the review comments. Ideally the HCC_PARAMS1 must indicate 
-total number of ports supported. If not then I believe the core 
-consultant configuration is wrong.
+> Am 16.05.23 um 12:41 schrieb Tim Jiang:
+>> This patch adds support for QCA2066 firmware patch and nvm downloading.
+> 
+> Could you please elaborate, what new features are needed for this as you add common functions?
+> 
+> Please document the datasheet.
+> [Tim] no new feature, only support new chip qca2066 btfw downloading
 
-According to the spec:
+As I wrote, you add common functions like `qca_read_fw_board_id()`, 
+which were not required before. So please elaborate in the commit message.
 
-"The MaxPorts value in the HCSPARAMS1 register defines the number of
-Port Register Sets (e.g. PORTSC, PORTPMSC, and PORTLI register sets)."
+>> Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
+>> ---
+>>    drivers/bluetooth/btqca.c   | 77 ++++++++++++++++++++++++++++++++++++-
+>>    drivers/bluetooth/btqca.h   |  4 ++
+>>    drivers/bluetooth/hci_qca.c |  8 +++-
+>>    3 files changed, 87 insertions(+), 2 deletions(-)
 
-So shouldn't the (usb2+usb3 ports be equal to MaxPorts to ensure each 
-port properly accesses the respective PortSC etc., ?
+[…]
 
-Do we have any machines today that support HOST_ONLY_CONFIG indicated in 
-HWPARAMS0 that support multiport and violate this rule ?
+>> @@ -574,6 +616,30 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
+>>    }
+>>    EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
+>>    
+>> +static void qca_generate_nvm_name(struct hci_dev *hdev, char *fwname,
+>> +		   size_t max_size, struct qca_btsoc_version ver, u16 bid) {
+>> +	u8 rom_ver = 0;
+>> +	u32 soc_ver;
+> 
+> Any reason to fix the size of the variables?
+> [Tim] sorry , I does not got your point
 
-Regards,
-Krishna,
+Why can’t you simply use `unsigned int` [1]?
+
+[…]
+
+>> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+>> index 1b064504b388..ec24ce451568 100644
+>> --- a/drivers/bluetooth/hci_qca.c
+>> +++ b/drivers/bluetooth/hci_qca.c
+>> @@ -1729,7 +1729,7 @@ static int qca_setup(struct hci_uart *hu)
+>>    	bt_dev_info(hdev, "setting up %s",
+>>    		qca_is_wcn399x(soc_type) ? "wcn399x" :
+>>    		(soc_type == QCA_WCN6750) ? "wcn6750" :
+>> -		(soc_type == QCA_WCN6855) ? "wcn6855" : "ROME/QCA6390");
+>> +		(soc_type == QCA_WCN6855) ? "wcn6855" : "ROME/QCA6390/QCA2066");
+>>    
+>>    	qca->memdump_state = QCA_MEMDUMP_IDLE;
+>>    
+>> @@ -1874,6 +1874,11 @@ static const struct qca_device_data qca_soc_data_qca6390 __maybe_unused = {
+>>    	.num_vregs = 0,
+>>    };
+>>    
+>> +static const struct qca_device_data qca_soc_data_qca2066 = {
+>> +	.soc_type = QCA_QCA2066,
+>> +	.num_vregs = 0,
+>> +};
+>> +
+>>    static const struct qca_device_data qca_soc_data_wcn6750 __maybe_unused = {
+>>    	.soc_type = QCA_WCN6750,
+>>    	.vregs = (struct qca_vreg []) {
+>> @@ -2364,6 +2369,7 @@ static const struct of_device_id qca_bluetooth_of_match[] = {
+>>    	{ .compatible = "qcom,wcn3998-bt", .data = &qca_soc_data_wcn3998},
+>>    	{ .compatible = "qcom,wcn6750-bt", .data = &qca_soc_data_wcn6750},
+>>    	{ .compatible = "qcom,wcn6855-bt", .data = &qca_soc_data_wcn6855},
+>> +	{ .compatible = "qcom,qca2066-bt", .data = &qca_soc_data_qca2066},
+> 
+> Sort it?
+> [Tim] it have been sorted or please guide me how to sort it ?
+
+Sort it lexicographically, that means, q goes before w.
+
+>>    	{ /* sentinel */ }
+>>    };
+>>    MODULE_DEVICE_TABLE(of, qca_bluetooth_of_match);
+
+
+Kind regards,
+
+Paul
