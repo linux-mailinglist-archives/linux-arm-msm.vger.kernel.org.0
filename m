@@ -2,116 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87E0070602B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 08:33:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 65450706032
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 08:34:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232288AbjEQGd4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 02:33:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50632 "EHLO
+        id S231761AbjEQGeN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 02:34:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51026 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230183AbjEQGdz (ORCPT
+        with ESMTP id S232756AbjEQGeL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 02:33:55 -0400
-Received: from smtprelay02.ispgateway.de (smtprelay02.ispgateway.de [80.67.18.14])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1DC7359E;
-        Tue, 16 May 2023 23:33:53 -0700 (PDT)
-Received: from [92.206.161.29] (helo=note-book.lan)
-        by smtprelay02.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-        (Exim 4.94.2)
-        (envelope-from <git@apitzsch.eu>)
-        id 1pzAip-0006Lp-H4; Wed, 17 May 2023 08:33:15 +0200
-From:   =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-Date:   Wed, 17 May 2023 08:32:31 +0200
-Subject: [PATCH v2] arm64: dts: qcom: msm8916-longcheer-l8910: Add front
- flash LED
+        Wed, 17 May 2023 02:34:11 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C13E3C3F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 23:34:04 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-3063433fa66so174704f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 23:34:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684305243; x=1686897243;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=OpTLZX9KtlAuj1Cffw1z+96W8NMTOQYC35BDi4+L6fc=;
+        b=Gf/C3ZqVHbsEB6YKahXvqpjJgBu4gmKvRSW+lGXWxWqoaaDo3fOYjZBa+5vTl98D4o
+         tBO0gLpf4GuNgdoTKqqyL6kggSTNSUdSsp4R+LD1JL+IMXiA3v7AGs+zpBZ1Gbm7AaVB
+         lf3qvTlrEzDYI6SiyOTuqT4V8OTgjrDAZToEV4I+YM2icik9u3KuT9hb+MTbhJ0QDyrx
+         EUP5s42uUBTGYNGkZXNZlWxO4w0SGr3HgTLWD+AQoatYY7HIbAy9xHwUq/XRxGq1raKb
+         dp6+H+9fvNasxXLxaSYmrfGHR0ons0xeFsQOaI3g2v3fizk2PqL/3SyZHmz0aIKhGnXu
+         DAjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684305243; x=1686897243;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OpTLZX9KtlAuj1Cffw1z+96W8NMTOQYC35BDi4+L6fc=;
+        b=TE6M9XC/sRmzLTQD9cDuqt4JYVmlpyKNeCMPeviVSS2hSjSlI2y13C/wfDJQyBFu3F
+         mlDy5qE05nB9NXuG4a9HtTHSAWKtm9dBwvZTGiHS6APqyGPjYNzODFDPeRS83i1xr2+a
+         6pnkCEiXKtBPEkT0fQeuDvx2ZuE5Xza2EfgTfzlRRQq7qEgKBNDpt7W+EUL6imjxV8Sb
+         ZRKyaUxXHp60fiK5aIsysDyyn6BW9/jeioDaKmn2n+eN8JVnTKCwBwMkd2SqrydaxhBg
+         paMDMrR9YGPfDhXx8lUzTJHQGMEDKOku286Jua4nWhPpFqS4i9YO0/1uyyDMSNtxTM7N
+         qjyg==
+X-Gm-Message-State: AC+VfDyVVZyb1BJLe4hb9V6L4mEcyRZUL7Pemsf99SoQkMbonqdPTvug
+        B1ZY8AnzYrz6syoa6j2ufYqh8Q/mYIJ1cyayMnUb6Q==
+X-Google-Smtp-Source: ACHHUZ71GE4h3Ar8VfQUiWo22IRSBv5ttVtQNSLUBPBoPH8eMTBu0NUl70AEvntkEM7vyQhaU/sudjfs814G2Jpsmkc=
+X-Received: by 2002:a5d:4c82:0:b0:309:38af:91c6 with SMTP id
+ z2-20020a5d4c82000000b0030938af91c6mr2390353wrs.68.1684305242680; Tue, 16 May
+ 2023 23:34:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20230514-x5_front_flash-v2-1-845a8bb0483b@apitzsch.eu>
-X-B4-Tracking: v=1; b=H4sIAP50ZGQC/3WNwQ6CMBAFf4X0bA0tEKkn/8MQspStbaIt6VaCE
- v7dwt3jvJfJrIwwOiR2LVYWcXbkgs8gTwXTFvwDuRszM1nKqmxEzZemNzH41JsnkOVatAqlHCp
- pRpalAQj5EMFru2svoIRxP6aIxi1H6d5lto5SiJ8jPIt9/duYBRe8Uhel21q1aOAGk0tf0vaMb
- 9Zt2/YDd33EmccAAAA=
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
+References: <20230516213308.2432018-1-bhupesh.sharma@linaro.org>
+ <20230516213308.2432018-4-bhupesh.sharma@linaro.org> <2023051723-decibel-skiing-56ed@gregkh>
+In-Reply-To: <2023051723-decibel-skiing-56ed@gregkh>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Wed, 17 May 2023 12:03:51 +0530
+Message-ID: <CAH=2Ntx9LcH9Bm_n6u6KgN7oQXw7XhoxUuRBKEzk79btRxtt6w@mail.gmail.com>
+Subject: Re: [PATCH v5 3/5] usb: misc: eud: Add driver support for SM6115 / SM4250
+To:     Greg KH <gregkh@linuxfoundation.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Stephan Gerhold <stephan@gerhold.net>,
-        =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-X-Mailer: b4 0.12.2
-X-Df-Sender: YW5kcmVAYXBpdHpzY2guZXU=
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        linux-usb@vger.kernel.org, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, linux-kernel@vger.kernel.org,
+        bhupesh.linux@gmail.com, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-l8910 uses OCP8110 flash LED driver. Add it to the device tree.
+Hi Greg,
 
-Tested-by: Stephan Gerhold <stephan@gerhold.net>
-Signed-off-by: André Apitzsch <git@apitzsch.eu>
----
-Changes in v2:
-- fix pinctrl-* order
-- remove unnecessary newline
-- Link to v1: https://lore.kernel.org/r/20230514-x5_front_flash-v1-1-3979c8498efa@apitzsch.eu
----
- .../boot/dts/qcom/msm8916-longcheer-l8910.dts      | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+On Wed, 17 May 2023 at 10:21, Greg KH <gregkh@linuxfoundation.org> wrote:
+>
+> On Wed, May 17, 2023 at 03:03:06AM +0530, Bhupesh Sharma wrote:
+> > Add SM6115 / SM4250 SoC EUD support in qcom_eud driver.
+>
+> Why is the subject line duplicated here?
+>
+> > On some SoCs (like the SM6115 / SM4250 SoC), the mode manager
+> > needs to be accessed only via the secure world (through 'scm'
+> > calls).
+> >
+> > Also, the enable bit inside 'tcsr_check_reg' needs to be set
+> > first to set the eud in 'enable' mode on these SoCs.
+> >
+> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > ---
+> >  drivers/usb/misc/Kconfig    |  1 +
+> >  drivers/usb/misc/qcom_eud.c | 69 +++++++++++++++++++++++++++++++++----
+>
+> Given that you didn't cc the usb maintainer, I'm guessing you don't want
+> this patch applied?
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
-index b79e80913af9..6046e2c1f158 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
-@@ -20,6 +20,21 @@ chosen {
- 		stdout-path = "serial0";
- 	};
- 
-+	flash-led-controller {
-+		compatible = "ocs,ocp8110";
-+		enable-gpios = <&msmgpio 49 GPIO_ACTIVE_HIGH>;
-+		flash-gpios = <&msmgpio 119 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-0 = <&camera_front_flash_default>;
-+		pinctrl-names = "default";
-+
-+		flash_led: led {
-+			function = LED_FUNCTION_FLASH;
-+			color = <LED_COLOR_ID_WHITE>;
-+			flash-max-timeout-us = <250000>;
-+		};
-+	};
-+
- 	gpio-keys {
- 		compatible = "gpio-keys";
- 
-@@ -246,6 +261,13 @@ button_backlight_default: button-backlight-default-state {
- 		bias-disable;
- 	};
- 
-+	camera_front_flash_default: camera-front-flash-default-state {
-+		pins = "gpio49", "gpio119";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	gpio_keys_default: gpio-keys-default-state {
- 		pins = "gpio107";
- 		function = "gpio";
+Oops, I will do that in the next version.
 
----
-base-commit: 533c54547153d46c0bf99ac0e396bed71f760c03
-change-id: 20230514-x5_front_flash-c189e22b32fd
+> >  2 files changed, 63 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/drivers/usb/misc/Kconfig b/drivers/usb/misc/Kconfig
+> > index 99b15b77dfd5..fe1b5fec1dfc 100644
+> > --- a/drivers/usb/misc/Kconfig
+> > +++ b/drivers/usb/misc/Kconfig
+> > @@ -147,6 +147,7 @@ config USB_APPLEDISPLAY
+> >  config USB_QCOM_EUD
+> >       tristate "QCOM Embedded USB Debugger(EUD) Driver"
+> >       depends on ARCH_QCOM || COMPILE_TEST
+> > +     select QCOM_SCM
+>
+> How well is that going to work on building on non-QCOM systems?  Can
+> QCOM_SCM build if COMPILE_TEST is enabled?  select is rough to get
+> right, are you sure it's correct here?  If so, some documentation in the
+> changelog would be appreciated.
 
-Best regards,
--- 
-André Apitzsch <git@apitzsch.eu>
+Ok, I will double check.
 
+> >       select USB_ROLE_SWITCH
+> >       help
+> >         This module enables support for Qualcomm Technologies, Inc.
+> > diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
+> > index b7f13df00764..10d194604d4c 100644
+> > --- a/drivers/usb/misc/qcom_eud.c
+> > +++ b/drivers/usb/misc/qcom_eud.c
+> > @@ -5,12 +5,14 @@
+> >
+> >  #include <linux/bitops.h>
+> >  #include <linux/err.h>
+> > +#include <linux/firmware/qcom/qcom_scm.h>
+>
+> There's no rule to keep these sorted, but it's your choice...
+
+Sure.
+
+> >  #include <linux/interrupt.h>
+> >  #include <linux/io.h>
+> >  #include <linux/iopoll.h>
+> >  #include <linux/kernel.h>
+> >  #include <linux/module.h>
+> >  #include <linux/of.h>
+> > +#include <linux/of_device.h>
+> >  #include <linux/platform_device.h>
+> >  #include <linux/slab.h>
+> >  #include <linux/sysfs.h>
+> > @@ -22,23 +24,33 @@
+> >  #define EUD_REG_VBUS_INT_CLR 0x0080
+> >  #define EUD_REG_CSR_EUD_EN   0x1014
+> >  #define EUD_REG_SW_ATTACH_DET        0x1018
+> > -#define EUD_REG_EUD_EN2        0x0000
+> > +#define EUD_REG_EUD_EN2              0x0000
+>
+> Why the coding style cleanup in the same patch?  Remember, changes only
+> do one thing, and you have already listed 2 things in your commit
+> message :(
+
+Sure, will spin a separate patch for cleanups.
+
+> >  #define EUD_ENABLE           BIT(0)
+> > -#define EUD_INT_PET_EUD      BIT(0)
+> > +#define EUD_INT_PET_EUD              BIT(0)
+>
+> Again, why this change?
+
+Ack.
+Will send a v6 shortly.
+
+Thanks,
+Bhupesh
