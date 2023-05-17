@@ -2,166 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BEB6706C02
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 17:02:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DFFCC706C47
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 17:10:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231773AbjEQPCQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 11:02:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53844 "EHLO
+        id S231624AbjEQPKy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 11:10:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232433AbjEQPBs (ORCPT
+        with ESMTP id S231687AbjEQPKu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 11:01:48 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C06AD84E;
-        Wed, 17 May 2023 08:00:33 -0700 (PDT)
-Received: from g550jk.localnet (84-115-214-73.cable.dynamic.surfer.at [84.115.214.73])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id B99AECE0B8;
-        Wed, 17 May 2023 14:59:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1684335570; bh=b+cK+yIredBclcZLDhIrSKK1DPiHez1yG+yF+QpEoIA=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=dwp2HpAqySkhm6KLTWLtXtB124Zj7Xpxw0ZItIvaTZF0S1HEPdLbMbjIrKYOBRZbz
-         hZBTrKZwbig8CtBwGP23KUmU7+F9VM4+PDzgP9RE2eq9hOjdNkZi8nuqmOrJkf7Zhu
-         OT0QpD4A5WpyPqaF1yrRPqfu3GNRE5p0n2GyM6BM=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
+        Wed, 17 May 2023 11:10:50 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EB6AA5D4;
+        Wed, 17 May 2023 08:10:39 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C2A1A60FBD;
+        Wed, 17 May 2023 15:10:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CEE0C433EF;
+        Wed, 17 May 2023 15:10:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1684336238;
+        bh=Ny0LoiDv3bdptEg6qSZYN06fzaz93keaVkr7dslnSLA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=bjrUez/4cBi2daN/lwRZUVJr2uMICn2TiWwRJKY5GVljwxRJOtPmsMt6z2oSfhDDc
+         Y7RwIrQi3vSr6HeQjOf4WI+hDofp6G4GK7v7A3NtM9jpr9qKtqUjUbl7UPV/I76NJ5
+         Sa0bdeTErhYfHu7YdrPjpP7dzFT9ozbHgkDBuMpbjmT5Sr5VbUUP04Qu0lXHs9R4zh
+         IhgpGJd+v+zIHLhCMnrzGT4MDkq3rNDnZkTqGmnXqiI82k0+LCYUDakvZKOz2OdisR
+         4XEPouomRWHk9Irbh7o/AGGGwNbXx/JHMW977iXccU/BTP7tV6BAIDzEvDM06yKhI1
+         Cyc3s/ZLhGWSQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1pzInW-0005qx-Fz; Wed, 17 May 2023 17:10:39 +0200
+Date:   Wed, 17 May 2023 17:10:38 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
         Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: smd-rpm: conditionally enable scaling before doing
- handover
-Date:   Wed, 17 May 2023 16:59:29 +0200
-Message-ID: <2679120.mvXUDI8C0e@z3ntu.xyz>
-In-Reply-To: <20bd79c1-6c38-f1ed-1661-6fa4c308c5c5@linaro.org>
-References: <20230506-rpmcc-scaling-handover-v1-1-374338a8dfd9@z3ntu.xyz>
- <20bd79c1-6c38-f1ed-1661-6fa4c308c5c5@linaro.org>
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
+        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
+        ahalaney@redhat.com
+Subject: Re: [PATCH v8 3/9] usb: dwc3: core: Access XHCI address space
+ temporarily to read port info
+Message-ID: <ZGTubmBViN9rTiZC@hovoldconsulting.com>
+References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
+ <20230514054917.21318-4-quic_kriskura@quicinc.com>
+ <ZGNy6FvVrBjYmorz@hovoldconsulting.com>
+ <b2954b92-8b12-700a-af50-b914af7b0ace@quicinc.com>
+ <ZGSDr08h3Go1Dk8C@hovoldconsulting.com>
+ <82a8c414-bfa8-5066-fb68-1ac117b76c4e@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <82a8c414-bfa8-5066-fb68-1ac117b76c4e@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Dienstag, 16. Mai 2023 03:27:46 CEST Konrad Dybcio wrote:
-> On 6.05.2023 22:10, Luca Weiss wrote:
-> > On older platforms like msm8226, msm8974 and msm8916 the driver in the
-> > downstream kernel enables scaling first before doing the handover of the
-> > clocks.
+On Wed, May 17, 2023 at 05:51:45PM +0530, Krishna Kurapati PSSNV wrote:
+> On 5/17/2023 1:05 PM, Johan Hovold wrote:
+
+> >>>> +	temp = readl(regs + DWC3_XHCI_HCSPARAMS1);
+> >>>> +	if (HCS_MAX_PORTS(temp) != (dwc->num_usb3_ports + dwc->num_usb2_ports)) {
+> >>>> +		dev_err(dwc->dev,
+> >>>> +			"Mismatched reported MAXPORTS (%d)\n", HCS_MAX_PORTS(temp));
+> >>>> +		ret = -EINVAL;
+> >>>> +		goto unmap_reg;
+> >>>> +	}
+> >>>
+> >>> Not sure this is needed either.
+> >>>
+> >>> Could this risk regressing platforms which does not have currently have
+> >>> all PHYs described in DT?
+> >>>
+> >> No, it doesn't. AFAIK, this only tells how many ports are present as per
+> >> the core consultant configuration of the device. I tried to explain what
+> >> would happen incase phy's are not present in DT in [2] & [3].
 > > 
-> > While this normally doesn't seem to cause noticeable problems, on
-> > apq8026-asus-sparrow this causes the device to immediately reboot,
-> > perhaps due to older rpm firmware that becomes unhappy.
+> > Right, whether the PHYs are described in DT is not directly related to
+> > this.
 > > 
-> > On newer platforms the order has swapped and enabling scaling is done
-> > after the handover, so let's introduce this behavior only conditionally
-> > for msm8226 and msm8974 for now.
+> > As long as HCS_MAX_PORTS by definition (assumption) is always
+> > (dwc->num_usb3_ports + dwc->num_usb2_ports) any such machines would
+> > continue to work.
 > > 
-> > Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> > ---
+> > But if you want to catch machines where this assumption does not hold,
+> > you could also end up regressing machines which have so far been working
+> > despite these numbers not adding up.
+> > 
+> > That may be acceptable, but I'm still not sure what the value of this
+> > check is (e.g. as xhci core will handle basic sanity checks like usb2 +
+> > usb3 <= max_ports).
+
+>    Thanks for the review comments. Ideally the HCC_PARAMS1 must indicate 
+> total number of ports supported. If not then I believe the core 
+> consultant configuration is wrong.
 > 
-> Did you give this a spin on some 8974? I think hammerhead had
-> issues around rpmcc in the past..
-
-Yes, appears to be fine on msm8974 also.
-
-I tried to reproduce the hammerhead ocmem hang we had in the past but even 
-with v6.3 rpmcc it seems to be fine. But iirc it was happening more or less at 
-random in the past so wouldn't be surprised if my tests just didn't show 
-anything on accident.
-
-Regards
-Luca
-
+> According to the spec:
 > 
-> Konrad
+> "The MaxPorts value in the HCSPARAMS1 register defines the number of
+> Port Register Sets (e.g. PORTSC, PORTPMSC, and PORTLI register sets)."
 > 
-> >  drivers/clk/qcom/clk-smd-rpm.c | 16 +++++++++++++---
-> >  1 file changed, 13 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/drivers/clk/qcom/clk-smd-rpm.c
-> > b/drivers/clk/qcom/clk-smd-rpm.c index 887b945a6fb7..6d5476afc4d1 100644
-> > --- a/drivers/clk/qcom/clk-smd-rpm.c
-> > +++ b/drivers/clk/qcom/clk-smd-rpm.c
-> > @@ -178,6 +178,7 @@ struct clk_smd_rpm_req {
-> > 
-> >  struct rpm_smd_clk_desc {
-> >  
-> >  	struct clk_smd_rpm **clks;
-> >  	size_t num_clks;
-> > 
-> > +	bool scaling_before_handover;
-> > 
-> >  };
-> >  
-> >  static DEFINE_MUTEX(rpm_smd_clk_lock);
-> > 
-> > @@ -693,6 +694,7 @@ static struct clk_smd_rpm *msm8974_clks[] = {
-> > 
-> >  static const struct rpm_smd_clk_desc rpm_clk_msm8974 = {
-> >  
-> >  	.clks = msm8974_clks,
-> >  	.num_clks = ARRAY_SIZE(msm8974_clks),
-> > 
-> > +	.scaling_before_handover = true,
-> > 
-> >  };
-> >  
-> >  static struct clk_smd_rpm *msm8976_clks[] = {
-> > 
-> > @@ -1318,6 +1320,12 @@ static int rpm_smd_clk_probe(struct platform_device
-> > *pdev)> 
-> >  	rpm_smd_clks = desc->clks;
-> >  	num_clks = desc->num_clks;
-> > 
-> > +	if (desc->scaling_before_handover) {
-> > +		ret = clk_smd_rpm_enable_scaling(rpm);
-> > +		if (ret)
-> > +			goto err;
-> > +	}
-> > +
-> > 
-> >  	for (i = 0; i < num_clks; i++) {
-> >  	
-> >  		if (!rpm_smd_clks[i])
-> >  		
-> >  			continue;
-> > 
-> > @@ -1329,9 +1337,11 @@ static int rpm_smd_clk_probe(struct platform_device
-> > *pdev)> 
-> >  			goto err;
-> >  	
-> >  	}
-> > 
-> > -	ret = clk_smd_rpm_enable_scaling(rpm);
-> > -	if (ret)
-> > -		goto err;
-> > +	if (!desc->scaling_before_handover) {
-> > +		ret = clk_smd_rpm_enable_scaling(rpm);
-> > +		if (ret)
-> > +			goto err;
-> > +	}
-> > 
-> >  	for (i = 0; i < num_clks; i++) {
-> >  	
-> >  		if (!rpm_smd_clks[i])
-> > 
-> > ---
-> > base-commit: dd9e11d6477a52ede9ebe575c83285e79e823889
-> > change-id: 20230506-rpmcc-scaling-handover-a63029ed9d13
-> > 
-> > Best regards,
+> So shouldn't the (usb2+usb3 ports be equal to MaxPorts to ensure each 
+> port properly accesses the respective PortSC etc., ?
 
+Sure, that's what is expected, but why do you need to add a check for
+this in the glue driver all of a sudden? Your series does not seem to
+rely on this. This is the xHCI driver's business (as is parsing these
+registers in the first place, really).
 
-
-
+Johan
