@@ -2,82 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CA5A0707425
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 23:24:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48CFD707444
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 23:29:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230063AbjEQVYA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 17:24:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35964 "EHLO
+        id S229496AbjEQV3i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 17:29:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230130AbjEQVX7 (ORCPT
+        with ESMTP id S229644AbjEQV3g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 17:23:59 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 956EEE51
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:23:33 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2ac8ee9cf7aso13523591fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:23:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684358609; x=1686950609;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EIEqKwPabef9WSSFqkvljMpDwhrfc8zvSY2jSb3gR3A=;
-        b=lQ9+fXGrNYb2F27NPBYOaleD8aX/AyoGQtt7Cdi7uALJmO1s4GWTd4IznmyWp7Mr2h
-         E4OROenI/eYJQVWvRL4a/ozz7gepNOnNnh2H2TAUcl5g6FSaxqe/Gt50mm1N4L3QeRAa
-         ho+YN8zbovYXr2fNpoCa3pQftVcCWhQ+zGD1Ei2nnmuZqZVMrwJAOvce/OWQ7jUL1Rgd
-         P26JhuqHkMJ/nCqrfC0ASpWr+yB9itUiaJkObjLDmOKujbEA2X8CFhdzjIhP2zUN1AlB
-         Hqyr0Noz0J2q//RSnaOsH4vBVOt/cjL8vz46iFMS3qFzc56/l7uxJ6aD05Me9ifWjh4Q
-         s2Eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684358609; x=1686950609;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EIEqKwPabef9WSSFqkvljMpDwhrfc8zvSY2jSb3gR3A=;
-        b=jbjrMLTUKhLrrs6qmCs0sL0+o+Erxwx8T9FVDOCVsclwoWIhqXHU2/9W9SmTuP3hpL
-         L5db3CpXfStgPcGYYl8AkKxDLxquk1nS6LSSD+nU3rclQ+t6g+gAKaCi7CL/iDm1g45s
-         TWN88Pk7Ys1HcPqtLkgmBDi6pODyQbP5l2W5/nfaNa0gb4m8csZMFycVZuchz6HQP1cT
-         Z+xVVQkecfWvM0LKwsJ5dVHuTXu+CZB1VvRWS5JdbHDhsum0LUGBGgxlIWFIrvb0HjYM
-         qOLs8C8tKnGUR5HBcrCtj/x6BKkqy+qGyafBCF/F8q1SDMqHxNDAUauK1e5GDwM1SYng
-         URhw==
-X-Gm-Message-State: AC+VfDwPQAumfcoasK9nWSJZ4lh8NOunQoJ6lKfJo42b78OFUWYnrBf1
-        DoXGSi6ZcC/ASW945UpIo9NiPA==
-X-Google-Smtp-Source: ACHHUZ4001udylTG7mZCZpg+TNsGeE/xtbXjzhS1B/zlUDocbhq/vo/xg/nQTpNYk0+21lTA3mBbVw==
-X-Received: by 2002:ac2:491c:0:b0:4f3:792c:289d with SMTP id n28-20020ac2491c000000b004f3792c289dmr556905lfi.20.1684358608722;
-        Wed, 17 May 2023 14:23:28 -0700 (PDT)
-Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id h9-20020ac25d69000000b004f00d3d9df9sm5405lft.188.2023.05.17.14.23.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 May 2023 14:23:28 -0700 (PDT)
-Message-ID: <fc89ff77-08d4-851e-b209-df017285e86a@linaro.org>
-Date:   Wed, 17 May 2023 23:23:26 +0200
+        Wed, 17 May 2023 17:29:36 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 812851721
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:29:15 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34HLRjxR004734;
+        Wed, 17 May 2023 21:29:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=F6LI/fBKg9UF0fCwkF+wy/+dD+sz6j7Gjrl+y1eeJPo=;
+ b=a7oAbgZOBkaagra1fuf/hTJji0F73QHYgSLY6m6brtciX/jSode2w8/12bmtESRGQA05
+ O04pwZBczC82KBZs4LSGdlga0/aSg1w8PY9Iwkd6dM2ESayQJUvsPhsmS8OVWR/mAZ7I
+ Z1Q1rJG41oFNCq/IlOEatYViAPiTwFJK42OBX3/dq6F1f0Au8778T4KrkYlDa2Z3Q1HH
+ buQVvDndSLhelwP+Ie8SJTrUYNd/x3+QWPcnxH4Tu7cHcf7xrDZzXkmOVbvoA/itDo7M
+ e0S5K8Ay01ZvE2/HnmLRD4lNcdFWvJMaC8T9bWSMRarrqtjUHz2YG6BvYlnscacKEXfe cg== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qmwnr9e5k-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 17 May 2023 21:29:07 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34HLT7XG008296
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 17 May 2023 21:29:07 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 17 May
+ 2023 14:29:06 -0700
+Message-ID: <d9cb961f-7f22-0db5-c83c-52d371c9a15b@quicinc.com>
+Date:   Wed, 17 May 2023 14:29:06 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: Flush RSC sleep & wake votes
+Subject: Re: [PATCH v11 5/9] drm/msm: Add MSM-specific DSC helper methods
 Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230512150425.3171122-1-quic_bjorande@quicinc.com>
- <f6ecd66b-e207-0ed9-0ff3-1febfdf5bce9@linaro.org>
- <20230515023828.jqrrqkit5ygovimp@ripper>
- <1ecd0cba-296e-b036-f59e-f679c771ae9f@linaro.org>
- <20230516210143.GB606695@hu-bjorande-lv.qualcomm.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230516210143.GB606695@hu-bjorande-lv.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+CC:     <freedreno@lists.freedesktop.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        "Daniel Vetter" <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230329-rfc-msm-dsc-helper-v11-0-30270e1eeac3@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v11-5-30270e1eeac3@quicinc.com>
+ <hyqb6upm3zzruyneamujc3hw4vtwjtjxnomdilk6xyxdm2n6bk@4h3eeah6dlhx>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <hyqb6upm3zzruyneamujc3hw4vtwjtjxnomdilk6xyxdm2n6bk@4h3eeah6dlhx>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: zOgTpS6LxgA_VH2YkdDiqbbZxqk9hSAs
+X-Proofpoint-ORIG-GUID: zOgTpS6LxgA_VH2YkdDiqbbZxqk9hSAs
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-17_04,2023-05-17_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=926
+ clxscore=1015 malwarescore=0 priorityscore=1501 spamscore=0 phishscore=0
+ adultscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305170177
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -86,89 +89,89 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 16.05.2023 23:01, Bjorn Andersson wrote:
-> On Mon, May 15, 2023 at 11:34:45AM +0200, Konrad Dybcio wrote:
+On 5/17/2023 2:26 PM, Marijn Suijten wrote:
+> On 2023-05-17 11:51:14, Jessica Zhang wrote:
+>> Introduce MSM-specific DSC helper methods, as some calculations are
+>> common between DP and DSC.
 >>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/msm_dsc_helper.h | 38 ++++++++++++++++++++++++++++++++++++
+>>   1 file changed, 38 insertions(+)
 >>
->> On 15.05.2023 04:38, Bjorn Andersson wrote:
->>> On Sat, May 13, 2023 at 11:09:07AM +0200, Konrad Dybcio wrote:
->>>>
->>>>
->>>> On 12.05.2023 17:04, Bjorn Andersson wrote:
->>>>> The rpmh driver will cache sleep and wake votes until the cluster
->>>>> power-domain is about to enter idle, to avoid unnecessary writes. So
->>>>> associate the apps_rsc with the cluster pd, so that it can be notified
->>>>> about this event.
->>>>>
->>>>> Without this, only AMC votes are being commited.
->>>> Ouch.
->>>>
->>>> Should we make this required: in bindings and add it to all
->>>> platforms?
->>>>
->>>
->>> I though this was an optimization and in the absence of this callback
->>> the driver would just write out wake and sleep sets as well. But per the
->>> current implementation (and perhaps some underlying cause?) it is indeed
->>> required, if you care about power consumption.
->> Hm.. since it's not strictly required for operation, would something
->> like this be fitting?:
->>
+>> diff --git a/drivers/gpu/drm/msm/msm_dsc_helper.h b/drivers/gpu/drm/msm/msm_dsc_helper.h
+>> new file mode 100644
+>> index 000000000000..2d366ec7d92d
+>> --- /dev/null
+>> +++ b/drivers/gpu/drm/msm/msm_dsc_helper.h
+>> @@ -0,0 +1,38 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-only */
+>> +/*
+>> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved
+>> + *
+>> + * Helper methods for MSM specific DSC calculations that are common between timing engine,
 > 
-> I don't think it's required for operation, but the current
-> implementation does require it.
-> 
-> So I think we should either require it in the binding to mimic the
-> implementation, or the implementation should handle either case (only
-> with a performance impact)
-Let's just require it then.
+> Nit following the commit body: MSM-specific with a hyphen.
 
-Konrad
+Hi Marijn,
+
+Acked.
+
 > 
->> oneOf:
->>   - required:
->>       [...]
->>       - power-domains
+>> + * DSI, and DP.
+>> + */
+>> +
+>> +#ifndef MSM_DSC_HELPER_H_
+>> +#define MSM_DSC_HELPER_H_
+>> +
+>> +#include <linux/math.h>
+>> +#include <drm/display/drm_dsc_helper.h>
+>> +
+>> +/**
+>> + * msm_dsc_get_slices_per_intf() - get number of slices per interface
+> 
+> get -> calculate?
+
+Acked.
+
+> 
+>> + * @dsc: Pointer to drm dsc config struct
+>> + * @intf_width: interface width in pixels
+>> + * Returns: Integer representing the number of slices for the given interface
+>> + */
+>> +static inline int msm_dsc_get_slices_per_intf(const struct drm_dsc_config *dsc, int intf_width)
+> 
+> u32 per v10 review and acks?
+
+Ah, must have missed this one.
+
+Thanks,
+
+Jessica Zhang
+
+> 
+> The rest looks good, thanks!
+> 
+> - Marijn
+> 
+>> +{
+>> +	return DIV_ROUND_UP(intf_width, dsc->slice_width);
+>> +}
+>> +
+>> +/**
+>> + * msm_dsc_get_bytes_per_line() - calculate bytes per line
+>> + * @dsc: Pointer to drm dsc config struct
+>> + * Returns: Integer value representing bytes per line. DSI and DP need
+>> + *          to perform further calculations to turn this into pclk_per_intf,
+>> + *          such as dividing by different values depending on if widebus is enabled.
+>> + */
+>> +static inline u32 msm_dsc_get_bytes_per_line(const struct drm_dsc_config *dsc)
+>> +{
+>> +	return dsc->slice_count * dsc->slice_chunk_size;
+>> +}
+>> +
+>> +#endif /* MSM_DSC_HELPER_H_ */
 >>
->>   - required:
->>       [...]
->>     deprecated: true
+>> -- 
+>> 2.40.1
 >>
->> (if it even works this way)
-> 
-> I don't think it's worth supporting the combinations.
-> 
-> Regards,
-> Bjorn
-> 
->>
->> Konrad
->>>
->>>>>
->>>>> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
->>>>> ---
->>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>> Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
->>>>
->>>
->>> The Fixes sounds reasonable.
->>>
->>> Thanks,
->>> Bjorn
->>>
->>>> Konrad
->>>>>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 1 +
->>>>>  1 file changed, 1 insertion(+)
->>>>>
->>>>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>>>> index 8fa9fbfe5d00..5c68f2182c2f 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>>>> @@ -3982,6 +3982,7 @@ apps_rsc: rsc@18200000 {
->>>>>  			qcom,tcs-config = <ACTIVE_TCS  2>, <SLEEP_TCS   3>,
->>>>>  					  <WAKE_TCS    3>, <CONTROL_TCS 1>;
->>>>>  			label = "apps_rsc";
->>>>> +			power-domains = <&CLUSTER_PD>;
->>>>>  
->>>>>  			apps_bcm_voter: bcm-voter {
->>>>>  				compatible = "qcom,bcm-voter";
