@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 337F3706E9E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 18:51:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C543A706EA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 18:51:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229611AbjEQQuc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 12:50:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40590 "EHLO
+        id S229638AbjEQQud (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 12:50:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229813AbjEQQuX (ORCPT
+        with ESMTP id S229822AbjEQQuY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 12:50:23 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C3A74209
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:50:22 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2ac7de2b72fso10439731fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:50:21 -0700 (PDT)
+        Wed, 17 May 2023 12:50:24 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2037B46BC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:50:23 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2ac7f53ae44so10543031fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:50:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684342220; x=1686934220;
+        d=linaro.org; s=google; t=1684342221; x=1686934221;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Xbg/GarYLH0aFj2Z0GcGyUdxXKd4AWIEjgCUU5KwNKM=;
-        b=zMaSSOs9zSEtB4oW2mhF2Q2/mXwdY7jTNC+h1bBoN34mmDx29JN+E/4OdpCeDpjp/v
-         E6TrOiDrPwfFRRx/pYbm9kD7BAds9kRPwgy+6JTWZa+Z4gC9SBbo6xl/0nn4m/zUOF0U
-         qJFfGb40qFoJL3w/GfllmK5PDlBXDSFslZJDroYHLd/dKTH2LdxIT6RIQAyEDwNFhUie
-         /6iQmM0aqaaiKxjCUAEz8ZZOI/Qo6Iy9I6qW6rAktG+oZyibRB5RLuz6a8ccI8/H2UR7
-         7tuCVIld7pBvOWWlc1Y1W47Ob/psq38Gjwa8CXy5shBFgUsEETqNHWYth4ADmPTavRlX
-         R6Yw==
+        bh=jKJzh3VBdMQOrvlfJ6ldWhmoYbX6WSR7/WgTonW/aWQ=;
+        b=YmiF+k1DCo7sJT82Nk4sHD2XysqRnE+/gQkavGhTVbv/wfUHjEY8DCZp2ALGlIVFxK
+         vFJI4qnhA+rQycQEkYdzapsq5QVvy9SXn5xlTDOoXdH3J1z58P59pbM7e5MxV4tA0hp3
+         rbiaEhfSmmAB1rsLKvlYg6c7wOpxONwYICuOrUPT+3L/+in9V33CHGd/qHhzTf6wO3yG
+         +Jvh6u1Zv7vUkNa2k4FikK39n3WwVam404AZmfXKxvskCzetQqAQjfBdSlJA3260QPCp
+         37em6Erd7VhUrUSU/c10E737Ddrm8tAWCQ8bpq2ENKPG9oV1u1LR+ePlOFOzGeCaiwlF
+         ZPbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684342220; x=1686934220;
+        d=1e100.net; s=20221208; t=1684342221; x=1686934221;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Xbg/GarYLH0aFj2Z0GcGyUdxXKd4AWIEjgCUU5KwNKM=;
-        b=i9rVVS2iOLYtsZmtmOh5+3ZBcCq1Y7NQzmHPZGRcH4Q4NpRmpwPhIzfABKgG3u8rlX
-         uTcR9rO4WU0k4AMkP7+IU3SD8aFlHB+f1On4CJ55vBYMPkwcW17lyzjzopR7vR6gNRk4
-         nKxlE1lDAPKtgtWrAOuuGSUtNAF83Ek7dErPI/kuEtxOlg4ywVruHTfEPnkZ2Ki4r//+
-         ndrL5A27KgJCOo5LpqbbhbL4p9S1Ao7GBP9zbijojIFggmwCc28MRS1KWKrWLB5RyHk8
-         Fvu0wfv7CMw564Ma0dfjjpoIULj6OepM24Fro+48FckjIOdD7xCrZRTsbvGZGqHT+D2L
-         Q6oQ==
-X-Gm-Message-State: AC+VfDxpkXULfEaKW0Jv4ugFR49Kr2CD6q9os8+PpVPWuhNfUD6WFqmG
-        Q9JWXZoTvhiLJ1tHn8B78ds+ww==
-X-Google-Smtp-Source: ACHHUZ68sDc5EhoGFkHKlmYBQ5vHiLc5iApWhRpmEfpf2p+HvoGffqCO3CaUyRlRQjob+m2n7YFuOw==
-X-Received: by 2002:a2e:9252:0:b0:2a7:6fee:2503 with SMTP id v18-20020a2e9252000000b002a76fee2503mr10225196ljg.14.1684342220351;
-        Wed, 17 May 2023 09:50:20 -0700 (PDT)
+        bh=jKJzh3VBdMQOrvlfJ6ldWhmoYbX6WSR7/WgTonW/aWQ=;
+        b=FmQ9lkiYrt/2QCK81MVsl/NHprRGrRYiPkE9Okra5bDntJfk3WNs2ubfyjU4FVV23V
+         rhvU2aQolsLajljY63/I259FoR+y3AXAE1FLCEjEZt/UBJ9YiFBjB7q96t9oGfOSaAR7
+         UaNmYlZ9y4VMNjgpGScYJI2hDHkGImHV9eNGftx/ZZEyyGx7Kvkx3GkDdzrGg1kGmWRu
+         2TyMM0PCIP0Ll9WVys2f7ARryf4Xl7ip9zS12iJ2/cCIjgBDQxFLEhg0VFdg5N8e0XPd
+         4KqjmfM5vNhqxVmvXTmGRQb9zBsO5Crj71paRKr7I0konQsSpgiP1gOTLel20rSrCkyZ
+         vXVA==
+X-Gm-Message-State: AC+VfDwIreetqVkoujDP+ixZLL3Zh1XQ5HVfESd5tl2p4Lxko/Wyn2r9
+        1KSNsp90qlQbc6aOCLAhLZgz1g==
+X-Google-Smtp-Source: ACHHUZ4scB0qXASKtXLDjxdCzSc8nOLwoqbw3Tshdmgqbc6XZcRpopUJoPcc0s3OQF9oqf10FQSm+g==
+X-Received: by 2002:a2e:9d03:0:b0:2a7:a616:c39 with SMTP id t3-20020a2e9d03000000b002a7a6160c39mr9789440lji.48.1684342221526;
+        Wed, 17 May 2023 09:50:21 -0700 (PDT)
 Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id g6-20020a2e9cc6000000b002af0e9abaf6sm159224ljj.131.2023.05.17.09.50.18
+        by smtp.gmail.com with ESMTPSA id g6-20020a2e9cc6000000b002af0e9abaf6sm159224ljj.131.2023.05.17.09.50.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 May 2023 09:50:20 -0700 (PDT)
+        Wed, 17 May 2023 09:50:21 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 17 May 2023 18:50:11 +0200
-Subject: [PATCH 4/6] drm/msm/a6xx: Improve GMU force shutdown sequence
+Date:   Wed, 17 May 2023 18:50:12 +0200
+Subject: [PATCH 5/6] drm/msm/a6xx: Use GMU_ALWAYS_ON_COUNTER for
+ GMU-equipped GPUs in timestamp
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230517-topic-a7xx_prep-v1-4-7a964f2e99c2@linaro.org>
+Message-Id: <20230517-topic-a7xx_prep-v1-5-7a964f2e99c2@linaro.org>
 References: <20230517-topic-a7xx_prep-v1-0-7a964f2e99c2@linaro.org>
 In-Reply-To: <20230517-topic-a7xx_prep-v1-0-7a964f2e99c2@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -69,48 +70,50 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1684342212; l=999;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1684342212; l=1052;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=tIqOHRwnY5c8M0EJh8c6iF51VO5nfDTSDxvclL4zDow=;
- b=ippU5bfqmqMFyeRemvIfdDfB/dEI0Dag1wtnOk8dtad5ZqSn5m9G/Fn+WuYt4/235ZmGWag1a
- ysNfvVb+q/HCrjjoG85N3/1nkGUPR6jMjj0y9YHWyEaawakOzT8zf10
+ bh=yXq/EvspiDM4WLys1dNWbAg7dVVScVQhvkOnD1ANMBI=;
+ b=r6jwsVtQ4nvBF0AJY4c2o98RWESzy2qTp1iwGXmihRYAaw/Lb3C3Gds/eT2qIOq5DsqpEtp6u
+ 156ORD/lpIhDMiWaQkypMLl/VUZdMdWCtf9EjO5p0/D/H2C4QjxlzCj
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The GMU force shutdown sequence involves some additional register cleanup
-which was not implemented previously. Do so.
+Use the always-on counter provided by the GMU to skip having to
+keep the GPU online.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index ea6d671e7c6c..8004b582e45f 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -930,6 +930,13 @@ static void a6xx_gmu_force_off(struct a6xx_gmu *gmu)
- 	/* Make sure there are no outstanding RPMh votes */
- 	a6xx_gmu_rpmh_off(gmu);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 8707e8b6ac7e..d2a999b90589 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1664,12 +1664,9 @@ static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
  
-+	/* Clear the WRITEDROPPED fields and put fence into allow mode */
-+	gmu_write(gmu, REG_A6XX_GMU_AHB_FENCE_STATUS_CLR, 0x7);
-+	gmu_write(gmu, REG_A6XX_GMU_AO_AHB_FENCE_CTRL, 0);
-+
-+	/* Make sure the above writes go through */
-+	wmb();
-+
- 	/* Halt the gmu cm3 core */
- 	gmu_write(gmu, REG_A6XX_GMU_CM3_SYSRESET, 1);
+ 	mutex_lock(&a6xx_gpu->gmu.lock);
+ 
+-	/* Force the GPU power on so we can read this register */
+-	a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
+-
+-	*value = gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER);
+-
+-	a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
++	*value = gmu_read64(&a6xx_gpu->gmu,
++			    REG_A6XX_GMU_ALWAYS_ON_COUNTER_L,
++			    REG_A6XX_GMU_ALWAYS_ON_COUNTER_H);
+ 
+ 	mutex_unlock(&a6xx_gpu->gmu.lock);
  
 
 -- 
