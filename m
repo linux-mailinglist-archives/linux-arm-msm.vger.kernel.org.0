@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9828D7072C9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 22:13:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 22E487072CD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 22:13:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229624AbjEQUNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 16:13:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46456 "EHLO
+        id S229574AbjEQUNi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 16:13:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229607AbjEQUNf (ORCPT
+        with ESMTP id S229623AbjEQUNg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 16:13:35 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96FCC7D97
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 13:13:32 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2ac836f4447so12341741fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 13:13:32 -0700 (PDT)
+        Wed, 17 May 2023 16:13:36 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D6C28693
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 13:13:34 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f2676d62a2so1418069e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 13:13:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684354410; x=1686946410;
+        d=linaro.org; s=google; t=1684354412; x=1686946412;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=p4MkwaG45dwbFLpCnrCtiuWihS+msbfT86nmMyqxuCE=;
-        b=W1nZKzoQCW/zlSlxuOfTIs+v4ffA3p1XZPx+rO2HIEVNHPNy9pQ3fy+GbqzFkJA9G3
-         M3ftVFnTKRVYh4nL+cpLG+ouWmHUt4jKV/b0XNtLCXWjuDGIWvJbBF2LaRyCHqpZZK6r
-         kMx3iTdlkMmumNkEOVUU1UUFb2eO7Zg74V7YJeWMhfUSl2aDNHlavn4mQBimhyrYbIVW
-         JDVzBpNpxJxZJkP5MxtgahuW9AOdv0pCdEKSEZqPKZ5JSSZUewqF3kEvUuT8eJ0/2Iq/
-         Ju8TKULAvTJ3cxQVOwUu6s+NxCax7b7EONY6k3R/sJNlWKBoMs0METk1tSz3x1NYobtH
-         1znQ==
+        bh=Fddr7vQfG7SJnVJn02S1O20K03Qt9GSXK3rEV8Cg+k0=;
+        b=EkLoRT+KFXel4yX8Uvo1ory38MSZ65Hov9IExlTPHSRF37JxC4DtRK795QyrQtsc1F
+         rgd/0WA5MbPn1skALE6HAdAUU5IVndpePxwtaWYyBtRmL4j5oqAMLhZ+B8EPu81D0TvF
+         n6qa1LuB4PuR+Obzs26YyZ8FUwegIq+4/jDGdpp7TN4Ku6fcnm+jajQQXuICyxtVQrmt
+         hK2ZLT3VnC9WaVfUtcsWj166PSyczngUoIDptWoDBTRyPs1eBvFV4W2k6y/FgZ64zHcD
+         ruE+yasm9wzXzjZpD06p6YimBUB3VGNKInuJV6YfG5k3CkSiyYH/fW9AS84NXmZ4seaY
+         scWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684354410; x=1686946410;
+        d=1e100.net; s=20221208; t=1684354412; x=1686946412;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=p4MkwaG45dwbFLpCnrCtiuWihS+msbfT86nmMyqxuCE=;
-        b=SnGCCgq7gti6IAqi7vSanYR2sPupTWf8DWfjA3aw5TOw4NV7/X41Ri3Q02R4tehIQA
-         yN6JV+PVij5KFLT7vsSZKukmvQ9RpudAGWgAKFlsYr+KROCzIf2PFt1EPM42fLwgBMhe
-         XObC2ZC+sed0c6Nd/MBqHKtF3pVSjClgAuq4eXOGOep3iNU8vo8lZxEMTCMce238gWEH
-         qO667ILrO/y7BFMTZcMoU2l2vB/OS7M08jG1RKtQcco7JRdxMza7hzhsJoBgm3pKsHO2
-         nNcsUTPUt5WZ/mV702CodviY0DQHB2s3CgqHfJXoefD+6O7ZJxG5lOCfsRS3nwRiYGI3
-         X19w==
-X-Gm-Message-State: AC+VfDxPzmOUvFuhpFoAFvKvigueHWCI+hCx2ylSHdSEnvqx7/i9wLsb
-        kAs0WFDzmG8vHsFD9Aoez88QMZYBaMrNCmkNYzA=
-X-Google-Smtp-Source: ACHHUZ6p3dYPweRsYExmUfOQbW0N3Hl6Eag3VXD14Q/6zW8ajZknTB1/N24jWl+vraB0vvZ6A/VMyg==
-X-Received: by 2002:ac2:5ec5:0:b0:4cb:280b:33c9 with SMTP id d5-20020ac25ec5000000b004cb280b33c9mr535630lfq.24.1684354410757;
-        Wed, 17 May 2023 13:13:30 -0700 (PDT)
+        bh=Fddr7vQfG7SJnVJn02S1O20K03Qt9GSXK3rEV8Cg+k0=;
+        b=MjiP7Evhj5Ztnh3STysLnxDFAlzOM1Tjs885ol94LVuHXLq/Za66WMTBRwt4zFU7/5
+         LJgcQ37EvxsI6SwoW5oVCkmg6ZVh7MVrxEYvpQ31xlxN7pV4b0fj5AwGrvPgyz7jIOIr
+         O3PFlsfEf7bI46+6yPCQSDidcY9ISxTiUxGqChJ+YTmi+u50RG68VZrIGd+2hIjwU9yL
+         xpIMgYlSJgbrOXDvB0qeqZrDGMWcqB5B4WGCEkPbhy1fGbKDd5+TuAqrapEOhvD7Paey
+         jWVlbMWgUfA87qobQgEzNDblgS4ZPLxpVS9UDUZlQsPwkY/sEc5hekB03nMrutCX6Csl
+         NZ8w==
+X-Gm-Message-State: AC+VfDwsue9fSlnpcb9QUnJes8w5gdMMvatT+hmU8FMQZSH12YlV7go8
+        0qYuJamuJ0HehLaOZiWkMrrgvBSY1HOZoi+6JVI=
+X-Google-Smtp-Source: ACHHUZ6o180I0fAigI/8A3iS92oiIiwqKrYDmoXe1xL+jRS4jMwv7wocDJ2W+aCgBqX7A0m8StHBkg==
+X-Received: by 2002:a19:f707:0:b0:4f2:7e3e:7d24 with SMTP id z7-20020a19f707000000b004f27e3e7d24mr545223lfe.46.1684354412582;
+        Wed, 17 May 2023 13:13:32 -0700 (PDT)
 Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id p27-20020ac246db000000b004f382ae9892sm1190899lfo.247.2023.05.17.13.13.27
+        by smtp.gmail.com with ESMTPSA id p27-20020ac246db000000b004f382ae9892sm1190899lfo.247.2023.05.17.13.13.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 May 2023 13:13:30 -0700 (PDT)
+        Wed, 17 May 2023 13:13:32 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 17 May 2023 22:12:51 +0200
-Subject: [PATCH v2 2/3] dt-bindings: power: qcom,rpmpd: Format RPMh levels
- better
+Date:   Wed, 17 May 2023 22:12:52 +0200
+Subject: [PATCH v2 3/3] arm64: dts: qcom: sm8550: Add missing RPMhPD OPP
+ levels
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230517-topic-kailua-rpmhpd-v2-2-3063ce19c491@linaro.org>
+Message-Id: <20230517-topic-kailua-rpmhpd-v2-3-3063ce19c491@linaro.org>
 References: <20230517-topic-kailua-rpmhpd-v2-0-3063ce19c491@linaro.org>
 In-Reply-To: <20230517-topic-kailua-rpmhpd-v2-0-3063ce19c491@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -68,94 +68,113 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Conor Dooley <conor.dooley@microchip.com>
+        Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1684354400; l=2869;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1684354400; l=2617;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=rkz3rDD9UJ1lh0oaKwuo6UWyGych2wWx1GG3p1Uh5sc=;
- b=/xV2wCMDg+dtNNOsTBZmr3nxaglGCFZU1xdccHGhSQZrfJaW+FVFw0vlrNixVbLuC7BBndEoE
- AuYYnUP0SPsA3Z19xwWbOPbLV0mIAiawN8nSRPZvwnIj2MLz3A++2Gv
+ bh=JJOo1yC89QKK0GjXF7VRcmrSi+n6mZDBrrstrn3foPM=;
+ b=CpJVb5IAq0cXatsz5h3BLG1mi4TobFqZMAM/KIr0NgZShrr+JQ5Vz3+6wLTsj6rluYNpA1U2i
+ 7hQ7+NHTG0DCQgJt/oNsOa9bZhyOUYCKinWV09G+CrWPDCRR8d6BLbj
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,UPPERCASE_50_75,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-After adding the missing levels with a nice, easy-to-read diff,
-reformat the defines to make them nice to look at..
+We need more granularity for things like the GPU. Add the missing levels.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+This unfortunately requires some re-indexing, resulting in an ugly diff.
+Rename the nodes to prevent that in the future.
+
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- include/dt-bindings/power/qcom-rpmpd.h | 46 +++++++++++++++++-----------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 40 +++++++++++++++++++++++++++---------
+ 1 file changed, 30 insertions(+), 10 deletions(-)
 
-diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
-index e34c01e650d6..4ede277d20e1 100644
---- a/include/dt-bindings/power/qcom-rpmpd.h
-+++ b/include/dt-bindings/power/qcom-rpmpd.h
-@@ -207,29 +207,29 @@
- #define SC8280XP_XO		15
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 6e9bad8f6f33..1c9460dc3d44 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -3608,43 +3608,63 @@ rpmhpd: power-controller {
+ 				rpmhpd_opp_table: opp-table {
+ 					compatible = "operating-points-v2";
  
- /* SDM845 Power Domain performance levels */
--#define RPMH_REGULATOR_LEVEL_RETENTION	16
--#define RPMH_REGULATOR_LEVEL_MIN_SVS	48
--#define RPMH_REGULATOR_LEVEL_LOW_SVS_D2	52
--#define RPMH_REGULATOR_LEVEL_LOW_SVS_D1	56
--#define RPMH_REGULATOR_LEVEL_LOW_SVS_D0	60
--#define RPMH_REGULATOR_LEVEL_LOW_SVS	64
--#define RPMH_REGULATOR_LEVEL_LOW_SVS_P1	72
--#define RPMH_REGULATOR_LEVEL_LOW_SVS_L1	80
--#define RPMH_REGULATOR_LEVEL_LOW_SVS_L2	96
--#define RPMH_REGULATOR_LEVEL_SVS	128
--#define RPMH_REGULATOR_LEVEL_SVS_L0	144
--#define RPMH_REGULATOR_LEVEL_SVS_L1	192
--#define RPMH_REGULATOR_LEVEL_SVS_L2	224
--#define RPMH_REGULATOR_LEVEL_NOM	256
--#define RPMH_REGULATOR_LEVEL_NOM_L0	288
--#define RPMH_REGULATOR_LEVEL_NOM_L1	320
--#define RPMH_REGULATOR_LEVEL_NOM_L2	336
--#define RPMH_REGULATOR_LEVEL_TURBO	384
--#define RPMH_REGULATOR_LEVEL_TURBO_L0	400
--#define RPMH_REGULATOR_LEVEL_TURBO_L1	416
--#define RPMH_REGULATOR_LEVEL_TURBO_L2	432
--#define RPMH_REGULATOR_LEVEL_TURBO_L3	448
--#define RPMH_REGULATOR_LEVEL_SUPER_TURBO 464
-+#define RPMH_REGULATOR_LEVEL_RETENTION		16
-+#define RPMH_REGULATOR_LEVEL_MIN_SVS		48
-+#define RPMH_REGULATOR_LEVEL_LOW_SVS_D2		52
-+#define RPMH_REGULATOR_LEVEL_LOW_SVS_D1		56
-+#define RPMH_REGULATOR_LEVEL_LOW_SVS_D0		60
-+#define RPMH_REGULATOR_LEVEL_LOW_SVS		64
-+#define RPMH_REGULATOR_LEVEL_LOW_SVS_P1		72
-+#define RPMH_REGULATOR_LEVEL_LOW_SVS_L1		80
-+#define RPMH_REGULATOR_LEVEL_LOW_SVS_L2		96
-+#define RPMH_REGULATOR_LEVEL_SVS		128
-+#define RPMH_REGULATOR_LEVEL_SVS_L0		144
-+#define RPMH_REGULATOR_LEVEL_SVS_L1		192
-+#define RPMH_REGULATOR_LEVEL_SVS_L2		224
-+#define RPMH_REGULATOR_LEVEL_NOM		256
-+#define RPMH_REGULATOR_LEVEL_NOM_L0		288
-+#define RPMH_REGULATOR_LEVEL_NOM_L1		320
-+#define RPMH_REGULATOR_LEVEL_NOM_L2		336
-+#define RPMH_REGULATOR_LEVEL_TURBO		384
-+#define RPMH_REGULATOR_LEVEL_TURBO_L0		400
-+#define RPMH_REGULATOR_LEVEL_TURBO_L1		416
-+#define RPMH_REGULATOR_LEVEL_TURBO_L2		432
-+#define RPMH_REGULATOR_LEVEL_TURBO_L3		448
-+#define RPMH_REGULATOR_LEVEL_SUPER_TURBO 	464
- #define RPMH_REGULATOR_LEVEL_SUPER_TURBO_NO_CPR	480
+-					rpmhpd_opp_ret: opp1 {
++					rpmhpd_opp_ret: opp-16 {
+ 						opp-level = <RPMH_REGULATOR_LEVEL_RETENTION>;
+ 					};
  
- /* MDM9607 Power Domains */
+-					rpmhpd_opp_min_svs: opp2 {
++					rpmhpd_opp_min_svs: opp-48 {
+ 						opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
+ 					};
+ 
+-					rpmhpd_opp_low_svs: opp3 {
++					rpmhpd_opp_lov_svs_d2: opp-52 {
++						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D2>;
++					};
++
++					rpmhpd_opp_lov_svs_d1: opp-56 {
++						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
++					};
++
++					rpmhpd_opp_lov_svs_d0: opp-60 {
++						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D0>;
++					};
++
++					rpmhpd_opp_low_svs: opp-64 {
+ 						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+ 					};
+ 
+-					rpmhpd_opp_svs: opp4 {
++					rpmhpd_opp_low_svs_l1: opp-80 {
++						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_L1>;
++					};
++
++					rpmhpd_opp_svs: opp-128 {
+ 						opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
+ 					};
+ 
+-					rpmhpd_opp_svs_l1: opp5 {
++					rpmhpd_opp_svs_l0: opp-144 {
++						opp-level = <RPMH_REGULATOR_LEVEL_SVS_L0>;
++					};
++
++					rpmhpd_opp_svs_l1: opp-192 {
+ 						opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
+ 					};
+ 
+-					rpmhpd_opp_nom: opp6 {
++					rpmhpd_opp_nom: opp-256 {
+ 						opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
+ 					};
+ 
+-					rpmhpd_opp_nom_l1: opp7 {
++					rpmhpd_opp_nom_l1: opp-320 {
+ 						opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
+ 					};
+ 
+-					rpmhpd_opp_nom_l2: opp8 {
++					rpmhpd_opp_nom_l2: opp-336 {
+ 						opp-level = <RPMH_REGULATOR_LEVEL_NOM_L2>;
+ 					};
+ 
+-					rpmhpd_opp_turbo: opp9 {
++					rpmhpd_opp_turbo: opp-384 {
+ 						opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
+ 					};
+ 
+-					rpmhpd_opp_turbo_l1: opp10 {
++					rpmhpd_opp_turbo_l1: opp-416 {
+ 						opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
+ 					};
+ 				};
 
 -- 
 2.40.1
