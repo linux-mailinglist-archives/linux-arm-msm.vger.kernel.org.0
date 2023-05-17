@@ -2,138 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A749870722B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 21:29:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07BB070723D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 21:36:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229706AbjEQT3M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 15:29:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49150 "EHLO
+        id S229945AbjEQTgW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 15:36:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbjEQT3L (ORCPT
+        with ESMTP id S229511AbjEQTgV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 15:29:11 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B37101FE9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 12:28:30 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4efe8991b8aso1496156e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 12:28:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684351706; x=1686943706;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AoCBXCVisneTJ/xKyGw/fzqU76GzvlUnibRbCGUPltc=;
-        b=yFJ3jImtIluIRduy/GMhEyappIoBnHVZuVVSjpeXSPp9AXhSb9p40kyjEnIPnc7OBW
-         OUUqzaYv4WCJ2o7nYWBOd1pZifrcjwb6w7JhND8HhAX4DdNm88gWwbHoTwYH7bnDZott
-         g0Sw0qXOY4XQTPavkPeGUcgNF4d4XomEUAb4x9SU++2a+qMPMlfBl3p+EN5Ytjlj7/U4
-         cYe/WnzkQEAZaZYYw2lGBup40s5kdfiLeUVJQWZ/T5xzgxGKT9yumt7wDHyrXAzqu+P9
-         HXfdNoJnJFyq8Sy99wCs0/+SonCRzP+JpZwLwFyNcHWsVzm6C9P4PDycucwhPkVmCzDO
-         d8yQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684351706; x=1686943706;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AoCBXCVisneTJ/xKyGw/fzqU76GzvlUnibRbCGUPltc=;
-        b=GQaxXFWqn1E43FHH3295svjko3DGcEfv9h6SJ1ppWsztguFeB0cW6/DuWHMNP64rFy
-         6EYzrAWgM8Ud4RGM/GhiRGlxYwtIbTJz3FEYsvN4tD2VRtozMV+oW5vZwo4Tf3qjxP5n
-         MEImmpuMX05rzpsKsz7LKqlbc1xifAO6ZIGZ7yJcJPFdDW8pqcN+SJFvPc/37LerGYkc
-         cdAKuFvk9YemqXGqaZox944dx/pP050TtPlcCb2VOPRo+uyu8Wy6FN8HqyKy/NhRA4u4
-         lalw0r9rimB4wJ/7n3uNBkPUcdbInXowEsJMy9HSCA843EE2sY31habQjTnE1APEGwce
-         FWNQ==
-X-Gm-Message-State: AC+VfDzLjaIfj7MYlmesivCa2AfOQygx+1HxA1/Pejda6QIHKn1vO2/d
-        WbwZsPQ/RmXNoc7WcHZ2l8wjAg==
-X-Google-Smtp-Source: ACHHUZ45Y+CMq9N0vDVyJFWoKSyN16TjQkNJ2EdaelJGczyJCWYJyxPU1WTv7OgPe6Sss8E24x6DVg==
-X-Received: by 2002:ac2:4575:0:b0:4f3:5038:5857 with SMTP id k21-20020ac24575000000b004f350385857mr567731lfm.55.1684351706034;
-        Wed, 17 May 2023 12:28:26 -0700 (PDT)
-Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id z13-20020a056512376d00b004f019d3eab4sm3468608lft.23.2023.05.17.12.28.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 May 2023 12:28:25 -0700 (PDT)
-Message-ID: <15df78fc-c35b-aae0-fd64-917c9882c815@linaro.org>
-Date:   Wed, 17 May 2023 21:28:24 +0200
+        Wed, 17 May 2023 15:36:21 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1ABF109;
+        Wed, 17 May 2023 12:36:17 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34HJTOfD030115;
+        Wed, 17 May 2023 19:36:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=xA3BaMUdhySYpdcyg3JhGlNzUW+7jCWQoxSWw8L+Tow=;
+ b=ItiNPow8PqGn5Skr/Su7577RBhd5gdxFJ8Yl2EWr3Lbr2MRaBzAMjNCELj3TRLZdWOAr
+ DIVvOwRhRKN+ZAY3pD0Smbgh2N89O8NWHN6ep7d6tGj1YDxFlUC9fczOgeIxxsUMAIs4
+ ohlhqb4D7TXLz2FJSgTF8RKTeCg+V4gLJ0y/Oz/IvbO81ggis/n7dZSJO3WrNJ7wAEXc
+ kXwWOJn74RU1iOvcP2lJFmdVdkmtacx4T7YsLPHnmApMrmjWr9+JWWu9Go4Ds4CY1Gdo
+ R6oZE03k20dAdj5pUd36lvFt1vhN3dcvLic1R5htBZsoK5AllOqOa9nrAXnJaLcf+bY5 ng== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qn3fsg8xy-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 17 May 2023 19:36:03 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34HJa3X7004882
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 17 May 2023 19:36:03 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Wed, 17 May 2023 12:36:02 -0700
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+To:     <ogabbay@kernel.org>, <jacek.lawrynowicz@linux.intel.com>,
+        <quic_pkanojiy@quicinc.com>, <stanislaw.gruszka@linux.intel.com>,
+        <quic_carlv@quicinc.com>, <quic_ajitpals@quicinc.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: [PATCH 0/5] accel/qaic fixes for 6.4
+Date:   Wed, 17 May 2023 13:35:35 -0600
+Message-ID: <20230517193540.14323-1-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 2/5] of: reserved_mem: Implement
- alloc-{bottom-up,top-down}
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        devicetree@vger.kernel.org, devicetree-spec@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20230510-dt-resv-bottom-up-v1-0-3bf68873dbed@gerhold.net>
- <20230510-dt-resv-bottom-up-v1-2-3bf68873dbed@gerhold.net>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230510-dt-resv-bottom-up-v1-2-3bf68873dbed@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: I76tEy0jDJsr931TU_XuZ0JDXpayV1tt
+X-Proofpoint-GUID: I76tEy0jDJsr931TU_XuZ0JDXpayV1tt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-17_04,2023-05-17_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 suspectscore=0 spamscore=0 adultscore=0 bulkscore=0
+ phishscore=0 impostorscore=0 mlxlogscore=912 priorityscore=1501 mlxscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305170162
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+During development of new features, we noticed some spots in the code that
+could be improved based on review feedback from the initial driver series.
 
+Also two race condition fixes, one found during stress testing and another
+via code inspection.
 
-On 15.05.2023 12:12, Stephan Gerhold wrote:
-> Use memblock_set_bottom_up() to specify an explicit allocation order for
-> dynamic reservations with "alloc-ranges". Since the default value varies
-> between architectures the previous value is saved and restored after
-> trying the allocations.
-> 
-> If neither alloc-bottom-up or alloc-top-down are specified the previous
-> implementation-defined allocation order is preserved.
-> 
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> ---
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Jeffrey Hugo (1):
+  accel/qaic: Fix NNC message corruption
 
-Konrad
->  drivers/of/of_reserved_mem.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/of/of_reserved_mem.c b/drivers/of/of_reserved_mem.c
-> index 948efa9f99e3..6443140deacf 100644
-> --- a/drivers/of/of_reserved_mem.c
-> +++ b/drivers/of/of_reserved_mem.c
-> @@ -89,7 +89,7 @@ static int __init __reserved_mem_alloc_size(unsigned long node,
->  	phys_addr_t base = 0, align = 0, size;
->  	int len;
->  	const __be32 *prop;
-> -	bool nomap;
-> +	bool nomap, prev_bottom_up;
->  	int ret;
->  
->  	prop = of_get_flat_dt_prop(node, "size", &len);
-> @@ -130,6 +130,12 @@ static int __init __reserved_mem_alloc_size(unsigned long node,
->  			return -EINVAL;
->  		}
->  
-> +		prev_bottom_up = memblock_bottom_up();
-> +		if (of_get_flat_dt_prop(node, "alloc-bottom-up", NULL))
-> +			memblock_set_bottom_up(true);
-> +		if (of_get_flat_dt_prop(node, "alloc-top-down", NULL))
-> +			memblock_set_bottom_up(false);
-> +
->  		base = 0;
->  
->  		while (len > 0) {
-> @@ -148,6 +154,7 @@ static int __init __reserved_mem_alloc_size(unsigned long node,
->  			len -= t_len;
->  		}
->  
-> +		memblock_set_bottom_up(prev_bottom_up);
->  	} else {
->  		ret = early_init_dt_alloc_reserved_memory_arch(size, align,
->  							0, 0, nomap, &base);
-> 
+Pranjal Ramajor Asha Kanojiya (4):
+  accel/qaic: Validate user data before grabbing any lock
+  accel/qaic: Validate if BO is sliced before slicing
+  accel/qaic: Flush the transfer list again
+  accel/qaic: Grab ch_lock during QAIC_ATTACH_SLICE_BO
+
+ drivers/accel/qaic/qaic_control.c | 41 ++++++++------
+ drivers/accel/qaic/qaic_data.c    | 91 +++++++++++++++----------------
+ 2 files changed, 70 insertions(+), 62 deletions(-)
+
+-- 
+2.40.1
+
