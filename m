@@ -2,128 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 282627069D2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 15:29:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 329F37069F8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 15:34:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231410AbjEQN3C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 09:29:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39988 "EHLO
+        id S232087AbjEQNe0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 09:34:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44358 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230232AbjEQN3C (ORCPT
+        with ESMTP id S232065AbjEQNeP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 09:29:02 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 543A113A
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 06:29:00 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f13d8f74abso983700e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 06:29:00 -0700 (PDT)
+        Wed, 17 May 2023 09:34:15 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECF7493FB;
+        Wed, 17 May 2023 06:33:49 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-1ae52ce3250so6412065ad.2;
+        Wed, 17 May 2023 06:33:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684330138; x=1686922138;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=W7H9sn2dWZJRuoUfbIC4+AN4juqKG9jvbgSCH57Xe0A=;
-        b=QvCeS159FrQrEX1R8hhzpMrNxvNXOud0ZgvDu38e5OPdYk2ljrUDA5l0/rvQw/zoaa
-         FVvjA2gL+BE8blUqkoQRnmeJ/UuPvsA+VMjHdVMKUbjLEuwwZtLVVXf7wSsE7kokw84A
-         Sp/Gpaj7hrxaj2DHXx8MGN3lOLYIUljHiwAnXfYNKlJu34LzEtOvUdw5GEf0tfLsSYS+
-         l24dgLSlgREbA7GJhmSXIHqyYPt20NHboORUsLOldaXTWTD9/2tdOhTGkXJ397PbuzE/
-         H1kMgxgfOEjYUDBKRX0CZZymXI1rjbRbzKX5rDvoA9q0TDY4IYkCKRaijqSq2eNmsq5f
-         P32A==
+        d=gmail.com; s=20221208; t=1684330429; x=1686922429;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rbMQ0v3qCDD0ikHRHPJXrlACnnN8XxCRviK30k53MMg=;
+        b=RdHpAmHAmgLsJMNhFGmDLliPlydekszKQt9Tz6yED4lbjlyJO4WP+zJvjbG2AEPCBE
+         qZYxCpEgK72p119skAHTvpTu/9wKzeUFsKVv/61qVsje+kxlLhrjYrzqvsRLhufEwVYx
+         FGTVULU3Nd+prqhRnzpbDs6IhiwIvP+9lKTvIKQQ8PzikNiQQVnkp7DpZkeNMUuPXz1I
+         b+rCUMMmkjCPF8Gp1mVtDNGaIVhndd6XCSwzm4MbruhtfDrYbaafrXrEbkfgcSJlgs8E
+         ZDi81QQF9NjPkeISnDfrD+Bby7q3cAnq4j92YpUmuJMo17tJvXPBzIka8C2pgw5A+yyb
+         a6ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684330138; x=1686922138;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W7H9sn2dWZJRuoUfbIC4+AN4juqKG9jvbgSCH57Xe0A=;
-        b=lyRRg72O/rV7GCfihcUBulE1e61UTH4q5GKWALbV0rrAsWaE0Xv/cPY4SdQXq0XmiO
-         jb1rDkGyQ8mdhBf5X7PPlMXoou5yH5oZJBvsL5Mkx7/lO15A9AGDu9MCrGq+XWCZVQ2m
-         8vXOWsIA83JIyslfvHkbjATFisV/ovi0DLZ+xjr5i+k8rVpP7FU7jmryDgCUTY5NnX1x
-         Jo8Qq8wBOpK0M6wpqlPcVF3qNsbipsW/XgjIf7ZqitO9sV3A04/G7L5Cp+jtFB65+Fa2
-         y2jXucrXYu9yG7CRJxSdZMLsFnI/D6ytO/IJIMPdkHG7nq8AYosygv3DArbMNxJF9rS0
-         bhoA==
-X-Gm-Message-State: AC+VfDxnS1RDaYilxppkCUewLC5h+K50pXT9eAa4fl4a088kTUnbsDsB
-        HzQIiYiHaeG9yeBZFhVFGKOBPg==
-X-Google-Smtp-Source: ACHHUZ6pkE/lBljECeBc1B+gG2pYeVaj/bRXhcUm7XnHAQvhA1OVwaL5PHMHK0oHAqsccgfRrjWxnQ==
-X-Received: by 2002:ac2:4904:0:b0:4e8:c5d:42a5 with SMTP id n4-20020ac24904000000b004e80c5d42a5mr241158lfi.24.1684330138595;
-        Wed, 17 May 2023 06:28:58 -0700 (PDT)
-Received: from ?IPV6:2a00:f41:c93:874f:be7b:fb6c:26f9:307c? ([2a00:f41:c93:874f:be7b:fb6c:26f9:307c])
-        by smtp.gmail.com with ESMTPSA id h4-20020a05651211c400b004edc2a023ffsm3372074lfr.36.2023.05.17.06.28.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 May 2023 06:28:58 -0700 (PDT)
-Message-ID: <f82e0517-0c96-06e5-81ac-c97ea2b8decb@linaro.org>
-Date:   Wed, 17 May 2023 15:28:56 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sm8550: Add missing RPMhPD OPP
- levels
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20221208; t=1684330429; x=1686922429;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rbMQ0v3qCDD0ikHRHPJXrlACnnN8XxCRviK30k53MMg=;
+        b=Ti7VTpASYhBag0yzRzjOJfViAJWjUOakuINHVOK95t8QWCVQ8ei71EQ5BRmNE2ku3U
+         yvElxLsb5t+l0cTdi9+sOEw/01FRqZDqIIkFjJjeNwrP1uyNKQS4hfUoIrlY7Zt9x8sK
+         x3xP4UOqfHSPpwaQ2RdIMiLFQ4odwJTtPA+c99tF0UM3iq1XRdBvUoyPcWZb1RJlCIOC
+         kUIhhGU57w7+20BZ5o+5rCm61qbezkPyKfGVFS12bO1xRvx4cb7ud2lD3LzTpBUn/G2z
+         GYKv6U9onCY3udd1cvl7LCu4Wy7Nk3bUtI+qg1bZJ1+u6uSb18UIsgn5U/EOWy8eHJYC
+         de2Q==
+X-Gm-Message-State: AC+VfDzOHcknG+7waMRzGqXdY7yB1dmo/qNxmGBvApnZQ+5jiLhF6vpg
+        75E0RD2luw4ZW+K5Mf4cwow=
+X-Google-Smtp-Source: ACHHUZ5neLbN65pdb8800vQuzivVb7/qsgL/pjdYn69YBg2IaPl14+iRcWaf3Y3bIRvpHHYhq3gkMw==
+X-Received: by 2002:a17:902:da91:b0:1ae:f37:c1ab with SMTP id j17-20020a170902da9100b001ae0f37c1abmr16417374plx.25.1684330429024;
+        Wed, 17 May 2023 06:33:49 -0700 (PDT)
+Received: from localhost.localdomain (n220246252240.netvigator.com. [220.246.252.240])
+        by smtp.gmail.com with ESMTPSA id m5-20020a170902db0500b001ac7f583f72sm17519253plx.209.2023.05.17.06.33.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 May 2023 06:33:48 -0700 (PDT)
+From:   Jianhua Lu <lujianhua000@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230517-topic-kailua-rpmhpd-v1-0-cd3013d051a6@linaro.org>
- <20230517-topic-kailua-rpmhpd-v1-3-cd3013d051a6@linaro.org>
- <CAA8EJppaZSXeRP661g65WtadZAuJo1T8=Yk8AfX6n4Jg04BvZA@mail.gmail.com>
- <d6bc4b56-3a0c-44f4-2e21-ff07c69100a6@linaro.org>
-In-Reply-To: <d6bc4b56-3a0c-44f4-2e21-ff07c69100a6@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Jianhua Lu <lujianhua000@gmail.com>
+Subject: [PATCH v2] arm64: dts: qcom: sm8250-xiaomi-elish: remove redundant empty line
+Date:   Wed, 17 May 2023 21:33:40 +0800
+Message-Id: <20230517133340.21111-1-lujianhua000@gmail.com>
+X-Mailer: git-send-email 2.39.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
+        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Remove a redundant empty line introduced by
+  commit 51c4c2bd6f31 ("arm64: dts: qcom: sm8250-xiaomi-elish-boe: Add mdss and dsi panel")
 
+Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
+---
+Changes in v2:
+ - Drop fixes tag
 
-On 17.05.2023 15:25, Konrad Dybcio wrote:
-> 
-> 
-> On 17.05.2023 15:25, Dmitry Baryshkov wrote:
->> On Wed, 17 May 2023 at 16:20, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>>
->>> We need more granularity for things like the GPU. Add the missing levels.
->>>
->>> This unfortunately requires some re-indexing, resulting in an ugly diff.
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
->>>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 36 ++++++++++++++++++++++++++++--------
->>>  1 file changed, 28 insertions(+), 8 deletions(-)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
->>> index 6e9bad8f6f33..0c987dd4e4e5 100644
->>> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
->>> @@ -3616,35 +3616,55 @@ rpmhpd_opp_min_svs: opp2 {
->>>                                                 opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
->>>                                         };
->>>
->>> -                                       rpmhpd_opp_low_svs: opp3 {
->>> +                                       rpmhpd_opp_lov_svs_d2: opp3 {
->>> +                                               opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D2>;
->>> +                                       };
->>>
->>
->> Maybe we should stop using the indices for OPP entries and switch to
->> encoding levels instead?
-> I think we should just retire this and register a hardcoded OPP table
-> in the .c driver.
-But then we don't have any required-opps to reference... yeah the nodes
-should probably be renamed to opp-<levelvalue>
+ arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-Konrad
-> 
-> Konrad
->>
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+index 8af6a0120a50..eaac00085894 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
+@@ -504,7 +504,6 @@ panel_in_1: endpoint {
+ 					remote-endpoint = <&dsi1_out>;
+ 				};
+ 			};
+-
+ 		};
+ 	};
+ };
+-- 
+2.39.3
+
