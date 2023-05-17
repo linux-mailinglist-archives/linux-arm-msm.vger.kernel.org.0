@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C2DCB7073AB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 23:14:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C0017073AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 23:14:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229869AbjEQVOh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 17:14:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52152 "EHLO
+        id S229903AbjEQVOk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 17:14:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229814AbjEQVOe (ORCPT
+        with ESMTP id S229805AbjEQVOg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 17:14:34 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3220D7A99
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:14:32 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2ac836f4447so12947731fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:14:32 -0700 (PDT)
+        Wed, 17 May 2023 17:14:36 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9AF383FB
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:14:33 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2ac80da3443so13485771fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:14:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684358070; x=1686950070;
+        d=linaro.org; s=google; t=1684358072; x=1686950072;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WB7o5JzliPqClTUxbFBIzOZ1VAPC2kTl85qPjyuvehw=;
-        b=dla0xxAgw14sSQpkBy1XDqebun4ISYqPPRp1iSXhSPWTef6ck6itwp2Y98QnVkReZF
-         GpvDIb4WuYYs7hm67HcHOgnCjKz6JtEsEmNq/QaYbzQ3ycn6vWCFCqSstIKDC6EFU6Tr
-         dwNaL/ODPSlEq7vqgsAU7A6ZHwsqct8PwX2hdab8jmJupW6xJOmVKXTTV4fYI4LCcO6I
-         Dg95G16BYEvbL+/WjGlddz3pqr5vOohpGHjaYrZDjxVhHV8vwdP2zDzBJytkkbSgKtiH
-         iAyYVgBL0cqVwFEEgdKPmUoSGdXwLGzuE1jNwlHOJqQXQsZqTKSXToFuMCieKA3/CJoc
-         Rzeg==
+        bh=umRAJMqKc5zF6FOAntGSMEcHnMlgnfWakGEzWkoJKuw=;
+        b=xCQfwTscEvtS2rrOux3FRlqc0g861cQHp8W+wx4MmACk6AbBbjvABF7ylMkB1utg2w
+         iepKJ3Xe9+zKqFIvFu7T4N4ZOxfQZtFAJZHN2AAseg3aVfwMb56JDEz4f5oPCSZcU7yc
+         mfAQmN3xhtCVo+1x/UKM/UJxXIxdcqzyKI12LH7OmLTecgSbPFbwJZQ5PamRAqhzz9Ua
+         WARLlGezEb9UlUS15/atY9lZ10pDG4k06zgo6t8LQjIzcHPgpUjTYfk8El1vJcKGyVMO
+         /XVh9H07d9UzUJ8hUHPxnK40T2DeFmGcleRB1g57ia59asuZVf47cROmRJzVBXGM9LrJ
+         2raQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684358070; x=1686950070;
+        d=1e100.net; s=20221208; t=1684358072; x=1686950072;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WB7o5JzliPqClTUxbFBIzOZ1VAPC2kTl85qPjyuvehw=;
-        b=AUiFMgl+VUahuMIjpjKHYYlqNZeLUgjPKxOjLqLZday4Usqn/i4gLdPhtVHtPZDtqu
-         P3mo7pjXmLRfFqtKLc4zBGYODOdiAB/KpFsPpwHOYc0D4SihQNHtJotyv4BtyqXyn3Mm
-         xJHQedbShJvcCCyklPYg45aJhkMI66yTV9UhsaEopNEEQuiVgFLB+pq6+TsAs7nRJfLb
-         pqBOXkuGeI7fP2K81r70AITxSW+TiW2Dag+C+Fv5oC6LKGqgXu2743GoM7JpJF284Kil
-         GR6BTd/OxTJosft7m9y0wlsgmy8Pa97528cEeGFunlu77lhAu4abjHS6hm3Rxd3kp95L
-         ENsQ==
-X-Gm-Message-State: AC+VfDzTDlKYa42bvOL7sdoCfuUnNNUNLty+i57fWfsL34YC7ldNrMDg
-        FznD4gw7/N5VZfgjAz9hRqff4A==
-X-Google-Smtp-Source: ACHHUZ4lOGnG43GrE7vnXDxP7lMKs4LnDRJldBcGumsVA2ZKj+4w3XNxxEJFQhMyvbtkAnx7pcuoqw==
-X-Received: by 2002:a2e:b172:0:b0:2a8:c01a:71b6 with SMTP id a18-20020a2eb172000000b002a8c01a71b6mr9519546ljm.3.1684358070367;
-        Wed, 17 May 2023 14:14:30 -0700 (PDT)
+        bh=umRAJMqKc5zF6FOAntGSMEcHnMlgnfWakGEzWkoJKuw=;
+        b=Pg/lXWN/85kJQvqxRS1v59M/n+gQPCMpd/6fpqq6lSGS2cQBY91XQWdthnZzJTThOW
+         8gI2WliRDU9Dwt83nHTHSp7iSoxj8VJkYZug2nz6D3tu7TxTOw2zrM+EbNMW2DejjAR5
+         vI1Xt/IR9QgQy11TWcx/K5RTV8SngU3cL+hum15sWtSvlCrbvEQIsE+7er818CE8kFbm
+         D1oEts45sGI7k/qZ5Yz4K79M4wfGv+KBQFRgkqieAU5jxV0qrVfdBlo0z7eTIfxTTQM8
+         TSZCn9FkrorE137YXGq9aGVtG4lbyXZk19yATufkyTtXVxU5HlC8dE7aXjr65k55X9us
+         nYxw==
+X-Gm-Message-State: AC+VfDxVgv2neNfcu2QeUopH/M31DifWEVjNx3Drcns2lrMggy2qnL6s
+        XuEyGJlV02J5XIqeJasltMcLpA==
+X-Google-Smtp-Source: ACHHUZ6bRdZiWx4+kMVTtpzPkUtuso8ZdtBEASLvPQSebYOcaJbFL78oPbNh4Blk6kyNIKYSua7MvA==
+X-Received: by 2002:a2e:3201:0:b0:2ad:8f4a:1e52 with SMTP id y1-20020a2e3201000000b002ad8f4a1e52mr9502642ljy.30.1684358072091;
+        Wed, 17 May 2023 14:14:32 -0700 (PDT)
 Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id l5-20020a2e8345000000b002ac88e29049sm4781142ljh.43.2023.05.17.14.14.29
+        by smtp.gmail.com with ESMTPSA id l5-20020a2e8345000000b002ac88e29049sm4781142ljh.43.2023.05.17.14.14.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 May 2023 14:14:30 -0700 (PDT)
+        Wed, 17 May 2023 14:14:31 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 17 May 2023 23:14:16 +0200
-Subject: [PATCH v3 03/17] media: venus: Introduce VPU version distinction
+Date:   Wed, 17 May 2023 23:14:17 +0200
+Subject: [PATCH v3 04/17] media: venus: Add vpu_version to most SoCs
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230228-topic-venus-v3-3-6092ae43b58f@linaro.org>
+Message-Id: <20230228-topic-venus-v3-4-6092ae43b58f@linaro.org>
 References: <20230228-topic-venus-v3-0-6092ae43b58f@linaro.org>
 In-Reply-To: <20230228-topic-venus-v3-0-6092ae43b58f@linaro.org>
 To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
@@ -78,11 +78,11 @@ Cc:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Vikash Garodia <quic_vgarodia@quicinc.com>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1684358064; l=2053;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1684358064; l=2055;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=fQWU9RHiaT/ZJ+YZvKDL3yk/Cmmu65hET4UaVHeDybg=;
- b=MSj/MTkdOBsAAjOd9xHOkLdhXg9K+8D9c9MSPTarCVdqji1cP3OQmoxQKYt78/xr3r/5WoKtn
- pbacGU+XiN4BUX2kagT66UT3scWB2nnycC4DnBAaGppaU9ABdFkffzw
+ bh=nc30HaKHpy9R0tdyW3Z01908RNfbGE4dIZSAtIHTLSQ=;
+ b=YXKIWgtmy6cmCJsJJvLU4SOyJogiI+vvX3h3IUV8wCW9zGscSByxBEcJEZbzB8DDLQbVhwW+j
+ xKexNN9dYTyBNpkvH74EMqflr76LpD6nvs/cJ+BMjqxephMCpvg/TqE
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -95,60 +95,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Video Processing Unit hardware version is the differentiator, based
-on which the video driver should decide which code paths to take.
+Add vpu_version where I was able to retrieve the information to
+allow for more precise hardware-specific code path matching.
 
-Up until now, we've relied on HFI versions instead, but that was just
-a happy accident between recent SoCs. Add a field in the res struct
-and add correlated definitions that will be used to account for the
-aforementioned differences.
-
+Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/media/platform/qcom/venus/core.h | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/media/platform/qcom/venus/core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 4f81669986ba..62c310b7dee6 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -48,6 +48,14 @@ struct bw_tbl {
- 	u32 peak_10bit;
- };
- 
-+enum vpu_version {
-+	VPU_VERSION_AR50,
-+	VPU_VERSION_AR50_LITE,
-+	VPU_VERSION_IRIS1,
-+	VPU_VERSION_IRIS2,
-+	VPU_VERSION_IRIS2_1,
-+};
-+
- struct venus_resources {
- 	u64 dma_mask;
- 	const struct freq_tbl *freq_tbl;
-@@ -71,6 +79,7 @@ struct venus_resources {
- 	const char * const resets[VIDC_RESETS_NUM_MAX];
- 	unsigned int resets_num;
- 	enum hfi_version hfi_version;
-+	enum vpu_version vpu_version;
- 	u8 num_vpp_pipes;
- 	u32 max_load;
- 	unsigned int vmem_id;
-@@ -481,6 +490,12 @@ struct venus_inst {
- #define IS_V4(core)	((core)->res->hfi_version == HFI_VERSION_4XX)
- #define IS_V6(core)	((core)->res->hfi_version == HFI_VERSION_6XX)
- 
-+#define IS_AR50(core)		((core)->res->vpu_version == VPU_VERSION_AR50)
-+#define IS_AR50_LITE(core)	((core)->res->vpu_version == VPU_VERSION_AR50_LITE)
-+#define IS_IRIS1(core)		((core)->res->vpu_version == VPU_VERSION_IRIS1)
-+#define IS_IRIS2(core)		((core)->res->vpu_version == VPU_VERSION_IRIS2)
-+#define IS_IRIS2_1(core)	((core)->res->vpu_version == VPU_VERSION_IRIS2_1)
-+
- #define ctrl_to_inst(ctrl)	\
- 	container_of((ctrl)->handler, struct venus_inst, ctrl_handler)
- 
+diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
+index 2ae867cb4c48..01671dd23888 100644
+--- a/drivers/media/platform/qcom/venus/core.c
++++ b/drivers/media/platform/qcom/venus/core.c
+@@ -684,6 +684,7 @@ static const struct venus_resources sdm845_res = {
+ 	.vcodec_clks_num = 2,
+ 	.max_load = 3110400,	/* 4096x2160@90 */
+ 	.hfi_version = HFI_VERSION_4XX,
++	.vpu_version = VPU_VERSION_AR50,
+ 	.vmem_id = VIDC_RESOURCE_NONE,
+ 	.vmem_size = 0,
+ 	.vmem_addr = 0,
+@@ -709,6 +710,7 @@ static const struct venus_resources sdm845_res_v2 = {
+ 	.vcodec_num = 2,
+ 	.max_load = 3110400,	/* 4096x2160@90 */
+ 	.hfi_version = HFI_VERSION_4XX,
++	.vpu_version = VPU_VERSION_AR50,
+ 	.vmem_id = VIDC_RESOURCE_NONE,
+ 	.vmem_size = 0,
+ 	.vmem_addr = 0,
+@@ -756,6 +758,7 @@ static const struct venus_resources sc7180_res = {
+ 	.opp_pmdomain = (const char *[]) { "cx", NULL },
+ 	.vcodec_num = 1,
+ 	.hfi_version = HFI_VERSION_4XX,
++	.vpu_version = VPU_VERSION_AR50,
+ 	.vmem_id = VIDC_RESOURCE_NONE,
+ 	.vmem_size = 0,
+ 	.vmem_addr = 0,
+@@ -809,6 +812,7 @@ static const struct venus_resources sm8250_res = {
+ 	.vcodec_num = 1,
+ 	.max_load = 7833600,
+ 	.hfi_version = HFI_VERSION_6XX,
++	.vpu_version = VPU_VERSION_IRIS2,
+ 	.num_vpp_pipes = 4,
+ 	.vmem_id = VIDC_RESOURCE_NONE,
+ 	.vmem_size = 0,
+@@ -866,6 +870,7 @@ static const struct venus_resources sc7280_res = {
+ 	.opp_pmdomain = (const char *[]) { "cx", NULL },
+ 	.vcodec_num = 1,
+ 	.hfi_version = HFI_VERSION_6XX,
++	.vpu_version = VPU_VERSION_IRIS2_1,
+ 	.num_vpp_pipes = 1,
+ 	.vmem_id = VIDC_RESOURCE_NONE,
+ 	.vmem_size = 0,
 
 -- 
 2.40.1
