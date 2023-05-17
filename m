@@ -2,155 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2ECF707595
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 00:43:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4724870759A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 00:47:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229572AbjEQWnB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 18:43:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38068 "EHLO
+        id S229604AbjEQWrv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 18:47:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229484AbjEQWnA (ORCPT
+        with ESMTP id S229484AbjEQWru (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 18:43:00 -0400
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD52140CD;
-        Wed, 17 May 2023 15:42:58 -0700 (PDT)
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20230517224257euoutp01a6b4694033a0b3119371221b095c0dbf~gD5Fbuhh81658316583euoutp01e;
-        Wed, 17 May 2023 22:42:57 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20230517224257euoutp01a6b4694033a0b3119371221b095c0dbf~gD5Fbuhh81658316583euoutp01e
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1684363377;
-        bh=MM3+qPbAfH/ZKaZBejHniISc0eX5MmJZmSGjD/SXFpU=;
-        h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-        b=EaO4Kw7y8EDGUGR934cmeVvYPOc9m6NPooOO1Q5op9EOddITBuUMdWWEsm8uN5jK+
-         zM0L672ET0zUAHhIFW7rHuYOTzv9MQiYtE44GhxZPlra5SjlF5r/+eXJw9yh+OuIyR
-         UtUo+jivCQxUTox7rlLBXZNa6N1Z5snUdYQrOtLM=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20230517224257eucas1p1ed1da7df9807315231c345b1ffee3827~gD5FMjpDX0327003270eucas1p1N;
-        Wed, 17 May 2023 22:42:57 +0000 (GMT)
-Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id DC.56.42423.17855646; Wed, 17
-        May 2023 23:42:57 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20230517224256eucas1p25e3b58d492b58b440b1aa0fb467fa7bc~gD5EWfep60455704557eucas1p2V;
-        Wed, 17 May 2023 22:42:56 +0000 (GMT)
-Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20230517224256eusmtrp2671486061b7284c13c57d0967952a90c~gD5EUhWir3236532365eusmtrp23;
-        Wed, 17 May 2023 22:42:56 +0000 (GMT)
-X-AuditID: cbfec7f2-a51ff7000002a5b7-2c-646558715bcf
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms1.samsung.com (EUCPMTA) with SMTP id 8E.21.10549.07855646; Wed, 17
-        May 2023 23:42:56 +0100 (BST)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20230517224254eusmtip187f238847c66c6e277e4d3e17211ade8~gD5CWtW0G2837028370eusmtip1Z;
-        Wed, 17 May 2023 22:42:54 +0000 (GMT)
-Message-ID: <584c65a9-305b-3174-a59b-93effc8a4c85@samsung.com>
-Date:   Thu, 18 May 2023 00:42:54 +0200
+        Wed, 17 May 2023 18:47:50 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01BF540CD;
+        Wed, 17 May 2023 15:47:48 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 964E9204C1;
+        Thu, 18 May 2023 00:47:46 +0200 (CEST)
+Date:   Thu, 18 May 2023 00:47:44 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, dmitry.baryshkov@linaro.org,
+        andersson@kernel.org, Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v10 7/8] drm/msm/dpu: add DSC 1.2 hw blocks for relevant
+ chipsets
+Message-ID: <w7xre5jdot3fpe3ldj6vcnvribpbalfvova5hhmbgvgvkrcm34@xqvsc5ga2knb>
+References: <1684360919-28458-1-git-send-email-quic_khsieh@quicinc.com>
+ <1684360919-28458-8-git-send-email-quic_khsieh@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0)
-        Gecko/20100101 Thunderbird/102.10.1
-Subject: Re: [PATCH v2 00/25] iommu: Make default_domain's mandatory
-Content-Language: en-US
-To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-        linuxppc-dev@lists.ozlabs.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>
-Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Steven Price <steven.price@arm.com>,
-        Thierry Reding <treding@nvidia.com>
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <0-v2-8d1dc464eac9+10f-iommu_all_defdom_jgg@nvidia.com>
-Content-Transfer-Encoding: 7bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Te0wUVxTGe2dmZxYKOCwgt7Qo2QJqDQhVkmt4xIIJU20CNq1t7csVpkh4
-        78pDY3SRbQsbQwF5DvIQqVgQRZY3CwJayJawFqFE6Cpvl4dEoFYFGrYsgy3//c4538n3nZtc
-        IS76ibIThkaeYqWRknAxaUrUdS5pXWI+Z4PdhrLNkHZ8hUAjhXUkqkv2Qg9+gcjQ0gmQKr2W
-        RLoMPYUqFsYBepb0DTKMzQrQ8nOE9EU3AepfVQOk4EoIlJJfRaGf52oplHypnkAts2tUPT4g
-        QOl3eijUl9QL0OKIAUdpV5JwlHu/FUOZrU0kSnnOkagjqwWglZerAnRBsRdVXc3HUY28g0Qt
-        k+MkWpp6SKCc+XyA9Fde4ah9fkKA9GMpJMq98IREifeerUmaCgn054oFSm35GC113MeQQueB
-        hjNUBCobaaIOuDIT7YUYc6PwBmD6BnpxpuFRKWD+HtRiTNVYhYApmZYTTCP3iGKuqqcxpro8
-        hWR0A2qSaRzdz6SVtAGmUHOEUZWeZ6ZUeSDQ9pipVzAbHhrHSvf4HDc92Z3cTEW3+SZMaDKB
-        HGTuVQITIaT3wVzdDKYEpkIRfR3AvNUGii+eA5icrcb54i8AaxefYq9XqnIrSX5QBmBO/8SG
-        agHAkbKXpFFlTvvAP6b+ERiZoJ3gxWo1xvctoSZvgjCyDc3CclUvbmQr+iDsKXtBGRmnbeHQ
-        RNF6KGtaaQYr713E+ME0gAP5LkYmaXeonFOumQmFJmvLTU/EvGQ7rJ+7vB4I0qVvwvpmHcHH
-        PgjLFM0bbAVnumoont+BhkbeDNI/Ali8MrxRpAEo1w8BXuUJddrldTec3gVvNe3h2x/AqnSl
-        wNiGtAV8OGfJh7CAGXU5ON82h8k/iHi1M+S6bv5n2/77AzwNiLlNz8JtOp/bdA73v28xIMqB
-        LRsriwhhZe6RbLyrTBIhi40McQ2KiqgGa3+me7VrsQEUzCy4dgBMCDoAFOJia/MjqUHBIvNg
-        yekzrDTqW2lsOCvrAG8LCbGt+W5vTZCIDpGcYsNYNpqVvp5iQhM7ORZ6bUeqQrXrcJjXpKMN
-        58TVe/qWOdjn+pyNSxstIrS7+7dvKcGSCqjeu9479RX2Vp/Y6V/ZhNQKAxOKKzQH5EGJpw8N
-        z7g2HOscf1r8ZfaLwJm57HKPsNmqEsfSu+c8Hmca3La2OkltdsQl9bUuB5wwkxgs5/3Lp377
-        vnj564CoE6Ivstomvf1KB7ccHf3KXXMoTS/3jgovUOyfPetsFXXr0zMxH7bbXfbv2efZIxFt
-        07rb+3kWJ163/s5j1tTxuKPJ1se3ox3er8vgxvqDst5KsAnwjv4ofuf5SrN340fdPtPcOfyr
-        uNLhHDcILvm6+B29Vhjbzb7hpvaL0Tl32fjPr267XSMmZCcl7u/hUpnkXyCZbmOiBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0xTdxTH9+u9vS1ksEsp4SdxbqtbZhYsFCg7TGTL5ra7TRMQspHpdC3c
-        AOFpH4szMXZATOkIgsKAYipP3QQnofIQCkKzqawIOhiyCfJo5WV46kQewlpgCf99fr/z/X7P
-        ycnhE4JSyosfl6RiFUmyBBHlTFpWbw3sTolko31NZQLotC6TMGSoo6BOGwx//oJhrfkmAmNO
-        LQX9Z8d4UDlnRTCTdgTWRh5zYekpwNiFXxH0rJoQpOtLScgoquZBxVQtD7Tn6klofmynGmsv
-        F3Ju3OFBd9o9BPNDawRkl6QRUNDVwoHclkYKMp7qKTDnNSNYXljlQmq6P1SXFRFwTWOmoPmR
-        lYLF8T4S8meLEIyVPCegbdbGhbGRDAoKUkcp+OG3Gbuk0UDCg2VXyGo+CIvmLg6k90th8KyR
-        hEtDjbwPxIytzcBhqgxViOnuvUcwDQPliPn3704OUz1SyWVKJzQkc10/wGPKTBMcpuZyBsX0
-        95oo5vpwEJNd2ooYQ3sYYyw/xYwbC1Go59fiYEWyWsW+HpusVO0VHZKAn1gSBGK/gCCxxP/d
-        b97zk4p8QoKj2YS471iFT8i34liLtomX0vrhcVt7LtKgXH8dcuJjOgBXF1yhdMiZL6ArEG7o
-        6KE2Cttx+08a7ga745Ve3aZoBuH0knqOo+BCh+C/xlfWRST9Fs6sMW3+u+H2QhvpYA+axe0V
-        fevsTu/Ddy494zmYoD3xP7YLHEeokD77Mp4v7uI5HgQ9gfDVc2mb7fIRbqp6tG6haAnWTTnm
-        4POd7FGNo6KNpECsq9WhDX4N10+dJ7KRQL9lEP2WhvotFv0WSzEiLyMhq1YmxiQqJWKlLFGp
-        TooRRyUn1iD7sdbdXDQ2IMPknNiMOHxkRphPiIQuYVlR0QKXaNn3J1hF8lGFOoFVmpHUvo0c
-        wssjKtl+7Umqo5JAX6kkIDDIVxoU6C/ydPksRSsT0DEyFRvPsims4n8fh+/kpeF8kXPyZDpv
-        l8nno/iWEw+v7lx5sX3P3cgzth0/c/CPnZFLbdMdU3zZaWv3YM+1cMvd20dc+L+/r9123j31
-        iTq+p0UntLTuOIYtEVIh+wk5ThIHzKF5097y8Olhq9serwO+n1q0DIvnXRczX8odjnxxLGr0
-        0BWJrcPJ++IS5Ro2HTJYvve5fH/r8cp9t5yH6pryTrs1hC8fzsx4oJRUpo58XrjN+czYal6c
-        9/37s5n735BelM+t/KGatPr7ux8UvumhIZp2e76d5Mx75l78pbFvbvKGa37odIHHgFogly2x
-        6gin22rvrxS7FqANnvSkkfqFrIhXJB8f3vlQ/io9fkomk4tIZaxM8g6hUMr+A4UQ+lk1BAAA
-X-CMS-MailID: 20230517224256eucas1p25e3b58d492b58b440b1aa0fb467fa7bc
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20230516000132eucas1p2d20a1c49d4711fda942a3c3a842384e6
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20230516000132eucas1p2d20a1c49d4711fda942a3c3a842384e6
-References: <CGME20230516000132eucas1p2d20a1c49d4711fda942a3c3a842384e6@eucas1p2.samsung.com>
-        <0-v2-8d1dc464eac9+10f-iommu_all_defdom_jgg@nvidia.com>
-X-Spam-Status: No, score=-8.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,
-        SPF_PASS,TRACKER_ID,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1684360919-28458-8-git-send-email-quic_khsieh@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -158,176 +50,266 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16.05.2023 02:00, Jason Gunthorpe wrote:
-> [ There was alot of unexpected complication after rc1 with this series,
-> several new patches were needed ]
->
-> It has been a long time coming, this series completes the default_domain
-> transition and makes it so that the core IOMMU code will always have a
-> non-NULL default_domain for every driver on every
-> platform. set_platform_dma_ops() turned out to be a bad idea, and so
-> completely remove it.
->
-> This is achieved by changing each driver to either:
->
-> 1 - Convert the existing (or deleted) ops->detach_dev() into an
->      op->attach_dev() of an IDENTITY domain.
->
->      This is based on the theory that the ARM32 HW is able to function when
->      the iommu is turned off as so the turned off state is an IDENTITY
->      translation.
->
-> 2 - Use a new PLATFORM domain type. This is a hack to accommodate drivers
->      that we don't really know WTF they do. S390 is legitimately using this
->      to switch to it's platform dma_ops implementation, which is where the
->      name comes from.
->
-> 3 - Do #1 and force the default domain to be IDENTITY, this corrects
->      the tegra-smmu case where even an ARM64 system would have a NULL
->      default_domain.
->
-> Using this we can apply the rules:
->
-> a) ARM_DMA_USE_IOMMU mode always uses either the driver's
->     ops->default_domain, ops->def_domain_type(), or an IDENTITY domain.
->     All ARM32 drivers provide one of these three options.
->
-> b) dma-iommu.c mode uses either the driver's ops->default_domain,
->     ops->def_domain_type or the usual DMA API policy logic based on the
->     command line/etc to pick IDENTITY/DMA domain types
->
-> c) All other arch's (PPC/S390) use ops->default_domain always.
->
-> See the patch "Require a default_domain for all iommu drivers" for a
-> per-driver breakdown.
->
-> The conversion broadly teaches a bunch of ARM32 drivers that they can do
-> IDENTITY domains. There is some educated guessing involved that these are
-> actual IDENTITY domains. If this turns out to be wrong the driver can be
-> trivially changed to use a BLOCKING domain type instead. Further, the
-> domain type only matters for drivers using ARM64's dma-iommu.c mode as it
-> will select IDENTITY based on the command line and expect IDENTITY to
-> work. For ARM32 and other arch cases it is purely documentation.
->
-> Finally, based on all the analysis in this series, we can purge
-> IOMMU_DOMAIN_UNMANAGED/DMA constants from most of the drivers. This
-> greatly simplifies understanding the driver contract to the core
-> code. IOMMU drivers should not be involved in policy for how the DMA API
-> works, that should be a core core decision.
->
-> The main gain from this work is to remove alot of ARM_DMA_USE_IOMMU
-> specific code and behaviors from drivers. All that remains in iommu
-> drivers after this series is the calls to arm_iommu_create_mapping().
->
-> This is a step toward removing ARM_DMA_USE_IOMMU.
->
-> The IDENTITY domains added to the ARM64 supporting drivers can be tested
-> by booting in ARM64 mode and enabling CONFIG_IOMMU_DEFAULT_PASSTHROUGH. If
-> the system still boots then most likely the implementation is an IDENTITY
-> domain. If not we can trivially change it to BLOCKING or at worst PLATFORM
-> if there is no detail what is going on in the HW.
->
-> I think this is pretty safe for the ARM32 drivers as they don't really
-> change, the code that was in detach_dev continues to be called in the same
-> places it was called before.
+Title: "DPU >= 7.0" instead of "relevant chipsets" to match the others.
 
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+On 2023-05-17 15:01:58, Kuogee Hsieh wrote:
+> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> 
+> Add DSC 1.2 hardware blocks to the catalog with necessary sub-block and
+> feature flag information.  Each display compression engine (DCE) contains
+> dual DSC encoders so both share same base address but with
+> its own different sub block address.
 
-Works fine on ARM 32bit Exynos based boards.
+If you reword it, also reflow this line.
 
-> This follows the prior series:
->
-> https://lore.kernel.org/r/0-v5-1b99ae392328+44574-iommu_err_unwind_jgg@nvidia.com
->
-> This is on github: https://protect2.fireeye.com/v1/url?k=773809ed-1645e36e-773982a2-74fe48600158-bd3a7b89de1f2061&q=1&e=7f176af7-9cf3-429b-a0ce-8812c59dfb5c&u=https%3A%2F%2Fgithub.com%2Fjgunthorpe%2Flinux%2Fcommits%2Fiommu_all_defdom
->
-> v2:
->   - FSL is an IDENTITY domain
->   - Delete terga-gart instead of trying to carry it
->   - Use the policy determination from iommu_get_default_domain_type() to
->     drive the arm_iommu mode
->   - Reorganize and introduce new patches to do the above:
->      * Split the ops->identity_domain to an independent earlier patch
->      * Remove the UNMANAGED return from def_domain_type in mtk_v1 earlier
->        so the new iommu_get_default_domain_type() can work
->      * Make the driver's def_domain_type have higher policy priority than
->        untrusted
->      * Merge the set_platfom_dma_ops hunk from mtk_v1 along with rockchip
->        into the patch that forced IDENTITY on ARM32
->   - Revise sun50i to be cleaner and have a non-NULL internal domain
->   - Reword logging in exynos
->   - Remove the gdev from the group alloc path, instead add a new
->     function __iommu_group_domain_alloc() that takes in the group
->     and uses the first device. Split this to its own patch
->   - New patch to make iommufd's mock selftest into a real driver
->   - New patch to fix power's partial iommu driver
-> v1: https://lore.kernel.org/r/0-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com
->
-> Jason Gunthorpe (25):
->    iommu: Add iommu_ops->identity_domain
->    iommu: Add IOMMU_DOMAIN_PLATFORM
->    powerpc/iommu: Setup a default domain and remove set_platform_dma_ops
->    iommu: Add IOMMU_DOMAIN_PLATFORM for S390
->    iommu/tegra-gart: Remove tegra-gart
->    iommu/mtk_iommu_v1: Implement an IDENTITY domain
->    iommu: Reorganize iommu_get_default_domain_type() to respect
->      def_domain_type()
->    iommu: Allow an IDENTITY domain as the default_domain in ARM32
->    iommu/fsl_pamu: Implement an IDENTITY domain
->    iommu/exynos: Implement an IDENTITY domain
->    iommu/tegra-smmu: Implement an IDENTITY domain
->    iommu/tegra-smmu: Support DMA domains in tegra
->    iommu/omap: Implement an IDENTITY domain
->    iommu/msm: Implement an IDENTITY domain
->    iommufd/selftest: Make the mock iommu driver into a real driver
->    iommu: Remove ops->set_platform_dma_ops()
->    iommu/qcom_iommu: Add an IOMMU_IDENTITIY_DOMAIN
->    iommu/ipmmu: Add an IOMMU_IDENTITIY_DOMAIN
->    iommu/mtk_iommu: Add an IOMMU_IDENTITIY_DOMAIN
->    iommu/sun50i: Add an IOMMU_IDENTITIY_DOMAIN
->    iommu: Require a default_domain for all iommu drivers
->    iommu: Add __iommu_group_domain_alloc()
->    iommu: Add ops->domain_alloc_paging()
->    iommu: Convert simple drivers with DOMAIN_DMA to domain_alloc_paging()
->    iommu: Convert remaining simple drivers to domain_alloc_paging()
->
->   arch/arm/configs/multi_v7_defconfig     |   1 -
->   arch/arm/configs/tegra_defconfig        |   1 -
->   arch/powerpc/kernel/iommu.c             |  38 ++-
->   drivers/iommu/Kconfig                   |  11 -
->   drivers/iommu/Makefile                  |   1 -
->   drivers/iommu/arm/arm-smmu/qcom_iommu.c |  45 ++-
->   drivers/iommu/exynos-iommu.c            |  73 +++--
->   drivers/iommu/fsl_pamu_domain.c         |  39 ++-
->   drivers/iommu/iommu-priv.h              |  16 +
->   drivers/iommu/iommu.c                   | 263 +++++++++++------
->   drivers/iommu/iommufd/iommufd_private.h |   5 +-
->   drivers/iommu/iommufd/main.c            |   8 +-
->   drivers/iommu/iommufd/selftest.c        | 141 ++++-----
->   drivers/iommu/ipmmu-vmsa.c              |  50 +++-
->   drivers/iommu/msm_iommu.c               |  30 +-
->   drivers/iommu/mtk_iommu.c               |  30 +-
->   drivers/iommu/mtk_iommu_v1.c            |  28 +-
->   drivers/iommu/omap-iommu.c              |  28 +-
->   drivers/iommu/rockchip-iommu.c          |  26 +-
->   drivers/iommu/s390-iommu.c              |  28 +-
->   drivers/iommu/sprd-iommu.c              |   7 +-
->   drivers/iommu/sun50i-iommu.c            |  35 ++-
->   drivers/iommu/tegra-gart.c              | 371 ------------------------
->   drivers/iommu/tegra-smmu.c              |  50 +++-
->   drivers/memory/tegra/mc.c               |  34 ---
->   drivers/memory/tegra/tegra20.c          |  28 --
->   include/linux/iommu.h                   |  16 +-
->   include/soc/tegra/mc.h                  |  26 --
->   28 files changed, 622 insertions(+), 807 deletions(-)
->   create mode 100644 drivers/iommu/iommu-priv.h
->   delete mode 100644 drivers/iommu/tegra-gart.c
->
->
-> base-commit: 0b355ade2baf262f213da274411c0e05d8232a21
+> 
+> changes in v4:
+> -- delete DPU_DSC_HW_REV_1_1
+> -- re arrange sc8280xp_dsc[]
+> 
+> changes in v4:
+> -- fix checkpatch warning
+> 
+> changes in v10:
+> -- remove hard slice from commit text
 
-Best regards
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+It is still mentioned in the diff though, that's why I originally
+requested a better place to describe it.
 
+> -- replace DPU_DSC_NATIVE_422_EN with DPU_DSC_NATIVE_42x_EN
+> -- change DSC_BLK_1_2 .len from 0x100 to 0x29c
+> 
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
+> 
+> kuogee: catalog.h
+
+What's this for?  This file isn't touched in this patch.
+
+> ---
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h | 14 ++++++++++++
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |  7 ++++++
+>  .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   | 16 ++++++++++++++
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h | 14 ++++++++++++
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h | 14 ++++++++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     | 25 +++++++++++++++++++++-
+>  6 files changed, 89 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> index 500cfd0..d90486f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> @@ -153,6 +153,18 @@ static const struct dpu_merge_3d_cfg sm8350_merge_3d[] = {
+>  	MERGE_3D_BLK("merge_3d_2", MERGE_3D_2, 0x50000),
+>  };
+>  
+> +/*
+> + * NOTE: Each display compression engine (DCE) contains dual hard
+> + * slice DSC encoders so both share same base address but with
+> + * its own different sub block address.
+> + */
+> +static const struct dpu_dsc_cfg sm8350_dsc[] = {
+> +	DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 0, dsc_sblk_0),
+> +	DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x29c, 0, dsc_sblk_1),
+> +	DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
+> +	DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
+> +};
+> +
+>  static const struct dpu_intf_cfg sm8350_intf[] = {
+>  	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+> @@ -215,6 +227,8 @@ const struct dpu_mdss_cfg dpu_sm8350_cfg = {
+>  	.dspp = sm8350_dspp,
+>  	.pingpong_count = ARRAY_SIZE(sm8350_pp),
+>  	.pingpong = sm8350_pp,
+> +	.dsc_count = ARRAY_SIZE(sm8350_dsc),
+> +	.dsc = sm8350_dsc,
+>  	.merge_3d_count = ARRAY_SIZE(sm8350_merge_3d),
+>  	.merge_3d = sm8350_merge_3d,
+>  	.intf_count = ARRAY_SIZE(sm8350_intf),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> index 5646713..52609b8 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> @@ -93,6 +93,11 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
+>  	PP_BLK_DITHER("pingpong_3", PINGPONG_3, 0x6c000, 0, sc7280_pp_sblk, -1, -1),
+>  };
+>  
+> +/* NOTE: sc7280 only has one DSC hard slice encoder */
+> +static const struct dpu_dsc_cfg sc7280_dsc[] = {
+> +	DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
+> +};
+> +
+>  static const struct dpu_intf_cfg sc7280_intf[] = {
+>  	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+> @@ -149,6 +154,8 @@ const struct dpu_mdss_cfg dpu_sc7280_cfg = {
+>  	.mixer = sc7280_lm,
+>  	.pingpong_count = ARRAY_SIZE(sc7280_pp),
+>  	.pingpong = sc7280_pp,
+> +	.dsc_count = ARRAY_SIZE(sc7280_dsc),
+> +	.dsc = sc7280_dsc,
+>  	.intf_count = ARRAY_SIZE(sc7280_intf),
+>  	.intf = sc7280_intf,
+>  	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> index 808aacd..a84cf36 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> @@ -141,6 +141,20 @@ static const struct dpu_merge_3d_cfg sc8280xp_merge_3d[] = {
+>  	MERGE_3D_BLK("merge_3d_2", MERGE_3D_2, 0x50000),
+>  };
+>  
+> +/*
+> + * NOTE: Each display compression engine (DCE) contains dual hard
+> + * slice DSC encoders so both share same base address but with
+> + * its own different sub block address.
+> + */
+> +static const struct dpu_dsc_cfg sc8280xp_dsc[] = {
+> +	DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 0, dsc_sblk_0),
+> +	DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x29c, 0, dsc_sblk_1),
+> +	DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
+> +	DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
+> +	DSC_BLK_1_2("dce_2_0", DSC_4, 0x82000, 0x29c, 0, dsc_sblk_0),
+> +	DSC_BLK_1_2("dce_2_1", DSC_5, 0x82000, 0x29c, 0, dsc_sblk_1),
+> +};
+> +
+>  /* TODO: INTF 3, 8 and 7 are used for MST, marked as INTF_NONE for now */
+>  static const struct dpu_intf_cfg sc8280xp_intf[] = {
+>  	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
+> @@ -216,6 +230,8 @@ const struct dpu_mdss_cfg dpu_sc8280xp_cfg = {
+>  	.dspp = sc8280xp_dspp,
+>  	.pingpong_count = ARRAY_SIZE(sc8280xp_pp),
+>  	.pingpong = sc8280xp_pp,
+> +	.dsc_count = ARRAY_SIZE(sc8280xp_dsc),
+> +	.dsc = sc8280xp_dsc,
+>  	.merge_3d_count = ARRAY_SIZE(sc8280xp_merge_3d),
+>  	.merge_3d = sc8280xp_merge_3d,
+>  	.intf_count = ARRAY_SIZE(sc8280xp_intf),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> index 1a89ff9..1620622 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> @@ -161,6 +161,18 @@ static const struct dpu_merge_3d_cfg sm8450_merge_3d[] = {
+>  	MERGE_3D_BLK("merge_3d_3", MERGE_3D_3, 0x65f00),
+>  };
+>  
+> +/*
+> + * NOTE: Each display compression engine (DCE) contains dual hard
+> + * slice DSC encoders so both share same base address but with
+> + * its own different sub block address.
+> + */
+> +static const struct dpu_dsc_cfg sm8450_dsc[] = {
+> +	DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 0, dsc_sblk_0),
+> +	DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x29c, 0, dsc_sblk_1),
+> +	DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
+> +	DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
+> +};
+> +
+>  static const struct dpu_intf_cfg sm8450_intf[] = {
+>  	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+> @@ -223,6 +235,8 @@ const struct dpu_mdss_cfg dpu_sm8450_cfg = {
+>  	.dspp = sm8450_dspp,
+>  	.pingpong_count = ARRAY_SIZE(sm8450_pp),
+>  	.pingpong = sm8450_pp,
+> +	.dsc_count = ARRAY_SIZE(sm8450_dsc),
+> +	.dsc = sm8450_dsc,
+>  	.merge_3d_count = ARRAY_SIZE(sm8450_merge_3d),
+>  	.merge_3d = sm8450_merge_3d,
+>  	.intf_count = ARRAY_SIZE(sm8450_intf),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> index 497b34c..6582a14 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> @@ -165,6 +165,18 @@ static const struct dpu_merge_3d_cfg sm8550_merge_3d[] = {
+>  	MERGE_3D_BLK("merge_3d_3", MERGE_3D_3, 0x66700),
+>  };
+>  
+> +/*
+> + * NOTE: Each display compression engine (DCE) contains dual hard
+> + * slice DSC encoders so both share same base address but with
+> + * its own different sub block address.
+> + */
+> +static const struct dpu_dsc_cfg sm8550_dsc[] = {
+> +	DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 0, dsc_sblk_0),
+> +	DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x29c, 0, dsc_sblk_1),
+> +	DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
+> +	DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
+> +};
+> +
+>  static const struct dpu_intf_cfg sm8550_intf[] = {
+>  	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
+> @@ -227,6 +239,8 @@ const struct dpu_mdss_cfg dpu_sm8550_cfg = {
+>  	.dspp = sm8550_dspp,
+>  	.pingpong_count = ARRAY_SIZE(sm8550_pp),
+>  	.pingpong = sm8550_pp,
+> +	.dsc_count = ARRAY_SIZE(sm8550_dsc),
+> +	.dsc = sm8550_dsc,
+>  	.merge_3d_count = ARRAY_SIZE(sm8550_merge_3d),
+>  	.merge_3d = sm8550_merge_3d,
+>  	.intf_count = ARRAY_SIZE(sm8550_intf),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index f2a1535..9612ab5 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -1,6 +1,6 @@
+>  // SPDX-License-Identifier: GPL-2.0-only
+>  /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
+> - * Copyright (c) 2022. Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
+>  
+>  #define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
+> @@ -522,6 +522,16 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
+>  /*************************************************************
+>   * DSC sub blocks config
+>   *************************************************************/
+> +static const struct dpu_dsc_sub_blks dsc_sblk_0 = {
+> +	.enc = {.base = 0x100, .len = 0x100},
+> +	.ctl = {.base = 0xF00, .len = 0x10},
+> +};
+> +
+> +static const struct dpu_dsc_sub_blks dsc_sblk_1 = {
+> +	.enc = {.base = 0x200, .len = 0x100},
+> +	.ctl = {.base = 0xF80, .len = 0x10},
+> +};
+> +
+>  #define DSC_BLK(_name, _id, _base, _features) \
+>  	{\
+>  	.name = _name, .id = _id, \
+> @@ -529,6 +539,19 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
+>  	.features = _features, \
+>  	}
+>  
+> +/*
+> + * NOTE: Each display compression engine (DCE) contains dual hard
+> + * slice DSC encoders so both share same base address but with
+> + * its own different sub block address.
+> + */
+
+I still think this comment is superfluous (and doesn't even apply
+generically, see i.e. sc7280) and should best be kept exclusively in the
+SoC-specific catalog files.
+
+- Marijn
+
+> +#define DSC_BLK_1_2(_name, _id, _base, _len, _features, _sblk) \
+> +	{\
+> +	.name = _name, .id = _id, \
+> +	.base = _base, .len = _len, \
+> +	.features = BIT(DPU_DSC_HW_REV_1_2) | _features, \
+> +	.sblk = &_sblk, \
+> +	}
+> +
+>  /*************************************************************
+>   * INTF sub blocks config
+>   *************************************************************/
+> -- 
+> 2.7.4
+> 
