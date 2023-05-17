@@ -2,47 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9883A70757B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 00:32:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD93F707590
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 00:41:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229525AbjEQWb7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 18:31:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35088 "EHLO
+        id S229529AbjEQWls (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 18:41:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229699AbjEQWbw (ORCPT
+        with ESMTP id S229484AbjEQWlr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 18:31:52 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C8EC76A9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 15:31:40 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 8935F2045E;
-        Thu, 18 May 2023 00:31:38 +0200 (CEST)
-Date:   Thu, 18 May 2023 00:31:37 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, dmitry.baryshkov@linaro.org,
-        andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v10 6/8] drm/msm/dpu: separate DSC flush update out of
- interface
-Message-ID: <evkla3rkf4tge6gln4lgtulj7q5gt6vef3i2yqupc5lj2oszfx@7ttyxzlmvet5>
-References: <1684360919-28458-1-git-send-email-quic_khsieh@quicinc.com>
- <1684360919-28458-7-git-send-email-quic_khsieh@quicinc.com>
+        Wed, 17 May 2023 18:41:47 -0400
+Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64F3CC6;
+        Wed, 17 May 2023 15:41:44 -0700 (PDT)
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20230517224139euoutp017c2d47e37f1d6482e683800375f99180~gD3806AQW3178231782euoutp01c;
+        Wed, 17 May 2023 22:41:39 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20230517224139euoutp017c2d47e37f1d6482e683800375f99180~gD3806AQW3178231782euoutp01c
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1684363299;
+        bh=NcQzwCvCpxVNULTL4p4tvs+CN1+fBl+7JbHkAnqGlTc=;
+        h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
+        b=RDSSWi2cMlCnOeNEyFtWVBgQA74uILaYctFynXXm8LNuNdsyHqYyqBGBH6OUybVR6
+         2/N0BmpmSu3CT/7c2rBeWsMuXWGsW4+mKhGK3gAyLC6UoFIuQ3zNfLkYEsBMJnnVch
+         Je7+AexzTYHGxEnT+s2X61XNFIpwhXt2CyqK/YIw=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20230517224139eucas1p13e8fac5a51a7c41f26fe5910fe858f04~gD38j9syJ2454424544eucas1p19;
+        Wed, 17 May 2023 22:41:39 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges1new.samsung.com (EUCPMTA) with SMTP id 2C.46.42423.32855646; Wed, 17
+        May 2023 23:41:39 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20230517224138eucas1p2a52b9287f18e642ab4f497f91c9401c6~gD38AuTqB0316203162eucas1p2B;
+        Wed, 17 May 2023 22:41:38 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20230517224138eusmtrp1993107c255367809d06826cce0c7d570~gD37-jRKD2285622856eusmtrp1Y;
+        Wed, 17 May 2023 22:41:38 +0000 (GMT)
+X-AuditID: cbfec7f2-a3bff7000002a5b7-cd-64655823fb28
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id EC.23.14344.22855646; Wed, 17
+        May 2023 23:41:38 +0100 (BST)
+Received: from [106.210.134.192] (unknown [106.210.134.192]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20230517224136eusmtip17c0187406963fb821c57c5b9ba53893b~gD358V0mM1562815628eusmtip1h;
+        Wed, 17 May 2023 22:41:36 +0000 (GMT)
+Message-ID: <692ff1c1-47d2-815d-9e63-05d84eed283e@samsung.com>
+Date:   Thu, 18 May 2023 00:41:36 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1684360919-28458-7-git-send-email-quic_khsieh@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0)
+        Gecko/20100101 Thunderbird/102.10.1
+Subject: Re: [PATCH v2 10/25] iommu/exynos: Implement an IDENTITY domain
+Content-Language: en-US
+To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Kevin Tian <kevin.tian@intel.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+        linuxppc-dev@lists.ozlabs.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>
+Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Nicolin Chen <nicolinc@nvidia.com>,
+        Niklas Schnelle <schnelle@linux.ibm.com>,
+        Steven Price <steven.price@arm.com>,
+        Thierry Reding <treding@nvidia.com>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+In-Reply-To: <10-v2-8d1dc464eac9+10f-iommu_all_defdom_jgg@nvidia.com>
+Content-Transfer-Encoding: 7bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA01Ta1BUZRjuO+fs2WVt6bDi8IWVM+ugFOMiZdPXSAw0asdxuoANak7BDpyA
+        uNmuZOVMEJeEzZEFU+BQiwLFTZC7uLML7UYQksvNVoQlNsCWiysgNIBbSyxHi3/P+zzP+z7v
+        +818AlyczfcUxCScZOQJsjgJKSSaO1aMu7YfZSJ3W+8JkXHcTiCLuplEzZn+qL8ColVdB0AN
+        OU0kMuda+ahqfhyg2bQP0OrYDA89XETIWlQD0C2HFqB0tphAWYW1fPS9rYmPMs9fI5BuZg3V
+        j5t4KKftJh8NpPUB9MCyiiPV5TQc5fe0YuibVg2JshZZEhku6ACyLzl4KDX9JVRbUoijxhQD
+        iXR3x0m0MjlIoLy5QoCsl5dxpJ+b4CHrWBaJ8lP/JNGX7bNrFo2aQMN2V3ROF4JWDD0YSje/
+        jEZzGwhUZtHwA6X0hF6N0VfUVwA9YOrD6ZaRUkD/dceI0bVjVTy6eCqFoK+zI3y6RDuF0fWV
+        WSRtNmlJ+vofr9Kq4h8Bre4KphtKk+nJhgLwjsd7Qv9IJi7mE0buGxAujO6tLQcnLko/1c7+
+        gqWAWi8lcBFAag803VDxlUAoEFPlAJo1JXynIKYWAbyf7s4JCwDm3qvgPe741bYMOKEMwArW
+        SHLFPIA9bBPpdImoAFhkmVofRVBecPD3eYLj3WBXwcQ63kIxsLKhD3fizRQNB1fYdR6nPODQ
+        RBHmHOpOKZ+E1e1nMU6YAtBUuMuJScoPKm3K9TAXaj/MNgzwOc82eM32Le5shlTVJni3TcXn
+        9t4Hh64WkBzeDKc7Gx/xz8Du82cJruEMgJfsoxhXqABMsQ4BzrUXmo0P17oFaxHPw6saX44O
+        gjUrHbiThpQrHLS5cUu4wtzmvEe0CGZ+JebcOyDbWfNfrL63H1cBCbvhXdgN97MbzmH/z70E
+        iErgwSQp4qMYhV8Cc0qqkMUrkhKipBGJ8fVg7c90OzoftIDvpuelBoAJgAFAAS5xFwWfi4gU
+        iyJln33OyBPD5ElxjMIAtgoIiYfI57WuCDEVJTvJxDLMCUb+WMUELp4pmCooozGU3foKXPLo
+        tPuOuDV5hR5M/Cjj7cKCN08ne33olqqKkZW84S3UPKGLrf5pZ4dnhvGwaYbyriG2hxPPxQUc
+        k9eZ6UPF2dVHRsJiZwK9fY/+vBpSP5o9d9u4/9h0F8/9uCMosI3tbm059+wo+FimFORk+OQ+
+        nXj7wj6z5PDp1wXNob1/R2vLSwmJa8TymS1Fw9Z3VQ77pOjGtoDhSTlv6cCLs+O17MXE3vCy
+        +7G9NnyP/ouvl+BefX+xf9/72NI/Pgcqg9+S16UqXTLvCOoKina3q0t/8LS3s0cO5Vt2lmL6
+        uZzfNj21I+ympSwv28JYpJap8uSF0FuOUwshx7UDEkIRLfN7AZcrZP8CfV4kW6IEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0xbdRTH87v39rYlstzxCFfcnNaAj2hpgcIBAeeIepVkOsIfBp2zo9ey
+        DChpwceyKK8lUBkbBTYoWBjQzbEJlQJjrOVRJ4OJg8mssBXGAIHKeC04ViFgC5rw3+c8vud7
+        cnJ4uEc16cs7kpLGKlOkSQLSjfhl/cbIa4IPWZlIU+YPtyZWCRjTtZDQkhsBv12kYcPcjcBY
+        2EyCTTPNhUtLEwgWsj+BjfFZDvyzDDBdWY/gzroJQY62moC8cgMX9HPNXMgtukKAedZJjRNW
+        DhR2/MqFwezbCB6NbeBw+lw2DqX97RgUt7eRkLesJcFSYkawurLOgaycIDDUlOPQlGEhwfzn
+        BAmOmSECzi6WI5g+9wSHrsVJDkyP55FQmjVFQub1BWdLm46Ae6s7oMAcCw5LPwY5Ngnc1xgJ
+        uDDWxt0rZCa7dBhzWXcZMYPW2zjTOlKLmL+Hb2GMYfwSh6m2ZxDMVe0Il6kx2TGmsS6PZGxW
+        E8lcfRDGnK7uRIyu9wBjrP2GmTGWoQ984oURSkV6GvtcokKVFin4SAyBQnEYCAODw4TioNCD
+        4YESQUBUhIxNOvI5qwyI+lSYOGD4HqWeEX5pWujBMpDBT434PJoKpvvmniAXe1B6RBev7djK
+        76J7z2RwttiTXrOqSTVyc/YsIHr2xk3MVXCnoujKMTvXxQTlRw+NLhFb+Z10b9nkJntTLN2r
+        H9pkT4qhhxzaTcYpH/ruZCXmGupFaZ6iH1X1c10BTtkR3VCU/Z9dKaI7Zgo2LUhKTKvnXHvw
+        eXzqLfqUZZC7NSqEVjer0Rbvoa/MVeCnkYd22ybabY7abRLtNkkVIuqQF5uuSpYnqwKFKmmy
+        Kj1FLkxQJDci57O2dDuaWtHFv5aEFoTxkAXRPFzg5X6gIEHm4S6TfnWMVSoOKdOTWJUFSZzn
+        KMR9vRMUzm9PSTskDhFJxMEhYSJJWEiQwMf93dRcqQcll6axR1k2lVX+r8N4fN8MLMbBfeG7
+        IdtMtyDaZypogl+fu3OqqGCgRB75mLbvq1qPON76vGOt9o38xPMDK2PCE/hwys+qe6MsX/9H
+        aFZ8S6Y9Uee9Hx+OUzR1zEc2sxrPhH7T8WulJ+c15frOaDKGiO1cmZf1Le+eajwffnRB/eLd
+        XZLVEa7R+rIdroda0SnRj0JBe2V8uN/+H+pzR0U9++SKBzVZNiWn55l4TcvDikFbAK2RtB+8
+        050eJ/ti8Zh/7HufVSx9u+fZGP/8x1V1ysMnL7wjmvnp9RM3TW8OTF/DG+Tms11sjKHAuKjP
+        f6kk8PDX7yt6zbv3ZhY3uH38dN+rD38vjLbIO5PuVxS8HYeNCwhVolT8Cq5USf8F8R6m+zUE
+        AAA=
+X-CMS-MailID: 20230517224138eucas1p2a52b9287f18e642ab4f497f91c9401c6
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20230516000116eucas1p2afa079038cb38a53400b940cf84cd34d
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20230516000116eucas1p2afa079038cb38a53400b940cf84cd34d
+References: <CGME20230516000116eucas1p2afa079038cb38a53400b940cf84cd34d@eucas1p2.samsung.com>
+        <10-v2-8d1dc464eac9+10f-iommu_all_defdom_jgg@nvidia.com>
+X-Spam-Status: No, score=-8.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -50,191 +159,176 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-17 15:01:57, Kuogee Hsieh wrote:
-> Currently DSC flushing happens during interface configuration at
-> dpu_hw_ctl_intf_cfg_v1(). Separate DSC flush away from
-> dpu_hw_ctl_intf_cfg_v1() by adding dpu_hw_ctl_update_pending_flush_dsc_v1()
-> to handle both per-DSC engine and DSC flush bits at same time to make it
-> consistent with the location of flush programming of other DPU sub-blocks.
-> 
-> Changes in v10:
-> -- rewording commit text
-> -- pass ctl directly instead of dpu_enc to dsc_pipe_cfg()
+On 16.05.2023 02:00, Jason Gunthorpe wrote:
+> What exynos calls exynos_iommu_detach_device is actually putting the iommu
+> into identity mode.
+>
+> Move to the new core support for ARM_DMA_USE_IOMMU by defining
+> ops->identity_domain.
+>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-There are a few things missing from v8 review, see below.
+Acked-by: Marek Szyprowski
 
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 10 ++++++++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c  | 22 ++++++++++++++++------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h  | 13 +++++++++++++
->  3 files changed, 37 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index ffa6f04..1957545 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -1834,7 +1834,8 @@ dpu_encoder_dsc_initial_line_calc(struct drm_dsc_config *dsc,
->  	return DIV_ROUND_UP(total_pixels, dsc->slice_width);
->  }
->  
-> -static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_dsc *hw_dsc,
-> +static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_ctl *ctl,
-> +				     struct dpu_hw_dsc *hw_dsc,
->  				     struct dpu_hw_pingpong *hw_pp,
->  				     struct drm_dsc_config *dsc,
->  				     u32 common_mode,
-> @@ -1854,6 +1855,9 @@ static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_dsc *hw_dsc,
->  
->  	if (hw_pp->ops.enable_dsc)
->  		hw_pp->ops.enable_dsc(hw_pp);
+>   drivers/iommu/exynos-iommu.c | 66 +++++++++++++++++-------------------
+>   1 file changed, 32 insertions(+), 34 deletions(-)
+>
+> diff --git a/drivers/iommu/exynos-iommu.c b/drivers/iommu/exynos-iommu.c
+> index c275fe71c4db32..5e12b85dfe8705 100644
+> --- a/drivers/iommu/exynos-iommu.c
+> +++ b/drivers/iommu/exynos-iommu.c
+> @@ -24,6 +24,7 @@
+>   
+>   typedef u32 sysmmu_iova_t;
+>   typedef u32 sysmmu_pte_t;
+> +static struct iommu_domain exynos_identity_domain;
+>   
+>   /* We do not consider super section mapping (16MB) */
+>   #define SECT_ORDER 20
+> @@ -829,7 +830,7 @@ static int __maybe_unused exynos_sysmmu_suspend(struct device *dev)
+>   		struct exynos_iommu_owner *owner = dev_iommu_priv_get(master);
+>   
+>   		mutex_lock(&owner->rpm_lock);
+> -		if (data->domain) {
+> +		if (&data->domain->domain != &exynos_identity_domain) {
+>   			dev_dbg(data->sysmmu, "saving state\n");
+>   			__sysmmu_disable(data);
+>   		}
+> @@ -847,7 +848,7 @@ static int __maybe_unused exynos_sysmmu_resume(struct device *dev)
+>   		struct exynos_iommu_owner *owner = dev_iommu_priv_get(master);
+>   
+>   		mutex_lock(&owner->rpm_lock);
+> -		if (data->domain) {
+> +		if (&data->domain->domain != &exynos_identity_domain) {
+>   			dev_dbg(data->sysmmu, "restoring state\n");
+>   			__sysmmu_enable(data);
+>   		}
+> @@ -980,17 +981,20 @@ static void exynos_iommu_domain_free(struct iommu_domain *iommu_domain)
+>   	kfree(domain);
+>   }
+>   
+> -static void exynos_iommu_detach_device(struct iommu_domain *iommu_domain,
+> -				    struct device *dev)
+> +static int exynos_iommu_identity_attach(struct iommu_domain *identity_domain,
+> +					struct device *dev)
+>   {
+> -	struct exynos_iommu_domain *domain = to_exynos_domain(iommu_domain);
+>   	struct exynos_iommu_owner *owner = dev_iommu_priv_get(dev);
+> -	phys_addr_t pagetable = virt_to_phys(domain->pgtable);
+> +	struct exynos_iommu_domain *domain;
+> +	phys_addr_t pagetable;
+>   	struct sysmmu_drvdata *data, *next;
+>   	unsigned long flags;
+>   
+> -	if (!has_sysmmu(dev) || owner->domain != iommu_domain)
+> -		return;
+> +	if (owner->domain == identity_domain)
+> +		return 0;
 > +
-> +	if (ctl->ops.update_pending_flush_dsc)
-> +		ctl->ops.update_pending_flush_dsc(ctl, hw_dsc->idx);
->  }
->  
->  static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
-> @@ -1861,6 +1865,7 @@ static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
->  {
->  	/* coding only for 2LM, 2enc, 1 dsc config */
->  	struct dpu_encoder_phys *enc_master = dpu_enc->cur_master;
-> +	struct dpu_hw_ctl *ctl = enc_master->hw_ctl;
->  	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
->  	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
->  	int this_frame_slices;
-> @@ -1898,7 +1903,8 @@ static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
->  	initial_lines = dpu_encoder_dsc_initial_line_calc(dsc, enc_ip_w);
->  
->  	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
-> -		dpu_encoder_dsc_pipe_cfg(hw_dsc[i], hw_pp[i], dsc, dsc_common_mode, initial_lines);
-> +		dpu_encoder_dsc_pipe_cfg(ctl, hw_dsc[i], hw_pp[i], dsc,
-> +					 dsc_common_mode, initial_lines);
->  }
->  
->  void dpu_encoder_prepare_for_kickoff(struct drm_encoder *drm_enc)
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index 4f7cfa9..4e132d9 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -139,6 +139,11 @@ static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
->  				CTL_DSPP_n_FLUSH(dspp - DSPP_0),
->  				ctx->pending_dspp_flush_mask[dspp - DSPP_0]);
->  		}
+> +	domain = to_exynos_domain(owner->domain);
+> +	pagetable = virt_to_phys(domain->pgtable);
+>   
+>   	mutex_lock(&owner->rpm_lock);
+>   
+> @@ -1009,15 +1013,25 @@ static void exynos_iommu_detach_device(struct iommu_domain *iommu_domain,
+>   		list_del_init(&data->domain_node);
+>   		spin_unlock(&data->lock);
+>   	}
+> -	owner->domain = NULL;
+> +	owner->domain = identity_domain;
+>   	spin_unlock_irqrestore(&domain->lock, flags);
+>   
+>   	mutex_unlock(&owner->rpm_lock);
+>   
+> -	dev_dbg(dev, "%s: Detached IOMMU with pgtable %pa\n", __func__,
+> -		&pagetable);
+> +	dev_dbg(dev, "%s: Restored IOMMU to IDENTITY from pgtable %pa\n",
+> +		__func__, &pagetable);
+> +	return 0;
+>   }
+>   
+> +static struct iommu_domain_ops exynos_identity_ops = {
+> +	.attach_dev = exynos_iommu_identity_attach,
+> +};
 > +
-> +	if (ctx->pending_flush_mask & BIT(DSC_IDX))
-> +		DPU_REG_WRITE(&ctx->hw, CTL_DSC_FLUSH,
-> +			      ctx->pending_dsc_flush_mask);
-
-Again, when do we reset this mask to 0?  (v8 review)
-
+> +static struct iommu_domain exynos_identity_domain = {
+> +	.type = IOMMU_DOMAIN_IDENTITY,
+> +	.ops = &exynos_identity_ops,
+> +};
 > +
->  	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
->  }
->  
-> @@ -285,6 +290,13 @@ static void dpu_hw_ctl_update_pending_flush_merge_3d_v1(struct dpu_hw_ctl *ctx,
->  	ctx->pending_flush_mask |= BIT(MERGE_3D_IDX);
->  }
->  
-> +static void dpu_hw_ctl_update_pending_flush_dsc_v1(struct dpu_hw_ctl *ctx,
-> +						   enum dpu_dsc dsc_num)
-> +{
-> +	ctx->pending_dsc_flush_mask |= BIT(dsc_num - DSC_0);
-> +	ctx->pending_flush_mask |= BIT(DSC_IDX);
-> +}
-> +
->  static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl *ctx,
->  	enum dpu_dspp dspp, u32 dspp_sub_blk)
->  {
-> @@ -502,9 +514,6 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
->  	if ((test_bit(DPU_CTL_VM_CFG, &ctx->caps->features)))
->  		mode_sel = CTL_DEFAULT_GROUP_ID  << 28;
->  
-> -	if (cfg->dsc)
-> -		DPU_REG_WRITE(&ctx->hw, CTL_DSC_FLUSH, cfg->dsc);
+>   static int exynos_iommu_attach_device(struct iommu_domain *iommu_domain,
+>   				   struct device *dev)
+>   {
+> @@ -1026,12 +1040,11 @@ static int exynos_iommu_attach_device(struct iommu_domain *iommu_domain,
+>   	struct sysmmu_drvdata *data;
+>   	phys_addr_t pagetable = virt_to_phys(domain->pgtable);
+>   	unsigned long flags;
+> +	int err;
+>   
+> -	if (!has_sysmmu(dev))
+> -		return -ENODEV;
 > -
->  	if (cfg->intf_mode_sel == DPU_CTL_MODE_SEL_CMD)
->  		mode_sel |= BIT(17);
->  
-> @@ -524,10 +533,9 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
->  	if (cfg->merge_3d)
->  		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
->  			      BIT(cfg->merge_3d - MERGE_3D_0));
-> -	if (cfg->dsc) {
-> -		DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
-
-Again, this bugfix of now wrapping DSC_IDX in BIT() should go in a
-separate Fixes: patch to have this semantic change documented.  (v8
-review)
-
-> +
-> +	if (cfg->dsc)
->  		DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
+> -	if (owner->domain)
+> -		exynos_iommu_detach_device(owner->domain, dev);
+> +	err = exynos_iommu_identity_attach(&exynos_identity_domain, dev);
+> +	if (err)
+> +		return err;
+>   
+>   	mutex_lock(&owner->rpm_lock);
+>   
+> @@ -1407,26 +1420,12 @@ static struct iommu_device *exynos_iommu_probe_device(struct device *dev)
+>   	return &data->iommu;
+>   }
+>   
+> -static void exynos_iommu_set_platform_dma(struct device *dev)
+> -{
+> -	struct exynos_iommu_owner *owner = dev_iommu_priv_get(dev);
+> -
+> -	if (owner->domain) {
+> -		struct iommu_group *group = iommu_group_get(dev);
+> -
+> -		if (group) {
+> -			exynos_iommu_detach_device(owner->domain, dev);
+> -			iommu_group_put(group);
+> -		}
 > -	}
->  }
->  
->  static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
-> @@ -630,6 +638,8 @@ static void _setup_ctl_ops(struct dpu_hw_ctl_ops *ops,
->  		ops->update_pending_flush_merge_3d =
->  			dpu_hw_ctl_update_pending_flush_merge_3d_v1;
->  		ops->update_pending_flush_wb = dpu_hw_ctl_update_pending_flush_wb_v1;
-> +		ops->update_pending_flush_dsc =
-> +			dpu_hw_ctl_update_pending_flush_dsc_v1;
->  	} else {
->  		ops->trigger_flush = dpu_hw_ctl_trigger_flush;
->  		ops->setup_intf_cfg = dpu_hw_ctl_intf_cfg;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> index 6292002..d5f3ef8 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
-> @@ -158,6 +158,15 @@ struct dpu_hw_ctl_ops {
->  		enum dpu_dspp blk, u32 dspp_sub_blk);
->  
->  	/**
-> +	 * OR in the given flushbits to the cached pending_(dsc_)flush_mask
-> +	 * No effect on hardware
-> +	 * @ctx: ctl path ctx pointer
-> +	 * @blk: interface block index
-> +	 */
-> +	void (*update_pending_flush_dsc)(struct dpu_hw_ctl *ctx,
-> +		enum dpu_dsc blk);
-> +
-> +	/**
->  	 * Write the value of the pending_flush_mask to hardware
->  	 * @ctx       : ctl path ctx pointer
->  	 */
-> @@ -229,6 +238,9 @@ struct dpu_hw_ctl_ops {
->   * @pending_flush_mask: storage for pending ctl_flush managed via ops
->   * @pending_intf_flush_mask: pending INTF flush
->   * @pending_wb_flush_mask: pending WB flush
+> -}
+> -
+>   static void exynos_iommu_release_device(struct device *dev)
+>   {
+>   	struct exynos_iommu_owner *owner = dev_iommu_priv_get(dev);
+>   	struct sysmmu_drvdata *data;
+>   
+> -	exynos_iommu_set_platform_dma(dev);
+> +	WARN_ON(exynos_iommu_identity_attach(&exynos_identity_domain, dev));
+>   
+>   	list_for_each_entry(data, &owner->controllers, owner_node)
+>   		device_link_del(data->link);
+> @@ -1457,6 +1456,7 @@ static int exynos_iommu_of_xlate(struct device *dev,
+>   
+>   		INIT_LIST_HEAD(&owner->controllers);
+>   		mutex_init(&owner->rpm_lock);
+> +		owner->domain = &exynos_identity_domain;
+>   		dev_iommu_priv_set(dev, owner);
+>   	}
+>   
+> @@ -1471,11 +1471,9 @@ static int exynos_iommu_of_xlate(struct device *dev,
+>   }
+>   
+>   static const struct iommu_ops exynos_iommu_ops = {
+> +	.identity_domain = &exynos_identity_domain,
+>   	.domain_alloc = exynos_iommu_domain_alloc,
+>   	.device_group = generic_device_group,
+> -#ifdef CONFIG_ARM
+> -	.set_platform_dma_ops = exynos_iommu_set_platform_dma,
+> -#endif
+>   	.probe_device = exynos_iommu_probe_device,
+>   	.release_device = exynos_iommu_release_device,
+>   	.pgsize_bitmap = SECT_SIZE | LPAGE_SIZE | SPAGE_SIZE,
 
-The above is all capitalized, so...:
+Best regards
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
-> + * @pending_merge_3d_flush_mask: pending merge_3d flush
-
-MERGE_3D?
-
-> + * @pending_dspp_flush_mask: pending dspp flush
-
-DSPP
-
-> + * @pending_dsc_flush_mask: pending dsc flush
-
-DSC
-
-- Marijn
-
->   * @ops: operation list
->   */
->  struct dpu_hw_ctl {
-> @@ -245,6 +257,7 @@ struct dpu_hw_ctl {
->  	u32 pending_wb_flush_mask;
->  	u32 pending_merge_3d_flush_mask;
->  	u32 pending_dspp_flush_mask[DSPP_MAX - DSPP_0];
-> +	u32 pending_dsc_flush_mask;
->  
->  	/* ops */
->  	struct dpu_hw_ctl_ops ops;
-> -- 
-> 2.7.4
-> 
