@@ -2,70 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D49AA7071D5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 21:18:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 849BE707124
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 20:49:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230052AbjEQTSS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 15:18:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39056 "EHLO
+        id S229624AbjEQStl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 14:49:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42300 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230042AbjEQTSR (ORCPT
+        with ESMTP id S229843AbjEQStR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 15:18:17 -0400
-Received: from mo4-p03-ob.smtp.rzone.de (mo4-p03-ob.smtp.rzone.de [85.215.255.103])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C12EA3AAF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 12:18:14 -0700 (PDT)
-ARC-Seal: i=2; a=rsa-sha256; t=1684351093; cv=pass;
-    d=strato.com; s=strato-dkim-0002;
-    b=FdKkR4z1d/2iQ87qlez5+/FKyUou6K/vaKoTf3yjcBaVililWLCpUOq0jRm9mDfqed
-    O1LSfkMUG3buWSH0vu2C1afkmSPyG1hHFY7/zNVrk5c2C+xrQy5GMpDXUYCO/i+Koxdj
-    ShK8odz1LeA2SK6xSydAWidUemM9Uw9qkP/ohjVeiT4RXDwBcDO23AxJWvZkXMzVVKRP
-    8d2RULW8flZ83nIua249ToM+sF6afTwVZLrJ9lUdLnGj2E2a+bfnnp9PHg+phxnDP4Cw
-    YHOfnGhLZiZVsbDRGbV3L3Gfk+L2ZF5+dXjC2EHyw9guNIlSK6rzt5QBpHVz4XmvAYo+
-    FLOA==
-ARC-Message-Signature: i=2; a=rsa-sha256; c=relaxed/relaxed; t=1684351093;
-    s=strato-dkim-0002; d=strato.com;
-    h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Resent-To:
-    Resent-Date:Resent-From:Cc:Date:From:Subject:Sender;
-    bh=RzJCW5rwyoVlDeXe+0eK8YDHrRyc3l6qHJ+N7bVS/zI=;
-    b=bIKp/mqVJALPY4c5NvDWPbqQ2UAw4otxw+UTn8Qx/wxAQzN+EPPuR9dV9UtkjyE3th
-    RlDCyW1N3YNwwBi0xY5uaZndR8DZ8tR9awHjmGJhxYth4PXoDI8O2oHTjC4wFk5UqYX7
-    IkAkYI8Jh3Ihpgat0x6p9NNc50EMtijTbSnWrZW1SWqj36tuYI38EUKFPsqVosbj0WfB
-    kH+UuW8nByl7cHF3lDtPAaoSF7WDCGffLfz3h+nz4+2cRUyf9tYU7ptHBSs6fYzDdVqT
-    z/TnQpqKuJBzeEwgfCsM9V/2rf95cP1DiEYrPThbsvYXOV3CPPvsMA2WG1rHx9Ja6qsN
-    noYA==
-ARC-Authentication-Results: i=2; strato.com;
-    arc=pass (i=1);
-    dkim=pass header.d="gerhold.net" header.s="strato-dkim-0003" header.a="ed25519-sha256";
-    dkim=pass header.d="gerhold.net" header.s="strato-dkim-0002" header.a="rsa-sha256"
-X-RZG-CLASS-ID: mo03
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8pqP1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
-    with ESMTPSA id j6420az4HJICBKU
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate)
-    for <linux-arm-msm@vger.kernel.org>;
-    Wed, 17 May 2023 21:18:12 +0200 (CEST)
+        Wed, 17 May 2023 14:49:17 -0400
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.81])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D18C76BA;
+        Wed, 17 May 2023 11:49:13 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; t=1684349339; cv=none;
     d=strato.com; s=strato-dkim-0002;
-    b=ASCmdiWWzS0b3pRvrBe/Dy6eCVgG6v1Jt2Y1imDVbieCBQWvE2ypYViMSFbFyQtqzp
-    Cn1L6oZt7pFH6W3Vc1n2Y32+tY5iXQ6b09qjd3X1EPrjnDPbn5MeVLSCRpSnlmUQ6kn2
-    2i7TWH71E5Iubh+s/9vQA7UmU4KELJDTrGCoptP0nm0oMz9TuwBfvXF/ATcEnrnuadif
-    5HfZHLO4f63X66NwVNq7EIiocKcLQxKyPfYqQNXdKtdSyUgU4SO0YiMCC8K2/0wUL/Qr
-    EPsGTpybw9gBwg9jy5LGZ4YkhNIYYzKXeZsuIwEH5G/HOR9gC+p9H5tWEH8DN16FoO/2
-    7VGQ==
+    b=Yiez2FwUfKE5YcDJD3TJ1RiTTYaROAolh/7BpXVlL53PGsiVl0ELTfp/Tn82uUgCyq
+    r2nyIQ9dDZ5WahkI21OjShrtJHsuL1gb8iLU3I/vr4gv/gXvxEHO5qOKhSBw98ntKSqF
+    qVisqzinmwe5q/toSX6cddtYsQVGa0juZw16VyhmLC61xNd26FxxOVend1Mo/ptfTXmv
+    zSLk4CU6IWREE94uVijpZfSYauYCCS7tvDvTHfz+YAO5vGn+3Fzh0UT2uD23/7EoXFEz
+    g3Y9wQi9cJ8F5mkrfI04qMpBg+ke6YnyuAYVzn4zvDffCjMXhhlUkM9DMWaWSZX8Wb0z
+    /syA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1684349339;
     s=strato-dkim-0002; d=strato.com;
     h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
     From:Subject:Sender;
-    bh=RzJCW5rwyoVlDeXe+0eK8YDHrRyc3l6qHJ+N7bVS/zI=;
-    b=fgD6GHh0OhHwm8AT3NwU862+nB1Rd0F9scy6Q1C6d/hEXrSpYYnLUh2Kfp99Z/URub
-    ezzkiL1ggPBaeV67ZMiIMGs7XG/rWYWpzxHpMp7emIxh3/4wlb7iMh2C9nVpkXCvFjvF
-    LCmZebNxPhw7YlolnvQcz2VtE9Ehg01/SocDPRRghRXcu5jSmh4S9FuPMQH/wYdZ2fp3
-    1zaXzZ9YPYlb9aiDL3T23KPfBfmV1cQFwmno8npZsNho3wfaoWrj2BPXVTweLNoTPuyN
-    OYIMv9n+McRZepXue7yjoIUj7rz5lSFlMqy9hVcYz8w7lDp+xLOby5YnmDKsIcGh+PJn
-    g3lw==
+    bh=Q72gAZwrgAyQdwaXPFWfknvMiEMn9jleNzwpNjYRXJI=;
+    b=DjOJF8/aJcqJdksbZj/gHTZ7/T169cEYGnwyuOXHRcXtTwdOscsoKHWRy1VqP5IkOy
+    z1aD7N0v2krrtIfGwfhASkl3vHnjDeeBdxSlUYjs+VgGgvlEvCD9E9qK4SR4HNnxGMbj
+    BNws3Dgc6mpLxZWS8JxeMPqrJWI+8HVFjJKB+gdVZ2bpWY6GUi2FrNjYpianyQcxknYn
+    rShDSaS8FLeAvuHxd6bvkJnM4pVchTAlMG2tTG6BtdsHOk4HQVm0Nz/9QoltfHlT/dlb
+    Ckj1Eqc14u2xmkW6zlf4c20Ja/ewY0FSj3Jhgukk2WvuU/C8bI+459B1wq5fSb3wklCE
+    5Epw==
 ARC-Authentication-Results: i=1; strato.com;
     arc=none;
     dkim=none
@@ -74,35 +42,34 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1684349339;
     s=strato-dkim-0002; d=gerhold.net;
     h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
     From:Subject:Sender;
-    bh=RzJCW5rwyoVlDeXe+0eK8YDHrRyc3l6qHJ+N7bVS/zI=;
-    b=MHx0fU3xUzR0hAfPbNFvNsGRQszoKFnA9tSjffcMXrzEcc/nCrgriLJhxDxfK30//h
-    BzTMlReFERxsWqJvCCs8Ufq/KiVkTo5TkjM4YoVT9TRC9fXne2+IqOQuN9qo5OLZbgcX
-    nmgse71lwiFfKXQGTL9symTg5Mqx7Zyflxir3MPMLsHKVwLUNdGZ1pKoazJr0ElAQWtw
-    KHuYNnddvJRUh8ZszcoedsIUT5cScBU+olRCeThEPJfCHBwGfymlhyKzztcOSF1jAnDd
-    pqP1BUc1kcqbWyBLOkthr9r31tg7bHMjtnKBwdHyXyWPVh3QWc765utwmtOMwdncjYXT
-    AgpQ==
+    bh=Q72gAZwrgAyQdwaXPFWfknvMiEMn9jleNzwpNjYRXJI=;
+    b=XkHgje8nuyn2G+j61Q+t24/8AaQJYiq6pR2yVphDonOpQ5SDy4jIEJizk/KCkKyXUs
+    Ybflzpv6znyY0CZIwUPO/+fscnj/Jo9nV5Tcwk3h3lrpoEbPgfDzNO7OolUImxZkY0Pj
+    UXSi4OrMBRQZgO9GgXZtbQBySRkn6/8g5SStqtpG0DpDb984U5ECrOl1NIG9I3VUgzYw
+    3niZPSI0I0AfwiClU4XmoitfCkCyqri4ioZ5d+bbl90eOYXDqTIQCtKMpHuq3kqnMzsr
+    MEgvJV8Fl+Kcr7r41/TOIRnEVHw10i+lUn4p148k8/wVbCmaKr2x2CF6e6DQL+n71S/F
+    a4jg==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1684349339;
     s=strato-dkim-0003; d=gerhold.net;
     h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
     From:Subject:Sender;
-    bh=RzJCW5rwyoVlDeXe+0eK8YDHrRyc3l6qHJ+N7bVS/zI=;
-    b=y+kfvhbZa25zvhvqx2ZBcZyCb6X8U6/Ihi0wmYScLC+CVkXegzVCvypL0QSf6kNfrQ
-    j2JbQGdcXlt6qHHGSRAQ==
+    bh=Q72gAZwrgAyQdwaXPFWfknvMiEMn9jleNzwpNjYRXJI=;
+    b=e5+Uj/LbKfEEVgneV3pW0tHh7M5/ry6Qh2RjxjNZ3pDTdNCG1ZAzDXttglV5NNVkDe
+    4bGTJlQaKlXHGotbnpAw==
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn8u4ly9TY="
 Received: from [192.168.244.3]
     by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
-    with ESMTPSA id j6420az4HImxBIH
+    with ESMTPSA id j6420az4HImxBII
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
     Wed, 17 May 2023 20:48:59 +0200 (CEST)
 From:   Stephan Gerhold <stephan@gerhold.net>
-Date:   Wed, 17 May 2023 20:48:41 +0200
-Subject: [PATCH 2/8] arm64: dts: qcom: apq8016-sbc: Fix 1.8V power rail on
- LS expansion
+Date:   Wed, 17 May 2023 20:48:42 +0200
+Subject: [PATCH 3/8] arm64: dts: qcom: msm8916: Fix regulator constraints
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230510-msm8916-regulators-v1-2-54d4960a05fc@gerhold.net>
+Message-Id: <20230510-msm8916-regulators-v1-3-54d4960a05fc@gerhold.net>
 References: <20230510-msm8916-regulators-v1-0-54d4960a05fc@gerhold.net>
 In-Reply-To: <20230510-msm8916-regulators-v1-0-54d4960a05fc@gerhold.net>
 To:     Bjorn Andersson <andersson@kernel.org>
@@ -117,79 +84,631 @@ X-Mailer: b4 0.12.2
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The 96Boards specification expects a 1.8V power rail on the low-speed
-expansion connector that is able to provide at least 0.18W / 100 mA.
-According to the DB410c hardware user manual this is done by connecting
-both L15 and L16 in parallel with up to 55mA each (for 110 mA total) [1].
+The regulator constraints for most MSM8916 devices (except DB410c) were
+originally taken from Qualcomm's msm-3.10 vendor device tree (for lack
+of better documentation). Unfortunately it turns out that Qualcomm's
+voltages are slightly off as well and do not match the voltage
+constraints applied by the RPM firmware.
 
-Unfortunately the current regulator setup in the DB410c device tree
-does not implement the specification correctly and only provides 5 mA:
+This means that we sometimes request a specific voltage but the RPM
+firmware actually applies a much lower or higher voltage. This is
+particularly critical for pm8916_l11 which is used as SD card VMMC
+regulator: The SD card can choose a voltage from the current range of
+1.8 - 2.95V. If it chooses to run at 1.8V we pretend that this is fine
+but the RPM firmware will still silently end up configuring 2.95V.
+This can be easily reproduced with a multimeter or by checking the
+SPMI hardware registers of the regulator.
 
-  - Only L15 is marked always-on, so L16 is never enabled.
-  - Without specifying a load the regulator is put into LPM where
-    it can only provide 5 mA.
+Fix this by making the voltages match the actual "specified range" in
+the PM8916 Device Specification which is enforced by the RPM firmware.
 
-Fix this by:
-
-  - Adding proper voltage constraints for L16.
-  - Making L16 always-on.
-  - Adding regulator-system-load for both L15 and L16. 100 mA should be
-    available in total, so specify 50 mA for each. (The regulator
-    hardware can only be in normal (55 mA) or low-power mode (5 mA) so
-    this will actually result in the expected 110 mA total...)
-
-[1]: https://www.96boards.org/documentation/consumer/dragonboard/dragonboard410c/hardware-docs/hardware-user-manual.md.html#power-supplies
-
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Fixes: 828dd5d66f0f ("arm64: dts: apq8016-sbc: make 1.8v available on LS expansion")
 Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 ---
- arch/arm64/boot/dts/qcom/apq8016-sbc.dts | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts           | 14 +++++++-------
+ arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts       | 14 +++++++-------
+ arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts             | 14 +++++++-------
+ arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts         | 14 +++++++-------
+ arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts             | 12 ++++++------
+ arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts       | 14 +++++++-------
+ arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts       | 14 +++++++-------
+ arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi | 14 +++++++-------
+ arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi   | 14 +++++++-------
+ arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi    | 14 +++++++-------
+ arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts     | 14 +++++++-------
+ arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi                  | 14 +++++++-------
+ arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts      | 12 ++++++------
+ 13 files changed, 89 insertions(+), 89 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-index 14cb217a13c1..3ec449f5cab7 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
-@@ -526,19 +526,27 @@ l14 {
- 		regulator-max-microvolt = <3300000>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts b/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts
+index 13cd9ad167df..0d517804e44e 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts
+@@ -159,13 +159,13 @@ &smd_rpm_regulators {
+ 	vdd_l7-supply = <&pm8916_s4>;
+ 
+ 	s3 {
+-		regulator-min-microvolt = <1200000>;
+-		regulator-max-microvolt = <1300000>;
++		regulator-min-microvolt = <1250000>;
++		regulator-max-microvolt = <1350000>;
  	};
  
--	/**
--	 * 1.8v required on LS expansion
--	 * for mezzanine boards
-+	/*
-+	 * The 96Boards specification expects a 1.8V power rail on the low-speed
-+	 * expansion connector that is able to provide at least 0.18W / 100 mA.
-+	 * L15/L16 are connected in parallel to provide 55 mA each. A minimum load
-+	 * must be specified to ensure the regulators are not put in LPM where they
-+	 * would only provide 5 mA.
- 	 */
- 	l15 {
- 		regulator-min-microvolt = <1800000>;
- 		regulator-max-microvolt = <1800000>;
-+		regulator-system-load = <50000>;
-+		regulator-allow-set-load;
- 		regulator-always-on;
+ 	s4 {
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <2100000>;
++		regulator-min-microvolt = <1850000>;
++		regulator-max-microvolt = <2150000>;
  	};
  
- 	l16 {
- 		regulator-min-microvolt = <1800000>;
--		regulator-max-microvolt = <3300000>;
-+		regulator-max-microvolt = <1800000>;
-+		regulator-system-load = <50000>;
-+		regulator-allow-set-load;
-+		regulator-always-on;
+ 	l1 {
+@@ -199,7 +199,7 @@ l7 {
  	};
  
- 	l17 {
+ 	l8 {
+-		regulator-min-microvolt = <2850000>;
++		regulator-min-microvolt = <2900000>;
+ 		regulator-max-microvolt = <2900000>;
+ 	};
+ 
+@@ -209,12 +209,12 @@ l9 {
+ 	};
+ 
+ 	l10 {
+-		regulator-min-microvolt = <2700000>;
++		regulator-min-microvolt = <2800000>;
+ 		regulator-max-microvolt = <2800000>;
+ 	};
+ 
+ 	l11 {
+-		regulator-min-microvolt = <1800000>;
++		regulator-min-microvolt = <2950000>;
+ 		regulator-max-microvolt = <2950000>;
+ 		regulator-system-load = <200000>;
+ 		regulator-allow-set-load;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts b/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
+index fecb69944cfa..ddd64cc46998 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts
+@@ -201,13 +201,13 @@ &smd_rpm_regulators {
+ 	vdd_l7-supply = <&pm8916_s4>;
+ 
+ 	s3 {
+-		regulator-min-microvolt = <1200000>;
+-		regulator-max-microvolt = <1300000>;
++		regulator-min-microvolt = <1250000>;
++		regulator-max-microvolt = <1350000>;
+ 	};
+ 
+ 	s4 {
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <2100000>;
++		regulator-min-microvolt = <1850000>;
++		regulator-max-microvolt = <2150000>;
+ 	};
+ 
+ 	l1 {
+@@ -241,7 +241,7 @@ l7 {
+ 	};
+ 
+ 	l8 {
+-		regulator-min-microvolt = <2850000>;
++		regulator-min-microvolt = <2900000>;
+ 		regulator-max-microvolt = <2900000>;
+ 	};
+ 
+@@ -251,12 +251,12 @@ l9 {
+ 	};
+ 
+ 	l10 {
+-		regulator-min-microvolt = <2700000>;
++		regulator-min-microvolt = <2800000>;
+ 		regulator-max-microvolt = <2800000>;
+ 	};
+ 
+ 	l11 {
+-		regulator-min-microvolt = <1800000>;
++		regulator-min-microvolt = <2950000>;
+ 		regulator-max-microvolt = <2950000>;
+ 		regulator-allow-set-load;
+ 		regulator-system-load = <200000>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts b/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
+index 91284a1d0966..982457503a3c 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
+@@ -169,13 +169,13 @@ &smd_rpm_regulators {
+ 	vdd_l7-supply = <&pm8916_s4>;
+ 
+ 	s3 {
+-		regulator-min-microvolt = <1200000>;
+-		regulator-max-microvolt = <1300000>;
++		regulator-min-microvolt = <1250000>;
++		regulator-max-microvolt = <1350000>;
+ 	};
+ 
+ 	s4 {
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <2100000>;
++		regulator-min-microvolt = <1850000>;
++		regulator-max-microvolt = <2150000>;
+ 	};
+ 
+ 	l1 {
+@@ -209,7 +209,7 @@ l7 {
+ 	};
+ 
+ 	l8 {
+-		regulator-min-microvolt = <2850000>;
++		regulator-min-microvolt = <2900000>;
+ 		regulator-max-microvolt = <2900000>;
+ 	};
+ 
+@@ -219,12 +219,12 @@ l9 {
+ 	};
+ 
+ 	l10 {
+-		regulator-min-microvolt = <2700000>;
++		regulator-min-microvolt = <2800000>;
+ 		regulator-max-microvolt = <2800000>;
+ 	};
+ 
+ 	l11 {
+-		regulator-min-microvolt = <1800000>;
++		regulator-min-microvolt = <2950000>;
+ 		regulator-max-microvolt = <2950000>;
+ 		regulator-allow-set-load;
+ 		regulator-system-load = <200000>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts b/arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts
+index 525ec76efeeb..9584d271c526 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts
+@@ -159,13 +159,13 @@ &smd_rpm_regulators {
+ 	vdd_l7-supply = <&pm8916_s4>;
+ 
+ 	s3 {
+-		regulator-min-microvolt = <1200000>;
+-		regulator-max-microvolt = <1300000>;
++		regulator-min-microvolt = <1250000>;
++		regulator-max-microvolt = <1350000>;
+ 	};
+ 
+ 	s4 {
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <2100000>;
++		regulator-min-microvolt = <1850000>;
++		regulator-max-microvolt = <2150000>;
+ 	};
+ 
+ 	l1 {
+@@ -199,7 +199,7 @@ l7 {
+ 	};
+ 
+ 	l8 {
+-		regulator-min-microvolt = <2850000>;
++		regulator-min-microvolt = <2900000>;
+ 		regulator-max-microvolt = <2900000>;
+ 	};
+ 
+@@ -209,12 +209,12 @@ l9 {
+ 	};
+ 
+ 	l10 {
+-		regulator-min-microvolt = <2700000>;
++		regulator-min-microvolt = <2800000>;
+ 		regulator-max-microvolt = <2800000>;
+ 	};
+ 
+ 	l11 {
+-		regulator-min-microvolt = <1800000>;
++		regulator-min-microvolt = <2950000>;
+ 		regulator-max-microvolt = <2950000>;
+ 		regulator-system-load = <200000>;
+ 		regulator-allow-set-load;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts b/arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts
+index 5b1bac8f5122..baa7bb86cdd5 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts
+@@ -322,13 +322,13 @@ &smd_rpm_regulators {
+ 	vdd_l7-supply = <&pm8916_s4>;
+ 
+ 	s3 {
+-		regulator-min-microvolt = <1200000>;
+-		regulator-max-microvolt = <1300000>;
++		regulator-min-microvolt = <1250000>;
++		regulator-max-microvolt = <1350000>;
+ 	};
+ 
+ 	s4 {
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <2100000>;
++		regulator-min-microvolt = <1850000>;
++		regulator-max-microvolt = <2150000>;
+ 	};
+ 
+ 	l1 {
+@@ -372,12 +372,12 @@ l9 {
+ 	};
+ 
+ 	l10 {
+-		regulator-min-microvolt = <2700000>;
++		regulator-min-microvolt = <2800000>;
+ 		regulator-max-microvolt = <2800000>;
+ 	};
+ 
+ 	l11 {
+-		regulator-min-microvolt = <1800000>;
++		regulator-min-microvolt = <2950000>;
+ 		regulator-max-microvolt = <2950000>;
+ 		regulator-allow-set-load;
+ 		regulator-system-load = <200000>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
+index f1dd625e1822..68d1b76aaf77 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
+@@ -273,13 +273,13 @@ &smd_rpm_regulators {
+ 	vdd_l7-supply = <&pm8916_s4>;
+ 
+ 	s3 {
+-		regulator-min-microvolt = <1200000>;
+-		regulator-max-microvolt = <1300000>;
++		regulator-min-microvolt = <1250000>;
++		regulator-max-microvolt = <1350000>;
+ 	};
+ 
+ 	s4 {
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <2100000>;
++		regulator-min-microvolt = <1850000>;
++		regulator-max-microvolt = <2150000>;
+ 	};
+ 
+ 	l1 {
+@@ -313,7 +313,7 @@ l7 {
+ 	};
+ 
+ 	l8 {
+-		regulator-min-microvolt = <2850000>;
++		regulator-min-microvolt = <2900000>;
+ 		regulator-max-microvolt = <2900000>;
+ 	};
+ 
+@@ -323,12 +323,12 @@ l9 {
+ 	};
+ 
+ 	l10 {
+-		regulator-min-microvolt = <2700000>;
++		regulator-min-microvolt = <2800000>;
+ 		regulator-max-microvolt = <2800000>;
+ 	};
+ 
+ 	l11 {
+-		regulator-min-microvolt = <1800000>;
++		regulator-min-microvolt = <2950000>;
+ 		regulator-max-microvolt = <2950000>;
+ 		regulator-allow-set-load;
+ 		regulator-system-load = <200000>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
+index b79e80913af9..5ef51d3e9098 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
+@@ -140,13 +140,13 @@ &smd_rpm_regulators {
+ 	vdd_l7-supply = <&pm8916_s4>;
+ 
+ 	s3 {
+-		regulator-min-microvolt = <1200000>;
+-		regulator-max-microvolt = <1300000>;
++		regulator-min-microvolt = <1250000>;
++		regulator-max-microvolt = <1350000>;
+ 	};
+ 
+ 	s4 {
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <2100000>;
++		regulator-min-microvolt = <1850000>;
++		regulator-max-microvolt = <2150000>;
+ 	};
+ 
+ 	l1 {
+@@ -180,7 +180,7 @@ l7 {
+ 	};
+ 
+ 	l8 {
+-		regulator-min-microvolt = <2850000>;
++		regulator-min-microvolt = <2900000>;
+ 		regulator-max-microvolt = <2900000>;
+ 	};
+ 
+@@ -190,12 +190,12 @@ l9 {
+ 	};
+ 
+ 	l10 {
+-		regulator-min-microvolt = <2700000>;
++		regulator-min-microvolt = <2800000>;
+ 		regulator-max-microvolt = <2800000>;
+ 	};
+ 
+ 	l11 {
+-		regulator-min-microvolt = <1800000>;
++		regulator-min-microvolt = <2950000>;
+ 		regulator-max-microvolt = <2950000>;
+ 		regulator-allow-set-load;
+ 		regulator-system-load = <200000>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
+index 16d67749960e..b362a76eebc9 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi
+@@ -285,13 +285,13 @@ &smd_rpm_regulators {
+ 	vdd_l7-supply = <&pm8916_s4>;
+ 
+ 	s3 {
+-		regulator-min-microvolt = <1200000>;
+-		regulator-max-microvolt = <1300000>;
++		regulator-min-microvolt = <1250000>;
++		regulator-max-microvolt = <1350000>;
+ 	};
+ 
+ 	s4 {
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <2100000>;
++		regulator-min-microvolt = <1850000>;
++		regulator-max-microvolt = <2150000>;
+ 	};
+ 
+ 	l1 {
+@@ -325,7 +325,7 @@ l7 {
+ 	};
+ 
+ 	l8 {
+-		regulator-min-microvolt = <2850000>;
++		regulator-min-microvolt = <2900000>;
+ 		regulator-max-microvolt = <2900000>;
+ 	};
+ 
+@@ -335,12 +335,12 @@ l9 {
+ 	};
+ 
+ 	l10 {
+-		regulator-min-microvolt = <2700000>;
++		regulator-min-microvolt = <2800000>;
+ 		regulator-max-microvolt = <2800000>;
+ 	};
+ 
+ 	l11 {
+-		regulator-min-microvolt = <1800000>;
++		regulator-min-microvolt = <2950000>;
+ 		regulator-max-microvolt = <2950000>;
+ 		regulator-allow-set-load;
+ 		regulator-system-load = <200000>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi
+index 74ffd04db8d8..4464beeeaab1 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi
+@@ -168,13 +168,13 @@ &smd_rpm_regulators {
+ 	vdd_l7-supply = <&pm8916_s4>;
+ 
+ 	s3 {
+-		regulator-min-microvolt = <1200000>;
+-		regulator-max-microvolt = <1300000>;
++		regulator-min-microvolt = <1250000>;
++		regulator-max-microvolt = <1350000>;
+ 	};
+ 
+ 	s4 {
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <2100000>;
++		regulator-min-microvolt = <1850000>;
++		regulator-max-microvolt = <2150000>;
+ 	};
+ 
+ 	l1 {
+@@ -208,7 +208,7 @@ l7 {
+ 	};
+ 
+ 	l8 {
+-		regulator-min-microvolt = <2850000>;
++		regulator-min-microvolt = <2900000>;
+ 		regulator-max-microvolt = <2900000>;
+ 	};
+ 
+@@ -218,12 +218,12 @@ l9 {
+ 	};
+ 
+ 	l10 {
+-		regulator-min-microvolt = <2700000>;
++		regulator-min-microvolt = <2800000>;
+ 		regulator-max-microvolt = <2800000>;
+ 	};
+ 
+ 	l11 {
+-		regulator-min-microvolt = <1800000>;
++		regulator-min-microvolt = <2950000>;
+ 		regulator-max-microvolt = <2950000>;
+ 		regulator-system-load = <200000>;
+ 		regulator-allow-set-load;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
+index adeee0830e76..6e231e92e675 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi
+@@ -134,13 +134,13 @@ &smd_rpm_regulators {
+ 	vdd_l7-supply = <&pm8916_s4>;
+ 
+ 	s3 {
+-		regulator-min-microvolt = <1200000>;
+-		regulator-max-microvolt = <1300000>;
++		regulator-min-microvolt = <1250000>;
++		regulator-max-microvolt = <1350000>;
+ 	};
+ 
+ 	s4 {
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <2100000>;
++		regulator-min-microvolt = <1850000>;
++		regulator-max-microvolt = <2150000>;
+ 	};
+ 
+ 	l1 {
+@@ -174,7 +174,7 @@ l7 {
+ 	};
+ 
+ 	l8 {
+-		regulator-min-microvolt = <2850000>;
++		regulator-min-microvolt = <2900000>;
+ 		regulator-max-microvolt = <2900000>;
+ 	};
+ 
+@@ -184,12 +184,12 @@ l9 {
+ 	};
+ 
+ 	l10 {
+-		regulator-min-microvolt = <2700000>;
++		regulator-min-microvolt = <2800000>;
+ 		regulator-max-microvolt = <2800000>;
+ 	};
+ 
+ 	l11 {
+-		regulator-min-microvolt = <1800000>;
++		regulator-min-microvolt = <2950000>;
+ 		regulator-max-microvolt = <2950000>;
+ 		regulator-allow-set-load;
+ 		regulator-system-load = <200000>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
+index 1a41a4db874d..fa5b330aaeae 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
+@@ -326,13 +326,13 @@ &smd_rpm_regulators {
+ 	vdd_l7-supply = <&pm8916_s4>;
+ 
+ 	s3 {
+-		regulator-min-microvolt = <1200000>;
+-		regulator-max-microvolt = <1300000>;
++		regulator-min-microvolt = <1250000>;
++		regulator-max-microvolt = <1350000>;
+ 	};
+ 
+ 	s4 {
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <2100000>;
++		regulator-min-microvolt = <1850000>;
++		regulator-max-microvolt = <2150000>;
+ 	};
+ 
+ 	l1 {
+@@ -366,7 +366,7 @@ l7 {
+ 	};
+ 
+ 	l8 {
+-		regulator-min-microvolt = <2850000>;
++		regulator-min-microvolt = <2900000>;
+ 		regulator-max-microvolt = <2900000>;
+ 	};
+ 
+@@ -376,12 +376,12 @@ l9 {
+ 	};
+ 
+ 	l10 {
+-		regulator-min-microvolt = <2700000>;
++		regulator-min-microvolt = <2800000>;
+ 		regulator-max-microvolt = <2800000>;
+ 	};
+ 
+ 	l11 {
+-		regulator-min-microvolt = <1800000>;
++		regulator-min-microvolt = <2950000>;
+ 		regulator-max-microvolt = <2950000>;
+ 		regulator-allow-set-load;
+ 		regulator-system-load = <200000>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi b/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
+index 50bae6f214f1..b27896e83a0e 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi
+@@ -132,13 +132,13 @@ &smd_rpm_regulators {
+ 	vdd_l7-supply = <&pm8916_s4>;
+ 
+ 	s3 {
+-		regulator-min-microvolt = <1200000>;
+-		regulator-max-microvolt = <1300000>;
++		regulator-min-microvolt = <1250000>;
++		regulator-max-microvolt = <1350000>;
+ 	};
+ 
+ 	s4 {
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <2100000>;
++		regulator-min-microvolt = <1850000>;
++		regulator-max-microvolt = <2150000>;
+ 	};
+ 
+ 	l1 {
+@@ -172,7 +172,7 @@ l7 {
+ 	};
+ 
+ 	l8 {
+-		regulator-min-microvolt = <2850000>;
++		regulator-min-microvolt = <2900000>;
+ 		regulator-max-microvolt = <2900000>;
+ 	};
+ 
+@@ -182,12 +182,12 @@ l9 {
+ 	};
+ 
+ 	l10 {
+-		regulator-min-microvolt = <2700000>;
++		regulator-min-microvolt = <2800000>;
+ 		regulator-max-microvolt = <2800000>;
+ 	};
+ 
+ 	l11 {
+-		regulator-min-microvolt = <1800000>;
++		regulator-min-microvolt = <2950000>;
+ 		regulator-max-microvolt = <2950000>;
+ 		regulator-system-load = <200000>;
+ 		regulator-allow-set-load;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
+index ac56c7595f78..78020a0db4e4 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
+@@ -194,13 +194,13 @@ &smd_rpm_regulators {
+ 	vdd_l7-supply = <&pm8916_s4>;
+ 
+ 	s3 {
+-		regulator-min-microvolt = <1200000>;
+-		regulator-max-microvolt = <1300000>;
++		regulator-min-microvolt = <1250000>;
++		regulator-max-microvolt = <1350000>;
+ 	};
+ 
+ 	s4 {
+-		regulator-min-microvolt = <1800000>;
+-		regulator-max-microvolt = <2100000>;
++		regulator-min-microvolt = <1850000>;
++		regulator-max-microvolt = <2150000>;
+ 	};
+ 
+ 	l1 {
+@@ -234,7 +234,7 @@ l7 {
+ 	};
+ 
+ 	l8 {
+-		regulator-min-microvolt = <2850000>;
++		regulator-min-microvolt = <2900000>;
+ 		regulator-max-microvolt = <2900000>;
+ 	};
+ 
+@@ -244,7 +244,7 @@ l9 {
+ 	};
+ 
+ 	l10 {
+-		regulator-min-microvolt = <2700000>;
++		regulator-min-microvolt = <2800000>;
+ 		regulator-max-microvolt = <2800000>;
+ 	};
+ 
 
 -- 
 2.40.1
