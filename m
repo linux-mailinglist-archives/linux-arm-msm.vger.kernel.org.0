@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C747707196
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 21:11:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FA8F70719F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 21:12:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229894AbjEQTLu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 15:11:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58910 "EHLO
+        id S229949AbjEQTM2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 15:12:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229582AbjEQTLt (ORCPT
+        with ESMTP id S229946AbjEQTM0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 15:11:49 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6662E1713
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 12:11:48 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-64354231003so283526b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 12:11:48 -0700 (PDT)
+        Wed, 17 May 2023 15:12:26 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17039AD2A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 12:12:13 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1ae54b623c2so9556205ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 12:12:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1684350708; x=1686942708;
+        d=chromium.org; s=google; t=1684350732; x=1686942732;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZmRR+LDHi4vpUNfcU4UnpvuCDjrlHXKQ9miogAVxhUc=;
-        b=FDNiwE1wBwNXmIbzPtvxKOeuyLv+uey9+OwW+wADK5iqWFO7m04+X+j+7fGCgiWNPq
-         o1nMxEcxrUqnKmSqQ7/cx6sY3sunlH3JvM6/vE6FP03x8sb8khI2/boHqXI4JYeMpQJL
-         jGNnTk3cf6CUNOTaJYjDV6pkpkZofERqfBMNQ=
+        bh=2TweVo7pe1RT0U4fJi1MmEd78Di3WvMfNoLR23I7nbs=;
+        b=lbYAiBBRmL5JG7kvR3ch5RRhu+skJcHwpvcGTQun5EtQJEpcQC3jTxCTGQOM3dVW8X
+         CrEjomYR2sZtOYw2xbyl9tOqhSYF/zT86dd11oD3tjkwXgF0T+QbRmX+4Bqihn7a/Yqh
+         gkQW0IJ+k9LTKm7tT9O4BR/ogticSCt2HQ3+c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684350708; x=1686942708;
+        d=1e100.net; s=20221208; t=1684350732; x=1686942732;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ZmRR+LDHi4vpUNfcU4UnpvuCDjrlHXKQ9miogAVxhUc=;
-        b=cR1gru9FaL4DW8BKC4464wFniSWSvRdlQd7aOI8GH0nX9JsnUv8MxtwMJY5oJBwF0v
-         6/Gs6oQPhUIYmBccUAw9nrCOdk1LV0mxsldj/G0CvlcowknrsyCaWlXz8rjuNkN1su5B
-         D42fCOx5JEjptt3RMyOk+viIXx4tJGjvm3CwSHCrZmnd9c6matkstVN4zCfYga8v5zIT
-         90la9IjTLKgzmW/cD4xgPuY221FXPJrSOuSzk21DEp7u+MZEQeAoTy0Lh2+UwCwpZ8uI
-         sOEwYtzaeiIR7bSdQmB8EfGUCoRq9I//X+L1fGwM8zniLhzXSdZ4jja++kDEdAMDvjZB
-         j43w==
-X-Gm-Message-State: AC+VfDyyaj6JiVbzTvmLgC4vRRWewWAdTrDWDHtC6LowniSyH0Wb00D/
-        lpu/Q0H78OoFFJgrmjOID+7+0Q==
-X-Google-Smtp-Source: ACHHUZ7wLjrqSTw1UhI0SssyHVt2MDqbCYAvBTTdRW0t5h6nvBmWStNbTIaFvH9ERQgSF8UUFI3Rjw==
-X-Received: by 2002:a05:6a00:1901:b0:647:157b:cb61 with SMTP id y1-20020a056a00190100b00647157bcb61mr380822pfi.7.1684350707893;
-        Wed, 17 May 2023 12:11:47 -0700 (PDT)
+        bh=2TweVo7pe1RT0U4fJi1MmEd78Di3WvMfNoLR23I7nbs=;
+        b=OKJWp1GuCxYFVFzvkGQ+amvu1kJ8KbepAbXttd8mEmCjuUVsR9Q6gofldwkvo45z4s
+         Q+bVI4UUsh58NiooD1gMG1uubCvalSXXpJW5Bwdu2WGCGXEIFHdppOMvXqgLGSmjBpVW
+         yCYIBNcaSvMq9p3x7RA1OlcSuDkXmqb5EU6O6dOYpo3D7th4qoohWcJU2TzVOBgatBbY
+         7JumWgSLoFLZ6tUUox9FqBBDCspfI4Q7UJvkZFVfEgJXJVf5fRdqv8HI/kb545qNKKRt
+         PNHgK3eschTiK7LljBrlmUQf/1AsFznj8Vw+4QROOhOoupY4qG/rnqLT2nf0z+dKnAbw
+         FUUg==
+X-Gm-Message-State: AC+VfDyj3gh8qo2lShHBHwkRPl1RxlbZWCJcQesppp9LskxudzLrzDZd
+        7Vwl/J5AzQ217e/u/C+2+6cbaQ==
+X-Google-Smtp-Source: ACHHUZ7YR5PTferdj6NHTPRa9xPJnCLNgUmoVpZYWgZwyj3/ZkalIoXAhIaQ+cJHTVYO73t+U3vEJg==
+X-Received: by 2002:a17:902:9a46:b0:1ae:5f7e:c117 with SMTP id x6-20020a1709029a4600b001ae5f7ec117mr1313241plv.60.1684350732651;
+        Wed, 17 May 2023 12:12:12 -0700 (PDT)
 Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id e12-20020a62aa0c000000b006439b7f755bsm15980446pff.98.2023.05.17.12.11.47
+        by smtp.gmail.com with ESMTPSA id x21-20020a17090300d500b001a687c505e6sm18019526plc.232.2023.05.17.12.12.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 May 2023 12:11:47 -0700 (PDT)
-Date:   Wed, 17 May 2023 12:11:46 -0700
+        Wed, 17 May 2023 12:12:12 -0700 (PDT)
+Date:   Wed, 17 May 2023 12:12:11 -0700
 From:   Kees Cook <keescook@chromium.org>
 To:     "Gustavo A. R. Silva" <gustavoars@kernel.org>
 Cc:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
@@ -57,15 +57,15 @@ Cc:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
         Mauro Carvalho Chehab <mchehab@kernel.org>,
         linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-Subject: Re: [PATCH 1/2][next] media: venus: hfi_cmds: Replace one-element
- array with flexible-array member
-Message-ID: <202305171211.F973001@keescook>
+Subject: Re: [PATCH 2/2][next] media: venus: hfi_cmds: Use struct_size()
+ helper
+Message-ID: <202305171212.11465CFF3@keescook>
 References: <cover.1684278538.git.gustavoars@kernel.org>
- <e4b13d7b79d1477e775c6d4564f7b23c4cf967f2.1684278538.git.gustavoars@kernel.org>
+ <fd52d6ddce285474615e4bd96931ab12a0da8199.1684278538.git.gustavoars@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e4b13d7b79d1477e775c6d4564f7b23c4cf967f2.1684278538.git.gustavoars@kernel.org>
+In-Reply-To: <fd52d6ddce285474615e4bd96931ab12a0da8199.1684278538.git.gustavoars@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -76,21 +76,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 16, 2023 at 05:14:27PM -0600, Gustavo A. R. Silva wrote:
-> One-element arrays are deprecated, and we are replacing them with flexible
-> array members instead. So, replace one-element arrays with flexible-array
-> members in struct hfi_session_set_buffers_pkt, and refactor the rest of
-> the code, accordingly.
+On Tue, May 16, 2023 at 05:14:49PM -0600, Gustavo A. R. Silva wrote:
+> Prefer struct_size() over open-coded versions of idiom:
 > 
-> This helps with the ongoing efforts to tighten the FORTIFY_SOURCE
-> routines on memcpy() and help us make progress towards globally
-> enabling -fstrict-flex-arrays=3 [1].
+> sizeof(struct-with-flex-array) + sizeof(typeof-flex-array-elements) * count
 > 
-> This results in no differences in binary output.
+> where count is the max number of items the flexible array is supposed to
+> contain.
 > 
-> Link: https://github.com/KSPP/linux/issues/79
-> Link: https://github.com/KSPP/linux/issues/292
-> Link: https://gcc.gnu.org/pipermail/gcc-patches/2022-October/602902.html [1]
+> Link: https://github.com/KSPP/linux/issues/160
 > Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
 
 Reviewed-by: Kees Cook <keescook@chromium.org>
