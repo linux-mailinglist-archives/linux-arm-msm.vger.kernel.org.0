@@ -2,112 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DDD44706E50
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 18:38:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9B4D706E5D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 18:40:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229805AbjEQQiE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 12:38:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33530 "EHLO
+        id S229673AbjEQQkv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 12:40:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229702AbjEQQiD (ORCPT
+        with ESMTP id S229527AbjEQQkt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 12:38:03 -0400
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F5A87EF9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:37:55 -0700 (PDT)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-510db954476so585898a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:37:55 -0700 (PDT)
+        Wed, 17 May 2023 12:40:49 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4663040CE
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:40:48 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4ec8eca56cfso1220708e87.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:40:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684341474; x=1686933474;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oxFHTRCKX1b6ZPvp5Tbzp6uL023q77o/sho/DiHZlF0=;
-        b=ZlTl28XaVoUXtK1R34OnJkyaUON8lN7ZqEl9xlLeb2F1+VNKzXQlqUBUy3hYRe4+Xi
-         ybUetVhyCtCPth5UUo3OCKa6R+YiCxy1IwqvcrwWikT73tdqJ49b672dd7+Z8F4UM9g7
-         +794RuU2affLlGgyft4JZzow4imJSjLkSG2szqvX5pIw69/0w6ygLxEhAr+YTxUBwRe2
-         Ug9i/gcRmusm2cYeUth3Vp9EBacAnars4fWV+8HIUk2j2Vh8nuWVObwz34XOlD7n2pLa
-         +M+i4hpBfOIvxZ/z9Ty72PK3C0UgnGdUASeQYcjc7NBSmxP9IyfyF6qNMiD+noYB8xQc
-         ufYw==
+        d=linaro.org; s=google; t=1684341646; x=1686933646;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2xdDvmJDjqeVtU3worCYJR7EC7H+K8m1I2mTyMfP2vk=;
+        b=V7aY0VMoo5ZCcwwrG13zZge67I985EbaaSZQLLuVnRLN98V8FQ39lsc9A0ZrgMuh8a
+         IgQTjCzBy6vRpq1VFMhrsUyGsw4kZaqpy9A+mky9v41JtOnW3EFhLcGao4VtA5WGsbEw
+         DUMmtlJl4V7VtL8hxXA7CmEZ5ObVcVRmN6vTzvnlm9ZxbYx/r3mAEaR6HApQmcRJKK8n
+         gNS0dnLy8+WmNhYTVgD7Q8Jc2boE+7WJlJ2BjMtkX65QuvEFivxBp1nVjSWCq+B4cKN7
+         UD/BHgMp75p10FEd3nDx8/VDO1cGKaEpYS/psffBxY8FNky3KLEutp0+VLd6zzAttq+x
+         dOmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684341474; x=1686933474;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oxFHTRCKX1b6ZPvp5Tbzp6uL023q77o/sho/DiHZlF0=;
-        b=Qbtd+wb1a1W8W9MR/isAY3PSCYVnFiUQm8lVRDrW50Vnuo0JCP0jIfL8BikjR4AGmD
-         /aObwkxWco4i8ax6VCsYIwWttjuyAI17KfQU8ACpvqs/WrRoW8gwEu7UEzxjwvLFsZJS
-         H28dfARFwPd201wHYilMx+x/woJ3LD0Vl96uWVQqKhdjxmi7oReiQXBchzCnsF7LRuph
-         cw71DvOkyY9ZxYA9Juezd2tVpn92aEAdXj+vuxxvkWTJCKbTe0yHxY0fBKKwYA1/1RFs
-         h4NwUTbobDnvAQ1fwJVwj+92FGQFZSpMxXZ0B2xjCgEB4CTQSkOEXr2TxroXDCyguzYo
-         Bl1w==
-X-Gm-Message-State: AC+VfDzWiJrOONpVErfH7M1gTf+IBs+3nsDlpfcQhLaIrdWYEoKrlS5e
-        Xc/eBYpk0BTQXjYYCs2QxpNssw==
-X-Google-Smtp-Source: ACHHUZ4v5X5Nl45QaqZ4wy3xZQPUxWAVDqcRKxfdhsGdP1MRZG40xfitQgvgVmpnf2IMERFZMSdA6w==
-X-Received: by 2002:a05:6402:1209:b0:50b:d26d:c57e with SMTP id c9-20020a056402120900b0050bd26dc57emr2431904edw.12.1684341473752;
-        Wed, 17 May 2023 09:37:53 -0700 (PDT)
-Received: from krzk-bin.. ([2a02:810d:15c0:828:c9ff:4c84:dd21:568d])
-        by smtp.gmail.com with ESMTPSA id t21-20020aa7d715000000b0050bc041d2a8sm9284827edq.15.2023.05.17.09.37.52
+        d=1e100.net; s=20221208; t=1684341646; x=1686933646;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2xdDvmJDjqeVtU3worCYJR7EC7H+K8m1I2mTyMfP2vk=;
+        b=WW8grqCyFGVYVS9lE6j9Gk/NEyvCl+K8jXE8ErVLgJmIkKxlY2mlbnJ/iU8uDrk9GB
+         7hmXwXoJQRZ6Fvrorymzz8dSVB5bQG9NMcvowPRvnIDz8FmYor3s/hp1kk8l8i+DVXLl
+         tnrnKVLm1GCl0rgaOC9HPtG3GDfGegXgHhEtAv47RTviCQ1yrt6POTakYR/e1nVWDTfX
+         VUkURzeVqesV/7Fev3nf+H/V1FAxoFCttosYfh3CeM/DfX8mh2nDk0rUPkmFAYudcfCP
+         gYy4rtmv9axzqYwrgMFCj0rIH/vN9Gr+oExywCidECLSxS7v57mUsiXDgpaJRHcUkryW
+         mMbw==
+X-Gm-Message-State: AC+VfDwpQ/d6KaCpbZW5yWJJpb8aEUALxjNa1Kty4FH2TWgOFe29aH3u
+        HCB366UoFtd1BCiEfwsQ9msuYg==
+X-Google-Smtp-Source: ACHHUZ6xO2wXHIeSKpXgjPvEao6Re1B1D5J4M9TVxhe62Z8YP9EkytjJcIfVEuvmU44MgXxjEUY6cA==
+X-Received: by 2002:a2e:4949:0:b0:2a7:6d19:b569 with SMTP id b9-20020a2e4949000000b002a76d19b569mr8845521ljd.53.1684341646547;
+        Wed, 17 May 2023 09:40:46 -0700 (PDT)
+Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
+        by smtp.gmail.com with ESMTPSA id 9-20020a05651c040900b002a8c271de33sm1919259lja.67.2023.05.17.09.40.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 May 2023 09:37:53 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        =?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Charles Keepax <ckeepax@opensource.cirrus.com>,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] soundwire: debugfs: fix unbalanced pm_runtime_put()
-Date:   Wed, 17 May 2023 18:37:50 +0200
-Message-Id: <20230517163750.997629-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230517163750.997629-1-krzysztof.kozlowski@linaro.org>
-References: <20230517163750.997629-1-krzysztof.kozlowski@linaro.org>
+        Wed, 17 May 2023 09:40:46 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/4] SM8450 GPUCC
+Date:   Wed, 17 May 2023 18:40:37 +0200
+Message-Id: <20230517-topic-waipio-gpucc-v1-0-4f40e282af1d@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIUDZWQC/x2NQQqDMBAAvyJ7dkFNq+JXpIdkXXVBkpBoFcS/d
+ +lxBoa5IXMSzjAUNyT+SpbgFeqyAFqtXxhlUoamakz1rjvcQxTC00qUgEs8iLDtp9Z0vTHuRaC
+ hs5nRJetp1dQf26YyJp7l+p/Gz/P8AJUHtGd5AAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1684341644; l=1188;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=e/lggVuMBS0PkLLWqBbNb2RZISCTXYwBvDmZ80YVsjY=;
+ b=z9/TsFBmiMuoPWT2k/rdDOETkZ0VZaNOt070SFR76uEiO9x6oS1NDGGhTMQEuJ7ur57g0hEii
+ sPOsfM5rzz1DqYc3WwUekvnePl/6qb62vMU/O4Y1pyPp64uyKusaGEa
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-1.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If pm_runtime_resume_and_get() failed with -EACCES, the driver continued
-execution and finally called pm_runtime_put_autosuspend().  Since
-pm_runtime_resume_and_get() drops the usage counter on every error, this
-lead to double decrement of that counter.
+Introduce hardware clock control to ultimately avoid spurious rcg
+(re)configurations and introduce GPUCC for SM8450.
 
-Fixes: b275bf45ba1d ("soundwire: debugfs: Switch to sdw_read_no_pm")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/soundwire/debugfs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Konrad Dybcio (4):
+      dt-bindings: clock: Add Qcom SM8450 GPUCC
+      clk: qcom: rcg2: Make hw_clk_ctrl toggleable
+      clk: qcom: gcc-sm8450: Enable hw_clk_ctrl
+      clk: qcom: Add support for SM8450 GPUCC
 
-diff --git a/drivers/soundwire/debugfs.c b/drivers/soundwire/debugfs.c
-index dea782e0edc4..c3a1a359ee5c 100644
---- a/drivers/soundwire/debugfs.c
-+++ b/drivers/soundwire/debugfs.c
-@@ -56,8 +56,9 @@ static int sdw_slave_reg_show(struct seq_file *s_file, void *data)
- 	if (!buf)
- 		return -ENOMEM;
- 
--	ret = pm_runtime_resume_and_get(&slave->dev);
-+	ret = pm_runtime_get_sync(&slave->dev);
- 	if (ret < 0 && ret != -EACCES) {
-+		pm_runtime_put_noidle(&slave->dev);
- 		kfree(buf);
- 		return ret;
- 	}
+ .../bindings/clock/qcom,sm8450-gpucc.yaml          |  73 ++
+ drivers/clk/qcom/Kconfig                           |   8 +
+ drivers/clk/qcom/Makefile                          |   1 +
+ drivers/clk/qcom/clk-rcg.h                         |   2 +
+ drivers/clk/qcom/clk-rcg2.c                        |   2 +
+ drivers/clk/qcom/gcc-sm8450.c                      |  39 ++
+ drivers/clk/qcom/gpucc-sm8450.c                    | 766 +++++++++++++++++++++
+ include/dt-bindings/clock/qcom,sm8450-gpucc.h      |  48 ++
+ include/dt-bindings/reset/qcom,sm8450-gpucc.h      |  20 +
+ 9 files changed, 959 insertions(+)
+---
+base-commit: 065efa589871e93b6610c70c1e9de274ef1f1ba2
+change-id: 20230517-topic-waipio-gpucc-68d637833b4c
+
+Best regards,
 -- 
-2.34.1
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
