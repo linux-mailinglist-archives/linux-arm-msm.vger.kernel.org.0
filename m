@@ -2,361 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 92CA570765E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 01:22:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26CDD707672
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 01:32:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229436AbjEQXW5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 19:22:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54232 "EHLO
+        id S229694AbjEQXcn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 19:32:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56890 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229527AbjEQXW4 (ORCPT
+        with ESMTP id S229468AbjEQXcm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 19:22:56 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 120DC30E6;
-        Wed, 17 May 2023 16:22:49 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34HMxhPP019648;
-        Wed, 17 May 2023 23:22:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=hUbA3URmTGJE56PdDudnP72n27MNQz3qCtNpALMkXtE=;
- b=FZsV5olTVz8TVObt978fI7iG6K2N0NENjqvygPHMnCXvJe1aQaB1mrRdc43YXjYBtC5v
- mDN2W4OHiuYEBGY8kBA/G50RMCCc6uyT69TBMa1Uue7J2SKsQt5ncnR09dbNF++lc+lf
- QzVH9DvmMlpjIL12ZWmQOFP07ApLiWsPevCptoby/dRAJp7Nz82lRKGH7hHGioU3Akaw
- bF+pLFPRD0Ek3wjtBLSI77PH0xrJSqUvdsg3xXZtbi5EqEfBWJAUKKPyYBAmEsoTNiy0
- US3x1YpcL5ZCxkkfQQbFIq0+jy83cGTSlnXAbZlIaK0D+ITYDziDkvRJKYBMq1qny1VB 0Q== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qmts29yk1-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 17 May 2023 23:22:39 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34HNMcfJ032549
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 17 May 2023 23:22:39 GMT
-Received: from [10.110.94.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 17 May
- 2023 16:22:38 -0700
-Message-ID: <51f0439c-a5e8-b47a-21af-7bbbc944ca53@quicinc.com>
-Date:   Wed, 17 May 2023 16:22:37 -0700
+        Wed, 17 May 2023 19:32:42 -0400
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2044.outbound.protection.outlook.com [40.107.223.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6225F40EB;
+        Wed, 17 May 2023 16:32:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=g2J+oE80v+B1Kweq6z+STuijyPtEkRwz8pWoXjK5/lQ4oTOz3mj7kQzuMqaizG9F3CDXxn1SPDZ12GUVIrss5lQvnO8AOsROrJUHU08jWds/Xwy2ni4vQ6NT3akOEHyDNXrU0AQf7GG7/ndMSDYssSOJNoOJW7BNYvWmlow4ZTg+0Z1R81JLQTzISBekPtY7ntcWV4mBmsXlEhhFfteRdZHsEOze+edxxSXD+de+gaZsjOsIXvAO6wJx60ga8lV5hSOXUMsHx0ZRZtxb0cbb5t0uynFY9iRHWxsQFsEsfk5XV5EcivwgSrhAade6XQ/BagWzw4JeIkEsqBhvyzz5og==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=SU7+OS0futKjoBt58LQ+nXP395IRweXRjQi4kW6PQLU=;
+ b=Oeo0w4/5iIve7I8iVusfV7B8W3I/Fz6Wxu2h+/W+gJKHNDn5maJ1ZKO016jx3O6IIRHXD4iEAEXDy+N3X3RJw5NDwwpb+S9cIgbKHcAafK0ONde0BZSBLcYpJvbwFpi4010MX9ajBY89qOqYnJMMHu5USl52el4hupiiJNKxyqnfTg8ptZvVkZHk+yTXIMGrvN7eQmUokftc15sZCRDH+bpPurGs1h3H7L43+Xrx5bh4uxSrLpW6Wx3ctNAc5Hx1SOQvtYS+chdssRAE2v0q1N55PQVj4Ay5uC5Nphu8dOe9Zn4ysQpWiHtzSLlqilkyffZxycabLwasEIhuoZaLAA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=lists.ozlabs.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=SU7+OS0futKjoBt58LQ+nXP395IRweXRjQi4kW6PQLU=;
+ b=T9dbxYfi0ePh8X7jY4DWSOh/1wX2Pd3qEz/X3enlbBpLhGYWh+9H9J8rgPwD7yquiJvDAeDLOhOt3pCQFi00U3NOIDUA+dUAlN02tFWC75pOM12ItgpPcDBhHd9ZpcYDl38kmQI1OsTb5REddcPhFx6Xh+wL59OQnHdxP1vmaSbLPy5tbCWpGE5+RUrMnr52BGOg0U50+SzNGm6CizbLS/swXInbWEdZZzWGEbUBf/F2IQJ9XEVzzQSnFTnxUKykC1E4AswHHdnhtQbiN/JngfDwbkNa4gGol5cIZ3UJUOhjcCjjt/pyJm2XsU9g6JPUnJJWxkFTHhHsR7JY/otAnw==
+Received: from MW4PR04CA0257.namprd04.prod.outlook.com (2603:10b6:303:88::22)
+ by SA0PR12MB4542.namprd12.prod.outlook.com (2603:10b6:806:73::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6411.17; Wed, 17 May
+ 2023 23:32:39 +0000
+Received: from CO1NAM11FT087.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:303:88:cafe::3c) by MW4PR04CA0257.outlook.office365.com
+ (2603:10b6:303:88::22) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6411.18 via Frontend
+ Transport; Wed, 17 May 2023 23:32:38 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ CO1NAM11FT087.mail.protection.outlook.com (10.13.174.68) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6411.19 via Frontend Transport; Wed, 17 May 2023 23:32:38 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.5; Wed, 17 May 2023
+ 16:32:32 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.37; Wed, 17 May 2023 16:32:32 -0700
+Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com
+ (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.37 via Frontend
+ Transport; Wed, 17 May 2023 16:32:29 -0700
+Date:   Wed, 17 May 2023 16:32:28 -0700
+From:   Nicolin Chen <nicolinc@nvidia.com>
+To:     Jason Gunthorpe <jgg@nvidia.com>
+CC:     Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Heiko Stuebner <heiko@sntech.de>, <iommu@lists.linux.dev>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        "Jonathan Hunter" <jonathanh@nvidia.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Kevin Tian <kevin.tian@intel.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>,
+        <linux-rockchip@lists.infradead.org>, <linux-s390@vger.kernel.org>,
+        <linux-samsung-soc@vger.kernel.org>, <linux-sunxi@lists.linux.dev>,
+        <linux-tegra@vger.kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        <linuxppc-dev@lists.ozlabs.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        "Niklas Schnelle" <schnelle@linux.ibm.com>,
+        Steven Price <steven.price@arm.com>,
+        Thierry Reding <treding@nvidia.com>
+Subject: Re: [PATCH v2 00/25] iommu: Make default_domain's mandatory
+Message-ID: <ZGVkDB+MCrx3tQho@Asurada-Nvidia>
+References: <0-v2-8d1dc464eac9+10f-iommu_all_defdom_jgg@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v10 7/8] drm/msm/dpu: add DSC 1.2 hw blocks for relevant
- chipsets
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>
-CC:     <freedreno@lists.freedesktop.org>, <quic_sbillaka@quicinc.com>,
-        <andersson@kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <dianders@chromium.org>, <vkoul@kernel.org>, <agross@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <quic_jesszhan@quicinc.com>, <swboyd@chromium.org>,
-        <sean@poorly.run>, <linux-kernel@vger.kernel.org>
-References: <1684360919-28458-1-git-send-email-quic_khsieh@quicinc.com>
- <1684360919-28458-8-git-send-email-quic_khsieh@quicinc.com>
- <w7xre5jdot3fpe3ldj6vcnvribpbalfvova5hhmbgvgvkrcm34@xqvsc5ga2knb>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <w7xre5jdot3fpe3ldj6vcnvribpbalfvova5hhmbgvgvkrcm34@xqvsc5ga2knb>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: SMtPvud4DbmpjK5WAPRtu_wd9bpczX6U
-X-Proofpoint-ORIG-GUID: SMtPvud4DbmpjK5WAPRtu_wd9bpczX6U
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-17_04,2023-05-17_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 impostorscore=0
- mlxlogscore=999 spamscore=0 mlxscore=0 clxscore=1015 lowpriorityscore=0
- malwarescore=0 adultscore=0 priorityscore=1501 phishscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
- definitions=main-2305170191
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <0-v2-8d1dc464eac9+10f-iommu_all_defdom_jgg@nvidia.com>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1NAM11FT087:EE_|SA0PR12MB4542:EE_
+X-MS-Office365-Filtering-Correlation-Id: 192db192-fae9-42d6-3f47-08db572f0083
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: Xp1ANaCQqDkvQxMkDGNeVnZgg2QHq7mlxtx6A8BUGbMjgoK/P5t4maMzuKixtU7LOp1Uo51Vq1YlcBrFPWS0rnzkEwCuhDzcZeOuHx/19o9krkOp0BlyU+ELCWMUAa2hwCDlxWgHCeqWhgEmE/6HiMNQ3HaErUKoXy1VV+dz5h9TrvywnLzRpJS4c5bx3ly6mA5NODX6vzM91weyCKzGWGqSEKxblrcKPQn6ug8piZ8Bp71af5OIFJd4wIwY6r5tgQhZ/OWx3z6/vImdPUa7OL33h6NUI3X+UUCl3lwWLMfbYcf48h2em+LTnt8k2b/xfZfdLOwqtyB+/vcWiH0tUgSU3UCZFbEQlnWMm2dGI2NsnvZSke9uazUM3qy3KR6LdIVfXbnjrx9xpCEzwl9H0xvpZT7axGCMoG/RBVT/rjx0IO6nfxRmzCFQIRXTm245v+wimriyw7R8Z691v8EpdPwTZ+JsqDOSIdYsWIxL6jK14OaX+JShd8mKAe5d5V918vZ2AcBEpzMLOWu0zl+eOMkD6ihhybqSDfKBlYw5BFA+BxtQo0mXWF+7TCnGhGrvi/rGWPHYrKmd3RPzf0jRIRe1ckw48EBLqTTkA0QPyisnVLFgu2A+82FWUp2LDoyPUY1LjMGD65nnIxPjWZdUVjbHzaY9rvlgmAIWNrawbvWntCrWkGwAGa9aU59g/9Iwyk6RYfuMygImtPEcSX7+iCzGDeF7hBh5dMDabpdtET0nSRboAE8Ym/yNorJPawsljffBQTVY97BVKPn21CS5etWQxehgcoxSHpfuCz7vii6g6rpIQ9uyBl4A9UO5PmM9
+X-Forefront-Antispam-Report: CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230028)(4636009)(346002)(396003)(39860400002)(136003)(376002)(451199021)(36840700001)(40470700004)(46966006)(36860700001)(82740400003)(7636003)(356005)(40460700003)(41300700001)(7416002)(7406005)(2906002)(6862004)(8676002)(5660300002)(33716001)(6636002)(8936002)(55016003)(86362001)(316002)(4326008)(70206006)(70586007)(40480700001)(82310400005)(83380400001)(966005)(336012)(186003)(47076005)(107886003)(426003)(9686003)(26005)(478600001)(54906003)(67856001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 May 2023 23:32:38.5800
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 192db192-fae9-42d6-3f47-08db572f0083
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CO1NAM11FT087.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4542
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, May 15, 2023 at 09:00:33PM -0300, Jason Gunthorpe wrote:
+ 
+> This is on github: https://github.com/jgunthorpe/linux/commits/iommu_all_defdom
 
+Ran some VFIO-passthrough sanity on x86 and ARM64, using this
+branch. It should cover partially this series. So, if I may:
 
-On 5/17/2023 3:47 PM, Marijn Suijten wrote:
-> Title: "DPU >= 7.0" instead of "relevant chipsets" to match the others.
-> 
-> On 2023-05-17 15:01:58, Kuogee Hsieh wrote:
->> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>
->> Add DSC 1.2 hardware blocks to the catalog with necessary sub-block and
->> feature flag information.  Each display compression engine (DCE) contains
->> dual DSC encoders so both share same base address but with
->> its own different sub block address.
-> 
-> If you reword it, also reflow this line.
-> 
->>
->> changes in v4:
->> -- delete DPU_DSC_HW_REV_1_1
->> -- re arrange sc8280xp_dsc[]
->>
->> changes in v4:
->> -- fix checkpatch warning
->>
->> changes in v10:
->> -- remove hard slice from commit text
-> 
-> It is still mentioned in the diff though, that's why I originally
-> requested a better place to describe it.
-> 
->> -- replace DPU_DSC_NATIVE_422_EN with DPU_DSC_NATIVE_42x_EN
->> -- change DSC_BLK_1_2 .len from 0x100 to 0x29c
->>
->> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> 
->>
->> kuogee: catalog.h
-> 
-> What's this for?  This file isn't touched in this patch.
-> 
->> ---
->>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h | 14 ++++++++++++
->>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |  7 ++++++
->>   .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   | 16 ++++++++++++++
->>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h | 14 ++++++++++++
->>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h | 14 ++++++++++++
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     | 25 +++++++++++++++++++++-
->>   6 files changed, 89 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
->> index 500cfd0..d90486f 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
->> @@ -153,6 +153,18 @@ static const struct dpu_merge_3d_cfg sm8350_merge_3d[] = {
->>   	MERGE_3D_BLK("merge_3d_2", MERGE_3D_2, 0x50000),
->>   };
->>   
->> +/*
->> + * NOTE: Each display compression engine (DCE) contains dual hard
->> + * slice DSC encoders so both share same base address but with
->> + * its own different sub block address.
->> + */
->> +static const struct dpu_dsc_cfg sm8350_dsc[] = {
->> +	DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 0, dsc_sblk_0),
->> +	DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x29c, 0, dsc_sblk_1),
->> +	DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
->> +	DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
->> +};
->> +
->>   static const struct dpu_intf_cfg sm8350_intf[] = {
->>   	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
->>   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
->> @@ -215,6 +227,8 @@ const struct dpu_mdss_cfg dpu_sm8350_cfg = {
->>   	.dspp = sm8350_dspp,
->>   	.pingpong_count = ARRAY_SIZE(sm8350_pp),
->>   	.pingpong = sm8350_pp,
->> +	.dsc_count = ARRAY_SIZE(sm8350_dsc),
->> +	.dsc = sm8350_dsc,
->>   	.merge_3d_count = ARRAY_SIZE(sm8350_merge_3d),
->>   	.merge_3d = sm8350_merge_3d,
->>   	.intf_count = ARRAY_SIZE(sm8350_intf),
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
->> index 5646713..52609b8 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
->> @@ -93,6 +93,11 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
->>   	PP_BLK_DITHER("pingpong_3", PINGPONG_3, 0x6c000, 0, sc7280_pp_sblk, -1, -1),
->>   };
->>   
->> +/* NOTE: sc7280 only has one DSC hard slice encoder */
->> +static const struct dpu_dsc_cfg sc7280_dsc[] = {
->> +	DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
->> +};
->> +
->>   static const struct dpu_intf_cfg sc7280_intf[] = {
->>   	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
->>   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
->> @@ -149,6 +154,8 @@ const struct dpu_mdss_cfg dpu_sc7280_cfg = {
->>   	.mixer = sc7280_lm,
->>   	.pingpong_count = ARRAY_SIZE(sc7280_pp),
->>   	.pingpong = sc7280_pp,
->> +	.dsc_count = ARRAY_SIZE(sc7280_dsc),
->> +	.dsc = sc7280_dsc,
->>   	.intf_count = ARRAY_SIZE(sc7280_intf),
->>   	.intf = sc7280_intf,
->>   	.vbif_count = ARRAY_SIZE(sdm845_vbif),
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
->> index 808aacd..a84cf36 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
->> @@ -141,6 +141,20 @@ static const struct dpu_merge_3d_cfg sc8280xp_merge_3d[] = {
->>   	MERGE_3D_BLK("merge_3d_2", MERGE_3D_2, 0x50000),
->>   };
->>   
->> +/*
->> + * NOTE: Each display compression engine (DCE) contains dual hard
->> + * slice DSC encoders so both share same base address but with
->> + * its own different sub block address.
->> + */
->> +static const struct dpu_dsc_cfg sc8280xp_dsc[] = {
->> +	DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 0, dsc_sblk_0),
->> +	DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x29c, 0, dsc_sblk_1),
->> +	DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
->> +	DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
->> +	DSC_BLK_1_2("dce_2_0", DSC_4, 0x82000, 0x29c, 0, dsc_sblk_0),
->> +	DSC_BLK_1_2("dce_2_1", DSC_5, 0x82000, 0x29c, 0, dsc_sblk_1),
->> +};
->> +
->>   /* TODO: INTF 3, 8 and 7 are used for MST, marked as INTF_NONE for now */
->>   static const struct dpu_intf_cfg sc8280xp_intf[] = {
->>   	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
->> @@ -216,6 +230,8 @@ const struct dpu_mdss_cfg dpu_sc8280xp_cfg = {
->>   	.dspp = sc8280xp_dspp,
->>   	.pingpong_count = ARRAY_SIZE(sc8280xp_pp),
->>   	.pingpong = sc8280xp_pp,
->> +	.dsc_count = ARRAY_SIZE(sc8280xp_dsc),
->> +	.dsc = sc8280xp_dsc,
->>   	.merge_3d_count = ARRAY_SIZE(sc8280xp_merge_3d),
->>   	.merge_3d = sc8280xp_merge_3d,
->>   	.intf_count = ARRAY_SIZE(sc8280xp_intf),
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
->> index 1a89ff9..1620622 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
->> @@ -161,6 +161,18 @@ static const struct dpu_merge_3d_cfg sm8450_merge_3d[] = {
->>   	MERGE_3D_BLK("merge_3d_3", MERGE_3D_3, 0x65f00),
->>   };
->>   
->> +/*
->> + * NOTE: Each display compression engine (DCE) contains dual hard
->> + * slice DSC encoders so both share same base address but with
->> + * its own different sub block address.
->> + */
->> +static const struct dpu_dsc_cfg sm8450_dsc[] = {
->> +	DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 0, dsc_sblk_0),
->> +	DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x29c, 0, dsc_sblk_1),
->> +	DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
->> +	DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
->> +};
->> +
->>   static const struct dpu_intf_cfg sm8450_intf[] = {
->>   	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
->>   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
->> @@ -223,6 +235,8 @@ const struct dpu_mdss_cfg dpu_sm8450_cfg = {
->>   	.dspp = sm8450_dspp,
->>   	.pingpong_count = ARRAY_SIZE(sm8450_pp),
->>   	.pingpong = sm8450_pp,
->> +	.dsc_count = ARRAY_SIZE(sm8450_dsc),
->> +	.dsc = sm8450_dsc,
->>   	.merge_3d_count = ARRAY_SIZE(sm8450_merge_3d),
->>   	.merge_3d = sm8450_merge_3d,
->>   	.intf_count = ARRAY_SIZE(sm8450_intf),
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
->> index 497b34c..6582a14 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
->> @@ -165,6 +165,18 @@ static const struct dpu_merge_3d_cfg sm8550_merge_3d[] = {
->>   	MERGE_3D_BLK("merge_3d_3", MERGE_3D_3, 0x66700),
->>   };
->>   
->> +/*
->> + * NOTE: Each display compression engine (DCE) contains dual hard
->> + * slice DSC encoders so both share same base address but with
->> + * its own different sub block address.
->> + */
->> +static const struct dpu_dsc_cfg sm8550_dsc[] = {
->> +	DSC_BLK_1_2("dce_0_0", DSC_0, 0x80000, 0x29c, 0, dsc_sblk_0),
->> +	DSC_BLK_1_2("dce_0_1", DSC_1, 0x80000, 0x29c, 0, dsc_sblk_1),
->> +	DSC_BLK_1_2("dce_1_0", DSC_2, 0x81000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_0),
->> +	DSC_BLK_1_2("dce_1_1", DSC_3, 0x81000, 0x29c, BIT(DPU_DSC_NATIVE_42x_EN), dsc_sblk_1),
->> +};
->> +
->>   static const struct dpu_intf_cfg sm8550_intf[] = {
->>   	INTF_BLK("intf_0", INTF_0, 0x34000, 0x280, INTF_DP, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
->>   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 24),
->> @@ -227,6 +239,8 @@ const struct dpu_mdss_cfg dpu_sm8550_cfg = {
->>   	.dspp = sm8550_dspp,
->>   	.pingpong_count = ARRAY_SIZE(sm8550_pp),
->>   	.pingpong = sm8550_pp,
->> +	.dsc_count = ARRAY_SIZE(sm8550_dsc),
->> +	.dsc = sm8550_dsc,
->>   	.merge_3d_count = ARRAY_SIZE(sm8550_merge_3d),
->>   	.merge_3d = sm8550_merge_3d,
->>   	.intf_count = ARRAY_SIZE(sm8550_intf),
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> index f2a1535..9612ab5 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> @@ -1,6 +1,6 @@
->>   // SPDX-License-Identifier: GPL-2.0-only
->>   /* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->> - * Copyright (c) 2022. Qualcomm Innovation Center, Inc. All rights reserved.
->> + * Copyright (c) 2022-2023, Qualcomm Innovation Center, Inc. All rights reserved.
->>    */
->>   
->>   #define pr_fmt(fmt)	"[drm:%s:%d] " fmt, __func__, __LINE__
->> @@ -522,6 +522,16 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
->>   /*************************************************************
->>    * DSC sub blocks config
->>    *************************************************************/
->> +static const struct dpu_dsc_sub_blks dsc_sblk_0 = {
->> +	.enc = {.base = 0x100, .len = 0x100},
->> +	.ctl = {.base = 0xF00, .len = 0x10},
->> +};
->> +
->> +static const struct dpu_dsc_sub_blks dsc_sblk_1 = {
->> +	.enc = {.base = 0x200, .len = 0x100},
->> +	.ctl = {.base = 0xF80, .len = 0x10},
->> +};
->> +
->>   #define DSC_BLK(_name, _id, _base, _features) \
->>   	{\
->>   	.name = _name, .id = _id, \
->> @@ -529,6 +539,19 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
->>   	.features = _features, \
->>   	}
->>   
->> +/*
->> + * NOTE: Each display compression engine (DCE) contains dual hard
->> + * slice DSC encoders so both share same base address but with
->> + * its own different sub block address.
->> + */
-> 
-> I still think this comment is superfluous (and doesn't even apply
-> generically, see i.e. sc7280) and should best be kept exclusively in the
-> SoC-specific catalog files.
-> 
-> - Marijn
-> 
+Tested-by: Nicolin Chen <nicolinc@nvidia.com>
 
-sc7280 is the only exception as it has only one encoder. But, by and 
-large, for all other chipsets this is true and hence kept here.
+Thanks
+Nic
 
-The main reason for this comment is people should not get confused that 
-how come two DSC encoders have the same base address.
-
->> +#define DSC_BLK_1_2(_name, _id, _base, _len, _features, _sblk) \
->> +	{\
->> +	.name = _name, .id = _id, \
->> +	.base = _base, .len = _len, \
->> +	.features = BIT(DPU_DSC_HW_REV_1_2) | _features, \
->> +	.sblk = &_sblk, \
->> +	}
->> +
->>   /*************************************************************
->>    * INTF sub blocks config
->>    *************************************************************/
->> -- 
->> 2.7.4
->>
+> v2:
+>  - FSL is an IDENTITY domain
+>  - Delete terga-gart instead of trying to carry it
+>  - Use the policy determination from iommu_get_default_domain_type() to
+>    drive the arm_iommu mode
+>  - Reorganize and introduce new patches to do the above:
+>     * Split the ops->identity_domain to an independent earlier patch
+>     * Remove the UNMANAGED return from def_domain_type in mtk_v1 earlier
+>       so the new iommu_get_default_domain_type() can work
+>     * Make the driver's def_domain_type have higher policy priority than
+>       untrusted
+>     * Merge the set_platfom_dma_ops hunk from mtk_v1 along with rockchip
+>       into the patch that forced IDENTITY on ARM32
+>  - Revise sun50i to be cleaner and have a non-NULL internal domain
+>  - Reword logging in exynos
+>  - Remove the gdev from the group alloc path, instead add a new
+>    function __iommu_group_domain_alloc() that takes in the group
+>    and uses the first device. Split this to its own patch
+>  - New patch to make iommufd's mock selftest into a real driver
+>  - New patch to fix power's partial iommu driver
