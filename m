@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D139A706EA0
+	by mail.lfdr.de (Postfix) with ESMTP id 7D575706E9F
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 18:51:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229570AbjEQQua (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 12:50:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40550 "EHLO
+        id S229590AbjEQQub (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 12:50:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229773AbjEQQuU (ORCPT
+        with ESMTP id S229791AbjEQQuV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 12:50:20 -0400
+        Wed, 17 May 2023 12:50:21 -0400
 Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 193A94209
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:50:19 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2ac78bb48eeso9949551fa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:50:18 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 229074ED4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:50:20 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2ac8cc8829fso10240691fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:50:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684342217; x=1686934217;
+        d=linaro.org; s=google; t=1684342218; x=1686934218;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=doFIHuCbi1YVLGjN4vxnw9b75i10GnebCx9q/QOL15k=;
-        b=q84ua9/uG5SVyYtD81DuUZPTSxq5rhYzcSzZz6Qn6Ngk9gihmN3MjBpoHK9+tMergQ
-         3XUqLY8nIz05QUbzpms6NXtlOrAQM7FwLZdCXGN5GZSepqzpPomm1wqOh67elqjS+KA2
-         UKugEONlZsdGZoak6/XSNZRHALjPEc/nvk6h0VP7oU4ZtCCip48PrHB5hbgLA8A9qiH5
-         kj4w5e0CM4UdCZH/IA8pIELaIkQ3BsXvPaF4Wx/99I5Qd/1k7gU+TGO7qodJUisEiUUG
-         9+SFNiwrHY7QbhnASmhZ/NhUvDENzHLB/e85in5sbxC+auy8Fc6ObAac6eFbeoYYqTcn
-         tD0w==
+        bh=aSc4FWFPOC7I3VWo73gY6L/30rahECGBPz2uIJ+lIl8=;
+        b=BD8AfYiBBLe/6Sigf9ZlRzi45spq2zvlb9stWhpy/B76+Jo9AW2w/rG8iX61pPBnMm
+         TbkSE/bggMhlhsyxikrySK76J+/Ie+K+tcMI2+yT83I2H14Sq29eGSisfEYP4ucH6vjK
+         +tRAm4kWroqXMMX3aLcWDnnYuVCymm5tk8FFHMWTwf7rzAW/HOoytDQIvoHIPOH0r+ao
+         hOOxeWGkadd65nhQ5uMROg0B69Wg1SH/aafUlEDnOe9tXgZ4Npo+XT7nOnFCNJSSnUKX
+         Ci5vHMFUQ6ZoP66qkzuGc4PMeLBhTlrrbX9IJ9oyvNZnyqwxiovbQRVb2fzG64wUEKPT
+         R/SQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684342217; x=1686934217;
+        d=1e100.net; s=20221208; t=1684342218; x=1686934218;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=doFIHuCbi1YVLGjN4vxnw9b75i10GnebCx9q/QOL15k=;
-        b=lDOwNhl0dy3LghA/ZUszhgNkSGwvy3XFZ0/lM23pMrTTaLQTpr+2eiKmn3L85459pG
-         9is0UU2xqTVzO8JaP81GtQeT1pdVWqAEoKA8npqLADkSnO+kdwU1RN0tvQ1NgzuhyO1P
-         0V7qA9dCEcnRbSMJQI/IBMmHnEyIv/ynSxqm5aU2UJb7SCGi4Ab8EG20LAj0YWwCD/xG
-         tV5+Q7rKYnu+PSr3GM87ALyEctWkWk8XMyqpxbZ87DJ8OQ5zLRgbM4iNwkGAjXWVyy7v
-         td22y9OP+NzkKvvYJmKQKo9I+E/3JFp31Lx8gnqFb+NphoeC3Fp7HFTP9nbS89Tus3Yb
-         yDoA==
-X-Gm-Message-State: AC+VfDyPHrZ5bqjeIRAaLgOYfJkUTsW9Tor06U89ft6cSxKGQ/WopWEo
-        tEdziAH6qU4gwzO4XHyQ2OOfoA==
-X-Google-Smtp-Source: ACHHUZ7e1U1bUzU4tY8e7QVk7/FKiRfI0hj0BYVrry6UsUx67+Ea9YcPxgwDeXC34t5tE2dl04gMnA==
-X-Received: by 2002:a2e:9e0f:0:b0:29c:3f18:57a7 with SMTP id e15-20020a2e9e0f000000b0029c3f1857a7mr9570078ljk.35.1684342217227;
-        Wed, 17 May 2023 09:50:17 -0700 (PDT)
+        bh=aSc4FWFPOC7I3VWo73gY6L/30rahECGBPz2uIJ+lIl8=;
+        b=f52of1pvaVLBkqCx+Xl18+QTt085oM6lj8LomHlwe4zI9FeiYvDFZvLATviQnJLZz1
+         EJcgBa4oG5ldvwWlPUKvCz//g87wn9POZFe4joyIXkPEC9dM0dCxwvNWppZsplEQ1q7T
+         L2sVEHX5B4rV6oxoynmIA41uBT6ukXwuM5HG4OpxsVITj6nCMbhucG2CElSaE0VAhCxS
+         hhj12xG0Wj/XyFKbYXrSbcqABNpQjIAJbK77nNFqo7Nr+yThFbFn4So0vJEZXZi/umf9
+         USOBzBd9NwJfWsk5q04XPVxffw0+ehG0bF5sy3TW7MDZxIfkJaUA75j85vgZ6USQMJYf
+         Z7/w==
+X-Gm-Message-State: AC+VfDwvAjGltAA75KPJSvRgkDbs3gxa3fRHjKS3hevlYHL/w2Bj2r9c
+        qTizqqQCLYwb7lrK4mw+raHSNg==
+X-Google-Smtp-Source: ACHHUZ6FaHQHgcfK2D22hwdfeZnqMr16EgduhClje7jaP2zHD6BkuFkOVZcicAq/MtCp+EGdtBFGfQ==
+X-Received: by 2002:a2e:3012:0:b0:2ad:983c:3453 with SMTP id w18-20020a2e3012000000b002ad983c3453mr9404123ljw.5.1684342218479;
+        Wed, 17 May 2023 09:50:18 -0700 (PDT)
 Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id g6-20020a2e9cc6000000b002af0e9abaf6sm159224ljj.131.2023.05.17.09.50.15
+        by smtp.gmail.com with ESMTPSA id g6-20020a2e9cc6000000b002af0e9abaf6sm159224ljj.131.2023.05.17.09.50.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 May 2023 09:50:16 -0700 (PDT)
+        Wed, 17 May 2023 09:50:18 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 17 May 2023 18:50:09 +0200
-Subject: [PATCH 2/6] drm/msm/a6xx: Skip empty protection ranges entries
+Date:   Wed, 17 May 2023 18:50:10 +0200
+Subject: [PATCH 3/6] drm/msm/a6xx: Ensure clean GMU state in
+ a6xx_gmu_fw_start
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230517-topic-a7xx_prep-v1-2-7a964f2e99c2@linaro.org>
+Message-Id: <20230517-topic-a7xx_prep-v1-3-7a964f2e99c2@linaro.org>
 References: <20230517-topic-a7xx_prep-v1-0-7a964f2e99c2@linaro.org>
 In-Reply-To: <20230517-topic-a7xx_prep-v1-0-7a964f2e99c2@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -69,49 +70,53 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1684342212; l=1049;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1684342212; l=1213;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=3GlljK/1BVjiAo5f22OuFyyc96OvFEAFjCCjuTjlQ3o=;
- b=JDAk6fXSs/PfJosLcj5uyuRhiKpGLFyoGp8A7FuUirGZ0Z6GNIin23Zlc9OKACT9KDP3GHh55
- fa1FCvSNzO3CwCD12p1MakhpVpfc+wIbLCFNIwFpMakrwwqxNaXyaMm
+ bh=AafR4gmpdLdCW49giEqj+iQDIXWZqQQlcHizyhfpHRg=;
+ b=BhCdzTabSPUF9ByKOuuSnx0F7aPAwFydWOHefDYIo9iawEJ0RnTP/Cui8OHVcudCT+qo1U893
+ IYCczZPwG9FAeeywaBmx4XWmqx/x1vTG5047BD/4b/JOC20BN7uYaX6
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some specific SKUs leave certain protection range registers empty.
-Allow for that behavior.
+While it's not very well understood, there is some sort of a fault
+handler implemented in the GMU firmware which triggers when a certain
+bit is set, resulting in the M3 core not booting up the way we expect
+it to.
+
+Write a magic value to a magic register to hopefully prevent that
+from happening.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index deed42675fe2..8707e8b6ac7e 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -778,8 +778,11 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
- 	 */
- 	gpu_write(gpu, REG_A6XX_CP_PROTECT_CNTL, BIT(0) | BIT(1) | BIT(3));
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index e16b4b3f8535..ea6d671e7c6c 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -796,6 +796,12 @@ static int a6xx_gmu_fw_start(struct a6xx_gmu *gmu, unsigned int state)
+ 	gmu_write(gmu, REG_A6XX_GMU_AHB_FENCE_RANGE_0,
+ 		(1 << 31) | (0xa << 18) | (0xa0));
  
--	for (i = 0; i < count - 1; i++)
--		gpu_write(gpu, REG_A6XX_CP_PROTECT(i), regs[i]);
-+	for (i = 0; i < count - 1; i++) {
-+		/* Intentionally skip writing to some registers */
-+		if (regs[i])
-+			gpu_write(gpu, REG_A6XX_CP_PROTECT(i), regs[i]);
-+	}
- 	/* last CP_PROTECT to have "infinite" length on the last entry */
- 	gpu_write(gpu, REG_A6XX_CP_PROTECT(count_max - 1), regs[i]);
- }
++	/*
++	 * Snapshots toggle the NMI bit which will result in a jump to the NMI
++	 * handler instead of __main. Set the M3 config value to avoid that.
++	 */
++	gmu_write(gmu, REG_A6XX_GMU_CM3_CFG, 0x4052);
++
+ 	chipid = adreno_gpu->rev.core << 24;
+ 	chipid |= adreno_gpu->rev.major << 16;
+ 	chipid |= adreno_gpu->rev.minor << 12;
 
 -- 
 2.40.1
