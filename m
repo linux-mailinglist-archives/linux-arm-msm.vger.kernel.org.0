@@ -2,140 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DCB7A707403
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 23:19:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A7BB707409
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 23:20:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230093AbjEQVT3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 17:19:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58736 "EHLO
+        id S229468AbjEQVUL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 17:20:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230106AbjEQVTR (ORCPT
+        with ESMTP id S230169AbjEQVTp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 17:19:17 -0400
-Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBE68192
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:18:58 -0700 (PDT)
-Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-64354231003so376567b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:18:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684358316; x=1686950316;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nsC+YIR9GPviDXHSlkV5AONTmzt9XmYN5GUXlOjFZyw=;
-        b=mLEnL4+900Y3v1EqzSKYSJxW7S1yg/ELTQklPqGBcRBmawcubhgNP+sNXAvPz5XNQZ
-         bzYl/HCY0Gj0DjZz+yT+WpWJqnVxfV3I19QTXwM0TPs36dZnrb/kF1uLJuBQMC7ho3yw
-         D1VKf+c0humm1eT7OVArCXHOWmozEY2C4uwlCqgpNpe/JaziXFyfnlJchrdZ5pCFgSdQ
-         PSvtFyKcpeq4GUJctxBrsUFZYnWtuNtlXDM/uWayPRI1dDFGYaZywPPGal1mPWBz471K
-         ojUvE7j/m7OK1Hd3955o538yns9ywuFX4wL36FXlP6CP49dHP2T+PA4pRMEkg4HDfm2N
-         Q7bg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684358316; x=1686950316;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nsC+YIR9GPviDXHSlkV5AONTmzt9XmYN5GUXlOjFZyw=;
-        b=I3FJj5L9YDCK308kFFoq4lLq/vgAbIcagnSsUO9IdvoddHO9ki2jO94xoPbA93kufK
-         dTiiuvMesMjvGYxmz0nQzXJjmzJhKaHM3kdZ4+4UHIhF6l1e4Wfjo+xbUg7O31fTAE8W
-         29L7m4GvDhggoODfSkbdHe1vPNwbIIdHsBxK6a5mRvM38kKw0vt9XLO7db31jlHN5LW+
-         WVIPtOopAcceHn/j55Hg5xNT7Od3Ctr7Lzz4XjXYNSlSNmjxhETqSmPvz4GC9JsiGdkY
-         Y9oiZpAOUlX9u3nJIiLrk21vSUny0pxnaQVlKJ0eSdvQS5oEZrpGjYfLIPL3rxcU5yRs
-         gQRw==
-X-Gm-Message-State: AC+VfDwpRTrZRzCHYPcsYopdLk5wdyE4yAhVbnNJKcmE91m5G9mQMJyd
-        F1PXVAMfQEi0b9TUQ4qNyRGuqRBXdXbpk6tSUOI=
-X-Google-Smtp-Source: ACHHUZ7ZROYmKec5DJ3xETJ6t99Gy8RZhTD5iWOnz0B+vLWZcQYsGJlm6hN9VNbIaLXHbMbdKvjBVQ==
-X-Received: by 2002:aa7:8882:0:b0:63b:54e4:871b with SMTP id z2-20020aa78882000000b0063b54e4871bmr778781pfe.8.1684358316360;
-        Wed, 17 May 2023 14:18:36 -0700 (PDT)
-Received: from localhost.localdomain ([2401:4900:1c60:6bed:7a51:340a:a439:1b87])
-        by smtp.gmail.com with ESMTPSA id n18-20020aa79052000000b0064cb6206463sm4359210pfo.85.2023.05.17.14.18.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 May 2023 14:18:36 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        bhupesh.sharma@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org,
-        quic_schowdhu@quicinc.com, gregkh@linuxfoundation.org
-Subject: [PATCH v6 6/6] arm64: dts: qcom: qrb4210-rb2: Enable EUD debug peripheral
-Date:   Thu, 18 May 2023 02:47:56 +0530
-Message-Id: <20230517211756.2483552-7-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230517211756.2483552-1-bhupesh.sharma@linaro.org>
-References: <20230517211756.2483552-1-bhupesh.sharma@linaro.org>
+        Wed, 17 May 2023 17:19:45 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66DC3D2D7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:19:24 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id DCC363F805;
+        Wed, 17 May 2023 23:18:41 +0200 (CEST)
+Date:   Wed, 17 May 2023 23:18:40 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v11 3/9] drm/display/dsc: Add drm_dsc_get_bpp_int helper
+Message-ID: <yrkishznoq5zyyu5mqutnzfx3rsrwq373zij2nzajjhf3yyw4f@bml6t4qjkjj6>
+References: <20230329-rfc-msm-dsc-helper-v11-0-30270e1eeac3@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v11-3-30270e1eeac3@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230329-rfc-msm-dsc-helper-v11-3-30270e1eeac3@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since the USB-C type port on the Qualcomm QRB4210-RB2 board
-can be set primarily in a 'device' configuration (with the default
-DIP switch settings), it makes sense to enable the EUD debug
-peripheral on the board by default by setting the USB 'dr_mode' property
-as 'otg'.
+On 2023-05-17 11:51:12, Jessica Zhang wrote:
+> Add helper to get the integer value of drm_dsc_config.bits_per_pixel
+> 
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 
-Now, the EUD debug peripheral can be enabled by executing:
- $ echo 1 > /sys/bus/platform/drivers/qcom_eud/1610000.eud/enable
+Seems fine, but folks might request to make int->integer to make it more
+clear that it returns the integer part, and/or add the commit body to a
+documentation comment.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 27 +++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+Similarly I wonder if we should add a constructor too that can be used
+in RC table creation and panel drivers.
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-index 1a0776a0cfd0..0ce72f1ebc10 100644
---- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -30,6 +30,10 @@ vph_pwr: vph-pwr-regulator {
- 	};
- };
- 
-+&eud {
-+	status = "okay";
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-@@ -253,7 +257,28 @@ &usb {
- 
- &usb_dwc3 {
- 	maximum-speed = "super-speed";
--	dr_mode = "peripheral";
-+
-+	/*
-+	 * There is only one USB DWC3 controller on QRB4210 board and it is connected
-+	 * via a DIP Switch:
-+	 * - to either an USB - C type connector or an USB - A type connector
-+	 *   (via a GL3590-S hub), and
-+	 * - to either an USB - A type connector (via a GL3590-S hub) or a connector
-+	 *   for further connection with a mezzanine board.
-+	 *
-+	 * All of the above hardware muxes would allow us to hook things up in
-+	 * different ways to some potential benefit for static configurations (for e.g.
-+	 * on one hand we can have two USB - A type connectors and a USB - Ethernet
-+	 * connection available and on the other we can use the USB - C type in
-+	 * peripheral mode).
-+	 *
-+	 * Note that since the USB - C type can be used only in peripehral mode,
-+	 * so hardcoding the mode to 'peripheral' here makes sense.
-+	 *
-+	 * However since we want to use the EUD debug device, we set the mode as
-+	 * 'otg' here.
-+	 */
-+	dr_mode = "otg";
- };
- 
- &usb_hsphy {
--- 
-2.38.1
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 
+- Marijn
+
+> ---
+>  include/drm/display/drm_dsc_helper.h | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/include/drm/display/drm_dsc_helper.h b/include/drm/display/drm_dsc_helper.h
+> index ea99b0b90674..b7956830cab9 100644
+> --- a/include/drm/display/drm_dsc_helper.h
+> +++ b/include/drm/display/drm_dsc_helper.h
+> @@ -9,6 +9,7 @@
+>  #define DRM_DSC_HELPER_H_
+>  
+>  #include <drm/display/drm_dsc.h>
+> +#include <linux/bug.h>
+>  
+>  enum drm_dsc_params_kind {
+>  	DRM_DSC_1_2_444,
+> @@ -26,6 +27,12 @@ void drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg);
+>  int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg, enum drm_dsc_params_kind kind);
+>  int drm_dsc_compute_rc_parameters(struct drm_dsc_config *vdsc_cfg);
+>  
+> +static inline u32 drm_dsc_get_bpp_int(const struct drm_dsc_config *dsc)
+> +{
+> +	WARN_ON_ONCE(dsc->bits_per_pixel & 0xf);
+> +	return dsc->bits_per_pixel >> 4;
+> +}
+> +
+>  static inline u8 drm_dsc_initial_scale_value(const struct drm_dsc_config *dsc)
+>  {
+>  	return 8 * dsc->rc_model_size / (dsc->rc_model_size - dsc->initial_offset);
+> 
+> -- 
+> 2.40.1
+> 
