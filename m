@@ -2,265 +2,366 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FEE2707698
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 01:52:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0170570769D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 01:53:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229543AbjEQXwa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 19:52:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34324 "EHLO
+        id S229454AbjEQXxm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 19:53:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbjEQXwa (ORCPT
+        with ESMTP id S229452AbjEQXxl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 19:52:30 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 942393AA2;
-        Wed, 17 May 2023 16:52:28 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34HNhWdd023511;
-        Wed, 17 May 2023 23:52:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=+YfXMZOV+Di1dlo3VxyeoiX3A94aQPiUQSHo2yDIK1o=;
- b=hq4P+GemjSVPvJVIRYwVEXDbNdjYR8UMWv5oPOF9K6uE/CZpO6FXLPuFaiEmicMKnrb7
- RoJc7vUp2rkRaJ9STCVqK5d81xxP1kpVquUJagYjHsNU2OkylsjRPxAEztdrdWkb4372
- +3U6JZ5EVA5MNF+ePCM3CfVJZ+YVGzW01G5ynQFDOYGRoeSV6EpbcM32cHOCliL9DByZ
- XPd9tOEIm2qLfVUMpMjhkHJcBwP9clh9JVFTweu0ESvQxtzc+njNYNkevojyNKzv0/re
- rB7LTjSrSJz/q70XqYx6KoKxHp0Kfmnuh6sKE63wb0Fz/j7XxaLXwYbutr93gLtADnkF 3g== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qn73ur5qr-1
+        Wed, 17 May 2023 19:53:41 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B60D33AAD
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 16:53:39 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34HNbfXg029403;
+        Wed, 17 May 2023 23:53:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=mpxz3jeY/B46qeI4HbNhXtuU9VYiebUbnv4RkVFXRyU=;
+ b=hP5isYQT7Dq2YVsfDqAw+1h52n5gBkrgYEmSxfaDV4vbFaWS+3l2pW2EvtIR1DPKfmKH
+ 20VKkfBgpOvErbMn14CZ0u4t22/tnNWOVIG1dwxN8xRtYO2ac7HiE+ZsKlMf5gDIqKsP
+ yDR0cPJPg2IscOsSCgiV43FRJcrKopgDScxRFPwaho4R/TWf1s8K+jyxl9jdUKIie59E
+ IUP6ZgVsD0R6Bsxe1Dm5DDbbpqyfwCq+ArpyVg21fkhJHtfhm/3JJedd3XeW2ExcXLlV
+ szJ1xKyjsF6KngqHs6xgqfcNMA5aYbGFPtE1j2VQtC/PdQMKC0IxsyzZxwHUzct9RV0d 4A== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qn8a601vb-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 17 May 2023 23:52:24 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34HNqNwE017108
+        Wed, 17 May 2023 23:53:32 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34HNrVHC000556
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 17 May 2023 23:52:23 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 17 May 2023 16:52:23 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2] arm64: dts: qcom: sc8280xp: Add SDC2 and enable on CRD
-Date:   Wed, 17 May 2023 16:52:17 -0700
-Message-ID: <20230517235217.1728548-1-quic_bjorande@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+        Wed, 17 May 2023 23:53:31 GMT
+Received: from [10.110.94.204] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 17 May
+ 2023 16:53:31 -0700
+Message-ID: <7b385f62-7818-a28c-0d88-a825f3b58dce@quicinc.com>
+Date:   Wed, 17 May 2023 16:53:30 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: [RFC PATCH v2 05/13] drm/msm/dpu: get rid of struct
+ dpu_rm_requirements
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230321011821.635977-1-dmitry.baryshkov@linaro.org>
+ <20230321011821.635977-6-dmitry.baryshkov@linaro.org>
+ <a1ba90c2-8144-ccf3-b38e-0dbb549a7481@quicinc.com>
+ <CAA8EJppAaXWpSNMMWTRKVa8=oNyAP7K1LcwusmEY4L-5-nqLow@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJppAaXWpSNMMWTRKVa8=oNyAP7K1LcwusmEY4L-5-nqLow@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 2OdYG0yZOb-JJrhr1-9Vyoe2mZ9n49aM
-X-Proofpoint-GUID: 2OdYG0yZOb-JJrhr1-9Vyoe2mZ9n49aM
+X-Proofpoint-GUID: l_Yp6UvRuJLo3TRQv7Flg2AklP8W8PMd
+X-Proofpoint-ORIG-GUID: l_Yp6UvRuJLo3TRQv7Flg2AklP8W8PMd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-05-17_04,2023-05-17_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- lowpriorityscore=0 priorityscore=1501 mlxlogscore=999 malwarescore=0
- impostorscore=0 bulkscore=0 mlxscore=0 clxscore=1015 adultscore=0
- spamscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305170196
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ suspectscore=0 phishscore=0 priorityscore=1501 malwarescore=0
+ clxscore=1015 spamscore=0 mlxscore=0 mlxlogscore=999 adultscore=0
+ impostorscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2305170196
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The CRD has Micro SD slot, introduce the necessary DeviceTree nodes for
-enabling this.
 
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
 
-Changes since v1:
-- Order of pinctr-N and pinctrl-names
-- Reset GCC_SDCC2_BCR and not sdc4
+On 5/14/2023 10:06 AM, Dmitry Baryshkov wrote:
+> On Sat, 13 May 2023 at 01:39, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>> On 3/20/2023 6:18 PM, Dmitry Baryshkov wrote:
+>>> The struct dpu_rm_requirements was used to wrap display topology and
+>>> hw resources, which meant INTF indices. As of commit ef58e0ad3436
+>>> ("drm/msm/dpu: get INTF blocks directly rather than through RM") the hw
+>>> resources struct was removed, leaving struct dpu_rm_requirements
+>>> containing a single field (topology). Remove the useless wrapper.
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>
+>> Irrespective of where we plan to have the topology, this change doesn't
+>> seem incorrect as such.
+>>
+>> The only thing I can think of is when we need more information to be
+>> passed to the RM to allocate the blocks in addition to the topology this
+>> struct could have been expanded.
+>>
+>> So one example I can think of is lets say I want to add CDM block
+>> support. Then that information is outside of topology today because I
+>> will use CDM if my output format is yuv. It has nothing to do with
+>> topology but that block still needs to come from RM.
+> 
+> I'd say, it is a part of the topology. CDM blocks are a part of the
+> pipeline, aren't they?
+> 
+> If you prefer, we can rename msm_display_topology to dpu_rm_requirements itself.
+> 
 
- arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 81 +++++++++++++++++++++++
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi    | 43 ++++++++++++
- 2 files changed, 124 insertions(+)
+I am fine with renaming msm_display_topology to dpu_rm_requirements.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-index 5b25d54b9591..ff9cebbccfcb 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-@@ -308,6 +308,13 @@ vreg_l1c: ldo1 {
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-+		vreg_l6c: ldo6 {
-+			regulator-name = "vreg_l6c";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l7c: ldo7 {
- 			regulator-name = "vreg_l7c";
- 			regulator-min-microvolt = <2504000>;
-@@ -318,6 +325,13 @@ vreg_l7c: ldo7 {
- 						   RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-+		vreg_l9c: ldo9 {
-+			regulator-name = "vreg_l9c";
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
- 		vreg_l13c: ldo13 {
- 			regulator-name = "vreg_l13c";
- 			regulator-min-microvolt = <3072000>;
-@@ -600,6 +614,19 @@ &remoteproc_nsp0 {
- 	status = "okay";
- };
- 
-+&sdc2 {
-+	pinctrl-0 = <&sdc2_default_state>;
-+	pinctrl-1 = <&sdc2_sleep_state>;
-+	pinctrl-names = "default", "sleep";
-+
-+	vmmc-supply = <&vreg_l9c>;
-+	vqmmc-supply = <&vreg_l6c>;
-+
-+	cd-gpios = <&tlmm 131 GPIO_ACTIVE_LOW>;
-+
-+	status = "okay";
-+};
-+
- &uart17 {
- 	compatible = "qcom,geni-debug-uart";
- 
-@@ -842,6 +869,60 @@ wake-n-pins {
- 		};
- 	};
- 
-+	sdc2_default_state: sdc2-default-state {
-+		clk-pins {
-+			pins = "sdc2_clk";
-+			drive-strength = <16>;
-+			bias-disable;
-+		};
-+
-+		cmd-pins {
-+			pins = "sdc2_cmd";
-+			drive-strength = <16>;
-+			bias-pull-up;
-+		};
-+
-+		data-pins {
-+			pins = "sdc2_data";
-+			drive-strength = <16>;
-+			bias-pull-up;
-+		};
-+
-+		card-detect-pins {
-+			pins = "gpio131";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+
-+	sdc2_sleep_state: sdc2-sleep-state {
-+		clk-pins {
-+			pins = "sdc2_clk";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+
-+		cmd-pins {
-+			pins = "sdc2_cmd";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		data-pins {
-+			pins = "sdc2_data";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+
-+		card-detect-pins {
-+			pins = "gpio131";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+
- 	tpad_default: tpad-default-state {
- 		int-n-pins {
- 			pins = "gpio182";
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 8fa9fbfe5d00..3711f109aeaf 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -2815,6 +2815,49 @@ data-pins {
- 			};
- 		};
- 
-+		sdc2: mmc@8804000 {
-+			compatible = "qcom,sc8280xp-sdhci", "qcom,sdhci-msm-v5";
-+			reg = <0 0x08804000 0 0x1000>;
-+
-+			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hc_irq", "pwr_irq";
-+
-+			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-+				 <&gcc GCC_SDCC2_APPS_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>;
-+			clock-names = "iface", "core", "xo";
-+			resets = <&gcc GCC_SDCC2_BCR>;
-+			interconnects = <&aggre2_noc MASTER_SDCC_2 0 &mc_virt SLAVE_EBI1 0>,
-+					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_SDCC_2 0>;
-+			interconnect-names = "sdhc-ddr","cpu-sdhc";
-+			iommus = <&apps_smmu 0x4e0 0x0>;
-+			power-domains = <&rpmhpd SC8280XP_CX>;
-+			operating-points-v2 = <&sdc2_opp_table>;
-+			bus-width = <4>;
-+			dma-coherent;
-+
-+			status = "disabled";
-+
-+			sdc2_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-100000000 {
-+					opp-hz = /bits/ 64 <100000000>;
-+					required-opps = <&rpmhpd_opp_low_svs>;
-+					opp-peak-kBps = <1800000 400000>;
-+					opp-avg-kBps = <100000 0>;
-+				};
-+
-+				opp-202000000 {
-+					opp-hz = /bits/ 64 <202000000>;
-+					required-opps = <&rpmhpd_opp_svs_l1>;
-+					opp-peak-kBps = <5400000 1600000>;
-+					opp-avg-kBps = <200000 0>;
-+				};
-+			};
-+		};
-+
- 		usb_0_qmpphy: phy@88eb000 {
- 			compatible = "qcom,sc8280xp-qmp-usb43dp-phy";
- 			reg = <0 0x088eb000 0 0x4000>;
--- 
-2.25.1
+Because making CDM part of topology wont be right.
 
+>> I know that usually I have lost on these type of discussions saying that
+>> if the code is not there yet, it should be dropped but I do have a plan
+>> to add that support soon probably by the next cycle. That time we will
+>> need some sort of wrapper to hold the topology and "extra" information
+>> to allocate the blocks.
+>>
+>> One alternative ofcourse is to expand dpu_rm_reserve() to accept
+>> something like "needs_cdm" but this is not scalable.
+>>
+>> Thoughts?
+>>
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  2 +-
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 69 +++++++--------------
+>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      |  2 +-
+>>>    3 files changed, 23 insertions(+), 50 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> index 4ee708264f3b..a2cb23dea0b8 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> @@ -638,7 +638,7 @@ static int dpu_encoder_virt_atomic_check(
+>>>
+>>>                if (!crtc_state->active_changed || crtc_state->enable)
+>>>                        ret = dpu_rm_reserve(&dpu_kms->rm, global_state,
+>>> -                                     drm_enc, crtc_state, topology);
+>>> +                                     drm_enc, crtc_state, &topology);
+>>>        }
+>>>
+>>>        trace_dpu_enc_atomic_check_flags(DRMID(drm_enc), adj_mode->flags);
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>> index f4dda88a73f7..952e139c0234 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+>>> @@ -24,15 +24,6 @@ static inline bool reserved_by_other(uint32_t *res_map, int idx,
+>>>        return res_map[idx] && res_map[idx] != enc_id;
+>>>    }
+>>>
+>>> -/**
+>>> - * struct dpu_rm_requirements - Reservation requirements parameter bundle
+>>> - * @topology:  selected topology for the display
+>>> - * @hw_res:     Hardware resources required as reported by the encoders
+>>> - */
+>>> -struct dpu_rm_requirements {
+>>> -     struct msm_display_topology topology;
+>>> -};
+>>> -
+>>>    int dpu_rm_destroy(struct dpu_rm *rm)
+>>>    {
+>>>        int i;
+>>> @@ -329,14 +320,13 @@ static bool _dpu_rm_check_lm_peer(struct dpu_rm *rm, int primary_idx,
+>>>     *      mixer in rm->pingpong_blks[].
+>>>     * @dspp_idx: output parameter, index of dspp block attached to the layer
+>>>     *      mixer in rm->dspp_blks[].
+>>> - * @reqs: input parameter, rm requirements for HW blocks needed in the
+>>> - *      datapath.
+>>> + * @topology:  selected topology for the display
+>>>     * Return: true if lm matches all requirements, false otherwise
+>>>     */
+>>>    static bool _dpu_rm_check_lm_and_get_connected_blks(struct dpu_rm *rm,
+>>>                struct dpu_global_state *global_state,
+>>>                uint32_t enc_id, int lm_idx, int *pp_idx, int *dspp_idx,
+>>> -             struct dpu_rm_requirements *reqs)
+>>> +             struct msm_display_topology *topology)
+>>>    {
+>>>        const struct dpu_lm_cfg *lm_cfg;
+>>>        int idx;
+>>> @@ -361,7 +351,7 @@ static bool _dpu_rm_check_lm_and_get_connected_blks(struct dpu_rm *rm,
+>>>        }
+>>>        *pp_idx = idx;
+>>>
+>>> -     if (!reqs->topology.num_dspp)
+>>> +     if (!topology->num_dspp)
+>>>                return true;
+>>>
+>>>        idx = lm_cfg->dspp - DSPP_0;
+>>> @@ -383,7 +373,7 @@ static bool _dpu_rm_check_lm_and_get_connected_blks(struct dpu_rm *rm,
+>>>    static int _dpu_rm_reserve_lms(struct dpu_rm *rm,
+>>>                               struct dpu_global_state *global_state,
+>>>                               uint32_t enc_id,
+>>> -                            struct dpu_rm_requirements *reqs)
+>>> +                            struct msm_display_topology *topology)
+>>>
+>>>    {
+>>>        int lm_idx[MAX_BLOCKS];
+>>> @@ -391,14 +381,14 @@ static int _dpu_rm_reserve_lms(struct dpu_rm *rm,
+>>>        int dspp_idx[MAX_BLOCKS] = {0};
+>>>        int i, j, lm_count = 0;
+>>>
+>>> -     if (!reqs->topology.num_lm) {
+>>> -             DPU_ERROR("invalid number of lm: %d\n", reqs->topology.num_lm);
+>>> +     if (!topology->num_lm) {
+>>> +             DPU_ERROR("invalid number of lm: %d\n", topology->num_lm);
+>>>                return -EINVAL;
+>>>        }
+>>>
+>>>        /* Find a primary mixer */
+>>>        for (i = 0; i < ARRAY_SIZE(rm->mixer_blks) &&
+>>> -                     lm_count < reqs->topology.num_lm; i++) {
+>>> +                     lm_count < topology->num_lm; i++) {
+>>>                if (!rm->mixer_blks[i])
+>>>                        continue;
+>>>
+>>> @@ -407,7 +397,7 @@ static int _dpu_rm_reserve_lms(struct dpu_rm *rm,
+>>>
+>>>                if (!_dpu_rm_check_lm_and_get_connected_blks(rm, global_state,
+>>>                                enc_id, i, &pp_idx[lm_count],
+>>> -                             &dspp_idx[lm_count], reqs)) {
+>>> +                             &dspp_idx[lm_count], topology)) {
+>>>                        continue;
+>>>                }
+>>>
+>>> @@ -415,7 +405,7 @@ static int _dpu_rm_reserve_lms(struct dpu_rm *rm,
+>>>
+>>>                /* Valid primary mixer found, find matching peers */
+>>>                for (j = i + 1; j < ARRAY_SIZE(rm->mixer_blks) &&
+>>> -                             lm_count < reqs->topology.num_lm; j++) {
+>>> +                             lm_count < topology->num_lm; j++) {
+>>>                        if (!rm->mixer_blks[j])
+>>>                                continue;
+>>>
+>>> @@ -428,7 +418,7 @@ static int _dpu_rm_reserve_lms(struct dpu_rm *rm,
+>>>                        if (!_dpu_rm_check_lm_and_get_connected_blks(rm,
+>>>                                        global_state, enc_id, j,
+>>>                                        &pp_idx[lm_count], &dspp_idx[lm_count],
+>>> -                                     reqs)) {
+>>> +                                     topology)) {
+>>>                                continue;
+>>>                        }
+>>>
+>>> @@ -437,7 +427,7 @@ static int _dpu_rm_reserve_lms(struct dpu_rm *rm,
+>>>                }
+>>>        }
+>>>
+>>> -     if (lm_count != reqs->topology.num_lm) {
+>>> +     if (lm_count != topology->num_lm) {
+>>>                DPU_DEBUG("unable to find appropriate mixers\n");
+>>>                return -ENAVAIL;
+>>>        }
+>>> @@ -446,7 +436,7 @@ static int _dpu_rm_reserve_lms(struct dpu_rm *rm,
+>>>                global_state->mixer_to_enc_id[lm_idx[i]] = enc_id;
+>>>                global_state->pingpong_to_enc_id[pp_idx[i]] = enc_id;
+>>>                global_state->dspp_to_enc_id[dspp_idx[i]] =
+>>> -                     reqs->topology.num_dspp ? enc_id : 0;
+>>> +                     topology->num_dspp ? enc_id : 0;
+>>>
+>>>                trace_dpu_rm_reserve_lms(lm_idx[i] + LM_0, enc_id,
+>>>                                         pp_idx[i] + PINGPONG_0);
+>>> @@ -539,44 +529,30 @@ static int _dpu_rm_make_reservation(
+>>>                struct dpu_rm *rm,
+>>>                struct dpu_global_state *global_state,
+>>>                struct drm_encoder *enc,
+>>> -             struct dpu_rm_requirements *reqs)
+>>> +             struct msm_display_topology *topology)
+>>>    {
+>>>        int ret;
+>>>
+>>> -     ret = _dpu_rm_reserve_lms(rm, global_state, enc->base.id, reqs);
+>>> +     ret = _dpu_rm_reserve_lms(rm, global_state, enc->base.id, topology);
+>>>        if (ret) {
+>>>                DPU_ERROR("unable to find appropriate mixers\n");
+>>>                return ret;
+>>>        }
+>>>
+>>>        ret = _dpu_rm_reserve_ctls(rm, global_state, enc->base.id,
+>>> -                             &reqs->topology);
+>>> +                                topology);
+>>>        if (ret) {
+>>>                DPU_ERROR("unable to find appropriate CTL\n");
+>>>                return ret;
+>>>        }
+>>>
+>>> -     ret  = _dpu_rm_reserve_dsc(rm, global_state, enc, &reqs->topology);
+>>> +     ret  = _dpu_rm_reserve_dsc(rm, global_state, enc, topology);
+>>>        if (ret)
+>>>                return ret;
+>>>
+>>>        return ret;
+>>>    }
+>>>
+>>> -static int _dpu_rm_populate_requirements(
+>>> -             struct drm_encoder *enc,
+>>> -             struct dpu_rm_requirements *reqs,
+>>> -             struct msm_display_topology req_topology)
+>>> -{
+>>> -     reqs->topology = req_topology;
+>>> -
+>>> -     DRM_DEBUG_KMS("num_lm: %d num_dsc: %d num_intf: %d\n",
+>>> -                   reqs->topology.num_lm, reqs->topology.num_dsc,
+>>> -                   reqs->topology.num_intf);
+>>> -
+>>> -     return 0;
+>>> -}
+>>> -
+>>>    static void _dpu_rm_clear_mapping(uint32_t *res_mapping, int cnt,
+>>>                                  uint32_t enc_id)
+>>>    {
+>>> @@ -608,9 +584,8 @@ int dpu_rm_reserve(
+>>>                struct dpu_global_state *global_state,
+>>>                struct drm_encoder *enc,
+>>>                struct drm_crtc_state *crtc_state,
+>>> -             struct msm_display_topology topology)
+>>> +             struct msm_display_topology *topology)
+>>>    {
+>>> -     struct dpu_rm_requirements reqs;
+>>>        int ret;
+>>>
+>>>        /* Check if this is just a page-flip */
+>>> @@ -625,13 +600,11 @@ int dpu_rm_reserve(
+>>>        DRM_DEBUG_KMS("reserving hw for enc %d crtc %d\n",
+>>>                      enc->base.id, crtc_state->crtc->base.id);
+>>>
+>>> -     ret = _dpu_rm_populate_requirements(enc, &reqs, topology);
+>>> -     if (ret) {
+>>> -             DPU_ERROR("failed to populate hw requirements\n");
+>>> -             return ret;
+>>> -     }
+>>> +     DRM_DEBUG_KMS("num_lm: %d num_dsc: %d num_intf: %d\n",
+>>> +                   topology->num_lm, topology->num_dsc,
+>>> +                   topology->num_intf);
+>>>
+>>> -     ret = _dpu_rm_make_reservation(rm, global_state, enc, &reqs);
+>>> +     ret = _dpu_rm_make_reservation(rm, global_state, enc, topology);
+>>>        if (ret)
+>>>                DPU_ERROR("failed to reserve hw resources: %d\n", ret);
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+>>> index d62c2edb2460..f05697462856 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+>>> @@ -71,7 +71,7 @@ int dpu_rm_reserve(struct dpu_rm *rm,
+>>>                struct dpu_global_state *global_state,
+>>>                struct drm_encoder *drm_enc,
+>>>                struct drm_crtc_state *crtc_state,
+>>> -             struct msm_display_topology topology);
+>>> +             struct msm_display_topology *topology);
+>>>
+>>>    /**
+>>>     * dpu_rm_reserve - Given the encoder for the display chain, release any
+> 
+> 
+> 
