@@ -2,152 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A589B70706C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 20:08:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9E7A707081
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 20:14:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229945AbjEQSH7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 14:07:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42734 "EHLO
+        id S230058AbjEQSOV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 14:14:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229942AbjEQSH6 (ORCPT
+        with ESMTP id S230056AbjEQSOU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 14:07:58 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1BACB0;
-        Wed, 17 May 2023 11:07:57 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5BB23649E3;
-        Wed, 17 May 2023 18:07:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59121C433EF;
-        Wed, 17 May 2023 18:07:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684346876;
-        bh=fFAQZam9M9GaiJNW3WGAqDih6/zmyl0kx8ysWpMj0WQ=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=k/QWdDVAs6ecpvp4JtgSMAgngJmiD4LVWf5EX+ggp09aHS5JhVJO5AZTR2rqwtvuD
-         PrZnBWsZTppJ8mC2sjtxPM0KR3WVmVR5DVqEahaByES2GmBUmfAT9tEVgE+xeICORj
-         VL+Z7nx1GkhOtWfwiiSwspOq92zj3kkvziWfsvcW1ltbfJLXd4fTXbJkCufDva4lW1
-         sbblEy8ZZ9oTGSRzNmGfoPZp98C3AV27Qraaaru72/6gwJvTS4b9yNc1UeCoI+DXKH
-         2BOBwCiDhQgxmjrpCDIbLp6SCC3CinzTinq64wh7Qktj1ggE55sEIeUEDX+pcQHNpE
-         G1DybcnsONI0w==
-Date:   Wed, 17 May 2023 12:08:46 -0600
-From:   "Gustavo A. R. Silva" <gustavoars@kernel.org>
-To:     Kees Cook <keescook@chromium.org>
-Cc:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-Subject: Re: [PATCH][next] media: venus: hfi_cmds: Replace fake flex-array
- with flexible-array member
-Message-ID: <ZGUYLoqwrcVsjiaH@work>
-References: <ZGQn63U4IeRUiJWb@work>
- <202305171049.9AB52166@keescook>
+        Wed, 17 May 2023 14:14:20 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A4E586A4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 11:14:01 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id d75a77b69052e-3f38a7c5d45so1877901cf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 11:14:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=marek-ca.20221208.gappssmtp.com; s=20221208; t=1684347240; x=1686939240;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cIsKo+Rm7KfIjye8eF4zvalj6Z+h8gM9MUxkgWOisgM=;
+        b=ttwZeU9UZclhUw8/DU3vTFExjFlUH3xBwirqJeiOLP+HJvJTE/vhOwchnTwVUSkAiZ
+         /EI9vWJUeAu8bt2KhnWQaCu2Je5oeQ5A4wCnDsrirgS46TRq1HLdVRfHIzDQTMeiKYtZ
+         TWjrujI+Y2gArrRtyiO8BoCcwEZjJqmUsxFEWsftoprVIavuh0XOEA3jY/xmg2V6yQUA
+         X8MFwijoQm44UsBWg4xAhP5CcTRaLXOAmvOqHW+FX8VHmp6NBjXjEn4Vky7HrEs2vgSK
+         YX83o/sS4STCDW1Opm4/VeSq+KcNKc1rxn0hsBl0i8FOdaj9oP1IuI30+zQh6xMjqUwR
+         FGOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684347240; x=1686939240;
+        h=content-transfer-encoding:content-language:in-reply-to:mime-version
+         :user-agent:date:message-id:from:references:cc:to:subject
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cIsKo+Rm7KfIjye8eF4zvalj6Z+h8gM9MUxkgWOisgM=;
+        b=T+dTf7IyXTJjA70l4V5rW7xK7hE95tkmxRuMclnzgmQWOzHRLn4phutgtswiBXfKDj
+         h0s+42GFuP+D0l06tHA+2214ZJLnkw8ZxAzTCopv7KmJWue6z2U+fUb2Qjq4iH1pNoC8
+         5Urs0zImisxVR28S784BVgkaTF2S+9jEj7TffFyWkhFNScZcEBNkrycKSHLyGLGgBlCb
+         5Dz+qowIfQLUt5nj8cmXprEYkGgyK4VTD1bN/KHJoz2JyXeM3CT9N8RZ65X1mHeLk16j
+         9UitdstmXCxVczaTdwXwAg6VorTmDJCfg69BX8k5RlINVMLOPd4s2SMTYeSeKb80AH93
+         FQJw==
+X-Gm-Message-State: AC+VfDwtAdCndscJfySIxk6PoyEBK3UMcISWA58hA0vkYErHv2+TgiMg
+        GOuSgAj7R9ksxb4IKi/gg1Gz0A==
+X-Google-Smtp-Source: ACHHUZ6xCvOPB/9FWAGC3QmUe2dmsJ2C7F8D+jHxYJqWVQxCnZoCMrOdI2fWSUBK41RXKygoHSjquA==
+X-Received: by 2002:a05:622a:153:b0:3f5:954:3fbb with SMTP id v19-20020a05622a015300b003f509543fbbmr779808qtw.28.1684347240334;
+        Wed, 17 May 2023 11:14:00 -0700 (PDT)
+Received: from [192.168.0.189] (modemcable125.110-19-135.mc.videotron.ca. [135.19.110.125])
+        by smtp.gmail.com with ESMTPSA id i23-20020a05620a145700b00759300a1ef9sm803029qkl.31.2023.05.17.11.13.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 May 2023 11:13:59 -0700 (PDT)
+Subject: Re: [Freedreno] [PATCH 5/6] drm/msm/a6xx: Use GMU_ALWAYS_ON_COUNTER
+ for GMU-equipped GPUs in timestamp
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        freedreno@lists.freedesktop.org
+References: <20230517-topic-a7xx_prep-v1-0-7a964f2e99c2@linaro.org>
+ <20230517-topic-a7xx_prep-v1-5-7a964f2e99c2@linaro.org>
+From:   Jonathan Marek <jonathan@marek.ca>
+Message-ID: <aaab25be-3403-518d-e639-c80b0930906a@marek.ca>
+Date:   Wed, 17 May 2023 14:09:26 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.2.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <202305171049.9AB52166@keescook>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230517-topic-a7xx_prep-v1-5-7a964f2e99c2@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.3 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 17, 2023 at 10:50:53AM -0700, Kees Cook wrote:
-> On Tue, May 16, 2023 at 07:03:39PM -0600, Gustavo A. R. Silva wrote:
-> > One-element arrays are deprecated, and we are replacing them with flexible
-> > array members instead. So, replace one-element arrays with flexible-array
-> > members in struct hfi_sys_set_resource_pkt, and refactor the rest of
-> > the code, accordingly.
-> > 
-> > This helps with the ongoing efforts to tighten the FORTIFY_SOURCE
-> > routines on memcpy() and help us make progress towards globally
-> > enabling -fstrict-flex-arrays=3 [1].
-> > 
-> > The only binary differences seen before/after changes are the
-> > following:
-> > 
-> >      17ba:      mov    %rbx,%rdi
-> >      17bd:      call   17c2 <pkt_sys_set_resource+0x42>
-> >                         17be: R_X86_64_PLT32    __tsan_write4-0x4
-> > -    17c2:      movl   $0x14,(%rbx)
-> > +    17c2:      movl   $0x10,(%rbx)
-> >      17c8:      lea    0x4(%rbx),%rdi
-> >      17cc:      call   17d1 <pkt_sys_set_resource+0x51>
-> >                         17cd: R_X86_64_PLT32    __tsan_write4-0x4
-> > 
-> > which is expected once this accounts for the following line of code
-> > at  drivers/media/platform/qcom/venus/hfi_cmds.c:73
-> > 
-> > 73         pkt->hdr.size = sizeof(*pkt);
-> > 
-> > and as *pkt is of type struct hfi_sys_set_resource_pkt, sizeof(*pkt) is
-> > reduced by 4 bytes, due to the flex-array transformation.
-> 
-> Based on the other place that was subtracting the 1 element, this looks
+AFAIK GMU_ALWAYS_ON_COUNTER does not have the same value as 
+CP_ALWAYS_ON_COUNTER (only the same frequency), so changing this would 
+break userspace expecting to be able to compare the value returned by 
+MSM_PARAM_TIMESTAMP with CP timestamp values.
 
-Do you mean the one you commented on yesterday?
-
-https://lore.kernel.org/linux-hardening/ZGPk3PpvYzjD1+0%2F@work/ this?
-
---
-Gustavo
-
-> like hfi_cmds.c:73 is an existing sizing bug that is now fixed with this
-> patch, yes?
+On 5/17/23 12:50 PM, Konrad Dybcio wrote:
+> Use the always-on counter provided by the GMU to skip having to
+> keep the GPU online.
 > 
-> Reviewed-by: Kees Cook <keescook@chromium.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 9 +++------
+>   1 file changed, 3 insertions(+), 6 deletions(-)
 > 
-> -Kees
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 8707e8b6ac7e..d2a999b90589 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1664,12 +1664,9 @@ static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
+>   
+>   	mutex_lock(&a6xx_gpu->gmu.lock);
+>   
+> -	/* Force the GPU power on so we can read this register */
+> -	a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
+> -
+> -	*value = gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER);
+> -
+> -	a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
+> +	*value = gmu_read64(&a6xx_gpu->gmu,
+> +			    REG_A6XX_GMU_ALWAYS_ON_COUNTER_L,
+> +			    REG_A6XX_GMU_ALWAYS_ON_COUNTER_H);
+>   
+>   	mutex_unlock(&a6xx_gpu->gmu.lock);
+>   
 > 
-> > 
-> > Link: https://github.com/KSPP/linux/issues/79
-> > Link: https://github.com/KSPP/linux/issues/293
-> > Link: https://gcc.gnu.org/pipermail/gcc-patches/2022-October/602902.html [1]
-> > Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-> > ---
-> >  drivers/media/platform/qcom/venus/hfi_cmds.c | 2 +-
-> >  drivers/media/platform/qcom/venus/hfi_cmds.h | 2 +-
-> >  2 files changed, 2 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
-> > index 3f74d518ad08..7c82e212434e 100644
-> > --- a/drivers/media/platform/qcom/venus/hfi_cmds.c
-> > +++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
-> > @@ -83,7 +83,7 @@ int pkt_sys_set_resource(struct hfi_sys_set_resource_pkt *pkt, u32 id, u32 size,
-> >  		res->size = size;
-> >  		res->mem = addr;
-> >  		pkt->resource_type = HFI_RESOURCE_OCMEM;
-> > -		pkt->hdr.size += sizeof(*res) - sizeof(u32);
-> > +		pkt->hdr.size += sizeof(*res);
-> >  		break;
-> >  	}
-> >  	case VIDC_RESOURCE_NONE:
-> > diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.h b/drivers/media/platform/qcom/venus/hfi_cmds.h
-> > index ba74d03eb9cd..dd9c5066442d 100644
-> > --- a/drivers/media/platform/qcom/venus/hfi_cmds.h
-> > +++ b/drivers/media/platform/qcom/venus/hfi_cmds.h
-> > @@ -56,7 +56,7 @@ struct hfi_sys_set_resource_pkt {
-> >  	struct hfi_pkt_hdr hdr;
-> >  	u32 resource_handle;
-> >  	u32 resource_type;
-> > -	u32 resource_data[1];
-> > +	u32 resource_data[];
-> >  };
-> >  
-> >  struct hfi_sys_release_resource_pkt {
-> > -- 
-> > 2.34.1
-> > 
-> 
-> -- 
-> Kees Cook
