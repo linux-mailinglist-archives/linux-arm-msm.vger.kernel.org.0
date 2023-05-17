@@ -2,71 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5920F706E9A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 18:51:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D6C2706E9B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 18:51:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229535AbjEQQu2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 12:50:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40214 "EHLO
+        id S229512AbjEQQu3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 12:50:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229568AbjEQQuC (ORCPT
+        with ESMTP id S229745AbjEQQuR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 12:50:02 -0400
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C900344A3;
-        Wed, 17 May 2023 09:50:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1684342201; x=1715878201;
-  h=message-id:date:mime-version:subject:to:references:from:
-   in-reply-to:content-transfer-encoding;
-  bh=1mSQXJWCQ9lX0x3tGFr7Nl/lmeL6e4hiAkMTL3TSDuM=;
-  b=d5AsvZ27xNGMxQz+3DSNnC0Ug+21ZZGVek1URLjO40bYSNvAOEpYiYkR
-   qVYGzlOVqqjkqWhAi8JktYvOBIAmEygDrA1HzWDRLnMnQHwXNnU78u5Ln
-   RRkRdj2iQl96cdXldB23nObxhupx1XrSwUs1CAXcGJPlqoN64Oq8MfD6x
-   4IuG4JhL+Il2cPfFO9qsYOOh6UXDZ7UuppRM7W82eWFnIeVd7S15/XV4L
-   vdiGyl5srMlmDIlyojXwGXqOiXPAsQAibrRs8YDJJF1x2CNR4wY2l9cM6
-   h22eLvHcvyTMFsE4gxhyMYNbcHm4Z1WpTlHNZQ3oPIFfZYyhJENpABoiB
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10713"; a="350649405"
-X-IronPort-AV: E=Sophos;i="5.99,282,1677571200"; 
-   d="scan'208";a="350649405"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 May 2023 09:48:51 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10713"; a="734764323"
-X-IronPort-AV: E=Sophos;i="5.99,282,1677571200"; 
-   d="scan'208";a="734764323"
-Received: from pgopdahl-mobl1.amr.corp.intel.com (HELO [10.209.16.196]) ([10.209.16.196])
-  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 May 2023 09:48:50 -0700
-Message-ID: <805a61d6-64eb-5805-b0bf-74fcc317fb98@linux.intel.com>
-Date:   Wed, 17 May 2023 11:47:35 -0500
+        Wed, 17 May 2023 12:50:17 -0400
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CFB24ED0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:50:16 -0700 (PDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2ac733b813fso10361731fa.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:50:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684342214; x=1686934214;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qu3lyWs3Jbx0/jeZXUB6hf2dlkHallCSn46b3AvlYYI=;
+        b=YqE6HhdyUGy4W9xtxxoPucGkbifgxv0R6p3g00l33zbm9pWPUToFqZa3RqRKnWmRbD
+         1LmqI0SC/n5wP/2HoNMrA0CjBg/DMvBk/XPiUzmB/hvx/GuP7MO7e8IQqtRZ3hY/7vPz
+         +JutbUhDxW/3WG/Gbs8PGZqEoNqFrogO2ictnvbC93qbBnvbRP1vD2nKMHSIj6SSUKLk
+         1FWumXpW8hi7+2zn5F2EHx+nSsua0rZfYe7rB9Jqrg+gMzHl4CJOsHZcBMJecTjFzqgt
+         ++8513xov++McXYwn9Xy8N1XtNwiFgWFyZWFpDygrnqkf9M4gC/ZD5JoazASjVYRQkYu
+         8jtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684342214; x=1686934214;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Qu3lyWs3Jbx0/jeZXUB6hf2dlkHallCSn46b3AvlYYI=;
+        b=gply3EsXZD7I8ctvlJsmW3gHKXughrmuQJE0GmsKStTxZqj6iHn2sNNHjCBj/oLH0S
+         35JjbtoSaRElUdtQeZnomp9NmvPnWT5wz+g+THwqN7EG+Lx0yqzQhXdB0RcFlrmh8pG+
+         sj0wbENaDEEnCetmSvpvbG8HFNc7lE59AdIUnIqxrNqlm/vQhKLkjyuHqZ4svNgtbzU1
+         OELl3dtl9SHYZmBoGe4TjUmYRjplyFzES5sSfTPbCKl1U4iyqqKG11yJv6kK41N9Afiu
+         CUOIMqOjw7jAiFVfSvXlEN+v+bmdg9jw+byjm7CBuj4qBoEq/nzscFk9KGy3MjwnoX5B
+         OXcQ==
+X-Gm-Message-State: AC+VfDwcMEM+D9F3M2v92JrSZCPckQBKuzINSV0ir8Ye2QeOEVmtEM2a
+        aHc1GL03N61WJ/xB3D3ayhtcNA==
+X-Google-Smtp-Source: ACHHUZ7B1OkgdyFqV7dA+bLi8NfyBZ5hPdx4Dm9efcTeqthni/6gYdQdU9dCQt6KhxgZntR/mv09GA==
+X-Received: by 2002:a2e:91c5:0:b0:2aa:af16:5c55 with SMTP id u5-20020a2e91c5000000b002aaaf165c55mr10779281ljg.44.1684342214593;
+        Wed, 17 May 2023 09:50:14 -0700 (PDT)
+Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
+        by smtp.gmail.com with ESMTPSA id g6-20020a2e9cc6000000b002af0e9abaf6sm159224ljj.131.2023.05.17.09.50.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 May 2023 09:50:14 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/6] Adreno QoL changes
+Date:   Wed, 17 May 2023 18:50:07 +0200
+Message-Id: <20230517-topic-a7xx_prep-v1-0-7a964f2e99c2@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.10.0
-Subject: Re: [PATCH 2/2] soundwire: debugfs: fix unbalanced pm_runtime_put()
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        =?UTF-8?Q?P=c3=a9ter_Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Charles Keepax <ckeepax@opensource.cirrus.com>,
-        alsa-devel@alsa-project.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230517163750.997629-1-krzysztof.kozlowski@linaro.org>
- <20230517163750.997629-2-krzysztof.kozlowski@linaro.org>
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <20230517163750.997629-2-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-5.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+X-B4-Tracking: v=1; b=H4sIAL8FZWQC/x2N0QqDMAxFf0XybKA6trj9iowRa6oBqaXdRkH89
+ 4U9nsM93AOKZJUCj+aALF8tukeDrm3ArxwXQZ2NoXf9xV07wvee1CNTra+UJSENxLe7p9mFAFZ
+ NXASnzNGv1sXPtpm0ZdD6vxmf5/kDWs6iCHYAAAA=
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1684342212; l=971;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=+el7PqiUKmuBnYDuD93qCjkLN+POO/QcjFGpgw7amf0=;
+ b=I+eTif+5OVxiz5T1jAnY0c3EyKvbZtNVmuIgmiwcS4EQl1tWIrD8wAq3ratR8+88fMXU9M0Q+
+ Om6Zb11zNzTDegUIrWEsg6zeuEMq3DoyBQjp0ernsgB6ONfhpHSi0Uc
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,35 +86,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series brings some niceties in preparation for A7xx introduction.
 
+It should be fully independent of the GMU wrapper series.
 
-On 5/17/23 11:37, Krzysztof Kozlowski wrote:
-> If pm_runtime_resume_and_get() failed with -EACCES, the driver continued
-> execution and finally called pm_runtime_put_autosuspend().  Since
-> pm_runtime_resume_and_get() drops the usage counter on every error, this
-> lead to double decrement of that counter.
-> 
-> Fixes: b275bf45ba1d ("soundwire: debugfs: Switch to sdw_read_no_pm")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (6):
+      drm/msm/a6xx: Explain CP_PROTECT_CNTL writes in a6xx_set_cp_protect
+      drm/msm/a6xx: Skip empty protection ranges entries
+      drm/msm/a6xx: Ensure clean GMU state in a6xx_gmu_fw_start
+      drm/msm/a6xx: Improve GMU force shutdown sequence
+      drm/msm/a6xx: Use GMU_ALWAYS_ON_COUNTER for GMU-equipped GPUs in timestamp
+      drm/msm/a6xx: Fix up GMU region reservations
 
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 21 +++++++++++++++++----
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 23 ++++++++++++-----------
+ 2 files changed, 29 insertions(+), 15 deletions(-)
+---
+base-commit: 065efa589871e93b6610c70c1e9de274ef1f1ba2
+change-id: 20230517-topic-a7xx_prep-787a69c7d0ff
 
-> ---
->  drivers/soundwire/debugfs.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soundwire/debugfs.c b/drivers/soundwire/debugfs.c
-> index dea782e0edc4..c3a1a359ee5c 100644
-> --- a/drivers/soundwire/debugfs.c
-> +++ b/drivers/soundwire/debugfs.c
-> @@ -56,8 +56,9 @@ static int sdw_slave_reg_show(struct seq_file *s_file, void *data)
->  	if (!buf)
->  		return -ENOMEM;
->  
-> -	ret = pm_runtime_resume_and_get(&slave->dev);
-> +	ret = pm_runtime_get_sync(&slave->dev);
->  	if (ret < 0 && ret != -EACCES) {
-> +		pm_runtime_put_noidle(&slave->dev);
->  		kfree(buf);
->  		return ret;
->  	}
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
