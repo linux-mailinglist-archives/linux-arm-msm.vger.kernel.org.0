@@ -2,103 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 329F37069F8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 15:34:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DDEA706A1A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 15:43:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232087AbjEQNe0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 09:34:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44358 "EHLO
+        id S230527AbjEQNnD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 09:43:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232065AbjEQNeP (ORCPT
+        with ESMTP id S229959AbjEQNnC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 09:34:15 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECF7493FB;
-        Wed, 17 May 2023 06:33:49 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-1ae52ce3250so6412065ad.2;
-        Wed, 17 May 2023 06:33:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684330429; x=1686922429;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=rbMQ0v3qCDD0ikHRHPJXrlACnnN8XxCRviK30k53MMg=;
-        b=RdHpAmHAmgLsJMNhFGmDLliPlydekszKQt9Tz6yED4lbjlyJO4WP+zJvjbG2AEPCBE
-         qZYxCpEgK72p119skAHTvpTu/9wKzeUFsKVv/61qVsje+kxlLhrjYrzqvsRLhufEwVYx
-         FGTVULU3Nd+prqhRnzpbDs6IhiwIvP+9lKTvIKQQ8PzikNiQQVnkp7DpZkeNMUuPXz1I
-         b+rCUMMmkjCPF8Gp1mVtDNGaIVhndd6XCSwzm4MbruhtfDrYbaafrXrEbkfgcSJlgs8E
-         ZDi81QQF9NjPkeISnDfrD+Bby7q3cAnq4j92YpUmuJMo17tJvXPBzIka8C2pgw5A+yyb
-         a6ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684330429; x=1686922429;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rbMQ0v3qCDD0ikHRHPJXrlACnnN8XxCRviK30k53MMg=;
-        b=Ti7VTpASYhBag0yzRzjOJfViAJWjUOakuINHVOK95t8QWCVQ8ei71EQ5BRmNE2ku3U
-         yvElxLsb5t+l0cTdi9+sOEw/01FRqZDqIIkFjJjeNwrP1uyNKQS4hfUoIrlY7Zt9x8sK
-         x3xP4UOqfHSPpwaQ2RdIMiLFQ4odwJTtPA+c99tF0UM3iq1XRdBvUoyPcWZb1RJlCIOC
-         kUIhhGU57w7+20BZ5o+5rCm61qbezkPyKfGVFS12bO1xRvx4cb7ud2lD3LzTpBUn/G2z
-         GYKv6U9onCY3udd1cvl7LCu4Wy7Nk3bUtI+qg1bZJ1+u6uSb18UIsgn5U/EOWy8eHJYC
-         de2Q==
-X-Gm-Message-State: AC+VfDzOHcknG+7waMRzGqXdY7yB1dmo/qNxmGBvApnZQ+5jiLhF6vpg
-        75E0RD2luw4ZW+K5Mf4cwow=
-X-Google-Smtp-Source: ACHHUZ5neLbN65pdb8800vQuzivVb7/qsgL/pjdYn69YBg2IaPl14+iRcWaf3Y3bIRvpHHYhq3gkMw==
-X-Received: by 2002:a17:902:da91:b0:1ae:f37:c1ab with SMTP id j17-20020a170902da9100b001ae0f37c1abmr16417374plx.25.1684330429024;
-        Wed, 17 May 2023 06:33:49 -0700 (PDT)
-Received: from localhost.localdomain (n220246252240.netvigator.com. [220.246.252.240])
-        by smtp.gmail.com with ESMTPSA id m5-20020a170902db0500b001ac7f583f72sm17519253plx.209.2023.05.17.06.33.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 May 2023 06:33:48 -0700 (PDT)
-From:   Jianhua Lu <lujianhua000@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
+        Wed, 17 May 2023 09:43:02 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A220C269A;
+        Wed, 17 May 2023 06:43:01 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 37C5F64403;
+        Wed, 17 May 2023 13:43:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20858C433EF;
+        Wed, 17 May 2023 13:42:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1684330980;
+        bh=kJ4IaHDWaTOfQsuK204QfW/lAjzQ5F4JSArmUW3wBsk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=aROdYL4Xz4Cyr270m0N14Li9g8Zfm6Ua+YuOyoV0oSO54/u3VROi7CB9dm48qxH/Y
+         XhdqWNsSrdb2lcallndCg77UbzraQvpSYenW0rK0AWVyyuBZUYhsP7vuVgQwszE1KA
+         EL8Dc56FamCYynQ13kLT2aivSH6SPxS1Atw0dpboVu9VxGcjCU1EveZmWutOUglRj+
+         qMERrYsVNcxsEANvjlC0GfUG36BVDftloGptoT/1jAVCezgsDmhCCJ4L2uyksAlPDF
+         CWFQIPDMYfvTuMFnyoC/zDma7EnzVcJj9ZMndnSnSL93TdUq58h+QUZU3lQlTSp002
+         e3tS0zimjyJyw==
+Date:   Wed, 17 May 2023 14:42:54 +0100
+From:   Lee Jones <lee@kernel.org>
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        ob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Jianhua Lu <lujianhua000@gmail.com>
-Subject: [PATCH v2] arm64: dts: qcom: sm8250-xiaomi-elish: remove redundant empty line
-Date:   Wed, 17 May 2023 21:33:40 +0800
-Message-Id: <20230517133340.21111-1-lujianhua000@gmail.com>
-X-Mailer: git-send-email 2.39.3
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v6] dt-bindings: mfd: qcom,spmi-pmic: Add pattern
+ property for phy
+Message-ID: <20230517134254.GA9658@google.com>
+References: <20230510082725.3612903-1-abel.vesa@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230510082725.3612903-1-abel.vesa@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Remove a redundant empty line introduced by
-  commit 51c4c2bd6f31 ("arm64: dts: qcom: sm8250-xiaomi-elish-boe: Add mdss and dsi panel")
+On Wed, 10 May 2023, Abel Vesa wrote:
 
-Signed-off-by: Jianhua Lu <lujianhua000@gmail.com>
----
-Changes in v2:
- - Drop fixes tag
+> The phy pattern property will be used for providing eUSB2 repeater
+> functionality. This will be modelled as a Qualcomm PHY driver.
+> 
+> Acked-by: Lee Jones <lee@kernel.org>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+> 
+> The v5 (resend) is here:
+> https://lore.kernel.org/all/20230320150617.1824465-1-abel.vesa@linaro.org/
+> 
+> All other patches have been merged already. This is the only one left.
+> 
+> Changes since v5:
+>  * rebased on top of -next
+>  * added Krzysztof's R-b tag
+>  * added Lee's A-b tag
+> 
+> Changes since v4:
+>  * none
+> 
+> Changes since v3:
+>  * made this the second patch rather than the first in the series
+> 
+>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 4 ++++
+>  1 file changed, 4 insertions(+)
 
- arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+Applied, thanks
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-index 8af6a0120a50..eaac00085894 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-xiaomi-elish-common.dtsi
-@@ -504,7 +504,6 @@ panel_in_1: endpoint {
- 					remote-endpoint = <&dsi1_out>;
- 				};
- 			};
--
- 		};
- 	};
- };
 -- 
-2.39.3
-
+Lee Jones [李琼斯]
