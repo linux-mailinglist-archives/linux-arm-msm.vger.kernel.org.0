@@ -2,104 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B0F17070A5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 20:21:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A41A9707127
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 20:49:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229738AbjEQSVy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 14:21:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52078 "EHLO
+        id S229869AbjEQStm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 14:49:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42370 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbjEQSVx (ORCPT
+        with ESMTP id S229875AbjEQStU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 14:21:53 -0400
-Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [IPv6:2001:67c:2050:0:465::201])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 419C77EC5;
-        Wed, 17 May 2023 11:21:52 -0700 (PDT)
-Received: from smtp202.mailbox.org (smtp202.mailbox.org [10.196.197.202])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-        (No client certificate requested)
-        by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4QM1f50hvRz9sjK;
-        Wed, 17 May 2023 20:21:49 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dylanvanassche.be;
-        s=MBO0001; t=1684347709;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=OUTW/1nl21rkbLxL1BJ2Mi9Ky/aG3WBLvZCR8496Gfs=;
-        b=w0HCpVe9Kotu/fkyqY2cfKBbv77oO28uUCYSzLZnCvp/agfv5jqwAH8mgzXj0KrxJirrn1
-        um+rkgAHzOa34d6ZhBSMs0ULabSrpQRq0h0tn+23lrkS/Oy6BVvY1pHhaU4KQ/Zh8SxyAx
-        yfxHlGAfsoiiVKWaGIwfB6PTTMnkGOPO1VXyRYHXLXmiIel99xgCa6HPH4NSLN84z0NIUe
-        igov0CNskxLwSWUflZNoxKD17vsHn7GSNVMQDWQjUifkZEaKVHTJ38M/0wi+wxNS2Wph1f
-        D9RWLEiZZHAP9XhFXXVMQ+s97ksAS1x2/mVj58diwtBgmCUMPLoKqZNtltW+cA==
-From:   Dylan Van Assche <me@dylanvanassche.be>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        amartinz@shiftphones.com, Dylan Van Assche <me@dylanvanassche.be>
-Subject: [PATCH 2/2] arm64: dts: qcom: sdm845-shift-axolotl: enable flash LED
-Date:   Wed, 17 May 2023 20:21:33 +0200
-Message-Id: <20230517182133.72590-3-me@dylanvanassche.be>
-In-Reply-To: <20230517182133.72590-1-me@dylanvanassche.be>
-References: <20230517182133.72590-1-me@dylanvanassche.be>
+        Wed, 17 May 2023 14:49:20 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87F35FE;
+        Wed, 17 May 2023 11:49:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1684349338; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=SOvaP70EpeiiuJlzCSzsm5LozTmTSI4H3CrgpWGKAJ5xrXTr4CIxBEGbZ7S3Jw1jCI
+    suF06UFufdfBLWUEtKTRuNEdwqNW1yu2qUcQ2kVii4HL7QPc5mg6Dvc4wUdPiIG2BscA
+    rJUCEB6wYTdas69OCLwt5wyT0AXTfL4NV+dNiDTS6KGyS3hDbQTbcB34+mdHU0suAkbr
+    cgW/SXh1TQf3R/zLlNNTM3xAhP/3zgng5aybMv88nMGt9kVEiO5comH46NhAkg0FRXYM
+    qEsuP6KtZjlVPpv6t5BxBlXOXa92ft2EBgVAsIPCMRhyDY5v/VjHr7VQUuGWqtVAzjGu
+    TLFw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1684349338;
+    s=strato-dkim-0002; d=strato.com;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=rkE8u4oZLTFlvJ+Zt4904j+4OJtDMcJqCcbkOZiB4ZI=;
+    b=l8W3DgW/Oy44vzO2xLsFj9qMkke55RK1R/VV3PxVMMIblGU5KCgrf5V7SQkptlJNDY
+    zn66ERxZ2xxhwo+gQfmnSn2dpL37bHZwQiXD0YHgKw+9e2YwtD/ZLr1D7b63tVdDMOg1
+    Crpv7S1nZDrDn5GZUanqesr5JC2wFjDC7uO8RlIRo38NpnQEstfS5Ij9B7vU2l86teUU
+    LvojZTY7al1B+mPDSgnzDFUChF8JpDcjiQ+VrqOasBOYzAMG4CnD/+3NxIeOTaMeNSyO
+    PN8BzuVFPvBKXZ1EMmHDlCQ+jhF8yZSmz26T938Q70MVevoZw4DQGMMBtgydX8nCd0rF
+    VcMg==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1684349338;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=rkE8u4oZLTFlvJ+Zt4904j+4OJtDMcJqCcbkOZiB4ZI=;
+    b=A/5rOeqweqyklVWe2WutOH3RuZwDaE5UPFZyP/nEfZ91UQfEf/gj+eF20OYBX5LtFf
+    wb432uMo3qfxYJSuDzIBzBeFomJNJ/1rvRu0rC/Xt1bVkarokaM+nvfmCJ5DEUm9eLyz
+    tNmO77Jn3boRbXfhkdGdG0QaKd1xHlj3n4LZbjK7mVY3OE8YogkmG1cDugbn8vqDI/fp
+    p3Nl6dd7lF2hFQtc/Cx9kCl1xUdGxB9mdmJvSBgtc/0gGIA+hMckqVWIbmj0eHoKe1Hy
+    TpSZC1FYAu+dfC4EKjMIBwZl1OBUzcyqE4aGqHDlql2eMz46P4n3FjEiUWsRjfE0pCBO
+    8hIQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1684349338;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=rkE8u4oZLTFlvJ+Zt4904j+4OJtDMcJqCcbkOZiB4ZI=;
+    b=wxemYTJlhedpobpExgquKfr5ICn128VyQyxrOu8VwynAyFG6RH907hNcAwHDla1T0r
+    4lpnpYWtc//O21JjyCAQ==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn8u4ly9TY="
+Received: from [192.168.244.3]
+    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
+    with ESMTPSA id j6420az4HImwBIF
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Wed, 17 May 2023 20:48:58 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH 0/8] arm64: dts: qcom: msm8916: Rework regulator
+ constraints
+Date:   Wed, 17 May 2023 20:48:39 +0200
+Message-Id: <20230510-msm8916-regulators-v1-0-54d4960a05fc@gerhold.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIchZWQC/x2N0QqDMAwAf0XyvEBrcc79ythD1FQDax2JGwPx3
+ 617PI7jNjBWYYN7tYHyV0yWXMBfKhhmyhOjjIWhdnVwjXeYLN06f0Xl6fOidVHDro0UQhsajgw
+ l7MkYe6U8zGeayFbWU7yVo/z+t8dz3w+dAOZafQAAAA==
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Stephan Gerhold <stephan@gerhold.net>
+X-Mailer: b4 0.12.2
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SHIFT6mq (axolotl) is an SDM845-based smartphone with 2 flash LEDs.
-One LED is white, the other one is yellow. Define both LEDs in the DTS
-so they can be used as flash or torch.
+Rework the regulator constraints for the MSM8916 device trees to be 
+closer to reality. There are several mistakes in there, some of them 
+taken over directly from Qualcomm's vendor kernel. Fortunately, none of 
+the mistakes is absolutely critical because it turns out that the RPM 
+firmware also validates the voltages and silently clamps the requests 
+to a proper range. Still, this behavior should be clearly represented 
+in the device tree rather than pretending to apply the wrong voltages.
 
-Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
+To make the regulator constraints more easily maintainable with a large 
+number of similar MSM8916 boards I propose moving the voltages for the 
+standard components in the SoC to the shared msm8916-pm8916.dtsi 
+include. With this only the actual board-specific regulators are 
+described in the board DT.
+
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 ---
- .../boot/dts/qcom/sdm845-shift-axolotl.dts    | 22 +++++++++++++++++++
- 1 file changed, 22 insertions(+)
+Stephan Gerhold (8):
+      arm64: dts: qcom: apq8016-sbc: Fix regulator constraints
+      arm64: dts: qcom: apq8016-sbc: Fix 1.8V power rail on LS expansion
+      arm64: dts: qcom: msm8916: Fix regulator constraints
+      arm64: dts: qcom: msm8916: Disable audio codecs by default
+      arm64: dts: qcom: pm8916: Move default regulator "-supply"s
+      arm64: dts: qcom: msm8916-pm8916: Clarify purpose
+      arm64: dts: qcom: msm8916: Define regulator constraints next to usage
+      arm64: dts: qcom: msm8916-pm8916: Mark always-on regulators
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-index 0ad891348e0c..e7fc0c3cae58 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
-@@ -554,6 +554,28 @@ led@5 {
- 	};
- };
- 
-+&pmi8998_flash {
-+	status = "okay";
-+
-+	led-0 {
-+		function = LED_FUNCTION_FLASH;
-+		color = <LED_COLOR_ID_WHITE>;
-+		led-sources = <1>;
-+		led-max-microamp = <180000>;
-+		flash-max-microamp = <1000000>;
-+		flash-max-timeout-us = <1280000>;
-+	};
-+
-+	led-1 {
-+		function = LED_FUNCTION_FLASH;
-+		color = <LED_COLOR_ID_YELLOW>;
-+		led-sources = <2>;
-+		led-max-microamp = <180000>;
-+		flash-max-microamp = <1000000>;
-+		flash-max-timeout-us = <1280000>;
-+	};
-+};
-+
- &qup_uart9_rx {
- 	drive-strength = <2>;
- 	bias-pull-up;
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts           | 145 +++++----------------
+ arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts   | 115 ++--------------
+ .../boot/dts/qcom/msm8916-alcatel-idol347.dts      | 110 +---------------
+ arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts     | 110 +---------------
+ arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts | 110 +---------------
+ arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts     | 125 ++++--------------
+ .../boot/dts/qcom/msm8916-longcheer-l8150.dts      | 110 +---------------
+ .../boot/dts/qcom/msm8916-longcheer-l8910.dts      | 110 +---------------
+ arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi       | 121 ++++++++++++++---
+ .../dts/qcom/msm8916-samsung-a2015-common.dtsi     | 110 +---------------
+ .../boot/dts/qcom/msm8916-samsung-gt5-common.dtsi  | 110 +---------------
+ .../boot/dts/qcom/msm8916-samsung-j5-common.dtsi   | 103 ---------------
+ .../boot/dts/qcom/msm8916-samsung-serranove.dts    | 103 ---------------
+ arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi          | 103 ---------------
+ .../boot/dts/qcom/msm8916-wingtech-wt88047.dts     | 119 +++--------------
+ arch/arm64/boot/dts/qcom/msm8916.dtsi              |   1 +
+ arch/arm64/boot/dts/qcom/pm8916.dtsi               |   4 +-
+ 17 files changed, 236 insertions(+), 1473 deletions(-)
+---
+base-commit: 4272e06e19f388ccfe1f04f19060ea84d2a19a8b
+change-id: 20230510-msm8916-regulators-97fa33735efe
+
+Best regards,
 -- 
-2.40.1
+Stephan Gerhold <stephan@gerhold.net>
 
