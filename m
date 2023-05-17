@@ -2,110 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 238087071DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 21:19:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BAFBA70720B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 21:26:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229829AbjEQTTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 15:19:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39426 "EHLO
+        id S229471AbjEQT0M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 15:26:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230072AbjEQTTI (ORCPT
+        with ESMTP id S229752AbjEQT0J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 15:19:08 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83D9B5BA7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 12:19:06 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2ac7ac8a4ffso11840441fa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 12:19:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684351145; x=1686943145;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ih5DlZFK0mk8q52UPHf2uO23Ixivj6XKrt6mWlpxJJM=;
-        b=wQj5WnVXEyxEuvJyYzdXcQ9KgIu5p+W06h5lLQbUb8c1vCO0xaQe7KF6O0uuWLSO8g
-         WWH8RLcJRjzw/j6FvjzZHiEv8PZ/2wBdXKNkybA1pFu+OMFUo5skNMfdyh1xNj/0tEkn
-         1I8SCNWA738PjWsT9NAWN6/ox5oo34mLYQ4CA3KnADU6BDI4k33QKzR/etl9XLrOqRlR
-         tSdRB5B+ajDx/dulZ+YIQc4oe9N0/F1u4y+44Da8XjQzQ8YMSrRVBYug32Lt/+avrqXM
-         gW8cV69omRP8oAqu8gNQcZQmHJjydnaJqCFGXfjk/gaxMfI+9mr2O31SVKsBGxf+u9qu
-         Oghw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684351145; x=1686943145;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ih5DlZFK0mk8q52UPHf2uO23Ixivj6XKrt6mWlpxJJM=;
-        b=dAS1fvRCniBuIsRVgjuwdv4ykmGP7xLgQcHsGUx2J48JOQPW97HcXheMlaTygKAjKH
-         67J5Y2YOljhrGsMi3TxvK7ndXpkvABdjU592IoWsbJwcHT++cqcmFrCvN2jb0d+S1ZhQ
-         l6VYH03iv57xIe/nRBi7tCZET29bBJTXWL344/nvsceXQdpZQAOn+KsDyDUXctd0JvME
-         zUPDL8Z18/zvuDZdEh2LIspqH+Kli1H9GmT7VZxW62vw2pRpYrd9OCj9+z54OwKTxSy8
-         ITiv4UyfAYg8qE+iAjVOCeAybbmh14O0ySuaQaGBz9XFJXUYwOyKPPr4/U3HC9ahKHBX
-         9byg==
-X-Gm-Message-State: AC+VfDyaQkXNdZOcA9zsnmwAjIJ9mgMJiSH0DlxeDoNdHMHDmR9axI+I
-        wSOP4lCK905lMYxP84Ag6ZWX9A==
-X-Google-Smtp-Source: ACHHUZ6VEAH0IbqXDUui7Xr7fXNha7EfIwXK2r35JiX2FEIHWITYKUz1mrU7v8MnUGAoO9UEfcmFYw==
-X-Received: by 2002:a2e:9b97:0:b0:2a7:853e:a43 with SMTP id z23-20020a2e9b97000000b002a7853e0a43mr8976235lji.40.1684351144800;
-        Wed, 17 May 2023 12:19:04 -0700 (PDT)
-Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id t13-20020a2e780d000000b002a8ae16ac8csm3964954ljc.18.2023.05.17.12.19.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 May 2023 12:19:04 -0700 (PDT)
-Message-ID: <4c11be9a-796f-79f1-2828-d3367f978785@linaro.org>
-Date:   Wed, 17 May 2023 21:19:02 +0200
+        Wed, 17 May 2023 15:26:09 -0400
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E9472698
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 12:25:43 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 8718B20371;
+        Wed, 17 May 2023 21:25:13 +0200 (CEST)
+Date:   Wed, 17 May 2023 21:25:12 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v11 8/9] drm/msm/dsi: Use MSM and DRM DSC helper methods
+Message-ID: <xpfpp7aiy4i7girzqgvdjsthwwtewn4ffzugqp4xgkcqhgor4x@hlarb2cu5xsr>
+References: <20230329-rfc-msm-dsc-helper-v11-0-30270e1eeac3@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v11-8-30270e1eeac3@quicinc.com>
+ <l5caompoxuarl3fxhpv37xmpahprvwn2w6mg2y4tla5uitckmf@ytytt7wivfs7>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 1/3] dt-bindings: leds: qcom,spmi-flash-led: add PM8550
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Fenglin Wu <quic_fenglinw@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     Neil Armstrong <neil.armstrong@linaro.org>,
-        "Signed-off-by : Abel Vesa" <abel.vesa@linaro.org>
-References: <20230516150202.188655-1-krzysztof.kozlowski@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230516150202.188655-1-krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <l5caompoxuarl3fxhpv37xmpahprvwn2w6mg2y4tla5uitckmf@ytytt7wivfs7>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 16.05.2023 17:02, Krzysztof Kozlowski wrote:
-> Document compatible for PM8550 Torch and Flash LED controller.
+On 2023-05-17 21:13:36, Marijn Suijten wrote:
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->  Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> On 2023-05-17 11:51:17, Jessica Zhang wrote:
+> > 
+> > Use MSM and DRM DSC helper methods to configure DSC for DSI.
+> > 
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> > ---
+> >  drivers/gpu/drm/msm/dsi/dsi_host.c | 7 ++++---
+> >  1 file changed, 4 insertions(+), 3 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > index 74d38f90398a..b21108948061 100644
+> > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> > @@ -28,6 +28,7 @@
+> >  #include "dsi.xml.h"
+> >  #include "sfpb.xml.h"
+> >  #include "dsi_cfg.h"
+> > +#include "msm_dsc_helper.h"
+> >  #include "msm_kms.h"
+> >  #include "msm_gem.h"
+> >  #include "phy/dsi_phy.h"
+> > @@ -848,7 +849,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+> >  	/* first calculate dsc parameters and then program
+> >  	 * compress mode registers
+> >  	 */
+> > -	slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->slice_width);
+> > +	slice_per_intf = msm_dsc_get_slices_per_intf(dsc, hdisplay);
+> >  
+> >  	/*
+> >  	 * If slice_count is greater than slice_per_intf
+> > @@ -858,7 +859,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
+> >  	if (dsc->slice_count > slice_per_intf)
+> >  		dsc->slice_count = 1;
+> >  
+> > -	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
+> > +	total_bytes_per_intf = dsc->slice_count * slice_per_intf;
 > 
-> diff --git a/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml b/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
-> index ffacf703d9f9..074ef7e63c49 100644
-> --- a/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
-> +++ b/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
-> @@ -26,6 +26,7 @@ properties:
->            - qcom,pm8150c-flash-led
->            - qcom,pm8150l-flash-led
->            - qcom,pm8350c-flash-led
-> +          - qcom,pm8550-flash-led
->        - const: qcom,spmi-flash-led
->  
->    reg:
+> Oh no, this line shouldn't have changed.  Besides not conforming to the
+> "use MSM and DRM DSC helper methods" title, this is now no longer
+> computing the bytes that we were in v10.  Was this tested?
+
+Regarding testing, it probably goes unnoticed easily because of only
+being used in eol_byte_num = total_bytes_per_intf % 3: on hdisplay=1096
+and slice_count=slice_per_intf=2 both result in eol_byte_num=1 :)
+
+- Marijn
+
+> 
+> - Marijn
+> 
+> >  
+> >  	eol_byte_num = total_bytes_per_intf % 3;
+> >  	pkt_per_line = slice_per_intf / dsc->slice_count;
+> > @@ -1759,7 +1760,7 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
+> >  		return ret;
+> >  	}
+> >  
+> > -	dsc->initial_scale_value = 32;
+> > +	dsc->initial_scale_value = drm_dsc_initial_scale_value(dsc);
+> >  	dsc->line_buf_depth = dsc->bits_per_component + 1;
+> >  
+> >  	return drm_dsc_compute_rc_parameters(dsc);
+> > 
+> > -- 
+> > 2.40.1
+> > 
