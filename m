@@ -2,406 +2,259 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FFD7706DF2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 18:19:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4033706E02
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 18:21:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229648AbjEQQTR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 12:19:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46704 "EHLO
+        id S229534AbjEQQV3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 12:21:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229640AbjEQQTK (ORCPT
+        with ESMTP id S229521AbjEQQV2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 12:19:10 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BDC0A5C5;
-        Wed, 17 May 2023 09:18:22 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5460F6494C;
-        Wed, 17 May 2023 16:17:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B059C433D2;
-        Wed, 17 May 2023 16:17:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684340266;
-        bh=AY5A1hYu1RLVk+v1p8YuhzNp4ErIpaq/MI2LxjMx3Z8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LZDsUKFBl/bU7TbW57eeE3wNn0+8FoGG4o0e6J8xVtMzti5t1/bOIREEgnOORSL9y
-         E4SQVJ6beTDQa1l95QoAsIUJNyEq+wsfxcRafPEuOmrJA18YRsuqAr+c0tJ/HaV8G0
-         vkkXl3sSHSIt5dI+m/2mB+0qkjeOQ99atDsFhXBl2MmyGHkJGT9XfVMYJ+frnzDAi9
-         Ls6tDPVPJomLKIyy0b3cD4CeZxT5dlePk2TO+1DJVm7wF1Igyl8CYR0ujrKTncnGTB
-         qRxQ1rNJvnwVms6i2Thko9ePhQBczpkmwXXKaYydcC06jCf/QV7IAhaTrwgvaRq2dP
-         jxDLVi1mn1WTg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1pzJqV-0006Ns-88; Wed, 17 May 2023 18:17:47 +0200
-Date:   Wed, 17 May 2023 18:17:47 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krishna Kurapati <quic_kriskura@quicinc.com>
-Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com
-Subject: Re: [PATCH v8 5/9] usb: dwc3: core: Refactor PHY logic to support
- Multiport Controller
-Message-ID: <ZGT-K1PW66kEEYIJ@hovoldconsulting.com>
-References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-6-quic_kriskura@quicinc.com>
+        Wed, 17 May 2023 12:21:28 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 106A4D2C3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:21:19 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2af0eb50b4aso4839291fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 09:21:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684340477; x=1686932477;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ChIVfbdP674iihHLcCeQgumGx8yk3INFc1OPHf7Gp3M=;
+        b=o5+4zGG4vLM3JtsbCVaRv8icO5k4KRyaqLIgm4nNXIEa3NKvVHVNNQ/LQBBsttlcoi
+         yHI9soeCj9MPwYzd2qtoP6IyGy1vWUMCpgxOyPXuCVHN8bXONHBEt/213Xy/8Xgezaam
+         pQy1ExSn4egGCGveDIgH/YbJ6HdA+PybZnIMZ+c81NseZLUJYelYJGsbSrpIlcnGcM8U
+         HJ1kp3Reo9erF5wOFwg+7njtC7+42Ady7kWCYjh3TkcwimZKnnelxqz6kjTFAq7TVyy8
+         HxK6fRRFPbwkOEnTqHJlUDHbgYoCVeaf1xx2csw3GRi8NJ5li8cNDXDr3LwoZ6VWI2KO
+         tkcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684340477; x=1686932477;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ChIVfbdP674iihHLcCeQgumGx8yk3INFc1OPHf7Gp3M=;
+        b=YQ1ZsZLm+jpUCNfFrGkI3YWW9wkgf+Qod7yQe4CiAt2y+t9CAxGKImkzSx9ySHYcXb
+         PKr09S0AObSjR/s2HN5peIas8s/OGg3JmBVF8NhE5mQJVq4aBsR/mzB0G8MLlwrkhaI/
+         krlZ5mpQH6h3l77FcAD9RdNrkYR+zDtLEt2Q6Q86aaIOxi2iFveYHmAg6V5sakQmjfO1
+         gm9daQABY14d5FkHLoOnY9s4+A+6ssGxOxRUWLfPLuNFH2JxsNHWlROcgJflgo9lGI3X
+         P2LYxWVun0qHagPckIMpx7yuFpOB4VVmM4krbNFncJbbCwVvfWz9Rbjwl/7MRGktOwbw
+         YX7w==
+X-Gm-Message-State: AC+VfDzwmQ41K/SYwKP8GW3kN0mm1Wurkp5yI02jbbSSsAbd49oO2j5G
+        Ow0ItsZBdq8BktqWj7jdLmLq0g==
+X-Google-Smtp-Source: ACHHUZ7Kx9X9WbzBlqUy7R10/6IiExFzx1PtsoTdz59PYW4PPh2JL61/9upryDyHc2SoeR4gUWLw/w==
+X-Received: by 2002:ac2:596e:0:b0:4ef:eeaa:e9b9 with SMTP id h14-20020ac2596e000000b004efeeaae9b9mr387519lfp.35.1684340477151;
+        Wed, 17 May 2023 09:21:17 -0700 (PDT)
+Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
+        by smtp.gmail.com with ESMTPSA id k27-20020ac257db000000b004e95f53adc7sm3433962lfo.27.2023.05.17.09.21.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 May 2023 09:21:16 -0700 (PDT)
+Message-ID: <95f36218-c0eb-eb69-696d-044fd72cf8c4@linaro.org>
+Date:   Wed, 17 May 2023 18:21:15 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230514054917.21318-6-quic_kriskura@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v8 0/8] The great interconnecification fixation
+Content-Language: en-US
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>
+References: <20230228-topic-qos-v8-0-ee696a2c15a9@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230228-topic-qos-v8-0-ee696a2c15a9@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, May 14, 2023 at 11:19:13AM +0530, Krishna Kurapati wrote:
-> Currently the DWC3 driver supports only single port controller
-> which requires at most one HS and one SS PHY.
+
+
+On 7.04.2023 22:14, Konrad Dybcio wrote:
+> Hi!
+Bump!
+
+Konrad
 > 
-> But the DWC3 USB controller can be connected to multiple ports and
-> each port can have their own PHYs. Each port of the multiport
-> controller can either be HS+SS capable or HS only capable
-> Proper quantification of them is required to modify GUSB2PHYCFG
-> and GUSB3PIPECTL registers appropriately.
+> v7 -> v8:
+> - Rebase (dropping has_bus_pd, picked patches from v7)
 > 
-> Add support for detecting, obtaining and configuring phy's supported
-> by a multiport controller and limit the max number of ports
-> supported to 4.
+> - Clean up the QoS-setting functions [3/8]
 > 
-> Co-developed-by: Harsh Agarwal <quic_harshq@quicinc.com>
-> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-
-If Harsh is the primary author you need to add a From: line at the
-beginning of the patch.
-
-Either way, you need his SoB as well as your Co-developed-by tag.
-
-All this is documented under Documentation/process/ somewhere.
-
-> +/**
-> + * dwc3_phy_setup - Configure USB PHY Interface of DWC3 Core
-> + * @dwc: Pointer to our controller context structure
-> + *
-> + * Returns 0 on success. The USB PHY interfaces are configured but not
-> + * initialized. The PHY interfaces and the PHYs get initialized together with
-> + * the core in dwc3_core_init.
-> + */
-> +static int dwc3_phy_setup(struct dwc3 *dwc)
-> +{
-> +	int i;
-> +	int ret;
-
-Please try to use reverse xmas style for declaration throughout (i.e.
-place the longest declarations first).
-
-> +
-> +	for (i = 0; i < dwc->num_usb3_ports; i++) {
-> +		ret = dwc3_ss_phy_setup(dwc, i);
-> +		if (ret)
-> +			return ret;
-> +	}
-> +
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = dwc3_hs_phy_setup(dwc, i);
-> +		if (ret)
-> +			return ret;
-> +	}
->  
->  	return 0;
->  }
-> @@ -744,22 +777,38 @@ static int dwc3_phy_setup(struct dwc3 *dwc)
->  static int dwc3_phy_init(struct dwc3 *dwc)
->  {
->  	int ret;
-> +	int i;
-> +	int j;
->  
->  	usb_phy_init(dwc->usb2_phy);
->  	usb_phy_init(dwc->usb3_phy);
->  
-> -	ret = phy_init(dwc->usb2_generic_phy);
-> -	if (ret < 0)
-> -		goto err_shutdown_usb3_phy;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = phy_init(dwc->usb2_generic_phy[i]);
-> +		if (ret < 0) {
-> +			/* clean up prior initialized HS PHYs */
-> +			for (j = 0; j < i; j++)
-> +				phy_exit(dwc->usb2_generic_phy[j]);
-> +			goto err_shutdown_usb3_phy;
-> +		}
-> +	}
->  
-> -	ret = phy_init(dwc->usb3_generic_phy);
-> -	if (ret < 0)
-> -		goto err_exit_usb2_phy;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = phy_init(dwc->usb3_generic_phy[i]);
-> +		if (ret < 0) {
-> +			/* clean up prior initialized SS PHYs */
-> +			for (j = 0; j < i; j++)
-> +				phy_exit(dwc->usb3_generic_phy[j]);
-> +			goto err_exit_usb2_phy;
-> +		}
-> +	}
-
-The above is probably better implemented as a single loop over
-num_usb2_ports where you enable each USB2 and USB3 PHY. On errors you
-use the loop index to disable the already enabled PHYs in reverse
-order below (after disabling the USB2 PHY if USB3 phy init fails).
-
->  	return 0;
->  
->  err_exit_usb2_phy:
-> -	phy_exit(dwc->usb2_generic_phy);
-> +	for (i = 0; i < dwc->num_usb2_ports; i++)
-> +		phy_exit(dwc->usb2_generic_phy[i]);
-> +
-
-No need for a newline separator.
-
->  err_shutdown_usb3_phy:
->  	usb_phy_shutdown(dwc->usb3_phy);
->  	usb_phy_shutdown(dwc->usb2_phy);
-> @@ -769,8 +818,12 @@ static int dwc3_phy_init(struct dwc3 *dwc)
->  
->  static void dwc3_phy_exit(struct dwc3 *dwc)
->  {
-> -	phy_exit(dwc->usb3_generic_phy);
-> -	phy_exit(dwc->usb2_generic_phy);
-> +	int i;
-> +
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		phy_exit(dwc->usb3_generic_phy[i]);
-> +		phy_exit(dwc->usb2_generic_phy[i]);
-> +	}
-
-For symmetry, I'd probably do this in reverse order to.
-
->  	usb_phy_shutdown(dwc->usb3_phy);
->  	usb_phy_shutdown(dwc->usb2_phy);
-> @@ -779,22 +832,38 @@ static void dwc3_phy_exit(struct dwc3 *dwc)
->  static int dwc3_phy_power_on(struct dwc3 *dwc)
->  {
->  	int ret;
-> +	int i;
-> +	int j;
->  
->  	usb_phy_set_suspend(dwc->usb2_phy, 0);
->  	usb_phy_set_suspend(dwc->usb3_phy, 0);
->  
-> -	ret = phy_power_on(dwc->usb2_generic_phy);
-> -	if (ret < 0)
-> -		goto err_suspend_usb3_phy;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = phy_power_on(dwc->usb2_generic_phy[i]);
-> +		if (ret < 0) {
-> +			/* Turn off prior ON'ed HS Phy's */
-> +			for (j = 0; j < i; j++)
-> +				phy_power_off(dwc->usb2_generic_phy[j]);
-> +			goto err_suspend_usb3_phy;
-> +		}
-> +	}
->  
-> -	ret = phy_power_on(dwc->usb3_generic_phy);
-> -	if (ret < 0)
-> -		goto err_power_off_usb2_phy;
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		ret = phy_power_on(dwc->usb3_generic_phy[i]);
-> +		if (ret < 0) {
-> +			/* Turn of prior ON'ed SS Phy's */
-> +			for (j = 0; j < i; j++)
-> +				phy_power_off(dwc->usb3_generic_phy[j]);
-> +			goto err_power_off_usb2_phy;
-> +		}
-> +	}
-
-These loops should be merged too as for phy_init.
-
->  	return 0;
->  
->  err_power_off_usb2_phy:
-> -	phy_power_off(dwc->usb2_generic_phy);
-> +	for (i = 0; i < dwc->num_usb2_ports; i++)
-> +		phy_power_off(dwc->usb2_generic_phy[i]);
-> +
->  err_suspend_usb3_phy:
->  	usb_phy_set_suspend(dwc->usb3_phy, 1);
->  	usb_phy_set_suspend(dwc->usb2_phy, 1);
-
-> +static int dwc3_get_multiport_phys(struct dwc3 *dwc)
-> +{
-> +	int ret;
-> +	struct device *dev = dwc->dev;
-> +	int i;
-> +	char phy_name[11];
-
-As an example, for reverse xmas style this should be
-
-	struct device *dev = dwc->dev;
-	char phy_name[11];
-	int ret;
-	int i;
-
-which tends to be more readable.
-
-> +
-> +	/*
-> +	 * Each port is at least HS capable. So loop over num_usb2_ports
-> +	 * to get available phy's.
-> +	 */
-> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
-> +		sprintf(phy_name, "usb2-port%d", i);
-> +		dwc->usb2_generic_phy[i] = devm_phy_get(dev, phy_name);
-> +		if (IS_ERR(dwc->usb2_generic_phy[i])) {
-> +			ret = PTR_ERR(dwc->usb2_generic_phy[i]);
-> +			if (ret == -ENOSYS || ret == -ENODEV)
-> +				dwc->usb2_generic_phy[i] = NULL;
-> +			else
-> +				return dev_err_probe(dev, ret, "usb2 phy: %s not configured\n", phy_name);
-
-This can just be
-
-	"phy %s not configured"
-
-or perhaps better
-
-	"failed to lookup phy %s"
-
-> +		}
-> +
-> +		sprintf(phy_name, "usb3-port%d", i);
-> +		dwc->usb3_generic_phy[i] = devm_phy_get(dev, phy_name);
-> +		if (IS_ERR(dwc->usb3_generic_phy[i])) {
-> +			ret = PTR_ERR(dwc->usb3_generic_phy[i]);
-> +			if (ret == -ENOSYS || ret == -ENODEV)
-> +				dwc->usb3_generic_phy[i] = NULL;
-> +			else
-> +				return dev_err_probe(dev, ret, "usb3 phy: %s not configured\n", phy_name);
-> +		}
-> +	}
-> +
-> +	return 0;
-> +}
-
-I think you should drop this helper and use the same loop for both
-single and multiport controllers below.
-
-Just use the old phy names if num_usb2_ports is 1, for example:
-
-	if (dwc->num_usb2_ports == 1)
-		sprintf(phy_name, "usb2-phy");
-	else
-		sprintf(phy_name, "usb2-port%d", i);
-
-> +
->  static int dwc3_core_get_phy(struct dwc3 *dwc)
->  {
->  	struct device		*dev = dwc->dev;
-> @@ -1314,20 +1428,23 @@ static int dwc3_core_get_phy(struct dwc3 *dwc)
->  			return dev_err_probe(dev, ret, "no usb3 phy configured\n");
->  	}
->  
-> -	dwc->usb2_generic_phy = devm_phy_get(dev, "usb2-phy");
-> -	if (IS_ERR(dwc->usb2_generic_phy)) {
-> -		ret = PTR_ERR(dwc->usb2_generic_phy);
-> +	if (dwc->num_usb2_ports > 1)
-> +		return dwc3_get_multiport_phys(dwc);
-> +
-> +	dwc->usb2_generic_phy[0] = devm_phy_get(dev, "usb2-phy");
-> +	if (IS_ERR(dwc->usb2_generic_phy[0])) {
-> +		ret = PTR_ERR(dwc->usb2_generic_phy[0]);
->  		if (ret == -ENOSYS || ret == -ENODEV)
-> -			dwc->usb2_generic_phy = NULL;
-> +			dwc->usb2_generic_phy[0] = NULL;
->  		else
->  			return dev_err_probe(dev, ret, "no usb2 phy configured\n");
->  	}
->  
-> -	dwc->usb3_generic_phy = devm_phy_get(dev, "usb3-phy");
-> -	if (IS_ERR(dwc->usb3_generic_phy)) {
-> -		ret = PTR_ERR(dwc->usb3_generic_phy);
-> +	dwc->usb3_generic_phy[0] = devm_phy_get(dev, "usb3-phy");
-> +	if (IS_ERR(dwc->usb3_generic_phy[0])) {
-> +		ret = PTR_ERR(dwc->usb3_generic_phy[0]);
->  		if (ret == -ENOSYS || ret == -ENODEV)
-> -			dwc->usb3_generic_phy = NULL;
-> +			dwc->usb3_generic_phy[0] = NULL;
->  		else
->  			return dev_err_probe(dev, ret, "no usb3 phy configured\n");
->  	}
- 
->  static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
->  {
-> +	int i;
-
-Add this declaration last instead (and similar throughout).
-
->  	unsigned long	flags;
->  	u32 reg;
-
-> diff --git a/drivers/usb/dwc3/core.h b/drivers/usb/dwc3/core.h
-> index d3401963bc27..84f6303922aa 100644
-> --- a/drivers/usb/dwc3/core.h
-> +++ b/drivers/usb/dwc3/core.h
-> @@ -35,6 +35,9 @@
->  
->  #define DWC3_MSG_MAX	500
->  
-> +/* Number of ports supported by a multiport controller */
-> +#define MAX_PORTS_SUPPORTED	4
-
-This define should have a DWC3 prefix (e.g. DWC3_MAX_PORTS, "SUPPORTED"
-doesn't seem to add much).
-
-Is this just an arbitrary implementation limit?
-
-> +
->  /* Define XHCI Extcap register offsets for getting multiport info */
->  #define XHCI_HCC_PARAMS_OFFSET	0x10
->  #define DWC3_XHCI_HCSPARAMS1	0x04
-> @@ -1038,8 +1041,8 @@ struct dwc3_scratchpad_array {
->   * @usb3_phy: pointer to USB3 PHY
->   * @num_usb2_ports: number of usb2 ports.
->   * @num_usb3_ports: number of usb3 ports.
-> - * @usb2_generic_phy: pointer to USB2 PHY
-> - * @usb3_generic_phy: pointer to USB3 PHY
-> + * @usb2_generic_phy: pointer to array of USB2 PHY
-> + * @usb3_generic_phy: pointer to array of USB3 PHY
->   * @phys_ready: flag to indicate that PHYs are ready
->   * @ulpi: pointer to ulpi interface
->   * @ulpi_ready: flag to indicate that ULPI is initialized
-> @@ -1178,8 +1181,8 @@ struct dwc3 {
->  	u8			num_usb2_ports;
->  	u8			num_usb3_ports;
->  
-> -	struct phy		*usb2_generic_phy;
-> -	struct phy		*usb3_generic_phy;
-> +	struct phy		*usb2_generic_phy[MAX_PORTS_SUPPORTED];
-> +	struct phy		*usb3_generic_phy[MAX_PORTS_SUPPORTED];
-
-As I mentioned in a comment to one of the earlier patches, you need to
-add a sanity check when parsing the port counts to avoid accessing data
-beyond these arrays when looping over the PHYs.
-
->  
->  	bool			phys_ready;
-
-Johan
+> - Only set the QoS registers once [4/8] - Georgi talked to some
+>   Qualcomm folks and we concluded that it's "good enough" as they
+>   should:tm: persist until a full reboot on "almost all" platforms
+> 
+> - Move the intf clock enabling/disabling to correspond with /\ [5/8]
+> 
+> - DO NOT switch to associating an interface clock with a given node
+>   (instead of a provider), as it makes little sense with the changes
+>   with [4/8] and the new iteration of [5/8]
+> 
+> v7: https://lore.kernel.org/r/20230228-topic-qos-v7-0-815606092fff@linaro.org
+> 
+> v6 -> v7 changelog:
+> - Rebase on Johan's recent patches
+> 
+> Link to v6: https://lore.kernel.org/r/20230228-topic-qos-v6-0-3c37a349656f@linaro.org
+> 
+> v5 -> v6 changelog:
+> - Completely rewrite the commit message of [1/9], I realized that there
+>   was actually no issue with the present upstream setups and the only
+>   drivers suffering from ghost votes were.. my own OOT drivers..
+>   As a consequence of that, all fixes tags were dropped and the patch
+>   has been kept, since it was deemed useful for newer SoCs that don't
+>   distinguish ap_owned nodes.
+> 
+> - Change the number of allowed bus_clocks from (0-2 in the previous
+>   revision, 0-inf in the current upstream state) to {0, 2}. Scaling is
+>   only possible with a pair of wake-sleep clocks, but some providers
+>   don't do scaling at all (see 8996 A0NoC, 660 GNoC). Drop the cheeky
+>   -1 / 0 / >0 checks from the previous revision. [7/9]
+> 
+> - bus_clocks are now forced to be named "bus", "bus_a", as there is no
+>   need for variance here - we don't do scaling on non-SMD RPM bus clocks.
+>   [7/9]
+> 
+> - The interface clocks are now only turned on when the associated bus
+>   is running at a non-zero frequency [6/9] instead of being always on
+>   and leaking power
+> 
+> Tested on MSM8996 Kagura, SM6375 PDX225 (OOT), MSM8998 Maple (OOT)
+> 
+> Link to v5: https://lore.kernel.org/linux-arm-msm/20230217-topic-icc-fixes-v5-v5-0-c9a550f9fdb9@linaro.org/
+> 
+> v4 -> v5 changelog:
+> - Previously the "Always set QoS params on QNoC" contained part of what
+>   should have been included in "make QoS INVALID default".. (very bad)
+>   Fix it!
+> 
+> - Drop negative offset and keep_alive, they will be resubmitted with new
+>   icc driver submissions
+> 
+> - use b4 this time.. hopefully the series gets to everybody now
+> 
+> Link to v4: https://lore.kernel.org/linux-arm-msm/20230214143720.2416762-1-konrad.dybcio@linaro.org/
+> 
+> v3 -> v4 changelog:
+> - Drop "Always set QoS params on QNoC", it only causes issues.. this
+>   can be investigated another day, as it's not necessary for operation
+> 
+> - Drop "Add a way to always set QoS registers", same as /\
+> 
+> - Add a way (and use it) to have no bus_clocks (the ones we set rate on),
+>   as at least msm8996 has a bus (A0NoC) that doesn't have any and does
+>   all the scaling through RPM requests
+> 
+> - Promote 8996 icc to core_initcall
+> 
+> - Introduce keep_alive (see patch [11/12]) (important!, will be used by at least 6375)
+> 
+> - Allow negative QoS offsets in preparation for introducing 8998 icc [12/12]
+> 
+> Link to v3: https://lore.kernel.org/linux-arm-msm/20230116132152.405535-1-konrad.dybcio@linaro.org/
+> 
+> v2 -> v3 changelog:
+> - Drop "Don't set QoS params before non-zero bw is requested"
+> 
+> - Rebase on next
+> 
+> - [1/9] ("..make QoS INVALID default.."): remove unused define for
+>   MODE_INVALID_VAL
+> 
+> - Pick up tags
+> 
+> v1 -> v2 changelog:
+> - reorder "make QoS INVALID default", makes more sense to have it
+>   before "Always set QoS params on QNoC"
+> 
+> - Limit ap_owned-independent QoS setting to QNoC only
+> 
+> - Add new patches for handling the 8996-and-friends clocks situation
+>   and optional BIMC regardless-of-ap_owned QoS programming
+> 
+> [1] https://lore.kernel.org/linux-arm-msm/14e06574-f95e-8960-0243-8c95a1c294e9@linaro.org/T/#m056692bea71d4c272968d5e07afbd9eb07a88123
+> [2] https://lore.kernel.org/linux-arm-msm/20230110132202.956619-1-konrad.dybcio@linaro.org/
+> 
+> This series grew quite a bit bigger than the previous [1] attempt, so
+> I decided to also add a cover letter.
+> 
+> Link to v2: [2]
+> 
+> It addresses a few things that were not quite right:
+> 
+> - Setting QoS params before a "real" (non-zero) bandwidth request
+>   makes little sense (since there's no data supposed to flow through
+>   the bus, why would the QoS matter) and (at least newer) downstream
+>   prevents that from happening. Do the same in Patch 1.
+> 
+> - QNoC type buses expect to always have their QoS registers set as long
+>   as there's a non-INVALID QoS mode set; ap_owned is not really a thing
+>   on these anymore, Patch 3 handles that.
+> 
+> - The recent MSM8996 boot fix was done quickly and not quite properly,
+>   leading to possibly setting the aggregate bus rate on "normal"
+>   hardware interface clocks; this series handles that by limiting the
+>   number of bus_clocks to 2 (which is the maximum that makes sense,
+>   anyway) and handling the rest as "intf_clocks", which are required
+>   to access the   hardware at the other end. Patches 5-8 take care of
+>   that and Patch 10 reverts the _optional moniker in clk_get_ to make
+>   sure we always have the bus scaling clocks, as they're well, kind
+>   of important ;)
+> 
+> - Similarly to QNoC, BIMC on "newer" (which can be loosely approximated
+>   by "new enough" == "has only BIMC and QNoC hosts") SoCs expects to
+>   always receive QoS programming, whereas BIMC on "older" SoCs cries
+>   like a wild boar and crashes the platform when trying to do so
+>   unconditionally. Patch 9 adds a way to take care of that for newer
+>   SoCs (like SM6375)
+> 
+> - QoS mode INVALID was assumed by developers before to be the default
+>   ("I didn't specify any QoS settings, so the driver can't assume I
+>   did.. right? right!?" - wrong, partial struct initialization led to
+>   0 being set and 0 corresponded to QoS mode FIXED). Make it so, as
+>   that's the logical choice. This allows the "Always set QoS params
+>   on QNoC" patch to work without setting tons of what-should-
+>   -obviously-be-the-default values everywhere, as well as fixes older
+>   drivers that set ap_owned = true but left the QoS mode field unset.
+>   Patch 2 cleans that up.
+> 
+> - Some nodes are physically connected over more than one channel
+>   (usually DDR or other high-throughput paths). Patch 4 allows that
+>   to be reflected in calculations. This will be required for at least
+>   MSM8998 and SM6375 (which will be submitted soon after this lands)
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> Konrad Dybcio (8):
+>       interconnect: qcom: rpm: Rename icc desc clocks to bus_blocks
+>       interconnect: qcom: rpm: Rename icc provider num_clocks to num_bus_clocks
+>       interconnect: qcom: rpm: Drop unused parameters
+>       interconnect: qcom: rpm: Set QoS registers only once
+>       interconnect: qcom: rpm: Handle interface clocks
+>       interconnect: qcom: icc-rpm: Enforce 2 or 0 bus clocks
+>       interconnect: qcom: rpm: Don't use clk_get_optional for bus clocks anymore
+>       interconnect: qcom: msm8996: Promote to core_initcall
+> 
+>  drivers/interconnect/qcom/icc-rpm.c | 110 +++++++++++++++++++-----------------
+>  drivers/interconnect/qcom/icc-rpm.h |  22 ++++++--
+>  drivers/interconnect/qcom/msm8996.c |  35 +++++++-----
+>  drivers/interconnect/qcom/sdm660.c  |  17 +++---
+>  4 files changed, 102 insertions(+), 82 deletions(-)
+> ---
+> base-commit: e134c93f788fb93fd6a3ec3af9af850a2048c7e6
+> change-id: 20230228-topic-qos-5435cac88d89
+> 
+> Best regards,
