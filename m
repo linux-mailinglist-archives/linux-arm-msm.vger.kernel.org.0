@@ -2,168 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65450706032
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 08:34:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51AD070606D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 08:50:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231761AbjEQGeN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 02:34:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51026 "EHLO
+        id S229510AbjEQGua (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 02:50:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232756AbjEQGeL (ORCPT
+        with ESMTP id S229455AbjEQGu3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 02:34:11 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C13E3C3F
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 23:34:04 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-3063433fa66so174704f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 May 2023 23:34:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684305243; x=1686897243;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=OpTLZX9KtlAuj1Cffw1z+96W8NMTOQYC35BDi4+L6fc=;
-        b=Gf/C3ZqVHbsEB6YKahXvqpjJgBu4gmKvRSW+lGXWxWqoaaDo3fOYjZBa+5vTl98D4o
-         tBO0gLpf4GuNgdoTKqqyL6kggSTNSUdSsp4R+LD1JL+IMXiA3v7AGs+zpBZ1Gbm7AaVB
-         lf3qvTlrEzDYI6SiyOTuqT4V8OTgjrDAZToEV4I+YM2icik9u3KuT9hb+MTbhJ0QDyrx
-         EUP5s42uUBTGYNGkZXNZlWxO4w0SGr3HgTLWD+AQoatYY7HIbAy9xHwUq/XRxGq1raKb
-         dp6+H+9fvNasxXLxaSYmrfGHR0ons0xeFsQOaI3g2v3fizk2PqL/3SyZHmz0aIKhGnXu
-         DAjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684305243; x=1686897243;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OpTLZX9KtlAuj1Cffw1z+96W8NMTOQYC35BDi4+L6fc=;
-        b=TE6M9XC/sRmzLTQD9cDuqt4JYVmlpyKNeCMPeviVSS2hSjSlI2y13C/wfDJQyBFu3F
-         mlDy5qE05nB9NXuG4a9HtTHSAWKtm9dBwvZTGiHS6APqyGPjYNzODFDPeRS83i1xr2+a
-         6pnkCEiXKtBPEkT0fQeuDvx2ZuE5Xza2EfgTfzlRRQq7qEgKBNDpt7W+EUL6imjxV8Sb
-         ZRKyaUxXHp60fiK5aIsysDyyn6BW9/jeioDaKmn2n+eN8JVnTKCwBwMkd2SqrydaxhBg
-         paMDMrR9YGPfDhXx8lUzTJHQGMEDKOku286Jua4nWhPpFqS4i9YO0/1uyyDMSNtxTM7N
-         qjyg==
-X-Gm-Message-State: AC+VfDyVVZyb1BJLe4hb9V6L4mEcyRZUL7Pemsf99SoQkMbonqdPTvug
-        B1ZY8AnzYrz6syoa6j2ufYqh8Q/mYIJ1cyayMnUb6Q==
-X-Google-Smtp-Source: ACHHUZ71GE4h3Ar8VfQUiWo22IRSBv5ttVtQNSLUBPBoPH8eMTBu0NUl70AEvntkEM7vyQhaU/sudjfs814G2Jpsmkc=
-X-Received: by 2002:a5d:4c82:0:b0:309:38af:91c6 with SMTP id
- z2-20020a5d4c82000000b0030938af91c6mr2390353wrs.68.1684305242680; Tue, 16 May
- 2023 23:34:02 -0700 (PDT)
+        Wed, 17 May 2023 02:50:29 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07AE1F9;
+        Tue, 16 May 2023 23:50:28 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34H6Uogf015953;
+        Wed, 17 May 2023 06:50:10 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=xjEHHe3G4oxpB5wTQRg3eTNM6AlEMH3zCXXumh2MKPA=;
+ b=mdf7RlFiid6VuCbzv+gs8fqs0Njt9p6punb93Dfn95bUQHEJihquvFwi5PbzKFRYA6nF
+ /1hSrSvK1ggpec6ZJrDNJ8zP+eXMLjLH+iYOlwADJuGlPrpirSADjJpHlnayKKErR0KH
+ Zr2Ohhpq9TXSzkGoklnvaPVUNecnYsWEYGYwRU69sc48SeSu0/E4ni4xOs1ap7i/TR4z
+ 8eAx+sjGAmsxhDMqd2h4Q8ELw8D2ubpQxrUrLHYrASG1FOk+iCyGAG+ytZt7FA/1YUfw
+ SLhWZX71LXpIoAlNPOlcvoFbchhqk9bnvGAy5/JgFV1irF4ihu0H9W63E6glj2uZZg12 JQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qmrvhr4xf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 17 May 2023 06:50:10 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34H6o9OR032120
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 17 May 2023 06:50:09 GMT
+Received: from [10.216.22.19] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 16 May
+ 2023 23:50:03 -0700
+Message-ID: <4db69d3e-9aee-a0cd-aabd-88aaf7c6b210@quicinc.com>
+Date:   Wed, 17 May 2023 12:19:59 +0530
 MIME-Version: 1.0
-References: <20230516213308.2432018-1-bhupesh.sharma@linaro.org>
- <20230516213308.2432018-4-bhupesh.sharma@linaro.org> <2023051723-decibel-skiing-56ed@gregkh>
-In-Reply-To: <2023051723-decibel-skiing-56ed@gregkh>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Wed, 17 May 2023 12:03:51 +0530
-Message-ID: <CAH=2Ntx9LcH9Bm_n6u6KgN7oQXw7XhoxUuRBKEzk79btRxtt6w@mail.gmail.com>
-Subject: Re: [PATCH v5 3/5] usb: misc: eud: Add driver support for SM6115 / SM4250
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-usb@vger.kernel.org, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, linux-kernel@vger.kernel.org,
-        bhupesh.linux@gmail.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, krzysztof.kozlowski@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH V5 4/8] pinctrl: qcom: Add IPQ5018 pinctrl driver
+Content-Language: en-US
+To:     Andy Shevchenko <andy.shevchenko@gmail.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
+        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <robimarko@gmail.com>
+References: <20230516114523.3266419-1-quic_srichara@quicinc.com>
+ <20230516114523.3266419-5-quic_srichara@quicinc.com>
+ <02d1f821-4b1f-e4f2-0732-026f9b0b7ed9@quicinc.com>
+ <CAHp75VdLm7o83x9keZEUv9pDK2ZkWkQtMcLU148KyHZgf_6VUw@mail.gmail.com>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <CAHp75VdLm7o83x9keZEUv9pDK2ZkWkQtMcLU148KyHZgf_6VUw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: bUQbkQsSindQLwb6I5TtEpsnLVCPUJN3
+X-Proofpoint-GUID: bUQbkQsSindQLwb6I5TtEpsnLVCPUJN3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-16_14,2023-05-16_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=743
+ impostorscore=0 adultscore=0 mlxscore=0 suspectscore=0 clxscore=1015
+ spamscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305170056
+X-Spam-Status: No, score=-5.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Greg,
 
-On Wed, 17 May 2023 at 10:21, Greg KH <gregkh@linuxfoundation.org> wrote:
->
-> On Wed, May 17, 2023 at 03:03:06AM +0530, Bhupesh Sharma wrote:
-> > Add SM6115 / SM4250 SoC EUD support in qcom_eud driver.
->
-> Why is the subject line duplicated here?
->
-> > On some SoCs (like the SM6115 / SM4250 SoC), the mode manager
-> > needs to be accessed only via the secure world (through 'scm'
-> > calls).
-> >
-> > Also, the enable bit inside 'tcsr_check_reg' needs to be set
-> > first to set the eud in 'enable' mode on these SoCs.
-> >
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >  drivers/usb/misc/Kconfig    |  1 +
-> >  drivers/usb/misc/qcom_eud.c | 69 +++++++++++++++++++++++++++++++++----
->
-> Given that you didn't cc the usb maintainer, I'm guessing you don't want
-> this patch applied?
 
-Oops, I will do that in the next version.
+On 5/16/2023 10:23 PM, Andy Shevchenko wrote:
+> On Tue, May 16, 2023 at 2:58 PM Sricharan Ramabadhran
+> <quic_srichara@quicinc.com> wrote:
+>> On 5/16/2023 5:15 PM, Sricharan Ramabadhran wrote:
+> 
+> ...
+> 
+>>>    [v5] Rebased patch on top of "Add pinctrl support for SDX75" series
+>>>         and fixed other comments from andy.shevchenko@gmail.com
+>>>
+>>     I rebased this on top of [1] series. But if that takes time to merge,
+>>     can i post this without that dependency and get this merged ?
+>>
+>> [1] https://lore.kernel.org/r/1683718725-14869-1-git-send-email-
+>>      quic_rohiagar@quicinc.com
+> 
+> First of all, please remove so-o long context which is not related _at
+> all_ in this conversation right now.
+> 
 
-> >  2 files changed, 63 insertions(+), 7 deletions(-)
-> >
-> > diff --git a/drivers/usb/misc/Kconfig b/drivers/usb/misc/Kconfig
-> > index 99b15b77dfd5..fe1b5fec1dfc 100644
-> > --- a/drivers/usb/misc/Kconfig
-> > +++ b/drivers/usb/misc/Kconfig
-> > @@ -147,6 +147,7 @@ config USB_APPLEDISPLAY
-> >  config USB_QCOM_EUD
-> >       tristate "QCOM Embedded USB Debugger(EUD) Driver"
-> >       depends on ARCH_QCOM || COMPILE_TEST
-> > +     select QCOM_SCM
->
-> How well is that going to work on building on non-QCOM systems?  Can
-> QCOM_SCM build if COMPILE_TEST is enabled?  select is rough to get
-> right, are you sure it's correct here?  If so, some documentation in the
-> changelog would be appreciated.
+   ok
 
-Ok, I will double check.
+> Regarding your question, you need to talk to the respective
+> maintainers how to proceed. The best is that all stakeholders pull an
+> immutable branch/tag with that series applied from pin control
+> maintainer (Linus W) and your series on top of that.
+> 
+   Sure, I have anyways posted V6 on top of that series already.
+   From [1], Linus already applied that and my V6 applied/works
+   fine on top of that. So it should be all fine.
 
-> >       select USB_ROLE_SWITCH
-> >       help
-> >         This module enables support for Qualcomm Technologies, Inc.
-> > diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
-> > index b7f13df00764..10d194604d4c 100644
-> > --- a/drivers/usb/misc/qcom_eud.c
-> > +++ b/drivers/usb/misc/qcom_eud.c
-> > @@ -5,12 +5,14 @@
-> >
-> >  #include <linux/bitops.h>
-> >  #include <linux/err.h>
-> > +#include <linux/firmware/qcom/qcom_scm.h>
->
-> There's no rule to keep these sorted, but it's your choice...
 
-Sure.
+   [1] 
+https://lore.kernel.org/netdev/CACRpkdbu95hkFWJtCKoUXCyLfS2hxUywD41iF45ZtgKzqjXAJw@mail.gmail.com/T/
 
-> >  #include <linux/interrupt.h>
-> >  #include <linux/io.h>
-> >  #include <linux/iopoll.h>
-> >  #include <linux/kernel.h>
-> >  #include <linux/module.h>
-> >  #include <linux/of.h>
-> > +#include <linux/of_device.h>
-> >  #include <linux/platform_device.h>
-> >  #include <linux/slab.h>
-> >  #include <linux/sysfs.h>
-> > @@ -22,23 +24,33 @@
-> >  #define EUD_REG_VBUS_INT_CLR 0x0080
-> >  #define EUD_REG_CSR_EUD_EN   0x1014
-> >  #define EUD_REG_SW_ATTACH_DET        0x1018
-> > -#define EUD_REG_EUD_EN2        0x0000
-> > +#define EUD_REG_EUD_EN2              0x0000
->
-> Why the coding style cleanup in the same patch?  Remember, changes only
-> do one thing, and you have already listed 2 things in your commit
-> message :(
-
-Sure, will spin a separate patch for cleanups.
-
-> >  #define EUD_ENABLE           BIT(0)
-> > -#define EUD_INT_PET_EUD      BIT(0)
-> > +#define EUD_INT_PET_EUD              BIT(0)
->
-> Again, why this change?
-
-Ack.
-Will send a v6 shortly.
-
-Thanks,
-Bhupesh
+Regards,
+  Sricharan
