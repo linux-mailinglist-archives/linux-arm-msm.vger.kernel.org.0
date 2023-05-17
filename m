@@ -2,71 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D9BAE707156
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 20:54:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 249F270717C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 21:07:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229812AbjEQSyb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 14:54:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48154 "EHLO
+        id S229820AbjEQTHP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 15:07:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54422 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbjEQSya (ORCPT
+        with ESMTP id S229453AbjEQTHO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 14:54:30 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7040192
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 11:54:28 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id 98e67ed59e1d1-24e01ba9e03so938345a91.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 11:54:28 -0700 (PDT)
+        Wed, 17 May 2023 15:07:14 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 823911FF5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 12:07:12 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-96b4ed40d97so180401866b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 12:07:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1684349668; x=1686941668;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=R54qrXpRXauvJnkZnQVt+Z87JHaYQBFqFu4dbWlWKuU=;
-        b=YOBsq8PP05/w38VDa0SXCGmdQh/1emiGk49qoBF9cz1Jc6Eoas/qpQPA7EbPAmB7S0
-         aZFk3Z2iHcKzdKa388FofA0Up5h+ZFapgP9NTHcTzV/eRtJZP0CeSe214oQGRChz4F96
-         88O5wM9zSkZr8bnOxQ3PwNnFIdFUoMaKhUmNk=
+        d=linaro.org; s=google; t=1684350431; x=1686942431;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sjU63skqCTcgfqPTFoQRuF0AORaTbY/dYzoZwYojga4=;
+        b=z3HRdzYzgb7UjvGGZLE0de4RfGjaC3dI0a5ll2R9nl/7xPCLVCo6CX8Q+/eerHdHrA
+         4tmNsl3Sx/I7IroS6mDSOx6dq1wo8qrru60XTcxUHwPGg3yeYmf7tgbXlZgiAvrioC2T
+         diG3ZxUu5VsXgk41DBmU10v8tBjqQAvrecXI6ZsAkiU4yTYwMXO86rxvoVH0fwYSkgrj
+         IF85hR4z3BqaWt1enBIlbjTdw9ii3619h0krlsqr+NNP6I1hQjehH0zS0c1gADaIBKg7
+         97WLq08U44+9SpvlzXtiT44t7eFJdS0f9+qxVOxWiO+f16TT67aOJtSm9Axabe69fh0P
+         BJgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684349668; x=1686941668;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=R54qrXpRXauvJnkZnQVt+Z87JHaYQBFqFu4dbWlWKuU=;
-        b=OIjSck3AXQ+TE2NEu8VwM4cV9/fUqvBNBJzXyAkdiTtpuf3OHxU+hmX/Qzlj2bp+wT
-         74eHWaIcqoiL5+wV70HG/O+QkgQiWXXzuWW+AaCAjxcVWT+V4zoAJjbcT4qc8IuTAoGD
-         91GRxoT6oRCk3jIS/NY/UGhgYsPGlKfqrwHacHKtG8VTGd+1LHYnF3epIK20Mi06NSak
-         tNoh2PSVjuFek8StR0Jm2vu4r0Nd3ypZm9srGy/MJSWqFiV43rGlAMe2slE63xuRk7nr
-         1Q85+AcwmFg1pypnGhRQCLDvG/IuUs3auu/M6D45Y7mA6eHRDhiwJ5HB16TUl7Wa+IO8
-         fiTw==
-X-Gm-Message-State: AC+VfDwrAaXFu7cMk88agotL3eBFmNs9XtoRE7JuAb51+z5SGj7xq6f1
-        /UrFbimChZ9HE+kagHrVo6iN2ATM0WkF+JiH4nk=
-X-Google-Smtp-Source: ACHHUZ6+0qmyB748J64aWK2VoC7egUUCgofve5208iCv5bsbGWtl4XBIGCzOemSDxj8LWHRRM1KRTA==
-X-Received: by 2002:a17:90b:2398:b0:253:3e9d:f92a with SMTP id mr24-20020a17090b239800b002533e9df92amr633903pjb.29.1684349668336;
-        Wed, 17 May 2023 11:54:28 -0700 (PDT)
-Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id om11-20020a17090b3a8b00b0024e268985b1sm1941458pjb.9.2023.05.17.11.54.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 May 2023 11:54:27 -0700 (PDT)
-Date:   Wed, 17 May 2023 11:54:27 -0700
-From:   Kees Cook <keescook@chromium.org>
-To:     "Gustavo A. R. Silva" <gustavoars@kernel.org>
-Cc:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org
-Subject: Re: [PATCH][next] media: venus: hfi_cmds: Replace fake flex-arrays
- with flexible-array members
-Message-ID: <202305171152.79664B158@keescook>
-References: <ZGQrSQ/zHu+pk7WU@work>
+        d=1e100.net; s=20221208; t=1684350431; x=1686942431;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sjU63skqCTcgfqPTFoQRuF0AORaTbY/dYzoZwYojga4=;
+        b=VTo1k+TI0l3w6BlBB60yRLsrclZJ2uAkqllU8zIa2YcK8P9phYn9jdGpPWAM0M3FKA
+         5uWp/Qn0//OYm7M6MStVOa3kTVzB3m8aReMGh+qKR/sN816D8FPrdkMIdhrYWTvobYY4
+         hlxbxQcEPpf2KQHMUKeNBxhHHPdjJBay+5BG+14nBxqy0r2Ch1sPNAXZAw25tfKlY+DG
+         VRkpdoBuU+4dBYUrilGIjXZwQU8n8R2uBYW7TX4rpLARN3WeHTnlGtuaiVuB8qL7c4v3
+         NAby7HzqqgbTrNvKbn634/fg1Y5iQDWbgmWfgh6HRVKMYk9n8ZQNXFZDlx+pSlVi05oi
+         XIbQ==
+X-Gm-Message-State: AC+VfDy57dgmapMpb5KMH1DsS+uGN4bDMJ6A4ppRNTC6alD6eUsId92x
+        D7RCmrL1e0MM99wZH/QNMinwAw==
+X-Google-Smtp-Source: ACHHUZ5B92EqkTOQwxl3OS8GU6Zy19JKsxA9kUMtqvA27n8/1/XjFdFaEe6RdAnyp6Qb4IEtOSqE5Q==
+X-Received: by 2002:a17:907:7b98:b0:947:55ad:dd00 with SMTP id ne24-20020a1709077b9800b0094755addd00mr40841052ejc.26.1684350430968;
+        Wed, 17 May 2023 12:07:10 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:d7a:e7cc:21b3:c435? ([2a02:810d:15c0:828:d7a:e7cc:21b3:c435])
+        by smtp.gmail.com with ESMTPSA id hs32-20020a1709073ea000b009534211cc97sm12663542ejc.159.2023.05.17.12.07.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 May 2023 12:07:09 -0700 (PDT)
+Message-ID: <a10695f5-e7d6-7fac-695c-a5b1c17ad56a@linaro.org>
+Date:   Wed, 17 May 2023 21:07:06 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZGQrSQ/zHu+pk7WU@work>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: pmi8998: add flash LED
+To:     Dylan Van Assche <me@dylanvanassche.be>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        amartinz@shiftphones.com
+References: <20230517182133.72590-1-me@dylanvanassche.be>
+ <20230517182133.72590-2-me@dylanvanassche.be>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230517182133.72590-2-me@dylanvanassche.be>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,29 +80,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 16, 2023 at 07:18:01PM -0600, Gustavo A. R. Silva wrote:
-> One-element arrays are deprecated, and we are replacing them with flexible
-> array members instead. So, replace one-element arrays with flexible-array
-> members in multiple structures.
+On 17/05/2023 20:21, Dylan Van Assche wrote:
+> Qualcomm PMIC PMI8998 has a 3 channel flash LED driver which is used
+> by many phones for 1 or 2 flash LEDs. Each LED can be used in flash mode
+> or torch mode. Add the flash LED node to PMI8998 DTS.
 > 
-> This helps with the ongoing efforts to tighten the FORTIFY_SOURCE
-> routines on memcpy() and help us make progress towards globally
-> enabling -fstrict-flex-arrays=3 [1].
+> Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
+> ---
+>  arch/arm64/boot/dts/qcom/pmi8998.dtsi | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
-> This results in no differences in binary output.
-> 
-> Link: https://github.com/KSPP/linux/issues/79
-> Link: https://github.com/KSPP/linux/issues/294
-> Link: https://gcc.gnu.org/pipermail/gcc-patches/2022-October/602902.html [1]
-> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+> diff --git a/arch/arm64/boot/dts/qcom/pmi8998.dtsi b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> index ffe587f281d8..89f959353ad5 100644
+> --- a/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> @@ -60,6 +60,12 @@ pmi8998_lpg: pwm {
+>  			status = "disabled";
+>  		};
+>  
+> +		pmi8998_flash: led-controller@d300 {
+> +			compatible = "qcom,spmi-flash-led";
 
-The subject is very close to the related patch (plural vs non-plural):
-https://lore.kernel.org/all/e4b13d7b79d1477e775c6d4564f7b23c4cf967f2.1684278538.git.gustavoars@kernel.org/
+This cannot be alone.
 
-So it might be nice to name struct hfi_session_set_buffers_pkt
-specifically in the other patch's subject, but otherwise:
+It does not look like you tested the DTS against bindings. Please run
+`make dtbs_check` (see
+Documentation/devicetree/bindings/writing-schema.rst for instructions).
 
-Reviewed-by: Kees Cook <keescook@chromium.org>
+Best regards,
+Krzysztof
 
--- 
-Kees Cook
