@@ -2,170 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4161670740C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 23:21:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CA5A0707425
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 23:24:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229770AbjEQVV1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 17:21:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32840 "EHLO
+        id S230063AbjEQVYA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 17:24:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229578AbjEQVV0 (ORCPT
+        with ESMTP id S230130AbjEQVX7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 17:21:26 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D507E61B3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:20:53 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 828873F6B3;
-        Wed, 17 May 2023 23:19:44 +0200 (CEST)
-Date:   Wed, 17 May 2023 23:19:43 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v11 4/9] drm/msm/dsi: use DRM DSC helpers for DSC setup
-Message-ID: <l6sqloieycjla32a7mgchdmlccczzukl7hiqpy7spfyxg4q6y2@x5dph6s3nguw>
-References: <20230329-rfc-msm-dsc-helper-v11-0-30270e1eeac3@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v11-4-30270e1eeac3@quicinc.com>
+        Wed, 17 May 2023 17:23:59 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 956EEE51
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:23:33 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2ac8ee9cf7aso13523591fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 14:23:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684358609; x=1686950609;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EIEqKwPabef9WSSFqkvljMpDwhrfc8zvSY2jSb3gR3A=;
+        b=lQ9+fXGrNYb2F27NPBYOaleD8aX/AyoGQtt7Cdi7uALJmO1s4GWTd4IznmyWp7Mr2h
+         E4OROenI/eYJQVWvRL4a/ozz7gepNOnNnh2H2TAUcl5g6FSaxqe/Gt50mm1N4L3QeRAa
+         ho+YN8zbovYXr2fNpoCa3pQftVcCWhQ+zGD1Ei2nnmuZqZVMrwJAOvce/OWQ7jUL1Rgd
+         P26JhuqHkMJ/nCqrfC0ASpWr+yB9itUiaJkObjLDmOKujbEA2X8CFhdzjIhP2zUN1AlB
+         Hqyr0Noz0J2q//RSnaOsH4vBVOt/cjL8vz46iFMS3qFzc56/l7uxJ6aD05Me9ifWjh4Q
+         s2Eg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684358609; x=1686950609;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EIEqKwPabef9WSSFqkvljMpDwhrfc8zvSY2jSb3gR3A=;
+        b=jbjrMLTUKhLrrs6qmCs0sL0+o+Erxwx8T9FVDOCVsclwoWIhqXHU2/9W9SmTuP3hpL
+         L5db3CpXfStgPcGYYl8AkKxDLxquk1nS6LSSD+nU3rclQ+t6g+gAKaCi7CL/iDm1g45s
+         TWN88Pk7Ys1HcPqtLkgmBDi6pODyQbP5l2W5/nfaNa0gb4m8csZMFycVZuchz6HQP1cT
+         Z+xVVQkecfWvM0LKwsJ5dVHuTXu+CZB1VvRWS5JdbHDhsum0LUGBGgxlIWFIrvb0HjYM
+         qOLs8C8tKnGUR5HBcrCtj/x6BKkqy+qGyafBCF/F8q1SDMqHxNDAUauK1e5GDwM1SYng
+         URhw==
+X-Gm-Message-State: AC+VfDwPQAumfcoasK9nWSJZ4lh8NOunQoJ6lKfJo42b78OFUWYnrBf1
+        DoXGSi6ZcC/ASW945UpIo9NiPA==
+X-Google-Smtp-Source: ACHHUZ4001udylTG7mZCZpg+TNsGeE/xtbXjzhS1B/zlUDocbhq/vo/xg/nQTpNYk0+21lTA3mBbVw==
+X-Received: by 2002:ac2:491c:0:b0:4f3:792c:289d with SMTP id n28-20020ac2491c000000b004f3792c289dmr556905lfi.20.1684358608722;
+        Wed, 17 May 2023 14:23:28 -0700 (PDT)
+Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
+        by smtp.gmail.com with ESMTPSA id h9-20020ac25d69000000b004f00d3d9df9sm5405lft.188.2023.05.17.14.23.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 May 2023 14:23:28 -0700 (PDT)
+Message-ID: <fc89ff77-08d4-851e-b209-df017285e86a@linaro.org>
+Date:   Wed, 17 May 2023 23:23:26 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230329-rfc-msm-dsc-helper-v11-4-30270e1eeac3@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] arm64: dts: qcom: sc8280xp: Flush RSC sleep & wake votes
+Content-Language: en-US
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230512150425.3171122-1-quic_bjorande@quicinc.com>
+ <f6ecd66b-e207-0ed9-0ff3-1febfdf5bce9@linaro.org>
+ <20230515023828.jqrrqkit5ygovimp@ripper>
+ <1ecd0cba-296e-b036-f59e-f679c771ae9f@linaro.org>
+ <20230516210143.GB606695@hu-bjorande-lv.qualcomm.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230516210143.GB606695@hu-bjorande-lv.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-17 11:51:13, Jessica Zhang wrote:
-> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> Use new DRM DSC helpers to setup DSI DSC configuration. The
-> initial_scale_value needs to be adjusted according to the standard, but
-> this is a separate change.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 
-Nothing changed since v10 so it should have been finde to pick up my
-r-b [1]?
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-
-[1]: https://lore.kernel.org/linux-arm-msm/6f3v5xmv66yw7mxecwqbrj6mxlfos3cwosb6xqs7hjbgrjgfqz@acm27l7qot5f/
-
-- Marijn
-
-> ---
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 61 +++++---------------------------------
->  1 file changed, 8 insertions(+), 53 deletions(-)
+On 16.05.2023 23:01, Bjorn Andersson wrote:
+> On Mon, May 15, 2023 at 11:34:45AM +0200, Konrad Dybcio wrote:
+>>
+>>
+>> On 15.05.2023 04:38, Bjorn Andersson wrote:
+>>> On Sat, May 13, 2023 at 11:09:07AM +0200, Konrad Dybcio wrote:
+>>>>
+>>>>
+>>>> On 12.05.2023 17:04, Bjorn Andersson wrote:
+>>>>> The rpmh driver will cache sleep and wake votes until the cluster
+>>>>> power-domain is about to enter idle, to avoid unnecessary writes. So
+>>>>> associate the apps_rsc with the cluster pd, so that it can be notified
+>>>>> about this event.
+>>>>>
+>>>>> Without this, only AMC votes are being commited.
+>>>> Ouch.
+>>>>
+>>>> Should we make this required: in bindings and add it to all
+>>>> platforms?
+>>>>
+>>>
+>>> I though this was an optimization and in the absence of this callback
+>>> the driver would just write out wake and sleep sets as well. But per the
+>>> current implementation (and perhaps some underlying cause?) it is indeed
+>>> required, if you care about power consumption.
+>> Hm.. since it's not strictly required for operation, would something
+>> like this be fitting?:
+>>
 > 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 961689a255c4..74d38f90398a 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -1731,28 +1731,9 @@ static int dsi_host_parse_lane_data(struct msm_dsi_host *msm_host,
->  	return -EINVAL;
->  }
->  
-> -static u32 dsi_dsc_rc_buf_thresh[DSC_NUM_BUF_RANGES - 1] = {
-> -	0x0e, 0x1c, 0x2a, 0x38, 0x46, 0x54, 0x62,
-> -	0x69, 0x70, 0x77, 0x79, 0x7b, 0x7d, 0x7e
-> -};
-> -
-> -/* only 8bpc, 8bpp added */
-> -static char min_qp[DSC_NUM_BUF_RANGES] = {
-> -	0, 0, 1, 1, 3, 3, 3, 3, 3, 3, 5, 5, 5, 7, 13
-> -};
-> -
-> -static char max_qp[DSC_NUM_BUF_RANGES] = {
-> -	4, 4, 5, 6, 7, 7, 7, 8, 9, 10, 11, 12, 13, 13, 15
-> -};
-> -
-> -static char bpg_offset[DSC_NUM_BUF_RANGES] = {
-> -	2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -12, -12, -12
-> -};
-> -
->  static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc_config *dsc)
->  {
-> -	int i;
-> -	u16 bpp = dsc->bits_per_pixel >> 4;
-> +	int ret;
->  
->  	if (dsc->bits_per_pixel & 0xf) {
->  		DRM_DEV_ERROR(&msm_host->pdev->dev, "DSI does not support fractional bits_per_pixel\n");
-> @@ -1764,49 +1745,23 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
->  		return -EOPNOTSUPP;
->  	}
->  
-> -	dsc->rc_model_size = 8192;
-> -	dsc->first_line_bpg_offset = 12;
-> -	dsc->rc_edge_factor = 6;
-> -	dsc->rc_tgt_offset_high = 3;
-> -	dsc->rc_tgt_offset_low = 3;
->  	dsc->simple_422 = 0;
->  	dsc->convert_rgb = 1;
->  	dsc->vbr_enable = 0;
->  
-> -	/* handle only bpp = bpc = 8 */
-> -	for (i = 0; i < DSC_NUM_BUF_RANGES - 1 ; i++)
-> -		dsc->rc_buf_thresh[i] = dsi_dsc_rc_buf_thresh[i];
-> +	drm_dsc_set_const_params(dsc);
-> +	drm_dsc_set_rc_buf_thresh(dsc);
->  
-> -	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
-> -		dsc->rc_range_params[i].range_min_qp = min_qp[i];
-> -		dsc->rc_range_params[i].range_max_qp = max_qp[i];
-> -		/*
-> -		 * Range BPG Offset contains two's-complement signed values that fill
-> -		 * 8 bits, yet the registers and DCS PPS field are only 6 bits wide.
-> -		 */
-> -		dsc->rc_range_params[i].range_bpg_offset = bpg_offset[i] & DSC_RANGE_BPG_OFFSET_MASK;
-> +	/* handle only bpp = bpc = 8, pre-SCR panels */
-> +	ret = drm_dsc_setup_rc_params(dsc, DRM_DSC_1_1_PRE_SCR);
-> +	if (ret) {
-> +		DRM_DEV_ERROR(&msm_host->pdev->dev, "could not find DSC RC parameters\n");
-> +		return ret;
->  	}
->  
-> -	dsc->initial_offset = 6144;		/* Not bpp 12 */
-> -	if (bpp != 8)
-> -		dsc->initial_offset = 2048;	/* bpp = 12 */
-> -
-> -	if (dsc->bits_per_component <= 10)
-> -		dsc->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
-> -	else
-> -		dsc->mux_word_size = DSC_MUX_WORD_SIZE_12_BPC;
-> -
-> -	dsc->initial_xmit_delay = 512;
->  	dsc->initial_scale_value = 32;
-> -	dsc->first_line_bpg_offset = 12;
->  	dsc->line_buf_depth = dsc->bits_per_component + 1;
->  
-> -	/* bpc 8 */
-> -	dsc->flatness_min_qp = 3;
-> -	dsc->flatness_max_qp = 12;
-> -	dsc->rc_quant_incr_limit0 = 11;
-> -	dsc->rc_quant_incr_limit1 = 11;
-> -
->  	return drm_dsc_compute_rc_parameters(dsc);
->  }
->  
+> I don't think it's required for operation, but the current
+> implementation does require it.
 > 
-> -- 
-> 2.40.1
+> So I think we should either require it in the binding to mimic the
+> implementation, or the implementation should handle either case (only
+> with a performance impact)
+Let's just require it then.
+
+Konrad
 > 
+>> oneOf:
+>>   - required:
+>>       [...]
+>>       - power-domains
+>>
+>>   - required:
+>>       [...]
+>>     deprecated: true
+>>
+>> (if it even works this way)
+> 
+> I don't think it's worth supporting the combinations.
+> 
+> Regards,
+> Bjorn
+> 
+>>
+>> Konrad
+>>>
+>>>>>
+>>>>> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+>>>>> ---
+>>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>> Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
+>>>>
+>>>
+>>> The Fixes sounds reasonable.
+>>>
+>>> Thanks,
+>>> Bjorn
+>>>
+>>>> Konrad
+>>>>>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 1 +
+>>>>>  1 file changed, 1 insertion(+)
+>>>>>
+>>>>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>>>> index 8fa9fbfe5d00..5c68f2182c2f 100644
+>>>>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>>>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>>>>> @@ -3982,6 +3982,7 @@ apps_rsc: rsc@18200000 {
+>>>>>  			qcom,tcs-config = <ACTIVE_TCS  2>, <SLEEP_TCS   3>,
+>>>>>  					  <WAKE_TCS    3>, <CONTROL_TCS 1>;
+>>>>>  			label = "apps_rsc";
+>>>>> +			power-domains = <&CLUSTER_PD>;
+>>>>>  
+>>>>>  			apps_bcm_voter: bcm-voter {
+>>>>>  				compatible = "qcom,bcm-voter";
