@@ -2,475 +2,272 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBBEB706586
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 12:42:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43FDC70658B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 May 2023 12:44:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229921AbjEQKmm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 06:42:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58250 "EHLO
+        id S229654AbjEQKor (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 06:44:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229904AbjEQKml (ORCPT
+        with ESMTP id S229904AbjEQKoq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 06:42:41 -0400
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DDA0420B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 03:42:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1684320155; x=1715856155;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=sWYakdGes8V2hKnHB756o9sqPJngGkgGg0x0xltIfWw=;
-  b=Ys3Pl9iZx/dmgW8+zyOjOuh8JGKxSjicRAreLCZuShGFaZxWY5/iLm1S
-   2hBCJz6o+7FU5xIfMNQMm6L2Vj7mdte7yvcp2zHWH6KorsK5/1wAKWoA7
-   Q1St6H9pSJAM4ibk0QADSp0cMtxCqWbVwbM6Qt6qu/irTFvytz0k2Evl1
-   KNDMS3dsDGqOIb3rMOkf4UeJK3/Kbv5B/AY3TFWxSpYvhT99W3YmiZWQY
-   MPf3m7jlXi2n4AnNsMD/YHuJNQ8p71Shihq/WMu2UpvfYZZfuIUua7ips
-   HBlEXl8vlSEgpMXpNjrbrlmi92/jvOlhLcBj2slReScGYabt62YHaiYiw
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10712"; a="350560129"
-X-IronPort-AV: E=Sophos;i="5.99,281,1677571200"; 
-   d="scan'208";a="350560129"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 May 2023 03:42:35 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10712"; a="771417748"
-X-IronPort-AV: E=Sophos;i="5.99,281,1677571200"; 
-   d="scan'208";a="771417748"
-Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
-  by fmsmga004.fm.intel.com with ESMTP; 17 May 2023 03:42:35 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.23; Wed, 17 May 2023 03:42:34 -0700
-Received: from fmsmsx603.amr.corp.intel.com (10.18.126.83) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.23; Wed, 17 May 2023 03:42:34 -0700
-Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
- fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.23 via Frontend Transport; Wed, 17 May 2023 03:42:34 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.106)
- by edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
+        Wed, 17 May 2023 06:44:46 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7B7097;
+        Wed, 17 May 2023 03:44:44 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34H96Cq4010037;
+        Wed, 17 May 2023 10:44:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=bFnCwGczl3OS9F2aTvxsraVLaxiRaaqktdcvI5Dvz6k=;
+ b=IaiQAFS5WVtG8L5SpXbnC8Wo/6e5vo7FHIYRlyY3Q7X8W20+thJwUAzdUrso5+GRUR3J
+ g3sHywdbIctw1wU+zDcxCvm+6hdxpBTlek/yZazsQfvIANa0E+gbFNZg99e1ALLXIpyQ
+ p9cTe/GuDka7Nl2JkHhypNlWUdq6DJrJWsGgDY495gJjgpJTbtZg4ypZhFDd5mgZUJP5
+ SiAa5Xqxvj3pw81yDaSvh4d3Y9npc9B0dKJv0uT4dNpVyA9wkbQ+DR3cKo2UZz1Te+Lz
+ MltSbsBCx/CvxrRuljeapwbS3zUg//mUwwxKtAuRizXXtHS73XiO3km7/9uQcFeJ6kLJ bg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qme0m9smd-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 17 May 2023 10:44:40 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34HAidNJ017404
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 17 May 2023 10:44:39 GMT
+Received: from tjiang-gv.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.23; Wed, 17 May 2023 03:42:34 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WgV00Cf8wejNSB1/62akNIlQaZmejsvIuTPEMo54hQQQ7aCPA2MQC0qCzxsyMP5ixkTdN/mRW665D+LHIe+mOx3p3Xvpdg5dUL4VAtiQ32Gv7+IXtQekxrTre/RUE+odN43bzNFNJkgctjmKOV0OzJd5eeN559h4cik3uTUh5BpAf5wo2Llcz8pkUSS4BGLqFiwizUYPlwzTseQqTT/52SieDLnSTDCtb5xpKTu/8OiVwXMMGE8xtJ2Jd0fOeePCQYNedCVqfexPpFyTsq+RjoSnjwQu6LJNdVpzFGHJZD7ZJmhJKJ1Cn0w617q4sPmVJjfcPRYAHLOJXom7XBvllA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HwhWCU+shhb1oQVZWGtf92kj/8IFUXswMI8HPxFdX0g=;
- b=fFoHvnW6RyhWdLb3OV/VYOrtncJfb8wNxH8Gt29knUQjjK2CqorN1Km81tTX0NbVeyWJdCwTYuinSfj41DivNSYn1xgJr2jQhcXrj7p9ZppzDJ0N++YCf1VOV6wBRMWG5p3THYFzGi0F0DfA+3uG5udhercrw612dmtkh0S+bj8u7y4sCu1xWPjIfShIQS8zHcuA7qg+9Pf42ZG6iHTvHD7o3q6gjvHzqamVMI8D7c8mPNZ0Eslo9JGry2DHWmjauB1W6yzkVYNPTs+dFeb4bvxayka8SKKGJC8pJIKRhQ45z0oaHyJRcXy4N2sLRJGSN257rhBz/IuzoO8Cx7lCNg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SN7PR11MB6750.namprd11.prod.outlook.com (2603:10b6:806:266::21)
- by SJ2PR11MB7598.namprd11.prod.outlook.com (2603:10b6:a03:4c6::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6387.30; Wed, 17 May
- 2023 10:42:32 +0000
-Received: from SN7PR11MB6750.namprd11.prod.outlook.com
- ([fe80::3c34:3b9d:4abf:d93c]) by SN7PR11MB6750.namprd11.prod.outlook.com
- ([fe80::3c34:3b9d:4abf:d93c%3]) with mapi id 15.20.6387.030; Wed, 17 May 2023
- 10:42:31 +0000
-From:   "Kandpal, Suraj" <suraj.kandpal@intel.com>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        "Vivi, Rodrigo" <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     =?iso-8859-1?Q?Ville_Syrj=E4l=E4?= <ville.syrjala@linux.intel.com>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>
-Subject: RE: [PATCH v7 6/8] drm/display/dsc: split DSC 1.2 and DSC 1.1
- (pre-SCR) parameters
-Thread-Topic: [PATCH v7 6/8] drm/display/dsc: split DSC 1.2 and DSC 1.1
- (pre-SCR) parameters
-Thread-Index: AQHZiKpNklz9nwIHl0S1ZcPePAxJcK9eRBLg
-Date:   Wed, 17 May 2023 10:42:31 +0000
-Message-ID: <SN7PR11MB67506715FEA682D6FC61C073E37E9@SN7PR11MB6750.namprd11.prod.outlook.com>
-References: <20230517102807.2181589-1-dmitry.baryshkov@linaro.org>
- <20230517102807.2181589-7-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230517102807.2181589-7-dmitry.baryshkov@linaro.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SN7PR11MB6750:EE_|SJ2PR11MB7598:EE_
-x-ms-office365-filtering-correlation-id: 625de435-0505-451e-a02e-08db56c36afb
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: NdpiL9yZnxR9/dpm0ZCq1nEki0WbOHHvsgGEAvrJNYh3lPW3yy8wPYH0fHg2S7Q007tuiQ1dHBt9VHqAvHMt0Ji3Dmk+u53PUtqRZgmMlky1lndFZNezwwl+DB0lhCT/hBtz57n6Dly5muwjbUtWUrYbKN8NN5X9pv+9nHu1kc2bVQrEn15uGkm4yqeBny/Ts33c9CthKMf8rFuc/4SvOVO88mhA8+31Ju8jWniDH5O5NuktsAIiuXnUc6UrIO+KO7yRIMsi4+vYHFVX57aFg+wMNE324FehTSm7I6sMU5xkA7voPySii+8HJBTtcVSDiv1XYKv43QywlmYrss7XcaqF+QZyWhSBAK5P6H82nA1gBuatH1y4j+1RR0WwS3tYrEZ341gD0mSOBJMmmErvJN6cqGU/zF0eXqMygkkYGSZ+XOWDIFpenpPZHpm9yVxHxqEb9GLq8BT8qjNE3FyzrNt/zoB83Xa6hfrX3k6lBS5fbpaEL5u30YG0Xd6WILyshW9fwlEokbP78dVpnLy9vNjgWK6hvVyOCqUO+qnIu2oFa16DJ/WjGZJkFg48mvinwBvpe7gUle6BXnRCYCCk5M02qpmzN2iBxRCEJCtDMuJEU5qXWHBYwv9GI7QeajMN
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN7PR11MB6750.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(346002)(136003)(39860400002)(396003)(376002)(366004)(451199021)(7696005)(66556008)(9686003)(66446008)(66946007)(76116006)(66476007)(64756008)(316002)(478600001)(4326008)(110136005)(54906003)(5660300002)(71200400001)(41300700001)(52536014)(186003)(6506007)(30864003)(55016003)(26005)(8676002)(8936002)(7416002)(38100700002)(2906002)(38070700005)(83380400001)(33656002)(921005)(82960400001)(122000001)(86362001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?39GyLr/Lso7TcLFn09RaZLgkhRfGQEK7Ku1B8TxbJLoE0bwN1KC2dwz0HL?=
- =?iso-8859-1?Q?3yrovzb+wGUBR6lfs8MpGndKGArZrhPZrimm/M4hTCmqRjO2vbA9duTGC/?=
- =?iso-8859-1?Q?bgomcdKDsV0vzDdGoMuDobyqy4Uz0pLlmPL2098zRyIJGXJnYF6a4h22dV?=
- =?iso-8859-1?Q?2h//I9K6TXI5tOkBZhXmxyeW0FpBxwl/ddtiRd7N6+BdwvM7VTOsKbCagx?=
- =?iso-8859-1?Q?cF9xJ/tw9jGPPG6hMA8+ggGC2RukvlJf6DnX3wIu6mW82fpoub6nYGKur2?=
- =?iso-8859-1?Q?O3IqGZzK7q6sltf1YqQeYqDeKXOVBdafncmEKbKHcQGih+EB2gO/v1c+5q?=
- =?iso-8859-1?Q?HOeLIIqK7vsZWAEME61sEj43NiYYrTpJ7SFoCmWuXJq6YNQYuJZdA6voRn?=
- =?iso-8859-1?Q?k1xPzD+rq4ej7YnY6zwsk8iTD0aZuLjk8N0h5Bvvkah4u2AbXN7J5gp0Fc?=
- =?iso-8859-1?Q?fD8btfNmO6eExQjRfDTu/FUAXz66mZJ+jPKwNbXxtcbUkRuzN1JKwkAWd9?=
- =?iso-8859-1?Q?JJ/JqQlHFyQBt0dXLyFQHW8VHYO843xbXfE6XhNIRKGo68CKpDX6rQUdBm?=
- =?iso-8859-1?Q?xFcEhKlnBrvEvmgJeVD5rKK5DLhUEVDmsY5cCooxfjQ5CWL0MsBjm/YnuW?=
- =?iso-8859-1?Q?q3HGSpvcr4EprfG2iVP1PT2ZXavqpEWIBc83LSeKOZWibGrhwbaihFA0rR?=
- =?iso-8859-1?Q?kuTbIj1L+PVlKPHieIeP7JAcJSiml/0xoAYkHO+4b11/B1rvEV7t/nKUeX?=
- =?iso-8859-1?Q?h085qvsbTpC8ObvLQM+hTJCzDH9SFK0SfZjxavBZXzW584C8QWEiX+7ItU?=
- =?iso-8859-1?Q?G0t+sxTZrooB3SZTTn5xmdGIA4X9caXPnTIcyEhB8BCDsNbYn7GaNVLFlJ?=
- =?iso-8859-1?Q?pB3Kiv/N0XPHXFy4yAHyOdRgyap9NPCbRE/EsfRF2+UzzWpvtg2Y2uEsOe?=
- =?iso-8859-1?Q?R38Lk9qOvXlDqmQF706Fxl0Bk8jG9A/V71+qZryHhPx+XrBJa3fODDQp7g?=
- =?iso-8859-1?Q?b//nUR3715TyXC84h6Qf70IQSdR68AN6CodL2XZSIjz8j5sNdMfcjwwrqp?=
- =?iso-8859-1?Q?boEK7rMGcuaXftWJP9tsXZkDjfZXpjZEjxcklACUX8gBRdixXNg6Xk6M55?=
- =?iso-8859-1?Q?6M5zzF2DXUzjeg7Y7gajwDJIGz3Ni8vHSlSdQo2o2WxNGGBmpxo0mfN8N8?=
- =?iso-8859-1?Q?SIYvvKv5JWo0EjjWEuwKeDioF6TGporjNyGsfA7SGHUXA4vSdXiYm0cL27?=
- =?iso-8859-1?Q?jvD1mxkG+IuK287AoJARPSyIP1D/w/RMYloLeNp9WDjUkxpY8rKNcqGz1T?=
- =?iso-8859-1?Q?jCOruV5PG/qsfqH7zNhBKGIkixSYaKEhlmUo7OdjeJEQpZ0B+f29W2i78i?=
- =?iso-8859-1?Q?XbjrictIeLOel0YoOx063u2w0WxRUxy08px9CI6zQ+Oh9jK5HEgdFsYes3?=
- =?iso-8859-1?Q?Xjxit22QiIYu3oR86g/RXTlAV+qzsPyWNDjEzlUyfZsjBv3DEM5fhgJY6T?=
- =?iso-8859-1?Q?KW1ckznnpi1v990cLIdXUJPXD54/9rTDpqNrqM8XmrrXXUD2SWr2IzT8O8?=
- =?iso-8859-1?Q?EjTobYlNg9cYi7t5IU0/b5J3CuJh94uMvcZCfEAtjco/3OWzBGIZFmCpnF?=
- =?iso-8859-1?Q?8ZgNhXoirhGESe9MFs84nKkGJL0pK/lPcO?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ 15.2.986.42; Wed, 17 May 2023 03:44:37 -0700
+From:   Tim Jiang <quic_tjiang@quicinc.com>
+To:     <marcel@holtmann.org>
+CC:     <linux-kernel@vger.kernel.org>, <linux-bluetooth@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <quic_tjiang@quicinc.com>,
+        <quic_bgodavar@quicinc.com>, <quic_hemantg@quicinc.com>,
+        <mka@chromium.org>
+Subject: [PATCH v4] Bluetooth: hci_qca: Add support for Qualcomm Bluetooth SoC QCA2066
+Date:   Wed, 17 May 2023 18:44:26 +0800
+Message-ID: <20230517104426.14055-1-quic_tjiang@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SN7PR11MB6750.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 625de435-0505-451e-a02e-08db56c36afb
-X-MS-Exchange-CrossTenant-originalarrivaltime: 17 May 2023 10:42:31.6221
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: vxsfEzgCyguF8+jbvMZM5FQhsIbGVRdSpxxbJLN2pblMbFhm+0Ivchtd8MWoyexIBPNbpOblYktu46WtSHMN3A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB7598
-X-OriginatorOrg: intel.com
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: BAI6Bd6tcv-bgQq4KRgoXT3dOAmqXYVZ
+X-Proofpoint-ORIG-GUID: BAI6Bd6tcv-bgQq4KRgoXT3dOAmqXYVZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-17_02,2023-05-16_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 suspectscore=0 phishscore=0 malwarescore=0 bulkscore=0
+ spamscore=0 adultscore=0 mlxlogscore=999 mlxscore=0 lowpriorityscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305170087
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
->=20
-> The array of rc_parameters contains a mixture of parameters from DSC 1.1
-> and DSC 1.2 standards. Split these tow configuration arrays in preparatio=
-n to
-> adding more configuration data.
->=20
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+This patch adds support for QCA2066 firmware patch and nvm downloading.
 
-LGTM.
+Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
+---
+ drivers/bluetooth/btqca.c   | 76 ++++++++++++++++++++++++++++++++++++-
+ drivers/bluetooth/btqca.h   |  4 ++
+ drivers/bluetooth/hci_qca.c |  8 +++-
+ 3 files changed, 86 insertions(+), 2 deletions(-)
 
-Reviewed-by: Suraj Kandpal
-
-> ---
->  drivers/gpu/drm/display/drm_dsc_helper.c  | 139 ++++++++++++++++++----
-> drivers/gpu/drm/i915/display/intel_vdsc.c |  10 +-
->  include/drm/display/drm_dsc_helper.h      |   7 +-
->  3 files changed, 129 insertions(+), 27 deletions(-)
->=20
-> diff --git a/drivers/gpu/drm/display/drm_dsc_helper.c
-> b/drivers/gpu/drm/display/drm_dsc_helper.c
-> index acb93d4116e0..f1ba39df5708 100644
-> --- a/drivers/gpu/drm/display/drm_dsc_helper.c
-> +++ b/drivers/gpu/drm/display/drm_dsc_helper.c
-> @@ -325,10 +325,88 @@ struct rc_parameters_data {
->  #define DSC_BPP(bpp)	((bpp) << 4)
->=20
->  /*
-> - * Selected Rate Control Related Parameter Recommended Values
-> - * from DSC_v1.11 spec & C Model release: DSC_model_20161212
-> + * Rate Control Related Parameter Recommended Values from DSC_v1.1
-> spec
-> + prior
-> + * to DSC 1.1 fractional bpp underflow SCR (DSC_v1.1_E1.pdf)
-> + *
-> + * Cross-checked against C Model releases: DSC_model_20161212 and
-> + 20210623
->   */
-> -static const struct rc_parameters_data rc_parameters[] =3D {
-> +static const struct rc_parameters_data rc_parameters_pre_scr[] =3D {
-> +	{
-> +		.bpp =3D DSC_BPP(8), .bpc =3D 8,
-> +		{ 512, 12, 6144, 3, 12, 11, 11, {
-> +			{ 0, 4, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
-> +			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
-> +			{ 3, 9, -8 }, { 3, 10, -10 }, { 5, 11, -10 }, { 5, 12, -12 },
-> +			{ 5, 13, -12 }, { 7, 13, -12 }, { 13, 15, -12 }
-> +			}
-> +		}
-> +	},
-> +	{
-> +		.bpp =3D DSC_BPP(8), .bpc =3D 10,
-> +		{ 512, 12, 6144, 7, 16, 15, 15, {
-> +			/*
-> +			 * DSC model/pre-SCR-cfg has 8 for
-> range_max_qp[0], however
-> +			 * VESA DSC 1.1 Table E-5 sets it to 4.
-> +			 */
-> +			{ 0, 4, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 5, 10, -2 },
-> +			{ 7, 11, -4 }, { 7, 11, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
-> +			{ 7, 13, -8 }, { 7, 14, -10 }, { 9, 15, -10 }, { 9, 16, -12 },
-> +			{ 9, 17, -12 }, { 11, 17, -12 }, { 17, 19, -12 }
-> +			}
-> +		}
-> +	},
-> +	{
-> +		.bpp =3D DSC_BPP(8), .bpc =3D 12,
-> +		{ 512, 12, 6144, 11, 20, 19, 19, {
-> +			{ 0, 12, 2 }, { 4, 12, 0 }, { 9, 13, 0 }, { 9, 14, -2 },
-> +			{ 11, 15, -4 }, { 11, 15, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
-> +			{ 11, 17, -8 }, { 11, 18, -10 }, { 13, 19, -10 },
-> +			{ 13, 20, -12 }, { 13, 21, -12 }, { 15, 21, -12 },
-> +			{ 21, 23, -12 }
-> +			}
-> +		}
-> +	},
-> +	{
-> +		.bpp =3D DSC_BPP(12), .bpc =3D 8,
-> +		{ 341, 15, 2048, 3, 12, 11, 11, {
-> +			{ 0, 2, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
-> +			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
-> +			{ 3, 9, -8 }, { 3, 10, -10 }, { 5, 11, -10 },
-> +			{ 5, 12, -12 }, { 5, 13, -12 }, { 7, 13, -12 }, { 13, 15, -12 }
-> +			}
-> +		}
-> +	},
-> +	{
-> +		.bpp =3D DSC_BPP(12), .bpc =3D 10,
-> +		{ 341, 15, 2048, 7, 16, 15, 15, {
-> +			{ 0, 2, 2 }, { 2, 5, 0 }, { 3, 7, 0 }, { 4, 8, -2 },
-> +			{ 6, 9, -4 }, { 7, 10, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
-> +			{ 7, 13, -8 }, { 7, 14, -10 }, { 9, 15, -10 }, { 9, 16, -12 },
-> +			{ 9, 17, -12 }, { 11, 17, -12 }, { 17, 19, -12 }
-> +			}
-> +		}
-> +	},
-> +	{
-> +		.bpp =3D DSC_BPP(12), .bpc =3D 12,
-> +		{ 341, 15, 2048, 11, 20, 19, 19, {
-> +			{ 0, 6, 2 }, { 4, 9, 0 }, { 7, 11, 0 }, { 8, 12, -2 },
-> +			{ 10, 13, -4 }, { 11, 14, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
-> +			{ 11, 17, -8 }, { 11, 18, -10 }, { 13, 19, -10 },
-> +			{ 13, 20, -12 }, { 13, 21, -12 }, { 15, 21, -12 },
-> +			{ 21, 23, -12 }
-> +			}
-> +		}
-> +	},
-> +	{ /* sentinel */ }
-> +};
-> +
-> +/*
-> + * Selected Rate Control Related Parameter Recommended Values from DSC
-> +v1.2, v1.2a, v1.2b and
-> + * DSC_v1.1_E1 specs.
-> + *
-> + * Cross-checked against C Model releases: DSC_model_20161212 and
-> +20210623  */ static const struct rc_parameters_data
-> +rc_parameters_1_2_444[] =3D {
->  	{
->  		.bpp =3D DSC_BPP(6), .bpc =3D 8,
->  		{ 768, 15, 6144, 3, 13, 11, 11, {
-> @@ -388,22 +466,18 @@ static const struct rc_parameters_data
-> rc_parameters[] =3D {
->  		{ 512, 12, 6144, 3, 12, 11, 11, {
->  			{ 0, 4, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
->  			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
-> -			{ 3, 9, -8 }, { 3, 10, -10 }, { 5, 11, -10 }, { 5, 12, -12 },
-> -			{ 5, 13, -12 }, { 7, 13, -12 }, { 13, 15, -12 }
-> +			{ 3, 9, -8 }, { 3, 10, -10 }, { 5, 10, -10 }, { 5, 11, -12 },
-> +			{ 5, 11, -12 }, { 9, 12, -12 }, { 12, 13, -12 }
->  			}
->  		}
->  	},
->  	{
->  		.bpp =3D DSC_BPP(8), .bpc =3D 10,
->  		{ 512, 12, 6144, 7, 16, 15, 15, {
-> -			/*
-> -			 * DSC model/pre-SCR-cfg has 8 for
-> range_max_qp[0], however
-> -			 * VESA DSC 1.1 Table E-5 sets it to 4.
-> -			 */
-> -			{ 0, 4, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 5, 10, -2 },
-> +			{ 0, 8, 2 }, { 4, 8, 0 }, { 5, 9, 0 }, { 5, 10, -2 },
->  			{ 7, 11, -4 }, { 7, 11, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
-> -			{ 7, 13, -8 }, { 7, 14, -10 }, { 9, 15, -10 }, { 9, 16, -12 },
-> -			{ 9, 17, -12 }, { 11, 17, -12 }, { 17, 19, -12 }
-> +			{ 7, 13, -8 }, { 7, 14, -10 }, { 9, 14, -10 }, { 9, 15, -12 },
-> +			{ 9, 15, -12 }, { 13, 16, -12 }, { 16, 17, -12 }
->  			}
->  		}
->  	},
-> @@ -412,9 +486,9 @@ static const struct rc_parameters_data
-> rc_parameters[] =3D {
->  		{ 512, 12, 6144, 11, 20, 19, 19, {
->  			{ 0, 12, 2 }, { 4, 12, 0 }, { 9, 13, 0 }, { 9, 14, -2 },
->  			{ 11, 15, -4 }, { 11, 15, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
-> -			{ 11, 17, -8 }, { 11, 18, -10 }, { 13, 19, -10 },
-> -			{ 13, 20, -12 }, { 13, 21, -12 }, { 15, 21, -12 },
-> -			{ 21, 23, -12 }
-> +			{ 11, 17, -8 }, { 11, 18, -10 }, { 13, 18, -10 },
-> +			{ 13, 19, -12 }, { 13, 19, -12 }, { 17, 20, -12 },
-> +			{ 20, 21, -12 }
->  			}
->  		}
->  	},
-> @@ -498,8 +572,8 @@ static const struct rc_parameters_data
-> rc_parameters[] =3D {
->  		{ 341, 15, 2048, 3, 12, 11, 11, {
->  			{ 0, 2, 2 }, { 0, 4, 0 }, { 1, 5, 0 }, { 1, 6, -2 },
->  			{ 3, 7, -4 }, { 3, 7, -6 }, { 3, 7, -8 }, { 3, 8, -8 },
-> -			{ 3, 9, -8 }, { 3, 10, -10 }, { 5, 11, -10 },
-> -			{ 5, 12, -12 }, { 5, 13, -12 }, { 7, 13, -12 }, { 13, 15, -12 }
-> +			{ 3, 8, -8 }, { 3, 9, -10 }, { 5, 9, -10 }, { 5, 9, -12 },
-> +			{ 5, 9, -12 }, { 7, 10, -12 }, { 10, 11, -12 }
->  			}
->  		}
->  	},
-> @@ -508,8 +582,8 @@ static const struct rc_parameters_data
-> rc_parameters[] =3D {
->  		{ 341, 15, 2048, 7, 16, 15, 15, {
->  			{ 0, 2, 2 }, { 2, 5, 0 }, { 3, 7, 0 }, { 4, 8, -2 },
->  			{ 6, 9, -4 }, { 7, 10, -6 }, { 7, 11, -8 }, { 7, 12, -8 },
-> -			{ 7, 13, -8 }, { 7, 14, -10 }, { 9, 15, -10 }, { 9, 16, -12 },
-> -			{ 9, 17, -12 }, { 11, 17, -12 }, { 17, 19, -12 }
-> +			{ 7, 12, -8 }, { 7, 13, -10 }, { 9, 13, -10 }, { 9, 13, -12 },
-> +			{ 9, 13, -12 }, { 11, 14, -12 }, { 14, 15, -12 }
->  			}
->  		}
->  	},
-> @@ -518,9 +592,9 @@ static const struct rc_parameters_data
-> rc_parameters[] =3D {
->  		{ 341, 15, 2048, 11, 20, 19, 19, {
->  			{ 0, 6, 2 }, { 4, 9, 0 }, { 7, 11, 0 }, { 8, 12, -2 },
->  			{ 10, 13, -4 }, { 11, 14, -6 }, { 11, 15, -8 }, { 11, 16, -8 },
-> -			{ 11, 17, -8 }, { 11, 18, -10 }, { 13, 19, -10 },
-> -			{ 13, 20, -12 }, { 13, 21, -12 }, { 15, 21, -12 },
-> -			{ 21, 23, -12 }
-> +			{ 11, 16, -8 }, { 11, 17, -10 }, { 13, 17, -10 },
-> +			{ 13, 17, -12 }, { 13, 17, -12 }, { 15, 18, -12 },
-> +			{ 18, 19, -12 }
->  			}
->  		}
->  	},
-> @@ -602,7 +676,8 @@ static const struct rc_parameters_data
-> rc_parameters[] =3D {
->  	{ /* sentinel */ }
->  };
->=20
-> -static const struct rc_parameters *get_rc_params(u16 dsc_bpp,
-> +static const struct rc_parameters *get_rc_params(const struct
-> rc_parameters_data *rc_parameters,
-> +						 u16 dsc_bpp,
->  						 u8 bits_per_component)
->  {
->  	int i;
-> @@ -622,11 +697,13 @@ static const struct rc_parameters
-> *get_rc_params(u16 dsc_bpp,
->   * function.
->   *
->   * @vdsc_cfg: DSC Configuration data partially filled by driver
-> + * @type: operating mode and standard to follow
->   *
->   * Return: 0 or -error code in case of an error
->   */
-> -int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg)
-> +int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg, enum
-> +drm_dsc_params_type type)
->  {
-> +	const struct rc_parameters_data *data;
->  	const struct rc_parameters *rc_params;
->  	int i;
->=20
-> @@ -634,7 +711,19 @@ int drm_dsc_setup_rc_params(struct
-> drm_dsc_config *vdsc_cfg)
->  			 !vdsc_cfg->bits_per_component))
->  		return -EINVAL;
->=20
-> -	rc_params =3D get_rc_params(vdsc_cfg->bits_per_pixel,
-> +	switch (type) {
-> +	case DRM_DSC_1_2_444:
-> +		data =3D rc_parameters_1_2_444;
-> +		break;
-> +	case DRM_DSC_1_1_PRE_SCR:
-> +		data =3D rc_parameters_pre_scr;
-> +		break;
-> +	default:
-> +		return -EINVAL;
-> +	}
-> +
-> +	rc_params =3D get_rc_params(data,
-> +				  vdsc_cfg->bits_per_pixel,
->  				  vdsc_cfg->bits_per_component);
->  	if (!rc_params)
->  		return -EINVAL;
-> diff --git a/drivers/gpu/drm/i915/display/intel_vdsc.c
-> b/drivers/gpu/drm/i915/display/intel_vdsc.c
-> index d4340b18c18d..bd9116d2cd76 100644
-> --- a/drivers/gpu/drm/i915/display/intel_vdsc.c
-> +++ b/drivers/gpu/drm/i915/display/intel_vdsc.c
-> @@ -226,7 +226,15 @@ int intel_dsc_compute_params(struct
-> intel_crtc_state *pipe_config)
->  	if (DISPLAY_VER(dev_priv) >=3D 13) {
->  		calculate_rc_params(vdsc_cfg);
->  	} else {
-> -		ret =3D drm_dsc_setup_rc_params(vdsc_cfg);
-> +		if ((compressed_bpp =3D=3D 8 ||
-> +		     compressed_bpp =3D=3D 12) &&
-> +		    (vdsc_cfg->bits_per_component =3D=3D 8 ||
-> +		     vdsc_cfg->bits_per_component =3D=3D 10 ||
-> +		     vdsc_cfg->bits_per_component =3D=3D 12))
-> +			ret =3D drm_dsc_setup_rc_params(vdsc_cfg,
-> DRM_DSC_1_1_PRE_SCR);
-> +		else
-> +			ret =3D drm_dsc_setup_rc_params(vdsc_cfg,
-> DRM_DSC_1_2_444);
-> +
->  		if (ret)
->  			return ret;
->=20
-> diff --git a/include/drm/display/drm_dsc_helper.h
-> b/include/drm/display/drm_dsc_helper.h
-> index 1681791f65a5..66eac7276d04 100644
-> --- a/include/drm/display/drm_dsc_helper.h
-> +++ b/include/drm/display/drm_dsc_helper.h
-> @@ -10,12 +10,17 @@
->=20
->  #include <drm/display/drm_dsc.h>
->=20
-> +enum drm_dsc_params_type {
-> +	DRM_DSC_1_2_444,
-> +	DRM_DSC_1_1_PRE_SCR, /* legacy params from DSC 1.1 */ };
-> +
->  void drm_dsc_dp_pps_header_init(struct dp_sdp_header *pps_header);  int
-> drm_dsc_dp_rc_buffer_size(u8 rc_buffer_block_size, u8 rc_buffer_size);
-> void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set
-> *pps_sdp,
->  			      const struct drm_dsc_config *dsc_cfg);  void
-> drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg); -int
-> drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg);
-> +int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg, enum
-> +drm_dsc_params_type type);
->  int drm_dsc_compute_rc_parameters(struct drm_dsc_config *vdsc_cfg);
->=20
->  #endif /* _DRM_DSC_HELPER_H_ */
-> --
-> 2.39.2
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index fd0941fe8608..9bb0ba6fe00d 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -205,6 +205,48 @@ static int qca_send_reset(struct hci_dev *hdev)
+ 	return 0;
+ }
+ 
++static int qca_read_fw_board_id(struct hci_dev *hdev, u16 *bid)
++{
++	u8 cmd;
++	struct sk_buff *skb;
++	struct edl_event_hdr *edl;
++	int err = 0;
++	int bid_len;
++
++	bt_dev_dbg(hdev, "QCA read board ID");
++
++	cmd = EDL_GET_BID_REQ_CMD;
++	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CMD_LEN,
++				&cmd, 0, HCI_INIT_TIMEOUT);
++	if (IS_ERR(skb)) {
++		err = PTR_ERR(skb);
++		bt_dev_err(hdev, "Reading QCA board ID failed (%d)", err);
++		return err;
++	}
++
++	edl = skb_pull_data(skb, sizeof(*edl));
++	if (!edl) {
++		bt_dev_err(hdev, "QCA read board ID with no header");
++		err = -EILSEQ;
++		goto out;
++	}
++
++	if (edl->cresp != EDL_CMD_REQ_RES_EVT ||
++	    edl->rtype != EDL_GET_BID_REQ_CMD) {
++		bt_dev_err(hdev, "QCA Wrong packet: %d %d", edl->cresp, edl->rtype);
++		err = -EIO;
++		goto out;
++	}
++
++	bid_len = edl->data[0];
++	*bid = (edl->data[1] << 8) + edl->data[2];
++	bt_dev_info(hdev, "%s: bid len = %x, bid = %x", __func__, bid_len, *bid);
++
++out:
++	kfree_skb(skb);
++	return err;
++}
++
+ int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
+ {
+ 	struct sk_buff *skb;
+@@ -574,6 +616,29 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
+ }
+ EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
+ 
++static void qca_generate_nvm_name(struct hci_dev *hdev, char *fwname,
++		   size_t max_size, struct qca_btsoc_version ver, u16 bid)
++{
++	u8 rom_ver = 0;
++	u32 soc_ver;
++	const char *variant;
++
++	soc_ver = get_soc_ver(ver.soc_id, ver.rom_ver);
++	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
++
++	if ((ver.soc_id & 0x0000ff00) == QCA_HSP_GF_SOC_ID)  /* hsp gf chip */
++		variant = "g";
++	else
++		variant = "";
++
++	if (bid == 0x0)
++		snprintf(fwname, max_size, "qca/hpnv%02x%s.bin", rom_ver, variant);
++	else
++		snprintf(fwname, max_size, "qca/hpnv%02x%s.%x", rom_ver, variant, bid);
++
++	bt_dev_info(hdev, "%s: nvm name is %s", __func__, fwname);
++}
++
+ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
+ 		   const char *firmware_name)
+@@ -582,6 +647,7 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 	int err;
+ 	u8 rom_ver = 0;
+ 	u32 soc_ver;
++	u16 boardid = 0;
+ 
+ 	bt_dev_dbg(hdev, "QCA setup on UART");
+ 
+@@ -604,6 +670,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 	if (qca_is_wcn399x(soc_type)) {
+ 		snprintf(config.fwname, sizeof(config.fwname),
+ 			 "qca/crbtfw%02x.tlv", rom_ver);
++	} else if (soc_type == QCA_QCA2066) {
++		snprintf(config.fwname, sizeof(config.fwname),
++			 "qca/hpbtfw%02x.tlv", rom_ver);
+ 	} else if (soc_type == QCA_QCA6390) {
+ 		snprintf(config.fwname, sizeof(config.fwname),
+ 			 "qca/htbtfw%02x.tlv", rom_ver);
+@@ -631,6 +700,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 	/* Give the controller some time to get ready to receive the NVM */
+ 	msleep(10);
+ 
++	if (soc_type == QCA_QCA2066)
++		qca_read_fw_board_id(hdev, &boardid);
++
+ 	/* Download NVM configuration */
+ 	config.type = TLV_TYPE_NVM;
+ 	if (firmware_name)
+@@ -644,7 +716,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 			snprintf(config.fwname, sizeof(config.fwname),
+ 				 "qca/crnv%02x.bin", rom_ver);
+ 		}
+-	}
++	} else if (soc_type == QCA_QCA2066)
++		qca_generate_nvm_name(hdev, config.fwname, sizeof(config.fwname),
++				ver, boardid);
+ 	else if (soc_type == QCA_QCA6390)
+ 		snprintf(config.fwname, sizeof(config.fwname),
+ 			 "qca/htnv%02x.bin", rom_ver);
+diff --git a/drivers/bluetooth/btqca.h b/drivers/bluetooth/btqca.h
+index b884095bcd9d..7c9b3464ae4a 100644
+--- a/drivers/bluetooth/btqca.h
++++ b/drivers/bluetooth/btqca.h
+@@ -13,6 +13,7 @@
+ #define EDL_PATCH_TLV_REQ_CMD		(0x1E)
+ #define EDL_GET_BUILD_INFO_CMD		(0x20)
+ #define EDL_NVM_ACCESS_SET_REQ_CMD	(0x01)
++#define EDL_GET_BID_REQ_CMD		(0x23)
+ #define EDL_PATCH_CONFIG_CMD		(0x28)
+ #define MAX_SIZE_PER_TLV_SEGMENT	(243)
+ #define QCA_PRE_SHUTDOWN_CMD		(0xFC08)
+@@ -48,6 +49,8 @@
+ 
+ #define QCA_FW_BUILD_VER_LEN		255
+ 
++#define QCA_HSP_GF_SOC_ID		0x1200
++
+ 
+ enum qca_baudrate {
+ 	QCA_BAUDRATE_115200 	= 0,
+@@ -145,6 +148,7 @@ enum qca_btsoc_type {
+ 	QCA_WCN3990,
+ 	QCA_WCN3998,
+ 	QCA_WCN3991,
++	QCA_QCA2066,
+ 	QCA_QCA6390,
+ 	QCA_WCN6750,
+ 	QCA_WCN6855,
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 1b064504b388..c7b8e1c630b4 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -1729,7 +1729,7 @@ static int qca_setup(struct hci_uart *hu)
+ 	bt_dev_info(hdev, "setting up %s",
+ 		qca_is_wcn399x(soc_type) ? "wcn399x" :
+ 		(soc_type == QCA_WCN6750) ? "wcn6750" :
+-		(soc_type == QCA_WCN6855) ? "wcn6855" : "ROME/QCA6390");
++		(soc_type == QCA_WCN6855) ? "wcn6855" : "ROME/QCA6390/QCA2066");
+ 
+ 	qca->memdump_state = QCA_MEMDUMP_IDLE;
+ 
+@@ -1874,6 +1874,11 @@ static const struct qca_device_data qca_soc_data_qca6390 __maybe_unused = {
+ 	.num_vregs = 0,
+ };
+ 
++static const struct qca_device_data qca_soc_data_qca2066 __maybe_unused = {
++	.soc_type = QCA_QCA2066,
++	.num_vregs = 0,
++};
++
+ static const struct qca_device_data qca_soc_data_wcn6750 __maybe_unused = {
+ 	.soc_type = QCA_WCN6750,
+ 	.vregs = (struct qca_vreg []) {
+@@ -2364,6 +2369,7 @@ static const struct of_device_id qca_bluetooth_of_match[] = {
+ 	{ .compatible = "qcom,wcn3998-bt", .data = &qca_soc_data_wcn3998},
+ 	{ .compatible = "qcom,wcn6750-bt", .data = &qca_soc_data_wcn6750},
+ 	{ .compatible = "qcom,wcn6855-bt", .data = &qca_soc_data_wcn6855},
++	{ .compatible = "qcom,qca2066-bt", .data = &qca_soc_data_qca2066},
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, qca_bluetooth_of_match);
+-- 
+2.17.1
 
