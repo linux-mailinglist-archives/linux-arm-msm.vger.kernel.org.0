@@ -2,79 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B53C6707D16
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 11:41:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF457707D37
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 11:49:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230060AbjERJls (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 05:41:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59362 "EHLO
+        id S230170AbjERJtB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 05:49:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230031AbjERJlr (ORCPT
+        with ESMTP id S230290AbjERJtB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 05:41:47 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA0D71733
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:41:44 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2ac770a99e2so19774651fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:41:44 -0700 (PDT)
+        Thu, 18 May 2023 05:49:01 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32BB81720
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:48:59 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f00c33c3d6so2223798e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:48:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684402903; x=1686994903;
+        d=linaro.org; s=google; t=1684403337; x=1686995337;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=vjqQeuYRpvMsut/c1evBJHvsSn9+lFSN53c//wdZ/FQ=;
-        b=lxGL7xCqkfKsajfk0zq6AGTDZOJpoTin3Km9a2j2J7UCTAc/bm5lJlyD7dzpe7oVHw
-         VHdmYA9VzOIDbztMGfrqrYPBFzMg+c+3Z15vl8v4yXx8Uwu08ELlxU00Gtrcyfo9ogQv
-         2EkiZIACXYEcjBYBqD0OlyJZELInl7+SVqbJKHxD7ScYIvIujwiwCViNuOyeJTp5Fdyw
-         kdxGwMNoaYtE/K+VjO4t84AnuvsgMsskyUcBb5yGxddAHj0lrbap0Khy5b16y1mqdp45
-         8hDP4UZ4RMi4dtkYMrr4G9C6w4Iwk1kUVPtmnrvW4WcjCwwLAG43sFSCzf/Enot42haK
-         wMCQ==
+        bh=2GnXEaoNLwvt/m9XpCMVWbr8cKI+gCa0zAel8TKE3gk=;
+        b=zHVieKgJXSOVBnyFh9W/eerTNjThyX64e1V7drkdNjoyMATIznYS26qilMUR+55LCu
+         sY74p+3d5lorxyJ2NJvT1fGC64nlXxzdR4zIwMj+1wbFGqueg+A5eVlChMWd2K23Lq29
+         NxF6IolN7lU2s6YT7JnVXFoIuXU901m2ah1S1nL5T6va5QKxrWnQGrEDUq060L6Iod12
+         tU9YYBV+cur5WpIE2DFlvZdcd8W9HnTwHA056AgoVuOTpwgAU36H9NgreRsabEqLTU4P
+         xIPXlW6qlOpX8s+JutTZSqxWC4LEUD0SxNg1clHhZKuOT7ZFnZnoLmJsvcFymyHkj/Mk
+         5MyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684402903; x=1686994903;
+        d=1e100.net; s=20221208; t=1684403337; x=1686995337;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vjqQeuYRpvMsut/c1evBJHvsSn9+lFSN53c//wdZ/FQ=;
-        b=SuifMD+Pah/xizTQflf+4ZxXrNENenVV+ASdS73T+3ST8nWtYBz/YRrgdNor5N1k7Q
-         wsJAQIAPZ8WhTwI2bKQI7Q4i2pdetJHtoJ5+Ih/ZtwBt8ndbTMHOZ1z1boVvwoHofHZX
-         wdvXf51gqiqR5VnpqqWMIU4hMnjcCnik6ED5VgP40/XbwB0gb8VjRJP13L87tay9M7Kp
-         EytZ4ur283/R46SD+nwAj2aNnYp/jePHjPoWnQxi961xZ80mYWtdmO8+eDChPHoh6wh0
-         9toY7td/yYV2FVGa2g3eWpypCOAq7ReBaRzDk31D8YocnOIO9oQRKiTQQ0lDaFSIdeCc
-         lCuA==
-X-Gm-Message-State: AC+VfDzmfDYhRjdJgDsf9SdTHwLn2gres7ITRIq8x4qXwNL03Ffufw30
-        MtBkxP35qvWz+m7wVPLjSvB7POeqjXaWxRyyQRc=
-X-Google-Smtp-Source: ACHHUZ4UT5ZdWhf2s2u0WXN8DiysRHiC8lCqC2j57Z6hovVUBC2/syVJt56WBhEu8aTwXLHOQllPDw==
-X-Received: by 2002:a05:651c:1047:b0:2ad:c1ec:fa3 with SMTP id x7-20020a05651c104700b002adc1ec0fa3mr8305804ljm.20.1684402902982;
-        Thu, 18 May 2023 02:41:42 -0700 (PDT)
+        bh=2GnXEaoNLwvt/m9XpCMVWbr8cKI+gCa0zAel8TKE3gk=;
+        b=fGw36ERCyensRDSusKfB5CVViPbRKIHlN9Gtvf7QxY6glrSSLH++bnTu4z9r0i3MfG
+         xRwV7ivF+hkCmw9RCeQZD1bIckS1B5wNUXJq+Ftcn11RHKF/mfsVEbVRcjOYoJrpVyc5
+         yRKCFU0OHVwpAfkMPqKfTtaPeeduntb4Gn772XMHINdaUuG1byNiI0C0lvGctCyuCSVp
+         1NHqQOVuC9wng4VfBD5969j7NyVGczUuwgNTKxRG7t8++qp6i3CpYi81ejJylQ+w2KcF
+         H/atk93fQcb69kh+uEmO530wDGn58In/ty54NjE9RpC+fCW1Wa4HYYinTOa8W9qtSAus
+         qJiw==
+X-Gm-Message-State: AC+VfDyTduRZdgRgwJD0/zrVnWbFJgSxKojFVn04Y49TXbeTQruG/JsZ
+        0gwjyfJxL7lXxe0LTvrOP457Fw==
+X-Google-Smtp-Source: ACHHUZ5YnvtT2zZVHIWpogOnglFbkJr/gASlvlkb6WiG6tTP6XhEF7LQQz/4XpZ4BBnsC7mdCqwieQ==
+X-Received: by 2002:ac2:550f:0:b0:4f3:8244:95e2 with SMTP id j15-20020ac2550f000000b004f3824495e2mr1159314lfk.50.1684403337377;
+        Thu, 18 May 2023 02:48:57 -0700 (PDT)
 Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id t16-20020a2e9d10000000b002aa3ad9014asm204808lji.54.2023.05.18.02.41.41
+        by smtp.gmail.com with ESMTPSA id a15-20020a056512020f00b004ecad67a925sm196303lfo.66.2023.05.18.02.48.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 May 2023 02:41:42 -0700 (PDT)
-Message-ID: <b050f3c4-6ff0-d687-73bf-0f98a2e74bed@linaro.org>
-Date:   Thu, 18 May 2023 11:41:41 +0200
+        Thu, 18 May 2023 02:48:56 -0700 (PDT)
+Message-ID: <2875f7ef-c43e-74f6-12b9-342bb2cfbaf8@linaro.org>
+Date:   Thu, 18 May 2023 11:48:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH 3/5] arm64: dts: qcom: qrb4210-rb2: Add GPIO LEDs
+Subject: Re: [PATCH] mmc: sdhci-msm: Disable broken 64-bit DMA on MSM8916
 Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230515-topic-rb2-bits-v1-0-a52d154a639d@linaro.org>
- <20230515-topic-rb2-bits-v1-3-a52d154a639d@linaro.org>
- <20230518021307.z63xrx5v2lhd3byf@ripper>
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230518-msm8916-64bit-v1-1-5694b0f35211@gerhold.net>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230518021307.z63xrx5v2lhd3byf@ripper>
+In-Reply-To: <20230518-msm8916-64bit-v1-1-5694b0f35211@gerhold.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,91 +80,76 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 18.05.2023 04:13, Bjorn Andersson wrote:
-> On Mon, May 15, 2023 at 03:04:14PM +0200, Konrad Dybcio wrote:
->> Add the three LEDs (blue/yellow/green) connected to TLMM GPIOs.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 36 ++++++++++++++++++++++++++++++--
->>  1 file changed, 34 insertions(+), 2 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
->> index 9b539720f05d..eeee268ebfe2 100644
->> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
->> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
->> @@ -5,6 +5,7 @@
->>  
->>  /dts-v1/;
->>  
->> +#include <dt-bindings/leds/common.h>
->>  #include "sm4250.dtsi"
->>  
->>  / {
->> @@ -30,6 +31,38 @@ hdmi_con: endpoint {
->>  		};
->>  	};
->>  
->> +	leds {
->> +		compatible = "gpio-leds";
->> +
->> +		led-bt {
->> +			label = "blue:bt";
->> +			function = LED_FUNCTION_BLUETOOTH;
->> +			color = <LED_COLOR_ID_BLUE>;
->> +			gpios = <&tlmm 45 GPIO_ACTIVE_HIGH>;
->> +			linux,default-trigger = "bluetooth-power";
->> +			default-state = "off";
->> +		};
->> +
->> +		led-user0 {
->> +			label = "green:user0";
->> +			function = LED_FUNCTION_INDICATOR;
->> +			color = <LED_COLOR_ID_GREEN>;
->> +			gpios = <&tlmm 52 GPIO_ACTIVE_HIGH>;
->> +			linux,default-trigger = "none";
->> +			default-state = "off";
->> +			panic-indicator;
->> +		};
->> +
->> +		led-wlan {
->> +			label = "yellow:wlan";
->> +			function = LED_FUNCTION_WLAN;
->> +			color = <LED_COLOR_ID_YELLOW>;
->> +			gpios = <&tlmm 47 GPIO_ACTIVE_HIGH>;
->> +			linux,default-trigger = "phy0tx";
->> +			default-state = "off";
->> +		};
->> +	};
->> +
->>  	vreg_hdmi_out_1p2: regulator-hdmi-out-1p2 {
->>  		compatible = "regulator-fixed";
->>  		regulator-name = "VREG_HDMI_OUT_1P2";
->> @@ -385,8 +418,7 @@ &sleep_clk {
->>  };
->>  
->>  &tlmm {
->> -	gpio-reserved-ranges = <43 2>, <47 1>,
->> -			       <49 1>, <52 1>, <54 1>,
->> +	gpio-reserved-ranges = <43 2>, <49 1>, <54 1>,
+On 18.05.2023 11:39, Stephan Gerhold wrote:
+> While SDHCI claims to support 64-bit DMA on MSM8916 it does not seem to
+> be properly functional. It is not immediately obvious because SDHCI is
+> usually used with IOMMU bypassed on this SoC, and all physical memory
+> has 32-bit addresses. But when trying to enable the IOMMU it quickly
+> fails with an error such as the following:
 > 
-> How come pin 49 becomes inaccessible here? Was this intended for the
-> previous patch?
-It doesn't, the "remove" part of the diff is 2-lines.
-
-This reserved-ranges is totally bogus since introduction.. I can send
-a separate patch squaring it out.
+>   arm-smmu 1e00000.iommu: Unhandled context fault:
+>     fsr=0x402, iova=0xfffff200, fsynr=0xe0000, cbfrsynra=0x140, cb=3
+>   mmc1: ADMA error: 0x02000000
+>   mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+>   mmc1: sdhci: Sys addr:  0x00000000 | Version:  0x00002e02
+>   mmc1: sdhci: Blk size:  0x00000008 | Blk cnt:  0x00000000
+>   mmc1: sdhci: Argument:  0x00000000 | Trn mode: 0x00000013
+>   mmc1: sdhci: Present:   0x03f80206 | Host ctl: 0x00000019
+>   mmc1: sdhci: Power:     0x0000000f | Blk gap:  0x00000000
+>   mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
+>   mmc1: sdhci: Timeout:   0x0000000a | Int stat: 0x00000001
+>   mmc1: sdhci: Int enab:  0x03ff900b | Sig enab: 0x03ff100b
+>   mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+>   mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x00008007
+>   mmc1: sdhci: Cmd:       0x0000333a | Max curr: 0x00000000
+>   mmc1: sdhci: Resp[0]:   0x00000920 | Resp[1]:  0x5b590000
+>   mmc1: sdhci: Resp[2]:   0xe6487f80 | Resp[3]:  0x0a404094
+>   mmc1: sdhci: Host ctl2: 0x00000008
+>   mmc1: sdhci: ADMA Err:  0x00000001 | ADMA Ptr: 0x0000000ffffff224
+>   mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
+>   mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:  0x60006400 | DLL cfg2: 0x00000000
+>   mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:  0x00000000 | DDR cfg: 0x00000000
+>   mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88018a8 Vndr func3: 0x00000000
+>   mmc1: sdhci: ============================================
+>   mmc1: sdhci: fffffffff200: DMA 0x0000ffffffffe100, LEN 0x0008, Attr=0x21
+>   mmc1: sdhci: fffffffff20c: DMA 0x0000000000000000, LEN 0x0000, Attr=0x03
+> 
+> Looking closely it's obvious that only the 32-bit part of the address
+> (0xfffff200) arrives at the SMMU, the higher 16-bit (0xffff...) get
+> lost somewhere. This might not be a limitation of the SDHCI itself but
+> perhaps the bus/interconnect it is connected to, or even the connection
+> to the SMMU.
+> 
+> Work around this by setting SDHCI_QUIRK2_BROKEN_64_BIT_DMA to avoid
+> using 64-bit addresses.
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+Would using 64bit address translation not require you to use (dma-)ranges
+with a greater-than-default size, like we do on newer platforms? Did you
+test that by chance?
 
 Konrad
-
+>  drivers/mmc/host/sdhci-msm.c | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
-> Regards,
-> Bjorn
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 8ac81d57a3df..1877d583fe8c 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -2479,6 +2479,9 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
+>  		msm_host->ddr_config = DDR_CONFIG_POR_VAL;
+>  
+>  	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
+> +
+> +	if (of_device_is_compatible(node, "qcom,msm8916-sdhci"))
+> +		host->quirks2 |= SDHCI_QUIRK2_BROKEN_64_BIT_DMA;
+>  }
+>  
+>  static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
 > 
->>  			       <56 3>, <61 2>, <64 1>,
->>  			       <68 1>, <72 8>, <96 1>;
->>  
->>
->> -- 
->> 2.40.1
->>
+> ---
+> base-commit: d4ebc9419afbac330e9ec0d2936108742aa4d97a
+> change-id: 20230518-msm8916-64bit-f5bcf6af7679
+> 
+> Best regards,
