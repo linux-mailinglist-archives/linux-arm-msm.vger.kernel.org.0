@@ -2,73 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 008A0707D6B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 11:57:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D35F707D6D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 11:57:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230318AbjERJ5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 05:57:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38832 "EHLO
+        id S230199AbjERJ54 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 05:57:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230323AbjERJ5n (ORCPT
+        with ESMTP id S230341AbjERJ5z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 05:57:43 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA05D10CA
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:57:40 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2af1c884b08so1345481fa.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:57:40 -0700 (PDT)
+        Thu, 18 May 2023 05:57:55 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37489E4E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:57:51 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f004cc54f4so2236724e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:57:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684403859; x=1686995859;
+        d=linaro.org; s=google; t=1684403869; x=1686995869;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=NG81Hvhp9Jezbz57sI5ty/V2MncOzknsBAnNjODvXNA=;
-        b=QYRU1OuSfJALtMZbzZJcWOzE/EUpPp5XHN32GeUBGSqA0qFvrN8OEjIvlnn8ZdZc0w
-         hf6CvAEGrssbe0tpBeeFgKLnRvB+7d/Kl+45c3FHENhJmp1KgWLxDcwgAR5cQayXjs+Z
-         FSvrXb6Ulg1vVUkXilSIMtK95cDtN4UDtz+5Pw7gwTrKOBXbRtNnp0Yc6jAkuDmRhtPC
-         46grWegzyv8+5zDjTHWnjhx2uzZMA3lRgTDA80RA7OHCH9Exw+vC91NJSeER33S2SVLn
-         gd1cAEAEsNSD2RU4ZREFNcmKKPPsCl9e4eCCQQtZ/wxbw3pkRelCiISmqV59iYI8OpJu
-         PZPg==
+        bh=+fi2K2ih8ubNNH5ts+siPsdYefNa7Updp+53R5c4EGk=;
+        b=J/vAfma9k1hVBwvI1U0sxejKv2JbtGG6vzM5w4TozX/waKbatEu2l4ZHOoYQsq+rET
+         bBKN/mm46IE8mJiUFA/048Ej/CxgCYxteYHYKTAPzAxwvvxH0nidBtm8Vk4ESkCKxcy1
+         ZlTQ+kGkuMhlR9ELtLeuIIlBZFpvfZ6FF/vF1pBRJh3cVIg/XS0cXvU1zNZ79MycZyIm
+         4hLuhVWllZEnAoH7RYg2yKiQp6qq7utgcKHe8n1F1f4DTzz0N4ivd4xWI23X4bfZMyXt
+         DlxQGlvbtwvEJMyprlG8pXVtSLKrFJMcaZvN8GIJllKJ+6zr0FlxJxwpnz83beFiLre4
+         KrPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684403859; x=1686995859;
+        d=1e100.net; s=20221208; t=1684403869; x=1686995869;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NG81Hvhp9Jezbz57sI5ty/V2MncOzknsBAnNjODvXNA=;
-        b=NnAZyj8VYJJ1luMiOALuP6/5e5zHy6pXmDGd6eR4pZwSlRkHhdPnbf+WR5RGpAWd1o
-         KH76lLICM/7eRkP9JQ8whxGT7yn/bBPE/APczBLb1qMZD0r5lErc85vQmbtYfJcBdZOe
-         STo7d6+tDAhbu4PBGKBZlG4Wuhn/zDw92R+XhOeQSYgKFUMEGXB1FzIaMr2Rpb6tbju6
-         M0V5P3KdTt9bIp4TjctvGOWFXdSs4bs/LfPERTZA7b806uZvh67/+wOKmLZd3v20w9JE
-         ZVTy/kIDiYdhEAyTJq/1vIBKHVBHRqzfeUID8eaD4waAB9M1XWBjZK5GA3r/p9Ir1N9o
-         W22A==
-X-Gm-Message-State: AC+VfDzIEHJoFKzaW91r4cl22Zs3TtRuVPJOfz9lCfiLk1QroJno5T8G
-        k6+LBgJAW5ObSJ0y0f2lM/TpsA==
-X-Google-Smtp-Source: ACHHUZ4lC3/7Pro9CW/fHIqUqGj2sbVcmgowiYOEovSX41gP8cjF3fT5zknO5kTxsircC8umKQTVNg==
-X-Received: by 2002:a2e:a4a6:0:b0:2a8:ea26:5c72 with SMTP id g6-20020a2ea4a6000000b002a8ea265c72mr2138143ljm.8.1684403858977;
-        Thu, 18 May 2023 02:57:38 -0700 (PDT)
+        bh=+fi2K2ih8ubNNH5ts+siPsdYefNa7Updp+53R5c4EGk=;
+        b=iTz5kvyZGcqEksJCNtGBafb+4g8djiHtP6pVwTfzsbUuAVzve2zNGdjV2+HWB2Td9G
+         i6j3NLBSHqiM2gs5aqKO3JrjBadzGlXfM5tdmXA0DvceUSsT1Ki9kPpN156Q7z1XqFMi
+         F2O4BAVqRsdXherqz/as6i556acHYVSK7anTUGWmtUm4W6XWznpz7sPpiUqK0P7aUyyp
+         nY20vBpRF69gMhMIW8caIciM6kYTV/ZzG3Jmdz9LKNssWA2ZprdQWb2vazh/E1qHSZD1
+         LtmiBUp3d5501spTsBnt1gccCEY7EkpArBbuCRaSvqfQ7nhO5OHZtSasszcfCAeIS3Rf
+         JSng==
+X-Gm-Message-State: AC+VfDx7aKvxkwP1T3L1edxK+B1jd1SIzIFDROSZHqmUT1AKRw5YPI/y
+        Zi/nyLk8B6EONbj25pJhNl1hvQ==
+X-Google-Smtp-Source: ACHHUZ7EGCNw+zzJkw+MsrJrijBrAQg2OgAeyFpyRWLczaVQ70GcXbkHlNU1ozBevshl36LBSWeNqQ==
+X-Received: by 2002:ac2:52b2:0:b0:4ef:ef67:65c9 with SMTP id r18-20020ac252b2000000b004efef6765c9mr1082916lfm.23.1684403869439;
+        Thu, 18 May 2023 02:57:49 -0700 (PDT)
 Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id y7-20020a2e9d47000000b002a8d01905f7sm201013ljj.101.2023.05.18.02.57.38
+        by smtp.gmail.com with ESMTPSA id w26-20020a19c51a000000b004eb3b6da6f5sm189050lfe.228.2023.05.18.02.57.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 May 2023 02:57:38 -0700 (PDT)
-Message-ID: <c811fe35-0930-ea38-5afa-0fceb8ee1837@linaro.org>
-Date:   Thu, 18 May 2023 11:57:37 +0200
+        Thu, 18 May 2023 02:57:49 -0700 (PDT)
+Message-ID: <17f26ff4-e71f-1469-843d-ee7a5cd566a1@linaro.org>
+Date:   Thu, 18 May 2023 11:57:47 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH 86/97] usb: misc: eud: Convert to platform remove callback
- returning void
+Subject: Re: [PATCH 92/97] usb: typec: qcom-pmic-typec: Convert to platform
+ remove callback returning void
 Content-Language: en-US
 To:     =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Souradeep Chowdhury <quic_schowdhu@quicinc.com>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
         kernel@pengutronix.de
 References: <20230517230239.187727-1-u.kleine-koenig@pengutronix.de>
- <20230517230239.187727-87-u.kleine-koenig@pengutronix.de>
+ <20230517230239.187727-93-u.kleine-koenig@pengutronix.de>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230517230239.187727-87-u.kleine-koenig@pengutronix.de>
+In-Reply-To: <20230517230239.187727-93-u.kleine-koenig@pengutronix.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -101,37 +101,37 @@ On 18.05.2023 01:02, Uwe Kleine-König wrote:
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  drivers/usb/misc/qcom_eud.c | 6 ++----
+>  drivers/usb/typec/qcom-pmic-typec.c | 6 ++----
 >  1 file changed, 2 insertions(+), 4 deletions(-)
 > 
-> diff --git a/drivers/usb/misc/qcom_eud.c b/drivers/usb/misc/qcom_eud.c
-> index b7f13df00764..0dc414463759 100644
-> --- a/drivers/usb/misc/qcom_eud.c
-> +++ b/drivers/usb/misc/qcom_eud.c
-> @@ -217,7 +217,7 @@ static int eud_probe(struct platform_device *pdev)
->  	return 0;
+> diff --git a/drivers/usb/typec/qcom-pmic-typec.c b/drivers/usb/typec/qcom-pmic-typec.c
+> index 432ea62f1bab..924af87fb26d 100644
+> --- a/drivers/usb/typec/qcom-pmic-typec.c
+> +++ b/drivers/usb/typec/qcom-pmic-typec.c
+> @@ -228,7 +228,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+>  	return ret;
 >  }
 >  
-> -static int eud_remove(struct platform_device *pdev)
-> +static void eud_remove(struct platform_device *pdev)
+> -static int qcom_pmic_typec_remove(struct platform_device *pdev)
+> +static void qcom_pmic_typec_remove(struct platform_device *pdev)
 >  {
->  	struct eud_chip *chip = platform_get_drvdata(pdev);
+>  	struct qcom_pmic_typec *qcom_usb = platform_get_drvdata(pdev);
 >  
-> @@ -226,8 +226,6 @@ static int eud_remove(struct platform_device *pdev)
+> @@ -237,8 +237,6 @@ static int qcom_pmic_typec_remove(struct platform_device *pdev)
 >  
->  	device_init_wakeup(&pdev->dev, false);
->  	disable_irq_wake(chip->irq);
+>  	typec_unregister_port(qcom_usb->port);
+>  	usb_role_switch_put(qcom_usb->role_sw);
 > -
 > -	return 0;
 >  }
 >  
->  static const struct of_device_id eud_dt_match[] = {
-> @@ -238,7 +236,7 @@ MODULE_DEVICE_TABLE(of, eud_dt_match);
+>  static const struct of_device_id qcom_pmic_typec_table[] = {
+> @@ -253,7 +251,7 @@ static struct platform_driver qcom_pmic_typec = {
+>  		.of_match_table = qcom_pmic_typec_table,
+>  	},
+>  	.probe = qcom_pmic_typec_probe,
+> -	.remove = qcom_pmic_typec_remove,
+> +	.remove_new = qcom_pmic_typec_remove,
+>  };
+>  module_platform_driver(qcom_pmic_typec);
 >  
->  static struct platform_driver eud_driver = {
->  	.probe	= eud_probe,
-> -	.remove	= eud_remove,
-> +	.remove_new = eud_remove,
->  	.driver	= {
->  		.name = "qcom_eud",
->  		.dev_groups = eud_groups,
