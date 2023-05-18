@@ -2,77 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2415F707D5B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 11:55:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C081D707D69
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 11:57:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230338AbjERJzS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 05:55:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37928 "EHLO
+        id S230328AbjERJ5e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 05:57:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230341AbjERJzS (ORCPT
+        with ESMTP id S230199AbjERJ5d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 05:55:18 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAD6A19B4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:55:13 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2ad89c7a84fso19392781fa.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:55:13 -0700 (PDT)
+        Thu, 18 May 2023 05:57:33 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2EB9E4E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:57:31 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2af1822b710so4423221fa.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:57:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684403712; x=1686995712;
+        d=linaro.org; s=google; t=1684403850; x=1686995850;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=U4y39yQeXgfshTFx8LmSwMssJPh2RhRz9IxqW/7rapk=;
-        b=js8tUXvIUOpLgtCGl0gjJeo7q7Ptbvp9VUWF5RYmreXr0lBQRn0lJ6FfPrczx+njss
-         naQGYXPCVNmqgEg/lVmN9Kq3J3x+0tv88V/V9uzoedXHshbooWiY3uATOK+Idn8TG0Qu
-         4Uq4wRNyph/Sv9AQZDhfKUomUAZj/egf9D+ozic9g0K1oj+kQt5RkEDQiEIqiH+SRuGb
-         8lZLrsO93bEx7pZLHQG5NSJRmaDGGvSVanBw3iT35Mc4aZDd1ZmeNx1mE1t5GyS/DOc7
-         wvqbhfwJBz8kBDxG8gavbJlsQmRUjsKOZYarK7OCrpL7tP4XWIcrGVwVkZVjuarQVXJp
-         dA7Q==
+        bh=ii3IQNZBUSQL/0xcT98KiKH1C3SWxauYsCsVnRYuILo=;
+        b=qyu0OzkxQib109sezttk43W2IzgKzmuHFxr4Pc8tRGrVcwLEuESTrcVHO6BfVHsKrI
+         mCTxYYwbur77+IhaHsgof6Sm1ZNrslHg0g3pW8uu/7MAgdWdJJaQexiFqRXEHexNEOSr
+         3t3Oab0zZPVFe39m828uI7X8ad7XQIKc3sXjhf81SeNUrQo7iizN+pOLnpPK+cCPp6wJ
+         7uEp2RUfW4YGwy4sHRgHLd66aWyoM7Tw3vp9BoT43aK0RSo8mFRvxbIwCqZOBjDiUg6S
+         QqJn28FTAyE34GTdluc4dOv+1DbK9mwv7TFHP0pjZdSx1aYBHfP5wNH27Byc441isHVs
+         MszA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684403712; x=1686995712;
+        d=1e100.net; s=20221208; t=1684403850; x=1686995850;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=U4y39yQeXgfshTFx8LmSwMssJPh2RhRz9IxqW/7rapk=;
-        b=O8u1VMRJBZgkfVozhXY3DiIHseuUHpe391eVLEaPU5q1Kup5UFFs8OYBJJh9Frzo8l
-         2Nk/6uAzeEiLDtibsgh8ufioOwtYsb82NYpDLL3McoRvQsnuj9u2Fv6Sa6rUX/jniV22
-         EMxyx86rLQDL7HJ3IAFf50Jge6FDthZdy/xfjWjg+AaCpRJw0jTazMM3fIMOM+6moACH
-         BdS/ymTPhpRHZW1V13M4/XWTQ7rInMLFoEjgphEUHVJlkFk6kKQJB6fn14pwBNLsPJMd
-         dHyZtChzb1uymm/TVNLeCDvhOOe0Utpsi6xYbhEG5P6XLXLDgSR9ePEc2vcdrSEljsuO
-         ATfg==
-X-Gm-Message-State: AC+VfDwomZZf9IWQnp/p1g9xmWETngybdjwUFHdoCXOqig9mccpdgo7t
-        FWuGuTBX4QzHDMsJN7SJEwW+8u9y8vUC2Q+dPIk=
-X-Google-Smtp-Source: ACHHUZ5n0ktk0pGSlf8ODuwS2HY5zZGV37C2wJ0GZgPIWg5BKM7dFIJcAX//tvNrRrreST+xVlo2yg==
-X-Received: by 2002:a2e:9091:0:b0:2ad:ac93:3c7d with SMTP id l17-20020a2e9091000000b002adac933c7dmr9481189ljg.38.1684403711998;
-        Thu, 18 May 2023 02:55:11 -0700 (PDT)
+        bh=ii3IQNZBUSQL/0xcT98KiKH1C3SWxauYsCsVnRYuILo=;
+        b=If+uvh/aTCSkrbSifrYNGHvtEItDr+CqTUVaZetp6vB3Pbmluul4EoU1/nz3tcdyMZ
+         RAKvQZcG8r+S3x22Sp52vKvpUto/kLXe4Z/OelzLgIlNfz/91jzn+Qzzt7eg2XajcDH1
+         rs2uisZ98uM4LBwVIg1JSBd1mNtGZERlL1GMhnsGRQ8T9HA6wCKppVGel0xrpHhYFg5G
+         /L6e4a9Zrn34zeU4G07bi27n62CZwoi/ihyzS0Us0K8LunA5QDdlzuS7g4YuKGQaBoJw
+         hBootK6ugv6QySVjfY7TyLKBNx8QmzG5HgTtzykbNyigiuTm3PTa8i3a9bcMl6urN1Ao
+         eNjg==
+X-Gm-Message-State: AC+VfDwbH+B3F5gPWacPQD9KI3NO6dLYIYumvyDlh1/C+uJSxy9I4u0Z
+        OxBnrXQDEYUls/Kc9QMP7a1/SQ==
+X-Google-Smtp-Source: ACHHUZ6lAXc5axy45y4oOclger4bxsHe0MjFQOcI6f3Jvbs7gyaI1VKtcUSA1Y5ypSsDTj2vXsEmnQ==
+X-Received: by 2002:a2e:2c17:0:b0:2ad:b674:a7a3 with SMTP id s23-20020a2e2c17000000b002adb674a7a3mr8717864ljs.31.1684403850053;
+        Thu, 18 May 2023 02:57:30 -0700 (PDT)
 Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id c16-20020a2e9490000000b002a93e0605ebsm215873ljh.8.2023.05.18.02.55.10
+        by smtp.gmail.com with ESMTPSA id c16-20020a2e9490000000b002a93e0605ebsm216785ljh.8.2023.05.18.02.57.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 May 2023 02:55:11 -0700 (PDT)
-Message-ID: <f4854178-613c-5ace-5714-d77b7f71a914@linaro.org>
-Date:   Thu, 18 May 2023 11:55:09 +0200
+        Thu, 18 May 2023 02:57:29 -0700 (PDT)
+Message-ID: <22143b03-fa5e-627e-05b1-44034779ba01@linaro.org>
+Date:   Thu, 18 May 2023 11:57:28 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc8280xp: Add SDC2 and enable on CRD
+Subject: Re: [PATCH 20/97] usb: dwc3-qcom: Convert to platform remove callback
+ returning void
 Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+To:     =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230517235217.1728548-1-quic_bjorande@quicinc.com>
+        Bjorn Andersson <andersson@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        kernel@pengutronix.de
+References: <20230517230239.187727-1-u.kleine-koenig@pengutronix.de>
+ <20230517230239.187727-21-u.kleine-koenig@pengutronix.de>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230517235217.1728548-1-quic_bjorande@quicinc.com>
+In-Reply-To: <20230517230239.187727-21-u.kleine-koenig@pengutronix.de>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,196 +83,55 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 18.05.2023 01:52, Bjorn Andersson wrote:
-> The CRD has Micro SD slot, introduce the necessary DeviceTree nodes for
-> enabling this.
+On 18.05.2023 01:01, Uwe Kleine-König wrote:
+> The .remove() callback for a platform driver returns an int which makes
+> many driver authors wrongly assume it's possible to do error handling by
+> returning an error code. However the value returned is ignored (apart from
+> emitting a warning) and this typically results in resource leaks. To improve
+> here there is a quest to make the remove callback return void. In the first
+> step of this quest all drivers are converted to .remove_new() which already
+> returns void. Eventually after all drivers are converted, .remove_new() is
+> renamed to .remove().
 > 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> Trivially convert this driver from always returning zero in the remove
+> callback to the void returning variant.
+> 
+> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 > ---
-> 
-> Changes since v1:
-> - Order of pinctr-N and pinctrl-names
-> - Reset GCC_SDCC2_BCR and not sdc4
-b4 diff 20230517235217.1728548-1-quic_bjorande@quicinc.com also reveals:
-
-- move cd-gpios
-- add interconnect OPP properties
-
-nevertheless:
-
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
-
+>  drivers/usb/dwc3/dwc3-qcom.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
 > 
->  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 81 +++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi    | 43 ++++++++++++
->  2 files changed, 124 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> index 5b25d54b9591..ff9cebbccfcb 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-> @@ -308,6 +308,13 @@ vreg_l1c: ldo1 {
->  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->  		};
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 959fc925ca7c..167f851c8e59 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -938,7 +938,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+>  	return ret;
+>  }
 >  
-> +		vreg_l6c: ldo6 {
-> +			regulator-name = "vreg_l6c";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2960000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
->  		vreg_l7c: ldo7 {
->  			regulator-name = "vreg_l7c";
->  			regulator-min-microvolt = <2504000>;
-> @@ -318,6 +325,13 @@ vreg_l7c: ldo7 {
->  						   RPMH_REGULATOR_MODE_HPM>;
->  		};
+> -static int dwc3_qcom_remove(struct platform_device *pdev)
+> +static void dwc3_qcom_remove(struct platform_device *pdev)
+>  {
+>  	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
+>  	struct device *dev = &pdev->dev;
+> @@ -958,8 +958,6 @@ static int dwc3_qcom_remove(struct platform_device *pdev)
 >  
-> +		vreg_l9c: ldo9 {
-> +			regulator-name = "vreg_l9c";
-> +			regulator-min-microvolt = <2960000>;
-> +			regulator-max-microvolt = <2960000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +
->  		vreg_l13c: ldo13 {
->  			regulator-name = "vreg_l13c";
->  			regulator-min-microvolt = <3072000>;
-> @@ -600,6 +614,19 @@ &remoteproc_nsp0 {
->  	status = "okay";
->  };
+>  	pm_runtime_allow(dev);
+>  	pm_runtime_disable(dev);
+> -
+> -	return 0;
+>  }
 >  
-> +&sdc2 {
-> +	pinctrl-0 = <&sdc2_default_state>;
-> +	pinctrl-1 = <&sdc2_sleep_state>;
-> +	pinctrl-names = "default", "sleep";
-> +
-> +	vmmc-supply = <&vreg_l9c>;
-> +	vqmmc-supply = <&vreg_l6c>;
-> +
-> +	cd-gpios = <&tlmm 131 GPIO_ACTIVE_LOW>;
-> +
-> +	status = "okay";
-> +};
-> +
->  &uart17 {
->  	compatible = "qcom,geni-debug-uart";
+>  static int __maybe_unused dwc3_qcom_pm_suspend(struct device *dev)
+> @@ -1052,7 +1050,7 @@ MODULE_DEVICE_TABLE(acpi, dwc3_qcom_acpi_match);
 >  
-> @@ -842,6 +869,60 @@ wake-n-pins {
->  		};
->  	};
->  
-> +	sdc2_default_state: sdc2-default-state {
-> +		clk-pins {
-> +			pins = "sdc2_clk";
-> +			drive-strength = <16>;
-> +			bias-disable;
-> +		};
-> +
-> +		cmd-pins {
-> +			pins = "sdc2_cmd";
-> +			drive-strength = <16>;
-> +			bias-pull-up;
-> +		};
-> +
-> +		data-pins {
-> +			pins = "sdc2_data";
-> +			drive-strength = <16>;
-> +			bias-pull-up;
-> +		};
-> +
-> +		card-detect-pins {
-> +			pins = "gpio131";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-> +	};
-> +
-> +	sdc2_sleep_state: sdc2-sleep-state {
-> +		clk-pins {
-> +			pins = "sdc2_clk";
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-> +
-> +		cmd-pins {
-> +			pins = "sdc2_cmd";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +
-> +		data-pins {
-> +			pins = "sdc2_data";
-> +			drive-strength = <2>;
-> +			bias-pull-up;
-> +		};
-> +
-> +		card-detect-pins {
-> +			pins = "gpio131";
-> +			function = "gpio";
-> +			drive-strength = <2>;
-> +			bias-disable;
-> +		};
-> +	};
-> +
->  	tpad_default: tpad-default-state {
->  		int-n-pins {
->  			pins = "gpio182";
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index 8fa9fbfe5d00..3711f109aeaf 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -2815,6 +2815,49 @@ data-pins {
->  			};
->  		};
->  
-> +		sdc2: mmc@8804000 {
-> +			compatible = "qcom,sc8280xp-sdhci", "qcom,sdhci-msm-v5";
-> +			reg = <0 0x08804000 0 0x1000>;
-> +
-> +			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "hc_irq", "pwr_irq";
-> +
-> +			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-> +				 <&gcc GCC_SDCC2_APPS_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK>;
-> +			clock-names = "iface", "core", "xo";
-> +			resets = <&gcc GCC_SDCC2_BCR>;
-> +			interconnects = <&aggre2_noc MASTER_SDCC_2 0 &mc_virt SLAVE_EBI1 0>,
-> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_SDCC_2 0>;
-> +			interconnect-names = "sdhc-ddr","cpu-sdhc";
-> +			iommus = <&apps_smmu 0x4e0 0x0>;
-> +			power-domains = <&rpmhpd SC8280XP_CX>;
-> +			operating-points-v2 = <&sdc2_opp_table>;
-> +			bus-width = <4>;
-> +			dma-coherent;
-> +
-> +			status = "disabled";
-> +
-> +			sdc2_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-100000000 {
-> +					opp-hz = /bits/ 64 <100000000>;
-> +					required-opps = <&rpmhpd_opp_low_svs>;
-> +					opp-peak-kBps = <1800000 400000>;
-> +					opp-avg-kBps = <100000 0>;
-> +				};
-> +
-> +				opp-202000000 {
-> +					opp-hz = /bits/ 64 <202000000>;
-> +					required-opps = <&rpmhpd_opp_svs_l1>;
-> +					opp-peak-kBps = <5400000 1600000>;
-> +					opp-avg-kBps = <200000 0>;
-> +				};
-> +			};
-> +		};
-> +
->  		usb_0_qmpphy: phy@88eb000 {
->  			compatible = "qcom,sc8280xp-qmp-usb43dp-phy";
->  			reg = <0 0x088eb000 0 0x4000>;
+>  static struct platform_driver dwc3_qcom_driver = {
+>  	.probe		= dwc3_qcom_probe,
+> -	.remove		= dwc3_qcom_remove,
+> +	.remove_new	= dwc3_qcom_remove,
+>  	.driver		= {
+>  		.name	= "dwc3-qcom",
+>  		.pm	= &dwc3_qcom_dev_pm_ops,
