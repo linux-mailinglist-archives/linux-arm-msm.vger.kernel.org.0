@@ -2,132 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E669B707C10
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 10:30:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DB2A707C56
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 10:48:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230218AbjERIaO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 04:30:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58466 "EHLO
+        id S229981AbjERIsq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 04:48:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230192AbjERIaK (ORCPT
+        with ESMTP id S229704AbjERIsp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 04:30:10 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37FB91BD0;
-        Thu, 18 May 2023 01:30:08 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34I5Nwlg010670;
-        Thu, 18 May 2023 08:30:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=GMMvJnkAxm8s6BWfqwfRdT244uW3bNSbKXIRt2O+RY0=;
- b=VETbeLKJm5K72lRLikx/pktKIHoJw6Q169QDmVQmw/QNO4Izz53EqknaLjoHO0ns4xLo
- 2PydKfa5JQCFKf4tTULbKjwxlt8uyEf5lhH7dFcRf5tDK0eYKSzZb2thKRHnvfFGQkNX
- SrOPVi0b+LZMubhgV5yUGuYnIdRuQassWJNfN1/Ac1y5E240sLhmWvj+AqszTHJTmU+0
- AVmOaHl5NMukKVieEey870sB8DgAa3sePA7J3ZEXIa1mxvd4LeptK4Bg8/h7iOI2k/pa
- DtZhSomZgOS8WIUK/3LWDbVbcFldXtq5H3aSzIIwKWVCwOwjRThVP92/xjNe/MkABFba Vg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qn73urxmw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 18 May 2023 08:30:04 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34I8U23A024037
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 18 May 2023 08:30:02 GMT
-Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 18 May 2023 01:29:59 -0700
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH V2 3/3] arm64: dts: qcom: ipq5332: add few more reserved memory region
-Date:   Thu, 18 May 2023 13:59:34 +0530
-Message-ID: <20230518082934.24129-4-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230518082934.24129-1-quic_kathirav@quicinc.com>
-References: <20230518082934.24129-1-quic_kathirav@quicinc.com>
+        Thu, 18 May 2023 04:48:45 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A0A3172D;
+        Thu, 18 May 2023 01:48:44 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A2C7964D92;
+        Thu, 18 May 2023 08:48:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 073EFC4339C;
+        Thu, 18 May 2023 08:48:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1684399723;
+        bh=SXA942ESpbNtA6sHwpw+PwUXgclY607/7gMLX0DUBVw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=V6YyKW/bTXPrsy4U+SUU/Oynl+bctcUlKA25oY/rsAYmj0Jt1Kf54HG3C9qrHzgmv
+         uy6/SuUef5qufMDF6zqsfILiQZ2QRh3V4b1MvtMuNyTpxLQ38QAqL+QoIU+h3CNZiS
+         V4nV48kCqaap8tH2eMreu4sse4KjM3J1n8QU62Aha+10cJ+rzaAw7JM5OfFJ9wB/XO
+         GsW0K4ampv3KfXff9NuX/4lJJ6gOBi6ektaHLEyelHW1pJhIvDhf04hWGOxmtBARUo
+         HamRgnet8Agus/xuppnitZBrQnpv/yvGQ5SN+TyStxZPh7jZunvn08JiqmH41Jef75
+         UkCMhRSxaGj9A==
+Date:   Thu, 18 May 2023 09:48:36 +0100
+From:   Lee Jones <lee@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Fenglin Wu <quic_fenglinw@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        "Signed-off-by : Abel Vesa" <abel.vesa@linaro.org>
+Subject: Re: [PATCH 1/3] dt-bindings: leds: qcom,spmi-flash-led: add PM8550
+Message-ID: <20230518084836.GA404509@google.com>
+References: <20230516150202.188655-1-krzysztof.kozlowski@linaro.org>
+ <4c11be9a-796f-79f1-2828-d3367f978785@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 5Q8gr6HBz1bUEKdp1HkJpq0sCK7y74Bc
-X-Proofpoint-GUID: 5Q8gr6HBz1bUEKdp1HkJpq0sCK7y74Bc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-18_06,2023-05-17_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- lowpriorityscore=0 priorityscore=1501 mlxlogscore=561 malwarescore=0
- impostorscore=0 bulkscore=0 mlxscore=0 clxscore=1015 adultscore=0
- spamscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305180062
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4c11be9a-796f-79f1-2828-d3367f978785@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In IPQ SoCs, U-boot will collect the system RAM contents upon crash for
-the post morterm analysis. If we don't reserve the memory region used by
-U-boot, obviously linux will consume it and upon next boot on crash, uboot
-will be loaded in the same region, which will lead to loose some of the
-data, sometimes we may miss out critical information. So lets reserve the
-region used by the U-boot.
+On Wed, 17 May 2023, Konrad Dybcio wrote:
 
-Similarly SBL copies some data into the reserved region and it will be
-used in the crash scenario. So reserve 1MB for SBL as well.
+> 
+> 
+> On 16.05.2023 17:02, Krzysztof Kozlowski wrote:
+> > Document compatible for PM8550 Torch and Flash LED controller.
+> > 
+> > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > ---
+> Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-While at it, drop the size padding in the smem memory region.
+This should be a Reviewed-by.
 
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
----
-Changes in V2:
-	- Dropped the size padding in smem memory region
+Other maintainers might get confused by this and apply the patch via
+their own repositories which I'm assuming was not the intention.
 
- arch/arm64/boot/dts/qcom/ipq5332.dtsi | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+> >  Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml | 1 +
+> >  1 file changed, 1 insertion(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml b/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
+> > index ffacf703d9f9..074ef7e63c49 100644
+> > --- a/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
+> > +++ b/Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml
+> > @@ -26,6 +26,7 @@ properties:
+> >            - qcom,pm8150c-flash-led
+> >            - qcom,pm8150l-flash-led
+> >            - qcom,pm8350c-flash-led
+> > +          - qcom,pm8550-flash-led
+> >        - const: qcom,spmi-flash-led
+> >  
+> >    reg:
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-index 753581e60604..7e0a2a674f09 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-@@ -114,6 +114,16 @@
- 		#size-cells = <2>;
- 		ranges;
- 
-+		uboot@4a100000 {
-+			reg = <0x0 0x4a100000 0x0 0x400000>;
-+			no-map;
-+		};
-+
-+		sbl@4a500000 {
-+			reg = <0x0 0x4a500000 0x0 0x100000>;
-+			no-map;
-+		};
-+
- 		tz_mem: tz@4a600000 {
- 			reg = <0x0 0x4a600000 0x0 0x200000>;
- 			no-map;
-@@ -121,7 +131,7 @@
- 
- 		smem@4a800000 {
- 			compatible = "qcom,smem";
--			reg = <0x0 0x4a800000 0x0 0x00100000>;
-+			reg = <0x0 0x4a800000 0x0 0x100000>;
- 			no-map;
- 
- 			hwlocks = <&tcsr_mutex 0>;
 -- 
-2.17.1
-
+Lee Jones [李琼斯]
