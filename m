@@ -2,77 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1B737083E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 16:25:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E069F708420
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 16:43:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230031AbjEROZ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 10:25:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52010 "EHLO
+        id S231148AbjEROnY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 10:43:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230376AbjEROZ2 (ORCPT
+        with ESMTP id S231550AbjEROnX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 10:25:28 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B386310A;
-        Thu, 18 May 2023 07:25:27 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34ICUC6Y006621;
-        Thu, 18 May 2023 14:25:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=dv/kYzyTjABVbrLr5VsPzbkETBNf77h54Wrhs4vxRzA=;
- b=NEme2u+V4iDKsO0/gWUmHwUgBmqR8F/ichKyRJbyFwBFH3TDYEkVMPmT1/af9Ru500LE
- eXKhiqRaGl0aFRSlTul4pr3Ga5PIR2LX+qtfldw4GM9gsDEKrmZGsB26e1MqHnREZ5f4
- gKAn2fPZ4X8sDhf5Vf2GeCjGQbQRoWBtcqYWOeAw2JZru6NvK9MkUdZQ6peAtebm24TK
- RgmfIzx2peTRqkfcan7bqPj0/uq8A/jZJTXmhxnmqD/BgRPx6bp3SPO5X7/kpQwTaLLK
- szyBMajqJggz3Yajmr2q98GxAfzO319PZkWn7DV3FXJuu7uyOvLJwA3R1bFz+/Z0P0+y fw== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qnbxqh9nk-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 18 May 2023 14:25:23 +0000
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34IEPNgr015985
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 18 May 2023 14:25:23 GMT
-Received: from [10.216.40.42] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 18 May
- 2023 07:25:20 -0700
-Message-ID: <f62b5cfd-41e5-aad5-04bf-5959b2fd7a51@quicinc.com>
-Date:   Thu, 18 May 2023 19:55:16 +0530
+        Thu, 18 May 2023 10:43:23 -0400
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6151DE
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 07:43:20 -0700 (PDT)
+Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-96649b412easo333262866b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 07:43:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684420999; x=1687012999;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=c5mg0bYNmMZvR4XH2KepYJHCkc1QT01FXeVw0nsFkdI=;
+        b=OE2AED9qmZeTEF4yTzRED57SFPtPzoTevCrBoA2Q6K6gvRvkQLMs6JKlvgW9jETwAT
+         sp6LZGN/xQgYPx1elInzgtAzdG3z1OgVoXHWSSNpCjuCdDfXNhiIlxI8jFzKwreq+KpV
+         t6vYmcjPbdFqMFTTLhtX607igdRWV+UuwJtM/wr4dgzRLg/qiMlIl1Kx51TJzB7pYgAZ
+         w8R0wayIPAPMVBatVENiYy3xTDjOGl2vTYWhqnLXez6YZhMYHZSJnQ/RBJ5IrvEVWH1A
+         Eavd23Glvi7/xu8ZnLh7ObYJnhLaX02jGOwI4obyur9GDUNATueJv8JPtxU/pQQMBtJ5
+         Q0yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684420999; x=1687012999;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=c5mg0bYNmMZvR4XH2KepYJHCkc1QT01FXeVw0nsFkdI=;
+        b=W/OrmMp1OGqUaLy8LVlQnV6J+sClkZTpkfzZU+vgG5IGPlXaqIu3Deaxp6gfv8809N
+         MbnD+YA3jCtH/zvXVXc5csUixMycgzjzIaPnJijPiBEbuN+RwBVX3VJ2qLzV0gSlb7aO
+         XiaIjfKilftO5Z8imxvNUCnN3U0LmYCmMPUxAknm3QseonR5Xuo4rxybGv8nYesJ7aL9
+         dd22D8bgAbx4CHjAIY76St/7ouAfjMoJ0bXER1Myi6MrFDsO159sVUbsmjNuiNgn35qX
+         KuqCnV97Kmez3KmfEhAU8Hg4caPJ/IIMc9KzqzwawzbmYOXXwKnRW3iQQzBOGLtfk9y2
+         e3CQ==
+X-Gm-Message-State: AC+VfDy8zXJ1NG7t8FKS0egCgL0vD8jImw8ejSOOY3Gu3he6AhNzKLo1
+        eNkUlRUdEMwW5KrlS+IZRdF4XA==
+X-Google-Smtp-Source: ACHHUZ45LkdJN1RAMofvHRAMOL/5aJwIIPt/2VGC/d6xWczG4Bg4nJDUcgLltbg0DwlPo+UOxleaXg==
+X-Received: by 2002:a17:906:d542:b0:96b:e92:4feb with SMTP id cr2-20020a170906d54200b0096b0e924febmr15567096ejc.60.1684420999310;
+        Thu, 18 May 2023 07:43:19 -0700 (PDT)
+Received: from ?IPV6:2a02:810d:15c0:828:7e24:6d1b:6bf:4249? ([2a02:810d:15c0:828:7e24:6d1b:6bf:4249])
+        by smtp.gmail.com with ESMTPSA id zm10-20020a170906994a00b0094a82a236cbsm1031416ejb.129.2023.05.18.07.43.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 May 2023 07:43:18 -0700 (PDT)
+Message-ID: <1fe6d202-f180-b76f-bf8e-98280355ae5a@linaro.org>
+Date:   Thu, 18 May 2023 16:43:17 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [RESEND,PATCH 1/2] firmware: qcom: scm: Add SDI disable support
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH V3 4/4] arm64: dts: qcom: ipq9574: Enable crypto nodes
 Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <srichara@quicinc.com>
-References: <20230518140224.2248782-1-robimarko@gmail.com>
-From:   Mukesh Ojha <quic_mojha@quicinc.com>
-In-Reply-To: <20230518140224.2248782-1-robimarko@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Anusha Rao <quic_anusha@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        thara.gopinath@gmail.com, herbert@gondor.apana.org.au,
+        davem@davemloft.net, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org, p.zabel@pengutronix.de,
+        bhupesh.sharma@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-crypto@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_gokulsri@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_poovendh@quicinc.com
+References: <20230518141105.24741-1-quic_anusha@quicinc.com>
+ <20230518141105.24741-5-quic_anusha@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230518141105.24741-5-quic_anusha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: gZ4prnw1DRY7VZDlLSgzOrTRP6srSIlj
-X-Proofpoint-GUID: gZ4prnw1DRY7VZDlLSgzOrTRP6srSIlj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-18_11,2023-05-17_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- priorityscore=1501 impostorscore=0 mlxscore=0 bulkscore=0 adultscore=0
- phishscore=0 suspectscore=0 mlxlogscore=999 malwarescore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305180116
-X-Spam-Status: No, score=-5.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,72 +85,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/18/2023 7:32 PM, Robert Marko wrote:
-> Some SoC-s like IPQ5018 require SDI(Secure Debug Image) to be disabled
-> before trying to reboot, otherwise board will just hang after reboot has
-> been issued via PSCI.
+On 18/05/2023 16:11, Anusha Rao wrote:
+> Enable crypto support for ipq9574.
 > 
-> So, provide a call to SCM that allows disabling it.
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
-
-This scm call support indeed needed for reboot cases, but i am not sure
-about target specific check in the later patch.
-
-Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
-
--- Mukesh
-
+> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
 > ---
->   drivers/firmware/qcom_scm.c | 23 +++++++++++++++++++++++
->   drivers/firmware/qcom_scm.h |  1 +
->   2 files changed, 24 insertions(+)
-> 
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index fde33acd46b7..bdc9324d4e62 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -407,6 +407,29 @@ int qcom_scm_set_remote_state(u32 state, u32 id)
->   }
->   EXPORT_SYMBOL(qcom_scm_set_remote_state);
->   
-> +static int qcom_scm_disable_sdi(void)
-> +{
-> +	int ret;
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_BOOT,
-> +		.cmd = QCOM_SCM_BOOT_SDI_CONFIG,
-> +		.args[0] = 1, /* Disable watchdog debug */
-> +		.args[1] = 0, /* Disable SDI */
-> +		.arginfo = QCOM_SCM_ARGS(2),
-> +		.owner = ARM_SMCCC_OWNER_SIP,
-> +	};
-> +	struct qcom_scm_res res;
-> +
-> +	ret = qcom_scm_clk_enable();
-> +	if (ret)
-> +		return ret;
-> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
-> +
-> +	qcom_scm_clk_disable();
-> +
-> +	return ret ? : res.result[0];
-> +}
-> +
->   static int __qcom_scm_set_dload_mode(struct device *dev, bool enable)
->   {
->   	struct qcom_scm_desc desc = {
-> diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
-> index e6e512bd57d1..7b68fa820495 100644
-> --- a/drivers/firmware/qcom_scm.h
-> +++ b/drivers/firmware/qcom_scm.h
-> @@ -80,6 +80,7 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
->   #define QCOM_SCM_SVC_BOOT		0x01
->   #define QCOM_SCM_BOOT_SET_ADDR		0x01
->   #define QCOM_SCM_BOOT_TERMINATE_PC	0x02
-> +#define QCOM_SCM_BOOT_SDI_CONFIG	0x09
->   #define QCOM_SCM_BOOT_SET_DLOAD_MODE	0x10
->   #define QCOM_SCM_BOOT_SET_ADDR_MC	0x11
->   #define QCOM_SCM_BOOT_SET_REMOTE_STATE	0x0a
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
+
