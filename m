@@ -2,75 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1C6B77076FF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 02:38:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A9DF707703
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 02:40:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229533AbjERAi1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 20:38:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51022 "EHLO
+        id S229677AbjERAkH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 20:40:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbjERAi0 (ORCPT
+        with ESMTP id S229436AbjERAkG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 20:38:26 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79A9A273D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 17:38:25 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2ac7462d9f1so15284041fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 17:38:25 -0700 (PDT)
+        Wed, 17 May 2023 20:40:06 -0400
+Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 255AD30E6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 17:40:04 -0700 (PDT)
+Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2ad819ab8a9so15663361fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 17:40:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684370304; x=1686962304;
+        d=linaro.org; s=google; t=1684370402; x=1686962402;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=RDmvYByjQsOl+xkWa90beSoV5wSDkboDGuoJ5SmvNAA=;
-        b=N4H0t5CPe+pIpKdkiDxQrEhybD9CUcCPAIgYJSqRHvOdDKr2JoIpXZvDFoeKNiNPZc
-         g+BwOixhYhgipwcMyZ6ggBzdDC9uyAvhZnMkWGsvf0IH2CizwnWv7jufVNAJDcsCqF+q
-         3i3t1eHqRmsXTBhctRpozFztzBrWA6/qavsHelLfECSxDtWwTLcE2veCsfO8D3poeAme
-         bfM6MGQ9v462jU2+mn2/yTUcWcmkEPRr8f5RMi78V1laYEhxmRgQBsjlhhPU1MwXAiK0
-         Uff+bq7AlYXi4NUbSYGO8VeHT0vSiuWRdyt0xgKBuGD72gitPgfbUfWjuJFzMPP2nHn9
-         Q0kg==
+        bh=JngQhTfI8Rhrj1ZIfILXfp+eL2PcOd/TsT6KpOwnk48=;
+        b=iy8RKNEn+FsGeDYqHGbbnFfumxi/pBF6Sq0+qzowkAO2jW6ExgeF0x7KLhXRmVyHaE
+         E5OdaHMBb0n4k5TgxUNG6W5e2Xmscfu2soHhn/JKD0DP3r0NDxgIC2XKDDH9KGACR4hz
+         2+LX6Iy7KjNO4eLGEABun++y4U3K4sNRrK1YgP8NWVA8IKput7fxlW5gDOF/9asuHcAn
+         S24VwhSPU+0PsN1xLkMnV+0w/lJ8Hfbg3ArU8WzeMEIkuPY6YMFG0c4lF58kscy6Zhh2
+         0CtMQhSDR40aNzsQUWbAuGYyZCuJ4T+TO63OzW4zDjhqBjL3+snYgAOguT837aZFiTNi
+         UWVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684370304; x=1686962304;
+        d=1e100.net; s=20221208; t=1684370402; x=1686962402;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RDmvYByjQsOl+xkWa90beSoV5wSDkboDGuoJ5SmvNAA=;
-        b=iQCNKvEGcwROa+2c+82c1wjJUJFW5VLU1i2r36lhDUguh+8BC+K4PL8+YxMqozXAUl
-         64aZG/QScDAlDRwX2syVpmKiH5EjYW1wnbT+58ha5DLJfamA6NgK+cSf3tA8emHvhalY
-         WtwwnVCwOe3v3mv/VUENNVea7Q0r1r4bZWKfOxfXf6mlEZ2y7QR+9DI6GJ5ggrnFOpdZ
-         X6DFP7V6YZb9/Ps9KAStDLFuHwcFkrRlxKz4rpLjrwiuleIoTjg7flFx9mgj5wBJsN6g
-         I/puS6zTCbNhtULw3YbfvgTo5SAD0CoLr9RaHp5J2AzTeKDnRILfth6BWcAUuYoUwnCM
-         aFLg==
-X-Gm-Message-State: AC+VfDypRmV/OYlWZe+LtErURB+LC79AWMi68Z/Aq8fDSFq8FV877PSZ
-        NPxAmJ5//425B31nMACfQC9j+Q==
-X-Google-Smtp-Source: ACHHUZ7QefiowKDijq4DSc6g9gj2uUiHjFCOs/9Zc96kTvdluVfgcGJkerE+ZcEjbdlS+ZQakjZVUw==
-X-Received: by 2002:a2e:b172:0:b0:2a7:8150:82c1 with SMTP id a18-20020a2eb172000000b002a7815082c1mr9874787ljm.38.1684370303765;
-        Wed, 17 May 2023 17:38:23 -0700 (PDT)
+        bh=JngQhTfI8Rhrj1ZIfILXfp+eL2PcOd/TsT6KpOwnk48=;
+        b=f4RZPna11tM2Quv8lj51XyJrTBh8Gb8YZdeG4o2Hc5qZRHuYf/KS4EXZnjzJv3CRJ8
+         p9ihY+esaHjERuAHHww4Fm7fcb5VJef1qL7/CphBClNVuw46PfueoiztDiJvZ+eycwmx
+         FqJZQWWG/ATXXJYD7njbWEnvsm386w8Vy3VXYa0b/aZfP6clSpgixnXQA+y0hcl22eCv
+         cFMdJpAQEH5rs5RxRaKuMyRZN8Gy9SKBogM/AbcCn+LA3IcN9d7puY9QetTNKBnAcJsR
+         GJrjQsdVXKmTJywjpeoZl3ZmI4zX0wnfJJWvYuavpzPvEEPo7wVtXEOMU/9sZk3qMjv8
+         x7vw==
+X-Gm-Message-State: AC+VfDwDoXvw61Tx0tgnrB3Rvv/Te+4J/m3pOznYVStWPwYMvLWEdGxC
+        zp6nbzR1znn5I1IbQcsJVM67ow==
+X-Google-Smtp-Source: ACHHUZ6QY9V+7pTA8acpF+FmTwmXPPYTPPVNMX2b6n7ZK3ig3bL5P1d9m5APWgm24EoXfZaAWVwi0A==
+X-Received: by 2002:a2e:7004:0:b0:2ab:365b:dc7d with SMTP id l4-20020a2e7004000000b002ab365bdc7dmr10106805ljc.27.1684370402427;
+        Wed, 17 May 2023 17:40:02 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id k26-20020a2e889a000000b002adaacdb900sm7954lji.42.2023.05.17.17.38.23
+        by smtp.gmail.com with ESMTPSA id v6-20020a2e9906000000b002ada45ce1fbsm1345lji.128.2023.05.17.17.40.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 May 2023 17:38:23 -0700 (PDT)
-Message-ID: <1a4158f8-d1ca-4c15-51ee-8eeb721a07a1@linaro.org>
-Date:   Thu, 18 May 2023 03:38:22 +0300
+        Wed, 17 May 2023 17:40:02 -0700 (PDT)
+Message-ID: <e3acba8b-3832-3fac-81c2-1b13ef851a3c@linaro.org>
+Date:   Thu, 18 May 2023 03:40:01 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.0
-Subject: Re: [PATCH v12 3/9] drm/display/dsc: Add drm_dsc_get_bpp_int helper
+Subject: Re: [PATCH v2 1/3] dt-bindings: power: qcom,rpmpd: add missing RPMH
+ levels
 Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        freedreno@lists.freedesktop.org
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230329-rfc-msm-dsc-helper-v12-0-9cdb7401f614@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v12-3-9cdb7401f614@quicinc.com>
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Conor Dooley <conor.dooley@microchip.com>
+References: <20230517-topic-kailua-rpmhpd-v2-0-3063ce19c491@linaro.org>
+ <20230517-topic-kailua-rpmhpd-v2-1-3063ce19c491@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230329-rfc-msm-dsc-helper-v12-3-9cdb7401f614@quicinc.com>
+In-Reply-To: <20230517-topic-kailua-rpmhpd-v2-1-3063ce19c491@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,14 +85,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/05/2023 01:27, Jessica Zhang wrote:
-> Add helper to get the integer value of drm_dsc_config.bits_per_pixel
+On 17/05/2023 23:12, Konrad Dybcio wrote:
+> There are a lot of RPMh levels that we haven't included yet.. some
+> sadly turned out to be necessary, add them!
 > 
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Acked-by: Conor Dooley <conor.dooley@microchip.com>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->   include/drm/display/drm_dsc_helper.h | 7 +++++++
->   1 file changed, 7 insertions(+)
+>   include/dt-bindings/power/qcom-rpmpd.h | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
