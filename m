@@ -2,102 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 441C5707BBB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 10:18:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 811A9707BD2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 10:21:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229970AbjERISV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 04:18:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50500 "EHLO
+        id S230042AbjERIVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 04:21:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51710 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230018AbjERIST (ORCPT
+        with ESMTP id S230040AbjERIVR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 04:18:19 -0400
-Received: from smtp.smtpout.orange.fr (smtp-24.smtpout.orange.fr [80.12.242.24])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40C7310D0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 01:18:15 -0700 (PDT)
-Received: from pop-os.home ([86.243.2.178])
-        by smtp.orange.fr with ESMTPA
-        id zYpup3mV8cjUozYpupl7Aa; Thu, 18 May 2023 10:18:13 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-        s=t20230301; t=1684397893;
-        bh=T4joMoRqF0rssfg793XkwK9lf4GR80yAVh0bfaxIbJ4=;
-        h=From:To:Cc:Subject:Date;
-        b=rqE/hZYJLqj2cF3pYy/AJGKuEPC6eHZakRG7ZprvxJq4R96dTge2zZ5yZmJCr9TkI
-         9D6PK77vw8sobGrE5A7+DqZ+VNVoXbkn1qr3s+WHIh+QBYdsHs0azN0eiUS8i7DhZF
-         5mZhC6nTgLgUBkN3PkyHCpW00F2Ag279PQYur7koLu+Eeu2ru7tBKBG3Zv4HJy9hA2
-         ywE43p8y1l3Jyo+N1iv20hujQ+SmcwQRE0FzQUhrqhoZx8F6B8OFpjbFDMufWsVe+X
-         Kfhdo0P1C4eCQ5cylMeb2RZ635naSrdUhNP6Usmp7txu04fqX79c2qY9NJ+cKPG1E4
-         FZicBXYH7ehfg==
-X-ME-Helo: pop-os.home
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Thu, 18 May 2023 10:18:13 +0200
-X-ME-IP: 86.243.2.178
-From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Will Deacon <will@kernel.org>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Neil Leeder <nleeder@codeaurora.org>
-Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: [PATCH] perf: qcom_l2_pmu: Make l2_cache_pmu_probe_cluster() more robust
-Date:   Thu, 18 May 2023 10:18:08 +0200
-Message-Id: <6a0f5bdb6b7b2ed4ef194fc49693e902ad5b95ea.1684397879.git.christophe.jaillet@wanadoo.fr>
-X-Mailer: git-send-email 2.34.1
+        Thu, 18 May 2023 04:21:17 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CDAC10D0;
+        Thu, 18 May 2023 01:21:11 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 36F95648B7;
+        Thu, 18 May 2023 08:21:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4672C433EF;
+        Thu, 18 May 2023 08:21:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1684398070;
+        bh=GR2nFvTtJZy4UyCufRkfx+kYWz4p6a0F2EAW+weYMe0=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=O5nQ6YQaOkWa0A9Hut2cGFTX7PxU3SSBAoNC+0jT0TLWJiPpo1/7bp8xB+GYqLri3
+         YuEDXrdenQz6ms0QA85UXhd1gOUIxRgsLcoRVoHR+FaY/WrqZg3U6Jc4kbAefDE/u4
+         q5K8MaKKaBnpVAun2pW4Lr+u34t+Rv48ky2sUAsNoa6ujDCb0cW8py32WxZW/S7xgs
+         O0iLSFqWY30+sBx8cMDs992yJ3C9RRT6IMTIgnwIStBdCxtRQwPQDi9X28hAaN6aBw
+         ftMDxrdJZDCXINfEjLhhfT5s2oUcvLaUOdLTizFtkMWSNjfeVtMbpwXiiRk4gcXzey
+         lS3t/USvzTAwQ==
+Message-ID: <a422a4ec-5fc9-9b4b-0cdc-8ea4e9dfc292@kernel.org>
+Date:   Thu, 18 May 2023 10:21:05 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v1] dt-bindings: net: Add QCA2066 Bluetooth
+To:     Tim Jiang <quic_tjiang@quicinc.com>, marcel@holtmann.org
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
+        quic_hemantg@quicinc.com, mka@chromium.org
+References: <20230518050826.27316-1-quic_tjiang@quicinc.com>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <20230518050826.27316-1-quic_tjiang@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-9.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If an error occurs after calling list_add(), the &l2cache_pmu->clusters
-list will reference some memory that will be freed when the managed
-resources will be released.
+On 18/05/2023 07:08, Tim Jiang wrote:
+> Add bindings for the QCA2066 chipset.
+> 
+> Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
 
-Move the list_add() at the end of the function when everything is in fine.
+Please use scripts/get_maintainers.pl to get a list of necessary people
+and lists to CC.  It might happen, that command when run on an older
+kernel, gives you outdated entries.  Therefore please be sure you base
+your patches on recent Linux kernel.
 
-This is harmless because if l2_cache_pmu_probe_cluster() fails, then
-l2_cache_pmu_probe() will fail as well and 'l2cache_pmu' will be released
-as well.
-But it looks cleaner and could silence static checker warning.
+You missed at least DT list (maybe more), so this won't be tested.
+Please resend and include all necessary entries.
 
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
----
-This is not a fix, because there is no issue.
-But in case of interest:
-Fixes: 21bdbb7102ed ("perf: add qcom l2 cache perf events driver")
----
- drivers/perf/qcom_l2_pmu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/perf/qcom_l2_pmu.c b/drivers/perf/qcom_l2_pmu.c
-index aaca6db7d8f6..3f9a98c17a89 100644
---- a/drivers/perf/qcom_l2_pmu.c
-+++ b/drivers/perf/qcom_l2_pmu.c
-@@ -857,7 +857,6 @@ static int l2_cache_pmu_probe_cluster(struct device *dev, void *data)
- 		return -ENOMEM;
- 
- 	INIT_LIST_HEAD(&cluster->next);
--	list_add(&cluster->next, &l2cache_pmu->clusters);
- 	cluster->cluster_id = fw_cluster_id;
- 
- 	irq = platform_get_irq(sdev, 0);
-@@ -883,6 +882,7 @@ static int l2_cache_pmu_probe_cluster(struct device *dev, void *data)
- 
- 	spin_lock_init(&cluster->pmu_lock);
- 
-+	list_add(&cluster->next, &l2cache_pmu->clusters);
- 	l2cache_pmu->num_pmus++;
- 
- 	return 0;
--- 
-2.34.1
+Beside that patch looks incomplete.
+
+Best regards,
+Krzysztof
 
