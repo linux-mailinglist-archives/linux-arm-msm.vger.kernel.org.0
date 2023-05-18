@@ -2,246 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A94857081DE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 14:54:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F706708211
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 15:08:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230081AbjERMyW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 08:54:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38342 "EHLO
+        id S230334AbjERNIN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 09:08:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41276 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230076AbjERMyW (ORCPT
+        with ESMTP id S230305AbjERNIM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 08:54:22 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69B0B1712
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 05:54:20 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f387d97dddso2386015e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 05:54:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684414458; x=1687006458;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kGL7tJe2R/pndMei8Z26s8Ep8SxlOSmhM3gTp42yw60=;
-        b=AVhW7b0P29X0NK1I9toFEUORHktkndMoSvpgXM6F4WHuaFgyC9TdMps3/28rbuM252
-         6ZPNq8jMaFksN3eaE2ePEj9wuRDZ4MtCsSoqR3n0oEzlvwxFJ/eTsIvnyTK74K9m0N8j
-         305Xl/YjvEhqpdfBGo3Kox7u/N6UZURx9aww2sBQQdMEFCg1g+JmYE1f6zXANdgLVarf
-         7w5uxf11vaKSxYjtk34AtHhdjkDZAtxtTuUzQToAQlbid9pc+RCEzm0a3EMPRKZA9/P4
-         kEb+fveOAbSuTt+DWUXfpy5bWvznc0Be3SA1Ia97MymX1j7my8ujxOjGQY1Qi+PtTdjs
-         isoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684414458; x=1687006458;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kGL7tJe2R/pndMei8Z26s8Ep8SxlOSmhM3gTp42yw60=;
-        b=HFe0GYD9w0QXbv0marWs6RPyXyAb65LTMT3b6VdmKPOtGiCkkNLUXreE8rxxKJiCAh
-         7/oaJgoYfItuLEjQDEGqAMuhlU08cgQJRXgRNMtlOP2fmiYJ4aiN6yOSf7Fizqa2Imk4
-         OQ9KU443Kc+kYUYHVWOgZBta2bQw9YlMAkJ0n2+276ZRE1rIUUYmTIwEXrceYIkMPu0M
-         lzQUE8GX7xWttixtBChFMasTrrBi7/VkqeZivdceg3fCdTfMhBSwDF5Cbti93Vj01KPd
-         BSOyLSmOQYUl/xnhLnS4BlyY5bG5ib9XzolrMQaq/EZaNDEIHHY6jgV4uLxDhvIXcQ2E
-         +wYQ==
-X-Gm-Message-State: AC+VfDwEBHmt24sJoWd+GXxCEP8+p+8Hkk4Q6JyxWdJJrvmzCxCEFR0F
-        iHhXzy4qrr7k9s0Pg2eyAJqxEA==
-X-Google-Smtp-Source: ACHHUZ4I+0QfRj0+aaSKBVXQKrDgPq5R6zxH1tPybkLd+nFZs3mFrEE18x3NAEF9VgihacTcGL8pTg==
-X-Received: by 2002:ac2:47e7:0:b0:4e6:9b01:b92b with SMTP id b7-20020ac247e7000000b004e69b01b92bmr1148731lfp.67.1684414458618;
-        Thu, 18 May 2023 05:54:18 -0700 (PDT)
-Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id x7-20020ac24887000000b004f13c00dd9bsm239318lfc.135.2023.05.18.05.54.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 May 2023 05:54:18 -0700 (PDT)
-Message-ID: <fb58c20e-ad2c-5398-ad69-8e01de58fc02@linaro.org>
-Date:   Thu, 18 May 2023 14:54:16 +0200
+        Thu, 18 May 2023 09:08:12 -0400
+X-Greylist: delayed 184 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 18 May 2023 06:07:56 PDT
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F32F1726;
+        Thu, 18 May 2023 06:07:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1684415090; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=jHp5siR+mpF442a5tGnVIsTWCOu67V55rUPcoVou53WJKCWN+qTAmII+Pu7TU8ex/D
+    ySc9MtPECNPRnckq8ffAVuhWY3mWc/KQ02u7XxRUW17+KlUrEjaSL9ImXRvFPzRRWKol
+    T71KZYiJsYr4gC96Z2zjELQQK+JhoCs81WVtBkXj/p34f4eRtWIrU2t580mxujVcEXJT
+    G1ygOstO9LGws1Qvj3qMkD91qtCp2gBluqD0pMam7Bov9bdNLV95awDdWfV8in14ble1
+    n1unqDIZPTjwKjQ5sA8XcuejNLKxgoPWfLwj0xa8ta5lOfB0E+wELt4DPjZicgOir1J5
+    vQhg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1684415090;
+    s=strato-dkim-0002; d=strato.com;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=1A4pWdRSyRquDJYOJ8/0StLwGPzYcPJ+8wTjCsISdD8=;
+    b=mqzczOcU5K6zxym1zhKJ27g9oD2QhWKdq3EdsIrVgkimBlyZBrFfQXOljU/+/RCH25
+    8fyIEDniNEt0KIkzKIHH2E+oULCE7lVxi86Xxji3q9xD1vzBZSLCA0ZnHQtAuPRy6RA5
+    mp/YBNaxbQNQojX/Vuj101TvU2lWPkOjNqEzIRfoWMM8pMiMKCWtYNHOyA4SA+AHGQ4Q
+    7aROCLu6uGh/wsTMaMQfrZEPLIwgMdMKzOvzgnahRlVn/TR6RG5HK5fcSfHIDd6EA4lG
+    4qUQWq23DngjEYt1c/AyhBmYspLWrfwjO5X2lGtoL9MArqlgRUtl9JEufiIUI4O0eCJ9
+    oEgw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1684415090;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=1A4pWdRSyRquDJYOJ8/0StLwGPzYcPJ+8wTjCsISdD8=;
+    b=bMshw8duaax9aITLuq2vz4VCipAk+DcXI85nhKezpsY8LVVBtlG6dTZcX4xYDv2/77
+    iEfY6hurG0RjWXSq97qNkyCEQa3wy8DVpAjuQIZ5+Q29Vauu12m5AUVJo5YUBubesoZQ
+    F/UB6WkPa9O3IShE+ABpnRS/tBWGNXteaXAwcjzTnnpz/RlVKxKnn0/6LgfwgpM7t6qY
+    +3YFpntevYSlXTlPUm/UBYS6X/kPC3Enjuzehl+8Xg5SVDfM4nKHl4DzPZQlGT5ra1uS
+    yGSlF8zgAfGd08Q2KSHPcJH4UaqvDx4KPt2cgkHe7+TccuiAUPOw5Rfck4vjy/IJjqzW
+    JkFA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1684415090;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=1A4pWdRSyRquDJYOJ8/0StLwGPzYcPJ+8wTjCsISdD8=;
+    b=yR1zUV+6SNnB74h2L/cWgn5U5zo14cpDUHP5THYm7utMH3ChNq/dMEz/+zkdzZFBlv
+    uAgFYXaxT8wdiC72HDDQ==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn8u4p1/zY="
+Received: from [192.168.244.3]
+    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
+    with ESMTPSA id j6420az4ID4oCWf
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 18 May 2023 15:04:50 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+Date:   Thu, 18 May 2023 15:04:25 +0200
+Subject: [PATCH] spi: qup: Request DMA before enabling clocks
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-Cc:     Rob Herring <robh@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Marc Zyngier <maz@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org>
- <20230328-topic-msgram_mpm-v2-1-e24a48e57f0d@linaro.org>
- <168069726278.2356075.14351594478003012447.robh@kernel.org>
- <20230405134727.GA2461305-robh@kernel.org>
- <1e6e2590-ac78-400b-35ce-321d5e52f385@linaro.org>
- <9df12111-ec84-c4f7-fbcb-bccaef91b048@linaro.org>
- <3ce9b5ec-8b02-537a-c663-c849e80cab66@linaro.org>
- <ZDAAToSzNLVo6le8@gerhold.net>
- <198523f5-d06f-15cd-af6c-f391c02bcaa9@linaro.org>
- <1f8fc036-380b-0a42-bb29-a3e275ed6a33@linaro.org>
- <2e648a97-083e-8ee2-1695-4af299bb222a@linaro.org>
- <15f48b06-a6be-1295-5deb-d3594bce6699@linaro.org>
- <ec32fc8e-56e0-51a5-dd96-c7cc8b9cf71f@linaro.org>
- <6a9b1c25-2e17-a657-3a58-b2ff8d1c86d7@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH v2 1/2] dt-bindings: interrupt-controller: mpm: Pass MSG
- RAM slice through phandle
-In-Reply-To: <6a9b1c25-2e17-a657-3a58-b2ff8d1c86d7@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Message-Id: <20230518-spi-qup-clk-defer-v1-1-f49fc9ca4e02@gerhold.net>
+X-B4-Tracking: v=1; b=H4sIAFgiZmQC/x2N0QrCMAwAf2Xk2UC7MhF/RXzo2tQFS60JG8LYv
+ xv2eAfH7aAkTAr3YQehjZU/zcBfBkhLbC9CzsYwujG4yd9QO+N37ZjqGzMVEswlhkRXHxwFsG6
+ OSjhLbGmxsq21muxChX/n6PE8jj/UF+p5eAAAAA==
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>
+X-Mailer: b4 0.12.2
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+It is usually better to request all necessary resources (clocks,
+regulators, ...) before starting to make use of them. That way they do
+not change state in case one of the resources is not available yet and
+probe deferral (-EPROBE_DEFER) is necessary. This is particularly
+important for DMA channels and IOMMUs which are not enforced by
+fw_devlink yet (unless you use fw_devlink.strict=1).
 
+spi-qup does this in the wrong order, the clocks are enabled and
+disabled again when the DMA channels are not available yet.
 
-On 13.04.2023 10:50, Krzysztof Kozlowski wrote:
-> On 12/04/2023 19:06, Konrad Dybcio wrote:
->>
->>
->> On 12.04.2023 18:53, Krzysztof Kozlowski wrote:
->>> On 12/04/2023 14:09, Konrad Dybcio wrote:
->>>>
->>>>
->>>> On 12.04.2023 13:55, Krzysztof Kozlowski wrote:
->>>>> On 12/04/2023 13:47, Konrad Dybcio wrote:
->>>>>>> For unrelated reasons I actually have some patches for this, that switch
->>>>>>> the /smd top-level node to a "remoteproc-like" node dedicated to the
->>>>>>> RPM, similar to how WCNSS/ADSP/Modem/etc are represented. I need this to
->>>>>>> add additional (optional) properties like "resets" and "iommus" for the
->>>>>>> RPM, but it would allow adding arbitrary subnodes as well:
->>>>>>>
->>>>>>> https://github.com/msm8916-mainline/linux/commit/35231ac28703805daa8220f1233847c7df34589e
->>>>>>>
->>>>>>> I could finish those up and post them if that would help...
->>>>>> Krzysztof, what do you think?
->>>>>
->>>>> I don't know what is there in MSM8916 and how it should be represented.
->>>> Similarly to other Qualcomm SoCs, MSM8916 has a RPM (Cortex-M3) core,
->>>> which communicates over the SMD protocol (or G-LINK on >=8996).
->>>>
->>>> The Qualcomm firmware loads the RPM fw blob and sets it up early in
->>>> the boot process, but msm8916-mainline folks managed to get TF-A
->>>> going and due to it being less.. invasive.. than the Qualcomm TZ,
->>>> RPM needs a bit more handling to be accessible.
->>>>
->>>> The M3 core is wired up through the CNoC bus and we communicate
->>>> with it through the MSG RAM and the "APCS mailbox".
->>>
->>> Thanks, that's actually good description. Yet I still do not know what
->>> is exactly the problem and the question. Linking some out of tree
->>> commits does not give me the answer, at least I cannot get that answer
->>> form the link.
->>>
->>> For example what I don't understand is: why additional resources (like
->>> resets) can be provided only in new binding, but not in the old.
->> The old binding dictates that the rpm node (which in turn
->> holds all "devices" that only interface with RPM, like RPMCC) is
->> a child of smd{}, which does not make sense logically, as SMD is
->> a protocol (e.g. we don't place devices connected over i2c under
->> /i2c{}).
-> 
-> We do. All devices connected over I2C are under i2c node which is the
-> controller. The example is different than what you have here...
-> 
->>  The rpm node lacks a compatible, as it's representing
->> an "smd channel", so there's no driver so there's no way to assert
->> resets etc.
-> 
-> You have rpm-requests which has compatible. These are not its resources?
-I believe we misrepresented this 10y ago and now we're stuck with that
-legacy..
+This causes issues in some cases: On most SoCs one of the SPI QUP
+clocks is shared with the UART controller. When using earlycon UART is
+actively used during boot but might not have probed yet, usually for
+the same reason (waiting for the DMA controller). In this case, the
+brief enable/disable cycle ends up gating the clock and further UART
+console output will halt the system completely.
 
-Currently we have:
+Avoid this by requesting the DMA channels before changing the clock
+state.
 
-[1]
-smd {
-	rpm {
-		rpm-requests {
-			compatible = "qcom,rpm-msm8916"
+Fixes: 612762e82ae6 ("spi: qup: Add DMA capabilities")
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+ drivers/spi/spi-qup.c | 37 ++++++++++++++++++-------------------
+ 1 file changed, 18 insertions(+), 19 deletions(-)
 
-or
+diff --git a/drivers/spi/spi-qup.c b/drivers/spi/spi-qup.c
+index 944ef6b42bce..00e5e88e72c4 100644
+--- a/drivers/spi/spi-qup.c
++++ b/drivers/spi/spi-qup.c
+@@ -1028,23 +1028,8 @@ static int spi_qup_probe(struct platform_device *pdev)
+ 		return -ENXIO;
+ 	}
+ 
+-	ret = clk_prepare_enable(cclk);
+-	if (ret) {
+-		dev_err(dev, "cannot enable core clock\n");
+-		return ret;
+-	}
+-
+-	ret = clk_prepare_enable(iclk);
+-	if (ret) {
+-		clk_disable_unprepare(cclk);
+-		dev_err(dev, "cannot enable iface clock\n");
+-		return ret;
+-	}
+-
+ 	master = spi_alloc_master(dev, sizeof(struct spi_qup));
+ 	if (!master) {
+-		clk_disable_unprepare(cclk);
+-		clk_disable_unprepare(iclk);
+ 		dev_err(dev, "cannot allocate master\n");
+ 		return -ENOMEM;
+ 	}
+@@ -1092,6 +1077,19 @@ static int spi_qup_probe(struct platform_device *pdev)
+ 	spin_lock_init(&controller->lock);
+ 	init_completion(&controller->done);
+ 
++	ret = clk_prepare_enable(cclk);
++	if (ret) {
++		dev_err(dev, "cannot enable core clock\n");
++		goto error_dma;
++	}
++
++	ret = clk_prepare_enable(iclk);
++	if (ret) {
++		clk_disable_unprepare(cclk);
++		dev_err(dev, "cannot enable iface clock\n");
++		goto error_dma;
++	}
++
+ 	iomode = readl_relaxed(base + QUP_IO_M_MODES);
+ 
+ 	size = QUP_IO_M_OUTPUT_BLOCK_SIZE(iomode);
+@@ -1121,7 +1119,7 @@ static int spi_qup_probe(struct platform_device *pdev)
+ 	ret = spi_qup_set_state(controller, QUP_STATE_RESET);
+ 	if (ret) {
+ 		dev_err(dev, "cannot set RESET state\n");
+-		goto error_dma;
++		goto error_clk;
+ 	}
+ 
+ 	writel_relaxed(0, base + QUP_OPERATIONAL);
+@@ -1145,7 +1143,7 @@ static int spi_qup_probe(struct platform_device *pdev)
+ 	ret = devm_request_irq(dev, irq, spi_qup_qup_irq,
+ 			       IRQF_TRIGGER_HIGH, pdev->name, controller);
+ 	if (ret)
+-		goto error_dma;
++		goto error_clk;
+ 
+ 	pm_runtime_set_autosuspend_delay(dev, MSEC_PER_SEC);
+ 	pm_runtime_use_autosuspend(dev);
+@@ -1160,11 +1158,12 @@ static int spi_qup_probe(struct platform_device *pdev)
+ 
+ disable_pm:
+ 	pm_runtime_disable(&pdev->dev);
++error_clk:
++	clk_disable_unprepare(cclk);
++	clk_disable_unprepare(iclk);
+ error_dma:
+ 	spi_qup_release_dma(master);
+ error:
+-	clk_disable_unprepare(cclk);
+-	clk_disable_unprepare(iclk);
+ 	spi_master_put(master);
+ 	return ret;
+ }
 
-[2]
-rpm-glink {
-	rpm-requests {
-		compatible = "qcom,rpm-sm6375"
+---
+base-commit: 5e41763e97db00125dec847e54a1827436d34cd3
+change-id: 20230518-spi-qup-clk-defer-dfa3ce6130e3
 
+Best regards,
+-- 
+Stephan Gerhold <stephan@gerhold.net>
 
-In the case of [1], 'smd' is a communication protocol and the 'rpm'
-node describes the RPM's "smd edge" (think a communication channel
-assigned to the RPM processor)
-
-
-In the case of [2], rpm-glink is also just a description of the G-LINK
-communication protocol/"bus" (putting bus in quotes, as GLINK is really a
-very very fancy set of mailboxes)
-
-So we've really been describing the protocols and not the hardware buses..
-
-What Stephan and I were trying to say, is that there's no great node that
-actually represents the Cortex-M3 RPM core itself.
-
-The rpm-requests node is the closest, but it won't fit his purpose, as it 
-depends on the communication with the CM3 already being active - it will
-only get registered through qcom_glink_rx_open / qcom_channel_state_worker
-for GLINK/SMD respectively. These channels will only be open if the core
-is up, but for that to happen its reset line must be deasserted.
-
-Stephen proposed restructuring that to be centered around the CM3 core and
-not the communication protocol.
-
-I know you're not very fond of downstream tree commits, but looking at his
-branch, I think that's it:
-
-https://github.com/msm8916-mainline/linux/commit/e4e90fd3f711295461ee17891567e75e2342e5c8
-
-I'd be in favour of such restructurization - makes things much more clear
-and sane.
-
-Stephen, if you're willing to do it, I can test your patches on both GLINK
-and SMD platforms.
-
-> 
->>
->> On newer SoCs that still implement SMD RPM (like 8996), we do
->> actually have a driver and a parent node which it binds to
->> (rpm-glink).
-> 
-> You want to add RPM resets to rpm-glink node? This also does not look right.
-No, I was just pointing out that rpm-requests' direct parent node has a
-driver bound to it in case of GLINK but not in the case of SMD
-
-
-> 
->>
->> AFAIU:
->> In both cases, the "final" drivers (rpmcc, rpmpd..) are bound
->> after hitting a SMD/GLINK callback that tells Linux we're ready
->> to rock. That's an issue for Stephan, as these callbacks won't
->> ever happen if the RPM core is not initialized (and TF-A doesn't
->> do that).
-> 
-> To me half or almost all of Qualcomm remote-proc-related bindings, like
-> SMD, GLINK and associated processors, are difficult to read, half-baked
-> and developed to match the current Linux/SW need.
-Agreed :/
-
-When the Linux drivers
-> changed, new bindings were added... If you want to fix it, sure go
-> ahead, but design everything to match something rational, not again to
-> match one specific SW/FW implementation.
-I don't think it's worth the hassle.. we may add it to the "we'll fix it
-when we eventually find some gamebreaking issue that requires us to break
-the 10yo backwards compatibility for some deep core driver, if that happens"
-list..
-
-Konrad
-> 
-> Best regards,
-> Krzysztof
-> 
