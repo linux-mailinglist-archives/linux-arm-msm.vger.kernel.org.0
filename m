@@ -2,78 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A03F7082F1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 15:40:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB55F70831D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 15:47:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231381AbjERNkD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 09:40:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59532 "EHLO
+        id S230393AbjERNrR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 09:47:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231132AbjERNkB (ORCPT
+        with ESMTP id S230308AbjERNqq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 09:40:01 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0E221A7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 06:39:53 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-96a2b6de3cbso319044866b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 06:39:53 -0700 (PDT)
+        Thu, 18 May 2023 09:46:46 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA256E4F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 06:46:44 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3f41dceb9d1so20205315e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 06:46:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684417192; x=1687009192;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9TjZBlEcYTCCpYd0EWrlM/xAExh6zuB4ZIDwlVPxXTM=;
-        b=UtoOLaPCtVZiaeUG2eAR+BoX6XervPJ44kNitEkB2i8nE19OiPwe4WPG71xS9pCu1x
-         sArEfo/YPzCZZXlyjAVWSv9fIlagSo4a8k6kNho74FfM9XXGpzGQEcgLCu8w8ZMnnb4e
-         fnFrD1VfE8ksxCsbIbxMofGopGZ0wBoauS5ABMJnQjdKof/lo+ROYTs/DLGV56IsRO1k
-         SzkjlYnDFU0m9lpu1vDEBGXnDQf/5Gz9LoMDv7lVcUWFEUg/rrJhDYvdBp6b+i1XoRr6
-         /gKp4CLyot03bsSfuT3b8edrPbizU3BXXnxcR7JLjO9S17y4Z7N1hIEuuVkVcw7HnA36
-         guUA==
+        d=linaro.org; s=google; t=1684417603; x=1687009603;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=n37kZ9OaSB2I1L9nZa5F9grWcO9GO9dx9m8E0RZj7ew=;
+        b=rNt5bxcuBOipXy+gj9lj5he9BVeqcZDNLnR6RtNY2GSXk3UtdkW+T7MJJ9wqaAvx3G
+         neACjsomII8ntdG81HZnQlevqETbR3yNN9OSYKrWkaLJ8ZPjRJiQI+JGEzXUjZo8W2K6
+         elyZxK+hpLpt0FVRlQoNNs8lU9aaqwt1U6bWL1p8NmK2kvR66KFrUzY3pLmvngRQurCV
+         1Dj740gakwCCd4d0Yqeb+jB/0cnHQk0aOJl++S66fVN+z2JhWsGeE5irsWNCgD68ALGt
+         JdRdVX84KHxqf/QXqZhkW3f+1VW7lIMxuU5k2vaL1RCmEPcNQKh/QSErDySlmcxbsJA/
+         SVlw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684417192; x=1687009192;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9TjZBlEcYTCCpYd0EWrlM/xAExh6zuB4ZIDwlVPxXTM=;
-        b=MXTQiGv2M2N+mHGnRxIpem3lKrFoEaA0Fvt4BItaKFizoqaEBGyX1rzwWG1HgLy6P1
-         yGulvgcPItf2k2SYEl0tMiQnY8G2F1C9ekUj5AbgHClTq6xhfLhQfclhsxtREjivs9xH
-         p3tKlhwNSyQSNrwr+UjAYVQ3pNcRlfkaTHf74sNi9XlQOumQELREpq5IcTUda0sdc8jv
-         DmaB8Ttymf7nm3CPNKvztUUPJQ9OAhoQpxG4OJtxcMkfOM5sNUrjr4h50G/emKLR4Jvh
-         jMj4L75q+0D57Ul8eLLvw8QC1x5QaZNISJT3+f20+vUDO5HfhwcI2/j9G25dg2A+t/5A
-         JOpA==
-X-Gm-Message-State: AC+VfDw0byWIOafmgQXdKmnEEpAMkSFyJZAohelo2pVYdpYTj8PBYunW
-        uxYL54nMzM6Y10RjZPE5ncAtpg==
-X-Google-Smtp-Source: ACHHUZ7BmIRiwtmUUF+QH7l8KYeBPlkWIy0PM9v8f7UFbcRNmiiSYH5CXMZJR3OovEEGm8cP3klyJQ==
-X-Received: by 2002:a17:906:7303:b0:965:6d21:48bc with SMTP id di3-20020a170906730300b009656d2148bcmr42875928ejc.75.1684417192268;
-        Thu, 18 May 2023 06:39:52 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:7e24:6d1b:6bf:4249? ([2a02:810d:15c0:828:7e24:6d1b:6bf:4249])
-        by smtp.gmail.com with ESMTPSA id i24-20020a1709063c5800b0096f0c21903bsm1003848ejg.31.2023.05.18.06.39.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 May 2023 06:39:51 -0700 (PDT)
-Message-ID: <b93a1717-acde-0df3-ab8d-7a3e33fdb1b3@linaro.org>
-Date:   Thu, 18 May 2023 15:39:50 +0200
+        d=1e100.net; s=20221208; t=1684417603; x=1687009603;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=n37kZ9OaSB2I1L9nZa5F9grWcO9GO9dx9m8E0RZj7ew=;
+        b=TBzbEjmaIIdfCtH1hnSuheBwFD1PURhKOgmM4lWRGrUNOZ/szMU6LnONOVkZNuD0R3
+         FwnW8L+rcYUPyVsMFkjTr3PKe8EXKYOQ9nSQfFtPAz1UlRwVFk/V4mMaU3Joc76e1lUS
+         OlX/gabTMa2C82A6W8UcMF9CAZ05kSN2N+kmzwXVD0cFaZ7iX0oiLkSsSODxt8mgZUq2
+         Lp2kac+bwY0HvP6EKZq9f4OaQQiIHKUX/qy+rErO7WTOPY+4A3EHeqsyfX5JBHIXqKoU
+         blyO745tkZyU6b2pghZhXB5uzGR/eHPzNMCB4iJd54ywmCR6YTEAzcBe8FPZ0F3axMCX
+         azSA==
+X-Gm-Message-State: AC+VfDz8tndFoQHFd8dA47qvvJrEG/awPyFlYN9LEhWK4G817KUv0u3J
+        UvsQkqaaHuDmxj5tk0hcoLyL9dtCqb4qABFt9gTnyg==
+X-Google-Smtp-Source: ACHHUZ4sg6CWtPLHXtpPccBwHuiBIUQk33g30SZ0fhjsgYp0KOauavRqRHfQsI71hiJkt9HYbOC8XxoBaQ7OD+0SV5s=
+X-Received: by 2002:a7b:c852:0:b0:3f1:979f:a733 with SMTP id
+ c18-20020a7bc852000000b003f1979fa733mr1740091wml.31.1684417603085; Thu, 18
+ May 2023 06:46:43 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2 2/3] MAINTAINERS: Update the entry for pinctrl
- maintainers
-Content-Language: en-US
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
+References: <1684413670-12901-1-git-send-email-quic_rohiagar@quicinc.com> <1684413670-12901-3-git-send-email-quic_rohiagar@quicinc.com>
+In-Reply-To: <1684413670-12901-3-git-send-email-quic_rohiagar@quicinc.com>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Thu, 18 May 2023 19:16:31 +0530
+Message-ID: <CAH=2Ntze2sHoaY-x19u1iw-3QD_SPS0T0J5xw=xtOyRb6ryf5w@mail.gmail.com>
+Subject: Re: [PATCH v2 2/3] MAINTAINERS: Update the entry for pinctrl maintainers
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         linus.walleij@linaro.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        richardcochran@gmail.com, manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        richardcochran@gmail.com, manivannan.sadhasivam@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         netdev@vger.kernel.org
-References: <1684413670-12901-1-git-send-email-quic_rohiagar@quicinc.com>
- <1684413670-12901-3-git-send-email-quic_rohiagar@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1684413670-12901-3-git-send-email-quic_rohiagar@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,14 +72,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/05/2023 14:41, Rohit Agarwal wrote:
+On Thu, 18 May 2023 at 18:11, Rohit Agarwal <quic_rohiagar@quicinc.com> wrote:
+>
 > Update the entry for pinctrl bindings maintainer as the
 > current one checks only in the .txt files.
-> 
+>
 > Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> ---
+>  MAINTAINERS | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index e0ad886..c030984 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -16672,7 +16672,7 @@ PIN CONTROLLER - QUALCOMM
+>  M:     Bjorn Andersson <andersson@kernel.org>
+>  L:     linux-arm-msm@vger.kernel.org
+>  S:     Maintained
+> -F:     Documentation/devicetree/bindings/pinctrl/qcom,*.txt
+> +F:     Documentation/devicetree/bindings/pinctrl/qcom,*
+>  F:     drivers/pinctrl/qcom/
+>
+>  PIN CONTROLLER - RENESAS
+> --
+> 2.7.4
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Looks good now, so:
 
-Best regards,
-Krzysztof
+Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 
+Thanks.
