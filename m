@@ -2,123 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E69170773A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 03:14:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28E387077D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 04:09:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229640AbjERBOu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 17 May 2023 21:14:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59328 "EHLO
+        id S229749AbjERCJV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 17 May 2023 22:09:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229539AbjERBOt (ORCPT
+        with ESMTP id S229514AbjERCJV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 17 May 2023 21:14:49 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E4144488
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 May 2023 18:14:47 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34I1EgHU025164;
-        Thu, 18 May 2023 01:14:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : date :
- subject : mime-version : content-type : content-transfer-encoding :
- message-id : references : in-reply-to : to : cc; s=qcppdkim1;
- bh=v4hdOistjXnRF5RLqWA+tShnrbCQm4iYw1xuvbpJfUA=;
- b=DXAwcdOijwJGJv9Ninhz9NOWr+JWxSZeRitYjw4N/qiRI5r2fTUsleQQxwcZuihDN6Gu
- bvhAdgJaQ3GO47ctxQItTff/21lscnMxR6xsKsgH585lKQkULPdha0jy9N47p34jhLE7
- 58Oon6m2wvQLHm2uFnEiBCT9MQnyBGB6ghWlxIzp1OL7DJ0R+38tzBifBgr4hruuAz7t
- VLmRaRNVqlOqdKqHPcfPzXW/RNVsBqTjM6R4FcUUXI5A6HMaW8DrEP70rgXkVbTK5j84
- GnqbmQCNBpgIB3hmFgbWI8sPiUwOCwPhVwX3fRYjyVp5qiQY+H5qFcJhnx8SubMa5DG8 KQ== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qn3fsgs79-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 18 May 2023 01:14:42 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34I1EfCd006959
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 18 May 2023 01:14:41 GMT
-Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 17 May 2023 18:14:41 -0700
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-Date:   Wed, 17 May 2023 18:14:35 -0700
-Subject: [PATCH v13 9/9] drm/msm/dsi: update hdisplay calculation for
- dsi_timing_setup
+        Wed, 17 May 2023 22:09:21 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4C033AAA;
+        Wed, 17 May 2023 19:09:19 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 49E6E63AF8;
+        Thu, 18 May 2023 02:09:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3EEC433EF;
+        Thu, 18 May 2023 02:09:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1684375758;
+        bh=9obMk6AZmvHe9BCy9surK81tpa8yMdMfGVW9yRTcpvY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=RjG5A9fC790sBDxbZoTfoTVeG1YzvfsrPKGv0UUQAEpDwGfKWQvbTWx/aKUInScKj
+         20rKq6DZOaBFoIlYhiiBsD8EStKottaYxIkVjqTcfRNVb0p6TmdZIzvH2tvjqSn5ze
+         294ybGC4oWoa1KM5MHVv2MfM/gXD2D69y0JzXb89QvZTGdkdd/4Ntz5io9BKui8v4+
+         7NhGpHpHr4vEsXHGwfgqu3nfsH7qE3N55IoUPEmHMwgCeCUV/z2cpbO7PEmJsDNGCE
+         jtk2EQVypHI7GYjop2mkyb/cbxfY688dJLvMzg9gctamF5L4unRaQfslvgrtHsGIX2
+         r1BVwSAVO7b0A==
+Date:   Wed, 17 May 2023 19:13:07 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 3/5] arm64: dts: qcom: qrb4210-rb2: Add GPIO LEDs
+Message-ID: <20230518021307.z63xrx5v2lhd3byf@ripper>
+References: <20230515-topic-rb2-bits-v1-0-a52d154a639d@linaro.org>
+ <20230515-topic-rb2-bits-v1-3-a52d154a639d@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20230329-rfc-msm-dsc-helper-v13-9-d7581e7becec@quicinc.com>
-References: <20230329-rfc-msm-dsc-helper-v13-0-d7581e7becec@quicinc.com>
-In-Reply-To: <20230329-rfc-msm-dsc-helper-v13-0-d7581e7becec@quicinc.com>
-To:     <freedreno@lists.freedesktop.org>
-CC:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-X-Mailer: b4 0.13-dev-bfdf5
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1684372478; l=1029;
- i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
- bh=x5Yx+3m1ry8zEMx//Z2KoppAyj/f7rIKvYja256G7lw=;
- b=/bVb5EzcBD37E3G5jMOMtkYLor6SBo1PiG8GwktD8VNA/0e2QT71oKYSQH5Gct5ShWLTwKiQB
- Lk3CpEp30Z1CMF8wNYAvT78VFxoK/ZvK0IZsi3xl0RnoP+xWNxpeZdH
-X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
- pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: YHH6LkhCEbhjdczpzQjMmEF8zeZFjTut
-X-Proofpoint-GUID: YHH6LkhCEbhjdczpzQjMmEF8zeZFjTut
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-17_05,2023-05-17_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 suspectscore=0 spamscore=0 adultscore=0 bulkscore=0
- phishscore=0 impostorscore=0 mlxlogscore=902 priorityscore=1501 mlxscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305180006
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230515-topic-rb2-bits-v1-3-a52d154a639d@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently, hdisplay is being divided by 3 for DSC. However, this
-calculation only works for cases where BPP = 8.
+On Mon, May 15, 2023 at 03:04:14PM +0200, Konrad Dybcio wrote:
+> Add the three LEDs (blue/yellow/green) connected to TLMM GPIOs.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 36 ++++++++++++++++++++++++++++++--
+>  1 file changed, 34 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> index 9b539720f05d..eeee268ebfe2 100644
+> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+> @@ -5,6 +5,7 @@
+>  
+>  /dts-v1/;
+>  
+> +#include <dt-bindings/leds/common.h>
+>  #include "sm4250.dtsi"
+>  
+>  / {
+> @@ -30,6 +31,38 @@ hdmi_con: endpoint {
+>  		};
+>  	};
+>  
+> +	leds {
+> +		compatible = "gpio-leds";
+> +
+> +		led-bt {
+> +			label = "blue:bt";
+> +			function = LED_FUNCTION_BLUETOOTH;
+> +			color = <LED_COLOR_ID_BLUE>;
+> +			gpios = <&tlmm 45 GPIO_ACTIVE_HIGH>;
+> +			linux,default-trigger = "bluetooth-power";
+> +			default-state = "off";
+> +		};
+> +
+> +		led-user0 {
+> +			label = "green:user0";
+> +			function = LED_FUNCTION_INDICATOR;
+> +			color = <LED_COLOR_ID_GREEN>;
+> +			gpios = <&tlmm 52 GPIO_ACTIVE_HIGH>;
+> +			linux,default-trigger = "none";
+> +			default-state = "off";
+> +			panic-indicator;
+> +		};
+> +
+> +		led-wlan {
+> +			label = "yellow:wlan";
+> +			function = LED_FUNCTION_WLAN;
+> +			color = <LED_COLOR_ID_YELLOW>;
+> +			gpios = <&tlmm 47 GPIO_ACTIVE_HIGH>;
+> +			linux,default-trigger = "phy0tx";
+> +			default-state = "off";
+> +		};
+> +	};
+> +
+>  	vreg_hdmi_out_1p2: regulator-hdmi-out-1p2 {
+>  		compatible = "regulator-fixed";
+>  		regulator-name = "VREG_HDMI_OUT_1P2";
+> @@ -385,8 +418,7 @@ &sleep_clk {
+>  };
+>  
+>  &tlmm {
+> -	gpio-reserved-ranges = <43 2>, <47 1>,
+> -			       <49 1>, <52 1>, <54 1>,
+> +	gpio-reserved-ranges = <43 2>, <49 1>, <54 1>,
 
-Update hdisplay calculation to be bytes_per_line / 3, so that it
-accounts for cases where BPP != 8.
+How come pin 49 becomes inaccessible here? Was this intended for the
+previous patch?
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Regards,
+Bjorn
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 5526a51b3d97..9223d7ec5a73 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -952,7 +952,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 		 * pulse width same
- 		 */
- 		h_total -= hdisplay;
--		hdisplay /= 3;
-+		hdisplay = msm_dsc_get_bytes_per_line(msm_host->dsc) / 3;
- 		h_total += hdisplay;
- 		ha_end = ha_start + hdisplay;
- 	}
-
--- 
-2.40.1
-
+>  			       <56 3>, <61 2>, <64 1>,
+>  			       <68 1>, <72 8>, <96 1>;
+>  
+> 
+> -- 
+> 2.40.1
+> 
