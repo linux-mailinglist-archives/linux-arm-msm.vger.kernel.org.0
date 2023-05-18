@@ -2,75 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10D48708B74
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 00:22:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44399708BD6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 00:40:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230274AbjERWWv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 18:22:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41800 "EHLO
+        id S230514AbjERWkZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 18:40:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50702 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230252AbjERWWu (ORCPT
+        with ESMTP id S230507AbjERWkY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 18:22:50 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DDEFE50
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 15:22:48 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f122ff663eso2863014e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 15:22:48 -0700 (PDT)
+        Thu, 18 May 2023 18:40:24 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A54EE75
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 15:40:22 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f24d4900bbso2987711e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 15:40:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684448566; x=1687040566;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=i8JseUKXWpuc/CckoDttK7Sy0JkMwOH5zx3JHuSisWM=;
-        b=k72/ciEv0LMI8jr2jFWeeQmLA4UG2sQgnNDIHc77sX+4HwSZpA+JOttRF8jtAicd58
-         bd4xSo1R13Q1fK6oHhH67EUjmJyYSK3A2sUTVAKLN73mw5HxMLm49hQcHVmPGeNQ2gc7
-         Fr8Y09p9tKsuEWzBVuPVT1MoMgv3KWvKEmQYm5JBs866qlvFbfsg/w1itzK+mJxwH8ba
-         aYUn6llHshWJBWw9GFRtHTxB8jvmqAm3FL1nIlkSBKLgzz5AIS+8A07Fr3WbHQImPMQB
-         SV0rszajC2L997VfgiWeaVIJIb46FzUINlVVcQVyuslhtPnuIHDmuFBO9ZBMwgz5lGkN
-         4OAQ==
+        d=linaro.org; s=google; t=1684449620; x=1687041620;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/2NH++c4VhC9XWEVE5uzOsg61iCKWgGKssQQYMJ5/Ww=;
+        b=MR6PaJ7ZWCYV1Br5FE3pGCk+ymATp+bNfKKJfm8GGb6QbtwINtwtK1sMG2ugMa9UFm
+         L4nqRg6spkN9FwU2dPSnv4LPqNDOp9+Rt4XAwKk5gq8gV76yfCv2zeNRwm0UkBHwTu0C
+         u/PWDpMhQqNgRT9TrlB+CrPiA9zDxfVgyB8+hlrjM3GebRssjaVoZ1tqPqpeyrFm9s3D
+         Wuxc7pDV58duw4BB6ZkU80vaBuo9d6wy/93i9Stm/s7eVKK5Gg14t/IwL2PqSkfQRjaB
+         N1OSZ5W4Lnn6rbkXKs/gX7TfAr7TbStf4JDytS7eKMSH8WbZre06qpwJfPZd6V4z6JYJ
+         wjHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684448566; x=1687040566;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=i8JseUKXWpuc/CckoDttK7Sy0JkMwOH5zx3JHuSisWM=;
-        b=fyp/+Mi8zF9vnhP8Qj4PL1JdUCZxdxYPsc9ijiV3AHvANmu8xmRLpeCVZg0O7MAEC0
-         ZeYN5L73YC2LF+aQp9NdZkRp1UFmuQ9Q6B7djo9v81aPGLvWr+enhHxMGooQujO4aUHX
-         bKlqIAfVaXPbzeCKZi8SjYThpfKzOPkdbtjdGqEh6cU3D70oDD03TwOlTZ2GW7t8EJSB
-         BQg5f+rrwk52rhWc77tneYzliUDpdL38qjN8sRr9lkE2mPKhH1lhT3UsGHMI0r8YmPTg
-         FzROB0EpYSYgkjhWrqoTEtTZyko4Owr6ZAdjN36SyB8J/4Y2yNse7FoTfhrKE3o8Xo+H
-         atlQ==
-X-Gm-Message-State: AC+VfDzX1eLZU2Qhl9EXKLgyp7vJhbHT24Pfst3y294bbxn2ob6jaU1I
-        m8X1LiQW1HwVV7rSJPYwTCdISA==
-X-Google-Smtp-Source: ACHHUZ5CjPCT3k2acRkFwvYEsutvL5H7iPXc96a2v6WLQ1hv2cqlZTWch1RCkJTkPccRNYAkyprCfA==
-X-Received: by 2002:ac2:5e81:0:b0:4f3:872d:10ff with SMTP id b1-20020ac25e81000000b004f3872d10ffmr82273lfq.64.1684448566688;
-        Thu, 18 May 2023 15:22:46 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id o18-20020ac24352000000b004ec7c0f2178sm383860lfl.63.2023.05.18.15.22.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 May 2023 15:22:46 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Jeykumar Sankaran <quic_jeykumar@quicinc.com>
-Subject: [PATCH v3 9/9] drm/msm/dpu: use common helper for WB and SSPP QoS setup
-Date:   Fri, 19 May 2023 01:22:38 +0300
-Message-Id: <20230518222238.3815293-10-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230518222238.3815293-1-dmitry.baryshkov@linaro.org>
-References: <20230518222238.3815293-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20221208; t=1684449620; x=1687041620;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/2NH++c4VhC9XWEVE5uzOsg61iCKWgGKssQQYMJ5/Ww=;
+        b=OjPombxAuHC+50pdKwjtf5w6fGwNYwHy0bz6E8H0eS7/Gz5JMOwOulbqmAtOaQGc8O
+         OZlmWmd/bIF91vEMvSGDqGWTmBKtx3ibmITA9MDjOE4BA9Caotz1kLIK76/bODqiXayI
+         QNop6tNLjYHSNhF2/OMoEWnVnXn64MGgnBN+Ez5U+tn8gCR1ZK2tAz/3tFXwqaufR0iI
+         ZBhWAfUktFQjnj7T2hdz7tTJuWhmR7+AM1gCpBUJh6pU1erybkcB3YgkLOJssUsOd3U8
+         MbVqDQJuhQkP7i8qQSOJsIDQ57/LCyDpTqtonuhdfSQjVWr68vsuUSKAsGL2YKuEzyoi
+         Ypiw==
+X-Gm-Message-State: AC+VfDyA75LOvp7phSTBy5Zpi6NbgpIcdDECAEMl1J+MrVoZg5sm7/y8
+        6OoO+7820AAmLA7P9UY6jrHxhQ==
+X-Google-Smtp-Source: ACHHUZ4rOh18fVzYdVv7xzcUnLRINIeOIj4YN1jogDWq7DlSgW85yFdMNrqXWQMZSN+vB2XLFFpJwg==
+X-Received: by 2002:ac2:4315:0:b0:4d5:a689:7580 with SMTP id l21-20020ac24315000000b004d5a6897580mr140353lfh.47.1684449620186;
+        Thu, 18 May 2023 15:40:20 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id u9-20020ac248a9000000b004f00189e1dasm385760lfg.143.2023.05.18.15.40.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 May 2023 15:40:19 -0700 (PDT)
+Message-ID: <b2fcc9f5-ca11-ab87-e40b-9c6d2662325b@linaro.org>
+Date:   Fri, 19 May 2023 01:40:19 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v10 6/8] drm/msm/dpu: separate DSC flush update out of
+ interface
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1684360919-28458-1-git-send-email-quic_khsieh@quicinc.com>
+ <1684360919-28458-7-git-send-email-quic_khsieh@quicinc.com>
+ <evkla3rkf4tge6gln4lgtulj7q5gt6vef3i2yqupc5lj2oszfx@7ttyxzlmvet5>
+ <8e9feb23-a5f0-7cd8-ebff-8e9097ff0ca1@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <8e9feb23-a5f0-7cd8-ebff-8e9097ff0ca1@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,460 +85,144 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rework SSPP and WB code to use common helper for programming QoS
-settings.
+On 19/05/2023 01:09, Kuogee Hsieh wrote:
+> 
+> On 5/17/2023 3:31 PM, Marijn Suijten wrote:
+>>
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+>>> @@ -139,6 +139,11 @@ static inline void 
+>>> dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
+>>>                   CTL_DSPP_n_FLUSH(dspp - DSPP_0),
+>>>                   ctx->pending_dspp_flush_mask[dspp - DSPP_0]);
+>>>           }
+>>> +
+>>> +    if (ctx->pending_flush_mask & BIT(DSC_IDX))
+>>> +        DPU_REG_WRITE(&ctx->hw, CTL_DSC_FLUSH,
+>>> +                  ctx->pending_dsc_flush_mask);
+>> Again, when do we reset this mask to 0?  (v8 review)
+> 
+> can not find it.
+> 
+> let me add a separate  patch to fix this.
 
-Reviewed-by: Jeykumar Sankaran <quic_jeykumar@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  4 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   | 31 ++-----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   | 19 +----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c   | 31 +++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h   | 21 +++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c     | 29 +------
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h     | 16 +---
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     | 85 +++++++------------
- 8 files changed, 100 insertions(+), 136 deletions(-)
+The pending_dsc_flush_mask was added in this patch, so the reset should 
+be a part of this patch too.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-index e7b65f6f53d6..023a9c4ad1db 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-@@ -102,7 +102,7 @@ static void dpu_encoder_phys_wb_set_qos_remap(
- static void dpu_encoder_phys_wb_set_qos(struct dpu_encoder_phys *phys_enc)
- {
- 	struct dpu_hw_wb *hw_wb;
--	struct dpu_hw_wb_qos_cfg qos_cfg;
-+	struct dpu_hw_qos_cfg qos_cfg;
- 	const struct dpu_mdss_cfg *catalog;
- 	const struct dpu_qos_lut_tbl *qos_lut_tb;
- 
-@@ -115,7 +115,7 @@ static void dpu_encoder_phys_wb_set_qos(struct dpu_encoder_phys *phys_enc)
- 
- 	hw_wb = phys_enc->hw_wb;
- 
--	memset(&qos_cfg, 0, sizeof(struct dpu_hw_wb_qos_cfg));
-+	memset(&qos_cfg, 0, sizeof(struct dpu_hw_qos_cfg));
- 	qos_cfg.danger_safe_en = true;
- 	qos_cfg.danger_lut =
- 		catalog->perf->danger_lut_tbl[DPU_QOS_LUT_USAGE_NRT];
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-index 1abe1eca4f42..b364cf75bb3f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-@@ -539,30 +539,15 @@ static void dpu_hw_sspp_setup_solidfill(struct dpu_sw_pipe *pipe, u32 color)
- 				color);
- }
- 
--static void dpu_hw_sspp_setup_danger_safe_lut(struct dpu_hw_sspp *ctx,
--			u32 danger_lut,
--			u32 safe_lut)
-+static void dpu_hw_sspp_setup_qos_lut(struct dpu_hw_sspp *ctx,
-+				      struct dpu_hw_qos_cfg *cfg)
- {
--	if (!ctx)
--		return;
--
--	DPU_REG_WRITE(&ctx->hw, SSPP_DANGER_LUT, danger_lut);
--	DPU_REG_WRITE(&ctx->hw, SSPP_SAFE_LUT, safe_lut);
--}
--
--static void dpu_hw_sspp_setup_creq_lut(struct dpu_hw_sspp *ctx,
--			u64 creq_lut)
--{
--	if (!ctx)
-+	if (!ctx || !cfg)
- 		return;
- 
--	if (ctx->cap && test_bit(DPU_SSPP_QOS_8LVL, &ctx->cap->features)) {
--		DPU_REG_WRITE(&ctx->hw, SSPP_CREQ_LUT_0, creq_lut);
--		DPU_REG_WRITE(&ctx->hw, SSPP_CREQ_LUT_1,
--				creq_lut >> 32);
--	} else {
--		DPU_REG_WRITE(&ctx->hw, SSPP_CREQ_LUT, creq_lut);
--	}
-+	_dpu_hw_setup_qos_lut(&ctx->hw, SSPP_DANGER_LUT,
-+			      test_bit(DPU_SSPP_QOS_8LVL, &ctx->cap->features),
-+			      cfg);
- }
- 
- static void dpu_hw_sspp_setup_qos_ctrl(struct dpu_hw_sspp *ctx,
-@@ -604,9 +589,7 @@ static void _setup_layer_ops(struct dpu_hw_sspp *c,
- 	c->ops.setup_pe = dpu_hw_sspp_setup_pe_config;
- 
- 	if (test_bit(DPU_SSPP_QOS, &features)) {
--		c->ops.setup_danger_safe_lut =
--			dpu_hw_sspp_setup_danger_safe_lut;
--		c->ops.setup_creq_lut = dpu_hw_sspp_setup_creq_lut;
-+		c->ops.setup_qos_lut = dpu_hw_sspp_setup_qos_lut;
- 		c->ops.setup_qos_ctrl = dpu_hw_sspp_setup_qos_ctrl;
- 	}
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-index 4278c421b6ac..085f34bc6b88 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-@@ -254,25 +254,14 @@ struct dpu_hw_sspp_ops {
- 	void (*setup_sharpening)(struct dpu_hw_sspp *ctx,
- 			struct dpu_hw_sharp_cfg *cfg);
- 
--	/**
--	 * setup_danger_safe_lut - setup danger safe LUTs
--	 * @ctx: Pointer to pipe context
--	 * @danger_lut: LUT for generate danger level based on fill level
--	 * @safe_lut: LUT for generate safe level based on fill level
--	 *
--	 */
--	void (*setup_danger_safe_lut)(struct dpu_hw_sspp *ctx,
--			u32 danger_lut,
--			u32 safe_lut);
- 
- 	/**
--	 * setup_creq_lut - setup CREQ LUT
-+	 * setup_qos_lut - setup QoS LUTs
- 	 * @ctx: Pointer to pipe context
--	 * @creq_lut: LUT for generate creq level based on fill level
--	 *
-+	 * @cfg: LUT configuration
- 	 */
--	void (*setup_creq_lut)(struct dpu_hw_sspp *ctx,
--			u64 creq_lut);
-+	void (*setup_qos_lut)(struct dpu_hw_sspp *ctx,
-+			struct dpu_hw_qos_cfg *cfg);
- 
- 	/**
- 	 * setup_qos_ctrl - setup QoS control
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
-index 95d20b9a3f2f..9d2273fd2fed 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
-@@ -73,6 +73,19 @@ static u32 dpu_hw_util_log_mask = DPU_DBG_MASK_NONE;
- #define QSEED3LITE_SEP_LUT_SIZE \
- 	        (QSEED3LITE_LUT_SIZE * QSEED3LITE_SEPARABLE_LUTS * sizeof(u32))
- 
-+/* QOS_LUT */
-+#define QOS_DANGER_LUT                    0x00
-+#define QOS_SAFE_LUT                      0x04
-+#define QOS_CREQ_LUT                      0x08
-+#define QOS_QOS_CTRL                      0x0C
-+#define QOS_CREQ_LUT_0                    0x14
-+#define QOS_CREQ_LUT_1                    0x18
-+
-+/* QOS_QOS_CTRL */
-+#define QOS_QOS_CTRL_DANGER_SAFE_EN       BIT(0)
-+#define QOS_QOS_CTRL_DANGER_VBLANK_MASK   GENMASK(5, 4)
-+#define QOS_QOS_CTRL_VBLANK_EN            BIT(16)
-+#define QOS_QOS_CTRL_CREQ_VBLANK_MASK     GENMASK(21, 20)
- 
- void dpu_reg_write(struct dpu_hw_blk_reg_map *c,
- 		u32 reg_off,
-@@ -450,6 +463,24 @@ u64 _dpu_hw_get_qos_lut(const struct dpu_qos_lut_tbl *tbl,
- 	return 0;
- }
- 
-+void _dpu_hw_setup_qos_lut(struct dpu_hw_blk_reg_map *c, u32 offset,
-+			   bool qos_8lvl,
-+			   const struct dpu_hw_qos_cfg *cfg)
-+{
-+	DPU_REG_WRITE(c, offset + QOS_DANGER_LUT, cfg->danger_lut);
-+	DPU_REG_WRITE(c, offset + QOS_SAFE_LUT, cfg->safe_lut);
-+
-+	if (qos_8lvl) {
-+		DPU_REG_WRITE(c, offset + QOS_CREQ_LUT_0, cfg->creq_lut);
-+		DPU_REG_WRITE(c, offset + QOS_CREQ_LUT_1, cfg->creq_lut >> 32);
-+	} else {
-+		DPU_REG_WRITE(c, offset + QOS_CREQ_LUT, cfg->creq_lut);
-+	}
-+
-+	DPU_REG_WRITE(c, offset + QOS_QOS_CTRL,
-+		      cfg->danger_safe_en ? QOS_QOS_CTRL_DANGER_SAFE_EN : 0);
-+}
-+
- void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c,
- 		u32 misr_ctrl_offset,
- 		bool enable, u32 frame_count)
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-index dc6e3b795aef..1f6079f47071 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
-@@ -305,6 +305,23 @@ struct dpu_drm_scaler_v2 {
- 	struct dpu_drm_de_v1 de;
- };
- 
-+/**
-+ * struct dpu_hw_qos_cfg: pipe QoS configuration
-+ * @danger_lut: LUT for generate danger level based on fill level
-+ * @safe_lut: LUT for generate safe level based on fill level
-+ * @creq_lut: LUT for generate creq level based on fill level
-+ * @creq_vblank: creq value generated to vbif during vertical blanking
-+ * @danger_vblank: danger value generated during vertical blanking
-+ * @vblank_en: enable creq_vblank and danger_vblank during vblank
-+ * @danger_safe_en: enable danger safe generation
-+ */
-+struct dpu_hw_qos_cfg {
-+	u32 danger_lut;
-+	u32 safe_lut;
-+	u64 creq_lut;
-+	bool danger_safe_en;
-+};
-+
- u32 *dpu_hw_util_get_log_mask_ptr(void);
- 
- void dpu_reg_write(struct dpu_hw_blk_reg_map *c,
-@@ -336,6 +353,10 @@ void dpu_setup_cdp(struct dpu_hw_blk_reg_map *c, u32 offset,
- u64 _dpu_hw_get_qos_lut(const struct dpu_qos_lut_tbl *tbl,
- 		u32 total_fl);
- 
-+void _dpu_hw_setup_qos_lut(struct dpu_hw_blk_reg_map *c, u32 offset,
-+			   bool qos_8lvl,
-+			   const struct dpu_hw_qos_cfg *cfg);
-+
- void dpu_hw_setup_misr(struct dpu_hw_blk_reg_map *c,
- 		u32 misr_ctrl_offset,
- 		bool enable,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-index a6de4b82a188..dcffd6cc47fc 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
-@@ -49,9 +49,6 @@
- #define WB_OUT_IMAGE_SIZE                     0x2C0
- #define WB_OUT_XY                             0x2C4
- 
--/* WB_QOS_CTRL */
--#define WB_QOS_CTRL_DANGER_SAFE_EN            BIT(0)
--
- static void dpu_hw_wb_setup_outaddress(struct dpu_hw_wb *ctx,
- 		struct dpu_hw_wb_cfg *data)
- {
-@@ -135,32 +132,14 @@ static void dpu_hw_wb_roi(struct dpu_hw_wb *ctx, struct dpu_hw_wb_cfg *wb)
- }
- 
- static void dpu_hw_wb_setup_qos_lut(struct dpu_hw_wb *ctx,
--		struct dpu_hw_wb_qos_cfg *cfg)
-+		struct dpu_hw_qos_cfg *cfg)
- {
--	struct dpu_hw_blk_reg_map *c = &ctx->hw;
--	u32 qos_ctrl = 0;
--
- 	if (!ctx || !cfg)
- 		return;
- 
--	DPU_REG_WRITE(c, WB_DANGER_LUT, cfg->danger_lut);
--	DPU_REG_WRITE(c, WB_SAFE_LUT, cfg->safe_lut);
--
--	/*
--	 * for chipsets not using DPU_WB_QOS_8LVL but still using DPU
--	 * driver such as msm8998, the reset value of WB_CREQ_LUT is
--	 * sufficient for writeback to work. SW doesn't need to explicitly
--	 * program a value.
--	 */
--	if (ctx->caps && test_bit(DPU_WB_QOS_8LVL, &ctx->caps->features)) {
--		DPU_REG_WRITE(c, WB_CREQ_LUT_0, cfg->creq_lut);
--		DPU_REG_WRITE(c, WB_CREQ_LUT_1, cfg->creq_lut >> 32);
--	}
--
--	if (cfg->danger_safe_en)
--		qos_ctrl |= WB_QOS_CTRL_DANGER_SAFE_EN;
--
--	DPU_REG_WRITE(c, WB_QOS_CTRL, qos_ctrl);
-+	_dpu_hw_setup_qos_lut(&ctx->hw, WB_DANGER_LUT,
-+			      test_bit(DPU_WB_QOS_8LVL, &ctx->caps->features),
-+			      cfg);
- }
- 
- static void dpu_hw_wb_setup_cdp(struct dpu_hw_wb *ctx,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h
-index ab3541856258..c7f792eeb55c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h
-@@ -21,20 +21,6 @@ struct dpu_hw_wb_cfg {
- 	struct drm_rect crop;
- };
- 
--/**
-- * struct dpu_hw_wb_qos_cfg : Writeback pipe QoS configuration
-- * @danger_lut: LUT for generate danger level based on fill level
-- * @safe_lut: LUT for generate safe level based on fill level
-- * @creq_lut: LUT for generate creq level based on fill level
-- * @danger_safe_en: enable danger safe generation
-- */
--struct dpu_hw_wb_qos_cfg {
--	u32 danger_lut;
--	u32 safe_lut;
--	u64 creq_lut;
--	bool danger_safe_en;
--};
--
- /**
-  *
-  * struct dpu_hw_wb_ops : Interface to the wb hw driver functions
-@@ -56,7 +42,7 @@ struct dpu_hw_wb_ops {
- 			struct dpu_hw_wb_cfg *wb);
- 
- 	void (*setup_qos_lut)(struct dpu_hw_wb *ctx,
--			struct dpu_hw_wb_qos_cfg *cfg);
-+			struct dpu_hw_qos_cfg *cfg);
- 
- 	void (*setup_cdp)(struct dpu_hw_wb *ctx,
- 			  const struct dpu_format *fmt,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index c8837d0aa0c3..d66745115917 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -190,12 +190,14 @@ static u64 _dpu_plane_calc_clk(const struct drm_display_mode *mode,
-  * _dpu_plane_calc_fill_level - calculate fill level of the given source format
-  * @plane:		Pointer to drm plane
-  * @pipe:		Pointer to software pipe
-+ * @lut_usage:		LUT usecase
-  * @fmt:		Pointer to source buffer format
-  * @src_width:		width of source buffer
-  * Return: fill level corresponding to the source buffer/format or 0 if error
-  */
- static int _dpu_plane_calc_fill_level(struct drm_plane *plane,
- 		struct dpu_sw_pipe *pipe,
-+		enum dpu_qos_lut_usage lut_usage,
- 		const struct dpu_format *fmt, u32 src_width)
- {
- 	struct dpu_plane *pdpu;
-@@ -207,6 +209,9 @@ static int _dpu_plane_calc_fill_level(struct drm_plane *plane,
- 		return 0;
- 	}
- 
-+	if (lut_usage == DPU_QOS_LUT_USAGE_NRT)
-+		return 0;
-+
- 	pdpu = to_dpu_plane(plane);
- 	fixed_buff_size = pdpu->catalog->caps->pixel_ram_size;
- 
-@@ -252,83 +257,58 @@ static void _dpu_plane_set_qos_lut(struct drm_plane *plane,
- 		const struct dpu_format *fmt, struct dpu_sw_pipe_cfg *pipe_cfg)
- {
- 	struct dpu_plane *pdpu = to_dpu_plane(plane);
--	u64 qos_lut;
--	u32 total_fl = 0, lut_usage;
-+	struct dpu_hw_qos_cfg cfg;
-+	u32 total_fl, lut_usage;
- 
- 	if (!pdpu->is_rt_pipe) {
- 		lut_usage = DPU_QOS_LUT_USAGE_NRT;
- 	} else {
--		total_fl = _dpu_plane_calc_fill_level(plane, pipe, fmt,
--				drm_rect_width(&pipe_cfg->src_rect));
--
- 		if (fmt && DPU_FORMAT_IS_LINEAR(fmt))
- 			lut_usage = DPU_QOS_LUT_USAGE_LINEAR;
- 		else
- 			lut_usage = DPU_QOS_LUT_USAGE_MACROTILE;
- 	}
- 
--	qos_lut = _dpu_hw_get_qos_lut(
--			&pdpu->catalog->perf->qos_lut_tbl[lut_usage], total_fl);
-+	total_fl = _dpu_plane_calc_fill_level(plane, pipe, lut_usage, fmt,
-+				drm_rect_width(&pipe_cfg->src_rect));
-+
-+	cfg.creq_lut = _dpu_hw_get_qos_lut(&pdpu->catalog->perf->qos_lut_tbl[lut_usage], total_fl);
-+	cfg.danger_lut = pdpu->catalog->perf->danger_lut_tbl[lut_usage];
-+	cfg.safe_lut = pdpu->catalog->perf->safe_lut_tbl[lut_usage];
-+
-+	if (pipe->sspp->idx != SSPP_CURSOR0 &&
-+	    pipe->sspp->idx != SSPP_CURSOR1 &&
-+	    pdpu->is_rt_pipe)
-+		cfg.danger_safe_en = true;
-+
-+	DPU_DEBUG_PLANE(pdpu, "pnum:%d ds:%d is_rt:%d\n",
-+		pdpu->pipe - SSPP_VIG0,
-+		cfg.danger_safe_en,
-+		pdpu->is_rt_pipe);
- 
- 	trace_dpu_perf_set_qos_luts(pipe->sspp->idx - SSPP_VIG0,
- 			(fmt) ? fmt->base.pixel_format : 0,
--			pdpu->is_rt_pipe, total_fl, qos_lut, lut_usage);
-+			pdpu->is_rt_pipe, total_fl, cfg.creq_lut, lut_usage);
- 
- 	DPU_DEBUG_PLANE(pdpu, "pnum:%d fmt: %4.4s rt:%d fl:%u lut:0x%llx\n",
- 			pdpu->pipe - SSPP_VIG0,
- 			fmt ? (char *)&fmt->base.pixel_format : NULL,
--			pdpu->is_rt_pipe, total_fl, qos_lut);
--
--	pipe->sspp->ops.setup_creq_lut(pipe->sspp, qos_lut);
--}
--
--/**
-- * _dpu_plane_set_danger_lut - set danger/safe LUT of the given plane
-- * @plane:		Pointer to drm plane
-- * @pipe:		Pointer to software pipe
-- * @fmt:		Pointer to source buffer format
-- */
--static void _dpu_plane_set_danger_lut(struct drm_plane *plane,
--		struct dpu_sw_pipe *pipe,
--		const struct dpu_format *fmt)
--{
--	struct dpu_plane *pdpu = to_dpu_plane(plane);
--	u32 danger_lut, safe_lut;
--
--	if (!pdpu->is_rt_pipe) {
--		danger_lut = pdpu->catalog->perf->danger_lut_tbl
--				[DPU_QOS_LUT_USAGE_NRT];
--		safe_lut = pdpu->catalog->perf->safe_lut_tbl
--				[DPU_QOS_LUT_USAGE_NRT];
--	} else {
--		if (fmt && DPU_FORMAT_IS_LINEAR(fmt)) {
--			danger_lut = pdpu->catalog->perf->danger_lut_tbl
--					[DPU_QOS_LUT_USAGE_LINEAR];
--			safe_lut = pdpu->catalog->perf->safe_lut_tbl
--					[DPU_QOS_LUT_USAGE_LINEAR];
--		} else {
--			danger_lut = pdpu->catalog->perf->danger_lut_tbl
--					[DPU_QOS_LUT_USAGE_MACROTILE];
--			safe_lut = pdpu->catalog->perf->safe_lut_tbl
--					[DPU_QOS_LUT_USAGE_MACROTILE];
--		}
--	}
-+			pdpu->is_rt_pipe, total_fl, cfg.creq_lut);
- 
- 	trace_dpu_perf_set_danger_luts(pdpu->pipe - SSPP_VIG0,
- 			(fmt) ? fmt->base.pixel_format : 0,
- 			(fmt) ? fmt->fetch_mode : 0,
--			danger_lut,
--			safe_lut);
-+			cfg.danger_lut,
-+			cfg.safe_lut);
- 
- 	DPU_DEBUG_PLANE(pdpu, "pnum:%d fmt: %4.4s mode:%d luts[0x%x, 0x%x]\n",
- 		pdpu->pipe - SSPP_VIG0,
- 		fmt ? (char *)&fmt->base.pixel_format : NULL,
- 		fmt ? fmt->fetch_mode : -1,
--		danger_lut,
--		safe_lut);
-+		cfg.danger_lut,
-+		cfg.safe_lut);
- 
--	pipe->sspp->ops.setup_danger_safe_lut(pipe->sspp,
--			danger_lut, safe_lut);
-+	pipe->sspp->ops.setup_qos_lut(pipe->sspp, &cfg);
- }
- 
- /**
-@@ -336,7 +316,6 @@ static void _dpu_plane_set_danger_lut(struct drm_plane *plane,
-  * @plane:		Pointer to drm plane
-  * @pipe:		Pointer to software pipe
-  * @enable:		true to enable QoS control
-- * @flags:		QoS control mode (enum dpu_plane_qos)
-  */
- static void _dpu_plane_set_qos_ctrl(struct drm_plane *plane,
- 	struct dpu_sw_pipe *pipe,
-@@ -1086,10 +1065,6 @@ static void dpu_plane_sspp_update_pipe(struct drm_plane *plane,
- 	}
- 
- 	_dpu_plane_set_qos_lut(plane, pipe, fmt, pipe_cfg);
--	_dpu_plane_set_danger_lut(plane, pipe, fmt);
--	_dpu_plane_set_qos_ctrl(plane, pipe,
--				pipe->sspp->idx != SSPP_CURSOR0 &&
--				pipe->sspp->idx != SSPP_CURSOR1);
- 
- 	if (pipe->sspp->idx != SSPP_CURSOR0 &&
- 	    pipe->sspp->idx != SSPP_CURSOR1)
+> 
+>>
+>>> +
+>>>       DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
+>>>   }
+>>> @@ -285,6 +290,13 @@ static void 
+>>> dpu_hw_ctl_update_pending_flush_merge_3d_v1(struct dpu_hw_ctl *ctx,
+>>>       ctx->pending_flush_mask |= BIT(MERGE_3D_IDX);
+>>>   }
+>>> +static void dpu_hw_ctl_update_pending_flush_dsc_v1(struct dpu_hw_ctl 
+>>> *ctx,
+>>> +                           enum dpu_dsc dsc_num)
+>>> +{
+>>> +    ctx->pending_dsc_flush_mask |= BIT(dsc_num - DSC_0);
+>>> +    ctx->pending_flush_mask |= BIT(DSC_IDX);
+>>> +}
+>>> +
+>>>   static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl 
+>>> *ctx,
+>>>       enum dpu_dspp dspp, u32 dspp_sub_blk)
+>>>   {
+>>> @@ -502,9 +514,6 @@ static void dpu_hw_ctl_intf_cfg_v1(struct 
+>>> dpu_hw_ctl *ctx,
+>>>       if ((test_bit(DPU_CTL_VM_CFG, &ctx->caps->features)))
+>>>           mode_sel = CTL_DEFAULT_GROUP_ID  << 28;
+>>> -    if (cfg->dsc)
+>>> -        DPU_REG_WRITE(&ctx->hw, CTL_DSC_FLUSH, cfg->dsc);
+>>> -
+>>>       if (cfg->intf_mode_sel == DPU_CTL_MODE_SEL_CMD)
+>>>           mode_sel |= BIT(17);
+>>> @@ -524,10 +533,9 @@ static void dpu_hw_ctl_intf_cfg_v1(struct 
+>>> dpu_hw_ctl *ctx,
+>>>       if (cfg->merge_3d)
+>>>           DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
+>>>                     BIT(cfg->merge_3d - MERGE_3D_0));
+>>> -    if (cfg->dsc) {
+>>> -        DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
+>> Again, this bugfix of now wrapping DSC_IDX in BIT() should go in a
+>> separate Fixes: patch to have this semantic change documented.  (v8
+>> review)
+> That will be this patch. let me add Fixes at this patch
+
+_separate_ patch.
+
+>>
+>>> +
+>>> +    if (cfg->dsc)
+>>>           DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
+>>> -    }
+>>>   }
+>>>   static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
+>>> @@ -630,6 +638,8 @@ static void _setup_ctl_ops(struct dpu_hw_ctl_ops 
+>>> *ops,
+>>>           ops->update_pending_flush_merge_3d =
+>>>               dpu_hw_ctl_update_pending_flush_merge_3d_v1;
+>>>           ops->update_pending_flush_wb = 
+>>> dpu_hw_ctl_update_pending_flush_wb_v1;
+>>> +        ops->update_pending_flush_dsc =
+>>> +            dpu_hw_ctl_update_pending_flush_dsc_v1;
+>>>       } else {
+>>>           ops->trigger_flush = dpu_hw_ctl_trigger_flush;
+>>>           ops->setup_intf_cfg = dpu_hw_ctl_intf_cfg;
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+>>> index 6292002..d5f3ef8 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h
+>>> @@ -158,6 +158,15 @@ struct dpu_hw_ctl_ops {
+>>>           enum dpu_dspp blk, u32 dspp_sub_blk);
+>>>       /**
+>>> +     * OR in the given flushbits to the cached pending_(dsc_)flush_mask
+>>> +     * No effect on hardware
+>>> +     * @ctx: ctl path ctx pointer
+>>> +     * @blk: interface block index
+>>> +     */
+>>> +    void (*update_pending_flush_dsc)(struct dpu_hw_ctl *ctx,
+>>> +        enum dpu_dsc blk);
+>>> +
+>>> +    /**
+>>>        * Write the value of the pending_flush_mask to hardware
+>>>        * @ctx       : ctl path ctx pointer
+>>>        */
+>>> @@ -229,6 +238,9 @@ struct dpu_hw_ctl_ops {
+>>>    * @pending_flush_mask: storage for pending ctl_flush managed via ops
+>>>    * @pending_intf_flush_mask: pending INTF flush
+>>>    * @pending_wb_flush_mask: pending WB flush
+>> The above is all capitalized, so...:
+>>
+>>> + * @pending_merge_3d_flush_mask: pending merge_3d flush
+>> MERGE_3D?
+>>
+>>> + * @pending_dspp_flush_mask: pending dspp flush
+>> DSPP
+>>
+>>> + * @pending_dsc_flush_mask: pending dsc flush
+>> DSC
+>>
+>> - Marijn
+>>
+>>>    * @ops: operation list
+>>>    */
+>>>   struct dpu_hw_ctl {
+>>> @@ -245,6 +257,7 @@ struct dpu_hw_ctl {
+>>>       u32 pending_wb_flush_mask;
+>>>       u32 pending_merge_3d_flush_mask;
+>>>       u32 pending_dspp_flush_mask[DSPP_MAX - DSPP_0];
+>>> +    u32 pending_dsc_flush_mask;
+>>>       /* ops */
+>>>       struct dpu_hw_ctl_ops ops;
+>>> -- 
+>>> 2.7.4
+>>>
+
 -- 
-2.39.2
+With best wishes
+Dmitry
 
