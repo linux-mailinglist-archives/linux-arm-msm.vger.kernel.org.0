@@ -2,58 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F18D1707F2A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 13:26:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6025C707F32
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 13:27:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230398AbjERLZt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 07:25:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52270 "EHLO
+        id S229920AbjERL1u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 07:27:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231190AbjERLZT (ORCPT
+        with ESMTP id S230031AbjERL1Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 07:25:19 -0400
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD624173F
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 04:25:14 -0700 (PDT)
-Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-309382efe13so1204410f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 04:25:14 -0700 (PDT)
+        Thu, 18 May 2023 07:27:25 -0400
+Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 315661A7
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 04:27:24 -0700 (PDT)
+Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-3093eb8cd1fso1211731f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 04:27:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684409113; x=1687001113;
+        d=linaro.org; s=google; t=1684409242; x=1687001242;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=BhFInwLsH1VRwzHca+pTHra4vA2t1bJO0iPFi7Zt5Dc=;
-        b=kzXs1kE4hJIcijFMsDeehT0w3FUh8L6Wm5LiY8l08WgS3NWKkJBVl9TwSRWh55vs9F
-         x+k1owavGmavqBxYVhnqdGcBJOgDzsxTalV8CJTDQ/jVnOom48H32XeoaRhyZj/5hqIL
-         UOXdUvTNAHvQydDbYdGOM2EGLEIRn2eLpJVyj+Crit4SspVBOloDBkGA9oIkhazGd547
-         SVwyMrVqOzL3UHioR9h6iKz96uUCGAEySpvxrMh5RyHGzFuzHnz2NDvER1I2TeUHoEJ6
-         6WQ8+jbXfqMAFxqiFJZkpLNQ4GLHDTr97Q4TjvP+gmJmEESR3bCHscClu3eIpco122C0
-         UaFA==
+        bh=CbvXJRWlz/SuQ4flbBmfGTl0h1jB+7ggDXXoc965Hvg=;
+        b=xmRtuf6JEyXOvFruq7cAfQZCJTY87SYsfKXdpOVjmNERcj0bHlc6urmeWcR2zQwpYZ
+         RbFl4XYfH8x+5otWc09zmgpJ+7xWImSryC0EPi8hHuQmxCH8Q1QTkykXi6lrK5WLRYvy
+         K4znYEJnwLKzE7hvrTIvwL3zCvZ2BT/dg9Go34sCTIriWjBxEF29pmx2O5olMiRad5F0
+         pWExbfjG59ts4UitMugz8BJafmcYN4EG0c+hD8HeNSlt6xVOl8RhDHQoLAYr5cwzHhda
+         NR/jMf2tH0ZiWOPhhB0WogwgqzMaTuJUwWhi+k4knI0kqrxmmHJluqjrosopYAOx4/It
+         zMag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684409113; x=1687001113;
+        d=1e100.net; s=20221208; t=1684409242; x=1687001242;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=BhFInwLsH1VRwzHca+pTHra4vA2t1bJO0iPFi7Zt5Dc=;
-        b=K0MUpIrziHdUCBH5lKXY4FlM1TWXYyW7PmFN6fwxNMtkR4IA90ffEMGr5lwo3lb3En
-         qkupIFSen1WGzySzJRUPvbN1/8ghBbkY8FUhhcof0Ubr3HXMu4yDnQB+czdD4TRYmPsp
-         e2Ffh4VOQ85jiCT88l6eG/pTy0YL3dj+Hlnd9PtdkpKkGtU7omnxEL7IXIK4akTn4mI9
-         vZ8dyAPSEGPB1ma3QkJrqcWVZ9UUjiSyiY7VAU/M1jzzJOPfieEMjhP/GKkMmchbWX+4
-         mTRGAHr74QNF3+A25rSGqfW6Vp5qII7ITcnuVTdejf28VTgCc2ZJ2ZFUZyBDRe/jG494
-         98+A==
-X-Gm-Message-State: AC+VfDw0uUIpvuWO1DgqZjiCbugKqTYSQeYMrL95Dp4l7Kye2j8NqgNm
-        YcRpRxltWVe/pZPbYmuFVW//7yP5TT01KVmYp1ALcQ==
-X-Google-Smtp-Source: ACHHUZ57WDjmoMJqqO8NuR6wkBS/oUWnjJFrMWWVk4Vkli3A7c5kawOFgMjZ9urvSusdO0cpFn58OW96Xjnw0giELK8=
-X-Received: by 2002:adf:f711:0:b0:309:436a:fc2f with SMTP id
- r17-20020adff711000000b00309436afc2fmr1228675wrp.57.1684409113189; Thu, 18
- May 2023 04:25:13 -0700 (PDT)
+        bh=CbvXJRWlz/SuQ4flbBmfGTl0h1jB+7ggDXXoc965Hvg=;
+        b=bw5A1k5/SYg5mm+y/BHhuVOYahGVsPM1UciaXkf5dHuYB60uwo7dfyzrCupjb9/bAf
+         OPbymhUdLs3hBfHfxNNgV7vEnYQ1qR9Gfz5vSoTySYdfxNg6o+eGNd8jDoWhACJIanfA
+         OO4SywIvkpNWwbQEThIlLQe4T39sYohz0qf/bnP63KNgEnRJdWEUTP6/2t1YhJWEoyuZ
+         iPwTHNMJfu9PNOVXM4avdtNHcTSm7/FZfecQ9HdTo6gsFsMMhWPjXTwJGiSbeqBBEUI3
+         ZpHLo8tRUGBUKW227IkOA0gf/nf84Y6oQdRT0p79uoKKbDPE2khFYItdcYMBBJDqb9p5
+         d43w==
+X-Gm-Message-State: AC+VfDyaDSbdqdgi4rDNCUm1I1IgNn3M7UKTaYpDQgPPRP2GwwzmuUHg
+        25+DYZCvoStxfp8vEJ71nmekawM7hKkNOIHEIH9A5g==
+X-Google-Smtp-Source: ACHHUZ4aD+JXEYScBpfdnz6YAH394kPaxWE3KXojne4tAsZb7tX4F518piM9Vwm8SfOwU8dXtueL8lGV9GEcm+qPYC0=
+X-Received: by 2002:adf:e2c2:0:b0:309:33c4:52e1 with SMTP id
+ d2-20020adfe2c2000000b0030933c452e1mr1044451wrj.64.1684409242622; Thu, 18 May
+ 2023 04:27:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230518082934.24129-1-quic_kathirav@quicinc.com> <20230518082934.24129-4-quic_kathirav@quicinc.com>
-In-Reply-To: <20230518082934.24129-4-quic_kathirav@quicinc.com>
+References: <20230518082934.24129-1-quic_kathirav@quicinc.com> <20230518082934.24129-3-quic_kathirav@quicinc.com>
+In-Reply-To: <20230518082934.24129-3-quic_kathirav@quicinc.com>
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Thu, 18 May 2023 16:55:00 +0530
-Message-ID: <CAH=2Ntz2MxM1rNeTULTWAotXWouEOj+uNHaWCjzW+ZMNZiT2hg@mail.gmail.com>
-Subject: Re: [PATCH V2 3/3] arm64: dts: qcom: ipq5332: add few more reserved
- memory region
+Date:   Thu, 18 May 2023 16:57:10 +0530
+Message-ID: <CAH=2NtyJDZ=1kcO-vbvyGs3kBUyUaNuX7MXn3xf69v_tQJ_UNQ@mail.gmail.com>
+Subject: Re: [PATCH V2 2/3] arm64: dts: qcom: ipq5332: define UART1
 To:     Kathiravan T <quic_kathirav@quicinc.com>
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
         robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
@@ -62,7 +61,7 @@ Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,72 +69,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
 On Thu, 18 May 2023 at 14:00, Kathiravan T <quic_kathirav@quicinc.com> wrote:
 >
-> In IPQ SoCs, U-boot will collect the system RAM contents upon crash for
-> the post morterm analysis. If we don't reserve the memory region used by
-> U-boot, obviously linux will consume it and upon next boot on crash, uboot
-> will be loaded in the same region, which will lead to loose some of the
-> data, sometimes we may miss out critical information. So lets reserve the
-> region used by the U-boot.
->
-> Similarly SBL copies some data into the reserved region and it will be
-> used in the crash scenario. So reserve 1MB for SBL as well.
->
-> While at it, drop the size padding in the smem memory region.
+> Add the definition for the UART1 found on IPQ5332 SoC.
 >
 > Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
 > ---
 > Changes in V2:
->         - Dropped the size padding in smem memory region
+>         - Added the dma and dma-names property
+>         - Didn't pick up the R-b tag due to above change
 >
->  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 12 +++++++++++-
->  1 file changed, 11 insertions(+), 1 deletion(-)
+>  arch/arm64/boot/dts/qcom/ipq5332.dtsi | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
 >
 > diff --git a/arch/arm64/boot/dts/qcom/ipq5332.dtsi b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> index 753581e60604..7e0a2a674f09 100644
+> index 12e0e179e139..753581e60604 100644
 > --- a/arch/arm64/boot/dts/qcom/ipq5332.dtsi
 > +++ b/arch/arm64/boot/dts/qcom/ipq5332.dtsi
-> @@ -114,6 +114,16 @@
->                 #size-cells = <2>;
->                 ranges;
+> @@ -218,6 +218,18 @@
+>                         status = "disabled";
+>                 };
 >
-> +               uboot@4a100000 {
-
-Shouldn't this be bootloader agnostic? AFAIK any bootloader ported on
-IPQ SoCs and booting linux can access the system RAM.
-
-I mean s/uboot/bootloader here and in the commit log.
-
-Also which entity collects the post-crash data, is it some linux driver?
-If yes, can you add more details about it in the commit log.
-
-Thanks,
-Bhupesh
-
-> +                       reg = <0x0 0x4a100000 0x0 0x400000>;
-> +                       no-map;
+> +               blsp1_uart1: serial@78b0000 {
+> +                       compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
+> +                       reg = <0x078b0000 0x200>;
+> +                       interrupts = <GIC_SPI 291 IRQ_TYPE_LEVEL_HIGH>;
+> +                       clocks = <&gcc GCC_BLSP1_UART2_APPS_CLK>,
+> +                                <&gcc GCC_BLSP1_AHB_CLK>;
+> +                       clock-names = "core", "iface";
+> +                       dmas = <&blsp_dma 2>, <&blsp_dma 3>;
+> +                       dma-names = "tx", "rx";
+> +                       status = "disabled";
 > +               };
 > +
-> +               sbl@4a500000 {
-> +                       reg = <0x0 0x4a500000 0x0 0x100000>;
-> +                       no-map;
-> +               };
-> +
->                 tz_mem: tz@4a600000 {
->                         reg = <0x0 0x4a600000 0x0 0x200000>;
->                         no-map;
-> @@ -121,7 +131,7 @@
->
->                 smem@4a800000 {
->                         compatible = "qcom,smem";
-> -                       reg = <0x0 0x4a800000 0x0 0x00100000>;
-> +                       reg = <0x0 0x4a800000 0x0 0x100000>;
->                         no-map;
->
->                         hwlocks = <&tcsr_mutex 0>;
+>                 blsp1_spi0: spi@78b5000 {
+>                         compatible = "qcom,spi-qup-v2.2.1";
+>                         reg = <0x078b5000 0x600>;
 > --
 > 2.17.1
->
+
+Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+
+Thanks.
