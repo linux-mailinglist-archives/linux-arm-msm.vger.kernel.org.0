@@ -2,78 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 811A9707BD2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 10:21:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43027707C07
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 10:30:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230042AbjERIVS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 04:21:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51710 "EHLO
+        id S230176AbjERIaC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 04:30:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230040AbjERIVR (ORCPT
+        with ESMTP id S230245AbjERI36 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 04:21:17 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CDAC10D0;
-        Thu, 18 May 2023 01:21:11 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 36F95648B7;
-        Thu, 18 May 2023 08:21:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4672C433EF;
-        Thu, 18 May 2023 08:21:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684398070;
-        bh=GR2nFvTtJZy4UyCufRkfx+kYWz4p6a0F2EAW+weYMe0=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=O5nQ6YQaOkWa0A9Hut2cGFTX7PxU3SSBAoNC+0jT0TLWJiPpo1/7bp8xB+GYqLri3
-         YuEDXrdenQz6ms0QA85UXhd1gOUIxRgsLcoRVoHR+FaY/WrqZg3U6Jc4kbAefDE/u4
-         q5K8MaKKaBnpVAun2pW4Lr+u34t+Rv48ky2sUAsNoa6ujDCb0cW8py32WxZW/S7xgs
-         O0iLSFqWY30+sBx8cMDs992yJ3C9RRT6IMTIgnwIStBdCxtRQwPQDi9X28hAaN6aBw
-         ftMDxrdJZDCXINfEjLhhfT5s2oUcvLaUOdLTizFtkMWSNjfeVtMbpwXiiRk4gcXzey
-         lS3t/USvzTAwQ==
-Message-ID: <a422a4ec-5fc9-9b4b-0cdc-8ea4e9dfc292@kernel.org>
-Date:   Thu, 18 May 2023 10:21:05 +0200
+        Thu, 18 May 2023 04:29:58 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FBDE198A;
+        Thu, 18 May 2023 01:29:57 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34I7JD7R023367;
+        Thu, 18 May 2023 08:29:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=1fi0Vf7Z9eUFZq54XD4aCZyuxVaubtBpsoxN9DObvwE=;
+ b=g0F4VUz2LpMgWbVDr7PwF8OUEkkSUjCbJ1XPDH1Z8dIvGQLIwBC1O6+LI32S5G1Qybli
+ bJLnKSNyVxfLfYIfXOTjNCIyAzGgMuzhNCPa3dzYgXcseCpbNLLIcrYHzvdXmFLDf7TY
+ tzyWEiIwkqHEdjboZX3si3/VBfKLoqZnAV6QSW1I7s2EWcMSxvFUxBvw8nAKy0lmel1K
+ OybA8bFX/U0UaiiWTVq8pao2V+DEjiSYRywvrrBvlTjVS4fMR9dxaLZS1EO8RVTeoN2i
+ L0EiXNZ1ikK+N9i0Jb93Z5WqUeQREesBQisqb7oy4VPaP/P/5+hnHa/MRef0hjJzB2Ir DQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qned3085g-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 18 May 2023 08:29:53 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34I8TqS7022809
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 18 May 2023 08:29:52 GMT
+Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Thu, 18 May 2023 01:29:49 -0700
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Kathiravan T <quic_kathirav@quicinc.com>
+Subject: [PATCH V2 0/3] Minor updates in the IPQ5332 DTS files
+Date:   Thu, 18 May 2023 13:59:31 +0530
+Message-ID: <20230518082934.24129-1-quic_kathirav@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v1] dt-bindings: net: Add QCA2066 Bluetooth
-To:     Tim Jiang <quic_tjiang@quicinc.com>, marcel@holtmann.org
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, quic_bgodavar@quicinc.com,
-        quic_hemantg@quicinc.com, mka@chromium.org
-References: <20230518050826.27316-1-quic_tjiang@quicinc.com>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <20230518050826.27316-1-quic_tjiang@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-9.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: WI0OVESAixf0nxxD-K36pqwL_paHkSA-
+X-Proofpoint-GUID: WI0OVESAixf0nxxD-K36pqwL_paHkSA-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-18_05,2023-05-17_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 bulkscore=0 phishscore=0
+ mlxlogscore=525 priorityscore=1501 clxscore=1015 mlxscore=0 spamscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305180062
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/05/2023 07:08, Tim Jiang wrote:
-> Add bindings for the QCA2066 chipset.
-> 
-> Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
+Rename the MI01.2 DTS after Reference Design Platform(RDP) number to align
+with ipq5332-rdp468.dts, add UART1 node and reserve memory for U-boot
+and SBL to avoid losing the RAM contents which will be used in post
+morterm analysis.
 
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC.  It might happen, that command when run on an older
-kernel, gives you outdated entries.  Therefore please be sure you base
-your patches on recent Linux kernel.
+Kathiravan T (3):
+  arm64: dts: qcom: ipq5332: rename mi01.2 dts to rdp441
+  arm64: dts: qcom: ipq5332: define UART1
+  arm64: dts: qcom: ipq5332: add few more reserved memory region
 
-You missed at least DT list (maybe more), so this won't be tested.
-Please resend and include all necessary entries.
+ arch/arm64/boot/dts/qcom/Makefile             |  2 +-
+ ...{ipq5332-mi01.2.dts => ipq5332-rdp441.dts} |  0
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi         | 24 ++++++++++++++++++-
+ 3 files changed, 24 insertions(+), 2 deletions(-)
+ rename arch/arm64/boot/dts/qcom/{ipq5332-mi01.2.dts => ipq5332-rdp441.dts} (100%)
 
-
-Beside that patch looks incomplete.
-
-Best regards,
-Krzysztof
+-- 
+2.17.1
 
