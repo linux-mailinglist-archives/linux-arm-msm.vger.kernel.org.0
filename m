@@ -2,85 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3AAA2707CC1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 11:26:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B53C6707D16
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 11:41:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230101AbjERJ0R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 05:26:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49708 "EHLO
+        id S230060AbjERJls (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 05:41:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59362 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229810AbjERJ0Q (ORCPT
+        with ESMTP id S230031AbjERJlr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 05:26:16 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.53])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0963211E;
-        Thu, 18 May 2023 02:26:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1684401972; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=Rl6R68C8H4FPS/jhpoG/Z31osMkn07jJyu2d79AfgLwKgfd294KNUbRsdLtXpyZGSw
-    Ho2eSCCRy2J3Jk1LZMKL4KTAObInXkmhfg8cdx8VeHCwlStjIFHB9cmnUSqnaSEL6sb3
-    +2QE70nh5o4Hrsik/XYYueDYQ0GvamH0C47s6BZttfSjZGqUFErNas6/MIeIjODSDGqC
-    GGt6JUPfd9yXmYwnQjOvq0TZPz/jf5mdXno8z4a4PXa5EVkOtnGeo4B4xw8f6E/I/dQN
-    mFP0oYDABlnUYxsZMWsFoaaF4KNIiUwYWv99JeFa1AmjrHzXg4iiqQpNPdwbvQTzYdC9
-    C/Tg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1684401972;
-    s=strato-dkim-0002; d=strato.com;
-    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
-    bh=VQO5GZKsRP3ZSA1ItJkim0mWjRZa1duUQAzHk9XLuPY=;
-    b=NIIo/VIFja0OfqtlM4e3RXLGSwMSF2BlN3ax5U95Y1Vq14CRZqicftsRm7MN5/MZjP
-    lvgwQXc9Jo/PFn3fnfxzahTZY937ggcZbkJOGlAYbKd0YLWVECy5dWLtoQCCxTI7rXpE
-    4oUEc7fuaYxoa8KYsAtaUxEPsWu69s7+kh1fcijKL8HVVnVzQvUxOYOvbW2VBKNtDUn8
-    fBWx3BlgSKdm/bJ6ydFnBfs8svd1jHsS+JdjzQ45FKRkBVapSQG6psNWZUnvbZ3FX08s
-    9hiGw6QnttU374FQRqkoU7t1JFoklMKKgT+sQnibgsQXtd9G6pcFRbm2x8SO7o947m/9
-    WO3Q==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1684401972;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
-    bh=VQO5GZKsRP3ZSA1ItJkim0mWjRZa1duUQAzHk9XLuPY=;
-    b=Aj4L2AS39FtstuOcjpg1P1jT1Bkvw0beudtYK6j9LzznPKPhXBLiCBuXG898o9Cw00
-    4SjJBaCIUP40zcOUXy+SDa3OlO6BG9qa/B2G0hGSB9nidnpD8JHvHgV8UvcI5o7JtVRx
-    Rw9aSMRITOuJOAGxtrOTW52DG9E+e7CXwznteFFpvxixtS+ilNu+E4oDQwVe0Edtw6Ih
-    jVdvwOaNcnDgwNQYRFGosd+Ixcdy2GPxjW2DFTwTaiFO7724FgtHQEVdPU+O3ZXKZlY6
-    WNvf97fwjKAiwY9LLaF4apHbdZCKPOUrub1y8ONZu/qqnwnGuPrkae+JLm5QcB/al4d9
-    Kxtg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1684401972;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
-    bh=VQO5GZKsRP3ZSA1ItJkim0mWjRZa1duUQAzHk9XLuPY=;
-    b=lQcwfg74Koai6ozuU8fbsRd5/ddzfMLtsyABsfDZg/Wr8FRRCoDTcz2TIDv0jBb7JC
-    wTwvBtwk0N7MEkjrhdCQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn8u4p1/zY="
-Received: from [192.168.244.3]
-    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
-    with ESMTPSA id j6420az4I9QBCGS
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 18 May 2023 11:26:11 +0200 (CEST)
-From:   Stephan Gerhold <stephan@gerhold.net>
-Date:   Thu, 18 May 2023 11:26:00 +0200
-Subject: [PATCH] dmaengine: qcom: bam_dma: make channels/EEs optional in DT
- with clock
+        Thu, 18 May 2023 05:41:47 -0400
+Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA0D71733
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:41:44 -0700 (PDT)
+Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2ac770a99e2so19774651fa.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:41:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684402903; x=1686994903;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vjqQeuYRpvMsut/c1evBJHvsSn9+lFSN53c//wdZ/FQ=;
+        b=lxGL7xCqkfKsajfk0zq6AGTDZOJpoTin3Km9a2j2J7UCTAc/bm5lJlyD7dzpe7oVHw
+         VHdmYA9VzOIDbztMGfrqrYPBFzMg+c+3Z15vl8v4yXx8Uwu08ELlxU00Gtrcyfo9ogQv
+         2EkiZIACXYEcjBYBqD0OlyJZELInl7+SVqbJKHxD7ScYIvIujwiwCViNuOyeJTp5Fdyw
+         kdxGwMNoaYtE/K+VjO4t84AnuvsgMsskyUcBb5yGxddAHj0lrbap0Khy5b16y1mqdp45
+         8hDP4UZ4RMi4dtkYMrr4G9C6w4Iwk1kUVPtmnrvW4WcjCwwLAG43sFSCzf/Enot42haK
+         wMCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684402903; x=1686994903;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vjqQeuYRpvMsut/c1evBJHvsSn9+lFSN53c//wdZ/FQ=;
+        b=SuifMD+Pah/xizTQflf+4ZxXrNENenVV+ASdS73T+3ST8nWtYBz/YRrgdNor5N1k7Q
+         wsJAQIAPZ8WhTwI2bKQI7Q4i2pdetJHtoJ5+Ih/ZtwBt8ndbTMHOZ1z1boVvwoHofHZX
+         wdvXf51gqiqR5VnpqqWMIU4hMnjcCnik6ED5VgP40/XbwB0gb8VjRJP13L87tay9M7Kp
+         EytZ4ur283/R46SD+nwAj2aNnYp/jePHjPoWnQxi961xZ80mYWtdmO8+eDChPHoh6wh0
+         9toY7td/yYV2FVGa2g3eWpypCOAq7ReBaRzDk31D8YocnOIO9oQRKiTQQ0lDaFSIdeCc
+         lCuA==
+X-Gm-Message-State: AC+VfDzmfDYhRjdJgDsf9SdTHwLn2gres7ITRIq8x4qXwNL03Ffufw30
+        MtBkxP35qvWz+m7wVPLjSvB7POeqjXaWxRyyQRc=
+X-Google-Smtp-Source: ACHHUZ4UT5ZdWhf2s2u0WXN8DiysRHiC8lCqC2j57Z6hovVUBC2/syVJt56WBhEu8aTwXLHOQllPDw==
+X-Received: by 2002:a05:651c:1047:b0:2ad:c1ec:fa3 with SMTP id x7-20020a05651c104700b002adc1ec0fa3mr8305804ljm.20.1684402902982;
+        Thu, 18 May 2023 02:41:42 -0700 (PDT)
+Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
+        by smtp.gmail.com with ESMTPSA id t16-20020a2e9d10000000b002aa3ad9014asm204808lji.54.2023.05.18.02.41.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 May 2023 02:41:42 -0700 (PDT)
+Message-ID: <b050f3c4-6ff0-d687-73bf-0f98a2e74bed@linaro.org>
+Date:   Thu, 18 May 2023 11:41:41 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 3/5] arm64: dts: qcom: qrb4210-rb2: Add GPIO LEDs
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230515-topic-rb2-bits-v1-0-a52d154a639d@linaro.org>
+ <20230515-topic-rb2-bits-v1-3-a52d154a639d@linaro.org>
+ <20230518021307.z63xrx5v2lhd3byf@ripper>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230518021307.z63xrx5v2lhd3byf@ripper>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230518-bamclk-dt-v1-1-82f738c897d9@gerhold.net>
-X-B4-Tracking: v=1; b=H4sIACfvZWQC/x2N0QqDMAxFf0XyvIDaDmW/MvaQtNkMq91odQzEf
- zf4eC7ncjaoUlQq3JoNivy06icbdJcGwkT5JajRGPq2d+21G5FpDumNccHoPZP4gZ0bwHymKsi
- FcpjskdeUbPwWeer/DNwf+34A1/ZNkXAAAAA=
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>
-X-Mailer: b4 0.12.2
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,61 +82,93 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If we have a BAM clock in the DT we are able to turn on the BAM
-controller while probing, so there is no need to read "num-channels"
-and "qcom,num-ees" from the DT. It can be read more accurately directly
-from the identification registers of the BAM.
 
-This simplifies setting up typical controlled-remotely BAM DMAs in the
-DT that can be turned on via a clock (e.g. the BLSP DMA).
 
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
- drivers/dma/qcom/bam_dma.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+On 18.05.2023 04:13, Bjorn Andersson wrote:
+> On Mon, May 15, 2023 at 03:04:14PM +0200, Konrad Dybcio wrote:
+>> Add the three LEDs (blue/yellow/green) connected to TLMM GPIOs.
+>>
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 36 ++++++++++++++++++++++++++++++--
+>>  1 file changed, 34 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+>> index 9b539720f05d..eeee268ebfe2 100644
+>> --- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+>> @@ -5,6 +5,7 @@
+>>  
+>>  /dts-v1/;
+>>  
+>> +#include <dt-bindings/leds/common.h>
+>>  #include "sm4250.dtsi"
+>>  
+>>  / {
+>> @@ -30,6 +31,38 @@ hdmi_con: endpoint {
+>>  		};
+>>  	};
+>>  
+>> +	leds {
+>> +		compatible = "gpio-leds";
+>> +
+>> +		led-bt {
+>> +			label = "blue:bt";
+>> +			function = LED_FUNCTION_BLUETOOTH;
+>> +			color = <LED_COLOR_ID_BLUE>;
+>> +			gpios = <&tlmm 45 GPIO_ACTIVE_HIGH>;
+>> +			linux,default-trigger = "bluetooth-power";
+>> +			default-state = "off";
+>> +		};
+>> +
+>> +		led-user0 {
+>> +			label = "green:user0";
+>> +			function = LED_FUNCTION_INDICATOR;
+>> +			color = <LED_COLOR_ID_GREEN>;
+>> +			gpios = <&tlmm 52 GPIO_ACTIVE_HIGH>;
+>> +			linux,default-trigger = "none";
+>> +			default-state = "off";
+>> +			panic-indicator;
+>> +		};
+>> +
+>> +		led-wlan {
+>> +			label = "yellow:wlan";
+>> +			function = LED_FUNCTION_WLAN;
+>> +			color = <LED_COLOR_ID_YELLOW>;
+>> +			gpios = <&tlmm 47 GPIO_ACTIVE_HIGH>;
+>> +			linux,default-trigger = "phy0tx";
+>> +			default-state = "off";
+>> +		};
+>> +	};
+>> +
+>>  	vreg_hdmi_out_1p2: regulator-hdmi-out-1p2 {
+>>  		compatible = "regulator-fixed";
+>>  		regulator-name = "VREG_HDMI_OUT_1P2";
+>> @@ -385,8 +418,7 @@ &sleep_clk {
+>>  };
+>>  
+>>  &tlmm {
+>> -	gpio-reserved-ranges = <43 2>, <47 1>,
+>> -			       <49 1>, <52 1>, <54 1>,
+>> +	gpio-reserved-ranges = <43 2>, <49 1>, <54 1>,
+> 
+> How come pin 49 becomes inaccessible here? Was this intended for the
+> previous patch?
+It doesn't, the "remove" part of the diff is 2-lines.
 
-diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-index 1e47d27e1f81..4c3eb972039d 100644
---- a/drivers/dma/qcom/bam_dma.c
-+++ b/drivers/dma/qcom/bam_dma.c
-@@ -1272,7 +1272,15 @@ static int bam_dma_probe(struct platform_device *pdev)
- 	bdev->powered_remotely = of_property_read_bool(pdev->dev.of_node,
- 						"qcom,powered-remotely");
- 
--	if (bdev->controlled_remotely || bdev->powered_remotely) {
-+	if (bdev->controlled_remotely || bdev->powered_remotely)
-+		bdev->bamclk = devm_clk_get_optional(bdev->dev, "bam_clk");
-+	else
-+		bdev->bamclk = devm_clk_get(bdev->dev, "bam_clk");
-+
-+	if (IS_ERR(bdev->bamclk))
-+		return PTR_ERR(bdev->bamclk);
-+
-+	if (!bdev->bamclk) {
- 		ret = of_property_read_u32(pdev->dev.of_node, "num-channels",
- 					   &bdev->num_channels);
- 		if (ret)
-@@ -1284,14 +1292,6 @@ static int bam_dma_probe(struct platform_device *pdev)
- 			dev_err(bdev->dev, "num-ees unspecified in dt\n");
- 	}
- 
--	if (bdev->controlled_remotely || bdev->powered_remotely)
--		bdev->bamclk = devm_clk_get_optional(bdev->dev, "bam_clk");
--	else
--		bdev->bamclk = devm_clk_get(bdev->dev, "bam_clk");
--
--	if (IS_ERR(bdev->bamclk))
--		return PTR_ERR(bdev->bamclk);
--
- 	ret = clk_prepare_enable(bdev->bamclk);
- 	if (ret) {
- 		dev_err(bdev->dev, "failed to prepare/enable clock\n");
+This reserved-ranges is totally bogus since introduction.. I can send
+a separate patch squaring it out.
 
----
-base-commit: 1c677f238f92ba0a329b7c13220f38b396872806
-change-id: 20230518-bamclk-dt-d44bae47b337
+Konrad
 
-Best regards,
--- 
-Stephan Gerhold <stephan@gerhold.net>
-
+> 
+> Regards,
+> Bjorn
+> 
+>>  			       <56 3>, <61 2>, <64 1>,
+>>  			       <68 1>, <72 8>, <96 1>;
+>>  
+>>
+>> -- 
+>> 2.40.1
+>>
