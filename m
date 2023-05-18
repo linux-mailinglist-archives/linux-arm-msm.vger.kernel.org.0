@@ -2,441 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B92D7081A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 14:46:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A94857081DE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 14:54:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230040AbjERMqp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 08:46:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36782 "EHLO
+        id S230081AbjERMyW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 08:54:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229917AbjERMqo (ORCPT
+        with ESMTP id S230076AbjERMyW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 08:46:44 -0400
-Received: from 189.cn (ptr.189.cn [183.61.185.101])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 832928F;
-        Thu, 18 May 2023 05:46:41 -0700 (PDT)
-HMM_SOURCE_IP: 10.64.8.43:37340.1169356039
-HMM_ATTACHE_NUM: 0000
-HMM_SOURCE_TYPE: SMTP
-Received: from clientip-114.242.206.180 (unknown [10.64.8.43])
-        by 189.cn (HERMES) with SMTP id CD0D9100135;
-        Thu, 18 May 2023 20:46:38 +0800 (CST)
-Received: from  ([114.242.206.180])
-        by gateway-151646-dep-75648544bd-prw2v with ESMTP id 0047ede249374502a0ae76a827e3ffab for tzimmermann@suse.de;
-        Thu, 18 May 2023 20:46:39 CST
-X-Transaction-ID: 0047ede249374502a0ae76a827e3ffab
-X-Real-From: 15330273260@189.cn
-X-Receive-IP: 114.242.206.180
-X-MEDUSA-Status: 0
-Sender: 15330273260@189.cn
-Message-ID: <f1688b87-0b8d-59b0-2fe8-88b2d40c513e@189.cn>
-Date:   Thu, 18 May 2023 20:46:37 +0800
+        Thu, 18 May 2023 08:54:22 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69B0B1712
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 05:54:20 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f387d97dddso2386015e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 05:54:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684414458; x=1687006458;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kGL7tJe2R/pndMei8Z26s8Ep8SxlOSmhM3gTp42yw60=;
+        b=AVhW7b0P29X0NK1I9toFEUORHktkndMoSvpgXM6F4WHuaFgyC9TdMps3/28rbuM252
+         6ZPNq8jMaFksN3eaE2ePEj9wuRDZ4MtCsSoqR3n0oEzlvwxFJ/eTsIvnyTK74K9m0N8j
+         305Xl/YjvEhqpdfBGo3Kox7u/N6UZURx9aww2sBQQdMEFCg1g+JmYE1f6zXANdgLVarf
+         7w5uxf11vaKSxYjtk34AtHhdjkDZAtxtTuUzQToAQlbid9pc+RCEzm0a3EMPRKZA9/P4
+         kEb+fveOAbSuTt+DWUXfpy5bWvznc0Be3SA1Ia97MymX1j7my8ujxOjGQY1Qi+PtTdjs
+         isoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684414458; x=1687006458;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kGL7tJe2R/pndMei8Z26s8Ep8SxlOSmhM3gTp42yw60=;
+        b=HFe0GYD9w0QXbv0marWs6RPyXyAb65LTMT3b6VdmKPOtGiCkkNLUXreE8rxxKJiCAh
+         7/oaJgoYfItuLEjQDEGqAMuhlU08cgQJRXgRNMtlOP2fmiYJ4aiN6yOSf7Fizqa2Imk4
+         OQ9KU443Kc+kYUYHVWOgZBta2bQw9YlMAkJ0n2+276ZRE1rIUUYmTIwEXrceYIkMPu0M
+         lzQUE8GX7xWttixtBChFMasTrrBi7/VkqeZivdceg3fCdTfMhBSwDF5Cbti93Vj01KPd
+         BSOyLSmOQYUl/xnhLnS4BlyY5bG5ib9XzolrMQaq/EZaNDEIHHY6jgV4uLxDhvIXcQ2E
+         +wYQ==
+X-Gm-Message-State: AC+VfDwEBHmt24sJoWd+GXxCEP8+p+8Hkk4Q6JyxWdJJrvmzCxCEFR0F
+        iHhXzy4qrr7k9s0Pg2eyAJqxEA==
+X-Google-Smtp-Source: ACHHUZ4I+0QfRj0+aaSKBVXQKrDgPq5R6zxH1tPybkLd+nFZs3mFrEE18x3NAEF9VgihacTcGL8pTg==
+X-Received: by 2002:ac2:47e7:0:b0:4e6:9b01:b92b with SMTP id b7-20020ac247e7000000b004e69b01b92bmr1148731lfp.67.1684414458618;
+        Thu, 18 May 2023 05:54:18 -0700 (PDT)
+Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
+        by smtp.gmail.com with ESMTPSA id x7-20020ac24887000000b004f13c00dd9bsm239318lfc.135.2023.05.18.05.54.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 May 2023 05:54:18 -0700 (PDT)
+Message-ID: <fb58c20e-ad2c-5398-ad69-8e01de58fc02@linaro.org>
+Date:   Thu, 18 May 2023 14:54:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [v2,11/12] drm/fbdev-generic: Implement dedicated fbdev I/O
- helpers
-To:     Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
-        airlied@gmail.com, maarten.lankhorst@linux.intel.com,
-        mripard@kernel.org, javierm@redhat.com, sam@ravnborg.org
-Cc:     linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-        freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230515094033.2133-12-tzimmermann@suse.de>
- <80b4b615-0a71-89e8-3a58-fbeb8a9a06e8@189.cn>
- <28d2e7d5-7dde-b1f9-3b5f-0ba51f8eaaeb@suse.de>
 Content-Language: en-US
-From:   Sui Jingfeng <15330273260@189.cn>
-In-Reply-To: <28d2e7d5-7dde-b1f9-3b5f-0ba51f8eaaeb@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,FROM_LOCAL_DIGITS,
-        FROM_LOCAL_HEX,NICE_REPLY_A,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+Cc:     Rob Herring <robh@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Marc Zyngier <maz@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20230328-topic-msgram_mpm-v2-0-e24a48e57f0d@linaro.org>
+ <20230328-topic-msgram_mpm-v2-1-e24a48e57f0d@linaro.org>
+ <168069726278.2356075.14351594478003012447.robh@kernel.org>
+ <20230405134727.GA2461305-robh@kernel.org>
+ <1e6e2590-ac78-400b-35ce-321d5e52f385@linaro.org>
+ <9df12111-ec84-c4f7-fbcb-bccaef91b048@linaro.org>
+ <3ce9b5ec-8b02-537a-c663-c849e80cab66@linaro.org>
+ <ZDAAToSzNLVo6le8@gerhold.net>
+ <198523f5-d06f-15cd-af6c-f391c02bcaa9@linaro.org>
+ <1f8fc036-380b-0a42-bb29-a3e275ed6a33@linaro.org>
+ <2e648a97-083e-8ee2-1695-4af299bb222a@linaro.org>
+ <15f48b06-a6be-1295-5deb-d3594bce6699@linaro.org>
+ <ec32fc8e-56e0-51a5-dd96-c7cc8b9cf71f@linaro.org>
+ <6a9b1c25-2e17-a657-3a58-b2ff8d1c86d7@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH v2 1/2] dt-bindings: interrupt-controller: mpm: Pass MSG
+ RAM slice through phandle
+In-Reply-To: <6a9b1c25-2e17-a657-3a58-b2ff8d1c86d7@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 2023/5/17 15:07, Thomas Zimmermann wrote:
-> Hi
->
-> Am 17.05.23 um 03:58 schrieb Sui Jingfeng:
->> Hi, Thomas
->>
->>
->> After apply your patch set, the kernel with 
->> arch/loongarch/configs/loongson3_defconfig
->>
->> can not finish compile anymore.  gcc complains:
->>
->>
->>    AR      drivers/gpu/built-in.a
->>    AR      drivers/built-in.a
->>    AR      built-in.a
->>    AR      vmlinux.a
->>    LD      vmlinux.o
->>    OBJCOPY modules.builtin.modinfo
->>    GEN     modules.builtin
->>    GEN     .vmlinux.objs
->>    MODPOST Module.symvers
->> ERROR: modpost: "fb_sys_write" [drivers/gpu/drm/drm_kms_helper.ko] 
->> undefined!
->> ERROR: modpost: "sys_imageblit" [drivers/gpu/drm/drm_kms_helper.ko] 
->> undefined!
->> ERROR: modpost: "sys_fillrect" [drivers/gpu/drm/drm_kms_helper.ko] 
->> undefined!
->> ERROR: modpost: "sys_copyarea" [drivers/gpu/drm/drm_kms_helper.ko] 
->> undefined!
->> ERROR: modpost: "fb_sys_read" [drivers/gpu/drm/drm_kms_helper.ko] 
->> undefined!
->> make[1]: *** [scripts/Makefile.modpost:136: Module.symvers] Error 1
->> make: *** [Makefile:1978: modpost] Error 2
->
-> Thanks for reporting this problem. I found that it's caused by a typo 
-> in the very first patch 1/7, where these helpers are not selected 
-> correctly. Will be fixed in the next round.
->
-Yeah, this is just a typo.
-
-Should replace 'FB_SYS_HELPER' with 'FB_SYS_HELPERS' on the first patch 
-of this series.
 
 
-> Best regards
-> Thomas
->
+On 13.04.2023 10:50, Krzysztof Kozlowski wrote:
+> On 12/04/2023 19:06, Konrad Dybcio wrote:
 >>
 >>
->> On 2023/5/15 17:40, Thomas Zimmermann wrote:
->>> Implement dedicated fbdev helpers for framebuffer I/O instead
->>> of using DRM's helpers. Fbdev-generic was the only caller of the
->>> DRM helpers, so remove them from the helper module.
+>> On 12.04.2023 18:53, Krzysztof Kozlowski wrote:
+>>> On 12/04/2023 14:09, Konrad Dybcio wrote:
+>>>>
+>>>>
+>>>> On 12.04.2023 13:55, Krzysztof Kozlowski wrote:
+>>>>> On 12/04/2023 13:47, Konrad Dybcio wrote:
+>>>>>>> For unrelated reasons I actually have some patches for this, that switch
+>>>>>>> the /smd top-level node to a "remoteproc-like" node dedicated to the
+>>>>>>> RPM, similar to how WCNSS/ADSP/Modem/etc are represented. I need this to
+>>>>>>> add additional (optional) properties like "resets" and "iommus" for the
+>>>>>>> RPM, but it would allow adding arbitrary subnodes as well:
+>>>>>>>
+>>>>>>> https://github.com/msm8916-mainline/linux/commit/35231ac28703805daa8220f1233847c7df34589e
+>>>>>>>
+>>>>>>> I could finish those up and post them if that would help...
+>>>>>> Krzysztof, what do you think?
+>>>>>
+>>>>> I don't know what is there in MSM8916 and how it should be represented.
+>>>> Similarly to other Qualcomm SoCs, MSM8916 has a RPM (Cortex-M3) core,
+>>>> which communicates over the SMD protocol (or G-LINK on >=8996).
+>>>>
+>>>> The Qualcomm firmware loads the RPM fw blob and sets it up early in
+>>>> the boot process, but msm8916-mainline folks managed to get TF-A
+>>>> going and due to it being less.. invasive.. than the Qualcomm TZ,
+>>>> RPM needs a bit more handling to be accessible.
+>>>>
+>>>> The M3 core is wired up through the CNoC bus and we communicate
+>>>> with it through the MSG RAM and the "APCS mailbox".
 >>>
->>> v2:
->>>     * use FB_SYS_HELPERS_DEFERRED option
+>>> Thanks, that's actually good description. Yet I still do not know what
+>>> is exactly the problem and the question. Linking some out of tree
+>>> commits does not give me the answer, at least I cannot get that answer
+>>> form the link.
 >>>
->>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->>> ---
->>>   drivers/gpu/drm/Kconfig             |   6 +-
->>>   drivers/gpu/drm/drm_fb_helper.c     | 107 
->>> ----------------------------
->>>   drivers/gpu/drm/drm_fbdev_generic.c |  47 ++++++++++--
->>>   include/drm/drm_fb_helper.h         |  41 -----------
->>>   4 files changed, 43 insertions(+), 158 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
->>> index 77fb10ddd8a2..92a782827b7b 100644
->>> --- a/drivers/gpu/drm/Kconfig
->>> +++ b/drivers/gpu/drm/Kconfig
->>> @@ -95,6 +95,7 @@ config DRM_KUNIT_TEST
->>>   config DRM_KMS_HELPER
->>>       tristate
->>>       depends on DRM
->>> +    select FB_SYS_HELPERS_DEFERRED if DRM_FBDEV_EMULATION
+>>> For example what I don't understand is: why additional resources (like
+>>> resets) can be provided only in new binding, but not in the old.
+>> The old binding dictates that the rpm node (which in turn
+>> holds all "devices" that only interface with RPM, like RPMCC) is
+>> a child of smd{}, which does not make sense logically, as SMD is
+>> a protocol (e.g. we don't place devices connected over i2c under
+>> /i2c{}).
+> 
+> We do. All devices connected over I2C are under i2c node which is the
+> controller. The example is different than what you have here...
+> 
+>>  The rpm node lacks a compatible, as it's representing
+>> an "smd channel", so there's no driver so there's no way to assert
+>> resets etc.
+> 
+> You have rpm-requests which has compatible. These are not its resources?
+I believe we misrepresented this 10y ago and now we're stuck with that
+legacy..
+
+Currently we have:
+
+[1]
+smd {
+	rpm {
+		rpm-requests {
+			compatible = "qcom,rpm-msm8916"
+
+or
+
+[2]
+rpm-glink {
+	rpm-requests {
+		compatible = "qcom,rpm-sm6375"
+
+
+In the case of [1], 'smd' is a communication protocol and the 'rpm'
+node describes the RPM's "smd edge" (think a communication channel
+assigned to the RPM processor)
+
+
+In the case of [2], rpm-glink is also just a description of the G-LINK
+communication protocol/"bus" (putting bus in quotes, as GLINK is really a
+very very fancy set of mailboxes)
+
+So we've really been describing the protocols and not the hardware buses..
+
+What Stephan and I were trying to say, is that there's no great node that
+actually represents the Cortex-M3 RPM core itself.
+
+The rpm-requests node is the closest, but it won't fit his purpose, as it 
+depends on the communication with the CM3 already being active - it will
+only get registered through qcom_glink_rx_open / qcom_channel_state_worker
+for GLINK/SMD respectively. These channels will only be open if the core
+is up, but for that to happen its reset line must be deasserted.
+
+Stephen proposed restructuring that to be centered around the CM3 core and
+not the communication protocol.
+
+I know you're not very fond of downstream tree commits, but looking at his
+branch, I think that's it:
+
+https://github.com/msm8916-mainline/linux/commit/e4e90fd3f711295461ee17891567e75e2342e5c8
+
+I'd be in favour of such restructurization - makes things much more clear
+and sane.
+
+Stephen, if you're willing to do it, I can test your patches on both GLINK
+and SMD platforms.
+
+> 
 >>
->> Here, select FB_SYS_HELPERS helps resolve the above issue mentioned.
+>> On newer SoCs that still implement SMD RPM (like 8996), we do
+>> actually have a driver and a parent node which it binds to
+>> (rpm-glink).
+> 
+> You want to add RPM resets to rpm-glink node? This also does not look right.
+No, I was just pointing out that rpm-requests' direct parent node has a
+driver bound to it in case of GLINK but not in the case of SMD
+
+
+> 
 >>
-But select FB_SYS_HELPERS here is more better, I think.  Because it show 
-the nature that
+>> AFAIU:
+>> In both cases, the "final" drivers (rpmcc, rpmpd..) are bound
+>> after hitting a SMD/GLINK callback that tells Linux we're ready
+>> to rock. That's an issue for Stephan, as these callbacks won't
+>> ever happen if the RPM core is not initialized (and TF-A doesn't
+>> do that).
+> 
+> To me half or almost all of Qualcomm remote-proc-related bindings, like
+> SMD, GLINK and associated processors, are difficult to read, half-baked
+> and developed to match the current Linux/SW need.
+Agreed :/
 
-DRM_KMS_HELPER is depend on FB_SYS_HELPERS, I think you may want isolate
+When the Linux drivers
+> changed, new bindings were added... If you want to fix it, sure go
+> ahead, but design everything to match something rational, not again to
+> match one specific SW/FW implementation.
+I don't think it's worth the hassle.. we may add it to the "we'll fix it
+when we eventually find some gamebreaking issue that requires us to break
+the 10yo backwards compatibility for some deep core driver, if that happens"
+list..
 
-those dependency with DRM_FBDEV_EMULATION guard.
-
-at least, you should guarantee that drm itself could built and run 
-standalone.
-
-Fbdev emulation is a client of drm, not reverse.
-
-
-By the way, does Denial happy about this,
-
-maybe, he want the fbdev emulation 100% made in drm?
-
->>>       help
->>>         CRTC helpers for KMS drivers.
->>> @@ -135,11 +136,6 @@ config DRM_FBDEV_EMULATION
->>>       select FB_CFB_FILLRECT
->>>       select FB_CFB_COPYAREA
->>>       select FB_CFB_IMAGEBLIT
->>> -    select FB_DEFERRED_IO
->>> -    select FB_SYS_FOPS
->>> -    select FB_SYS_FILLRECT
->>> -    select FB_SYS_COPYAREA
->>> -    select FB_SYS_IMAGEBLIT
->>>       select FRAMEBUFFER_CONSOLE if !EXPERT
->>>       select FRAMEBUFFER_CONSOLE_DETECT_PRIMARY if FRAMEBUFFER_CONSOLE
->>>       default y
->>> diff --git a/drivers/gpu/drm/drm_fb_helper.c 
->>> b/drivers/gpu/drm/drm_fb_helper.c
->>> index 8724e08c518b..ba0a808f14ee 100644
->>> --- a/drivers/gpu/drm/drm_fb_helper.c
->>> +++ b/drivers/gpu/drm/drm_fb_helper.c
->>> @@ -729,113 +729,6 @@ void drm_fb_helper_deferred_io(struct fb_info 
->>> *info, struct list_head *pagerefli
->>>   }
->>>   EXPORT_SYMBOL(drm_fb_helper_deferred_io);
->>> -/**
->>> - * drm_fb_helper_sys_read - Implements struct &fb_ops.fb_read for 
->>> system memory
->>> - * @info: fb_info struct pointer
->>> - * @buf: userspace buffer to read from framebuffer memory
->>> - * @count: number of bytes to read from framebuffer memory
->>> - * @ppos: read offset within framebuffer memory
->>> - *
->>> - * Returns:
->>> - * The number of bytes read on success, or an error code otherwise.
->>> - */
->>> -ssize_t drm_fb_helper_sys_read(struct fb_info *info, char __user *buf,
->>> -                   size_t count, loff_t *ppos)
->>> -{
->>> -    return fb_sys_read(info, buf, count, ppos);
->>> -}
->>> -EXPORT_SYMBOL(drm_fb_helper_sys_read);
->>> -
->>> -/**
->>> - * drm_fb_helper_sys_write - Implements struct &fb_ops.fb_write for 
->>> system memory
->>> - * @info: fb_info struct pointer
->>> - * @buf: userspace buffer to write to framebuffer memory
->>> - * @count: number of bytes to write to framebuffer memory
->>> - * @ppos: write offset within framebuffer memory
->>> - *
->>> - * Returns:
->>> - * The number of bytes written on success, or an error code otherwise.
->>> - */
->>> -ssize_t drm_fb_helper_sys_write(struct fb_info *info, const char 
->>> __user *buf,
->>> -                size_t count, loff_t *ppos)
->>> -{
->>> -    struct drm_fb_helper *helper = info->par;
->>> -    loff_t pos = *ppos;
->>> -    ssize_t ret;
->>> -    struct drm_rect damage_area;
->>> -
->>> -    ret = fb_sys_write(info, buf, count, ppos);
->>> -    if (ret <= 0)
->>> -        return ret;
->>> -
->>> -    if (helper->funcs->fb_dirty) {
->>> -        drm_fb_helper_memory_range_to_clip(info, pos, ret, 
->>> &damage_area);
->>> -        drm_fb_helper_damage(helper, damage_area.x1, damage_area.y1,
->>> -                     drm_rect_width(&damage_area),
->>> -                     drm_rect_height(&damage_area));
->>> -    }
->>> -
->>> -    return ret;
->>> -}
->>> -EXPORT_SYMBOL(drm_fb_helper_sys_write);
->>> -
->>> -/**
->>> - * drm_fb_helper_sys_fillrect - wrapper around sys_fillrect
->>> - * @info: fbdev registered by the helper
->>> - * @rect: info about rectangle to fill
->>> - *
->>> - * A wrapper around sys_fillrect implemented by fbdev core
->>> - */
->>> -void drm_fb_helper_sys_fillrect(struct fb_info *info,
->>> -                const struct fb_fillrect *rect)
->>> -{
->>> -    struct drm_fb_helper *helper = info->par;
->>> -
->>> -    sys_fillrect(info, rect);
->>> -
->>> -    if (helper->funcs->fb_dirty)
->>> -        drm_fb_helper_damage(helper, rect->dx, rect->dy, 
->>> rect->width, rect->height);
->>> -}
->>> -EXPORT_SYMBOL(drm_fb_helper_sys_fillrect);
->>> -
->>> -/**
->>> - * drm_fb_helper_sys_copyarea - wrapper around sys_copyarea
->>> - * @info: fbdev registered by the helper
->>> - * @area: info about area to copy
->>> - *
->>> - * A wrapper around sys_copyarea implemented by fbdev core
->>> - */
->>> -void drm_fb_helper_sys_copyarea(struct fb_info *info,
->>> -                const struct fb_copyarea *area)
->>> -{
->>> -    struct drm_fb_helper *helper = info->par;
->>> -
->>> -    sys_copyarea(info, area);
->>> -
->>> -    if (helper->funcs->fb_dirty)
->>> -        drm_fb_helper_damage(helper, area->dx, area->dy, 
->>> area->width, area->height);
->>> -}
->>> -EXPORT_SYMBOL(drm_fb_helper_sys_copyarea);
->>> -
->>> -/**
->>> - * drm_fb_helper_sys_imageblit - wrapper around sys_imageblit
->>> - * @info: fbdev registered by the helper
->>> - * @image: info about image to blit
->>> - *
->>> - * A wrapper around sys_imageblit implemented by fbdev core
->>> - */
->>> -void drm_fb_helper_sys_imageblit(struct fb_info *info,
->>> -                 const struct fb_image *image)
->>> -{
->>> -    struct drm_fb_helper *helper = info->par;
->>> -
->>> -    sys_imageblit(info, image);
->>> -
->>> -    if (helper->funcs->fb_dirty)
->>> -        drm_fb_helper_damage(helper, image->dx, image->dy, 
->>> image->width, image->height);
->>> -}
->>> -EXPORT_SYMBOL(drm_fb_helper_sys_imageblit);
->>> -
->>>   /**
->>>    * drm_fb_helper_cfb_read - Implements struct &fb_ops.fb_read for 
->>> I/O memory
->>>    * @info: fb_info struct pointer
->>> diff --git a/drivers/gpu/drm/drm_fbdev_generic.c 
->>> b/drivers/gpu/drm/drm_fbdev_generic.c
->>> index 8e5148bf40bb..f53fc49e34a4 100644
->>> --- a/drivers/gpu/drm/drm_fbdev_generic.c
->>> +++ b/drivers/gpu/drm/drm_fbdev_generic.c
->>> @@ -34,6 +34,43 @@ static int drm_fbdev_generic_fb_release(struct 
->>> fb_info *info, int user)
->>>       return 0;
->>>   }
->>> +static ssize_t drm_fbdev_generic_fb_write(struct fb_info *info, 
->>> const char __user *buf,
->>> +                      size_t count, loff_t *ppos)
->>> +{
->>> +    struct drm_fb_helper *helper = info->par;
->>> +    loff_t pos = *ppos;
->>> +    ssize_t ret;
->>> +
->>> +    ret = fb_sys_write(info, buf, count, ppos);
->>> +    if (ret > 0)
->>> +        drm_fb_helper_damage_range(helper, pos, ret);
->>> +    return ret;
->>> +}
->>> +
->>> +static void drm_fbdev_generic_fb_fillrect(struct fb_info *info, 
->>> const struct fb_fillrect *rect)
->>> +{
->>> +    struct drm_fb_helper *helper = info->par;
->>> +
->>> +    sys_fillrect(info, rect);
->>> +    drm_fb_helper_damage(helper, rect->dx, rect->dy, rect->width, 
->>> rect->height);
->>> +}
->>> +
->>> +static void drm_fbdev_generic_fb_copyarea(struct fb_info *info, 
->>> const struct fb_copyarea *area)
->>> +{
->>> +    struct drm_fb_helper *helper = info->par;
->>> +
->>> +    sys_copyarea(info, area);
->>> +    drm_fb_helper_damage(helper, area->dx, area->dy, area->width, 
->>> area->height);
->>> +}
->>> +
->>> +static void drm_fbdev_generic_fb_imageblit(struct fb_info *info, 
->>> const struct fb_image *image)
->>> +{
->>> +    struct drm_fb_helper *helper = info->par;
->>> +
->>> +    sys_imageblit(info, image);
->>> +    drm_fb_helper_damage(helper, image->dx, image->dy, 
->>> image->width, image->height);
->>> +}
->>> +
->>>   static void drm_fbdev_generic_fb_destroy(struct fb_info *info)
->>>   {
->>>       struct drm_fb_helper *fb_helper = info->par;
->>> @@ -56,12 +93,12 @@ static const struct fb_ops 
->>> drm_fbdev_generic_fb_ops = {
->>>       .owner        = THIS_MODULE,
->>>       .fb_open    = drm_fbdev_generic_fb_open,
->>>       .fb_release    = drm_fbdev_generic_fb_release,
->>> -    .fb_read    = drm_fb_helper_sys_read,
->>> -    .fb_write    = drm_fb_helper_sys_write,
->>> +    .fb_read    = fb_sys_read,
->>> +    .fb_write    = drm_fbdev_generic_fb_write,
->>>       DRM_FB_HELPER_DEFAULT_OPS,
->>> -    .fb_fillrect    = drm_fb_helper_sys_fillrect,
->>> -    .fb_copyarea    = drm_fb_helper_sys_copyarea,
->>> -    .fb_imageblit    = drm_fb_helper_sys_imageblit,
->>> +    .fb_fillrect    = drm_fbdev_generic_fb_fillrect,
->>> +    .fb_copyarea    = drm_fbdev_generic_fb_copyarea,
->>> +    .fb_imageblit    = drm_fbdev_generic_fb_imageblit,
->>>       .fb_mmap    = fb_deferred_io_mmap,
->>>       .fb_destroy    = drm_fbdev_generic_fb_destroy,
->>>   };
->>> diff --git a/include/drm/drm_fb_helper.h b/include/drm/drm_fb_helper.h
->>> index 80c402f4e379..e3240d749a43 100644
->>> --- a/include/drm/drm_fb_helper.h
->>> +++ b/include/drm/drm_fb_helper.h
->>> @@ -259,18 +259,6 @@ void drm_fb_helper_damage_range(struct 
->>> drm_fb_helper *helper, off_t off, size_t
->>>   void drm_fb_helper_deferred_io(struct fb_info *info, struct 
->>> list_head *pagereflist);
->>> -ssize_t drm_fb_helper_sys_read(struct fb_info *info, char __user *buf,
->>> -                   size_t count, loff_t *ppos);
->>> -ssize_t drm_fb_helper_sys_write(struct fb_info *info, const char 
->>> __user *buf,
->>> -                size_t count, loff_t *ppos);
->>> -
->>> -void drm_fb_helper_sys_fillrect(struct fb_info *info,
->>> -                const struct fb_fillrect *rect);
->>> -void drm_fb_helper_sys_copyarea(struct fb_info *info,
->>> -                const struct fb_copyarea *area);
->>> -void drm_fb_helper_sys_imageblit(struct fb_info *info,
->>> -                 const struct fb_image *image);
->>> -
->>>   ssize_t drm_fb_helper_cfb_read(struct fb_info *info, char __user 
->>> *buf,
->>>                      size_t count, loff_t *ppos);
->>>   ssize_t drm_fb_helper_cfb_write(struct fb_info *info, const char 
->>> __user *buf,
->>> @@ -398,35 +386,6 @@ static inline int 
->>> drm_fb_helper_defio_init(struct drm_fb_helper *fb_helper)
->>>       return -ENODEV;
->>>   }
->>> -static inline ssize_t drm_fb_helper_sys_read(struct fb_info *info,
->>> -                         char __user *buf, size_t count,
->>> -                         loff_t *ppos)
->>> -{
->>> -    return -ENODEV;
->>> -}
->>> -
->>> -static inline ssize_t drm_fb_helper_sys_write(struct fb_info *info,
->>> -                          const char __user *buf,
->>> -                          size_t count, loff_t *ppos)
->>> -{
->>> -    return -ENODEV;
->>> -}
->>> -
->>> -static inline void drm_fb_helper_sys_fillrect(struct fb_info *info,
->>> -                          const struct fb_fillrect *rect)
->>> -{
->>> -}
->>> -
->>> -static inline void drm_fb_helper_sys_copyarea(struct fb_info *info,
->>> -                          const struct fb_copyarea *area)
->>> -{
->>> -}
->>> -
->>> -static inline void drm_fb_helper_sys_imageblit(struct fb_info *info,
->>> -                           const struct fb_image *image)
->>> -{
->>> -}
->>> -
->>>   static inline ssize_t drm_fb_helper_cfb_read(struct fb_info *info, 
->>> char __user *buf,
->>>                            size_t count, loff_t *ppos)
->>>   {
->
+Konrad
+> 
+> Best regards,
+> Krzysztof
+> 
