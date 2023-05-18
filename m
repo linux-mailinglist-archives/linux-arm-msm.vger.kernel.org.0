@@ -2,122 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 35D06707A39
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 08:22:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C81D707A5B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 08:49:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229898AbjERGW6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 02:22:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40458 "EHLO
+        id S229801AbjERGtP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 02:49:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229513AbjERGW5 (ORCPT
+        with ESMTP id S229807AbjERGtO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 02:22:57 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98DC8172D;
-        Wed, 17 May 2023 23:22:56 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34I6293I028055;
-        Thu, 18 May 2023 06:22:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=/AnDV/3xdVdl08tsQzbCGrmi9kVas80L/eRnAlVjl2Y=;
- b=iXRPJHn353Qba/JTaMUgSh9jxQT44cimj1THGW//7NODvMF1Nw+xXiJzqQigmr6V78ZF
- BSQcR/5f+w0Fudz2ORF0reJeUWYHVjHqsFhQfP/XbBIt5xFDxcxIK+qvkAIR6KtJg8k3
- tcWQ9jJqOvt/VBVZam2LGxqmFC684mwkyV/8jlhMcBatE7UMKt2gDB+FVs0UsRap7dcB
- pS1qINfjBZNIjSvrQMCajoxlv3F0quQ5eS6MG9VS3KbPKu8vyHrvvx3AkqKXeXUlKOS7
- L4QCx09mD0Gw9lYqc9LJVF9y8UsYUhpfUGDZtHsbhXcQiDhm/qpyw0kswci4rys2+aJq 7w== 
-Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qned3018r-1
+        Thu, 18 May 2023 02:49:14 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 552AE2122;
+        Wed, 17 May 2023 23:49:13 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34I6a5vp009104;
+        Thu, 18 May 2023 06:48:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=GdRg7Y9j4xrW11AwJfAZpy43hBuEn4tHcz/Itw1Jsto=;
+ b=C/3Hc9KooNQVYypd4dGPnoFzkfHYGQfxYozTGBt81F/OttJxFDyTYMl9J9TC8yeebT6J
+ iMzoU2zCjhIEeF9T4moV2EXFPAqeCcbVBJD1AJWVu7eRbTIl/E0Gm8Tsv90uydi6NXLq
+ KsFXdcQLMjD5+Ge2YhIEV/SMqmFSMSDoWBL8FpVwJjthGSdjQxjp79TJbL3MT3QUWyLP
+ paTLU8u/3wvwhbFsRiOLRKU0CGjQL883HlnpW0JpBzvJb9truum8hbLzqcCqGHNE7cYM
+ 4Qq3f58aS78LpjAGkO0AH+7rCGkJspL9PyhRPkHEjkr8F6z9Ym3710je9jeILeq8vpVl +Q== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qncbhr91a-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 18 May 2023 06:22:46 +0000
-Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-        by APTAIPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 34I6MhvR000555;
-        Thu, 18 May 2023 06:22:43 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APTAIPPMTA02.qualcomm.com (PPS) with ESMTP id 3qj3mmf043-1;
-        Thu, 18 May 2023 06:22:43 +0000
-Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 34I6MhUJ000550;
-        Thu, 18 May 2023 06:22:43 GMT
-Received: from cbsp-sh-gv.qualcomm.com (CBSP-SH-gv.ap.qualcomm.com [10.231.249.68])
-        by APTAIPPMTA02.qualcomm.com (PPS) with ESMTP id 34I6Mh6P000548;
-        Thu, 18 May 2023 06:22:43 +0000
-Received: by cbsp-sh-gv.qualcomm.com (Postfix, from userid 4098150)
-        id B4353477B; Thu, 18 May 2023 14:22:41 +0800 (CST)
-From:   Qiang Yu <quic_qianyu@quicinc.com>
-To:     mani@kernel.org, quic_jhugo@quicinc.com
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_cang@quicinc.com,
-        quic_mrana@quicinc.com, Qiang Yu <quic_qianyu@quicinc.com>,
-        stable@vger.kernel.org
-Subject: [PATCH v4] bus: mhi: host: Skip MHI reset if device is in RDDM
-Date:   Thu, 18 May 2023 14:22:39 +0800
-Message-Id: <1684390959-17836-1-git-send-email-quic_qianyu@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-X-QCInternal: smtphost
+        Thu, 18 May 2023 06:48:53 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34I6mpqZ028262
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 18 May 2023 06:48:51 GMT
+Received: from [10.216.51.58] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 17 May
+ 2023 23:48:43 -0700
+Message-ID: <0374e88f-5b12-271a-41f0-32a31fbecbec@quicinc.com>
+Date:   Thu, 18 May 2023 12:18:39 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V6 7/8] arm64: dts: Add ipq5018 SoC and rdp432-c2 board
+ support
+To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
+        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <robimarko@gmail.com>,
+        <andy.shevchenko@gmail.com>
+References: <20230516165413.3361867-1-quic_srichara@quicinc.com>
+ <20230516165413.3361867-8-quic_srichara@quicinc.com>
+Content-Language: en-US
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <20230516165413.3361867-8-quic_srichara@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: VRvzgFQvJEKTXqb3lmMNlJzqZ0vbclas
-X-Proofpoint-GUID: VRvzgFQvJEKTXqb3lmMNlJzqZ0vbclas
+X-Proofpoint-GUID: 3seELNgdxH5fZtduLxDlSRu1sBZ8GeU0
+X-Proofpoint-ORIG-GUID: 3seELNgdxH5fZtduLxDlSRu1sBZ8GeU0
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
  definitions=2023-05-18_04,2023-05-17_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- lowpriorityscore=0 malwarescore=0 suspectscore=0 bulkscore=0 phishscore=0
- mlxlogscore=999 priorityscore=1501 clxscore=1011 mlxscore=0 spamscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305180047
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ lowpriorityscore=0 bulkscore=0 phishscore=0 adultscore=0
+ priorityscore=1501 suspectscore=0 clxscore=1011 impostorscore=0 mlxscore=0
+ malwarescore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2305180050
+X-Spam-Status: No, score=-3.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In RDDM EE, device can not process MHI reset issued by host. In case of MHI
-power off, host is issuing MHI reset and polls for it to get cleared until
-it times out. Since this timeout can not be avoided in case of RDDM, skip
-the MHI reset in this scenarios.
 
-Cc: <stable@vger.kernel.org>
-Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state transitions")
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
----
-v1->v2: use ~75 columns in commit text, add Fixes tag
-v2->v3: update Fixes tag
-v3->v4: add review tag and CC stable
+On 5/16/2023 10:24 PM, Sricharan Ramabadhran wrote:
+> Add initial device tree support for the Qualcomm IPQ5018 SoC and
+> rdp432-c2 board.
+>
+> Few things like 'reboot' does not work because, couple of more 'SCM'
+> APIS are needed to clear some TrustZone settings. Those will be
+> posted separately.
+>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Co-developed-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> ---
+>    [v6] Added Reviewed by and fixed commit log as per comments from
+>         robimarko@gmail.com
+>
+>   arch/arm64/boot/dts/qcom/Makefile             |   1 +
+>   .../arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts |  72 +++++
+>   arch/arm64/boot/dts/qcom/ipq5018.dtsi         | 250 ++++++++++++++++++
+>   3 files changed, 323 insertions(+)
+>   create mode 100644 arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+>   create mode 100644 arch/arm64/boot/dts/qcom/ipq5018.dtsi
+>
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index d42c59572ace..57858e7f2095 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -3,6 +3,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= ipq5018-rdp432-c2.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-mi01.2.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp468.dtb
+>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c2.dts
+> new file mode 100644
+> index 000000000000..e636a1cb9b77
+> --- /dev/null
 
- drivers/bus/mhi/host/pm.c | 5 +++++
- 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-index 0834590..8a4362d 100644
---- a/drivers/bus/mhi/host/pm.c
-+++ b/drivers/bus/mhi/host/pm.c
-@@ -470,6 +470,10 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
- 
- 	/* Trigger MHI RESET so that the device will not access host memory */
- 	if (!MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
-+		/* Skip MHI RESET if in RDDM state */
-+		if (mhi_cntrl->rddm_image && mhi_get_exec_env(mhi_cntrl) == MHI_EE_RDDM)
-+			goto skip_mhi_reset;
-+
- 		dev_dbg(dev, "Triggering MHI Reset in device\n");
- 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
- 
-@@ -495,6 +499,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
- 		}
- 	}
- 
-+skip_mhi_reset:
- 	dev_dbg(dev,
- 		 "Waiting for all pending event ring processing to complete\n");
- 	mhi_event = mhi_cntrl->mhi_event;
--- 
-2.7.4
+<snip>
+
+
+> +	reserved-memory {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		tz_region: tz@4ac00000 {
+> +			reg = <0x0 0x4ac00000 0x0 0x400000>;
+
+
+TZ size is 2MB not 4MB.
+
+<snip>...
+
+Thanks
 
