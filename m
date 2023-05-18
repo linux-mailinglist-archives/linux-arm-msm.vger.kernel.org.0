@@ -2,107 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1878B708373
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 16:02:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B91B70838A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 16:06:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231557AbjEROCd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 10:02:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42000 "EHLO
+        id S231594AbjEROG1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 10:06:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231258AbjEROCc (ORCPT
+        with ESMTP id S230247AbjEROG0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 10:02:32 -0400
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FA40E51;
-        Thu, 18 May 2023 07:02:31 -0700 (PDT)
-Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-510ea8d0bb5so797599a12.0;
-        Thu, 18 May 2023 07:02:31 -0700 (PDT)
+        Thu, 18 May 2023 10:06:26 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F9871B5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 07:06:25 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-3078aa0b152so1390519f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 07:06:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684418549; x=1687010549;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1684418784; x=1687010784;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Y2Hw87l7Ts/Jxr3HsiObApCTHPM3x3z16x4yMMIWg7U=;
-        b=UbH1d1RvF5tQKqhb7d53yj0gbmWx4JmBW7ux3rULr/Kjj0RuhefLvFoKuKO0kuGFm/
-         V0D0VT8n89q4OS2WsJqIWcEEGnQLhbvyhjaVN8TMCqRgmYZP5xKc07kNTiHAgLcgBEN5
-         t0qTXum3ZUoTrHXW7fdqxSyPbp4wH8G+W/xmC0+/VP8HHr9PIhpcIaVu0bfaZpalwmS9
-         OWPS3v9iQ6AlKx0SSIcmUEZQ8BvxeQzWx/KGKjoObMxmfzzpXCnqc3Mu4zIilMQyjhY3
-         fCiYZ5oRZ22P5VxBilzTB1TFn2XsqMNN3abIdzGxRkEIWX9b4vVgbYfdBrR4p48cnFia
-         jpqw==
+        bh=azqpCVnd/614+AfKRHDl6hN6ez5a51IoobwFr9W5qBQ=;
+        b=h+GRLvpVsV6qF+yhQyC+9b89tOnb+IO73WPsf/PENnlj/jBn9IHDnS3KG2cpxTAoSi
+         ix13lFUJ/6yah6rp5/iuHqJzworFHDCDRWlmVTJfPoIyi/b8ZQWsq7QGGwXxS3MgKR5b
+         lxVSwmnxQIbRUscKxLYp1u/pdm+ggnBOTSW6oFHFM6nnLsAoAL8a3GI8E3kjQK+xlHIo
+         eNomgcLsFD3Byhthgx2JOBp3d81/Qf2/lXHfkszJkGuHG0EovhpGJeXYXJ16T8GiKbaF
+         JTwccEgIFv27bd9bxEelXasc/qEmPjALXS/fhVMT625offvc0Gb7VwOivbAqiwudCXRu
+         7iYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684418549; x=1687010549;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Y2Hw87l7Ts/Jxr3HsiObApCTHPM3x3z16x4yMMIWg7U=;
-        b=SKUpUP2PehJpDex6UEG2I6Ag9j67xvU8LZlNwWGaZMw1lFe4vqVoKNOKuSffYRAo0D
-         4FNU7GNuFatrO4w8maTosttiw6a2LXw5l3kNINUP4pgKlOyVavrehxrYxrsQ+nsc+enI
-         bxvcJYO556WRfbJ3zuTR2RFOiBdwAS9ipCiXTxWmfJSa6dI465Xfwwl/sKrcyr4h8f5W
-         OI/ReeupjHQJMgIVBfUCoZ5e4yjWIozNLK152pvQeyP2y8GKQ57l1LfmLpsg/ZmE2FrV
-         15z5gPNMClOZ7SS/mwMc2MR203MP+ZDTHgEaUZV20xRRraBpiiGHnqTzlYAbRJxjMixU
-         +WZQ==
-X-Gm-Message-State: AC+VfDzvdwS0Fnpdzn7QCJ4ekXv5YRpFbC/Pocfo3hawTrpt3/crXVRC
-        hEK3SFQVeHADvad61cLvNs6cWhkyN14=
-X-Google-Smtp-Source: ACHHUZ4g1yJ2IoW8AWI40CmRxuC3p7yQTD2VvHNMhL4VhevYghbQIBuSPIaOlRiiJsnlkZZd26ikoQ==
-X-Received: by 2002:a17:906:fd8c:b0:94f:3cf5:6d7f with SMTP id xa12-20020a170906fd8c00b0094f3cf56d7fmr38420982ejb.46.1684418549192;
-        Thu, 18 May 2023 07:02:29 -0700 (PDT)
-Received: from fedora.. (cpezg-94-253-130-143-cbl.xnet.hr. [94.253.130.143])
-        by smtp.googlemail.com with ESMTPSA id m14-20020a170906258e00b0096f272206b3sm997025ejb.125.2023.05.18.07.02.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 May 2023 07:02:28 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        srichara@quicinc.com
-Cc:     Robert Marko <robimarko@gmail.com>
-Subject: [RESEND,PATCH 2/2] firmware: qcom: scm: disable SDI on IPQ5018
-Date:   Thu, 18 May 2023 16:02:24 +0200
-Message-Id: <20230518140224.2248782-2-robimarko@gmail.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230518140224.2248782-1-robimarko@gmail.com>
-References: <20230518140224.2248782-1-robimarko@gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20221208; t=1684418784; x=1687010784;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=azqpCVnd/614+AfKRHDl6hN6ez5a51IoobwFr9W5qBQ=;
+        b=lfskFgXzf8duSQoP4cGLybOZofW2/wWMaL/wqXnltM7LVdkjYTVTV3CnZeXKcG8tbs
+         VN15/FKJwmHQW3tNInDvxX0V04tpSiOm7/OTeeFwU/tuKs9leZ1gc0gjWujqSW+ZEWkB
+         lDCIigJRC8e0WwxvlU//9qtEP1ghqMDbYmMeUlIKdAPEXQHmWUZsAIGpO0u1sUMdlBx5
+         Anu8fygeJhGCZVPpiX+J0VBZhtPYh09WvHvN4y2Z9/fGHRdwEP8QPALs4rabpkhZJzYb
+         VHUkUZToF5INqG6ZqrWJ9a6uKWQHbjpOQDKgXHZORuHR7NyMKtRV3u/zTwIpU9CKreyD
+         F6Pg==
+X-Gm-Message-State: AC+VfDzyBT3rKr+bL4zKpkOVm/a+o0oRlcwUjEhiyCf9H9NiPn9Je+kq
+        GZ51bWPPbwL7UcqQRs2TlUWPkg==
+X-Google-Smtp-Source: ACHHUZ7G56jeX+RtKQ3jgdBRAl+/CNsoOO6ryL3IsYzeTnzcHLO0SRpVzbHO+rNNmTHmhy28FkvR+w==
+X-Received: by 2002:a05:6000:1245:b0:2ef:b19f:b24c with SMTP id j5-20020a056000124500b002efb19fb24cmr2059445wrx.0.1684418783660;
+        Thu, 18 May 2023 07:06:23 -0700 (PDT)
+Received: from localhost (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id n16-20020a1c7210000000b003f19b3d89e9sm5389587wmc.33.2023.05.18.07.06.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 May 2023 07:06:23 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Thu, 18 May 2023 15:06:22 +0100
+Message-Id: <CSPGMHY9BH1S.J16A0P4WUJ9V@lion>
+Cc:     <linux-arm-msm@vger.kernel.org>, <linux-leds@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        <phone-devel@vger.kernel.org>, <amartinz@shiftphones.com>
+Subject: Re: [PATCH v3 3/3] arm64: dts: qcom: sdm845-shift-axolotl: enable
+ flash LEDs
+From:   "Caleb Connolly" <caleb.connolly@linaro.org>
+To:     "Dylan Van Assche" <me@dylanvanassche.be>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>, <pavel@ucw.cz>,
+        <lee@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <quic_fenglinw@quicinc.com>
+X-Mailer: aerc 0.15.1
+References: <20230518133113.273880-1-me@dylanvanassche.be>
+ <20230518133113.273880-4-me@dylanvanassche.be>
+In-Reply-To: <20230518133113.273880-4-me@dylanvanassche.be>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-IPQ5018 seems to have SDI (Secure Debug Image) enabled by default which
-prevents normal reboot from working causing the board to just hang after
-reboot is called.
+On Thu May 18, 2023 at 2:31 PM BST, Dylan Van Assche wrote:
+> The SHIFT6mq (axolotl) is an SDM845-based smartphone with 2 flash LEDs.
+> One LED is white, the other one is yellow. Define both LEDs in the DTS
+> so they can be used as flash or torch and enable the flash LED
+> controller to control them in PMI8998.
+>
+> Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-So, let disable SDI during SCM probe for IPQ5018.
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
- drivers/firmware/qcom_scm.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+// Caleb (they/them)
 
-diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-index bdc9324d4e62..c6a38ce49fb0 100644
---- a/drivers/firmware/qcom_scm.c
-+++ b/drivers/firmware/qcom_scm.c
-@@ -1525,6 +1525,14 @@ static int qcom_scm_probe(struct platform_device *pdev)
- 	if (download_mode)
- 		qcom_scm_set_download_mode(true);
- 
-+	/* IPQ5018 seems to have SDI (Secure Debug Image) enabled by default
-+	 * which will prevent normal reboot causing the board to hang after
-+	 * making the reboot call.
-+	 * So, make a call to SCM to disable SDI.
-+	 */
-+	if (of_machine_is_compatible("qcom,ipq5018"))
-+		qcom_scm_disable_sdi();
-+
- 	return 0;
- }
- 
--- 
-2.40.1
+> ---
+>  .../boot/dts/qcom/sdm845-shift-axolotl.dts    | 22 +++++++++++++++++++
+>  1 file changed, 22 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm=
+64/boot/dts/qcom/sdm845-shift-axolotl.dts
+> index 0ad891348e0c..1eaff964b202 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+> @@ -554,6 +554,28 @@ led@5 {
+>  	};
+>  };
+> =20
+> +&pmi8998_flash {
+> +	status =3D "okay";
+> +
+> +	led-0 {
+> +		function =3D LED_FUNCTION_FLASH;
+> +		color =3D <LED_COLOR_ID_WHITE>;
+> +		led-sources =3D <1>;
+> +		led-max-microamp =3D <100000>;
+> +		flash-max-microamp =3D <1100000>;
+> +		flash-max-timeout-us =3D <1280000>;
+> +	};
+> +
+> +	led-1 {
+> +		function =3D LED_FUNCTION_FLASH;
+> +		color =3D <LED_COLOR_ID_YELLOW>;
+> +		led-sources =3D <2>;
+> +		led-max-microamp =3D <100000>;
+> +		flash-max-microamp =3D <1100000>;
+> +		flash-max-timeout-us =3D <1280000>;
+> +	};
+> +};
+> +
+>  &qup_uart9_rx {
+>  	drive-strength =3D <2>;
+>  	bias-pull-up;
 
