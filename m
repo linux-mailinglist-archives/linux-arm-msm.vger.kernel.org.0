@@ -2,206 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BAF6A707ECA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 13:06:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BA90707EF3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 13:11:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230344AbjERLG4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 07:06:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41606 "EHLO
+        id S230329AbjERLLp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 07:11:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230322AbjERLGz (ORCPT
+        with ESMTP id S230427AbjERLLn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 07:06:55 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C109710D8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 04:06:53 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-953343581a4so277790966b.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 04:06:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684408012; x=1687000012;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yeJXFRF7sbuSmGTwl5/y2NHZf03i5D97leo/Mm1jmPA=;
-        b=MjfqNjnPpIzx92qYzyVccFfBlsVJ8+9ROZDV6w+QVISVgL4MVL3AdF3Mh8FrK8cnOm
-         wHW6IB6uWI3uRraA3KtEA5TtALuzerEdegGTu0l7Vl/8dN76rFSPm7KcFkPCBs9YO1Md
-         thRZobFoifwp8/WHXagA42ih2WHxzXczGWkEXITjkYC0PdXzIRqkPSNXaNxFZURmxNva
-         SUqZROTPUozLgNYTgx6yiHS8MLuGLETlulPv9WLkJxcCtcffY3PG+xxVsIJgX+Khv+1F
-         Tm/u5v1fRrrsCylilQDaaBR0QLZV4+ryfeqdOu5Un4DFcaPrICGHy5rGXSYwjbyFWTZ6
-         8Gew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684408012; x=1687000012;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yeJXFRF7sbuSmGTwl5/y2NHZf03i5D97leo/Mm1jmPA=;
-        b=kjIDRXfJ1dq38i4ydTnJm6VDyCWo4JEdo3KP6tBB+NN0M8OieeALp6NYtjNNRuI5HG
-         dzh6B9k4dum7pcoXKgdLqtwDB4V/tCGK6fyo8IDI9IcMjuTWxjvTN/9jHfvvUlBtPf1b
-         aF+JWHt5M6IoxGPDB44Pucp5bPPT10ztrKSEKEwuqgUlrHX9u1QJ9VZtc1sEfqYXnge5
-         0Mt5V6Ga67/Gc6AsuZvhdwyam4qPEPfUH2fHwrf7kGGs1suVO6ACcHiHVi+isFeVXFec
-         qb7qiA2q8r9yhMQqHXiLSa7/yojJdLqQ5ebIHMk43FXsTnHHG8AGjOxh05A1hCb9qIoT
-         4qHg==
-X-Gm-Message-State: AC+VfDzKgp57rMs9ugtP78voYsqXIfeenaG6ExPSPxn5INbp1upQkvpM
-        ySc5pOlgq8ak8RGN7WUTCOg3cw==
-X-Google-Smtp-Source: ACHHUZ77B3+5K0JTlWbBlEvuo7J0nvSd9qNSA6L2iF+zlVo6gn+LFWwwVl6YZjX6L8F1UPtYxDep4w==
-X-Received: by 2002:a17:907:31ca:b0:960:d28d:3368 with SMTP id xf10-20020a17090731ca00b00960d28d3368mr38722660ejb.60.1684408012085;
-        Thu, 18 May 2023 04:06:52 -0700 (PDT)
-Received: from ?IPV6:2a02:810d:15c0:828:a2b:c408:5834:f48e? ([2a02:810d:15c0:828:a2b:c408:5834:f48e])
-        by smtp.gmail.com with ESMTPSA id pv27-20020a170907209b00b00882f9130eafsm824286ejb.26.2023.05.18.04.06.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 May 2023 04:06:51 -0700 (PDT)
-Message-ID: <24b60ca3-b6b9-662f-03c8-df1536b52bc9@linaro.org>
-Date:   Thu, 18 May 2023 13:06:49 +0200
+        Thu, 18 May 2023 07:11:43 -0400
+X-Greylist: delayed 5486 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Thu, 18 May 2023 04:11:18 PDT
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 456CA10E6;
+        Thu, 18 May 2023 04:11:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1684408224; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=i/jxOxlicI5zWCrrOzlERhmF40xvJ+X3NjHAfehLC+oR13NCWx8ci8JpC7+T5x8PSS
+    Ux28DA4adyVMpnEhy/OEoohUaXVoCnvJ+sJfrQtABXy74Luqop7JDmxsZySeq0CMIPPV
+    ZkXpC85yjalur6lb5Ca0XkKLltZnu95mUz1hUs8/hg1HPegTxftUWZTq9NaNFN0f0jM3
+    eTec+FUo25NIWBQIt+cMZ+kW3vTI798hZUNTcmm+N8xlXhCRWgLsnu1ZhKRIihFx6pQo
+    V2pEjyjnnZqPY6cSX1ywWTuiaUtdpifRysTQGnNa/uF1EAZrNFdfoTtwGRqecgn6n73U
+    h/pA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1684408224;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=NEijn91Y8frPe3mx21CYziEmrOndT1BFgqTmRjdyTDg=;
+    b=ReY+PInXvBEjsFE4mQEViAkc4IEsoTiOJeBMYB+QIo+T5Cx3KeR2d2I2MvfGsJzz6I
+    VKVm7slVoPRBKYaC5QRRzxUGRh5+m+jc5/4h00lhzQ0+6g1xVQEOe2EUii6WIHJuYLlV
+    fU4buavo3jDZShcBAw3MguClRgwX44WWBfcnLR5cgaTZvU+0nNnw+2n+OKKDNiuhJhh7
+    aEXR8U9Td8lP/DnOP2H7GIk8cvbZcXOg6oqgMu5Yq4dPqbeLANHRH1RGBHlKIi9RlXZQ
+    vUDgwrRxAfTWPzxkgS0bGP8VO18G6jG1R3CrTmz2jeMBdWZMCK/L9e6Wlf6ePhk7oBhq
+    i5FQ==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1684408224;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=NEijn91Y8frPe3mx21CYziEmrOndT1BFgqTmRjdyTDg=;
+    b=ZO1OoBgWLCM67V6Mh5BBHOIz06/sEeZtTW9Qte+w5KOCsY8rToN7tZ/rk5VlXLzlb5
+    PMm/YN6rnsqmZf7pa3ntkeXhTvl2D8zfta+GnK/9AYUvyNV417n6HjWRuI3kC1IOXeEk
+    F52THWUursQxM0tXfS9OtoGQ/2gLJbk9wxQUjq9fEZ8JbsSN2FgGzJEMGViZ8lPbLDvU
+    pReIulrLsJZm5DqnXIFOe1jsS5x+/nrLgUc4j+mSKR877oNS9xcSZ9x3JcQBLIqhd9jo
+    q9UJMDTR5HwMYwzx9l/9SFJC8pzhNvSi8l6a8agx/d7h8zEKsCAK/SKGHwV6fHIvEZsJ
+    x36g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1684408224;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=NEijn91Y8frPe3mx21CYziEmrOndT1BFgqTmRjdyTDg=;
+    b=FQyRzGQ0Dorlg5rgX7u/PjgKY5inrusOXv5ZvNI3uCDQn9Jw57IjG5BffSWUWCA0bN
+    lMOT+cvPr2TbLw5fCdAQ==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8Z2F1A=="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
+    with ESMTPSA id j6420az4IBAOCOu
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 18 May 2023 13:10:24 +0200 (CEST)
+Date:   Thu, 18 May 2023 13:10:16 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] mmc: sdhci-msm: Disable broken 64-bit DMA on MSM8916
+Message-ID: <ZGYHmC3NW1W34HVQ@gerhold.net>
+References: <20230518-msm8916-64bit-v1-1-5694b0f35211@gerhold.net>
+ <2875f7ef-c43e-74f6-12b9-342bb2cfbaf8@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 2/4] dt-bindings: thermal: tsens: Add ipq9574
- compatible
-Content-Language: en-US
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        amitk@kernel.org, thara.gopinath@gmail.com, rafael@kernel.org,
-        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Praveenkumar I <quic_ipkumar@quicinc.com>
-References: <cover.1684140883.git.quic_varada@quicinc.com>
- <37adcf5d8d545a076e8ed971a4fb6c6c2833ef3c.1684140883.git.quic_varada@quicinc.com>
- <b7e749ff-f4f0-0e61-9aae-876db4278fbc@linaro.org>
- <20230516120426.GA1679@varda-linux.qualcomm.com>
- <1999753b-ceee-d66c-9a48-cbcbb8e6236e@linaro.org>
- <20230517055726.GA3165@varda-linux.qualcomm.com>
- <cfba78d7-e563-4544-00f3-0991b91eb1f3@linaro.org>
- <20230518054054.GA998@varda-linux.qualcomm.com>
- <fe1d81d2-52e6-7d2d-8d6c-ffdcbb8ccc89@linaro.org>
- <20230518090503.GA9173@varda-linux.qualcomm.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230518090503.GA9173@varda-linux.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2875f7ef-c43e-74f6-12b9-342bb2cfbaf8@linaro.org>
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/05/2023 11:05, Varadarajan Narayanan wrote:
-> On Thu, May 18, 2023 at 09:09:12AM +0200, Krzysztof Kozlowski wrote:
->> On 18/05/2023 07:40, Varadarajan Narayanan wrote:
->>> On Wed, May 17, 2023 at 09:00:49AM +0200, Krzysztof Kozlowski wrote:
->>>> On 17/05/2023 07:57, Varadarajan Narayanan wrote:
->>>>> Part-1 is adding the 'const' entries at the beginning i.e.
->>>>>
->>>>> 	+      - const: qcom,tsens-v0_1
->>>>> 	+      - const: qcom,tsens-v1
->>>>> 	+      - const: qcom,tsens-v2
->>>>> 	+      - const: qcom,ipq8074-tsens
->>>>>
->>>>> Part-2 is changing from one valid syntax to another i.e.
->>>>>
->>>>> 	+        items:
->>>>> 	+          - enum:
->>>>> 	+              - qcom,ipq9574-tsens
->>>>> 	+          - const: qcom,ipq8074-tsens
->>>>>
->>>>> Without both of the above changes, either or both of dtbs_check
->>>>> & dt_binding_check fails. So, it is not possible to just add the
->>>>> "valid hunk" (part-2) alone.
->>>>
->>>> Of course it is. All schema files work like that...
->>>>>
->>>>> If having both part-1 and part-2 in the same patch is not
->>>>> acceptable, shall I split them into two patches? Please let me know.
->>>>
->>>> No, hunk one is not justified.
->>>
->>> For the other compatibles, the enum entries and const/fallback
->>> entries are different. For the 9574 & 8074 case, we want to have
->>> qcom,ipq8074-tsens as both enum and const/fallback entry. Hence,
->>> if we don't have the first hunk, dtbs_check fails for 8074
->>> related dtbs
->>>
->>> 	ipq8074-hk01.dtb: thermal-sensor@4a9000: compatible: 'oneOf' condition
->>> 		['qcom,ipq8074-tsens'] is too short
->>
->> Why? It is already there. Open the file and you will see that this is
->> already covered.
+On Thu, May 18, 2023 at 11:48:55AM +0200, Konrad Dybcio wrote:
+> On 18.05.2023 11:39, Stephan Gerhold wrote:
+> > While SDHCI claims to support 64-bit DMA on MSM8916 it does not seem to
+> > be properly functional. It is not immediately obvious because SDHCI is
+> > usually used with IOMMU bypassed on this SoC, and all physical memory
+> > has 32-bit addresses. But when trying to enable the IOMMU it quickly
+> > fails with an error such as the following:
+> > 
+> >   arm-smmu 1e00000.iommu: Unhandled context fault:
+> >     fsr=0x402, iova=0xfffff200, fsynr=0xe0000, cbfrsynra=0x140, cb=3
+> >   mmc1: ADMA error: 0x02000000
+> >   mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+> >   mmc1: sdhci: Sys addr:  0x00000000 | Version:  0x00002e02
+> >   mmc1: sdhci: Blk size:  0x00000008 | Blk cnt:  0x00000000
+> >   mmc1: sdhci: Argument:  0x00000000 | Trn mode: 0x00000013
+> >   mmc1: sdhci: Present:   0x03f80206 | Host ctl: 0x00000019
+> >   mmc1: sdhci: Power:     0x0000000f | Blk gap:  0x00000000
+> >   mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
+> >   mmc1: sdhci: Timeout:   0x0000000a | Int stat: 0x00000001
+> >   mmc1: sdhci: Int enab:  0x03ff900b | Sig enab: 0x03ff100b
+> >   mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+> >   mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x00008007
+> >   mmc1: sdhci: Cmd:       0x0000333a | Max curr: 0x00000000
+> >   mmc1: sdhci: Resp[0]:   0x00000920 | Resp[1]:  0x5b590000
+> >   mmc1: sdhci: Resp[2]:   0xe6487f80 | Resp[3]:  0x0a404094
+> >   mmc1: sdhci: Host ctl2: 0x00000008
+> >   mmc1: sdhci: ADMA Err:  0x00000001 | ADMA Ptr: 0x0000000ffffff224
+> >   mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
+> >   mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:  0x60006400 | DLL cfg2: 0x00000000
+> >   mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:  0x00000000 | DDR cfg: 0x00000000
+> >   mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88018a8 Vndr func3: 0x00000000
+> >   mmc1: sdhci: ============================================
+> >   mmc1: sdhci: fffffffff200: DMA 0x0000ffffffffe100, LEN 0x0008, Attr=0x21
+> >   mmc1: sdhci: fffffffff20c: DMA 0x0000000000000000, LEN 0x0000, Attr=0x03
+> > 
+> > Looking closely it's obvious that only the 32-bit part of the address
+> > (0xfffff200) arrives at the SMMU, the higher 16-bit (0xffff...) get
+> > lost somewhere. This might not be a limitation of the SDHCI itself but
+> > perhaps the bus/interconnect it is connected to, or even the connection
+> > to the SMMU.
+> > 
+> > Work around this by setting SDHCI_QUIRK2_BROKEN_64_BIT_DMA to avoid
+> > using 64-bit addresses.
+> > 
+> > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> > ---
+> Would using 64bit address translation not require you to use (dma-)ranges
+> with a greater-than-default size, like we do on newer platforms? Did you
+> test that by chance?
 > 
-> I guess dtbs_check doesn't like the same value being a const and
-> a oneof entry.
 
-I don't understand.
+No, there is no "dma-ranges" in msm8916.dtsi. It seems to use 64-bit
+(virtual) addresses by default for SDHCI, limited to 48-bit by the SMMU.
 
->  Have attached the file, please see if something is
-> not in order.
+I tried limiting dma-ranges to 32-bit in msm8916.dtsi /soc@0 like
+dma-ranges = <0 0 0 0xffffffff>; This seems to work as well as an
+alternative to this patch, although it causes several annoying
+"Invalid size 0xffffffff for dma-range(s)" warnings. I know the
+0xffffffff isn't valid but I don't see how I would actually specify
+2^32 there without rewriting the entire msm8916.dtsi to use
+#address/size-cells = <2> instead of <1>.
 
-I don't know what changed there. Please work on patches.
+It's not entirely clear to me where the actual limitation is coming from
+here. It could be specific to the SDHCI (in which case this patch makes
+more sense) or a general limitation of the bus/interconnect (in which
+case dma-ranges might make more sense).
 
-> 
->> If you remove it, then yes, you will see errors and the answer is: do
->> not remove it.
-> 
-> I haven't removed it. 
+In any case 64-bit DMA is broken for SDHCI on MSM8916 so I would say
+this patch is still the right thing to do. It's pointless to waste extra
+cycles and memory to manage 64-bit pointers for SDHCI ADMA 64-bit, when
+they can never work successfully on this SoC. The dma-ranges approach
+doesn't change that, while SDHCI_QUIRK2_BROKEN_64_BIT_DMA actually makes
+it use ADMA in 32-bit mode.
 
-You did. Look:
-
-       - description: v2 of TSENS with combined interrupt
--        enum:
--          - qcom,ipq8074-tsens
-
-The first character in the diff (-) means removal.
-
-> For this patch, ipq8074-tsens changed from
-> being an oneof enum entry to a const entry. Probably, that is why
-> dtbs_check is giving these errors.
-
-You removed the entry which you should not have touched.
-
-> 
->>> 	ipq8074-hk10-c2.dtb: thermal-sensor@4a9000: compatible: 'oneOf' condition
->>> 		['qcom,ipq8074-tsens'] is too short
->>>
->>> 	ipq8074-hk10-c1.dtb: thermal-sensor@4a9000: compatible: 'oneOf' condition
->>> 		['qcom,ipq8074-tsens'] is too short
->>>
->>> I'm not sure of the correct solution. Having the first hunk
->>> solves the above dtbs_check errors, so went with it. I'm able to
->>> avoid dtbs_check errors with just one entry in the first hunk.
->>
->> You made multiple changes in one patch which is not correct. Your goal
->> is to add only one change - ipq9574 followed by ipq8074. Add this one.
->> Don't touch others.
-> 
-> But that breaks dtbs_check.
-
-All other cases, hundreds of other binding files, do not have problem.
-Only this one "breaks dtbs_check". No, it does not.
-
-Whatever is broken is result of your removal of unrelated pieces.
-
-> 
->>>  	+      - const: qcom,ipq8074-tsens
->>>
->>> Please let me know if there is a better way to resolve this or we
->>> can have just the 8074 entry in the first hunk.
->>
->> You only need to add new item on the oneOf list:
->>  - enum
->>      - ipq9574
->>  - const: ipq8074
-> 
-> The "['qcom,ipq8074-tsens'] is too short" errors were generated
-> with the above snippet only. Please see the attachment
-
-It's not true. The error you see is result because you removed something
-you should not. I did not ask you to remove anything. So repeating -
-"add new item". Adding is not "removal and adding". Adding is just "adding".
-
-Best regards,
-Krzysztof
-
+Thanks,
+Stephan
