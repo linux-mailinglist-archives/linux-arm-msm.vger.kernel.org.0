@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B2FC9708B68
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 00:22:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12FB5708B6A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 00:22:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229957AbjERWWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 18:22:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41742 "EHLO
+        id S229485AbjERWWp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 18:22:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229842AbjERWWo (ORCPT
+        with ESMTP id S230273AbjERWWo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 18 May 2023 18:22:44 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65BACE57
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 15:22:42 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2ac82912a59so28075751fa.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 15:22:42 -0700 (PDT)
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 299921A2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 15:22:43 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2ab3e8f4efeso2262171fa.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 15:22:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684448560; x=1687040560;
+        d=linaro.org; s=google; t=1684448561; x=1687040561;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=c/FSqh+3JrXMuGo9qVgDoKrtQjNWUoz9j1Y/GscvxrY=;
-        b=RbdclsXLy+LVJcup0/goXw+LdDGvkYqw4zMaBapZAyEOlTsSWy+duE6YAdCE7ux67Z
-         wfIAa6hyAevCSJVF7E/rj/0runDMJfb+I55fcHEWOdNmjQOeojErvHp2NR7M9/D3Kv5N
-         62BBgk3kwyBM5SobM2TS9eqEdzpmqhsMCHYxiuOde1BurCo1OIZOWhAmriX+75SrdxKE
-         MS0/HaymyxyWCuhk0fgXKsl4N61dxO2Gw+kpTE6wrlod4q9SiQ+MkZ9gER1VGUelzX1C
-         cfj9L06ubnaj7I3Net18XpjDmBjAHwyIZu5a5UaKO4rU4G98t4r0KiMOhFoiBk9OZ5Au
-         UMug==
+        bh=qPcCMM9+m/0oHbYpF4Qkr7vZG/8FKEHFgnQB0u/qhng=;
+        b=zzk+0J7j8eaneitjNnmCS0VlXA2x+1N2FBXfdAUH/S9pzles7VTeq037pVpcJYVgG0
+         S5HyNHlwB8Ha7kjFSenbe/mH3XyABvpZPF5qtIbyDdVPWGbnY2s5skyiOccj4hC043b7
+         4KdRGP7HbozARC/wbwYGIZCYlwhqYljwnNN8fscZBZRmFo+X9QHek2onc1GH693Qfyc5
+         gjOeA3sKVu2Q8f5sUzeC6o74dt1MOrzCoPjoh72vyJ+sRRXWc/CtPLHdas2en6vxaaHD
+         kYN84iy2Qle0iDJbJ9klXclo3EvYFD/fjwocpTvfwO27x7Eotv9jC83z5iZoxNnDog/b
+         zyeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684448560; x=1687040560;
+        d=1e100.net; s=20221208; t=1684448561; x=1687040561;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=c/FSqh+3JrXMuGo9qVgDoKrtQjNWUoz9j1Y/GscvxrY=;
-        b=mCA60WmpxDuFL8EW4MlfVaV4GCKwzVUTbwODwtwFTM8NpiwP9zCLPFljkM/LNNktcI
-         rf0S0XAgzGanDo2qQ2ohuLyxJKv7ygzloX5k26nMsrm9rkBmzlzlpFu9katIOUNP+ceV
-         PQzPiBKKGUX4LULyzBuV/ZcyC58rBRkIj+L/yLRYHnhX3Jwcw5PygYXDheAq0Ydpp218
-         41n0EmTTiC90g126CWAlbwN2vbd/wQMe17QEr1Ppqx2e77giV+C8a3IRIUAmWiOrp6cC
-         D0SfFLMcjobQOwibAXQfk/xrVLhAUk2B1Na1izOOxyz/Edn1n1DLUYabZGmRvrXpNmXT
-         x5Xw==
-X-Gm-Message-State: AC+VfDzjW1dyxF0baJaCXfUZpbSq6FJ4CxDxKktZnwIGzVdKZfwDkWRK
-        jvBzJeT2t/lg1XhleT+OwpdjFg==
-X-Google-Smtp-Source: ACHHUZ7bEPsyIeXkktlMTpQRFW8ww/CaMYUXFu7x7EgILMi3TX6nrLSbZK7vcnwfwz+vdvTP3vd5uw==
-X-Received: by 2002:ac2:5187:0:b0:4f3:8728:540a with SMTP id u7-20020ac25187000000b004f38728540amr135461lfi.7.1684448560679;
-        Thu, 18 May 2023 15:22:40 -0700 (PDT)
+        bh=qPcCMM9+m/0oHbYpF4Qkr7vZG/8FKEHFgnQB0u/qhng=;
+        b=CuBZINcsv0Sz7/XM65DQN+06HN3rS5zZq5b7H00J+VqI2rruRgf9c036szsKtGi42e
+         w0aMhIcTq2xZSYylo8GvjGZ2BxXQbXLNayodpH42898tzglDTsal1x9rxVNZ9cHV8lRz
+         WAxQY4tURihCtf8nItkkl4exSeGXIEVmU5QypbGjWvUOWXuihfTfZiQfYVLutmQ/U37f
+         4XEC6t17cagTx+2QAUJwRKaO5x3BOAS9qOcU8r6/ksgqDFlFgWEROlMTL/8c/UPq3KLS
+         CJRY/mmNqI8kzjif9wbDNkdJb6eQamKZCE4F82U3nxHkp8JJb1WGbar0oVKR0nYJ6SFb
+         aXew==
+X-Gm-Message-State: AC+VfDxcoSy7gRFI9ylw9ExKUnntbiXLsz3N5wKcAngSQeThVqFPo7xi
+        FDPhVkuZEfSK0BDFQ6Kt3jX/yQ==
+X-Google-Smtp-Source: ACHHUZ5mZ0JOlrkyHUMiyT8YeLll5JC1WPCJVvYrejaXj3XCVq9eQQ/K5/Et5Nl5NP6SElH6yQOQ5Q==
+X-Received: by 2002:a05:6512:118a:b0:4f3:8225:fadf with SMTP id g10-20020a056512118a00b004f38225fadfmr232330lfr.12.1684448561501;
+        Thu, 18 May 2023 15:22:41 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id o18-20020ac24352000000b004ec7c0f2178sm383860lfl.63.2023.05.18.15.22.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org,
         Jeykumar Sankaran <quic_jeykumar@quicinc.com>
-Subject: [PATCH v3 1/9] drm/msm/dpu: fix SSPP register definitions
-Date:   Fri, 19 May 2023 01:22:30 +0300
-Message-Id: <20230518222238.3815293-2-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 2/9] drm/msm/dpu: simplify CDP programming
+Date:   Fri, 19 May 2023 01:22:31 +0300
+Message-Id: <20230518222238.3815293-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230518222238.3815293-1-dmitry.baryshkov@linaro.org>
 References: <20230518222238.3815293-1-dmitry.baryshkov@linaro.org>
@@ -70,137 +70,296 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,UPPERCASE_50_75
-        autolearn=no autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Reorder SSPP register definitions to sort them in the ascending order.
-Move register bitfields after the register definitions.
+Get rid of intermediatory configuration structure and defines. Pass the
+format and the enablement bit directly to the new helper. The
+WB_CDP_CNTL register ignores BIT(2), so we can write it for both SSPP
+and WB CDP settings.
 
+Reviewed-by: Jeykumar Sankaran <quic_jeykumar@quicinc.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 64 ++++++++++-----------
- 1 file changed, 32 insertions(+), 32 deletions(-)
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 17 ++++-----------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   | 17 ++++-----------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   | 14 ++++---------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c   | 21 +++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h   | 19 +++--------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c     | 19 ++++-------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h     | 11 ++--------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c     | 16 +++-----------
+ 8 files changed, 45 insertions(+), 89 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+index bac4aa807b4b..e7b65f6f53d6 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+@@ -140,7 +140,6 @@ static void dpu_encoder_phys_wb_setup_fb(struct dpu_encoder_phys *phys_enc,
+ 	struct dpu_encoder_phys_wb *wb_enc = to_dpu_encoder_phys_wb(phys_enc);
+ 	struct dpu_hw_wb *hw_wb;
+ 	struct dpu_hw_wb_cfg *wb_cfg;
+-	struct dpu_hw_cdp_cfg cdp_cfg;
+ 
+ 	if (!phys_enc || !phys_enc->dpu_kms || !phys_enc->dpu_kms->catalog) {
+ 		DPU_ERROR("invalid encoder\n");
+@@ -163,18 +162,10 @@ static void dpu_encoder_phys_wb_setup_fb(struct dpu_encoder_phys *phys_enc,
+ 		hw_wb->ops.setup_outformat(hw_wb, wb_cfg);
+ 
+ 	if (hw_wb->ops.setup_cdp) {
+-		memset(&cdp_cfg, 0, sizeof(struct dpu_hw_cdp_cfg));
+-
+-		cdp_cfg.enable = phys_enc->dpu_kms->catalog->perf->cdp_cfg
+-				[DPU_PERF_CDP_USAGE_NRT].wr_enable;
+-		cdp_cfg.ubwc_meta_enable =
+-				DPU_FORMAT_IS_UBWC(wb_cfg->dest.format);
+-		cdp_cfg.tile_amortize_enable =
+-				DPU_FORMAT_IS_UBWC(wb_cfg->dest.format) ||
+-				DPU_FORMAT_IS_TILE(wb_cfg->dest.format);
+-		cdp_cfg.preload_ahead = DPU_WB_CDP_PRELOAD_AHEAD_64;
+-
+-		hw_wb->ops.setup_cdp(hw_wb, &cdp_cfg);
++		const struct dpu_perf_cfg *perf = phys_enc->dpu_kms->catalog->perf;
++
++		hw_wb->ops.setup_cdp(hw_wb, wb_cfg->dest.format,
++				     perf->cdp_cfg[DPU_PERF_CDP_USAGE_NRT].wr_enable);
+ 	}
+ 
+ 	if (hw_wb->ops.setup_outaddress)
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-index 6b68ec5c7a5a..08098880b7d5 100644
+index 08098880b7d5..78d928065b7b 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-@@ -26,45 +26,18 @@
- #define SSPP_SRC_FORMAT                    0x30
- #define SSPP_SRC_UNPACK_PATTERN            0x34
- #define SSPP_SRC_OP_MODE                   0x38
+@@ -590,13 +590,13 @@ static void dpu_hw_sspp_setup_qos_ctrl(struct dpu_hw_sspp *ctx,
+ }
+ 
+ static void dpu_hw_sspp_setup_cdp(struct dpu_sw_pipe *pipe,
+-		struct dpu_hw_cdp_cfg *cfg)
++				  const struct dpu_format *fmt,
++				  bool enable)
+ {
+ 	struct dpu_hw_sspp *ctx = pipe->sspp;
+-	u32 cdp_cntl = 0;
+ 	u32 cdp_cntl_offset = 0;
+ 
+-	if (!ctx || !cfg)
++	if (!ctx)
+ 		return;
+ 
+ 	if (pipe->multirect_index == DPU_SSPP_RECT_SOLO ||
+@@ -605,16 +605,7 @@ static void dpu_hw_sspp_setup_cdp(struct dpu_sw_pipe *pipe,
+ 	else
+ 		cdp_cntl_offset = SSPP_CDP_CNTL_REC1;
+ 
+-	if (cfg->enable)
+-		cdp_cntl |= BIT(0);
+-	if (cfg->ubwc_meta_enable)
+-		cdp_cntl |= BIT(1);
+-	if (cfg->tile_amortize_enable)
+-		cdp_cntl |= BIT(2);
+-	if (cfg->preload_ahead == DPU_SSPP_CDP_PRELOAD_AHEAD_64)
+-		cdp_cntl |= BIT(3);
 -
--/* SSPP_MULTIRECT*/
--#define SSPP_SRC_SIZE_REC1                 0x16C
--#define SSPP_SRC_XY_REC1                   0x168
--#define SSPP_OUT_SIZE_REC1                 0x160
--#define SSPP_OUT_XY_REC1                   0x164
--#define SSPP_SRC_FORMAT_REC1               0x174
--#define SSPP_SRC_UNPACK_PATTERN_REC1       0x178
--#define SSPP_SRC_OP_MODE_REC1              0x17C
--#define SSPP_MULTIRECT_OPMODE              0x170
--#define SSPP_SRC_CONSTANT_COLOR_REC1       0x180
--#define SSPP_EXCL_REC_SIZE_REC1            0x184
--#define SSPP_EXCL_REC_XY_REC1              0x188
+-	DPU_REG_WRITE(&ctx->hw, cdp_cntl_offset, cdp_cntl);
++	dpu_setup_cdp(&ctx->hw, cdp_cntl_offset, fmt, enable);
+ }
+ 
+ static void _setup_layer_ops(struct dpu_hw_sspp *c,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+index 7a8d11ba618d..86bf4b2cda77 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+@@ -177,14 +177,6 @@ struct dpu_hw_pipe_qos_cfg {
+ 	bool danger_safe_en;
+ };
+ 
+-/**
+- * enum CDP preload ahead address size
+- */
+-enum {
+-	DPU_SSPP_CDP_PRELOAD_AHEAD_32,
+-	DPU_SSPP_CDP_PRELOAD_AHEAD_64
+-};
 -
--#define MDSS_MDP_OP_DEINTERLACE            BIT(22)
--#define MDSS_MDP_OP_DEINTERLACE_ODD        BIT(23)
--#define MDSS_MDP_OP_IGC_ROM_1              BIT(18)
--#define MDSS_MDP_OP_IGC_ROM_0              BIT(17)
--#define MDSS_MDP_OP_IGC_EN                 BIT(16)
--#define MDSS_MDP_OP_FLIP_UD                BIT(14)
--#define MDSS_MDP_OP_FLIP_LR                BIT(13)
--#define MDSS_MDP_OP_BWC_EN                 BIT(0)
--#define MDSS_MDP_OP_PE_OVERRIDE            BIT(31)
--#define MDSS_MDP_OP_BWC_LOSSLESS           (0 << 1)
--#define MDSS_MDP_OP_BWC_Q_HIGH             (1 << 1)
--#define MDSS_MDP_OP_BWC_Q_MED              (2 << 1)
--
- #define SSPP_SRC_CONSTANT_COLOR            0x3c
- #define SSPP_EXCL_REC_CTL                  0x40
- #define SSPP_UBWC_STATIC_CTRL              0x44
--#define SSPP_FETCH_CONFIG                  0x048
-+#define SSPP_FETCH_CONFIG                  0x48
- #define SSPP_DANGER_LUT                    0x60
- #define SSPP_SAFE_LUT                      0x64
- #define SSPP_CREQ_LUT                      0x68
- #define SSPP_QOS_CTRL                      0x6C
--#define SSPP_DECIMATION_CONFIG             0xB4
- #define SSPP_SRC_ADDR_SW_STATUS            0x70
- #define SSPP_CREQ_LUT_0                    0x74
- #define SSPP_CREQ_LUT_1                    0x78
-+#define SSPP_DECIMATION_CONFIG             0xB4
- #define SSPP_SW_PIX_EXT_C0_LR              0x100
- #define SSPP_SW_PIX_EXT_C0_TB              0x104
- #define SSPP_SW_PIX_EXT_C0_REQ_PIXELS      0x108
-@@ -81,11 +54,33 @@
- #define SSPP_TRAFFIC_SHAPER_PREFILL        0x150
- #define SSPP_TRAFFIC_SHAPER_REC1_PREFILL   0x154
- #define SSPP_TRAFFIC_SHAPER_REC1           0x158
-+#define SSPP_OUT_SIZE_REC1                 0x160
-+#define SSPP_OUT_XY_REC1                   0x164
-+#define SSPP_SRC_XY_REC1                   0x168
-+#define SSPP_SRC_SIZE_REC1                 0x16C
-+#define SSPP_MULTIRECT_OPMODE              0x170
-+#define SSPP_SRC_FORMAT_REC1               0x174
-+#define SSPP_SRC_UNPACK_PATTERN_REC1       0x178
-+#define SSPP_SRC_OP_MODE_REC1              0x17C
-+#define SSPP_SRC_CONSTANT_COLOR_REC1       0x180
-+#define SSPP_EXCL_REC_SIZE_REC1            0x184
-+#define SSPP_EXCL_REC_XY_REC1              0x188
- #define SSPP_EXCL_REC_SIZE                 0x1B4
- #define SSPP_EXCL_REC_XY                   0x1B8
--#define SSPP_VIG_OP_MODE                   0x0
--#define SSPP_VIG_CSC_10_OP_MODE            0x0
--#define SSPP_TRAFFIC_SHAPER_BPC_MAX        0xFF
+ /**
+  * struct dpu_hw_pipe_ts_cfg - traffic shaper configuration
+  * @size: size to prefill in bytes, or zero to disable
+@@ -331,10 +323,12 @@ struct dpu_hw_sspp_ops {
+ 	/**
+ 	 * setup_cdp - setup client driven prefetch
+ 	 * @pipe: Pointer to software pipe context
+-	 * @cfg: Pointer to cdp configuration
++	 * @fmt: format used by the sw pipe
++	 * @enable: whether the CDP should be enabled for this pipe
+ 	 */
+ 	void (*setup_cdp)(struct dpu_sw_pipe *pipe,
+-			  struct dpu_hw_cdp_cfg *cfg);
++			  const struct dpu_format *fmt,
++			  bool enable);
+ };
+ 
+ /**
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+index 8062228eada6..95d20b9a3f2f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+@@ -494,3 +494,24 @@ int dpu_hw_collect_misr(struct dpu_hw_blk_reg_map *c,
+ 
+ 	return 0;
+ }
 +
-+/* SSPP_SRC_OP_MODE & OP_MODE_REC1 */
-+#define MDSS_MDP_OP_DEINTERLACE            BIT(22)
-+#define MDSS_MDP_OP_DEINTERLACE_ODD        BIT(23)
-+#define MDSS_MDP_OP_IGC_ROM_1              BIT(18)
-+#define MDSS_MDP_OP_IGC_ROM_0              BIT(17)
-+#define MDSS_MDP_OP_IGC_EN                 BIT(16)
-+#define MDSS_MDP_OP_FLIP_UD                BIT(14)
-+#define MDSS_MDP_OP_FLIP_LR                BIT(13)
-+#define MDSS_MDP_OP_BWC_EN                 BIT(0)
-+#define MDSS_MDP_OP_PE_OVERRIDE            BIT(31)
-+#define MDSS_MDP_OP_BWC_LOSSLESS           (0 << 1)
-+#define MDSS_MDP_OP_BWC_Q_HIGH             (1 << 1)
-+#define MDSS_MDP_OP_BWC_Q_MED              (2 << 1)
- 
- /* SSPP_QOS_CTRL */
- #define SSPP_QOS_CTRL_VBLANK_EN            BIT(16)
-@@ -96,6 +91,7 @@
- #define SSPP_QOS_CTRL_CREQ_VBLANK_OFF      20
- 
- /* DPU_SSPP_SCALER_QSEED2 */
-+#define SSPP_VIG_OP_MODE                   0x0
- #define SCALE_CONFIG                       0x04
- #define COMP0_3_PHASE_STEP_X               0x10
- #define COMP0_3_PHASE_STEP_Y               0x14
-@@ -107,6 +103,9 @@
- #define COMP1_2_INIT_PHASE_Y               0x2C
- #define VIG_0_QSEED2_SHARP                 0x30
- 
-+/* SSPP_TRAFFIC_SHAPER and _REC1 */
-+#define SSPP_TRAFFIC_SHAPER_BPC_MAX        0xFF
++#define CDP_ENABLE		BIT(0)
++#define CDP_UBWC_META_ENABLE	BIT(1)
++#define CDP_TILE_AMORTIZE_ENABLE BIT(2)
++#define CDP_PRELOAD_AHEAD_64	BIT(3)
 +
- /*
-  * Definitions for ViG op modes
-  */
-@@ -128,6 +127,7 @@
- /*
-  * Definitions for CSC 10 op modes
-  */
-+#define SSPP_VIG_CSC_10_OP_MODE            0x0
- #define VIG_CSC_10_SRC_DATAFMT BIT(1)
- #define VIG_CSC_10_EN          BIT(0)
- #define CSC_10BIT_OFFSET       4
++void dpu_setup_cdp(struct dpu_hw_blk_reg_map *c, u32 offset,
++		   const struct dpu_format *fmt, bool enable)
++{
++	u32 cdp_cntl = CDP_PRELOAD_AHEAD_64;
++
++	if (enable)
++		cdp_cntl |= CDP_ENABLE;
++	if (DPU_FORMAT_IS_UBWC(fmt))
++		cdp_cntl |= CDP_UBWC_META_ENABLE;
++	if (DPU_FORMAT_IS_UBWC(fmt) ||
++	    DPU_FORMAT_IS_TILE(fmt))
++		cdp_cntl |= CDP_TILE_AMORTIZE_ENABLE;
++
++	DPU_REG_WRITE(c, offset, cdp_cntl);
++}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+index 27f4c39e35ab..dc6e3b795aef 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+@@ -305,22 +305,6 @@ struct dpu_drm_scaler_v2 {
+ 	struct dpu_drm_de_v1 de;
+ };
+ 
+-/**
+- * struct dpu_hw_cdp_cfg : CDP configuration
+- * @enable: true to enable CDP
+- * @ubwc_meta_enable: true to enable ubwc metadata preload
+- * @tile_amortize_enable: true to enable amortization control for tile format
+- * @preload_ahead: number of request to preload ahead
+- *	DPU_*_CDP_PRELOAD_AHEAD_32,
+- *	DPU_*_CDP_PRELOAD_AHEAD_64
+- */
+-struct dpu_hw_cdp_cfg {
+-	bool enable;
+-	bool ubwc_meta_enable;
+-	bool tile_amortize_enable;
+-	u32 preload_ahead;
+-};
+-
+ u32 *dpu_hw_util_get_log_mask_ptr(void);
+ 
+ void dpu_reg_write(struct dpu_hw_blk_reg_map *c,
+@@ -346,6 +330,9 @@ void dpu_hw_csc_setup(struct dpu_hw_blk_reg_map  *c,
+ 		u32 csc_reg_off,
+ 		const struct dpu_csc_cfg *data, bool csc10);
+ 
++void dpu_setup_cdp(struct dpu_hw_blk_reg_map *c, u32 offset,
++		   const struct dpu_format *fmt, bool enable);
++
+ u64 _dpu_hw_get_qos_lut(const struct dpu_qos_lut_tbl *tbl,
+ 		u32 total_fl);
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
+index 4834866d72fd..a6de4b82a188 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.c
+@@ -164,24 +164,13 @@ static void dpu_hw_wb_setup_qos_lut(struct dpu_hw_wb *ctx,
+ }
+ 
+ static void dpu_hw_wb_setup_cdp(struct dpu_hw_wb *ctx,
+-		struct dpu_hw_cdp_cfg *cfg)
++				const struct dpu_format *fmt,
++				bool enable)
+ {
+-	struct dpu_hw_blk_reg_map *c;
+-	u32 cdp_cntl = 0;
+-
+-	if (!ctx || !cfg)
++	if (!ctx)
+ 		return;
+ 
+-	c = &ctx->hw;
+-
+-	if (cfg->enable)
+-		cdp_cntl |= BIT(0);
+-	if (cfg->ubwc_meta_enable)
+-		cdp_cntl |= BIT(1);
+-	if (cfg->preload_ahead == DPU_WB_CDP_PRELOAD_AHEAD_64)
+-		cdp_cntl |= BIT(3);
+-
+-	DPU_REG_WRITE(c, WB_CDP_CNTL, cdp_cntl);
++	dpu_setup_cdp(&ctx->hw, WB_CDP_CNTL, fmt, enable);
+ }
+ 
+ static void dpu_hw_wb_bind_pingpong_blk(
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h
+index e4f85409c624..ab3541856258 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_wb.h
+@@ -21,14 +21,6 @@ struct dpu_hw_wb_cfg {
+ 	struct drm_rect crop;
+ };
+ 
+-/**
+- * enum CDP preload ahead address size
+- */
+-enum {
+-	DPU_WB_CDP_PRELOAD_AHEAD_32,
+-	DPU_WB_CDP_PRELOAD_AHEAD_64
+-};
+-
+ /**
+  * struct dpu_hw_wb_qos_cfg : Writeback pipe QoS configuration
+  * @danger_lut: LUT for generate danger level based on fill level
+@@ -67,7 +59,8 @@ struct dpu_hw_wb_ops {
+ 			struct dpu_hw_wb_qos_cfg *cfg);
+ 
+ 	void (*setup_cdp)(struct dpu_hw_wb *ctx,
+-			struct dpu_hw_cdp_cfg *cfg);
++			  const struct dpu_format *fmt,
++			  bool enable);
+ 
+ 	void (*bind_pingpong_blk)(struct dpu_hw_wb *ctx,
+ 			bool enable, const enum dpu_pingpong pp);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 14b5cfe30611..3b210320ea62 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -1116,20 +1116,10 @@ static void dpu_plane_sspp_update_pipe(struct drm_plane *plane,
+ 		pipe->sspp->ops.setup_format(pipe, fmt, src_flags);
+ 
+ 		if (pipe->sspp->ops.setup_cdp) {
+-			struct dpu_hw_cdp_cfg cdp_cfg;
++			const struct dpu_perf_cfg *perf = pdpu->catalog->perf;
+ 
+-			memset(&cdp_cfg, 0, sizeof(struct dpu_hw_cdp_cfg));
+-
+-			cdp_cfg.enable = pdpu->catalog->perf->cdp_cfg
+-					[DPU_PERF_CDP_USAGE_RT].rd_enable;
+-			cdp_cfg.ubwc_meta_enable =
+-					DPU_FORMAT_IS_UBWC(fmt);
+-			cdp_cfg.tile_amortize_enable =
+-					DPU_FORMAT_IS_UBWC(fmt) ||
+-					DPU_FORMAT_IS_TILE(fmt);
+-			cdp_cfg.preload_ahead = DPU_SSPP_CDP_PRELOAD_AHEAD_64;
+-
+-			pipe->sspp->ops.setup_cdp(pipe, &cdp_cfg);
++			pipe->sspp->ops.setup_cdp(pipe, fmt,
++						  perf->cdp_cfg[DPU_PERF_CDP_USAGE_RT].rd_enable);
+ 		}
+ 	}
+ 
 -- 
 2.39.2
 
