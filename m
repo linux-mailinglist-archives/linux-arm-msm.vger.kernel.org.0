@@ -2,70 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF457707D37
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 11:49:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2415F707D5B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 May 2023 11:55:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230170AbjERJtB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 05:49:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33954 "EHLO
+        id S230338AbjERJzS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 05:55:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230290AbjERJtB (ORCPT
+        with ESMTP id S230341AbjERJzS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 05:49:01 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32BB81720
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:48:59 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f00c33c3d6so2223798e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:48:59 -0700 (PDT)
+        Thu, 18 May 2023 05:55:18 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAD6A19B4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:55:13 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2ad89c7a84fso19392781fa.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 02:55:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684403337; x=1686995337;
+        d=linaro.org; s=google; t=1684403712; x=1686995712;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=2GnXEaoNLwvt/m9XpCMVWbr8cKI+gCa0zAel8TKE3gk=;
-        b=zHVieKgJXSOVBnyFh9W/eerTNjThyX64e1V7drkdNjoyMATIznYS26qilMUR+55LCu
-         sY74p+3d5lorxyJ2NJvT1fGC64nlXxzdR4zIwMj+1wbFGqueg+A5eVlChMWd2K23Lq29
-         NxF6IolN7lU2s6YT7JnVXFoIuXU901m2ah1S1nL5T6va5QKxrWnQGrEDUq060L6Iod12
-         tU9YYBV+cur5WpIE2DFlvZdcd8W9HnTwHA056AgoVuOTpwgAU36H9NgreRsabEqLTU4P
-         xIPXlW6qlOpX8s+JutTZSqxWC4LEUD0SxNg1clHhZKuOT7ZFnZnoLmJsvcFymyHkj/Mk
-         5MyA==
+        bh=U4y39yQeXgfshTFx8LmSwMssJPh2RhRz9IxqW/7rapk=;
+        b=js8tUXvIUOpLgtCGl0gjJeo7q7Ptbvp9VUWF5RYmreXr0lBQRn0lJ6FfPrczx+njss
+         naQGYXPCVNmqgEg/lVmN9Kq3J3x+0tv88V/V9uzoedXHshbooWiY3uATOK+Idn8TG0Qu
+         4Uq4wRNyph/Sv9AQZDhfKUomUAZj/egf9D+ozic9g0K1oj+kQt5RkEDQiEIqiH+SRuGb
+         8lZLrsO93bEx7pZLHQG5NSJRmaDGGvSVanBw3iT35Mc4aZDd1ZmeNx1mE1t5GyS/DOc7
+         wvqbhfwJBz8kBDxG8gavbJlsQmRUjsKOZYarK7OCrpL7tP4XWIcrGVwVkZVjuarQVXJp
+         dA7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684403337; x=1686995337;
+        d=1e100.net; s=20221208; t=1684403712; x=1686995712;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2GnXEaoNLwvt/m9XpCMVWbr8cKI+gCa0zAel8TKE3gk=;
-        b=fGw36ERCyensRDSusKfB5CVViPbRKIHlN9Gtvf7QxY6glrSSLH++bnTu4z9r0i3MfG
-         xRwV7ivF+hkCmw9RCeQZD1bIckS1B5wNUXJq+Ftcn11RHKF/mfsVEbVRcjOYoJrpVyc5
-         yRKCFU0OHVwpAfkMPqKfTtaPeeduntb4Gn772XMHINdaUuG1byNiI0C0lvGctCyuCSVp
-         1NHqQOVuC9wng4VfBD5969j7NyVGczUuwgNTKxRG7t8++qp6i3CpYi81ejJylQ+w2KcF
-         H/atk93fQcb69kh+uEmO530wDGn58In/ty54NjE9RpC+fCW1Wa4HYYinTOa8W9qtSAus
-         qJiw==
-X-Gm-Message-State: AC+VfDyTduRZdgRgwJD0/zrVnWbFJgSxKojFVn04Y49TXbeTQruG/JsZ
-        0gwjyfJxL7lXxe0LTvrOP457Fw==
-X-Google-Smtp-Source: ACHHUZ5YnvtT2zZVHIWpogOnglFbkJr/gASlvlkb6WiG6tTP6XhEF7LQQz/4XpZ4BBnsC7mdCqwieQ==
-X-Received: by 2002:ac2:550f:0:b0:4f3:8244:95e2 with SMTP id j15-20020ac2550f000000b004f3824495e2mr1159314lfk.50.1684403337377;
-        Thu, 18 May 2023 02:48:57 -0700 (PDT)
+        bh=U4y39yQeXgfshTFx8LmSwMssJPh2RhRz9IxqW/7rapk=;
+        b=O8u1VMRJBZgkfVozhXY3DiIHseuUHpe391eVLEaPU5q1Kup5UFFs8OYBJJh9Frzo8l
+         2Nk/6uAzeEiLDtibsgh8ufioOwtYsb82NYpDLL3McoRvQsnuj9u2Fv6Sa6rUX/jniV22
+         EMxyx86rLQDL7HJ3IAFf50Jge6FDthZdy/xfjWjg+AaCpRJw0jTazMM3fIMOM+6moACH
+         BdS/ymTPhpRHZW1V13M4/XWTQ7rInMLFoEjgphEUHVJlkFk6kKQJB6fn14pwBNLsPJMd
+         dHyZtChzb1uymm/TVNLeCDvhOOe0Utpsi6xYbhEG5P6XLXLDgSR9ePEc2vcdrSEljsuO
+         ATfg==
+X-Gm-Message-State: AC+VfDwomZZf9IWQnp/p1g9xmWETngybdjwUFHdoCXOqig9mccpdgo7t
+        FWuGuTBX4QzHDMsJN7SJEwW+8u9y8vUC2Q+dPIk=
+X-Google-Smtp-Source: ACHHUZ5n0ktk0pGSlf8ODuwS2HY5zZGV37C2wJ0GZgPIWg5BKM7dFIJcAX//tvNrRrreST+xVlo2yg==
+X-Received: by 2002:a2e:9091:0:b0:2ad:ac93:3c7d with SMTP id l17-20020a2e9091000000b002adac933c7dmr9481189ljg.38.1684403711998;
+        Thu, 18 May 2023 02:55:11 -0700 (PDT)
 Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id a15-20020a056512020f00b004ecad67a925sm196303lfo.66.2023.05.18.02.48.56
+        by smtp.gmail.com with ESMTPSA id c16-20020a2e9490000000b002a93e0605ebsm215873ljh.8.2023.05.18.02.55.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 May 2023 02:48:56 -0700 (PDT)
-Message-ID: <2875f7ef-c43e-74f6-12b9-342bb2cfbaf8@linaro.org>
-Date:   Thu, 18 May 2023 11:48:55 +0200
+        Thu, 18 May 2023 02:55:11 -0700 (PDT)
+Message-ID: <f4854178-613c-5ace-5714-d77b7f71a914@linaro.org>
+Date:   Thu, 18 May 2023 11:55:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH] mmc: sdhci-msm: Disable broken 64-bit DMA on MSM8916
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc8280xp: Add SDC2 and enable on CRD
 Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230518-msm8916-64bit-v1-1-5694b0f35211@gerhold.net>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230517235217.1728548-1-quic_bjorande@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230518-msm8916-64bit-v1-1-5694b0f35211@gerhold.net>
+In-Reply-To: <20230517235217.1728548-1-quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -80,76 +82,196 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 18.05.2023 11:39, Stephan Gerhold wrote:
-> While SDHCI claims to support 64-bit DMA on MSM8916 it does not seem to
-> be properly functional. It is not immediately obvious because SDHCI is
-> usually used with IOMMU bypassed on this SoC, and all physical memory
-> has 32-bit addresses. But when trying to enable the IOMMU it quickly
-> fails with an error such as the following:
+On 18.05.2023 01:52, Bjorn Andersson wrote:
+> The CRD has Micro SD slot, introduce the necessary DeviceTree nodes for
+> enabling this.
 > 
->   arm-smmu 1e00000.iommu: Unhandled context fault:
->     fsr=0x402, iova=0xfffff200, fsynr=0xe0000, cbfrsynra=0x140, cb=3
->   mmc1: ADMA error: 0x02000000
->   mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
->   mmc1: sdhci: Sys addr:  0x00000000 | Version:  0x00002e02
->   mmc1: sdhci: Blk size:  0x00000008 | Blk cnt:  0x00000000
->   mmc1: sdhci: Argument:  0x00000000 | Trn mode: 0x00000013
->   mmc1: sdhci: Present:   0x03f80206 | Host ctl: 0x00000019
->   mmc1: sdhci: Power:     0x0000000f | Blk gap:  0x00000000
->   mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
->   mmc1: sdhci: Timeout:   0x0000000a | Int stat: 0x00000001
->   mmc1: sdhci: Int enab:  0x03ff900b | Sig enab: 0x03ff100b
->   mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
->   mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x00008007
->   mmc1: sdhci: Cmd:       0x0000333a | Max curr: 0x00000000
->   mmc1: sdhci: Resp[0]:   0x00000920 | Resp[1]:  0x5b590000
->   mmc1: sdhci: Resp[2]:   0xe6487f80 | Resp[3]:  0x0a404094
->   mmc1: sdhci: Host ctl2: 0x00000008
->   mmc1: sdhci: ADMA Err:  0x00000001 | ADMA Ptr: 0x0000000ffffff224
->   mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
->   mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:  0x60006400 | DLL cfg2: 0x00000000
->   mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:  0x00000000 | DDR cfg: 0x00000000
->   mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88018a8 Vndr func3: 0x00000000
->   mmc1: sdhci: ============================================
->   mmc1: sdhci: fffffffff200: DMA 0x0000ffffffffe100, LEN 0x0008, Attr=0x21
->   mmc1: sdhci: fffffffff20c: DMA 0x0000000000000000, LEN 0x0000, Attr=0x03
-> 
-> Looking closely it's obvious that only the 32-bit part of the address
-> (0xfffff200) arrives at the SMMU, the higher 16-bit (0xffff...) get
-> lost somewhere. This might not be a limitation of the SDHCI itself but
-> perhaps the bus/interconnect it is connected to, or even the connection
-> to the SMMU.
-> 
-> Work around this by setting SDHCI_QUIRK2_BROKEN_64_BIT_DMA to avoid
-> using 64-bit addresses.
-> 
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
-Would using 64bit address translation not require you to use (dma-)ranges
-with a greater-than-default size, like we do on newer platforms? Did you
-test that by chance?
+> 
+> Changes since v1:
+> - Order of pinctr-N and pinctrl-names
+> - Reset GCC_SDCC2_BCR and not sdc4
+b4 diff 20230517235217.1728548-1-quic_bjorande@quicinc.com also reveals:
+
+- move cd-gpios
+- add interconnect OPP properties
+
+nevertheless:
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  drivers/mmc/host/sdhci-msm.c | 3 +++
->  1 file changed, 3 insertions(+)
+
 > 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 8ac81d57a3df..1877d583fe8c 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -2479,6 +2479,9 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
->  		msm_host->ddr_config = DDR_CONFIG_POR_VAL;
+>  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts | 81 +++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi    | 43 ++++++++++++
+>  2 files changed, 124 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> index 5b25d54b9591..ff9cebbccfcb 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> @@ -308,6 +308,13 @@ vreg_l1c: ldo1 {
+>  			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>  		};
 >  
->  	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
+> +		vreg_l6c: ldo6 {
+> +			regulator-name = "vreg_l6c";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <2960000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
 > +
-> +	if (of_device_is_compatible(node, "qcom,msm8916-sdhci"))
-> +		host->quirks2 |= SDHCI_QUIRK2_BROKEN_64_BIT_DMA;
->  }
+>  		vreg_l7c: ldo7 {
+>  			regulator-name = "vreg_l7c";
+>  			regulator-min-microvolt = <2504000>;
+> @@ -318,6 +325,13 @@ vreg_l7c: ldo7 {
+>  						   RPMH_REGULATOR_MODE_HPM>;
+>  		};
 >  
->  static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
-> 
-> ---
-> base-commit: d4ebc9419afbac330e9ec0d2936108742aa4d97a
-> change-id: 20230518-msm8916-64bit-f5bcf6af7679
-> 
-> Best regards,
+> +		vreg_l9c: ldo9 {
+> +			regulator-name = "vreg_l9c";
+> +			regulator-min-microvolt = <2960000>;
+> +			regulator-max-microvolt = <2960000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+>  		vreg_l13c: ldo13 {
+>  			regulator-name = "vreg_l13c";
+>  			regulator-min-microvolt = <3072000>;
+> @@ -600,6 +614,19 @@ &remoteproc_nsp0 {
+>  	status = "okay";
+>  };
+>  
+> +&sdc2 {
+> +	pinctrl-0 = <&sdc2_default_state>;
+> +	pinctrl-1 = <&sdc2_sleep_state>;
+> +	pinctrl-names = "default", "sleep";
+> +
+> +	vmmc-supply = <&vreg_l9c>;
+> +	vqmmc-supply = <&vreg_l6c>;
+> +
+> +	cd-gpios = <&tlmm 131 GPIO_ACTIVE_LOW>;
+> +
+> +	status = "okay";
+> +};
+> +
+>  &uart17 {
+>  	compatible = "qcom,geni-debug-uart";
+>  
+> @@ -842,6 +869,60 @@ wake-n-pins {
+>  		};
+>  	};
+>  
+> +	sdc2_default_state: sdc2-default-state {
+> +		clk-pins {
+> +			pins = "sdc2_clk";
+> +			drive-strength = <16>;
+> +			bias-disable;
+> +		};
+> +
+> +		cmd-pins {
+> +			pins = "sdc2_cmd";
+> +			drive-strength = <16>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		data-pins {
+> +			pins = "sdc2_data";
+> +			drive-strength = <16>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		card-detect-pins {
+> +			pins = "gpio131";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-disable;
+> +		};
+> +	};
+> +
+> +	sdc2_sleep_state: sdc2-sleep-state {
+> +		clk-pins {
+> +			pins = "sdc2_clk";
+> +			drive-strength = <2>;
+> +			bias-disable;
+> +		};
+> +
+> +		cmd-pins {
+> +			pins = "sdc2_cmd";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		data-pins {
+> +			pins = "sdc2_data";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		card-detect-pins {
+> +			pins = "gpio131";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-disable;
+> +		};
+> +	};
+> +
+>  	tpad_default: tpad-default-state {
+>  		int-n-pins {
+>  			pins = "gpio182";
+> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> index 8fa9fbfe5d00..3711f109aeaf 100644
+> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+> @@ -2815,6 +2815,49 @@ data-pins {
+>  			};
+>  		};
+>  
+> +		sdc2: mmc@8804000 {
+> +			compatible = "qcom,sc8280xp-sdhci", "qcom,sdhci-msm-v5";
+> +			reg = <0 0x08804000 0 0x1000>;
+> +
+> +			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "hc_irq", "pwr_irq";
+> +
+> +			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
+> +				 <&gcc GCC_SDCC2_APPS_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>;
+> +			clock-names = "iface", "core", "xo";
+> +			resets = <&gcc GCC_SDCC2_BCR>;
+> +			interconnects = <&aggre2_noc MASTER_SDCC_2 0 &mc_virt SLAVE_EBI1 0>,
+> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_SDCC_2 0>;
+> +			interconnect-names = "sdhc-ddr","cpu-sdhc";
+> +			iommus = <&apps_smmu 0x4e0 0x0>;
+> +			power-domains = <&rpmhpd SC8280XP_CX>;
+> +			operating-points-v2 = <&sdc2_opp_table>;
+> +			bus-width = <4>;
+> +			dma-coherent;
+> +
+> +			status = "disabled";
+> +
+> +			sdc2_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-100000000 {
+> +					opp-hz = /bits/ 64 <100000000>;
+> +					required-opps = <&rpmhpd_opp_low_svs>;
+> +					opp-peak-kBps = <1800000 400000>;
+> +					opp-avg-kBps = <100000 0>;
+> +				};
+> +
+> +				opp-202000000 {
+> +					opp-hz = /bits/ 64 <202000000>;
+> +					required-opps = <&rpmhpd_opp_svs_l1>;
+> +					opp-peak-kBps = <5400000 1600000>;
+> +					opp-avg-kBps = <200000 0>;
+> +				};
+> +			};
+> +		};
+> +
+>  		usb_0_qmpphy: phy@88eb000 {
+>  			compatible = "qcom,sc8280xp-qmp-usb43dp-phy";
+>  			reg = <0 0x088eb000 0 0x4000>;
