@@ -2,119 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BBF4709583
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 12:58:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1CAB7095A1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 13:01:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231579AbjESK6V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 06:58:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41588 "EHLO
+        id S231329AbjESLB2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 07:01:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229932AbjESK6T (ORCPT
+        with ESMTP id S231340AbjESLB0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 06:58:19 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD70910E0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 03:58:16 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f4449fa085so19260125e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 03:58:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684493895; x=1687085895;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=XxgOnxMM/jMjGnPd9a1thhj/iw7hO2xaZ7M1qo3NZYg=;
-        b=bCO7u+Q011hkRNjgVIUsuJKMpZwPQZEwMRMpT2cVzaBkU2cVeNwyXtaRw1SC1PBA+w
-         QiJxuuAB+Wcwu+NP8ZXQmlROjFvtdkZxoanDqFSpq2LndPvLQ4M15sdatas0T1cDj4gQ
-         5ApylH0EPWhZhTgUnpWNDF7CEDyzeFd3KPaLU+bz2e9U4aQyibJmm4bXXaeI/g8MtoYU
-         ZyUo9XchT9RFoe5J9LW+0xCs8VDZPZEvUDQi0dShZNiudoD3mjXX0fvdrChwKr/qn9P0
-         9AKVSQeWzmvmaObi5D4+NKTvpPYgJmwCf8cb0HF/L7x7L0U+F1cUwmq9DjaUXfO84H6H
-         pF2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684493895; x=1687085895;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XxgOnxMM/jMjGnPd9a1thhj/iw7hO2xaZ7M1qo3NZYg=;
-        b=LWmMX6o6fP2cGSBatywzzfOswDo2OJE+wXr2ZxOBaVj+SJ7wHuxo3uKlzVb5Qlfd/i
-         VoYep3WaY5rWEO5THApNQdQGdX0eUtWLyseay5RLZDit8J4d5PpRPlGVNa2yLm6djm1s
-         jiIibl3hAr47Qt1QRPLVGoQfCsN4b/DIGA3aStkMoQXXrcmqLhgy7NuaGzBByXzhxXJ6
-         +UC6x0kmdnpfafWKO+mKbf/7ijoFLa4i5u5S4hgaj+syNlS5/yO0RWriIJu6/cFF1dZk
-         bMUOy+1Ojd1GhxCeqpMPGDh7Zm/3lssQgaaJTSDq/IUAQUDzy7Rna4GhbZ5ynILN6wV4
-         1IKQ==
-X-Gm-Message-State: AC+VfDyXyJiWWfWrJENprM8DdxdnCAGajCXG9iUL1MOhebsG2txJWh9K
-        3sH+PoPlWvqW7cF90kT8McyUlQ==
-X-Google-Smtp-Source: ACHHUZ5Jkz/tisFg9BRWiG5aFVV9XmZ2Daa6Xp+YaPTVsrIurgnXC8HO/LlOr/DT1q8KJVKReSwS2Q==
-X-Received: by 2002:a7b:cc8e:0:b0:3f4:1dd9:e9de with SMTP id p14-20020a7bcc8e000000b003f41dd9e9demr1272529wma.8.1684493895108;
-        Fri, 19 May 2023 03:58:15 -0700 (PDT)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id 8-20020a05600c024800b003f42ceb3bf4sm1984115wmj.32.2023.05.19.03.58.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 May 2023 03:58:13 -0700 (PDT)
-Date:   Fri, 19 May 2023 13:58:10 +0300
-From:   Dan Carpenter <dan.carpenter@linaro.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Sukrut Bellary <sukrut.bellary@linux.com>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org,
-        Shuah Khan <skhan@linuxfoundation.org>
-Subject: Re: [PATCH] misc: fastrpc: Fix double free of 'buf' in error path
-Message-ID: <fa0e9d9d-6362-456b-87f7-990ccf7e8930@kili.mountain>
-References: <20230518100829.515143-1-sukrut.bellary@linux.com>
- <9194ebdf-f335-4cd6-bf89-bb4f86a57784@kili.mountain>
- <f47b17c1-1c02-2aa3-ba10-fcef70cb25a8@linaro.org>
- <b0115d7d-d15a-4948-8726-09a8b37f3f36@kili.mountain>
+        Fri, 19 May 2023 07:01:26 -0400
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 383841BC1;
+        Fri, 19 May 2023 04:00:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1684494032; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=P7f4Q9hQu7cnvWu1lAf8NZUpIXs9TYXjTG4aZDpiIQK7Eq2A5o4Qe8OiAjiab8pFeD
+    4R4GgT0mYWNQEocFqKeO35HYdbAG8VWaeC4e4PleHTeKO1yzGwpROuCHNjNrSlVLFhJI
+    w4zr6Q9h9Y/vQCg8VtrpzqYyBRnInSBUaRRmcWaLGCHC8mlzmdQjA80QSDZUle/cgQ1m
+    iw6eo5b3EEKxXTGeRMZTJo3ms/Mgqxz/AqJGAlndVg6t++YYbRkhnMeG9jRq+vxKQzcm
+    RCYavuR/arfCmK9FdEhrZnC5uFSWoP0iCEArZGk9O9A3pHRBEtqbSElByjZCTvMtpvgY
+    /svQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1684494032;
+    s=strato-dkim-0002; d=strato.com;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=yQb8geel8/PmlIERmu/C0g7x/X4cNdXUDvdM8Uvw/9U=;
+    b=WzM3laCuIUGw2ijYcg0X2MH5hIAfjIuke8yso8SLc9mXgslLyIZgZFweu5UcSorLag
+    S+eahYtVQQot9DbmRW2QBRLF+gMEQDF1C3+7ayl97kheXC2o5VCJqvwpMWdo8OshYUyN
+    WY1g1zSP203XuOv3r07gTpcfum93c8qe5jRMk1EmQgZ9Aisp2+RsyNeQM8RM+X3mNrLz
+    tKqyQ719l9l65ah085x84+PNikqF+K4OaJU7s8ncA2by3AQdE8GfRaiQ+El2AG9AuzDl
+    icYpD+LKltNC1jS0e/uGHLdD1ThA3HlbylEWEw8qJQVvG+aSrLXfn2S8iKwPHtkDKomQ
+    +/jg==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo02
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1684494032;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=yQb8geel8/PmlIERmu/C0g7x/X4cNdXUDvdM8Uvw/9U=;
+    b=nwH1W17jDTYw2bFCTJjtYH+bUYL0T/gy8+YqriQXvTzWjjm7vCqQm2c1ZS3j+0+aUE
+    U5bs7wpK3X1wJeDPUthpjly2Hpg8cpjFzMMTHOFnijG9TS0dMZIfkH1qz3PWpjFYRFp4
+    z4iA0Lb5tcTVmHneYG38tLkA+SUMfSGN9RETlrOkZ29yjlr80UKpXYq9U5oeBoMargew
+    wxI66xTjvUvTZ9FG+e3NwyZ/5JHErivfUrBk6kXhRo39zt4uZJ0ugIP8QT4rR7XNR1U0
+    WuMjRCu/mZBWdYWsxdkNJRnN+LMdRDm21wEp0dSe9oKJp8ELccIZZFAuayrj2qxiCRxL
+    q9gg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1684494032;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=yQb8geel8/PmlIERmu/C0g7x/X4cNdXUDvdM8Uvw/9U=;
+    b=r+2dnb6GwAVOFrnmIwUyHxClper+2dBKBOwjX4uZ4b3CBZ8FOs0WyozLf7lBHU2Wca
+    atRpLj02n/PYq0iSY8AQ==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn9VOT/9w=="
+Received: from [192.168.244.3]
+    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
+    with ESMTPSA id j6420az4JB0WEZZ
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Fri, 19 May 2023 13:00:32 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+Date:   Fri, 19 May 2023 13:00:13 +0200
+Subject: [PATCH v2] dmaengine: qcom: bam_dma: allow omitting
+ num-{channels,ees}
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b0115d7d-d15a-4948-8726-09a8b37f3f36@kili.mountain>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230518-bamclk-dt-v2-1-a1a857b966ca@gerhold.net>
+X-B4-Tracking: v=1; b=H4sIALxWZ2QC/22Nyw7CIBBFf8XM2jEFaqCu/A/TBY9pISI1UBtN0
+ 38Xu3Z5Tu5jhUI5UIHLYYVMSyhhShX48QDW6zQSBlcZeMNFc2YKjX7YeEc3o2tbo6mVRggJNW9
+ 0ITRZJ+trI71irPKZaQjv/eDWV/ahzFP+7H8L+9l/0wtDhooPUiirOum660jZT9GdEs3Qb9v2B
+ dpnIge5AAAA
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+X-Mailer: b4 0.12.2
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is unrelated but I was looking through the driver and I notice
-a bunch of code doing:
+The bam_dma driver needs to know the number of channels and execution
+environments (EEs) at probe time. If we are in full control of the BAM
+controller this information can be obtained from the BAM identification
+registers (BAM_REVISION/BAM_NUM_PIPES).
 
-grep 'return ret ?' drivers/firmware/ -R
+When the BAM is "controlled remotely" it is more complicated. The BAM
+might not be on at probe time, so reading the registers could fail.
+This is why the information must be added to the device tree in this
+case, using "num-channels" and "qcom,num-ees".
 
-	return ret ? : res.result[0];
+However, there are also some BAM instances that are initialized by
+something else but we still have a clock that allows to turn it on when
+needed. This can be set up in the DT with "qcom,controlled-remotely"
+and "clocks" and is already supported by the bam_dma driver. Examples
+for this are the typical BLSP BAM instances on older SoCs, QPIC BAM
+(for NAND) and the crypto BAM on some SoCs.
 
-"ret" here is a kernel error code, and res.result[0] is a firmware
-error code.  Mixing error codes is a dangerous thing.  I was reviewing
-some of the callers and the firmware error code gets passed quite far
-back into the kernel to where we would only expect kernel error codes.
+In this case, there is no need to read "num-channels" and
+"qcom,num-ees" from the DT. The BAN can be turned on using the clock
+so we can just read it from the BAM registers like in the normal case.
 
-Presumably the firmware is returning positive error codes?  To be honest,
-I am just guessing.  It's better to convert custom error codes to kernel
-error codes as soon as possible.  I am just guessing.  Sukrut, do you
-think you could take a look?  If the callers do not differentiate
-between negative kernel error codes and positive custom error codes then
-probably just do:
+Check for the BAM clock earlier and skip reading "num-channels" and
+"qcom,num-ees" if it is present to allow simplifying the DT description
+a bit.
 
-	if (res.result[0])
-		ret = -EIO; // -EINVAL?
-	return ret;
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+Changes in v2:
+- Rewrite commit message for more clarity (discussion with Bhupesh)
+- Link to v1: https://lore.kernel.org/r/20230518-bamclk-dt-v1-1-82f738c897d9@gerhold.net
+---
+ drivers/dma/qcom/bam_dma.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-Also there are a couple places which do:
+diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+index 1e47d27e1f81..4c3eb972039d 100644
+--- a/drivers/dma/qcom/bam_dma.c
++++ b/drivers/dma/qcom/bam_dma.c
+@@ -1272,7 +1272,15 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 	bdev->powered_remotely = of_property_read_bool(pdev->dev.of_node,
+ 						"qcom,powered-remotely");
+ 
+-	if (bdev->controlled_remotely || bdev->powered_remotely) {
++	if (bdev->controlled_remotely || bdev->powered_remotely)
++		bdev->bamclk = devm_clk_get_optional(bdev->dev, "bam_clk");
++	else
++		bdev->bamclk = devm_clk_get(bdev->dev, "bam_clk");
++
++	if (IS_ERR(bdev->bamclk))
++		return PTR_ERR(bdev->bamclk);
++
++	if (!bdev->bamclk) {
+ 		ret = of_property_read_u32(pdev->dev.of_node, "num-channels",
+ 					   &bdev->num_channels);
+ 		if (ret)
+@@ -1284,14 +1292,6 @@ static int bam_dma_probe(struct platform_device *pdev)
+ 			dev_err(bdev->dev, "num-ees unspecified in dt\n");
+ 	}
+ 
+-	if (bdev->controlled_remotely || bdev->powered_remotely)
+-		bdev->bamclk = devm_clk_get_optional(bdev->dev, "bam_clk");
+-	else
+-		bdev->bamclk = devm_clk_get(bdev->dev, "bam_clk");
+-
+-	if (IS_ERR(bdev->bamclk))
+-		return PTR_ERR(bdev->bamclk);
+-
+ 	ret = clk_prepare_enable(bdev->bamclk);
+ 	if (ret) {
+ 		dev_err(bdev->dev, "failed to prepare/enable clock\n");
 
-	return ret ? false : !!res.result[0];
+---
+base-commit: 2437d5ea2191f3059246a1a7ac6fc4c8cc004dec
+change-id: 20230518-bamclk-dt-d44bae47b337
 
-Here true means success and false means failure.  So the !! converts
-a firmware error code to true when it should be false so that's a bug.
-Quadruple negatives are confusing...  It should be:
-
-	if (ret || res.result[0])
-		return false;
-	return true;
-
-regards,
-dan carpenter
+Best regards,
+-- 
+Stephan Gerhold <stephan@gerhold.net>
 
