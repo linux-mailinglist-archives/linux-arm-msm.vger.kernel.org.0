@@ -2,126 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D0DB708DE9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 04:39:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43510708DFC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 04:45:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229547AbjESCjG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 18 May 2023 22:39:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48324 "EHLO
+        id S229485AbjESCp1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 18 May 2023 22:45:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229602AbjESCjF (ORCPT
+        with ESMTP id S229458AbjESCp0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 22:39:05 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E09ECE6B
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 19:39:03 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2acb6571922so28975461fa.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 19:39:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684463942; x=1687055942;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rPNIghn0XJ0SWng+xegh98pXn9OmFxCxXfcggZ3NhzM=;
-        b=jqUgEDdUvBcFOs9vGVrg03sl8GtF2kSA8wpm10ccG9YYnxyTrpQBo/xCvtqa2BfkM8
-         eDYaX2Jju9nSGmRrrTpadplPcQNLETSoLOBq9cg+aFIsaOnnZSgo7dlhUR28mM3mmjYq
-         4n6Ld2B02aGJcahT8Dfn7fzgwfYiqqKDIeC0UnhtOeVPjeHzYSckT9I+3wcDfRyQw3Vq
-         xDkQ0tOjxHVlxL8HSxhPhAgcQEHlzjlNbAVFFXQx/jqrNrVCvY0KhenZ1N8HREzEjwT0
-         YrooHGHKbRI8Z5fNi1yCK9HhBg6nDNKsZ7RQIErxALRyd/ewPFdE6/m2sg33LVjArfDI
-         DvwQ==
+        Thu, 18 May 2023 22:45:26 -0400
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AB53DE4E;
+        Thu, 18 May 2023 19:45:25 -0700 (PDT)
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-64d24136663so861719b3a.0;
+        Thu, 18 May 2023 19:45:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684463942; x=1687055942;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rPNIghn0XJ0SWng+xegh98pXn9OmFxCxXfcggZ3NhzM=;
-        b=HiJGO9wyim6ptrXwIseVEZ1QUUAXr+1ldxuTVs50Az2+lfO6pqNgEaOBx4cEUczGhC
-         5zGYWtCMjBSfVKJjG7rLDoxuaNkIgHSsVcmu6oCRHx+Bw36Dw7nQz8v/akxbARMi0Kid
-         o2IjPe+dcRzJMc0AThmqZk174x+p7wsBf/6we31FGT8AbPYfnFkXar47duK3+PEilgFN
-         djFJkx0ZQ/i/iUpt4R3NWWWoTszd86Cy2lVAoojWZySp5OnDGBoF71who7nkSejBwyVT
-         Dbys5RvwqdLV0Dqig4ejss9qgu0p7jfxS4bVo7kutbL3vyn7Ag8zg1ZuosfgxUCTFclX
-         iKBg==
-X-Gm-Message-State: AC+VfDxOcC0qIBpNag0K0v7NIsKR08Hr0+o5jnc0p+5TihC/Z8bTIM5F
-        ANa9ytJlxqo5Ozi0ZYkNp2VBMXG1K8ozZFsHwzg=
-X-Google-Smtp-Source: ACHHUZ5xrh422ZzI+xsoIKNhJW8/H9x5HQ4BGByJmrKc2iqsPa/8/rV61bJ/e8r3SUISaA4huTT1DQ==
-X-Received: by 2002:a2e:3603:0:b0:2ad:98a6:4af0 with SMTP id d3-20020a2e3603000000b002ad98a64af0mr131239lja.23.1684463942246;
-        Thu, 18 May 2023 19:39:02 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id s15-20020a2e2c0f000000b002af25598ef9sm25906ljs.0.2023.05.18.19.39.01
+        d=1e100.net; s=20221208; t=1684464325; x=1687056325;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6c1nbbCIKIRME1OUyJ8+uiganEQb54Z8X/TFo+TONq4=;
+        b=hkYjRPdZeudUV7Qg50CKZlh9yVrzJXK5/TSY5VUYrUft5CYjsUJ4efbIU78ek2GmA1
+         YoTmbsHYkqQlz0iNDE4+DMc8NscdpCbB+uEFqEieMjeO2HoleoRDYKTqPSP8pQyrjKmO
+         tZIsm9F0vqNuwlFksMTIQnHFO9D+i7QW6St1GPtW20bsIg/IsFCQFigCKJltqzS8ixIW
+         06S7TNqRf9bduGQj36WjK9POa/Et9SResbLP/sBooGxQCDBHB6gKfoJIpPbYS3pRkx2+
+         DeYcXDa0nvRLCgwtnhKktGfLyxUtVR/Rntc8Z5K/QL4ZhTkiUjahvG1BzJ7sCyXPLMs6
+         Q3Pw==
+X-Gm-Message-State: AC+VfDyWypDubg4NokpZcCeJbIrFX27sL6Nfcj1kEa7oxeCRJmkWMWs6
+        DHRtSrbmre/J+X+ovlXQZ6D4xAXOBC7vchhZ
+X-Google-Smtp-Source: ACHHUZ7IC29lRhrJaA3/a5Lj1K67GGWxO0DXWqTK9gdDqllORTzhXJ5kwDqZPcQfy7iQSGK41/hxpQ==
+X-Received: by 2002:a05:6a00:804:b0:63b:8423:9e31 with SMTP id m4-20020a056a00080400b0063b84239e31mr1267414pfk.11.1684464324881;
+        Thu, 18 May 2023 19:45:24 -0700 (PDT)
+Received: from dev-linux.lan (cpe-70-95-21-110.san.res.rr.com. [70.95.21.110])
+        by smtp.gmail.com with ESMTPSA id x13-20020a62fb0d000000b0063d2cd02d69sm1974894pfm.54.2023.05.18.19.45.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 May 2023 19:39:01 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v2 7/7] drm/msm/dpu: simplify dpu_encoder_phys_wb_init()
-Date:   Fri, 19 May 2023 05:38:55 +0300
-Message-Id: <20230519023855.3840907-8-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230519023855.3840907-1-dmitry.baryshkov@linaro.org>
-References: <20230519023855.3840907-1-dmitry.baryshkov@linaro.org>
+        Thu, 18 May 2023 19:45:24 -0700 (PDT)
+Date:   Thu, 18 May 2023 19:45:22 -0700
+From:   Sukrut Bellary <sukrut.bellary@linux.com>
+To:     Dan Carpenter <dan.carpenter@linaro.org>
+Cc:     Abel Vesa <abel.vesa@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org,
+        Shuah Khan <skhan@linuxfoundation.org>
+Subject: Re: [PATCH] misc: fastrpc: Fix double free of 'buf' in error path
+Message-ID: <ZGbiwqMxnFFvS7y8@dev-linux.lan>
+References: <20230518100829.515143-1-sukrut.bellary@linux.com>
+ <9194ebdf-f335-4cd6-bf89-bb4f86a57784@kili.mountain>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9194ebdf-f335-4cd6-bf89-bb4f86a57784@kili.mountain>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no need to assign a result to temp varable just to return it
-after a goto. Drop the temporary variable and goto and return the result
-directly.
+On Thu, May 18, 2023 at 01:55:07PM +0300, Dan Carpenter wrote:
+> On Thu, May 18, 2023 at 03:08:29AM -0700, Sukrut Bellary wrote:
+> > smatch warning:
+> > drivers/misc/fastrpc.c:1926 fastrpc_req_mmap() error: double free of 'buf'
+> > 
+> > In fastrpc_req_mmap() error path, the fastrpc buffer is freed in
+> > fastrpc_req_munmap_impl() if unmap is successful.
+> > 
+> > But in the end, there is an unconditional call to fastrpc_buf_free().
+> > So the above case triggers the double free of fastrpc buf.
+> > 
+> > Fix this by avoiding the call to the second fastrpc_buf_free() if
+> > fastrpc_req_munmap_impl() is successful.
+> > 'err' is not updated as it needs to retain the err returned by
+> > qcom_scm_assign_mem(), which is the starting point of this error path.
+> > 
+> > This is based on static analysis only. Compilation tested.
+> 
+> Please don't put this in the commit message.  We want everyone reading
+> the git log to believe everything is 100% rock solid.  :P
+> 
+> We need a Fixes tag.
+> Fixes: 72fa6f7820c4 ("misc: fastrpc: Rework fastrpc_req_munmap")
+> 
+> Let's add Abel to the CC list.
+> 
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+Thank you for reviewing the patch.
+I will add a Fixes tag and fix the commit message.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-index 6608c00e3c33..e9325cafb1a8 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
-@@ -684,21 +684,18 @@ struct dpu_encoder_phys *dpu_encoder_phys_wb_init(
- {
- 	struct dpu_encoder_phys *phys_enc = NULL;
- 	struct dpu_encoder_phys_wb *wb_enc = NULL;
--	int ret = 0;
- 
- 	DPU_DEBUG("\n");
- 
- 	if (!p || !p->parent) {
- 		DPU_ERROR("invalid params\n");
--		ret = -EINVAL;
--		goto fail_alloc;
-+		return ERR_PTR(-EINVAL);
- 	}
- 
- 	wb_enc = kzalloc(sizeof(*wb_enc), GFP_KERNEL);
- 	if (!wb_enc) {
- 		DPU_ERROR("failed to allocate wb phys_enc enc\n");
--		ret = -ENOMEM;
--		goto fail_alloc;
-+		return ERR_PTR(-ENOMEM);
- 	}
- 
- 	phys_enc = &wb_enc->base;
-@@ -715,7 +712,4 @@ struct dpu_encoder_phys *dpu_encoder_phys_wb_init(
- 	DPU_DEBUG("Created dpu_encoder_phys for wb %d\n", phys_enc->hw_wb->idx);
- 
- 	return phys_enc;
--
--fail_alloc:
--	return ERR_PTR(ret);
- }
--- 
-2.39.2
+> > 
+> > Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+> > Signed-off-by: Sukrut Bellary <sukrut.bellary@linux.com>
+> > ---
+>   ^^^
+> Put testing caveats here instead, where it will be removed from the
+> git log.
+>
 
+Shall I add "This is based on static analysis only. Compilation tested"
+here 
+or 
+is it not required to mention this for all the fixes?
+Can you please recommend what's is the preferred method I need to follow?
+
+> >  drivers/misc/fastrpc.c | 5 ++++-
+> >  1 file changed, 4 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> > index f48466960f1b..1c3ab78f274f 100644
+> > --- a/drivers/misc/fastrpc.c
+> > +++ b/drivers/misc/fastrpc.c
+> > @@ -1921,7 +1921,10 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+> >  	return 0;
+> >  
+> >  err_assign:
+> > -	fastrpc_req_munmap_impl(fl, buf);
+> > +	if (!fastrpc_req_munmap_impl(fl, buf)) {
+> > +		/* buf is freed */
+> > +		return err;
+> > +	}
+> >  err_invoke:
+> >  	fastrpc_buf_free(buf);
+> 
+> This bug is real but the fix is not complete.
+> 
+> drivers/misc/fastrpc.c
+>   1911                  if (err) {
+>   1912                          dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
+>   1913                                          buf->phys, buf->size, err);
+>   1914                          goto err_assign;
+>   1915                  }
+>   1916          }
+>   1917  
+>   1918          spin_lock(&fl->lock);
+>   1919          list_add_tail(&buf->node, &fl->mmaps);
+>                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> buf needs to be removed from the list before we free it, otherwise it
+> leads to a use after free.  The fastrpc_req_munmap_impl() function does
+> that but here this function just calls fastrpc_buf_free().
+> 
+>   1920          spin_unlock(&fl->lock);
+>   1921  
+>   1922          if (copy_to_user((void __user *)argp, &req, sizeof(req))) {
+>   1923                  err = -EFAULT;
+>   1924                  goto err_assign;
+>   1925          }
+>   1926  
+>   1927          dev_dbg(dev, "mmap\t\tpt 0x%09lx OK [len 0x%08llx]\n",
+>   1928                  buf->raddr, buf->size);
+>   1929  
+>   1930          return 0;
+>   1931  
+>   1932  err_assign:
+>   1933          fastrpc_req_munmap_impl(fl, buf);
+>   1934  err_invoke:
+>   1935          fastrpc_buf_free(buf);
+>   1936  
+>   1937          return err;
+>   1938  }
+> 
+
+Nice catch!
+I will address this in the next version.
+
+Regards,
+Sukrut Bellary
+
+> regards,
+> dan carpenter
