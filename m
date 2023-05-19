@@ -2,114 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97FDD7098BF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 15:51:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 063567098D7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 15:58:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231974AbjESNvt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 09:51:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34006 "EHLO
+        id S232014AbjESN6U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 09:58:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231971AbjESNvr (ORCPT
+        with ESMTP id S232011AbjESN6T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 09:51:47 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32A08192;
-        Fri, 19 May 2023 06:51:43 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C23C2657CD;
-        Fri, 19 May 2023 13:51:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08C1FC433D2;
-        Fri, 19 May 2023 13:51:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684504302;
-        bh=WKlnm8UtxT+qYnvDF9i2Qq122VqGCiN1FomPmbhIJpk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=vG18ZPOeNSniciRdpye/diDQF7VE35xTBCVDzW3Dk9q83g/Innsdha1pyX3aj3e5W
-         n0JHvJGpJb+JR8RnuiKBZB5MUpqYO+Zpmjg8URHAamzLMGms3uarbdAQq7aN7QtgzE
-         /RvqHV0ofuyLa4lGKila6YWQcV5Gpab6PAdpp90l1AEOWCe5vSwciWGrLN/z8COhyt
-         gpPAVDiOYwkFvMi/n02Bi44t0aeeIF0NOClOSc0Z3BOVI39a7H9yLn0qQ5BwGf7FWW
-         pI9hRwRZ99lKSMFSLyJAam8AxMDYdcxVKwMN6a8OjdLWWS4faWes5zHTPYKi3AeOHs
-         l9ijf36zoOq3g==
-Date:   Fri, 19 May 2023 19:21:29 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Qiang Yu <quic_qianyu@quicinc.com>
-Cc:     mani@kernel.org, quic_jhugo@quicinc.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_cang@quicinc.com, quic_mrana@quicinc.com,
-        stable@vger.kernel.org
-Subject: Re: [PATCH v4] bus: mhi: host: Skip MHI reset if device is in RDDM
-Message-ID: <20230519135129.GA4843@thinkpad>
-References: <1684390959-17836-1-git-send-email-quic_qianyu@quicinc.com>
+        Fri, 19 May 2023 09:58:19 -0400
+Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD9831B0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 06:58:15 -0700 (PDT)
+Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-64d2ca9ef0cso892724b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 06:58:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684504695; x=1687096695;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KlUcxwV3gHbaA4F0tBqjLsI2LgjbYmHKZKwiT7gbhio=;
+        b=gyQPvSS053XBYCQ+ulxO8jW8Fmtq1OHPBkIElOynEB24rNWum9fd4vNcGVumCLQXHr
+         H0lHQIY4KR77DtaPP+1Pqc3orpKb5wJCzyOMlsFVsKJM3elUlcrYz+Yji8FmZXl+mIHi
+         zgO5cYxUO8SnLM4MUgrFSOqdDDWqwoES4wUMXLI++QZ35Yb+yv45TlScA6FPoRp49aQR
+         T0e6Yl9Sq/nopmZSvgSqqSitQNGtePYTeAXih5RAU48oohyWoz6W6sUpDez8EvZrsXbZ
+         WgONjcXu+KFY6fxAegXn1eMfobcpNUElTWVjXGII/LR1IyHBnQGlnMHN6BeDBl11uVlI
+         0jTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684504695; x=1687096695;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KlUcxwV3gHbaA4F0tBqjLsI2LgjbYmHKZKwiT7gbhio=;
+        b=QzMvtYJKkbBiIsPycmKDatNx2wo18lhzEZpewHr5HV5K9ZqOF+rgnD/AGc8lTLUTVC
+         A+RSaTw2EPaaFCEeJb6G84vQyC9xW8WUGVoUkjD3QtvQaOcMQ3MmncFB1H+2ha/rm3zH
+         XPEgDoRHWn61sETpDPPVAeh40FLfazPRusWs2zt9/D1CFY0WuIIGdIiDoCPyKpUip3D8
+         CA0ENGcrORJ9dpjVOkIp+Vl5JQb1uGKuAjeUfWA94A411Iyiv4hVP+60wp9vRyIyxp1D
+         6E9sqUEoDIOCEBjn8YzQ2UgdUK5JETFQpN1t9mvomH9uSkVCqwSDLNrRwEuWfIB3p1JK
+         ulnQ==
+X-Gm-Message-State: AC+VfDxsQWKqJu2MmgAa/9blur+I6KwormgBez4Xmpi9ZtTlRTrm07mA
+        JLA5dtezkVK+koFc+X/ChqnC
+X-Google-Smtp-Source: ACHHUZ4/BIkQFVCK8F94/Uf3Z9uqkLZjy+JIWTSYU7oAl3bKx61PWCnAyinFjETqy7PbT/rCJ/s3gw==
+X-Received: by 2002:a05:6a20:72a8:b0:100:c7bd:9f5d with SMTP id o40-20020a056a2072a800b00100c7bd9f5dmr2169335pzk.44.1684504695128;
+        Fri, 19 May 2023 06:58:15 -0700 (PDT)
+Received: from localhost.localdomain ([117.202.184.13])
+        by smtp.gmail.com with ESMTPSA id i3-20020a63e443000000b0052873a7cecesm3112096pgk.0.2023.05.19.06.58.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 May 2023 06:58:14 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     loic.poulain@linaro.org, quic_krichai@quicinc.com,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH] bus: mhi: host: pci_generic: Add support for IP_SW0 channels
+Date:   Fri, 19 May 2023 19:28:03 +0530
+Message-Id: <20230519135803.13850-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1684390959-17836-1-git-send-email-quic_qianyu@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 18, 2023 at 02:22:39PM +0800, Qiang Yu wrote:
-> In RDDM EE, device can not process MHI reset issued by host. In case of MHI
-> power off, host is issuing MHI reset and polls for it to get cleared until
-> it times out. Since this timeout can not be avoided in case of RDDM, skip
-> the MHI reset in this scenarios.
-> 
-> Cc: <stable@vger.kernel.org>
-> Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state transitions")
-> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-> ---
-> v1->v2: use ~75 columns in commit text, add Fixes tag
-> v2->v3: update Fixes tag
-> v3->v4: add review tag and CC stable
-> 
->  drivers/bus/mhi/host/pm.c | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-> index 0834590..8a4362d 100644
-> --- a/drivers/bus/mhi/host/pm.c
-> +++ b/drivers/bus/mhi/host/pm.c
-> @@ -470,6 +470,10 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
->  
->  	/* Trigger MHI RESET so that the device will not access host memory */
->  	if (!MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
-> +		/* Skip MHI RESET if in RDDM state */
-> +		if (mhi_cntrl->rddm_image && mhi_get_exec_env(mhi_cntrl) == MHI_EE_RDDM)
+IP_SW0 channels are used to transfer data over the networking interface
+between MHI endpoint and the host. Define the channels in the MHI v1
+channel config along with dedicated event rings.
 
-Do we really need to check for rddm_image? Wouldn't the EE check sufficient
-enough?
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+---
+ drivers/bus/mhi/host/pci_generic.c | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
-In that case, the check can be moved to the prior if condition.
-
-- Mani
-
-> +			goto skip_mhi_reset;
-> +
->  		dev_dbg(dev, "Triggering MHI Reset in device\n");
->  		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
->  
-> @@ -495,6 +499,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
->  		}
->  	}
->  
-> +skip_mhi_reset:
->  	dev_dbg(dev,
->  		 "Waiting for all pending event ring processing to complete\n");
->  	mhi_event = mhi_cntrl->mhi_event;
-> -- 
-> 2.7.4
-> 
-> 
-
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index db0a0b062d8e..70e37c490150 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -212,6 +212,19 @@ struct mhi_pci_dev_info {
+ 		.offload_channel = false,	\
+ 	}
+ 
++#define MHI_EVENT_CONFIG_SW_DATA(ev_ring, el_count) \
++	{					\
++		.num_elements = el_count,	\
++		.irq_moderation_ms = 0,		\
++		.irq = (ev_ring) + 1,		\
++		.priority = 1,			\
++		.mode = MHI_DB_BRST_DISABLE,	\
++		.data_type = MHI_ER_DATA,	\
++		.hardware_event = false,	\
++		.client_managed = false,	\
++		.offload_channel = false,	\
++	}
++
+ #define MHI_EVENT_CONFIG_HW_DATA(ev_ring, el_count, ch_num) \
+ 	{					\
+ 		.num_elements = el_count,	\
+@@ -237,8 +250,10 @@ static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
+ 	MHI_CHANNEL_CONFIG_DL_AUTOQUEUE(21, "IPCR", 8, 0),
+ 	MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
+ 	MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
+-	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 2),
+-	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 3),
++	MHI_CHANNEL_CONFIG_UL(46, "IP_SW0", 64, 2),
++	MHI_CHANNEL_CONFIG_DL(47, "IP_SW0", 64, 3),
++	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 4),
++	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 5),
+ };
+ 
+ static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
+@@ -246,9 +261,12 @@ static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
+ 	MHI_EVENT_CONFIG_CTRL(0, 64),
+ 	/* DIAG dedicated event ring */
+ 	MHI_EVENT_CONFIG_DATA(1, 128),
++	/* Software channels dedicated event ring */
++	MHI_EVENT_CONFIG_SW_DATA(2, 64),
++	MHI_EVENT_CONFIG_SW_DATA(3, 64),
+ 	/* Hardware channels request dedicated hardware event rings */
+-	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+-	MHI_EVENT_CONFIG_HW_DATA(3, 2048, 101)
++	MHI_EVENT_CONFIG_HW_DATA(4, 1024, 100),
++	MHI_EVENT_CONFIG_HW_DATA(5, 2048, 101)
+ };
+ 
+ static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
 -- 
-மணிவண்ணன் சதாசிவம்
+2.25.1
+
