@@ -2,117 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FBB370A36D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 01:39:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4CB570A370
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 01:40:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230318AbjESXjy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 19:39:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48416 "EHLO
+        id S229523AbjESXka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 19:40:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230221AbjESXjw (ORCPT
+        with ESMTP id S229518AbjESXk3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 19:39:52 -0400
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B97A1B3;
-        Fri, 19 May 2023 16:39:51 -0700 (PDT)
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-51b0f9d7d70so3530272a12.1;
-        Fri, 19 May 2023 16:39:51 -0700 (PDT)
+        Fri, 19 May 2023 19:40:29 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB0ED1B3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 16:40:28 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4efe8b3f3f7so4342285e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 16:40:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684539627; x=1687131627;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6tgw64QArDRy7OvpPNE5Lmjz7wtWaHwDObMSRxTN810=;
+        b=Ik73RGkBIkUJzAHOt+zcQM4hIdiEKd+SA86jn8b6gFksbp6y4qIIb4BojUyZqli6AN
+         9AUK7Wwr9yqTthjtVdPxKjgLuonZjbKPe7yglCUtzncz8h6BjzNdlHF8WYp38/GWfpBU
+         C0IoBHMd/wMI3EPBR25Dwfvk5Sd12++lHma3cYgPCwxmghFu0ywHu+tmmUMLRHHm40pz
+         9HgZKd0+64khRqdlVXP/u+6ygHCY9c6ejBKy5rgadt8Ophmu+nKdWe5bhKUA3eimE0DH
+         A/MOYXA5uZzyJIOtPSWaL1NcVt5RAkX5Z1HqpSuEPczHcHyVa1tmQ3kcdC0/EOHXo/h4
+         4Htw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684539591; x=1687131591;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=j+/I1DakxPrd+okwwNtUEXRwJ7ucYEoX+rOCHphwT6I=;
-        b=B4U12YwCYTeNLFHf+F6NnDTiONqlnERt6n4jt+H00j4OT/7WnLUBOFVSve7MZHPsAc
-         ZaHn2Pu2wT8QFbrH2uXUG12KjsLeqfHtjkuGchc/B49nW3FsIdcvFKdDVoISs8vkPd2g
-         39Hv+OQ0gqBbU/KMrTnHQjHV/mKMZBmcYrewkAF1tloXWajUi6AZvKYlYkuwDqx45v3q
-         qQy01bhau/+1mLLUKrpOin/W8W7vai43rGMnUHAWxKx1m2TGKFje2BbylHP2a73klI9y
-         pn9QwOQknSR+yGKYKSOs/mmNKcXcpIKRkbjvtZTb+JbhADCsWFrLLDqOIC02Qudc1YBa
-         volw==
-X-Gm-Message-State: AC+VfDzZEqG1MZAW5kj2oZe8W1WP/NaBi391i2HdbVV9vLwSMIOrpN7+
-        1lw/0wesZPNfnSorOD1c8d5EnsrDZMIeSrVO
-X-Google-Smtp-Source: ACHHUZ70tJtQIqEYhaAi+PGMl9f8G8LSCKi3EFC8z7gNKkwLrwkpzW/lG6RgAB29zE9TPARoQtOpMg==
-X-Received: by 2002:a17:902:d4c6:b0:1a5:150f:8558 with SMTP id o6-20020a170902d4c600b001a5150f8558mr4038822plg.17.1684539590542;
-        Fri, 19 May 2023 16:39:50 -0700 (PDT)
-Received: from dev-linux.lan (cpe-70-95-21-110.san.res.rr.com. [70.95.21.110])
-        by smtp.gmail.com with ESMTPSA id t5-20020a170902e84500b001960706141fsm170742plg.149.2023.05.19.16.39.49
+        d=1e100.net; s=20221208; t=1684539627; x=1687131627;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6tgw64QArDRy7OvpPNE5Lmjz7wtWaHwDObMSRxTN810=;
+        b=lxl82hFIYGHmw2Day3M9MIBagkypZ82JeX8QdYxP0iMZPV1JXzCBxqaIjDClaBuSb/
+         uAAy0H1OKSo8lGVGhRIFQSULMiIM7LrVS376+5TKcAG9cLGXcy4qE9qpIrmat2xSE1Cw
+         KdRKNooDzaYmcQT0sz3uoaqBTVVwec3qhzh4OPBwhFgVVd6xXvFN26ZWZV6geLgiDOpe
+         loSvvi/93EahuTx/oBKp152+17Dqu2Fk1lg4nMoc7YWjEVHA8fzY9mnmn4PE/su3FkgO
+         I0uDxMuAYl7NrUEst9X09hs+FSHAPn3/5LtJQC0xvmh0x8K+l6jaBRYuh6v4+eF0B7nA
+         73lA==
+X-Gm-Message-State: AC+VfDzC4tlx6b9rLi67H8OUtYPII1YM1mlFRX8/MFzF2kifFkhayMrH
+        7Zp+jN6PTKHN35p3MicywPCoaQ==
+X-Google-Smtp-Source: ACHHUZ659kbwQ+zdbPhbcbhPNXF2toD/GnKXZZ2iSe3oNSV16KRXsqgmyhbNW6lUTZB6cVqjO81y+w==
+X-Received: by 2002:ac2:4556:0:b0:4e9:c627:195d with SMTP id j22-20020ac24556000000b004e9c627195dmr1079154lfm.57.1684539627094;
+        Fri, 19 May 2023 16:40:27 -0700 (PDT)
+Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id l7-20020a2e3e07000000b002af25598f07sm43454lja.78.2023.05.19.16.40.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 May 2023 16:39:49 -0700 (PDT)
-Date:   Fri, 19 May 2023 16:39:47 -0700
-From:   Sukrut Bellary <sukrut.bellary@linux.com>
-To:     Dan Carpenter <dan.carpenter@linaro.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org,
-        Shuah Khan <skhan@linuxfoundation.org>
-Subject: Re: [PATCH] misc: fastrpc: Fix double free of 'buf' in error path
-Message-ID: <ZGgIw3rzigqI92BO@dev-linux.lan>
-References: <20230518100829.515143-1-sukrut.bellary@linux.com>
- <9194ebdf-f335-4cd6-bf89-bb4f86a57784@kili.mountain>
- <f47b17c1-1c02-2aa3-ba10-fcef70cb25a8@linaro.org>
- <b0115d7d-d15a-4948-8726-09a8b37f3f36@kili.mountain>
- <fa0e9d9d-6362-456b-87f7-990ccf7e8930@kili.mountain>
+        Fri, 19 May 2023 16:40:26 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v2 0/4] drm/msm/dpu: simplity RM code
+Date:   Sat, 20 May 2023 02:40:21 +0300
+Message-Id: <20230519234025.2864377-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fa0e9d9d-6362-456b-87f7-990ccf7e8930@kili.mountain>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 19, 2023 at 01:58:10PM +0300, Dan Carpenter wrote:
-> This is unrelated but I was looking through the driver and I notice
-> a bunch of code doing:
-> 
-> grep 'return ret ?' drivers/firmware/ -R
-> 
-> 	return ret ? : res.result[0];
-> 
-> "ret" here is a kernel error code, and res.result[0] is a firmware
-> error code.  Mixing error codes is a dangerous thing.  I was reviewing
-> some of the callers and the firmware error code gets passed quite far
-> back into the kernel to where we would only expect kernel error codes.
-> 
-> Presumably the firmware is returning positive error codes?  To be honest,
-> I am just guessing.  It's better to convert custom error codes to kernel
-> error codes as soon as possible.  I am just guessing.  Sukrut, do you
-> think you could take a look?  If the callers do not differentiate
-> between negative kernel error codes and positive custom error codes then
-> probably just do:
-> 
-> 	if (res.result[0])
-> 		ret = -EIO; // -EINVAL?
-> 	return ret;
-> 
+Implement several small simplifications for the DPU resource manager.
+The ideas behind these patches were suggested by Marijn.
 
-Thanks, Dan, for sharing your findings.
-Yes, sure, I will take a look.
+Changes since v1:
+- Reworded commit message for the patch 1 (Marijn)
+- Fixed documentation for dpu_lm_cfg::pingpong (Marijn)
+- Added Suggested-by to the last patch (Marijn)
 
-Regards,
-Sukrut Bellary
+Dmitry Baryshkov (4):
+  drm/msm/dpu: replace IS_ERR_OR_NULL with IS_ERR during DSC init
+  drm/msm/dpu: remove futile checks from dpu_rm_init()
+  drm/msm/dpu: use PINGPONG_NONE for LMs with no PP attached
+  drm/msm/dpu: move PINGPONG_NONE check to dpu_lm_init()
 
-> Also there are a couple places which do:
-> 
-> 	return ret ? false : !!res.result[0];
-> 
-> Here true means success and false means failure.  So the !! converts
-> a firmware error code to true when it should be false so that's a bug.
-> Quadruple negatives are confusing...  It should be:
-> 
-> 	if (ret || res.result[0])
-> 		return false;
-> 	return true;
-> 
-> regards,
-> dan carpenter
-> 
+ .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  4 +-
+ .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  4 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c     |  5 +++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |  3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        | 41 +------------------
+ 6 files changed, 13 insertions(+), 46 deletions(-)
+
+-- 
+2.39.2
+
