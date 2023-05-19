@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8088A70A375
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 01:40:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27DE470A376
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 01:40:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230133AbjESXkd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 19:40:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48892 "EHLO
+        id S229877AbjESXke (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 19:40:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48900 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229827AbjESXkd (ORCPT
+        with ESMTP id S230005AbjESXkd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 19 May 2023 19:40:33 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0927BE5A
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20AD51B7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 16:40:32 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2af28303127so10875771fa.3
         for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 16:40:31 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f3af4295ddso1287712e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 16:40:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684539629; x=1687131629;
+        d=linaro.org; s=google; t=1684539630; x=1687131630;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nnu86aHsFvtanZnKvSuDSJpSBM6pga1ozC9nPHHaAaM=;
-        b=Tyzuj9NJexe/fWbID7X9P/UU50wnU2GBXTk/YUtY+wSAYKnkbW/iWv5LAxrNVEJKr3
-         BFDtqENi1k2fiZpcyEYd+kdwsYnVUhpgFHNl7LfDjopnyT0tcxDIC+tgLB5K4eLGsmF+
-         OqJYvoaQdKd3HHYCPNKyD0E5JbiN4jgnKnVaGB8jvlEbOQrq62Y4IAAyxu5J1uuTO9Nh
-         5O/5s640YbolZnTxj6kDkNVEj7uiN11kaOEGFWqrrcIl++SVKfDTtZ8hvBkiYC5LQy70
-         By3b3zqSLqEidEKMlAVxYP3Sj/JKDrykNIwyNfi6wv/ZRI7LZIurtyzvG7mAKbn99ziT
-         obuA==
+        bh=SP9r8o45jCIKKsv86cuaR2n6xnWFwKLjeFYUSAiBNjc=;
+        b=jfAAR1SEHiKrVRED/e4YHu2ieVicHNB5SXnFYtRpO4i2yTK32P6PSIY6no6pDyHR4U
+         /3IS409Au91L20PuZSqSaJkO4418crBke1zO+HFMOduMBEVjGOsNcxVfKltHqv24QzOs
+         3xSvYLXNkWnNqKnhcNXjVALKOPN+WsNFslOaSzfQqqDZKmiiEJsfOzzy/mIRJp0ExXKQ
+         G4RK/rgaIDIlK+D+NW0R+K5e1GIEQTC3MClhOO3CsXV4Tb6Fw1gGcnPxt8eR09x8cqBq
+         d6PPvFtVwXl21gHE7taswp84XLUBL6/qQUT5nwDuOl7j0G5jHeS/rAXdCg+s00MDT4OP
+         IZQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684539629; x=1687131629;
+        d=1e100.net; s=20221208; t=1684539630; x=1687131630;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nnu86aHsFvtanZnKvSuDSJpSBM6pga1ozC9nPHHaAaM=;
-        b=gmR4zewx1xSaA8NM1kYSohLgMqys6YfQWeqjzWCIJfvYslNEXVit7FOlwA+biCH/h/
-         aV12aN/DVmXVA1iIF4J2ruAoOZL3sidNjzqd+M0YmTamXSqYJk1VjmPRFZW3+mZ7khs7
-         Zy8B7mn6XgyrgHKRnNQFmiGZvJJOHa1mODhf5QmQFbVM1AXGzhBvdSZnC/Q6vpCZQ403
-         FXMiq/6Bh01qCLoN7q8hcNUgkkR0r26cU4qxMZkm1o6vQePNvJf6J/wf3cRcrwdyTJme
-         XP1JHIiWqLBH+yOFFdD7cj2aG1zV6W9n3vFrFbC04Nn7I0me8KsKOE5MGPF5DGJqdwYZ
-         iu3A==
-X-Gm-Message-State: AC+VfDzl5j+uTm1qOhn8ukPMdAAVVY7zdT0O7+DD25N9/4Lb87HVJhSy
-        UdlAy3X5gKFY+3ZqsFHkt8bghg==
-X-Google-Smtp-Source: ACHHUZ50vwYQILoWGT/85lXxQMyIRH7gbuo5XLMlym2eypjBVfGij6VZ8WAp24RQWsG/raTqlYAVpQ==
-X-Received: by 2002:a19:ee14:0:b0:4f1:1de7:1aab with SMTP id g20-20020a19ee14000000b004f11de71aabmr1073203lfb.44.1684539629268;
-        Fri, 19 May 2023 16:40:29 -0700 (PDT)
+        bh=SP9r8o45jCIKKsv86cuaR2n6xnWFwKLjeFYUSAiBNjc=;
+        b=NEX6vvUJcBhqhgLaAT63fp3f+dUihZ2+CKYUK4sntGQGkaTVjz+tR6pt+TXw6yAI9R
+         C8C89njZz/GBRDBEAPhXqiKR0+HshTjIEMW9io69DEEL5uomIijQY5m1wAAWQnEPSXl3
+         Vr92HJFrW30kD6C+r/oY4seWlGoiM3xRiB08EMTIQ/iQDXhaIHBm4ECpeF2Ai6veohSR
+         edM4XpRIXhhXJqImUT/nUiTwwtW9CcNdbkG4baz/nYKnB6EHobWV5IAO1GRIc0W4a2ly
+         8WBYEpOQd5qorMXm1VZvxMRTXXJ2cdrpbHttwHglxOD3FfdWFLbD3xznDmPz3TZT3Gcg
+         kRcw==
+X-Gm-Message-State: AC+VfDzjy9U4xLfJFWA+474Y/vExmOrMdZayTa4HKhZikJI7H9aPgw0J
+        soR6ycRCnyxFq3MtiO6WmMBXzA==
+X-Google-Smtp-Source: ACHHUZ4L1DmQxj2wcs+2VmKrhphZOV8bO0R/mrtTqApwLNfX3QOU1rJVE5lDNRfyJGLaU79dWCmK5A==
+X-Received: by 2002:a2e:8014:0:b0:2ac:8cc0:bee5 with SMTP id j20-20020a2e8014000000b002ac8cc0bee5mr1447324ljg.0.1684539630277;
+        Fri, 19 May 2023 16:40:30 -0700 (PDT)
 Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id l7-20020a2e3e07000000b002af25598f07sm43454lja.78.2023.05.19.16.40.28
+        by smtp.gmail.com with ESMTPSA id l7-20020a2e3e07000000b002af25598f07sm43454lja.78.2023.05.19.16.40.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 May 2023 16:40:28 -0700 (PDT)
+        Fri, 19 May 2023 16:40:29 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v2 3/4] drm/msm/dpu: use PINGPONG_NONE for LMs with no PP attached
-Date:   Sat, 20 May 2023 02:40:24 +0300
-Message-Id: <20230519234025.2864377-4-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 4/4] drm/msm/dpu: move PINGPONG_NONE check to dpu_lm_init()
+Date:   Sat, 20 May 2023 02:40:25 +0300
+Message-Id: <20230519234025.2864377-5-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230519234025.2864377-1-dmitry.baryshkov@linaro.org>
 References: <20230519234025.2864377-1-dmitry.baryshkov@linaro.org>
@@ -78,92 +78,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On msm8998/sdm845 some LM blocks do not have corresponding PINGPONG
-block. Currently the driver uses PINGPONG_MAX for such cases. Switch
-that to use PINGPONG_NONE instead, which is more logical.
+Move the check for lm->pingpong being not NONE from dpu_rm_init() to
+dpu_lm_init(), following the change to dpu_hw_intf_init().
 
+Suggested-by: Marijn Suijten <marijn.suijten@somainline.org>
 Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h | 4 ++--
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h  | 4 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h          | 2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h             | 3 ++-
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c                  | 2 +-
- 5 files changed, 8 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c | 5 +++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c    | 5 -----
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-index 37a52b4ef8d3..3c732a0360c7 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-@@ -104,9 +104,9 @@ static const struct dpu_lm_cfg msm8998_lm[] = {
- 	LM_BLK("lm_2", LM_2, 0x46000, MIXER_MSM8998_MASK,
- 		&msm8998_lm_sblk, PINGPONG_2, LM_5, 0),
- 	LM_BLK("lm_3", LM_3, 0x47000, MIXER_MSM8998_MASK,
--		&msm8998_lm_sblk, PINGPONG_MAX, 0, 0),
-+		&msm8998_lm_sblk, PINGPONG_NONE, 0, 0),
- 	LM_BLK("lm_4", LM_4, 0x48000, MIXER_MSM8998_MASK,
--		&msm8998_lm_sblk, PINGPONG_MAX, 0, 0),
-+		&msm8998_lm_sblk, PINGPONG_NONE, 0, 0),
- 	LM_BLK("lm_5", LM_5, 0x49000, MIXER_MSM8998_MASK,
- 		&msm8998_lm_sblk, PINGPONG_3, LM_2, 0),
- };
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-index 0b727252671c..36ea1af10894 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-@@ -102,9 +102,9 @@ static const struct dpu_lm_cfg sdm845_lm[] = {
- 	LM_BLK("lm_2", LM_2, 0x46000, MIXER_SDM845_MASK,
- 		&sdm845_lm_sblk, PINGPONG_2, LM_5, 0),
- 	LM_BLK("lm_3", LM_3, 0x0, MIXER_SDM845_MASK,
--		&sdm845_lm_sblk, PINGPONG_MAX, 0, 0),
-+		&sdm845_lm_sblk, PINGPONG_NONE, 0, 0),
- 	LM_BLK("lm_4", LM_4, 0x0, MIXER_SDM845_MASK,
--		&sdm845_lm_sblk, PINGPONG_MAX, 0, 0),
-+		&sdm845_lm_sblk, PINGPONG_NONE, 0, 0),
- 	LM_BLK("lm_5", LM_5, 0x49000, MIXER_SDM845_MASK,
- 		&sdm845_lm_sblk, PINGPONG_3, LM_2, 0),
- };
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index 1cb5699a5a47..677048cc3b7d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -529,7 +529,7 @@ struct dpu_sspp_cfg {
-  * @base               register offset of this block
-  * @features           bit mask identifying sub-blocks/features
-  * @sblk:              LM Sub-blocks information
-- * @pingpong:          ID of connected PingPong, PINGPONG_MAX if unsupported
-+ * @pingpong:          ID of connected PingPong, PINGPONG_NONE if unsupported
-  * @lm_pair_mask:      Bitmask of LMs that can be controlled by same CTL
-  */
- struct dpu_lm_cfg {
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-index 1913a19de733..02a0f48aac94 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-@@ -191,7 +191,8 @@ enum dpu_dsc {
- };
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+index 214f207ddf8a..d1c3bd8379ea 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+@@ -161,6 +161,11 @@ struct dpu_hw_mixer *dpu_hw_lm_init(const struct dpu_lm_cfg *cfg,
+ {
+ 	struct dpu_hw_mixer *c;
  
- enum dpu_pingpong {
--	PINGPONG_0 = 1,
-+	PINGPONG_NONE,
-+	PINGPONG_0,
- 	PINGPONG_1,
- 	PINGPONG_2,
- 	PINGPONG_3,
++	if (cfg->pingpong == PINGPONG_NONE) {
++		DPU_DEBUG("skip mixer %d without pingpong\n", cfg->id);
++		return NULL;
++	}
++
+ 	c = kzalloc(sizeof(*c), GFP_KERNEL);
+ 	if (!c)
+ 		return ERR_PTR(-ENOMEM);
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-index d5a06628885e..bf7b8e7c45b1 100644
+index bf7b8e7c45b1..2ca3c666e22f 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
-@@ -117,7 +117,7 @@ int dpu_rm_init(struct dpu_rm *rm,
+@@ -117,11 +117,6 @@ int dpu_rm_init(struct dpu_rm *rm,
  		struct dpu_hw_mixer *hw;
  		const struct dpu_lm_cfg *lm = &cat->mixer[i];
  
--		if (lm->pingpong == PINGPONG_MAX) {
-+		if (lm->pingpong == PINGPONG_NONE) {
- 			DPU_DEBUG("skip mixer %d without pingpong\n", lm->id);
- 			continue;
- 		}
+-		if (lm->pingpong == PINGPONG_NONE) {
+-			DPU_DEBUG("skip mixer %d without pingpong\n", lm->id);
+-			continue;
+-		}
+-
+ 		hw = dpu_hw_lm_init(lm, mmio);
+ 		if (IS_ERR(hw)) {
+ 			rc = PTR_ERR(hw);
 -- 
 2.39.2
 
