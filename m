@@ -2,120 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 932A77097CA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 14:57:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 453397097F9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 15:09:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231660AbjESM5l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 08:57:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37164 "EHLO
+        id S230268AbjESNJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 09:09:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231414AbjESM5k (ORCPT
+        with ESMTP id S229965AbjESNJK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 08:57:40 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E7B7E45;
-        Fri, 19 May 2023 05:56:56 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34JCGhFw013234;
-        Fri, 19 May 2023 12:56:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=T8XoqpXDyaET013xmrLDBkOm8cU8UuGqCHGSI8E8QUU=;
- b=AlvZK+mppsmRb7iA3+hqFSJMidqgpMlFikcgWFDRHS7TckDx/Duuk07fFSwi+IEIVuFj
- ey7DoY1ZMXj0CE0HX94jAgaEOANvFhsizTehnKvmWEfoJJI4K0nzLU9Y6RD2PxBxisxH
- UltqFFmSRvfDgwnJ6J2GuL6pp84hw6IVtoELAgLRpMyNSJz3h6EOhz2zcJI0Jq8MmRZQ
- M6p3Ub/jqzZXTQd9JHQSBOWp9CXR1kz9//8uJAtcogWi2wVtjUJsNQfaiuaO47r/MSak
- b91kK+xzZW35+7KGETDUSXNtsRAF3DgcHmhwW01z+0VJ0XCNgKe8E2Sfs2HPY3DRw/k8 Ow== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qp8fm04fp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 19 May 2023 12:56:12 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34JCto1n022073
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 19 May 2023 12:55:50 GMT
-Received: from win-platform-upstream01.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 19 May 2023 05:55:12 -0700
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
-        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <robimarko@gmail.com>,
-        <andy.shevchenko@gmail.com>, <quic_srichara@quicinc.com>
-Subject: [PATCH V7 8/8] arm64: defconfig: Enable IPQ5018 SoC base configs
-Date:   Fri, 19 May 2023 18:24:09 +0530
-Message-ID: <20230519125409.497439-9-quic_srichara@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230519125409.497439-1-quic_srichara@quicinc.com>
-References: <20230519125409.497439-1-quic_srichara@quicinc.com>
+        Fri, 19 May 2023 09:09:10 -0400
+Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1470010A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 06:09:09 -0700 (PDT)
+Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2af28303127so3687671fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 06:09:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684501747; x=1687093747;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/Zv1mah4N/HaBlq32OJrOUOQJENrx2Ay1ik5IJM6AVI=;
+        b=E1COi7fX2rR/FXALr7SUoo8vmNVfuubFb6T0kKFyjEycRTKBAFRDmAdnqRsiv96QI+
+         YuksjYw1TCI8YD7OL1HQrzgBRoCAIAFokNHTHkDVC1hU3qngsBeDaYnHcwPs5B3kG3Es
+         u00S6fMxCjT7Mb78GlmwZedLK69dZlMIFKBL02M+7Q+i2qcCqg0QAnEjTlwu+jqP61+t
+         XdH1jZt1ZsHLr3eQuYX9Uk+sJk8rDuB0PHuNDxu1ssWyB4KCdzOdVXgajCPByvWxCIDq
+         eFyq3BBwUZrDO/qwGY7btyI+X5TzriO5HGMlo/fA56RtJOJp3ByAog9e5a2LPgxKgf2g
+         5u5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684501747; x=1687093747;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/Zv1mah4N/HaBlq32OJrOUOQJENrx2Ay1ik5IJM6AVI=;
+        b=j2ZPnJRPOMUY7ZI6fw6i98f6AQVBFERWuVeXoj1v0sThrOSq6yuAT0w+Tsf70pp3R8
+         wboj067PS5Zyq7keF4K4XBB3HJWkV5Swk/zTowUVe4I3n7oQZzq+YuuAGfMXoUunvGd6
+         117Xigtc9TV+6RcKzrFQc2vOuOt7lIgzQoYLg8pGHu9GwWmgD3U6JHGqTtgTTR1Pd9sS
+         HRgk7uhLUe/kyw76ISt95aA6mBS66DY5a+wfHtpDlNVr4JSuE7owcKgYgqeOVhIoMYjb
+         9J1Uif28rqQFVhzgIQ83yhisKf1mvXSJrS4tROJy7zGlL1GRehIFvXvHwX8NnKZfzck4
+         sFkA==
+X-Gm-Message-State: AC+VfDwiw9bgvf9ybTmJo+Gwi0WnA+XSd//zzdBhk87EJBdTCq7PTLOR
+        R7NLnLKGMVPd/BMWiWAGYUd/gg==
+X-Google-Smtp-Source: ACHHUZ7c/wlNtcqnvOYUHVFfllflTtq4Bc0T77kg8q0qZWMwJo/oVsLcE8qIc4ULCRXWHIkvU13COQ==
+X-Received: by 2002:ac2:5a4d:0:b0:4ed:cb37:7d8c with SMTP id r13-20020ac25a4d000000b004edcb377d8cmr716553lfn.67.1684501747257;
+        Fri, 19 May 2023 06:09:07 -0700 (PDT)
+Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
+        by smtp.gmail.com with ESMTPSA id q30-20020ac25a1e000000b004edc7f6ee44sm278767lfn.234.2023.05.19.06.09.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 May 2023 06:09:06 -0700 (PDT)
+Message-ID: <4a9248c0-96ec-1986-d874-1cb7d8aac0ac@linaro.org>
+Date:   Fri, 19 May 2023 15:09:05 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/4] clk: qcom: clk-alpha-pll: Add support for lucid ole
+ pll ops
+Content-Language: en-US
+To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230509161218.11979-1-quic_jkona@quicinc.com>
+ <20230509161218.11979-2-quic_jkona@quicinc.com>
+ <019999fd-3c86-8c85-76c7-8d0206e60f4d@linaro.org>
+ <55fc32df-f01b-1ba3-3813-26a5f8c7f730@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <55fc32df-f01b-1ba3-3813-26a5f8c7f730@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 6l7PAwVJcBwfMczpSgcK0NxfayXQIvz1
-X-Proofpoint-GUID: 6l7PAwVJcBwfMczpSgcK0NxfayXQIvz1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-19_08,2023-05-17_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 adultscore=0 mlxlogscore=887 bulkscore=0 spamscore=0
- priorityscore=1501 malwarescore=0 phishscore=0 clxscore=1015
- suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305190109
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enables clk & pinctrl related configs
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
----
- [v6] Added Reviewed by
 
- arch/arm64/configs/defconfig | 3 +++
- 1 file changed, 3 insertions(+)
+On 19.05.2023 14:49, Jagadeesh Kona wrote:
+> Hi,
+> 
+> Thanks Konrad for your review!
+> 
+> On 5/10/2023 1:36 AM, Konrad Dybcio wrote:
+>>
+>>
+>> On 9.05.2023 18:12, Jagadeesh Kona wrote:
+>>> From: Taniya Das <quic_tdas@quicinc.com>
+>>>
+>>> Add support for lucid ole pll ops to configure and control the
+>>> lucid ole pll. The lucid ole pll has an additional test control
+>>> register which is required to be programmed, add support to
+>>> program the same.
+>>>
+>>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+>>> ---
+>> Isn't this commit "write to PLL_TEST_CTL_U2 on LUCID_EVO" instead?
+>>
+>> Meaninglessly duplicating ops does not seem useful.
+>>
+>> Konrad
+> 
+> Though we are reusing same ops for EVO and OLE, PLL_TEST_CTL_U2 register programming is applicable only to OLE PLL type.
+Well, your patch makes it unconditional (modulo programmer error) so
+I think that makes little sense.. A comment would be enough, imo.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index a24609e14d50..8bf0ef77f375 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -553,6 +553,7 @@ CONFIG_PINCTRL_IMX8ULP=y
- CONFIG_PINCTRL_IMX93=y
- CONFIG_PINCTRL_MSM=y
- CONFIG_PINCTRL_IPQ8074=y
-+CONFIG_PINCTRL_IPQ5018=y
- CONFIG_PINCTRL_IPQ5332=y
- CONFIG_PINCTRL_IPQ6018=y
- CONFIG_PINCTRL_IPQ9574=y
-@@ -1154,6 +1155,8 @@ CONFIG_QCOM_CLK_APCC_MSM8996=y
- CONFIG_QCOM_CLK_SMD_RPM=y
- CONFIG_QCOM_CLK_RPMH=y
- CONFIG_IPQ_GCC_5332=y
-+CONFIG_IPQ_APSS_5018=y
-+CONFIG_IPQ_GCC_5018=y
- CONFIG_IPQ_GCC_6018=y
- CONFIG_IPQ_GCC_8074=y
- CONFIG_IPQ_GCC_9574=y
--- 
-2.34.1
-
+Konrad
+And PLL type is useful to properly refer respective hardware datasheets. Hence added separate ops for OLE PLL type.
+> 
+> 
+>>>   drivers/clk/qcom/clk-alpha-pll.c | 2 ++
+>>>   drivers/clk/qcom/clk-alpha-pll.h | 4 ++++
+>>>   2 files changed, 6 insertions(+)
+>>>
+>>> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+>>> index b9f6535a7ba7..f81c7c561352 100644
+>>> --- a/drivers/clk/qcom/clk-alpha-pll.c
+>>> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+>>> @@ -55,6 +55,7 @@
+>>>   #define PLL_TEST_CTL(p)        ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL])
+>>>   #define PLL_TEST_CTL_U(p)    ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U])
+>>>   #define PLL_TEST_CTL_U1(p)     ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U1])
+>>> +#define PLL_TEST_CTL_U2(p)     ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U2])
+>>>   #define PLL_STATUS(p)        ((p)->offset + (p)->regs[PLL_OFF_STATUS])
+>>>   #define PLL_OPMODE(p)        ((p)->offset + (p)->regs[PLL_OFF_OPMODE])
+>>>   #define PLL_FRAC(p)        ((p)->offset + (p)->regs[PLL_OFF_FRAC])
+>>> @@ -2096,6 +2097,7 @@ void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regma
+>>>       clk_alpha_pll_write_config(regmap, PLL_TEST_CTL(pll), config->test_ctl_val);
+>>>       clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U(pll), config->test_ctl_hi_val);
+>>>       clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U1(pll), config->test_ctl_hi1_val);
+>>> +    clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U2(pll), config->test_ctl_hi2_val);
+>>>         /* Disable PLL output */
+>>>       regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
+>>> diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
+>>> index d07b17186b90..4d9b6d5b7062 100644
+>>> --- a/drivers/clk/qcom/clk-alpha-pll.h
+>>> +++ b/drivers/clk/qcom/clk-alpha-pll.h
+>>> @@ -125,6 +125,7 @@ struct alpha_pll_config {
+>>>       u32 test_ctl_val;
+>>>       u32 test_ctl_hi_val;
+>>>       u32 test_ctl_hi1_val;
+>>> +    u32 test_ctl_hi2_val;
+>>>       u32 main_output_mask;
+>>>       u32 aux_output_mask;
+>>>       u32 aux2_output_mask;
+>>> @@ -171,6 +172,7 @@ extern const struct clk_ops clk_alpha_pll_zonda_ops;
+>>>   #define clk_alpha_pll_postdiv_zonda_ops clk_alpha_pll_postdiv_fabia_ops
+>>>     extern const struct clk_ops clk_alpha_pll_lucid_evo_ops;
+>>> +#define clk_alpha_pll_lucid_ole_ops clk_alpha_pll_lucid_evo_ops
+>>>   extern const struct clk_ops clk_alpha_pll_reset_lucid_evo_ops;
+>>>   #define clk_alpha_pll_reset_lucid_ole_ops clk_alpha_pll_reset_lucid_evo_ops
+>>>   extern const struct clk_ops clk_alpha_pll_fixed_lucid_evo_ops;
+>>> @@ -196,6 +198,8 @@ void clk_zonda_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+>>>                    const struct alpha_pll_config *config);
+>>>   void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+>>>                    const struct alpha_pll_config *config);
+>>> +#define clk_lucid_ole_pll_configure(pll, regmap, config) \
+>>> +            clk_lucid_evo_pll_configure(pll, regmap, config)
+>>>   void clk_rivian_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+>>>                     const struct alpha_pll_config *config);
+>>>   void clk_stromer_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+> 
+> Thanks & Regards,
+> Jagadeesh
