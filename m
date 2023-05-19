@@ -2,122 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8701970A303
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 00:58:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2085E70A307
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 00:59:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229974AbjESW6N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 18:58:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60546 "EHLO
+        id S229512AbjESW73 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 18:59:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229449AbjESW6M (ORCPT
+        with ESMTP id S229449AbjESW73 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 18:58:12 -0400
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF9B1E46;
-        Fri, 19 May 2023 15:58:02 -0700 (PDT)
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-64d247a023aso1663259b3a.2;
-        Fri, 19 May 2023 15:58:02 -0700 (PDT)
+        Fri, 19 May 2023 18:59:29 -0400
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BD8299;
+        Fri, 19 May 2023 15:59:28 -0700 (PDT)
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-24e16918323so2752682a91.2;
+        Fri, 19 May 2023 15:59:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684537082; x=1687129082;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lT3nVX8BOP6xdFUAxxsGq0VwKjJtQEdxnV8AqojOVvE=;
-        b=G4zQo875H6QgGCt/ELHZWPc5M13RsMIMJUenfmaNPxgrTdnvpli3cJ5sKr1qpgurNx
-         f/Frs0t8etXo5EjkBgXJsuB5loRA4uqRsQEqh+4GHlurCVCCSMFXLct0mS3vP18ylg3i
-         ykpedVuBytPy1c7+dxGr4+TWeif95YpsQigav/oDY7utpu4WDx/YtadLsL/OuiQfj9AP
-         aSzfW2QtZDhnKIfODzqZLacTKkd1ydOuPNN+DTbMNvsAAErHY3D3KTXqw0VMqHu3k5j6
-         1d216j+6xkRxWHfmMJmlLle07TUZ3Gi6ZmCwMnkn7KC21XHU90OAbQTPs45L3759Ng6C
-         hhzw==
-X-Gm-Message-State: AC+VfDzLTWFRrQRAkOB4W1I1oA0HFbBeULZMq5NVd9Ilgw1GU0SAlH2D
-        eVVocdfxZuWf/63bwV891kc=
-X-Google-Smtp-Source: ACHHUZ4dpJa1bPQdCUzlU6b8KGnb61gD8PYkuxGZtcIWM6wwJnGwKzbgeY8t6vG1yKx/SWkXHSVUuA==
-X-Received: by 2002:a05:6a00:1914:b0:648:b185:efd9 with SMTP id y20-20020a056a00191400b00648b185efd9mr4424120pfi.11.1684537081838;
-        Fri, 19 May 2023 15:58:01 -0700 (PDT)
-Received: from dev-linux.lan (cpe-70-95-21-110.san.res.rr.com. [70.95.21.110])
-        by smtp.gmail.com with ESMTPSA id e24-20020a62aa18000000b0064d3a9def35sm166486pff.188.2023.05.19.15.58.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 May 2023 15:58:01 -0700 (PDT)
-Date:   Fri, 19 May 2023 15:57:59 -0700
-From:   Sukrut Bellary <sukrut.bellary@linux.com>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     Dan Carpenter <dan.carpenter@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org,
-        Shuah Khan <skhan@linuxfoundation.org>
-Subject: Re: [PATCH] misc: fastrpc: Fix double free of 'buf' in error path
-Message-ID: <ZGf+99vmXpN5nJ2f@dev-linux.lan>
-References: <20230518100829.515143-1-sukrut.bellary@linux.com>
- <9194ebdf-f335-4cd6-bf89-bb4f86a57784@kili.mountain>
- <f47b17c1-1c02-2aa3-ba10-fcef70cb25a8@linaro.org>
- <b0115d7d-d15a-4948-8726-09a8b37f3f36@kili.mountain>
- <4aa42c38-e0e2-4d2d-bfe2-15bc151f7117@linaro.org>
+        d=1e100.net; s=20221208; t=1684537168; x=1687129168;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sc+4sKuAVnCsRRFZyDycPPE7ku7z68s6fzQGZc0XWWI=;
+        b=dtASnA/skP2Is0vSg5068h2X9zXaWHa7YmOzSohJmJ0yivtBKvTcjXPmr/C5Gv5F1V
+         5pNuMhaNudH2adHL65K+oIamYFAKrJ4vhwnnivTkhJppAasJ+Nt+2RrbB071vuB+EeqY
+         H3/zoiUixTMOBWN0/0IIVM6cqSur3k1IpzGkEicyKiXB/uxMa+73IPnu5xGmECiqGXxk
+         K0aQ7JFPCEmXnNCpkxxb8PDvlTRstwANtYLwnO/cd82s9FEp+woRjQfM/unwpPYI0ZAg
+         T4mAeqSKr0xcPnTIk4rOO4r4FnmkKXKha7PJo5isZa/TaMuvkNJUVsotamrCyUUc01tU
+         jzLw==
+X-Gm-Message-State: AC+VfDzJr7BF3HktSzgRSiEsCymNOD0GpTj3lheVSAzgupUUi89gteUr
+        HscyraIvzQVEE+bOawdMMQsUZp1Zx6o=
+X-Google-Smtp-Source: ACHHUZ44anxKWqZIZ9BTOAtlGNmmSVZ94Ky5mZtjdxCWyy6amU0na459B1gSNWf5wzSMK1O2JdnUMQ==
+X-Received: by 2002:a17:90a:d188:b0:253:4212:9157 with SMTP id fu8-20020a17090ad18800b0025342129157mr3788026pjb.28.1684537167971;
+        Fri, 19 May 2023 15:59:27 -0700 (PDT)
+Received: from ?IPV6:2620:15c:211:201:102a:f960:4ec2:663d? ([2620:15c:211:201:102a:f960:4ec2:663d])
+        by smtp.gmail.com with ESMTPSA id ch9-20020a17090af40900b0024df7d7c35esm131760pjb.43.2023.05.19.15.59.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 May 2023 15:59:27 -0700 (PDT)
+Message-ID: <772624e4-c463-4661-f433-6d60a489f023@acm.org>
+Date:   Fri, 19 May 2023 15:59:25 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4aa42c38-e0e2-4d2d-bfe2-15bc151f7117@linaro.org>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v5 6/7] ufs: mcq: Use ufshcd_mcq_poll_cqe_lock() in mcq
+ mode
+Content-Language: en-US
+To:     "Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
+        quic_asutoshd@quicinc.com, quic_cang@quicinc.com, mani@kernel.org,
+        stanley.chu@mediatek.com, adrian.hunter@intel.com,
+        beanhuo@micron.com, avri.altman@wdc.com, martin.petersen@oracle.com
+Cc:     linux-scsi@vger.kernel.org, Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley" <jejb@linux.ibm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Alice Chao <alice.chao@mediatek.com>,
+        Arthur Simchaev <Arthur.Simchaev@wdc.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..." 
+        <linux-arm-msm@vger.kernel.org>
+References: <cover.1683872601.git.quic_nguyenb@quicinc.com>
+ <15f2844264a3308347d3986f72e6078bcaca5b55.1683872601.git.quic_nguyenb@quicinc.com>
+From:   Bart Van Assche <bvanassche@acm.org>
+In-Reply-To: <15f2844264a3308347d3986f72e6078bcaca5b55.1683872601.git.quic_nguyenb@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,
         FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+        NICE_REPLY_A,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 19, 2023 at 11:39:59AM +0100, Srinivas Kandagatla wrote:
-> 
-> 
-> On 19/05/2023 11:22, Dan Carpenter wrote:
-> > > ----------------------->cut<---------------------------
-> > > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> > > index f60bbf99485c..3fdd326e1ae8 100644
-> > > --- a/drivers/misc/fastrpc.c
-> > > +++ b/drivers/misc/fastrpc.c
-> > > @@ -1891,7 +1891,8 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl,
-> > > char __user *argp)
-> > >                                        &args[0]);
-> > >          if (err) {
-> > >                  dev_err(dev, "mmap error (len 0x%08llx)\n", buf->size);
-> > > -               goto err_invoke;
-> > > +               fastrpc_buf_free(buf);
-> > > +               return err;
-> > >          }
-> > > 
-> > >          /* update the buffer to be able to deallocate the memory on the DSP
-> > > */
-> > > @@ -1930,11 +1931,7 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl,
-> > > char __user *argp)
-> > >          return 0;
-> > > 
-> > >   err_assign:
-> > > -       fastrpc_req_munmap_impl(fl, buf);
-> > > -err_invoke:
-> > > -       fastrpc_buf_free(buf);
-> > > -
-> > > -       return err;
-> > > +       return fastrpc_req_munmap_impl(fl, buf);
-> > 
-> > This will return success if copy_to_user() fails.
-> > 
-> that is true, using return value of fastrpc_req_munmap_impl does not really
-> make sense here we should just return err in either case to the user.
->
+On 5/11/23 23:28, Bao D. Nguyen wrote:
+> In preparation for adding mcq error handler support, update the mcq
+> code to use the ufshcd_mcq_poll_cqe_lock() in interrupt context
+> instead of using ufshcd_mcq_poll_cqe_nolock(). This is to keep
+> synchronization between mcq interrupt and error handler contexts
+> because both need to access the mcq hardware in separate contexts.
 
-Thanks, Srini and Dan, for reviewing the patch and suggestions.
-I will add this in v2.
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 
-Regards,
-Sukrut Bellary
 
-> --srini
-> 
-> > regards,
-> > dan carpenter
-> > 
