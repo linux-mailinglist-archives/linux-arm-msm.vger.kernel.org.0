@@ -2,72 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D49517096FA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 14:00:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F8FC709705
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 14:04:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230195AbjESL77 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 07:59:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43974 "EHLO
+        id S231371AbjESMEt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 08:04:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45230 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229571AbjESL77 (ORCPT
+        with ESMTP id S231559AbjESMEq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 07:59:59 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05EADF5;
-        Fri, 19 May 2023 04:59:58 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        Fri, 19 May 2023 08:04:46 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 427E718C
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 05:04:44 -0700 (PDT)
+Received: from SoMainline.org (82-72-63-87.cable.dynamic.v4.ziggo.nl [82.72.63.87])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 955C765710;
-        Fri, 19 May 2023 11:59:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6ECCC433EF;
-        Fri, 19 May 2023 11:59:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684497597;
-        bh=jGfCp1g8O5R8vITSnEGD8PGxEQbGPlY0ilYpANNCCaA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=rl3XaIMlUbNbyDZRfTH8BGhpI6z9Y9DxA6Svt94cOsXYGzba520RDaU0XgL24vKdM
-         La3NQRENMGf2yXJziYPJq+MzgzRZIzqWpoNcjDWRa6I8vGsvsbnl2o5eYY05go683w
-         lHFsXp+mjrnKW1jVMXk4PIxcvEJoaaCPZAroSn/INjFJhJ+tl/k+cCS8asEYp5S2JM
-         HsunLtnp4zHAklMhHbSSYxvWgnU3fKmC1A1JDYi+2tGAWV/fZ+Ev+2a+Chc9lFWh9c
-         lq0yhdjf/BDk8+6xRkZq2gQwNkcLT4l2u4XlbmMjapUH+MZRGHNUVbDAb3AYkgn173
-         wsYZ/eTE+RuBQ==
-Date:   Fri, 19 May 2023 12:59:49 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v13 10/24] gunyah: vm_mgr: Add/remove user memory regions
-Message-ID: <20230519115948.GB2637@willie-the-truck>
-References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
- <20230509204801.2824351-11-quic_eberman@quicinc.com>
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B44081F97E;
+        Fri, 19 May 2023 14:04:40 +0200 (CEST)
+Date:   Fri, 19 May 2023 14:04:38 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org, quic_abhinavk@quicinc.com,
+        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v10 6/8] drm/msm/dpu: separate DSC flush update out of
+ interface
+Message-ID: <ku27atp4yqkpmz7g4ttylvzd43jmu4cwcs76nqgzramgxetjna@bu76f4c73724>
+References: <1684360919-28458-1-git-send-email-quic_khsieh@quicinc.com>
+ <1684360919-28458-7-git-send-email-quic_khsieh@quicinc.com>
+ <evkla3rkf4tge6gln4lgtulj7q5gt6vef3i2yqupc5lj2oszfx@7ttyxzlmvet5>
+ <8e9feb23-a5f0-7cd8-ebff-8e9097ff0ca1@quicinc.com>
+ <b2fcc9f5-ca11-ab87-e40b-9c6d2662325b@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20230509204801.2824351-11-quic_eberman@quicinc.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b2fcc9f5-ca11-ab87-e40b-9c6d2662325b@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,110 +54,87 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Elliot,
-
-On Tue, May 09, 2023 at 01:47:47PM -0700, Elliot Berman wrote:
-> When launching a virtual machine, Gunyah userspace allocates memory for
-> the guest and informs Gunyah about these memory regions through
-> SET_USER_MEMORY_REGION ioctl.
+On 2023-05-19 01:40:19, Dmitry Baryshkov wrote:
 > 
-> Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-> Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->  drivers/virt/gunyah/Makefile    |   2 +-
->  drivers/virt/gunyah/vm_mgr.c    |  59 +++++++-
->  drivers/virt/gunyah/vm_mgr.h    |  26 ++++
->  drivers/virt/gunyah/vm_mgr_mm.c | 236 ++++++++++++++++++++++++++++++++
->  include/uapi/linux/gunyah.h     |  37 +++++
->  5 files changed, 356 insertions(+), 4 deletions(-)
->  create mode 100644 drivers/virt/gunyah/vm_mgr_mm.c
+> On 19/05/2023 01:09, Kuogee Hsieh wrote:
+> > 
+> > On 5/17/2023 3:31 PM, Marijn Suijten wrote:
+> >>
+> >>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> >>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> >>> @@ -139,6 +139,11 @@ static inline void 
+> >>> dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
+> >>>                   CTL_DSPP_n_FLUSH(dspp - DSPP_0),
+> >>>                   ctx->pending_dspp_flush_mask[dspp - DSPP_0]);
+> >>>           }
+> >>> +
+> >>> +    if (ctx->pending_flush_mask & BIT(DSC_IDX))
+> >>> +        DPU_REG_WRITE(&ctx->hw, CTL_DSC_FLUSH,
+> >>> +                  ctx->pending_dsc_flush_mask);
+> >> Again, when do we reset this mask to 0?  (v8 review)
+> > 
+> > can not find it.
+> > 
+> > let me add a separate  patch to fix this.
+> 
+> The pending_dsc_flush_mask was added in this patch, so the reset should 
+> be a part of this patch too.
 
-[...]
+Yes, same patch.
 
-> +int gh_vm_mem_alloc(struct gh_vm *ghvm, struct gh_userspace_memory_region *region)
-> +{
-> +	struct gh_vm_mem *mapping, *tmp_mapping;
-> +	struct page *curr_page, *prev_page;
-> +	struct gh_rm_mem_parcel *parcel;
-> +	int i, j, pinned, ret = 0;
-> +	unsigned int gup_flags;
-> +	size_t entry_size;
-> +	u16 vmid;
-> +
-> +	if (!region->memory_size || !PAGE_ALIGNED(region->memory_size) ||
-> +		!PAGE_ALIGNED(region->userspace_addr) ||
-> +		!PAGE_ALIGNED(region->guest_phys_addr))
-> +		return -EINVAL;
-> +
-> +	if (overflows_type(region->guest_phys_addr + region->memory_size, u64))
-> +		return -EOVERFLOW;
-> +
-> +	ret = mutex_lock_interruptible(&ghvm->mm_lock);
-> +	if (ret)
-> +		return ret;
-> +
-> +	mapping = __gh_vm_mem_find_by_label(ghvm, region->label);
-> +	if (mapping) {
-> +		ret = -EEXIST;
-> +		goto unlock;
-> +	}
-> +
-> +	list_for_each_entry(tmp_mapping, &ghvm->memory_mappings, list) {
-> +		if (gh_vm_mem_overlap(tmp_mapping, region->guest_phys_addr,
-> +					region->memory_size)) {
-> +			ret = -EEXIST;
-> +			goto unlock;
-> +		}
-> +	}
-> +
-> +	mapping = kzalloc(sizeof(*mapping), GFP_KERNEL_ACCOUNT);
-> +	if (!mapping) {
-> +		ret = -ENOMEM;
-> +		goto unlock;
-> +	}
-> +
-> +	mapping->guest_phys_addr = region->guest_phys_addr;
-> +	mapping->npages = region->memory_size >> PAGE_SHIFT;
-> +	parcel = &mapping->parcel;
-> +	parcel->label = region->label;
-> +	parcel->mem_handle = GH_MEM_HANDLE_INVAL; /* to be filled later by mem_share/mem_lend */
-> +	parcel->mem_type = GH_RM_MEM_TYPE_NORMAL;
-> +
-> +	ret = account_locked_vm(ghvm->mm, mapping->npages, true);
-> +	if (ret)
-> +		goto free_mapping;
-> +
-> +	mapping->pages = kcalloc(mapping->npages, sizeof(*mapping->pages), GFP_KERNEL_ACCOUNT);
-> +	if (!mapping->pages) {
-> +		ret = -ENOMEM;
-> +		mapping->npages = 0; /* update npages for reclaim */
-> +		goto unlock_pages;
-> +	}
-> +
-> +	gup_flags = FOLL_LONGTERM;
-> +	if (region->flags & GH_MEM_ALLOW_WRITE)
-> +		gup_flags |= FOLL_WRITE;
-> +
-> +	pinned = pin_user_pages_fast(region->userspace_addr, mapping->npages,
-> +					gup_flags, mapping->pages);
-> +	if (pinned < 0) {
-> +		ret = pinned;
-> +		goto free_pages;
-> +	} else if (pinned != mapping->npages) {
-> +		ret = -EFAULT;
-> +		mapping->npages = pinned; /* update npages for reclaim */
-> +		goto unpin_pages;
-> +	}
+Related question I asked in v8: only the global pending_flush_mask and
+pending_dspp_flush_mask are reset in dpu_hw_ctl_clear_pending_flush().
+Shall I send a patch to clear the other missing ones (e.g. merge_3d etc)
+as well?
 
-Sorry if I missed it, but I still don't see where you reject file mappings
-here.
+> >>> +
+> >>>       DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
+> >>>   }
+> >>> @@ -285,6 +290,13 @@ static void 
+> >>> dpu_hw_ctl_update_pending_flush_merge_3d_v1(struct dpu_hw_ctl *ctx,
+> >>>       ctx->pending_flush_mask |= BIT(MERGE_3D_IDX);
+> >>>   }
+> >>> +static void dpu_hw_ctl_update_pending_flush_dsc_v1(struct dpu_hw_ctl 
+> >>> *ctx,
+> >>> +                           enum dpu_dsc dsc_num)
+> >>> +{
+> >>> +    ctx->pending_dsc_flush_mask |= BIT(dsc_num - DSC_0);
+> >>> +    ctx->pending_flush_mask |= BIT(DSC_IDX);
+> >>> +}
+> >>> +
+> >>>   static void dpu_hw_ctl_update_pending_flush_dspp(struct dpu_hw_ctl 
+> >>> *ctx,
+> >>>       enum dpu_dspp dspp, u32 dspp_sub_blk)
+> >>>   {
+> >>> @@ -502,9 +514,6 @@ static void dpu_hw_ctl_intf_cfg_v1(struct 
+> >>> dpu_hw_ctl *ctx,
+> >>>       if ((test_bit(DPU_CTL_VM_CFG, &ctx->caps->features)))
+> >>>           mode_sel = CTL_DEFAULT_GROUP_ID  << 28;
+> >>> -    if (cfg->dsc)
+> >>> -        DPU_REG_WRITE(&ctx->hw, CTL_DSC_FLUSH, cfg->dsc);
+> >>> -
+> >>>       if (cfg->intf_mode_sel == DPU_CTL_MODE_SEL_CMD)
+> >>>           mode_sel |= BIT(17);
+> >>> @@ -524,10 +533,9 @@ static void dpu_hw_ctl_intf_cfg_v1(struct 
+> >>> dpu_hw_ctl *ctx,
+> >>>       if (cfg->merge_3d)
+> >>>           DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
+> >>>                     BIT(cfg->merge_3d - MERGE_3D_0));
+> >>> -    if (cfg->dsc) {
+> >>> -        DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
+> >> Again, this bugfix of now wrapping DSC_IDX in BIT() should go in a
+> >> separate Fixes: patch to have this semantic change documented.  (v8
+> >> review)
+> > That will be this patch. let me add Fixes at this patch
+> 
+> _separate_ patch.
 
-This is also the wrong interface for upstream. Please get involved with
-the fd-based guest memory discussions [1] and port your series to that. 
+Separate patch, and documenting clearly what happens and why.  Kuogee, I
+can send this as well if it makes things more clear, since it doesn't
+seem (from the patch description) that anyone noticed the
+implication/bugfix in this change as a drive-by effect of porting
+sde_hw_ctl_update_bitmask_dsc_v1() from downstream.
 
-This patch cannot be merged in its current form.
+- Marijn
 
-Will
-
-[1] https://lore.kernel.org/kvm/20221202061347.1070246-1-chao.p.peng@linux.intel.com/
+<snip>
