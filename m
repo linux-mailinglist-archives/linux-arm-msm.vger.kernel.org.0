@@ -2,60 +2,44 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE30970A712
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 12:00:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 08D0870A722
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 12:19:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231164AbjETJ76 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 May 2023 05:59:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53944 "EHLO
+        id S231557AbjETKTu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 May 2023 06:19:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229946AbjETJ75 (ORCPT
+        with ESMTP id S229807AbjETKTr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 May 2023 05:59:57 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 255A8E46;
-        Sat, 20 May 2023 02:59:57 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B6F9360FE0;
-        Sat, 20 May 2023 09:59:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B863DC433D2;
-        Sat, 20 May 2023 09:59:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684576796;
-        bh=DxoajCPa+2FvZZ5OhrT8JkkDXOxmrx33rD6QPWVeGqE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=pnBKgCHh2Q+afDI+ZhBdd1yB/TC3tRFlHvcThgL37HN7hPeY501rNvey5TpCg8ahS
-         p05rFzz0JNZNbxBVmOMj5rWYhqwXfnhFnE76NFzlm8ksVkjeh0Eu5WOZHT+mf9NVIU
-         5ZBgI4K1NGbUlnR3ahkiTjWknQQv33eaqqOHE/Cdqw0p11KwCzAUPtBw9wtp4gYPgd
-         61iok8Jl/wy2qpA6ywjBY7bd76rvwSLUW+xScI6+H9LzVvlYbiPKjxlZoOvj3hwHDJ
-         NMpM3P4eOJnRKhHt6z40Cb57ooL/lopO/Y/ykYCINC49dGjDacgD8Zs/e87IUQm0n0
-         ELpkA8v3nBDTQ==
-Date:   Sat, 20 May 2023 10:59:51 +0100
-From:   Conor Dooley <conor@kernel.org>
-To:     Matti =?iso-8859-1?Q?Lehtim=E4ki?= <matti.lehtimaki@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/5] dt-bindings: sram: qcom,imem: Document MSM8226
-Message-ID: <20230520-waltz-growing-13c2536672d6@spud>
-References: <20230519210903.117030-1-matti.lehtimaki@gmail.com>
- <20230519210903.117030-2-matti.lehtimaki@gmail.com>
+        Sat, 20 May 2023 06:19:47 -0400
+X-Greylist: delayed 4199 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Sat, 20 May 2023 03:19:47 PDT
+Received: from mail.corrib.pl (mail.corrib.pl [185.58.226.145])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0164A189
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 May 2023 03:19:46 -0700 (PDT)
+Received: by mail.corrib.pl (Postfix, from userid 1001)
+        id 909EBA51FC; Fri, 19 May 2023 09:06:21 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=corrib.pl; s=mail;
+        t=1684483598; bh=85MOfYTjIHwki6Ys5IeFKzEzX5V7umZoL3TytLG0W/k=;
+        h=Date:From:To:Subject:From;
+        b=k+L1CQzsjFnyDzTTyCW579r/7iSYirImeEgIQrJ4GrtMksJZD/90fdmjutlbe1aur
+         Q0uejWWvLw5HiAME2zvdKqOpTbbcd4XkTSIcxJ7EP3EoFK0BidsLFD5VPOhRLQIgjp
+         FQ1dTP4QXIEx5aQchtyKjsOx0JecBuMIlZG5V+4zRPjwBdolssjn82LecZRRAKN/Gk
+         rC4ZA0lli5FiHezQduEVbb6zvikIwNWkvoY6uwOxhcg0j+aeYd2McaspjPkjmjYbaA
+         16iEZCsxeysyT6uohXeFbJGo0F7toWdXyezLwPskrz+lqJGXG2CZVijrVDF17b1T2y
+         Ug+TlSSRr0sMg==
+Received: by mail.corrib.pl for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 08:06:12 GMT
+Message-ID: <20230519074500-0.1.7b.ofe6.0.l0omtk2vjj@corrib.pl>
+Date:   Fri, 19 May 2023 08:06:12 GMT
+From:   "Szczepan Andryszczuk" <szczepan.andryszczuk@corrib.pl>
+To:     <linux-arm-msm@vger.kernel.org>
+Subject: Faktoring
+X-Mailer: mail.corrib.pl
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="aHnMxTr/suFljBxF"
-Content-Disposition: inline
-In-Reply-To: <20230519210903.117030-2-matti.lehtimaki@gmail.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,31 +47,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Dzie=C5=84 dobry,
 
---aHnMxTr/suFljBxF
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+rozwa=C5=BCali Pa=C5=84stwo wyb=C3=B3r finansowania, kt=C3=B3re spe=C5=82=
+ni potrzeby firmy, zapewniaj=C4=85c natychmiastowy dost=C4=99p do got=C3=B3=
+wki, bez zb=C4=99dnych przestoj=C3=B3w?=20
 
-On Sat, May 20, 2023 at 12:08:58AM +0300, Matti Lehtim=E4ki wrote:
-> Add compatible for MSM8226 IMEM.
->=20
-> Signed-off-by: Matti Lehtim=E4ki <matti.lehtimaki@gmail.com>
+Przygotowali=C5=9Bmy rozwi=C4=85zania faktoringowe dopasowane do Pa=C5=84=
+stwa bran=C5=BCy i wielko=C5=9Bci firmy, dzi=C4=99ki kt=C3=B3rym, nie mus=
+z=C4=85 Pa=C5=84stwo martwi=C4=87 si=C4=99 o niewyp=C5=82acalno=C5=9B=C4=87=
+ kontrahent=C3=B3w, poniewa=C5=BC transakcje s=C4=85 zabezpieczone i posi=
+adaj=C4=85 gwarancj=C4=99 sp=C5=82aty.=20
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+Chc=C4=85 Pa=C5=84stwo przeanalizowa=C4=87 dost=C4=99pne opcje?
 
-Thanks,
-Conor.
 
---aHnMxTr/suFljBxF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZGiaFwAKCRB4tDGHoIJi
-0m9BAP9Fs9SqElbBNdiIcqgKQXkILr2JclrTyc15gnm3eqUxPAD+PRA14Dnvy6Et
-WLuMC/14lmHv/xCXCR1KzcEIyJmbXgE=
-=KCh3
------END PGP SIGNATURE-----
-
---aHnMxTr/suFljBxF--
+Pozdrawiam
+Szczepan Andryszczuk
