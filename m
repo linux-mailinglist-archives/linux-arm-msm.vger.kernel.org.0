@@ -2,253 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4CE6709B99
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 17:49:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24034709BBF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 17:57:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232163AbjESPtq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 11:49:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60052 "EHLO
+        id S231189AbjESP5F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 11:57:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34274 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232190AbjESPtp (ORCPT
+        with ESMTP id S230251AbjESP5F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 11:49:45 -0400
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1DF11B4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 08:49:43 -0700 (PDT)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2ac8d9399d5so39275681fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 08:49:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684511382; x=1687103382;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WnOy3xXVbZBcw8tuSp38bYTCu1PvdF8k1HAWiCvu54c=;
-        b=VVkR2j/NOlOxHM/B7faQwk8qAx3TeoxX8ZLAfFNPxP6hFUbXZp+NSG5VKylzZNeIT8
-         VWoegMs/s9JiiunagKPhteWANGdCT0RDgucig0YlP0j2/1sajx9RjdH31bWK7I+QpDQ/
-         5vhJYyFATJoLrg0KA7B79OMue9inxxI+YroL99O9SBeDcx2thAQoc0H+UG60GHDGoBUp
-         ibdUcusD/QcVAorhVRlD4d2UdzsOsD/4ol02ieK9DAr5LK29TDEOzkCO82t882CqIw7y
-         PFhDSntGWja8cuu6Da8GIod3sQmYt4q/UzSkTE8IjtCFIZfC1K6t/wPZAavDOab5MDVg
-         e7og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684511382; x=1687103382;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WnOy3xXVbZBcw8tuSp38bYTCu1PvdF8k1HAWiCvu54c=;
-        b=JwwKgDFBtxl1CkyzPrp7uvhtSL0w+PxDEyRRK1uhzjmPbCzDKp38HnFhJfWL3z0OO8
-         A5itJbEtdsjROctFTppmUPLZryQL9CRhOngNLCBaV4wgdV2f2tguPfVcjkSViptEzGFX
-         CHXgRweoEftCucoLwVZJFObQCruwRr9KdCV2+auCMP2wv7X0fu5fd77KZ7UCNist1xhI
-         81t8ohD1mazHQtPM8plOoQspBaalU1zYdvIb2I0wKP7qI+a5ZvzUxCrIcj921+InjbIt
-         wll9QI2NfDKWBgd1W6zRS28N44ilPZB0qtUYowMVvVaUCrOxDxMGQnWjESPrZhMGiuwu
-         pWuQ==
-X-Gm-Message-State: AC+VfDwJIjeKdjYsC6PVs6C7cK4coEw2Wj61K/kEv4QKwqA1OpeNAzUI
-        vYGBSZ/6w08RpmkMBkR1nKEnhA==
-X-Google-Smtp-Source: ACHHUZ5unJI7LT83cS2mbrlmzrYyfmxct/dzSY9H+Vz1NTmvfESLjsasBB6t3LWhi88e2P8kNYRPWQ==
-X-Received: by 2002:a2e:984d:0:b0:2ad:dd7e:6651 with SMTP id e13-20020a2e984d000000b002addd7e6651mr989010ljj.43.1684511382103;
-        Fri, 19 May 2023 08:49:42 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id d22-20020a2e96d6000000b002ab59a09d75sm873333ljj.120.2023.05.19.08.49.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 May 2023 08:49:41 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v2 4/4] drm/msm/mdp5: move resource allocation to the _probe function
-Date:   Fri, 19 May 2023 18:49:38 +0300
-Message-Id: <20230519154938.3929839-5-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230519154938.3929839-1-dmitry.baryshkov@linaro.org>
-References: <20230519154938.3929839-1-dmitry.baryshkov@linaro.org>
+        Fri, 19 May 2023 11:57:05 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04D65FE;
+        Fri, 19 May 2023 08:57:03 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34JEJl8U020360;
+        Fri, 19 May 2023 15:57:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-transfer-encoding :
+ content-type; s=qcppdkim1;
+ bh=Ir5dN+oTdbW+JR+3BqIxqPzQO7UKaVyQxIbd3sYGDc8=;
+ b=LT/VNA4vtefSyn5SRRedm2dY7F+vQsBF2Ehs4uAYYqsa0oSEkOJQXv3vM4LeRhZ4F7B3
+ z7KMhhaT3/9PaDVeBDY2HBk7Ys163mWQUWTMTzppGInLol44sZaXD9NATkvq/YNujfJR
+ tA+2zbmxRqXRAFdIJqmrrIWjH3kIyD6Y+u2LFLVKTOT6fF7zR14g2a7f1oACtXVaxctL
+ GAqdkbfnTZ416/8/67Yfc1Yt/D7+z75EpyoBm25pvBv8ehKaiBVFVP1LRE758eFkgKE8
+ T1cpDqNqylE+tcMB1tLNWuIzGVjpA52OlJemz3VMnmLpAWY7Z0WuTFL0TCB5zthjk+wt pw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qp57y10s6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 19 May 2023 15:57:00 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34JFuxxv023410
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 19 May 2023 15:56:59 GMT
+Received: from hu-jkona-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 19 May 2023 08:56:54 -0700
+From:   Jagadeesh Kona <quic_jkona@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        "Jagadeesh Kona" <quic_jkona@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Subject: [PATCH 0/4] Add camera clock controller support for SM8550
+Date:   Fri, 19 May 2023 21:25:58 +0530
+Message-ID: <20230519155602.6642-1-quic_jkona@quicinc.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: lbL1ZCNEt8-lfYA2VjfniPKRJYYXgv5w
+X-Proofpoint-ORIG-GUID: lbL1ZCNEt8-lfYA2VjfniPKRJYYXgv5w
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-19_11,2023-05-17_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=922 phishscore=0
+ spamscore=0 lowpriorityscore=0 malwarescore=0 mlxscore=0 clxscore=1011
+ priorityscore=1501 bulkscore=0 impostorscore=0 suspectscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305190135
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-To let the probe function bail early if any of the resources is
-unavailable, move resource allocattion from kms_init directly to the
-probe callback.
+Add bindings, driver and devicetree node for camera clock controller
+on SM8550.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 100 ++++++++++-------------
- 1 file changed, 44 insertions(+), 56 deletions(-)
+Depends on [1] for lucid ole pll ops definition
+[1] https://patchwork.kernel.org/project/linux-clk/list/?series=746186&state=%2A&archive=both
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index 7fd89c93a491..2881bf17d649 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -554,20 +554,16 @@ static int mdp5_kms_init(struct drm_device *dev)
- 	struct platform_device *pdev;
- 	struct mdp5_kms *mdp5_kms;
- 	struct mdp5_cfg *config;
--	struct msm_kms *kms;
-+	struct msm_kms *kms = priv->kms;
- 	struct msm_gem_address_space *aspace;
--	int irq, i, ret;
-+	int i, ret;
- 
- 	ret = mdp5_init(to_platform_device(dev->dev), dev);
- 	if (ret)
- 		return ret;
- 
--	/* priv->kms would have been populated by the MDP5 driver */
--	kms = priv->kms;
--	if (!kms)
--		return -ENOMEM;
--
- 	mdp5_kms = to_mdp5_kms(to_mdp_kms(kms));
-+
- 	pdev = mdp5_kms->pdev;
- 
- 	ret = mdp_kms_init(&mdp5_kms->base, &kms_funcs);
-@@ -576,15 +572,6 @@ static int mdp5_kms_init(struct drm_device *dev)
- 		goto fail;
- 	}
- 
--	irq = irq_of_parse_and_map(pdev->dev.of_node, 0);
--	if (!irq) {
--		ret = -EINVAL;
--		DRM_DEV_ERROR(&pdev->dev, "failed to get irq\n");
--		goto fail;
--	}
--
--	kms->irq = irq;
--
- 	config = mdp5_cfg_get_config(mdp5_kms->cfg);
- 
- 	/* make sure things are off before attaching iommu (bootloader could
-@@ -787,60 +774,23 @@ static int interface_init(struct mdp5_kms *mdp5_kms)
- static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- {
- 	struct msm_drm_private *priv = dev->dev_private;
--	struct mdp5_kms *mdp5_kms;
-+	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
- 	struct mdp5_cfg *config;
- 	u32 major, minor;
- 	int ret;
- 
--	mdp5_kms = devm_kzalloc(&pdev->dev, sizeof(*mdp5_kms), GFP_KERNEL);
--	if (!mdp5_kms) {
--		ret = -ENOMEM;
--		goto fail;
--	}
--
--	spin_lock_init(&mdp5_kms->resource_lock);
--
- 	mdp5_kms->dev = dev;
--	mdp5_kms->pdev = pdev;
- 
- 	ret = mdp5_global_obj_init(mdp5_kms);
- 	if (ret)
- 		goto fail;
- 
--	mdp5_kms->mmio = msm_ioremap(pdev, "mdp_phys");
--	if (IS_ERR(mdp5_kms->mmio)) {
--		ret = PTR_ERR(mdp5_kms->mmio);
--		goto fail;
--	}
--
--	/* mandatory clocks: */
--	ret = get_clk(pdev, &mdp5_kms->axi_clk, "bus", true);
--	if (ret)
--		goto fail;
--	ret = get_clk(pdev, &mdp5_kms->ahb_clk, "iface", true);
--	if (ret)
--		goto fail;
--	ret = get_clk(pdev, &mdp5_kms->core_clk, "core", true);
--	if (ret)
--		goto fail;
--	ret = get_clk(pdev, &mdp5_kms->vsync_clk, "vsync", true);
--	if (ret)
--		goto fail;
--
--	/* optional clocks: */
--	get_clk(pdev, &mdp5_kms->lut_clk, "lut", false);
--	get_clk(pdev, &mdp5_kms->tbu_clk, "tbu", false);
--	get_clk(pdev, &mdp5_kms->tbu_rt_clk, "tbu_rt", false);
--
- 	/* we need to set a default rate before enabling.  Set a safe
- 	 * rate first, then figure out hw revision, and then set a
- 	 * more optimal rate:
- 	 */
- 	clk_set_rate(mdp5_kms->core_clk, 200000000);
- 
--	/* set uninit-ed kms */
--	priv->kms = &mdp5_kms->base.base;
--
- 	pm_runtime_enable(&pdev->dev);
- 	mdp5_kms->rpm_enabled = true;
- 
-@@ -931,15 +881,53 @@ static int mdp5_setup_interconnect(struct platform_device *pdev)
- 
- static int mdp5_dev_probe(struct platform_device *pdev)
- {
--	int ret;
-+	struct mdp5_kms *mdp5_kms;
-+	int ret, irq;
- 
- 	DBG("");
- 
-+	mdp5_kms = devm_kzalloc(&pdev->dev, sizeof(*mdp5_kms), GFP_KERNEL);
-+	if (!mdp5_kms)
-+		return -ENOMEM;
-+
- 	ret = mdp5_setup_interconnect(pdev);
- 	if (ret)
- 		return ret;
- 
--	return msm_drv_probe(&pdev->dev, mdp5_kms_init, NULL);
-+	mdp5_kms->pdev = pdev;
-+
-+	spin_lock_init(&mdp5_kms->resource_lock);
-+
-+	mdp5_kms->mmio = msm_ioremap(pdev, "mdp_phys");
-+	if (IS_ERR(mdp5_kms->mmio))
-+		return PTR_ERR(mdp5_kms->mmio);
-+
-+	/* mandatory clocks: */
-+	ret = get_clk(pdev, &mdp5_kms->axi_clk, "bus", true);
-+	if (ret)
-+		return ret;
-+	ret = get_clk(pdev, &mdp5_kms->ahb_clk, "iface", true);
-+	if (ret)
-+		return ret;
-+	ret = get_clk(pdev, &mdp5_kms->core_clk, "core", true);
-+	if (ret)
-+		return ret;
-+	ret = get_clk(pdev, &mdp5_kms->vsync_clk, "vsync", true);
-+	if (ret)
-+		return ret;
-+
-+	/* optional clocks: */
-+	get_clk(pdev, &mdp5_kms->lut_clk, "lut", false);
-+	get_clk(pdev, &mdp5_kms->tbu_clk, "tbu", false);
-+	get_clk(pdev, &mdp5_kms->tbu_rt_clk, "tbu_rt", false);
-+
-+	irq = platform_get_irq(pdev, 0);
-+	if (irq < 0)
-+		return dev_err_probe(&pdev->dev, irq, "failed to get irq\n");
-+
-+	mdp5_kms->base.base.irq = irq;
-+
-+	return msm_drv_probe(&pdev->dev, mdp5_kms_init, &mdp5_kms->base.base);
- }
- 
- static int mdp5_dev_remove(struct platform_device *pdev)
+Jagadeesh Kona (4):
+  clk: qcom: clk-alpha-pll: Add support for rivian ole pll ops
+  dt-bindings: clock: qcom: Add SM8550 camera clock controller
+  clk: qcom: camcc-sm8550: Add camera clock controller driver for SM8550
+  arm64: dts: qcom: sm8550: Add camera clock controller
+
+ .../bindings/clock/qcom,sm8550-camcc.yaml     |   82 +
+ arch/arm64/boot/dts/qcom/sm8550.dtsi          |   15 +
+ drivers/clk/qcom/Kconfig                      |    7 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/camcc-sm8550.c               | 3572 +++++++++++++++++
+ drivers/clk/qcom/clk-alpha-pll.h              |    4 +
+ include/dt-bindings/clock/qcom,sm8550-camcc.h |  187 +
+ 7 files changed, 3868 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sm8550-camcc.yaml
+ create mode 100644 drivers/clk/qcom/camcc-sm8550.c
+ create mode 100644 include/dt-bindings/clock/qcom,sm8550-camcc.h
+
 -- 
-2.39.2
+2.40.1
 
