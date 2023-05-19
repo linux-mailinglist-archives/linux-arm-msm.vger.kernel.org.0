@@ -2,130 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1305E70A1E5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 23:38:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F01BC70A1F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 23:48:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231705AbjESViK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 17:38:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57572 "EHLO
+        id S229832AbjESVsg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 17:48:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231739AbjESViI (ORCPT
+        with ESMTP id S229458AbjESVse (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 17:38:08 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 197D1E6B;
-        Fri, 19 May 2023 14:38:00 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34JLOLAI031661;
-        Fri, 19 May 2023 21:37:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=8kMd9I9nK+eyP/i8tgPXVXTLTP0GC4mDhJJCZnDImmM=;
- b=FUrariuSJ+L+POCeeDy7+NvpAeOu07nrxQWufeK7xQHRM2CtK2RwtDJlvwO81zT9oQCU
- bkPDFVOy32FT7qbyURUPxNjaCBlQe+YhKEswYesNcH7N5j4LA7YLjWQLAdj792GDZnPk
- OKeU0ENknr8NktPR5LwAo5yJdqrY3bQiOqDQiSufM8kC8ox3ruBP3SSdFqcr/w6TQ6fE
- HxPC12x+F30Eb3AMRqoFD6Lwfoq6/Wl0pjpyvhqdthB9DnrH0deFHt736BPSreK00LVQ
- WQHBfYPDTiWuH9kPgUc+VJiWW6pgk1KGnIcith0Je0dsCYGW/iOxiD4+xFkKST6hUds0 Cg== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qp4nt9xhu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 19 May 2023 21:37:56 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34JLbt5S015585
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 19 May 2023 21:37:55 GMT
-Received: from hu-jkona-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 19 May 2023 14:37:50 -0700
-From:   Jagadeesh Kona <quic_jkona@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        "Jagadeesh Kona" <quic_jkona@quicinc.com>
-Subject: [PATCH 3/3] arm64: dts: qcom: sm8550: Add graphics clock controller
-Date:   Sat, 20 May 2023 03:06:56 +0530
-Message-ID: <20230519213656.26089-4-quic_jkona@quicinc.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230519213656.26089-1-quic_jkona@quicinc.com>
-References: <20230519213656.26089-1-quic_jkona@quicinc.com>
+        Fri, 19 May 2023 17:48:34 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 097081B4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 14:48:33 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-64d3491609fso802243b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 14:48:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684532912; x=1687124912;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Zau2qsQhDV1bV+FMZBbLle6RPe9ivNDcr7IgnOjplHE=;
+        b=IMAwsr9+5YpQkpjpZW1wfxFE419+51fvECkQ//gzJPWu+Ym5syz5uYmop1IrWnHqdX
+         OXTkDjceuLKn/gxeZFArNWe0DqX2O3IQuJ6gzbhP2S6HDfdPUmTtIDyUxe7tAjgYlsf3
+         iEW0ApPGQekcmHedcd1pzdR1DgEtlvos/27mjFIM/vvPDUbWY98OPGu/0qEoT15Kf5x5
+         mTCqQROwCJKhPauYPn80TvWK7lXJD8dW7B1XXP17ou0xUiBwwL42H/qwdZfNicRB/cow
+         ETp4P7vhaS4JQDesCY54+cd9h5mkgno+3+rKrAyIJtJQDYrC7284UNacABL9c0PXGdeD
+         ieKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684532912; x=1687124912;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Zau2qsQhDV1bV+FMZBbLle6RPe9ivNDcr7IgnOjplHE=;
+        b=Ra9KAApg9ePeJAy1L1R6zPDRsryPivdAwk6tetIUFLJo9BaZw88P2J+FwJA0qVk75l
+         5Kc9lh1HJ7LNVxmxEgX6SnxQV3sJPW+9/tm/80KTGATX8bc43I/LOpDPBGD9STH9LpFk
+         ptT6OKh26O8hyAtbdRNO1mHdDrUjcfPAwxyMQMaPugX1MAF9yb/L1q9uNYfKLjfcq01y
+         wZUPFvd2iQ2i2dOYRHtxgbHYWyxheB+D/ujtuBtcv2pX67MtozVNPNQtQqSf4mbrx4AL
+         B3+Lu1fBGznCxANuJ9T9yB414Rg2K4/vKm+BoeJ0xdUsg66R75BvoR/MJVLUeA8s+xRF
+         Wi6g==
+X-Gm-Message-State: AC+VfDxrxixHhSCpk69Ph+qmwLv4hcn4J4OLpbJUNaikrVR8gUWdwJxq
+        JvWNl5sIW4XoZUPUT+LAz8UMNzYarBzKAshjPK8=
+X-Google-Smtp-Source: ACHHUZ4h5q/mZRzPyIqULeKtyzgLrq5KYlThiD42UFvTU6gxmHsk/Wh1DL4/bZlqVwqR2vaYQWZyDQ==
+X-Received: by 2002:a05:6a00:2d90:b0:64d:2487:5b3c with SMTP id fb16-20020a056a002d9000b0064d24875b3cmr4608384pfb.29.1684532911929;
+        Fri, 19 May 2023 14:48:31 -0700 (PDT)
+Received: from localhost.localdomain ([2401:4900:1c60:d309:883d:817e:8e91:be39])
+        by smtp.gmail.com with ESMTPSA id n14-20020aa7904e000000b006470a6ef529sm144891pfo.88.2023.05.19.14.48.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 May 2023 14:48:31 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        linux-crypto@vger.kernel.org, andersson@kernel.org,
+        bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org, vladimir.zapolskiy@linaro.org,
+        rfoss@kernel.org, neil.armstrong@linaro.org, djakov@kernel.org,
+        stephan@gerhold.net
+Subject: [PATCH v7 00/11] arm64: qcom: Enable Crypto Engine for a few Qualcomm SoCs
+Date:   Sat, 20 May 2023 03:18:02 +0530
+Message-Id: <20230519214813.2593271-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: FEf5leIXnT-YV_RJlasKAnTvBAM69xY5
-X-Proofpoint-GUID: FEf5leIXnT-YV_RJlasKAnTvBAM69xY5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-19_16,2023-05-17_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- suspectscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015 phishscore=0
- spamscore=0 impostorscore=0 bulkscore=0 malwarescore=0 mlxscore=0
- mlxlogscore=983 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305190187
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for graphics clock controller on Qualcomm
-SM8550 platform.
+Changes since v6:
+-----------------
+- v6 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230405072836.1690248-1-bhupesh.sharma@linaro.org/
+- Collected Acks, R-Bs and Tested-by for various patches.
+- Addressed Konrad's comment about iommu sids for sm8150 and sm8250
+  crypto node entries.
+- Addressed Konrad's and Stephan's comments about adding RPM clock for
+  crypto blocks on qcm2290 and sm6115.
 
-Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Changes since v5:
+-----------------
+- v5 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230402100509.1154220-1-bhupesh.sharma@linaro.org/
+- Collected Ack from Rob for [PATCH 01/11].
+- Addressed Georgi's comment about interconnect cells in [PATCH 10/11].
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index e67e7c69dae6..5258b057f51c 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -5,6 +5,7 @@
- 
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/clock/qcom,sm8550-gcc.h>
-+#include <dt-bindings/clock/qcom,sm8550-gpucc.h>
- #include <dt-bindings/clock/qcom,sm8550-tcsr.h>
- #include <dt-bindings/clock/qcom,sm8550-dispcc.h>
- #include <dt-bindings/clock/qcom,sm8550-videocc.h>
-@@ -1963,6 +1964,17 @@ tcsr: clock-controller@1fc0000 {
- 			#reset-cells = <1>;
- 		};
- 
-+		gpucc: clock-controller@3d90000 {
-+			compatible = "qcom,sm8550-gpucc";
-+			reg = <0 0x03d90000 0 0xa000>;
-+			clocks = <&bi_tcxo_div2>,
-+				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
-+				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		remoteproc_mpss: remoteproc@4080000 {
- 			compatible = "qcom,sm8550-mpss-pas";
- 			reg = <0x0 0x04080000 0x0 0x4040>;
+Changes since v4:
+-----------------
+- v4 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230331164323.729093-1-bhupesh.sharma@linaro.org/
+- Collected R-Bs from Konrad for a couple of patches sent in v4.
+- Fixed incorrect email IDs for a couple of patches sent in v3, which I used for
+  some patches created on a different work machine.
+- No functional changes since v3.
+
+Changes since v3:
+-----------------
+- v3 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230328092815.292665-1-bhupesh.sharma@linaro.org/
+- Collected Acks from Krzysztof for a couple of patches sent in v3.
+- Fixed review comments from Krzysztof regarding DMA binding document
+  and also added a couple of new patches which are required to fix the
+  'dtbs_check' errors highlighted after this fix.
+
+Changes since v2:
+-----------------
+- v2 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230322114519.3412469-1-bhupesh.sharma@linaro.org/
+- No functional change since v2. As the sdm845 patch from v1 was accepted in linux-next,
+  dropped it from this version.
+
+Changes since v1:
+-----------------
+- v1 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230321190118.3327360-1-bhupesh.sharma@linaro.org/
+- Folded the BAM DMA dt-binding change.
+  (sent earlier as: https://lore.kernel.org/linux-arm-msm/20230321184811.3325725-1-bhupesh.sharma@linaro.org/)
+- Folded the QCE dt-binding change.
+  (sent earlier as: https://lore.kernel.org/linux-arm-msm/20230320073816.3012198-1-bhupesh.sharma@linaro.org/)
+- Folded Neil's SM8450 dts patch in this series.
+- Addressed review comments from Rob, Stephan and Konrad.
+- Collected Konrad's R-B for [PATCH 5/9].
+
+This patchset enables Crypto Engine support for Qualcomm SoCs like
+SM6115, SM8150, SM8250, SM8350 and SM8450.
+
+Note that:
+- SM8250 crypto engine patch utilizes the work already done by myself and
+  Vladimir.
+- SM8350 crypto engine patch utilizes the work already done by Robert.
+- SM8450 crypto engine patch utilizes the work already done by Neil.
+
+Also this patchset is rebased on linux-next/master.
+
+Bhupesh Sharma (10):
+  dt-bindings: dma: Add support for SM6115 and QCM2290 SoCs
+  dt-bindings: dma: Increase iommu maxItems for BAM DMA
+  arm64: dts: qcom: sdm8550: Fix the BAM DMA engine compatible string
+  arm64: dts: qcom: sdm845: Fix the slimbam DMA engine compatible string
+  dt-bindings: qcom-qce: Fix compatible combinations for SM8150 and
+    IPQ4019 SoCs
+  dt-bindings: qcom-qce: Add compatibles for SM6115 and QCM2290
+  arm64: dts: qcom: sm6115: Add Crypto Engine support
+  arm64: dts: qcom: sm8150: Add Crypto Engine support
+  arm64: dts: qcom: sm8250: Add Crypto Engine support
+  arm64: dts: qcom: sm8350: Add Crypto Engine support
+
+Neil Armstrong (1):
+  arm64: dts: qcom: sm8450: add crypto nodes
+
+ .../devicetree/bindings/crypto/qcom-qce.yaml  | 50 +++++++++++++++----
+ .../devicetree/bindings/dma/qcom,bam-dma.yaml | 22 +++++---
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  2 +-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          | 25 ++++++++++
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          | 30 +++++++++++
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          | 32 ++++++++++++
+ arch/arm64/boot/dts/qcom/sm8350.dtsi          | 22 ++++++++
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          | 28 +++++++++++
+ arch/arm64/boot/dts/qcom/sm8550.dtsi          |  2 +-
+ 9 files changed, 194 insertions(+), 19 deletions(-)
+
 -- 
-2.40.1
+2.38.1
 
