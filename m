@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4CB570A370
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 01:40:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01D7870A372
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 01:40:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229523AbjESXka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 19:40:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48838 "EHLO
+        id S229518AbjESXkc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 19:40:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229518AbjESXk3 (ORCPT
+        with ESMTP id S229827AbjESXkb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 19:40:29 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB0ED1B3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 16:40:28 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4efe8b3f3f7so4342285e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 16:40:28 -0700 (PDT)
+        Fri, 19 May 2023 19:40:31 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 629791B7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 16:40:29 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2af29e51722so7586841fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 16:40:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1684539627; x=1687131627;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6tgw64QArDRy7OvpPNE5Lmjz7wtWaHwDObMSRxTN810=;
-        b=Ik73RGkBIkUJzAHOt+zcQM4hIdiEKd+SA86jn8b6gFksbp6y4qIIb4BojUyZqli6AN
-         9AUK7Wwr9yqTthjtVdPxKjgLuonZjbKPe7yglCUtzncz8h6BjzNdlHF8WYp38/GWfpBU
-         C0IoBHMd/wMI3EPBR25Dwfvk5Sd12++lHma3cYgPCwxmghFu0ywHu+tmmUMLRHHm40pz
-         9HgZKd0+64khRqdlVXP/u+6ygHCY9c6ejBKy5rgadt8Ophmu+nKdWe5bhKUA3eimE0DH
-         A/MOYXA5uZzyJIOtPSWaL1NcVt5RAkX5Z1HqpSuEPczHcHyVa1tmQ3kcdC0/EOHXo/h4
-         4Htw==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nrEeUaHJg5tvfQUV7ZJ9RQA7N6g3X5zbRUUxxD+s4dk=;
+        b=MjtkRZ9J3FObJ6JfJN2xUsZIb3PkGWM5H1aslAWC1fVy9uMWu1euDQZ9uhtn454oAQ
+         JnpAv5U2fL1+sXKU7vy61NICQmZTUNzZBfVqJW5Gw4ZZSW48uu1JxS/hB2JF/vN1o9RJ
+         jMtBQWY3ct9CxNBcBhZPCBPSuwP3GLZRTJTTP/b5owfWhvhmELTPG1Xj1BnAiNwH3AVG
+         pMdfpU0N8ngAz5ysvNe6AWAA0JbRM5jvIo+FcnmhiOV8kNF82xxGpW4vl+14IYVG+Ue/
+         +H36Q+OBNoAuF9psEg52d7bLMwYsZr4AX8emSQGcl1cgAFEdaiDypHOjD90XfGKcqqQF
+         Htew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1684539627; x=1687131627;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6tgw64QArDRy7OvpPNE5Lmjz7wtWaHwDObMSRxTN810=;
-        b=lxl82hFIYGHmw2Day3M9MIBagkypZ82JeX8QdYxP0iMZPV1JXzCBxqaIjDClaBuSb/
-         uAAy0H1OKSo8lGVGhRIFQSULMiIM7LrVS376+5TKcAG9cLGXcy4qE9qpIrmat2xSE1Cw
-         KdRKNooDzaYmcQT0sz3uoaqBTVVwec3qhzh4OPBwhFgVVd6xXvFN26ZWZV6geLgiDOpe
-         loSvvi/93EahuTx/oBKp152+17Dqu2Fk1lg4nMoc7YWjEVHA8fzY9mnmn4PE/su3FkgO
-         I0uDxMuAYl7NrUEst9X09hs+FSHAPn3/5LtJQC0xvmh0x8K+l6jaBRYuh6v4+eF0B7nA
-         73lA==
-X-Gm-Message-State: AC+VfDzC4tlx6b9rLi67H8OUtYPII1YM1mlFRX8/MFzF2kifFkhayMrH
-        7Zp+jN6PTKHN35p3MicywPCoaQ==
-X-Google-Smtp-Source: ACHHUZ659kbwQ+zdbPhbcbhPNXF2toD/GnKXZZ2iSe3oNSV16KRXsqgmyhbNW6lUTZB6cVqjO81y+w==
-X-Received: by 2002:ac2:4556:0:b0:4e9:c627:195d with SMTP id j22-20020ac24556000000b004e9c627195dmr1079154lfm.57.1684539627094;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nrEeUaHJg5tvfQUV7ZJ9RQA7N6g3X5zbRUUxxD+s4dk=;
+        b=dg23Tyf0D3pFs0yIlJEGoGBRjBpFVF2GZap03zA6DY8LlDG+8nJFATpmDxAARk7T9j
+         arYWiLR7zhFIqEcMMGz8nL3zEDuzoftQ+JUdW2SHjL3c2ohwZjpsFkWI0OaMhSRDG3tg
+         uIenKGzxVxK7w99nio1y1z3lgTWnuVX93XGHysUvY0o4Yu+mOg2a3FsL7lnBl918dSNr
+         ukjX5RL/ofkSlOsTNXom6jS71zO96H8wIoIAuDn8xx+S4vYuqkCbXE4IbGGN7pSmtgXg
+         CXT9dCobX0OwKJGTCAJEABXuk/JVFd5UyPrNpTBG5xLy5Ob135WDrz71FGeS3oLyKGs7
+         6uzw==
+X-Gm-Message-State: AC+VfDxBsPpFH/PvgxAIfuswTDghF80IPVvaJpH46isBKgbIN6uce/uQ
+        eL1JFz0vNCTi4tBNl9N0HysgEA==
+X-Google-Smtp-Source: ACHHUZ6NWHUNRWcW5fT7TncahCjkztt2MYDM6c1eeSusriHH2dOVOCIK5d95Qz2Jt2aJ8jHVa00okg==
+X-Received: by 2002:a2e:91d4:0:b0:2ac:7137:5f13 with SMTP id u20-20020a2e91d4000000b002ac71375f13mr1298139ljg.9.1684539627729;
         Fri, 19 May 2023 16:40:27 -0700 (PDT)
 Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id l7-20020a2e3e07000000b002af25598f07sm43454lja.78.2023.05.19.16.40.26
+        by smtp.gmail.com with ESMTPSA id l7-20020a2e3e07000000b002af25598f07sm43454lja.78.2023.05.19.16.40.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 May 2023 16:40:26 -0700 (PDT)
+        Fri, 19 May 2023 16:40:27 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -59,10 +60,12 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v2 0/4] drm/msm/dpu: simplity RM code
-Date:   Sat, 20 May 2023 02:40:21 +0300
-Message-Id: <20230519234025.2864377-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 1/4] drm/msm/dpu: replace IS_ERR_OR_NULL with IS_ERR during DSC init
+Date:   Sat, 20 May 2023 02:40:22 +0300
+Message-Id: <20230519234025.2864377-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230519234025.2864377-1-dmitry.baryshkov@linaro.org>
+References: <20230519234025.2864377-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -75,28 +78,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Implement several small simplifications for the DPU resource manager.
-The ideas behind these patches were suggested by Marijn.
+Using IS_ERR_OR_NULL() together with PTR_ERR() is a typical mistake. If
+the value is NULL, then the function will return 0 instead of a proper
+return code. Moreover dpu_hw_dsc_init() can not return NULL.
+Replace the IS_ERR_OR_NULL() call with IS_ERR().
 
-Changes since v1:
-- Reworded commit message for the patch 1 (Marijn)
-- Fixed documentation for dpu_lm_cfg::pingpong (Marijn)
-- Added Suggested-by to the last patch (Marijn)
+This follows the commit 740828c73a36 ("drm/msm/dpu: fix error handling
+in dpu_rm_init"), which removed IS_ERR_OR_NULL() from RM init code, but
+then the commit f2803ee91a41 ("drm/msm/disp/dpu1: Add DSC support in
+RM") added it for DSC init.
 
-Dmitry Baryshkov (4):
-  drm/msm/dpu: replace IS_ERR_OR_NULL with IS_ERR during DSC init
-  drm/msm/dpu: remove futile checks from dpu_rm_init()
-  drm/msm/dpu: use PINGPONG_NONE for LMs with no PP attached
-  drm/msm/dpu: move PINGPONG_NONE check to dpu_lm_init()
+Suggested-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  4 +-
- .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  4 +-
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c     |  5 +++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h   |  3 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        | 41 +------------------
- 6 files changed, 13 insertions(+), 46 deletions(-)
-
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+index f0fc70422e56..dffd3dd0a877 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+@@ -247,7 +247,7 @@ int dpu_rm_init(struct dpu_rm *rm,
+ 		const struct dpu_dsc_cfg *dsc = &cat->dsc[i];
+ 
+ 		hw = dpu_hw_dsc_init(dsc, mmio);
+-		if (IS_ERR_OR_NULL(hw)) {
++		if (IS_ERR(hw)) {
+ 			rc = PTR_ERR(hw);
+ 			DPU_ERROR("failed dsc object creation: err %d\n", rc);
+ 			goto fail;
 -- 
 2.39.2
 
