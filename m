@@ -2,110 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7044E7099B0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 16:29:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E17627099BF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 16:31:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232000AbjESO3J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 10:29:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51006 "EHLO
+        id S232035AbjESOb3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 10:31:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52022 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231958AbjESO3I (ORCPT
+        with ESMTP id S231959AbjESOb2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 10:29:08 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7E2B137
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 07:29:05 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f2676d62a2so3699754e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 07:29:05 -0700 (PDT)
+        Fri, 19 May 2023 10:31:28 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F4B6E1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 07:31:27 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id 98e67ed59e1d1-24e3b69bc99so2606635a91.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 07:31:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684506544; x=1687098544;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SXSWp9UT1nFmnhqm3B5R8YXXasDWmGa7xqzY3bdTr7A=;
-        b=kwgATlkhkJ4dpLP5u471YE6mmR19bPExUHdjGal9FiBa7R6o+oSZL+4RnDlhNr6rG+
-         ZBg+fTcrx53sT/mK7GMwZTZP/Np9fiqVxc4O0FfRFGTitrNigCpLb9LPZnTgUBvJPR/S
-         MctcdvBpb9KpbHMWDu8XyEHKPtTur3zxrte8OohbJH7O/giAGZixo7Hd+p7LhLAdQ+3c
-         uHt51bdM/EEISau7rcH0k2u+BDlx0Mvsjsfd5KnOLrX2xNVaOnRAqhk7FW0m1ywKn3Hk
-         /eKpXOsMkVNKTjzqZi3B5wGXQDep9OvqyEnUEvmiT/Ku0mOws+C0JixM6wDb1WCJmjuF
-         +szA==
+        d=linaro.org; s=google; t=1684506687; x=1687098687;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2i+4jZMYyJOuLHa5p2LrqOp9rYboDhqgn1MB/sFP3Yk=;
+        b=NGH3s5VWcjCYJ467VCymIG56S/3e59VN9TouKrORlz1kUH9pDmPg+OhKrB7IREV6Rp
+         kyfAqSlCnfHExdp468iMVrISs6R+GMlbQ1CNIlcI1H05fV8MvYoZ8rVO2Mb4OV5wKw3v
+         I2bZ7wlj/bmDqIN8+0fwdCIE2/PYo+5mu5RzVhFiJ2YiTMpKd4F2lH6Vtg6aFyRA4ILl
+         rv7jDg/JBqRVP9kP83q9iGSkkC1pc5qJ8m3npI278unfvFayw6rzteHKvQ45jeEz1yel
+         WiqQADrAXSBPKyRx3xMRGcyYlXSv51Ab5b6XCaKL0GFBrwacjOCTB2sJDic4lu1vexJt
+         qkWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684506544; x=1687098544;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SXSWp9UT1nFmnhqm3B5R8YXXasDWmGa7xqzY3bdTr7A=;
-        b=Ajks1Tump/I5dhgnciail3LOmLDC2PuHuxIHSfQDvWaQtzrw+CpPgf2vMmz1VfQLG2
-         ECwtvpmUgOm9B9oN9vjPxmKzJhD1kAy2hgkfMncauT5M28yJ4gHH7KeiNZ2pMbxoixXL
-         JykBsuZihsYPEEYZdjHLLfGZl3wg0aRz9YnAZmLAkePI1WNew8GXD2jeYeml6Iq896Ej
-         v0evZe3SHhdUX5JkVc0I+yxHEOVor9gc8UAjA0E/K4AO1IHXXIqJdPGv9rOgaHWFtnpC
-         yDF9C33xu8a7aOxbqWpkgzcz34mHfubi1qpjzYjEkiKCzwqmMe03XuHD0u8dSp4usJvN
-         Q2Zg==
-X-Gm-Message-State: AC+VfDy/BItBKXg4cG7Lfbw081IAatcXgH7umxGTC0qAmjnRMejIQqdQ
-        zQjGc/cQOBLh6cwVMzJnXdqCCQ==
-X-Google-Smtp-Source: ACHHUZ6w05g//15CVJcp2ZhyzGhk5MPjyJqW3b/KEHwqEqs+F7QYpnESM/ah/J7f/bBWLjs6GgWeTQ==
-X-Received: by 2002:a05:6512:945:b0:4e9:74a8:134c with SMTP id u5-20020a056512094500b004e974a8134cmr763720lft.43.1684506544001;
-        Fri, 19 May 2023 07:29:04 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id d6-20020ac25ec6000000b004f14ecc03f1sm609354lfq.100.2023.05.19.07.29.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 May 2023 07:29:03 -0700 (PDT)
-Message-ID: <1678a177-f9a3-9673-d837-0ec82a4f5c1a@linaro.org>
-Date:   Fri, 19 May 2023 17:29:02 +0300
+        d=1e100.net; s=20221208; t=1684506687; x=1687098687;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2i+4jZMYyJOuLHa5p2LrqOp9rYboDhqgn1MB/sFP3Yk=;
+        b=Eflb9pLcqci7XUKlW2UHhZm1gf7Z9NLjE4NwfEOV64V9nv4vVsVxF80Xe9onYdMVZ8
+         O3/gdx54KqZpiKurL1Vw64qtMEqgmBdqKKtCvkhjm+k4oFVlb6w2KpEWW0bRz5igSARD
+         F8wSCleGPcorfMIxRGSmWP7UHQQzMuuBRmVQeWCmxe/VgjIRxysH8i4KnDeIqwEjvnSa
+         pWmbX5B6pwUEbfOfl4V8DT6/pNi1tUujUlRPMSSmAcBuCrKWWaufemfJ8Kox/Qu6IXMF
+         Nif9QZJ+rO0cBc5m3L6FGkFZBsj3XWHzgEcOUZ1k55WJ7OLryoGK2UjUK7eInSfMzWnL
+         DIsQ==
+X-Gm-Message-State: AC+VfDwmm0Vx/UyaQaueY+m6M8OmiRLFmM39zmFbot5+7IVmhpx3Y6l6
+        nSYU5Pi7iW9mQ0uNgVtA+vJr
+X-Google-Smtp-Source: ACHHUZ4YSPrAcDxn1zJ2i51SAYCP+PWm804ct+HEEvUvMD4g7cLt1qC2faNpG6gOsV6P1sjOQukimg==
+X-Received: by 2002:a17:90a:c712:b0:250:2192:1bff with SMTP id o18-20020a17090ac71200b0025021921bffmr2556538pjt.23.1684506686731;
+        Fri, 19 May 2023 07:31:26 -0700 (PDT)
+Received: from localhost.localdomain ([117.202.184.13])
+        by smtp.gmail.com with ESMTPSA id 30-20020a17090a09a100b00250d908a771sm1634845pjo.50.2023.05.19.07.31.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 May 2023 07:31:26 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com
+Cc:     robh@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, steev@kali.org,
+        quic_srichara@quicinc.com, dmitry.baryshkov@linaro.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 0/8] PCI: qcom: Do not advertise hotplug capability
+Date:   Fri, 19 May 2023 20:01:09 +0530
+Message-Id: <20230519143117.23875-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH] drm/msm/dpu: Use V4.0 PCC DSPP sub-block in SC7[12]80
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Kalyan Thota <quic_kalyant@quicinc.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Rob Clark <robdclark@chromium.org>
-References: <20230518-dpu-sc7180-pcc-version-v1-1-ec9ca4949e3e@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230518-dpu-sc7180-pcc-version-v1-1-ec9ca4949e3e@somainline.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/05/2023 00:29, Marijn Suijten wrote:
-> According to various downstream sources the PCC sub-block inside DSPP is
-> version 4.0 since DPU 4.0 and higher, including SC7[12]80 at DPU version
-> 6.2 and 7.2 respectively.  After correcting the version this struct
-> becomes identical to sm8150_dspp_sblk which is used all across the
-> catalog: replace uses of sc7180_dspp_sblk with that and remove
-> the struct definition for sc7180_dspp_sblk entirely.
-> 
-> Fixes: 4259ff7ae509e ("drm/msm/dpu: add support for pcc color block in dpu driver")
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h | 2 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c         | 5 -----
->   3 files changed, 2 insertions(+), 7 deletions(-)
+Hi,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+The SoCs making use of Qualcomm PCIe controllers do not support the PCIe hotplug
+functionality. But the hotplug capability bit is set by default in the hardware.
+This causes the kernel PCI core to register hotplug service for the controller
+and send hotplug commands to it. But those commands will timeout generating
+messages as below during boot and suspend/resume.
+    
+[    5.782159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2020 msec ago)
+[    5.810161] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2048 msec ago)
+[    7.838162] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2020 msec ago)
+[    7.870159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2052 msec ago)
+    
+This not only spams the console output but also induces a delay of a couple of
+seconds. To fix this issue, this series clears the HPC bit in PCI_EXP_SLTCAP
+register as a part of the post init sequence for all IP versions to not
+advertise the hotplug capability for the controller.
+
+Testing
+=======
+
+This series has been tested on DB845c (SDM845 SoC) and Lenovo Thinkpad X13s
+(SC8280XP SoC).
+
+Thanks,
+Mani
+
+Changes in v2:
+
+* Collected tags
+* Moved the HPC clearing to a separate function and reused across different
+  configs
+
+Manivannan Sadhasivam (8):
+  PCI: qcom: Use DWC helpers for modifying the read-only DBI registers
+  PCI: qcom: Disable write access to read only registers for IP v2.9.0
+  PCI: qcom: Do not advertise hotplug capability for IPs v2.7.0 and
+    v1.9.0
+  PCI: qcom: Do not advertise hotplug capability for IPs v2.3.3 and
+    v2.9.0
+  PCI: qcom: Do not advertise hotplug capability for IP v2.3.2
+  PCI: qcom: Use post init sequence of IP v2.3.2 for v2.4.0
+  PCI: qcom: Do not advertise hotplug capability for IP v1.0.0
+  PCI: qcom: Do not advertise hotplug capability for IP v2.1.0
+
+ drivers/pci/controller/dwc/pcie-qcom.c | 73 ++++++++++++++------------
+ 1 file changed, 38 insertions(+), 35 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.25.1
 
