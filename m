@@ -2,84 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D7145709FA2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 21:07:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A032709FDF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 21:26:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229944AbjESTHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 15:07:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52532 "EHLO
+        id S229673AbjEST0q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 15:26:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229970AbjESTG5 (ORCPT
+        with ESMTP id S230462AbjEST0o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 15:06:57 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEF2DE49
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 12:06:45 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f3a611b3ddso1498586e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 12:06:45 -0700 (PDT)
+        Fri, 19 May 2023 15:26:44 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A5B3116
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 12:26:42 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f1fe1208a4so4140087e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 12:26:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684523204; x=1687115204;
+        d=linaro.org; s=google; t=1684524400; x=1687116400;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Rui+ZWUFjt86muw9r1inOKrWuQmQAvAfmjQmisslnGc=;
-        b=rXItGa2oK4EId+ypJUigwh2I4n2aUm3LD0VPGd7JlVZCaPN/L88EcMPOP4jWOnPsQZ
-         CMm4ajybmaym87ABRc8V6w1o4kohcT+W1ohUypA9+EDCj73+q5y0nvyWbhDHobWdb6Wu
-         sIyjjd8bJ8+fnLS+pt1HFKqrBe9SO5gkmQyicwHfhc6LPGdryrcV1gAFOFPuRy+/V/vf
-         CEB4XZ2V6Bv9bm8AjqnJWsxwAw2BnFMIUlmk2zv186UF9J2mfuO7wgqfYg5tVieB6J6P
-         kLogJIvzdk6ert42EdAka5D9GXdWfHp+tod5qHax9lYYW06PeODCbhHf8lYLWQS8Oqlk
-         9n0w==
+        bh=GpB4KeaemkhVdvu/d2ARZdmioqBby83Vs2g6NbKJdpg=;
+        b=Pw0ndM+FiV9eNFnRsYKwN3Ioonzwup94M8WIuAtXXLe0daEDX3YFW1TJIFly9m9Uhu
+         Nm4JDtFiwo1JbVObhoP+acxiQmDepJNkpP+0uI7ysOmdYTo2FVxL+0nxXMnnifxcgKJQ
+         s8ioIisvGR6w9566N4s1wLLV84zsRb8H8r7JicTSW/s1N84GE9mIEmX7gvuKjL8TqBTf
+         GKLigZC1AQUQp4ZwEXCZzPdWdpeMjJW0RywlbxAPrqUOzqqJl4RciEvtrhk7VhMn6vYm
+         Fn9Cg25+6yFIBBQbpAdOSzloSg6ufJAGkGX+qEYySz60YHij5sP+L6I77s2Y0yo8EPI0
+         yNjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684523204; x=1687115204;
+        d=1e100.net; s=20221208; t=1684524400; x=1687116400;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rui+ZWUFjt86muw9r1inOKrWuQmQAvAfmjQmisslnGc=;
-        b=l6EiCLsutRFFTtO8kSurkd9YXEMEDR0DvrkUFbMxtgLjnSc6eql/d0YUAkOstAthvN
-         qignw2qTQ4JtTGba09tkmWK6ZACIe9yWi1Gnj1L88+Xx8xRYiYP1fF2lKAwRw2lHWo7M
-         Apukw8zCYfq8svTv5V5lb3zkG5syvX57jonN/HXTFzgHdr8rpN4gz9XZKq1PURMw4hVz
-         M4e1GrodY1kUAj5o9fDVyEIhHMpE0pVAuMFDqS7NI5h2bA2maw4nKXBQOTwaWtTjGJ53
-         hYQF4BwSIvQJqAEcnz2+YakgTuiBS7G1PkjCPL9hXV0lkS5+5qFWGBW82D16nrQZ6PFf
-         k3GQ==
-X-Gm-Message-State: AC+VfDx3wp7JrTjPDMfIKC+xMLRAYiNEwkb9LRtYfq8s8rFq4hQq66VJ
-        /KwdKv9unMxNTcguAlvJKnMIWg==
-X-Google-Smtp-Source: ACHHUZ67Ce2tA0cEGprwriJupZEEkiXqed5dpC+i0UuXp7d1PPnEunZUR84ZOoZKnBiZEonZaVqBdg==
-X-Received: by 2002:a05:6512:3d22:b0:4f3:aa26:1890 with SMTP id d34-20020a0565123d2200b004f3aa261890mr1294165lfv.22.1684523204153;
-        Fri, 19 May 2023 12:06:44 -0700 (PDT)
-Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id d30-20020ac25ede000000b004f019d3eab4sm2904lfq.23.2023.05.19.12.06.42
+        bh=GpB4KeaemkhVdvu/d2ARZdmioqBby83Vs2g6NbKJdpg=;
+        b=R6QlNMUi56FKvNTqzDdKjX2LuTsKIn89+dds6XjXRRRPyQ2nE+QxsFm+a8fXaNoMHP
+         n96XtmtLH5OvtlZZu/4zID8dBkMi3Im90MtwO02u96Pz1It8b/sIoNQ/LBsdgIM6WL1v
+         VbPLh3/7j/n7jRwe03HJqOhoqhvnAgaBbS21WiHBgC2YyGZEOoo7Y/x6UUghZO1an4NI
+         PyvcRFAcuup9O6GBePXdXFUU3KkCCQwr0io+/GmabUnnfKcOSRHPW0IUMuQWYTAMEIIz
+         1aFldCo2m7KsFKzrY1+6szq5NA0bcQAiAFly2/fhwFP0KKxl+f4LWZSL2DiF8D+X2uBu
+         tkfg==
+X-Gm-Message-State: AC+VfDzSrQBXwWglhzGU6qjUPEeDtM5Bai4gjwjPHLb4YyCZ1ZVy5HQ2
+        kHHVQnTtqRJfN5FFT2ap2MykPg==
+X-Google-Smtp-Source: ACHHUZ6ADBOWW+C9I2r3mhjSH2Mgt70NPVduQ4FcaygLnkmjzTLL5hcJ/kFt8K4oJzUxMyqH2iiRUQ==
+X-Received: by 2002:ac2:5491:0:b0:4f3:a446:8230 with SMTP id t17-20020ac25491000000b004f3a4468230mr1092271lfk.13.1684524400303;
+        Fri, 19 May 2023 12:26:40 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id q6-20020ac25146000000b004efff420b0asm3366lfd.108.2023.05.19.12.26.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 May 2023 12:06:43 -0700 (PDT)
-Message-ID: <0ccf9fdf-5604-d65d-6c7f-02c96f706a09@linaro.org>
-Date:   Fri, 19 May 2023 21:06:41 +0200
+        Fri, 19 May 2023 12:26:39 -0700 (PDT)
+Message-ID: <1dba8a01-1eac-0bfd-ed7d-21d36495c111@linaro.org>
+Date:   Fri, 19 May 2023 22:26:39 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v4 05/12] dt-bindings: display/msm: Add SM6375 MDSS
-Content-Language: en-US
-To:     Rob Herring <robh@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
-        freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
-        Joerg Roedel <joro@8bytes.org>, linux-kernel@vger.kernel.org,
-        Will Deacon <will@kernel.org>, devicetree@vger.kernel.org,
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v6 2/4] interconnect: add clk-based icc provider support
+Content-Language: en-GB
+To:     Nick Desaulniers <ndesaulniers@google.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, iommu@lists.linux.dev,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        David Airlie <airlied@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-References: <20230411-topic-straitlagoon_mdss-v4-0-68e7e25d70e1@linaro.org>
- <20230411-topic-straitlagoon_mdss-v4-5-68e7e25d70e1@linaro.org>
- <168452313011.3852116.2187810600963716663.robh@kernel.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <168452313011.3852116.2187810600963716663.robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+        Taniya Das <quic_tdas@quicinc.com>,
+        Georgi Djakov <djakov@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        linux-pm@vger.kernel.org, llvm@lists.linux.dev
+References: <20230512001334.2983048-1-dmitry.baryshkov@linaro.org>
+ <20230512001334.2983048-3-dmitry.baryshkov@linaro.org>
+ <ZGeyO6MRBSPf7b1y@google.com>
+ <CAKwvOdn-w2QPmq9_CmpHFurWyo9DiAiMEf0wus6ufW5g+8LKGQ@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <CAKwvOdn-w2QPmq9_CmpHFurWyo9DiAiMEf0wus6ufW5g+8LKGQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -90,51 +89,284 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 19.05.2023 21:05, Rob Herring wrote:
-> 
-> On Fri, 19 May 2023 19:04:26 +0200, Konrad Dybcio wrote:
->> Document the SM6375 MDSS.
+On 19/05/2023 20:32, Nick Desaulniers wrote:
+> On Fri, May 19, 2023 at 10:30 AM Nick Desaulniers
+> <ndesaulniers@google.com> wrote:
 >>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  .../bindings/display/msm/qcom,sm6375-mdss.yaml     | 216 +++++++++++++++++++++
->>  1 file changed, 216 insertions(+)
+>> On Fri, May 12, 2023 at 03:13:32AM +0300, Dmitry Baryshkov wrote:
+>>> For some devices it is useful to export clocks as interconnect providers,
+>>> if the clock corresponds to bus bandwidth.
+>>>
+>>> For example, on MSM8996 the cluster interconnect clock should be scaled
+>>> according to the cluster frequencies. Exporting it as an interconnect
+>>> allows one to properly describe this as the cluster bandwidth
+>>> requirements.
+>>>
+>>> Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 >>
+>> Hi Dmitry,
+>> Apologies if this has already been reported elsewhere, but our CI is red
+>> for linux-next today for allmodconfig builds:
+>>
+>>>> ERROR: modpost: missing MODULE_LICENSE() in drivers/interconnect/icc-clk.o
 > 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6375-mdss.example.dtb: display-controller@5e01000: clock-names:0: 'bus' was expected
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6375-mdss.example.dtb: display-controller@5e01000: clock-names:1: 'iface' was expected
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6375-mdss.example.dtb: display-controller@5e01000: clock-names:2: 'rot' was expected
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml
-> /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6375-mdss.example.dtb: display-controller@5e01000: clock-names:4: 'core' was expected
-> 	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml
-> 
-Whoops, forgot to fix the bindings.. there was going to be a v5 anyway.
+> I also suspect these 2 additional errors are related to this series?
+>>> Error: ERROR: modpost: "icc_clk_register" [drivers/clk/qcom/clk-cbf-8996.ko] undefined!
+>>> Error: ERROR: modpost: "icc_clk_unregister" [drivers/clk/qcom/clk-cbf-8996.ko] undefined!
 
-Konrad
-> doc reference errors (make refcheckdocs):
+Ack, thanks for the report. I will send a fix in a few hours.
+
 > 
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230411-topic-straitlagoon_mdss-v4-5-68e7e25d70e1@linaro.org
+>>
+>> https://github.com/ClangBuiltLinux/continuous-integration2/actions/runs/5024096989/jobs/9011763868
+>>
+>> Can you PTAL?
+>>
+>>> ---
+>>>   drivers/interconnect/Kconfig     |   6 ++
+>>>   drivers/interconnect/Makefile    |   2 +
+>>>   drivers/interconnect/icc-clk.c   | 168 +++++++++++++++++++++++++++++++
+>>>   include/linux/interconnect-clk.h |  22 ++++
+>>>   4 files changed, 198 insertions(+)
+>>>   create mode 100644 drivers/interconnect/icc-clk.c
+>>>   create mode 100644 include/linux/interconnect-clk.h
+>>>
+>>> diff --git a/drivers/interconnect/Kconfig b/drivers/interconnect/Kconfig
+>>> index d637a89d4695..5faa8d2aecff 100644
+>>> --- a/drivers/interconnect/Kconfig
+>>> +++ b/drivers/interconnect/Kconfig
+>>> @@ -15,4 +15,10 @@ source "drivers/interconnect/imx/Kconfig"
+>>>   source "drivers/interconnect/qcom/Kconfig"
+>>>   source "drivers/interconnect/samsung/Kconfig"
+>>>
+>>> +config INTERCONNECT_CLK
+>>> +     tristate
+>>> +     depends on COMMON_CLK
+>>> +     help
+>>> +       Support for wrapping clocks into the interconnect nodes.
+>>> +
+>>>   endif
+>>> diff --git a/drivers/interconnect/Makefile b/drivers/interconnect/Makefile
+>>> index 97d393fd638d..5604ce351a9f 100644
+>>> --- a/drivers/interconnect/Makefile
+>>> +++ b/drivers/interconnect/Makefile
+>>> @@ -7,3 +7,5 @@ obj-$(CONFIG_INTERCONNECT)            += icc-core.o
+>>>   obj-$(CONFIG_INTERCONNECT_IMX)               += imx/
+>>>   obj-$(CONFIG_INTERCONNECT_QCOM)              += qcom/
+>>>   obj-$(CONFIG_INTERCONNECT_SAMSUNG)   += samsung/
+>>> +
+>>> +obj-$(CONFIG_INTERCONNECT_CLK)               += icc-clk.o
+>>> diff --git a/drivers/interconnect/icc-clk.c b/drivers/interconnect/icc-clk.c
+>>> new file mode 100644
+>>> index 000000000000..0db3b654548b
+>>> --- /dev/null
+>>> +++ b/drivers/interconnect/icc-clk.c
+>>> @@ -0,0 +1,168 @@
+>>> +/* SPDX-License-Identifier: GPL-2.0 */
+>>> +/*
+>>> + * Copyright (c) 2023, Linaro Ltd.
+>>> + */
+>>> +
+>>> +#include <linux/clk.h>
+>>> +#include <linux/device.h>
+>>> +#include <linux/interconnect-clk.h>
+>>> +#include <linux/interconnect-provider.h>
+>>> +
+>>> +struct icc_clk_node {
+>>> +     struct clk *clk;
+>>> +     bool enabled;
+>>> +};
+>>> +
+>>> +struct icc_clk_provider {
+>>> +     struct icc_provider provider;
+>>> +     int num_clocks;
+>>> +     struct icc_clk_node clocks[];
+>>> +};
+>>> +
+>>> +#define to_icc_clk_provider(_provider) \
+>>> +     container_of(_provider, struct icc_clk_provider, provider)
+>>> +
+>>> +static int icc_clk_set(struct icc_node *src, struct icc_node *dst)
+>>> +{
+>>> +     struct icc_clk_node *qn = src->data;
+>>> +     int ret;
+>>> +
+>>> +     if (!qn || !qn->clk)
+>>> +             return 0;
+>>> +
+>>> +     if (!src->peak_bw) {
+>>> +             if (qn->enabled)
+>>> +                     clk_disable_unprepare(qn->clk);
+>>> +             qn->enabled = false;
+>>> +
+>>> +             return 0;
+>>> +     }
+>>> +
+>>> +     if (!qn->enabled) {
+>>> +             ret = clk_prepare_enable(qn->clk);
+>>> +             if (ret)
+>>> +                     return ret;
+>>> +             qn->enabled = true;
+>>> +     }
+>>> +
+>>> +     return clk_set_rate(qn->clk, icc_units_to_bps(src->peak_bw));
+>>> +}
+>>> +
+>>> +static int icc_clk_get_bw(struct icc_node *node, u32 *avg, u32 *peak)
+>>> +{
+>>> +     struct icc_clk_node *qn = node->data;
+>>> +
+>>> +     if (!qn || !qn->clk)
+>>> +             *peak = INT_MAX;
+>>> +     else
+>>> +             *peak = Bps_to_icc(clk_get_rate(qn->clk));
+>>> +
+>>> +     return 0;
+>>> +}
+>>> +
+>>> +/**
+>>> + * icc_clk_register() - register a new clk-based interconnect provider
+>>> + * @dev: device supporting this provider
+>>> + * @first_id: an ID of the first provider's node
+>>> + * @num_clocks: number of instances of struct icc_clk_data
+>>> + * @data: data for the provider
+>>> + *
+>>> + * Registers and returns a clk-based interconnect provider. It is a simple
+>>> + * wrapper around COMMON_CLK framework, allowing other devices to vote on the
+>>> + * clock rate.
+>>> + *
+>>> + * Return: 0 on success, or an error code otherwise
+>>> + */
+>>> +struct icc_provider *icc_clk_register(struct device *dev,
+>>> +                                   unsigned int first_id,
+>>> +                                   unsigned int num_clocks,
+>>> +                                   const struct icc_clk_data *data)
+>>> +{
+>>> +     struct icc_clk_provider *qp;
+>>> +     struct icc_provider *provider;
+>>> +     struct icc_onecell_data *onecell;
+>>> +     struct icc_node *node;
+>>> +     int ret, i, j;
+>>> +
+>>> +     onecell = devm_kzalloc(dev, struct_size(onecell, nodes, 2 * num_clocks), GFP_KERNEL);
+>>> +     if (!onecell)
+>>> +             return ERR_PTR(-ENOMEM);
+>>> +
+>>> +     qp = devm_kzalloc(dev, struct_size(qp, clocks, num_clocks), GFP_KERNEL);
+>>> +     if (!qp)
+>>> +             return ERR_PTR(-ENOMEM);
+>>> +
+>>> +     qp->num_clocks = num_clocks;
+>>> +
+>>> +     provider = &qp->provider;
+>>> +     provider->dev = dev;
+>>> +     provider->get_bw = icc_clk_get_bw;
+>>> +     provider->set = icc_clk_set;
+>>> +     provider->aggregate = icc_std_aggregate;
+>>> +     provider->xlate = of_icc_xlate_onecell;
+>>> +     INIT_LIST_HEAD(&provider->nodes);
+>>> +     provider->data = onecell;
+>>> +
+>>> +     icc_provider_init(provider);
+>>> +
+>>> +     for (i = 0, j = 0; i < num_clocks; i++) {
+>>> +             qp->clocks[i].clk = data[i].clk;
+>>> +
+>>> +             node = icc_node_create(first_id + j);
+>>> +             if (IS_ERR(node)) {
+>>> +                     ret = PTR_ERR(node);
+>>> +                     goto err;
+>>> +             }
+>>> +
+>>> +             node->name = devm_kasprintf(dev, GFP_KERNEL, "%s_master", data[i].name);
+>>> +             node->data = &qp->clocks[i];
+>>> +             icc_node_add(node, provider);
+>>> +             /* link to the next node, slave */
+>>> +             icc_link_create(node, first_id + j + 1);
+>>> +             onecell->nodes[j++] = node;
+>>> +
+>>> +             node = icc_node_create(first_id + j);
+>>> +             if (IS_ERR(node)) {
+>>> +                     ret = PTR_ERR(node);
+>>> +                     goto err;
+>>> +             }
+>>> +
+>>> +             node->name = devm_kasprintf(dev, GFP_KERNEL, "%s_slave", data[i].name);
+>>> +             /* no data for slave node */
+>>> +             icc_node_add(node, provider);
+>>> +             onecell->nodes[j++] = node;
+>>> +     }
+>>> +
+>>> +     onecell->num_nodes = j;
+>>> +
+>>> +     ret = icc_provider_register(provider);
+>>> +     if (ret)
+>>> +             goto err;
+>>> +
+>>> +     return provider;
+>>> +
+>>> +err:
+>>> +     icc_nodes_remove(provider);
+>>> +
+>>> +     return ERR_PTR(ret);
+>>> +}
+>>> +
+>>> +/**
+>>> + * icc_clk_unregister() - unregister a previously registered clk interconnect provider
+>>> + * @provider: provider returned by icc_clk_register()
+>>> + */
+>>> +void icc_clk_unregister(struct icc_provider *provider)
+>>> +{
+>>> +     struct icc_clk_provider *qp = container_of(provider, struct icc_clk_provider, provider);
+>>> +     int i;
+>>> +
+>>> +     icc_provider_deregister(&qp->provider);
+>>> +     icc_nodes_remove(&qp->provider);
+>>> +
+>>> +     for (i = 0; i < qp->num_clocks; i++) {
+>>> +             struct icc_clk_node *qn = &qp->clocks[i];
+>>> +
+>>> +             if (qn->enabled)
+>>> +                     clk_disable_unprepare(qn->clk);
+>>> +     }
+>>> +}
+>>> diff --git a/include/linux/interconnect-clk.h b/include/linux/interconnect-clk.h
+>>> new file mode 100644
+>>> index 000000000000..0cd80112bea5
+>>> --- /dev/null
+>>> +++ b/include/linux/interconnect-clk.h
+>>> @@ -0,0 +1,22 @@
+>>> +/* SPDX-License-Identifier: GPL-2.0 */
+>>> +/*
+>>> + * Copyright (c) 2023, Linaro Ltd.
+>>> + */
+>>> +
+>>> +#ifndef __LINUX_INTERCONNECT_CLK_H
+>>> +#define __LINUX_INTERCONNECT_CLK_H
+>>> +
+>>> +struct device;
+>>> +
+>>> +struct icc_clk_data {
+>>> +     struct clk *clk;
+>>> +     const char *name;
+>>> +};
+>>> +
+>>> +struct icc_provider *icc_clk_register(struct device *dev,
+>>> +                                   unsigned int first_id,
+>>> +                                   unsigned int num_clocks,
+>>> +                                   const struct icc_clk_data *data);
+>>> +void icc_clk_unregister(struct icc_provider *provider);
+>>> +
+>>> +#endif
+>>> --
+>>> 2.39.2
+>>>
 > 
-> The base for the series is generally the latest rc1. A different dependency
-> should be noted in *this* patch.
 > 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
 > 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit after running the above command yourself. Note
-> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-> your schema. However, it must be unset to test all examples with your schema.
-> 
+
+-- 
+With best wishes
+Dmitry
+
