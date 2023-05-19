@@ -2,67 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52604708FB5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 08:12:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9AEC870917C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 10:16:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229531AbjESGMn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 02:12:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41084 "EHLO
+        id S229701AbjESIQd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 04:16:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229436AbjESGMm (ORCPT
+        with ESMTP id S229436AbjESIQc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 02:12:42 -0400
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 347B11AC;
-        Thu, 18 May 2023 23:12:41 -0700 (PDT)
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-64d2e8a842cso433162b3a.3;
-        Thu, 18 May 2023 23:12:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684476760; x=1687068760;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+4SN79Akj+b85DVae9qGC3BAR6GQduEBcnLj3YcjnHU=;
-        b=Qsb3/9IqTkYzB+lUSxJ3cVvE7+1MtyMYPtChMAICXWgpxGqT+vots9SpUmib8an714
-         CZJz52v24Gzp+BRDWKn3BM7tdT9D2EN/iD47wYLypxm39ptgwW4nFyFTV3jiH5lcKlHr
-         rq+Ba+zrI0cqk0f5S5h+j8EXlYBrksIn467kc+T0ClnjpH5NoPDldgsFIRFiGCF9eiaH
-         XvE24lXpVzmV6py7P5dFXzmdoQt4H+MlLITh5xUl1uOBbR8W+dhXHooALgqdPjnVZjZM
-         8XLn3WgE4BAJ4wetf/lCDVnNe0Fbl8y9+mzZsPuCeC3VqTeDIhkU60eWmLmGqI7qtsIw
-         dzzg==
-X-Gm-Message-State: AC+VfDwxL3kxIHPp5tt9eEEi6SELX7qwDtJaTeJ4nOubsoZaEM2JWWCG
-        gMag0pJ+/xy/WXJL5oe0Zkk=
-X-Google-Smtp-Source: ACHHUZ4ofhRJDj2vK6lAjY0g6mcB8/BlvmqrFVReEtZMOaB2HN6AWPaKGIiMWBSj5LRDoL1gK+4qgg==
-X-Received: by 2002:a05:6a00:804:b0:647:d698:56d2 with SMTP id m4-20020a056a00080400b00647d69856d2mr1842354pfk.27.1684476759789;
-        Thu, 18 May 2023 23:12:39 -0700 (PDT)
-Received: from dev-linux.lan (cpe-70-95-21-110.san.res.rr.com. [70.95.21.110])
-        by smtp.gmail.com with ESMTPSA id f12-20020aa78b0c000000b0063b7f3250e9sm2283595pfd.7.2023.05.18.23.12.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 May 2023 23:12:39 -0700 (PDT)
-Date:   Thu, 18 May 2023 23:12:37 -0700
-From:   Sukrut Bellary <sukrut.bellary@linux.com>
-To:     Dan Carpenter <dan.carpenter@linaro.org>
-Cc:     Abel Vesa <abel.vesa@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
+        Fri, 19 May 2023 04:16:32 -0400
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 974F310D;
+        Fri, 19 May 2023 01:16:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1684484191; x=1716020191;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=Id5GnFi+b9G0LPMHVhGmB67A8W/8PBqlzXVDTx1zeiY=;
+  b=cNkGnZdd2ltM6PQICkOYkZxpzb9KsiPDF6T/wwBwYAJGbZvN0JzgCIWK
+   /4XIXHeLYhzLLOavPDC+PTwSCgdT3OeAusiYiQBtWXDMCQ8ChRx7XN2EB
+   KnQA/GRBl4TSA2Cp7jBgkyOERPTCD3s8ptnVXM+a08AP3w+Wfd6aMdEJl
+   mQ0JGOtsO495LxCZStpjsS/NDk53OKmYAEYTtWqjTRWu1C2dEFbOzYq4f
+   yHGNRGmZJrbDXqdZvBRmMzG/4HcR+1r7CAIRH6aHp0csJgYp1BQUITcii
+   hOVT5RFJ0Tc6dZQdyYkrkhDGl0sG9xwSeWggYuibGLLUKlBiIrS2DIQjm
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10714"; a="341749172"
+X-IronPort-AV: E=Sophos;i="6.00,176,1681196400"; 
+   d="scan'208";a="341749172"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2023 01:16:30 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10714"; a="846811378"
+X-IronPort-AV: E=Sophos;i="6.00,176,1681196400"; 
+   d="scan'208";a="846811378"
+Received: from kuha.fi.intel.com ([10.237.72.185])
+  by fmsmga001.fm.intel.com with SMTP; 19 May 2023 01:16:27 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Fri, 19 May 2023 11:16:27 +0300
+Date:   Fri, 19 May 2023 11:16:27 +0300
+From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To:     Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org,
-        Shuah Khan <skhan@linuxfoundation.org>
-Subject: Re: [PATCH] misc: fastrpc: Fix double free of 'buf' in error path
-Message-ID: <ZGcTVfAQeRcOSjO8@dev-linux.lan>
-References: <20230518100829.515143-1-sukrut.bellary@linux.com>
- <9194ebdf-f335-4cd6-bf89-bb4f86a57784@kili.mountain>
- <ZGbiwqMxnFFvS7y8@dev-linux.lan>
- <28c6814d-1863-41fa-a471-35a3ccf4447c@kili.mountain>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        kernel@pengutronix.de
+Subject: Re: [PATCH 92/97] usb: typec: qcom-pmic-typec: Convert to platform
+ remove callback returning void
+Message-ID: <ZGcwW1SUpQkih0X6@kuha.fi.intel.com>
+References: <20230517230239.187727-1-u.kleine-koenig@pengutronix.de>
+ <20230517230239.187727-93-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <28c6814d-1863-41fa-a471-35a3ccf4447c@kili.mountain>
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230517230239.187727-93-u.kleine-koenig@pengutronix.de>
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,32 +71,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 19, 2023 at 07:16:14AM +0300, Dan Carpenter wrote:
-> On Thu, May 18, 2023 at 07:45:22PM -0700, Sukrut Bellary wrote:
-> > > > 
-> > > > Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
-> > > > Signed-off-by: Sukrut Bellary <sukrut.bellary@linux.com>
-> > > > ---
-> > >   ^^^
-> > > Put testing caveats here instead, where it will be removed from the
-> > > git log.
-> > >
-> > 
-> > Shall I add "This is based on static analysis only. Compilation tested"
-> > here 
-> > or 
-> > is it not required to mention this for all the fixes?
-> > Can you please recommend what's is the preferred method I need to follow?
+On Thu, May 18, 2023 at 01:02:34AM +0200, Uwe Kleine-König wrote:
+> The .remove() callback for a platform driver returns an int which makes
+> many driver authors wrongly assume it's possible to do error handling by
+> returning an error code. However the value returned is ignored (apart from
+> emitting a warning) and this typically results in resource leaks. To improve
+> here there is a quest to make the remove callback return void. In the first
+> step of this quest all drivers are converted to .remove_new() which already
+> returns void. Eventually after all drivers are converted, .remove_new() is
+> renamed to .remove().
 > 
-> You can't go wrong with always adding it.  The untested part is useful
-> to know.  Also it's good to know how a bug is found so we can say if
-> it's affecting user and so we can improve our processes going forward.
->
-Ok, that's clear. Thanks for the input.
-
-Regards,
-Sukrut Bellary
-
-> regards,
-> dan carpenter
+> Trivially convert this driver from always returning zero in the remove
+> callback to the void returning variant.
 > 
+> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+
+> ---
+>  drivers/usb/typec/qcom-pmic-typec.c | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/usb/typec/qcom-pmic-typec.c b/drivers/usb/typec/qcom-pmic-typec.c
+> index 432ea62f1bab..924af87fb26d 100644
+> --- a/drivers/usb/typec/qcom-pmic-typec.c
+> +++ b/drivers/usb/typec/qcom-pmic-typec.c
+> @@ -228,7 +228,7 @@ static int qcom_pmic_typec_probe(struct platform_device *pdev)
+>  	return ret;
+>  }
+>  
+> -static int qcom_pmic_typec_remove(struct platform_device *pdev)
+> +static void qcom_pmic_typec_remove(struct platform_device *pdev)
+>  {
+>  	struct qcom_pmic_typec *qcom_usb = platform_get_drvdata(pdev);
+>  
+> @@ -237,8 +237,6 @@ static int qcom_pmic_typec_remove(struct platform_device *pdev)
+>  
+>  	typec_unregister_port(qcom_usb->port);
+>  	usb_role_switch_put(qcom_usb->role_sw);
+> -
+> -	return 0;
+>  }
+>  
+>  static const struct of_device_id qcom_pmic_typec_table[] = {
+> @@ -253,7 +251,7 @@ static struct platform_driver qcom_pmic_typec = {
+>  		.of_match_table = qcom_pmic_typec_table,
+>  	},
+>  	.probe = qcom_pmic_typec_probe,
+> -	.remove = qcom_pmic_typec_remove,
+> +	.remove_new = qcom_pmic_typec_remove,
+>  };
+>  module_platform_driver(qcom_pmic_typec);
+>  
+> -- 
+> 2.39.2
+
+-- 
+heikki
