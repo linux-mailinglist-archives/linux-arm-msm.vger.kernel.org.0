@@ -2,81 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D3F1B709FFE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 21:37:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 847E370A06D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 22:14:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229816AbjESThj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 15:37:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39834 "EHLO
+        id S231578AbjESUO5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 16:14:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229559AbjESThi (ORCPT
+        with ESMTP id S231791AbjESUOq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 15:37:38 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0BE73F7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 12:37:37 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2af16426065so28372331fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 12:37:36 -0700 (PDT)
+        Fri, 19 May 2023 16:14:46 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10F1710EC
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 13:14:10 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f41d087b3bso37228635e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 13:14:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684525055; x=1687117055;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WG0EFsOhil7znf5rykPHYGinvzpEeFLqXGWnT2ERSWE=;
-        b=gaNk9bKffkPqzIUawRpdv9HapibjGvLX44I4JpV5vF64gNCXMbvVohiFoZVTMBNOLq
-         tdXVpD0/FdX36wKio9KlSiz+VKESKoiSfjctcB9pwoG2zsLywLHkvyJ37LOWzxvJ5JJn
-         Pj9DCafXxOiivgieUFRtf3DY8B7F906PamTt3fgXKmX41xX32eW4/wsuNNrfa9K4k2Ss
-         9MQT1nid+iqQ3/zfTexDdofVe55ktRvrzMgx5yVDCtE279hJXU6vclLiYIeSOFSzIMcM
-         7WymrTtE0h+4snepZN5O6Ux529RNA+6uAq/orDCXpcDh5YOBb3hUlQtdwSlfrPxy5Po0
-         FzCw==
+        d=linaro.org; s=google; t=1684527248; x=1687119248;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=AnzQY1sqcvkjTs0N5+FyW+tD9eHn3O+t59IFw425bEc=;
+        b=lBMivHKfRgtwtCk+QICLAiIJZApK/Ya8eAcwg2PaSoWf/aHVGAuuAVxqiR8GzW4L3P
+         QnOaTovcfEvbcdxxdX6Cy++w8DSCIVL2TTCMG2Y8IEo2ON0UjTTifJy/TgoHmB66wmjQ
+         EPDzFOGysJEybVyEC4CKrHDZcXsDjbTVna5hli/+MjItKxiu9PmBgRGdqEpRQ3qeWgVN
+         ucWiYZKuviqLbfq1YqHdoAwCQy031OYleemP0tyFxWzrezJNvORm3g38mqtn+geEDs5A
+         udl1L6GjoTGK7lCDDUDydf2cmkDpGuAWi97/7sA+nMfN304GTW2xmNZrrFwZ2VPuvXdd
+         etTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684525055; x=1687117055;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WG0EFsOhil7znf5rykPHYGinvzpEeFLqXGWnT2ERSWE=;
-        b=WzvPQQWe6iokT3IThpkeAXGNaq2F4v0VtqpeMZ2TyFFRGw4zKCm3HbLHPu6MKylGaF
-         YutslczIQnKGn41ZNFgAEMcm4OTMxc0Ca5hyQ4z1E3nsR5OYq73IMgQKdipj/giO7xsk
-         Pyr2P8MNiwZUwJ04VpCoKCIvgVYVvUijU06jCxwL1gL7AdrMJNKJ/ATORbu0siHQjmhm
-         tkixlXvqWAUCe6WOMAMS3aiUchukgkaa7Oa6Yzasj/vOelJ6Qo3EAqdY1Cx4luierN5J
-         xRAtDBcN1pipdIWIVBR+LeVRHkGWp2prDRlseInsUOXgClCvqn8P7CCrFCHWjbcKhOuu
-         NmOQ==
-X-Gm-Message-State: AC+VfDwgRkmLeqtYoGz+lhGu+tEYbHZNldh/vhFGcjNaxgf7uli5a9jS
-        959K5Ih0EGXO2iC9Wj7LCXGmUQ==
-X-Google-Smtp-Source: ACHHUZ5tcOJqtD9OIVZzWmDu973LRCYXHhUH97wnNQSNlitcCQGK0nH3KTEVuRhzrtpplDEyDu828w==
-X-Received: by 2002:a2e:9c06:0:b0:2ad:ae71:4f21 with SMTP id s6-20020a2e9c06000000b002adae714f21mr1099842lji.48.1684525055192;
-        Fri, 19 May 2023 12:37:35 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id 18-20020a05651c041200b002ad95392147sm958598lja.118.2023.05.19.12.37.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 May 2023 12:37:34 -0700 (PDT)
-Message-ID: <100f7525-35ed-a2a2-6672-e5874e0a1ac5@linaro.org>
-Date:   Fri, 19 May 2023 22:37:34 +0300
+        d=1e100.net; s=20221208; t=1684527248; x=1687119248;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AnzQY1sqcvkjTs0N5+FyW+tD9eHn3O+t59IFw425bEc=;
+        b=SzdvT+GotYEdvRxyQpArV1KmkUrQN0uzcp4Qmaa8c9od98S0H0fL+TeXErbvD/MUVc
+         8SoKt7ITBXTtYnH0MNYuM7LTnIJHTNCzra03O4V0ghaoo7gFn8m4Rk8LqXOWHcJDHHMy
+         NJCulzq9E4FvsECI+e8vgL3VqLTHbdZsLb0HPeg3no2wSVztcJysGeD20NPUcGc5o8F1
+         MqiWEuhffFCkib0H+4tA5p5hTTRKeFWqGTxDuuvwwtco9BB6OqOVJys7tsbKWKvV6FQN
+         YGzTlt2lPmCqFqlY4t82svn+uHqoynQMepzXde2qKISsGi2F4E3RavbWkAPVOB3Roe0j
+         1XKg==
+X-Gm-Message-State: AC+VfDw4XMPyTvhhd+BVVKrD+4HvEQ3oGMwU3iYHHX7NUFljOTDYpY4P
+        XtmRdCD8rdolx5J93oqiNFtIgkZ/OZTB6h98WVPdsw==
+X-Google-Smtp-Source: ACHHUZ42sasNBJ5U+qQUANkYHe8wr6QZwvgJdArljj1mz3V27qwnBdyMWtJUiDirfiineHeOKCNND53yzPz00TsHIAA=
+X-Received: by 2002:a1c:f705:0:b0:3f4:c28b:ec88 with SMTP id
+ v5-20020a1cf705000000b003f4c28bec88mr1837762wmh.41.1684527248304; Fri, 19 May
+ 2023 13:14:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [Freedreno] [PATCH] drm/msm/dsi: simplify pixel clk rate handling
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     linux-arm-msm@vger.kernel.org,
+References: <20230518-bamclk-dt-v2-1-a1a857b966ca@gerhold.net>
+In-Reply-To: <20230518-bamclk-dt-v2-1-a1a857b966ca@gerhold.net>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Sat, 20 May 2023 01:43:56 +0530
+Message-ID: <CAH=2Ntx3WxEM_ita+caGXvqCJjCy=TkX8gjyT9nSV3j-89Y_cQ@mail.gmail.com>
+Subject: Re: [PATCH v2] dmaengine: qcom: bam_dma: allow omitting num-{channels,ees}
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Vinod Koul <vkoul@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        freedreno@lists.freedesktop.org
-References: <20230118130031.2345941-1-dmitry.baryshkov@linaro.org>
- <8ebd01e3-00be-b0da-e91a-ab1a4e074074@quicinc.com>
- <85d0a8c6-f6b4-4cd4-7cc6-b13f37523bd4@linaro.org>
- <637c1848-0e3f-9f3d-dc56-8f2d5b8de696@quicinc.com>
- <a9669c51-3171-3751-f249-be4a7f4312c2@linaro.org>
- <9a505edb-f3e8-ade4-8d4e-629bc2840f29@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <9a505edb-f3e8-ade4-8d4e-629bc2840f29@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -85,185 +71,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/05/2023 22:36, Abhinav Kumar wrote:
-> 
-> 
-> On 5/19/2023 12:33 PM, Dmitry Baryshkov wrote:
->> On 19/05/2023 21:54, Jessica Zhang wrote:
->>>
->>>
->>> On 3/28/2023 6:04 AM, Dmitry Baryshkov wrote:
->>>> On 26/01/2023 02:07, Abhinav Kumar wrote:
->>>>>
->>>>>
->>>>> On 1/18/2023 5:00 AM, Dmitry Baryshkov wrote:
->>>>>> Move a call to dsi_calc_pclk() out of calc_clk_rate directly towards
->>>>>> msm_dsi_host_get_phy_clk_req(). It is called for both 6g and v2 
->>>>>> hosts.
->>>>>>
->>>>>> Also, while we are at it, replace another dsi_get_pclk_rate() 
->>>>>> invocation
->>>>>> with using the stored value at msm_host->pixel_clk_rate.
->>>>>>
->>>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>>>> ---
->>>>>>   drivers/gpu/drm/msm/dsi/dsi.h      |  4 ++--
->>>>>>   drivers/gpu/drm/msm/dsi/dsi_cfg.h  |  2 +-
->>>>>>   drivers/gpu/drm/msm/dsi/dsi_host.c | 24 ++++++++++++------------
->>>>>>   3 files changed, 15 insertions(+), 15 deletions(-)
->>>>>>
->>>>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h 
->>>>>> b/drivers/gpu/drm/msm/dsi/dsi.h
->>>>>> index bd3763a5d723..93ec54478eb6 100644
->>>>>> --- a/drivers/gpu/drm/msm/dsi/dsi.h
->>>>>> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
->>>>>> @@ -129,8 +129,8 @@ int dsi_dma_base_get_6g(struct msm_dsi_host 
->>>>>> *msm_host, uint64_t *iova);
->>>>>>   int dsi_dma_base_get_v2(struct msm_dsi_host *msm_host, uint64_t 
->>>>>> *iova);
->>>>>>   int dsi_clk_init_v2(struct msm_dsi_host *msm_host);
->>>>>>   int dsi_clk_init_6g_v2(struct msm_dsi_host *msm_host);
->>>>>> -int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool 
->>>>>> is_bonded_dsi);
->>>>>> -int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool 
->>>>>> is_bonded_dsi);
->>>>>> +int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host);
->>>>>> +int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host);
->>>>>>   void msm_dsi_host_snapshot(struct msm_disp_state *disp_state, 
->>>>>> struct mipi_dsi_host *host);
->>>>>>   void msm_dsi_host_test_pattern_en(struct mipi_dsi_host *host);
->>>>>>   struct drm_dsc_config *msm_dsi_host_get_dsc_config(struct 
->>>>>> mipi_dsi_host *host);
->>>>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_cfg.h 
->>>>>> b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
->>>>>> index 44be4a88aa83..5106e66846c3 100644
->>>>>> --- a/drivers/gpu/drm/msm/dsi/dsi_cfg.h
->>>>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_cfg.h
->>>>>> @@ -51,7 +51,7 @@ struct msm_dsi_host_cfg_ops {
->>>>>>       void* (*tx_buf_get)(struct msm_dsi_host *msm_host);
->>>>>>       void (*tx_buf_put)(struct msm_dsi_host *msm_host);
->>>>>>       int (*dma_base_get)(struct msm_dsi_host *msm_host, uint64_t 
->>>>>> *iova);
->>>>>> -    int (*calc_clk_rate)(struct msm_dsi_host *msm_host, bool 
->>>>>> is_bonded_dsi);
->>>>>> +    int (*calc_clk_rate)(struct msm_dsi_host *msm_host);
->>>>>>   };
->>>>>>   struct msm_dsi_cfg_handler {
->>>>>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c 
->>>>>> b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>>> index 18fa30e1e858..7d99a108bff6 100644
->>>>>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>>>>> @@ -616,28 +616,21 @@ static void dsi_calc_pclk(struct 
->>>>>> msm_dsi_host *msm_host, bool is_bonded_dsi)
->>>>>>   }
->>>>>> -int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool 
->>>>>> is_bonded_dsi)
->>>>>> +int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host)
->>>>>>   {
->>>>>> -    if (!msm_host->mode) {
->>>>>> -        pr_err("%s: mode not set\n", __func__);
->>>>>> -        return -EINVAL;
->>>>>> -    }
->>>>>> -
->>>>>> -    dsi_calc_pclk(msm_host, is_bonded_dsi);
->>>>>>       msm_host->esc_clk_rate = clk_get_rate(msm_host->esc_clk);
->>>>>> +
->>>>>>       return 0;
->>>>>>   }
->>>>>> -int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool 
->>>>>> is_bonded_dsi)
->>>>>> +int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host)
->>>>>>   {
->>>>>>       u32 bpp = dsi_get_bpp(msm_host->format);
->>>>>>       u64 pclk_bpp;
->>>>>>       unsigned int esc_mhz, esc_div;
->>>>>>       unsigned long byte_mhz;
->>>>>> -    dsi_calc_pclk(msm_host, is_bonded_dsi);
->>>>>> -
->>>>>> -    pclk_bpp = (u64)dsi_get_pclk_rate(msm_host->mode, 
->>>>>> is_bonded_dsi) * bpp;
->>>>>> +    pclk_bpp = msm_host->pixel_clk_rate * bpp;
->>>>>>       do_div(pclk_bpp, 8);
->>>>>>       msm_host->src_clk_rate = pclk_bpp;
->>>>>> @@ -2292,7 +2285,14 @@ void msm_dsi_host_get_phy_clk_req(struct 
->>>>>> mipi_dsi_host *host,
->>>>>>       const struct msm_dsi_cfg_handler *cfg_hnd = msm_host->cfg_hnd;
->>>>>>       int ret;
->>>>>> -    ret = cfg_hnd->ops->calc_clk_rate(msm_host, is_bonded_dsi);
->>>>>> +    if (!msm_host->mode) {
->>>>>> +        pr_err("%s: mode not set\n", __func__);
->>>>>> +        return;
->>>>>> +    }
->>>>>> +
->>>>>> +    dsi_calc_pclk(msm_host, is_bonded_dsi);
->>>>>> +
->>>>>> +    ret = cfg_hnd->ops->calc_clk_rate(msm_host);
->>>>>
->>>>> I am not too sure what we are gaining by this.
->>>>>
->>>>> Its not that we are replacing dsi_get_pclk_rate().
->>>>>
->>>>> We are moving the dsi_get_pclk_rate() from the calc_clk_rate() to 
->>>>> the msm_dsi_host_get_phy_clk_req().
->>>>>
->>>>> Also, with this change, dsi_calc_clk_rate_6g() looks kind of empty 
->>>>> to stand on its own.
->>>>>
->>>>> The original intention of the calc_clk_rate() op seems to be 
->>>>> calculate and store all the clocks (byte, pixel and esc).
->>>>>
->>>>> Why change that behavior by breaking it up?
->>>>
->>>> Unification between platforms. Both v2 and 6g platforms call 
->>>> dsi_calc_pclk(). Let's just move it to a common code path.
->>>
->>> Hi Dmitry,
->>>
->>> I think what Abhinav means here is that the meaning and functionality 
->>> of calc_clk_rate() changes with this patch.
->>>
->>> Before, calc_clk_rate() does *all* the clk_rate calculations and 
->>> assignments. But after this change, it will only calculate and assign 
->>> the escape clk rate.
->>>
->>> I agree with Abhinav that this change renders the calc_clk_rate() op 
->>> misleading as it will not calculate all of the clock rates anymore.
->>
->> Would it make sense if I rename it to calc_other_clock_rates()?
->>
-> 
-> Not really. I would rather still have it separate and drop this patch.
-> 
-> So even if pixel clock calculation looks common today between v2 and 6g, 
-> lets say tomorrow there is a 7g or 8g which needs some other math there, 
-> I think this is the right place where it should stay so that we 
-> calculate all clocks together.
+On Fri, 19 May 2023 at 16:30, Stephan Gerhold <stephan@gerhold.net> wrote:
+>
+> The bam_dma driver needs to know the number of channels and execution
+> environments (EEs) at probe time. If we are in full control of the BAM
+> controller this information can be obtained from the BAM identification
+> registers (BAM_REVISION/BAM_NUM_PIPES).
+>
+> When the BAM is "controlled remotely" it is more complicated. The BAM
+> might not be on at probe time, so reading the registers could fail.
+> This is why the information must be added to the device tree in this
+> case, using "num-channels" and "qcom,num-ees".
+>
+> However, there are also some BAM instances that are initialized by
+> something else but we still have a clock that allows to turn it on when
+> needed. This can be set up in the DT with "qcom,controlled-remotely"
+> and "clocks" and is already supported by the bam_dma driver. Examples
+> for this are the typical BLSP BAM instances on older SoCs, QPIC BAM
+> (for NAND) and the crypto BAM on some SoCs.
+>
+> In this case, there is no need to read "num-channels" and
+> "qcom,num-ees" from the DT. The BAN can be turned on using the clock
+> so we can just read it from the BAM registers like in the normal case.
+>
+> Check for the BAM clock earlier and skip reading "num-channels" and
+> "qcom,num-ees" if it is present to allow simplifying the DT description
+> a bit.
+>
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+> Changes in v2:
+> - Rewrite commit message for more clarity (discussion with Bhupesh)
+> - Link to v1: https://lore.kernel.org/r/20230518-bamclk-dt-v1-1-82f738c897d9@gerhold.net
+> ---
+>  drivers/dma/qcom/bam_dma.c | 18 +++++++++---------
+>  1 file changed, 9 insertions(+), 9 deletions(-)
+>
+> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
+> index 1e47d27e1f81..4c3eb972039d 100644
+> --- a/drivers/dma/qcom/bam_dma.c
+> +++ b/drivers/dma/qcom/bam_dma.c
+> @@ -1272,7 +1272,15 @@ static int bam_dma_probe(struct platform_device *pdev)
+>         bdev->powered_remotely = of_property_read_bool(pdev->dev.of_node,
+>                                                 "qcom,powered-remotely");
+>
+> -       if (bdev->controlled_remotely || bdev->powered_remotely) {
+> +       if (bdev->controlled_remotely || bdev->powered_remotely)
+> +               bdev->bamclk = devm_clk_get_optional(bdev->dev, "bam_clk");
+> +       else
+> +               bdev->bamclk = devm_clk_get(bdev->dev, "bam_clk");
+> +
+> +       if (IS_ERR(bdev->bamclk))
+> +               return PTR_ERR(bdev->bamclk);
+> +
+> +       if (!bdev->bamclk) {
+>                 ret = of_property_read_u32(pdev->dev.of_node, "num-channels",
+>                                            &bdev->num_channels);
+>                 if (ret)
+> @@ -1284,14 +1292,6 @@ static int bam_dma_probe(struct platform_device *pdev)
+>                         dev_err(bdev->dev, "num-ees unspecified in dt\n");
+>         }
+>
+> -       if (bdev->controlled_remotely || bdev->powered_remotely)
+> -               bdev->bamclk = devm_clk_get_optional(bdev->dev, "bam_clk");
+> -       else
+> -               bdev->bamclk = devm_clk_get(bdev->dev, "bam_clk");
+> -
+> -       if (IS_ERR(bdev->bamclk))
+> -               return PTR_ERR(bdev->bamclk);
+> -
+>         ret = clk_prepare_enable(bdev->bamclk);
+>         if (ret) {
+>                 dev_err(bdev->dev, "failed to prepare/enable clock\n");
 
-Ack.
+Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 
-> 
->> Moving pclk calculation to the core code emphasises that pclk 
->> calculation is common between v2 and 6g hosts.
->>
->>>
->>> Thanks,
->>>
->>> Jessica Zhang
->>>
->>>>
->>>>>
->>>>>>       if (ret) {
->>>>>>           pr_err("%s: unable to calc clk rate, %d\n", __func__, ret);
->>>>>>           return;
->>>>
->>>> -- 
->>>> With best wishes
->>>> Dmitry
->>>>
->>
-
--- 
-With best wishes
-Dmitry
-
+Thanks.
