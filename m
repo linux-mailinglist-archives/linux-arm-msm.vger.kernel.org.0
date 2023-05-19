@@ -2,113 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CDBA70A297
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 00:01:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8701970A303
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 00:58:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229508AbjESWBa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 18:01:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39886 "EHLO
+        id S229974AbjESW6N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 18:58:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229458AbjESWB3 (ORCPT
+        with ESMTP id S229449AbjESW6M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 18:01:29 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AA92B1;
-        Fri, 19 May 2023 15:01:28 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34JLvbYi032293;
-        Fri, 19 May 2023 22:00:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=2M8Qy/bGAgxLNT+04Owjjr5jUyJqYgJChjPSDnOvG3U=;
- b=nq13IB1crg9fM9BXi3478aY8LGzKVxkL+XIFOyVUoTphnKIGlWauVLoxHGcDNsRpRAfD
- MDvgFKB7uFsigADdgVxsDxsnOqYnvwEV7jTjwlIZCXLw8iwUgkj13uwxGisqy83K38tB
- 5JV2wj8DLlezMGb5LX0lStdV738874vagDRXmy/4prcycXhfxrbyrtpMsc0REJBTUVCx
- kxtDpOfa8AlwWhRScdTV/txOACcDco0H/bex7V3c6bS2d75Bwri5FG5XDVbs5UwqE8pq
- 4Y+84uOFYm0b28iKMdOZF+R6DPpm/l1s7pWIrxkHCIopJQBbZiO5OnfKWz8al0VkA9mS mQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qpad1h8nw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 19 May 2023 22:00:53 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34JM0qlm007656
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 19 May 2023 22:00:52 GMT
-Received: from [10.110.96.82] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 19 May
- 2023 15:00:51 -0700
-Message-ID: <56ac76e8-e5ac-3712-1e07-ad6c5b96c77c@quicinc.com>
-Date:   Fri, 19 May 2023 15:00:43 -0700
+        Fri, 19 May 2023 18:58:12 -0400
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF9B1E46;
+        Fri, 19 May 2023 15:58:02 -0700 (PDT)
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-64d247a023aso1663259b3a.2;
+        Fri, 19 May 2023 15:58:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684537082; x=1687129082;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lT3nVX8BOP6xdFUAxxsGq0VwKjJtQEdxnV8AqojOVvE=;
+        b=G4zQo875H6QgGCt/ELHZWPc5M13RsMIMJUenfmaNPxgrTdnvpli3cJ5sKr1qpgurNx
+         f/Frs0t8etXo5EjkBgXJsuB5loRA4uqRsQEqh+4GHlurCVCCSMFXLct0mS3vP18ylg3i
+         ykpedVuBytPy1c7+dxGr4+TWeif95YpsQigav/oDY7utpu4WDx/YtadLsL/OuiQfj9AP
+         aSzfW2QtZDhnKIfODzqZLacTKkd1ydOuPNN+DTbMNvsAAErHY3D3KTXqw0VMqHu3k5j6
+         1d216j+6xkRxWHfmMJmlLle07TUZ3Gi6ZmCwMnkn7KC21XHU90OAbQTPs45L3759Ng6C
+         hhzw==
+X-Gm-Message-State: AC+VfDzLTWFRrQRAkOB4W1I1oA0HFbBeULZMq5NVd9Ilgw1GU0SAlH2D
+        eVVocdfxZuWf/63bwV891kc=
+X-Google-Smtp-Source: ACHHUZ4dpJa1bPQdCUzlU6b8KGnb61gD8PYkuxGZtcIWM6wwJnGwKzbgeY8t6vG1yKx/SWkXHSVUuA==
+X-Received: by 2002:a05:6a00:1914:b0:648:b185:efd9 with SMTP id y20-20020a056a00191400b00648b185efd9mr4424120pfi.11.1684537081838;
+        Fri, 19 May 2023 15:58:01 -0700 (PDT)
+Received: from dev-linux.lan (cpe-70-95-21-110.san.res.rr.com. [70.95.21.110])
+        by smtp.gmail.com with ESMTPSA id e24-20020a62aa18000000b0064d3a9def35sm166486pff.188.2023.05.19.15.58.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 May 2023 15:58:01 -0700 (PDT)
+Date:   Fri, 19 May 2023 15:57:59 -0700
+From:   Sukrut Bellary <sukrut.bellary@linux.com>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Dan Carpenter <dan.carpenter@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org,
+        Shuah Khan <skhan@linuxfoundation.org>
+Subject: Re: [PATCH] misc: fastrpc: Fix double free of 'buf' in error path
+Message-ID: <ZGf+99vmXpN5nJ2f@dev-linux.lan>
+References: <20230518100829.515143-1-sukrut.bellary@linux.com>
+ <9194ebdf-f335-4cd6-bf89-bb4f86a57784@kili.mountain>
+ <f47b17c1-1c02-2aa3-ba10-fcef70cb25a8@linaro.org>
+ <b0115d7d-d15a-4948-8726-09a8b37f3f36@kili.mountain>
+ <4aa42c38-e0e2-4d2d-bfe2-15bc151f7117@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.2
-Subject: Re: [PATCH v2] drm/msm/dpu: Set DPU_DATA_HCTL_EN for in
- INTF_SC7180_MASK
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "Kalyan Thota" <quic_kalyant@quicinc.com>,
-        Shubhashree Dhar <dhar@codeaurora.org>,
-        Raviteja Tamatam <travitej@codeaurora.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-CC:     Rob Clark <robdclark@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        "Marijn Suijten" <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230508-topic-hctl_en-v2-1-e7bea9f1f5dd@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230508-topic-hctl_en-v2-1-e7bea9f1f5dd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: dlWzTMD1K9sgige-225FzMntVgVNF14M
-X-Proofpoint-ORIG-GUID: dlWzTMD1K9sgige-225FzMntVgVNF14M
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-19_16,2023-05-17_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 lowpriorityscore=0 phishscore=0 impostorscore=0
- clxscore=1011 suspectscore=0 spamscore=0 mlxlogscore=736 adultscore=0
- bulkscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305190190
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4aa42c38-e0e2-4d2d-bfe2-15bc151f7117@linaro.org>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/19/2023 11:49 AM, Konrad Dybcio wrote:
-> DPU5 and newer targets enable this unconditionally. Move it from the
-> SC7280 mask to the SC7180 one.
+On Fri, May 19, 2023 at 11:39:59AM +0100, Srinivas Kandagatla wrote:
 > 
+> 
+> On 19/05/2023 11:22, Dan Carpenter wrote:
+> > > ----------------------->cut<---------------------------
+> > > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> > > index f60bbf99485c..3fdd326e1ae8 100644
+> > > --- a/drivers/misc/fastrpc.c
+> > > +++ b/drivers/misc/fastrpc.c
+> > > @@ -1891,7 +1891,8 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl,
+> > > char __user *argp)
+> > >                                        &args[0]);
+> > >          if (err) {
+> > >                  dev_err(dev, "mmap error (len 0x%08llx)\n", buf->size);
+> > > -               goto err_invoke;
+> > > +               fastrpc_buf_free(buf);
+> > > +               return err;
+> > >          }
+> > > 
+> > >          /* update the buffer to be able to deallocate the memory on the DSP
+> > > */
+> > > @@ -1930,11 +1931,7 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl,
+> > > char __user *argp)
+> > >          return 0;
+> > > 
+> > >   err_assign:
+> > > -       fastrpc_req_munmap_impl(fl, buf);
+> > > -err_invoke:
+> > > -       fastrpc_buf_free(buf);
+> > > -
+> > > -       return err;
+> > > +       return fastrpc_req_munmap_impl(fl, buf);
+> > 
+> > This will return success if copy_to_user() fails.
+> > 
+> that is true, using return value of fastrpc_req_munmap_impl does not really
+> make sense here we should just return err in either case to the user.
+>
 
-You mean DPU 5.0.0 right?
+Thanks, Srini and Dan, for reviewing the patch and suggestions.
+I will add this in v2.
 
-> Fixes: 7e6ee55320f0 ("drm/msm/disp/dpu1: enable DATA_HCTL_EN for sc7280 target")
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
+Regards,
+Sukrut Bellary
 
-I have cross-checked all the chipsets affected by this and confirmed 
-DATA_HCTL is present and those 3 registers programmed with that feature 
-bit are valid, hence
-
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-
+> --srini
+> 
+> > regards,
+> > dan carpenter
+> > 
