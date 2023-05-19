@@ -2,163 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 34A117094B3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 12:22:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04B537094CB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 12:31:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231886AbjESKWz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 06:22:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48188 "EHLO
+        id S231331AbjESKby (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 06:31:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231877AbjESKWt (ORCPT
+        with ESMTP id S230314AbjESKbx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 06:22:49 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E556F10E6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 03:22:45 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3f4c6c4b51eso29591895e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 03:22:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684491764; x=1687083764;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=vos6vt5BS4/XYeWH6r4wBT3sD7a/Mu3b1rL5AWSUIyc=;
-        b=zvzQZJFrb6oSGwy04xhouMY/dwjvf6Ni+outoTs3WPM/su4qbg5jfqZ9Ud5HrEwUGU
-         0md11nEmqTgE66PCfjcTR9y4zmAKk5h/wahbydQvJArnA2QsFFQMlDQSUtBhIvDxgnCy
-         OT64vCwMkDCFhdleOHfOnoFOX+XQr6hgH6Elkc0yxNHb5m9zuVYCaDxsTghqs6UV3s7/
-         e0SCp0WmtrGL2TBxjT2OUy6r6resja0f3Z9wT6gCbNubcJnDfwBFj1F1tll939WFp7gV
-         Ph2mpCwwfpCevEhnQxszUmkazo3ccpwXhnLSH4RjBfCEvey8eQDLa1V5iE7QqNbX35tG
-         FEjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684491764; x=1687083764;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vos6vt5BS4/XYeWH6r4wBT3sD7a/Mu3b1rL5AWSUIyc=;
-        b=cJ/eJyA6JfSlYzQr8Jmz9GW2GE1JYW3KwjuFqU6slImtolgJF0R0IqpkViU9F3raN9
-         awfCGZQCqRXvXRm5j7Z0iL7kDLmGqGpQEHXqKKb24zqYik7/42Mwarm0XvvZy46wxede
-         epbB58uqkCnZOTxmS5sY/WrdywIjAjX+bZ4xn/Ec8jBbpi9ew6AqtU0CrDDEOjx4Ny3J
-         ZjvZ4X1+FS9gn1OD4cxA4TtC8d3PS2dCKBJ17ecS2tBcEYJ7xuwdGmFCjkqjTKG1JkcD
-         XUCYsOxhA3m6kG7HT/hZJTRRzo+L5h5HzGsot5qSPvFO0r/Kyq3xKIzcjR/H2iMkHjCM
-         BnoQ==
-X-Gm-Message-State: AC+VfDwLF6H3kCID+JaCiOKDDr1GfCnbpYWY1mqTCQu8yrrqxr5ECTQP
-        RMLBVc8RNKlRLoe1k2aZVgOjAIbabYOC2ijb6JAQBw==
-X-Google-Smtp-Source: ACHHUZ6vRDGZhwrqmLqjDvWeD6HWjxwxm0aXo54EkY10Lk264m027KeqfdyrszY2jPj4S1mOezbHoAT4r5KzdaduUKI=
-X-Received: by 2002:a1c:f402:0:b0:3f4:23a4:7a93 with SMTP id
- z2-20020a1cf402000000b003f423a47a93mr1017546wma.25.1684491764154; Fri, 19 May
- 2023 03:22:44 -0700 (PDT)
+        Fri, 19 May 2023 06:31:53 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A242F3;
+        Fri, 19 May 2023 03:31:51 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34J5lU4O013551;
+        Fri, 19 May 2023 10:31:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=qjcoW5vuw7bUv+S7SNKWcWXyfhTSHNiKl95sYQjlnG0=;
+ b=J8t6zEUvKfs3Mty3iBiBYeXieBjiHPtrQSvaDG61cpNtJtUBMtXyPQ9ZRR3Xqcy5Eb8N
+ ugG/jZfbizNYOzT0+5aVGpq1N4FUXGBHSYGYlvR3bSTKk5NVNiCjm7KCFX6D/jaM81RO
+ tkLKpjcfUQnoYZSIS1KqF2xDoUoJR38kfrCZgk3CSFw1AfViY01dx5L+eqxiYXSj6Rac
+ PUlpHPtRCh5ePZyMgLbp9MeY1VNi2oV2yWn6CcKUnKj3Ua5CarmwVBWhd77CkIjfcklI
+ e6qfxvycChIHczYNkwsDriKet/qiQamc9G7Q0uT5QRXm+8SsQsxnEW2aCPYHqh7aGw85 lQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qp2e98nx1-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 19 May 2023 10:31:48 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34JAVlET006928
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 19 May 2023 10:31:47 GMT
+Received: from poovendh-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 19 May 2023 03:31:42 -0700
+From:   Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_devipriy@quicinc.com>
+Subject: [PATCH 0/2] Add initial support for RDP454 of IPQ9574 family
+Date:   Fri, 19 May 2023 16:01:26 +0530
+Message-ID: <20230519103128.30783-1-quic_poovendh@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-References: <20230405072836.1690248-1-bhupesh.sharma@linaro.org>
- <20230405072836.1690248-8-bhupesh.sharma@linaro.org> <ZGdLCdSof027mk5u@gerhold.net>
-In-Reply-To: <ZGdLCdSof027mk5u@gerhold.net>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Fri, 19 May 2023 15:52:32 +0530
-Message-ID: <CAH=2Ntx4H+hOzYLWqiogdBGE+rQ2XayrweE_P8T8gVE0zbwzeg@mail.gmail.com>
-Subject: Re: [PATCH v6 07/11] arm64: dts: qcom: sm6115: Add Crypto Engine support
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        agross@kernel.org, linux-kernel@vger.kernel.org,
-        linux-crypto@vger.kernel.org, andersson@kernel.org,
-        bhupesh.linux@gmail.com, krzysztof.kozlowski@linaro.org,
-        robh+dt@kernel.org, konrad.dybcio@linaro.org,
-        vladimir.zapolskiy@linaro.org, rfoss@kernel.org,
-        neil.armstrong@linaro.org, djakov@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6luPCjqnIL165bDI_v04jfEwSNBNi8WY
+X-Proofpoint-ORIG-GUID: 6luPCjqnIL165bDI_v04jfEwSNBNi8WY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-19_06,2023-05-17_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ suspectscore=0 bulkscore=0 malwarescore=0 phishscore=0 spamscore=0
+ adultscore=0 priorityscore=1501 impostorscore=0 mlxlogscore=704
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305190089
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephan,
+From: POOVENDHAN SELVARAJ <quic_poovendh@quicinc.com>
 
-On Fri, 19 May 2023 at 15:40, Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> Hi Bhupesh,
->
-> Not sure if this is the latest version of this series since it's pretty
-> old but I didn't find a new one. Just came here because you mentioned
-> RB1/RB2 [1] in my bam_dma patch and they don't have any BAM defined
-> upstream yet.
->
-> [1]: https://lore.kernel.org/linux-arm-msm/CAH=2Ntw0BZH=RGp14mYLhX7D6jV5O5eDKRQbby=uCy85xMDU_g@mail.gmail.com/
->
-> On Wed, Apr 05, 2023 at 12:58:32PM +0530, Bhupesh Sharma wrote:
-> > Add crypto engine (CE) and CE BAM related nodes and definitions to
-> > 'sm6115.dtsi'.
-> >
-> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sm6115.dtsi | 22 ++++++++++++++++++++++
-> >  1 file changed, 22 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> > index 2a51c938bbcb..ebac026b4cc7 100644
-> > --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> > @@ -650,6 +650,28 @@ usb_hsphy: phy@1613000 {
-> >                       status = "disabled";
-> >               };
-> >
-> > +             cryptobam: dma-controller@1b04000 {
-> > +                     compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
-> > +                     reg = <0x0 0x01b04000 0x0 0x24000>;
-> > +                     interrupts = <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>;
-> > +                     #dma-cells = <1>;
-> > +                     qcom,ee = <0>;
-> > +                     qcom,controlled-remotely;
-> > +                     num-channels = <8>;
-> > +                     qcom,num-ees = <2>;
-> > +                     iommus = <&apps_smmu 0x94 0x11>,
-> > +                              <&apps_smmu 0x96 0x11>;
-> > +             };
-> > +
-> > +             crypto: crypto@1b3a000 {
-> > +                     compatible = "qcom,sm6115-qce", "qcom,sm8150-qce", "qcom,qce";
-> > +                     reg = <0x0 0x01b3a000 0x0 0x6000>;
-> > +                     dmas = <&cryptobam 6>, <&cryptobam 7>;
-> > +                     dma-names = "rx", "tx";
-> > +                     iommus = <&apps_smmu 0x94 0x11>,
-> > +                              <&apps_smmu 0x96 0x11>;
->
-> Shouldn't you have clocks = <&rpmcc RPM_SMD_CE1_CLK> here to make sure
-> the clock for the crypto engine is on? Your binding patch (PATCH 06/11)
-> says "Crypto Engine block on Qualcomm SoCs SM6115 and QCM2290 do not
-> require clocks strictly" but doesn't say why.
->
-> Make sure you don't rely on having rpmcc keep unused clocks on
-> permanently. This is the case at the moment, but we would like to change
-> this [2]. Adding new users that rely on this broken behavior would just
-> make this effort even more complicated.
->
-> If you also add the clock to the cryptobam then you should be able to
-> see the advantage of my bam_dma patch [3]. It allows you to drop
-> "num-channels" and "qcom,num-ees" from the cryptobam in your changes
-> above because it can then be read directly from the BAM registers.
+Add the initial device tree support for the Reference Design
+Platform(RDP) 454 based on IPQ9574 family of SoCs. This patch series adds
+support for Console UART, SPI NOR and SMPA1 regulator node.
 
-Thanks for pointing this out. Actually that's why I was using your
-patch while testing with RB1/RB2 :)
+The series depends on the below patch sets which adds support for
+SPI NOR and SMPA1 regulator nodes.
+https://lore.kernel.org/linux-arm-msm/20230329053726.14860-3-quic_kathirav@quicinc.com/
+https://lore.kernel.org/linux-arm-msm/20230407155727.20615-1-quic_devipriy@quicinc.com/
 
-Yes, so the background is that I am preparing a new version of this
-crypto enablement patchset.
-Also your assumption about the clocks being turned on by the firmware
-is true for RB1/RB2 devices, so enabling them via Linux is optional as
-per Qualcomm enggs.
+Poovendhan Selvaraj (2):
+  dt-bindings: arm: qcom: document AL02-C9 board based on IPQ9574 family
+  arm64: dts: qcom: ipq9574: add support for RDP454 variant
 
-So, I am testing the new patchset right now with 'clock' entries
-provided in the .dtsi and see if that causes any issue / improvement
-(etc.)
+ .../devicetree/bindings/arm/qcom.yaml         |  2 +
+ arch/arm64/boot/dts/qcom/Makefile             |  1 +
+ arch/arm64/boot/dts/qcom/ipq9574-rdp454.dts   | 92 +++++++++++++++++++
+ 3 files changed, 95 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp454.dts
 
-Will come back with updates (and a new version of this patchset) soon.
 
-Regards,
-Bhupesh
+base-commit: 4272e06e19f388ccfe1f04f19060ea84d2a19a8b
+-- 
+2.17.1
 
-> Thanks,
-> Stephan
->
-> [2]: https://lore.kernel.org/linux-arm-msm/20230303-topic-rpmcc_sleep-v2-0-ae80a325fe94@linaro.org/
-> [3]: https://lore.kernel.org/linux-arm-msm/20230518-bamclk-dt-v1-1-82f738c897d9@gerhold.net/
