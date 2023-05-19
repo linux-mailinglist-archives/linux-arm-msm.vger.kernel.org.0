@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C3981708DE8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 04:39:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D0DB708DE9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 04:39:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229691AbjESCjG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S229547AbjESCjG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Thu, 18 May 2023 22:39:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48318 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229547AbjESCjE (ORCPT
+        with ESMTP id S229602AbjESCjF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 18 May 2023 22:39:04 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FABFE61
+        Thu, 18 May 2023 22:39:05 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E09ECE6B
         for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 19:39:03 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2ac78bb48eeso29489151fa.1
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2acb6571922so28975461fa.0
         for <linux-arm-msm@vger.kernel.org>; Thu, 18 May 2023 19:39:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684463941; x=1687055941;
+        d=linaro.org; s=google; t=1684463942; x=1687055942;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MawV/aylOA8R8XcD5L27Eb1AoElurGv+lqie52FpoZQ=;
-        b=XoC/J+kF76dsQ9eomhbLCXsMVvobpp66Rtzi4uJHvt4B7kxUnFgr19RqJZT/GR17rN
-         I2Wzy9NyYtIuIxfoYOTG3hQnTx0U5b/UBuN6aDJEI8cPrHYhhQazU8siy+3SPRnELDyA
-         R1t416veztkvO0aV/ezwrZE6YyGe3VkWd42billPaIWcGwOqE5GwYvjIKr93eIrE18mK
-         tMlUG8iDwbHcKOwV6PF3eUgnRICzwX9Yp4uNPjX6Q0G5iWC+QnMy0paSIo/yph4YNsV7
-         ghmtx3EY5iBt+vyJ3MYH3yXjO8ClmJtNPD+hVR26ka6dgNQM3Kq5bhQFKlMx4+CHUMNF
-         CKlg==
+        bh=rPNIghn0XJ0SWng+xegh98pXn9OmFxCxXfcggZ3NhzM=;
+        b=jqUgEDdUvBcFOs9vGVrg03sl8GtF2kSA8wpm10ccG9YYnxyTrpQBo/xCvtqa2BfkM8
+         eDYaX2Jju9nSGmRrrTpadplPcQNLETSoLOBq9cg+aFIsaOnnZSgo7dlhUR28mM3mmjYq
+         4n6Ld2B02aGJcahT8Dfn7fzgwfYiqqKDIeC0UnhtOeVPjeHzYSckT9I+3wcDfRyQw3Vq
+         xDkQ0tOjxHVlxL8HSxhPhAgcQEHlzjlNbAVFFXQx/jqrNrVCvY0KhenZ1N8HREzEjwT0
+         YrooHGHKbRI8Z5fNi1yCK9HhBg6nDNKsZ7RQIErxALRyd/ewPFdE6/m2sg33LVjArfDI
+         DvwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684463941; x=1687055941;
+        d=1e100.net; s=20221208; t=1684463942; x=1687055942;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MawV/aylOA8R8XcD5L27Eb1AoElurGv+lqie52FpoZQ=;
-        b=GQASDRognPvmcWDS9depT8lU5Npdj2dCOXOaVjCsTB3ZAHE6MnmFY3aIPQtN5wwhbP
-         GZeuOspPNYhSNk2Mbf1v5ZA31S4mYYluhoAXegpLajVZ/A3nD7a89w0FUhBr3OUW5wkG
-         vIi/d/myxX+JjdLkHHrjP0wvlS946N/vaOT0UmhmUntYv8zqVm750qkvCyC5qKyfPDJX
-         lKZqo20UsOFcIH9C/3VpThFNWTA8jwCubWyteu4oOjDKf6HRJiG4sLqCdghFq8NT0bvV
-         YM6B8OUT9+s76AWXIZk8ZWvyTAFvJZxg35u2oTuPUWW68Jyx7rIpSA2AKR6kLfeEZmq6
-         ngyw==
-X-Gm-Message-State: AC+VfDy66SniOEfZCvRsS8VS6gv/nWLcw/4J/3mkp60tvHVgzGll5h80
-        QSxBlW3rQ2e98ek18nTPFA2JSg==
-X-Google-Smtp-Source: ACHHUZ4xWQ57d2FDVq/qwKgaZ3g8Q+d+InbTKrtFotgKXJPjTVGgQnA4T679EwiJZf/UTAAYjnFxWw==
-X-Received: by 2002:a2e:9c06:0:b0:2ad:ae71:4f21 with SMTP id s6-20020a2e9c06000000b002adae714f21mr97912lji.48.1684463941500;
-        Thu, 18 May 2023 19:39:01 -0700 (PDT)
+        bh=rPNIghn0XJ0SWng+xegh98pXn9OmFxCxXfcggZ3NhzM=;
+        b=HiJGO9wyim6ptrXwIseVEZ1QUUAXr+1ldxuTVs50Az2+lfO6pqNgEaOBx4cEUczGhC
+         5zGYWtCMjBSfVKJjG7rLDoxuaNkIgHSsVcmu6oCRHx+Bw36Dw7nQz8v/akxbARMi0Kid
+         o2IjPe+dcRzJMc0AThmqZk174x+p7wsBf/6we31FGT8AbPYfnFkXar47duK3+PEilgFN
+         djFJkx0ZQ/i/iUpt4R3NWWWoTszd86Cy2lVAoojWZySp5OnDGBoF71who7nkSejBwyVT
+         Dbys5RvwqdLV0Dqig4ejss9qgu0p7jfxS4bVo7kutbL3vyn7Ag8zg1ZuosfgxUCTFclX
+         iKBg==
+X-Gm-Message-State: AC+VfDxOcC0qIBpNag0K0v7NIsKR08Hr0+o5jnc0p+5TihC/Z8bTIM5F
+        ANa9ytJlxqo5Ozi0ZYkNp2VBMXG1K8ozZFsHwzg=
+X-Google-Smtp-Source: ACHHUZ5xrh422ZzI+xsoIKNhJW8/H9x5HQ4BGByJmrKc2iqsPa/8/rV61bJ/e8r3SUISaA4huTT1DQ==
+X-Received: by 2002:a2e:3603:0:b0:2ad:98a6:4af0 with SMTP id d3-20020a2e3603000000b002ad98a64af0mr131239lja.23.1684463942246;
+        Thu, 18 May 2023 19:39:02 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id s15-20020a2e2c0f000000b002af25598ef9sm25906ljs.0.2023.05.18.19.39.00
+        by smtp.gmail.com with ESMTPSA id s15-20020a2e2c0f000000b002af25598ef9sm25906ljs.0.2023.05.18.19.39.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 18 May 2023 19:39:01 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -59,9 +59,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v2 6/7] drm/msm/dpu: drop temp variable from dpu_encoder_phys_cmd_init()
-Date:   Fri, 19 May 2023 05:38:54 +0300
-Message-Id: <20230519023855.3840907-7-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 7/7] drm/msm/dpu: simplify dpu_encoder_phys_wb_init()
+Date:   Fri, 19 May 2023 05:38:55 +0300
+Message-Id: <20230519023855.3840907-8-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230519023855.3840907-1-dmitry.baryshkov@linaro.org>
 References: <20230519023855.3840907-1-dmitry.baryshkov@linaro.org>
@@ -78,34 +78,50 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 There is no need to assign a result to temp varable just to return it
-two lines below. Drop the temporary variable.
+after a goto. Drop the temporary variable and goto and return the result
+directly.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index bedc8d0316c6..d4685e0a3f8d 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -759,15 +759,13 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+index 6608c00e3c33..e9325cafb1a8 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+@@ -684,21 +684,18 @@ struct dpu_encoder_phys *dpu_encoder_phys_wb_init(
  {
  	struct dpu_encoder_phys *phys_enc = NULL;
- 	struct dpu_encoder_phys_cmd *cmd_enc = NULL;
+ 	struct dpu_encoder_phys_wb *wb_enc = NULL;
 -	int ret = 0;
  
- 	DPU_DEBUG("intf\n");
+ 	DPU_DEBUG("\n");
  
- 	cmd_enc = kzalloc(sizeof(*cmd_enc), GFP_KERNEL);
- 	if (!cmd_enc) {
+ 	if (!p || !p->parent) {
+ 		DPU_ERROR("invalid params\n");
+-		ret = -EINVAL;
+-		goto fail_alloc;
++		return ERR_PTR(-EINVAL);
+ 	}
+ 
+ 	wb_enc = kzalloc(sizeof(*wb_enc), GFP_KERNEL);
+ 	if (!wb_enc) {
+ 		DPU_ERROR("failed to allocate wb phys_enc enc\n");
 -		ret = -ENOMEM;
- 		DPU_ERROR("failed to allocate\n");
--		return ERR_PTR(ret);
+-		goto fail_alloc;
 +		return ERR_PTR(-ENOMEM);
  	}
- 	phys_enc = &cmd_enc->base;
  
+ 	phys_enc = &wb_enc->base;
+@@ -715,7 +712,4 @@ struct dpu_encoder_phys *dpu_encoder_phys_wb_init(
+ 	DPU_DEBUG("Created dpu_encoder_phys for wb %d\n", phys_enc->hw_wb->idx);
+ 
+ 	return phys_enc;
+-
+-fail_alloc:
+-	return ERR_PTR(ret);
+ }
 -- 
 2.39.2
 
