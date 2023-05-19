@@ -2,126 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB72070A353
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 01:27:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FBB370A36D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 01:39:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229529AbjESX1M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 19:27:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44000 "EHLO
+        id S230318AbjESXjy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 19:39:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229654AbjESX1K (ORCPT
+        with ESMTP id S230221AbjESXjw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 19:27:10 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3D05E46
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 16:27:08 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f3a611b3ddso1747105e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 16:27:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684538827; x=1687130827;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5QsFRFDPv+w7LZXZOw0WA98ik9DN1mQO3qx3JO5B1H0=;
-        b=uI81i88i4vLJSz57S9e4aavEnPgPe8LEhscoxsdJHS8rI14Kpk3cINhNwm5LNan95E
-         KGil51GWfiZl8vHVIajj5QPGFH/D632STPHGU12u39WIdFD+P0HI+Ql/QCaMX52IfHpW
-         +u1wLZu+cjmmp8OZoJj3ZVCpxRxIMCC7vxzmjUVqxVnBS2RChsmk1/ySmEtZ+ykRdcsi
-         nJCuIxDB3HsHRY2YqWAX2sUI5VagVp7LfywKJSJWmdwf49zpadHNk0vhRgalgYg7O2ne
-         oqc6Zz0A+ZoX9sPzccRWBKKdDw8pjqICsL0hFeYmE8PM3EfpTCrE6p1vt9uZmeJYKnmr
-         bcsg==
+        Fri, 19 May 2023 19:39:52 -0400
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B97A1B3;
+        Fri, 19 May 2023 16:39:51 -0700 (PDT)
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-51b0f9d7d70so3530272a12.1;
+        Fri, 19 May 2023 16:39:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684538827; x=1687130827;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5QsFRFDPv+w7LZXZOw0WA98ik9DN1mQO3qx3JO5B1H0=;
-        b=CMZXT2+CHgRma5ThozCARio8rYNt2M69H0Y5xJvURtGalHyDCa32wtI9L3/pVi3rGe
-         RExt7M3zzugTmWN+NhfQtCauiqdpUqvReq0YwtZpWEVpalpZIwtr/6kwZ8U4Z2xz/5a5
-         CF7sPayoVOBWzMoTO6plENyrfdzfPKaVpAHdeenoGmaP/u/LQbJXlPN6us+qnNVHJqPw
-         4KaZVNxdrK59mvM4wCVjQgMrjIfZ4NThxJZ/7CUXFYqTyTTPFjhnCGjwVUnmfmpdifuW
-         eyboBLx7O3N+bxK3J8N3NHsb6zyvzW9nT+L16tVkpjrEoe3i1ovIqeONj11+56bj1rmx
-         18aQ==
-X-Gm-Message-State: AC+VfDzy2+ZusLcHVTzwAh2wPhzqLx5UeNaRinZ+FTpBN+v5UbOzA1uL
-        2mjwMD/XVhiQLn9YSWB3rnEyoQ==
-X-Google-Smtp-Source: ACHHUZ7VnkPD1ndqaR5abX1TbBBXiGwzOUrBy9MaQnF4clOVweenoPwAMoB73Q3jwaB6Er+KN7+O0g==
-X-Received: by 2002:a05:6512:90d:b0:4f1:4898:d183 with SMTP id e13-20020a056512090d00b004f14898d183mr1203512lft.25.1684538826864;
-        Fri, 19 May 2023 16:27:06 -0700 (PDT)
-Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id g6-20020ac25386000000b004eb2ac90f36sm55315lfh.207.2023.05.19.16.27.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 May 2023 16:27:06 -0700 (PDT)
-Message-ID: <3cfacc54-6cc5-1a11-d7db-96409097f290@linaro.org>
-Date:   Sat, 20 May 2023 01:27:04 +0200
+        d=1e100.net; s=20221208; t=1684539591; x=1687131591;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=j+/I1DakxPrd+okwwNtUEXRwJ7ucYEoX+rOCHphwT6I=;
+        b=B4U12YwCYTeNLFHf+F6NnDTiONqlnERt6n4jt+H00j4OT/7WnLUBOFVSve7MZHPsAc
+         ZaHn2Pu2wT8QFbrH2uXUG12KjsLeqfHtjkuGchc/B49nW3FsIdcvFKdDVoISs8vkPd2g
+         39Hv+OQ0gqBbU/KMrTnHQjHV/mKMZBmcYrewkAF1tloXWajUi6AZvKYlYkuwDqx45v3q
+         qQy01bhau/+1mLLUKrpOin/W8W7vai43rGMnUHAWxKx1m2TGKFje2BbylHP2a73klI9y
+         pn9QwOQknSR+yGKYKSOs/mmNKcXcpIKRkbjvtZTb+JbhADCsWFrLLDqOIC02Qudc1YBa
+         volw==
+X-Gm-Message-State: AC+VfDzZEqG1MZAW5kj2oZe8W1WP/NaBi391i2HdbVV9vLwSMIOrpN7+
+        1lw/0wesZPNfnSorOD1c8d5EnsrDZMIeSrVO
+X-Google-Smtp-Source: ACHHUZ70tJtQIqEYhaAi+PGMl9f8G8LSCKi3EFC8z7gNKkwLrwkpzW/lG6RgAB29zE9TPARoQtOpMg==
+X-Received: by 2002:a17:902:d4c6:b0:1a5:150f:8558 with SMTP id o6-20020a170902d4c600b001a5150f8558mr4038822plg.17.1684539590542;
+        Fri, 19 May 2023 16:39:50 -0700 (PDT)
+Received: from dev-linux.lan (cpe-70-95-21-110.san.res.rr.com. [70.95.21.110])
+        by smtp.gmail.com with ESMTPSA id t5-20020a170902e84500b001960706141fsm170742plg.149.2023.05.19.16.39.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 May 2023 16:39:49 -0700 (PDT)
+Date:   Fri, 19 May 2023 16:39:47 -0700
+From:   Sukrut Bellary <sukrut.bellary@linux.com>
+To:     Dan Carpenter <dan.carpenter@linaro.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org,
+        Shuah Khan <skhan@linuxfoundation.org>
+Subject: Re: [PATCH] misc: fastrpc: Fix double free of 'buf' in error path
+Message-ID: <ZGgIw3rzigqI92BO@dev-linux.lan>
+References: <20230518100829.515143-1-sukrut.bellary@linux.com>
+ <9194ebdf-f335-4cd6-bf89-bb4f86a57784@kili.mountain>
+ <f47b17c1-1c02-2aa3-ba10-fcef70cb25a8@linaro.org>
+ <b0115d7d-d15a-4948-8726-09a8b37f3f36@kili.mountain>
+ <fa0e9d9d-6362-456b-87f7-990ccf7e8930@kili.mountain>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 5/5] ARM: dts: qcom: apq8026-samsung-matisse-wifi: Add
- reboot-mode node
-Content-Language: en-US
-To:     =?UTF-8?Q?Matti_Lehtim=c3=a4ki?= <matti.lehtimaki@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230519210903.117030-1-matti.lehtimaki@gmail.com>
- <20230519210903.117030-6-matti.lehtimaki@gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230519210903.117030-6-matti.lehtimaki@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fa0e9d9d-6362-456b-87f7-990ccf7e8930@kili.mountain>
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 19.05.2023 23:09, Matti Lehtimäki wrote:
-> This enables userspace to signal the bootloader to go into the
-> bootloader or recovery mode.
+On Fri, May 19, 2023 at 01:58:10PM +0300, Dan Carpenter wrote:
+> This is unrelated but I was looking through the driver and I notice
+> a bunch of code doing:
 > 
-> The magic values can be found in both the downstream kernel and the LK
-> kernel (bootloader).
+> grep 'return ret ?' drivers/firmware/ -R
 > 
-> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> ---
->  .../arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+> 	return ret ? : res.result[0];
 > 
-> diff --git a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-> index 91b860e24681..a05c41191efd 100644
-> --- a/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-> +++ b/arch/arm/boot/dts/qcom-apq8026-samsung-matisse-wifi.dts
-> @@ -279,6 +279,16 @@ touchscreen@4a {
->  	};
->  };
->  
-> +&imem {
-> +	status = "okay";
-Drop, undisable in dtsi
+> "ret" here is a kernel error code, and res.result[0] is a firmware
+> error code.  Mixing error codes is a dangerous thing.  I was reviewing
+> some of the callers and the firmware error code gets passed quite far
+> back into the kernel to where we would only expect kernel error codes.
+> 
+> Presumably the firmware is returning positive error codes?  To be honest,
+> I am just guessing.  It's better to convert custom error codes to kernel
+> error codes as soon as possible.  I am just guessing.  Sukrut, do you
+> think you could take a look?  If the callers do not differentiate
+> between negative kernel error codes and positive custom error codes then
+> probably just do:
+> 
+> 	if (res.result[0])
+> 		ret = -EIO; // -EINVAL?
+> 	return ret;
+> 
 
-> +
-> +	reboot-mode {
-You can add a label like imem_reboot_mode and refer to just this
-thing from the device dt. Though I'm fairly sure the modes should
-be common.
+Thanks, Dan, for sharing your findings.
+Yes, sure, I will take a look.
 
-Konrad
-> +		mode-bootloader = <0x77665500>;
-> +		mode-normal     = <0x77665501>;
-> +		mode-recovery   = <0x77665502>;
-> +	};
-> +};
-> +
->  &rpm_requests {
->  	regulators {
->  		compatible = "qcom,rpm-pm8226-regulators";
+Regards,
+Sukrut Bellary
+
+> Also there are a couple places which do:
+> 
+> 	return ret ? false : !!res.result[0];
+> 
+> Here true means success and false means failure.  So the !! converts
+> a firmware error code to true when it should be false so that's a bug.
+> Quadruple negatives are confusing...  It should be:
+> 
+> 	if (ret || res.result[0])
+> 		return false;
+> 	return true;
+> 
+> regards,
+> dan carpenter
+> 
