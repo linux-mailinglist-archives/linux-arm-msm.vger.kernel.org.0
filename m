@@ -2,80 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D43DE709E03
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 19:28:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BCD9B709E2C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 19:32:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230013AbjESR2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 13:28:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37842 "EHLO
+        id S232126AbjESRb6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 13:31:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229937AbjESR2a (ORCPT
+        with ESMTP id S232014AbjESRbn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 13:28:30 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D585DC7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 10:28:27 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2ab3e8f4efeso13467991fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 10:28:27 -0700 (PDT)
+        Fri, 19 May 2023 13:31:43 -0400
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2C181FC2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 10:30:52 -0700 (PDT)
+Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-64d2c865e4eso1114666b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 10:30:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684517306; x=1687109306;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=CxGxnPUJjHuZyUcS7YnICwHCISjOXoTWhWv3CA+SKBY=;
-        b=jpzsIx3rnDzYUkMrMBBF4JPwVn/S114JDwpjPJ3UO3swndpZJ1H+ilPS6O1THlLZs3
-         1VyXjONvKGFtVb1oHJlFH3SafHWsgm+035QG7+zlO2XQjhR50LGd7MCVUjPmQXs63+gz
-         +l/L0GnCF5sB8ZwE7lqp5RQl90B2/TOhWiyjXRBcKzNJ36syLfLAXpelHMuk2IyfMBKY
-         j1Bc6ANyG4QLoe49gmF3R27sU8dHjqmkImPODlDX3ZQjg/M+D+UTMegO+i3iHiLAyNr+
-         PrBS9XLvX/hcL0K1jjyfT6kmIqfMxDYu8lGX8ARvWpnsqGvldmEgM0Zl/hJIikcEfCAq
-         EmAQ==
+        d=google.com; s=20221208; t=1684517442; x=1687109442;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=UC+jI3/CK9+amjGlwgD2fjJeUO4RPUZ3xbU2aD/Wzuc=;
+        b=Btgcj/NqXDvRLxYdXKsksJ7KfJOVcTo2lby1gP+oiz1Ucfv0zDDAvdIKKg37PSwlDo
+         OSoGBPBdwZVwYzptVaE48/LZYEEGl1ox15uuzGDq0IX0TwnyzdmQQcNeFue7F03IVYl1
+         Yh77OG7Z42cRSrcFBVR8tn5GQEefyaHysNz3FQGtqjme7AweLw4CsTYvsvpeh3P6HP/i
+         wQMywIHdhDAI28aVHUOSAJJN09yhTSYULS74SVSEP2YYGLFyjD1FQLHT175Tz9Rz3Jha
+         JBZm+n5guQr4gwil+za9lyOumYOOW9HtzKQREKASdRLfHrFaXFQUm6iiVMIy/Ju14wp/
+         m96g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684517306; x=1687109306;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CxGxnPUJjHuZyUcS7YnICwHCISjOXoTWhWv3CA+SKBY=;
-        b=ZSgm68tPuoaaJPRJF7aN8P0uQVCxXSbDq6+HDJqtje8lfj9ZdjCMnWczGdp0kA4kUe
-         qnxrbKmROxYbv84XUudQsr38kcI+vAmaHopCtTiyRtFH1H4Fo0w9SV1WUTCsypxHY4NJ
-         mzOmcIXoPy9UGmEDaBuCba9W+JS5I7gmWt1fZjHKQiaOSjjQDA7V4pat14FWXnVETURb
-         jBoimzV0+FGk8azUbAT9/y1Pnk5++kgr2US/59tuQeYJMHiyJmHpWYjuc7oBi5+qUoRC
-         LSrYgNtfk8WDM2g9xFPOFcmXoAxDhO1NDvfIOzqgBfG/Imse19elgW+b1rvuSqc/mDIH
-         r1Yw==
-X-Gm-Message-State: AC+VfDwB1VAXH/C9ggpGWRb75GnIMYCEUdXENCbvBqn09MyPCOdXXVF3
-        Cp3+2Dig8a1VsGMUvTsjinjr3Q==
-X-Google-Smtp-Source: ACHHUZ7rRMfyzJGZjCUTiXFmMObwN1i0P6LQUBk4gM6jpz/Kl0kOj3YR2P7dv9Rpo3TcnP5KH8Oy/w==
-X-Received: by 2002:a2e:8559:0:b0:2ae:d911:1fb4 with SMTP id u25-20020a2e8559000000b002aed9111fb4mr1093179ljj.14.1684517306080;
-        Fri, 19 May 2023 10:28:26 -0700 (PDT)
-Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id a2-20020a2e8302000000b002a7853b9339sm904102ljh.119.2023.05.19.10.28.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 May 2023 10:28:25 -0700 (PDT)
-Message-ID: <405186ab-46df-fcf1-2894-a08c4b42c069@linaro.org>
-Date:   Fri, 19 May 2023 19:28:23 +0200
+        d=1e100.net; s=20221208; t=1684517442; x=1687109442;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UC+jI3/CK9+amjGlwgD2fjJeUO4RPUZ3xbU2aD/Wzuc=;
+        b=eCE3Yw5MRNRcX/nyfLhT4YfmnNJCbhGMk3R+olksawsRjR98EkPHnDAc1C0lw9/NUE
+         iGPJt0ycgli8jxtDJ+XAvrWXvx7qvwsIu0tGD4psDzVNbOiGa1PvEINsJ/iLsA71SePJ
+         LI7WlPoWJwVievrdEL3k5j+RNn2b2bqtEmnHZHGhmsmkpCnIjghLqYFPupWGBaQciNkW
+         ASdDAIV4afp833kid3ZhDBLoXPOPQl9gErv+ZGQ8DJqz+nXPZZmK7/WCUFExFAjUXAos
+         D/NBP2RH1s8KWFAcwgc/oLcF2uqTx9FHPKtSW2sSh4DYMVLyRfSRKlxoXD3DCCP6Homz
+         UvEQ==
+X-Gm-Message-State: AC+VfDxCOPvi2AHV6rmFwFtCZRyqFxdd0pwXMdG6CfYl1yj/az33AoBB
+        Gktzju7PRLycd+PqitCV9LyWFQ==
+X-Google-Smtp-Source: ACHHUZ7F2QVS8EAefbNQl9H9vP8gSthVYMLuaEyNi4/cSt5b9RpnlAOTm1x8bx6UlG3DIwW/u1+rLw==
+X-Received: by 2002:a05:6a20:4285:b0:109:bd4c:3865 with SMTP id o5-20020a056a20428500b00109bd4c3865mr3169537pzj.24.1684517442075;
+        Fri, 19 May 2023 10:30:42 -0700 (PDT)
+Received: from google.com ([2620:15c:2d1:203:a93f:b5b1:61c5:a52a])
+        by smtp.gmail.com with ESMTPSA id v7-20020aa78087000000b0063d3fbf4783sm3263959pff.80.2023.05.19.10.30.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 May 2023 10:30:41 -0700 (PDT)
+Date:   Fri, 19 May 2023 10:30:35 -0700
+From:   Nick Desaulniers <ndesaulniers@google.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Georgi Djakov <djakov@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        linux-pm@vger.kernel.org, llvm@lists.linux.dev
+Subject: Re: [PATCH v6 2/4] interconnect: add clk-based icc provider support
+Message-ID: <ZGeyO6MRBSPf7b1y@google.com>
+References: <20230512001334.2983048-1-dmitry.baryshkov@linaro.org>
+ <20230512001334.2983048-3-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 5/8] arm64: dts: qcom: Add SDX75 platform and IDP board
- support
-Content-Language: en-US
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        tglx@linutronix.de, maz@kernel.org, will@kernel.org,
-        robin.murphy@arm.com, joro@8bytes.org, robimarko@gmail.com,
-        quic_gurus@quicinc.com
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux.dev
-References: <1684487350-30476-1-git-send-email-quic_rohiagar@quicinc.com>
- <1684487350-30476-6-git-send-email-quic_rohiagar@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <1684487350-30476-6-git-send-email-quic_rohiagar@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230512001334.2983048-3-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,266 +84,264 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 19.05.2023 11:09, Rohit Agarwal wrote:
-> Add basic devicetree support for SDX75 platform and IDP board from
-> Qualcomm. The SDX75 platform features an ARM Cortex A55 CPU which forms
-> the Application Processor Sub System (APSS) along with standard Qualcomm
-> peripherals like GCC, TLMM, UART, QPIC, and BAM etc... Also, there
-> exists the networking parts such as IPA, MHI, PCIE-EP, EMAC, and Modem
-> etc..
+On Fri, May 12, 2023 at 03:13:32AM +0300, Dmitry Baryshkov wrote:
+> For some devices it is useful to export clocks as interconnect providers,
+> if the clock corresponds to bus bandwidth.
 > 
-> This commit adds basic devicetree support.
+> For example, on MSM8996 the cluster interconnect clock should be scaled
+> according to the cluster frequencies. Exporting it as an interconnect
+> allows one to properly describe this as the cluster bandwidth
+> requirements.
 > 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Hi Dmitry,
+Apologies if this has already been reported elsewhere, but our CI is red
+for linux-next today for allmodconfig builds:
+
+>> ERROR: modpost: missing MODULE_LICENSE() in drivers/interconnect/icc-clk.o
+
+https://github.com/ClangBuiltLinux/continuous-integration2/actions/runs/5024096989/jobs/9011763868
+
+Can you PTAL?
+
 > ---
->  arch/arm64/boot/dts/qcom/Makefile      |   1 +
->  arch/arm64/boot/dts/qcom/sdx75-idp.dts |  19 ++
->  arch/arm64/boot/dts/qcom/sdx75.dtsi    | 534 +++++++++++++++++++++++++++++++++
->  3 files changed, 554 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sdx75-idp.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sdx75.dtsi
+>  drivers/interconnect/Kconfig     |   6 ++
+>  drivers/interconnect/Makefile    |   2 +
+>  drivers/interconnect/icc-clk.c   | 168 +++++++++++++++++++++++++++++++
+>  include/linux/interconnect-clk.h |  22 ++++
+>  4 files changed, 198 insertions(+)
+>  create mode 100644 drivers/interconnect/icc-clk.c
+>  create mode 100644 include/linux/interconnect-clk.h
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index d42c595..4fd5a18 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -173,6 +173,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-polaris.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-shift-axolotl.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sdx75-idp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm4250-oneplus-billie2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm6115p-lenovo-j606f.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sdx75-idp.dts b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
+> diff --git a/drivers/interconnect/Kconfig b/drivers/interconnect/Kconfig
+> index d637a89d4695..5faa8d2aecff 100644
+> --- a/drivers/interconnect/Kconfig
+> +++ b/drivers/interconnect/Kconfig
+> @@ -15,4 +15,10 @@ source "drivers/interconnect/imx/Kconfig"
+>  source "drivers/interconnect/qcom/Kconfig"
+>  source "drivers/interconnect/samsung/Kconfig"
+>  
+> +config INTERCONNECT_CLK
+> +	tristate
+> +	depends on COMMON_CLK
+> +	help
+> +	  Support for wrapping clocks into the interconnect nodes.
+> +
+>  endif
+> diff --git a/drivers/interconnect/Makefile b/drivers/interconnect/Makefile
+> index 97d393fd638d..5604ce351a9f 100644
+> --- a/drivers/interconnect/Makefile
+> +++ b/drivers/interconnect/Makefile
+> @@ -7,3 +7,5 @@ obj-$(CONFIG_INTERCONNECT)		+= icc-core.o
+>  obj-$(CONFIG_INTERCONNECT_IMX)		+= imx/
+>  obj-$(CONFIG_INTERCONNECT_QCOM)		+= qcom/
+>  obj-$(CONFIG_INTERCONNECT_SAMSUNG)	+= samsung/
+> +
+> +obj-$(CONFIG_INTERCONNECT_CLK)		+= icc-clk.o
+> diff --git a/drivers/interconnect/icc-clk.c b/drivers/interconnect/icc-clk.c
 > new file mode 100644
-> index 0000000..e2e803b
+> index 000000000000..0db3b654548b
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
-> @@ -0,0 +1,19 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
+> +++ b/drivers/interconnect/icc-clk.c
+> @@ -0,0 +1,168 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
 > +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2023, Linaro Ltd.
 > + */
 > +
-> +/dts-v1/;
+> +#include <linux/clk.h>
+> +#include <linux/device.h>
+> +#include <linux/interconnect-clk.h>
+> +#include <linux/interconnect-provider.h>
 > +
-> +#include "sdx75.dtsi"
-> +
-> +/ {
-> +	model = "Qualcomm Technologies, Inc. SDX75 IDP";
-> +	compatible = "qcom,sdx75-idp", "qcom,sdx75";
-> +	qcom,board-id = <0x2010022 0x302>;
-You should be able to get by without qcom,{msm,board}-id.
-
-> +
+> +struct icc_clk_node {
+> +	struct clk *clk;
+> +	bool enabled;
 > +};
 > +
-> +&tlmm {
-> +	gpio-reserved-ranges = <110 6>;
+> +struct icc_clk_provider {
+> +	struct icc_provider provider;
+> +	int num_clocks;
+> +	struct icc_clk_node clocks[];
 > +};
-> diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi b/arch/arm64/boot/dts/qcom/sdx75.dtsi
+> +
+> +#define to_icc_clk_provider(_provider) \
+> +	container_of(_provider, struct icc_clk_provider, provider)
+> +
+> +static int icc_clk_set(struct icc_node *src, struct icc_node *dst)
+> +{
+> +	struct icc_clk_node *qn = src->data;
+> +	int ret;
+> +
+> +	if (!qn || !qn->clk)
+> +		return 0;
+> +
+> +	if (!src->peak_bw) {
+> +		if (qn->enabled)
+> +			clk_disable_unprepare(qn->clk);
+> +		qn->enabled = false;
+> +
+> +		return 0;
+> +	}
+> +
+> +	if (!qn->enabled) {
+> +		ret = clk_prepare_enable(qn->clk);
+> +		if (ret)
+> +			return ret;
+> +		qn->enabled = true;
+> +	}
+> +
+> +	return clk_set_rate(qn->clk, icc_units_to_bps(src->peak_bw));
+> +}
+> +
+> +static int icc_clk_get_bw(struct icc_node *node, u32 *avg, u32 *peak)
+> +{
+> +	struct icc_clk_node *qn = node->data;
+> +
+> +	if (!qn || !qn->clk)
+> +		*peak = INT_MAX;
+> +	else
+> +		*peak = Bps_to_icc(clk_get_rate(qn->clk));
+> +
+> +	return 0;
+> +}
+> +
+> +/**
+> + * icc_clk_register() - register a new clk-based interconnect provider
+> + * @dev: device supporting this provider
+> + * @first_id: an ID of the first provider's node
+> + * @num_clocks: number of instances of struct icc_clk_data
+> + * @data: data for the provider
+> + *
+> + * Registers and returns a clk-based interconnect provider. It is a simple
+> + * wrapper around COMMON_CLK framework, allowing other devices to vote on the
+> + * clock rate.
+> + *
+> + * Return: 0 on success, or an error code otherwise
+> + */
+> +struct icc_provider *icc_clk_register(struct device *dev,
+> +				      unsigned int first_id,
+> +				      unsigned int num_clocks,
+> +				      const struct icc_clk_data *data)
+> +{
+> +	struct icc_clk_provider *qp;
+> +	struct icc_provider *provider;
+> +	struct icc_onecell_data *onecell;
+> +	struct icc_node *node;
+> +	int ret, i, j;
+> +
+> +	onecell = devm_kzalloc(dev, struct_size(onecell, nodes, 2 * num_clocks), GFP_KERNEL);
+> +	if (!onecell)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	qp = devm_kzalloc(dev, struct_size(qp, clocks, num_clocks), GFP_KERNEL);
+> +	if (!qp)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	qp->num_clocks = num_clocks;
+> +
+> +	provider = &qp->provider;
+> +	provider->dev = dev;
+> +	provider->get_bw = icc_clk_get_bw;
+> +	provider->set = icc_clk_set;
+> +	provider->aggregate = icc_std_aggregate;
+> +	provider->xlate = of_icc_xlate_onecell;
+> +	INIT_LIST_HEAD(&provider->nodes);
+> +	provider->data = onecell;
+> +
+> +	icc_provider_init(provider);
+> +
+> +	for (i = 0, j = 0; i < num_clocks; i++) {
+> +		qp->clocks[i].clk = data[i].clk;
+> +
+> +		node = icc_node_create(first_id + j);
+> +		if (IS_ERR(node)) {
+> +			ret = PTR_ERR(node);
+> +			goto err;
+> +		}
+> +
+> +		node->name = devm_kasprintf(dev, GFP_KERNEL, "%s_master", data[i].name);
+> +		node->data = &qp->clocks[i];
+> +		icc_node_add(node, provider);
+> +		/* link to the next node, slave */
+> +		icc_link_create(node, first_id + j + 1);
+> +		onecell->nodes[j++] = node;
+> +
+> +		node = icc_node_create(first_id + j);
+> +		if (IS_ERR(node)) {
+> +			ret = PTR_ERR(node);
+> +			goto err;
+> +		}
+> +
+> +		node->name = devm_kasprintf(dev, GFP_KERNEL, "%s_slave", data[i].name);
+> +		/* no data for slave node */
+> +		icc_node_add(node, provider);
+> +		onecell->nodes[j++] = node;
+> +	}
+> +
+> +	onecell->num_nodes = j;
+> +
+> +	ret = icc_provider_register(provider);
+> +	if (ret)
+> +		goto err;
+> +
+> +	return provider;
+> +
+> +err:
+> +	icc_nodes_remove(provider);
+> +
+> +	return ERR_PTR(ret);
+> +}
+> +
+> +/**
+> + * icc_clk_unregister() - unregister a previously registered clk interconnect provider
+> + * @provider: provider returned by icc_clk_register()
+> + */
+> +void icc_clk_unregister(struct icc_provider *provider)
+> +{
+> +	struct icc_clk_provider *qp = container_of(provider, struct icc_clk_provider, provider);
+> +	int i;
+> +
+> +	icc_provider_deregister(&qp->provider);
+> +	icc_nodes_remove(&qp->provider);
+> +
+> +	for (i = 0; i < qp->num_clocks; i++) {
+> +		struct icc_clk_node *qn = &qp->clocks[i];
+> +
+> +		if (qn->enabled)
+> +			clk_disable_unprepare(qn->clk);
+> +	}
+> +}
+> diff --git a/include/linux/interconnect-clk.h b/include/linux/interconnect-clk.h
 > new file mode 100644
-> index 0000000..c2b8810
+> index 000000000000..0cd80112bea5
 > --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
-> @@ -0,0 +1,534 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
+> +++ b/include/linux/interconnect-clk.h
+> @@ -0,0 +1,22 @@
+> +/* SPDX-License-Identifier: GPL-2.0 */
 > +/*
-> + * SDX75 SoC device tree source
-> + *
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + *
+> + * Copyright (c) 2023, Linaro Ltd.
 > + */
 > +
-> +#include <dt-bindings/clock/qcom,rpmh.h>
-> +#include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/soc/qcom,rpmh-rsc.h>
+> +#ifndef __LINUX_INTERCONNECT_CLK_H
+> +#define __LINUX_INTERCONNECT_CLK_H
 > +
-> +/ {
-> +	#address-cells = <2>;
-> +	#size-cells = <2>;
-> +	qcom,msm-id = <556 0x10000>;
-> +	interrupt-parent = <&intc>;
+> +struct device;
 > +
-> +	chosen: chosen { };
-> +
-> +	memory {
-The memory node should have a unit address.
-
-> +		device_type = "memory";
-> +		reg = <0 0 0 0>;
-> +	};
-> +
-> +	clocks { };
-> +
-> +	cpus {
-> +		#address-cells = <2>;
-> +		#size-cells = <0>;
-> +
-[...]
-
-> +
-> +		CLUSTER_PD: power-domain-cpu-cluster0 {
-> +			#power-domain-cells = <0>;
-> +			domain-idle-states = <&CLUSTER_SLEEP_0 &CX_RET &CLUSTER_SLEEP_1>;
-Is CLUSTER_SLEEP_1 deeper than CX retention?
-
-> +		};
-> +	};
-> +
-> +	firmware {
-> +		scm: scm {
-> +			compatible = "qcom,scm-sdx75", "qcom,scm";
-> +		};
-> +	};
-> +
-> +	pmu {
-> +		compatible = "arm,armv8-pmuv3";
-> +		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_HIGH>;
-> +	};
-> +
-> +	reserved-memory {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-> +
-> +		gunyah_hyp_mem: memory@80000000 {
-reserved memory subnodes should have meaningful node names, e.g.
-
-hypervisor@800...
-
-> +			reg = <0x0 0x80000000 0x0 0x800000>;
-> +			no-map;
-> +		};
-> +
-[...]
-
-> +
-> +	smem: qcom,smem {
-> +		compatible = "qcom,smem";
-> +		memory-region = <&smem_mem>;
-> +		hwlocks = <&tcsr_mutex 3>;
-> +	};
-> +
-> +	soc: soc {
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +		ranges;
-Are the SoC buses limited to 32b addresses?
-
-> +		compatible = "simple-bus";
-Compatible should go first.
-
-> +
-> +		tcsr_mutex: hwlock@1f40000 {
-> +			compatible = "qcom,tcsr-mutex";
-> +			reg = <0x0 0x01f40000 0x0 0x40000>;
-> +			#hwlock-cells = <1>;
-> +		};
-> +
-> +		pdc: interrupt-controller@b220000 {
-> +			compatible = "qcom,sdx75-pdc", "qcom,pdc";
-> +			reg = <0x0 0xb220000 0x0 0x30000>,
-> +			      <0x0 0x174000f0 0x0 0x64>;
-> +			qcom,pdc-ranges = <0 147 52>,
-> +					  <52 266 32>,
-> +					  <84 500 59>;
-> +			#interrupt-cells = <2>;
-> +			interrupt-parent = <&intc>;
-> +			interrupt-controller;
-> +		};
-> +
-> +		tlmm: pinctrl@f000000 {
-> +			compatible = "qcom,sdx75-tlmm";
-> +			reg = <0x0 0x0f000000 0x0 0x400000>;
-> +			interrupts = <GIC_SPI 212 IRQ_TYPE_LEVEL_HIGH>;
-> +			gpio-controller;
-> +			#gpio-cells = <2>;
-> +			gpio-ranges = <&tlmm 0 0 133>;
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +			wakeup-parent = <&pdc>;
-> +		};
-> +
-> +		apps_smmu: iommu@15000000 {
-> +			compatible = "qcom,sdx75-smmu-500", "arm,mmu-500";
-> +			reg = <0x0 0x15000000 0x0 0x40000>;
-> +			#iommu-cells = <2>;
-> +			#global-interrupts = <2>;
-> +			interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 68 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 69 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 73 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 94 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 105 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 106 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 107 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 108 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 298 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 299 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 301 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 302 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 303 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 306 IRQ_TYPE_LEVEL_HIGH>;
-Many newer SoCs have dma-coherent SMMUs. Is this the case here?
-
-> +		};
-> +
-> +		intc: interrupt-controller@17200000 {
-> +			compatible = "arm,gic-v3";
-> +			#interrupt-cells = <3>;
-> +			interrupt-controller;
-> +			#redistributor-regions = <1>;
-> +			redistributor-stride = <0x0 0x20000>;
-> +			reg = <0x0 0x17200000 0x0 0x10000>,
-> +			      <0x0 0x17260000 0x0 0x80000>;
-> +			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
-> +		};
-> +
-> +		timer@17420000 {
-> +			compatible = "arm,armv7-timer-mem";
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +			reg = <0x0 0x17420000 0x0 0x1000>;
-> +			clock-frequency = <19200000>;
-clock-frequency is discouraged, unless strictly necessary.
-
-Since gh is running, the timer is already programmed so it should be
-fine to drop this.
-
-[...]
-
-> +	timer {
-> +		compatible = "arm,armv8-timer";
-> +		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
-> +			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
-> +			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
-> +			     <GIC_PPI 12 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>;
-> +		clock-frequency = <19200000>;
-Ditto
-
-Konrad
-> +	};
+> +struct icc_clk_data {
+> +	struct clk *clk;
+> +	const char *name;
 > +};
+> +
+> +struct icc_provider *icc_clk_register(struct device *dev,
+> +				      unsigned int first_id,
+> +				      unsigned int num_clocks,
+> +				      const struct icc_clk_data *data);
+> +void icc_clk_unregister(struct icc_provider *provider);
+> +
+> +#endif
+> -- 
+> 2.39.2
+> 
