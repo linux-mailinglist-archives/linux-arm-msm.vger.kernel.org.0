@@ -2,134 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 977E3709CEB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 18:53:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A76A709D12
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 18:58:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230470AbjESQw7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 12:52:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40738 "EHLO
+        id S230240AbjESQ6o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 12:58:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229682AbjESQw5 (ORCPT
+        with ESMTP id S229451AbjESQ6n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 12:52:57 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91733B6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 09:52:56 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4efe8b3f3f7so3970447e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 09:52:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684515175; x=1687107175;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NKNMa0s4Vk4CkoiOAyA9DUfRZyyAScSWwyf79QsupZg=;
-        b=T3kEGXtQkNq9tMLqkKPuXcX5Hwe7JZrZnODT8hWYVSVNv51ycYlxBGrhCxXdgtSnOB
-         DgN000U/z4upaQRc9BBUs9+0+VfgjiWk6bMMXhTCUgTE0EbmwIuCtKUlmcEUcAGxpZCD
-         Dp1eK8JZpvv8PdPCz36WLmYsVWAthILLNgL8pQU+jAH0TZOiFpUA/QOGjBV+zHWC0jtO
-         JpO5HvNRFyRFfltfo+TcBVO4XGprcpCMcmPvNcusTie1Fw+iQAo7/MWzdgrXUhShRGPh
-         LJn3iQQ5GpIsv/tPzTWzP+OEaP13gHsbb+sAzIg6bn+o+/C7T8OffztR9KcLQxX763IJ
-         vdOw==
+        Fri, 19 May 2023 12:58:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFE1F114
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 09:57:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1684515475;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=OSQIXexhEgr4UYHcCQ3e6Gbt+1IifasCgEOBLmd3ZJs=;
+        b=MqRqw1637uy9bbPUvfG4c+Zq0duxrqK+AXEUeoU2bmNRMlVWOv//QjG0yj+3ARFXSgThAa
+        ijytMws4drKw4RJSZte8dpD3tLN+bNyOBOtBaqWlm5hrT8AzmOQPg+W26j3WBgZZZqv3H5
+        m6B5XvHzwBbAU80VtmY0M9e0NHiU1S8=
+Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
+ [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-182-0DHTONujPpWv4639J7q5ug-1; Fri, 19 May 2023 12:57:53 -0400
+X-MC-Unique: 0DHTONujPpWv4639J7q5ug-1
+Received: by mail-ot1-f69.google.com with SMTP id 46e09a7af769-6ab2d2697bdso2935850a34.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 09:57:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684515175; x=1687107175;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NKNMa0s4Vk4CkoiOAyA9DUfRZyyAScSWwyf79QsupZg=;
-        b=UD9IBiA/4voPHcX/Bz8y4zxrZRec3mkgf6Beda8MmKwtRK70gck2aYaGx0rH4n9Voe
-         vrYPjN4NTj7IrOebiV6U23eIw9a4U1+g1QFG4uTmo7naScOVviRY7q6tZhLm+MQZgOnH
-         ZX5flaWnU3Km+W5C7OwSBKhx+2JDYMx5DnDzTdYQvzWZpzb60wKZIDnMd+wIXcb0zGPx
-         jJoSh7A3YD1MVJzYK6ljJwAvTz7mcb4zhdPwqHXDWeO2Eoi0NVAyLIdeBWROrA0TF/b3
-         junlsbIW7xRaojwaenkwfUz3SjBk1yhRAPeVoRnuRw1AI1WlEVgsZxlkgpEO7hLNBmZv
-         hA9Q==
-X-Gm-Message-State: AC+VfDzQgyGPVhoesLwlgHnVNs0KDqFHMZjdRezms4lbi06KUltny4PZ
-        rsvSpO4RG2Q4s0iYV98WpAghSg==
-X-Google-Smtp-Source: ACHHUZ5GRnZEXcAAo1HGUkRBvXlAE5ebGSOeGchueyWmdk7Arl/6Rvf1X0Uq6sPltP51ozwaEDXP8A==
-X-Received: by 2002:ac2:5503:0:b0:4ec:8816:f4fc with SMTP id j3-20020ac25503000000b004ec8816f4fcmr966012lfk.6.1684515174867;
-        Fri, 19 May 2023 09:52:54 -0700 (PDT)
-Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id r4-20020a056512102400b004f24db9248dsm656008lfr.141.2023.05.19.09.52.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 May 2023 09:52:54 -0700 (PDT)
-Message-ID: <634c80b4-5007-4f66-9114-1dedf3c95f1f@linaro.org>
-Date:   Fri, 19 May 2023 18:52:53 +0200
+        d=1e100.net; s=20221208; t=1684515473; x=1687107473;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OSQIXexhEgr4UYHcCQ3e6Gbt+1IifasCgEOBLmd3ZJs=;
+        b=Jn9Yu/g0ebzkv2eHVBbZ+Rn1eALYoBnkot5fnu1GKfFVfD9ETwTZodqMw4QLKPzyBr
+         eB8Ib+zCNrNn0+qDguf6v6wkAoMmq1xpI9aJ/v+3SQtROC9mJ8jK7xFpK/i7bHXPgkBZ
+         uRiUHzmHsqu6STh7s6GBwbCt/jxe2WdAP4RkX/6jvddDAoQVLtMi1jgVM8vIvWHc6YiI
+         96zLEPnjySJszKlmZBmIHoA1DqkIcs3pNqbXTUDonYpZ+3DF39cHHlX+Ajh+rc6qn+RT
+         tgSyi9ms9X7TAAFHh8aoMjim4n6x9qUaNe2lhCvh5lUwolbABWrsfSwar/p+GD3hc/1o
+         nEdg==
+X-Gm-Message-State: AC+VfDzvaHEpoot/SUA9H2+hjCnH6/pxaXQFucj1ee2PXTQz0YTo2kUV
+        9NqWgwk5asKv42SADpU78wfHtF6fiqtw+Yu+SIHSDKiUDacdGnTUpF0tqazvqDf02eCu046tJXt
+        KMqM0jyGTkHUwcCpAxOWqsnezyA==
+X-Received: by 2002:a9d:4f07:0:b0:6a5:f682:44ca with SMTP id d7-20020a9d4f07000000b006a5f68244camr1219053otl.16.1684515472999;
+        Fri, 19 May 2023 09:57:52 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ4RGmOB71h2mvB5aElpiYywwU5/QlRBW65OVaQT7Hgd8JfaRKJWGZOMGc7iCxi/sUCdW1BMfg==
+X-Received: by 2002:a9d:4f07:0:b0:6a5:f682:44ca with SMTP id d7-20020a9d4f07000000b006a5f68244camr1219041otl.16.1684515472780;
+        Fri, 19 May 2023 09:57:52 -0700 (PDT)
+Received: from halaney-x13s ([2600:1700:1ff0:d0e0::42])
+        by smtp.gmail.com with ESMTPSA id n22-20020a0568301e9600b006ab305429e7sm1843984otr.0.2023.05.19.09.57.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 May 2023 09:57:52 -0700 (PDT)
+Date:   Fri, 19 May 2023 11:57:50 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     andersson@kernel.org
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 v0/4] sa8155p-adp devicetree ethernet cleanup
+Message-ID: <20230519165750.p36jzknh44eij4nf@halaney-x13s>
+References: <20230501212446.2570364-1-ahalaney@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm8550: Add camera clock controller
-Content-Language: en-US
-To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
-References: <20230519155602.6642-1-quic_jkona@quicinc.com>
- <20230519155602.6642-5-quic_jkona@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230519155602.6642-5-quic_jkona@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230501212446.2570364-1-ahalaney@redhat.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hey Bjorn,
 
+I think this one is ready to be picked up. Just a gentle reminder, I
+almost forgot about it until I cleaned my inbox this morning :)
 
-On 19.05.2023 17:56, Jagadeesh Kona wrote:
-> Add device node for camera clock controller on Qualcomm
-> SM8550 platform.
+Thanks,
+Andrew
+
+On Mon, May 01, 2023 at 04:24:42PM -0500, Andrew Halaney wrote:
+> This series cleans up some devicetree conventions in sa8155p-adp based
+> on feedback from other platforms.
 > 
-> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sm8550.dtsi | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
+> The hope is that by getting it right here, future contributors won't
+> repeat the same mistakes as I did!
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index e67e7c69dae6..ac82d3774ed8 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -4,6 +4,7 @@
->   */
->  
->  #include <dt-bindings/clock/qcom,rpmh.h>
-> +#include <dt-bindings/clock/qcom,sm8550-camcc.h>
->  #include <dt-bindings/clock/qcom,sm8550-gcc.h>
->  #include <dt-bindings/clock/qcom,sm8550-tcsr.h>
->  #include <dt-bindings/clock/qcom,sm8550-dispcc.h>
-> @@ -2397,6 +2398,20 @@ opp-202000000 {
->  			};
->  		};
->  
-> +		camcc: clock-controller@ade0000 {
-> +			compatible = "qcom,sm8550-camcc";
-> +			reg = <0 0xade0000 0 0x20000>;
-Please pad the non-zero address part to 8 hex digits
+> v3: https://lore.kernel.org/linux-arm-msm/20230421205512.339850-1-ahalaney@redhat.com/
+> 
+> Thanks,
+> Andrew
+> 
+> Andrew Halaney (4):
+>   arm64: dts: qcom: sa8155p-adp: Make compatible the first property
+>   arm64: dts: qcom: Make -cells decimal
+>   arm64: dts: qcom: sa8155p-adp: Remove unneeded rgmii_phy information
+>   arm64: dts: qcom: sa8155p-adp: Move mtl nodes into ethernet node
+> 
+>  arch/arm64/boot/dts/qcom/ipq6018.dtsi        |  2 +-
+>  arch/arm64/boot/dts/qcom/ipq8074.dtsi        | 14 ++---
+>  arch/arm64/boot/dts/qcom/msm8953.dtsi        |  4 +-
+>  arch/arm64/boot/dts/qcom/qcs404-evb-4000.dts |  4 +-
+>  arch/arm64/boot/dts/qcom/sa8155p-adp.dts     | 56 ++++++++++----------
+>  5 files changed, 39 insertions(+), 41 deletions(-)
+> 
+> -- 
+> 2.40.0
+> 
 
-Konrad
-> +			clocks = <&bi_tcxo_div2>,
-> +				 <&bi_tcxo_ao_div2>,
-> +				 <&sleep_clk>,
-> +				 <&gcc GCC_CAMERA_AHB_CLK>;
-> +			power-domains = <&rpmhpd SM8550_MMCX>;
-> +			required-opps = <&rpmhpd_opp_low_svs>;
-> +			#clock-cells = <1>;
-> +			#reset-cells = <1>;
-> +			#power-domain-cells = <1>;
-> +		};
-> +
->  		mdss: display-subsystem@ae00000 {
->  			compatible = "qcom,sm8550-mdss";
->  			reg = <0 0x0ae00000 0 0x1000>;
