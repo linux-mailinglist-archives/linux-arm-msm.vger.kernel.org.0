@@ -2,82 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 453397097F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 15:09:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78E17709832
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 15:29:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230268AbjESNJM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 09:09:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42652 "EHLO
+        id S231625AbjESN3V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 09:29:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229965AbjESNJK (ORCPT
+        with ESMTP id S229546AbjESN3U (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 09:09:10 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1470010A
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 06:09:09 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2af28303127so3687671fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 06:09:08 -0700 (PDT)
+        Fri, 19 May 2023 09:29:20 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B886FC2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 06:29:18 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2ac90178fdaso35584961fa.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 06:29:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684501747; x=1687093747;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/Zv1mah4N/HaBlq32OJrOUOQJENrx2Ay1ik5IJM6AVI=;
-        b=E1COi7fX2rR/FXALr7SUoo8vmNVfuubFb6T0kKFyjEycRTKBAFRDmAdnqRsiv96QI+
-         YuksjYw1TCI8YD7OL1HQrzgBRoCAIAFokNHTHkDVC1hU3qngsBeDaYnHcwPs5B3kG3Es
-         u00S6fMxCjT7Mb78GlmwZedLK69dZlMIFKBL02M+7Q+i2qcCqg0QAnEjTlwu+jqP61+t
-         XdH1jZt1ZsHLr3eQuYX9Uk+sJk8rDuB0PHuNDxu1ssWyB4KCdzOdVXgajCPByvWxCIDq
-         eFyq3BBwUZrDO/qwGY7btyI+X5TzriO5HGMlo/fA56RtJOJp3ByAog9e5a2LPgxKgf2g
-         5u5A==
+        d=linaro.org; s=google; t=1684502957; x=1687094957;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=062DucJSZM1ir9uGBCKc/nlmbbSP2byuRNORA6qyTPQ=;
+        b=rYoeEimKwUN9rBpJQr8NFWGMad89OMytiHuI8sGumrM21rcMl8M+faPG1j9Z60Z7C7
+         cbYobtTN7dBQB0hkw8NDZ90zQAfh63LE1vIZcl2xOTSr4RCTsgf9VfrVX38Mdfm1qq+Q
+         k9AKfH5YSwjWuecWVlETC0og518k1/Uxe5HHM5oPL069HALBdnGxOErxGL6ybJS90fdx
+         +st2atGwTwsnCwI+zrui82GsBybMEIRDeQpu8qLzXHGBYzLvbZJW7JT3exyweV/iR6uy
+         XXok+3FBpZ3RcO/wpvOPyIF3n01HLBpgAoAln98IQgwANSmu1aT25xB24u0mCeWARPJK
+         O0hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684501747; x=1687093747;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/Zv1mah4N/HaBlq32OJrOUOQJENrx2Ay1ik5IJM6AVI=;
-        b=j2ZPnJRPOMUY7ZI6fw6i98f6AQVBFERWuVeXoj1v0sThrOSq6yuAT0w+Tsf70pp3R8
-         wboj067PS5Zyq7keF4K4XBB3HJWkV5Swk/zTowUVe4I3n7oQZzq+YuuAGfMXoUunvGd6
-         117Xigtc9TV+6RcKzrFQc2vOuOt7lIgzQoYLg8pGHu9GwWmgD3U6JHGqTtgTTR1Pd9sS
-         HRgk7uhLUe/kyw76ISt95aA6mBS66DY5a+wfHtpDlNVr4JSuE7owcKgYgqeOVhIoMYjb
-         9J1Uif28rqQFVhzgIQ83yhisKf1mvXSJrS4tROJy7zGlL1GRehIFvXvHwX8NnKZfzck4
-         sFkA==
-X-Gm-Message-State: AC+VfDwiw9bgvf9ybTmJo+Gwi0WnA+XSd//zzdBhk87EJBdTCq7PTLOR
-        R7NLnLKGMVPd/BMWiWAGYUd/gg==
-X-Google-Smtp-Source: ACHHUZ7c/wlNtcqnvOYUHVFfllflTtq4Bc0T77kg8q0qZWMwJo/oVsLcE8qIc4ULCRXWHIkvU13COQ==
-X-Received: by 2002:ac2:5a4d:0:b0:4ed:cb37:7d8c with SMTP id r13-20020ac25a4d000000b004edcb377d8cmr716553lfn.67.1684501747257;
-        Fri, 19 May 2023 06:09:07 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1684502957; x=1687094957;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=062DucJSZM1ir9uGBCKc/nlmbbSP2byuRNORA6qyTPQ=;
+        b=QFuZPYLNRkH4bIjwphKLEoaLUC66PlDhSbpPF41jKkZCO2k7rVVx30ZQO6SZZ3FNec
+         wkV4jQJ6q4+PTIGQZrVd9jmBq91t3Pnm7psFIks254iBsfd6DUu+oIbOAP8hCNGFSlKA
+         zm96tRReD6+b+L5dKIHHuYxXyieXgxE54ELnGbRjLPMym959EOS/OJYf6DO2w/gpf9Fq
+         QGkknnFXvEoFRxU5dIefvMmDD6JHDmDtqw7Fq//qZ/bEAsM9rZTZcLfrvItmKA83FUVJ
+         N/vg5T/2AztCtFOWGRVR8TSc8TsDBd3VHqt7DkX7SFOGTSXjLlWK12irglnA9hP4gmQv
+         u8NQ==
+X-Gm-Message-State: AC+VfDwxLNmL2Oc7nNU2fvZiWU/YBQrO7zWydy0eVGo3rSysIK6LpS9C
+        cMQCVrMlFZ3duPn5vAtchrABqw==
+X-Google-Smtp-Source: ACHHUZ4An4Zn0nCxdOQvjscIRQdVdw5YKfZDEGb/fZyIPdEtEAK+FUDxz4vkUKK6RepEB5UA97H0YA==
+X-Received: by 2002:a2e:3506:0:b0:2ac:7ab1:a441 with SMTP id z6-20020a2e3506000000b002ac7ab1a441mr825771ljz.30.1684502957010;
+        Fri, 19 May 2023 06:29:17 -0700 (PDT)
 Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id q30-20020ac25a1e000000b004edc7f6ee44sm278767lfn.234.2023.05.19.06.09.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 May 2023 06:09:06 -0700 (PDT)
-Message-ID: <4a9248c0-96ec-1986-d874-1cb7d8aac0ac@linaro.org>
-Date:   Fri, 19 May 2023 15:09:05 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 1/4] clk: qcom: clk-alpha-pll: Add support for lucid ole
- pll ops
-Content-Language: en-US
-To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230509161218.11979-1-quic_jkona@quicinc.com>
- <20230509161218.11979-2-quic_jkona@quicinc.com>
- <019999fd-3c86-8c85-76c7-8d0206e60f4d@linaro.org>
- <55fc32df-f01b-1ba3-3813-26a5f8c7f730@quicinc.com>
+        by smtp.gmail.com with ESMTPSA id q24-20020a2e9698000000b002ad92dff470sm821384lji.134.2023.05.19.06.29.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 May 2023 06:29:16 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <55fc32df-f01b-1ba3-3813-26a5f8c7f730@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Subject: [PATCH v2 0/6] Adreno QoL changes
+Date:   Fri, 19 May 2023 15:29:05 +0200
+Message-Id: <20230517-topic-a7xx_prep-v2-0-5b9daa2b2cf0@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAKF5Z2QC/3WNQQ6CMBBFr0K6dkypSi0r72GIKaWFSUhLpkgwh
+ Ls7snf5fv7L20T2hD6LutgE+QUzpsigToVwg429B+yYhZLqIm+lhjlN6MDqdX1N5CfQd20r43Q
+ nQxBstTZ7aMlGN7AX3+PIIz8Drkfm2TAPmOdEn6O6lL/1f2ApQYK2proG5Y1x6jFitJTOiXrR7
+ Pv+BT8FWLHEAAAA
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1684502955; l=1302;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=VXBY1tMYfUryEB9oBPhxsJwm809WxNcgkNQbGylhXoM=;
+ b=w+XgKEDdVaEnraLk8O2/v+j0nPDV21xxFmeq0iukvcqGuAZwNVmE577OSwHvLLPiZISgimcbj
+ XpVrJ00+P6DAi9757vNDqmpxwhaH9608W8sQI60AobALER/s1YyY+b2
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,92 +88,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This series brings some niceties in preparation for A7xx introduction.
 
+It should be fully independent of the GMU wrapper series.
 
-On 19.05.2023 14:49, Jagadeesh Kona wrote:
-> Hi,
-> 
-> Thanks Konrad for your review!
-> 
-> On 5/10/2023 1:36 AM, Konrad Dybcio wrote:
->>
->>
->> On 9.05.2023 18:12, Jagadeesh Kona wrote:
->>> From: Taniya Das <quic_tdas@quicinc.com>
->>>
->>> Add support for lucid ole pll ops to configure and control the
->>> lucid ole pll. The lucid ole pll has an additional test control
->>> register which is required to be programmed, add support to
->>> program the same.
->>>
->>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->>> ---
->> Isn't this commit "write to PLL_TEST_CTL_U2 on LUCID_EVO" instead?
->>
->> Meaninglessly duplicating ops does not seem useful.
->>
->> Konrad
-> 
-> Though we are reusing same ops for EVO and OLE, PLL_TEST_CTL_U2 register programming is applicable only to OLE PLL type.
-Well, your patch makes it unconditional (modulo programmer error) so
-I think that makes little sense.. A comment would be enough, imo.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Changes in v2:
+- Drop switching to using the GMU_AO counter in timestamp
+- Add a definition for REG_A6XX_GMU_AHB_FENCE_STATUS_CLR, may be subbed
+  with a register sync after mesa MR22901
+- Link to v1: https://lore.kernel.org/r/20230517-topic-a7xx_prep-v1-0-7a964f2e99c2@linaro.org
 
-Konrad
-And PLL type is useful to properly refer respective hardware datasheets. Hence added separate ops for OLE PLL type.
-> 
-> 
->>>   drivers/clk/qcom/clk-alpha-pll.c | 2 ++
->>>   drivers/clk/qcom/clk-alpha-pll.h | 4 ++++
->>>   2 files changed, 6 insertions(+)
->>>
->>> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
->>> index b9f6535a7ba7..f81c7c561352 100644
->>> --- a/drivers/clk/qcom/clk-alpha-pll.c
->>> +++ b/drivers/clk/qcom/clk-alpha-pll.c
->>> @@ -55,6 +55,7 @@
->>>   #define PLL_TEST_CTL(p)        ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL])
->>>   #define PLL_TEST_CTL_U(p)    ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U])
->>>   #define PLL_TEST_CTL_U1(p)     ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U1])
->>> +#define PLL_TEST_CTL_U2(p)     ((p)->offset + (p)->regs[PLL_OFF_TEST_CTL_U2])
->>>   #define PLL_STATUS(p)        ((p)->offset + (p)->regs[PLL_OFF_STATUS])
->>>   #define PLL_OPMODE(p)        ((p)->offset + (p)->regs[PLL_OFF_OPMODE])
->>>   #define PLL_FRAC(p)        ((p)->offset + (p)->regs[PLL_OFF_FRAC])
->>> @@ -2096,6 +2097,7 @@ void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regma
->>>       clk_alpha_pll_write_config(regmap, PLL_TEST_CTL(pll), config->test_ctl_val);
->>>       clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U(pll), config->test_ctl_hi_val);
->>>       clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U1(pll), config->test_ctl_hi1_val);
->>> +    clk_alpha_pll_write_config(regmap, PLL_TEST_CTL_U2(pll), config->test_ctl_hi2_val);
->>>         /* Disable PLL output */
->>>       regmap_update_bits(regmap, PLL_MODE(pll), PLL_OUTCTRL, 0);
->>> diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
->>> index d07b17186b90..4d9b6d5b7062 100644
->>> --- a/drivers/clk/qcom/clk-alpha-pll.h
->>> +++ b/drivers/clk/qcom/clk-alpha-pll.h
->>> @@ -125,6 +125,7 @@ struct alpha_pll_config {
->>>       u32 test_ctl_val;
->>>       u32 test_ctl_hi_val;
->>>       u32 test_ctl_hi1_val;
->>> +    u32 test_ctl_hi2_val;
->>>       u32 main_output_mask;
->>>       u32 aux_output_mask;
->>>       u32 aux2_output_mask;
->>> @@ -171,6 +172,7 @@ extern const struct clk_ops clk_alpha_pll_zonda_ops;
->>>   #define clk_alpha_pll_postdiv_zonda_ops clk_alpha_pll_postdiv_fabia_ops
->>>     extern const struct clk_ops clk_alpha_pll_lucid_evo_ops;
->>> +#define clk_alpha_pll_lucid_ole_ops clk_alpha_pll_lucid_evo_ops
->>>   extern const struct clk_ops clk_alpha_pll_reset_lucid_evo_ops;
->>>   #define clk_alpha_pll_reset_lucid_ole_ops clk_alpha_pll_reset_lucid_evo_ops
->>>   extern const struct clk_ops clk_alpha_pll_fixed_lucid_evo_ops;
->>> @@ -196,6 +198,8 @@ void clk_zonda_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
->>>                    const struct alpha_pll_config *config);
->>>   void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
->>>                    const struct alpha_pll_config *config);
->>> +#define clk_lucid_ole_pll_configure(pll, regmap, config) \
->>> +            clk_lucid_evo_pll_configure(pll, regmap, config)
->>>   void clk_rivian_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
->>>                     const struct alpha_pll_config *config);
->>>   void clk_stromer_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
-> 
-> Thanks & Regards,
-> Jagadeesh
+---
+Konrad Dybcio (6):
+      drm/msm/a6xx: Add REG_A6XX_GMU_AHB_FENCE_STATUS_CLR definition
+      drm/msm/a6xx: Explain CP_PROTECT_CNTL writes in a6xx_set_cp_protect
+      drm/msm/a6xx: Skip empty protection ranges entries
+      drm/msm/a6xx: Ensure clean GMU state in a6xx_gmu_fw_start
+      drm/msm/a6xx: Improve GMU force shutdown sequence
+      drm/msm/a6xx: Fix up GMU region reservations
+
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c     | 21 +++++++++++++++++----
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h |  2 ++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 14 +++++++++-----
+ 3 files changed, 28 insertions(+), 9 deletions(-)
+---
+base-commit: dbd91ef4e91c1ce3a24429f5fb3876b7a0306733
+change-id: 20230517-topic-a7xx_prep-787a69c7d0ff
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
