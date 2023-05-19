@@ -2,106 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D6AF7092BF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 11:11:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D33647092E7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 11:23:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231502AbjESJLJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 05:11:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54204 "EHLO
+        id S231425AbjESJXR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 05:23:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231497AbjESJK4 (ORCPT
+        with ESMTP id S231411AbjESJXI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 05:10:56 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D36E1BD3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 02:10:34 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-3078aa0b152so1977398f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 02:10:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684487433; x=1687079433;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=m4PUn3laZkjlv9r91VlagRE7SeQ4y7zfvRtcaATbBto=;
-        b=tPPNaiTO8lJ5jKQV6OBH0hubdfYT6e0g5een+CNh5ZVnoqtMivb80X9jt62BmL7Ntc
-         JmDTguBRtWeMmeWge9aFO2HntpQSdodBZm/+Bk5lRIzSoCNh6vAi8eupqFAh9LXyq/av
-         mqb/xGE2oU0pXdzRbXi6jBqk9jQj2FCBBKMSVhMYeAHY7KTU9fNZZweDD4jivvMWtQrj
-         OENV18nIItD13qed13rPXMEVGHvBz7PVZ5m4CA4oa5LRABnMxGoPL0J7t8A0zq94JhVp
-         hXc9a81Ra8u+zRHvw9la+GPmwDtH70uD0C2A8Dgcu+vmuDYVDVWK0L5Gt0RgSYf0hcyL
-         pd/g==
+        Fri, 19 May 2023 05:23:08 -0400
+Received: from mail-oi1-f171.google.com (mail-oi1-f171.google.com [209.85.167.171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBEB2E47;
+        Fri, 19 May 2023 02:23:06 -0700 (PDT)
+Received: by mail-oi1-f171.google.com with SMTP id 5614622812f47-392116ae103so1828141b6e.0;
+        Fri, 19 May 2023 02:23:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684487433; x=1687079433;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=m4PUn3laZkjlv9r91VlagRE7SeQ4y7zfvRtcaATbBto=;
-        b=g4yg9hVP0EpzkNPXLbRVJDO2PT230C4ZHoBIASIBRIL8nnaQ2Y/sznSgDH62ErOyVS
-         wJc9TC5h6Ko70kvfIKJ388CcWXbOicDckCOwqA1UlVPO7ZB3lXihE5ynpxxHVlk4mdVg
-         Escq88bdmzLRJightPyZt+pNyuhv8z2UnI5Y7q99F3KjjHN/04dUYerfMaqBnXkcwiyS
-         GL3mP7wqN2pUnMG7+lnvhMNdubyWWQ9czQZK0qg8RAXIwRGymQImEEBw+QywDEITcJgT
-         0ft08PXCOyAnckEA4P4yvS/5zjgHLS5GHuziwWLmI0YQXGCYS3Oh5Kzc60M/fbdhGe2w
-         3jKg==
-X-Gm-Message-State: AC+VfDxELnWSAQK1h7QFlxFR1OmJkpwoT7/F3Mk9+hubOs/1AExm8MX3
-        ohicYpv51a1wZvZ3UuoE3hG0eD6isNxMPhh/uNy5mQ==
-X-Google-Smtp-Source: ACHHUZ6Ls/fxuZgcyZ694cYOnC1gqFmjt2rYX4qoLImFgpcP92r4Yt0cObiHBFfjDzWMPfy6SRBwmNGjFRTCq9koXeo=
-X-Received: by 2002:a5d:6388:0:b0:309:492a:bb07 with SMTP id
- p8-20020a5d6388000000b00309492abb07mr1162243wru.26.1684487432711; Fri, 19 May
- 2023 02:10:32 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1684488186; x=1687080186;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=RrRs7m1C9m+EmWKO0WMeaCgh3OJPLA5+BvKvd2/4zcI=;
+        b=bWQDfChZLh/+qRczbv4WkYth3d/59Ug2xHfV0MSPr5DIOMf7pVqr9eC96bB2rXiuNO
+         lV5cpjkMCDn9zGdo8FAf+c7q63sGWdpF+z9r5GXOmIVdiehp8Alk/ZVwfeBDYS4980OI
+         FhPDFTMSUhJbwOXAc5epLEZtL8gC730pSjj9JGYPKAS7TdJWpaPt7vEM4I7ad2iGHCyk
+         cmEefAjPU3JDrVrLlVZRQsqX76UUzkz8i/0xpPoaQ33cnWAle0SL8PMhkUdNfLNQdsIL
+         64r3Gz3CKsYmmUZgOlRMO8bxMgOQRVY/wl2d49TY6F2BHdm7CNSArhmTrb0vxQpfJZC3
+         Rf6Q==
+X-Gm-Message-State: AC+VfDzVfUaEwsl5L32mOkuHE1JmE+8vfNhLASdunbZ7ZApNyQYFd5AB
+        MH7OV9QKpZvWtraTUr0bqw==
+X-Google-Smtp-Source: ACHHUZ57u3i+SSbVtqMNZMI6jUmfxGleHemSqI5RU40IgUoQx0IFUvSu7hfhjcMeFaohQaq83RSbgg==
+X-Received: by 2002:a05:6808:4c4:b0:394:2868:d51f with SMTP id a4-20020a05680804c400b003942868d51fmr787182oie.4.1684488186007;
+        Fri, 19 May 2023 02:23:06 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id c24-20020aca1c18000000b00397c03854edsm837946oic.17.2023.05.19.02.23.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 May 2023 02:23:05 -0700 (PDT)
+Received: (nullmailer pid 3014366 invoked by uid 1000);
+        Fri, 19 May 2023 09:23:02 -0000
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
-References: <20230518-bamclk-dt-v1-1-82f738c897d9@gerhold.net>
- <CAH=2Ntya7bqHVri_F8BOUJ6kJxtG2_usV08do+=OgkaoVJvxBQ@mail.gmail.com> <ZGYKQkgRrBqO2rsx@gerhold.net>
-In-Reply-To: <ZGYKQkgRrBqO2rsx@gerhold.net>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Fri, 19 May 2023 14:40:21 +0530
-Message-ID: <CAH=2Ntw0BZH=RGp14mYLhX7D6jV5O5eDKRQbby=uCy85xMDU_g@mail.gmail.com>
-Subject: Re: [PATCH] dmaengine: qcom: bam_dma: make channels/EEs optional in
- DT with clock
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+From:   Rob Herring <robh@kernel.org>
+To:     Devi Priya <quic_devipriy@quicinc.com>
+Cc:     andersson@kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, vkoul@kernel.org,
+        quic_srichara@quicinc.com, krzysztof.kozlowski+dt@linaro.org,
+        quic_sjaganat@quicinc.com, quic_anusha@quicinc.com,
+        linux-arm-msm@vger.kernel.org, quic_ipkumar@quicinc.com,
+        kishon@kernel.org, quic_arajkuma@quicinc.com, conor+dt@kernel.org,
+        quic_kathirav@quicinc.com, konrad.dybcio@linaro.org,
+        linux-phy@lists.infradead.org, robh+dt@kernel.org,
+        agross@kernel.org
+In-Reply-To: <20230519085723.15601-2-quic_devipriy@quicinc.com>
+References: <20230519085723.15601-1-quic_devipriy@quicinc.com>
+ <20230519085723.15601-2-quic_devipriy@quicinc.com>
+Message-Id: <168448818232.3014347.12687378726384996026.robh@kernel.org>
+Subject: Re: [PATCH V2 1/2] dt-bindings: phy: qcom,qmp-pcie: Add ipq9574
+ bindings
+Date:   Fri, 19 May 2023 04:23:02 -0500
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 18 May 2023 at 16:51, Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> On Thu, May 18, 2023 at 04:43:57PM +0530, Bhupesh Sharma wrote:
-> > On Thu, 18 May 2023 at 14:56, Stephan Gerhold <stephan@gerhold.net> wrote:
-> > >
-> > > If we have a BAM clock in the DT we are able to turn on the BAM
-> > > controller while probing, so there is no need to read "num-channels"
-> > > and "qcom,num-ees" from the DT. It can be read more accurately directly
-> > > from the identification registers of the BAM.
-> > >
-> > > This simplifies setting up typical controlled-remotely BAM DMAs in the
-> > > DT that can be turned on via a clock (e.g. the BLSP DMA).
-> >
-> > Can you please list which qcom board(s) you tested this patch on?
-> >
->
-> It works fine at least on MSM8916/DB410c (for blsp_dma) and MDM9607
-> (blsp_dma and qpic_dma (for NAND)). More testing would be much
-> appreciated of course!
 
-I tested this yesterday on RB1/RB2, RB5 and saw no improvement, so was wondering
-why exactly is this needed and which platforms are impacted.
+On Fri, 19 May 2023 14:27:22 +0530, Devi Priya wrote:
+> Add bindings for the PCIe QMP PHYs found on IPQ9574.
+> 
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> ---
+>  Changes in V2:
+> 	- Picked up the R-b tag
+> 	- Did not convert the clock IDs to numerical values as the clock
+> 	  header (dependent patch) is merged in latest rc1.
+> 
+>  .../phy/qcom,ipq9574-qmp-pcie-phy.yaml        | 90 +++++++++++++++++++
+>  1 file changed, 90 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.yaml
+> 
 
-> Personally I don't see much of a risk: If enabling the clock doesn't
-> actually enable the BAM controller, then the clock probably does not
-> belong to the BAM in the first place... :)
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-Right, but I think the commit message needs a bit more clarity to
-reflect that it is now proposed to check for the bam_clk presence
-earlier in the _probe flow (as compared to earlier).
+yamllint warnings/errors:
 
-Thanks.
+dtschema/dtc warnings/errors:
+Error: Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.example.dts:29.26-27 syntax error
+FATAL ERROR: Unable to parse input tree
+make[1]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.example.dtb] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1512: dt_binding_check] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230519085723.15601-2-quic_devipriy@quicinc.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
