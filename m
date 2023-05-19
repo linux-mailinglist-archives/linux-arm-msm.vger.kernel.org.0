@@ -2,126 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D15D709840
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 15:29:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C992709879
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 15:39:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231823AbjESN3a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 09:29:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49002 "EHLO
+        id S230412AbjESNjK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 09:39:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231797AbjESN31 (ORCPT
+        with ESMTP id S230394AbjESNjK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 09:29:27 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3264CC2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 06:29:26 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2af177f12d1so22163551fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 06:29:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684502964; x=1687094964;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CoLKDA4nls3CGbrXvxh61SjvP4v8d9SGkB682PI8Y9w=;
-        b=Z2m27kLSE1/hw4iXIE43fi41wpKcFGxK0Xnz1w3T0lvfvcVk7Le/dEr+zi+NGu1tJf
-         /OKfe10DfnNwtrOoIjkKfQVAUfzj1PZRmT8MEw6tANJx9t9XoxSvsB/Go/dOwGpkfSvi
-         Lb0vcRU1NXSqRbpzFuwYtJQ0M5MkGiPzGD+GpyLJGC+1otOlmpnKQzFzuijUnp610wRL
-         f93k4HuHiZM1WfeSuOYffIrpdKQ6KwV4WkxxgEcPK/WPFMC9Qm6xJp2wwXU0SCVvOeZv
-         yfA8zWafiXtaFx0IQYXhtZPOS1COVU+JOV6hYDyHf6fqP6pkl/A7YrypOO69nsxDmsXw
-         PWbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684502964; x=1687094964;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CoLKDA4nls3CGbrXvxh61SjvP4v8d9SGkB682PI8Y9w=;
-        b=JA+ooEjv0c7cSyi5q4Yll/PaTj9dBFsR/ktIyE5c/xN8gwmcyRsYlhPWRYKoKnaYCK
-         3N7fuVbqZHm5EYY7a36xQcessj4iI2EakKN4ykwSDtfEcLu3iWVIeFqPXws+NgvIFIMV
-         g/XiTy8OMaaFjRuptIVcjNAzc1EbDZOgOPICqZ4zS7hzVKwv6N9sms2flqv303loD7dx
-         FhG5hw9D2KkXYwjNuSotL20EZIJyfDfZgtyg0idenw+Z4HFuYtg7o1Ul26xcMzkhcTc3
-         VqLk6SX+2go9DJ4ox32Bjz8wkkTe1RFrFpqW9jG9MPOtRTCrIpMCkdMTqLBVeYKCeBWd
-         2Zjw==
-X-Gm-Message-State: AC+VfDwW7E7qyJqHObjmVwcUwEppthk0IOYu82mc0HFpzqMR/7+VTU72
-        gm7D8px3lr2zsEUPDBFquzGJnQ==
-X-Google-Smtp-Source: ACHHUZ6CxGFLDlfvrAV3JkY97oQkX8w9GTUFMc0/kvtZwEgddKmd2D5f8xSBKXHwb9BO5aK9+azW7Q==
-X-Received: by 2002:a2e:8091:0:b0:2ad:fef4:94f8 with SMTP id i17-20020a2e8091000000b002adfef494f8mr797526ljg.6.1684502964590;
-        Fri, 19 May 2023 06:29:24 -0700 (PDT)
-Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id q24-20020a2e9698000000b002ad92dff470sm821384lji.134.2023.05.19.06.29.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 May 2023 06:29:24 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Fri, 19 May 2023 15:29:11 +0200
-Subject: [PATCH v2 6/6] drm/msm/a6xx: Fix up GMU region reservations
+        Fri, 19 May 2023 09:39:10 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 094D4AA;
+        Fri, 19 May 2023 06:39:08 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34JBfF5u029249;
+        Fri, 19 May 2023 13:39:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=1fi0Vf7Z9eUFZq54XD4aCZyuxVaubtBpsoxN9DObvwE=;
+ b=JPg8SAJ31olCmBojcGO3MEjqA/sReoeRsi9025EcUpJUcD9k/RkklB9FaEUS0gwX7LCO
+ jbdG/dWM/h04EQGRdF8BDnPdaxj0WOXJpW3Gs1gAd7mWM2T9qNHH19tgPyLfH7/ybrYx
+ 2546PMe/qDC1sggx3/jmjJzXGgcAbrrxevbt/YbJfAOKDU8nBD3cFBlL8CkG1AgPPCog
+ Yz0MdZUmBCaeh2rQZcwzG6JRA1a7OiSxgvnYFlYuxJ2SrSCGOn8Hpu9EuQIBoz+CZYOt
+ ZYDTX/vVMLoWWR5XjqjEIxXtJkjz9QhtLFbnuF8fRzDax6266TXoZ+VeKZa/x/MpV2Bu pg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qncbhus3j-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 19 May 2023 13:39:05 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34JDd3x9000758
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 19 May 2023 13:39:03 GMT
+Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 19 May 2023 06:38:59 -0700
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Kathiravan T <quic_kathirav@quicinc.com>
+Subject: [PATCH V3 0/3] Minor updates in the IPQ5332 DTS files
+Date:   Fri, 19 May 2023 19:08:41 +0530
+Message-ID: <20230519133844.23512-1-quic_kathirav@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230517-topic-a7xx_prep-v2-6-5b9daa2b2cf0@linaro.org>
-References: <20230517-topic-a7xx_prep-v2-0-5b9daa2b2cf0@linaro.org>
-In-Reply-To: <20230517-topic-a7xx_prep-v2-0-5b9daa2b2cf0@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1684502955; l=1342;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=btUFgb1HmX4JzaeMKMcU2R1/tETWRJTF/5M21P54ufE=;
- b=uge7jhsa+6TMgVnbDiql/KjRMCa2Zb0JOe9R2GsPOzeoMYLsykOQCCB6qAuMi5PGNRRC++0uR
- dFwe/8HcIVVBFtJho3vrH41g3hspVEGRLxiuZX69M1/8Ix2IBah+mWC
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: aGuSYYuABg39rmqBC0noQ50f6HQ15ETw
+X-Proofpoint-ORIG-GUID: aGuSYYuABg39rmqBC0noQ50f6HQ15ETw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-19_09,2023-05-17_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ lowpriorityscore=0 bulkscore=0 phishscore=0 adultscore=0
+ priorityscore=1501 suspectscore=0 clxscore=1015 impostorscore=0 mlxscore=0
+ malwarescore=0 mlxlogscore=529 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2305190114
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Change the order of region allocations to make the addresses match
-downstream. This shouldn't matter very much, but helps eliminate one
-more difference when comparing register accesses.
+Rename the MI01.2 DTS after Reference Design Platform(RDP) number to align
+with ipq5332-rdp468.dts, add UART1 node and reserve memory for U-boot
+and SBL to avoid losing the RAM contents which will be used in post
+morterm analysis.
 
-Also, make the log region 16K long. That's what it is, unconditionally
-on A6xx and A7xx.
+Kathiravan T (3):
+  arm64: dts: qcom: ipq5332: rename mi01.2 dts to rdp441
+  arm64: dts: qcom: ipq5332: define UART1
+  arm64: dts: qcom: ipq5332: add few more reserved memory region
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 8004b582e45f..386c81e1a2f3 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1614,13 +1614,13 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
- 			goto err_memory;
- 	}
- 
--	/* Allocate memory for for the HFI queues */
--	ret = a6xx_gmu_memory_alloc(gmu, &gmu->hfi, SZ_16K, 0, "hfi");
-+	/* Allocate memory for the GMU log region */
-+	ret = a6xx_gmu_memory_alloc(gmu, &gmu->log, SZ_16K, 0, "log");
- 	if (ret)
- 		goto err_memory;
- 
--	/* Allocate memory for the GMU log region */
--	ret = a6xx_gmu_memory_alloc(gmu, &gmu->log, SZ_4K, 0, "log");
-+	/* Allocate memory for for the HFI queues */
-+	ret = a6xx_gmu_memory_alloc(gmu, &gmu->hfi, SZ_16K, 0, "hfi");
- 	if (ret)
- 		goto err_memory;
- 
+ arch/arm64/boot/dts/qcom/Makefile             |  2 +-
+ ...{ipq5332-mi01.2.dts => ipq5332-rdp441.dts} |  0
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi         | 24 ++++++++++++++++++-
+ 3 files changed, 24 insertions(+), 2 deletions(-)
+ rename arch/arm64/boot/dts/qcom/{ipq5332-mi01.2.dts => ipq5332-rdp441.dts} (100%)
 
 -- 
-2.40.1
+2.17.1
 
