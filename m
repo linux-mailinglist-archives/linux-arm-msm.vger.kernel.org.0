@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F129709CE0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 18:50:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 23251709CE9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 18:52:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229828AbjESQuN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 12:50:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38260 "EHLO
+        id S229733AbjESQwU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 12:52:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229862AbjESQuM (ORCPT
+        with ESMTP id S230414AbjESQwT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 12:50:12 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EFC7171E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 09:49:44 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f27977aed6so3906043e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 09:49:43 -0700 (PDT)
+        Fri, 19 May 2023 12:52:19 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B0B6B9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 09:52:16 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f1fe1208a4so3978653e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 09:52:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684514972; x=1687106972;
+        d=linaro.org; s=google; t=1684515135; x=1687107135;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=UoJqhyAehxEE8IzaFRIjwy7At/aHaz/mTctqSYW77Ps=;
-        b=edZnk59vtfRbVveJW2Wp7hxu7rzwL1wnB+YDKUqq4hKRd2VdeZI2yP378Vj3kuFqsh
-         VxjCFat5uj4kxcEpT53TmNB96Ncls5iM9FLgv6mTudpfWB8GGcU3H/lu99jI4SsqARFc
-         ioQqwbILjLlp7vnn4/owvL0tMktS4uZAeiQkOFAPnoT7kvzUDWD3QcLLV4+8vmyr3P7m
-         XjscQl4J5yVQyQ/ud2zAXPfEGyuvpHv2InLiHWr4xLYz7NJ8qFYS6GwZoSR+xvXW/7oo
-         brib1WAlbgxW1BKegRzYspZMMKf4sRG+8AEfDMhEL1SQdYlqRk/vuICeYvhZ+2GePNHr
-         D4pg==
+        bh=2DjgA1oSFnHQ4T6jrg+cwQvWM2kbJwi4Mht8bmer9w4=;
+        b=bD5SZuxbEmenh+bIZ9h7qXdIyWVefZ/663ljisl0IiiYIlre6Eo5AcRKIL5SfF8UFt
+         Y5cp/rZkyH0wtkvf+Ec/mop9IBVz8dNg9tATgCuNQZCG0k+bWamEtt3zd50+7pCZU3xL
+         wDBsIy0q/eUcbMMBK5oj9cODU16IoYnOFgYEpKqjrcac6TgQEZUO9ZaRUXmGY01o/eTh
+         VJZvvhGiT2sq6JW4vxM2nlZKCOnoR4hfLrcx74dzK/OZF1hrHO2FKUtuF5vxEOmvSgVZ
+         6LqioT2CnphXAe9kg+6bqSVnQnATy5kx/1ZcRS0r6uOWRcZtNoWnrMfnKM3jyxJuiujb
+         J9aA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684514972; x=1687106972;
+        d=1e100.net; s=20221208; t=1684515135; x=1687107135;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UoJqhyAehxEE8IzaFRIjwy7At/aHaz/mTctqSYW77Ps=;
-        b=fOOZ9v5PE9mADdme4B28UlcmHcuPJnsAp6xOQIph+2sfa9OumpEeKghes7Y07qHXam
-         keFrN8u5RJ1Utr8NnFvGKYIUE+C1Ok9Ogyl/yKJI/HUbzqgpcRp8BOMlejtQVHJTuHv8
-         QdctbdXZ6giwwhnzDMP7FBi3P1z2IBd1CBMKBVTC31LbVCtns7exyveqelCK+HY47kcX
-         HMxdSL+8WVHyKsQl1CMPNlCyQ8pvyZ1gQLdO5KxYcNwUYfulYnD+J+rT9lZoLbVtpjV2
-         oxVa0jPKMlcM9p8pKn8OCcvSb9u+jCxqUNEAjbWy5+QvAbS3g5b6c+gVIIGvZ4D0PHik
-         DJRA==
-X-Gm-Message-State: AC+VfDzooPJDDDyTTP6eAHwkklzPtN/otLl+SkCphUI2qWrsv7sQHsxo
-        vSp8G6QDPLmSLlobmTYJU9f8sQ==
-X-Google-Smtp-Source: ACHHUZ5prLsQF0d2sfE7FXa53jb99u03XPIwvFMjNKmBLZeFPS/8GhrY3PXVAmZjOBdUdeG+ybqqUQ==
-X-Received: by 2002:ac2:4556:0:b0:4f1:5015:43c4 with SMTP id j22-20020ac24556000000b004f1501543c4mr1073151lfm.38.1684514972574;
-        Fri, 19 May 2023 09:49:32 -0700 (PDT)
+        bh=2DjgA1oSFnHQ4T6jrg+cwQvWM2kbJwi4Mht8bmer9w4=;
+        b=IWfCUJyRvpi8Ykh+YwULjBNN8dyvcyDccKJRM21rKzIkQ9aztOwIVDY0y2aduB+zcu
+         IBdgP3+sYh1/0u8lYCI4cSe4mXy4DzEDaF9fykJ71YYI/NMI9ticgK4+3IJDSIzJKVwB
+         JTcMSgW3FRikWAbqN2T0xodDJ+8Y4G+P3DXDR9rWfw7D3DWYRAerAGhHSCocMK1o+1SR
+         UcnNpR1yecSjRqPpK3PNuLzdlPRTi/v6e+RKZDQLNDIY+bZDhidVCNbt+UtVTH1YIzXG
+         QG4EIAwkxqnYEzFhfpGQx+/x8Y94oDzJA7MQK69miPmRX0lWaxAo9kdlE5f5eERjd386
+         ZNXQ==
+X-Gm-Message-State: AC+VfDwF8lYYOJNvw7VwGWCUf7TySScsEz2kSEhclzucEpY1ClNXE/SS
+        HscWssCDGsPvuTcM3bQxVpde/A==
+X-Google-Smtp-Source: ACHHUZ6YOnVvDEC7VEmTfNh32G3NHcYUKKtzhFaBOKXNc9qp7TPU42iCrIiTIu5+W5aG+vTZHFl5/A==
+X-Received: by 2002:a19:f00b:0:b0:4ed:bf01:3ff3 with SMTP id p11-20020a19f00b000000b004edbf013ff3mr801227lfc.43.1684515134862;
+        Fri, 19 May 2023 09:52:14 -0700 (PDT)
 Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id q25-20020ac25159000000b004efe8991806sm668958lfd.6.2023.05.19.09.49.30
+        by smtp.gmail.com with ESMTPSA id s18-20020ac25fb2000000b004edb8fac1cesm648518lfe.215.2023.05.19.09.52.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 May 2023 09:49:32 -0700 (PDT)
-Message-ID: <e62200fb-2398-dcd0-0b25-afa94942bae6@linaro.org>
-Date:   Fri, 19 May 2023 18:49:29 +0200
+        Fri, 19 May 2023 09:52:14 -0700 (PDT)
+Message-ID: <f78d73b3-5cec-ca0e-fceb-b70f52fee29b@linaro.org>
+Date:   Fri, 19 May 2023 18:52:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH 1/4] clk: qcom: clk-alpha-pll: Add support for rivian ole
- pll ops
+Subject: Re: [PATCH 3/4] clk: qcom: camcc-sm8550: Add camera clock controller
+ driver for SM8550
 Content-Language: en-US
 To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -71,9 +71,9 @@ Cc:     Bjorn Andersson <andersson@kernel.org>,
         Taniya Das <quic_tdas@quicinc.com>,
         Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
 References: <20230519155602.6642-1-quic_jkona@quicinc.com>
- <20230519155602.6642-2-quic_jkona@quicinc.com>
+ <20230519155602.6642-4-quic_jkona@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230519155602.6642-2-quic_jkona@quicinc.com>
+In-Reply-To: <20230519155602.6642-4-quic_jkona@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,48 +88,185 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 19.05.2023 17:55, Jagadeesh Kona wrote:
-> Add support for rivian ole pll ops and ole pll registers to
-> configure and control the rivian ole pll.
+On 19.05.2023 17:56, Jagadeesh Kona wrote:
+> Add support for the camera clock controller for camera clients to be
+> able to request for camcc clocks on SM8550 platform.
 > 
 > Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
 > Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 > ---
->  drivers/clk/qcom/clk-alpha-pll.h | 4 ++++
->  1 file changed, 4 insertions(+)
+>  drivers/clk/qcom/Kconfig        |    7 +
+>  drivers/clk/qcom/Makefile       |    1 +
+>  drivers/clk/qcom/camcc-sm8550.c | 3572 +++++++++++++++++++++++++++++++
+>  3 files changed, 3580 insertions(+)
+>  create mode 100644 drivers/clk/qcom/camcc-sm8550.c
 > 
-> diff --git a/drivers/clk/qcom/clk-alpha-pll.h b/drivers/clk/qcom/clk-alpha-pll.h
-> index 4d9b6d5b7062..e6df398bee6d 100644
-> --- a/drivers/clk/qcom/clk-alpha-pll.h
-> +++ b/drivers/clk/qcom/clk-alpha-pll.h
-> @@ -24,6 +24,7 @@ enum {
->  	CLK_ALPHA_PLL_TYPE_LUCID_EVO,
->  	CLK_ALPHA_PLL_TYPE_LUCID_OLE,
->  	CLK_ALPHA_PLL_TYPE_RIVIAN_EVO,
-> +	CLK_ALPHA_PLL_TYPE_RIVIAN_OLE = CLK_ALPHA_PLL_TYPE_RIVIAN_EVO,
-This makes sense
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index 6bb9b4aff047..c8eccd428736 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -700,6 +700,13 @@ config SM_CAMCC_8450
+>  	  Support for the camera clock controller on SM8450 devices.
+>  	  Say Y if you want to support camera devices and camera functionality.
+>  
+> +config SM_CAMCC_8550
+> +	tristate "SM8550 Camera Clock Controller"
+> +	select SM_GCC_8550
+> +	help
+> +	  Support for the camera clock controller on SM8550 devices.
+> +	  Say Y if you want to support camera devices and camera functionality.
+> +
+>  config SM_DISPCC_6115
+>  	tristate "SM6115 Display Clock Controller"
+>  	depends on SM_GCC_6115
+> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+> index f0b95fc217aa..2b1fcd5c920a 100644
+> --- a/drivers/clk/qcom/Makefile
+> +++ b/drivers/clk/qcom/Makefile
+> @@ -100,6 +100,7 @@ obj-$(CONFIG_SDX_GCC_65) += gcc-sdx65.o
+>  obj-$(CONFIG_SM_CAMCC_6350) += camcc-sm6350.o
+>  obj-$(CONFIG_SM_CAMCC_8250) += camcc-sm8250.o
+>  obj-$(CONFIG_SM_CAMCC_8450) += camcc-sm8450.o
+> +obj-$(CONFIG_SM_CAMCC_8550) += camcc-sm8550.o
+>  obj-$(CONFIG_SM_DISPCC_6115) += dispcc-sm6115.o
+>  obj-$(CONFIG_SM_DISPCC_6125) += dispcc-sm6125.o
+>  obj-$(CONFIG_SM_DISPCC_6350) += dispcc-sm6350.o
+> diff --git a/drivers/clk/qcom/camcc-sm8550.c b/drivers/clk/qcom/camcc-sm8550.c
+> new file mode 100644
+> index 000000000000..2c3d2436da0f
+> --- /dev/null
+> +++ b/drivers/clk/qcom/camcc-sm8550.c
+> @@ -0,0 +1,3572 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/clk-provider.h>
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/pm_runtime.h>
+> +#include <linux/regmap.h>
+> +
+> +#include <dt-bindings/clock/qcom,sm8550-camcc.h>
+> +
+> +#include "clk-alpha-pll.h"
+> +#include "clk-branch.h"
+> +#include "clk-rcg.h"
+> +#include "clk-regmap.h"
+> +#include "common.h"
+> +#include "gdsc.h"
+> +#include "reset.h"
+> +
+> +enum {
+> +	DT_BI_TCXO,
+> +	DT_BI_TCXO_AO,
+> +	DT_SLEEP_CLK,
+> +};
+> +
+> +enum {
+> +	P_BI_TCXO,
+> +	P_CAM_CC_PLL0_OUT_EVEN,
+> +	P_CAM_CC_PLL0_OUT_MAIN,
+> +	P_CAM_CC_PLL0_OUT_ODD,
+> +	P_CAM_CC_PLL10_OUT_EVEN,
+> +	P_CAM_CC_PLL11_OUT_EVEN,
+> +	P_CAM_CC_PLL12_OUT_EVEN,
+While it makes sense for a computer, I think it would make more
+sense to keep the >=10 entries after 9
 
-The rest is just sugar syntax, I don't think it makes sense to keep
-adding meaningless defines..
+> +	P_CAM_CC_PLL1_OUT_EVEN,
+> +	P_CAM_CC_PLL2_OUT_EVEN,
+> +	P_CAM_CC_PLL2_OUT_MAIN,
+> +	P_CAM_CC_PLL3_OUT_EVEN,
+> +	P_CAM_CC_PLL4_OUT_EVEN,
+> +	P_CAM_CC_PLL5_OUT_EVEN,
+> +	P_CAM_CC_PLL6_OUT_EVEN,
+> +	P_CAM_CC_PLL7_OUT_EVEN,
+> +	P_CAM_CC_PLL8_OUT_EVEN,
+> +	P_CAM_CC_PLL9_OUT_EVEN,
+> +	P_CAM_CC_PLL9_OUT_ODD,
+> +	P_SLEEP_CLK,
+> +};
+> +
+> +static const struct pll_vco lucid_ole_vco[] = {
+> +	{ 249600000, 2300000000, 0 },
+> +};
+> +
+> +static const struct pll_vco rivian_ole_vco[] = {
+> +	{ 777000000, 1285000000, 0 },
+> +};
+> +
+> +static const struct alpha_pll_config cam_cc_pll0_config = {
+> +	.l = 0x4400003E,
+Lowercase hex, everywhere, please.
+
+> +	.alpha = 0x8000,
+> +	.config_ctl_val = 0x20485699,
+> +	.config_ctl_hi_val = 0x00182261,
+> +	.config_ctl_hi1_val = 0x82AA299C,
+> +	.test_ctl_val = 0x00000000,
+> +	.test_ctl_hi_val = 0x00000003,
+> +	.test_ctl_hi1_val = 0x00009000,
+> +	.test_ctl_hi2_val = 0x00000034,
+> +	.user_ctl_val = 0x00008400,
+> +	.user_ctl_hi_val = 0x00000005,
+> +};
+> +
+[...]
+
+> +
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll1, regmap, &cam_cc_pll1_config);
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll10, regmap, &cam_cc_pll10_config);
+Same as the first comment
 
 Konrad
->  	CLK_ALPHA_PLL_TYPE_DEFAULT_EVO,
->  	CLK_ALPHA_PLL_TYPE_BRAMMO_EVO,
->  	CLK_ALPHA_PLL_TYPE_STROMER,
-> @@ -181,6 +182,7 @@ extern const struct clk_ops clk_alpha_pll_postdiv_lucid_evo_ops;
->  #define clk_alpha_pll_postdiv_lucid_ole_ops clk_alpha_pll_postdiv_lucid_evo_ops
->  
->  extern const struct clk_ops clk_alpha_pll_rivian_evo_ops;
-> +#define clk_alpha_pll_rivian_ole_ops clk_alpha_pll_rivian_evo_ops
->  #define clk_alpha_pll_postdiv_rivian_evo_ops clk_alpha_pll_postdiv_fabia_ops
->  
->  void clk_alpha_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
-> @@ -202,6 +204,8 @@ void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regma
->  			clk_lucid_evo_pll_configure(pll, regmap, config)
->  void clk_rivian_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
->  				  const struct alpha_pll_config *config);
-> +#define clk_rivian_ole_pll_configure(pll, regmap, config) \
-> +			clk_rivian_evo_pll_configure(pll, regmap, config)
->  void clk_stromer_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
->  			       const struct alpha_pll_config *config);
->  
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll11, regmap, &cam_cc_pll11_config);
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll12, regmap, &cam_cc_pll12_config);
+> +	clk_rivian_ole_pll_configure(&cam_cc_pll2, regmap, &cam_cc_pll2_config);
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config);
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll4, regmap, &cam_cc_pll4_config);
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll5, regmap, &cam_cc_pll5_config);
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll6, regmap, &cam_cc_pll6_config);
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll7, regmap, &cam_cc_pll7_config);
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll8, regmap, &cam_cc_pll8_config);
+> +	clk_lucid_ole_pll_configure(&cam_cc_pll9, regmap, &cam_cc_pll9_config);
+> +
+> +	/*
+> +	 * Keep clocks always enabled:
+> +	 *	cam_cc_gdsc_clk
+> +	 *	cam_cc_sleep_clk
+> +	 */
+> +	regmap_update_bits(regmap, 0x1419c, BIT(0), BIT(0));
+> +	regmap_update_bits(regmap, 0x142cc, BIT(0), BIT(0));
+> +
+> +	ret = qcom_cc_really_probe(pdev, &cam_cc_sm8550_desc, regmap);
+> +
+> +	pm_runtime_put(&pdev->dev);
+> +
+> +	return ret;
+> +}
+> +
+> +static struct platform_driver cam_cc_sm8550_driver = {
+> +	.probe = cam_cc_sm8550_probe,
+> +	.driver = {
+> +		.name = "cam_cc-sm8550",
+> +		.of_match_table = cam_cc_sm8550_match_table,
+> +	},
+> +};
+> +
+> +static int __init cam_cc_sm8550_init(void)
+> +{
+> +	return platform_driver_register(&cam_cc_sm8550_driver);
+> +}
+> +subsys_initcall(cam_cc_sm8550_init);
+> +
+> +static void __exit cam_cc_sm8550_exit(void)
+> +{
+> +	platform_driver_unregister(&cam_cc_sm8550_driver);
+> +}
+> +module_exit(cam_cc_sm8550_exit);
+> +
+> +MODULE_DESCRIPTION("QTI CAM_CC SM8550 Driver");
+> +MODULE_LICENSE("GPL");
