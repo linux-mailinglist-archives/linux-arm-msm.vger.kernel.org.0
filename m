@@ -2,148 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 847E370A06D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 22:14:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D963670A08F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 22:26:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231578AbjESUO5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 16:14:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50552 "EHLO
+        id S230178AbjESU06 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 16:26:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231791AbjESUOq (ORCPT
+        with ESMTP id S229693AbjESU05 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 16:14:46 -0400
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10F1710EC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 13:14:10 -0700 (PDT)
-Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f41d087b3bso37228635e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 13:14:09 -0700 (PDT)
+        Fri, 19 May 2023 16:26:57 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2473510F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 13:26:56 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-3090d3e9c92so3621784f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 13:26:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684527248; x=1687119248;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=AnzQY1sqcvkjTs0N5+FyW+tD9eHn3O+t59IFw425bEc=;
-        b=lBMivHKfRgtwtCk+QICLAiIJZApK/Ya8eAcwg2PaSoWf/aHVGAuuAVxqiR8GzW4L3P
-         QnOaTovcfEvbcdxxdX6Cy++w8DSCIVL2TTCMG2Y8IEo2ON0UjTTifJy/TgoHmB66wmjQ
-         EPDzFOGysJEybVyEC4CKrHDZcXsDjbTVna5hli/+MjItKxiu9PmBgRGdqEpRQ3qeWgVN
-         ucWiYZKuviqLbfq1YqHdoAwCQy031OYleemP0tyFxWzrezJNvORm3g38mqtn+geEDs5A
-         udl1L6GjoTGK7lCDDUDydf2cmkDpGuAWi97/7sA+nMfN304GTW2xmNZrrFwZ2VPuvXdd
-         etTA==
+        d=linaro.org; s=google; t=1684528014; x=1687120014;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xAE6bKGD8uI4B1Ojm7oaDsntRbDY/p/o83Rm9HGs3vU=;
+        b=KhQh40O1foL2uAE4MXyDZfPQ5dBQPWBnpePjc4y7//CUqlwhXfNm71R7dYxmEJwWWG
+         rcaOqd+lIjIKiEE08whNoRF97O97YYF1vTCQS2xZ7QSSLDW5/OKkcyEGapsecuN9/to2
+         v2BNxDmrF1a3IEzJiwbJ7osQD4vwrNfvAKgQiMfw1I++7sILIG1YSGGVeWdJCEOROapP
+         wfLarCWDjHf6uPYYt0NeZ4pIgzO2tEoUuUMIFC/JxzpARfwOLfcGJz+utC+29Nof1tWj
+         726P5tfBTvxjVUdwixgi/sKT1pl+HCC3hmOg+yCSbfISpiLD0/Y+qWcyKGM1JmallZq0
+         dZkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684527248; x=1687119248;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AnzQY1sqcvkjTs0N5+FyW+tD9eHn3O+t59IFw425bEc=;
-        b=SzdvT+GotYEdvRxyQpArV1KmkUrQN0uzcp4Qmaa8c9od98S0H0fL+TeXErbvD/MUVc
-         8SoKt7ITBXTtYnH0MNYuM7LTnIJHTNCzra03O4V0ghaoo7gFn8m4Rk8LqXOWHcJDHHMy
-         NJCulzq9E4FvsECI+e8vgL3VqLTHbdZsLb0HPeg3no2wSVztcJysGeD20NPUcGc5o8F1
-         MqiWEuhffFCkib0H+4tA5p5hTTRKeFWqGTxDuuvwwtco9BB6OqOVJys7tsbKWKvV6FQN
-         YGzTlt2lPmCqFqlY4t82svn+uHqoynQMepzXde2qKISsGi2F4E3RavbWkAPVOB3Roe0j
-         1XKg==
-X-Gm-Message-State: AC+VfDw4XMPyTvhhd+BVVKrD+4HvEQ3oGMwU3iYHHX7NUFljOTDYpY4P
-        XtmRdCD8rdolx5J93oqiNFtIgkZ/OZTB6h98WVPdsw==
-X-Google-Smtp-Source: ACHHUZ42sasNBJ5U+qQUANkYHe8wr6QZwvgJdArljj1mz3V27qwnBdyMWtJUiDirfiineHeOKCNND53yzPz00TsHIAA=
-X-Received: by 2002:a1c:f705:0:b0:3f4:c28b:ec88 with SMTP id
- v5-20020a1cf705000000b003f4c28bec88mr1837762wmh.41.1684527248304; Fri, 19 May
- 2023 13:14:08 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1684528014; x=1687120014;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xAE6bKGD8uI4B1Ojm7oaDsntRbDY/p/o83Rm9HGs3vU=;
+        b=bdHpz0PAUQ0ztfDyura98ELoAzXrXMHeR/AHiPqhxIR/WpXf24SFjORC11zej/ht1t
+         hnC4xY4MTvqu1WNPw7V0nfii3bbp31sqvG6jIS3IxY8TPMh7rxN/3IP/PKD18WXSL+rX
+         ub/ajOR0zKYVY+ngPZdTt7jbjYeIb8IQDQIHR+eoNl31SyJU4jx9flr6h8Cdsdq5hXcY
+         GPOa13E+CGDpeH60ja/YlGKFgk7SBjDDEXbtmP5kDIdZKNEgk80pNa2U/GmkLTa2JGgF
+         ylUnOiqhEoZPvRifBMIOlR3wzWhKWHNi3yRqUhA/pDEoLbPWunBVwzMe1S2qTIBvClEK
+         qjug==
+X-Gm-Message-State: AC+VfDw4uCDSYc6aCwpNDLQOCEHJZwT6kuXBPVLxZnumzDby7jl+9aus
+        B9WUGAalpPKdZzn/Tp+U7uMPTA==
+X-Google-Smtp-Source: ACHHUZ4uiJw3o5Q8DT0mgGSljrWF/EZLsfHVRRKzsHn/aWcqBrnB/38cAQiKQNUue0GSQcyZ6n1WNg==
+X-Received: by 2002:a5d:5188:0:b0:306:43a4:86b with SMTP id k8-20020a5d5188000000b0030643a4086bmr2636003wrv.4.1684528014184;
+        Fri, 19 May 2023 13:26:54 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id k17-20020a5d5251000000b003079693eff2sm6137050wrc.41.2023.05.19.13.26.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 May 2023 13:26:53 -0700 (PDT)
+Message-ID: <0d0a1985-a08b-29ed-4bc4-2eea560d7ac0@linaro.org>
+Date:   Fri, 19 May 2023 21:26:52 +0100
 MIME-Version: 1.0
-References: <20230518-bamclk-dt-v2-1-a1a857b966ca@gerhold.net>
-In-Reply-To: <20230518-bamclk-dt-v2-1-a1a857b966ca@gerhold.net>
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Sat, 20 May 2023 01:43:56 +0530
-Message-ID: <CAH=2Ntx3WxEM_ita+caGXvqCJjCy=TkX8gjyT9nSV3j-89Y_cQ@mail.gmail.com>
-Subject: Re: [PATCH v2] dmaengine: qcom: bam_dma: allow omitting num-{channels,ees}
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 3/4] clk: qcom: camcc-sm8550: Add camera clock controller
+ driver for SM8550
+Content-Language: en-US
+To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
         Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+References: <20230519155602.6642-1-quic_jkona@quicinc.com>
+ <20230519155602.6642-4-quic_jkona@quicinc.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230519155602.6642-4-quic_jkona@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 19 May 2023 at 16:30, Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> The bam_dma driver needs to know the number of channels and execution
-> environments (EEs) at probe time. If we are in full control of the BAM
-> controller this information can be obtained from the BAM identification
-> registers (BAM_REVISION/BAM_NUM_PIPES).
->
-> When the BAM is "controlled remotely" it is more complicated. The BAM
-> might not be on at probe time, so reading the registers could fail.
-> This is why the information must be added to the device tree in this
-> case, using "num-channels" and "qcom,num-ees".
->
-> However, there are also some BAM instances that are initialized by
-> something else but we still have a clock that allows to turn it on when
-> needed. This can be set up in the DT with "qcom,controlled-remotely"
-> and "clocks" and is already supported by the bam_dma driver. Examples
-> for this are the typical BLSP BAM instances on older SoCs, QPIC BAM
-> (for NAND) and the crypto BAM on some SoCs.
->
-> In this case, there is no need to read "num-channels" and
-> "qcom,num-ees" from the DT. The BAN can be turned on using the clock
-> so we can just read it from the BAM registers like in the normal case.
->
-> Check for the BAM clock earlier and skip reading "num-channels" and
-> "qcom,num-ees" if it is present to allow simplifying the DT description
-> a bit.
->
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> ---
-> Changes in v2:
-> - Rewrite commit message for more clarity (discussion with Bhupesh)
-> - Link to v1: https://lore.kernel.org/r/20230518-bamclk-dt-v1-1-82f738c897d9@gerhold.net
-> ---
->  drivers/dma/qcom/bam_dma.c | 18 +++++++++---------
->  1 file changed, 9 insertions(+), 9 deletions(-)
->
-> diff --git a/drivers/dma/qcom/bam_dma.c b/drivers/dma/qcom/bam_dma.c
-> index 1e47d27e1f81..4c3eb972039d 100644
-> --- a/drivers/dma/qcom/bam_dma.c
-> +++ b/drivers/dma/qcom/bam_dma.c
-> @@ -1272,7 +1272,15 @@ static int bam_dma_probe(struct platform_device *pdev)
->         bdev->powered_remotely = of_property_read_bool(pdev->dev.of_node,
->                                                 "qcom,powered-remotely");
->
-> -       if (bdev->controlled_remotely || bdev->powered_remotely) {
-> +       if (bdev->controlled_remotely || bdev->powered_remotely)
-> +               bdev->bamclk = devm_clk_get_optional(bdev->dev, "bam_clk");
-> +       else
-> +               bdev->bamclk = devm_clk_get(bdev->dev, "bam_clk");
-> +
-> +       if (IS_ERR(bdev->bamclk))
-> +               return PTR_ERR(bdev->bamclk);
-> +
-> +       if (!bdev->bamclk) {
->                 ret = of_property_read_u32(pdev->dev.of_node, "num-channels",
->                                            &bdev->num_channels);
->                 if (ret)
-> @@ -1284,14 +1292,6 @@ static int bam_dma_probe(struct platform_device *pdev)
->                         dev_err(bdev->dev, "num-ees unspecified in dt\n");
->         }
->
-> -       if (bdev->controlled_remotely || bdev->powered_remotely)
-> -               bdev->bamclk = devm_clk_get_optional(bdev->dev, "bam_clk");
-> -       else
-> -               bdev->bamclk = devm_clk_get(bdev->dev, "bam_clk");
-> -
-> -       if (IS_ERR(bdev->bamclk))
-> -               return PTR_ERR(bdev->bamclk);
-> -
->         ret = clk_prepare_enable(bdev->bamclk);
->         if (ret) {
->                 dev_err(bdev->dev, "failed to prepare/enable clock\n");
+On 19/05/2023 16:56, Jagadeesh Kona wrote:
+> +MODULE_DESCRIPTION("QTI CAM_CC SM8550 Driver");
 
-Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+This pattern looks odd and inconsistent in our clock drivers. We mostly 
+have CAMCC or VIDEOCC but occasionally have CAM_CC and VIDEO_CC.
 
-Thanks.
+I'd drop that underscore to, in addition to Konrad's comment on Ucase hex.
+
+Other than that, LGTM.
+
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
