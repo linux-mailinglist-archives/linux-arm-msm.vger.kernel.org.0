@@ -2,86 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0ACF5709F8A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 21:04:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 27EEF709F97
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 21:05:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229661AbjESTER (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 15:04:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50074 "EHLO
+        id S230144AbjESTFg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 15:05:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51010 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229683AbjESTEQ (ORCPT
+        with ESMTP id S230004AbjESTFd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 15:04:16 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8E7B3E5E;
-        Fri, 19 May 2023 12:04:10 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34JCaN2l026842;
-        Fri, 19 May 2023 19:04:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=opzbwkDTgm8cg905fbiHB+IaDqvTINH0S8yzfdIVucQ=;
- b=R4oCqG6wi4UYwFirTgVkLs2JG8ahGHALBvJZkPEX37G3R5nOxzcHE8oTr/NwTSKUzzTP
- eGNDIo1BUKYt22wRuFhM/FJCrbaJ6Z+plHLUhXJnf1Voiv7LhmD9RRDRWx42AdmPcnlL
- 1e0pjNe2VHag5KIQZT6aVYpIPUvkvS7+9/M6ucDG8y2cuCLGBkGcHyACQMJJm7hyUFPM
- JOIchT+moBYJhU9xtXCQ8Z5JGhmC5zFKN98nxkXcTgF8jdleKD2+vu5WJJlpn11dsEe7
- P22108ziN1dcq1HCMtY3ua8muSu2EUbMrjUTad5XPACfDD+X7OzQE3Drg74F0SFiiY1w kg== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qp69u1d63-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 19 May 2023 19:04:03 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34JJ41Sp030712
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 19 May 2023 19:04:02 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 19 May
- 2023 12:04:01 -0700
-Message-ID: <d4e78b24-a3f1-37a3-11c1-92631b3e7c45@quicinc.com>
-Date:   Fri, 19 May 2023 12:04:00 -0700
+        Fri, 19 May 2023 15:05:33 -0400
+Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02524115;
+        Fri, 19 May 2023 12:05:32 -0700 (PDT)
+Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-6ac8ede63ccso2641543a34.2;
+        Fri, 19 May 2023 12:05:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684523132; x=1687115132;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=I40vgsxqxEeuLbFdYwBEPCfpX/jxJIkwaPXV/ediegI=;
+        b=N7OYhA9yXOaVr1glSocWyJamm/Ze3b/YK66xNBoHkxUoa9Fu2ufwofDU120IL3YWh0
+         M9Eykeo3iDCMj/cY0O1+8gi9HRcXfZ88BLUysJweAc/wfGp6XsOmbB2R0UvHEl90tbzI
+         +4lOpmCkVaMfaWaqey8jf4ayP3u1+0bqTMDDr96xoMJ4ksk5tKX8SJSYzjPt5v0kqgiR
+         0LJJvqnK/j0j2wKWLndC1dtZPfzMMMSbXCBmFoj8oFDyzyEtqDi1uCuXwA+nSU4GLz8D
+         iCIDBAw0NP5bP7n+yUe7Xd2Yrh0lvFgwPtTg1VnrI046kfXC8NsIJo+0VEKCWmX3dFuY
+         NSqg==
+X-Gm-Message-State: AC+VfDyFFXB+DPL7Ft12lPzTFoCr83UD1SOxScXZwJunUX7dlvZQA82z
+        z61+/4tq3URIQbk7jKX4er47vlvXvg==
+X-Google-Smtp-Source: ACHHUZ6Z7ctoE0Xg6rjUWDn3rqomNMMmXJEoVf2UiTHn5Uezqyl7vhRSGEzk/DBjyr6PSMIrc1TYBg==
+X-Received: by 2002:a05:6870:36c1:b0:187:85c1:8075 with SMTP id u1-20020a05687036c100b0018785c18075mr1541235oak.15.1684523132174;
+        Fri, 19 May 2023 12:05:32 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id v1-20020a056870e28100b0018456166c7asm2259270oad.39.2023.05.19.12.05.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 19 May 2023 12:05:31 -0700 (PDT)
+Received: (nullmailer pid 3852246 invoked by uid 1000);
+        Fri, 19 May 2023 19:05:30 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2 1/4] drm/msm/dsi: Adjust pclk rate for compression
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+From:   Rob Herring <robh@kernel.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
+        freedreno@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
+        Joerg Roedel <joro@8bytes.org>, linux-kernel@vger.kernel.org,
+        Will Deacon <will@kernel.org>, devicetree@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20230405-add-dsc-support-v2-0-1072c70e9786@quicinc.com>
- <20230405-add-dsc-support-v2-1-1072c70e9786@quicinc.com>
- <79b468f5-8f2e-175b-5bce-1b3ea5127628@quicinc.com>
- <i4bemmveyvowfy7dogetoygaflfttpe26dpg7bbimrzf53wv3w@o3odsno4pb2w>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <i4bemmveyvowfy7dogetoygaflfttpe26dpg7bbimrzf53wv3w@o3odsno4pb2w>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: yEaxfN0UFLSebcIDduIl4fL_-QJC5pzL
-X-Proofpoint-GUID: yEaxfN0UFLSebcIDduIl4fL_-QJC5pzL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-19_14,2023-05-17_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 malwarescore=0
- bulkscore=0 adultscore=0 mlxlogscore=999 spamscore=0 suspectscore=0
- impostorscore=0 priorityscore=1501 clxscore=1015 mlxscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305190163
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        Rob Clark <robdclark@gmail.com>, iommu@lists.linux.dev,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        David Airlie <airlied@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>
+In-Reply-To: <20230411-topic-straitlagoon_mdss-v4-5-68e7e25d70e1@linaro.org>
+References: <20230411-topic-straitlagoon_mdss-v4-0-68e7e25d70e1@linaro.org>
+ <20230411-topic-straitlagoon_mdss-v4-5-68e7e25d70e1@linaro.org>
+Message-Id: <168452313011.3852116.2187810600963716663.robh@kernel.org>
+Subject: Re: [PATCH v4 05/12] dt-bindings: display/msm: Add SM6375 MDSS
+Date:   Fri, 19 May 2023 14:05:30 -0500
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
+        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -89,125 +78,44 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 5/8/2023 2:56 PM, Marijn Suijten wrote:
-> On 2023-05-05 14:49:08, Jessica Zhang wrote:
->> On 5/5/2023 2:23 PM, Jessica Zhang wrote:
->>> Adjust the pclk rate to divide hdisplay by the compression ratio when DSC
->>> is enabled.
->>>
->>> Changes in v2:
->>> - Adjusted pclk_rate math to divide only the hdisplay value by
->>>     compression ratio
->>>
->>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>> ---
->>>    drivers/gpu/drm/msm/dsi/dsi_host.c | 17 +++++++++++++----
->>>    1 file changed, 13 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>> index 43a5ec33eee8..0e5778e8091f 100644
->>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>> @@ -561,7 +561,8 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
->>>    	clk_disable_unprepare(msm_host->byte_clk);
->>>    }
->>>    
->>> -static unsigned long dsi_get_pclk_rate(const struct drm_display_mode *mode, bool is_bonded_dsi)
->>> +static unsigned long dsi_get_pclk_rate(const struct drm_display_mode *mode,
->>> +		struct drm_dsc_config *dsc, bool is_bonded_dsi)
->>>    {
->>>    	unsigned long pclk_rate;
->>>    
->>> @@ -576,6 +577,14 @@ static unsigned long dsi_get_pclk_rate(const struct drm_display_mode *mode, bool
->>>    	if (is_bonded_dsi)
->>>    		pclk_rate /= 2;
->>>    
->>> +	/* If DSC is enabled, divide hdisplay by compression ratio */
->>> +	if (dsc) {
->>> +		int new_hdisplay = DIV_ROUND_UP(mode->hdisplay * msm_dsc_get_bpp_int(dsc),
->>> +				dsc->bits_per_component * 3);
->>> +		int fps = DIV_ROUND_UP(pclk_rate, mode->htotal * mode->vtotal);
->>
->> Should've used drm_mode_vrefresh() here... Will spin a v3 with that
->> change (along with any additional comments)
+On Fri, 19 May 2023 19:04:26 +0200, Konrad Dybcio wrote:
+> Document the SM6375 MDSS.
 > 
-> Perhaps unsigned long on some of these?  Overall the computations and
-> multi-lines look rather cluttered, perhaps (parts of) this is/are a
-> prime candidate to go into the new helpers?
-
-Hi Marijn,
-
-Sorry for the late reply, wanted to get the MSM DSC helpers series 
-settled first before addressing these changes.
-
-Sounds good, I'll put these calculations in a separate 
-dsi_adjust_compressed_pclk() helper.
-
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  .../bindings/display/msm/qcom,sm6375-mdss.yaml     | 216 +++++++++++++++++++++
+>  1 file changed, 216 insertions(+)
 > 
-> Note that I cannot get the 4k mode working at 60Hz on one of my panels
-> (30Hz works with minor corruption), regardless of this patch.  See also:
-> https://gitlab.freedesktop.org/drm/msm/-/issues/24#note_1900031
-As discussed elsewhere, we suspect that this is unrelated to DSC 
-specifically and might be an issue with the upstream driver not taking 
-transfer time into account with calculating pclk_rate.
 
-We will look into this as a separate issue.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-> 
->>> +		pclk_rate = (new_hdisplay + (mode->htotal - mode->hdisplay)) * mode->vtotal * fps;
->>> +	}
->>> +
->>>    	return pclk_rate;
->>>    }
->>>    
->>> @@ -585,7 +594,7 @@ unsigned long dsi_byte_clk_get_rate(struct mipi_dsi_host *host, bool is_bonded_d
->>>    	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
->>>    	u8 lanes = msm_host->lanes;
->>>    	u32 bpp = dsi_get_bpp(msm_host->format);
->>> -	unsigned long pclk_rate = dsi_get_pclk_rate(mode, is_bonded_dsi);
->>> +	unsigned long pclk_rate = dsi_get_pclk_rate(mode, msm_host->dsc, is_bonded_dsi);
->>>    	u64 pclk_bpp = (u64)pclk_rate * bpp;
->>>    
->>>    	if (lanes == 0) {
->>> @@ -604,7 +613,7 @@ unsigned long dsi_byte_clk_get_rate(struct mipi_dsi_host *host, bool is_bonded_d
->>>    
->>>    static void dsi_calc_pclk(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->>>    {
->>> -	msm_host->pixel_clk_rate = dsi_get_pclk_rate(msm_host->mode, is_bonded_dsi);
->>> +	msm_host->pixel_clk_rate = dsi_get_pclk_rate(msm_host->mode, msm_host->dsc, is_bonded_dsi);
->>>    	msm_host->byte_clk_rate = dsi_byte_clk_get_rate(&msm_host->base, is_bonded_dsi,
->>>    							msm_host->mode);
->>>    
->>> @@ -634,7 +643,7 @@ int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->>>    
->>>    	dsi_calc_pclk(msm_host, is_bonded_dsi);
->>>    
->>> -	pclk_bpp = (u64)dsi_get_pclk_rate(msm_host->mode, is_bonded_dsi) * bpp;
->>> +	pclk_bpp = (u64)dsi_get_pclk_rate(msm_host->mode, msm_host->dsc, is_bonded_dsi) * bpp;
-> 
-> Let's rebase on top of "drm/msm/dsi: simplify pixel clk rate handling"
-> [1] to clean this up.
-> 
-> [1]: https://lore.kernel.org/linux-arm-msm/20230118130031.2345941-1-dmitry.baryshkov@linaro.org/
+yamllint warnings/errors:
 
-I've looked into this patch and have made a comment on it. Just have 
-some reservations about it as it changes the functionality of a clk 
-handler op.
+dtschema/dtc warnings/errors:
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6375-mdss.example.dtb: display-controller@5e01000: clock-names:0: 'bus' was expected
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6375-mdss.example.dtb: display-controller@5e01000: clock-names:1: 'iface' was expected
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6375-mdss.example.dtb: display-controller@5e01000: clock-names:2: 'rot' was expected
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sm6375-mdss.example.dtb: display-controller@5e01000: clock-names:4: 'core' was expected
+	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/display/msm/qcom,sc7180-dpu.yaml
 
-I will hold off on rebasing and wait for that thread to resolve first.
+doc reference errors (make refcheckdocs):
 
-Thanks,
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230411-topic-straitlagoon_mdss-v4-5-68e7e25d70e1@linaro.org
 
-Jessica Zhang
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
 
-> 
-> - Marijn
-> 
->>>    	do_div(pclk_bpp, 8);
->>>    	msm_host->src_clk_rate = pclk_bpp;
->>>    
->>>
->>> -- 
->>> 2.40.1
->>>
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
+
