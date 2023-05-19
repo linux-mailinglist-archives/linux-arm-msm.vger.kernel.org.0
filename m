@@ -2,87 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 87D717093F5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 11:46:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C012F70941E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 11:52:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231747AbjESJqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 05:46:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47816 "EHLO
+        id S230522AbjESJwf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 05:52:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55314 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231748AbjESJqE (ORCPT
+        with ESMTP id S230179AbjESJwf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 05:46:04 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59B7B1FED;
-        Fri, 19 May 2023 02:45:05 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34J8HWdT019195;
-        Fri, 19 May 2023 09:32:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=7MrAXfkaHJRG2+gJIQBBVWcJlXg0VFzqvF/nx5Zn7p4=;
- b=EDpTiLb6m98sBuAk6PXTyn38Ja4urLSbK2dAYqI9tchkr1Obv9c/841xbfSQrUSmoPjn
- MCvMQsR6Iba5BKhOiSVCKsNrIgspiL65TeR4SttxUHBb7syfoSmUs8/0muKaTlWEOFD0
- cAw8399O4r7MdYrUc0mSXmATZTLiajeTys+JkQo9PrODHqTPLxWSGth0g0ijiTso+oWD
- QQpj2gQQ8hCeIzwL67hzjiHZ8dWagLPo6i6q9yM0u0zZYGt1QY4L0w1CIqG7iuuSgUEZ
- 7lW6VIdkTLQaSB76Z6CrQwWOJlAqOVoV66OcrXmd1xadZgWsbTvvRQL9vzcG4uzqK3LQ 5A== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qp0gk8qkd-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 19 May 2023 09:32:41 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34J9WdoV025568
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 19 May 2023 09:32:39 GMT
-Received: from [10.50.31.193] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 19 May
- 2023 02:32:34 -0700
-Message-ID: <83afe19f-6f5e-988a-de0b-9f9de9a7733c@quicinc.com>
-Date:   Fri, 19 May 2023 15:02:25 +0530
+        Fri, 19 May 2023 05:52:35 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7D47E47
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 02:52:30 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3f42b984405so19078465e9.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 02:52:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684489949; x=1687081949;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=SPfHgNrM5MlvjCqiw/HF/XoF5b8L8wEkySYl5W6Wv6A=;
+        b=PbDuiE6XmzMOq1wshTaKBVsBOYDYUmiGyFedMSL3K4n1b3KwigeY+TLFkUfwDMAZa2
+         LAp5QBUHZH9nx1GNiVTKvoIt3ldbmnWpNtGlnD9L2X24fokUoGORST5rcrktwnVWWloh
+         DVy5RBHYLjTruCWj42f8kIiLDrbUzU6jJd6AD0I4nWS5QhxwpUcP7wA2+c8F2wtXaP0i
+         N1OebklRd2Ww60kYPs5NztO9i6Rm/yNcKDL3l6cBe4wK+qitSKs0wbx3vRodSMOS5Reo
+         +cuZ54IbrN6ZRnHKNhkhST7Mo/zV8qQwzAokTdhcizRjvtpRO5JZK/ViEBv4R1eOpOeY
+         6PRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684489949; x=1687081949;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=SPfHgNrM5MlvjCqiw/HF/XoF5b8L8wEkySYl5W6Wv6A=;
+        b=lU/hTGMKcaJ2k+VBmCD9nu14VRrcwfKs+82OJw1+kB4/fUoh4twbfagt0cbfcbwFBn
+         Gr/9nw71G0YivyiYkwi3XnL4iPs4Tm0N5v8N6IWaJSXBJdGckG0r3/N4Bs7L1bJpB+aR
+         aTV81zv+2eN6gFHMI1M1jcGzj+m7JCIMabj6IuDADTD+Jp4rxQHT1DMvmkJ8174w0CRa
+         WRHjOO8wziEc5rA3meSRItTQ3pp0SZyZ501NUqQRE3p8JH7yuVyTHFpW9PVtJaL8YVJL
+         YXz/TaWXcFoYlf/gHDd3A7nDZngcbt04RzpsDE4dPqEaJ/h8jLUOI68mEhLmCAmh81x3
+         TQdQ==
+X-Gm-Message-State: AC+VfDwx0Ju5Py/AQb/JlfbjD87nBLPXyKc1uLWRdkoXdNUEffccUMZL
+        mxMOvNmt6xNYKYj1G8Ak29mfKA==
+X-Google-Smtp-Source: ACHHUZ5BDX+33LpPim0FnLDibDfS5ZQCg0PA5JaT7KujpbF8lYIWS/dS834pgmcgMwTZNEsnX6Q/hQ==
+X-Received: by 2002:a05:600c:ac7:b0:3f5:1980:ad43 with SMTP id c7-20020a05600c0ac700b003f51980ad43mr849004wmr.31.1684489949316;
+        Fri, 19 May 2023 02:52:29 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id z24-20020a05600c221800b003f31d44f0cbsm1802892wml.29.2023.05.19.02.52.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 May 2023 02:52:28 -0700 (PDT)
+Message-ID: <f47b17c1-1c02-2aa3-ba10-fcef70cb25a8@linaro.org>
+Date:   Fri, 19 May 2023 10:52:27 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH V2 1/2] dt-bindings: phy: qcom,qmp-pcie: Add ipq9574
- bindings
-To:     Rob Herring <robh@kernel.org>
-CC:     <andersson@kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <vkoul@kernel.org>,
-        <quic_srichara@quicinc.com>, <krzysztof.kozlowski+dt@linaro.org>,
-        <quic_sjaganat@quicinc.com>, <quic_anusha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <quic_ipkumar@quicinc.com>,
-        <kishon@kernel.org>, <quic_arajkuma@quicinc.com>,
-        <conor+dt@kernel.org>, <quic_kathirav@quicinc.com>,
-        <konrad.dybcio@linaro.org>, <linux-phy@lists.infradead.org>,
-        <robh+dt@kernel.org>, <agross@kernel.org>
-References: <20230519085723.15601-1-quic_devipriy@quicinc.com>
- <20230519085723.15601-2-quic_devipriy@quicinc.com>
- <168448818232.3014347.12687378726384996026.robh@kernel.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] misc: fastrpc: Fix double free of 'buf' in error path
 Content-Language: en-US
-From:   Devi Priya <quic_devipriy@quicinc.com>
-In-Reply-To: <168448818232.3014347.12687378726384996026.robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Dan Carpenter <dan.carpenter@linaro.org>,
+        Sukrut Bellary <sukrut.bellary@linux.com>,
+        Abel Vesa <abel.vesa@linaro.org>
+Cc:     Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org,
+        Shuah Khan <skhan@linuxfoundation.org>
+References: <20230518100829.515143-1-sukrut.bellary@linux.com>
+ <9194ebdf-f335-4cd6-bf89-bb4f86a57784@kili.mountain>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <9194ebdf-f335-4cd6-bf89-bb4f86a57784@kili.mountain>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: uvUx_OxTzKM4ubTS1uhlTCtY9att-qsA
-X-Proofpoint-ORIG-GUID: uvUx_OxTzKM4ubTS1uhlTCtY9att-qsA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-19_06,2023-05-17_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- lowpriorityscore=0 spamscore=0 clxscore=1015 malwarescore=0
- mlxlogscore=999 priorityscore=1501 mlxscore=0 phishscore=0 bulkscore=0
- adultscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2304280000 definitions=main-2305190080
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -91,55 +84,135 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 5/19/2023 2:53 PM, Rob Herring wrote:
-> 
-> On Fri, 19 May 2023 14:27:22 +0530, Devi Priya wrote:
->> Add bindings for the PCIe QMP PHYs found on IPQ9574.
+On 18/05/2023 11:55, Dan Carpenter wrote:
+> On Thu, May 18, 2023 at 03:08:29AM -0700, Sukrut Bellary wrote:
+>> smatch warning:
+>> drivers/misc/fastrpc.c:1926 fastrpc_req_mmap() error: double free of 'buf'
 >>
->> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+>> In fastrpc_req_mmap() error path, the fastrpc buffer is freed in
+>> fastrpc_req_munmap_impl() if unmap is successful.
+>>
+>> But in the end, there is an unconditional call to fastrpc_buf_free().
+>> So the above case triggers the double free of fastrpc buf.
+>>
+>> Fix this by avoiding the call to the second fastrpc_buf_free() if
+>> fastrpc_req_munmap_impl() is successful.
+>> 'err' is not updated as it needs to retain the err returned by
+>> qcom_scm_assign_mem(), which is the starting point of this error path.
+>>
+>> This is based on static analysis only. Compilation tested.
+> 
+> Please don't put this in the commit message.  We want everyone reading
+> the git log to believe everything is 100% rock solid.  :P
+> 
+> We need a Fixes tag.
+> Fixes: 72fa6f7820c4 ("misc: fastrpc: Rework fastrpc_req_munmap")
+> 
+> Let's add Abel to the CC list.
+> 
+>>
+>> Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+>> Signed-off-by: Sukrut Bellary <sukrut.bellary@linux.com>
 >> ---
->>   Changes in V2:
->> 	- Picked up the R-b tag
->> 	- Did not convert the clock IDs to numerical values as the clock
->> 	  header (dependent patch) is merged in latest rc1.
+>    ^^^
+> Put testing caveats here instead, where it will be removed from the
+> git log.
+> 
+>>   drivers/misc/fastrpc.c | 5 ++++-
+>>   1 file changed, 4 insertions(+), 1 deletion(-)
 >>
->>   .../phy/qcom,ipq9574-qmp-pcie-phy.yaml        | 90 +++++++++++++++++++
->>   1 file changed, 90 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.yaml
->>
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> Error: Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.example.dts:29.26-27 syntax error
-> FATAL ERROR: Unable to parse input tree
-> make[1]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.example.dtb] Error 1
-> make[1]: *** Waiting for unfinished jobs....
-> make: *** [Makefile:1512: dt_binding_check] Error 2
-> 
-Sorry, The PCIe clocks are added part of the below series:
-https://lore.kernel.org/linux-arm-msm/20230519090219.15925-1-quic_devipriy@quicinc.com/
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index f48466960f1b..1c3ab78f274f 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -1921,7 +1921,10 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+>>   	return 0;
+>>   
+>>   err_assign:
+>> -	fastrpc_req_munmap_impl(fl, buf);
+>> +	if (!fastrpc_req_munmap_impl(fl, buf)) {
+>> +		/* buf is freed */
+>> +		return err;
+>> +	}
+>>   err_invoke:
+>>   	fastrpc_buf_free(buf);
 
-Thanks,
-Devi Priya
-> doc reference errors (make refcheckdocs):
+how about doing something like this:
+
+----------------------->cut<---------------------------
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index f60bbf99485c..3fdd326e1ae8 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1891,7 +1891,8 @@ static int fastrpc_req_mmap(struct fastrpc_user 
+*fl, char __user *argp)
+                                       &args[0]);
+         if (err) {
+                 dev_err(dev, "mmap error (len 0x%08llx)\n", buf->size);
+-               goto err_invoke;
++               fastrpc_buf_free(buf);
++               return err;
+         }
+
+         /* update the buffer to be able to deallocate the memory on the 
+DSP */
+@@ -1930,11 +1931,7 @@ static int fastrpc_req_mmap(struct fastrpc_user 
+*fl, char __user *argp)
+         return 0;
+
+  err_assign:
+-       fastrpc_req_munmap_impl(fl, buf);
+-err_invoke:
+-       fastrpc_buf_free(buf);
+-
+-       return err;
++       return fastrpc_req_munmap_impl(fl, buf);
+  }
+----------------------->cut<---------------------------
+
 > 
-> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230519085723.15601-2-quic_devipriy@quicinc.com
+> This bug is real but the fix is not complete.
 > 
-> The base for the series is generally the latest rc1. A different dependency
-> should be noted in *this* patch.
+Yes, there is a danger of freeing the buf while its added to the list.
+
+Above change should address that, in err cases fd close should take care 
+of deleting list and freeing buf.
+
+--srini
+> drivers/misc/fastrpc.c
+>    1911                  if (err) {
+>    1912                          dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
+>    1913                                          buf->phys, buf->size, err);
+>    1914                          goto err_assign;
+>    1915                  }
+>    1916          }
+>    1917
+>    1918          spin_lock(&fl->lock);
+>    1919          list_add_tail(&buf->node, &fl->mmaps);
+>                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> buf needs to be removed from the list before we free it, otherwise it
+> leads to a use after free.  The fastrpc_req_munmap_impl() function does
+> that but here this function just calls fastrpc_buf_free().
 > 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
+>    1920          spin_unlock(&fl->lock);
+>    1921
+>    1922          if (copy_to_user((void __user *)argp, &req, sizeof(req))) {
+>    1923                  err = -EFAULT;
+>    1924                  goto err_assign;
+>    1925          }
+>    1926
+>    1927          dev_dbg(dev, "mmap\t\tpt 0x%09lx OK [len 0x%08llx]\n",
+>    1928                  buf->raddr, buf->size);
+>    1929
+>    1930          return 0;
+>    1931
+>    1932  err_assign:
+>    1933          fastrpc_req_munmap_impl(fl, buf);
+>    1934  err_invoke:
+>    1935          fastrpc_buf_free(buf);
+>    1936
+>    1937          return err;
+>    1938  }
 > 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit after running the above command yourself. Note
-> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-> your schema. However, it must be unset to test all examples with your schema.
-> 
+> regards,
+> dan carpenter
