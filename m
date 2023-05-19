@@ -2,77 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 128C87094A1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 12:19:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FDF27094AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 12:22:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231678AbjESKT0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 06:19:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45912 "EHLO
+        id S231848AbjESKWe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 06:22:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47924 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231649AbjESKTZ (ORCPT
+        with ESMTP id S231854AbjESKWd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 06:19:25 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A2B4E43
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 03:19:23 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-64d2467d63fso1133220b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 03:19:23 -0700 (PDT)
+        Fri, 19 May 2023 06:22:33 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4508E10DC
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 03:22:27 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3f415a90215so29690575e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 03:22:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1684491562; x=1687083562;
+        d=linaro.org; s=google; t=1684491746; x=1687083746;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qj62ljf+0iUnRxsl+5rGmWLfCd+ZduUHDQ0TcSjtNPo=;
-        b=kIxc4Lf0uvp6zqnULYMA+7if3bIRU4JpUVybikBicvfHe6byerwKVRVqraDO/8PJHM
-         aPK0r5TEDKHlfVAo7zwFq5a6o3D9qggB2U+9QV4fSNLRZgkJ9u70CvGOTAbDiHHi3gBQ
-         U7Myk0TNW1RgoDqkFUwjYFESdYt19fRE658wI=
+        bh=/QFC45etN1BVr/CRelIotBHqCWGvrxTZ78FfYnnInhQ=;
+        b=o5z3BOYjKwfbYDYrlK8oJ2gwzblDUPsqIT66zb3k15qAOci+hgqbrTTfh4DW46mVQs
+         ywZe7V2jhjGaUoNTXzJ5YeJK98FfD/2KSwULshqqWVj/Wc3vjPmloFsMzBzFcCLLbf4s
+         ds3TAj0NdPA44vGUP+z76NAUw3jTlCnLQgPjMwVWUE1TB5F9Wf48/IIEvYrd3461pxR+
+         kNRNDrTUo0pSZdC50yQstlwtPPdyMGscZ+1aUQOzi3MxGvI/8lNmp1oWsN7e+yg7f/oJ
+         cg8yAn+GhPc5KrhRmhSkonwZQaTtRaGVYmfBtJ3S6rfg3CK6FARkQBwaUaj4P3DKx9iP
+         FxJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684491562; x=1687083562;
+        d=1e100.net; s=20221208; t=1684491746; x=1687083746;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qj62ljf+0iUnRxsl+5rGmWLfCd+ZduUHDQ0TcSjtNPo=;
-        b=WsBooPkk05+kjf4VULNpqrVsgks0aJ2zXUC0ILqq75t9oEIJ+3j7/Gt9oS/g+YWX7n
-         +UQD8r+2GdVvzAkfVXKmjej46lRckfGDTStdCaNTTQHDyWjM7lQAl/MdERFljZH2iXRg
-         /R7iqPhiNwGJUhIjTv3226WF7TQAX8GUweVqYv09SgvsP+1ENi/+R+EXxxNR3hTv9ETy
-         l2Y/7gFH1clSA2dFoag94KMxZ6aGbNSHOx0YB1/bd1u0BbDBEb/59RcD+H3I9P493sVT
-         elZueirmekSLFwbLBbSFe5LVd0kUOLd9U4fXj4MgHD7KP22tud6RnF1DHyzOqvuL6wld
-         vPSg==
-X-Gm-Message-State: AC+VfDzHCli1M60tDt1rRJzeghd26L2g/spvApbKGkncN7prXCw+ZU0w
-        ZUF74g8wz6t7f2QMoMkYtfNuUw==
-X-Google-Smtp-Source: ACHHUZ4m5ma9dTtNQQRPOW0z8Fk44jAL7FJETJa2QEwRupK0xenoA9ywTZwW/ej6pzBO1ubPV0BQaw==
-X-Received: by 2002:aa7:8893:0:b0:643:849a:dd06 with SMTP id z19-20020aa78893000000b00643849add06mr2540694pfe.34.1684491562512;
-        Fri, 19 May 2023 03:19:22 -0700 (PDT)
-Received: from chromium.org (0.223.81.34.bc.googleusercontent.com. [34.81.223.0])
-        by smtp.gmail.com with ESMTPSA id t7-20020aa79387000000b0063d2dae6243sm2731599pfe.115.2023.05.19.03.19.18
+        bh=/QFC45etN1BVr/CRelIotBHqCWGvrxTZ78FfYnnInhQ=;
+        b=PKQ6bA6s8mzu3oGIhwKz+Ug0Vs7U5ga7g2BCNpo1auREwZkqkmM5kTAgAXujl9MbSQ
+         DipZkgwX2lUNZ1KZpD47LAHOx57aWqPjJ64w/VErhTmxwoFfElYbYEAnhRGuDEYrItJn
+         IaefF6mNGu090+wOvteQFtaGDK6jbRJJg2SFb5tlHJgnE45j7dUy08iLOJWqstPtQI1I
+         4SpZZ51/fpPfeVBIbiAk84DwxNmP7dElVhj3MUXKOj4gnjfdmNoIJHCUm5Fn2OPTGnno
+         xHWcGX1Ec6jXiWyZkrGBa20Cc8zXsRuPJjo9X47zjkXW75jos0/4Nqj1BTdk2MRGFDxz
+         vl/Q==
+X-Gm-Message-State: AC+VfDzrvdhsXl8DWD0YQ6G94mqcUIFa/VKuUDXoGAq/M52ZiMW9yT6R
+        v0oHtlzD98c+9R7eM/t0/GWlKg==
+X-Google-Smtp-Source: ACHHUZ5yN9VLaq3RBCpVpZzJ31VMgDn2KYhY3d4nSaXke8UcVsZFmr8ilGHB0FVdUSs1KUNr+eC4Rw==
+X-Received: by 2002:a5d:5704:0:b0:306:44a9:76a1 with SMTP id a4-20020a5d5704000000b0030644a976a1mr1129284wrv.17.1684491745677;
+        Fri, 19 May 2023 03:22:25 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id l5-20020adfe585000000b002f7780eee10sm4831863wrm.59.2023.05.19.03.22.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 May 2023 03:19:22 -0700 (PDT)
-Date:   Fri, 19 May 2023 10:19:16 +0000
-From:   Tomasz Figa <tfiga@chromium.org>
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Cc:     m.szyprowski@samsung.com, mchehab@kernel.org, ming.qian@nxp.com,
-        shijie.qin@nxp.com, eagle.zhou@nxp.com, bin.liu@mediatek.com,
-        matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
-        tiffany.lin@mediatek.com, andrew-ct.chen@mediatek.com,
-        yunfei.dong@mediatek.com, stanimir.k.varbanov@gmail.com,
-        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, daniel.almeida@collabora.com,
-        hverkuil-cisco@xs4all.nl, laurent.pinchart@ideasonboard.com,
-        jernel@kernel.org, linux-media@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, kernel@collabora.com
-Subject: Re: [PATCH v2 3/8] media: videobuf2: Add a module param to limit vb2
- queue buffer storage
-Message-ID: <20230519101916.dt25jofubidrasd2@chromium.org>
-References: <20230321102855.346732-1-benjamin.gaignard@collabora.com>
- <20230321102855.346732-4-benjamin.gaignard@collabora.com>
+        Fri, 19 May 2023 03:22:22 -0700 (PDT)
+Date:   Fri, 19 May 2023 13:22:19 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     Sukrut Bellary <sukrut.bellary@linux.com>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org,
+        Shuah Khan <skhan@linuxfoundation.org>
+Subject: Re: [PATCH] misc: fastrpc: Fix double free of 'buf' in error path
+Message-ID: <b0115d7d-d15a-4948-8726-09a8b37f3f36@kili.mountain>
+References: <20230518100829.515143-1-sukrut.bellary@linux.com>
+ <9194ebdf-f335-4cd6-bf89-bb4f86a57784@kili.mountain>
+ <f47b17c1-1c02-2aa3-ba10-fcef70cb25a8@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230321102855.346732-4-benjamin.gaignard@collabora.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <f47b17c1-1c02-2aa3-ba10-fcef70cb25a8@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,138 +79,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 21, 2023 at 11:28:50AM +0100, Benjamin Gaignard wrote:
-> Add module parameter "max_vb_buffer_per_queue" to be able to limit
-> the number of vb2 buffers store in queue.
+> ----------------------->cut<---------------------------
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index f60bbf99485c..3fdd326e1ae8 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -1891,7 +1891,8 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl,
+> char __user *argp)
+>                                       &args[0]);
+>         if (err) {
+>                 dev_err(dev, "mmap error (len 0x%08llx)\n", buf->size);
+> -               goto err_invoke;
+> +               fastrpc_buf_free(buf);
+> +               return err;
+>         }
 > 
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> ---
->  drivers/media/common/videobuf2/videobuf2-core.c | 15 +++------------
->  include/media/videobuf2-core.h                  | 11 +++++++++--
->  2 files changed, 12 insertions(+), 14 deletions(-)
+>         /* update the buffer to be able to deallocate the memory on the DSP
+> */
+> @@ -1930,11 +1931,7 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl,
+> char __user *argp)
+>         return 0;
 > 
-> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-> index ae9d72f4d181..f4da917ccf3f 100644
-> --- a/drivers/media/common/videobuf2/videobuf2-core.c
-> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
-> @@ -34,6 +34,8 @@
->  static int debug;
->  module_param(debug, int, 0644);
->  
-> +module_param(max_vb_buffer_per_queue, ulong, 0644);
-> +
->  #define dprintk(q, level, fmt, arg...)					\
->  	do {								\
->  		if (debug >= level)					\
-> @@ -412,10 +414,6 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
->  	struct vb2_buffer *vb;
->  	int ret;
->  
-> -	/* Ensure that q->num_buffers+num_buffers is below VB2_MAX_FRAME */
-> -	num_buffers = min_t(unsigned int, num_buffers,
-> -			    VB2_MAX_FRAME - q->num_buffers);
+>  err_assign:
+> -       fastrpc_req_munmap_impl(fl, buf);
+> -err_invoke:
+> -       fastrpc_buf_free(buf);
 > -
+> -       return err;
+> +       return fastrpc_req_munmap_impl(fl, buf);
 
-We should keep the validation here, just using the new module parameter
-instead of VB2_MAX_FRAME. Otherwise we let the userspace pass
-UINT_MAX to REQBUFS and have the array below exhaust the system memory.
+This will return success if copy_to_user() fails.
 
->  	for (buffer = 0; buffer < num_buffers; ++buffer) {
->  		/* Allocate vb2 buffer structures */
->  		vb = kzalloc(q->buf_struct_size, GFP_KERNEL);
-> @@ -801,9 +799,7 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
->  	/*
->  	 * Make sure the requested values and current defaults are sane.
->  	 */
-> -	WARN_ON(q->min_buffers_needed > VB2_MAX_FRAME);
->  	num_buffers = max_t(unsigned int, *count, q->min_buffers_needed);
-> -	num_buffers = min_t(unsigned int, num_buffers, VB2_MAX_FRAME);
+regards,
+dan carpenter
 
-Similar concern here.
-
->  	memset(q->alloc_devs, 0, sizeof(q->alloc_devs));
->  	/*
->  	 * Set this now to ensure that drivers see the correct q->memory value
-> @@ -919,11 +915,6 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
->  	bool no_previous_buffers = !q->num_buffers;
->  	int ret;
->  
-> -	if (q->num_buffers == VB2_MAX_FRAME) {
-> -		dprintk(q, 1, "maximum number of buffers already allocated\n");
-> -		return -ENOBUFS;
-> -	}
-> -
-
-Ditto.
-
->  	if (no_previous_buffers) {
->  		if (q->waiting_in_dqbuf && *count) {
->  			dprintk(q, 1, "another dup()ped fd is waiting for a buffer\n");
-> @@ -948,7 +939,7 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
->  			return -EINVAL;
->  	}
->  
-> -	num_buffers = min(*count, VB2_MAX_FRAME - q->num_buffers);
-> +	num_buffers = *count;
-
-Ditto.
-
->  
->  	if (requested_planes && requested_sizes) {
->  		num_planes = requested_planes;
-> diff --git a/include/media/videobuf2-core.h b/include/media/videobuf2-core.h
-> index 397dbf6e61e1..b8b34a993e04 100644
-> --- a/include/media/videobuf2-core.h
-> +++ b/include/media/videobuf2-core.h
-> @@ -12,6 +12,7 @@
->  #ifndef _MEDIA_VIDEOBUF2_CORE_H
->  #define _MEDIA_VIDEOBUF2_CORE_H
->  
-> +#include <linux/minmax.h>
->  #include <linux/mm_types.h>
->  #include <linux/mutex.h>
->  #include <linux/poll.h>
-> @@ -48,6 +49,8 @@ struct vb2_fileio_data;
->  struct vb2_threadio_data;
->  struct vb2_buffer;
->  
-> +static size_t max_vb_buffer_per_queue = 1024;
-> +
->  /**
->   * struct vb2_mem_ops - memory handling/memory allocator operations.
->   * @alloc:	allocate video memory and, optionally, allocator private data,
-> @@ -1268,12 +1271,16 @@ static inline bool vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *
->  
->  	if (vb->index >= q->max_num_bufs) {
->  		struct vb2_buffer **tmp;
-> +		int cnt = min(max_vb_buffer_per_queue, q->max_num_bufs * 2);
-
-Should cnt also be size_t to match max_vb_buffer_per_queue?
-This could also overflow given q->max_num_bufs big enough, so maybe it
-would just be better to rewrite to?
-
-size_t cnt = (q->max_num_bufs > max_vb_buffer_per_queue / 2) ?
-		max_vb_buffer_per_queue : q->max_num_bufs * 2;
-
-Or we could just switch to XArray and it would solve this for us. :)
-
-Best regards,
-Tomasz
-
-> +
-> +		if (cnt >= q->max_num_bufs)
-> +			goto realloc_failed;
->  
-> -		tmp = krealloc_array(q->bufs, q->max_num_bufs * 2, sizeof(*q->bufs), GFP_KERNEL);
-> +		tmp = krealloc_array(q->bufs, cnt, sizeof(*q->bufs), GFP_KERNEL);
->  		if (!tmp)
->  			goto realloc_failed;
->  
-> -		q->max_num_bufs *= 2;
-> +		q->max_num_bufs = cnt;
->  		q->bufs = tmp;
->  	}
->  
-> -- 
-> 2.34.1
-> 
