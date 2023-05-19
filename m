@@ -2,160 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B0C63709CA3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 18:42:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 315E9709CCC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 18:48:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229643AbjESQmi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 12:42:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33884 "EHLO
+        id S229970AbjESQsy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 12:48:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230137AbjESQmg (ORCPT
+        with ESMTP id S231176AbjESQsu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 12:42:36 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5B4010E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 09:42:34 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2af2958db45so4671151fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 09:42:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684514553; x=1687106553;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=143EakvyOuVdHkumYHBraHpbTfkxgJP6S3+u9gTOH5w=;
-        b=H6i68wdNAUIf4PQUqwLssDsY3GknAmQxtXtb71tGZxPoWwlYnwRqr8auBnpdr1ktOm
-         9dBuw/oXX5ve66KfRi9b/9NAbhOgrtNe7xPpuWXNOnoUgzDZStfuCNo3L3MzZ8i3R67N
-         UtAtpvq2RUUreDOuy5FhTDT0bGgGBgWynt2GiadslacGJNXaVFgolXG9lakRzjMWLgm+
-         9ZiE87SjX2xi0dhJaqcEGBp7kn17U5hVlZblqBGVuNoVj7u4guslAG6HNZ+xvQb5nycM
-         DgoCNnBo6BqbBYJ5DV6lxEAstGCkCAwf9g6xDGxApWAeBWzUIg+BsjLxlLUssp12Lldx
-         H5dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684514553; x=1687106553;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=143EakvyOuVdHkumYHBraHpbTfkxgJP6S3+u9gTOH5w=;
-        b=hHCX19Uta3L6MAlLkP7P0M5JoXLaJZs1h15vtdE5R1wGpEIWLfkNyb60Nsazg41G2h
-         wzcvJLQ78sN5ClYNZvx+Vweveyp8WX1/1j1j3k3QbvLtqjZNCgysE9HBNYDV+ftHPt2z
-         TP8uwE2p6gIM/6Y+P9eaI3wwYVrQpgDoxZ3qKVVPAC4laW7CVyH2RoFHWLqsYl40GFtA
-         YRuP1wjtOagRIaDEr4oNH8sdZIiW1hBRR67SneLhQFYWTxOaCzLOFNPSK+/zz/r3xESR
-         qrYoOGP/ZSZJ0lFa6zNQBOS7Lt8ARNF8Adk4ZEx/eMe8NO5HGNHmgIiXM+gz3WPzBKBK
-         OKdA==
-X-Gm-Message-State: AC+VfDyLeEjJM8rH7TKvZKG/vA+43hc4TzHS0Xjxop8LSlnJCzIR+nBI
-        g58kGivcPM4KuCH0OsBnwB+nKQ==
-X-Google-Smtp-Source: ACHHUZ5CdyVB0/lT15XzwEt1IwNhkaSEWNdeA1DBJ6SV+PZd+UtKzg7gmtugTSK7682fQLSzo6Qxpw==
-X-Received: by 2002:a2e:9008:0:b0:2a8:e44e:c75a with SMTP id h8-20020a2e9008000000b002a8e44ec75amr896865ljg.32.1684514553045;
-        Fri, 19 May 2023 09:42:33 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id l11-20020a2e3e0b000000b002aa40d705a5sm895992lja.11.2023.05.19.09.42.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 May 2023 09:42:32 -0700 (PDT)
-Message-ID: <e4824511-1148-83ee-b6e9-4f819e655f32@linaro.org>
-Date:   Fri, 19 May 2023 19:42:31 +0300
+        Fri, 19 May 2023 12:48:50 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9FEB5EC;
+        Fri, 19 May 2023 09:48:27 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 277B86594E;
+        Fri, 19 May 2023 16:48:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98EFEC433D2;
+        Fri, 19 May 2023 16:48:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1684514906;
+        bh=8Gl6iYH6gR/9z8MMwXI7I7Ruzm5hvUrJgueITf+FkeM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LCskzqen57JjtATBDsrIKARbpRgKBmGJluamvr+sroASrbC3ZsPXzBZu1lLHlLhHa
+         N74o0KY9aziyUVcqaxkkZZrZpZEWfOLLdLL5p9qA9QDIMsxzeuLBcT0kt1YuAmIme2
+         wEPAgmUEokI4xnXpSjdeXrsnypuPsKDlLI9i29R3ewCt12LLQzoR22h60MXff+hP2k
+         pgARHOFQo5jq0D8e+MVj2+lArp+3PBAKmkV8VPRlcshdv112s8vyUe9wpezor3wibZ
+         fKtY7znpaSD2gezUKOPH/aFmfPBwIpCrsnPMcPfPJZaCwcXp80hxeGiQn0FW+4hEW7
+         f/I9Fay7oxoPQ==
+Date:   Fri, 19 May 2023 17:48:21 +0100
+From:   Conor Dooley <conor@kernel.org>
+To:     Jagadeesh Kona <quic_jkona@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Subject: Re: [PATCH 2/4] dt-bindings: clock: qcom: Add SM8550 camera clock
+ controller
+Message-ID: <20230519-crumb-vividly-0d278146defe@spud>
+References: <20230519155602.6642-1-quic_jkona@quicinc.com>
+ <20230519155602.6642-3-quic_jkona@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v1 3/3] msm: skip the atomic commit of self refresh while
- PSR running
-Content-Language: en-GB
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Vinod Polimera <vpolimer@qti.qualcomm.com>
-Cc:     "Kalyan Thota (QUIC)" <quic_kalyant@quicinc.com>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "Sankeerth Billakanti (QUIC)" <quic_sbillaka@quicinc.com>,
-        "dianders@chromium.org" <dianders@chromium.org>,
-        "Bjorn Andersson (QUIC)" <quic_bjorande@quicinc.com>,
-        "Abhinav Kumar (QUIC)" <quic_abhinavk@quicinc.com>,
-        "Vishnuvardhan Prodduturi (QUIC)" <quic_vproddut@quicinc.com>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "Vinod Polimera (QUIC)" <quic_vpolimer@quicinc.com>,
-        "swboyd@chromium.org" <swboyd@chromium.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>
-References: <1680271114-1534-1-git-send-email-quic_vpolimer@quicinc.com>
- <1680271114-1534-4-git-send-email-quic_vpolimer@quicinc.com>
- <CAA8EJppc3LDQy2RgVZbWki4Y-_FOTK67Y8RfK5Bm9gqdfqMjqQ@mail.gmail.com>
- <BN0PR02MB8173E9FF869F7EEFCE1F5410E4929@BN0PR02MB8173.namprd02.prod.outlook.com>
- <CAA8EJprj5cmB_STfv45NDCJ_e=aWfwMgaNmGkQBqFa8fQq6gQw@mail.gmail.com>
-In-Reply-To: <CAA8EJprj5cmB_STfv45NDCJ_e=aWfwMgaNmGkQBqFa8fQq6gQw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="0XkQP2uuk2uCUtkF"
+Content-Disposition: inline
+In-Reply-To: <20230519155602.6642-3-quic_jkona@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 03/04/2023 19:11, Dmitry Baryshkov wrote:
-> On Mon, 3 Apr 2023 at 15:01, Vinod Polimera <vpolimer@qti.qualcomm.com> wrote:
->>
->>> On Fri, 31 Mar 2023 at 16:59, Vinod Polimera <quic_vpolimer@quicinc.com>
->>> wrote:
->>>>
->>>> In certain CPU stress conditions, there can be a delay in scheduling commit
->>>> work and it was observed that PSR commit from a different work queue
->>> was
->>>> scheduled. Avoid these commits as display is already in PSR mode.
->>>>
->>>> Signed-off-by: Vinod Polimera <quic_vpolimer@quicinc.com>
->>>> ---
->>>>   drivers/gpu/drm/msm/msm_atomic.c | 3 +++
->>>>   1 file changed, 3 insertions(+)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/msm_atomic.c
->>> b/drivers/gpu/drm/msm/msm_atomic.c
->>>> index 645fe53..f8141bb 100644
->>>> --- a/drivers/gpu/drm/msm/msm_atomic.c
->>>> +++ b/drivers/gpu/drm/msm/msm_atomic.c
->>>> @@ -192,6 +192,9 @@ int msm_atomic_check(struct drm_device *dev,
->>> struct drm_atomic_state *state)
->>>>                          new_crtc_state->mode_changed = true;
->>>>                          state->allow_modeset = true;
->>>>                  }
->>>> +
->>>> +               if (old_crtc_state->self_refresh_active && new_crtc_state-
->>>> self_refresh_active)
->>>> +                       return -EINVAL;
->>>
->>> EINVAL here means that atomic_check will fail if both old and new
->>> states are in SR mode. For example, there might be a mode set for
->>> another CRTC (while keeping this one in SR mode). I don't think this
->>> is correct. We should skip/shortcut the commit, that's true. But I
->>> doubt that returning an error here is a proper way to do this. Please
->>> correct me if I'm wrong.
->>
->> If there is a modeset on same crtc with a different connector. The new_crtc_state will not have self_refresh_active set.
->> Self_refresh_active is set from the helper library, which will duplicate the old_state and just adds self_refresh_active to true and active to false.
->> so we can be confident that if we are checking for self_refresh_active status then it should be coming from the library call.
->>
->> Also the EINVAL is returned to the self_refresh library API and the function will be retired.
-> 
-> Maybe I misunderstand you here. However, in this way EINVAL is
-> returned to drm_atomic_check_only() and not to the SR code.
 
-Unless anybody objects, I'm going to drop this patch now. The issue 
-should be solved in the framework itself.
+--0XkQP2uuk2uCUtkF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
->> And self_refresh_active is cleared on every commit : https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/drivers/gpu/drm/drm_atomic_state_helper.c#n158
-> 
-> And this means that this check will not trigger at all, if I'm not
-> mistaken. You've added code to msm_atomic_check(), so
-> drm_self_refresh_helper_alter_state() was not called (yet) and thus
-> new_crtc_state->self_refresh_active is set to false, fresh after
-> crtc's duplicate_state.
-> 
-> --
-> With best wishes
-> Dmitry
+On Fri, May 19, 2023 at 09:26:00PM +0530, Jagadeesh Kona wrote:
+> Add device tree bindings for the camera clock controller on
+> Qualcomm SM8550 platform.
+>=20
+> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
 
--- 
-With best wishes
-Dmitry
+Should this SoB go with a Co-developed-by?
+I'll leave it up to Krzysztof or someone else familiar with qcom
+products as to whether there's an existing binding that this should be
+added to, but qcom,videocc.yaml seems "suspect" to an outsider.
 
+Otherwise, what you have here looks fine to me.
+
+Thanks,
+Conor.
+
+--0XkQP2uuk2uCUtkF
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZGeoVQAKCRB4tDGHoIJi
+0hjVAQCc+Zare9tPldClToejv4lzAIMi/YKvhKVIbgx55/zTKAD+O+V2sWV1RBr8
+iJWNg8CL/rE8DM7bKclm10Sr6DsSnwY=
+=xC/S
+-----END PGP SIGNATURE-----
+
+--0XkQP2uuk2uCUtkF--
