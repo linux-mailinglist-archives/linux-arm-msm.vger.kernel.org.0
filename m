@@ -2,60 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EF4470946A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 12:06:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3F6E709476
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 12:07:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231648AbjESKGB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 06:06:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37172 "EHLO
+        id S231730AbjESKHT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 06:07:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231613AbjESKGA (ORCPT
+        with ESMTP id S229995AbjESKHQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 06:06:00 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63EAB12B
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 03:05:58 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1ae763f9c0bso9505035ad.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 03:05:58 -0700 (PDT)
+        Fri, 19 May 2023 06:07:16 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 626F5F0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 03:07:15 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1ae3ed1b08eso31036925ad.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 03:07:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684490758; x=1687082758;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1684490835; x=1687082835;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=t6PY6uvUf462T5HGV7ZU1zDBsJ0eattmDdV+/C5PCe8=;
-        b=IVUEnwMqL5OREMR07mtKr8g8QRCpY4hGCDmnHnUVeqzZat7auN15wGndpqI2hOG8Ku
-         UKZjPP6eJT1wyv3Uo1nbytT+te6IV7AFyo9YW6mYXzNNcZE3jSZUVkuf3vH+50X+bu+T
-         iA5JSSUemXiJCUXn3x941Ud6NdyRngRfcSmSlH4vtI7Jw2zcZx+vB6sB4X2gfaz9yJq1
-         01hqTR6/t5ME5bm456kENgG70IQUp/17RKiGyBmFnNCzpksENb4BpUtvNHnqrQduTmSp
-         6VIrzSx8aCQTsxebHR7j8aZdoSNfokPc0nYPnjDfmghNRkgJccQTy3zo6PIMvQqm9rx6
-         LYrQ==
+        bh=PnbeQCKRZQ1oVV3aSgGqxAoaIE3PNvSwf7Z9BVloxcA=;
+        b=T7CPrN+4s5uBE5e3tFiT/gAVTm+XDVUlfwLAQnJMvReUd1KrhuTA/5cuU8I8vbCw3N
+         d8ZKQZykUctX3N6m4RAgiluMX62iLMghEHVlshYLQ720rPm9x6VfJgHy5s9jQJ3voQ1I
+         8EXPAV6nrCxtmaAXDouNEW8L9XY7MzBki6ExeNgjmRRmVM2hEP+my2gXP38YZgTcJLFF
+         oUeeFrl3EkK3dt4niwOYl8HgnTPKqSZWMOtmn7pioOFVmLcgz3T6Sq2vLd/kEjpVRMeu
+         JaFVO8FMKQ0vRaMnv6ABgLYQg4zz/UHmuyZz5aPW+4vjrHgg/vk3I8K5WZ94LMdMmGjz
+         REoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684490758; x=1687082758;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1684490835; x=1687082835;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=t6PY6uvUf462T5HGV7ZU1zDBsJ0eattmDdV+/C5PCe8=;
-        b=cZ+89BG/4V5O+DDTsEBi2M9idKxYvctfpCvqsms9wKlIg3xbpEshtobER7dCg2iePV
-         EqNwwPyGqh7xKy0k8ceGopHjLrH4nVdBVMXAoQAiPKwb73SFB3F3IH9UQNMP5VVj5q8c
-         bMYotVSu8FuUqej+woL8uxKG7cuVy66merndqYxixg/dgyydZGOp/CLh7NxYDmizYcDg
-         wgL6W9ndPcFRVGGJ6iRwLbiAeJTGO5QEcEwT0mDJUkv4tyRri78nRE3ywU/d8ROGm6ZE
-         7Z4AfGyKQYMTW4k3U/Hcrv/2KRClXAOTGxA4d6mUudzhFokdv11ShqbZU71cCxq0fzYB
-         vS9Q==
-X-Gm-Message-State: AC+VfDweI2sVfLMQTWe7c2SgpJFarjSh3zM1cuteFrHQXvie7k9yDt+d
-        z72jmORBfKpv3kDmwncj15Of8g==
-X-Google-Smtp-Source: ACHHUZ7lgCfZfb0FUOSKZivRwVF3xk9a4aNF0MSxuLrcXj9+fivBKJ+Knm9ROa3VzxvyXITlnYpSAg==
-X-Received: by 2002:a17:902:e547:b0:1ac:712d:2032 with SMTP id n7-20020a170902e54700b001ac712d2032mr2401279plf.50.1684490757775;
-        Fri, 19 May 2023 03:05:57 -0700 (PDT)
+        bh=PnbeQCKRZQ1oVV3aSgGqxAoaIE3PNvSwf7Z9BVloxcA=;
+        b=dayygHdPg8g1DNawAbHRM14InE6sVASbJm8JazZpAxWFL81vJBXTq6iYSu6+YVLI2C
+         6DThG7GV9pGNOcPHjsOdkvxN5t909hyhLKMFxxFiuduvnziNVyi3zIfYjedICDROS6t+
+         w3uWp8zWrknjQpbme9c1XorPXCrMUlEqEHieb1K8LyD6xuqUN+zrladxx4wzC7+WYGoG
+         fdM39B5oR2ktcY5ZB8o0m1eeUreU5WjfWAVb+hEAqGZnmpMc3U3zMaPxmyL8maArAAL8
+         Hw4tgCXtRIA9V5sBU/sfmvjAaz3fd5IczgujCrmO4IldwecKxQF/6QxYBFgSDgKaLFJm
+         E2aw==
+X-Gm-Message-State: AC+VfDzZReGjqr2/jW0mGAH7jK4TO908MVwLln7OSkAFIvHzSJo0hIRJ
+        +j23uhNqWJIZQj8JnedpyLwZ5A==
+X-Google-Smtp-Source: ACHHUZ7QcLQIIL2qrjhVKBw8fOYJtVm3POoYBswuGh6hyMI670oYUJkue8G1M6neaNsKEO0v5m6gPg==
+X-Received: by 2002:a17:902:7683:b0:1a6:82ac:f277 with SMTP id m3-20020a170902768300b001a682acf277mr2234879pll.14.1684490834817;
+        Fri, 19 May 2023 03:07:14 -0700 (PDT)
 Received: from ?IPV6:2401:4900:1c60:d309:883d:817e:8e91:be39? ([2401:4900:1c60:d309:883d:817e:8e91:be39])
-        by smtp.gmail.com with ESMTPSA id y7-20020a17090322c700b001a800e03cf9sm3006682plg.256.2023.05.19.03.05.53
+        by smtp.gmail.com with ESMTPSA id bf7-20020a170902b90700b001a64851087bsm2998993plb.272.2023.05.19.03.07.11
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 19 May 2023 03:05:57 -0700 (PDT)
-Message-ID: <7cf74a2b-21e3-4a0d-5791-d7d97e21cf30@linaro.org>
-Date:   Fri, 19 May 2023 15:35:51 +0530
+        Fri, 19 May 2023 03:07:14 -0700 (PDT)
+Message-ID: <94e1e91d-e36a-215e-2395-6212c1694dd3@linaro.org>
+Date:   Fri, 19 May 2023 15:37:09 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.1
-Subject: Re: [PATCH 2/4] arm: dts: qcom: qdu1000: Add SDHCI node
+Subject: Re: [PATCH 1/4] dt-bindings: mmc: sdhci-msm: Document the
+ QDU1000/QRU1000 compatible
+Content-Language: en-US
 To:     Komal Bajaj <quic_kbajaj@quicinc.com>,
         Ulf Hansson <ulf.hansson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -67,10 +69,9 @@ To:     Komal Bajaj <quic_kbajaj@quicinc.com>,
 Cc:     linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
 References: <20230519085122.15758-1-quic_kbajaj@quicinc.com>
- <20230519085122.15758-3-quic_kbajaj@quicinc.com>
-Content-Language: en-US
+ <20230519085122.15758-2-quic_kbajaj@quicinc.com>
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-In-Reply-To: <20230519085122.15758-3-quic_kbajaj@quicinc.com>
+In-Reply-To: <20230519085122.15758-2-quic_kbajaj@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,111 +84,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Komal,
 
 On 5/19/23 2:21 PM, Komal Bajaj wrote:
-> Add sdhc node for eMMC on QDU1000 and QRU1000 SoCs.
+> Document the compatible for SDHCI on QDU1000 and QRU1000 SoCs.
 > 
 > Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
 > ---
->   arch/arm64/boot/dts/qcom/qdu1000.dtsi | 60 +++++++++++++++++++++++++++
->   1 file changed, 60 insertions(+)
+>   Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-> index 734438113bba..6113def66a08 100644
-> --- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-> @@ -19,6 +19,10 @@
-> 
->   	chosen: chosen { };
-> 
-> +	aliases {
-> +		mmc0 = &sdhc_1; /*SDC1 eMMC slot*/
+> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> index 4f2d9e8127dd..f51a38b12d6f 100644
+> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+> @@ -55,6 +55,7 @@ properties:
+>                 - qcom,sm8350-sdhci
+>                 - qcom,sm8450-sdhci
+>                 - qcom,sm8550-sdhci
+> +              - qcom,qdu1000-sdhci
 
-Please use the right comment formats /* text */
-Also, just /* eMMC */ would be fine here.
-
-> +	};
-> +
->   	cpus {
->   		#address-cells = <2>;
->   		#size-cells = <0>;
-> @@ -842,6 +846,62 @@
->   			#hwlock-cells = <1>;
->   		};
-> 
-> +		sdhc_1: mmc@8804000 {
-> +			compatible = "qcom,qdu1000-sdhci", "qcom,sdhci-msm-v5";
-> +			reg = <0x0 0x08804000 0x0 0x1000>,
-> +			      <0x0 0x08805000 0x0 0x1000>;
-> +
-> +			reg-names = "hc", "cqhci";
-> +
-> +			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "hc_irq", "pwr_irq";
-> +
-> +			clocks = <&gcc GCC_SDCC5_AHB_CLK>,
-> +				 <&gcc GCC_SDCC5_APPS_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK>;
-> +			clock-names = "iface", "core", "xo";
-> +
-> +			/* Add dt entry for gcc hw reset */
-
-Please drop the comment above - it's not needed.
-
-> +			resets = <&gcc GCC_SDCC5_BCR>;
-> +
-> +			interconnects = <&system_noc MASTER_SDCC_1 0 &mc_virt SLAVE_EBI1 0>,
-> +					<&gem_noc MASTER_APPSS_PROC 0 &system_noc SLAVE_SDCC_2 0>;
-> +			interconnect-names = "sdhc-ddr", "cpu-sdhc";
-> +			power-domains = <&rpmhpd QDU1000_CX>;
-> +			operating-points-v2 = <&sdhc1_opp_table>;
-> +
-> +			iommus = <&apps_smmu 0x0080 0x0>;
-> +			dma-coherent;
-> +
-> +			bus-width = <8>;
-> +			non-removable;
-> +			supports-cqe;
-> +
-> +			no-sd;
-> +			no-sd;
-
-Can we club the following 3 together:
-non-removable;
-no-sd;
-no-sd;
-
-And normally these is a part of board file (.dts), right?
+Please add new entries in alphabetical order.
 
 Thanks,
 Bhupesh
 
-> +			mmc-ddr-1_8v;
-> +			mmc-hs200-1_8v;
-> +			mmc-hs400-1_8v;
-> +			mmc-hs400-enhanced-strobe;
-> +			cap-mmc-hw-reset;
-> +
-> +			qcom,dll-config = <0x0007642c>;
-> +			qcom,ddr-config = <0x80040868>;
-> +
-> +			status = "disabled";
-> +
-> +			sdhc1_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-384000000 {
-> +					opp-hz = /bits/ 64 <384000000>;
-> +					required-opps = <&rpmhpd_opp_min_svs>;
-> +				};
-> +			};
-> +		};
-> +
->   		pdc: interrupt-controller@b220000 {
->   			compatible = "qcom,qdu1000-pdc", "qcom,pdc";
->   			reg = <0x0 0xb220000 0x0 0x30000>, <0x0 0x174000f0 0x0 0x64>;
+>             - const: qcom,sdhci-msm-v5 # for sdcc version 5.0
+> 
+>     reg:
 > --
 > 2.17.1
 > 
