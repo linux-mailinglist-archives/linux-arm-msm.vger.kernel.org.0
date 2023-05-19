@@ -2,117 +2,244 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A76A709D12
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 18:58:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5555D709D1C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 May 2023 19:03:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230240AbjESQ6o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 19 May 2023 12:58:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44824 "EHLO
+        id S231273AbjESRDP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 19 May 2023 13:03:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbjESQ6n (ORCPT
+        with ESMTP id S229458AbjESRDO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 19 May 2023 12:58:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFE1F114
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 09:57:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1684515475;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=OSQIXexhEgr4UYHcCQ3e6Gbt+1IifasCgEOBLmd3ZJs=;
-        b=MqRqw1637uy9bbPUvfG4c+Zq0duxrqK+AXEUeoU2bmNRMlVWOv//QjG0yj+3ARFXSgThAa
-        ijytMws4drKw4RJSZte8dpD3tLN+bNyOBOtBaqWlm5hrT8AzmOQPg+W26j3WBgZZZqv3H5
-        m6B5XvHzwBbAU80VtmY0M9e0NHiU1S8=
-Received: from mail-ot1-f69.google.com (mail-ot1-f69.google.com
- [209.85.210.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-182-0DHTONujPpWv4639J7q5ug-1; Fri, 19 May 2023 12:57:53 -0400
-X-MC-Unique: 0DHTONujPpWv4639J7q5ug-1
-Received: by mail-ot1-f69.google.com with SMTP id 46e09a7af769-6ab2d2697bdso2935850a34.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 May 2023 09:57:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684515473; x=1687107473;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OSQIXexhEgr4UYHcCQ3e6Gbt+1IifasCgEOBLmd3ZJs=;
-        b=Jn9Yu/g0ebzkv2eHVBbZ+Rn1eALYoBnkot5fnu1GKfFVfD9ETwTZodqMw4QLKPzyBr
-         eB8Ib+zCNrNn0+qDguf6v6wkAoMmq1xpI9aJ/v+3SQtROC9mJ8jK7xFpK/i7bHXPgkBZ
-         uRiUHzmHsqu6STh7s6GBwbCt/jxe2WdAP4RkX/6jvddDAoQVLtMi1jgVM8vIvWHc6YiI
-         96zLEPnjySJszKlmZBmIHoA1DqkIcs3pNqbXTUDonYpZ+3DF39cHHlX+Ajh+rc6qn+RT
-         tgSyi9ms9X7TAAFHh8aoMjim4n6x9qUaNe2lhCvh5lUwolbABWrsfSwar/p+GD3hc/1o
-         nEdg==
-X-Gm-Message-State: AC+VfDzvaHEpoot/SUA9H2+hjCnH6/pxaXQFucj1ee2PXTQz0YTo2kUV
-        9NqWgwk5asKv42SADpU78wfHtF6fiqtw+Yu+SIHSDKiUDacdGnTUpF0tqazvqDf02eCu046tJXt
-        KMqM0jyGTkHUwcCpAxOWqsnezyA==
-X-Received: by 2002:a9d:4f07:0:b0:6a5:f682:44ca with SMTP id d7-20020a9d4f07000000b006a5f68244camr1219053otl.16.1684515472999;
-        Fri, 19 May 2023 09:57:52 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ4RGmOB71h2mvB5aElpiYywwU5/QlRBW65OVaQT7Hgd8JfaRKJWGZOMGc7iCxi/sUCdW1BMfg==
-X-Received: by 2002:a9d:4f07:0:b0:6a5:f682:44ca with SMTP id d7-20020a9d4f07000000b006a5f68244camr1219041otl.16.1684515472780;
-        Fri, 19 May 2023 09:57:52 -0700 (PDT)
-Received: from halaney-x13s ([2600:1700:1ff0:d0e0::42])
-        by smtp.gmail.com with ESMTPSA id n22-20020a0568301e9600b006ab305429e7sm1843984otr.0.2023.05.19.09.57.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 May 2023 09:57:52 -0700 (PDT)
-Date:   Fri, 19 May 2023 11:57:50 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     andersson@kernel.org
-Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 v0/4] sa8155p-adp devicetree ethernet cleanup
-Message-ID: <20230519165750.p36jzknh44eij4nf@halaney-x13s>
-References: <20230501212446.2570364-1-ahalaney@redhat.com>
+        Fri, 19 May 2023 13:03:14 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEB11132;
+        Fri, 19 May 2023 10:03:12 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34JDFdwD022366;
+        Fri, 19 May 2023 17:02:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=15mqatN0JtAeqDTDURc3+E1nmxFNbcd2tiKr9rIMIXA=;
+ b=goVIuVlSw3toAzeF82WTFdm3Zf9PACYUlywnPgnHsUMBJLEhFtPBSvR9IVuGAFCM7nxr
+ 9GNYMiwzPZUyXxnNLcD0N8ww8H2PApz4SGEbNphqXZ/fuvioCOqfkbHbh0ujIvz1TMAV
+ VF9+v8S0S+Lqv+UnSHaAN6sasP38I+7NK7d2ZTOPWGCDdXVs6k0HsGrUGtu90ylX/tGs
+ hrH4VNBcP9fxaIQrGZy+tOXAeZisM2nB5eHkzACzT5+wJ9TcfW5y5ASJQf+p2UXRXXF5
+ E6H2Hp+aV88tm/LFLbaEdi7Q7TEr6/wjPlUnxVUQK6Hv4Szp2z+v3kCcOANqPrn4PXSk eQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qp4nt9aju-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 19 May 2023 17:02:32 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34JH2VMo021638
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 19 May 2023 17:02:31 GMT
+Received: from [10.110.48.165] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 19 May
+ 2023 10:02:30 -0700
+Message-ID: <e22c31bd-10ed-f242-3e72-debf40e01e3c@quicinc.com>
+Date:   Fri, 19 May 2023 10:02:29 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230501212446.2570364-1-ahalaney@redhat.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v13 10/24] gunyah: vm_mgr: Add/remove user memory regions
+To:     Will Deacon <will@kernel.org>
+CC:     Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Arnd Bergmann" <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        "Bagas Sanjaya" <bagasdotme@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        "Catalin Marinas" <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
+ <20230509204801.2824351-11-quic_eberman@quicinc.com>
+ <20230519115948.GB2637@willie-the-truck>
+Content-Language: en-US
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <20230519115948.GB2637@willie-the-truck>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: qssvahDTuyjVZhfr-3TN9xikhuY7sI_z
+X-Proofpoint-GUID: qssvahDTuyjVZhfr-3TN9xikhuY7sI_z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-19_12,2023-05-17_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015 phishscore=0
+ spamscore=0 impostorscore=0 bulkscore=0 malwarescore=0 mlxscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305190145
+X-Spam-Status: No, score=-3.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Bjorn,
 
-I think this one is ready to be picked up. Just a gentle reminder, I
-almost forgot about it until I cleaned my inbox this morning :)
 
-Thanks,
-Andrew
+On 5/19/2023 4:59 AM, Will Deacon wrote:
+> Hi Elliot,
+> 
+> On Tue, May 09, 2023 at 01:47:47PM -0700, Elliot Berman wrote:
+>> When launching a virtual machine, Gunyah userspace allocates memory for
+>> the guest and informs Gunyah about these memory regions through
+>> SET_USER_MEMORY_REGION ioctl.
+>>
+>> Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+>> Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+>> ---
+>>   drivers/virt/gunyah/Makefile    |   2 +-
+>>   drivers/virt/gunyah/vm_mgr.c    |  59 +++++++-
+>>   drivers/virt/gunyah/vm_mgr.h    |  26 ++++
+>>   drivers/virt/gunyah/vm_mgr_mm.c | 236 ++++++++++++++++++++++++++++++++
+>>   include/uapi/linux/gunyah.h     |  37 +++++
+>>   5 files changed, 356 insertions(+), 4 deletions(-)
+>>   create mode 100644 drivers/virt/gunyah/vm_mgr_mm.c
+> 
+> [...]
+> 
+>> +int gh_vm_mem_alloc(struct gh_vm *ghvm, struct gh_userspace_memory_region *region)
+>> +{
+>> +	struct gh_vm_mem *mapping, *tmp_mapping;
+>> +	struct page *curr_page, *prev_page;
+>> +	struct gh_rm_mem_parcel *parcel;
+>> +	int i, j, pinned, ret = 0;
+>> +	unsigned int gup_flags;
+>> +	size_t entry_size;
+>> +	u16 vmid;
+>> +
+>> +	if (!region->memory_size || !PAGE_ALIGNED(region->memory_size) ||
+>> +		!PAGE_ALIGNED(region->userspace_addr) ||
+>> +		!PAGE_ALIGNED(region->guest_phys_addr))
+>> +		return -EINVAL;
+>> +
+>> +	if (overflows_type(region->guest_phys_addr + region->memory_size, u64))
+>> +		return -EOVERFLOW;
+>> +
+>> +	ret = mutex_lock_interruptible(&ghvm->mm_lock);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	mapping = __gh_vm_mem_find_by_label(ghvm, region->label);
+>> +	if (mapping) {
+>> +		ret = -EEXIST;
+>> +		goto unlock;
+>> +	}
+>> +
+>> +	list_for_each_entry(tmp_mapping, &ghvm->memory_mappings, list) {
+>> +		if (gh_vm_mem_overlap(tmp_mapping, region->guest_phys_addr,
+>> +					region->memory_size)) {
+>> +			ret = -EEXIST;
+>> +			goto unlock;
+>> +		}
+>> +	}
+>> +
+>> +	mapping = kzalloc(sizeof(*mapping), GFP_KERNEL_ACCOUNT);
+>> +	if (!mapping) {
+>> +		ret = -ENOMEM;
+>> +		goto unlock;
+>> +	}
+>> +
+>> +	mapping->guest_phys_addr = region->guest_phys_addr;
+>> +	mapping->npages = region->memory_size >> PAGE_SHIFT;
+>> +	parcel = &mapping->parcel;
+>> +	parcel->label = region->label;
+>> +	parcel->mem_handle = GH_MEM_HANDLE_INVAL; /* to be filled later by mem_share/mem_lend */
+>> +	parcel->mem_type = GH_RM_MEM_TYPE_NORMAL;
+>> +
+>> +	ret = account_locked_vm(ghvm->mm, mapping->npages, true);
+>> +	if (ret)
+>> +		goto free_mapping;
+>> +
+>> +	mapping->pages = kcalloc(mapping->npages, sizeof(*mapping->pages), GFP_KERNEL_ACCOUNT);
+>> +	if (!mapping->pages) {
+>> +		ret = -ENOMEM;
+>> +		mapping->npages = 0; /* update npages for reclaim */
+>> +		goto unlock_pages;
+>> +	}
+>> +
+>> +	gup_flags = FOLL_LONGTERM;
+>> +	if (region->flags & GH_MEM_ALLOW_WRITE)
+>> +		gup_flags |= FOLL_WRITE;
+>> +
+>> +	pinned = pin_user_pages_fast(region->userspace_addr, mapping->npages,
+>> +					gup_flags, mapping->pages);
+>> +	if (pinned < 0) {
+>> +		ret = pinned;
+>> +		goto free_pages;
+>> +	} else if (pinned != mapping->npages) {
+>> +		ret = -EFAULT;
+>> +		mapping->npages = pinned; /* update npages for reclaim */
+>> +		goto unpin_pages;
+>> +	}
+> 
+> Sorry if I missed it, but I still don't see where you reject file mappings
+> here.
+> 
 
-On Mon, May 01, 2023 at 04:24:42PM -0500, Andrew Halaney wrote:
-> This series cleans up some devicetree conventions in sa8155p-adp based
-> on feedback from other platforms.
-> 
-> The hope is that by getting it right here, future contributors won't
-> repeat the same mistakes as I did!
-> 
-> v3: https://lore.kernel.org/linux-arm-msm/20230421205512.339850-1-ahalaney@redhat.com/
-> 
-> Thanks,
-> Andrew
-> 
-> Andrew Halaney (4):
->   arm64: dts: qcom: sa8155p-adp: Make compatible the first property
->   arm64: dts: qcom: Make -cells decimal
->   arm64: dts: qcom: sa8155p-adp: Remove unneeded rgmii_phy information
->   arm64: dts: qcom: sa8155p-adp: Move mtl nodes into ethernet node
-> 
->  arch/arm64/boot/dts/qcom/ipq6018.dtsi        |  2 +-
->  arch/arm64/boot/dts/qcom/ipq8074.dtsi        | 14 ++---
->  arch/arm64/boot/dts/qcom/msm8953.dtsi        |  4 +-
->  arch/arm64/boot/dts/qcom/qcs404-evb-4000.dts |  4 +-
->  arch/arm64/boot/dts/qcom/sa8155p-adp.dts     | 56 ++++++++++----------
->  5 files changed, 39 insertions(+), 41 deletions(-)
-> 
-> -- 
-> 2.40.0
+Sure, I can reject file mappings. I didn't catch that was the ask 
+previously and thought it was only a comment about behavior of file 
+mappings.
+
+> This is also the wrong interface for upstream. Please get involved with
+> the fd-based guest memory discussions [1] and port your series to that.
 > 
 
+The user interface design for *shared* memory aligns with 
+KVM_SET_USER_MEMORY_REGION.
+
+I understood we want to use restricted memfd for giving guest-private 
+memory (Gunyah calls this "lending memory"). When I went through the 
+changes, I gathered KVM is using restricted memfd only for guest-private 
+memory and not for shared memory. Thus, I dropped support for lending 
+memory to the guest VM and only retained the shared memory support in 
+this series. I'd like to merge what we can today and introduce the 
+guest-private memory support in tandem with the restricted memfd; I 
+don't see much reason to delay the series.
+
+I briefly evaluated and picked the arm64/pKVM support that Fuad shared 
+[2] and found it should be fine for Gunyah. I did build-only at the 
+time. I don't have any comments on the base restricted_memfd support and 
+Fuad has not posted [2] on mailing lists yet as far as I can tell.
+
+> This patch cannot be merged in its current form.
+> 
+
+I am a little confused why the implementation to share memory with the 
+VM is being rejected. Besides rejecting file mappings, any other changes 
+needed to be accepted?
+
+- Elliot
+
+> Will
+> 
+> [1] https://lore.kernel.org/kvm/20221202061347.1070246-1-chao.p.peng@linux.intel.com/
+[2]: 
+https://android-kvm.googlesource.com/linux/+/refs/heads/tabba/fdmem-v10-core
