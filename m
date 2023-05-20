@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C877170A7F9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 14:20:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43A2670A7FA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 14:20:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231834AbjETMUu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 May 2023 08:20:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51566 "EHLO
+        id S231854AbjETMUv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 May 2023 08:20:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231760AbjETMU0 (ORCPT
+        with ESMTP id S231368AbjETMUh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 May 2023 08:20:26 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A27EE5E
+        Sat, 20 May 2023 08:20:37 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14AC1E6A
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 May 2023 05:20:02 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f3a9ad31dbso2662483e87.0
         for <linux-arm-msm@vger.kernel.org>; Sat, 20 May 2023 05:20:01 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f3b9c88af8so163107e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 May 2023 05:20:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684585199; x=1687177199;
+        d=linaro.org; s=google; t=1684585200; x=1687177200;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1wFIIbEoxPLhpitFzIB7VWk7qAiJQapqN1VZ4+ZRTRI=;
-        b=C+KG0gmGqsOgsOugIiyb/PsDw8m8EZaSlRtwvAIvbgmowHTS8VyD8BXjouv+hdJzQN
-         IIFCEA9f4dpyvlbIkiytdxzm6+I0KkDKrrSP+p2/WRbPEGLWRP29rgvAXAT/smAbL7DM
-         g9KEPg7tsM6a6DfXGUmXxDpzhLulFTPSuwSRN+0q9y8qrxf2cE1OjcQoTZz68voPqK4L
-         lM8IY4X6bQg6kMpoHa5rjfbddLhY53+4h52vCNzi2qXTxE7/mqhU3yK1lQTPe+8R1+jl
-         lvqyYb2j6CnxFWF1DDv0LI7moKhrVe1t7qyKsnMjFTbayAshlozdV0AMyO2NpbNqyFHz
-         Qgqg==
+        bh=jEG7D8dDSqo05e8UhKgqNHGqbXe0pvKNUFpleUKYXVg=;
+        b=I+Q3ewZykqObWHuKmqMPuJPGa3NjNoeRSIFQSrxfdGMyJ8QZus7o1u2rIwOciol6ij
+         7lO60fSX2PeeqP+aSOVKvs0jToT8xNMFRS1Q233kBQGg+VCxzdBLRr6lCuDl8g4BNLZ2
+         oiMIH+/WEQYkpTA5dog0TVx2LnYQCHCLprTjwZjY9gbieHYUzkui909KCXd+FlfDGSX0
+         Av0XYR0qJZhBAIZjBXR9foRILwwsqAwWRHZ4BbevSgVyob/kTKLAwfwd/zfjoPWhYPf7
+         6sPgR8TtZ58hq2+mit63Q8Jzu54ObT3rbMCw6XPnA9NruJSRxIAhteVSG67+B+sQ4hTS
+         aGUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684585199; x=1687177199;
+        d=1e100.net; s=20221208; t=1684585200; x=1687177200;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1wFIIbEoxPLhpitFzIB7VWk7qAiJQapqN1VZ4+ZRTRI=;
-        b=jDTUgAZdYeIWtRNiJyJ+7zeEOa6NTZ4OXBnb8CvhrVDETPaXMUOIWvkiw5xRKTv1sx
-         9lQxauXtS0Ip07Mh8hllXS4usdQBtV5PZ8HMFJNex3iHbyCvjwCjGgz9atETZL5F6tY8
-         Yv5Axet98amoAnP7du4Tp1yr4H7Uf4GY8HzxCKlcBOVLuvvu2p+0PatFxygixWRVDF9h
-         n4t0vfNBM27UkqXcdhgxGyl3O+1fW/snW9AykeQrQ6SJQYESS0ZDpHHGSXp4hGUgY5du
-         ROspV4ygPu+gAM66mVJsOCu/JKPKbrv2Sd1NXklZSdicc4Wu2uMETVvzKUPtA806MzP0
-         cb7w==
-X-Gm-Message-State: AC+VfDyq6GJT5KHMKh8bI91rKsdXABcq5KqSt55h11T80mq0jE8LHhQO
-        x5lXRTevTB/fiLjKI4FVeSu7eA==
-X-Google-Smtp-Source: ACHHUZ686/APJwZF5d+ymeBfPVUJgO+udiA3oGWy50c+kqETtFbX5nhUCowpYdgHwWUe8gZseyu5EQ==
-X-Received: by 2002:ac2:4a7a:0:b0:4ed:b048:b98a with SMTP id q26-20020ac24a7a000000b004edb048b98amr1801618lfp.6.1684585198901;
-        Sat, 20 May 2023 05:19:58 -0700 (PDT)
+        bh=jEG7D8dDSqo05e8UhKgqNHGqbXe0pvKNUFpleUKYXVg=;
+        b=A9rBNRsxOwmZ/xQ3zfQs0uQmCNOHdxsQZ+2TNCwuvdkTNinTTcoDN3oflOnq1xKgru
+         xg9QTdM8h0BkFUbySjHokjnUJsgiLsSLA6ARLs1lBwZJe/qCDDI2rFIOeJQbinfW/AqY
+         +GnQguTotEXMiIKD3zcybxp6MXg5TDD4Ot3oG1RItiwYjza/xOW+1w5jP4f7aISCIOnl
+         LZbRE5dn0tRnPgoDIS9GCl5OeFqqxTrYbVRBzZi3PgvTBdfmxhpprHstlMnyeEadaxX+
+         CXJQTyoE2jzkPntX2Ac7X6zxV9c3NlcokyrgicrpuyaZD/AMHmt8Pe93JGYIcVCsyzvZ
+         jQEg==
+X-Gm-Message-State: AC+VfDx5A/tYFJLeLiNjPXwt6VI1RPLzVxTjCmXRKER3RXHKvIG0QGUq
+        mriBiB7JiyulpsVaKboai1j0YA==
+X-Google-Smtp-Source: ACHHUZ4Gs+fVbgITqcw+rliR2PEwd5WYSfQWfpcD1Pe4CNQyANny3sRLpUXp92PtuAZoJk3qkE7rvg==
+X-Received: by 2002:ac2:4430:0:b0:4f3:a99c:fbbe with SMTP id w16-20020ac24430000000b004f3a99cfbbemr1824929lfl.14.1684585200406;
+        Sat, 20 May 2023 05:20:00 -0700 (PDT)
 Received: from [192.168.1.101] (abxi58.neoplus.adsl.tpnet.pl. [83.9.2.58])
-        by smtp.gmail.com with ESMTPSA id y6-20020ac24466000000b004f37bd02a89sm244766lfl.287.2023.05.20.05.19.57
+        by smtp.gmail.com with ESMTPSA id y6-20020ac24466000000b004f37bd02a89sm244766lfl.287.2023.05.20.05.19.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 May 2023 05:19:58 -0700 (PDT)
+        Sat, 20 May 2023 05:20:00 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Sat, 20 May 2023 14:19:47 +0200
-Subject: [PATCH v7 07/18] drm/msm/a6xx: Add a helper for software-resetting
- the GPU
+Date:   Sat, 20 May 2023 14:19:48 +0200
+Subject: [PATCH v7 08/18] drm/msm/a6xx: Remove both GBIF and RBBM GBIF halt
+ on hw init
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230223-topic-gmuwrapper-v7-7-ecc7aab83556@linaro.org>
+Message-Id: <20230223-topic-gmuwrapper-v7-8-ecc7aab83556@linaro.org>
 References: <20230223-topic-gmuwrapper-v7-0-ecc7aab83556@linaro.org>
 In-Reply-To: <20230223-topic-gmuwrapper-v7-0-ecc7aab83556@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -76,85 +76,56 @@ Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         Marijn Suijten <marijn.suijten@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1684585186; l=2525;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1684585186; l=1283;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=mi/m4Oey75vF6uy9TLg2BuEnAAWYnXoWrcm53l1hJFY=;
- b=5ywVdFZzedX6RurJaylG6kigzNdrQo8yQnTLcVo+RubeyxkfhsUtzGzRh1qh5fRNMuUrbK8cM
- Hq+/6wtKodQDs8O0oo5Fp9/iXQAIDqpFVYbp+xOuXlHKapoHeKdeupz
+ bh=JTiDWY7uw1D1PMKchNdprqbjJGR71Zsm7TruEBGJMeY=;
+ b=4fROckR5rLH3nc9STYL54zMi3UHMYli5trCboT4r1jFi+HW8CMYFLBcgvzFiaAFA1KSk3V9o3
+ dc8cPUDGdU4DS+0RsJGbbtpgR27R2+TdgG433dly6u3cehfgmM1p2Yh
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Introduce a6xx_gpu_sw_reset() in preparation for adding GMU wrapper
-GPUs and reuse it in a6xx_gmu_force_off().
+Currently we're only deasserting REG_A6XX_RBBM_GBIF_HALT, but we also
+need REG_A6XX_GBIF_HALT to be set to 0.
 
-This helper, contrary to the original usage in GMU code paths, adds
-a write memory barrier which together with the necessary delay should
-ensure that the reset is never deasserted too quickly due to e.g. OoO
-execution going crazy.
+This is typically done automatically on successful GX collapse, but in
+case that fails, we should take care of it.
 
+Also, add a memory barrier to ensure it's gone through before jumping
+to further initialization.
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c |  3 +--
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 11 +++++++++++
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h |  1 +
- 3 files changed, 13 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index b86be123ecd0..5ba8cba69383 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -899,8 +899,7 @@ static void a6xx_gmu_force_off(struct a6xx_gmu *gmu)
- 	a6xx_bus_clear_pending_transactions(adreno_gpu, true);
- 
- 	/* Reset GPU core blocks */
--	gpu_write(gpu, REG_A6XX_RBBM_SW_RESET_CMD, 1);
--	udelay(100);
-+	a6xx_gpu_sw_reset(gpu, true);
- }
- 
- static void a6xx_gmu_set_initial_freq(struct msm_gpu *gpu, struct a6xx_gmu *gmu)
 diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index e3ac3f045665..083ccb5bcb4e 100644
+index 083ccb5bcb4e..dfde5fb65eed 100644
 --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
 +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1634,6 +1634,17 @@ void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, bool gx_
- 	gpu_write(gpu, REG_A6XX_GBIF_HALT, 0x0);
- }
+@@ -1003,8 +1003,12 @@ static int hw_init(struct msm_gpu *gpu)
+ 	a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_GPU_SET);
  
-+void a6xx_gpu_sw_reset(struct msm_gpu *gpu, bool assert)
-+{
-+	gpu_write(gpu, REG_A6XX_RBBM_SW_RESET_CMD, assert);
-+	/* Add a barrier to avoid bad surprises */
-+	mb();
-+
-+	/* The reset line needs to be asserted for at least 100 us */
-+	if (assert)
-+		udelay(100);
-+}
-+
- static int a6xx_pm_resume(struct msm_gpu *gpu)
- {
- 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-index 9580def06d45..aa70390ee1c6 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
-@@ -89,5 +89,6 @@ struct msm_gpu_state *a6xx_gpu_state_get(struct msm_gpu *gpu);
- int a6xx_gpu_state_put(struct msm_gpu_state *state);
+ 	/* Clear GBIF halt in case GX domain was not collapsed */
+-	if (a6xx_has_gbif(adreno_gpu))
++	if (a6xx_has_gbif(adreno_gpu)) {
++		gpu_write(gpu, REG_A6XX_GBIF_HALT, 0);
+ 		gpu_write(gpu, REG_A6XX_RBBM_GBIF_HALT, 0);
++		/* Let's make extra sure that the GPU can access the memory.. */
++		mb();
++	}
  
- void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, bool gx_off);
-+void a6xx_gpu_sw_reset(struct msm_gpu *gpu, bool assert);
+ 	gpu_write(gpu, REG_A6XX_RBBM_SECVID_TSB_CNTL, 0);
  
- #endif /* __A6XX_GPU_H__ */
 
 -- 
 2.40.1
