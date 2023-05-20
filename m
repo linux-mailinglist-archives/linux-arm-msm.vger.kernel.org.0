@@ -2,134 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CC72370AACD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 22:01:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD2A070AB01
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 22:49:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229525AbjETUBL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 May 2023 16:01:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42870 "EHLO
+        id S230292AbjETUtw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 May 2023 16:49:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbjETUBK (ORCPT
+        with ESMTP id S229599AbjETUtv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 May 2023 16:01:10 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7534134
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 May 2023 13:01:06 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2af2451b3f1so23100811fa.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 May 2023 13:01:06 -0700 (PDT)
+        Sat, 20 May 2023 16:49:51 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D14F9134
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 May 2023 13:49:49 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f3b337e842so1464141e87.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 May 2023 13:49:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684612865; x=1687204865;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kL5WC4XfsCjBMRG17TRvwYrcpAIhfVj8rtH9i+qu5n8=;
-        b=T8EEuoaH9hcVaP0ope0+Ib4TJAIQYcW4nlwT3SIP2Josx4is7qBtx/WUQy+tCC/ohi
-         nG/ycc+0hCWrHEUA2ccL0JWlgr+eP6TjkV5XzyqjHkl7Nc0HuEq+rNzcYCjpyNDcVF57
-         LXkUCSnby0SbyGIMOVlZc+vh1anQuQoRuKuRo6TfaerN4LufY8ugHt+evoT9Dz/3BKBS
-         LqCBjJTRpYxqLYShqSXFrWSAPfCA/u1Aef/IOoLRA4N8tMOeM6oE5DzZLNr2bD5WYdln
-         wwENCEJKUKcG8/YrIGweH7MUmJKK+FMdbHwFkyRqgnvXAeOOE/S3XviK3wrSNq6fvKLM
-         QY5Q==
+        d=linaro.org; s=google; t=1684615788; x=1687207788;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fqYU5pBw/fosyLtbu99SoFfcl2t7V6t1nbS3X58IuPE=;
+        b=k6zamuW9UmqDDFJzkuGLETMehT8oWegHya8cjibkMxfjNCbEpA4P9yHYLXe80vR7I2
+         FnY9AXD9QjWw9woVs+dfTaU9NvTz/EhBCr6+lmuSGX+tfUllo+Aw+Gj0Ac/4LNhjFbe0
+         QyaiiB+rjF5bh0PnM2F/dXXZ2st8I0aGRywO0yGnsvOmqTLHEO2l4zvwPn949gGQjW5K
+         TQyzvEsfkAnEil9Ek6U4hcWPaJ3xwUZyDEdWL3xoTf+B/eZg/3sgKhNa7Yfok6Ffp7I5
+         IRIZ2SNtdyss6APpC/amQzi6BMHm4+POnuZpI5k8dWxvoJ1T6edCU+Guw5/QUJdMvPUX
+         M1Pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684612865; x=1687204865;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kL5WC4XfsCjBMRG17TRvwYrcpAIhfVj8rtH9i+qu5n8=;
-        b=litssHhiPH0qy19keqPSPRPPTZBQLfU0HGbk/siU9tkBrbgfY1+fWEUYFXMTfwxF4H
-         AlhClwaolgz6fvlXLMh+AGEk2UBrLSzdlJXl7By5e4KSGzX7D3edMPt1+wF9KQD/QgGr
-         Jj8uqZKCkJDkeLCoZu956szdkfNgP+pDUP1KAdWazzE12LOMnxBbJAuECbT0o11m52da
-         oagjwc38Bx530R2lTzoD9IF2xl/ohRK64bXGp9FVMiyq5w2tbtRx9XJIIjxj/TTBd+PY
-         EbsyyywrAivrlu8kkvFIDlYS47NTZKScz2hpU5dMStf7ULdZbgEmH3cUwBnYNLpcOIHJ
-         Bvjg==
-X-Gm-Message-State: AC+VfDyafTfmQKHS9ofXatlCDi4KU5SZ+u/+yKx4SK/C5Qt21mwWbwkm
-        KkyCrpL2Cwd5+nk4rAHQhsfQZA==
-X-Google-Smtp-Source: ACHHUZ7iwo3hKsXxSciKJSuSMB9lTFMkik0lRJvgifMQz5iT7xHTeS9p9+1YlAcL/3t2i71b8+eoYw==
-X-Received: by 2002:a2e:a169:0:b0:2af:1761:8f23 with SMTP id u9-20020a2ea169000000b002af17618f23mr2601350ljl.46.1684612865159;
-        Sat, 20 May 2023 13:01:05 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id c4-20020a05651c014400b002ad9b741959sm418061ljd.76.2023.05.20.13.01.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 May 2023 13:01:04 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v2 2/2] drm/msm/dsi: use mult_frac for pclk_bpp calculation
-Date:   Sat, 20 May 2023 23:01:03 +0300
-Message-Id: <20230520200103.4019607-2-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230520200103.4019607-1-dmitry.baryshkov@linaro.org>
-References: <20230520200103.4019607-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20221208; t=1684615788; x=1687207788;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fqYU5pBw/fosyLtbu99SoFfcl2t7V6t1nbS3X58IuPE=;
+        b=G/JFsP3U98X3YDposylzC0Dlvm3WFp9kYXJhaKyVYp0Epl0TS8IsHc1bzXqJe48lrH
+         xzuQ36AWOExA6fzaPVBBb36I3XGqTFHeLKloTdvDUtGWqqkxTWSitoQLW9tPIn1Vt8NE
+         GnGP1jZz4Z7d3AwAtsEnV1KrUUF7XG/uKzxSMuUjPKuuLmGUz4V8hii9zKKih3zUoko/
+         S6wO5QR3DlXVlKiA6bAdN2WHUHnlfK8bUHqj7Rjr0pfq0bbaM2tzU4vmsk8+Com4Dupn
+         r8o5NyqM1FUxba3uUtRauA1YTaoMYnAmcNqnMTI4ZIVTY6Q3Z1GR1eeojnRDt9nxY4k3
+         spRQ==
+X-Gm-Message-State: AC+VfDznN38YIMvGbprYFvKH78Iyc1V8dNqjcfnAjY2O5aTTZVm0aJiK
+        rernzvU3Zz4I472DJZIGEhlAIg==
+X-Google-Smtp-Source: ACHHUZ7l5Y3JhzRvQohtL0YM5pZWEzOewup9on2iBfVDx+SL10dj1xELlEy5Tsbk98QUjnSPNxse4A==
+X-Received: by 2002:ac2:4d10:0:b0:4f3:b6e9:3e47 with SMTP id r16-20020ac24d10000000b004f3b6e93e47mr787738lfi.53.1684615788014;
+        Sat, 20 May 2023 13:49:48 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id m14-20020a19520e000000b004f3acfa92c9sm370115lfb.277.2023.05.20.13.49.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 20 May 2023 13:49:47 -0700 (PDT)
+Message-ID: <50fc88f9-4304-110c-84e8-15dfdeee062f@linaro.org>
+Date:   Sat, 20 May 2023 23:49:46 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [Freedreno] [PATCH 02/11] drm/msm/dpu: use the actual lm maximum
+ width instead of a hardcoded value
+Content-Language: en-GB
+To:     Jeykumar Sankaran <quic_jeykumar@quicinc.com>,
+        Arnaud Vrac <avrac@freebox.fr>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org
+References: <20230419-dpu-tweaks-v1-0-d1bac46db075@freebox.fr>
+ <20230419-dpu-tweaks-v1-2-d1bac46db075@freebox.fr>
+ <6e807c05-a990-5692-3f84-2e4153c8c278@linaro.org>
+ <905b4150-6e15-4172-10cf-19aa0ebf817c@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <905b4150-6e15-4172-10cf-19aa0ebf817c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Simplify calculations around pixel_clk_rate division. Replace common
-pattern of doing 64-bit multiplication and then a do_div() call with
-simpler mult_frac() invocation.
+On 20/04/2023 20:47, Jeykumar Sankaran wrote:
+> 
+> 
+> On 4/19/2023 3:23 PM, Dmitry Baryshkov wrote:
+>> On 19/04/2023 17:41, Arnaud Vrac wrote:
+>>> This avoids using two LMs instead of one when the display width is lower
+>>> than the maximum supported value. For example on MSM8996/MSM8998, the
+>>> actual maxwidth is 2560, so we would use two LMs for 1280x720 or
+>>> 1920x1080 resolutions, while one is enough.
+>>>
+>>> Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
+>>
+>> While this looks correct (and following what we have in 4.4), later 
+>> vendor kernels specify the topology explicitly. Probably we should 
+>> check this with the hw guys, because it might be the following case: 
+>> even though a single LM can supply the mode, it will spend more power 
+>> compared to two LMs.
+>>
+>>
+> Yes. 2 LM split will allow the HW to run in lower mdp core clock. Can 
+> you maintain the split_threshold in the hw catalog until per mode 
+> topology is available?
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+I don't think it warrants the trouble, unless we have a real usecase 
+when the device is short of LMs.
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 2b257b459974..744f2398a6d6 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -585,7 +585,7 @@ unsigned long dsi_byte_clk_get_rate(struct mipi_dsi_host *host, bool is_bonded_d
- 	u8 lanes = msm_host->lanes;
- 	u32 bpp = dsi_get_bpp(msm_host->format);
- 	unsigned long pclk_rate = dsi_get_pclk_rate(mode, is_bonded_dsi);
--	u64 pclk_bpp = (u64)pclk_rate * bpp;
-+	unsigned long pclk_bpp;
- 
- 	if (lanes == 0) {
- 		pr_err("%s: forcing mdss_dsi lanes to 1\n", __func__);
-@@ -594,9 +594,9 @@ unsigned long dsi_byte_clk_get_rate(struct mipi_dsi_host *host, bool is_bonded_d
- 
- 	/* CPHY "byte_clk" is in units of 16 bits */
- 	if (msm_host->cphy_mode)
--		do_div(pclk_bpp, (16 * lanes));
-+		pclk_bpp = mult_frac(pclk_rate, bpp, 16 * lanes);
- 	else
--		do_div(pclk_bpp, (8 * lanes));
-+		pclk_bpp = mult_frac(pclk_rate, bpp, 8 * lanes);
- 
- 	return pclk_bpp;
- }
-@@ -627,15 +627,12 @@ int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- {
- 	u32 bpp = dsi_get_bpp(msm_host->format);
--	u64 pclk_bpp;
- 	unsigned int esc_mhz, esc_div;
- 	unsigned long byte_mhz;
- 
- 	dsi_calc_pclk(msm_host, is_bonded_dsi);
- 
--	pclk_bpp = (u64)msm_host->pixel_clk_rate * bpp;
--	do_div(pclk_bpp, 8);
--	msm_host->src_clk_rate = pclk_bpp;
-+	msm_host->src_clk_rate = mult_frac(msm_host->pixel_clk_rate, bpp, 8);
- 
- 	/*
- 	 * esc clock is byte clock followed by a 4 bit divider,
+Arnaud, I'll mark this patch as Rejected for now, unless it fixes an LM 
+shortage for your platform.
+
+> 
+> Jeykumar S
+>>> ---
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 10 +++++-----
+>>>   1 file changed, 5 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> index 1dc5dbe585723..dd2914726c4f6 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> @@ -53,8 +53,6 @@
+>>>   #define IDLE_SHORT_TIMEOUT    1
+>>> -#define MAX_HDISPLAY_SPLIT 1080
+>>> -
+>>>   /* timeout in frames waiting for frame done */
+>>>   #define DPU_ENCODER_FRAME_DONE_TIMEOUT_FRAMES 5
+>>> @@ -568,10 +566,12 @@ static struct msm_display_topology 
+>>> dpu_encoder_get_topology(
+>>>        */
+>>>       if (intf_count == 2)
+>>>           topology.num_lm = 2;
+>>> -    else if (!dpu_kms->catalog->caps->has_3d_merge)
+>>> -        topology.num_lm = 1;
+>>> +    else if (dpu_kms->catalog->caps->has_3d_merge &&
+>>> +         dpu_kms->catalog->mixer_count > 0 &&
+>>> +         mode->hdisplay > dpu_kms->catalog->mixer[0].sblk->maxwidth)
+>>> +        topology.num_lm = 2;
+>>>       else
+>>> -        topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 
+>>> : 1;
+>>> +        topology.num_lm = 1;
+>>>       if (crtc_state->ctm)
+>>>           topology.num_dspp = topology.num_lm;
+>>>
+>>
+
 -- 
-2.39.2
+With best wishes
+Dmitry
 
