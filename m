@@ -2,155 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BD2A070AB01
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 22:49:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E03670AB32
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 23:57:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230292AbjETUtw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 May 2023 16:49:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48126 "EHLO
+        id S229576AbjETV50 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 May 2023 17:57:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229599AbjETUtv (ORCPT
+        with ESMTP id S229464AbjETV5Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 May 2023 16:49:51 -0400
+        Sat, 20 May 2023 17:57:25 -0400
 Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D14F9134
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 May 2023 13:49:49 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f3b337e842so1464141e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 May 2023 13:49:49 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6610D10A;
+        Sat, 20 May 2023 14:57:24 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4eed764a10cso5069953e87.0;
+        Sat, 20 May 2023 14:57:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684615788; x=1687207788;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20221208; t=1684619842; x=1687211842;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=fqYU5pBw/fosyLtbu99SoFfcl2t7V6t1nbS3X58IuPE=;
-        b=k6zamuW9UmqDDFJzkuGLETMehT8oWegHya8cjibkMxfjNCbEpA4P9yHYLXe80vR7I2
-         FnY9AXD9QjWw9woVs+dfTaU9NvTz/EhBCr6+lmuSGX+tfUllo+Aw+Gj0Ac/4LNhjFbe0
-         QyaiiB+rjF5bh0PnM2F/dXXZ2st8I0aGRywO0yGnsvOmqTLHEO2l4zvwPn949gGQjW5K
-         TQyzvEsfkAnEil9Ek6U4hcWPaJ3xwUZyDEdWL3xoTf+B/eZg/3sgKhNa7Yfok6Ffp7I5
-         IRIZ2SNtdyss6APpC/amQzi6BMHm4+POnuZpI5k8dWxvoJ1T6edCU+Guw5/QUJdMvPUX
-         M1Pg==
+        bh=JPNUD7cNkzmAphyvq3rw3p2VYxxzFLzr1hHOl/6y8X4=;
+        b=Dg3Guhu+KNFu3cQ7FBwwGWE+98As2DqyGLoBuWybWO8MP+Mr6BTn+xFSrTIQ4If9aq
+         2HFfnoV6fllmcjpDQ/6QZx/l7Yj8Okn3a+tHXyV0xlqSQ3GC34+wtjawOUBMz2XrpoTn
+         qMeu1sFuQo/NUOQf3BbDZBfOKB8tZXD308F2aUQbh8+kDqi+APPyN2NhFPfMIgygpULe
+         fl0CR3YHgeB8jo3QIvBJ49JUlMws3utm9n3S1Pu8VJ4mXxHevrA5+eeaUUdoAxn0cCcU
+         p7+p/Y/5WYJXptdYEmHGCjs5iZsiiOO2hy9L7Geubr505kjzSL1UTu1AxmkD6+slMmb7
+         p0Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684615788; x=1687207788;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1684619842; x=1687211842;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fqYU5pBw/fosyLtbu99SoFfcl2t7V6t1nbS3X58IuPE=;
-        b=G/JFsP3U98X3YDposylzC0Dlvm3WFp9kYXJhaKyVYp0Epl0TS8IsHc1bzXqJe48lrH
-         xzuQ36AWOExA6fzaPVBBb36I3XGqTFHeLKloTdvDUtGWqqkxTWSitoQLW9tPIn1Vt8NE
-         GnGP1jZz4Z7d3AwAtsEnV1KrUUF7XG/uKzxSMuUjPKuuLmGUz4V8hii9zKKih3zUoko/
-         S6wO5QR3DlXVlKiA6bAdN2WHUHnlfK8bUHqj7Rjr0pfq0bbaM2tzU4vmsk8+Com4Dupn
-         r8o5NyqM1FUxba3uUtRauA1YTaoMYnAmcNqnMTI4ZIVTY6Q3Z1GR1eeojnRDt9nxY4k3
-         spRQ==
-X-Gm-Message-State: AC+VfDznN38YIMvGbprYFvKH78Iyc1V8dNqjcfnAjY2O5aTTZVm0aJiK
-        rernzvU3Zz4I472DJZIGEhlAIg==
-X-Google-Smtp-Source: ACHHUZ7l5Y3JhzRvQohtL0YM5pZWEzOewup9on2iBfVDx+SL10dj1xELlEy5Tsbk98QUjnSPNxse4A==
-X-Received: by 2002:ac2:4d10:0:b0:4f3:b6e9:3e47 with SMTP id r16-20020ac24d10000000b004f3b6e93e47mr787738lfi.53.1684615788014;
-        Sat, 20 May 2023 13:49:48 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id m14-20020a19520e000000b004f3acfa92c9sm370115lfb.277.2023.05.20.13.49.47
+        bh=JPNUD7cNkzmAphyvq3rw3p2VYxxzFLzr1hHOl/6y8X4=;
+        b=J7pEtsCKXCMOTH9QT44m/Xsc/DwF5wZPtI5vflU2V+t9FBaJ4/DL/qsHMXtJ2rB+10
+         MchRu82ynkhMjN7zmnAzWuh0BLAATcIMqGdsDlTfsl7awfTH4Q8M/KAI3HQ4S7YMDosO
+         HxSccxHDEK8RGqQovsAmr/TYTkUbScYRMucXCFr4l93kONYwrQoHszyG8nlYXRJxxVi2
+         E4mraP8EYTuzXt1cgVMGvFyYdDpHLM+TrwtuZQ+qUia6Xdm0AupVmUHwohnfwn+0T4lQ
+         XkE3org5dhupI5HWhoVZ5b1MBv3bHUrNDObcxWg8ba7Cq+XA97shlXmOxhmEvAP5Q3S3
+         Aaiw==
+X-Gm-Message-State: AC+VfDztl8XhHJa11fqvTQaM/8vWakESK46CGoUeH8IjihXS0t9UiZbE
+        CJPYm5K80oJ/reeU4K+kDUY=
+X-Google-Smtp-Source: ACHHUZ4qzQ91T8MQRk1i5zKY2ftck77yGfDPC6y1iTwsHcgFi2sSTussEM5S0RxTCBsIf8yZMz55Xg==
+X-Received: by 2002:a2e:a164:0:b0:2af:25cf:92ae with SMTP id u4-20020a2ea164000000b002af25cf92aemr2434227ljl.22.1684619842384;
+        Sat, 20 May 2023 14:57:22 -0700 (PDT)
+Received: from [192.168.0.108] (dsl-hkibng42-56733b-36.dhcp.inet.fi. [86.115.59.36])
+        by smtp.googlemail.com with ESMTPSA id w5-20020a2ea3c5000000b002ad9df0586bsm454172lje.132.2023.05.20.14.57.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 20 May 2023 13:49:47 -0700 (PDT)
-Message-ID: <50fc88f9-4304-110c-84e8-15dfdeee062f@linaro.org>
-Date:   Sat, 20 May 2023 23:49:46 +0300
+        Sat, 20 May 2023 14:57:21 -0700 (PDT)
+Message-ID: <8431c46b-bd0f-3f09-593c-591a403c7c3b@gmail.com>
+Date:   Sun, 21 May 2023 00:57:21 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [Freedreno] [PATCH 02/11] drm/msm/dpu: use the actual lm maximum
- width instead of a hardcoded value
-Content-Language: en-GB
-To:     Jeykumar Sankaran <quic_jeykumar@quicinc.com>,
-        Arnaud Vrac <avrac@freebox.fr>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org
-References: <20230419-dpu-tweaks-v1-0-d1bac46db075@freebox.fr>
- <20230419-dpu-tweaks-v1-2-d1bac46db075@freebox.fr>
- <6e807c05-a990-5692-3f84-2e4153c8c278@linaro.org>
- <905b4150-6e15-4172-10cf-19aa0ebf817c@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <905b4150-6e15-4172-10cf-19aa0ebf817c@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 0/3] Mark RPMCC XO_A critical
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230501-topic-rpmcc_xo_a-v1-0-93f18e47b607@linaro.org>
+Content-Language: en-US
+From:   =?UTF-8?Q?Matti_Lehtim=c3=a4ki?= <matti.lehtimaki@gmail.com>
+In-Reply-To: <20230501-topic-rpmcc_xo_a-v1-0-93f18e47b607@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-3.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20/04/2023 20:47, Jeykumar Sankaran wrote:
+On 1.5.2023 15.57, Konrad Dybcio wrote:
+> The Arm part is supposed to hold an permanent, active-only vote on the XO
+> resource to prevent the RPM algorithms from deciding that its main clock
+> source should be cut off.
 > 
+> Guarantee this by marking XO_A critical.
 > 
-> On 4/19/2023 3:23 PM, Dmitry Baryshkov wrote:
->> On 19/04/2023 17:41, Arnaud Vrac wrote:
->>> This avoids using two LMs instead of one when the display width is lower
->>> than the maximum supported value. For example on MSM8996/MSM8998, the
->>> actual maxwidth is 2560, so we would use two LMs for 1280x720 or
->>> 1920x1080 resolutions, while one is enough.
->>>
->>> Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
->>
->> While this looks correct (and following what we have in 4.4), later 
->> vendor kernels specify the topology explicitly. Probably we should 
->> check this with the hw guys, because it might be the following case: 
->> even though a single LM can supply the mode, it will spend more power 
->> compared to two LMs.
->>
->>
-> Yes. 2 LM split will allow the HW to run in lower mdp core clock. Can 
-> you maintain the split_threshold in the hw catalog until per mode 
-> topology is available?
-
-I don't think it warrants the trouble, unless we have a real usecase 
-when the device is short of LMs.
-
-Arnaud, I'll mark this patch as Rejected for now, unless it fixes an LM 
-shortage for your platform.
-
+> These patches are extracted from a broader series at Stephen's request:
 > 
-> Jeykumar S
->>> ---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 10 +++++-----
->>>   1 file changed, 5 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> index 1dc5dbe585723..dd2914726c4f6 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->>> @@ -53,8 +53,6 @@
->>>   #define IDLE_SHORT_TIMEOUT    1
->>> -#define MAX_HDISPLAY_SPLIT 1080
->>> -
->>>   /* timeout in frames waiting for frame done */
->>>   #define DPU_ENCODER_FRAME_DONE_TIMEOUT_FRAMES 5
->>> @@ -568,10 +566,12 @@ static struct msm_display_topology 
->>> dpu_encoder_get_topology(
->>>        */
->>>       if (intf_count == 2)
->>>           topology.num_lm = 2;
->>> -    else if (!dpu_kms->catalog->caps->has_3d_merge)
->>> -        topology.num_lm = 1;
->>> +    else if (dpu_kms->catalog->caps->has_3d_merge &&
->>> +         dpu_kms->catalog->mixer_count > 0 &&
->>> +         mode->hdisplay > dpu_kms->catalog->mixer[0].sblk->maxwidth)
->>> +        topology.num_lm = 2;
->>>       else
->>> -        topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 
->>> : 1;
->>> +        topology.num_lm = 1;
->>>       if (crtc_state->ctm)
->>>           topology.num_dspp = topology.num_lm;
->>>
->>
+> https://lore.kernel.org/linux-arm-msm/3040c836-4db8-7e7b-3ed4-6d71f0496cc5@linaro.org/
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+> Konrad Dybcio (3):
+>       clk: qcom: smd-rpm_ Make __DEFINE_CLK_SMD_RPM_BRANCH_PREFIX accept flags
+>       clk: qcom: smd-rpm: Make DEFINE_CLK_SMD_RPM_BRANCH_A accept flags
+>       clk: qcom: smd-rpm: Make BI_TCXO_AO critical
+> 
+>  drivers/clk/qcom/clk-smd-rpm.c | 18 ++++++++++--------
+>  1 file changed, 10 insertions(+), 8 deletions(-)
+> ---
+> base-commit: 92e815cf07ed24ee1c51b122f24ffcf2964b4b13
+> change-id: 20230501-topic-rpmcc_xo_a-2caec8c8dad5
+> 
+> Best regards,
 
--- 
-With best wishes
-Dmitry
+This series fixes booting samsung,matisse-wifi with 6.4 rc1 and rc2.
+
+For the series:
+
+Tested-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
 
