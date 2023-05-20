@@ -2,87 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C05770AABD
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 21:37:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8054C70AACC
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 May 2023 22:01:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229917AbjETTh0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 20 May 2023 15:37:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40968 "EHLO
+        id S229625AbjETUBK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 20 May 2023 16:01:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229589AbjETThZ (ORCPT
+        with ESMTP id S229525AbjETUBJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 20 May 2023 15:37:25 -0400
-Received: from devico.uberspace.de (devico.uberspace.de [185.26.156.185])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE5AF10F
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 May 2023 12:37:21 -0700 (PDT)
-Received: (qmail 22232 invoked by uid 990); 20 May 2023 19:37:19 -0000
-Authentication-Results: devico.uberspace.de;
-        auth=pass (plain)
+        Sat, 20 May 2023 16:01:09 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24515133
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 May 2023 13:01:06 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f24d8440c9so2573782e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 May 2023 13:01:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684612864; x=1687204864;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/m15tgiwhJVpYle1UwrR9+q7qYpgbGWpHSlEeT8UPN0=;
+        b=t1mexu5qxJBbBJltPPFF13MB0UFh19PpxpRwP6BJZkVT+8+Who4LFtvR5rRPJ6WZlf
+         aF3vLsZKI/6m47koGyPqkQ70UlK6+FCGKwPDvOrnbFC8PNQfhP0qiApWMylsy0yMZfQU
+         xvfiVtXg8VSS4yUPKmKCyljjLAAZ6erdXVUaW0xoQUQzWEmQ+vEWGSuF9Rl6a9+GwK04
+         MjvFr6NVTJcMeOwmNqAvDtJoBI3hfXJWSgSWQh37YGFopku6dwx6cXsg41nbNgzynZi7
+         bz1RCJHueQJ/y9/P6dR+NQfrYqmcGufHo/y4g0Tcz/g1fqtxutbRF7N1sgijjpkaOBXD
+         JYRw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684612864; x=1687204864;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/m15tgiwhJVpYle1UwrR9+q7qYpgbGWpHSlEeT8UPN0=;
+        b=bCPINoRXDFt91ZD5g9pZAKMcF1/R67c1LDesNVMCeXZNgPUcwrvT/0Ts6iNpdXCQn0
+         nn/hgejAFRUg0ZJdLmRyOwic4J0tbVNw85q8tFn+vkxoKGOo0o5J02oowf9MSJIlvwD7
+         DHYK6EkJ6atBJ+381xyTRwplI+9BW+T4RSlYzdhHYMU6gcV1msuGlIgzt8qdT6rWTzWg
+         FM43DxNcbexqrvqLzgaek/+irT5+EGFMxEmzZlOiMG0Wws+jTAe2i2Ed5hy3JwrCnVvo
+         raGExEjhB/+K/QEHCiSx+0IQwI4qD+o4g30HuGs5HfdJEVN91zq/r/s31QaglpQuXXBv
+         QAVA==
+X-Gm-Message-State: AC+VfDwhfuH//mVDNoKMzLQgvQOPI1O7xjwfIJJB/ireiX19132T3IU1
+        AMZ0z7EyY4qzfXvCULdOLDheSA==
+X-Google-Smtp-Source: ACHHUZ4JAZCnM9aejw/rIPOad6sYyqPsXDK/bsqCMQMPQLijIi9hM33boelYXdGRDoI5/m9y8r3qjw==
+X-Received: by 2002:a05:6512:1048:b0:4f1:276f:a25 with SMTP id c8-20020a056512104800b004f1276f0a25mr2170344lfb.5.1684612864403;
+        Sat, 20 May 2023 13:01:04 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id c4-20020a05651c014400b002ad9b741959sm418061ljd.76.2023.05.20.13.01.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 20 May 2023 13:01:03 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v2 1/2] drm/msm/dsi: remove extra call to dsi_get_pclk_rate()
+Date:   Sat, 20 May 2023 23:01:02 +0300
+Message-Id: <20230520200103.4019607-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-Date:   Sat, 20 May 2023 19:37:18 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From:   "Leonard Lausen" <leonard@lausen.nl>
-Message-ID: <776024ddf6bcf0b8774253964678fe2f16c8c6bd@lausen.nl>
-TLS-Required: No
-Subject: Hexagon 692 DSP & FastRPC declarations in sc7180 Device Tree Files
-To:     "Bjorn Andersson" <andersson@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        cros-qcom-dts-watchers@chromium.org,
-        srinivas.kandagatla@linaro.org, amahesh@qti.qualcomm.com
-X-Rspamd-Bar: /
-X-Rspamd-Report: BAYES_HAM(-0.317062) MIME_GOOD(-0.1)
-X-Rspamd-Score: -0.417062
-Received: from unknown (HELO unkown) (::1)
-        by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Sat, 20 May 2023 21:37:18 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-        d=lausen.nl; s=uberspace;
-        h=from;
-        bh=KAN0KsjOE0JQNRluGzQKMt7qUIyIYtQacjFB2T1gHnc=;
-        b=rOIixYwUf4e/MAv6BFkjEQKDzsH8tOhpURYrsox3i7A7BGZPD4rLVYyGp9O/QmFyxRqw8Tuuhh
-        50K5YCwVU2HcXP6FpRvFCDeSAkeqbBoF2pVNwdOgjhkkVRo7NEEO6G4Cw1cotTTNuaZMljBncU3b
-        oQ2T0HwyuZ2VcCovC9csjy5f4PETJIJYx6IJz0Uw13KNatAK53DyIb1Y9hqD132r6gOHnLsrRW2R
-        pndPTWDjvghZDZIS+OlmxzlqJNoiiMW4cKiJmEJlL7uUQacHkeoXo9xBd2TfB6EPul35EuGK4h4j
-        yCAtJPMeJNEMeNyvNazYn0Mn4VwvoUGHEkKgNs+fps/ig6JOFrs4gYfWbpQd6ytHJE6tGvveKN5Q
-        Wh4N5+3EDw+gN+3YQRdJMPXNxPAUOQNaV/1R25LvuCk3pQ6qYk45158lZ6N7pDKrajTA98FsEYsw
-        TBFJxHtkyd5jT/oJCiduszZ44EoT5IV9Pzf9If16wrXGQH1vM71jNANl7/YAITCy0CjPsT8gyLkd
-        7RAvadj8OWIq5F7HLWt52xQmUNjJU08unVh0sI6Odxa8OCcOups1JY2poOJS9YUGr4zqxsGLZOZL
-        5N1aD8yruc69DB7K/jg7FFqsLluMFB34Nrowa68nGO6tZIY1uI2Q/BdceSNnDR6vfDF4Q4HvsYux
-        U=
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Dear Arm64 Linux Community,
+In dsi_calc_clk_rate_v2() there is no need to call dsi_get_pclk_rate().
+This function has just been called (from dsi_calc_pclk()) and its
+result is stored at msm_host->pixel_clk_rate. Use this variable
+directly.
 
-the sc7180 device tree files are missing the declaration of the Hexagon
-692 DSP that's providing the Qualcomm AI Engine on this SoC [1] based on
-the FastRPC driver. In contrast, the sc8280xp device tree files do
-include the corresponding declarations [2] and the cDSP does show up as
-/dev/fastrpc-cdsp{,-secure} on sc8280xp based devices.
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
 
-Is there anyone in the community, perhaps folks at Linaro or QuIC that
-might have access to the hardware documentation and could help provide
-the information required to declare the DSP in the device tree? This
-should require the cDSP base address, the number of compute-cb nodes
-as well as their correct iommu and reg values.
+Changes since v1:
+ - Fix typos in commit message (Marijn)
 
-Hexagon 692 DSP supports 5 TOPS, so declaring support in the device tree
-can unlock simple, but non-trivial and interactive use-cases with, for
-example, GPT-2-Large style models compiled for Hexagon with Apache TVM.
+---
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Best regards,
-Leonard Lausen
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 961689a255c4..2b257b459974 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -633,7 +633,7 @@ int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 
+ 	dsi_calc_pclk(msm_host, is_bonded_dsi);
+ 
+-	pclk_bpp = (u64)dsi_get_pclk_rate(msm_host->mode, is_bonded_dsi) * bpp;
++	pclk_bpp = (u64)msm_host->pixel_clk_rate * bpp;
+ 	do_div(pclk_bpp, 8);
+ 	msm_host->src_clk_rate = pclk_bpp;
+ 
+-- 
+2.39.2
 
-[1]: https://www.qualcomm.com/content/dam/qcomm-martech/dm-assets/documen=
-ts/prod_brief_qcom_sd7c_2.pdf
-[2]: https://github.com/torvalds/linux/blob/v6.3/arch/arm64/boot/dts/qcom=
-/sc8280xp.dtsi#L4045-L4174
