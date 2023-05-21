@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 54D9F70AF5A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 May 2023 19:47:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A149A70AF94
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 May 2023 20:32:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230372AbjEURnR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 May 2023 13:43:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44452 "EHLO
+        id S230224AbjEUSco (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 May 2023 14:32:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231410AbjEURmy (ORCPT
+        with ESMTP id S231268AbjEURmt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 May 2023 13:42:54 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77885B8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 10:21:50 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f00c33c3d6so6039395e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 10:21:50 -0700 (PDT)
+        Sun, 21 May 2023 13:42:49 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE9DDC
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 10:21:51 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f3a873476bso3811113e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 10:21:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1684689709; x=1687281709;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=aL7y3wzagnr2HfjgObLdfzPbAHB3ifg2d+IXSFsg1QU=;
-        b=GsVAEld/oI9yK0l6q2C4BZv8SsAtZ8rQFk6ByzPLXa6jn+B1/ad44CM4llg0ulPxQp
-         R3+M+o32S9oAsar9vfkHrh8ooQ1fUCXhAsftAmxNpXqRrN9KfqMUdExKwsRroadskxdQ
-         eiSyKzsG+MrEc9JRIAb/RL/OWKxBzMBjfGdu3TtuH9ZN60qRTvHL/MgaCwKjWrnDPOla
-         olJc0iVvrAAVEq9SpSukbiN92wN4P/8FToWQ5pbQpo9PYEY2F23/OrI9OQdt9Hc2qldq
-         thwhHMx4xjciiqbR1iWkd2aI+hTDEdO+KZhxEG1yCI69llZckDPf6wvbalOFPJW5Yf2u
-         S7Mw==
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=mgxLEMOPT0gpTytEGogztOORlfKpnqmLmCCMXpvq408=;
+        b=wzgFzBSnXJrMhjby5h2pTGKhIu6U1/x0iUEq4X35063OXvW25F6HsmZFgYPCfsTTdH
+         4KPIURu/kA4l7LbUSO+gsie99WzJ2MV0N3bKTJyy9rxLkGiOOnOJ+JwgjEUzAdZBXCqz
+         1DMMZFoxUNrlHsUQmbKAW3wrTyf9CELUDp/iJqQ25h9qia+9PTtSnTXjQcnSIRKgQHzs
+         T7ifPAVzzswlHdyqaY0yUQSHDuIdrmIxPfcS2pCqLitKhUVuSf/SMeMUu6iRZejuU4Zj
+         GCXSurK3ug0WuYaAlxNwHlHXrVicLV3e/Vt3qyj5O2GhbO7p2mEkBEUtQf76SJ+v6nEP
+         rkUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1684689709; x=1687281709;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aL7y3wzagnr2HfjgObLdfzPbAHB3ifg2d+IXSFsg1QU=;
-        b=QmPPLmpqqJuuSfyRwMhS3CXi+F8v4jyjlQfdHPNu0wxF5J1sYsav4PtXa7cBaUSkzD
-         GkSqMmPYfbE/i22JDOgNPIQaOBZ+9yFARSCAa7ctjT40TNCfj+RlVfq2EYqHKV+G9yPK
-         LvEmlKhKHVmXbuob68kTPrePjlKJ76Gb0agtMt3e3YbcKhq7jZLLcgqKLZW+BmeW0/uT
-         Q9G7CAKQy+MwpmhcqR7URDCUP5COctSmteK34plz6uBTu+xNiCPOu+gpW2QkhpzAWWnB
-         2WsZeGQ09sjob+aY6i3srvE3CwVDsUKcteucWTw1uzhjzGGfUFIQWS09p8B7QQcUgrwX
-         JR8Q==
-X-Gm-Message-State: AC+VfDw2wbWH2YxJnoMHDLp2XVQ67tKw9uozBxtHZTseJniNj04lOJF5
-        MMvUmax4AXJ3wWTAmtqbgZukGQ==
-X-Google-Smtp-Source: ACHHUZ7evLh/2VEFyCJXkXaDUxmCRMJ0SsM9ISKW0W8NxY03olOJ+t6sUWJPuxoLeVF8dCRm3S4XZA==
-X-Received: by 2002:a19:ee01:0:b0:4f3:a3e0:850e with SMTP id g1-20020a19ee01000000b004f3a3e0850emr3063162lfb.35.1684689708684;
-        Sun, 21 May 2023 10:21:48 -0700 (PDT)
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=mgxLEMOPT0gpTytEGogztOORlfKpnqmLmCCMXpvq408=;
+        b=R0BDiKOkPjaeQfGG8ymDBCdA/2Dm8bsP/XIZCAXBEpR+vVhI+koKKSVY58DsGfnEC+
+         jXseJ4pJOOXJU8q8FgYcrSjPRYW+TSCltwm7oXZvpA/Cx6uCC2uU3RAZZ3fMrUpx7uvb
+         WdyTfT7rhAqBWQYkwe8AEbRssUMfqNHTPQ35od68Qx3T+TkdGYLqUmzprwZu2Yi0buvZ
+         seDHJlM4rfWt/kO6R+7HXgjbefnK4ezZj6qxeMdGppbBwu8z+VGykdpRJ4uj4Wg5/M3R
+         sbukioE6sFx/73wGFA4W1FWLbwax8eydUon6mLVtbguMcZz7bvFaGBojqAPhH/ZtB7qJ
+         OCaw==
+X-Gm-Message-State: AC+VfDynv4PrU+Rw3Z99WZ4bp21nyW02GqcYB6X9DwCWzA+NQIlCbqkC
+        +iQau4EFD34o1Dl4M9arFyccEg==
+X-Google-Smtp-Source: ACHHUZ76SVkVTVRWB/MQarR3/eH9v+LKllJsb5ZhP3TvO2FLON1AgvHtmpq3zxTjuWHIzzpcVOrifw==
+X-Received: by 2002:a05:6512:21c:b0:4f0:5b4:4863 with SMTP id a28-20020a056512021c00b004f005b44863mr2182228lfo.0.1684689709392;
+        Sun, 21 May 2023 10:21:49 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
         by smtp.gmail.com with ESMTPSA id r22-20020ac24d16000000b004f24cb9ef14sm686339lfi.47.2023.05.21.10.21.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 May 2023 10:21:48 -0700 (PDT)
+        Sun, 21 May 2023 10:21:49 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>
@@ -59,10 +60,12 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH 1/2] drm/msm/dpu: drop SSPP register dumpers
-Date:   Sun, 21 May 2023 20:21:46 +0300
-Message-Id: <20230521172147.4163085-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 2/2] drm/msm/dpu: drop debugfs regset32 support
+Date:   Sun, 21 May 2023 20:21:47 +0300
+Message-Id: <20230521172147.4163085-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230521172147.4163085-1-dmitry.baryshkov@linaro.org>
+References: <20230521172147.4163085-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -75,50 +78,151 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Drop SSPP-specifig debugfs register dumps in favour of using
-debugfs/dri/0/kms or devcoredump.
+Drop the custom DPU's dpu_debugfs_create_regset32() function. With the
+SSPP user being gone, there is no need in this function. While we are at
+it also drop unused debugfs declarations from dpu_kms.h.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 25 ---------------------
- 1 file changed, 25 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 65 -------------------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 48 ------------------
+ 2 files changed, 113 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-index bfd82c2921af..6c5ebee2f7cd 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-@@ -727,31 +727,6 @@ int _dpu_hw_sspp_init_debugfs(struct dpu_hw_sspp *hw_pipe, struct dpu_kms *kms,
- 	debugfs_create_xul("features", 0600,
- 			debugfs_root, (unsigned long *)&hw_pipe->cap->features);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index a4293dc0b61b..26597fcb2a09 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -186,71 +186,6 @@ static void dpu_debugfs_danger_init(struct dpu_kms *dpu_kms,
  
--	/* add register dump support */
--	dpu_debugfs_create_regset32("src_blk", 0400,
--			debugfs_root,
--			sblk->src_blk.base + cfg->base,
--			sblk->src_blk.len,
--			kms);
+ }
+ 
+-/*
+- * Companion structure for dpu_debugfs_create_regset32.
+- */
+-struct dpu_debugfs_regset32 {
+-	uint32_t offset;
+-	uint32_t blk_len;
+-	struct dpu_kms *dpu_kms;
+-};
 -
--	if (cfg->features & BIT(DPU_SSPP_SCALER_QSEED3) ||
--			cfg->features & BIT(DPU_SSPP_SCALER_QSEED3LITE) ||
--			cfg->features & BIT(DPU_SSPP_SCALER_QSEED2) ||
--			cfg->features & BIT(DPU_SSPP_SCALER_QSEED4))
--		dpu_debugfs_create_regset32("scaler_blk", 0400,
--				debugfs_root,
--				sblk->scaler_blk.base + cfg->base,
--				sblk->scaler_blk.len,
--				kms);
+-static int dpu_regset32_show(struct seq_file *s, void *data)
+-{
+-	struct dpu_debugfs_regset32 *regset = s->private;
+-	struct dpu_kms *dpu_kms = regset->dpu_kms;
+-	void __iomem *base;
+-	uint32_t i, addr;
 -
--	if (cfg->features & BIT(DPU_SSPP_CSC) ||
--			cfg->features & BIT(DPU_SSPP_CSC_10BIT))
--		dpu_debugfs_create_regset32("csc_blk", 0400,
--				debugfs_root,
--				sblk->csc_blk.base + cfg->base,
--				sblk->csc_blk.len,
--				kms);
+-	if (!dpu_kms->mmio)
+-		return 0;
 -
- 	debugfs_create_u32("xin_id",
- 			0400,
- 			debugfs_root,
+-	base = dpu_kms->mmio + regset->offset;
+-
+-	/* insert padding spaces, if needed */
+-	if (regset->offset & 0xF) {
+-		seq_printf(s, "[%x]", regset->offset & ~0xF);
+-		for (i = 0; i < (regset->offset & 0xF); i += 4)
+-			seq_puts(s, "         ");
+-	}
+-
+-	pm_runtime_get_sync(&dpu_kms->pdev->dev);
+-
+-	/* main register output */
+-	for (i = 0; i < regset->blk_len; i += 4) {
+-		addr = regset->offset + i;
+-		if ((addr & 0xF) == 0x0)
+-			seq_printf(s, i ? "\n[%x]" : "[%x]", addr);
+-		seq_printf(s, " %08x", readl_relaxed(base + i));
+-	}
+-	seq_puts(s, "\n");
+-	pm_runtime_put_sync(&dpu_kms->pdev->dev);
+-
+-	return 0;
+-}
+-DEFINE_SHOW_ATTRIBUTE(dpu_regset32);
+-
+-void dpu_debugfs_create_regset32(const char *name, umode_t mode,
+-		void *parent,
+-		uint32_t offset, uint32_t length, struct dpu_kms *dpu_kms)
+-{
+-	struct dpu_debugfs_regset32 *regset;
+-
+-	if (WARN_ON(!name || !dpu_kms || !length))
+-		return;
+-
+-	regset = devm_kzalloc(&dpu_kms->pdev->dev, sizeof(*regset), GFP_KERNEL);
+-	if (!regset)
+-		return;
+-
+-	/* make sure offset is a multiple of 4 */
+-	regset->offset = round_down(offset, 4);
+-	regset->blk_len = length;
+-	regset->dpu_kms = dpu_kms;
+-
+-	debugfs_create_file(name, mode, parent, regset, &dpu_regset32_fops);
+-}
+-
+ static void dpu_debugfs_sspp_init(struct dpu_kms *dpu_kms, struct dentry *debugfs_root)
+ {
+ 	struct dentry *entry = debugfs_create_dir("sspp", debugfs_root);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+index 797b4ff3e806..66209e2448d2 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+@@ -141,54 +141,6 @@ struct dpu_global_state
+ struct dpu_global_state
+ 	*__must_check dpu_kms_get_global_state(struct drm_atomic_state *s);
+ 
+-/**
+- * Debugfs functions - extra helper functions for debugfs support
+- *
+- * Main debugfs documentation is located at,
+- *
+- * Documentation/filesystems/debugfs.rst
+- *
+- * @dpu_debugfs_create_regset32: Create 32-bit register dump file
+- */
+-
+-/**
+- * dpu_debugfs_create_regset32 - Create register read back file for debugfs
+- *
+- * This function is almost identical to the standard debugfs_create_regset32()
+- * function, with the main difference being that a list of register
+- * names/offsets do not need to be provided. The 'read' function simply outputs
+- * sequential register values over a specified range.
+- *
+- * @name:   File name within debugfs
+- * @mode:   File mode within debugfs
+- * @parent: Parent directory entry within debugfs, can be NULL
+- * @offset: sub-block offset
+- * @length: sub-block length, in bytes
+- * @dpu_kms: pointer to dpu kms structure
+- */
+-void dpu_debugfs_create_regset32(const char *name, umode_t mode,
+-		void *parent,
+-		uint32_t offset, uint32_t length, struct dpu_kms *dpu_kms);
+-
+-/**
+- * dpu_debugfs_get_root - Return root directory entry for KMS's debugfs
+- *
+- * The return value should be passed as the 'parent' argument to subsequent
+- * debugfs create calls.
+- *
+- * @dpu_kms: Pointer to DPU's KMS structure
+- *
+- * Return: dentry pointer for DPU's debugfs location
+- */
+-void *dpu_debugfs_get_root(struct dpu_kms *dpu_kms);
+-
+-/**
+- * DPU info management functions
+- * These functions/definitions allow for building up a 'dpu_info' structure
+- * containing one or more "key=value\n" entries.
+- */
+-#define DPU_KMS_INFO_MAX_SIZE	4096
+-
+ /**
+  * Vblank enable/disable functions
+  */
 -- 
 2.39.2
 
