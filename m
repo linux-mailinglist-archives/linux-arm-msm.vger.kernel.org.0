@@ -2,32 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C9C570B0B0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 May 2023 23:23:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5881070B0B3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 May 2023 23:23:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231157AbjEUVXV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 May 2023 17:23:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57166 "EHLO
+        id S231197AbjEUVXX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 May 2023 17:23:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230377AbjEUVXP (ORCPT
+        with ESMTP id S230400AbjEUVXP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 21 May 2023 17:23:15 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B35E9E1
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [5.144.164.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B372AE3
         for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 14:23:13 -0700 (PDT)
 Received: from Marijn-Arch-PC.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 900B83F340;
-        Sun, 21 May 2023 23:23:05 +0200 (CEST)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 58E6F3F342;
+        Sun, 21 May 2023 23:23:11 +0200 (CEST)
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-Date:   Sun, 21 May 2023 23:23:03 +0200
-Subject: [PATCH RFC 01/10] drm/panel: Clean up SOFEF00 config dependencies
+Date:   Sun, 21 May 2023 23:23:04 +0200
+Subject: [PATCH RFC 02/10] dt-bindings: display: panel: Describe Sony
+ Xperia XZ3's LGD panel
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230521-drm-panels-sony-v1-1-541c341d6bee@somainline.org>
+Message-Id: <20230521-drm-panels-sony-v1-2-541c341d6bee@somainline.org>
 References: <20230521-drm-panels-sony-v1-0-541c341d6bee@somainline.org>
 In-Reply-To: <20230521-drm-panels-sony-v1-0-541c341d6bee@somainline.org>
 To:     Neil Armstrong <neil.armstrong@linaro.org>,
@@ -54,43 +55,99 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         Jessica Zhang <quic_jesszhan@quicinc.com>,
         Marijn Suijten <marijn.suijten@somainline.org>
 X-Mailer: b4 0.12.2
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-As per the config name this Display IC features a DSI command-mode
-interface (or the command to switch to video mode is not
-known/documented) and does not use any of the video-mode helper
-utilities, hence should not select VIDEOMODE_HELPERS.  In addition it
-uses devm_gpiod_get() and related functions from GPIOLIB.
+Document the LG-Display OLED panel found in the Sony Xperia XZ3.
 
-Fixes: 5933baa36e26 ("drm/panel/samsung-sofef00: Add panel for OnePlus 6/T devices")
 Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 ---
- drivers/gpu/drm/panel/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../bindings/display/panel/sony,akatsuki-lgd.yaml  | 71 ++++++++++++++++++++++
+ 1 file changed, 71 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index 2b9d6db7860ba..67ef898d133f2 100644
---- a/drivers/gpu/drm/panel/Kconfig
-+++ b/drivers/gpu/drm/panel/Kconfig
-@@ -608,10 +608,10 @@ config DRM_PANEL_SAMSUNG_S6E8AA0
- 
- config DRM_PANEL_SAMSUNG_SOFEF00
- 	tristate "Samsung sofef00/s6e3fc2x01 OnePlus 6/6T DSI cmd mode panels"
-+	depends on GPIOLIB
- 	depends on OF
- 	depends on DRM_MIPI_DSI
- 	depends on BACKLIGHT_CLASS_DEVICE
--	select VIDEOMODE_HELPERS
- 	help
- 	  Say Y or M here if you want to enable support for the Samsung AMOLED
- 	  command mode panels found in the OnePlus 6/6T smartphones.
+diff --git a/Documentation/devicetree/bindings/display/panel/sony,akatsuki-lgd.yaml b/Documentation/devicetree/bindings/display/panel/sony,akatsuki-lgd.yaml
+new file mode 100644
+index 0000000000000..523e580b70c7d
+--- /dev/null
++++ b/Documentation/devicetree/bindings/display/panel/sony,akatsuki-lgd.yaml
+@@ -0,0 +1,71 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/display/panel/sony,akatsuki-lgd.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Sony Xperia XZ3 LG Display 1440x2880 6.0" OLED DSI panel
++
++maintainers:
++  - Marijn Suijten <marijn.suijten@somainline.org>
++
++description: |
++  This is an unnamed 6.0" 1440x2880 (9:18 aspect ratio) 60 hz panel
++  produced by LG Display, found in the Sony Xperia XZ3 smartphone.
++  It is always programmed with DSI 1.1. enabled.
++
++  The assembly features an Atmel maXTouch digitizer, described separately
++  as atmel,maxtouch.
++
++allOf:
++  - $ref: panel-common.yaml#
++
++properties:
++  compatible:
++    const: sony,akatsuki-lgd
++
++  port: true
++
++  reg:
++    maxItems: 1
++    description: DSI virtual channel
++
++  reset-gpios: true
++
++  vddio-supply:
++    description: I/O voltage supply (1.8V)
++
++required:
++  - compatible
++  - port
++  - reg
++  - reset-gpios
++  - vddio-supply
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/gpio/gpio.h>
++
++    dsi {
++        #address-cells = <1>;
++        #size-cells = <0>;
++        panel@0 {
++            compatible = "sony,akatsuki-lgd";
++            reg = <0>;
++
++            vddio-supply = <&vreg_l14a_1p8>;
++
++            reset-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
++
++            port {
++                panel_in: endpoint {
++                    remote-endpoint = <&dsi0_out>;
++                };
++            };
++        };
++    };
++
++...
++
 
 -- 
 2.40.1
