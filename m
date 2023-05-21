@@ -2,61 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 32BEA70AF84
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 May 2023 20:31:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F02C570AFB9
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 May 2023 21:04:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229715AbjEUSb0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 May 2023 14:31:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50106 "EHLO
+        id S230120AbjEUTEu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 May 2023 15:04:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231771AbjEUSaD (ORCPT
+        with ESMTP id S229890AbjEUTEs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 May 2023 14:30:03 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73903BD
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 11:29:50 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id 46e09a7af769-6af6f83fc49so765604a34.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 11:29:50 -0700 (PDT)
+        Sun, 21 May 2023 15:04:48 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93671C7
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 12:04:45 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f380cd1019so5973764e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 12:04:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684693790; x=1687285790;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8YdKvk1s42m4/YyjaeLQo6Rg9ti5aRTm6YguiBgoAog=;
-        b=Erbz7tA5D0m+MvvR7Ywy2y0rf0TYdz1OZaBimm9pJAQCLdc3a+p/8YHsDgUN5KpOt4
-         2kqNEfEOzCtJF04UxYmE57duLHedYwl8EG21VKJ7/yU1zH8hUQazEdwR18/uKsn7+vcN
-         FRFW45DaMYsY51lucjDnrzh2yowTtp/0fQeeIxO9IB1Uhe6dL+8I5LFt0MyNuwgLgseH
-         TixXH/78EprKDCJgcbiYUkHDcAw/Qk2sY2hUGsmeeCB70UYTX4o772xLoqkGf/RByvfN
-         WHN4TmajUR6i6KymqAddi3H1Dc4xyWhVdlk+NlUMrsagJbcB0NgoMh/rvKyQyU8euwvQ
-         tUyA==
+        d=linaro.org; s=google; t=1684695884; x=1687287884;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EjzD0RJieB3kY7LZTu5fQEwWkRRa+/As0v5gHQMzbZM=;
+        b=fBqdo85gKd1m+mY0hhENEGL5F+mfe30Ib7at50gTSu9D1ytt9kh5iqN9qybuljeW3P
+         SHYzCTAeWd+3JfIgN2zdzyIjShDzFRcE+qNp72ZEStDZiiZhxVIx8ejAIHb70ajM6Tdl
+         Ae5rcOZAcaqmFNaRgXUNRAc8VxOcrUDN7Y0jDDH9MTczACbLTKW2cZ4/ywIN63SXeNOs
+         uJ22WlmVrSGQ2VXCrBkmCSJBhevkHKXDc1/B22j6JDV86p1JlfAYMT3PkMV5Uh3uoILU
+         eTBVQQp+SLIoQ5WslWX1cMADRygzMHX5AgYxHuGIhctrL3p9jquW0j4CybeDkn7fXvsV
+         ic4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684693790; x=1687285790;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1684695884; x=1687287884;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8YdKvk1s42m4/YyjaeLQo6Rg9ti5aRTm6YguiBgoAog=;
-        b=Fi50IHxVKrbXFWvV6n3OJEIE7fydOqI1/qHLTGLSxiNWwLg9iBNosZ0a8nYcoJnl38
-         wfySw799K7+LmGNJY5Ib1YdWG/HNLqVrbJHZxIg8yAdZLBfepmWrg35c504G5+1BJJEt
-         8BRdsvcP/n56V9WelB84UmpnoKtvxCxgGq6g8vy8jAbmPO/bo7tz81MrW6SeHhZVU9Ah
-         XvYD8LeVI2FtJMcdacSLaIoU0L4QFqirxag7US9d1zRmdIeUA1ui2aG6v750arNPA+Nf
-         zgGFSwIfhWEth3pnEi8+qcosVlTmJ2DyHgTLRcDKfqnUb+RnGr8E6FqirX07vvy88YJu
-         NJOw==
-X-Gm-Message-State: AC+VfDzbflmflINP/BZUoFTwu52QcDwCVBCxs+fmCjyfZiVeho0JkQpg
-        NlBOeQj9TzdDRO/QbhZOYSPmTWoHIiHbvhInkJ0r9g==
-X-Google-Smtp-Source: ACHHUZ6tUPGnoQNqWfClyhqKpcD4Og/NRsCoCFuUaqfRk4LTXdDwhB41w0GIzYb4N2zjTwdmXRsKwnqf9JYItUOvo1Y=
-X-Received: by 2002:a05:6870:b145:b0:19d:6f68:c3f with SMTP id
- a5-20020a056870b14500b0019d6f680c3fmr1170765oal.33.1684693789681; Sun, 21 May
- 2023 11:29:49 -0700 (PDT)
+        bh=EjzD0RJieB3kY7LZTu5fQEwWkRRa+/As0v5gHQMzbZM=;
+        b=eFNu1eibgxqlByO0Frzl9oOmAGVV9JOf1nQN7e9BGg2p3nv3VAtXBr9CtzJSj3v+xA
+         pcCrjCKaupOMfudDab4Ut6MuhKIHFJiFgng2nJ/oWsCeeMGd5BGIMfeOKXAhDXtLvXDx
+         GAn10Sh7JtcFsxUhvuK+qNIVIj5rBUzP4ieyualzzYCtGL2Zvmrj7Qd3OuhUzMhBDytq
+         WKpiExZubJRV5zuDc7q9eSxA3HL1yhi+3/BhCpILWgaZAjhtGvckdJL3sicydBtEE0Ao
+         amGLdF/yCzuEYfzYVV1Ux1tbiBjPnP/u65yrqkfS5TsRkJP21Mm7wnz74QUfx8I2Yw/J
+         pSWA==
+X-Gm-Message-State: AC+VfDxOCk2htzzEwAB7D8NETBrwzFf8kJ6ZRLX8daGlkK/r3rOcVED3
+        Cng9iV+FZ1bRMB5eTV3yaGOcmw==
+X-Google-Smtp-Source: ACHHUZ6MkqQYNTM5Kb99NAfhmkraCoTJLYQEE2zFx66bwqaRhqvqi1ows4vzJNfc9YwvcKYzxbB+yw==
+X-Received: by 2002:ac2:4a7a:0:b0:4ed:b048:b98a with SMTP id q26-20020ac24a7a000000b004edb048b98amr2685363lfp.6.1684695883871;
+        Sun, 21 May 2023 12:04:43 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id r22-20020ac252b6000000b004f1d884a4efsm694495lfm.242.2023.05.21.12.04.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 21 May 2023 12:04:43 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 0/2] drm/msm/dpu: yet another attempt at cleaning up encoder's debugfs
+Date:   Sun, 21 May 2023 22:04:40 +0300
+Message-Id: <20230521190442.8293-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-References: <20230519135803.13850-1-manivannan.sadhasivam@linaro.org>
-In-Reply-To: <20230519135803.13850-1-manivannan.sadhasivam@linaro.org>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Sun, 21 May 2023 20:27:45 +0200
-Message-ID: <CAMZdPi_QRi_n7=Do_P6E3Xwk=zQ3nS3jpiFBNApCvWd4v=LSCw@mail.gmail.com>
-Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add support for IP_SW0 channels
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_krichai@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -67,78 +75,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 19 May 2023 at 15:58, Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> IP_SW0 channels are used to transfer data over the networking interface
-> between MHI endpoint and the host. Define the channels in the MHI v1
-> channel config along with dedicated event rings.
->
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Simplify dpu_encoder slightly by using drm_debugfs_add_file().
 
-Assuming we can extend the number of event rings (and dedicated irqs)
-without hitting any hardware limitation on the device side?
+Dmitry Baryshkov (2):
+  drm/msm/dpu: drop (mostly) unused DPU_NAME_SIZE define
+  drm/msm/dpu: switch dpu_encoder to use drm_debugfs_add_file()
 
-Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 40 ++++++---------------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |  2 --
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   |  2 --
+ 3 files changed, 11 insertions(+), 33 deletions(-)
 
+-- 
+2.39.2
 
-
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 26 ++++++++++++++++++++++----
->  1 file changed, 22 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index db0a0b062d8e..70e37c490150 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -212,6 +212,19 @@ struct mhi_pci_dev_info {
->                 .offload_channel = false,       \
->         }
->
-> +#define MHI_EVENT_CONFIG_SW_DATA(ev_ring, el_count) \
-> +       {                                       \
-> +               .num_elements = el_count,       \
-> +               .irq_moderation_ms = 0,         \
-> +               .irq = (ev_ring) + 1,           \
-> +               .priority = 1,                  \
-> +               .mode = MHI_DB_BRST_DISABLE,    \
-> +               .data_type = MHI_ER_DATA,       \
-> +               .hardware_event = false,        \
-> +               .client_managed = false,        \
-> +               .offload_channel = false,       \
-> +       }
-> +
->  #define MHI_EVENT_CONFIG_HW_DATA(ev_ring, el_count, ch_num) \
->         {                                       \
->                 .num_elements = el_count,       \
-> @@ -237,8 +250,10 @@ static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
->         MHI_CHANNEL_CONFIG_DL_AUTOQUEUE(21, "IPCR", 8, 0),
->         MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
->         MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
-> -       MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 2),
-> -       MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 3),
-> +       MHI_CHANNEL_CONFIG_UL(46, "IP_SW0", 64, 2),
-> +       MHI_CHANNEL_CONFIG_DL(47, "IP_SW0", 64, 3),
-> +       MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 4),
-> +       MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 5),
->  };
->
->  static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
-> @@ -246,9 +261,12 @@ static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
->         MHI_EVENT_CONFIG_CTRL(0, 64),
->         /* DIAG dedicated event ring */
->         MHI_EVENT_CONFIG_DATA(1, 128),
-> +       /* Software channels dedicated event ring */
-> +       MHI_EVENT_CONFIG_SW_DATA(2, 64),
-> +       MHI_EVENT_CONFIG_SW_DATA(3, 64),
->         /* Hardware channels request dedicated hardware event rings */
-> -       MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-> -       MHI_EVENT_CONFIG_HW_DATA(3, 2048, 101)
-> +       MHI_EVENT_CONFIG_HW_DATA(4, 1024, 100),
-> +       MHI_EVENT_CONFIG_HW_DATA(5, 2048, 101)
->  };
->
->  static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
-> --
-> 2.25.1
->
