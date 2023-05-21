@@ -2,74 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A149A70AF94
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 May 2023 20:32:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 70C8670AF88
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 May 2023 20:32:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230224AbjEUSco (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 May 2023 14:32:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44254 "EHLO
+        id S230100AbjEUScO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 May 2023 14:32:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231268AbjEURmt (ORCPT
+        with ESMTP id S231392AbjEURu0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 May 2023 13:42:49 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE9DDC
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 10:21:51 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f3a873476bso3811113e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 10:21:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684689709; x=1687281709;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mgxLEMOPT0gpTytEGogztOORlfKpnqmLmCCMXpvq408=;
-        b=wzgFzBSnXJrMhjby5h2pTGKhIu6U1/x0iUEq4X35063OXvW25F6HsmZFgYPCfsTTdH
-         4KPIURu/kA4l7LbUSO+gsie99WzJ2MV0N3bKTJyy9rxLkGiOOnOJ+JwgjEUzAdZBXCqz
-         1DMMZFoxUNrlHsUQmbKAW3wrTyf9CELUDp/iJqQ25h9qia+9PTtSnTXjQcnSIRKgQHzs
-         T7ifPAVzzswlHdyqaY0yUQSHDuIdrmIxPfcS2pCqLitKhUVuSf/SMeMUu6iRZejuU4Zj
-         GCXSurK3ug0WuYaAlxNwHlHXrVicLV3e/Vt3qyj5O2GhbO7p2mEkBEUtQf76SJ+v6nEP
-         rkUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684689709; x=1687281709;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mgxLEMOPT0gpTytEGogztOORlfKpnqmLmCCMXpvq408=;
-        b=R0BDiKOkPjaeQfGG8ymDBCdA/2Dm8bsP/XIZCAXBEpR+vVhI+koKKSVY58DsGfnEC+
-         jXseJ4pJOOXJU8q8FgYcrSjPRYW+TSCltwm7oXZvpA/Cx6uCC2uU3RAZZ3fMrUpx7uvb
-         WdyTfT7rhAqBWQYkwe8AEbRssUMfqNHTPQ35od68Qx3T+TkdGYLqUmzprwZu2Yi0buvZ
-         seDHJlM4rfWt/kO6R+7HXgjbefnK4ezZj6qxeMdGppbBwu8z+VGykdpRJ4uj4Wg5/M3R
-         sbukioE6sFx/73wGFA4W1FWLbwax8eydUon6mLVtbguMcZz7bvFaGBojqAPhH/ZtB7qJ
-         OCaw==
-X-Gm-Message-State: AC+VfDynv4PrU+Rw3Z99WZ4bp21nyW02GqcYB6X9DwCWzA+NQIlCbqkC
-        +iQau4EFD34o1Dl4M9arFyccEg==
-X-Google-Smtp-Source: ACHHUZ76SVkVTVRWB/MQarR3/eH9v+LKllJsb5ZhP3TvO2FLON1AgvHtmpq3zxTjuWHIzzpcVOrifw==
-X-Received: by 2002:a05:6512:21c:b0:4f0:5b4:4863 with SMTP id a28-20020a056512021c00b004f005b44863mr2182228lfo.0.1684689709392;
-        Sun, 21 May 2023 10:21:49 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id r22-20020ac24d16000000b004f24cb9ef14sm686339lfi.47.2023.05.21.10.21.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 May 2023 10:21:49 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 2/2] drm/msm/dpu: drop debugfs regset32 support
-Date:   Sun, 21 May 2023 20:21:47 +0300
-Message-Id: <20230521172147.4163085-2-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230521172147.4163085-1-dmitry.baryshkov@linaro.org>
-References: <20230521172147.4163085-1-dmitry.baryshkov@linaro.org>
+        Sun, 21 May 2023 13:50:26 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C48921720;
+        Sun, 21 May 2023 10:44:47 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34LHcPAL017651;
+        Sun, 21 May 2023 17:44:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=ztr/IrR1R/TohKTPGnGacnHC39isrkFF359v/DkDe8w=;
+ b=NcHUn/ehjZuieWfTQGG6vdUs5zHJbxI6HOjsSnsNQwzxwVN6kNYuw6kr0mWBXshuGily
+ +UUQ3gkrFXbHeLZZmWauL4RwxlxPDtwg4pYVY6ulNC/tfnk7v7KnS3gJvogVs/JPopHn
+ 9gCV4eO8TniX9dtjOZYOLzFQkrCy5KfIQa1BZJrTq6qZhW5LWTWZ4dP2YUPF/D9/c8wm
+ O4cL22IJT18cJTWlZj01QlU5o3VYIjpQfYLgBH3VNr6CfNx9hHEv9nlis6W3ZdkbWuM+
+ ozvTKAlXfUh0xQZ+S5PbT0XxrSfSffvuEWG0Taf1lWU8lq+VE3l07B/gCrHmfUVPMja6 cg== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qpqctsy02-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 21 May 2023 17:44:40 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34LHidtL030413
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 21 May 2023 17:44:39 GMT
+Received: from [10.216.45.27] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Sun, 21 May
+ 2023 10:44:31 -0700
+Message-ID: <202568ee-5bf0-1726-820a-5fb747969893@quicinc.com>
+Date:   Sun, 21 May 2023 23:14:27 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH 01/11] dt-bindings: remoteproc: qcom: Add support for
+ multipd model
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh@kernel.org>
+CC:     <quic_sjaganat@quicinc.com>, <quic_gurus@quicinc.com>,
+        <quic_gokulsri@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <andersson@kernel.org>, <jassisinghbrar@gmail.com>,
+        <konrad.dybcio@linaro.org>, <quic_eberman@quicinc.com>,
+        <quic_poovendh@quicinc.com>, <robimarko@gmail.com>,
+        <mturquette@baylibre.com>, <mathieu.poirier@linaro.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <quic_arajkuma@quicinc.com>,
+        <sboyd@kernel.org>, <robh+dt@kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <loic.poulain@linaro.org>, <quic_anusha@quicinc.com>,
+        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <agross@kernel.org>,
+        <linux-remoteproc@vger.kernel.org>
+References: <1678164097-13247-1-git-send-email-quic_mmanikan@quicinc.com>
+ <1678164097-13247-2-git-send-email-quic_mmanikan@quicinc.com>
+ <167819522915.3831.12765243745569076133.robh@kernel.org>
+ <9de5629f-0a69-7b5b-c312-ab6fe19d60f8@quicinc.com>
+ <fdb8e5a9-d8a0-1881-894f-1202ceefcc21@linaro.org>
+From:   Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+In-Reply-To: <fdb8e5a9-d8a0-1881-894f-1202ceefcc21@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: BvZwTcxkdB5K8xursqQddjOTT8QXNbi9
+X-Proofpoint-GUID: BvZwTcxkdB5K8xursqQddjOTT8QXNbi9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-21_13,2023-05-17_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 bulkscore=0
+ suspectscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
+ mlxlogscore=740 clxscore=1015 lowpriorityscore=0 phishscore=0 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305210158
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,151 +96,73 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Drop the custom DPU's dpu_debugfs_create_regset32() function. With the
-SSPP user being gone, there is no need in this function. While we are at
-it also drop unused debugfs declarations from dpu_kms.h.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 65 -------------------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 48 ------------------
- 2 files changed, 113 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index a4293dc0b61b..26597fcb2a09 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -186,71 +186,6 @@ static void dpu_debugfs_danger_init(struct dpu_kms *dpu_kms,
- 
- }
- 
--/*
-- * Companion structure for dpu_debugfs_create_regset32.
-- */
--struct dpu_debugfs_regset32 {
--	uint32_t offset;
--	uint32_t blk_len;
--	struct dpu_kms *dpu_kms;
--};
--
--static int dpu_regset32_show(struct seq_file *s, void *data)
--{
--	struct dpu_debugfs_regset32 *regset = s->private;
--	struct dpu_kms *dpu_kms = regset->dpu_kms;
--	void __iomem *base;
--	uint32_t i, addr;
--
--	if (!dpu_kms->mmio)
--		return 0;
--
--	base = dpu_kms->mmio + regset->offset;
--
--	/* insert padding spaces, if needed */
--	if (regset->offset & 0xF) {
--		seq_printf(s, "[%x]", regset->offset & ~0xF);
--		for (i = 0; i < (regset->offset & 0xF); i += 4)
--			seq_puts(s, "         ");
--	}
--
--	pm_runtime_get_sync(&dpu_kms->pdev->dev);
--
--	/* main register output */
--	for (i = 0; i < regset->blk_len; i += 4) {
--		addr = regset->offset + i;
--		if ((addr & 0xF) == 0x0)
--			seq_printf(s, i ? "\n[%x]" : "[%x]", addr);
--		seq_printf(s, " %08x", readl_relaxed(base + i));
--	}
--	seq_puts(s, "\n");
--	pm_runtime_put_sync(&dpu_kms->pdev->dev);
--
--	return 0;
--}
--DEFINE_SHOW_ATTRIBUTE(dpu_regset32);
--
--void dpu_debugfs_create_regset32(const char *name, umode_t mode,
--		void *parent,
--		uint32_t offset, uint32_t length, struct dpu_kms *dpu_kms)
--{
--	struct dpu_debugfs_regset32 *regset;
--
--	if (WARN_ON(!name || !dpu_kms || !length))
--		return;
--
--	regset = devm_kzalloc(&dpu_kms->pdev->dev, sizeof(*regset), GFP_KERNEL);
--	if (!regset)
--		return;
--
--	/* make sure offset is a multiple of 4 */
--	regset->offset = round_down(offset, 4);
--	regset->blk_len = length;
--	regset->dpu_kms = dpu_kms;
--
--	debugfs_create_file(name, mode, parent, regset, &dpu_regset32_fops);
--}
--
- static void dpu_debugfs_sspp_init(struct dpu_kms *dpu_kms, struct dentry *debugfs_root)
- {
- 	struct dentry *entry = debugfs_create_dir("sspp", debugfs_root);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-index 797b4ff3e806..66209e2448d2 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-@@ -141,54 +141,6 @@ struct dpu_global_state
- struct dpu_global_state
- 	*__must_check dpu_kms_get_global_state(struct drm_atomic_state *s);
- 
--/**
-- * Debugfs functions - extra helper functions for debugfs support
-- *
-- * Main debugfs documentation is located at,
-- *
-- * Documentation/filesystems/debugfs.rst
-- *
-- * @dpu_debugfs_create_regset32: Create 32-bit register dump file
-- */
--
--/**
-- * dpu_debugfs_create_regset32 - Create register read back file for debugfs
-- *
-- * This function is almost identical to the standard debugfs_create_regset32()
-- * function, with the main difference being that a list of register
-- * names/offsets do not need to be provided. The 'read' function simply outputs
-- * sequential register values over a specified range.
-- *
-- * @name:   File name within debugfs
-- * @mode:   File mode within debugfs
-- * @parent: Parent directory entry within debugfs, can be NULL
-- * @offset: sub-block offset
-- * @length: sub-block length, in bytes
-- * @dpu_kms: pointer to dpu kms structure
-- */
--void dpu_debugfs_create_regset32(const char *name, umode_t mode,
--		void *parent,
--		uint32_t offset, uint32_t length, struct dpu_kms *dpu_kms);
--
--/**
-- * dpu_debugfs_get_root - Return root directory entry for KMS's debugfs
-- *
-- * The return value should be passed as the 'parent' argument to subsequent
-- * debugfs create calls.
-- *
-- * @dpu_kms: Pointer to DPU's KMS structure
-- *
-- * Return: dentry pointer for DPU's debugfs location
-- */
--void *dpu_debugfs_get_root(struct dpu_kms *dpu_kms);
--
--/**
-- * DPU info management functions
-- * These functions/definitions allow for building up a 'dpu_info' structure
-- * containing one or more "key=value\n" entries.
-- */
--#define DPU_KMS_INFO_MAX_SIZE	4096
--
- /**
-  * Vblank enable/disable functions
-  */
--- 
-2.39.2
+On 5/3/2023 9:57 PM, Krzysztof Kozlowski wrote:
+> On 03/05/2023 12:59, Manikanta Mylavarapu wrote:
+>>
+>>
+>> On 3/7/2023 6:53 PM, Rob Herring wrote:
+>>>
+>>> On Tue, 07 Mar 2023 10:11:27 +0530, Manikanta Mylavarapu wrote:
+>>>> Add new binding document for multipd model remoteproc.
+>>>> IPQ5018, IPQ9574 follows multipd model.
+>>>>
+>>>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>>>> ---
+>>>>    .../bindings/remoteproc/qcom,multipd-pil.yaml | 282 ++++++++++++++++++
+>>>>    1 file changed, 282 insertions(+)
+>>>>    create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
+>>>>
+>>>
+>>> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+>>> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+>>>
+>>> yamllint warnings/errors:
+>>>
+>>> dtschema/dtc warnings/errors:
+>>> Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.example.dts:22:18: fatal error: dt-bindings/clock/qcom,gcc-ipq5018.h: No such file or directory
+>>>      22 |         #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
+>>>         |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+>>> compilation terminated.
+>>> make[1]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.example.dtb] Error 1
+>>> make[1]: *** Waiting for unfinished jobs....
+>>> make: *** [Makefile:1512: dt_binding_check] Error 2
+>>>
+>>> doc reference errors (make refcheckdocs):
+>>>
+>>> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1678164097-13247-2-git-send-email-quic_mmanikan@quicinc.com
+>>>
+>>> The base for the series is generally the latest rc1. A different dependency
+>>> should be noted in *this* patch.
+>>>
+>>> If you already ran 'make dt_binding_check' and didn't see the above
+>>> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+>>> date:
+>>>
+>>> pip3 install dtschema --upgrade
+>>>
+>>> Please check and re-submit after running the above command yourself. Note
+>>> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+>>> your schema. However, it must be unset to test all examples with your schema.
+>>>
+>>
+>> I mentioned dependency link
+>> (https://lore.kernel.org/linux-arm-msm/20220621161126.15883-1-quic_srichara@quicinc.com/)
+>> in cover page patch because it's required for entire series. I will add
+>> dependency link's and raise new patchset.
+> 
+> Is the dependency merged for v6.4-rc1? Looks not, so this means the
+> patch cannot be merged for next three months.
+> 
+> Why do you need any dependency here in this binding?
+> 
+> Best regards,
+> Krzysztof
+> 
 
+Since i removed gcc clocks from DTS nodes, dt-bindings are not required.
+I will remove it.
+
+Thanks & Regards,
+Manikanta.
