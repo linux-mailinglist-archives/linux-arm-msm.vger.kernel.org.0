@@ -2,143 +2,242 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4C4770B0FF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 May 2023 23:51:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6691270B15A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 00:07:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229715AbjEUVvh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 May 2023 17:51:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35590 "EHLO
+        id S230119AbjEUWHh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 May 2023 18:07:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229718AbjEUVvg (ORCPT
+        with ESMTP id S229528AbjEUWHg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 May 2023 17:51:36 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A43DDB
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 14:51:35 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2af2e908163so17345711fa.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 14:51:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684705893; x=1687297893;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=kdcfr+Mqe+nejGnID0ER1VhX+tnCrYLDf1fHXZd1m5U=;
-        b=h0YmQE4DZlcAoSXrJx+qa03mKVEVBFzc41z3zopqefnykjW46h18ji9/2nd+1yRHaP
-         asANOLz5I72uQvPxHiKNRIjduLepWevMK5vqzXWrz8wx5picu5+GmDMFQnIFMq5AqfgP
-         S5m7avBpdKUSWhFwktBj6q7KvNNNHbfDUgkwEvUl20qsfhpJLhwj4GW6bEwh/h3FahrX
-         OnC222uKGPUp6B6mPBhcGc/hcmHKZhBmSEOQJWCHhFl1xyOzAtWR62T1J+ummyviEB35
-         fyJxRfb2dIKuQhUmy7xmVKmNnZY677DFJl1x3Hc1Vp+igkgNUMXnDrtwlXhD5I6VDmxq
-         t8ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684705893; x=1687297893;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=kdcfr+Mqe+nejGnID0ER1VhX+tnCrYLDf1fHXZd1m5U=;
-        b=PYWkHUopZpSQdHeaf5yf4J5QTwoulUH3ivgFBwm3SSd61WfImDCyVQM3e1cAuNKl9c
-         kABnk/O7MAV+YxN6vWPmDo7O/GMmLz1hzMZEYWJ6QXXzkji0ISE+xuYjy/lBP9FNkc95
-         pRei0/YH+8jpruDLXCsukiQ0CSUhxBjdAI1UH639g+01oF6+KP7Zwz4yC20z3jwPrl24
-         R+OYGtJ7dSCdKRnELO25+tvvyKRzSI85uO76+c/M7P5kPXW0riqnqD2jXF15rmhFhn3o
-         ZdAimpwnWlgRbUOwXxcT0+wzui9m/daZY8EDJkKkqKSGOVMhPn6R2a2s5C0D9bhb3Z8b
-         hrVA==
-X-Gm-Message-State: AC+VfDxH2paTfgI4ljKsOWYXAWPHVkCfNAf4e9t/kn6M0D6OrIdHYLRX
-        GTjkiw+zUVl0b4c8lw5HbjjSYg==
-X-Google-Smtp-Source: ACHHUZ5KbqwqTIOY5qFN3b7VMVAXJqTU1RHjkNFgfuy0TNIJ999sF7RpjYR5HKC07/5BpEiloXsagg==
-X-Received: by 2002:a2e:3213:0:b0:2a9:f114:f168 with SMTP id y19-20020a2e3213000000b002a9f114f168mr3093590ljy.46.1684705893285;
-        Sun, 21 May 2023 14:51:33 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id o3-20020a2eb443000000b002aeeda05382sm858204ljm.29.2023.05.21.14.51.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 21 May 2023 14:51:32 -0700 (PDT)
-Message-ID: <25774b84-701a-5ffa-17ed-e498b594a866@linaro.org>
-Date:   Mon, 22 May 2023 00:51:32 +0300
+        Sun, 21 May 2023 18:07:36 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80E8FDC;
+        Sun, 21 May 2023 15:07:35 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34LM08BE003381;
+        Sun, 21 May 2023 22:07:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=+63/G/Tv/MrcI5FFFsDFDEW053aArl4gLPbcVipYQ/I=;
+ b=ZjssRMTFpesSGNTyncoKjKunNIuZOaWsNoYAPnF0i5Kvf17qPPlbbX5ra5xYz5HIttGZ
+ 7J5lrWFWsgIvqzsMFly2EZj1Pt+Nqy8fdTe9IGfomX1jtBGgnDZh1Lp+uBgsHvLi2mwQ
+ 3GzCkOXmDnwi1FCVa0nbxG4JnTBdrfpvAU82WOQjvz6WVZ17bd24ax0mdu9bZT4UWVRV
+ Yzc6964KvVAGApYq7UIXYLvve590DjKszl32dCh/NTMqSB1huJeL+g3rnKQ382GkpwS5
+ P/su2SIcL29aXSV9fe0NGvqKztsUgqjhhE1CNDl0YUfVZ/s55OHE61W7FBjlBHDTnViO +w== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qppa1a98t-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 21 May 2023 22:07:24 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34LM7NgP023683
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 21 May 2023 22:07:23 GMT
+Received: from [10.216.45.27] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Sun, 21 May
+ 2023 15:07:16 -0700
+Message-ID: <24826ca7-a9fa-9602-39ba-870021150c8d@quicinc.com>
+Date:   Mon, 22 May 2023 03:37:12 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 0/6] drm/msm/dpu: use UBWC data from MDSS driver
-Content-Language: en-GB
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230521171026.4159495-1-dmitry.baryshkov@linaro.org>
- <CAKXuJqgf-MeQe8kwmBaz7DBP9sxsWHr=AZmsbRfQgVKGg=6iUQ@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <CAKXuJqgf-MeQe8kwmBaz7DBP9sxsWHr=AZmsbRfQgVKGg=6iUQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH 08/11] remoteproc: qcom: Add Hexagon based multipd rproc
+ driver
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <jassisinghbrar@gmail.com>,
+        <mathieu.poirier@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <quic_gurus@quicinc.com>,
+        <loic.poulain@linaro.org>, <quic_eberman@quicinc.com>,
+        <robimarko@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <quic_gokulsri@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
+        <quic_anusha@quicinc.com>, <quic_poovendh@quicinc.com>
+References: <1678164097-13247-1-git-send-email-quic_mmanikan@quicinc.com>
+ <1678164097-13247-9-git-send-email-quic_mmanikan@quicinc.com>
+ <366ed962-dedb-0e88-036d-a1a806d0b589@quicinc.com>
+ <f63c86fd-4c39-7523-1971-6d8df91afcf4@quicinc.com>
+ <CAA8EJpoH51ajGvSdb1VBmtkKdLUnVGNhoBay93whz+hJh4ApXA@mail.gmail.com>
+From:   Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+In-Reply-To: <CAA8EJpoH51ajGvSdb1VBmtkKdLUnVGNhoBay93whz+hJh4ApXA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: H7Ecfu0LluM_zm-IRWNWOOtdyxEJw1xS
+X-Proofpoint-ORIG-GUID: H7Ecfu0LluM_zm-IRWNWOOtdyxEJw1xS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-21_16,2023-05-17_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
+ lowpriorityscore=0 bulkscore=0 adultscore=0 suspectscore=0
+ priorityscore=1501 spamscore=0 mlxlogscore=943 phishscore=0
+ impostorscore=0 mlxscore=0 malwarescore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305210199
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/05/2023 00:50, Steev Klimaszewski wrote:
-> Hi Dmitry
+
+
+On 5/21/2023 11:40 PM, Dmitry Baryshkov wrote:
+> On Sun, 21 May 2023 at 18:48, Manikanta Mylavarapu
+> <quic_mmanikan@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 3/7/2023 6:47 PM, Sricharan Ramabadhran wrote:
+>>>
+>>>
+>>> On 3/7/2023 10:11 AM, Manikanta Mylavarapu wrote:
+>>>> APSS brings Q6 out of reset and then Q6 brings
+>>>> WCSS block (wifi radio's) out of reset.
+>>>>
+>>>>                     ---------------
+>>>>                    -->  |WiFi 2G radio|
+>>>>                    |       --------------
+>>>>                    |
+>>>> --------    -------          |
+>>>> | APSS | --->   |QDSP6|  -----|
+>>>> ---------    -------       |
+>>>>                                 |
+>>>>                           |
+>>>>                    |   --------------
+>>>>                    --> |WiFi 5G radio|
+>>>>                    --------------
+>>>>
+>>>> Problem here is if any radio crashes, subsequently other
+>>>> radio also should crash because Q6 crashed. Let's say
+>>>> 2G radio crashed, Q6 should pass this info to APSS. Only
+>>>> Q6 processor interrupts registered with APSS. Obviously
+>>>> Q6 should crash and raise fatal interrupt to APSS. Due
+>>>> to this 5G radio also crashed. But no issue in 5G radio,
+>>>> because of 2G radio crash 5G radio also impacted.
+>>>>
+>>>> In multi pd model, this problem is resolved. Here WCSS
+>>>> functionality (WiFi radio's) moved out from Q6 root pd
+>>>> to a separate user pd. Due to this, radio's independently
+>>>> pass their status info to APPS with out crashing Q6. So
+>>>> other radio's won't be impacted.
+>>>>
+>>>>                          ---------
+>>>>                              |WiFi    |
+>>>>                          --> |2G radio|
+>>>>                          |     ---------
+>>>> ------    Start Q6             -------     |
+>>>> |    |    ------------------>     |     |     |
+>>>> |    |  Start WCSS PD1 (2G)       |     |        |
+>>>> |APSS|    ----------------------->|QDSP6|-----|
+>>>> |    |    Start WCSS PD1 (5G)    |     |
+>>>> |    |    ----------------------->|     |-----|
+>>>> ------                     -------     |
+>>>>                          |
+>>>>                          |    -----------
+>>>>                          |-->|WiFi      |
+>>>>                          |5G radio |
+>>>>                          -----------
+>>>> According to linux terminology, here consider Q6 as root
+>>>> i.e it provide all services, WCSS (wifi radio's) as user
+>>>> i.e it uses services provided by root.
+>>>>
+>>>> Since Q6 root & WCSS user pd's able to communicate with
+>>>> APSS individually, multipd remoteproc driver registers
+>>>> each PD with rproc framework. Here clients (Wifi host drivers)
+>>>> intrested on WCSS PD rproc, so multipd driver start's root
+>>>> pd in the context of WCSS user pd rproc start. Similarly
+>>>> on down path, root pd will be stopped after wcss user pd
+>>>> stopped.
+>>>>
+>>>> Here WCSS(user) PD is dependent on Q6(root) PD, so first
+>>>> q6 pd should be up before wcss pd. After wcss pd goes down,
+>>>> q6 pd should be turned off.
+>>>>
+>>>> rproc->ops->start(userpd_rproc) {
+>>>>      /* Boot root pd rproc */
+>>>>      rproc_boot(upd_dev->parent);
+>>>>      ---
+>>>>      /* user pd rproc start sequence */
+>>>>      ---
+>>>>      ---
+>>>> }
+>>>> With this way we ensure that root pd brought up before userpd.
+>>>>
+>>>> rproc->ops->stop(userpd_rproc) {
+>>>>      ---
+>>>>      ---
+>>>>      /* user pd rproc stop sequence */
+>>>>      ---
+>>>>      ---
+>>>>      /* Shutdown root pd rproc */
+>>>>      rproc_shutdown(upd_dev->parent);
+>>>> }
+>>>> After userpd rproc stops, root pd rproc will be stopped.
+>>>> IPQ5018, IPQ9574 supports multipd remoteproc driver.
+>>>>
+>>>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>>>> ---
+>>>>    drivers/firmware/qcom_scm.c            | 114 +++++
+>>>>    drivers/firmware/qcom_scm.h            |   6 +
+>>>>    drivers/remoteproc/Kconfig             |  20 +
+>>>>    drivers/remoteproc/Makefile            |   1 +
+>>>>    drivers/remoteproc/qcom_common.c       |  23 +
+>>>>    drivers/remoteproc/qcom_common.h       |   1 +
+>>>>    drivers/remoteproc/qcom_q6v5.c         |  41 +-
+>>>>    drivers/remoteproc/qcom_q6v5.h         |  15 +-
+>>>>    drivers/remoteproc/qcom_q6v5_adsp.c    |   5 +-
+>>>>    drivers/remoteproc/qcom_q6v5_mpd.c     | 668 +++++++++++++++++++++++++
+>>>>    drivers/remoteproc/qcom_q6v5_mss.c     |   4 +-
+>>>>    drivers/remoteproc/qcom_q6v5_pas.c     |   3 +-
+>>>>    drivers/soc/qcom/mdt_loader.c          | 314 ++++++++++++
+>>>>    include/linux/firmware/qcom/qcom_scm.h |   3 +
+>>>>    include/linux/soc/qcom/mdt_loader.h    |  19 +
+>>>>    15 files changed, 1228 insertions(+), 9 deletions(-)
+>>>>    create mode 100644 drivers/remoteproc/qcom_q6v5_mpd.c
+>>>>
+>>>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>>>> index d88c5f14bd54..d69560963353 100644
+>>>> --- a/drivers/firmware/qcom_scm.c
+>>>> +++ b/drivers/firmware/qcom_scm.c
+>>>> @@ -654,6 +654,120 @@ int qcom_scm_pas_shutdown(u32 peripheral)
+>>>>    }
+>>>>    EXPORT_SYMBOL(qcom_scm_pas_shutdown);
+>>>> +/**
+>>>> + * qti_scm_int_radio_powerup - Bring up internal radio userpd
+>>>> + *
+>>>> + * @peripheral:    peripheral id
+>>>> + *
+>>>> + * Return 0 on success.
+>>>> + */
+>>>> +int qti_scm_int_radio_powerup(u32 peripheral)
+>>>> +{
+>>>
+>>> qcom instead and in other places too.
+>>>
+>> Internal open source team suggested to use qti.
 > 
-> On Sun, May 21, 2023 at 12:28 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> Both DPU and MDSS programming requires knowledge of some of UBWC
->> parameters. This results in duplication of UBWC data between MDSS and
->> DPU drivers. To remove such duplication and make the driver more
->> error-prone, export respective configuration from the MDSS driver and
->> make DPU use it, instead of bundling a copy of such data.
->>
+> All existing drivers use qcom_ prefix. Other functions in qcom_scm.c
+> use qcom_ prefix. Please stick to it.
 > 
-> Surely you mean less error prone?
 
-Yes, of course!
+I will discuss with internal team and update in V3 series.
 
-> 
->> Dmitry Baryshkov (6):
->>    drm/msm/mdss: correct UBWC programming for SM8550
->>    drm/msm/mdss: rename ubwc_version to ubwc_enc_version
->>    drm/msm/mdss: export UBWC data
->>    drm/msm/mdss: populate missing data
->>    drm/msm/dpu: use MDSS data for programming SSPP
->>    drm/msm/dpu: drop UBWC configuration
->>
->>   .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  6 --
->>   .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  6 --
->>   .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  6 --
->>   .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  6 --
->>   .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  7 --
->>   .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  6 --
->>   .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |  7 --
->>   .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |  5 --
->>   .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  6 --
->>   .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  7 --
->>   .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  7 --
->>   .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  7 --
->>   .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  6 --
->>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    | 15 ----
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c   | 18 ++--
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h   |  7 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 16 +++-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h       |  1 +
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c        |  3 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h        |  2 +
->>   drivers/gpu/drm/msm/msm_mdss.c                | 90 ++++++++++++-------
->>   drivers/gpu/drm/msm/msm_mdss.h                | 27 ++++++
->>   22 files changed, 122 insertions(+), 139 deletions(-)
->>   create mode 100644 drivers/gpu/drm/msm/msm_mdss.h
->>
->> --
->> 2.39.2
->>
-
--- 
-With best wishes
-Dmitry
-
+Thanks & Regards,
+Manikanta.
