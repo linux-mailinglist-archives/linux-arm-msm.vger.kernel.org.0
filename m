@@ -2,55 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E3A8170AC4A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 May 2023 06:04:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10DF370AD77
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 May 2023 12:36:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229681AbjEUEDw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 May 2023 00:03:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57258 "EHLO
+        id S230522AbjEUK1z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 May 2023 06:27:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230187AbjEUEDf (ORCPT
+        with ESMTP id S231171AbjEUKZE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 May 2023 00:03:35 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65A59E4B;
-        Sat, 20 May 2023 21:03:03 -0700 (PDT)
+        Sun, 21 May 2023 06:25:04 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E052210C3;
+        Sun, 21 May 2023 03:14:04 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EBF7160C54;
-        Sun, 21 May 2023 04:03:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FDBAC433EF;
-        Sun, 21 May 2023 04:03:01 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7222161542;
+        Sun, 21 May 2023 10:14:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6455C433D2;
+        Sun, 21 May 2023 10:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684641782;
-        bh=tAL1e1CrhZKFhxrzTAaRdTpX97DGjoMXvtlZ/Guyg3E=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qOmd4822YlstRkGzmOQeiQ6MujYbRy6GTSeaJm0vJuGIjwwfsAFPN7fcm7nB3w9Tr
-         2PZ7MZrpm0KiaGQ/pYdYNZxjJU1vbHLSbTowJJxyvKTNyQfWKYU3iOTHYM4072mZDv
-         bj4Wg/1wBXbGZgrvbGYfPyjxGDHUkrXFvBXOZWj8JvPMef380QKRcUFNCsEXi+OSb7
-         FfpHeVvguvXVPCrKhae2AHSWQiUMTMTlJH9SkKBB0EG5+2CsfoRZa50Y+OyaDRnW43
-         50+Yh/+vNOpx0ok9b5x75ez4NkvANWZTApj7P7Ic4z08YIXshyHtbtAB1bK+QDYjSM
-         ugwGA4TcJ05gg==
-Date:   Sat, 20 May 2023 23:02:59 -0500
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc:     agross@kernel.org, konrad.dybcio@linaro.org,
-        linus.walleij@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        richardcochran@gmail.com, manivannan.sadhasivam@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        netdev@vger.kernel.org
-Subject: Re: [PATCH v3 0/3] Add pinctrl support for SDX75
-Message-ID: <7khdd4o2h2nwhopsziqdsjmbdfiehiax5mywbkrjr2fkzhcymz@4tastcouroqv>
-References: <1684425432-10072-1-git-send-email-quic_rohiagar@quicinc.com>
+        s=k20201202; t=1684664043;
+        bh=Vu1TAPPciiNN/+NNVmvm2e6pyVPkwqUzX+KPyIlmhCM=;
+        h=From:To:Cc:Subject:Date:From;
+        b=ZajnV1LcRAkwfLq/SJRiJS+qsd4lpR2KLL8lVNF7DVVheUsJOlHe7P2ShRWtM0Tkd
+         69DII5MQ03k9o/X8SjWJD7kfLHjYKxcfuYPcVl56KiPn64ch/vX5Cs2xud/M3ExphV
+         sSyuyMf7SQxEidkxPniJVpNz8d3w7Mi0gBzORbN9WIkfW+F6LznOr/6WaoBMXCmPyX
+         RqlLJHqzojkHWOnad98ZUuIwQzcOwIH8C7fPRHurcfWl83vJ1sORj07t1O94LRJl7b
+         H/goTc0FbDbgnMGh5zgjrk0qNgbIgB6iB03SXh+WkBPUoC3kuZyymqZHNA8SMP3tCp
+         7dvGSDzJFa1Xg==
+From:   Jisheng Zhang <jszhang@kernel.org>
+To:     Lars-Peter Clausen <lars@metafoo.de>,
+        Vinod Koul <vkoul@kernel.org>,
+        Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+        Logan Gunthorpe <logang@deltatee.com>,
+        Sinan Kaya <okaya@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>
+Cc:     dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v3 0/5] dma: don't set chancnt
+Date:   Sun, 21 May 2023 18:02:47 +0800
+Message-Id: <20230521100252.3197-1-jszhang@kernel.org>
+X-Mailer: git-send-email 2.40.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1684425432-10072-1-git-send-email-quic_rohiagar@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -59,46 +61,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 18, 2023 at 09:27:09PM +0530, Rohit Agarwal wrote:
-> Hi,
-> 
-> Changes in v3:
->  - Addressing minor comments from Bhupesh related to reusing variable.
-> 
-> Changes in v2:
->  - Added a patch for updating the maintainers entry for pinctrl bindings.
->  - Some formatting issue at the end of the driver change.
-> 
-> This patch series adds pinctrl bindings and tlmm support for SDX75.
-> 
-> The series is rebased on linux-next and based on all the review and
-> comments from different versions of [1].
-> 
-> [1] https://lore.kernel.org/linux-arm-msm/1681966915-15720-1-git-send-email-quic_rohiagar@quicinc.com/
-> 
+I'm patching dw-axi-dmac to add more features, but I found a small
+clean up point and some drivers in drivers/dma/ have the same issue,
+so this series comes.
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+The dma framework will calculate the dma channels chancnt, setting it
+is wrong.
 
-Regards,
-Bjorn
+NOTE: I leave drivers/dma/ioat/ as is, because its logic have a
+heavy dependency on chancnt usage, however it's still doable.
 
-> Thanks,
-> Rohit.
-> 
-> Rohit Agarwal (3):
->   dt-bindings: pinctrl: qcom: Add SDX75 pinctrl devicetree compatible
->   MAINTAINERS: Update the entry for pinctrl maintainers
->   pinctrl: qcom: Add SDX75 pincontrol driver
-> 
->  .../bindings/pinctrl/qcom,sdx75-tlmm.yaml          |  137 +++
->  MAINTAINERS                                        |    2 +-
->  drivers/pinctrl/qcom/Kconfig                       |   30 +-
->  drivers/pinctrl/qcom/Makefile                      |    3 +-
->  drivers/pinctrl/qcom/pinctrl-sdx75.c               | 1144 ++++++++++++++++++++
->  5 files changed, 1304 insertions(+), 12 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdx75-tlmm.yaml
->  create mode 100644 drivers/pinctrl/qcom/pinctrl-sdx75.c
-> 
-> -- 
-> 2.7.4
-> 
+Since v2:
+  - rebase on latest rc1
+  - collet Acked-by tag
+
+Since v1:
+  - collet Acked-by tag
+  - fix typo
+
+Jisheng Zhang (5):
+  dmaengine: dw-axi-dmac: Don't set chancnt
+  dmaengine: axi-dmac: Don't set chancnt
+  dmaengine: plx_dma: Don't set chancnt
+  dmaengine: hidma: Don't set chancnt
+  dmaengine: sprd: Don't set chancnt
+
+ drivers/dma/dma-axi-dmac.c                     | 1 -
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c | 1 -
+ drivers/dma/plx_dma.c                          | 1 -
+ drivers/dma/qcom/hidma.c                       | 1 -
+ drivers/dma/sprd-dma.c                         | 1 -
+ 5 files changed, 5 deletions(-)
+
+-- 
+2.40.0
+
