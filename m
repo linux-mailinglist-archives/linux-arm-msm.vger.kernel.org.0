@@ -2,209 +2,164 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BCA770B06E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 May 2023 22:58:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C040C70B0A8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 May 2023 23:23:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230198AbjEUU6B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 May 2023 16:58:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50524 "EHLO
+        id S229993AbjEUVXK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 May 2023 17:23:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230174AbjEUU6B (ORCPT
+        with ESMTP id S229718AbjEUVXI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 21 May 2023 16:58:01 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A94D3DE
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 13:57:58 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f3baf04f0cso1137363e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 13:57:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684702677; x=1687294677;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=j8VgRiwl/tsNhAm0CEALdxN74kfHKIFrIlet29wp6ag=;
-        b=bJ1SiCO5hhg/s+RqhzEQ/OtlfMMGNW+oEli/37gQlFgxaCcso3DVr3j6tnXu1JL+sW
-         auo2g8Vf5xccd7QiidhFV2dQDGFmJ0CxwTQs+RvAenXRDiJDgfSYXGX2hS7sTX251DJg
-         Sjohh6lrZYr7kaIRZiek1yMVeMIAtEpzX07E3FYJLwkjNaukAOpI/CWCZO/Qh76uNUGB
-         cYbcFrdQwUf/XqXsLolR9W326JfTeYTgu7W/TctwUZEu28udj2uGqj8nxCvGEYM4oO//
-         QjfEMAD0MtGAmk+ff4qElud7DzwLAtMYeL19MLN2EjsuIzdX7WlMDwg+OM5JvlWrxOjT
-         PmUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684702677; x=1687294677;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=j8VgRiwl/tsNhAm0CEALdxN74kfHKIFrIlet29wp6ag=;
-        b=WfHI2+pTBnJleB2DQT3QHzZYxuuMKHsir9M0BLZOqUlxS4T7X80818+jj9hvDL1Sek
-         PImB5cX9SzJ5PwilPTWLhfCRaPtoT+xJVSzGvkDxQKb33Ibe8OL627oqMizqiLgRIUyi
-         K1VZ9nFSdDF6B1Ch1BYmCGZbb2ED29LHGHnWDB/nsiBvuLByDvD2xGHqF1PjLAa+EjSh
-         q26EUK+eZDqHN0F3duyeEe0h4ymAUUGskYAqPRgcvWrYYy9hiB+jzBdeFea4k+OWStS0
-         fdyXy02dk2afZ0OdW8YqhIkTPvO/tqWsrOn2gyT/5NORL75X2ppdV+UW2HbCUvudIpFi
-         Klgg==
-X-Gm-Message-State: AC+VfDyhMiy893ohuIhziWLVeSKIlDYrMzCQXDLB5k+Us4pnUlU+NrxA
-        677GWoNTvASddrvryRTJrr+yrA==
-X-Google-Smtp-Source: ACHHUZ5t6z6Z/Pzc3RXPwIkR8BYJtuzC364yOjRapibj1hxvGc9LTzDSTBdOYaBYejxngr7JmrhU2A==
-X-Received: by 2002:a19:ee15:0:b0:4f3:ac64:84d9 with SMTP id g21-20020a19ee15000000b004f3ac6484d9mr2232089lfb.20.1684702676948;
-        Sun, 21 May 2023 13:57:56 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id q6-20020ac25146000000b004f391369ccbsm733232lfd.55.2023.05.21.13.57.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 21 May 2023 13:57:56 -0700 (PDT)
-Message-ID: <874a328c-bbfb-00cb-4b2e-69132605cb2d@linaro.org>
-Date:   Sun, 21 May 2023 23:57:55 +0300
+        Sun, 21 May 2023 17:23:08 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 286DEBF
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 14:23:06 -0700 (PDT)
+Received: from Marijn-Arch-PC.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id B65F53F2DD;
+        Sun, 21 May 2023 23:23:04 +0200 (CEST)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+Subject: [PATCH RFC 00/10] drm/panel: Drivers for four Sony CMD-mode (and
+ DSC) panels
+Date:   Sun, 21 May 2023 23:23:02 +0200
+Message-Id: <20230521-drm-panels-sony-v1-0-541c341d6bee@somainline.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH V2 1/2] dt-bindings: phy: qcom,qmp-pcie: Add ipq9574
- bindings
-Content-Language: en-GB
-To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
-        kishon@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
-        quic_anusha@quicinc.com, quic_ipkumar@quicinc.com
-References: <20230519085723.15601-1-quic_devipriy@quicinc.com>
- <20230519085723.15601-2-quic_devipriy@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230519085723.15601-2-quic_devipriy@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIALeLamQC/x2NQQrCQAwAv1JyNtDdtSheBR/Qq3jYbqMNrGlJU
+ JTSvxs8zsAwKxgpk8GpWUHpzcazOIRdA2XK8iDk0RliG1PbxYCjPnHJQtXQZvliKl0uKYbjPh7
+ AqyEb4aBZyuSdvGp1uSjd+fPfXKG/nOG2bT/r6/B3ewAAAA==
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Caleb Connolly <caleb@connolly.tech>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+X-Mailer: b4 0.12.2
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 19/05/2023 11:57, Devi Priya wrote:
-> Add bindings for the PCIe QMP PHYs found on IPQ9574.
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
-> ---
->   Changes in V2:
-> 	- Picked up the R-b tag
-> 	- Did not convert the clock IDs to numerical values as the clock
-> 	  header (dependent patch) is merged in latest rc1.
-> 
->   .../phy/qcom,ipq9574-qmp-pcie-phy.yaml        | 90 +++++++++++++++++++
->   1 file changed, 90 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.yaml
-> new file mode 100644
-> index 000000000000..7c8012647051
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.yaml
-> @@ -0,0 +1,90 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/phy/qcom,ipq9574-qmp-pcie-phy.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm QMP PHY controller (PCIe, IPQ9574)
-> +
-> +maintainers:
-> +  - Vinod Koul <vkoul@kernel.org>
-> +
-> +description:
-> +  The QMP PHY controller supports physical layer functionality for a number of
-> +  controllers on Qualcomm chipsets, such as, PCIe, UFS, and USB.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,ipq9574-qmp-gen3x1-pcie-phy
-> +      - qcom,ipq9574-qmp-gen3x2-pcie-phy
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 5
-> +
-> +  clock-names:
-> +    items:
-> +      - const: aux
-> +      - const: cfg_ahb
-> +      - const: anoc_lane
-> +      - const: snoc_lane
-> +      - const: pipe
+Sending in a bunch of almost-finished (hence RFC) Sony panel drivers
+upon drm/msm request, to further discussions around DSC panels and DSI
+pclk calculations.  This brings support for the following Sony Xperia
+devices:
 
-Could you please reorder the clocks in the following way:
-- aux
-- cfg_ahb
-- pipe
-- .. the rest
+- Xperia XZ3 (DSC)
+- Xperia 1 (DSC)
+- Xperia 5
+- Xperia 10 II (shared with Xperia 5)
+- Xperia 5 II (DSC, 120Hz)
 
-This will allow us to use this schema for other IPQ QMP PCIe PHYs.
+And, since the XZ3 already has all the DT in place to enable the panels
+on its smaller XZ2(c) siblings, an extra patch is included to add the
+new compatible string and properties to this device .dts.  DTS for other
+boards/platforms will come later, after cleaning up preliminary patches
+(e.g. DPU catalog additions, SoC/board DTS for the MDSS subsystem, etc).
 
-> +
-> +  resets:
-> +    maxItems: 2
-> +
-> +  reset-names:
-> +    items:
-> +      - const: phy
-> +      - const: common
-> +
-> +  "#clock-cells":
-> +    const: 0
-> +
-> +  clock-output-names:
-> +    maxItems: 1
-> +
-> +  "#phy-cells":
-> +    const: 0
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - resets
-> +  - reset-names
-> +  - "#clock-cells"
-> +  - clock-output-names
-> +  - "#phy-cells"
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,ipq9574-gcc.h>
-> +    #include <dt-bindings/reset/qcom,ipq9574-gcc.h>
-> +
-> +    pcie0_phy: phy@84000 {
-> +      compatible = "qcom,ipq9574-qmp-gen3x1-pcie-phy";
-> +      reg = <0x00084000 0x1000>;
-> +
-> +      clocks = <&gcc GCC_PCIE0_AUX_CLK>,
-> +               <&gcc GCC_PCIE0_AHB_CLK>,
-> +               <&gcc GCC_ANOC_PCIE0_1LANE_M_CLK>,
-> +               <&gcc GCC_SNOC_PCIE0_1LANE_S_CLK>,
-> +               <&gcc GCC_PCIE0_PIPE_CLK>;
-> +      clock-names = "aux", "cfg_ahb", "anoc_lane", "snoc_lane", "pipe";
-> +
-> +      resets = <&gcc GCC_PCIE0_PHY_BCR>,
-> +               <&gcc GCC_PCIE0PHY_PHY_BCR>;
-> +      reset-names = "phy", "common";
-> +
-> +      #clock-cells = <0>;
-> +      clock-output-names = "gcc_pcie0_pipe_clk_src";
-> +
-> +      #phy-cells = <0>;
-> +    };
+- File- and compatible names:
 
+  None of my downstream sources describe the product name of the panels
+  used here; in few cases the Display-IC is known but for the Xperia XZ3
+  Xperia 1 we have to make-do with a vendor name only.
+
+  Naming suggestions definitely welcome; i.e. I'm especially not fond of
+  sony-griffin-samsung.c :)
+
+- Panels/drivers featuring multiple modes
+
+  As brought up earlier in #freedreno drm_panel drivers can provide
+  multiple modes, but the selected mode is never communicated back to
+  the panel.  This either has to be added to the driver, or the drivers
+  in question have to be converted to drm_bridges (suggestion from
+  #freedreno).  That should allow us to select a mode at runtime, and
+  downstream even defines "fast paths" to switch from one mode to the
+  next (e.g. when only adjusting the refresh rate) without powering the
+  panel off and on again, which we can hopefully support too.
+
+  For now the choice between either mode has been hardcoded behind a
+  static const bool.
+
+- DSC
+
+  Not much to discuss here except that "it works" after piecing together
+  various series on the lists.  No dependencies to make this series
+  apply/compile, though.
+
+- pclk
+
+  The brunt of the discussion is around getting these command mode
+  panels functioning at their desired 60Hz or 120Hz refresh rate without
+  tearing/artifacts, and without hacks.  Part of that discussion around
+  DSC-specific timing adjustments is happening in [1], but the sofef01
+  (non-DSC) Driver-IC is also struggling on the Xperia 5 specifically,
+  as outlined in that specific patch.  That is currently "addressed"
+  with a "porch hack" but should probably have some sort of overhead /
+  transfer time taken into account in the MSM DSI driver.
+
+  Let me know what the best place is to collate all the relevant info
+  (links to downstream panel DTS, outcomes with different patches and
+  tweaks, etc).  A new fd.o drm/msm issue?
+
+[1]: https://gitlab.freedesktop.org/drm/msm/-/issues/24#note_1917707
+
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+---
+Marijn Suijten (10):
+      drm/panel: Clean up SOFEF00 config dependencies
+      dt-bindings: display: panel: Describe Sony Xperia XZ3's LGD panel
+      drm/panel: Add LGD panel driver for Sony Xperia XZ3
+      arm64: dts: qcom: sdm845-akatsuki: Configure OLED panel
+      dt-bindings: display: panel: Describe Samsung SOFEF01-M Display-IC
+      drm/panel/samsung-sofef01: Add panel driver for Sony Xperia 5 / 10 II
+      dt-bindings: display: panel: Describe Samsung SOFEF03-M Display-IC
+      drm/panel/samsung-sofef03: Add panel driver for Sony Xperia 5 II
+      dt-bindings: display: panel: Describe Sony Xperia 1 display
+      drm/panel/sony-griffin-samsung: Add panel driver for Sony Xperia 1
+
+ .../bindings/display/panel/samsung,sofef01-m.yaml  | 109 ++++++
+ .../bindings/display/panel/samsung,sofef03-m.yaml  |  73 ++++
+ .../bindings/display/panel/sony,akatsuki-lgd.yaml  |  71 ++++
+ .../display/panel/sony,griffin-samsung.yaml        |  73 ++++
+ .../dts/qcom/sdm845-sony-xperia-tama-akatsuki.dts  |   9 +
+ drivers/gpu/drm/panel/Kconfig                      |  52 ++-
+ drivers/gpu/drm/panel/Makefile                     |   4 +
+ drivers/gpu/drm/panel/panel-samsung-sofef01.c      | 360 ++++++++++++++++++
+ drivers/gpu/drm/panel/panel-samsung-sofef03.c      | 423 +++++++++++++++++++++
+ drivers/gpu/drm/panel/panel-sony-akatsuki-lgd.c    | 362 ++++++++++++++++++
+ drivers/gpu/drm/panel/panel-sony-griffin-samsung.c | 410 ++++++++++++++++++++
+ 11 files changed, 1945 insertions(+), 1 deletion(-)
+---
+base-commit: dbd91ef4e91c1ce3a24429f5fb3876b7a0306733
+change-id: 20230521-drm-panels-sony-3c5ac3218427
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Marijn Suijten <marijn.suijten@somainline.org>
 
