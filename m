@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C95B70B055
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 May 2023 22:38:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 54BF970B052
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 May 2023 22:38:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231182AbjEUUiq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 21 May 2023 16:38:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48134 "EHLO
+        id S231177AbjEUUip (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 21 May 2023 16:38:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230416AbjEUUin (ORCPT
+        with ESMTP id S229837AbjEUUin (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 21 May 2023 16:38:43 -0400
 Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DE8CD2
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 277D7EA
         for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 13:38:41 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f37b860173so5776342e87.2
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f3bb395e69so1149468e87.2
         for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 13:38:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1684701520; x=1687293520;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=XM5bLMfHigpVdJoq5ZxEoz7OtTkvdwEjGH8t5nLaKbM=;
-        b=K7kunTTV4UnCywremU5tiRRGwhf10zZ9xtRy/R2R65LajnZTVO0hf03MABIa1zDPAZ
-         4eZNTgYGR62YXzb5QjB79oNEuRu4GMy1bZDGr8Pv9C5iDzbxXZMXDVchnIRhb+NkLktk
-         AiS9xD2pY8hgSinG3EBAZ7G3YPiMXRNOmIKhBey0OOpvyOa2iKO0oOy/obWeoF9Qitus
-         A0vKEDbXX40wwFUEelLd5giDUDlETXQxwAdLdK+PY9m2VyOu57NdDAq0aNvhcSsCpWQO
-         cIpsRJW4NLVjmL2A5nGKcL6sJlodiVbfOXcMAFKHMfgk3V+a0Nn95z1bahqJRxc+ZmzK
-         3rjg==
+        bh=tvQv73DcEHQsVe/JKPU5MHMTOCvtg71K1/S9y9H33HI=;
+        b=B4crKEIqd8MJzJpXDxa1RdHFRIUO+iHDURLVdTC65oQGKgc23PqAjkXEy3ZAJpp+5U
+         hAHY5orpDDbVAaCO4FCe6y85jPHPqOEcH9Bs5GuHvIpFxoDTQj4tLSBk0OtvBKx88BCI
+         TR1d6SRP4RK3InsB0v07TACJ8svTxHDbkXD35cwcMvXOv9nqDwhDX9QXRl8PirA/NXQM
+         f+wKrRtMiDZ4wU+VwwMRXcrJJ6gyYr1nW68+HJpQ2yv2iMps6T112Snco43qoPr+4HXh
+         9IjzDhXVB7AhIXjkx+yYEP8OGoqSiEj0aDFIRv4/2tqM/gLwVQ9J5wl3j++oxKJqcvb6
+         WdKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20221208; t=1684701520; x=1687293520;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=XM5bLMfHigpVdJoq5ZxEoz7OtTkvdwEjGH8t5nLaKbM=;
-        b=Fb4hNRkIOm0KEnBT0o0A1xyLnJEwSf3zrWPO+TlD1RJI7QLisvlGuatQ5YiIRtWtJG
-         lb8sW5+ti70diNOiYCm84gAE+TP6QRAbxtwdJaR2bPrxMMtZLa2GkuAE6cNSxVgkOrBr
-         MMswm80FBYBZinGX/b/BLsvrP7ybxfKthhwgFvh1xcz5KxEGoIJosCiI++krbquKBwAc
-         omHhM+N/S+arf0ePLTVFLuZbx8PjN5zFZKnD4+Iq6aIm4X42ALjUYjRVxOsDpY06w4RN
-         2bWbXBH///guh1G5DZ197M7+1wW7VgKtKMoFfIXnD/BhRWEKwdxGBFuccatm8sx27cVH
-         N9xw==
-X-Gm-Message-State: AC+VfDxfl3tXxJt7CFaiL+xOrJ7w0knBk6Z9O8kFHyj756YvzG5DBcSA
-        GekaNOtEoMacbCn49Sj2yB6Fqw==
-X-Google-Smtp-Source: ACHHUZ73RqZnDZWVHnJA0HofjS+IO/YUUybq8JUeXLKLmPSn0F/KlOHfp8GBgD7hfB+bcE4jJ4OesA==
-X-Received: by 2002:ac2:53b3:0:b0:4f3:b222:1eed with SMTP id j19-20020ac253b3000000b004f3b2221eedmr1705337lfh.2.1684701519939;
-        Sun, 21 May 2023 13:38:39 -0700 (PDT)
+        bh=tvQv73DcEHQsVe/JKPU5MHMTOCvtg71K1/S9y9H33HI=;
+        b=WL2TYyWgJJNyvbUpe0GDStC4F70naq6QRZiLH0M87//mPj8975PWWFsR2zOm+YLFn+
+         ED9Z+Cz1w+vfflTFl1IEXugCMxTRy8xUEVWkFAI4EgVOgl3DMwGwgGHfKzM1YqrY2z9q
+         /fY3BwQsV+7f9yS+j313BzvKCbYOZvq26VhS/clXlpXq0On2CHCQLDeEiwPbh3SC2/MC
+         xCdub6A+ilbGkFv3KFZjT2Ai7zGz06Vl2BBH1knd6u+fyJp3PLbdjmIvcvC8S6kN5o7K
+         xZVWs60OLyuuCvrJ5u/gvQh2rs0ULle43iL5U5GPNQSAEK2ve8asPxnNt3ykB810F85Y
+         PdJw==
+X-Gm-Message-State: AC+VfDwStX5X0YAUIMRU+7/XlPjHIXF0Tiv52lMREtoJLp5iRk50N7p7
+        fJl0ZNRl5K9Ifs2v44YwT+g+YQ==
+X-Google-Smtp-Source: ACHHUZ71rPdWZsrjpDgzdEiF9Q9akw+D4F3lQ/tnaRQECKLy/Get1xRaf4SZ51w1WKu1MLX1VCZ4YA==
+X-Received: by 2002:ac2:5603:0:b0:4f4:4cd4:6df4 with SMTP id v3-20020ac25603000000b004f44cd46df4mr535311lfd.25.1684701520702;
+        Sun, 21 May 2023 13:38:40 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id a15-20020a056512020f00b004f3886a63d1sm718894lfo.298.2023.05.21.13.38.39
+        by smtp.gmail.com with ESMTPSA id a15-20020a056512020f00b004f3886a63d1sm718894lfo.298.2023.05.21.13.38.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 21 May 2023 13:38:39 -0700 (PDT)
+        Sun, 21 May 2023 13:38:40 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -61,9 +61,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, Johan Hovold <johan@kernel.org>
-Subject: [PATCH v2 06/11] arm64: dts: qcom: sm6115: switch UFS QMP PHY to new style of bindings
-Date:   Sun, 21 May 2023 23:38:29 +0300
-Message-Id: <20230521203834.22566-7-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 07/11] arm64: dts: qcom: sm6350: switch UFS QMP PHY to new style of bindings
+Date:   Sun, 21 May 2023 23:38:30 +0300
+Message-Id: <20230521203834.22566-8-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230521203834.22566-1-dmitry.baryshkov@linaro.org>
 References: <20230521203834.22566-1-dmitry.baryshkov@linaro.org>
@@ -71,7 +71,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,51 +84,53 @@ resource region, no per-PHY subnodes).
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm6115.dtsi | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-index 631ca327e064..289b96d31414 100644
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -784,7 +784,7 @@ ufs_mem_hc: ufs@4804000 {
- 			reg = <0x0 0x04804000 0x0 0x3000>, <0x0 0x04810000 0x0 0x8000>;
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index 18c4616848ce..a816bb212174 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -943,7 +943,7 @@ ufs_mem_hc: ufs@1d84000 {
+ 			      <0 0x01d90000 0 0x8000>;
  			reg-names = "std", "ice";
- 			interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
+ 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
 -			phys = <&ufs_mem_phy_lanes>;
 +			phys = <&ufs_mem_phy>;
  			phy-names = "ufsphy";
- 			lanes-per-direction = <1>;
+ 			lanes-per-direction = <2>;
  			#reset-cells = <1>;
-@@ -825,24 +825,17 @@ ufs_mem_hc: ufs@4804000 {
+@@ -988,10 +988,7 @@ ufs_mem_hc: ufs@1d84000 {
  
- 		ufs_mem_phy: phy@4807000 {
- 			compatible = "qcom,sm6115-qmp-ufs-phy";
--			reg = <0x0 0x04807000 0x0 0x1c4>;
+ 		ufs_mem_phy: phy@1d87000 {
+ 			compatible = "qcom,sm6350-qmp-ufs-phy";
+-			reg = <0 0x01d87000 0 0x18c>;
 -			#address-cells = <2>;
 -			#size-cells = <2>;
 -			ranges;
-+			reg = <0x0 0x04807000 0x0 0x1000>;
++			reg = <0 0x01d87000 0 0x1000>;
  
- 			clocks = <&gcc GCC_UFS_CLKREF_CLK>, <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
- 			clock-names = "ref", "ref_aux";
- 
+ 			clock-names = "ref",
+ 				      "ref_aux";
+@@ -1001,16 +998,9 @@ ufs_mem_phy: phy@1d87000 {
  			resets = <&ufs_mem_hc 0>;
  			reset-names = "ufsphy";
--			status = "disabled";
  
--			ufs_mem_phy_lanes: phy@4807400 {
--				reg = <0x0 0x04807400 0x0 0x098>,
--				      <0x0 0x04807600 0x0 0x130>,
--				      <0x0 0x04807c00 0x0 0x16c>;
+-			status = "disabled";
++			#phy-cells = <0>;
+ 
+-			ufs_mem_phy_lanes: phy@1d87400 {
+-				reg = <0 0x01d87400 0 0x128>,
+-				      <0 0x01d87600 0 0x1fc>,
+-				      <0 0x01d87c00 0 0x1dc>,
+-				      <0 0x01d87800 0 0x128>,
+-				      <0 0x01d87a00 0 0x1fc>;
 -				#phy-cells = <0>;
 -			};
-+			#phy-cells = <0>;
-+
 +			status = "disabled";
  		};
  
- 		gpi_dma0: dma-controller@4a00000 {
+ 		ipa: ipa@1e40000 {
 -- 
 2.39.2
 
