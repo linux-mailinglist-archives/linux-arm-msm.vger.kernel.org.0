@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E94270C3CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 19:00:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF52C70C3CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 19:00:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229777AbjEVRAE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 13:00:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54826 "EHLO
+        id S233092AbjEVRAR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 13:00:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231138AbjEVRAD (ORCPT
+        with ESMTP id S229830AbjEVRAQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 13:00:03 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EAACF1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 10:00:01 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f122ff663eso6872759e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 10:00:01 -0700 (PDT)
+        Mon, 22 May 2023 13:00:16 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84295E9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 10:00:15 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2af2602848aso42167691fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 10:00:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684774799; x=1687366799;
+        d=linaro.org; s=google; t=1684774814; x=1687366814;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=V8aNDm+cq25IEEnvkBipmOmSDadWxFkNtAaZWIaFaUc=;
-        b=ZtfIFXXCKoPm2qQgYLqZ/3mF0vRvc1RMiLS/Ljm+c7LS2RzmMy7OEvfRnAq8zPKk7e
-         cGHxw+xyOmrdYLMsMbYMh3Hv+V9qfe8qAHxENiSxecX6CW6yItYged2prrVeDtW9L/e6
-         DRtlCSOICzFCtw8VjK/dFof32T+WHvj/pPEu3YltwXCw4f7qyntAHg99/sF4S/SSqoac
-         7FO7NIvawT3u1rz3EL3LYiJSsToubb88/Gm5Gl5MAe1qOReTTRXxLQXKyvVmkFaYbE09
-         RgW4W0iMogduMxnDk2scAo8PgzHJ8qorIfMqddLUNhWj27R1nbKwvPxx35DU1Pv4c/ST
-         AnxA==
+        bh=HkWcCUxcGrEA3uBxRc2BHzxtLgYNVEfArtn5oBlXN0g=;
+        b=YQ4E2ftUZW8n5lJdtWKosAUp3xTf6mUmTvNJyiWwCJMoATucjkrGmN7YKsqxSvrVue
+         ZpHXKY2lCXq/nmKMk/1qnJlbCKIuKqAHgFjf4vHVb8INDt/ao5ziSz7KZryxLys48as2
+         hUkDy95+uwHpxnSu4HEuHA8z1QkFBfKIHbHxMsZTu05EHVc+xIYTeHVJLEKQ9cdb9Z32
+         S5K+zUdDANMrjQxvHdtKDl1Zp2N5AIckYdjuwZSLkbtQzx/jyGu9+suC04HWrxWmbq5L
+         7xWA04zTTlosievpMOhbAWaN2E7pIxp8G1shhXVAxdgDW9b2PN+67GVWfH0eRkZ74JQt
+         iXXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684774799; x=1687366799;
+        d=1e100.net; s=20221208; t=1684774814; x=1687366814;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=V8aNDm+cq25IEEnvkBipmOmSDadWxFkNtAaZWIaFaUc=;
-        b=dHE8Nhud3+3dWq6fDav/4CXZ3XAxMnRNffuif8pWdN1vxD7vZgVQAyr/vngCvlFQJa
-         FuXm/31FjfzxzMFsZDBLUC3h8jp4sFP9tvCK4y35XPSe750wLeLxkSEpSnNBrgnJeWTk
-         Ffspi3B4P+7mo4jNeo+roFBJEVAggUEvWXUkz6T0Qft6l1z4eWroCupuXP/Umq72OZVG
-         1zlmeJsT7ByeDw3CZYs/AS4K530ZuZCS0JUsoDlDe2hD3qJYuPT/ur5drtfsChQi6zZ3
-         6Tw3skvfOQky9XWZFAdB7wxBnbHjNAFJfdCzYz5LR0HGuGfQWGnCIGDwkj6tzk+Enj+/
-         C3YQ==
-X-Gm-Message-State: AC+VfDwziqUCMV0bYRS50lEnUKAkOvSWqZXCj5fsnTVJXMVcyoZB3vSg
-        l+l8U8mdEOA79uIuMWrQAGGLFw==
-X-Google-Smtp-Source: ACHHUZ5Ydfab2mUL/eocLrebhQ+17lOdwCLKydwVDc7Tibc5AZsbmKPr7jUD1vCqBrmrQMtJCyk8Zw==
-X-Received: by 2002:ac2:4465:0:b0:4f0:ff66:b4f1 with SMTP id y5-20020ac24465000000b004f0ff66b4f1mr3088648lfl.22.1684774799483;
-        Mon, 22 May 2023 09:59:59 -0700 (PDT)
+        bh=HkWcCUxcGrEA3uBxRc2BHzxtLgYNVEfArtn5oBlXN0g=;
+        b=RB0KasWF6+iHevmnOTs23QTJH8xloATai7cR2nvEf70mx0aqIjySlQSVQoYI8bafdZ
+         2dszB1Jra7+pWDEQfrGanWQQ+rOTSD+yueqdaaoIcd++5iZeAeKWJEpXcUm1e2NQrUE5
+         U/fvcaFKpsHOc+8pqKeTJ020SD0+uZcq/V+KuJcoAvMsH4OB9nKrWdNszbhrwnKX2u0f
+         4AMeQ1ZbKyBAxFCTG/5/3GrF2DoxdfR4p6neiRuUgU2kG8yZrYDwOTbG9nooiPelePKA
+         injWpbSvI5Qq3OSivqRM0t+CRQfFlQ9Z4vMkryMQ2LnQNnyCAhw6SVuP1wgGypINJeoZ
+         wYCg==
+X-Gm-Message-State: AC+VfDyFooNIfbJL4KVSjX2AQ3lO6udBYU9bYymza5p1Qr/tKhovaj82
+        eeQvPuCKEqo8zof0MdRFsu0imnpYcDN8SA06vaw=
+X-Google-Smtp-Source: ACHHUZ4qb59tJVbyi9jl1nrj67y8E/oqqmW8h0vygntzj4aKcdIM1RZBxPie9H98W7jT7H4Nc3t35w==
+X-Received: by 2002:a2e:9050:0:b0:2af:187b:3c88 with SMTP id n16-20020a2e9050000000b002af187b3c88mr4074672ljg.43.1684774813773;
+        Mon, 22 May 2023 10:00:13 -0700 (PDT)
 Received: from [192.168.1.101] (abyk97.neoplus.adsl.tpnet.pl. [83.9.30.97])
-        by smtp.gmail.com with ESMTPSA id q9-20020ac246e9000000b004f256fed9e8sm1040768lfo.145.2023.05.22.09.59.58
+        by smtp.gmail.com with ESMTPSA id x15-20020ac2488f000000b004edd32d0bdesm1042830lfc.288.2023.05.22.10.00.12
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 May 2023 09:59:59 -0700 (PDT)
-Message-ID: <37f97ffc-01c1-797c-f50c-1680f666d79d@linaro.org>
-Date:   Mon, 22 May 2023 18:59:57 +0200
+        Mon, 22 May 2023 10:00:13 -0700 (PDT)
+Message-ID: <c267aee2-fdbf-5f51-c86a-7016d82d3fe9@linaro.org>
+Date:   Mon, 22 May 2023 19:00:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v2 04/11] arm64: dts: qcom: msm8998: switch UFS QMP PHY to
+Subject: Re: [PATCH v2 05/11] arm64: dts: qcom: sdm845: switch UFS QMP PHY to
  new style of bindings
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -69,14 +69,14 @@ Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org, Johan Hovold <johan@kernel.org>
 References: <20230521203834.22566-1-dmitry.baryshkov@linaro.org>
- <20230521203834.22566-5-dmitry.baryshkov@linaro.org>
+ <20230521203834.22566-6-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230521203834.22566-5-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230521203834.22566-6-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -92,51 +92,51 @@ On 21.05.2023 22:38, Dmitry Baryshkov wrote:
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/msm8998.dtsi | 16 +++-------------
->  1 file changed, 3 insertions(+), 13 deletions(-)
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 17 ++++-------------
+>  1 file changed, 4 insertions(+), 13 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> index b150437a8355..848fbd2cb3f8 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> @@ -980,7 +980,7 @@ ufshc: ufshc@1da4000 {
->  			compatible = "qcom,msm8998-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
->  			reg = <0x01da4000 0x2500>;
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index 6aa2f8f3affc..559a50c44da1 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -2566,7 +2566,7 @@ ufs_mem_hc: ufshc@1d84000 {
+>  			      <0 0x01d90000 0 0x8000>;
+>  			reg-names = "std", "ice";
 >  			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
-> -			phys = <&ufsphy_lanes>;
-> +			phys = <&ufsphy>;
+> -			phys = <&ufs_mem_phy_lanes>;
+> +			phys = <&ufs_mem_phy>;
 >  			phy-names = "ufsphy";
 >  			lanes-per-direction = <2>;
->  			power-domains = <&gcc UFS_GDSC>;
-> @@ -1021,11 +1021,8 @@ ufshc: ufshc@1da4000 {
+>  			power-domains = <&gcc UFS_PHY_GDSC>;
+> @@ -2612,10 +2612,8 @@ ufs_mem_hc: ufshc@1d84000 {
 >  
->  		ufsphy: phy@1da7000 {
->  			compatible = "qcom,msm8998-qmp-ufs-phy";
-> -			reg = <0x01da7000 0x18c>;
-> -			#address-cells = <1>;
-> -			#size-cells = <1>;
-> +			reg = <0x01da7000 0x1000>;
->  			status = "disabled";
+>  		ufs_mem_phy: phy@1d87000 {
+>  			compatible = "qcom,sdm845-qmp-ufs-phy";
+> -			reg = <0 0x01d87000 0 0x18c>;
+> -			#address-cells = <2>;
+> -			#size-cells = <2>;
 > -			ranges;
->  
->  			clock-names =
->  				"ref",
-> @@ -1037,14 +1034,7 @@ ufsphy: phy@1da7000 {
+> +			reg = <0 0x01d87000 0 0x1000>;
+> +
+>  			clock-names = "ref",
+>  				      "ref_aux";
+>  			clocks = <&gcc GCC_UFS_MEM_CLKREF_CLK>,
+> @@ -2625,14 +2623,7 @@ ufs_mem_phy: phy@1d87000 {
 >  			reset-names = "ufsphy";
->  			resets = <&ufshc 0>;
+>  			status = "disabled";
 >  
-> -			ufsphy_lanes: phy@1da7400 {
-> -				reg = <0x01da7400 0x128>,
-> -				      <0x01da7600 0x1fc>,
-> -				      <0x01da7c00 0x1dc>,
-> -				      <0x01da7800 0x128>,
-> -				      <0x01da7a00 0x1fc>;
+> -			ufs_mem_phy_lanes: phy@1d87400 {
+> -				reg = <0 0x01d87400 0 0x108>,
+> -				      <0 0x01d87600 0 0x1e0>,
+> -				      <0 0x01d87c00 0 0x1dc>,
+> -				      <0 0x01d87800 0 0x108>,
+> -				      <0 0x01d87a00 0 0x1e0>;
 > -				#phy-cells = <0>;
 > -			};
 > +			#phy-cells = <0>;
-Looks like that will make status not-last?
+status last?
 
 Konrad
 >  		};
 >  
->  		tcsr_mutex: hwlock@1f40000 {
+>  		cryptobam: dma-controller@1dc4000 {
