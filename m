@@ -2,47 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECAB770CDB5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 00:19:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1FC770CDB8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 00:20:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234652AbjEVWTO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 18:19:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35940 "EHLO
+        id S234562AbjEVWU3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 18:20:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234662AbjEVWTM (ORCPT
+        with ESMTP id S233045AbjEVWU2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 18:19:12 -0400
+        Mon, 22 May 2023 18:20:28 -0400
 Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CCC6138
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 15:19:01 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D851AF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 15:20:26 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A8B913EAF5;
-        Tue, 23 May 2023 00:18:59 +0200 (CEST)
-Date:   Tue, 23 May 2023 00:18:58 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D6CA93EEEC;
+        Tue, 23 May 2023 00:20:24 +0200 (CEST)
+Date:   Tue, 23 May 2023 00:20:23 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/5] msm/drm/dsi: Round up DSC hdisplay calculation
-Message-ID: <dfezntyt7rfoqmmhpqwqzgbldzgki5ykeqizgig7t3gqwdzo6h@3xavmyqzxzjm>
-References: <20230405-add-dsc-support-v4-0-15daf84f8dcb@quicinc.com>
- <20230405-add-dsc-support-v4-1-15daf84f8dcb@quicinc.com>
- <eo7chb7m4cowvb53hnebi3bjtotm7x5ea5iv6ulmmfkr2hdt32@2nkoa5rco3qb>
- <a93c3c36-f262-b89d-8452-98120cffb491@quicinc.com>
- <CAA8EJpqzj-_fVLXfCrLeTUcwPHE-fb-kNP=SgbVM7U5fQT8p-w@mail.gmail.com>
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 4/6] drm/msm/dpu: autodetect supported interrupts
+Message-ID: <xlbo42dxaavbowu2luhkxwai2sflrzxuefw4ry354ye5t4ml6g@wjgvvg77sjv7>
+References: <20230522214527.190054-1-dmitry.baryshkov@linaro.org>
+ <20230522214527.190054-5-dmitry.baryshkov@linaro.org>
+ <j4sprk5c7wiafq5w5246xab2qgrevyz26bcwukgdk7zcac4ylk@pyt4s2ms5fyk>
+ <CAA8EJpr7caQsbUACsETQG6KTU=rzrXadBv-RHVTQD_zeY8x1Jg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJpqzj-_fVLXfCrLeTUcwPHE-fb-kNP=SgbVM7U5fQT8p-w@mail.gmail.com>
+In-Reply-To: <CAA8EJpr7caQsbUACsETQG6KTU=rzrXadBv-RHVTQD_zeY8x1Jg@mail.gmail.com>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
@@ -52,70 +51,119 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-23 01:14:40, Dmitry Baryshkov wrote:
-> On Tue, 23 May 2023 at 00:45, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+On 2023-05-23 01:17:50, Dmitry Baryshkov wrote:
+> On Tue, 23 May 2023 at 01:12, Marijn Suijten
+> <marijn.suijten@somainline.org> wrote:
 > >
-> >
-> >
-> > On 5/22/2023 1:44 PM, Marijn Suijten wrote:
-> > > On 2023-05-22 13:30:20, Jessica Zhang wrote:
-> > >> Currently, when compression is enabled, hdisplay is reduced via integer
-> > >> division. This causes issues for modes where the original hdisplay is
-> > >> not a multiple of 3.
-> > >>
-> > >> To fix this, use DIV_ROUND_UP to divide hdisplay.
-> > >>
-> > >> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > >> Suggested-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > On 2023-05-23 00:45:25, Dmitry Baryshkov wrote:
+> > > Declaring the mask of supported interrupts proved to be error-prone. It
+> > > is very easy to add a bit with no corresponding backing block or to miss
+> > > the INTF TE bit. Replace this with looping over the enabled INTF blocks
+> > > to setup the irq mask.
 > > >
-> > > Nit: probably these should go in the opposite order.  And if they're
-> > > all supposed to be chronological, I think it is:
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >
+> > Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> >
+> > > ---
+> > >  .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 20 ++++++++++++++++++-
+> > >  .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  6 ++++++
+> > >  2 files changed, 25 insertions(+), 1 deletion(-)
 > > >
-> > >      Suggested-by:
-> > >      Fixes:
-> > >      Signed-off-by:
-> > >      Reviewed-by:
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> > > index a03d826bb9ad..01f2660a2354 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> > > @@ -463,6 +463,7 @@ struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
+> > >  {
+> > >       struct dpu_hw_intr *intr;
+> > >       int nirq = MDP_INTR_MAX * 32;
+> > > +     unsigned int i;
 > > >
-> > > But unsure if that's a hard requirement, or even correct at all.
+> > >       if (!addr || !m)
+> > >               return ERR_PTR(-EINVAL);
+> > > @@ -480,7 +481,24 @@ struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
+> > >
+> > >       intr->total_irqs = nirq;
+> > >
+> > > -     intr->irq_mask = m->mdss_irqs;
+> > > +     intr->irq_mask = BIT(MDP_SSPP_TOP0_INTR) |
+> > > +                      BIT(MDP_SSPP_TOP0_INTR2) |
+> > > +                      BIT(MDP_SSPP_TOP0_HIST_INTR);
+> > > +     for (i = 0; i < m->intf_count; i++) {
+> > > +             const struct dpu_intf_cfg *intf = &m->intf[i];
+> > > +
+> > > +             if (intf->type == INTF_NONE)
+> > > +                     continue;
+> > > +
+> > > +             intr->irq_mask |= BIT(MDP_INTFn_INTR(intf->id));
+> > > +
+> > > +             if (test_bit(DPU_INTF_TE, &intf->features)) {
+> > > +                     unsigned idx = MDP_INTFn_TEAR_INTR(intf->id);
+> > > +
+> > > +                     if (!WARN_ON(idx == -1))
 > >
-> > Hi Marijn,
+> > We don't need to validate the catalog?  But warning users about this
+> > (and accidentally turning on all interrupt bits hiding the issue anyway)
+> > is a nice side effect though, as you showed it was already going wrong
+> > in patch 1/6.
 > >
-> > I don't see any explicit documentation on the order of R-b tags. FWIW, I
-> > see in the git log that S-o-b always goes at the bottom of the commit
-> > message.
-> >
-> > I would prefer the S-o-b to always be at the bottom (as it helps me
-> > avoid duplicate S-o-b's when doing `git commit -s`), though I can flip
-> > the order of the R-b and suggested-by tags.
+> > OTOH you might have inlined the macro and provided a more useful warning
+> > message (DPU_INTF_TE can only be present on INTF1/2)... and then one
+> > could assert on INTF_DSI etc etc etc...
 > 
-> I'd second Jessica here. Consider these tags as a history or a transcript:
-> 
-> I would not vote on the particular order of the Suggested-by/Fixes
-> tags, I don't think that is important. These come first. Then the
-> patch goes through different cycles. of reviews, which gain
-> Reviewed-by tags.
-> 
-> In the same way Link/Patchwork/whatever other tags are added in the
-> historical order.
-> 
-> By having the submitter's S-o-b at the bottom, the submitter adds the
-> final signature under everything else being stated/recorded.
+> I'd prefer to keep it, as a safeguard for submission being in
+> progress, newer generations gaining TE blocks on other interfaces,
+> etc.
+> I was selecting between having explicit intf->id == INTF_1 || ==
+> INTF_2 condition and this kind of macro.
 
-Correct, so the s-o-b can always be kept / moved back to the bottom on a
-resend, stating that they sign off on "all that was written previously"
-including picking up reviews.
-
-However, for the rest of your reply about "history / transcript", you
-seem to agree exactly with my point of keeping (or rather, simply
-appending) these in chronological order?
+Being explicit in-line here has my preference.  Maybe the same for the
+above bit, not sure about that one yet (e.g. have an upper bound on
+INTF_8).
 
 - Marijn
 
 > 
-> Of course, in a more complicated story, there might be other
-> developers taking part (Co-Developed-By + Signed-off-by), etc.
+> >
+> > - Marijn
+> >
+> > > +                             intr->irq_mask |= BIT(idx);
+> > > +             }
+> > > +     }
+> > >
+> > >       spin_lock_init(&intr->irq_lock);
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+> > > index f329d6d7f646..f0b92c9e3b09 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+> > > @@ -17,6 +17,7 @@ enum dpu_hw_intr_reg {
+> > >       MDP_SSPP_TOP0_INTR,
+> > >       MDP_SSPP_TOP0_INTR2,
+> > >       MDP_SSPP_TOP0_HIST_INTR,
+> > > +     /* All MDP_INTFn_INTR should come sequentially */
+> > >       MDP_INTF0_INTR,
+> > >       MDP_INTF1_INTR,
+> > >       MDP_INTF2_INTR,
+> > > @@ -33,6 +34,11 @@ enum dpu_hw_intr_reg {
+> > >       MDP_INTR_MAX,
+> > >  };
+> > >
+> > > +#define MDP_INTFn_INTR(intf) (MDP_INTF0_INTR + (intf - INTF_0))
+> > > +#define MDP_INTFn_TEAR_INTR(intf) (intf == INTF_1 ? MDP_INTF1_TEAR_INTR : \
+> > > +                                intf == INTF_2 ? MDP_INTF2_TEAR_INTR : \
+> > > +                                -1)
+> > > +
+> > >  /* compatibility */
+> > >  #define MDP_INTF0_7xxx_INTR MDP_INTF0_INTR
+> > >  #define MDP_INTF1_7xxx_INTR MDP_INTF1_INTR
+> > > --
+> > > 2.39.2
+> > >
 > 
-> Note: all described is just my perception and might differ from the
-> BCP regarding the tags.
-
-<snip>
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
