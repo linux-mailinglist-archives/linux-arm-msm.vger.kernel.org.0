@@ -2,69 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F0D470B691
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 09:32:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35DEA70B708
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 09:51:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232536AbjEVHcc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 03:32:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57630 "EHLO
+        id S232211AbjEVHvP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 03:51:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232519AbjEVHcb (ORCPT
+        with ESMTP id S231996AbjEVHux (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 03:32:31 -0400
-Received: from mail-yb1-xb2d.google.com (mail-yb1-xb2d.google.com [IPv6:2607:f8b0:4864:20::b2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F12DB6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 00:32:29 -0700 (PDT)
-Received: by mail-yb1-xb2d.google.com with SMTP id 3f1490d57ef6-ba81f71dfefso8309826276.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 00:32:29 -0700 (PDT)
+        Mon, 22 May 2023 03:50:53 -0400
+Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F8F41BF6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 00:49:08 -0700 (PDT)
+Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3f6042d60b5so8451305e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 00:49:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684740748; x=1687332748;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=l3nKRFXxsoHjfjdv323ChY4z/ZbZPhs8kEfFA/b0p14=;
-        b=ZQBKBNbhyGusoEZNZncEPEovCz9ZtzvSsUhyhSUHyzXTHxM4pTaAFa4m9WSjXG3JtY
-         Cpp4VN1YENR0DDoAf99GIkp0+KSSIAUV1PwqgbOIsE9KP7QESHwE7bijzkNwtxOt8/jn
-         SRTJr71ARxr7S7iyMsJ3cjvugn0Cz9iFXxkA3+AHQ3tea9YqTKuKM1srZu4dZuuH81d8
-         +x9dVC95WW8NMbrLtdS5OzsQAQmLeaHPPYQe5WZ7mtTE3QqkdIlUDVHfXjPa53ZHk7iw
-         HFOT6bsAmfR1jYA1L3yy1st3FFa8IuXPvy9PeMAo1IzzdUKSAE1R6PFef1EYITbTHGpO
-         Ka/A==
+        d=linaro.org; s=google; t=1684741686; x=1687333686;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7XMgaZJPGsrQVomCNqgAU3/ENZApSDLqMYm/e5VaXxw=;
+        b=o1KZiUY0+94ILPWC9thOe+05sNJsT9m47nDU9niy/0e+Elik++Sfj78+DVBL89cSHw
+         pw4lEj5H243X8aAV66ocyCPQNAYaUgr9QOYT+kLkLWdwbY6nWhoNBY26yB3ODLy4RA6J
+         7HaK5wNYk0LPiIeKAoo913TUJO/NwBPRJ/JYKqZWPDdr5rM/YQ/bLo8HHP9BRwlnAy5R
+         9bIiARG8Khqs/BCjGKx9oiNwBwegb4HHHLZeiCEZkkBhRyC8c9ek0znXbEUY4jgNyu6g
+         kga1xHYITtKp7GVxEhCjlR4KFZAATp/jP5I+KiiX/ktmxA3QN1m6A+G5dMeEwEOL8+Nv
+         9Itw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684740748; x=1687332748;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=l3nKRFXxsoHjfjdv323ChY4z/ZbZPhs8kEfFA/b0p14=;
-        b=RoZ6ivwnblFuMCb1++ZcrVLRt6bOqkiqKs0HOHAmSyBklYLQBKxqT+z7sFwcadXItX
-         fQW9od8azcBv9OMcwtdzazeJw+egKurlmdlEla1nVhC/5jFGUG4bGBT4bQO6U6ZTjSOS
-         Ur/z2m/DtpoaZbvlk2oj4t7r48nvz5BKUF62yuHxZYYZbubebcMiyQcHY+1f9Oe2tcO9
-         pJF/V6p2wEueVdRHK8FcaWzud/Qt5BRPq0HTRauHfkbocydEHlrplQYkCl7OnnNg242K
-         NlD6o8w/EsH5/tpJjfQuHS0Sasgaak3Tj9oZ2oWGaGXJzOYzULzlNa8eYCsah1vUAI1Y
-         U8+w==
-X-Gm-Message-State: AC+VfDzs3UXJy2eAuo6qnEsU0UX6KuNJKmhZcY8IsN92spLSP6M8e1BF
-        mdt2e17EwSaVvxpXHm5opsRgcnIsS5w2KmzX69Z5qg==
-X-Google-Smtp-Source: ACHHUZ4FkKkNnOjIqxj6cR6guYodDfCoBUf70rR+UN4AF9syzuN5i3kPXu5WUGJ7anEuu333nuhHkKPkvWZV8hR5tx8=
-X-Received: by 2002:a0d:d595:0:b0:561:e910:52f5 with SMTP id
- x143-20020a0dd595000000b00561e91052f5mr12470156ywd.27.1684740748447; Mon, 22
- May 2023 00:32:28 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1684741686; x=1687333686;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7XMgaZJPGsrQVomCNqgAU3/ENZApSDLqMYm/e5VaXxw=;
+        b=NPDzGA9l7T2tLvqM14OtF2J8OUrf0I+a+4LLq3utyiejMRzmr6XSb5J9SPqEkH4M6R
+         V5F0I7djATJq+b1myHa+o4kdIaE5O1iT4q+yN8oWJ0GKu2jy5hBjqCR8LENOxRDhuTa3
+         iSDPGqou0QyL95c5K/J9RAGxYtwIy3hLqhWd1IPnb0RQU5/BR7J5n1ZBOoL0RY323kVT
+         aft+fIOx5LQ8FG2S0pUVgHcZVTJYeWqvyKwE7MfnAoD+TwBUGR4THJh4gy0ZlURxo+kA
+         3k2JY4iQUOjPYGFq94R5CDsvgkczFaOgyuhM7D1naYRufijWkFeldZrxXv5nucsmdJlE
+         Q/1g==
+X-Gm-Message-State: AC+VfDzXslJ+Q/ai744RAgyFFpbR5XfHEhfIaHn8wgEPtZ1VYQaIWaW3
+        jTxKZw++tO2qfLAml9+sCNu/4w==
+X-Google-Smtp-Source: ACHHUZ45kpDtJdUknRe4eZfAOKeBPDqYXozusnHk6IjXHiCBaDluwN8/yjIW82K5hNfL27FxQcI/UQ==
+X-Received: by 2002:a1c:7512:0:b0:3f1:789d:ad32 with SMTP id o18-20020a1c7512000000b003f1789dad32mr6942704wmc.11.1684741686242;
+        Mon, 22 May 2023 00:48:06 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id m13-20020a7bca4d000000b003f4dde07956sm10636763wml.42.2023.05.22.00.48.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 May 2023 00:48:04 -0700 (PDT)
+Date:   Mon, 22 May 2023 10:48:01 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     Jeykumar Sankaran <jsanka@codeaurora.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Archit Taneja <architt@codeaurora.org>,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        kernel-janitors@vger.kernel.org
+Subject: [PATCH] drm/msm/dpu: signedness bug in
+ dpu_encoder_phys_cmd_tearcheck_config()
+Message-ID: <897779a0-1a1f-4193-9dd3-bc4f87e73e3c@kili.mountain>
 MIME-Version: 1.0
-References: <20230519125409.497439-1-quic_srichara@quicinc.com> <20230519125409.497439-5-quic_srichara@quicinc.com>
-In-Reply-To: <20230519125409.497439-5-quic_srichara@quicinc.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Mon, 22 May 2023 09:32:17 +0200
-Message-ID: <CACRpkdaX3i-O3=8XbLYJ1hXT8dOE7WJUUT6JxOKmWTJwru_24Q@mail.gmail.com>
-Subject: Re: [PATCH V7 4/8] pinctrl: qcom: Add IPQ5018 pinctrl driver
-To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, ulf.hansson@linaro.org,
-        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        robimarko@gmail.com, andy.shevchenko@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Mailer: git-send-email haha only kidding
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -75,27 +80,28 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 19, 2023 at 2:55=E2=80=AFPM Sricharan Ramabadhran
-<quic_srichara@quicinc.com> wrote:
+The "vsync_hz" variable is used to store negative error codes so it
+needs to be signed for the error checking to work correctly.
 
-> Add pinctrl definitions for the TLMM of IPQ5018.
->
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Co-developed-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
-> Signed-off-by: Nitheesh Sekar <quic_nsekar@quicinc.com>
-> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> ---
->  [v7] No change
+Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This looks mostly fine, but I want you to consider Andy's remarks.
-With those addressed:
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+index 74470d068622..b29e6d1ba7f6 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+@@ -320,7 +320,7 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
+ 	struct dpu_hw_tear_check tc_cfg = { 0 };
+ 	struct drm_display_mode *mode;
+ 	bool tc_enable = true;
+-	u32 vsync_hz;
++	int vsync_hz;
+ 	struct dpu_kms *dpu_kms;
+ 
+ 	if (!phys_enc->hw_pp) {
+-- 
+2.39.2
 
-Can this file and the bindings be applied independently of the rest
-of the patches? In that case I can apply v8 bindings+this patch to
-the pinctrl tree.
-
-Yours,
-Linus Walleij
