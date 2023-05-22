@@ -2,135 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE05670C4D5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 20:02:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D343370C65E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 21:17:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233014AbjEVSCf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 14:02:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58696 "EHLO
+        id S234148AbjEVTRP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 15:17:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232713AbjEVSCe (ORCPT
+        with ESMTP id S233857AbjEVTRM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 14:02:34 -0400
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7723DC6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 11:02:32 -0700 (PDT)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-563874afe98so45206347b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 11:02:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684778551; x=1687370551;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=aVJBY/8knzMSVZs/V5x+SxD32eOlg+FbYuKoI3xgu5k=;
-        b=IiaPqvUFy2+EUG1ROFc6gGPSTDqB+lvZrShUlA59d6U8FYt/+HOiHCfnpsFiTIftXQ
-         Q9A3skQlwcdqBzrTwhRn44a2nDlDjB9jJ6u1HC+0Pk7qB7QvsIrHsBbdrwAl1duQYAIa
-         JrLcXjAnqtXAywZp5HTN/r7dIHpxCNjCw8it3mJLVin5F23vlrZEJ2GAu4NFDsDOWvbf
-         g8gaI7XHdEoU1ykNMnNCx9ulX0ZzwIH/1S4kJtVRhbCqdz3fRU8+5FUsWVvXbJtAYv1m
-         MAhsXR/xFUfYOPehmPurjRam44Lm7EnvxmMTVYFAfy7/st3Rt2r1SOZN442KnBYLIrrU
-         38fA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684778551; x=1687370551;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aVJBY/8knzMSVZs/V5x+SxD32eOlg+FbYuKoI3xgu5k=;
-        b=OcPH4reCMWzy/9FAqiPUM+MMlDvIXVIywIXXRDsDzBcPYL+/j7tg9qjWRXSoHXPCYk
-         EHtlKNhGXwuXLJ95jqEj2TFc+JpLvHAKxhMkizRfEaJi+Hnev/XQOeONo1M5k2wV0EOf
-         WqYjB4DpXgwx65onfgk49ReD9jXCEUdwkht3oVte3dNxeRiAseQwwAPUJBVkLSStuDgV
-         w8bdp3apUY8Pz/HvU8jt9DGJks3S7yTjkqGQrwCQ/nOp0Vwbj2PyrqgnnaVuRH+pSV+I
-         JKLvaXXEQk6BPaThDcoX1wWwqC+APODwKfpIZaZAbpRAM1bt2jh7W49WKahKhZM+3SYf
-         XHJA==
-X-Gm-Message-State: AC+VfDwNhFt16BrHMNM4fYDl6goefHW5Uol0vbNxG2AQ5G5xQyU9EWcC
-        TVhGdUwq/Ww21gnBt1xh6cnvZIQ4DxAtt6wdW7HkQQ==
-X-Google-Smtp-Source: ACHHUZ5A0/pll2fL/dhzKjSv92cbxqoh0Y0r8v4Nv91Amd9dUVpr+L1YyCF04nMS1kzjLTSw5bsXDQHt/W8MX/vU+kU=
-X-Received: by 2002:a81:5289:0:b0:55a:4840:68d with SMTP id
- g131-20020a815289000000b0055a4840068dmr11841891ywb.20.1684778551387; Mon, 22
- May 2023 11:02:31 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230503130051.144708-1-y.oudjana@protonmail.com>
- <20230503130051.144708-4-y.oudjana@protonmail.com> <CAA8EJpokUqHRQz=RJnJpvFzCzz+=5TepPraQGvCvjqFL9+GX7w@mail.gmail.com>
- <5UM2VR.7LLGW1RDW4G2@gmail.com>
-In-Reply-To: <5UM2VR.7LLGW1RDW4G2@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 22 May 2023 21:02:20 +0300
-Message-ID: <CAA8EJpqh7Me9p1oPRZ88KQD4WRqYCswZ-2njYX6tTa6z0o6cGg@mail.gmail.com>
-Subject: Re: [PATCH RESEND 3/3] clk: qcom: cbf-msm8996: Add support for
- MSM8996 Pro
-To:     Yassine Oudjana <yassine.oudjana@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 22 May 2023 15:17:12 -0400
+X-Greylist: delayed 4201 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Mon, 22 May 2023 12:17:10 PDT
+Received: from mail.8bytes.org (mail.8bytes.org [IPv6:2a01:238:42d9:3f00:e505:6202:4f0c:f051])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id EA8FDE9;
+        Mon, 22 May 2023 12:17:09 -0700 (PDT)
+Received: from 8bytes.org (p200300c2773e310086ad4f9d2505dd0d.dip0.t-ipconnect.de [IPv6:2003:c2:773e:3100:86ad:4f9d:2505:dd0d])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mail.8bytes.org (Postfix) with ESMTPSA id 0771D2434D7;
+        Mon, 22 May 2023 18:10:03 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+        s=default; t=1684771803;
+        bh=IEYacWChjS8pqW2eXYZUvSMLj48VE4JauxQLZBxYtqA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=dsW1m+Y4pRxReMA3YAV1dR7xSpCrEFNRWPSoWZvvgL9y9t+B8nkXGdS5pIZgE/Mxc
+         jDkmtQgdl3dVqv6n3e4yCwCoQwKfP4wgVU7uooQ8pyt47lwv0bvnKcPDbqciBPuGzz
+         QflQuvzLHWoxNs4RdcEri8p72xuZLmU5YY/fJNWHmC0sEkQSGm+KOysLl+ctiUYkJ4
+         7Qlh+elGqPq5y9QZv4ABmp2fOJsDSjiUh+6IV6ASZ54RN9zWxU/tU36JULF7zRzETM
+         EVBM6Dq0OgEW2aYEblrwJsY5LuCTfZP55UCddCCkbSfFJKvpE/vQhuL22KcZwPL64w
+         mMOPCB+3NQIhg==
+Date:   Mon, 22 May 2023 18:10:01 +0200
+From:   Joerg Roedel <joro@8bytes.org>
+To:     Niklas Schnelle <schnelle@linux.ibm.com>
+Cc:     Matthew Rosato <mjrosato@linux.ibm.com>,
+        Will Deacon <will@kernel.org>,
+        Wenjia Zhang <wenjia@linux.ibm.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Jason Gunthorpe <jgg@ziepe.ca>,
+        Gerd Bayer <gbayer@linux.ibm.com>,
+        Julian Ruess <julianr@linux.ibm.com>,
+        Pierre Morel <pmorel@linux.ibm.com>,
+        Alexandra Winter <wintera@linux.ibm.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Alexander Gordeev <agordeev@linux.ibm.com>,
+        Christian Borntraeger <borntraeger@linux.ibm.com>,
+        Sven Schnelle <svens@linux.ibm.com>,
+        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        David Woodhouse <dwmw2@infradead.org>,
+        Lu Baolu <baolu.lu@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Yong Wu <yong.wu@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        iommu@lists.linux.dev, asahi@lists.linux.dev,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+        linux-doc@vger.kernel.org
+Subject: Re: [PATCH v9 6/6] iommu/dma: Make flush queue sizes and timeout
+ driver configurable
+Message-ID: <ZGuT2R42SWFHmklu@8bytes.org>
+References: <20230310-dma_iommu-v9-0-65bb8edd2beb@linux.ibm.com>
+ <20230310-dma_iommu-v9-6-65bb8edd2beb@linux.ibm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230310-dma_iommu-v9-6-65bb8edd2beb@linux.ibm.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 22 May 2023 at 20:49, Yassine Oudjana <yassine.oudjana@gmail.com> wrote:
->
->
-> On Wed, May 3 2023 at 04:20:00 PM +03:00:00, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> > On Wed, 3 May 2023 at 16:02, Yassine Oudjana
-> > <yassine.oudjana@gmail.com> wrote:
-> >>
-> >>  From: Yassine Oudjana <y.oudjana@protonmail.com>
-> >>
-> >>  The CBF PLL on MSM8996 Pro has a /4 post divisor instead of /2.
-> >> Handle the
-> >>  difference accordingly.
-> >>
-> >>  Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-> >>  ---
-> >>   drivers/clk/qcom/clk-cbf-8996.c | 121
-> >> ++++++++++++++++++++++++++++----
-> >>   1 file changed, 106 insertions(+), 15 deletions(-)
-> >>
-> >>  diff --git a/drivers/clk/qcom/clk-cbf-8996.c
-> >> b/drivers/clk/qcom/clk-cbf-8996.c
-> >>  index 1bb2cd956d68..a3e96578ddd9 100644
-> >>  --- a/drivers/clk/qcom/clk-cbf-8996.c
-> >>  +++ b/drivers/clk/qcom/clk-cbf-8996.c
-> >>  @@ -65,6 +65,19 @@ static const struct alpha_pll_config
-> >> cbfpll_config = {
-> >>          .early_output_mask = BIT(3),
-> >>   };
-> >>
-> >>  +static const struct alpha_pll_config cbfpll_pro_config = {
-> >>  +       .l = 72,
-> >>  +       .config_ctl_val = 0x200d4828,
-> >>  +       .config_ctl_hi_val = 0x006,
-> >>  +       .test_ctl_val = 0x1c000000,
-> >>  +       .test_ctl_hi_val = 0x00004000,
-> >>  +       .pre_div_mask = BIT(12),
-> >>  +       .post_div_mask = 0x3 << 8,
-> >>  +       .post_div_val = 0x3 << 8,
-> >>  +       .main_output_mask = BIT(0),
-> >>  +       .early_output_mask = BIT(3),
-> >>  +};
-> >
-> > Granted that the difference between this and the non-pro is just the
-> > post_div_val, would it be easier to just patch it in the probe()?
->
-> I wasn't sure if that approach would've been accepted since it relies
-> on the special case that only one instance of the CBF device will exist
-> in normal conditions, but if you say it's fine then sure, I can do that.
+On Mon, May 15, 2023 at 11:15:56AM +0200, Niklas Schnelle wrote:
+> In the s390 IOMMU driver a large fixed queue size and timeout is then
+> set together with single queue mode bringing its performance on s390
+> paged memory guests on par with the previous s390 specific DMA API
+> implementation.
 
-We do this for other clock controllers, which we know to be singleton.
-So this should be fine too.
+Hmm, the right flush-queue size and timeout settings are more a function
+of the endpoint device and device driver than of the iommu driver, no? I
+think something like this could also help solving the recently reported
+scalability problems in the fq-code, if done right.
 
---
-With best wishes
-Dmitry
+Regards,
+
+	Joerg
+
