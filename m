@@ -2,85 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5EBDB70B50E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 08:32:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4FC4370B51D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 08:34:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230379AbjEVGcI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 02:32:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47008 "EHLO
+        id S231767AbjEVGe1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 02:34:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229621AbjEVGcH (ORCPT
+        with ESMTP id S231734AbjEVGeU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 02:32:07 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92FA39B;
-        Sun, 21 May 2023 23:32:06 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34M4R3FZ016327;
-        Mon, 22 May 2023 06:32:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=DQa30vKRm5JaFVF5epmievdfUoju+vGys7fNeVT8iEE=;
- b=JZEoz6xtZ76hqA77bVxRXHLH5644PG4PDyV50qc7fp2iC+UvaN3pHKuadNEnKOVfjSSw
- q+HHHzHYEv/gAPPOnj4bqAhZfCIXirepj03Y0wj32zagIzkG6ay7VTp4LA47+wn8RinG
- rSsTJ9FdmIz9v99wfEvqJVe+gRrJJvgJTkkAUqRQeLyhr7ZZgubB4nkR6MeSWPpLXFIW
- xAQb7j+E9JApnUypVQ8YQOPYIuxmqfLAOcu+c3gecDHNTgo8OO2VkQk5AAlOv5kOX5u/
- UdZUoncQcda1GBeQTvVN2QGSlgurmX1v9M+nP7NdBY1d2Z4Hw8QqyJb5M1fPdvpo6wL/ /A== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qpkwmu0rc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 22 May 2023 06:32:03 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34M6W23X012783
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 22 May 2023 06:32:02 GMT
-Received: from [10.214.67.128] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Sun, 21 May
- 2023 23:31:58 -0700
-Message-ID: <478462f6-379f-afa8-dc44-11233e18460a@quicinc.com>
-Date:   Mon, 22 May 2023 12:01:54 +0530
+        Mon, 22 May 2023 02:34:20 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AD95130
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 23:34:11 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-3095b1b6e02so1492531f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 21 May 2023 23:34:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684737250; x=1687329250;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=EAyY58pCbi3W8r2Mevgk+ep+W1pb3pJ/ucHMinuaS84=;
+        b=A+wG49Gs9AoCWb6fIpuJql1Qx525ig00PRPuZsjZTRfztmcDeul8fJkUdztdlSkazD
+         wl3Pn5YQSSaD0ZOHwgYBcnoPg591y5TZhau233ZZCHJwxW/9nyvvyFdcs5eUKYVtQ+fM
+         h/NcSP0j9LOlDY7fsBHa+lb6rZbdIvg0esepOwLorgofVyjsbzzAzR/+nVsF7OdVBbnv
+         JO7eFO5yGhip4RJ3Di9zuRIswgIlthQ2GGpUX7CTQpTKPvXWYTwmkyDbFGwyx+bqoC35
+         ujT0VPdS9m0Iv3oLM9RU49buki+Qqdx0qTsWHWOkeNjb+TVoDUq4/rUZbiJmLKicBoGW
+         vtOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684737250; x=1687329250;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EAyY58pCbi3W8r2Mevgk+ep+W1pb3pJ/ucHMinuaS84=;
+        b=D81csYtYJjrQzv/XemmdhI9nUEGcPaCMyjNTxhK3dMHgDBvQ1eDFNd2EWYsAF86/KG
+         kVGHY39uqdvqubvveITqzW5P1cHWlDIs5kQIKyX/+RJuP+V91tYXXfuK8xaO0MdReguA
+         jC34Gcat6y5rsu7PCl4kfuyx1IZtzw0vGc8E/wcwO2EpL6AbsivNry1g+r6spvl2Q0Jf
+         fuSWzIdoo4o9xIvmeepOqOw869pCUUCZe1/O+1i/fbIVZoGBhMRshJ3mqOQSxLAEQRZc
+         f+VO1/xmnodJ75wfVqKhooF21qLPytizbPM2+KWyVaAeBE2yZJB2NyxgPgSqtA9HwntG
+         IGxw==
+X-Gm-Message-State: AC+VfDwUmno4bg/jC06weFMSOnfN10BzyvSxOPSFloOb4s/vcy7ZAj1p
+        xOFjG7bEIABwd9voEahlegBumlRPgwL8V8gVSRvhkQ==
+X-Google-Smtp-Source: ACHHUZ4ZOLKEL9Fy0aJeksELWsZExOmWjwk016kyCGbYqYeUbvvZErTsAeHMdvgJHfZqM375hBeZ/2kl5PNt1+nQe5s=
+X-Received: by 2002:adf:f1d0:0:b0:2f2:9198:f0f with SMTP id
+ z16-20020adff1d0000000b002f291980f0fmr6866143wro.10.1684737249945; Sun, 21
+ May 2023 23:34:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: qdu1000-idp: add SDHCI for emmc
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-CC:     <linux-mmc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20230519085122.15758-1-quic_kbajaj@quicinc.com>
- <20230519085122.15758-5-quic_kbajaj@quicinc.com>
- <8e3c745a-2e37-2927-7dbf-e23a777702f3@linaro.org>
- <ed4c33d3-ae5d-d695-eda0-0b09a4a26644@linaro.org>
-From:   Komal Bajaj <quic_kbajaj@quicinc.com>
-In-Reply-To: <ed4c33d3-ae5d-d695-eda0-0b09a4a26644@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: E5Tv7PCb8DHnIz5AvLsdiyecr4EtfRBC
-X-Proofpoint-ORIG-GUID: E5Tv7PCb8DHnIz5AvLsdiyecr4EtfRBC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-22_04,2023-05-17_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
- spamscore=0 impostorscore=0 mlxscore=0 adultscore=0 suspectscore=0
- priorityscore=1501 phishscore=0 mlxlogscore=830 lowpriorityscore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305220054
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+References: <20230522044512.4787-1-quic_kathirav@quicinc.com>
+In-Reply-To: <20230522044512.4787-1-quic_kathirav@quicinc.com>
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Date:   Mon, 22 May 2023 12:03:58 +0530
+Message-ID: <CAH=2NtydsLsTRhWEqocg4AQPzk5QURHeKNe7N-DhhV2-qnic6Q@mail.gmail.com>
+Subject: Re: [PATCH] firmware: qcom_scm: use the SCM_CONVENTION based on ARM / ARM64
+To:     Kathiravan T <quic_kathirav@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_eberman@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -89,56 +70,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
-
-On 5/20/2023 4:54 PM, Konrad Dybcio wrote:
+On Mon, 22 May 2023 at 10:15, Kathiravan T <quic_kathirav@quicinc.com> wrote:
 >
-> On 19.05.2023 12:13, Bhupesh Sharma wrote:
->> On 5/19/23 2:21 PM, Komal Bajaj wrote:
->>> Add sdhci node for emmc in qdu1000-idp.
->>>
->>> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
->>> ---
->>>    arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 11 +++++++++++
->>>    1 file changed, 11 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>> index 9e9fd4b8023e..b2526e991548 100644
->>> --- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
->>> @@ -451,3 +451,14 @@
->>>    &uart7 {
->>>        status = "okay";
->>>    };
->>> +
->>> +&sdhc_1 {
->>> +    status = "okay";
->>> +
->>> +    pinctrl-0 = <&sdc1_on_state>;
->>> +    pinctrl-1 = <&sdc1_off_state>;
->>> +    pinctrl-names = "default", "sleep";
->>> +
->>> +    vmmc-supply = <&vreg_l10a_2p95>;
->>> +    vqmmc-supply = <&vreg_l7a_1p8>;
->>> +};
->> Again, please follow alphabetical order for adding new node entries.
-Noted.
->>
->> Also, we have been placing 'status = .. ' entry at the end for new .dts (or .dts entry), but if that is the format used across this board dts
->> I am ok with the same.
-Sure, will move status to end.
-> Komal,
+> During SCM probe, to identify the SCM convention, scm call is made with
+> SMC_CONVENTION_ARM_64 followed by SMC_CONVENTION_ARM_32. Based on the
+> result what convention to be used is decided.
 >
-> since you're already touching this file, would you mind making a
-> separate commit moving status last for all nodes?
-Hi Konrad,
-I don't notice any other nodes whose state is maintained at the 
-beginning of the node.
+> IPQ chipsets starting from IPQ807x, supports both 32bit and 64bit kernel
+> variants, however TZ firmware runs in 64bit mode. When running on 32bit
+> kernel, scm call is made with SMC_CONVENTION_ARM_64 is causing the
+> system crash, due to the difference in the register sets between ARM and
+> AARCH64, which is accessed by the TZ.
 
-Thanks
-Komal
+If a crash is being fixed, should we use a Fixes tag as well?
+
+> To avoid this, use SMC_CONVENTION_ARM_64 only on ARM64 builds.
 >
-> Konrad
->> Thanks,
->> Bhupesh
+> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> ---
+>  drivers/firmware/qcom_scm.c | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index fde33acd46b7..db6754db48a0 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -171,6 +171,7 @@ static enum qcom_scm_convention __get_convention(void)
+>         if (likely(qcom_scm_convention != SMC_CONVENTION_UNKNOWN))
+>                 return qcom_scm_convention;
+>
+> +#if IS_ENABLED(CONFIG_ARM64)
+>         /*
+>          * Device isn't required as there is only one argument - no device
+>          * needed to dma_map_single to secure world
+> @@ -191,6 +192,7 @@ static enum qcom_scm_convention __get_convention(void)
+>                 forced = true;
+>                 goto found;
+>         }
+> +#endif
 
+If we are already inside a 'CONFIG_ARM64' define here ^^^, do we even
+need the following snippet now:
+
+/*
+     * Some SC7180 firmwares didn't implement the
+     * QCOM_SCM_INFO_IS_CALL_AVAIL call, so we fallback to forcing ARM_64
+     * calling conventions on these firmwares. Luckily we don't make any
+     * early calls into the firmware on these SoCs so the device pointer
+     * will be valid here to check if the compatible matches.
+     */
+    if (of_device_is_compatible(__scm ? __scm->dev->of_node : NULL,
+"qcom,scm-sc7180")) {
+        forced = true;
+        goto found;
+    }
+
+'forced' will always be 'true' now that we are inside the CONFIG_ARM64
+check above, right?
+So, maybe you can clean-up that path as well.
+
+Thanks,
+Bhupesh
