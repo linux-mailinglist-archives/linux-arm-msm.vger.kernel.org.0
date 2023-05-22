@@ -2,56 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 78B5370B82A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 10:57:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B66D70B835
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 10:59:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232620AbjEVI53 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 04:57:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40350 "EHLO
+        id S232176AbjEVI7p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 04:59:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232671AbjEVI4w (ORCPT
+        with ESMTP id S232212AbjEVI7T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 04:56:52 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDFBF196;
-        Mon, 22 May 2023 01:56:28 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 40708611A9;
-        Mon, 22 May 2023 08:56:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66729C4339B;
-        Mon, 22 May 2023 08:56:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684745787;
-        bh=LN/rjbcvhhidlr7lNhdnVlcRMhOuBdd16O7dwepf3xY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=f0kh7xX0HJit3/nP7bCLGauFMhd+TSb2IUwM7Z4PoyXJF0KQPZ0U97x78v9PClSII
-         84pD7O/g0AkV5dEK8mMD1LcobSya6NmnGi2csAFa81atYZjBzGrKLMki7VXImbL76U
-         0598zdUQZcn36+zIU2lhMXLkV1R8TztMPliLgp5RxyUPoiHC91Xs5IZoJR94oahe/B
-         s1pE/04nhGAhabRVsBN9hPyY2N+bSPtUVP3lyNqv9spgp3Vxkaci/kgcz+HfV37a2c
-         oUP2+rlqiuoTWNH57YEsKWsLe0m+kVoufYbWnsi041bVWfFV6jdMWeKQyHLArwYOFW
-         8mFGxa/Zfp1LA==
-Date:   Mon, 22 May 2023 10:56:19 +0200
-From:   Lorenzo Pieralisi <lpieralisi@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     kw@linux.com, bhelgaas@google.com, robh@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, steev@kali.org,
-        quic_srichara@quicinc.com, dmitry.baryshkov@linaro.org,
-        Dmitry Baryshkov <dmitry.baryshkov@gmail.com>
-Subject: Re: [PATCH v2 2/8] PCI: qcom: Disable write access to read only
- registers for IP v2.9.0
-Message-ID: <ZGsuM8CAv7AtluVx@lpieralisi>
-References: <20230519143117.23875-1-manivannan.sadhasivam@linaro.org>
- <20230519143117.23875-3-manivannan.sadhasivam@linaro.org>
+        Mon, 22 May 2023 04:59:19 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09727E75
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 01:58:37 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-1ae52ce3250so54025365ad.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 01:58:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684745916; x=1687337916;
+        h=content-transfer-encoding:in-reply-to:references:subject:to:from
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WVVEKPnXkSILTss/P2zaQmuQ5vs6PfUPsMsOFGsk8/M=;
+        b=Ql0qKVg8nKHPlO3LwnQK70xhH1YY18RDJ/jp8+QbdPUKQj/xMBIjs8YdP+RbTdGy8o
+         un7B0gd92OPgrULN/uskxekvP2KHntPf5K3teVTAow68P6BKUw7JOGc36akTxJXxTaTO
+         1Oz/EGCd2/FIJeE0UVTRnPqM4pllTdRzyzRDaK8DYLvT0UDQ53v2KPHA9bPS3umni37i
+         ojXwupNlP2JzASRvNu8BJHpk9LaqJwgVXFcjMU5/9gTxXAvZpQClz72/h730jFisC480
+         cRUwPmZQnoSEw4wQ0ATbD6NC33eu53YxhJM59qKi060tlSs5e0GhfD80QlJEZ/bRSXSJ
+         TsJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684745916; x=1687337916;
+        h=content-transfer-encoding:in-reply-to:references:subject:to:from
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=WVVEKPnXkSILTss/P2zaQmuQ5vs6PfUPsMsOFGsk8/M=;
+        b=gO5SLy7sNkev1fFXskciQ5hnQMDU4HZGVJp7aMG8WV33yPe5p32L82MWpFgR7RlZbw
+         fl3i0n5trmRjG3RQfk5B95wD1tlX9uf3xaso7FXU02tV6cvJKyeskhlxtsP5MaZ34Mjm
+         OKSJ4ef5EVw0RRXdzbieunnC/M9eWenxdzzkjbUDJqOtBZGIXsyDXVyy06/zZCsq119V
+         B5tUBgccWWLtaQONESPwvjoJFQx7JHwdkQRfjG/d2IPxd95CSQ2e29lLwoVaHhTnEe/X
+         lGGWIW4H8qWu+DPRgslnuYvRSo8+L6quPzDKuQZJXWA7A3idZ02xNabEJbuMXMCta4yx
+         Z+Ow==
+X-Gm-Message-State: AC+VfDzYQeQq2tuJcP8XTgoQbl3cARrI2LSbkkJSqbY1RS1wBcUZf664
+        Xk/6YUqalX9QPx1lsxOyNiccRA==
+X-Google-Smtp-Source: ACHHUZ4uhzrBezRPGNp3O4yAik4A3kP5KYKhP29A86ySFHnLnzIEoz/7dLeytbx4+onNWQEISTP78w==
+X-Received: by 2002:a17:902:f2cc:b0:1aa:fbaa:ee09 with SMTP id h12-20020a170902f2cc00b001aafbaaee09mr7905892plc.49.1684745916446;
+        Mon, 22 May 2023 01:58:36 -0700 (PDT)
+Received: from ?IPV6:2401:4900:1c60:d309:883d:817e:8e91:be39? ([2401:4900:1c60:d309:883d:817e:8e91:be39])
+        by smtp.gmail.com with ESMTPSA id y3-20020a17090322c300b001a1d553de0fsm4308539plg.271.2023.05.22.01.58.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 May 2023 01:58:36 -0700 (PDT)
+Message-ID: <c451dc43-b5a2-df42-c4a5-0db4c6641b1c@linaro.org>
+Date:   Mon, 22 May 2023 14:28:28 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230519143117.23875-3-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.3.1
+From:   bhupesh.sharma@linaro.org
+To:     Anusha Rao <quic_anusha@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        thara.gopinath@gmail.com, herbert@gondor.apana.org.au,
+        davem@davemloft.net, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        mturquette@baylibre.com, sboyd@kernel.org, p.zabel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, quic_srichara@quicinc.com,
+        quic_gokulsri@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
+        quic_poovendh@quicinc.com
+Subject: Re: [PATCH V3 2/4] clk: qcom: gcc-ipq9574: Enable crypto clocks
+References: <20230518141105.24741-1-quic_anusha@quicinc.com>
+ <20230518141105.24741-3-quic_anusha@quicinc.com>
+In-Reply-To: <20230518141105.24741-3-quic_anusha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -60,46 +84,131 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 19, 2023 at 08:01:11PM +0530, Manivannan Sadhasivam wrote:
-> In the post init sequence of v2.9.0, write access to read only registers
-> are not disabled after updating the registers. Fix it by disabling the
-> access after register update.
+
+
+On 5/18/23 7:41 PM, Anusha Rao <quic_anusha@quicinc.com> wrote:
+> Enable the clocks required for crypto operation.
 > 
-> Fixes: 0cf7c2efe8ac ("PCI: qcom: Add IPQ60xx support")
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@gmail.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
 > ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 3 +++
->  1 file changed, 3 insertions(+)
+>   Changes in V3:
+> 	- Added GCC prefix to CRYPTO_CLK_SRC.
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 01795ee7ce45..391a45d1e70a 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -1136,6 +1136,7 @@ static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
->  	writel(0, pcie->parf + PARF_Q2A_FLUSH);
->  
->  	dw_pcie_dbi_ro_wr_en(pci);
+>   drivers/clk/qcom/gcc-ipq9574.c | 72 ++++++++++++++++++++++++++++++++++
+>   1 file changed, 72 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq9574.c
+> index 7b0505f5c255..73663168d72a 100644
+> --- a/drivers/clk/qcom/gcc-ipq9574.c
+> +++ b/drivers/clk/qcom/gcc-ipq9574.c
+> @@ -728,6 +728,41 @@ static struct clk_rcg2 blsp1_uart6_apps_clk_src = {
+>   	},
+>   };
+>   
+> +static const struct freq_tbl ftbl_gcc_crypto_clk_src[] = {
+> +	F(160000000, P_GPLL0, 5, 0, 0),
+> +	{ }
+> +};
 > +
-
-Nit: spurious change.
-
-Lorenzo
-
->  	writel(PCIE_CAP_SLOT_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
->  
->  	val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
-> @@ -1145,6 +1146,8 @@ static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
->  	writel(PCI_EXP_DEVCTL2_COMP_TMOUT_DIS, pci->dbi_base + offset +
->  			PCI_EXP_DEVCTL2);
->  
-> +	dw_pcie_dbi_ro_wr_dis(pci);
+> +static struct clk_rcg2 gcc_crypto_clk_src = {
+> +	.cmd_rcgr = 0x16004,
+> +	.freq_tbl = ftbl_gcc_crypto_clk_src,
+> +	.hid_width = 5,
+> +	.parent_map = gcc_xo_gpll0_gpll0_out_main_div2_map,
+> +	.clkr.hw.init = &(const struct clk_init_data) {
+> +		.name = "gcc_crypto_clk_src",
+> +		.parent_data = gcc_xo_gpll0_gpll0_out_main_div2,
+> +		.num_parents = ARRAY_SIZE(gcc_xo_gpll0_gpll0_out_main_div2),
+> +		.ops = &clk_rcg2_ops,
+> +	},
+> +};
 > +
->  	for (i = 0; i < 256; i++)
->  		writel(0, pcie->parf + PARF_BDF_TO_SID_TABLE_N + (4 * i));
->  
-> -- 
-> 2.25.1
+> +static struct clk_branch gcc_crypto_clk = {
+> +	.halt_reg = 0x1600c,
+> +	.halt_check = BRANCH_HALT_VOTED,
+> +	.clkr = {
+> +		.enable_reg = 0x0b004,
+> +		.enable_mask = BIT(14),
+> +		.hw.init = &(const struct clk_init_data) {
+> +			.name = "gcc_crypto_clk",
+> +			.parent_hws = (const struct clk_hw *[]) {
+> +				&gcc_crypto_clk_src.clkr.hw },
+> +			.num_parents = 1,
+> +			.flags = CLK_SET_RATE_PARENT,
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+>   static struct clk_branch gcc_apss_ahb_clk = {
+>   	.halt_reg = 0x24018,
+>   	.halt_check = BRANCH_HALT_VOTED,
+> @@ -2071,6 +2106,38 @@ static struct clk_rcg2 pcnoc_bfdcd_clk_src = {
+>   	},
+>   };
+>   
+> +static struct clk_branch gcc_crypto_axi_clk = {
+> +	.halt_reg = 0x16010,
+> +	.clkr = {
+> +		.enable_reg = 0x16010,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(const struct clk_init_data) {
+> +			.name = "gcc_crypto_axi_clk",
+> +			.parent_hws = (const struct clk_hw *[]) {
+> +				&pcnoc_bfdcd_clk_src.clkr.hw },
+> +			.num_parents = 1,
+> +			.flags = CLK_SET_RATE_PARENT,
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+> +static struct clk_branch gcc_crypto_ahb_clk = {
+> +	.halt_reg = 0x16014,
+> +	.clkr = {
+> +		.enable_reg = 0x16014,
+> +		.enable_mask = BIT(0),
+> +		.hw.init = &(const struct clk_init_data) {
+> +			.name = "gcc_crypto_ahb_clk",
+> +			.parent_hws = (const struct clk_hw *[]) {
+> +				&pcnoc_bfdcd_clk_src.clkr.hw },
+> +			.num_parents = 1,
+> +			.flags = CLK_SET_RATE_PARENT,
+> +			.ops = &clk_branch2_ops,
+> +		},
+> +	},
+> +};
+> +
+>   static struct clk_branch gcc_nsscfg_clk = {
+>   	.halt_reg = 0x1702c,
+>   	.clkr = {
+> @@ -4036,6 +4103,10 @@ static struct clk_regmap *gcc_ipq9574_clks[] = {
+>   	[GCC_SNOC_PCIE1_1LANE_S_CLK] = &gcc_snoc_pcie1_1lane_s_clk.clkr,
+>   	[GCC_SNOC_PCIE2_2LANE_S_CLK] = &gcc_snoc_pcie2_2lane_s_clk.clkr,
+>   	[GCC_SNOC_PCIE3_2LANE_S_CLK] = &gcc_snoc_pcie3_2lane_s_clk.clkr,
+> +	[GCC_CRYPTO_CLK_SRC] = &gcc_crypto_clk_src.clkr,
+> +	[GCC_CRYPTO_CLK] = &gcc_crypto_clk.clkr,
+> +	[GCC_CRYPTO_AXI_CLK] = &gcc_crypto_axi_clk.clkr,
+> +	[GCC_CRYPTO_AHB_CLK] = &gcc_crypto_ahb_clk.clkr,
+>   };
+
+Can we please add these in alphabetical order. For e.g. here these entries would follow those for '[GCC_CMN_BLK_APU_ARES] = { 0x3a010, 2 },'
+
+>   static const struct qcom_reset_map gcc_ipq9574_resets[] = {
+> @@ -4193,6 +4264,7 @@ static const struct qcom_reset_map gcc_ipq9574_resets[] = {
+>   	[GCC_WCSS_ECAHB_ARES] = { 0x25070, 0 },
+>   	[GCC_WCSS_Q6_BCR] = { 0x18000, 0 },
+>   	[GCC_WCSS_Q6_TBU_BCR] = { 0x12054, 0 },
+> +	[GCC_CRYPTO_BCR] = { 0x16000, 0 },
+
+Same as above.
+
+With the above addressed:
+Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+
+Thanks.
+
+>   };
+>   
+>   static const struct of_device_id gcc_ipq9574_match_table[] = {
 > 
