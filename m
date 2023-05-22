@@ -2,46 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4099770CC1E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 23:17:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC1CE70CC47
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 23:23:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233688AbjEVVRh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 17:17:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38938 "EHLO
+        id S234297AbjEVVXy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 17:23:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41278 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230221AbjEVVRg (ORCPT
+        with ESMTP id S234439AbjEVVXy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 17:17:36 -0400
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [5.144.164.162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86834FD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 14:17:33 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 770681FECE;
-        Mon, 22 May 2023 23:17:31 +0200 (CEST)
-Date:   Mon, 22 May 2023 23:17:30 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, dmitry.baryshkov@linaro.org,
-        andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v12 07/10] drm/msm/dpu: always clear every individual
- pending flush mask
-Message-ID: <mhqmflms3wkfwcbyadilylymhvvn3gscr5f2klhhcmmildlnve@udfjrd7z7cqi>
-References: <1684783853-22193-1-git-send-email-quic_khsieh@quicinc.com>
- <1684783853-22193-8-git-send-email-quic_khsieh@quicinc.com>
+        Mon, 22 May 2023 17:23:54 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B056CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 14:23:49 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f13d8f74abso7260867e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 14:23:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684790627; x=1687382627;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GgR6hJl4v5W/VNWJbFimymN7T4wI+SFUcIfWJnoBenI=;
+        b=C3qykUUv308TdzTBXmivOlJVuKrHI6RtuofmrwxHy2E7E3r0piRlzU3uYZMjOHpq0/
+         nbFMtIECGL6ZVq6KigpUxLp2Lo6fhyliggSedkEvwX9qVT1Po4UhZL7jnxX9R2Fy0mLe
+         tnjbQ8XRYUwka9Mt9xkjoIMfYLBRE3HKIV3VbZcahdR0cXjf0ehy2L+ZZUD3KIm3Xe36
+         Weub8Zncccum9DcWa2UyhXt55dJ/uhhibcv7Jukx25VVp430Qf4Q8sBheIPSwvakd4ly
+         Qugdb9UXWvUKFFTXdU7DVTDrRx3e6NrTm2VSelHwdl9NzSkaxlrjZMixRKCAD+0tsWdG
+         D5/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684790627; x=1687382627;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GgR6hJl4v5W/VNWJbFimymN7T4wI+SFUcIfWJnoBenI=;
+        b=jFxn91D+GfgWH4rMjZVZ4VDo+Qq5vSDFxiqyYKQQlIwZ+HTQvKaQXgW2GtI3Zw8xVn
+         n+153Ce5xAv39aiiJ8v7zoB5OjLGQaRKFrexraiJEhr6ca/c35p9QJzqI+0bcF+JCYSq
+         Q8w9bBBm4S2/nzYq87OLHiev/ZcnPuuMTzvwLbWyBd/BZhJdpbNLjy1RSh0W5MgwQLYh
+         ivOPRS6TCcN50A5t/GeAg1aDnpY6akRGqizfUu+QUje2ZXV4RFTmpYLLEenwRQnDIdhl
+         7VaLwv9qbsx1zE67nS9Z2vNtzJKInKHTPsNzZNX47Auhw4Z5OyAiSGT30oygA+ToMtfK
+         HHsg==
+X-Gm-Message-State: AC+VfDwlNmLKTeQWYWktkyrJRGM+xkNlEUr/VxBW3JgBxwDdq0N1frNm
+        h58Ctj72xHRjQU3Yixsqnzl+JQ==
+X-Google-Smtp-Source: ACHHUZ7Bzw5s194y23fjwuuZCzhhqmzfXnSg4bE2VApw3ycGR9+tojHVXKq6PmENI3cIKwUk0nrQRA==
+X-Received: by 2002:ac2:5fae:0:b0:4f1:1de7:1aac with SMTP id s14-20020ac25fae000000b004f11de71aacmr3366506lfe.20.1684790627178;
+        Mon, 22 May 2023 14:23:47 -0700 (PDT)
+Received: from [192.168.1.101] (abyk97.neoplus.adsl.tpnet.pl. [83.9.30.97])
+        by smtp.gmail.com with ESMTPSA id q6-20020ac25146000000b004efff420b0asm1102032lfd.108.2023.05.22.14.23.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 May 2023 14:23:46 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Date:   Mon, 22 May 2023 23:23:39 +0200
+Subject: [PATCH] MAINTAINERS: Add Konrad Dybcio as linux-arm-msm
+ co-maintainer
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1684783853-22193-8-git-send-email-quic_khsieh@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230522-topic-maintainers-v1-1-2b91eb8e4f65@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAFrda2QC/x2NQQrCQAxFr1KyNtAZGVu8irhIx9QGalqSKkLp3
+ Q0u/uJ9eLwdnE3Y4drsYPwRl0UD0qmBOpE+GeURDLnN57bkjNuySsUXiW4xNsfUX0qivut4LBD
+ eQM44GGmdwtT3PMe5Go/y/Ydu9+P4AbGjoIx4AAAA
+To:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1684790626; l=891;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=sUSfHAwWdvL93XFzBSa385oPJR9eTOiEq7h6nDHiVoM=;
+ b=QSfE9E+AOnbudo0Zpi3rmrJr3RMqWRIexzkaUN1qaBRMyV0YhmSKKzgQWgqZTvO47oBGrogvl
+ bQzBzt1hZ13Da37H84OZUBm9oTG8uzMNZ3eO3MsPB44h3TuiyB3cUfT
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -50,56 +83,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-22 12:30:50, Kuogee Hsieh wrote:
-> There are two tiers of pending flush control, main controller and
-> individual hardware block. Currently only the main controller of
+As discussed with Bjorn Andersson in private, step up to
+co-maintainership.
 
-I would call "main controller" "top level" instead, but not sure how the
-hardware manual calls this?
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> flush mask is reset to 0 but leave out some individual pending flush
-> mask of particular hardware block keep previous value at
-> clear_pending_flush().
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 817e96c47be6..2da1e2ce2fae 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2568,7 +2568,7 @@ F:	arch/arm64/boot/dts/qcom/sdm845-cheza*
+ ARM/QUALCOMM SUPPORT
+ M:	Andy Gross <agross@kernel.org>
+ M:	Bjorn Andersson <andersson@kernel.org>
+-R:	Konrad Dybcio <konrad.dybcio@linaro.org>
++M:	Konrad Dybcio <konrad.dybcio@linaro.org>
+ L:	linux-arm-msm@vger.kernel.org
+ S:	Maintained
+ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git
 
-... but the individual pending flush masks of particular hardware blocks
-are left at their previous values, eventually accumulating all possible
-bit values and typically flushing more than necessary.
+---
+base-commit: 9f258af06b6268be8e960f63c3f66e88bdbbbdb0
+change-id: 20230522-topic-maintainers-18651a877ef5
 
-> Reset all individual hardware blocks flush
-> mask to 0 to avoid individual hardware block be triggered accidentally.
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
-maskS*
-
-> 
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-Thanks!  Does this need any fixes tag?
-
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index 69d0ea2..069c6e5 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -100,7 +100,9 @@ static inline void dpu_hw_ctl_clear_pending_flush(struct dpu_hw_ctl *ctx)
->  	trace_dpu_hw_ctl_clear_pending_flush(ctx->pending_flush_mask,
->  				     dpu_hw_ctl_get_flush_register(ctx));
->  	ctx->pending_flush_mask = 0x0;
-> -
-> +	ctx->pending_intf_flush_mask = 0;
-> +	ctx->pending_wb_flush_mask = 0;
-> +	ctx->pending_merge_3d_flush_mask = 0;
-
-I wouldn't mind keeping an empty line here.
-
->  	memset(ctx->pending_dspp_flush_mask, 0,
->  		sizeof(ctx->pending_dspp_flush_mask));
->  }
-> -- 
-> 2.7.4
-> 
