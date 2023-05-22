@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ED77670B7BF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 10:36:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD9CF70B7C6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 10:36:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232334AbjEVIgA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 04:36:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60348 "EHLO
+        id S232294AbjEVIg5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 04:36:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232360AbjEVIfu (ORCPT
+        with ESMTP id S229890AbjEVIg4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 04:35:50 -0400
-Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D08AFA
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 01:35:47 -0700 (PDT)
-Received: by mail-pf1-x42e.google.com with SMTP id d2e1a72fcca58-64d2c865e4eso2615819b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 01:35:47 -0700 (PDT)
+        Mon, 22 May 2023 04:36:56 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13FABB0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 01:36:55 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id d2e1a72fcca58-64d2c865e4eso2616518b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 01:36:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684744546; x=1687336546;
+        d=linaro.org; s=google; t=1684744614; x=1687336614;
         h=content-transfer-encoding:in-reply-to:references:subject:to:from
          :user-agent:mime-version:date:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8u81+gNqpoMK774yWwCBHKk+pd5Ao3K0ld1AoX7VQD8=;
-        b=NLNaXASyCE30Cfo/nFeN62e7oRbOpQAk3mNc5Vux+PxdODqbeBzx/fyJj5pK8jB0wJ
-         9fAZQynq/nhXzFv34mcmJFWS+ksIFnkkQl1gdnBcg2aavyP8+tQUAjlZ490n2JYYcNvN
-         t4pjqqFUbhb5WwMjjttyQVR9n8z3Im9KFDrGyOfOZM56jDBtjA4xETSHPMogK0MPUcKg
-         LsXn+e+kpHBYg5UeYseQLbdjjRg7F1AOtg0hIWopk7UiGRRIrmC/rGBPNCvq4BQOA0gp
-         Q87GNmF39jjQkKYVASoHe7jKxKyuJ071ITUFXKzS76SIIDDIMoZ/o6hQ5KjJoL6aa9cJ
-         f4RQ==
+        bh=lcrDpdT0P9HHoECV1vJkLFWVWwbxP8Fr74ykIaaMjzU=;
+        b=B1RoD1yqTtItp6r3dhSCZiKiWHVenEw735/3jc4hF+NN0Z9eGPuHCZ9KUjyzCgpynX
+         rjbwysUxw7q4InK+r8ctWMTyoFgSy9POLLwQbmznuI2ubUyLSg+sGjS5vpGK13cswrS0
+         fGsWuscsmsoRIO6azL9KjPAjvsfkIm/V9wpPH3i0xCat7zxMY7ctJnfmWZ+bkmSoFJXq
+         GavttCItjHcBvtxkmnoFOUmXYde2NN1/OdJHNHbPTezjqArcIRURzzXDQ6KCsZKI+wQg
+         ETZMKfJxk9im1gQt4SgLYAiZTjbFY7W6RPzuVqutAGu4lWfJ+CV4BcK9JvMPZE/iFiYA
+         MkZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684744546; x=1687336546;
+        d=1e100.net; s=20221208; t=1684744614; x=1687336614;
         h=content-transfer-encoding:in-reply-to:references:subject:to:from
          :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=8u81+gNqpoMK774yWwCBHKk+pd5Ao3K0ld1AoX7VQD8=;
-        b=PDj6hn46iX5foVJgaurmUzAAOmYc4JVnhyyXDbcgQ7aYzEMwL15mXy/9TPPr3NZKkC
-         xHk6iK9Cg2m2TPn1aq4sCIbc7G+7LiK3zTGDUObr1vGWL61h81edhVfW/VV+OZNzE9X3
-         W6GbvLBtZiz4/08I4a+i3KFLIPCX0G8N1re0IptBCYW5Zt4DGpJlM6xZUZ0Q7WO8m9i+
-         OfyPLoFIvzZ1qh8iy+Icqr00H0UNWtFD8BDasuTPIuIBYtLuVGe1wTMxacTm8Nq5ZH2A
-         mPlgP/u3D2wRMj7X6FSzhdSNrl8JHM19vWaCM7vvQqsxSo280yeRVslTA5nXzGoiSJf2
-         r0ew==
-X-Gm-Message-State: AC+VfDy4UUr+NV7UFQBFmE8U9vZu5QoJP5BDiYVUvQYDbHIBoXSHNQBa
-        mpzo81rsXX+8MU9ZI+d3CR2wLA==
-X-Google-Smtp-Source: ACHHUZ6MSwGF1WZDtb2DuJRHLwLiWl/saCrKgyrPeuZgMnchUsoJ34hpcutGb5dfceyxYajJ++kA7Q==
-X-Received: by 2002:a05:6a21:6d88:b0:104:923b:4d00 with SMTP id wl8-20020a056a216d8800b00104923b4d00mr11247917pzb.36.1684744546529;
-        Mon, 22 May 2023 01:35:46 -0700 (PDT)
+        bh=lcrDpdT0P9HHoECV1vJkLFWVWwbxP8Fr74ykIaaMjzU=;
+        b=OIdI4WsFmNe1P1LnMzR9W1SvIcz/lbP4+unpZqtWzF2W18Ch41oAYWSl2UuJKTTfxS
+         zS4ev4crrBn5DQj5cu9yVRRnAziQyBNK7ctbsFi2kLTYtxZZW2I2000NPlWalpH0/bDf
+         Q/dNwDRq6UVYUdNtwF8/7Y2bBzvoNLSsuVehyNtQmirbUYnFP6sui77j3+nYQdJDHqdd
+         cguFennz4IIOQLk96QynyljWLbmQhhAYDehMQ9BmcPDtLsYFvtJH/iDS8yh1Tkv5BEh9
+         rfxLoLMYdSnSVRk4LcFYnBXnEC4FCD3AlPi1gtItM1iMaKkUGRYomzIwsOq8z4FH2kKg
+         rnNg==
+X-Gm-Message-State: AC+VfDxlv8AlsknoUjOtQHfKvT7BsqujwJAbaQ3VEXO3w4qXcck+dIYO
+        F1ae0a+AD7T8IyTBlyKs2MJabw==
+X-Google-Smtp-Source: ACHHUZ7EUFzpEYB4KtHJwQgK1FcjRylaJpeidTl7vlWxTf7raf4yEB4xfF0K/RG8mbA35FrF8UxVjA==
+X-Received: by 2002:a05:6a00:234a:b0:64d:123d:cc74 with SMTP id j10-20020a056a00234a00b0064d123dcc74mr11227091pfj.4.1684744614530;
+        Mon, 22 May 2023 01:36:54 -0700 (PDT)
 Received: from ?IPV6:2401:4900:1c60:d309:883d:817e:8e91:be39? ([2401:4900:1c60:d309:883d:817e:8e91:be39])
-        by smtp.gmail.com with ESMTPSA id a22-20020a62bd16000000b0063afb08afeesm707621pff.67.2023.05.22.01.35.39
+        by smtp.gmail.com with ESMTPSA id n2-20020aa78a42000000b0064d57ecaa1dsm2738919pfa.28.2023.05.22.01.36.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 May 2023 01:35:46 -0700 (PDT)
-Message-ID: <b2009411-1822-b16e-6da4-44d399c52a19@linaro.org>
-Date:   Mon, 22 May 2023 14:05:37 +0530
+        Mon, 22 May 2023 01:36:54 -0700 (PDT)
+Message-ID: <056fa22c-a6be-da19-1352-d771ac61ebdf@linaro.org>
+Date:   Mon, 22 May 2023 14:06:32 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.3.1
@@ -68,16 +68,16 @@ To:     Anusha Rao <quic_anusha@quicinc.com>, agross@kernel.org,
         quic_gokulsri@quicinc.com, quic_sjaganat@quicinc.com,
         quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
         quic_poovendh@quicinc.com
-Subject: Re: [PATCH V3 1/4] dt-bindings: clock: Add crypto clock and reset
- definitions
+Subject: Re: [PATCH V3 3/4] dt-bindings: qcom-qce: add SoC compatible string
+ for ipq9574
 References: <20230518141105.24741-1-quic_anusha@quicinc.com>
- <20230518141105.24741-2-quic_anusha@quicinc.com>
-In-Reply-To: <20230518141105.24741-2-quic_anusha@quicinc.com>
+ <20230518141105.24741-4-quic_anusha@quicinc.com>
+In-Reply-To: <20230518141105.24741-4-quic_anusha@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,46 +85,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
 On 5/18/23 7:41 PM, Anusha Rao <quic_anusha@quicinc.com> wrote:
-> Add crypto clock and reset ID definitions for ipq9574.
+> Document the compatible string for ipq9574.
 > 
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Acked-by: Conor Dooley <conor.dooley@microchip.com>
 > Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
 > ---
 >   Changes in V3:
-> 	- Added GCC prefix to CRYPTO_CLK_SRC.
 > 	- Picked up Acked-by tag.
 > 
->   include/dt-bindings/clock/qcom,ipq9574-gcc.h | 4 ++++
->   include/dt-bindings/reset/qcom,ipq9574-gcc.h | 1 +
->   2 files changed, 5 insertions(+)
+>   Documentation/devicetree/bindings/crypto/qcom-qce.yaml | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/include/dt-bindings/clock/qcom,ipq9574-gcc.h b/include/dt-bindings/clock/qcom,ipq9574-gcc.h
-> index 5a2961bfe893..b32a7aa65349 100644
-> --- a/include/dt-bindings/clock/qcom,ipq9574-gcc.h
-> +++ b/include/dt-bindings/clock/qcom,ipq9574-gcc.h
-> @@ -210,4 +210,8 @@
->   #define GCC_SNOC_PCIE1_1LANE_S_CLK			201
->   #define GCC_SNOC_PCIE2_2LANE_S_CLK			202
->   #define GCC_SNOC_PCIE3_2LANE_S_CLK			203
-> +#define GCC_CRYPTO_CLK_SRC				204
-> +#define GCC_CRYPTO_CLK					205
-> +#define GCC_CRYPTO_AXI_CLK				206
-> +#define GCC_CRYPTO_AHB_CLK				207
->   #endif
-> diff --git a/include/dt-bindings/reset/qcom,ipq9574-gcc.h b/include/dt-bindings/reset/qcom,ipq9574-gcc.h
-> index d01dc6a24cf1..c709d103673d 100644
-> --- a/include/dt-bindings/reset/qcom,ipq9574-gcc.h
-> +++ b/include/dt-bindings/reset/qcom,ipq9574-gcc.h
-> @@ -160,5 +160,6 @@
->   #define GCC_WCSS_Q6_BCR						151
->   #define GCC_WCSS_Q6_TBU_BCR					152
->   #define GCC_TCSR_BCR						153
-> +#define GCC_CRYPTO_BCR						154
->   
->   #endif
+> diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+> index e375bd981300..0d1deae06e2d 100644
+> --- a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+> +++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
+> @@ -28,6 +28,7 @@ properties:
+>             - enum:
+>                 - qcom,ipq6018-qce
+>                 - qcom,ipq8074-qce
+> +              - qcom,ipq9574-qce
+>                 - qcom,msm8996-qce
+>                 - qcom,sdm845-qce
+>             - const: qcom,ipq4019-qce
 
 Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 
