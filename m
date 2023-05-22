@@ -2,45 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BB25170CD8F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 00:12:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7078570CD96
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 00:14:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229723AbjEVWMg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 18:12:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33214 "EHLO
+        id S232411AbjEVWOy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 18:14:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33872 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229477AbjEVWMg (ORCPT
+        with ESMTP id S232404AbjEVWOx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 18:12:36 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13AD79E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 15:12:34 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 363043F20F;
-        Tue, 23 May 2023 00:12:33 +0200 (CEST)
-Date:   Tue, 23 May 2023 00:12:31 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 4/6] drm/msm/dpu: autodetect supported interrupts
-Message-ID: <j4sprk5c7wiafq5w5246xab2qgrevyz26bcwukgdk7zcac4ylk@pyt4s2ms5fyk>
-References: <20230522214527.190054-1-dmitry.baryshkov@linaro.org>
- <20230522214527.190054-5-dmitry.baryshkov@linaro.org>
+        Mon, 22 May 2023 18:14:53 -0400
+Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65A15B3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 15:14:52 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-565014fc2faso19479947b3.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 15:14:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684793691; x=1687385691;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=wFwh5fQ3Hl7G9LU6n8ZD679YMX6rzEdWyx9gkPo21A8=;
+        b=kl/vKyWgbKzWXW35R+A7TwDhC7FxqQmQUnagTxRogEQtmt8gu6Bz2jT4GRseatEI1I
+         lWlztU+hiV78Hw379H2RHrJiuiexzvH+WJMfvNBUXDXrSOpmTuHW5mplvPySdQPt/NlK
+         d64dEmbdBMYQtrfDhNu3yeK+zWHQ12lFFhNoVY/HxBA03vkhawl5nWV7HdzHcX99T9Fn
+         d1Yh80ody3nbdbCf/DuZpSPDJWUdjGvQt/Gp6xiiei7OdluKyygKwzooDJZR5z8b5nm2
+         WMYet4Mtmio7qFAHRlnMgCAhFL7wkDG5mrEoNWcInZhiK6d0ESBRWdKW4TQAdLsROlxa
+         T4JA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684793691; x=1687385691;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wFwh5fQ3Hl7G9LU6n8ZD679YMX6rzEdWyx9gkPo21A8=;
+        b=C3fae7sofD/C9Csy6tAjUPVWBIr4I0vjjTKOIyyPg8swiagDhXQokIe8MQjAO2/qsW
+         1cj73e7IGF4sDymL21a98qF8gJd5BE2wg3jZG22bh/5M2ngmtS6418V2Ohv8KR+9vSo/
+         +2nNiyZ9UcHML4WwkBr3shmbhF+BJkPN+WCPw44dq/2lrULK2FpaHFbQdaLjKmk37W1E
+         Y4R/5AUuSWvj1hma11tT+0Gk9Zq2aBo2qO5QfAvX6OBCJi/bJ+qThGKD/cwLesRJ6iWa
+         dPnYrK6zCexeMNr+U/o2ixzWiD80hi+/V7oOzyAKaJlxNM+3C7Oo8xvPsYGYcN8jLdQ1
+         XauA==
+X-Gm-Message-State: AC+VfDxecbbtrXCdVkPopg4U3S8irUDDDhakGKH38ncvyhsQEDSjme7S
+        cOmO20fYHuRw/whVmWKPAJ+WJzMS2ijrcJnowX8TBw==
+X-Google-Smtp-Source: ACHHUZ5kWLaISLMMN8SNO0Uax4mvDI+Ifb9IzNEtBZKY0St5/K8lmsA2Sqyp6Ot9uWHAu1U7I2ZDXpl/fAZUpxMCF3E=
+X-Received: by 2002:a0d:df4c:0:b0:561:18c6:528c with SMTP id
+ i73-20020a0ddf4c000000b0056118c6528cmr12914744ywe.30.1684793691620; Mon, 22
+ May 2023 15:14:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230522214527.190054-5-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+References: <20230405-add-dsc-support-v4-0-15daf84f8dcb@quicinc.com>
+ <20230405-add-dsc-support-v4-1-15daf84f8dcb@quicinc.com> <eo7chb7m4cowvb53hnebi3bjtotm7x5ea5iv6ulmmfkr2hdt32@2nkoa5rco3qb>
+ <a93c3c36-f262-b89d-8452-98120cffb491@quicinc.com>
+In-Reply-To: <a93c3c36-f262-b89d-8452-98120cffb491@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 23 May 2023 01:14:40 +0300
+Message-ID: <CAA8EJpqzj-_fVLXfCrLeTUcwPHE-fb-kNP=SgbVM7U5fQT8p-w@mail.gmail.com>
+Subject: Re: [PATCH v4 1/5] msm/drm/dsi: Round up DSC hdisplay calculation
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -49,95 +75,94 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-23 00:45:25, Dmitry Baryshkov wrote:
-> Declaring the mask of supported interrupts proved to be error-prone. It
-> is very easy to add a bit with no corresponding backing block or to miss
-> the INTF TE bit. Replace this with looping over the enabled INTF blocks
-> to setup the irq mask.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Tue, 23 May 2023 at 00:45, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
+>
+>
+>
+> On 5/22/2023 1:44 PM, Marijn Suijten wrote:
+> > On 2023-05-22 13:30:20, Jessica Zhang wrote:
+> >> Currently, when compression is enabled, hdisplay is reduced via integer
+> >> division. This causes issues for modes where the original hdisplay is
+> >> not a multiple of 3.
+> >>
+> >> To fix this, use DIV_ROUND_UP to divide hdisplay.
+> >>
+> >> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+> >> Suggested-by: Marijn Suijten <marijn.suijten@somainline.org>
+> >
+> > Nit: probably these should go in the opposite order.  And if they're
+> > all supposed to be chronological, I think it is:
+> >
+> >      Suggested-by:
+> >      Fixes:
+> >      Signed-off-by:
+> >      Reviewed-by:
+> >
+> > But unsure if that's a hard requirement, or even correct at all.
+>
+> Hi Marijn,
+>
+> I don't see any explicit documentation on the order of R-b tags. FWIW, I
+> see in the git log that S-o-b always goes at the bottom of the commit
+> message.
+>
+> I would prefer the S-o-b to always be at the bottom (as it helps me
+> avoid duplicate S-o-b's when doing `git commit -s`), though I can flip
+> the order of the R-b and suggested-by tags.
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+I'd second Jessica here. Consider these tags as a history or a transcript:
 
-> ---
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 20 ++++++++++++++++++-
->  .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  6 ++++++
->  2 files changed, 25 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> index a03d826bb9ad..01f2660a2354 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> @@ -463,6 +463,7 @@ struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
->  {
->  	struct dpu_hw_intr *intr;
->  	int nirq = MDP_INTR_MAX * 32;
-> +	unsigned int i;
->  
->  	if (!addr || !m)
->  		return ERR_PTR(-EINVAL);
-> @@ -480,7 +481,24 @@ struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
->  
->  	intr->total_irqs = nirq;
->  
-> -	intr->irq_mask = m->mdss_irqs;
-> +	intr->irq_mask = BIT(MDP_SSPP_TOP0_INTR) |
-> +			 BIT(MDP_SSPP_TOP0_INTR2) |
-> +			 BIT(MDP_SSPP_TOP0_HIST_INTR);
-> +	for (i = 0; i < m->intf_count; i++) {
-> +		const struct dpu_intf_cfg *intf = &m->intf[i];
-> +
-> +		if (intf->type == INTF_NONE)
-> +			continue;
-> +
-> +		intr->irq_mask |= BIT(MDP_INTFn_INTR(intf->id));
-> +
-> +		if (test_bit(DPU_INTF_TE, &intf->features)) {
-> +			unsigned idx = MDP_INTFn_TEAR_INTR(intf->id);
-> +
-> +			if (!WARN_ON(idx == -1))
+I would not vote on the particular order of the Suggested-by/Fixes
+tags, I don't think that is important. These come first. Then the
+patch goes through different cycles. of reviews, which gain
+Reviewed-by tags.
 
-We don't need to validate the catalog?  But warning users about this
-(and accidentally turning on all interrupt bits hiding the issue anyway)
-is a nice side effect though, as you showed it was already going wrong
-in patch 1/6.
+In the same way Link/Patchwork/whatever other tags are added in the
+historical order.
 
-OTOH you might have inlined the macro and provided a more useful warning
-message (DPU_INTF_TE can only be present on INTF1/2)... and then one
-could assert on INTF_DSI etc etc etc...
+By having the submitter's S-o-b at the bottom, the submitter adds the
+final signature under everything else being stated/recorded.
 
-- Marijn
+Of course, in a more complicated story, there might be other
+developers taking part (Co-Developed-By + Signed-off-by), etc.
 
-> +				intr->irq_mask |= BIT(idx);
-> +		}
-> +	}
->  
->  	spin_lock_init(&intr->irq_lock);
->  
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> index f329d6d7f646..f0b92c9e3b09 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> @@ -17,6 +17,7 @@ enum dpu_hw_intr_reg {
->  	MDP_SSPP_TOP0_INTR,
->  	MDP_SSPP_TOP0_INTR2,
->  	MDP_SSPP_TOP0_HIST_INTR,
-> +	/* All MDP_INTFn_INTR should come sequentially */
->  	MDP_INTF0_INTR,
->  	MDP_INTF1_INTR,
->  	MDP_INTF2_INTR,
-> @@ -33,6 +34,11 @@ enum dpu_hw_intr_reg {
->  	MDP_INTR_MAX,
->  };
->  
-> +#define MDP_INTFn_INTR(intf)	(MDP_INTF0_INTR + (intf - INTF_0))
-> +#define MDP_INTFn_TEAR_INTR(intf) (intf == INTF_1 ? MDP_INTF1_TEAR_INTR : \
-> +				   intf == INTF_2 ? MDP_INTF2_TEAR_INTR : \
-> +				   -1)
-> +
->  /* compatibility */
->  #define MDP_INTF0_7xxx_INTR MDP_INTF0_INTR
->  #define MDP_INTF1_7xxx_INTR MDP_INTF1_INTR
-> -- 
-> 2.39.2
-> 
+Note: all described is just my perception and might differ from the
+BCP regarding the tags.
+
+>
+> Thanks,
+>
+> Jessica Zhang
+>
+> >
+> > - Marijn
+> >
+> >> Fixes: 08802f515c3cf ("drm/msm/dsi: Add support for DSC configuration")
+> >> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> >> ---
+> >>   drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
+> >>   1 file changed, 1 insertion(+), 1 deletion(-)
+> >>
+> >> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >> index 9223d7ec5a73..18d38b90eb28 100644
+> >> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >> @@ -952,7 +952,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+> >>               * pulse width same
+> >>               */
+> >>              h_total -= hdisplay;
+> >> -            hdisplay = msm_dsc_get_bytes_per_line(msm_host->dsc) / 3;
+> >> +            hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
+> >>              h_total += hdisplay;
+> >>              ha_end = ha_start + hdisplay;
+> >>      }
+> >>
+> >> --
+> >> 2.40.1
+> >>
+
+
+
+-- 
+With best wishes
+Dmitry
