@@ -2,62 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9136370C134
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 16:36:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8706D70C139
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 16:37:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232833AbjEVOg5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 10:36:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58298 "EHLO
+        id S230031AbjEVOhJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 10:37:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233788AbjEVOgz (ORCPT
+        with ESMTP id S233740AbjEVOhI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 10:36:55 -0400
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E49CFC1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 07:36:53 -0700 (PDT)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-3093d10442aso3916025f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 07:36:53 -0700 (PDT)
+        Mon, 22 May 2023 10:37:08 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40874C1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 07:37:06 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3f42769a0c1so62601035e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 07:37:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684766212; x=1687358212;
+        d=linaro.org; s=google; t=1684766224; x=1687358224;
         h=content-transfer-encoding:in-reply-to:organization:from:references
          :cc:to:content-language:subject:reply-to:user-agent:mime-version
          :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=IL0ksLPfjYHRoJETDHiXplHnZjbV8W44eCBuPuXFkbc=;
-        b=wH2AW5HDW3lAqAdDRnE2xRBSBDpQH6MZdKRRIyhxWxMrc6oJa0/LB1RdR9CpR+QNxK
-         7PeLMxWuJOuEzctbejXSfs+iwjLtsSQnODLhhxEcfdQsXJwu6/ga6XzxlUhdHfvWA0VX
-         y4N9X6eHrO9pXoImOpKpEdzBMWJsUSPxp2ghzD07mRXq4F20AWarXgw2AOhKx4puyLlz
-         tLzFmVxNVsr4LT4/pqBO632wFeS2Cko5QUh1EoardpQkAzdfpf/dUQQDp43EXd+8enzI
-         u7ZQ06tmmXT4FJSeiO+hvtH0NjjlREitLOxK0AK9OJoi3R5I1kjm4Y+0S/qNo6zqnH9G
-         RNDg==
+        bh=T4XiPRv2kQi3rk35PUyh6W94xYsv2wRcI+Ot2AMoq5o=;
+        b=YqhJoK4r7gnq7yVDz69pOJZOijkAtFdmeidSq9kpbgCXd7mArNBzdqqVpMoT/BrGzU
+         TGp3yyKX0gmUaF4Jo475F3OWB9xV8o3zdEVNolYnagc3TaqvLZ3L8DAEKZkDcc+4TJIl
+         Rne2VJkmdkU3SlIMFbMa8iYSkXznJAB8YhJLEyTvSSRA+AQArydxPqWeW/mVcBbZfXWr
+         AXrmFFa+y2zXuPcfuITlxB4G8cuPEheMSo2mW6lawObIkHYaEdAEOOf5/bAtWtpg/6J0
+         yaNy5rEaPq2cN98thzP40RpOw5mBe/LX/WdPEsJkkq4WsSrLDYnquDf2wpJ5mmvwgwbg
+         5rMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684766212; x=1687358212;
+        d=1e100.net; s=20221208; t=1684766224; x=1687358224;
         h=content-transfer-encoding:in-reply-to:organization:from:references
          :cc:to:content-language:subject:reply-to:user-agent:mime-version
          :date:message-id:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IL0ksLPfjYHRoJETDHiXplHnZjbV8W44eCBuPuXFkbc=;
-        b=MnZVDKX3aHr/gk56ndyc6GlYHEF4N5aAtjEQRFvXJnE49cu162xJiiykWUR1A5IcBT
-         GvMQ/8phWdtFeoFi90UAwGjMZHOU8uDf+ZJ1tZ3nTc8pOMGeBDy417qAHh8qNL6NIwPq
-         RJB4gzrOVAABykHe5EAuyPU/7TyoO2qw5nZ0l0Y5SWjk1mK8E8QNSREnA7h695UOsJc3
-         sBHKN+uYEnt6PYcBtPl8YJEql7tf36lvFlVr03tMmww0qaUwLGk6AGzM/FV+YuCeYv6h
-         uQTFCbXJHdg8dXPcFApTcHrUPbZYDhkp/e9kMUiDIx3xaDtM8d6EF2iykVaugUeUnXq1
-         GIkQ==
-X-Gm-Message-State: AC+VfDyzStqkBESLyXWluvqqMXLkO/temwY8b2qbiWZZYz5BiHgqKf0O
-        OKU8ED56aVgcZclElUgxU5LG9w==
-X-Google-Smtp-Source: ACHHUZ6bcWGjvul7Vp7kS8OrC3C0kf+Ud5NQ0k83LiW4UTcG1hIsUL0VeRhnCc9JyFIDCQUsEPs11A==
-X-Received: by 2002:adf:f80d:0:b0:306:4613:e0f0 with SMTP id s13-20020adff80d000000b003064613e0f0mr6842716wrp.68.1684766212279;
-        Mon, 22 May 2023 07:36:52 -0700 (PDT)
+        bh=T4XiPRv2kQi3rk35PUyh6W94xYsv2wRcI+Ot2AMoq5o=;
+        b=NkB7k+TA3KAGk7ffifqlt07A9lhmajqn/7Z+MsW9xgjwe+nbds/JdQQISQr8o8R82T
+         eI09J8FpjoyinlQirMcoX/EHe1pWR5zFAr/oqd7baD/XpiZnBxg1HzeKVxYgqbKojmKj
+         2A2uz5NoFix8lClXrRnZRG25RuN2p0mYM5ipECNJPouanOQy2JQfp4YBaLeb0Rqp9904
+         9s9u+Bm7AyrVM+hahABqyh+qQf9jeYFeEBmwDMKj31Q/zitgqcYgyvKKI7wDq2gStAzm
+         yhOGEKBZDVJnIdZ6FvZr+9R4w3VVizmE3KLcUR+Cfuqgx97RCQg53UCteo9ri+bmiZGm
+         4zrQ==
+X-Gm-Message-State: AC+VfDxeiq81Dl4icbLwmSo4pMWSa0/0+zQ5d0jSacqQ3fN74Hl85YnU
+        DoPrgHjOBx0OmfLTK/54MU7taQ==
+X-Google-Smtp-Source: ACHHUZ52TsBofu01lZU+TLi6fsQQCbq/5ggCABYyckjbcVa2edMUpsrKNFT2yDX98jXgrYjrINPNzA==
+X-Received: by 2002:a1c:7918:0:b0:3f6:766:f76f with SMTP id l24-20020a1c7918000000b003f60766f76fmr1287721wme.36.1684766224512;
+        Mon, 22 May 2023 07:37:04 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:982:cbb0:a478:d61d:5bb5:7df? ([2a01:e0a:982:cbb0:a478:d61d:5bb5:7df])
-        by smtp.gmail.com with ESMTPSA id b4-20020a5d45c4000000b003047d5b8817sm7920371wrs.80.2023.05.22.07.36.51
+        by smtp.gmail.com with ESMTPSA id q3-20020a7bce83000000b003f4fb5532a1sm8561816wmj.43.2023.05.22.07.37.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 May 2023 07:36:51 -0700 (PDT)
-Message-ID: <80da4c26-ca3f-00c9-072c-087a1ff24c74@linaro.org>
-Date:   Mon, 22 May 2023 16:36:51 +0200
+        Mon, 22 May 2023 07:37:04 -0700 (PDT)
+Message-ID: <b32f9e5b-7d98-dfc5-12f1-691fa0ee6ddc@linaro.org>
+Date:   Mon, 22 May 2023 16:37:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
 Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH 3/6] drm/msm/dpu: split interrupt address arrays
+Subject: Re: [PATCH 5/6] drm/msm/dpu: drop now-unused mdss_irqs field from hw
+ catalog
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -70,10 +71,10 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
 References: <20230522004227.134501-1-dmitry.baryshkov@linaro.org>
- <20230522004227.134501-4-dmitry.baryshkov@linaro.org>
+ <20230522004227.134501-6-dmitry.baryshkov@linaro.org>
 From:   Neil Armstrong <neil.armstrong@linaro.org>
 Organization: Linaro Developer Services
-In-Reply-To: <20230522004227.134501-4-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230522004227.134501-6-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -86,301 +87,306 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
 On 22/05/2023 02:42, Dmitry Baryshkov wrote:
-> There is no point in having a single enum (and a single array) for both
-> DPU < 7.0 and DPU >= 7.0 interrupt registers. Instead define a single
-> enum and two IRQ address arrays.
+> Now as the list of the interrupts is constructed from the catalog
+> data, drop the mdss_irqs field from catalog.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  2 +
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 82 +++++++++++++------
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h | 28 ++++---
->   3 files changed, 74 insertions(+), 38 deletions(-)
+>   .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    |  8 --------
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h |  9 ---------
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h | 11 -----------
+>   .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    | 13 -------------
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h | 10 ----------
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h |  6 ------
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h |  5 -----
+>   .../drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h    |  5 -----
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |  9 ---------
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |  7 -------
+>   .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   | 14 --------------
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |  9 ---------
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |  9 ---------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  3 ---
+>   14 files changed, 118 deletions(-)
 > 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+> index 3c732a0360c7..ff7c3d522046 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+> @@ -204,14 +204,6 @@ const struct dpu_mdss_cfg dpu_msm8998_cfg = {
+>   	.vbif_count = ARRAY_SIZE(msm8998_vbif),
+>   	.vbif = msm8998_vbif,
+>   	.perf = &msm8998_perf_data,
+> -	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
+> -		     BIT(MDP_SSPP_TOP0_INTR2) | \
+> -		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+> -		     BIT(MDP_INTF0_INTR) | \
+> -		     BIT(MDP_INTF1_INTR) | \
+> -		     BIT(MDP_INTF2_INTR) | \
+> -		     BIT(MDP_INTF3_INTR) | \
+> -		     BIT(MDP_INTF4_INTR),
+>   };
+>   
+>   #endif
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+> index 36ea1af10894..c4ccd742690a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+> @@ -202,15 +202,6 @@ const struct dpu_mdss_cfg dpu_sdm845_cfg = {
+>   	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>   	.vbif = sdm845_vbif,
+>   	.perf = &sdm845_perf_data,
+> -	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
+> -		     BIT(MDP_SSPP_TOP0_INTR2) | \
+> -		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+> -		     BIT(MDP_INTF0_INTR) | \
+> -		     BIT(MDP_INTF1_INTR) | \
+> -		     BIT(MDP_INTF2_INTR) | \
+> -		     BIT(MDP_INTF3_INTR) | \
+> -		     BIT(MDP_AD4_0_INTR) | \
+> -		     BIT(MDP_AD4_1_INTR),
+>   };
+>   
+>   #endif
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+> index b5f751354267..fb7069d470ff 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+> @@ -231,17 +231,6 @@ const struct dpu_mdss_cfg dpu_sm8150_cfg = {
+>   	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>   	.vbif = sdm845_vbif,
+>   	.perf = &sm8150_perf_data,
+> -	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
+> -		     BIT(MDP_SSPP_TOP0_INTR2) | \
+> -		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+> -		     BIT(MDP_INTF0_INTR) | \
+> -		     BIT(MDP_INTF1_INTR) | \
+> -		     BIT(MDP_INTF1_TEAR_INTR) | \
+> -		     BIT(MDP_INTF2_INTR) | \
+> -		     BIT(MDP_INTF2_TEAR_INTR) | \
+> -		     BIT(MDP_INTF3_INTR) | \
+> -		     BIT(MDP_AD4_0_INTR) | \
+> -		     BIT(MDP_AD4_1_INTR),
+>   };
+>   
+>   #endif
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> index 8ed2b263c5ea..bd7422e597aa 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> @@ -237,19 +237,6 @@ const struct dpu_mdss_cfg dpu_sc8180x_cfg = {
+>   	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>   	.vbif = sdm845_vbif,
+>   	.perf = &sc8180x_perf_data,
+> -	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
+> -		     BIT(MDP_SSPP_TOP0_INTR2) | \
+> -		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+> -		     BIT(MDP_INTF0_INTR) | \
+> -		     BIT(MDP_INTF1_INTR) | \
+> -		     BIT(MDP_INTF1_TEAR_INTR) | \
+> -		     BIT(MDP_INTF2_INTR) | \
+> -		     BIT(MDP_INTF2_TEAR_INTR) | \
+> -		     BIT(MDP_INTF3_INTR) | \
+> -		     BIT(MDP_INTF4_INTR) | \
+> -		     BIT(MDP_INTF5_INTR) | \
+> -		     BIT(MDP_AD4_0_INTR) | \
+> -		     BIT(MDP_AD4_1_INTR),
+>   };
+>   
+>   #endif
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+> index daebd2170041..75a5c1b5a74a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+> @@ -239,16 +239,6 @@ const struct dpu_mdss_cfg dpu_sm8250_cfg = {
+>   	.wb_count = ARRAY_SIZE(sm8250_wb),
+>   	.wb = sm8250_wb,
+>   	.perf = &sm8250_perf_data,
+> -	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
+> -		     BIT(MDP_SSPP_TOP0_INTR2) | \
+> -		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+> -		     BIT(MDP_INTF0_INTR) | \
+> -		     BIT(MDP_INTF1_INTR) | \
+> -		     BIT(MDP_INTF1_TEAR_INTR) | \
+> -		     BIT(MDP_INTF2_INTR) | \
+> -		     BIT(MDP_INTF2_TEAR_INTR) | \
+> -		     BIT(MDP_INTF3_INTR) | \
+> -		     BIT(MDP_INTF4_INTR),
+>   };
+>   
+>   #endif
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+> index 0b05da2592c0..84be02ce9c9c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+> @@ -149,12 +149,6 @@ const struct dpu_mdss_cfg dpu_sc7180_cfg = {
+>   	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>   	.vbif = sdm845_vbif,
+>   	.perf = &sc7180_perf_data,
+> -	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
+> -		     BIT(MDP_SSPP_TOP0_INTR2) | \
+> -		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+> -		     BIT(MDP_INTF0_INTR) | \
+> -		     BIT(MDP_INTF1_INTR) | \
+> -		     BIT(MDP_INTF1_TEAR_INTR),
+>   };
+>   
+>   #endif
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+> index ba9de008519b..71d6e036a7a7 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+> @@ -122,11 +122,6 @@ const struct dpu_mdss_cfg dpu_sm6115_cfg = {
+>   	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>   	.vbif = sdm845_vbif,
+>   	.perf = &sm6115_perf_data,
+> -	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
+> -		     BIT(MDP_SSPP_TOP0_INTR2) | \
+> -		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+> -		     BIT(MDP_INTF1_INTR) | \
+> -		     BIT(MDP_INTF1_TEAR_INTR),
+>   };
+>   
+>   #endif
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
+> index 92ac348eea6b..d80b383d874d 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
+> @@ -112,11 +112,6 @@ const struct dpu_mdss_cfg dpu_qcm2290_cfg = {
+>   	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>   	.vbif = sdm845_vbif,
+>   	.perf = &qcm2290_perf_data,
+> -	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
+> -		     BIT(MDP_SSPP_TOP0_INTR2) | \
+> -		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+> -		     BIT(MDP_INTF1_INTR) | \
+> -		     BIT(MDP_INTF1_TEAR_INTR),
+>   };
+>   
+>   #endif
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> index 3c1b2c13398d..f9e5f252ae54 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> @@ -222,15 +222,6 @@ const struct dpu_mdss_cfg dpu_sm8350_cfg = {
+>   	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>   	.vbif = sdm845_vbif,
+>   	.perf = &sm8350_perf_data,
+> -	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
+> -		     BIT(MDP_SSPP_TOP0_INTR2) | \
+> -		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+> -		     BIT(MDP_INTF0_7xxx_INTR) | \
+> -		     BIT(MDP_INTF1_7xxx_INTR) | \
+> -		     BIT(MDP_INTF1_7xxx_TEAR_INTR) | \
+> -		     BIT(MDP_INTF2_7xxx_INTR) | \
+> -		     BIT(MDP_INTF2_7xxx_TEAR_INTR) | \
+> -		     BIT(MDP_INTF3_7xxx_INTR),
+>   };
+>   
+>   #endif
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> index 5d894cbb0a62..dede8cb2d784 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> @@ -162,13 +162,6 @@ const struct dpu_mdss_cfg dpu_sc7280_cfg = {
+>   	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>   	.vbif = sdm845_vbif,
+>   	.perf = &sc7280_perf_data,
+> -	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
+> -		     BIT(MDP_SSPP_TOP0_INTR2) | \
+> -		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+> -		     BIT(MDP_INTF0_7xxx_INTR) | \
+> -		     BIT(MDP_INTF1_7xxx_INTR) | \
+> -		     BIT(MDP_INTF1_7xxx_TEAR_INTR) | \
+> -		     BIT(MDP_INTF5_7xxx_INTR),
+>   };
+>   
+>   #endif
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> index c3f1ae000a21..79ab2d015a44 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> @@ -224,20 +224,6 @@ const struct dpu_mdss_cfg dpu_sc8280xp_cfg = {
+>   	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>   	.vbif = sdm845_vbif,
+>   	.perf = &sc8280xp_perf_data,
+> -	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
+> -		     BIT(MDP_SSPP_TOP0_INTR2) | \
+> -		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+> -		     BIT(MDP_INTF0_7xxx_INTR) | \
+> -		     BIT(MDP_INTF1_7xxx_INTR) | \
+> -		     BIT(MDP_INTF1_7xxx_TEAR_INTR) | \
+> -		     BIT(MDP_INTF2_7xxx_INTR) | \
+> -		     BIT(MDP_INTF2_7xxx_TEAR_INTR) | \
+> -		     BIT(MDP_INTF3_7xxx_INTR) | \
+> -		     BIT(MDP_INTF4_7xxx_INTR) | \
+> -		     BIT(MDP_INTF5_7xxx_INTR) | \
+> -		     BIT(MDP_INTF6_7xxx_INTR) | \
+> -		     BIT(MDP_INTF7_7xxx_INTR) | \
+> -		     BIT(MDP_INTF8_7xxx_INTR),
+>   };
+>   
+>   #endif
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> index 86c2e68ebd2c..b0bc88136e86 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> @@ -230,15 +230,6 @@ const struct dpu_mdss_cfg dpu_sm8450_cfg = {
+>   	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>   	.vbif = sdm845_vbif,
+>   	.perf = &sm8450_perf_data,
+> -	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
+> -		     BIT(MDP_SSPP_TOP0_INTR2) | \
+> -		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+> -		     BIT(MDP_INTF0_7xxx_INTR) | \
+> -		     BIT(MDP_INTF1_7xxx_INTR) | \
+> -		     BIT(MDP_INTF1_7xxx_TEAR_INTR) | \
+> -		     BIT(MDP_INTF2_7xxx_INTR) | \
+> -		     BIT(MDP_INTF2_7xxx_TEAR_INTR) | \
+> -		     BIT(MDP_INTF3_7xxx_INTR),
+>   };
+>   
+>   #endif
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> index 85dc34458b88..afed62e44f90 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> @@ -234,15 +234,6 @@ const struct dpu_mdss_cfg dpu_sm8550_cfg = {
+>   	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+>   	.vbif = sdm845_vbif,
+>   	.perf = &sm8550_perf_data,
+> -	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
+> -		     BIT(MDP_SSPP_TOP0_INTR2) | \
+> -		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+> -		     BIT(MDP_INTF0_7xxx_INTR) | \
+> -		     BIT(MDP_INTF1_7xxx_INTR) | \
+> -		     BIT(MDP_INTF1_7xxx_TEAR_INTR) | \
+> -		     BIT(MDP_INTF2_7xxx_INTR) | \
+> -		     BIT(MDP_INTF2_7xxx_TEAR_INTR) | \
+> -		     BIT(MDP_INTF3_7xxx_INTR),
+>   };
+>   
+>   #endif
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 677048cc3b7d..72530ebb0ae6 100644
+> index 72530ebb0ae6..6d8c2fa8558a 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -351,6 +351,7 @@ struct dpu_rotation_cfg {
->    * @has_dim_layer      dim layer feature status
->    * @has_idle_pc        indicate if idle power collapse feature is supported
->    * @has_3d_merge       indicate if 3D merge is supported
-> + * @has_7xxx_intr      indicate that INTF/IRQs use addressing for DPU 7.0 and greater
->    * @max_linewidth      max linewidth for sspp
->    * @pixel_ram_size     size of latency hiding and de-tiling buffer in bytes
->    * @max_hdeci_exp      max horizontal decimation supported (max is 2^value)
-> @@ -364,6 +365,7 @@ struct dpu_caps {
->   	bool has_dim_layer;
->   	bool has_idle_pc;
->   	bool has_3d_merge;
-> +	bool has_7xxx_intr;
-
-looks good, but I can't find where has_7xxx_intr is set in the patchset
-
-Neil
-
->   	/* SSPP limits */
->   	u32 max_linewidth;
->   	u32 pixel_ram_size;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> index 0776b0f6df4f..a03d826bb9ad 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> @@ -51,11 +51,9 @@ struct dpu_intr_reg {
->   };
->   
->   /*
-> - * struct dpu_intr_reg -  List of DPU interrupt registers
-> - *
-> - * When making changes be sure to sync with dpu_hw_intr_reg
-> + * dpu_intr_set_legacy -  List of DPU interrupt registers for DPU <= 6.x
+> @@ -777,7 +777,6 @@ struct dpu_perf_cfg {
+>    * @dma_formats        Supported formats for dma pipe
+>    * @cursor_formats     Supported formats for cursor pipe
+>    * @vig_formats        Supported formats for vig pipe
+> - * @mdss_irqs:         Bitmap with the irqs supported by the target
 >    */
-> -static const struct dpu_intr_reg dpu_intr_set[] = {
-> +static const struct dpu_intr_reg dpu_intr_set_legacy[] = {
->   	[MDP_SSPP_TOP0_INTR] = {
->   		INTR_CLEAR,
->   		INTR_EN,
-> @@ -121,57 +119,78 @@ static const struct dpu_intr_reg dpu_intr_set[] = {
->   		MDP_AD4_INTR_EN_OFF(1),
->   		MDP_AD4_INTR_STATUS_OFF(1),
->   	},
-> -	[MDP_INTF0_7xxx_INTR] = {
-> +};
-> +
-> +/*
-> + * dpu_intr_set_7xxx -  List of DPU interrupt registers for DPU >= 7.0
-> + */
-> +static const struct dpu_intr_reg dpu_intr_set_7xxx[] = {
-> +	[MDP_SSPP_TOP0_INTR] = {
-> +		INTR_CLEAR,
-> +		INTR_EN,
-> +		INTR_STATUS
-> +	},
-> +	[MDP_SSPP_TOP0_INTR2] = {
-> +		INTR2_CLEAR,
-> +		INTR2_EN,
-> +		INTR2_STATUS
-> +	},
-> +	[MDP_SSPP_TOP0_HIST_INTR] = {
-> +		HIST_INTR_CLEAR,
-> +		HIST_INTR_EN,
-> +		HIST_INTR_STATUS
-> +	},
-> +	[MDP_INTF0_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(0),
->   		MDP_INTF_REV_7xxx_INTR_EN(0),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(0)
->   	},
-> -	[MDP_INTF1_7xxx_INTR] = {
-> +	[MDP_INTF1_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(1),
->   		MDP_INTF_REV_7xxx_INTR_EN(1),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(1)
->   	},
-> -	[MDP_INTF1_7xxx_TEAR_INTR] = {
-> +	[MDP_INTF1_TEAR_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_TEAR_CLEAR(1),
->   		MDP_INTF_REV_7xxx_INTR_TEAR_EN(1),
->   		MDP_INTF_REV_7xxx_INTR_TEAR_STATUS(1)
->   	},
-> -	[MDP_INTF2_7xxx_INTR] = {
-> +	[MDP_INTF2_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(2),
->   		MDP_INTF_REV_7xxx_INTR_EN(2),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(2)
->   	},
-> -	[MDP_INTF2_7xxx_TEAR_INTR] = {
-> +	[MDP_INTF2_TEAR_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_TEAR_CLEAR(2),
->   		MDP_INTF_REV_7xxx_INTR_TEAR_EN(2),
->   		MDP_INTF_REV_7xxx_INTR_TEAR_STATUS(2)
->   	},
-> -	[MDP_INTF3_7xxx_INTR] = {
-> +	[MDP_INTF3_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(3),
->   		MDP_INTF_REV_7xxx_INTR_EN(3),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(3)
->   	},
-> -	[MDP_INTF4_7xxx_INTR] = {
-> +	[MDP_INTF4_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(4),
->   		MDP_INTF_REV_7xxx_INTR_EN(4),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(4)
->   	},
-> -	[MDP_INTF5_7xxx_INTR] = {
-> +	[MDP_INTF5_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(5),
->   		MDP_INTF_REV_7xxx_INTR_EN(5),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(5)
->   	},
-> -	[MDP_INTF6_7xxx_INTR] = {
-> +	[MDP_INTF6_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(6),
->   		MDP_INTF_REV_7xxx_INTR_EN(6),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(6)
->   	},
-> -	[MDP_INTF7_7xxx_INTR] = {
-> +	[MDP_INTF7_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(7),
->   		MDP_INTF_REV_7xxx_INTR_EN(7),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(7)
->   	},
-> -	[MDP_INTF8_7xxx_INTR] = {
-> +	[MDP_INTF8_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(8),
->   		MDP_INTF_REV_7xxx_INTR_EN(8),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(8)
-> @@ -216,19 +235,19 @@ irqreturn_t dpu_core_irq(struct msm_kms *kms)
->   		return IRQ_NONE;
->   
->   	spin_lock_irqsave(&intr->irq_lock, irq_flags);
-> -	for (reg_idx = 0; reg_idx < ARRAY_SIZE(dpu_intr_set); reg_idx++) {
-> +	for (reg_idx = 0; reg_idx < MDP_INTR_MAX; reg_idx++) {
->   		if (!test_bit(reg_idx, &intr->irq_mask))
->   			continue;
->   
->   		/* Read interrupt status */
-> -		irq_status = DPU_REG_READ(&intr->hw, dpu_intr_set[reg_idx].status_off);
-> +		irq_status = DPU_REG_READ(&intr->hw, intr->intr_set[reg_idx].status_off);
->   
->   		/* Read enable mask */
-> -		enable_mask = DPU_REG_READ(&intr->hw, dpu_intr_set[reg_idx].en_off);
-> +		enable_mask = DPU_REG_READ(&intr->hw, intr->intr_set[reg_idx].en_off);
->   
->   		/* and clear the interrupt */
->   		if (irq_status)
-> -			DPU_REG_WRITE(&intr->hw, dpu_intr_set[reg_idx].clr_off,
-> +			DPU_REG_WRITE(&intr->hw, intr->intr_set[reg_idx].clr_off,
->   				     irq_status);
->   
->   		/* Finally update IRQ status based on enable mask */
-> @@ -285,7 +304,11 @@ static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
->   	assert_spin_locked(&intr->irq_lock);
->   
->   	reg_idx = DPU_IRQ_REG(irq_idx);
-> -	reg = &dpu_intr_set[reg_idx];
-> +	reg = &intr->intr_set[reg_idx];
-> +
-> +	/* Is this interrupt register supported on the platform */
-> +	if (WARN_ON(!reg->en_off))
-> +		return -EINVAL;
->   
->   	cache_irq_mask = intr->cache_irq_mask[reg_idx];
->   	if (cache_irq_mask & DPU_IRQ_MASK(irq_idx)) {
-> @@ -334,7 +357,7 @@ static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
->   	assert_spin_locked(&intr->irq_lock);
->   
->   	reg_idx = DPU_IRQ_REG(irq_idx);
-> -	reg = &dpu_intr_set[reg_idx];
-> +	reg = &intr->intr_set[reg_idx];
->   
->   	cache_irq_mask = intr->cache_irq_mask[reg_idx];
->   	if ((cache_irq_mask & DPU_IRQ_MASK(irq_idx)) == 0) {
-> @@ -368,10 +391,10 @@ static void dpu_clear_irqs(struct dpu_kms *dpu_kms)
->   	if (!intr)
->   		return;
->   
-> -	for (i = 0; i < ARRAY_SIZE(dpu_intr_set); i++) {
-> +	for (i = 0; i < MDP_INTR_MAX; i++) {
->   		if (test_bit(i, &intr->irq_mask))
->   			DPU_REG_WRITE(&intr->hw,
-> -					dpu_intr_set[i].clr_off, 0xffffffff);
-> +					intr->intr_set[i].clr_off, 0xffffffff);
->   	}
->   
->   	/* ensure register writes go through */
-> @@ -386,10 +409,10 @@ static void dpu_disable_all_irqs(struct dpu_kms *dpu_kms)
->   	if (!intr)
->   		return;
->   
-> -	for (i = 0; i < ARRAY_SIZE(dpu_intr_set); i++) {
-> +	for (i = 0; i < MDP_INTR_MAX; i++) {
->   		if (test_bit(i, &intr->irq_mask))
->   			DPU_REG_WRITE(&intr->hw,
-> -					dpu_intr_set[i].en_off, 0x00000000);
-> +					intr->intr_set[i].en_off, 0x00000000);
->   	}
->   
->   	/* ensure register writes go through */
-> @@ -421,10 +444,10 @@ u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx)
->   
->   	reg_idx = DPU_IRQ_REG(irq_idx);
->   	intr_status = DPU_REG_READ(&intr->hw,
-> -			dpu_intr_set[reg_idx].status_off) &
-> +			intr->intr_set[reg_idx].status_off) &
->   		DPU_IRQ_MASK(irq_idx);
->   	if (intr_status)
-> -		DPU_REG_WRITE(&intr->hw, dpu_intr_set[reg_idx].clr_off,
-> +		DPU_REG_WRITE(&intr->hw, intr->intr_set[reg_idx].clr_off,
->   				intr_status);
->   
->   	/* ensure register writes go through */
-> @@ -448,6 +471,11 @@ struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
->   	if (!intr)
->   		return ERR_PTR(-ENOMEM);
->   
-> +	if (m->caps->has_7xxx_intr)
-> +		intr->intr_set = dpu_intr_set_7xxx;
-> +	else
-> +		intr->intr_set = dpu_intr_set_legacy;
-> +
->   	intr->hw.blk_addr = addr + m->mdp[0].base;
->   
->   	intr->total_irqs = nirq;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> index 1f2dabc54c22..f329d6d7f646 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> @@ -23,24 +23,29 @@ enum dpu_hw_intr_reg {
->   	MDP_INTF3_INTR,
->   	MDP_INTF4_INTR,
->   	MDP_INTF5_INTR,
-> +	MDP_INTF6_INTR,
-> +	MDP_INTF7_INTR,
-> +	MDP_INTF8_INTR,
->   	MDP_INTF1_TEAR_INTR,
->   	MDP_INTF2_TEAR_INTR,
->   	MDP_AD4_0_INTR,
->   	MDP_AD4_1_INTR,
-> -	MDP_INTF0_7xxx_INTR,
-> -	MDP_INTF1_7xxx_INTR,
-> -	MDP_INTF1_7xxx_TEAR_INTR,
-> -	MDP_INTF2_7xxx_INTR,
-> -	MDP_INTF2_7xxx_TEAR_INTR,
-> -	MDP_INTF3_7xxx_INTR,
-> -	MDP_INTF4_7xxx_INTR,
-> -	MDP_INTF5_7xxx_INTR,
-> -	MDP_INTF6_7xxx_INTR,
-> -	MDP_INTF7_7xxx_INTR,
-> -	MDP_INTF8_7xxx_INTR,
->   	MDP_INTR_MAX,
+>   struct dpu_mdss_cfg {
+>   	const struct dpu_caps *caps;
+> @@ -825,8 +824,6 @@ struct dpu_mdss_cfg {
+>   	const struct dpu_format_extended *dma_formats;
+>   	const struct dpu_format_extended *cursor_formats;
+>   	const struct dpu_format_extended *vig_formats;
+> -
+> -	unsigned long mdss_irqs;
 >   };
 >   
-> +/* compatibility */
-> +#define MDP_INTF0_7xxx_INTR MDP_INTF0_INTR
-> +#define MDP_INTF1_7xxx_INTR MDP_INTF1_INTR
-> +#define MDP_INTF2_7xxx_INTR MDP_INTF2_INTR
-> +#define MDP_INTF3_7xxx_INTR MDP_INTF3_INTR
-> +#define MDP_INTF4_7xxx_INTR MDP_INTF4_INTR
-> +#define MDP_INTF5_7xxx_INTR MDP_INTF5_INTR
-> +#define MDP_INTF6_7xxx_INTR MDP_INTF6_INTR
-> +#define MDP_INTF7_7xxx_INTR MDP_INTF7_INTR
-> +#define MDP_INTF8_7xxx_INTR MDP_INTF8_INTR
-> +#define MDP_INTF1_7xxx_TEAR_INTR MDP_INTF1_TEAR_INTR
-> +#define MDP_INTF2_7xxx_TEAR_INTR MDP_INTF2_TEAR_INTR
-> +
->   #define DPU_IRQ_IDX(reg_idx, offset)	(reg_idx * 32 + offset)
->   
->   /**
-> @@ -60,6 +65,7 @@ struct dpu_hw_intr {
->   	u32 total_irqs;
->   	spinlock_t irq_lock;
->   	unsigned long irq_mask;
-> +	const struct dpu_intr_reg *intr_set;
->   
->   	struct {
->   		void (*cb)(void *arg, int irq_idx);
+>   extern const struct dpu_mdss_cfg dpu_msm8998_cfg;
 
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
