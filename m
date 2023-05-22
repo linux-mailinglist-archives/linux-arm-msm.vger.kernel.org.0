@@ -2,84 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 477E570CDC4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 00:22:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17D3D70CDC6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 00:23:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233045AbjEVWWW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 18:22:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36952 "EHLO
+        id S233655AbjEVWXC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 18:23:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37036 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232351AbjEVWWT (ORCPT
+        with ESMTP id S231528AbjEVWXB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 18:22:19 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31D138E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 15:22:16 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34MMJmEe002546;
-        Mon, 22 May 2023 22:22:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=hgNEJWTNMh2WjUXSW13kkkCEcxk1xBn2eSYcYcso7HY=;
- b=MFfWJHJXVPnQ9Ufz/VQsX/jtQhTJ0xmL5IZKYCLGIcydYCu285uRXX/QKfYMCm+Ne7jv
- RWcPd/LiKEtyDg00SV3E1/55jLah3QE3eXBMsm2Kj+1MBY/wmSmnrXimDk7fOp92SKQ2
- K4Ic0IPPjP6NntYkEKamvm0UhAsAviFECxmxwuHFwCqzknJl9cqWuVNUkzcXvQ9clyAL
- iY5oG5mFImFoU4xcNORMmQv1nlwqnsjjATEYoE1VPCKf199oyVqINUgDrqVTfEyoEjVk
- 4vbf1mxkO1694KwSRqesXwhalBFIHhNb67ieN1/JNoFfmBCRSmOhzCjapzQZkOllThAG LQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qraasrv9y-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 22 May 2023 22:22:02 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34MMM1Hm007613
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 22 May 2023 22:22:01 GMT
-Received: from [10.110.65.90] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 22 May
- 2023 15:22:01 -0700
-Message-ID: <266dcc31-18dc-10ad-6e2a-4e21239a74dc@quicinc.com>
-Date:   Mon, 22 May 2023 15:22:00 -0700
+        Mon, 22 May 2023 18:23:01 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9EDD8E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 15:22:59 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f3b337e842so3693501e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 15:22:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684794178; x=1687386178;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qJSRzVQri63512zNj0i13qdp4vOsM52UNAxzsHm7fSM=;
+        b=dV1cA/FSpBZMzQbz3HzmD1WbNWtkWKi9IaHOyNK7w2lqr8Z+vqGJtb6F4R4R36Qt8p
+         3EZQDQjZGtyv/2Y+rHauGI3mjBZsRlbdrShLBfmmDyKli4KJT2t2wwCqN0GpBLKDOFiZ
+         ZvTzDCNnIPrcWBGAoOAMee6Wn+b4xjiNd+s02RKA0Iz6lksrhbiDNP76IalSB6NZojYe
+         l/+gSA+IBogxGoVHTiUt8WDldZ/HQ2xEsx99f1mfmOrxBKtosE52AIOXepZxHaPgnmmP
+         JlIvSvBtAJX5TNu69dDGogTOWX0hhpD690GoILH+zolC1ieHaTMjE7eycZN+yBVe9eRU
+         YnOA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684794178; x=1687386178;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qJSRzVQri63512zNj0i13qdp4vOsM52UNAxzsHm7fSM=;
+        b=GIEG9GcoIYNaqTmPH3M58J/6XqOTyV+w5daMaecwMjCfybQEaOU7+v6EB/pN6rElsK
+         LoSeTPCbu/nBMIXRpybokPiiKip8ex58IjXwQKhZJnjW3A1ss0lB99fb7p8sbGFQM5vp
+         R96hhgH6CSyo0qW9eJosHalJr9fqPQhLZOfyf618/qGUCt1nMhTig3s85XCpaWIs1Y6o
+         1woN+8X41JpXnRVpc+lIXCSv1/VjTXzsLr9JfC8e7ONESOgX/pp/FtwO3M3UW9ISL/jT
+         NeLJIGVInmGMRdbc5uHHQ5Y/PhD3qzn3g0RWe4gjCNj03FPwqMYjApRVg91CkOgLvr0o
+         Z5uQ==
+X-Gm-Message-State: AC+VfDxlky9WaG76emGquiAjy9eExVGmAQ2WZVRVsStPbQ4b0feckGg3
+        rf0GIZESt9K9rL7rx/3tvRdFcg==
+X-Google-Smtp-Source: ACHHUZ7A0qFcQpm73ab9A5tSwcE+/ROdROgeCckH/XTp/VBb7N196FM9OXNv84bY1bb3cPOx0n6S9g==
+X-Received: by 2002:a2e:7a10:0:b0:2af:21d3:a4ca with SMTP id v16-20020a2e7a10000000b002af21d3a4camr4029540ljc.47.1684794178146;
+        Mon, 22 May 2023 15:22:58 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id d18-20020a2e3612000000b002a8c32fd2f3sm1325856lja.89.2023.05.22.15.22.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 May 2023 15:22:57 -0700 (PDT)
+Message-ID: <d23c077b-99de-e8c8-d97f-1c1bcca85ef2@linaro.org>
+Date:   Tue, 23 May 2023 01:22:57 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [Freedreno] [RFC PATCH v2 06/13] drm/msm/dpu: switch RM to use
- crtc_id rather than enc_id for allocation
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v4 1/5] msm/drm/dsi: Round up DSC hdisplay calculation
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>
-References: <20230321011821.635977-1-dmitry.baryshkov@linaro.org>
- <20230321011821.635977-7-dmitry.baryshkov@linaro.org>
- <29c1aa19-f1c7-4aff-0f48-b4e849547ebd@quicinc.com>
- <bf12ab07-4901-0a97-6e97-77d537a2cfe3@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <bf12ab07-4901-0a97-6e97-77d537a2cfe3@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: lB7n1lOoHD0S3jO6EMPrTDnD4x9bCzo7
-X-Proofpoint-ORIG-GUID: lB7n1lOoHD0S3jO6EMPrTDnD4x9bCzo7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-22_16,2023-05-22_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
- priorityscore=1501 mlxscore=0 lowpriorityscore=0 mlxlogscore=999
- spamscore=0 impostorscore=0 bulkscore=0 malwarescore=0 phishscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305220189
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20230405-add-dsc-support-v4-0-15daf84f8dcb@quicinc.com>
+ <20230405-add-dsc-support-v4-1-15daf84f8dcb@quicinc.com>
+ <eo7chb7m4cowvb53hnebi3bjtotm7x5ea5iv6ulmmfkr2hdt32@2nkoa5rco3qb>
+ <a93c3c36-f262-b89d-8452-98120cffb491@quicinc.com>
+ <CAA8EJpqzj-_fVLXfCrLeTUcwPHE-fb-kNP=SgbVM7U5fQT8p-w@mail.gmail.com>
+ <dfezntyt7rfoqmmhpqwqzgbldzgki5ykeqizgig7t3gqwdzo6h@3xavmyqzxzjm>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <dfezntyt7rfoqmmhpqwqzgbldzgki5ykeqizgig7t3gqwdzo6h@3xavmyqzxzjm>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,174 +86,79 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Sorry for the delay, other topics delayed my response on this one.
-
-On 5/18/2023 6:50 PM, Dmitry Baryshkov wrote:
-> On 19/05/2023 02:46, Abhinav Kumar wrote:
->>
->>
->> On 3/20/2023 6:18 PM, Dmitry Baryshkov wrote:
->>> Up to now the driver has been using encoder to allocate hardware
->>> resources. Switch it to use CRTC id in preparation for the next step.
+On 23/05/2023 01:18, Marijn Suijten wrote:
+> On 2023-05-23 01:14:40, Dmitry Baryshkov wrote:
+>> On Tue, 23 May 2023 at 00:45, Jessica Zhang <quic_jesszhan@quicinc.com> wrote:
 >>>
+>>>
+>>>
+>>> On 5/22/2023 1:44 PM, Marijn Suijten wrote:
+>>>> On 2023-05-22 13:30:20, Jessica Zhang wrote:
+>>>>> Currently, when compression is enabled, hdisplay is reduced via integer
+>>>>> division. This causes issues for modes where the original hdisplay is
+>>>>> not a multiple of 3.
+>>>>>
+>>>>> To fix this, use DIV_ROUND_UP to divide hdisplay.
+>>>>>
+>>>>> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>>>> Suggested-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>>>
+>>>> Nit: probably these should go in the opposite order.  And if they're
+>>>> all supposed to be chronological, I think it is:
+>>>>
+>>>>       Suggested-by:
+>>>>       Fixes:
+>>>>       Signed-off-by:
+>>>>       Reviewed-by:
+>>>>
+>>>> But unsure if that's a hard requirement, or even correct at all.
+>>>
+>>> Hi Marijn,
+>>>
+>>> I don't see any explicit documentation on the order of R-b tags. FWIW, I
+>>> see in the git log that S-o-b always goes at the bottom of the commit
+>>> message.
+>>>
+>>> I would prefer the S-o-b to always be at the bottom (as it helps me
+>>> avoid duplicate S-o-b's when doing `git commit -s`), though I can flip
+>>> the order of the R-b and suggested-by tags.
 >>
->> This decision to use encoder id instead of CRTC has been there 
->> downstream for quite sometime. So most of the delay in reviewing this 
->> series was trying to understand why we had this in the first place and 
->> who knew that story.
+>> I'd second Jessica here. Consider these tags as a history or a transcript:
 >>
->> You are right that from the perspective of clone mode mapping 
->> resources to CRTC is correct but using encoder id is what has been 
->> working so far without too much difficulty with a little more 
->> management  But another use-case can get simplified with this.
-> 
-> Thank you for the historical perspective and for the feedback.
-> 
-> I think that keeping resource allocation in dpu_encoder was required 
-> when INTF/WB themselves were allocated through the RM. However as 
-> INTF/WB blocks are now allocated in a static way, it doesn't make so 
-> much sense anymore.
-> 
-
-No, whether intf/wb block themselves are allocated through RM or not did 
-not really go into this. It was just about considering where all 
-hardware blocks make sense to be mapped : crtc or encoder. At the end, 
-considering the dsc, cwb and some more blocks encoder id was used.
-
+>> I would not vote on the particular order of the Suggested-by/Fixes
+>> tags, I don't think that is important. These come first. Then the
+>> patch goes through different cycles. of reviews, which gain
+>> Reviewed-by tags.
 >>
->> There is another angle to this. There are hardware blocks which can do 
->> writeback and the physical display concurrently. We call it concurrent 
->> writeback or CWB. This is present even on some of the chipsets already 
->> supported upstream.
+>> In the same way Link/Patchwork/whatever other tags are added in the
+>> historical order.
 >>
->> Now, lets say we start a concurrent writeback session , in todays code 
->> we will allocate the resources with the encoder id of the writeback's 
->> encoder and the other physical display's encoder.
+>> By having the submitter's S-o-b at the bottom, the submitter adds the
+>> final signature under everything else being stated/recorded.
+> 
+> Correct, so the s-o-b can always be kept / moved back to the bottom on a
+> resend, stating that they sign off on "all that was written previously"
+> including picking up reviews.
+> 
+> However, for the rest of your reply about "history / transcript", you
+> seem to agree exactly with my point of keeping (or rather, simply
+> appending) these in chronological order?
+
+Yes.
+
+> 
+> - Marijn
+> 
 >>
->> When the session stops, we can just deallocate the resources of the 
->> writeback encoder without touching the other encoder. So it will 
->> become easier to just free up the resources mapped to the encoder.
-> 
-> I have not looked into CWB programming. However from your description it 
-> would be as easy to do a full reallocation of the pipeline as just 
-> dropping the CWB/extra encoder. In fact this is what the driver was 
-> doing: in case of a modeset, drop all old resources and allocate full 
-> set of resources.
-> 
-
-Correct and the reason it was able to seamlessly drop all the old 
-resources was because of the encoder_id mapping, for the cwb use-case 
-using crtc id will not be so seamless to release the resources.
-
->> With clone mode implemented with CRTC id to map resources, we will 
->> have to probably do some extra book-keeping to handle concurrent 
->> writeback.
-> 
-> Probably not much. We'd have to describe the topology/requirements and 
-> then pass that to RM. I have been waiting for this patchset (and up to 
-> some point the DSC/ctl) to be reviewed before finalizing/submitting the 
-> patches that rework the CTL interface to use this kind of data structure.
-> 
-
-There is some effort there from what I can see in the cwb case. I am 
-unable to visualize how your rework will help that case. If you want to 
-move this mapping to crtc id to that series to convince us how, then it 
-is a better fit for that series.
-
->> Thats the use-case which gets impacted with this but for others, there 
->> shouldnt be a major impact from what we see.
+>> Of course, in a more complicated story, there might be other
+>> developers taking part (Co-Developed-By + Signed-off-by), etc.
 >>
->> That being said, what benefit are you seeing from making that change 
->> now for this series? Why is it specifically needed for virtual planes?
->>
->> I see in the commit text that you have mentioned this is in 
->> preparation for next step and next step talks about clone mode. But 
->> clone mode is not there yet. So why this change now?
+>> Note: all described is just my perception and might differ from the
+>> BCP regarding the tags.
 > 
-> There were several items that triggered this review.
-> 
-> First thing first. Current design allocates resources from 
-> dpu_encoder_virt_atomic_check(), then in 
-> dpu_encoder_virt_atomic_mode_set() the driver has to poke manually in 
-> the cstate and fill CTL and LM. This kept on bugging me for some time. 
-> The encoder should not be poking into the CRTC state.
-> 
+> <snip>
 
-Interesting point, but the DRM documentation seems to allow that and I 
-think now thats one of the positives to have things in encoder's atomic 
-check.
+-- 
+With best wishes
+Dmitry
 
-803 	 * This callback is used to validate encoder state for atomic drivers.
-804 	 * Since the encoder is the object connecting the CRTC and connector it
-805 	 * gets passed both states, to be able to validate interactions and
-806 	 * update the CRTC to match what the encoder needs for the requested
-807 	 * connector.
-808 	 *
-
-Encoder is the place where we have both the crtc and the connector state 
-being passed down to. the crtc's atomic check doesnt have the states of 
-encoder. So it just seems the encoder's atomic check is more centralized 
-for the entire pipeline.
-
-> Then came the virtual planes. I think you'd agree that for the virtual 
-> planes we assign SSPPs to the CRTCs. My initial design kept enc_id for 
-> all the resources except the SSPP blocks (which were allocated per 
-> crtc_id). This was not perfect from the symmetry point of view.
-> 
-
-Yes for SSPPs, since they are connected to LMs and LM is mapped to CRTC 
-yes its right that it will be better of to map to CRTC , only if we 
-think about these two blocks in isolation. But if I would think that if 
-we want to validate the pipeline encoder is more central.
-
-> Above all, filling the cstate in mode_set was too late for atomic_check 
-> to look into allocated LM to see if it supports MIXER_SOURCESPLIT or 
-> not. See dpu_plane_atomic_check().
-> 
-> I started by moving the cstate filling from the 
-> dpu_encoder_virt_atomic_mode_set() to dpu_encoder_virt_atomic_check(). 
-> And then it just became natural to turn it to be CRTC-centric code. The 
-> encoder doesn't have to peek into CRTC state. CRTC/plane do not have to 
-> delay the checks becasuse the necessary data is provided by the other 
-> party at a later point.
-> 
-
-I agree that moving from mode_set() to atomic_check() for the cstate had 
-to be done. But like I wrote encoder being passed a crtc state is 
-exactly for this purpose as its central to crtc and connector.
-
->> Resource allocation is centered around LMs for the blocks we have seen 
->> so far like LM, SSPP  but  ....
-> 
-> And LM is a CRTC.
-> 
->> DSC is already an exception because in earlier chipsets we saw that PP 
->> and DSC go together and cannot be muxed but later on that changed.
->>
->> Now, I have explained this case but I am not getting why we need to 
->> make the change for this series. Is it absolutely necessary?
-> 
-> Strictly, we don't. I can work around all the deficiencies of the 
-> current code. But it is more natural to do it now rather than later.
-> 
-
-Overall, like I wrote in my last response, I am not against the idea but 
-from your reasoning so far and from the responses i have given above, I 
-do not think that this series demands this change necessarily. I think 
-without this change, the virtual plane series itself is pretty small to 
-review and will be an easier task to land that first. We should deal 
-with it on a need basis rather than just deciding to use virtual planes 
-to make this design change.
-
->>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>> ---
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  16 +--
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |  10 +-
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 119 ++++++++++----------
->>>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      |  15 ++-
->>>   4 files changed, 77 insertions(+), 83 deletions(-)
-> 
-> 
-> [trimmed the patch contents, it is not relevant to this discussion]
-> 
