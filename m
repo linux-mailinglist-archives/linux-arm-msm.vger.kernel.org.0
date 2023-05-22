@@ -2,121 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E853F70CABC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 22:18:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B5EF70CB0D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 22:31:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229794AbjEVUS2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 16:18:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59784 "EHLO
+        id S233524AbjEVUbL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 16:31:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234788AbjEVUSW (ORCPT
+        with ESMTP id S233111AbjEVUas (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 16:18:22 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51209E4D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 13:18:05 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f3a166f8e9so5012400e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 13:18:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684786683; x=1687378683;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=37m5+D6QbSo7LpsLyUnajXaAQuo/moN3fPGc1pIbZaA=;
-        b=jOt+EAODFpuxIJLWaKzdp+pMdUS4J2LONY/bPDZ1UV71sTDvUl1mAhEKKQmvxqDAxs
-         ec9wpq9XKKsxfr6odEx5txda1qV8uzEJC26OH0lyIJ8eo4k5cJdxbA8IuKDfHtsESHvs
-         giO+lt0n7/+N/qeIdl/rCoHKUfQLcMR6NqTJHa1V2uwMKwCGyZF2mYxGVZb8yskiWuKZ
-         XjHJF9K4LpDXQ8r9fUXGW3QPN7PJW3f6ivBuXc8n71i95zzVzy13SdB6wHyxkGG1/kMJ
-         NB0jDlVqefoBKhyzIj0EnVj+z4k/Foh0XF8FLKuxPAfNp0O5hFpo2uZsa/IpQRnyNloW
-         +yig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684786683; x=1687378683;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=37m5+D6QbSo7LpsLyUnajXaAQuo/moN3fPGc1pIbZaA=;
-        b=fOPjhetb9Na/SbhmZST3SSfTfpdG2H89l9rXFzAf8hRjqJuCY+rFN4jGslKXY1cbFP
-         VicswGAbG3ybxtRG3NaY1id25jOn98UYhVr65vBJTkzmcMcOtxc/yMNvFnPbtptgwGkc
-         m/H7P/ZEjp6xkG1rYgd+hQ017oIhRmsBM8iHe9hBjhvJdo2cVsuEpJL38NBhC0cDEhrt
-         LDTIOn0AvvrBDTsY16zFNpD24dQyVvM1kaexCXj+Z7o7TpMbp6KVj3KKtBJICmUTOpaV
-         GHWhLf3/eaVjz4DlKwLmbqCjoHKALpXYifl9T1hHX+gjSbRSBR50Y09IR3czy5EpCGuM
-         onqw==
-X-Gm-Message-State: AC+VfDynEbadnS2/QgZIBJsHOmK5hC9Na4lx70dOLBmKFYjYYbAqAULR
-        Q/ut/JgeRPBGFIkiJt49rzumKg==
-X-Google-Smtp-Source: ACHHUZ4Yh5ixyr5evffTASHfLrrR9A5Kjg+Xi2i0N+jguD6R64U7zzHl/6oiWqR/erTmCJzKuZ9/uw==
-X-Received: by 2002:a05:6512:6c4:b0:4f4:aeb8:aebe with SMTP id u4-20020a05651206c400b004f4aeb8aebemr1372588lff.25.1684786683546;
-        Mon, 22 May 2023 13:18:03 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id a5-20020ac25205000000b004f392625952sm1093573lfl.26.2023.05.22.13.18.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 May 2023 13:18:03 -0700 (PDT)
-Message-ID: <d5e232d6-b789-a8c3-4ec5-7af0b9d8b9ae@linaro.org>
-Date:   Mon, 22 May 2023 23:18:02 +0300
+        Mon, 22 May 2023 16:30:48 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CC82BF;
+        Mon, 22 May 2023 13:30:46 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34MJq6h3008604;
+        Mon, 22 May 2023 20:30:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : subject :
+ date : message-id : mime-version : content-type :
+ content-transfer-encoding : to : cc; s=qcppdkim1;
+ bh=vLqKLO1BUpzQZwWunNwMNnH6hu7BMla/ZM9oufiLLSQ=;
+ b=DyidkjpsPoEsw5Sa+oWmszCWkwzKpkcFXxECxrIu2M74NyI2DjlBtzKbZRmPyMt7V87I
+ afGa2YXCCJPYn1YiRZJa8h14sxgf+2Hd9nPNiwqwbOyA8cGuS0pdHyl9h9kfxVNyJfWU
+ 7DxFdYSjzzwIgzJeubH7HFegEb4Bw+g51xxMsSqadViPiOB485NNFG5Vzgf7JvBQJsr9
+ UpL/YzJ88Bjkhu4vpKgf75EBeXeevQuqTNGwqoqv9Ni6Lus0Lu0WIXrGiqDX6jfrTJYn
+ egPIkBh5gLZbAEHqkEhDEJtWpB4kpgr0LMchs52S7QSHQ6fvArfu59UcLN4TuHku/Fta Vw== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qre8p03ye-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 22 May 2023 20:30:40 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34MKUdKp032333
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 22 May 2023 20:30:39 GMT
+Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Mon, 22 May 2023 13:30:38 -0700
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+Subject: [PATCH v4 0/5] Add DSC v1.2 Support for DSI
+Date:   Mon, 22 May 2023 13:30:19 -0700
+Message-ID: <20230405-add-dsc-support-v4-0-15daf84f8dcb@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v12 01/10] drm/msm/dpu: set DSC flush bit correctly at MDP
- CTL flush register
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
-        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1684783853-22193-1-git-send-email-quic_khsieh@quicinc.com>
- <1684783853-22193-2-git-send-email-quic_khsieh@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1684783853-22193-2-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-B4-Tracking: v=1; b=H4sIANvQa2QC/4WOOw7CMBBErxK5ZtHazgeouAei8GdDXMQJdhKBU
+ O6OnQ4hRDmzmvf2xSIFR5GdihcLtLjoBp9CuSuY6ZS/ETibMhMoJJZYgbIWbDQQ53EcwgQtcYl
+ alcdDyVlaaRUJdFDedHnXxx48PaZ8GgO17rHJLteUOxenITw398Jz+1uzcECotalblIoaWZ3vs
+ zPOm70ZepZpi/hDEInAsRGmQTo2h/qbIP8QZP6BuJWVElhr+UlY1/UNBqs8l08BAAA=
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+X-Mailer: b4 0.13-dev-bfdf5
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1684787438; l=3535;
+ i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id;
+ bh=e6Fl0fdsd/cKcvWsiYtQZ3LOz/0x54V8DgWbX2TkeYA=;
+ b=MFXYpjihrnAStLaSuYj96wxZPkzsRf4VWeHkM8KYlHyljroh5wPrmjTY4vGe56baUwKJj6Vn8
+ DaNirYWcDKWBPKiXYh8AP7MfhzNEc5af3kL9MbDbabRBzg9Jy5KkYJ5
+X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519;
+ pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: EzLYt6cECu4ZwKwKzlk5J8NcTUtcX2qQ
+X-Proofpoint-GUID: EzLYt6cECu4ZwKwKzlk5J8NcTUtcX2qQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-22_14,2023-05-22_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 adultscore=0 mlxlogscore=999 mlxscore=0 malwarescore=0
+ bulkscore=0 lowpriorityscore=0 spamscore=0 impostorscore=0 clxscore=1015
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305220173
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/05/2023 22:30, Kuogee Hsieh wrote:
-> DSC flush bit is the bit 22 of CTL flush register. BIT(22) is expected
-> to be written to CTL flush register to indicates that DSC is ready for
-> flush. However 0x22 (BIT(1) and BIT(5)) was written mistakenly at current
+This is a series of changes for DSI to enable command mode support
+for DSC v1.2.
 
-DSC_IDX is 22, not 0x22.
+This includes:
 
-> implementation. Fix this problem by writing BIT(22) to CTL flush register
-> for DSC to work properly.
-> 
-> Changes in V12:
-> -- split this patch out of "separate DSC flush update out of interface"
-> 
-> Fixes: 77f6da90487c ("drm/msm/disp/dpu1: Add DSC support in hw_ctl")
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index 4f7cfa9..69d0ea2 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -525,7 +525,7 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
->   		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
->   			      BIT(cfg->merge_3d - MERGE_3D_0));
->   	if (cfg->dsc) {
-> -		DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, DSC_IDX);
-> +		DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, BIT(DSC_IDX));
->   		DPU_REG_WRITE(c, CTL_DSC_ACTIVE, cfg->dsc);
->   	}
->   }
+1) Rounding up `hdisplay / 3` in dsc_timing_setup()
+2) Adjusting pclk_rate to account for compression
+3) Fixing incorrect uses of slice_count in DSI DSC calculations
+4) Setting the DATA_COMPRESS bit when DSC is enabled
 
+With these changes (and the dependency below), DSC v1.2 should work over
+DSI in command mode.
+
+Note: Changes that add DSC v1.2 support for video mode will be posted
+with the DP support changes.
+
+Depends-on: "add DSC 1.2 dpu supports" [1] and "Introduce MSM-specific
+DSC helpers" [2]
+
+[1] https://patchwork.freedesktop.org/series/116789/
+[2] https://patchwork.freedesktop.org/series/115833/
+
+Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+---
+Changes in v4:
+- Clarified slice_per_pkt comment regarding pkt_per_line calculations
+- Reworded commit message for "drm/msm/dsi: Remove incorrect references
+  to slice_count"
+- Wrapped INTF_SC7280_MASK macro definition in parentheses
+- Fixed incorrect commit hash in "msm/drm/dsi: Round up DSC hdisplay
+  calculation"
+- Picked up Reviewed-by tag
+- Link to v3: https://lore.kernel.org/r/20230405-add-dsc-support-v3-0-6e1d35a206b3@quicinc.com
+
+Changes in v3:
+- Added fix to round up hdisplay DSC adjustment
+- Fixed inconsistent whitespace in dpu_hw_intf_ops comment doc
+- Moved placement of dpu_hw_intf_enable_compression
+- Picked up "drm/msm/dsi: Fix calculation for pkt_per_line" patch and
+  squashed all slice_count fixes into a single patch
+- Use drm_mode_vrefresh() to calculate adjusted pclk rate
+- Moved compressed pclk adjustment to dsi_adjust_compressed_pclk() helper
+- Rebased changes on top of updated dependencies
+- Reworded commit message for "drm/msm/dpu: Set DATA_COMPRESS for
+  command mode" for clarity
+- Removed revision changelog in commit messages
+- Link to v2: https://lore.kernel.org/r/20230405-add-dsc-support-v2-0-1072c70e9786@quicinc.com
+
+Changes in v2:
+- Changed has_data_compress dpu_cap to a DATA_COMPRESS INTF feature flag
+- Changed pclk math to only divide hdisplay by compression ratio
+- Reworded word count TODO comment
+- Make DATA_COMPRESS an INTF flag
+- Read INTF_CONFIG2 before writing to DATA_COMPRESS bit
+- Fixed whitespace issue in macro definition
+- Removed `inline` from dpu_hw_intf_enable_compression declaration
+- Only set dpu_hw_intf_ops.data_compress if DATA_COMPRESS feature is set
+- Reworded commit messages and cover letter for clarity
+- Link to v1: https://lore.kernel.org/r/20230405-add-dsc-support-v1-0-6bc6f03ae735@quicinc.com
+
+---
+Jessica Zhang (5):
+      msm/drm/dsi: Round up DSC hdisplay calculation
+      drm/msm/dsi: Adjust pclk rate for compression
+      drm/msm/dpu: Add DPU_INTF_DATA_COMPRESS feature flag
+      drm/msm/dpu: Set DATA_COMPRESS for command mode
+      drm/msm/dsi: Remove incorrect references to slice_count
+
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c   |  3 ++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c        | 13 ++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h        |  2 +
+ drivers/gpu/drm/msm/dsi/dsi_host.c                 | 51 +++++++++++++++-------
+ 6 files changed, 58 insertions(+), 16 deletions(-)
+---
+base-commit: 2f0218fa4805d7c7eed8dc072e1bdf9f100492c7
+change-id: 20230405-add-dsc-support-fe130ba49841
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Jessica Zhang <quic_jesszhan@quicinc.com>
 
