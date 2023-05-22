@@ -2,46 +2,46 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6237C70BFF8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 15:45:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C236370C00A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 15:49:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231695AbjEVNpP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 09:45:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55712 "EHLO
+        id S232972AbjEVNtW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 09:49:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230184AbjEVNpO (ORCPT
+        with ESMTP id S231725AbjEVNtW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 09:45:14 -0400
-Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::226])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCC50C6;
-        Mon, 22 May 2023 06:45:12 -0700 (PDT)
+        Mon, 22 May 2023 09:49:22 -0400
+Received: from relay8-d.mail.gandi.net (relay8-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::228])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10513F4;
+        Mon, 22 May 2023 06:49:19 -0700 (PDT)
 Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id 4A59AC0008;
-        Mon, 22 May 2023 13:45:08 +0000 (UTC)
+        by mail.gandi.net (Postfix) with ESMTPSA id 5511F1BF206;
+        Mon, 22 May 2023 13:49:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1684763110;
+        t=1684763358;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:content-type:content-type:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=nUSffco4/w//XAZ47cQUSWYcDz41qfX87j0DxKN1CAE=;
-        b=XqLOC5hX6TjWGppK7GxG8h5/b8VVCWX/RXJtP66a12W1AAKIH61DM6rBKTqsi4CGF1ZPm5
-        /FjG9BjwdTtBcpLpuiDAa6dOfDoKZyP3+61PxaBCCCfYSZwRD4UjWpLWGnMHOFRafkVXuf
-        1LrDH6YsIvUpp+4z8ag875XUI3+hDqhl4Scqt2BSDRbpi3axcEIO1x4NSkrxYyUgGT2vZ0
-        QsxDYPmDTq/+iciT/uyYr+HJI9ENIvVhwtAxgsbxjn595GPLk7Au+EhAT2eeclRTnRBzel
-        LD3Lg6Bb7pAIB43M5w66f9YM5W5Ub7Vqm5X4HV59kYr7CqFjVLOF1F8Z8WX+sQ==
-Date:   Mon, 22 May 2023 15:45:07 +0200
+        bh=98DDrxz4hU1l5peZYXkR1grl9w+mJ1Ay3ep3FbsBoIQ=;
+        b=Z9F5eTpFhu0GPi4odkH/6aIxvXz0zyW0Pxf+lgyLHrhFN22wuuxVz7zQlV9bR+lW64cssh
+        NBOKenZX+RT8/UYOGnMTvF3MygXktEqKMSyl1hgn/QOGFZ929XTEeKaSN1T5Y4PP3/Yyf0
+        QR5QhYSK8PcGYDzeTpOrrS842J/aKILZTfoFp8hTFSq7cWJMlJ12vnPXMvhIhr5Iif2LoL
+        70B9uaEcGknqReoxyG0shhdHkvzGHWeqIOw7xHK+yvUVKiX2sgGTG3unqMJWGiWlJ2DqHH
+        j3PgLA8Hhgdq4TFamzZ405ZZt3M3yzAH5jfbcoPS7ltwdzQ4/6IOVWkQml1iAA==
+Date:   Mon, 22 May 2023 15:49:16 +0200
 From:   Miquel Raynal <miquel.raynal@bootlin.com>
 To:     Md Sadre Alam <quic_mdalam@quicinc.com>
 Cc:     mani@kernel.org, richard@nod.at, vigneshr@ti.com,
         linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, quic_srichara@quicinc.com
-Subject: Re: [PATCH v2 2/5] mtd: rawnand: qcom: Add support for reset,
- readid, status exec_op
-Message-ID: <20230522154507.0255d902@xps-13>
-In-Reply-To: <20230511133017.6307-3-quic_mdalam@quicinc.com>
+Subject: Re: [PATCH v2 3/5] mtd: rawnand: qcom: Add support for param_page
+ read exec_ops
+Message-ID: <20230522154916.3bb7be4e@xps-13>
+In-Reply-To: <20230511133017.6307-4-quic_mdalam@quicinc.com>
 References: <20230511133017.6307-1-quic_mdalam@quicinc.com>
-        <20230511133017.6307-3-quic_mdalam@quicinc.com>
+        <20230511133017.6307-4-quic_mdalam@quicinc.com>
 Organization: Bootlin
 X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
@@ -59,10 +59,9 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi Md,
 
-quic_mdalam@quicinc.com wrote on Thu, 11 May 2023 19:00:14 +0530:
+quic_mdalam@quicinc.com wrote on Thu, 11 May 2023 19:00:15 +0530:
 
-> This change will add exec_ops support for RESET , READ_ID, STATUS
-> command.
+> This change will add exec_ops for PARAM_PAGE_READ command.
 >=20
 > Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 > Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
@@ -72,250 +71,124 @@ quic_mdalam@quicinc.com wrote on Thu, 11 May 2023 19:00:14 +0530:
 >=20
 > * Missed to post Cover-letter, so posting v2 patch with cover-letter
 >=20
->  drivers/mtd/nand/raw/qcom_nandc.c | 166 +++++++++++++++++++++++++++++-
->  1 file changed, 163 insertions(+), 3 deletions(-)
+>  drivers/mtd/nand/raw/qcom_nandc.c | 91 ++++++++++++++++++++++++++++++-
+>  1 file changed, 90 insertions(+), 1 deletion(-)
 >=20
 > diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qco=
 m_nandc.c
-> index dae460e2aa0b..d2f2a8971907 100644
+> index d2f2a8971907..8717d5086f80 100644
 > --- a/drivers/mtd/nand/raw/qcom_nandc.c
 > +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> @@ -384,6 +384,9 @@ struct nandc_regs {
->   * @reg_read_pos:		marker for data read in reg_read_buf
->   *
->   * @cmd1/vld:			some fixed controller register values
-> + *
-> + * @exec_opwrite:		flag to select correct number of code word
-> + *				while reading status
->   */
->  struct qcom_nand_controller {
->  	struct device *dev;
-> @@ -434,6 +437,7 @@ struct qcom_nand_controller {
->  	int reg_read_pos;
+> @@ -3086,7 +3086,96 @@ static int qcom_erase_cmd_type_exec(struct nand_ch=
+ip *chip, const struct nand_su
 > =20
->  	u32 cmd1, vld;
-> +	bool exec_opwrite;
->  };
-> =20
->  /*
-> @@ -2920,6 +2924,8 @@ static int qcom_op_cmd_mapping(struct qcom_nand_con=
-troller *nandc, u8 cmd,
->  		break;
->  	case NAND_CMD_PAGEPROG:
->  		ret =3D OP_PROGRAM_PAGE;
-> +		q_op->flag =3D NAND_CMD_PAGEPROG;
-
-Just use the instruction value?
-
-> +		nandc->exec_opwrite =3D true;
->  		break;
->  	default:
->  		break;
-> @@ -2982,10 +2988,95 @@ static void qcom_parse_instructions(struct nand_c=
-hip *chip,
->  	}
->  }
-> =20
-> +static void qcom_delay_ns(unsigned int ns)
-> +{
-> +	if (!ns)
-> +		return;
+>  static int qcom_param_page_type_exec(struct nand_chip *chip,  const stru=
+ct nand_subop *subop)
+>  {
+> -	return 0;
+> +	struct qcom_nand_host *host =3D to_qcom_nand_host(chip);
+> +	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
+> +	struct qcom_op q_op;
+> +	const struct nand_op_instr *instr =3D NULL;
+> +	unsigned int op_id =3D 0;
+> +	unsigned int len =3D 0;
+> +	int ret =3D 0;
 > +
-> +	if (ns < 10000)
-> +		ndelay(ns);
+> +	qcom_parse_instructions(chip, subop, &q_op);
+> +
+> +	q_op.cmd_reg |=3D PAGE_ACC | LAST_PAGE;
+> +
+> +	pre_command(host, NAND_CMD_PARAM);
+> +	/*
+> +	 * NAND_CMD_PARAM is called before we know much about the FLASH chip
+> +	 * in use. we configure the controller to perform a raw read of 512
+> +	 * bytes to read onfi params
+
+There is no guess to do, just follow what the core asks.
+
+> +	 */
+> +	if (nandc->props->qpic_v2)
+> +		nandc_set_reg(chip, NAND_FLASH_CMD, q_op.cmd_reg);
 > +	else
-> +		udelay(DIV_ROUND_UP(ns, 1000));
-> +}
-> +
-> +static int qcom_wait_rdy_poll(struct nand_chip *chip, unsigned int time_=
-ms)
-> +{
-> +	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> +	unsigned long start =3D jiffies + msecs_to_jiffies(time_ms);
-> +	u32 flash;
-> +
-> +	nandc_read_buffer_sync(nandc, true);
-> +
-> +	do {
-> +		flash =3D le32_to_cpu(nandc->reg_read_buf[0]);
-> +		if (flash & FS_READY_BSY_N)
-> +			return 0;
-> +		cpu_relax();
-> +	} while (time_after(start, jiffies));
-> +
-> +	dev_err(nandc->dev, "Timeout waiting for device to be ready:0x%08x\n", =
-flash);
-> +
-> +	return -ETIMEDOUT;
-> +}
-> +
->  static int qcom_read_status_exec(struct nand_chip *chip,
->  				 const struct nand_subop *subop)
->  {
-> -	return 0;
-> +	struct qcom_nand_host *host =3D to_qcom_nand_host(chip);
-> +	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> +	struct nand_ecc_ctrl *ecc =3D &chip->ecc;
-> +	struct qcom_op q_op;
-> +	const struct nand_op_instr *instr =3D NULL;
-> +	unsigned int op_id =3D 0;
-> +	unsigned int len =3D 0;
-> +	int ret =3D 0, num_cw =3D 1, i;
-> +	u32 flash_status;
-> +
-> +	host->status =3D NAND_STATUS_READY | NAND_STATUS_WP;
-> +
-> +	qcom_parse_instructions(chip, subop, &q_op);
-> +
-> +	if (nandc->exec_opwrite) {
+> +		nandc_set_reg(chip, NAND_FLASH_CMD, q_op.cmd_reg);
 
-I definitely don't understand this flag at all.
+There is something wrong here.
 
-> +		num_cw =3D ecc->steps;
-> +		nandc->exec_opwrite =3D false;
+> +
+> +	nandc_set_reg(chip, NAND_ADDR0, 0);
+> +	nandc_set_reg(chip, NAND_ADDR1, 0);
+> +	nandc_set_reg(chip, NAND_DEV0_CFG0, 0 << CW_PER_PAGE
+> +					| 512 << UD_SIZE_BYTES
+> +					| 5 << NUM_ADDR_CYCLES
+> +					| 0 << SPARE_SIZE_BYTES);
+> +	nandc_set_reg(chip, NAND_DEV0_CFG1, 7 << NAND_RECOVERY_CYCLES
+> +					| 0 << CS_ACTIVE_BSY
+> +					| 17 << BAD_BLOCK_BYTE_NUM
+> +					| 1 << BAD_BLOCK_IN_SPARE_AREA
+> +					| 2 << WR_RD_BSY_GAP
+> +					| 0 << WIDE_FLASH
+> +					| 1 << DEV0_CFG1_ECC_DISABLE);
+> +	if (!nandc->props->qpic_v2)
+> +		nandc_set_reg(chip, NAND_EBI2_ECC_BUF_CFG, 1 << ECC_CFG_ECC_DISABLE);
+> +
+> +	/* configure CMD1 and VLD for ONFI param probing in QPIC v1 */
+> +	if (!nandc->props->qpic_v2) {
+> +		nandc_set_reg(chip, NAND_DEV_CMD_VLD,
+> +			      (nandc->vld & ~READ_START_VLD));
+> +		nandc_set_reg(chip, NAND_DEV_CMD1,
+> +			      (nandc->cmd1 & ~(0xFF << READ_ADDR))
+> +			      | NAND_CMD_PARAM << READ_ADDR);
 > +	}
 > +
-> +	pre_command(host, NAND_CMD_STATUS);
-> +
-> +	nandc_set_reg(chip, NAND_FLASH_CMD, q_op.cmd_reg);
 > +	nandc_set_reg(chip, NAND_EXEC_CMD, 1);
 > +
-> +	write_reg_dma(nandc, NAND_FLASH_CMD, 1, NAND_BAM_NEXT_SGL);
-> +	write_reg_dma(nandc, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
-> +
-> +	read_reg_dma(nandc, NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
-> +
-> +	ret =3D submit_descs(nandc);
-> +	if (ret)
-> +		dev_err(nandc->dev, "failure in sbumitting status descriptor\n");
-> +
-> +	free_descs(nandc);
-> +
-> +	nandc_read_buffer_sync(nandc, true);
-> +	for (i =3D 0; i < num_cw; i++) {
-> +		flash_status =3D le32_to_cpu(nandc->reg_read_buf[i]);
-> +
-> +	if (flash_status & FS_MPU_ERR)
-> +		host->status &=3D ~NAND_STATUS_WP;
-> +
-> +	if (flash_status & FS_OP_ERR || (i =3D=3D (num_cw - 1) &&
-> +					 (flash_status & FS_DEVICE_STS_ERR)))
-> +		host->status |=3D NAND_STATUS_FAIL;
-
-If there is a failure detected, error out (everywhere).
-
+> +	if (!nandc->props->qpic_v2) {
+> +		nandc_set_reg(chip, NAND_DEV_CMD1_RESTORE, nandc->cmd1);
+> +		nandc_set_reg(chip, NAND_DEV_CMD_VLD_RESTORE, nandc->vld);
 > +	}
 > +
-> +	flash_status =3D host->status;
+> +	nandc_set_read_loc(chip, 0, 0, 0, 512, 1);
 > +
-> +	instr =3D q_op.data_instr;
-> +	op_id =3D q_op.data_instr_idx;
-> +	len =3D nand_subop_get_data_len(subop, op_id);
-> +	memcpy(instr->ctx.data.buf.in, &flash_status, len);
+> +	if (!nandc->props->qpic_v2) {
+> +		write_reg_dma(nandc, NAND_DEV_CMD_VLD, 1, 0);
+> +		write_reg_dma(nandc, NAND_DEV_CMD1, 1, NAND_BAM_NEXT_SGL);
+> +	}
 > +
-> +	return ret;
->  }
-> =20
->  static int qcom_erase_cmd_type_exec(struct nand_chip *chip, const struct=
- nand_subop *subop)
-> @@ -3000,12 +3091,81 @@ static int qcom_param_page_type_exec(struct nand_=
-chip *chip,  const struct nand_
-> =20
->  static int qcom_read_id_type_exec(struct nand_chip *chip, const struct n=
-and_subop *subop)
->  {
-> -	return 0;
-> +	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> +	struct qcom_nand_host *host =3D to_qcom_nand_host(chip);
-> +	struct qcom_op q_op;
-> +	const struct nand_op_instr *instr =3D NULL;
-> +	unsigned int op_id =3D 0;
-> +	unsigned int len =3D 0;
-> +	int ret =3D 0;
+> +	nandc->buf_count =3D 512;
+
+The length is provided by the instruction.
+
+> +	memset(nandc->data_buffer, 0xff, nandc->buf_count);
 > +
-> +	qcom_parse_instructions(chip, subop, &q_op);
+> +	config_nand_single_cw_page_read(chip, false, 0);
 > +
-> +	pre_command(host, NAND_CMD_READID);
+> +	read_data_dma(nandc, FLASH_BUF_ACC, nandc->data_buffer,
+> +		      nandc->buf_count, 0);
 > +
-> +	nandc_set_reg(chip, NAND_FLASH_CMD, q_op.cmd_reg);
-> +	nandc_set_reg(chip, NAND_ADDR0, q_op.addr1_reg);
-> +	nandc_set_reg(chip, NAND_ADDR1, q_op.addr2_reg);
-> +	nandc_set_reg(chip, NAND_FLASH_CHIP_SELECT,
-> +		      nandc->props->is_bam ? 0 : DM_EN);
-> +
-> +	nandc_set_reg(chip, NAND_EXEC_CMD, 1);
-> +
-> +	write_reg_dma(nandc, NAND_FLASH_CMD, 4, NAND_BAM_NEXT_SGL);
-> +	write_reg_dma(nandc, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
-> +
-> +	read_reg_dma(nandc, NAND_READ_ID, 1, NAND_BAM_NEXT_SGL);
+> +	/* restore CMD1 and VLD regs */
+> +	if (!nandc->props->qpic_v2) {
+> +		write_reg_dma(nandc, NAND_DEV_CMD1_RESTORE, 1, 0);
+> +		write_reg_dma(nandc, NAND_DEV_CMD_VLD_RESTORE, 1, NAND_BAM_NEXT_SGL);
+> +	}
 > +
 > +	ret =3D submit_descs(nandc);
 > +	if (ret)
-> +		dev_err(nandc->dev, "failure in sbumitting read id descriptor\n");
+> +		dev_err(nandc->dev, "failure in sbumitting param page descriptor\n");
 > +
 > +	free_descs(nandc);
-> +
-> +	instr =3D q_op.data_instr;
-> +	op_id =3D q_op.data_instr_idx;
-> +	len =3D nand_subop_get_data_len(subop, op_id);
-> +
-> +	nandc_read_buffer_sync(nandc, true);
-> +	memcpy(instr->ctx.data.buf.in, nandc->reg_read_buf, len);
-> +
-> +	return ret;
->  }
-> =20
->  static int qcom_misc_cmd_type_exec(struct nand_chip *chip, const struct =
-nand_subop *subop)
->  {
-> -	return 0;
-> +	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> +	struct qcom_nand_host *host =3D to_qcom_nand_host(chip);
-> +	struct qcom_op q_op;
-> +	int ret =3D 0;
-> +
-> +	qcom_parse_instructions(chip, subop, &q_op);
-> +
-> +	if (q_op.flag =3D=3D NAND_CMD_PAGEPROG)
-> +		goto wait_rdy;
-> +
-> +	pre_command(host, NAND_CMD_RESET);
-
-???
-
-> +
-> +	nandc_set_reg(chip, NAND_FLASH_CMD, q_op.cmd_reg);
-> +	nandc_set_reg(chip, NAND_EXEC_CMD, 1);
-> +
-> +	write_reg_dma(nandc, NAND_FLASH_CMD, 1, NAND_BAM_NEXT_SGL);
-> +	write_reg_dma(nandc, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
-> +
-> +	read_reg_dma(nandc, NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
-> +
-> +	ret =3D submit_descs(nandc);
-> +	if (ret)
-> +		dev_err(nandc->dev, "failure in sbumitting misc descriptor\n");
-
-Typo                                             ^
-
-Same above.
-
-You should error out immediately when something wrong happens.
-
-> +
-> +	free_descs(nandc);
-> +
-> +wait_rdy:
-> +	qcom_delay_ns(q_op.rdy_delay_ns);
 > +
 > +	ret =3D qcom_wait_rdy_poll(chip, q_op.rdy_timeout_ms);
 > +
+> +	instr =3D q_op.data_instr;
+> +	op_id =3D q_op.data_instr_idx;
+> +	len =3D nand_subop_get_data_len(subop, op_id);
+> +	memcpy(instr->ctx.data.buf.in, nandc->data_buffer, len);
+> +
 > +	return ret;
 >  }
 > =20
->  static int qcom_data_read_type_exec(struct nand_chip *chip, const struct=
- nand_subop *subop)
+>  static int qcom_read_id_type_exec(struct nand_chip *chip, const struct n=
+and_subop *subop)
 
 
 Thanks,
