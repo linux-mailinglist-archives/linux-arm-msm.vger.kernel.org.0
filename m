@@ -2,75 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CEF9D70CCCE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 23:45:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C67DA70CCDE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 23:49:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233984AbjEVVpj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 17:45:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49892 "EHLO
+        id S231448AbjEVVt6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 17:49:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51028 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234241AbjEVVpg (ORCPT
+        with ESMTP id S230379AbjEVVt5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 17:45:36 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31224F1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 14:45:35 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f004cc54f4so7727877e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 14:45:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684791933; x=1687383933;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+32966TgCsnZHHISjlCuxLmScv3wYTVuCXEogzJX5l0=;
-        b=PKbs1Sftn+C4z3k3p8AxqFgjaOquUkL/Nk55v/22Elk+KiuV5WGRnis+lnXSkpybMh
-         Hdnj/mOEhlKpDJ4Lzi3Fe0EOBLkMIgcW/u2gluL90E0ojX/xCUtfJUxekuYEx6I/afsh
-         icSSjP9Z2u1/rJeXRYLO0395ccWm8FV9BoTJMuSaG/PHKCsTtn1paiaj7HI72wO4GAnj
-         dhCzjJaVZE7S5K4lnoAwSu8qK6J+tYsCyblYdzGMFGYSt63XoBl+CeflRpVLeFAbXKJ+
-         2rzK1/to7dR1VXK7QbGXs/CNXtk5ojGEE3Yjis1Mnc+7Fmy4YwjmW0TcemdR7UQ+X+Ep
-         f0gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684791933; x=1687383933;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+32966TgCsnZHHISjlCuxLmScv3wYTVuCXEogzJX5l0=;
-        b=L01gro8TcIceF+mMZWTdqbsUQixx27CyVEKx4bJihX8fharNjgLuphnYixw9Kabi0+
-         jqyuqKVjnauFFsunMHOpMEqR6+qopilvJfo2+gZmwNhGvXJsRxd0rwGTayGTgAysbgB6
-         sdg0O0NftWOG3EKY1bLUHzOqTtGYsudUV739Gn+h2qowAHRKRbaTvzQQufJGGWA5n8ra
-         ir/aauBDYXo7xHlL1cAyMKynzf68xze6LOnUa2EEJUcvB4gd6Y5sUC6x7RFhFtt2YD3C
-         VfqSxarp0x0yeE4ldF4usmy7pSL1voXuWA/aqc/xcn46MrRZOcs8vpba8p4odg+6AfV5
-         +05Q==
-X-Gm-Message-State: AC+VfDz/VPOTp0PumM3ksjJEEcWoK3pKL/6rlCnAQ4AJufgxQzkrpSPx
-        scoXmu5q2PwgYH5f3XWsKy2zOwyNlYoXK9miQAM=
-X-Google-Smtp-Source: ACHHUZ7H6HQIP0q+P0CZsnbVGDMNjFVv1BafI1+S0GRMALYPJadYg6JkJDKxi3bXmCol7YKI9ybwgQ==
-X-Received: by 2002:ac2:4a68:0:b0:4f4:b378:469d with SMTP id q8-20020ac24a68000000b004f4b378469dmr911796lfp.41.1684791933271;
-        Mon, 22 May 2023 14:45:33 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id j7-20020ac25507000000b004f2543be9dbsm1106918lfk.5.2023.05.22.14.45.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 22 May 2023 14:45:32 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
+        Mon, 22 May 2023 17:49:57 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8B20DB;
+        Mon, 22 May 2023 14:49:56 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 546816241D;
+        Mon, 22 May 2023 21:49:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66AFEC433EF;
+        Mon, 22 May 2023 21:49:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1684792195;
+        bh=bk+0bpMnoVQcE+GPrhxsvgXsK2kP9pMa49S8uTwGy5Y=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jEXS02ppHFJkO4Z1vb3+jCFGDmmQzVaMNFX9Fvn6VQinVGo7t5UIyMgQEf45v9Svh
+         qcVx9AjINU8QG4XYh+1EX1R4wTcE5jSJc5E5Te4z/wysibDTdDLppuUjEwk1v8Fi12
+         btwVjNzuxc//lLb1m6bd0Occ8AgWGMorpjMhHNpMtAoz791P1CRs8FvjQ2hcBkJVPA
+         5BwCEBs3xohxHL683VKhGewzfV8o8W/xQgkmdwKQ2TE3qEDoJpincZ1N8/TWQ2lJN8
+         pY3mJTJQgM0ObIiRNh5xMV2lncPBAaqp4ekbAOe+FcILE7pkvEJTWksCJtg+1FnUlK
+         0ZtcgP7oW3CYA==
+Date:   Mon, 22 May 2023 14:53:48 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Prashant Malani <pmalani@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH v2 6/6] drm/msm/dpu: drop compatibility INTR defines
-Date:   Tue, 23 May 2023 00:45:27 +0300
-Message-Id: <20230522214527.190054-7-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230522214527.190054-1-dmitry.baryshkov@linaro.org>
-References: <20230522214527.190054-1-dmitry.baryshkov@linaro.org>
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Vara Reddy <varar@codeaurora.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+        Benson Leung <bleung@chromium.org>
+Subject: Re: [RFC] drm/msm/dp: Allow attaching a drm_panel
+Message-ID: <20230522215348.uoyboow26n2o3tel@ripper>
+References: <CAD=FV=W9uKq00wXn4H1ax0u2D=R8Wn3J-Je43uxcPyDtk7AK7Q@mail.gmail.com>
+ <YVyMwsvLl6XalJxB@ripper>
+ <CAD=FV=WY+g38p7--QKZCaQnSqx7VvdwC36jH-VKnrEWoxK=XHQ@mail.gmail.com>
+ <YV0KBWxVtKgOp2Cj@ripper>
+ <CAD=FV=X5JFE3u9BtxxocaUrYNSpYXJN90UJ8HOvXZE6oYiVsDQ@mail.gmail.com>
+ <CACeCKac4b_ej87cQD692TNwpsoFsmBwDcSeLy5fp+pvLX1si7g@mail.gmail.com>
+ <YV7JNH9QvI4cBz5s@kuha.fi.intel.com>
+ <YV8dEKMhNKKl20j6@ripper>
+ <YWA7vXp+4QbKWU1S@kuha.fi.intel.com>
+ <do5veo5axxbvmcddpqf7u5rfer6soxzy5selfnjv5sn6n57h47@q3hfznslndba>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <do5veo5axxbvmcddpqf7u5rfer6soxzy5selfnjv5sn6n57h47@q3hfznslndba>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,130 +78,134 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While reworking interrupts masks, it was easier to keep old
-MDP_INTFn_7xxx_INTR and MDP_INTFn_7xxx_TEAR_INTR symbols. Now it is time
-to drop them and use unified symbol names.
+On Mon, May 22, 2023 at 03:51:01PM -0500, Bjorn Andersson wrote:
+> On Fri, Oct 08, 2021 at 03:38:21PM +0300, Heikki Krogerus wrote:
+> > Hi,
+> > 
+> > On Thu, Oct 07, 2021 at 09:15:12AM -0700, Bjorn Andersson wrote:
+> > > The one thing that I still don't understand though is, if the typec_mux
+> > > is used by the typec controller to inform _the_ mux about the function
+> > > to be used, what's up with the complexity in typec_mux_match()? This is
+> > > what lead me to believe that typec_mux was enabling/disabling individual
+> > > altmodes, rather just flipping the physical switch at the bottom.
+> > 
+> > Ah, typec_mux_match() is a mess. I'm sorry about that. I think most of
+> > the code in that function is not used by anybody. If I remember
+> > correctly, all that complexity is attempting to solve some
+> > hypothetical corner case(s). Probable a case where we have multiple
+> > muxes per port to deal with.
+> > 
+> > I think it would probable be best to clean the function to the bare
+> > minimum by keeping only the parts that are actually used today
+> > (attached).
+> > 
+> 
+> Sorry for not replying to this in a timely manner Heikki. I've been
+> ignoring this issue for a long time now, just adding "svid" to our dts
+> files. But, this obviously shows up in DT validation - and I'd prefer
+> not defining these properties as valid.
+> 
+> The attached patch works as expected.
+> 
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h  |  4 ++--
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h  |  2 +-
- .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h    |  4 ++--
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h  |  4 ++--
- .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h  |  4 ++--
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h   | 13 -------------
- 6 files changed, 9 insertions(+), 22 deletions(-)
+Sorry, I must have failed at applying the patch - it doesn't work...
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-index 649784aa6567..df88e3f2a548 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-@@ -161,11 +161,11 @@ static const struct dpu_intf_cfg sm8350_intf[] = {
- 	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x2c4, INTF_DSI, 0, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
--			DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2)),
-+			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
- 	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x2c4, INTF_DSI, 1, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
--			DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2)),
-+			DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2)),
- 	INTF_BLK("intf_3", INTF_3, 0x37000, 0x280, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31)),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-index 1e87c7f4775d..4d9936d41464 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-@@ -107,7 +107,7 @@ static const struct dpu_intf_cfg sc7280_intf[] = {
- 	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x2c4, INTF_DSI, 0, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
--			DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2)),
-+			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
- 	INTF_BLK("intf_5", INTF_5, 0x39000, 0x280, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 22),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 23)),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-index 3082657f06f2..65fa65b954db 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-@@ -151,11 +151,11 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
- 	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x300, INTF_DSI, 0, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
--			DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2)),
-+			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
- 	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x300, INTF_DSI, 1, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
--			DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2)),
-+			DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2)),
- 	INTF_BLK("intf_3", INTF_3, 0x37000, 0x280, INTF_NONE, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31)),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-index ca5b82bc8322..b8158ed94845 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-@@ -169,11 +169,11 @@ static const struct dpu_intf_cfg sm8450_intf[] = {
- 	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x300, INTF_DSI, 0, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
--			DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2)),
-+			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
- 	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x300, INTF_DSI, 1, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
--			DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2)),
-+			DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2)),
- 	INTF_BLK("intf_3", INTF_3, 0x37000, 0x280, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31)),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-index dd7c87f772ea..6a12e882b5b8 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-@@ -173,11 +173,11 @@ static const struct dpu_intf_cfg sm8550_intf[] = {
- 	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x300, INTF_DSI, 0, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
--			DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2)),
-+			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
- 	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x300, INTF_DSI, 1, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
--			DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2)),
-+			DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2)),
- 	INTF_BLK("intf_3", INTF_3, 0x37000, 0x280, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SC7280_MASK,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31)),
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-index f0b92c9e3b09..4a46c0900e04 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-@@ -39,19 +39,6 @@ enum dpu_hw_intr_reg {
- 				   intf == INTF_2 ? MDP_INTF2_TEAR_INTR : \
- 				   -1)
- 
--/* compatibility */
--#define MDP_INTF0_7xxx_INTR MDP_INTF0_INTR
--#define MDP_INTF1_7xxx_INTR MDP_INTF1_INTR
--#define MDP_INTF2_7xxx_INTR MDP_INTF2_INTR
--#define MDP_INTF3_7xxx_INTR MDP_INTF3_INTR
--#define MDP_INTF4_7xxx_INTR MDP_INTF4_INTR
--#define MDP_INTF5_7xxx_INTR MDP_INTF5_INTR
--#define MDP_INTF6_7xxx_INTR MDP_INTF6_INTR
--#define MDP_INTF7_7xxx_INTR MDP_INTF7_INTR
--#define MDP_INTF8_7xxx_INTR MDP_INTF8_INTR
--#define MDP_INTF1_7xxx_TEAR_INTR MDP_INTF1_TEAR_INTR
--#define MDP_INTF2_7xxx_TEAR_INTR MDP_INTF2_TEAR_INTR
--
- #define DPU_IRQ_IDX(reg_idx, offset)	(reg_idx * 32 + offset)
- 
- /**
--- 
-2.39.2
+> Could you please spin this as a proper patch, so we can get it merged?
+> 
+> Regards,
+> Bjorn
+> 
+> > thanks,
+> > 
+> > -- 
+> > heikki
+> 
+> > diff --git a/drivers/usb/typec/mux.c b/drivers/usb/typec/mux.c
+> > index c8340de0ed495..44f168c9bd9bf 100644
+> > --- a/drivers/usb/typec/mux.c
+> > +++ b/drivers/usb/typec/mux.c
+> > @@ -193,56 +193,15 @@ static int mux_fwnode_match(struct device *dev, const void *fwnode)
+> >  static void *typec_mux_match(struct fwnode_handle *fwnode, const char *id,
+> >  			     void *data)
+> >  {
+> > -	const struct typec_altmode_desc *desc = data;
+> >  	struct device *dev;
+> > -	bool match;
+> > -	int nval;
+> > -	u16 *val;
+> > -	int ret;
+> > -	int i;
+> >  
+> >  	/*
+> > -	 * Check has the identifier already been "consumed". If it
+> > -	 * has, no need to do any extra connection identification.
+> > +	 * The connection identifier will be needed with device graph (OF graph).
+> > +	 * Device graph is not supported by this code yet, so bailing out.
+> >  	 */
+> > -	match = !id;
+> > -	if (match)
+> > -		goto find_mux;
+> > -
+> > -	/* Accessory Mode muxes */
+> > -	if (!desc) {
+> > -		match = fwnode_property_present(fwnode, "accessory");
+> > -		if (match)
+> > -			goto find_mux;
+> > -		return NULL;
+> > -	}
+> > -
+> > -	/* Alternate Mode muxes */
+> > -	nval = fwnode_property_count_u16(fwnode, "svid");
+> > -	if (nval <= 0)
+> > -		return NULL;
+> > -
+> > -	val = kcalloc(nval, sizeof(*val), GFP_KERNEL);
+> > -	if (!val)
+> > -		return ERR_PTR(-ENOMEM);
+> > -
+> > -	ret = fwnode_property_read_u16_array(fwnode, "svid", val, nval);
+> > -	if (ret < 0) {
+> > -		kfree(val);
+> > -		return ERR_PTR(ret);
+> > -	}
+> > -
+> > -	for (i = 0; i < nval; i++) {
+> > -		match = val[i] == desc->svid;
+> > -		if (match) {
+> > -			kfree(val);
+> > -			goto find_mux;
+> > -		}
+> > -	}
+> > -	kfree(val);
+> > -	return NULL;
+> > +	if (id)
 
+We pass id as "mode-switch", so this will never be NULL. But we also only
+want to consider endpoints with "mode-switch", otherwise we'll fail if
+any of the referred endpoints is not implementing a typec_mux...
+
+So this needs the same snippet we find in typec_switch_match():
+
+	/*
+	 * Device graph (OF graph) does not give any means to identify the
+	 * device type or the device class of the remote port parent that @fwnode
+	 * represents, so in order to identify the type or the class of @fwnode
+	 * an additional device property is needed. With typec switches the
+	 * property is named "orientation-switch" (@id). The value of the device
+	 * property is ignored.
+	 */
+	if (id && !fwnode_property_present(fwnode, id))
+	        return NULL;
+
+With that, this works as expected!
+
+Regards,
+Bjorn
+
+> > +		return ERR_PTR(-ENOTSUPP);
+> >  
+> > -find_mux:
+> >  	dev = class_find_device(&typec_mux_class, NULL, fwnode,
+> >  				mux_fwnode_match);
+> >  
+> 
