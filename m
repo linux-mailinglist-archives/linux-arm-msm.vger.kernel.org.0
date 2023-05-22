@@ -2,58 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3CE870B966
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 11:51:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A66970B973
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 11:53:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231409AbjEVJvL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 05:51:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42518 "EHLO
+        id S232528AbjEVJxs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 05:53:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232505AbjEVJvC (ORCPT
+        with ESMTP id S232659AbjEVJxh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 05:51:02 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52DC2E9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 02:50:52 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-30781184e78so2288675f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 02:50:52 -0700 (PDT)
+        Mon, 22 May 2023 05:53:37 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DDE0FD
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 02:53:35 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id 5b1f17b1804b1-3f603d4bc5bso11429575e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 02:53:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684749051; x=1687341051;
+        d=linaro.org; s=google; t=1684749213; x=1687341213;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=iSXoKW4svoPOIZA9jwOfVXwEQMw1P1DLgfEryZQY9O4=;
-        b=gqGvi3LrZgQHit/+h+4Ey5bU0o6PwdO3GmnHc1rGRfq4d0VB0PKS3ancXXcuf9Ov9g
-         2ooq7qvY1a2CwLfZIMvqttTGEpYxR5dpPfCRqTOE39loJIKkqJjIFmzPZBpdK5+ZyxPm
-         UNarICUOrBOZdX7SVzVrTTnX2YbgsYDOM02I9WNrl7/3pTNYOv6QApGIXvGQ/FlgeUwX
-         yMGKCBN5mt6XtDxrCbFvu4uPJXHE4SVmHF1S4vv2AE4IxPpccZDII5dDD8hTiS7okyAC
-         +Y4DvXXAsEMbocKlKD3LSYyh8q3DVO2vaUnfsFOWR3LqW0X4J1oXbI1Wq1TpV0qwmR2y
-         u+TA==
+        bh=ECJI0LFwwkDe66I7X1nctePo0/j7Va03pbzms4rUc9o=;
+        b=W5YDVSR/w6v2V8d0U4G1JAAX5pdg0yRNNxsVnTThfSurqoKaqDjrnm8JiR3okhY4Q0
+         G2IhUc03bVF44qoTGSBx+XV1XWClLpW5kmQX0p5KUn5Fo0aTlz/n8/k4nqSL0shLyrvn
+         JHGnrXBZhNLBaAtNXV1I/gzfZCILl7kQTS8DVlKCr2PepXR3L7eu47hD+57m375RRxSQ
+         bCzUnG5Y1+nhv4xhq8rkFrcraDcjvFY3lUm5TIR17LlB3cUvmb2gbrlZZf+w2ZOEfK0J
+         9gcujURlXjnwP5oOm7NtJRNnGHfL8SE/kbfxJfAJFPvTAWNwEo2A6C95uK/3YQ5bGgfB
+         6SiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684749051; x=1687341051;
+        d=1e100.net; s=20221208; t=1684749213; x=1687341213;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=iSXoKW4svoPOIZA9jwOfVXwEQMw1P1DLgfEryZQY9O4=;
-        b=hG3HpnJElMjwmQjOwRVNoSh17JTyp7yiybbBObBFq7QaZbHPrGDpjPW95sT4ciXRvV
-         oSyJuZVcvknKf25eYZj7z8V8GmBNOc7BXlRzLmSVYtndP0K2cznG0V5w/AkWayb2I/I1
-         8kXJ9zV5+/vLrscb0YMbsOLfGq5shQGtghEpK0OrOV6Rp5yQGiUV8kJzqmhdL6W6W1uS
-         clH3xb2v6G8D2ONLR4NNceEpOIRHVjHweOlZbc8XWnzLIeVhMfm5FV5Y1hVU3ZgydtrF
-         McdnBJcuTpd/5Kxv+bT+2S0+b0gcZFlidcpn9TEFvEwM2m5K4gk9HgOrjK43itvso9Mg
-         rkuA==
-X-Gm-Message-State: AC+VfDxzQMxOom3wvhQ78BlrtsYl1h2XLzKTqoUhe+Pmo5ilXac1oymk
-        R7gW2EWH2/cDlsli3lW45S8HUBGEItOE8GWAPhRtUQ==
-X-Google-Smtp-Source: ACHHUZ7KVWWZo1XmM4Mv/pWB35mbIcyC7xtFyONKlm9eEk7VRc/+pfTtPeVMp42gunjjlwaCJ/HJQWue46rXtz4eeoE=
-X-Received: by 2002:adf:ea82:0:b0:30a:8f9e:8ee6 with SMTP id
- s2-20020adfea82000000b0030a8f9e8ee6mr1995815wrm.22.1684749050893; Mon, 22 May
- 2023 02:50:50 -0700 (PDT)
+        bh=ECJI0LFwwkDe66I7X1nctePo0/j7Va03pbzms4rUc9o=;
+        b=eVsWbXYpOHDloXvXcG2DevGmgJAo4gW9xCnJuIGZrH7UNsXPNUojkINoXB/Ozdyzbn
+         zNnPas54CjGtJ+m33dxE2gvcW/161NpTx1l2AFKUQijjcMofbiXnVZ8b8g+tT75Tpyp2
+         yx+Te5R91kuPqlwOTj/1lBOsRpierPj+hkbytSz8nD8RW6GDiIpb9jaHVOh60lW5Bloa
+         S9MNz7yYgG54ck6efWJJQQHj6EV70quAwzzVgMlWn6W5MsnGgPWdCfEDrm8zhb+FUwbT
+         dClPcYUHgolbiCbVIYdOPiGQ+Oq7aUFM5/0lZ3wyuIzcLyMqqgFQn1VctKRAmCR/lfuj
+         fvdw==
+X-Gm-Message-State: AC+VfDyoJvJwPOxkp8LgO3KN6enFM09NDtrMWIlsqRv8gP5SLEYOYcCO
+        77/m1HVg8JTaT7lbH5y6Aw8oXN0eun13c4P+QPn65A==
+X-Google-Smtp-Source: ACHHUZ7usYrNO9DYTgz7sXSTAh0vn5Ieny/IQU9kQKCqJycC4jNWWA4vXBpS1vxwt0dtwhhCEryzsqoxwgXB5mMTtqY=
+X-Received: by 2002:a5d:5584:0:b0:309:5d9:bc81 with SMTP id
+ i4-20020a5d5584000000b0030905d9bc81mr7078151wrv.49.1684749213663; Mon, 22 May
+ 2023 02:53:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230522093620.3568-1-quic_kbajaj@quicinc.com> <20230522093620.3568-2-quic_kbajaj@quicinc.com>
-In-Reply-To: <20230522093620.3568-2-quic_kbajaj@quicinc.com>
+References: <20230522093620.3568-1-quic_kbajaj@quicinc.com> <20230522093620.3568-5-quic_kbajaj@quicinc.com>
+In-Reply-To: <20230522093620.3568-5-quic_kbajaj@quicinc.com>
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Date:   Mon, 22 May 2023 15:20:39 +0530
-Message-ID: <CAH=2NtzzoUuVDNBmeEk7r=7b+i8pnmuteMrYtZw9JTYegix9ow@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] dt-bindings: mmc: sdhci-msm: Document the
- QDU1000/QRU1000 compatible
+Date:   Mon, 22 May 2023 15:23:22 +0530
+Message-ID: <CAH=2NtxwG3YaN7F_q2PARXPA_Rit7-KhkxFKXzL0xD3J8J4SpQ@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: qdu1000-idp: add SDHCI for emmc
 To:     Komal Bajaj <quic_kbajaj@quicinc.com>
 Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -77,29 +76,47 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Mon, 22 May 2023 at 15:06, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
 >
-> Document the compatible for SDHCI on QDU1000 and QRU1000 SoCs.
+> Add sdhci node for emmc in qdu1000-idp.
 >
-> Acked-by: Conor Dooley <conor.dooley@microchip.com>
 > Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
 > ---
->  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
 >
-> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> index 4f2d9e8127dd..af29d60ff0d6 100644
-> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> @@ -39,6 +39,7 @@ properties:
->                - qcom,ipq9574-sdhci
->                - qcom,qcm2290-sdhci
->                - qcom,qcs404-sdhci
-> +              - qcom,qdu1000-sdhci
->                - qcom,sc7180-sdhci
->                - qcom,sc7280-sdhci
->                - qcom,sdm630-sdhci
-> --
-> 2.17.1
+> diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> index 9e9fd4b8023e..61d8446a2d55 100644
+> --- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
+> @@ -451,3 +451,26 @@
+>  &uart7 {
+>         status = "okay";
+>  };
+> +
+> +&sdhc_1 {
+> +       pinctrl-names = "default", "sleep";
+> +       pinctrl-0 = <&sdc1_on_state>;
+> +       pinctrl-1 = <&sdc1_off_state>;
+> +
+> +       cap-mmc-hw-reset;
+> +       mmc-ddr-1_8v;
+> +       mmc-hs200-1_8v;
+> +       mmc-hs400-1_8v;
+> +       mmc-hs400-enhanced-strobe;
+> +
+> +       non-removable;
+> +       no-sd;
+> +       no-sdio;
+> +
+> +       supports-cqe;
+> +
+> +       vmmc-supply = <&vreg_l10a_2p95>;
+> +       vqmmc-supply = <&vreg_l7a_1p8>;
+> +
+> +       status = "okay";
+> +};
 
-Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+This node is out of alphabetical order again.
+&uart7 would follow &sdhc_1 and so on...
 
-Thanks.
+Thanks,
+Bhupesh
