@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A20C970CB70
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 22:44:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86C2970CB7F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 22:47:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234045AbjEVUoV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 16:44:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50250 "EHLO
+        id S234895AbjEVUr1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 16:47:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233461AbjEVUoU (ORCPT
+        with ESMTP id S234795AbjEVUrV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 16:44:20 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A8E8CD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 13:44:14 -0700 (PDT)
+        Mon, 22 May 2023 16:47:21 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24BA493
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 13:47:14 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 9523E3F21C;
-        Mon, 22 May 2023 22:44:10 +0200 (CEST)
-Date:   Mon, 22 May 2023 22:44:07 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 9CF743F273;
+        Mon, 22 May 2023 22:47:10 +0200 (CEST)
+Date:   Mon, 22 May 2023 22:47:08 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Jessica Zhang <quic_jesszhan@quicinc.com>
 Cc:     Rob Clark <robdclark@gmail.com>,
@@ -32,64 +32,78 @@ Cc:     Rob Clark <robdclark@gmail.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/5] msm/drm/dsi: Round up DSC hdisplay calculation
-Message-ID: <eo7chb7m4cowvb53hnebi3bjtotm7x5ea5iv6ulmmfkr2hdt32@2nkoa5rco3qb>
+Subject: Re: [PATCH v4 3/5] drm/msm/dpu: Add DPU_INTF_DATA_COMPRESS feature
+ flag
+Message-ID: <qrxir7a6l75ocavrwdfearjz6j4etwvzmqwc7o5ftrdc6awwz4@wsoftsrewqcm>
 References: <20230405-add-dsc-support-v4-0-15daf84f8dcb@quicinc.com>
- <20230405-add-dsc-support-v4-1-15daf84f8dcb@quicinc.com>
+ <20230405-add-dsc-support-v4-3-15daf84f8dcb@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230405-add-dsc-support-v4-1-15daf84f8dcb@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230405-add-dsc-support-v4-3-15daf84f8dcb@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-22 13:30:20, Jessica Zhang wrote:
-> Currently, when compression is enabled, hdisplay is reduced via integer
-> division. This causes issues for modes where the original hdisplay is
-> not a multiple of 3.
-> 
-> To fix this, use DIV_ROUND_UP to divide hdisplay.
-> 
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Suggested-by: Marijn Suijten <marijn.suijten@somainline.org>
+Can you fit DPU >= 7.0 in the title?
 
-Nit: probably these should go in the opposite order.  And if they're
-all supposed to be chronological, I think it is:
+On 2023-05-22 13:30:22, Jessica Zhang wrote:
+> Add DATA_COMPRESS feature flag to DPU INTF block.
 
-    Suggested-by:
-    Fixes:
-    Signed-off-by:
-    Reviewed-by:
-
-But unsure if that's a hard requirement, or even correct at all.
+Nit: repeating the title, perhaps you can reflow this with the second
+paragraph?
 
 - Marijn
 
-> Fixes: 08802f515c3cf ("drm/msm/dsi: Add support for DSC configuration")
+> In DPU 7.x and later, DSC/DCE enablement registers have been moved from
+> PINGPONG to INTF.
+> 
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 3 ++-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 ++
+>  2 files changed, 4 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 9223d7ec5a73..18d38b90eb28 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -952,7 +952,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->  		 * pulse width same
->  		 */
->  		h_total -= hdisplay;
-> -		hdisplay = msm_dsc_get_bytes_per_line(msm_host->dsc) / 3;
-> +		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
->  		h_total += hdisplay;
->  		ha_end = ha_start + hdisplay;
->  	}
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 7944481d0a33..8e12e07728df 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -104,7 +104,8 @@
+>  #define INTF_SC7180_MASK \
+>  	(BIT(DPU_INTF_INPUT_CTRL) | BIT(DPU_INTF_TE) | BIT(DPU_INTF_STATUS_SUPPORTED))
+>  
+> -#define INTF_SC7280_MASK INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN)
+> +#define INTF_SC7280_MASK \
+> +	(INTF_SC7180_MASK | BIT(DPU_DATA_HCTL_EN) | BIT(DPU_INTF_DATA_COMPRESS))
+>  
+>  #define WB_SM8250_MASK (BIT(DPU_WB_LINE_MODE) | \
+>  			 BIT(DPU_WB_UBWC) | \
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index 4eda2cc847ef..01c65f940f2a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -185,6 +185,7 @@ enum {
+>   * @DPU_DATA_HCTL_EN                Allows data to be transferred at different rate
+>   *                                  than video timing
+>   * @DPU_INTF_STATUS_SUPPORTED       INTF block has INTF_STATUS register
+> + * @DPU_INTF_DATA_COMPRESS          INTF block has DATA_COMPRESS register
+>   * @DPU_INTF_MAX
+>   */
+>  enum {
+> @@ -192,6 +193,7 @@ enum {
+>  	DPU_INTF_TE,
+>  	DPU_DATA_HCTL_EN,
+>  	DPU_INTF_STATUS_SUPPORTED,
+> +	DPU_INTF_DATA_COMPRESS,
+>  	DPU_INTF_MAX
+>  };
+>  
 > 
 > -- 
 > 2.40.1
