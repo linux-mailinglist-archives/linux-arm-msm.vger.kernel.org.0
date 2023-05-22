@@ -2,246 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D27570C0B0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 16:06:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C5F9870C11E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 16:29:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232988AbjEVOGj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 10:06:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42752 "EHLO
+        id S233199AbjEVO3y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 10:29:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233151AbjEVOGh (ORCPT
+        with ESMTP id S233657AbjEVO3n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 10:06:37 -0400
-Received: from relay5-d.mail.gandi.net (relay5-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::225])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E980FA
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 07:06:35 -0700 (PDT)
-Received: (Authenticated sender: miquel.raynal@bootlin.com)
-        by mail.gandi.net (Postfix) with ESMTPSA id C3C5B1C0004;
-        Mon, 22 May 2023 14:06:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1684764393;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=lFksMzukjU5IJFPkhxwZUOFmyMJnkU2QvIJkyZ8hCYg=;
-        b=ZpK2OZxNhunwfCcMupNhrhBfJ5GRyx7Kc/lKVn+iNnQ3WqgLx1hqyL/bwVxnaeZrQmlIAk
-        rCxbfqe3hA0gUtkijbcS70/WCyr2suOyGHZ0DEbjOwbku5E+6Qhm5X8XTUepv8LPJ9ZDlp
-        s1Pz4uqrin4bwJSAAYUsA/GWhMuCxC8eFjAYtbbYQn+86eyYKkpwbVOOjH4QrTC26HzrDn
-        d4DXfgQivT1WIlDdt+AT93n9+2SRYZX1KZJEraVAOBw+7GjiZXgWMAyIRLavS28ZLwYZ7V
-        mtS833/jmj7xp0Y69D9BOUDs8iUDGD3x8NcvXd7XTNS5SBC9iIy29/3VLPj+3g==
-Date:   Mon, 22 May 2023 16:06:31 +0200
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>
-Cc:     Richard Weinberger <richard@nod.at>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-mtd@lists.infradead.org,
-        =?UTF-8?B?UmFmYcWCIE1pxYJlY2tp?= <rafal@milecki.pl>,
-        Alexandru Gagniuc <mr.nuke.me@gmail.com>,
-        Christian Marangi <ansuelsmth@gmail.com>
-Subject: Re: [PATCH] mtd: parsers: qcom: deal with partitions names on
- Netgear WAX218
-Message-ID: <20230522160631.3bebb92a@xps-13>
-In-Reply-To: <20230417133719.16592-1-zajec5@gmail.com>
-References: <20230417133719.16592-1-zajec5@gmail.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+        Mon, 22 May 2023 10:29:43 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C562DB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 07:29:40 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-3093a778089so4003575f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 07:29:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684765779; x=1687357779;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Iad/inN830RPSlsPxQfnkdWFAqtBzchjxSkSm862bmI=;
+        b=ypjva5DFLqvmtX35LQvIjG1dUuFIWS29AKYZG2LRkXJnaZJegKgLIUY90VXfYCerwz
+         phNDmlvMhc+G8bWGbwhDSQ/+UpPnoVjCurzhhh+cKIzgPZhoDjPcq1jw+ao6gOe75M5r
+         Vk/5Eni21h+VI48Jo+mjEmae7SOMRD+LMfZejn2DtUPrcjjx5kCVAFET2tUiQPMCXXYJ
+         0MWdl1wHvVax83RC1QqOVHl9Yl4ev/la1P5NWZg7aWcP4io5l+FZGWbGEYF8MwpVTtnw
+         35FjlRi00q3JydodonXWpDwaspX2kFkIcd6EAf7bhHB0g8eRd+dt838NE+zx9WpxYVvI
+         0PBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684765779; x=1687357779;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Iad/inN830RPSlsPxQfnkdWFAqtBzchjxSkSm862bmI=;
+        b=hLv/RIv8R2du7dHnCv/NShE/hJgtlZEeEUu8I1UZvm2cFvZJZD4AWMIV23O4Rmt9n8
+         b1/lvMhPPlRhcorzsG+kHFL3taIvz/i57VN9WRos5S+0PybmsMxIHzCtgCXMNe3yq54m
+         pXzkwe+Ot836p/64DDl64oHl0+f0BoM0wGnSUGeUZ2o/unQ4B/tYWwZ1tWnKkbHH0mZ1
+         tNW1K696EQlxOAQZU+NXcJtpRUQi98Umz9zQMqV+pIL2VrX7zY5lSBwFyCPiiake+o9H
+         yuDAG5pTBe5xVVTydNbZG7y+lD7C/5igyC3E7aLmesdOENpc9S8RedHG/DVpFwJvLFqt
+         uK3w==
+X-Gm-Message-State: AC+VfDwe1hmLEwxAbmcnQV4AIAX/dJldAuFgS3LZ3XjYBJfk3LfEvtIZ
+        RC+W7WoDmFTQRMnXYS109YfJqWhbXXtVq2FboTby1g==
+X-Google-Smtp-Source: ACHHUZ7xRACcNOqYQj6vKBv911CqQyG+oqpV+epWPMiB7cFujbTJtJm8wErq4PfgG4JYjGkoolmsRQ==
+X-Received: by 2002:a5d:5391:0:b0:306:2b5f:8d0a with SMTP id d17-20020a5d5391000000b003062b5f8d0amr7870727wrv.56.1684765778931;
+        Mon, 22 May 2023 07:29:38 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:a478:d61d:5bb5:7df? ([2a01:e0a:982:cbb0:a478:d61d:5bb5:7df])
+        by smtp.gmail.com with ESMTPSA id n11-20020a5d484b000000b00307c0afc030sm8006851wrs.4.2023.05.22.07.29.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 May 2023 07:29:38 -0700 (PDT)
+Message-ID: <182177d8-08af-234e-f553-b9472f0b4ca9@linaro.org>
+Date:   Mon, 22 May 2023 16:29:37 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH 1/6] drm/msm/dpu: don't set DPU_INTF_TE globally
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230522004227.134501-1-dmitry.baryshkov@linaro.org>
+ <20230522004227.134501-2-dmitry.baryshkov@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20230522004227.134501-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rafa=C5=82,
-
-zajec5@gmail.com wrote on Mon, 17 Apr 2023 15:37:19 +0200:
-
-> From: Rafa=C5=82 Mi=C5=82ecki <rafal@milecki.pl>
->=20
-> Netgear WAX218 has two similar partitions: "rootfs" and "rootfs_1". They
-> both contain device firmware (kernel + rootfs). Bootloader chooses the
-> one to boot from depending on the "active_fw" variable.
->=20
-> The whole mechanism is used for safe firmware upgrades.
->=20
-> Sadly original bootloader on this device doesn't let know what firmware
-> it has booted.
->=20
-> To run system reliably we need to know which kernel has been booted and
-> mount proper rootfs accordingly. This patch registers currently used
-> partition using the "firmware" name.
-
-Let me try to understand this further: you need to know what kernel has
-started and use the relevant rootfs, both stored in mtd partitions, so
-you always mount the "firmware" partition as rootfs by changing the
-partition name dynamically at boot time. Am I understanding this
-correctly?
-
-> It isn't clear how many devices will need this so just check for a
-> WAX218 compatible string for now.
->=20
-> Signed-off-by: Rafa=C5=82 Mi=C5=82ecki <rafal@milecki.pl>
-> Cc: Alexandru Gagniuc <mr.nuke.me@gmail.com>
-> Cc: Christian Marangi <ansuelsmth@gmail.com>
+On 22/05/2023 02:42, Dmitry Baryshkov wrote:
+> Using BIT(DPU_INTF_TE) in INTF_SC7180_MASK (and by extension in
+> INTF_SC7280_MASK) results in this bit (and corrsponding operations)
+> being enabled for all interfaces, even the ones which do not have TE
+> block. Move this bit setting to INTF_DSI_TE(), so that it is only
+> enabled for those INTF blocks which have TE support.
+> 
+> Fixes: 152c1d430992 ("drm/msm/dpu: Add TEAR-READ-pointer interrupt to INTF block")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/mtd/parsers/qcomsmempart.c | 92 +++++++++++++++++++++++++++---
->  1 file changed, 84 insertions(+), 8 deletions(-)
->=20
-> diff --git a/drivers/mtd/parsers/qcomsmempart.c b/drivers/mtd/parsers/qco=
-msmempart.c
-> index 4311b89d8df0..352fb153745c 100644
-> --- a/drivers/mtd/parsers/qcomsmempart.c
-> +++ b/drivers/mtd/parsers/qcomsmempart.c
-> @@ -54,6 +54,69 @@ struct smem_flash_ptable {
->  	struct smem_flash_pentry pentry[SMEM_FLASH_PTABLE_MAX_PARTS_V4];
->  } __packed __aligned(4);
-> =20
-> +/**
-> + * parse_qcomsmem_get_active_fw - get active firmware index
-> + *
-> + * Some devices have active and backup/fallback firmwares. This function=
- returns index of the active
-> + * one. It's useful for registering MTD partitions using clear names.
-> + */
-> +static int parse_qcomsmem_get_active_fw(struct mtd_info *mtd, struct sme=
-m_flash_ptable *ptable)
-> +{
-> +	bool found =3D false;
-> +	size_t offset;
-> +	size_t bytes;
-> +	size_t size;
-> +	char *buf;
-> +	char *var;
-> +	int err;
-> +	int i;
-> +
-> +	if (!of_machine_is_compatible("netgear,wax218"))
-> +		return -EOPNOTSUPP;
-> +
-> +	/* Find partition with environment data */
-> +
-> +	for (i =3D 0; i < le32_to_cpu(ptable->numparts); i++) {
-> +		struct smem_flash_pentry *pentry =3D &ptable->pentry[i];
-> +
-> +		if (!strcmp(pentry->name, "0:APPSBLENV")) {
-> +			offset =3D le32_to_cpu(pentry->offset) * mtd->erasesize;
-> +			size =3D le32_to_cpu(pentry->length) * mtd->erasesize;
-> +			found =3D true;
-> +			break;
-> +		}
-> +	}
-> +	if (!found)
-> +		return -ENOENT;
-> +
-> +	/* Read it */
-> +
-> +	buf =3D kcalloc(1, size, GFP_KERNEL);
-> +	if (!buf)
-> +		return -ENOMEM;
-> +
-> +	err =3D mtd_read(mtd, offset, size, &bytes, buf);
-> +	if ((err && !mtd_is_bitflip(err)) || bytes !=3D size) {
-> +		pr_err("Failed to read environment\n");
-> +		return -EIO;
-> +	}
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 1dee5ba2b312..162141cb5c83 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -101,7 +101,6 @@
+>   
+>   #define INTF_SC7180_MASK \
+>   	(BIT(DPU_INTF_INPUT_CTRL) | \
+> -	 BIT(DPU_INTF_TE) | \
+>   	 BIT(DPU_INTF_STATUS_SUPPORTED) | \
+>   	 BIT(DPU_DATA_HCTL_EN))
+>   
+> @@ -544,7 +543,7 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
+>   	{\
+>   	.name = _name, .id = _id, \
+>   	.base = _base, .len = _len, \
+> -	.features = _features, \
+> +	.features = _features | BIT(DPU_INTF_TE), \
+>   	.type = _type, \
+>   	.controller_id = _ctrl_id, \
+>   	.prog_fetch_lines_worst_case = _progfetch, \
 
-Why can't we access this information through an nvmem cell thanks to
-the U-boot env parser?
-
-> +
-> +	/* Find & parse entry with active firmware index */
-> +
-> +	for (var =3D buf + 4; var < buf + size && *var; var +=3D strlen(var) + =
-1) {
-> +		const char *prefix =3D "active_fw=3D";
-> +		unsigned long idx;
-> +
-> +		if (strstarts(var, prefix)) {
-> +			err =3D kstrtol(var + strlen(prefix), 0, &idx);
-> +
-> +			return err ? err : idx;
-> +		}
-> +	}
-> +
-> +	return -ENOENT;
-> +}
-> +
->  static int parse_qcomsmem_part(struct mtd_info *mtd,
->  			       const struct mtd_partition **pparts,
->  			       struct mtd_part_parser_data *data)
-> @@ -64,6 +127,8 @@ static int parse_qcomsmem_part(struct mtd_info *mtd,
->  	struct smem_flash_ptable *ptable;
->  	struct mtd_partition *parts;
->  	char *name, *c;
-> +	int active_fw;
-> +	int fw_idx;
-> =20
->  	if (IS_ENABLED(CONFIG_MTD_SPI_NOR_USE_4K_SECTORS)
->  			&& mtd->type =3D=3D MTD_NORFLASH) {
-> @@ -123,24 +188,35 @@ static int parse_qcomsmem_part(struct mtd_info *mtd,
->  			numparts++;
->  	}
-> =20
-> +	active_fw =3D parse_qcomsmem_get_active_fw(mtd, ptable);
-> +
->  	parts =3D kcalloc(numparts, sizeof(*parts), GFP_KERNEL);
->  	if (!parts)
->  		return -ENOMEM;
-> =20
-> +	fw_idx =3D -1;
->  	for (i =3D 0, j =3D 0; i < tmpparts; i++) {
->  		pentry =3D &ptable->pentry[i];
->  		if (pentry->name[0] =3D=3D '\0')
->  			continue;
-> =20
-> -		name =3D kstrdup(pentry->name, GFP_KERNEL);
-> -		if (!name) {
-> -			ret =3D -ENOMEM;
-> -			goto out_free_parts;
-> -		}
-> +		if (active_fw >=3D 0 && strstarts(pentry->name, "rootfs")) {
-> +			name =3D kstrdup(++fw_idx =3D=3D active_fw ? "firmware" : "backup", G=
-FP_KERNEL);
-
-I'm really not a big fan of this logic.
-
-Changing dynamically the partition name really sounds dangerous.
-
-Does the kernel need to know? Or is it "just" the userspace? Could we
-imagine another mechanism than the name to carry the information?
-
-> +			if (!name) {
-> +				ret =3D -ENOMEM;
-> +				goto out_free_parts;
-> +			}
-> +		} else {
-> +			name =3D kstrdup(pentry->name, GFP_KERNEL);
-> +			if (!name) {
-> +				ret =3D -ENOMEM;
-> +				goto out_free_parts;
-> +			}
-> =20
-> -		/* Convert name to lower case */
-> -		for (c =3D name; *c !=3D '\0'; c++)
-> -			*c =3D tolower(*c);
-> +			/* Convert name to lower case */
-> +			for (c =3D name; *c !=3D '\0'; c++)
-> +				*c =3D tolower(*c);
-> +		}
-> =20
->  		parts[j].name =3D name;
->  		parts[j].offset =3D le32_to_cpu(pentry->offset) * mtd->erasesize;
-
-
-Thanks,
-Miqu=C3=A8l
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
