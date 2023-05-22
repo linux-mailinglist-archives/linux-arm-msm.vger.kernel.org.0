@@ -2,83 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 77B6970CCC0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 23:45:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3EA3470CCC5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 23:45:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230497AbjEVVpM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 17:45:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49610 "EHLO
+        id S230093AbjEVVpe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 17:45:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230093AbjEVVpL (ORCPT
+        with ESMTP id S233408AbjEVVpc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 17:45:11 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23D159B;
-        Mon, 22 May 2023 14:45:10 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34MKiCfw000460;
-        Mon, 22 May 2023 21:45:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=7zzV4se+9XO1mSACSy/SpYmNuDRpqT0xaYJqgBHjy58=;
- b=RCpbguHzxiGKUKkHbhkTtJBzLXbwbpk0hk/v2YsjUCoSYvBiZwqu0fqyAjSLKd+d/z/D
- uUkb99DOwRt5p8ZsYjqAIqRHM0GcdS1Wy/sI55lo8eiXna4syvHJPO4vCgaEu2PHwo70
- S6k72Nwt5hs3nUgLGAP6Wk4t7/YJKGzJnx8gKtrNdC18d3qj2XvrRI6GzZ+1b1x2vX0t
- MHJy/R24TnWHXM7SpYBZQ5uVjuJHgMi3G/2o3afGEPCVYxY8tQevUcNnf5WtlDjYf+5a
- pxDChn3/xiGP0UiCIJcCdg4k5VBjFSPpJkBOP0bvK+CoveH2Iy9GkPAHUdDUwzFxbLF+ Ig== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qppypcmg5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 22 May 2023 21:45:03 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34MLj2CY020785
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 22 May 2023 21:45:02 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 22 May
- 2023 14:45:01 -0700
-Message-ID: <a93c3c36-f262-b89d-8452-98120cffb491@quicinc.com>
-Date:   Mon, 22 May 2023 14:45:01 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v4 1/5] msm/drm/dsi: Round up DSC hdisplay calculation
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Mon, 22 May 2023 17:45:32 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49A84A7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 14:45:30 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f13d8f74abso7278855e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 14:45:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684791928; x=1687383928;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=k6gn7Y4qoY3ku7wbFuicMLgC2spCVikeHkn0CM0cq+U=;
+        b=TRrV+NSmwH0JScLFBWL1YvLsnvWyGmhV732WFztodQD6F/T+kOgYt3A3pZWyVNT9+i
+         2YYeRZntBy0nhvzlYJB9YDLkaILZ3xKklZmBq+y/8MZZXjJS4kZ/dbn5atnD3fImLPwX
+         BQ8hDRY5/KEmVir/eab856pq0xPu94/SFsogYvsvTwFa/fWW3nEl7nnoGXssJKOOabLa
+         aKWLV9Q6m9a6vZaXkMhIvnKdMmj8IIHZr6AVgMKaSTKHykkjVCNWXrf0wQvc6hn5HtP/
+         fTjkdbK0sgnwHWeopBFrRXJuzy9eNj3kKrRQ5r8TRlHfza73io76uDdw1oBu+QEWltld
+         cVIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684791928; x=1687383928;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=k6gn7Y4qoY3ku7wbFuicMLgC2spCVikeHkn0CM0cq+U=;
+        b=XCLwnSvVAAq+mYcMiOVQnNmf0jlvj4f54uNvFkMwRqa/YaimGCJhBukLhVXxVAOCnw
+         ryQannNxkI1gM5hM8ETSKXv4vMTSf4HcF/r50vg5NGqlfO/w0P71uhs4ZtVSoT9+ut8w
+         xKHqcTe9em+TKN3c6YJFDwv1AVai8diOAaVU8317p5aJlFVo27vVmWBhHYysY1R6bN8r
+         ubho/NPOR5OuSs4tzkdSR+KUJf7xPBoVQQC6i8Y0aZOf7k/s5Cd2XXzCexthDaViH6yF
+         7xL3oM1KLdb1gde7WXim9RuIY7MkeqP3Co3f7RyOeWyc10GSe68k64CMj64+g+bkPwf2
+         dluw==
+X-Gm-Message-State: AC+VfDxaQcqSdSkQr9MbGwRYe9fujUJKU19UwpF+DBYvdfad5AYzF2B+
+        xn4dbaQwz7pprTV1M7TT0TAhSA==
+X-Google-Smtp-Source: ACHHUZ6TaZjp2uCnvt0sLePWE7ya6+815pDv0RMQQ2jfUWQNEJpxo0lOlEKl3dQqPUVkcSLKV1a0jg==
+X-Received: by 2002:a05:6512:21c:b0:4f0:5b4:4863 with SMTP id a28-20020a056512021c00b004f005b44863mr2944951lfo.0.1684791928542;
+        Mon, 22 May 2023 14:45:28 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id j7-20020ac25507000000b004f2543be9dbsm1106918lfk.5.2023.05.22.14.45.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 May 2023 14:45:28 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20230405-add-dsc-support-v4-0-15daf84f8dcb@quicinc.com>
- <20230405-add-dsc-support-v4-1-15daf84f8dcb@quicinc.com>
- <eo7chb7m4cowvb53hnebi3bjtotm7x5ea5iv6ulmmfkr2hdt32@2nkoa5rco3qb>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <eo7chb7m4cowvb53hnebi3bjtotm7x5ea5iv6ulmmfkr2hdt32@2nkoa5rco3qb>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 3Sa6fvhNoISaab_aKiS4vw2UVTrYVWdE
-X-Proofpoint-GUID: 3Sa6fvhNoISaab_aKiS4vw2UVTrYVWdE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-22_16,2023-05-22_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
- clxscore=1015 mlxlogscore=999 phishscore=0 impostorscore=0
- lowpriorityscore=0 bulkscore=0 suspectscore=0 malwarescore=0 spamscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305220184
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH v2 0/6] drm/msm/dpu: rework interrupt handling
+Date:   Tue, 23 May 2023 00:45:21 +0300
+Message-Id: <20230522214527.190054-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,66 +75,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Declaring the mask of supported interrupts proved to be error-prone. It
+is very easy to add a bit with no corresponding backing block or to miss
+the INTF TE bit. Replace this static configuration with the irq mask
+calculated from the HW catalog data.
 
+Changes since v1:
+ - Enable dpu_caps::has_7xxx_intr for DPU >= 7.0 (Neil)
 
-On 5/22/2023 1:44 PM, Marijn Suijten wrote:
-> On 2023-05-22 13:30:20, Jessica Zhang wrote:
->> Currently, when compression is enabled, hdisplay is reduced via integer
->> division. This causes issues for modes where the original hdisplay is
->> not a multiple of 3.
->>
->> To fix this, use DIV_ROUND_UP to divide hdisplay.
->>
->> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
->> Suggested-by: Marijn Suijten <marijn.suijten@somainline.org>
-> 
-> Nit: probably these should go in the opposite order.  And if they're
-> all supposed to be chronological, I think it is:
-> 
->      Suggested-by:
->      Fixes:
->      Signed-off-by:
->      Reviewed-by:
-> 
-> But unsure if that's a hard requirement, or even correct at all.
+Dmitry Baryshkov (6):
+  drm/msm/dpu: don't set DPU_INTF_TE globally
+  drm/msm/dpu: inline __intr_offset
+  drm/msm/dpu: split interrupt address arrays
+  drm/msm/dpu: autodetect supported interrupts
+  drm/msm/dpu: drop now-unused mdss_irqs field from hw catalog
+  drm/msm/dpu: drop compatibility INTR defines
 
-Hi Marijn,
+ .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |   8 --
+ .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |   9 --
+ .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  11 --
+ .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  13 ---
+ .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  10 --
+ .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |   6 -
+ .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |   5 -
+ .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |   5 -
+ .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  14 +--
+ .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  10 +-
+ .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  19 +--
+ .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  14 +--
+ .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  14 +--
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |   3 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |   5 +-
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 110 ++++++++++++------
+ .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  21 ++--
+ 17 files changed, 102 insertions(+), 175 deletions(-)
 
-I don't see any explicit documentation on the order of R-b tags. FWIW, I 
-see in the git log that S-o-b always goes at the bottom of the commit 
-message.
+-- 
+2.39.2
 
-I would prefer the S-o-b to always be at the bottom (as it helps me 
-avoid duplicate S-o-b's when doing `git commit -s`), though I can flip 
-the order of the R-b and suggested-by tags.
-
-Thanks,
-
-Jessica Zhang
-
-> 
-> - Marijn
-> 
->> Fixes: 08802f515c3cf ("drm/msm/dsi: Add support for DSC configuration")
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> index 9223d7ec5a73..18d38b90eb28 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> @@ -952,7 +952,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->>   		 * pulse width same
->>   		 */
->>   		h_total -= hdisplay;
->> -		hdisplay = msm_dsc_get_bytes_per_line(msm_host->dsc) / 3;
->> +		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
->>   		h_total += hdisplay;
->>   		ha_end = ha_start + hdisplay;
->>   	}
->>
->> -- 
->> 2.40.1
->>
