@@ -2,26 +2,26 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1FC770CDB8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 00:20:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C03B70CDC0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 00:21:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234562AbjEVWU3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 18:20:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36376 "EHLO
+        id S234670AbjEVWVk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 18:21:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233045AbjEVWU2 (ORCPT
+        with ESMTP id S234672AbjEVWV2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 18:20:28 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D851AF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 15:20:26 -0700 (PDT)
+        Mon, 22 May 2023 18:21:28 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA44CBF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 15:21:25 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D6CA93EEEC;
-        Tue, 23 May 2023 00:20:24 +0200 (CEST)
-Date:   Tue, 23 May 2023 00:20:23 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 064833EED9;
+        Tue, 23 May 2023 00:21:23 +0200 (CEST)
+Date:   Tue, 23 May 2023 00:21:22 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -31,139 +31,153 @@ Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 4/6] drm/msm/dpu: autodetect supported interrupts
-Message-ID: <xlbo42dxaavbowu2luhkxwai2sflrzxuefw4ry354ye5t4ml6g@wjgvvg77sjv7>
+        freedreno@lists.freedesktop.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2 6/6] drm/msm/dpu: drop compatibility INTR defines
+Message-ID: <jvxfqncbc5y7tbcuitpgyjjiopg4j4umwoahqkb2osh77juezu@myhreiqafux2>
 References: <20230522214527.190054-1-dmitry.baryshkov@linaro.org>
- <20230522214527.190054-5-dmitry.baryshkov@linaro.org>
- <j4sprk5c7wiafq5w5246xab2qgrevyz26bcwukgdk7zcac4ylk@pyt4s2ms5fyk>
- <CAA8EJpr7caQsbUACsETQG6KTU=rzrXadBv-RHVTQD_zeY8x1Jg@mail.gmail.com>
+ <20230522214527.190054-7-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAA8EJpr7caQsbUACsETQG6KTU=rzrXadBv-RHVTQD_zeY8x1Jg@mail.gmail.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230522214527.190054-7-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-23 01:17:50, Dmitry Baryshkov wrote:
-> On Tue, 23 May 2023 at 01:12, Marijn Suijten
-> <marijn.suijten@somainline.org> wrote:
-> >
-> > On 2023-05-23 00:45:25, Dmitry Baryshkov wrote:
-> > > Declaring the mask of supported interrupts proved to be error-prone. It
-> > > is very easy to add a bit with no corresponding backing block or to miss
-> > > the INTF TE bit. Replace this with looping over the enabled INTF blocks
-> > > to setup the irq mask.
-> > >
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >
-> > Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> >
-> > > ---
-> > >  .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 20 ++++++++++++++++++-
-> > >  .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  6 ++++++
-> > >  2 files changed, 25 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> > > index a03d826bb9ad..01f2660a2354 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> > > @@ -463,6 +463,7 @@ struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
-> > >  {
-> > >       struct dpu_hw_intr *intr;
-> > >       int nirq = MDP_INTR_MAX * 32;
-> > > +     unsigned int i;
-> > >
-> > >       if (!addr || !m)
-> > >               return ERR_PTR(-EINVAL);
-> > > @@ -480,7 +481,24 @@ struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
-> > >
-> > >       intr->total_irqs = nirq;
-> > >
-> > > -     intr->irq_mask = m->mdss_irqs;
-> > > +     intr->irq_mask = BIT(MDP_SSPP_TOP0_INTR) |
-> > > +                      BIT(MDP_SSPP_TOP0_INTR2) |
-> > > +                      BIT(MDP_SSPP_TOP0_HIST_INTR);
-> > > +     for (i = 0; i < m->intf_count; i++) {
-> > > +             const struct dpu_intf_cfg *intf = &m->intf[i];
-> > > +
-> > > +             if (intf->type == INTF_NONE)
-> > > +                     continue;
-> > > +
-> > > +             intr->irq_mask |= BIT(MDP_INTFn_INTR(intf->id));
-> > > +
-> > > +             if (test_bit(DPU_INTF_TE, &intf->features)) {
-> > > +                     unsigned idx = MDP_INTFn_TEAR_INTR(intf->id);
-> > > +
-> > > +                     if (!WARN_ON(idx == -1))
-> >
-> > We don't need to validate the catalog?  But warning users about this
-> > (and accidentally turning on all interrupt bits hiding the issue anyway)
-> > is a nice side effect though, as you showed it was already going wrong
-> > in patch 1/6.
-> >
-> > OTOH you might have inlined the macro and provided a more useful warning
-> > message (DPU_INTF_TE can only be present on INTF1/2)... and then one
-> > could assert on INTF_DSI etc etc etc...
+On 2023-05-23 00:45:27, Dmitry Baryshkov wrote:
+> While reworking interrupts masks, it was easier to keep old
+> MDP_INTFn_7xxx_INTR and MDP_INTFn_7xxx_TEAR_INTR symbols. Now it is time
+> to drop them and use unified symbol names.
 > 
-> I'd prefer to keep it, as a safeguard for submission being in
-> progress, newer generations gaining TE blocks on other interfaces,
-> etc.
-> I was selecting between having explicit intf->id == INTF_1 || ==
-> INTF_2 condition and this kind of macro.
+> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Being explicit in-line here has my preference.  Maybe the same for the
-above bit, not sure about that one yet (e.g. have an upper bound on
-INTF_8).
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-- Marijn
-
+> ---
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h  |  4 ++--
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h  |  2 +-
+>  .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h    |  4 ++--
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h  |  4 ++--
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h  |  4 ++--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h   | 13 -------------
+>  6 files changed, 9 insertions(+), 22 deletions(-)
 > 
-> >
-> > - Marijn
-> >
-> > > +                             intr->irq_mask |= BIT(idx);
-> > > +             }
-> > > +     }
-> > >
-> > >       spin_lock_init(&intr->irq_lock);
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> > > index f329d6d7f646..f0b92c9e3b09 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> > > @@ -17,6 +17,7 @@ enum dpu_hw_intr_reg {
-> > >       MDP_SSPP_TOP0_INTR,
-> > >       MDP_SSPP_TOP0_INTR2,
-> > >       MDP_SSPP_TOP0_HIST_INTR,
-> > > +     /* All MDP_INTFn_INTR should come sequentially */
-> > >       MDP_INTF0_INTR,
-> > >       MDP_INTF1_INTR,
-> > >       MDP_INTF2_INTR,
-> > > @@ -33,6 +34,11 @@ enum dpu_hw_intr_reg {
-> > >       MDP_INTR_MAX,
-> > >  };
-> > >
-> > > +#define MDP_INTFn_INTR(intf) (MDP_INTF0_INTR + (intf - INTF_0))
-> > > +#define MDP_INTFn_TEAR_INTR(intf) (intf == INTF_1 ? MDP_INTF1_TEAR_INTR : \
-> > > +                                intf == INTF_2 ? MDP_INTF2_TEAR_INTR : \
-> > > +                                -1)
-> > > +
-> > >  /* compatibility */
-> > >  #define MDP_INTF0_7xxx_INTR MDP_INTF0_INTR
-> > >  #define MDP_INTF1_7xxx_INTR MDP_INTF1_INTR
-> > > --
-> > > 2.39.2
-> > >
-> 
-> 
-> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> index 649784aa6567..df88e3f2a548 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> @@ -161,11 +161,11 @@ static const struct dpu_intf_cfg sm8350_intf[] = {
+>  	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x2c4, INTF_DSI, 0, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
+> -			DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2)),
+> +			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
+>  	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x2c4, INTF_DSI, 1, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
+> -			DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2)),
+> +			DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2)),
+>  	INTF_BLK("intf_3", INTF_3, 0x37000, 0x280, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31)),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> index 1e87c7f4775d..4d9936d41464 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> @@ -107,7 +107,7 @@ static const struct dpu_intf_cfg sc7280_intf[] = {
+>  	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x2c4, INTF_DSI, 0, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
+> -			DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2)),
+> +			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
+>  	INTF_BLK("intf_5", INTF_5, 0x39000, 0x280, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 22),
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 23)),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> index 3082657f06f2..65fa65b954db 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> @@ -151,11 +151,11 @@ static const struct dpu_intf_cfg sc8280xp_intf[] = {
+>  	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x300, INTF_DSI, 0, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
+> -			DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2)),
+> +			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
+>  	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x300, INTF_DSI, 1, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
+> -			DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2)),
+> +			DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2)),
+>  	INTF_BLK("intf_3", INTF_3, 0x37000, 0x280, INTF_NONE, MSM_DP_CONTROLLER_0, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31)),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> index ca5b82bc8322..b8158ed94845 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> @@ -169,11 +169,11 @@ static const struct dpu_intf_cfg sm8450_intf[] = {
+>  	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x300, INTF_DSI, 0, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
+> -			DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2)),
+> +			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
+>  	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x300, INTF_DSI, 1, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
+> -			DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2)),
+> +			DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2)),
+>  	INTF_BLK("intf_3", INTF_3, 0x37000, 0x280, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31)),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> index dd7c87f772ea..6a12e882b5b8 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> @@ -173,11 +173,11 @@ static const struct dpu_intf_cfg sm8550_intf[] = {
+>  	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x35000, 0x300, INTF_DSI, 0, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
+> -			DPU_IRQ_IDX(MDP_INTF1_7xxx_TEAR_INTR, 2)),
+> +			DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
+>  	INTF_BLK_DSI_TE("intf_2", INTF_2, 0x36000, 0x300, INTF_DSI, 1, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 28),
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 29),
+> -			DPU_IRQ_IDX(MDP_INTF2_7xxx_TEAR_INTR, 2)),
+> +			DPU_IRQ_IDX(MDP_INTF2_TEAR_INTR, 2)),
+>  	INTF_BLK("intf_3", INTF_3, 0x37000, 0x280, INTF_DP, MSM_DP_CONTROLLER_1, 24, INTF_SC7280_MASK,
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+>  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 31)),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+> index f0b92c9e3b09..4a46c0900e04 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+> @@ -39,19 +39,6 @@ enum dpu_hw_intr_reg {
+>  				   intf == INTF_2 ? MDP_INTF2_TEAR_INTR : \
+>  				   -1)
+>  
+> -/* compatibility */
+> -#define MDP_INTF0_7xxx_INTR MDP_INTF0_INTR
+> -#define MDP_INTF1_7xxx_INTR MDP_INTF1_INTR
+> -#define MDP_INTF2_7xxx_INTR MDP_INTF2_INTR
+> -#define MDP_INTF3_7xxx_INTR MDP_INTF3_INTR
+> -#define MDP_INTF4_7xxx_INTR MDP_INTF4_INTR
+> -#define MDP_INTF5_7xxx_INTR MDP_INTF5_INTR
+> -#define MDP_INTF6_7xxx_INTR MDP_INTF6_INTR
+> -#define MDP_INTF7_7xxx_INTR MDP_INTF7_INTR
+> -#define MDP_INTF8_7xxx_INTR MDP_INTF8_INTR
+> -#define MDP_INTF1_7xxx_TEAR_INTR MDP_INTF1_TEAR_INTR
+> -#define MDP_INTF2_7xxx_TEAR_INTR MDP_INTF2_TEAR_INTR
+> -
+>  #define DPU_IRQ_IDX(reg_idx, offset)	(reg_idx * 32 + offset)
+>  
+>  /**
 > -- 
-> With best wishes
-> Dmitry
+> 2.39.2
+> 
