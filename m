@@ -2,49 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10DAC70CDD1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 00:25:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C27D470CDFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 00:32:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233088AbjEVWZA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 18:25:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38378 "EHLO
+        id S229477AbjEVWcf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 18:32:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234757AbjEVWYw (ORCPT
+        with ESMTP id S231821AbjEVWce (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 18:24:52 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B95988E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 15:24:37 -0700 (PDT)
+        Mon, 22 May 2023 18:32:34 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47226E6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 15:32:33 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 758D03ED94;
-        Tue, 23 May 2023 00:24:35 +0200 (CEST)
-Date:   Tue, 23 May 2023 00:24:34 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 36B2C3F20F;
+        Tue, 23 May 2023 00:32:31 +0200 (CEST)
+Date:   Tue, 23 May 2023 00:32:30 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
+Cc:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
+        Caleb Connolly <caleb@connolly.tech>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v2 1/6] drm/msm/dpu: don't set DPU_INTF_TE globally
-Message-ID: <m6usbg7kwvtf73t3sitsl7vglkotqnqdvdg5eq56wzwrjfvosz@e3fh4jc7sejx>
-References: <20230522214527.190054-1-dmitry.baryshkov@linaro.org>
- <20230522214527.190054-2-dmitry.baryshkov@linaro.org>
- <tc35qb4qkzoanna5mqiibdfv5ascdm2wtcalbspr4u64nwkc3v@itowzdap5vjq>
- <bf4f2183-dba2-d8c6-2ad5-2c0dcee7810e@linaro.org>
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+Subject: Re: [PATCH RFC 06/10] drm/panel/samsung-sofef01: Add panel driver
+ for Sony Xperia 5 / 10 II
+Message-ID: <gzhxxdh235nsbjbns37thi33rpk546ynkihihjiam46pkngkud@opwtr2swvdau>
+References: <20230521-drm-panels-sony-v1-0-541c341d6bee@somainline.org>
+ <20230521-drm-panels-sony-v1-6-541c341d6bee@somainline.org>
+ <f34cd6a8-6d6d-9dcf-b681-56439416c4b4@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <bf4f2183-dba2-d8c6-2ad5-2c0dcee7810e@linaro.org>
+In-Reply-To: <f34cd6a8-6d6d-9dcf-b681-56439416c4b4@linaro.org>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -52,87 +64,70 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-23 01:01:50, Dmitry Baryshkov wrote:
-> On 23/05/2023 00:56, Marijn Suijten wrote:
-> > Title suggestion: s/globally/on non-TE/DSI (INTF) blocks
+On 2023-05-22 04:19:45, Dmitry Baryshkov wrote:
+> On 22/05/2023 00:23, Marijn Suijten wrote:
+> > This SOFEF01-M Display-IC driver supports two modes with different
+> > compatibles to differentiate between slightly different physical sizes
+> > (panels) found on the Xperia 5 (6.1") and 10 II (6.0").
 > > 
-> > On 2023-05-23 00:45:22, Dmitry Baryshkov wrote:
-> >> Using BIT(DPU_INTF_TE) in INTF_SC7180_MASK (and by extension in
-> >> INTF_SC7280_MASK) results in this bit (and corrsponding operations)
-> >> being enabled for all interfaces, even the ones which do not have TE
-> >> block. Move this bit setting to INTF_DSI_TE(), so that it is only
-> >> enabled for those INTF blocks which have TE support.
-> >>
-> >> Fixes: 152c1d430992 ("drm/msm/dpu: Add TEAR-READ-pointer interrupt to INTF block")
-> >> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-> >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > 
-> > We've always been setting flags globally but I guess it makes sense to
-> > not only restrict this flag to DPU >= 5.0.0 but also just the few
-> > hardware blocks that actually have these in their *enlarged* register
-> > space (and have the interrupt).
-> > 
-> > Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> > 
-> >> ---
-> >>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 3 +--
-> >>   1 file changed, 1 insertion(+), 2 deletions(-)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >> index 1dee5ba2b312..162141cb5c83 100644
-> >> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> >> @@ -101,7 +101,6 @@
-> >>   
-> >>   #define INTF_SC7180_MASK \
-> >>   	(BIT(DPU_INTF_INPUT_CTRL) | \
-> >> -	 BIT(DPU_INTF_TE) | \
-> >>   	 BIT(DPU_INTF_STATUS_SUPPORTED) | \
-> >>   	 BIT(DPU_DATA_HCTL_EN))
-> >>   
-> >> @@ -544,7 +543,7 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
-> >>   	{\
-> >>   	.name = _name, .id = _id, \
-> >>   	.base = _base, .len = _len, \
-> >> -	.features = _features, \
-> >> +	.features = _features | BIT(DPU_INTF_TE), \
-> > 
-> > Now that we're more broadly switching to this pattern, should we do the
-> > same for PP_BLK() with and without TE block?  That way we can also
-> > forcefully initialize intr_rdptr=-1 similar to what I did for
-> > intr_tear_rd_ptr in INTF_BLK() (vs INTF_BLK_DSI_TE) here, instead of
-> > having the -1's floating around the catalog when I added them in commit
-> > 7952f5180eb3e ("drm/msm/dpu: Remove intr_rdptr from DPU >= 5.0.0
-> > pingpong config").
-> 
-> If we are going to expand the macros, then hiding -1 probably doesn't 
-> make sense as it will reappear soon.
-> 
-> Probably it makes sense to do another thing (which would play better 
-> with the expanded macros): increase IRQ indices by 1, making 'NO IRQ' 
-> equal to 0 instead of -1. This way all non-existing interrupts can be 
-> omitted during macros expansion. WDYT?
+> > It is currently also used to hardcode significantly higher fake porches
+> > for the Xperia 5, which are unused in transfers due to this being a
+> > command-mode panel but do have an effect on the clock rates set by
+> > dsi_host.c.  Without higher clock rates this panel fails to achieve
+> > 60fps and has significant tearing artifacts, while the same calculated
+> > clock rate works perfectly fine on the Xperia 10 II.
 
-I'm fine explicitly setting it to -1 to clarify it is missing.  On the
-other hand, default struct initialization might accidentally initialize
-it to the first interrupt on MDP_SSPP_TOP0_INTR (when users forget to
-write the member), where it makes sense to start at 1 instead.  Need to
-think about this for a bit.
-(The forced number of arguments is an advantage of the macro, even if we
- now have too many numeric constants to know which field it sets)
+<snip>
+
+> > +/* Sony Xperia 5 (kumano bahamut) */
+> > +static const struct drm_display_mode samsung_sofef01_m_bahamut_mode = {
+> > +	/*
+> > +	 * WARNING: These massive porches are wrong/useless for CMDmode
+> > +	 * (and not defined in downstream DTS) but necessary to bump dsi
+> > +	 * clocks higher, so that we can achieve proper 60fps without tearing.
+> > +	 */
+> > +	.clock = (1080 + 156 + 8 + 8) * (2520 + 2393 + 8 + 8) * 60 / 1000,
+> > +	.hdisplay = 1080,
+> > +	.hsync_start = 1080 + 156,
+> > +	.hsync_end = 1080 + 156 + 8,
+> > +	.htotal = 1080 + 156 + 8 + 8,
+> > +	.vdisplay = 2520,
+> > +	.vsync_start = 2520 + 2393,
+> > +	.vsync_end = 2520 + 2393 + 8,
+> > +	.vtotal = 2520 + 2393 + 8 + 8,
+> > +	.width_mm = 61,
+> > +	.height_mm = 142,
+> > +};
+> > +
+> > +/* Sony Xperia 10 II (seine pdx201) */
+> > +static const struct drm_display_mode samsung_sofef01_m_pdx201_mode = {
+> > +	.clock = (1080 + 8 + 8 + 8) * (2520 + 8 + 8 + 8) * 60 / 1000,
+> > +	.hdisplay = 1080,
+> > +	.hsync_start = 1080 + 8,
+> > +	.hsync_end = 1080 + 8 + 8,
+> > +	.htotal = 1080 + 8 + 8 + 8,
+> > +	.vdisplay = 2520,
+> > +	.vsync_start = 2520 + 8,
+> > +	.vsync_end = 2520 + 8 + 8,
+> > +	.vtotal = 2520 + 8 + 8 + 8,
+> > +	.width_mm = 60,
+> > +	.height_mm = 139,
+> > +};
+> > +
+> > +static const struct of_device_id samsung_sofef01_m_of_match[] = {
+> > +	{ .compatible = "samsung,sofef01-m-bahamut", .data = &samsung_sofef01_m_bahamut_mode },
+> > +	{ .compatible = "samsung,sofef01-m-pdx201", .data = &samsung_sofef01_m_pdx201_mode },
+> 
+> Are there really two panels? Can we use one mode for both usecases?
+
+See the commit description where I explained exactly this: the panels
+have different dimensions (6.1" vs 6.0", hence different DPI) and I also
+abuse this to hack in higher clock rates via fake porches.
+
+I just ended up on a scary website that supposedly contains the panel
+names:
+
+- Xperia 5 (bahamut, 6.1"): AMB609TC01
+- Xperia 10 II (pdx201, 6.0"): AMS597UT01
 
 - Marijn
-
-> > - Marijn
-> > 
-> >>   	.type = _type, \
-> >>   	.controller_id = _ctrl_id, \
-> >>   	.prog_fetch_lines_worst_case = _progfetch, \
-> >> -- 
-> >> 2.39.2
-> >>
-> 
-> -- 
-> With best wishes
-> Dmitry
-> 
