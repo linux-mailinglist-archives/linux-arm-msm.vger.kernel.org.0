@@ -2,63 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1212670B8DA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 11:26:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B9AB70B8EF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 11:30:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229777AbjEVJ0e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 05:26:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57478 "EHLO
+        id S232299AbjEVJa0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 05:30:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229559AbjEVJ0d (ORCPT
+        with ESMTP id S232227AbjEVJaU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 05:26:33 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 93474A8;
-        Mon, 22 May 2023 02:26:32 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id 98e67ed59e1d1-25275edf6caso2305359a91.1;
-        Mon, 22 May 2023 02:26:32 -0700 (PDT)
+        Mon, 22 May 2023 05:30:20 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A06B0B7;
+        Mon, 22 May 2023 02:30:17 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f3b9c88af8so1921280e87.2;
+        Mon, 22 May 2023 02:30:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684747592; x=1687339592;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=yICs6NuFzoF+XgPoWWxmf9TFo/FC9d4PCJAGYNSWKa4=;
-        b=DJViNaAHYvE5KmUKqp0AKM+rjq2tlOde+hmV94rSRaLwL6LUELR2X5tvvEI7/i7XaM
-         aOHKTgIMQOrnigaLTPEx7QxT+Tv4+1SR2H3CyNhzN7ickkM/poKikjwAF91ioXWt9nKS
-         6FcILmcxTpm7d8+bAn14xds766bXuB84OMUt6qj08vuCelMehf9DS9r1ilEXo14mifWW
-         g2MvYEzDv/oY9eP1JtWd+0F8dRbfeeQfAF/2/TdqPU7pRMISto8WTgYj720L6fVDcDt7
-         S0jIXepQq2Dxk+lATsxVJqw/NUPHGhfkbTsD65kmWpv3/479SbTB7orHPklbG42/X90U
-         IUQw==
+        d=gmail.com; s=20221208; t=1684747816; x=1687339816;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=N2xyW26ygJSV7jGPDNFX5kKvBpAiH74OJxHDLif1V4o=;
+        b=RUD8CW17ehLYABgkufotE7+2qA9MpQEUmH+a8Rzsv+BHTFpkQXkp/vUAoPyUND4WUa
+         df8zjLmWIsuyQpd0DvHu/G3O1/2e4FVgynUTVzKZOAHv9L/ks4U2wElYhdG0cnXNDszK
+         gTO/PkGc7RM8MyNAW2R1JXFqVuLd8vUvteqAFCV4ZHPafnbrsgCOMF9tMaGlDLolyrMT
+         itm3YGRJC6uJ8Sd1fKBuIgsQ3GwQti55DHbBOfA/xI6JndZhdZZLa4YvdkyDekb9MBGh
+         QVy2wxgngibHXKXssGnCfKbqsalSZPeUWc3hs2T62tJ5IaU+EyDu2k4A0jQw6RLQ8yJZ
+         bd4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684747592; x=1687339592;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yICs6NuFzoF+XgPoWWxmf9TFo/FC9d4PCJAGYNSWKa4=;
-        b=h7lXdR3Z0MIYSYnFb65ompXEHfM64RxU+/5mTrarFNdV+Gjof7yXVgvfoxMVP9Y9Bv
-         gAR7mdjmGV+kLRikHR5iYVG1pxwa3nNvOrj8BEcDynTifuUuYnrU5Qfk7ueytjnw1Z2g
-         EQLOcIazsjZXjPfQbocMmtqD57g+WpRGAcguGIJiFwi66hD6be8b0wnRHym8gW2zLkcb
-         NiSFO1nh8g0Y9B5aC69T2Iaoxzui3Th/L4K0Vj9vPiDA1X3wdRplxFihziWsJmO88yb2
-         Ot7dCXE6MZMSOGWcbb0Ip13IM5h1NxmqtMCFvhwpKbtVmwLtQ6cw+R+pPdCrXGY8VmG8
-         1Xaw==
-X-Gm-Message-State: AC+VfDyjCFQ4fQVcvF2xEN8ZbtZ7B8v0rXysqzodDmF2/DILODunfabd
-        FgsCcdF2HEZZN3kSb3gx7ukeX4oUm9/HEtrXRHU=
-X-Google-Smtp-Source: ACHHUZ4G1qdnvD42HFrXhAz3u2qKYEl+BMvnu/BjUDceWikeZLqcyH0Eqg2tRVxUzhikIQBLO493M9u2BjieN4fhTu4=
-X-Received: by 2002:a17:90a:ee8c:b0:24d:e296:659b with SMTP id
- i12-20020a17090aee8c00b0024de296659bmr10949653pjz.22.1684747591956; Mon, 22
- May 2023 02:26:31 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1684747816; x=1687339816;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=N2xyW26ygJSV7jGPDNFX5kKvBpAiH74OJxHDLif1V4o=;
+        b=kZ4odup+StFceeCkcrUvVAnLCKKzFx4vpFUqgWJ8JI2FipMpcKPCBBByADdCxwzpQ7
+         ynUk8e+Spu5nLPoPUXeB1Hbdnb0Y+erPBUQa6+doC5gEYkwDHWZlR5rN1KSTCDwIqor0
+         crGtJ6PionkzZUuDEwwbTVlWICNwOk5oGplCUT0hcNyqEF4zvNYFjIH4nvR5vZXeENNQ
+         9aCI2iVDxXcEwflnRYUVqWNhI0xoGaQGkMBiTMaxpVRTARubMRgR2/EytWgyXY5dJik3
+         CRj9GKFUiC2+4JImxg2KbPuAlEEKvm0CVZywpv5kI+Y0QeyRpxmLhpGuaBwGD6pZgUFU
+         NWNw==
+X-Gm-Message-State: AC+VfDyNKzMXtwg85tByvv17jn1WvNKG+epTrb46jUZUWZCEZHTXnXCp
+        UHKgXUKeDQHyVIkCaAmhzAD/0UZ5LyfrPUWaPw8=
+X-Google-Smtp-Source: ACHHUZ6/K2VPQrqZf4bbMsZ6RsWzfsJGdcrFrCLU2weoNL6fRpXehhPH0QBKWbv2BmkB7pm4G6ojPKMVBze4qdsiKeM=
+X-Received: by 2002:ac2:4259:0:b0:4f3:a55a:bace with SMTP id
+ m25-20020ac24259000000b004f3a55abacemr2981630lfl.7.1684747815493; Mon, 22 May
+ 2023 02:30:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <1678979666-551-1-git-send-email-quic_mojha@quicinc.com>
- <76943268-3982-deaf-9736-429dd51e01b0@gmail.com> <0e645486-f0be-4468-18ad-9e49088dee0b@quicinc.com>
- <CAOX2RU4xPNq4-OHUoMZtfZu05QEdpk1UtawZb1xQMrtc5ao84Q@mail.gmail.com> <a6c48095-179a-7e72-a282-fbc28af374cb@quicinc.com>
-In-Reply-To: <a6c48095-179a-7e72-a282-fbc28af374cb@quicinc.com>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Mon, 22 May 2023 11:26:20 +0200
-Message-ID: <CAOX2RU6S-x-KrQ-qQLW-qxu4bph79d+Yq9Vj=PQwWW4o-yG2xA@mail.gmail.com>
-Subject: Re: [PATCH v3] firmware: qcom_scm: Clear download bit during reboot
-To:     Mukesh Ojha <quic_mojha@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230419-dpu-tweaks-v1-0-d1bac46db075@freebox.fr>
+ <20230419-dpu-tweaks-v1-2-d1bac46db075@freebox.fr> <6e807c05-a990-5692-3f84-2e4153c8c278@linaro.org>
+ <905b4150-6e15-4172-10cf-19aa0ebf817c@quicinc.com> <50fc88f9-4304-110c-84e8-15dfdeee062f@linaro.org>
+In-Reply-To: <50fc88f9-4304-110c-84e8-15dfdeee062f@linaro.org>
+From:   Arnaud Vrac <rawoul@gmail.com>
+Date:   Mon, 22 May 2023 11:30:02 +0200
+Message-ID: <CAN5H-g4zEkxrUr2_0QZfNHndVqF=L-Bx3OTbKnFjQVmoYc7FyQ@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 02/11] drm/msm/dpu: use the actual lm maximum
+ width instead of a hardcoded value
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Jeykumar Sankaran <quic_jeykumar@quicinc.com>,
+        Arnaud Vrac <avrac@freebox.fr>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
         RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
@@ -69,154 +78,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 22 May 2023 at 11:11, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
+Le sam. 20 mai 2023 =C3=A0 22:49, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> a =C3=A9crit :
 >
->
->
-> On 5/22/2023 2:29 PM, Robert Marko wrote:
-> > On Mon, 22 May 2023 at 08:11, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
-> >>
-> >>
-> >>
-> >> On 5/18/2023 3:45 PM, Robert Marko wrote:
-> >>>
-> >>> On 16. 03. 2023. 16:14, Mukesh Ojha wrote:
-> >>>> During normal restart of a system download bit should
-> >>>> be cleared irrespective of whether download mode is
-> >>>> set or not.
-> >>>>
-> >>>> Fixes: 8c1b7dc9ba22 ("firmware: qcom: scm: Expose download-mode control")
-> >>>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
-> >>>
-> >>> Hi, this has been backported to 5.15.111, however it seems to be
-> >>> breaking reboot
-> >>> on IPQ4019 by causing the board to then hang in SBL with:
-> >>> root@OpenWrt:/# reboot
-> >>> root@OpenWrt:/# [   76.473541] device lan1 left promiscuous mode
-> >>> [   76.474204] br-lan: port 1(lan1) entered disabled state
-> >>> [   76.527975] device lan2 left promiscuous mode
-> >>> [   76.530301] br-lan: port 2(lan2) entered disabled state
-> >>> [   76.579376] device lan3 left promiscuous mode
-> >>> [   76.581698] br-lan: port 3(lan3) entered disabled state
-> >>> [   76.638434] device lan4 left promiscuous mode
-> >>> [   76.638777] br-lan: port 4(lan4) entered disabled state
-> >>> [   76.978489] qca8k-ipq4019 c000000.switch wan: Link is Down
-> >>> [   76.978883] device eth0 left promiscuous mode
-> >>> [   76.987077] ipqess-edma c080000.ethernet eth0: Link is Down
-> >>> [
-> >>> Format: Log Type - Time(microsec) - Message - Optional Info
-> >>> Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
-> >>> S - QC_IMAGE_VERSION_STRING=BOOT.BF.3.1.1-00123
-> >>> S - IMAGE_VARIANT_STRING=DAABANAZA
-> >>> S - OEM_IMAGE_VERSION_STRING=CRM
-> >>> S - Boot Config, 0x00000021
-> >>> S - Reset status Config, 0x00000010
-> >>> S - Core 0 Frequency, 0 MHz
-> >>> B -       261 - PBL, Start
-> >>> B -      1339 - bootable_media_detect_entry, Start
-> >>> B -      1679 - bootable_media_detect_success, Start
-> >>> B -      1693 - elf_loader_entry, Start
-> >>> B -      5076 - auth_hash_seg_entry, Start
-> >>> B -      7223 - auth_hash_seg_exit, Start
-> >>> B -    578349 - elf_segs_hash_verify_entry, Start
-> >>> B -    696356 - PBL, End
-> >>> B -    696380 - SBL1, Start
-> >>> B -    787236 - pm_device_init, Start
-> >>> D -         7 - pm_device_init, Delta
-> >>> B -    788701 - boot_flash_init, Start
-> >>> D -     52782 - boot_flash_init, Delta
-> >>> B -    845625 - boot_config_data_table_init, Start
-> >>> D -      3836 - boot_config_data_table_init, Delta - (419 Bytes)
-> >>> B -    852841 - clock_init, Start
-> >>> D -      7566 - clock_init, Delta
-> >>> B -    864883 - CDT version:2,Platform ID:9,Major ID:0,Minor
-> >>> ID:0,Subtype:64
-> >>> B -    868413 - sbl1_ddr_set_params, Start
-> >>> B -    873402 - cpr_init, Start
-> >>> D -         2 - cpr_init, Delta
-> >>> B -    877842 - Pre_DDR_clock_init, Start
-> >>> D -         4 - Pre_DDR_clock_init, Delta
-> >>> D -     13234 - sbl1_ddr_set_params, Delta
-> >>> B -    891155 - pm_driver_init, Start
-> >>> D -         2 - pm_driver_init, Delta
-> >>> B -    909105 - Image Load, Start
-> >>> B -   1030210 - Boot error ocuured!. Error code: 303d
-> >>>
-> >>> Reverting the commit fixes rebooting.
-> >>
-> >> Hi Robert,
-> >>
-> >> Can you check if disable SDI [1] works with this issue
-> >>
-> >> https://lore.kernel.org/linux-arm-msm/20230518140224.2248782-1-robimarko@gmail.com/
-> >>
-> >> [1]
-> >>
-> >>
-> >> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> >> index fde33acd46b7..01496ceb7136 100644
-> >> --- a/drivers/firmware/qcom_scm.c
-> >> +++ b/drivers/firmware/qcom_scm.c
-> >> @@ -1508,6 +1508,7 @@ static int qcom_scm_probe(struct platform_device
-> >> *pdev)
-> >>    static void qcom_scm_shutdown(struct platform_device *pdev)
-> >>    {
-> >>           /* Clean shutdown, disable download mode to allow normal restart */
-> >> +       qcom_scm_disable_sdi();
-> >>           qcom_scm_set_download_mode(false);
-> >>    }
+> On 20/04/2023 20:47, Jeykumar Sankaran wrote:
 > >
-> > Hi,
-> > I can confirm reboot works this way as well.
+> >
+> > On 4/19/2023 3:23 PM, Dmitry Baryshkov wrote:
+> >> On 19/04/2023 17:41, Arnaud Vrac wrote:
+> >>> This avoids using two LMs instead of one when the display width is lo=
+wer
+> >>> than the maximum supported value. For example on MSM8996/MSM8998, the
+> >>> actual maxwidth is 2560, so we would use two LMs for 1280x720 or
+> >>> 1920x1080 resolutions, while one is enough.
+> >>>
+> >>> Signed-off-by: Arnaud Vrac <avrac@freebox.fr>
+> >>
+> >> While this looks correct (and following what we have in 4.4), later
+> >> vendor kernels specify the topology explicitly. Probably we should
+> >> check this with the hw guys, because it might be the following case:
+> >> even though a single LM can supply the mode, it will spend more power
+> >> compared to two LMs.
+> >>
+> >>
+> > Yes. 2 LM split will allow the HW to run in lower mdp core clock. Can
+> > you maintain the split_threshold in the hw catalog until per mode
+> > topology is available?
 >
-> That's great, So, i don't need to revert the patch and you can
-> add this in your patch without target specific check ?
-
-Oh, you mean IPQ4019 not rebooting?
-I haven't tested that, give me couple of minutes to try that out.
-Cause, the link was just back to the SDI patchset.
-
-Regards,
-Robert
+> I don't think it warrants the trouble, unless we have a real usecase
+> when the device is short of LMs.
 >
-> -- Mukesh
+> Arnaud, I'll mark this patch as Rejected for now, unless it fixes an LM
+> shortage for your platform.
+
+It's fine, if I remember correctly I wrote this patch because display
+wouldn't work before I fixed the LM pairings on msm8998, but now it's
+not a requirement anymore.
+
 >
 > >
-> > Regards,
-> > Robert
-> >>
-> >>
-> >> -- Mukesh
-> >>
+> > Jeykumar S
+> >>> ---
+> >>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 10 +++++-----
+> >>>   1 file changed, 5 insertions(+), 5 deletions(-)
 > >>>
-> >>> Regards,
-> >>> Robert
+> >>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >>> index 1dc5dbe585723..dd2914726c4f6 100644
+> >>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >>> @@ -53,8 +53,6 @@
+> >>>   #define IDLE_SHORT_TIMEOUT    1
+> >>> -#define MAX_HDISPLAY_SPLIT 1080
+> >>> -
+> >>>   /* timeout in frames waiting for frame done */
+> >>>   #define DPU_ENCODER_FRAME_DONE_TIMEOUT_FRAMES 5
+> >>> @@ -568,10 +566,12 @@ static struct msm_display_topology
+> >>> dpu_encoder_get_topology(
+> >>>        */
+> >>>       if (intf_count =3D=3D 2)
+> >>>           topology.num_lm =3D 2;
+> >>> -    else if (!dpu_kms->catalog->caps->has_3d_merge)
+> >>> -        topology.num_lm =3D 1;
+> >>> +    else if (dpu_kms->catalog->caps->has_3d_merge &&
+> >>> +         dpu_kms->catalog->mixer_count > 0 &&
+> >>> +         mode->hdisplay > dpu_kms->catalog->mixer[0].sblk->maxwidth)
+> >>> +        topology.num_lm =3D 2;
+> >>>       else
+> >>> -        topology.num_lm =3D (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? =
+2
+> >>> : 1;
+> >>> +        topology.num_lm =3D 1;
+> >>>       if (crtc_state->ctm)
+> >>>           topology.num_dspp =3D topology.num_lm;
 > >>>
-> >>>> ---
-> >>>> Changes in v3:
-> >>>>     - Added Fixes tag.
-> >>>>     - Removed it from below patch series, as it makes sense to go this
-> >>>> independently.
-> >>>>
-> >>>> https://lore.kernel.org/lkml/1677664555-30191-1-git-send-email-quic_mojha@quicinc.com/
-> >>>>
-> >>>> Changes in v2:
-> >>>>     - No change.
-> >>>>
-> >>>>    drivers/firmware/qcom_scm.c | 3 +--
-> >>>>    1 file changed, 1 insertion(+), 2 deletions(-)
-> >>>>
-> >>>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> >>>> index 468d4d5..3e020d1 100644
-> >>>> --- a/drivers/firmware/qcom_scm.c
-> >>>> +++ b/drivers/firmware/qcom_scm.c
-> >>>> @@ -1506,8 +1506,7 @@ static int qcom_scm_probe(struct platform_device
-> >>>> *pdev)
-> >>>>    static void qcom_scm_shutdown(struct platform_device *pdev)
-> >>>>    {
-> >>>>        /* Clean shutdown, disable download mode to allow normal restart */
-> >>>> -    if (download_mode)
-> >>>> -        qcom_scm_set_download_mode(false);
-> >>>> +    qcom_scm_set_download_mode(false);
-> >>>>    }
-> >>>>    static const struct of_device_id qcom_scm_dt_match[] = {
+> >>
+>
+> --
+> With best wishes
+> Dmitry
+>
