@@ -2,80 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 472E870C1A6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 16:59:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE28A70C192
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 16:57:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231321AbjEVO7F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 10:59:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39834 "EHLO
+        id S230168AbjEVO5O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 10:57:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233769AbjEVO7C (ORCPT
+        with ESMTP id S233883AbjEVO5N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 10:59:02 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B7C7B9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 07:58:45 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f4b0a0b557so1249775e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 07:58:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684767524; x=1687359524;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GB7XYhd2mlIH0fHMUAhimGnNPOH+S2GqRkVg6KqMpSs=;
-        b=gPTggsTBERvcP+EXfapcNg3Im+HXfZaBAsfZou5V4jt90/bqnENtw1bbGYVIeHQyd0
-         N6wQ4CN9n+IvlsUIFDXSqPAbwWfZ5KAUrtV7Q4eUdvFdpaUPrPzlQZm9rY2UHZ08vYVi
-         EhCYxVKDHkgk3wft4zSgmjRkJBTST7DXgkSbzSmVS/L+VR9XbHPGLsfwL8ExFI2TKeyd
-         jmthItPiRl4f5pxPwlu7d58UfmQAHPWbcubxJ2h1ptGdgBtsIe4L9PDhgo1wzb+tSsXk
-         zBDdkdfYTAVJclEgmyFlDS0bdqNcP2pSv0TuGQnkDMG6yEAkut3jc/xVdEdC2hwIlR9I
-         EWRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684767524; x=1687359524;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GB7XYhd2mlIH0fHMUAhimGnNPOH+S2GqRkVg6KqMpSs=;
-        b=EpNoO+Jz5Fpa907Fl2Zp6FBkGM5zbNixpQsThZ3sVSA4go0MMa/Bo8yXSAFIEDUejj
-         hmFggVh+0V6rSfTM8gldxsG5Zv5hvtQlF2DR6QW+Ml3vdqZkaDPVwZOH2jFARjvH+JxT
-         zEqBhWM72RFBxmWM0bqKkFQbCeZnuEh/1AlUdbpgCxGuW3BbvPfKXc9jLpas8ps1jIIe
-         i5Gu1a1MLA61sdoaNzkBUAyBuWbau2IbvDU1UPVyGDP+/B/55RqZ5FwrALBcz7SxSdMh
-         k3HP21l2a5+vdSaV/SPPRGJWLmOFrUjcdqyFPUce7AtRrCVewUJ1x3hmmU78JpDCPMtD
-         69Wg==
-X-Gm-Message-State: AC+VfDwagpynHEIgF+ac6MpX06foadoS7XxTiaxvcPBhKzRhnaooZo4T
-        La5Ah003cwC7wacbJ8mBDei35Q==
-X-Google-Smtp-Source: ACHHUZ4BDbUixCFCn6K/ZmSTVEPc3IlyEtxt5/2WqXNMuohCC/E7nqhpjiIN29qz4pge9WjbtitRVA==
-X-Received: by 2002:ac2:489c:0:b0:4e8:5112:1ff2 with SMTP id x28-20020ac2489c000000b004e851121ff2mr3557967lfc.27.1684767523807;
-        Mon, 22 May 2023 07:58:43 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id r11-20020a19ac4b000000b004f3942e1fbesm1021727lfc.1.2023.05.22.07.58.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 May 2023 07:58:43 -0700 (PDT)
-Message-ID: <0be4bb6e-40dd-f4bd-3fd2-d62fa228d356@linaro.org>
-Date:   Mon, 22 May 2023 17:58:42 +0300
+        Mon, 22 May 2023 10:57:13 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43124BB;
+        Mon, 22 May 2023 07:57:12 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C169961AFE;
+        Mon, 22 May 2023 14:57:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514ADC433D2;
+        Mon, 22 May 2023 14:57:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1684767431;
+        bh=ThXECPaDh9Oj7V7+VzqTXFJWN8ADA2MjHyWE9rB8dPA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=pIpKE/DgQZtCWf7SiEQ+irFRq6pTLepH9Tg10WqNGBz7VesKSG/uV9y3p5g3bfcsl
+         FQE2Nao9jS3bgj8oJasHdsqWDLmHAMJQ84p7Dxak2W8M7eVpGJYwom3Ey/sg8GM+Ei
+         P/K13ZTA6wBGlLTaGwRkgGL4rzfl/RhpI8hR7BamUDmxtnwjcw4quYf2PaXH1TIHuI
+         fczfPBWI1gjAEkpYhsWDI74z50as3+CLy/A45h8FX1GCjUzkdywtRixdvkq+gKNQoQ
+         /zVx6QajqY7afz7EaR4d5o4QUSVE8h1gaRD2902iU+IKrenHGqPA/4zQMr1Ae37D0W
+         XYga9WMhrEU+g==
+Date:   Mon, 22 May 2023 08:01:05 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Komal Bajaj <quic_kbajaj@quicinc.com>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 2/4] arm: dts: qcom: qdu1000: Add SDHCI node
+Message-ID: <20230522150105.3i7zeucna7kh5waz@ripper>
+References: <20230522093620.3568-1-quic_kbajaj@quicinc.com>
+ <20230522093620.3568-3-quic_kbajaj@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 3/6] drm/msm/dpu: split interrupt address arrays
-Content-Language: en-GB
-To:     neil.armstrong@linaro.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230522004227.134501-1-dmitry.baryshkov@linaro.org>
- <20230522004227.134501-4-dmitry.baryshkov@linaro.org>
- <80da4c26-ca3f-00c9-072c-087a1ff24c74@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <80da4c26-ca3f-00c9-072c-087a1ff24c74@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230522093620.3568-3-quic_kbajaj@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,51 +62,96 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/05/2023 17:36, Neil Armstrong wrote:
-> Hi,
-> 
-> On 22/05/2023 02:42, Dmitry Baryshkov wrote:
->> There is no point in having a single enum (and a single array) for both
->> DPU < 7.0 and DPU >= 7.0 interrupt registers. Instead define a single
->> enum and two IRQ address arrays.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  2 +
->>   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 82 +++++++++++++------
->>   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h | 28 ++++---
->>   3 files changed, 74 insertions(+), 38 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->> index 677048cc3b7d..72530ebb0ae6 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->> @@ -351,6 +351,7 @@ struct dpu_rotation_cfg {
->>    * @has_dim_layer      dim layer feature status
->>    * @has_idle_pc        indicate if idle power collapse feature is 
->> supported
->>    * @has_3d_merge       indicate if 3D merge is supported
->> + * @has_7xxx_intr      indicate that INTF/IRQs use addressing for DPU 
->> 7.0 and greater
->>    * @max_linewidth      max linewidth for sspp
->>    * @pixel_ram_size     size of latency hiding and de-tiling buffer 
->> in bytes
->>    * @max_hdeci_exp      max horizontal decimation supported (max is 
->> 2^value)
->> @@ -364,6 +365,7 @@ struct dpu_caps {
->>       bool has_dim_layer;
->>       bool has_idle_pc;
->>       bool has_3d_merge;
->> +    bool has_7xxx_intr;
-> 
-> looks good, but I can't find where has_7xxx_intr is set in the patchset
-> 
-> Neil
+On Mon, May 22, 2023 at 03:06:18PM +0530, Komal Bajaj wrote:
 
-Indeed. It seems I missed a patch.
+Path says arch/arm64/, so $subject should start "arm64: dts: qcom: ..."
 
--- 
-With best wishes
-Dmitry
+> Add sdhc node for eMMC on QDU1000 and QRU1000 SoCs.
+> 
+> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/qdu1000.dtsi | 51 +++++++++++++++++++++++++++
+>  1 file changed, 51 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> index 734438113bba..38ee7115a35f 100644
+> --- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+> @@ -19,6 +19,10 @@
+>  
+>  	chosen: chosen { };
+>  
+> +	aliases {
+> +		mmc0 = &sdhc_1; /* eMMC */
 
+Don't we just have a single SDC instance on this platform? If so you
+don't need aliases.
+
+> +	};
+> +
+>  	cpus {
+>  		#address-cells = <2>;
+>  		#size-cells = <0>;
+> @@ -842,6 +846,53 @@
+>  			#hwlock-cells = <1>;
+>  		};
+>  
+> +		sdhc_1: mmc@8804000 {
+
+And you can skip the "_1" suffix...
+
+Regards,
+Bjorn
+
+> +			compatible = "qcom,qdu1000-sdhci", "qcom,sdhci-msm-v5";
+> +			reg = <0x0 0x08804000 0x0 0x1000>,
+> +			      <0x0 0x08805000 0x0 0x1000>;
+> +			reg-names = "hc", "cqhci";
+> +
+> +			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>,
+> +				     <GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "hc_irq", "pwr_irq";
+> +
+> +			clocks = <&gcc GCC_SDCC5_AHB_CLK>,
+> +				 <&gcc GCC_SDCC5_APPS_CLK>,
+> +				 <&rpmhcc RPMH_CXO_CLK>;
+> +			clock-names = "iface",
+> +				      "core",
+> +				      "xo";
+> +
+> +			resets = <&gcc GCC_SDCC5_BCR>;
+> +
+> +			interconnects = <&system_noc MASTER_SDCC_1 0 &mc_virt SLAVE_EBI1 0>,
+> +					<&gem_noc MASTER_APPSS_PROC 0 &system_noc SLAVE_SDCC_2 0>;
+> +			interconnect-names = "sdhc-ddr", "cpu-sdhc";
+> +			power-domains = <&rpmhpd QDU1000_CX>;
+> +			operating-points-v2 = <&sdhc1_opp_table>;
+> +
+> +			iommus = <&apps_smmu 0x80 0x0>;
+> +			dma-coherent;
+> +
+> +			bus-width = <8>;
+> +
+> +			qcom,dll-config = <0x0007642c>;
+> +			qcom,ddr-config = <0x80040868>;
+> +
+> +			status = "disabled";
+> +
+> +			sdhc1_opp_table: opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-384000000 {
+> +					opp-hz = /bits/ 64 <384000000>;
+> +					required-opps = <&rpmhpd_opp_nom>;
+> +					opp-peak-kBps = <6528000 1652800>;
+> +					opp-avg-kBps = <400000 0>;
+> +				};
+> +			};
+> +		};
+> +
+>  		pdc: interrupt-controller@b220000 {
+>  			compatible = "qcom,qdu1000-pdc", "qcom,pdc";
+>  			reg = <0x0 0xb220000 0x0 0x30000>, <0x0 0x174000f0 0x0 0x64>;
+> -- 
+> 2.17.1
+> 
