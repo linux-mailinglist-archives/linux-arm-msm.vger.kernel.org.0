@@ -2,213 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B66D70B835
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 10:59:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB14670B83D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 11:00:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232176AbjEVI7p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 04:59:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40932 "EHLO
+        id S232133AbjEVJAP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 05:00:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232212AbjEVI7T (ORCPT
+        with ESMTP id S232574AbjEVI7e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 04:59:19 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09727E75
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 01:58:37 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-1ae52ce3250so54025365ad.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 01:58:37 -0700 (PDT)
+        Mon, 22 May 2023 04:59:34 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0711C109;
+        Mon, 22 May 2023 01:59:28 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id 41be03b00d2f7-5307502146aso3975355a12.1;
+        Mon, 22 May 2023 01:59:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684745916; x=1687337916;
-        h=content-transfer-encoding:in-reply-to:references:subject:to:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WVVEKPnXkSILTss/P2zaQmuQ5vs6PfUPsMsOFGsk8/M=;
-        b=Ql0qKVg8nKHPlO3LwnQK70xhH1YY18RDJ/jp8+QbdPUKQj/xMBIjs8YdP+RbTdGy8o
-         un7B0gd92OPgrULN/uskxekvP2KHntPf5K3teVTAow68P6BKUw7JOGc36akTxJXxTaTO
-         1Oz/EGCd2/FIJeE0UVTRnPqM4pllTdRzyzRDaK8DYLvT0UDQ53v2KPHA9bPS3umni37i
-         ojXwupNlP2JzASRvNu8BJHpk9LaqJwgVXFcjMU5/9gTxXAvZpQClz72/h730jFisC480
-         cRUwPmZQnoSEw4wQ0ATbD6NC33eu53YxhJM59qKi060tlSs5e0GhfD80QlJEZ/bRSXSJ
-         TsJA==
+        d=gmail.com; s=20221208; t=1684745967; x=1687337967;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=cTRIWKnCdlFq7Rr2wAb/uB9jyO8yrcX3Db/QtbKH+r4=;
+        b=WPaDN0Czz+PWoaQqY4Wkgsabdbp4Y/pUQmbzKQU7tb2a9g7jndZFI+ttPZwrT6zHxn
+         jm9hcBC9XC53yXzP/Fy/sXBOZWqN21wNHXlqvL9IhXBNoSyH0AHM/dZOte6CBgaQXx3p
+         6D1ZEitLghatZe4bFkjBeeBbjswNLLzrTlb3prS7nBEkmBGyo0Hlf5Apdj4rBmyQCAFm
+         yEe0ouTTzNX8SJlsKWrrDcksGeYm6kMaRQy3tTur2iC/q45lWWdtrFAwGjd7vhFZnOt4
+         a015MWKRHaZf9BECop/EPVoqW7clFR9e1a5kgbl6Omzc8xFi9PvHD3fzVMQTWeFCMDn+
+         WUrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684745916; x=1687337916;
-        h=content-transfer-encoding:in-reply-to:references:subject:to:from
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=WVVEKPnXkSILTss/P2zaQmuQ5vs6PfUPsMsOFGsk8/M=;
-        b=gO5SLy7sNkev1fFXskciQ5hnQMDU4HZGVJp7aMG8WV33yPe5p32L82MWpFgR7RlZbw
-         fl3i0n5trmRjG3RQfk5B95wD1tlX9uf3xaso7FXU02tV6cvJKyeskhlxtsP5MaZ34Mjm
-         OKSJ4ef5EVw0RRXdzbieunnC/M9eWenxdzzkjbUDJqOtBZGIXsyDXVyy06/zZCsq119V
-         B5tUBgccWWLtaQONESPwvjoJFQx7JHwdkQRfjG/d2IPxd95CSQ2e29lLwoVaHhTnEe/X
-         lGGWIW4H8qWu+DPRgslnuYvRSo8+L6quPzDKuQZJXWA7A3idZ02xNabEJbuMXMCta4yx
-         Z+Ow==
-X-Gm-Message-State: AC+VfDzYQeQq2tuJcP8XTgoQbl3cARrI2LSbkkJSqbY1RS1wBcUZf664
-        Xk/6YUqalX9QPx1lsxOyNiccRA==
-X-Google-Smtp-Source: ACHHUZ4uhzrBezRPGNp3O4yAik4A3kP5KYKhP29A86ySFHnLnzIEoz/7dLeytbx4+onNWQEISTP78w==
-X-Received: by 2002:a17:902:f2cc:b0:1aa:fbaa:ee09 with SMTP id h12-20020a170902f2cc00b001aafbaaee09mr7905892plc.49.1684745916446;
-        Mon, 22 May 2023 01:58:36 -0700 (PDT)
-Received: from ?IPV6:2401:4900:1c60:d309:883d:817e:8e91:be39? ([2401:4900:1c60:d309:883d:817e:8e91:be39])
-        by smtp.gmail.com with ESMTPSA id y3-20020a17090322c300b001a1d553de0fsm4308539plg.271.2023.05.22.01.58.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 May 2023 01:58:36 -0700 (PDT)
-Message-ID: <c451dc43-b5a2-df42-c4a5-0db4c6641b1c@linaro.org>
-Date:   Mon, 22 May 2023 14:28:28 +0530
+        d=1e100.net; s=20221208; t=1684745967; x=1687337967;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cTRIWKnCdlFq7Rr2wAb/uB9jyO8yrcX3Db/QtbKH+r4=;
+        b=Kh/BfKsM6Mz3eUJQJRzoepiOZT0UhZEVM5TgqFciPpa/Y/0+sluVr1KdvuIvnc2yrN
+         pI+hwSFmIHxwDoQi9q44Q2WSelk/jTU7lYAVg6+7kzty5oBuaxRbv3snmz6W6kfStSfT
+         5lnLYrVJxZRoxoviHEJstmuiA4Rp6lFkwdRq/5SK+MIiT3OKJxvs//WTs6fzBPtMhUdj
+         cSpQ5KH1SY4Yy3mz2rMicx+ozljO+xIUB/oyEkKRQJnf/8hAinGb4oWz0LwYRUm7qR7n
+         P0+accRfEphqN2ZhlWZe3JufiLUn/b5rRTk8OU4zOQXe5AESmiRfbrOp8Lc56nIApkFg
+         f+mw==
+X-Gm-Message-State: AC+VfDyi+ZN6rivHOcXOwp4rtq1BIE0+dVVJflfs0nEv2JRj10I7DGp7
+        J/Wrisa7zhWRkDOZ688RJ25cgnfE5rRwWnOgLnA=
+X-Google-Smtp-Source: ACHHUZ71cstyW7OoGhwsVhbkJ7xw9m3HJQ3PyLkhtAeg80xYaSfVRjd7QMeLVMf+qNOUxD3FtSmIPUvWiJne1lhsciE=
+X-Received: by 2002:a17:902:778c:b0:1aa:cddd:57f2 with SMTP id
+ o12-20020a170902778c00b001aacddd57f2mr9848885pll.25.1684745967330; Mon, 22
+ May 2023 01:59:27 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.3.1
-From:   bhupesh.sharma@linaro.org
-To:     Anusha Rao <quic_anusha@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        thara.gopinath@gmail.com, herbert@gondor.apana.org.au,
-        davem@davemloft.net, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org, p.zabel@pengutronix.de,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, quic_srichara@quicinc.com,
-        quic_gokulsri@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
-        quic_poovendh@quicinc.com
-Subject: Re: [PATCH V3 2/4] clk: qcom: gcc-ipq9574: Enable crypto clocks
-References: <20230518141105.24741-1-quic_anusha@quicinc.com>
- <20230518141105.24741-3-quic_anusha@quicinc.com>
-In-Reply-To: <20230518141105.24741-3-quic_anusha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <1678979666-551-1-git-send-email-quic_mojha@quicinc.com>
+ <76943268-3982-deaf-9736-429dd51e01b0@gmail.com> <0e645486-f0be-4468-18ad-9e49088dee0b@quicinc.com>
+In-Reply-To: <0e645486-f0be-4468-18ad-9e49088dee0b@quicinc.com>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Mon, 22 May 2023 10:59:16 +0200
+Message-ID: <CAOX2RU4xPNq4-OHUoMZtfZu05QEdpk1UtawZb1xQMrtc5ao84Q@mail.gmail.com>
+Subject: Re: [PATCH v3] firmware: qcom_scm: Clear download bit during reboot
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, 22 May 2023 at 08:11, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
+>
+>
+>
+> On 5/18/2023 3:45 PM, Robert Marko wrote:
+> >
+> > On 16. 03. 2023. 16:14, Mukesh Ojha wrote:
+> >> During normal restart of a system download bit should
+> >> be cleared irrespective of whether download mode is
+> >> set or not.
+> >>
+> >> Fixes: 8c1b7dc9ba22 ("firmware: qcom: scm: Expose download-mode control")
+> >> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> >
+> > Hi, this has been backported to 5.15.111, however it seems to be
+> > breaking reboot
+> > on IPQ4019 by causing the board to then hang in SBL with:
+> > root@OpenWrt:/# reboot
+> > root@OpenWrt:/# [   76.473541] device lan1 left promiscuous mode
+> > [   76.474204] br-lan: port 1(lan1) entered disabled state
+> > [   76.527975] device lan2 left promiscuous mode
+> > [   76.530301] br-lan: port 2(lan2) entered disabled state
+> > [   76.579376] device lan3 left promiscuous mode
+> > [   76.581698] br-lan: port 3(lan3) entered disabled state
+> > [   76.638434] device lan4 left promiscuous mode
+> > [   76.638777] br-lan: port 4(lan4) entered disabled state
+> > [   76.978489] qca8k-ipq4019 c000000.switch wan: Link is Down
+> > [   76.978883] device eth0 left promiscuous mode
+> > [   76.987077] ipqess-edma c080000.ethernet eth0: Link is Down
+> > [
+> > Format: Log Type - Time(microsec) - Message - Optional Info
+> > Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+> > S - QC_IMAGE_VERSION_STRING=BOOT.BF.3.1.1-00123
+> > S - IMAGE_VARIANT_STRING=DAABANAZA
+> > S - OEM_IMAGE_VERSION_STRING=CRM
+> > S - Boot Config, 0x00000021
+> > S - Reset status Config, 0x00000010
+> > S - Core 0 Frequency, 0 MHz
+> > B -       261 - PBL, Start
+> > B -      1339 - bootable_media_detect_entry, Start
+> > B -      1679 - bootable_media_detect_success, Start
+> > B -      1693 - elf_loader_entry, Start
+> > B -      5076 - auth_hash_seg_entry, Start
+> > B -      7223 - auth_hash_seg_exit, Start
+> > B -    578349 - elf_segs_hash_verify_entry, Start
+> > B -    696356 - PBL, End
+> > B -    696380 - SBL1, Start
+> > B -    787236 - pm_device_init, Start
+> > D -         7 - pm_device_init, Delta
+> > B -    788701 - boot_flash_init, Start
+> > D -     52782 - boot_flash_init, Delta
+> > B -    845625 - boot_config_data_table_init, Start
+> > D -      3836 - boot_config_data_table_init, Delta - (419 Bytes)
+> > B -    852841 - clock_init, Start
+> > D -      7566 - clock_init, Delta
+> > B -    864883 - CDT version:2,Platform ID:9,Major ID:0,Minor
+> > ID:0,Subtype:64
+> > B -    868413 - sbl1_ddr_set_params, Start
+> > B -    873402 - cpr_init, Start
+> > D -         2 - cpr_init, Delta
+> > B -    877842 - Pre_DDR_clock_init, Start
+> > D -         4 - Pre_DDR_clock_init, Delta
+> > D -     13234 - sbl1_ddr_set_params, Delta
+> > B -    891155 - pm_driver_init, Start
+> > D -         2 - pm_driver_init, Delta
+> > B -    909105 - Image Load, Start
+> > B -   1030210 - Boot error ocuured!. Error code: 303d
+> >
+> > Reverting the commit fixes rebooting.
+>
+> Hi Robert,
+>
+> Can you check if disable SDI [1] works with this issue
+>
+> https://lore.kernel.org/linux-arm-msm/20230518140224.2248782-1-robimarko@gmail.com/
+>
+> [1]
+>
+>
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index fde33acd46b7..01496ceb7136 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -1508,6 +1508,7 @@ static int qcom_scm_probe(struct platform_device
+> *pdev)
+>   static void qcom_scm_shutdown(struct platform_device *pdev)
+>   {
+>          /* Clean shutdown, disable download mode to allow normal restart */
+> +       qcom_scm_disable_sdi();
+>          qcom_scm_set_download_mode(false);
+>   }
 
+Hi,
+I can confirm reboot works this way as well.
 
-On 5/18/23 7:41 PM, Anusha Rao <quic_anusha@quicinc.com> wrote:
-> Enable the clocks required for crypto operation.
-> 
-> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
-> ---
->   Changes in V3:
-> 	- Added GCC prefix to CRYPTO_CLK_SRC.
-> 
->   drivers/clk/qcom/gcc-ipq9574.c | 72 ++++++++++++++++++++++++++++++++++
->   1 file changed, 72 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/gcc-ipq9574.c b/drivers/clk/qcom/gcc-ipq9574.c
-> index 7b0505f5c255..73663168d72a 100644
-> --- a/drivers/clk/qcom/gcc-ipq9574.c
-> +++ b/drivers/clk/qcom/gcc-ipq9574.c
-> @@ -728,6 +728,41 @@ static struct clk_rcg2 blsp1_uart6_apps_clk_src = {
->   	},
->   };
->   
-> +static const struct freq_tbl ftbl_gcc_crypto_clk_src[] = {
-> +	F(160000000, P_GPLL0, 5, 0, 0),
-> +	{ }
-> +};
-> +
-> +static struct clk_rcg2 gcc_crypto_clk_src = {
-> +	.cmd_rcgr = 0x16004,
-> +	.freq_tbl = ftbl_gcc_crypto_clk_src,
-> +	.hid_width = 5,
-> +	.parent_map = gcc_xo_gpll0_gpll0_out_main_div2_map,
-> +	.clkr.hw.init = &(const struct clk_init_data) {
-> +		.name = "gcc_crypto_clk_src",
-> +		.parent_data = gcc_xo_gpll0_gpll0_out_main_div2,
-> +		.num_parents = ARRAY_SIZE(gcc_xo_gpll0_gpll0_out_main_div2),
-> +		.ops = &clk_rcg2_ops,
-> +	},
-> +};
-> +
-> +static struct clk_branch gcc_crypto_clk = {
-> +	.halt_reg = 0x1600c,
-> +	.halt_check = BRANCH_HALT_VOTED,
-> +	.clkr = {
-> +		.enable_reg = 0x0b004,
-> +		.enable_mask = BIT(14),
-> +		.hw.init = &(const struct clk_init_data) {
-> +			.name = "gcc_crypto_clk",
-> +			.parent_hws = (const struct clk_hw *[]) {
-> +				&gcc_crypto_clk_src.clkr.hw },
-> +			.num_parents = 1,
-> +			.flags = CLK_SET_RATE_PARENT,
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
->   static struct clk_branch gcc_apss_ahb_clk = {
->   	.halt_reg = 0x24018,
->   	.halt_check = BRANCH_HALT_VOTED,
-> @@ -2071,6 +2106,38 @@ static struct clk_rcg2 pcnoc_bfdcd_clk_src = {
->   	},
->   };
->   
-> +static struct clk_branch gcc_crypto_axi_clk = {
-> +	.halt_reg = 0x16010,
-> +	.clkr = {
-> +		.enable_reg = 0x16010,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(const struct clk_init_data) {
-> +			.name = "gcc_crypto_axi_clk",
-> +			.parent_hws = (const struct clk_hw *[]) {
-> +				&pcnoc_bfdcd_clk_src.clkr.hw },
-> +			.num_parents = 1,
-> +			.flags = CLK_SET_RATE_PARENT,
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
-> +static struct clk_branch gcc_crypto_ahb_clk = {
-> +	.halt_reg = 0x16014,
-> +	.clkr = {
-> +		.enable_reg = 0x16014,
-> +		.enable_mask = BIT(0),
-> +		.hw.init = &(const struct clk_init_data) {
-> +			.name = "gcc_crypto_ahb_clk",
-> +			.parent_hws = (const struct clk_hw *[]) {
-> +				&pcnoc_bfdcd_clk_src.clkr.hw },
-> +			.num_parents = 1,
-> +			.flags = CLK_SET_RATE_PARENT,
-> +			.ops = &clk_branch2_ops,
-> +		},
-> +	},
-> +};
-> +
->   static struct clk_branch gcc_nsscfg_clk = {
->   	.halt_reg = 0x1702c,
->   	.clkr = {
-> @@ -4036,6 +4103,10 @@ static struct clk_regmap *gcc_ipq9574_clks[] = {
->   	[GCC_SNOC_PCIE1_1LANE_S_CLK] = &gcc_snoc_pcie1_1lane_s_clk.clkr,
->   	[GCC_SNOC_PCIE2_2LANE_S_CLK] = &gcc_snoc_pcie2_2lane_s_clk.clkr,
->   	[GCC_SNOC_PCIE3_2LANE_S_CLK] = &gcc_snoc_pcie3_2lane_s_clk.clkr,
-> +	[GCC_CRYPTO_CLK_SRC] = &gcc_crypto_clk_src.clkr,
-> +	[GCC_CRYPTO_CLK] = &gcc_crypto_clk.clkr,
-> +	[GCC_CRYPTO_AXI_CLK] = &gcc_crypto_axi_clk.clkr,
-> +	[GCC_CRYPTO_AHB_CLK] = &gcc_crypto_ahb_clk.clkr,
->   };
-
-Can we please add these in alphabetical order. For e.g. here these entries would follow those for '[GCC_CMN_BLK_APU_ARES] = { 0x3a010, 2 },'
-
->   static const struct qcom_reset_map gcc_ipq9574_resets[] = {
-> @@ -4193,6 +4264,7 @@ static const struct qcom_reset_map gcc_ipq9574_resets[] = {
->   	[GCC_WCSS_ECAHB_ARES] = { 0x25070, 0 },
->   	[GCC_WCSS_Q6_BCR] = { 0x18000, 0 },
->   	[GCC_WCSS_Q6_TBU_BCR] = { 0x12054, 0 },
-> +	[GCC_CRYPTO_BCR] = { 0x16000, 0 },
-
-Same as above.
-
-With the above addressed:
-Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-
-Thanks.
-
->   };
->   
->   static const struct of_device_id gcc_ipq9574_match_table[] = {
-> 
+Regards,
+Robert
+>
+>
+> -- Mukesh
+>
+> >
+> > Regards,
+> > Robert
+> >
+> >> ---
+> >> Changes in v3:
+> >>    - Added Fixes tag.
+> >>    - Removed it from below patch series, as it makes sense to go this
+> >> independently.
+> >>
+> >> https://lore.kernel.org/lkml/1677664555-30191-1-git-send-email-quic_mojha@quicinc.com/
+> >>
+> >> Changes in v2:
+> >>    - No change.
+> >>
+> >>   drivers/firmware/qcom_scm.c | 3 +--
+> >>   1 file changed, 1 insertion(+), 2 deletions(-)
+> >>
+> >> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> >> index 468d4d5..3e020d1 100644
+> >> --- a/drivers/firmware/qcom_scm.c
+> >> +++ b/drivers/firmware/qcom_scm.c
+> >> @@ -1506,8 +1506,7 @@ static int qcom_scm_probe(struct platform_device
+> >> *pdev)
+> >>   static void qcom_scm_shutdown(struct platform_device *pdev)
+> >>   {
+> >>       /* Clean shutdown, disable download mode to allow normal restart */
+> >> -    if (download_mode)
+> >> -        qcom_scm_set_download_mode(false);
+> >> +    qcom_scm_set_download_mode(false);
+> >>   }
+> >>   static const struct of_device_id qcom_scm_dt_match[] = {
