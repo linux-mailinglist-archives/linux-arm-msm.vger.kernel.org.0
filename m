@@ -2,83 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D554470C4E6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 20:03:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A4C0370C549
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 May 2023 20:38:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229974AbjEVSDl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 14:03:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59778 "EHLO
+        id S231441AbjEVSiR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 14:38:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233207AbjEVSDk (ORCPT
+        with ESMTP id S229916AbjEVSiQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 14:03:40 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50A1D10C;
-        Mon, 22 May 2023 11:03:39 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34MGKIuS019507;
-        Mon, 22 May 2023 18:03:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=7FWcWoYpEo6qyXfPmpFBf5sJ3rHxVHmm/8f37QkNMa8=;
- b=EyALMqNaKyv9btn1NfDrTLqcPZbXFTT5KneJH1BIqCZdubobD6pU7UNhxG/MdOXXQyjy
- pQkEjzahAj8WAi+RL7PMxoQKC/nznKQHSKrl3rRV1pr0yptlDRKBqlFXvjHpVNDj+Vcz
- lFDo1S1gKtAH46mdLvEivBpYUQPmuwGNb163jrBJ/ZxT889ScifYi5qbleZxn8TbAWeR
- h0o2GR4QPsJCuxNIYGtA5kEDhmwTi40OZlOQNaEcQtCO8YchidCp1ZkIrB9jE/JS4yO5
- P66Pm4e4QlwWIp3C23wvxuaIfoi+tssOMvTBIKXS9w+6wLoshQuXueqy1wGAqjxM3GGZ vw== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qppkdmfaq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 22 May 2023 18:03:33 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34MI3WKB029508
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 22 May 2023 18:03:32 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 22 May
- 2023 11:03:31 -0700
-Message-ID: <5059b759-2c9c-fd81-f9a8-37e4dccd3ea8@quicinc.com>
-Date:   Mon, 22 May 2023 11:03:30 -0700
+        Mon, 22 May 2023 14:38:16 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CD74B6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 11:38:15 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f3a99b9177so5233083e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 May 2023 11:38:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684780694; x=1687372694;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7g+eBWdXPpClWzwgE+9KC8dMIxNBnrOJ+PBoFojXwDU=;
+        b=iMrFsTnQvHs2azUIRBShLKj+1/m+uYiDEh3lFC7fKyfiQ2Si0y6/yONmK9yEX2mKfY
+         PESZWrg2BSbmqL2t5n/TUPv/nHj1BV/mhGm03cOU3GLrkTYQoGKYmgHpm8er2Oh+LISe
+         ra9jNmrH4JEu0D2KDhgDq0f1ajkSYlyjmyD9sxeEm9wvsr8/WTiGMW7ilouBHDTWG8J1
+         77D1uNOA8kls3K/LttvhXoSRJeFzbq50w+mQuVW+9GGCe5cLmhJ15uyGWCXQDM4LIvNn
+         ADc1qUzb24fy7LAWvPF9shMtZHy6QUfekjwcdfcn6lNXxwOsOFtWoBDbhQOF6WdoaMl4
+         Fjpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684780694; x=1687372694;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7g+eBWdXPpClWzwgE+9KC8dMIxNBnrOJ+PBoFojXwDU=;
+        b=fINkWS2eAa+COrSntwsbTGg1rQuFRfkXQg0juILjUAUsyDke8qU4l5ZAhY9s+Z5hEz
+         2hjGmhIAmq02clV7T8/o72XpEtN1I12t84VzwkYTyG1A3/26u3m2dJKoXpBBkROruG4M
+         uUodqBskU9DVaUbK0dqij9NTQQ13taVjlqEwZhmdYK+ah//FZJIL2ZH3lp0l3SmGMSB+
+         CHc2gEdkmXSRuRZz7oCkFjhkPa3wtPRrbN/NzlLLTTWuUxqNujuzWI1CkmaHHNA1O3q9
+         ryu9oEJ+E2TEQZy2bRLQSbjgkPvkN6eDecA6lr0V8D5kF/tr61ii/ZZZ6MZLOcP3O0xv
+         xyIQ==
+X-Gm-Message-State: AC+VfDw1HL+jdz+eIlfM3cl6ePS82HDBmy65W3NfP7vH0gFrO/Mx1mkf
+        jnRcyUZ87u/NR/GieHsdzmVbjQ==
+X-Google-Smtp-Source: ACHHUZ6I1qjJZwN+hTVMveXFNPlk35jCWxEx22+V+5Br2s5Gi2M7p+E667aAD+xd2QTCwVeIvuXyng==
+X-Received: by 2002:a05:6512:49e:b0:4f1:4d66:ac96 with SMTP id v30-20020a056512049e00b004f14d66ac96mr3283290lfq.19.1684780693706;
+        Mon, 22 May 2023 11:38:13 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id r11-20020a19ac4b000000b004f252f48e5fsm1079378lfc.40.2023.05.22.11.38.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 22 May 2023 11:38:13 -0700 (PDT)
+Message-ID: <844191d4-9a6b-605a-5d1a-cd4ad5dc98c9@linaro.org>
+Date:   Mon, 22 May 2023 21:38:12 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 1/5] msm/drm/dsi: Round up DSC hdisplay calculation
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20230405-add-dsc-support-v3-0-6e1d35a206b3@quicinc.com>
- <20230405-add-dsc-support-v3-1-6e1d35a206b3@quicinc.com>
- <uh5cshbplstpnp7npqvnxwefyh7h4zur3vrkt626pdeczgdnya@s3mhsrlc4smy>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <uh5cshbplstpnp7npqvnxwefyh7h4zur3vrkt626pdeczgdnya@s3mhsrlc4smy>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v2 04/11] arm64: dts: qcom: msm8998: switch UFS QMP PHY to
+ new style of bindings
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, Johan Hovold <johan@kernel.org>
+References: <20230521203834.22566-1-dmitry.baryshkov@linaro.org>
+ <20230521203834.22566-5-dmitry.baryshkov@linaro.org>
+ <37f97ffc-01c1-797c-f50c-1680f666d79d@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <37f97ffc-01c1-797c-f50c-1680f666d79d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Rrk-t_FZVE1E-j1qlyTOgxSkuuoaZyaP
-X-Proofpoint-GUID: Rrk-t_FZVE1E-j1qlyTOgxSkuuoaZyaP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-22_12,2023-05-22_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 bulkscore=0 malwarescore=0 mlxlogscore=999 suspectscore=0
- adultscore=0 phishscore=0 mlxscore=0 impostorscore=0 priorityscore=1501
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305220152
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,60 +85,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/20/2023 1:07 AM, Marijn Suijten wrote:
-> On 2023-05-19 14:17:26, Jessica Zhang wrote:
->> Currently, when compression is enabled, hdisplay is reduced via integer
->> division. This causes issues for modes where the original hdisplay is
->> not a multiple of 3.
+On 22/05/2023 19:59, Konrad Dybcio wrote:
+> 
+> 
+> On 21.05.2023 22:38, Dmitry Baryshkov wrote:
+>> Change the UFS QMP PHY to use newer style of QMP PHY bindings (single
+>> resource region, no per-PHY subnodes).
 >>
->> To fix this, use DIV_ROUND_UP to divide hdisplay.
->>
->> Reported-by: Marijn Suijten <marijn.suijten@somainline.org>
-> 
-> This should have been:
-> 
-> Suggested-by: Marijn Suijten <marijn.suijten@somainline.org>
-> 
->> Fixes: f3a99460406b ("drm/msm/dsi: update hdisplay calculation for dsi_timing_setup")
-> 
-> This hash is not valid (and checkpatch points it out...), as it is your
-> local commit from the MSM DSC helper methods series.  The original issue
-> was introduced in:
-> 
-> Fixes: 08802f515c3cf ("drm/msm/dsi: Add support for DSC configuration")
-
-Hi Marijn,
-
-Acked.
-
-Thanks,
-
-Jessica Zhang
-
-> 
-> - Marijn
-> 
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 >> ---
->>   drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>   arch/arm64/boot/dts/qcom/msm8998.dtsi | 16 +++-------------
+>>   1 file changed, 3 insertions(+), 13 deletions(-)
 >>
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> index 9223d7ec5a73..18d38b90eb28 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> @@ -952,7 +952,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->>   		 * pulse width same
->>   		 */
->>   		h_total -= hdisplay;
->> -		hdisplay = msm_dsc_get_bytes_per_line(msm_host->dsc) / 3;
->> +		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
->>   		h_total += hdisplay;
->>   		ha_end = ha_start + hdisplay;
->>   	}
->>
->> -- 
->> 2.40.1
->>
+>> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>> index b150437a8355..848fbd2cb3f8 100644
+>> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+>> @@ -980,7 +980,7 @@ ufshc: ufshc@1da4000 {
+>>   			compatible = "qcom,msm8998-ufshc", "qcom,ufshc", "jedec,ufs-2.0";
+>>   			reg = <0x01da4000 0x2500>;
+>>   			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
+>> -			phys = <&ufsphy_lanes>;
+>> +			phys = <&ufsphy>;
+>>   			phy-names = "ufsphy";
+>>   			lanes-per-direction = <2>;
+>>   			power-domains = <&gcc UFS_GDSC>;
+>> @@ -1021,11 +1021,8 @@ ufshc: ufshc@1da4000 {
+>>   
+>>   		ufsphy: phy@1da7000 {
+>>   			compatible = "qcom,msm8998-qmp-ufs-phy";
+>> -			reg = <0x01da7000 0x18c>;
+>> -			#address-cells = <1>;
+>> -			#size-cells = <1>;
+>> +			reg = <0x01da7000 0x1000>;
+>>   			status = "disabled";
+>> -			ranges;
+>>   
+>>   			clock-names =
+>>   				"ref",
+>> @@ -1037,14 +1034,7 @@ ufsphy: phy@1da7000 {
+>>   			reset-names = "ufsphy";
+>>   			resets = <&ufshc 0>;
+>>   
+>> -			ufsphy_lanes: phy@1da7400 {
+>> -				reg = <0x01da7400 0x128>,
+>> -				      <0x01da7600 0x1fc>,
+>> -				      <0x01da7c00 0x1dc>,
+>> -				      <0x01da7800 0x128>,
+>> -				      <0x01da7a00 0x1fc>;
+>> -				#phy-cells = <0>;
+>> -			};
+>> +			#phy-cells = <0>;
+> Looks like that will make status not-last?
+
+It was not the last one beforehand, so I hesitated to move it. Let's fix it.
+
+> 
+> Konrad
+>>   		};
+>>   
+>>   		tcsr_mutex: hwlock@1f40000 {
+
+-- 
+With best wishes
+Dmitry
+
