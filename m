@@ -2,153 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3ED1770DEC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 16:09:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BF6270DF73
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 16:37:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237225AbjEWOJb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 10:09:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46930 "EHLO
+        id S230228AbjEWOhp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 10:37:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237091AbjEWOJR (ORCPT
+        with ESMTP id S229960AbjEWOho (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 10:09:17 -0400
-Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7CEF1720
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 07:07:33 -0700 (PDT)
-Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-2af1822b710so69771091fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 07:07:33 -0700 (PDT)
+        Tue, 23 May 2023 10:37:44 -0400
+Received: from mail-lf1-f41.google.com (mail-lf1-f41.google.com [209.85.167.41])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AAF2E0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 07:37:42 -0700 (PDT)
+Received: by mail-lf1-f41.google.com with SMTP id 2adb3069b0e04-4f4b256a0c9so2437886e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 07:37:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684850792; x=1687442792;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3/m36s1I5lLQu5ZfF2EQK7PHYdhhLUzc5VcckZizUzo=;
-        b=mJJFj4KKfK5O/1msuEyWitYgeaDaB1H7Zs90/dckpZxPxYuztJHVq+vnyvZCFllpdG
-         34o7+tjCwYPvFs/03VQu+Ca74aLQ+yFb04ws0M3HKq+vywg0dMgfXIpwv4SbVEvcByFf
-         hTnk3lKNIxvgN8MyifzrzgF/F8IQQ/GStiqlfYbVYFidQguAqIDcnzKySjO/63llzINk
-         obdrKIjS3MFPTQNWGzwCxePDQ+PP0v3uL1IGq1+tuVXYdKJ3ATuDSTX2G+Mfo6rY2mgL
-         p+Dn+hrpSNcZAZe+qKlEXKS8oONcpJYKHvO5e0ieh47WLn4xVvvuV+Y5W2W8SO0NdQgi
-         q0vw==
+        d=linaro.org; s=google; t=1684852601; x=1687444601;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=c7ocuvFCcfF3A0FWpWbXCb8imInW5CeToUEyN2l4YxU=;
+        b=LzYugZoz46SydEu7tDkdVvhbkOROFYBbOradLxpnVnac6LydanHcJjvNI+5i6Plgjv
+         C6zztM1w8q92QWXT0N4bDfLZKyvBgZvACVRq77R94NBCmH+6MhFhpkhKcOQoWyh8Vd+X
+         Zk0nEaxChA7ngNYY6sqjgBcOiC+L30JmWHtpDnSct+5i1kxYZc3BAL2YsRxeM9x9mr3m
+         3OFACriffw+FwfUXSB1Pw2iC10gKBf1+36yc/oPsB/q8DN29uKg/ClszEcErOEkkprz3
+         1kGadQRgyWlx/9duiYPA0Ktkb+QKhRmp6wTgAB/U+lpyxSBuYRucnRS/EL54QjbTAER1
+         db8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684850792; x=1687442792;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3/m36s1I5lLQu5ZfF2EQK7PHYdhhLUzc5VcckZizUzo=;
-        b=Z6EYMa4VI7cxKp2kr8YUi35vn5he+ffBYnbpTTwdFd2VtYqiY4zy9ivUUFJ02oszSX
-         COYouYp9fXLaZO6rYeuLKHV4qpSwgE5Lf1GZxGsZOq6XkLcCKfI4c3ou2wAi7oo83g3A
-         /KdNRUPOsjU9dapM4yP4QWhRW6ZJzl1yMhS9S7ByrBEjnf3yYPU38CRO1hpaDlaYxB0c
-         1AOQaPLSJFulCcK8L7zloIl+p/3y3puiERxdBTKKU53FG4ba6JW2QLJ5RopCwt3vSq/E
-         fTwy87+8c/nG5Gi5PKmEylj6OzLvk9eQrGNyPTzmnKbhzxVCaNDF4SlqEeToClF5BUPA
-         p2JA==
-X-Gm-Message-State: AC+VfDzpYc5rgjN2R0wmb/7QpBttWC5uRUuVetmedlwtQlEXY3wR7z1z
-        o2g31YnnKAIGOiAtNp/XFAVR4R0gQXjgtM4JeI4=
-X-Google-Smtp-Source: ACHHUZ5j8540mbF8AM+pJcRIA5egcAFfY/aeplJNYrDYh9hj0t3OOL1TtsFpB4ravHgVegvwiIsxuQ==
-X-Received: by 2002:a2e:9117:0:b0:2ac:78b0:8aef with SMTP id m23-20020a2e9117000000b002ac78b08aefmr5444810ljg.16.1684850792068;
-        Tue, 23 May 2023 07:06:32 -0700 (PDT)
-Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id l1-20020a2e9081000000b002adbe01cd69sm1633536ljg.9.2023.05.23.07.06.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 May 2023 07:06:31 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v3 11/11] arm64: dts: qcom: sm8450: switch UFS QMP PHY to new style of bindings
-Date:   Tue, 23 May 2023 17:06:22 +0300
-Message-Id: <20230523140622.265692-12-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230523140622.265692-1-dmitry.baryshkov@linaro.org>
-References: <20230523140622.265692-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20221208; t=1684852601; x=1687444601;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=c7ocuvFCcfF3A0FWpWbXCb8imInW5CeToUEyN2l4YxU=;
+        b=XCV7r68OqTnR9FNTDc+S6PD98HXNKL+1it/IAVac/ZW8CUC0ozJ8AJhJrkAmpmdH6u
+         fTzUy3fnBAIKV61vSRQ0FeVuU7K/FaCQduuMvrUcDwarJPz5fhdl7/Tp1WY5bmwwR+O8
+         wm7rFIhs2+ezdtgCWXshQpNQrGhmhVCzPjWdYT/KqMF9ZfAHsoUqI7ObbqmEKHSTBAnk
+         q+x7HYvNwn2CZE0dlOe/jmPlEgC5OedAJZZMUootnvU2hYK57rgAQ5f83sMi07V9beT6
+         /JLx6Zxt87TJl8SfkbOYamLe/noCrPqyiL0vz51L6/MWdvYFpuuQzATtH9g0PqPJDgcV
+         yIjg==
+X-Gm-Message-State: AC+VfDwB7dhKgEA9gv1VsV81B/iinb3xjerGwsW4XcTdHr8TZ6tKz1pm
+        kB1yjEvmOLBA+BjNSnKm/Hj0aQ==
+X-Google-Smtp-Source: ACHHUZ4zGlQ11pfxTGA0iTEHBRx+KcTRF0EK7y6TX77S6BxQAnSdRxPdEdlaQqfXU8T7iUjX/f4WIg==
+X-Received: by 2002:ac2:5a02:0:b0:4ea:fabb:4db1 with SMTP id q2-20020ac25a02000000b004eafabb4db1mr4302079lfn.1.1684852600995;
+        Tue, 23 May 2023 07:36:40 -0700 (PDT)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id b26-20020ac2411a000000b004f399531e8csm1364023lfi.226.2023.05.23.07.36.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 May 2023 07:36:40 -0700 (PDT)
+Message-ID: <b0be5965-0dc9-c33c-9cba-21bfa82c4faf@linaro.org>
+Date:   Tue, 23 May 2023 17:36:39 +0300
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [Freedreno] [PATCH v2 0/7] drm/msm/dpu: simplify DPU encoder init
+Content-Language: en-GB
+To:     neil.armstrong@linaro.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>
+References: <20230519023855.3840907-1-dmitry.baryshkov@linaro.org>
+ <557a8aee-37b9-5654-c82c-97206576ab44@quicinc.com>
+ <CAA8EJpp+ODZZu13ehAN-9Ehz87HCdXsXvO3DQ-oxAhKcb2rqtA@mail.gmail.com>
+ <af7ab667-1be4-7391-d0a9-6f9e7439eb6d@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <af7ab667-1be4-7391-d0a9-6f9e7439eb6d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Change the UFS QMP PHY to use newer style of QMP PHY bindings (single
-resource region, no per-PHY subnodes).
+On 23/05/2023 10:31, Neil Armstrong wrote:
+> On 23/05/2023 09:20, Dmitry Baryshkov wrote:
+>> On Tue, 23 May 2023 at 04:58, Abhinav Kumar 
+>> <quic_abhinavk@quicinc.com> wrote:
+>>>
+>>>
+>>>
+>>> On 5/18/2023 7:38 PM, Dmitry Baryshkov wrote:
+>>>> Rework dpu_encoder initialization code, simplifying calling sequences
+>>>> and separating common init parts.
+>>>>
+>>>> Changes since v1:
+>>>> - Withdrawn two pathes for a later consideration
+>>>> - Changed dpu_encoder_phys_init() to return void (Abhinav)
+>>>> - Added small simplifications of dpu_encoder_phys_cmd_init() and
+>>>>     dpu_encoder_phys_wb_init()
+>>>>
+>>>
+>>> I had previously given these comments on the cover letter of v1, so
+>>> giving it again.
+>>>
+>>> Please mention that your series was made on top of
+>>> https://patchwork.freedesktop.org/series/116530/.
+>>>
+>>> Figured it out when I tried to apply it to my branch to test.
+>>>
+>>> I had tested v1, and between v1 and v2 i only see very trivial change,
+>>> so i think its okay to retain:
+>>>
+>>> Tested-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # sc7280
+>>
+>> Unfortunately patchwork ignores tags sent in the cover letter thread.
+> 
+> But b4 does with -t option to b4 shazam or b4 am
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 28 ++++++++++------------------
- 1 file changed, 10 insertions(+), 18 deletions(-)
+Yes. But b4 doesn't append Patchwork headers.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 595533aeafc4..44a67c9274bd 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -741,9 +741,9 @@ gcc: clock-controller@100000 {
- 				 <&pcie0_lane>,
- 				 <&pcie1_lane>,
- 				 <0>,
--				 <&ufs_mem_phy_lanes 0>,
--				 <&ufs_mem_phy_lanes 1>,
--				 <&ufs_mem_phy_lanes 2>,
-+				 <&ufs_mem_phy 0>,
-+				 <&ufs_mem_phy 1>,
-+				 <&ufs_mem_phy 2>,
- 				 <&usb_1_qmpphy QMP_USB43DP_USB3_PIPE_CLK>;
- 			clock-names = "bi_tcxo",
- 				      "sleep_clk",
-@@ -4064,7 +4064,7 @@ ufs_mem_hc: ufshc@1d84000 {
- 			      <0 0x01d88000 0 0x8000>;
- 			reg-names = "std", "ice";
- 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
--			phys = <&ufs_mem_phy_lanes>;
-+			phys = <&ufs_mem_phy>;
- 			phy-names = "ufsphy";
- 			lanes-per-direction = <2>;
- 			#reset-cells = <1>;
-@@ -4114,10 +4114,8 @@ ufs_mem_hc: ufshc@1d84000 {
- 
- 		ufs_mem_phy: phy@1d87000 {
- 			compatible = "qcom,sm8450-qmp-ufs-phy";
--			reg = <0 0x01d87000 0 0x1c4>;
--			#address-cells = <2>;
--			#size-cells = <2>;
--			ranges;
-+			reg = <0 0x01d87000 0 0x1000>;
-+
- 			clock-names = "ref", "ref_aux", "qref";
- 			clocks = <&rpmhcc RPMH_CXO_CLK>,
- 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
-@@ -4125,17 +4123,11 @@ ufs_mem_phy: phy@1d87000 {
- 
- 			resets = <&ufs_mem_hc 0>;
- 			reset-names = "ufsphy";
--			status = "disabled";
- 
--			ufs_mem_phy_lanes: phy@1d87400 {
--				reg = <0 0x01d87400 0 0x188>,
--				      <0 0x01d87600 0 0x200>,
--				      <0 0x01d87c00 0 0x200>,
--				      <0 0x01d87800 0 0x188>,
--				      <0 0x01d87a00 0 0x200>;
--				#clock-cells = <1>;
--				#phy-cells = <0>;
--			};
-+			#clock-cells = <1>;
-+			#phy-cells = <0>;
-+
-+			status = "disabled";
- 		};
- 
- 		sdhc_2: mmc@8804000 {
+> 
+> Neil
+> 
+>>
+>>>
+>>>> Dmitry Baryshkov (7):
+>>>>     drm/msm/dpu: merge dpu_encoder_init() and dpu_encoder_setup()
+>>>>     drm/msm/dpu: separate common function to init physical encoder
+>>>>     drm/msm/dpu: drop duplicated intf/wb indices from encoder structs
+>>>>     drm/msm/dpu: inline dpu_encoder_get_wb()
+>>>>     drm/msm/dpu: call dpu_rm_get_intf() from dpu_encoder_get_intf()
+>>>>     drm/msm/dpu: drop temp variable from dpu_encoder_phys_cmd_init()
+>>>>     drm/msm/dpu: simplify dpu_encoder_phys_wb_init()
+>>>>
+>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 178 
+>>>> ++++++++----------
+>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   |  14 +-
+>>>>    .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  15 +-
+>>>>    .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |  35 ++--
+>>>>    .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |  19 +-
+>>>>    .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  35 +---
+>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  87 ++++-----
+>>>>    7 files changed, 140 insertions(+), 243 deletions(-)
+>>>>
+>>
+>>
+>>
+> 
+
 -- 
-2.39.2
+With best wishes
+Dmitry
 
