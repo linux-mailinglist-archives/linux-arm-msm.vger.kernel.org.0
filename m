@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90D0D70DEB5
+	by mail.lfdr.de (Postfix) with ESMTP id E999E70DEB6
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 16:09:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237133AbjEWOJY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 10:09:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46966 "EHLO
+        id S237100AbjEWOJZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 10:09:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237094AbjEWOJM (ORCPT
+        with ESMTP id S237122AbjEWOJM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 23 May 2023 10:09:12 -0400
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2EF21700
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 07:07:26 -0700 (PDT)
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-2af2e908163so41462071fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 07:07:26 -0700 (PDT)
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B4A01702
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 07:07:27 -0700 (PDT)
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-2af29e51722so50213191fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 07:07:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684850785; x=1687442785;
+        d=linaro.org; s=google; t=1684850786; x=1687442786;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=I68K3BB4iJfx3Xn7rbtjuQH5W+UC/hortCKGNEq34Zo=;
-        b=xGczPVEOxj5TK8sFUdgTtaP289D8M968lk4WpW/rbaC19oN3W63WNxH9xMCeGPbsRe
-         lXk7mR99FXDWSJ8mczu3gXkmcpBRonfAKKMfZvqTqZdJ2DsLF5D8b8RPRchW0PRT6wVg
-         Vj4SCG18Fb7mZWqummeapp5bib7qX91sPjbopQOvPOw3ogubdGr7WpSVgrh1lH1fAZpY
-         miXgOEEy1NxTheOXdeu6Cx1jcqS23RgUYdQ+z5h8m2tv03FgekiQJLzBFsTSPZ9+VNht
-         FdVvCKxRZzePzuEHIJQXGZTLbgcjV+9T9mpNpZP7KuFbOs/4HwpPWI/ssBGeosgs/EpF
-         P59A==
+        bh=JpWnc1zBcRxuJ08XPjlOy+/0E7QF+n2iCuXt7UnGnk0=;
+        b=LJ7X/fjQgggMHQ54N+o8Dg6swYXxPBpx9IS1a1h8jNiREeMNqJZHwhDcLpmWShBzKW
+         b1f0NHgS7hl7J388UTT9xr4/GceX1WDd4t3Bl5WuMksjoeDfi4xH7L9wKz16iiAPZ94+
+         fUuauTjhCQJM/5DNJxKN+xvjvVo8q0H/54z8PwGJmr1VhLEcrb7jDJMpm0mpGRWYaZ6r
+         6eVoJ9TMCI9y5SONdUjnHFrF8ToidLWZ84bMuvgVZF155N6GRxG9N9phx8Qd2/P51+Np
+         ZdQbJpdLzcVeEwh7Vpvsc9KXt4Cze09hehQATDv4kt/WuVHTaYCVyvxnZTN3ZkmTHuHP
+         Y6YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684850785; x=1687442785;
+        d=1e100.net; s=20221208; t=1684850786; x=1687442786;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=I68K3BB4iJfx3Xn7rbtjuQH5W+UC/hortCKGNEq34Zo=;
-        b=I63bZ0qt+3ThmTcMoCVYZ7oId60kRbyAxPKBFX6Sv4/5cPSzE6Etj9KIfGnUltRbiK
-         fRE12uVv4E5/5cbFU1SChWtwaRa9yXrvXJYckIzV2LJQ0mFkS0eOzuxEzJfSpxXltVPk
-         RuC4sb9i76NPyZlrqvrbnbjWQ5y1pv/8yuISH9dzWi/ZWkwvHyOukSoEncR6gw5gUm1i
-         AhEyoyqxyg8tp7WpPCc8GOlkJXZkEm8RqkzmCWLnBRpWWctAUErLAei2GBVGrqNLw4R+
-         AF7RQYdk3jBBskxvwNFacarZ9DbL/oko6j/tlVyyZdf24OGGgPPjFeh8/h/9OX9ty/tz
-         pylQ==
-X-Gm-Message-State: AC+VfDwMgHqyOBoh5mcv0BTGU37HkOU/YosZ2EAHdC8aCCnlEpkG7Dqk
-        vg0E6vZOWdHmv5l8uAmPzZOfAw==
-X-Google-Smtp-Source: ACHHUZ6/mAovC+w8kfwOqclTWdEbzxxpbdcrvCzhQwrkuGWAZ/+NZ/h/ceBmlSxpU4rb8b+KpRR9kA==
-X-Received: by 2002:a2e:3612:0:b0:2a8:adc4:a928 with SMTP id d18-20020a2e3612000000b002a8adc4a928mr5216807lja.18.1684850785222;
+        bh=JpWnc1zBcRxuJ08XPjlOy+/0E7QF+n2iCuXt7UnGnk0=;
+        b=F4q36hDSpIOp6DMAG8g5GDZhKSGTKY/AAOx9Qxoz/h/M8Z589SLnR4JJub/bb4t6Ua
+         2TrXDOiN++dfpMDaUfkwb+cwmgEBcJmBhTN/jv0PmoydT12JaVbraefUKwUxCj0F9QaX
+         zgNoxF6OMb8rTkQv+87GdDTLZt4BtceDhKmECKD2HeqgPQwBmD1bwzekvh5wDDZPcFAw
+         4xwAcdEcm3XxvYIjXQMJeeYsPyGXcr6z7759Hej+NsS9ba+zysjjZ658y5fQIALk1+Y4
+         nQagsZxzc3SbeGgU+unGxT8IE0Wngd4ZqFR+mPbaM7jOS8nQ4qsmXd6kLjJTLlHr0Zsx
+         qb+Q==
+X-Gm-Message-State: AC+VfDw44ZTytbNYgufkZQrRWirUI1JNmTJH+nN6UgmxgnLYnvc6p2Gh
+        D1sUpe6X3JGAiw4X2pJdlsp8rA==
+X-Google-Smtp-Source: ACHHUZ4LV/KGts4l2QvOhv+3rEbyYEgXjKiJuXJjmbKGAhx266yOWGurqRP65cQ+JkTumr/r8P9CKw==
+X-Received: by 2002:a2e:b209:0:b0:2a7:96bd:9eb3 with SMTP id l9-20020a2eb209000000b002a796bd9eb3mr4853150ljm.3.1684850785959;
         Tue, 23 May 2023 07:06:25 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id l1-20020a2e9081000000b002adbe01cd69sm1633536ljg.9.2023.05.23.07.06.24
+        by smtp.gmail.com with ESMTPSA id l1-20020a2e9081000000b002adbe01cd69sm1633536ljg.9.2023.05.23.07.06.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 May 2023 07:06:24 -0700 (PDT)
+        Tue, 23 May 2023 07:06:25 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -61,9 +61,9 @@ To:     Andy Gross <agross@kernel.org>,
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
         devicetree@vger.kernel.org
-Subject: [PATCH v3 02/11] phy: qcom-qmp-ufs: populate offsets configuration
-Date:   Tue, 23 May 2023 17:06:13 +0300
-Message-Id: <20230523140622.265692-3-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 03/11] arm64: dts: qcom: msm8996: switch UFS QMP PHY to new style of bindings
+Date:   Tue, 23 May 2023 17:06:14 +0300
+Message-Id: <20230523140622.265692-4-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230523140622.265692-1-dmitry.baryshkov@linaro.org>
 References: <20230523140622.265692-1-dmitry.baryshkov@linaro.org>
@@ -79,63 +79,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Populate offsets configuration for the rest of UFS PHYs to make it
-possible to switch them to the new (single-node) bindings style.
+Change the UFS QMP PHY to use newer style of QMP PHY bindings (single
+resource region, no per-PHY subnodes).
 
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 25 +++++++++----------------
+ 1 file changed, 9 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-index 8c877b668bb9..d99dc1043f74 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-@@ -833,6 +833,8 @@ static const struct qmp_ufs_offsets qmp_ufs_offsets_v6 = {
- static const struct qmp_phy_cfg msm8996_ufsphy_cfg = {
- 	.lanes			= 1,
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 2b35cb3f5292..2b65c608a57e 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -726,9 +726,9 @@ gcc: clock-controller@300000 {
+ 				 <&pciephy_1>,
+ 				 <&pciephy_2>,
+ 				 <&ssusb_phy_0>,
+-				 <&ufsphy_lane 0>,
+-				 <&ufsphy_lane 1>,
+-				 <&ufsphy_lane 2>;
++				 <&ufsphy 0>,
++				 <&ufsphy 1>,
++				 <&ufsphy 2>;
+ 			clock-names = "cxo",
+ 				      "cxo2",
+ 				      "sleep_clk",
+@@ -1993,7 +1993,7 @@ ufshc: ufshc@624000 {
+ 			reg = <0x00624000 0x2500>;
+ 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
  
-+	.offsets		= &qmp_ufs_offsets,
-+
- 	.tbls = {
- 		.serdes		= msm8996_ufsphy_serdes,
- 		.serdes_num	= ARRAY_SIZE(msm8996_ufsphy_serdes),
-@@ -924,6 +926,8 @@ static const struct qmp_phy_cfg sc8280xp_ufsphy_cfg = {
- static const struct qmp_phy_cfg sdm845_ufsphy_cfg = {
- 	.lanes			= 2,
+-			phys = <&ufsphy_lane>;
++			phys = <&ufsphy>;
+ 			phy-names = "ufsphy";
  
-+	.offsets		= &qmp_ufs_offsets,
-+
- 	.tbls = {
- 		.serdes		= sdm845_ufsphy_serdes,
- 		.serdes_num	= ARRAY_SIZE(sdm845_ufsphy_serdes),
-@@ -1038,6 +1042,8 @@ static const struct qmp_phy_cfg sm8150_ufsphy_cfg = {
- static const struct qmp_phy_cfg sm8250_ufsphy_cfg = {
- 	.lanes			= 2,
+ 			power-domains = <&gcc UFS_GDSC>;
+@@ -2046,25 +2046,18 @@ ufshc: ufshc@624000 {
  
-+	.offsets		= &qmp_ufs_offsets,
-+
- 	.tbls = {
- 		.serdes		= sm8150_ufsphy_serdes,
- 		.serdes_num	= ARRAY_SIZE(sm8150_ufsphy_serdes),
-@@ -1070,6 +1076,8 @@ static const struct qmp_phy_cfg sm8250_ufsphy_cfg = {
- static const struct qmp_phy_cfg sm8350_ufsphy_cfg = {
- 	.lanes			= 2,
+ 		ufsphy: phy@627000 {
+ 			compatible = "qcom,msm8996-qmp-ufs-phy";
+-			reg = <0x00627000 0x1c4>;
+-			#address-cells = <1>;
+-			#size-cells = <1>;
+-			ranges;
++			reg = <0x00627000 0x1000>;
  
-+	.offsets		= &qmp_ufs_offsets,
-+
- 	.tbls = {
- 		.serdes		= sm8350_ufsphy_serdes,
- 		.serdes_num	= ARRAY_SIZE(sm8350_ufsphy_serdes),
-@@ -1102,6 +1110,8 @@ static const struct qmp_phy_cfg sm8350_ufsphy_cfg = {
- static const struct qmp_phy_cfg sm8450_ufsphy_cfg = {
- 	.lanes			= 2,
+ 			clocks = <&gcc GCC_UFS_CLKREF_CLK>;
+ 			clock-names = "ref";
  
-+	.offsets		= &qmp_ufs_offsets,
+ 			resets = <&ufshc 0>;
+ 			reset-names = "ufsphy";
+-			status = "disabled";
+ 
+-			ufsphy_lane: phy@627400 {
+-				reg = <0x627400 0x12c>,
+-				      <0x627600 0x200>,
+-				      <0x627c00 0x1b4>;
+-				#clock-cells = <1>;
+-				#phy-cells = <0>;
+-			};
++			#clock-cells = <1>;
++			#phy-cells = <0>;
 +
- 	.tbls = {
- 		.serdes		= sm8350_ufsphy_serdes,
- 		.serdes_num	= ARRAY_SIZE(sm8350_ufsphy_serdes),
++			status = "disabled";
+ 		};
+ 
+ 		camss: camss@a00000 {
 -- 
 2.39.2
 
