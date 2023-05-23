@@ -2,84 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 378EF70DE4C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 15:59:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C6D4A70DEB1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 16:09:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237095AbjEWN63 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 09:58:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41486 "EHLO
+        id S236641AbjEWOJX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 10:09:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47630 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237152AbjEWN6V (ORCPT
+        with ESMTP id S237284AbjEWOJE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 09:58:21 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32E3FE5B;
-        Tue, 23 May 2023 06:57:48 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34NDslaD025315;
-        Tue, 23 May 2023 13:57:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=sIgFMJvy3ZwJ+GETuDx0qmHUJKSPvN2B7sAcW9yrDAI=;
- b=hzk6PG/G4DvzpqO1cfgZSytLuBdj8mzlea10g0Gk71HFbLxXJe2WSmkT4gR9EcvX7Uzl
- 8g0J7eNJwgQA+Pmuc98O2Gi8tAZRgN9bhfzjniEpOGfwNwy0jkGm+uUKRLAu4v7dVA91
- mgsoDIzPJBwErsobhHKn+rPAqUkQ3dSye208avQDVZ0d0N6NMgJDpLfstcIEOu/X7fMp
- RnB2JEMprd0iVnV0Iu6iBMt8GL8mCv7fZRn4iUQjKigYzIe+F9h6kxm8AwfriNCl99Zi
- 9Gj7tUrj1fZviEQKy4CtK5IB101PUfqAEK2xZX8tA3SiJfErXQQuB9+vXA16gZJ9CJUB EA== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qracsjq10-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 23 May 2023 13:57:45 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 34NDveIn032174;
-        Tue, 23 May 2023 13:57:42 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 3qpq9kjvth-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
-        Tue, 23 May 2023 13:57:42 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 34NDvfUJ032181;
-        Tue, 23 May 2023 13:57:41 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-kbajaj-hyd.qualcomm.com [10.147.247.189])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 34NDvfbZ032180;
-        Tue, 23 May 2023 13:57:41 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2340697)
-        id C4AB8529754; Tue, 23 May 2023 19:27:40 +0530 (+0530)
-From:   Komal Bajaj <quic_kbajaj@quicinc.com>
-To:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 23 May 2023 10:09:04 -0400
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62B5718E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 07:07:25 -0700 (PDT)
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-2af2c35fb85so44153331fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 07:07:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684850784; x=1687442784;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=p3KXXqilydNSJx6QX3Hgpj305X8NziePQgOUtVW2SK0=;
+        b=awrh0BqWOiMn4lx3qn7o1+q0TkhqFBkzo2YEPuF0b0V2QzSJ+TaGwlAamERzgeSl+U
+         DXcVOIuWuQtrmfyuqYZEhjmvZZNEgW6czIR8aImz3WTwmaEk0+3Kti1KPKvo5Lo5u3SN
+         pI06QZBM9H/lyvwSvD94h9UPRQZxDNWpkXigpyVsXF5Jj8h5qXKLglfrkBqrJUhg8Nre
+         T78RurSEY2XG2IKoRFh42wODb6HlkKZdPHYu8UQp6qJYaJn9JtvxC0ZCLi5igBse0mDS
+         s5P5JooLOjxgukFiN13cLhVM0MP6iBhmOKgKvHKv/4cLgax+pouWNzeo+q0b7OXkL7qj
+         ajfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684850784; x=1687442784;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=p3KXXqilydNSJx6QX3Hgpj305X8NziePQgOUtVW2SK0=;
+        b=bYNdJcahdS43v4CRzIMYsCoovlvV750C5HZOfMcg/eTUeN+IlTkNgkjaDDd3ZHrXBy
+         I6/FU1v1ZnNfRCHTrThNCoP+B3/WeNIPW7bvGNlHRNmR2wY+r5CNinvbyc6L0y7oESjv
+         ScbAYuacaSFV2o62Eeu9Wkk54WkehgoOOml0B30IrlHHW7URfuBXukm0dk1SmibR1qq8
+         OdaW+V0k/RbFgoE3ralxWToSxNDGtlV24Y+z09uFV7QB5YinitxXbAEd695WJuTlYuMt
+         nb/WwG19cTSUccJG6gLZszlFck7tOrIqPuu0mTAgFyvoJDN8WSeSKzNlysXaWBm8yLFt
+         RqgQ==
+X-Gm-Message-State: AC+VfDx1rMxIhjemcfRhwxokIgIHfzf+iGjMFJULr2/IVhZKiDvfCO3i
+        tA+wdv6uc6H7X/jPFd0SJKsekA==
+X-Google-Smtp-Source: ACHHUZ4zUgBMgGLYTzXfn85FeLCsjP+6KNCl1xEr29QcvYTUYMdyldO+hcO99YKNm6Xqjayq7IUy3A==
+X-Received: by 2002:a2e:7019:0:b0:2a7:73a2:d915 with SMTP id l25-20020a2e7019000000b002a773a2d915mr5738921ljc.5.1684850783704;
+        Tue, 23 May 2023 07:06:23 -0700 (PDT)
+Received: from umbar.unikie.fi ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id l1-20020a2e9081000000b002adbe01cd69sm1633536ljg.9.2023.05.23.07.06.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 May 2023 07:06:23 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Komal Bajaj <quic_kbajaj@quicinc.com>, linux-mmc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 4/4] arm64: dts: qcom: qdu1000-idp: add SDHCI for emmc
-Date:   Tue, 23 May 2023 19:27:33 +0530
-Message-Id: <20230523135733.3852-5-quic_kbajaj@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230523135733.3852-1-quic_kbajaj@quicinc.com>
-References: <20230523135733.3852-1-quic_kbajaj@quicinc.com>
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CB-5zmwsMNHlLtH4JesL-M9dvqBKyf4_
-X-Proofpoint-ORIG-GUID: CB-5zmwsMNHlLtH4JesL-M9dvqBKyf4_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-23_09,2023-05-23_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=768 spamscore=0
- malwarescore=0 phishscore=0 impostorscore=0 clxscore=1015 adultscore=0
- mlxscore=0 bulkscore=0 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305230109
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH v3 00/11] phy: qcom-qmp-ufs: convert to newer style of bindings
+Date:   Tue, 23 May 2023 17:06:11 +0300
+Message-Id: <20230523140622.265692-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
         URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,47 +76,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add sdhci node for emmc in qdu1000-idp.
+Reviewing several patchsets for newer platforms made me understand that
+having two styles of QMP PHY bindings causes confusion. Despite binding
+documents having notes telling that old bindings should be used for
+older platforms, it is too easy to attempt adding new platform with
+older QMP PHY binding. Thus let's have just a single documented style of
+bindings.
 
-Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qdu1000-idp.dts | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+Changes since v2:
+ - Moved status property to the last place for msm8998, sdm845 (Konrad)
 
-diff --git a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-index 9e9fd4b8023e..6e988e90aa50 100644
---- a/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qdu1000-idp.dts
-@@ -448,6 +448,29 @@
- 	status = "okay";
- };
+Changes since v1:
+ - Split large patchset into smaller parts
+ - Rebased on phy/next
 
-+&sdhc {
-+	pinctrl-names = "default", "sleep";
-+	pinctrl-0 = <&sdc_on_state>;
-+	pinctrl-1 = <&sdc_off_state>;
-+
-+	cap-mmc-hw-reset;
-+	mmc-ddr-1_8v;
-+	mmc-hs200-1_8v;
-+	mmc-hs400-1_8v;
-+	mmc-hs400-enhanced-strobe;
-+
-+	non-removable;
-+	no-sd;
-+	no-sdio;
-+
-+	supports-cqe;
-+
-+	vmmc-supply = <&vreg_l10a_2p95>;
-+	vqmmc-supply = <&vreg_l7a_1p8>;
-+
-+	status = "okay";
-+};
-+
- &uart7 {
- 	status = "okay";
- };
---
-2.17.1
+Dmitry Baryshkov (11):
+  dt-bindings: phy: migrate QMP UFS PHY bindings to
+    qcom,sc8280xp-qmp-ufs-phy.yaml
+  phy: qcom-qmp-ufs: populate offsets configuration
+  arm64: dts: qcom: msm8996: switch UFS QMP PHY to new style of bindings
+  arm64: dts: qcom: msm8998: switch UFS QMP PHY to new style of bindings
+  arm64: dts: qcom: sdm845: switch UFS QMP PHY to new style of bindings
+  arm64: dts: qcom: sm6115: switch UFS QMP PHY to new style of bindings
+  arm64: dts: qcom: sm6350: switch UFS QMP PHY to new style of bindings
+  arm64: dts: qcom: sm8150: switch UFS QMP PHY to new style of bindings
+  arm64: dts: qcom: sm8250: switch UFS QMP PHY to new style of bindings
+  arm64: dts: qcom: sm8350: switch UFS QMP PHY to new style of bindings
+  arm64: dts: qcom: sm8450: switch UFS QMP PHY to new style of bindings
+
+ .../phy/qcom,msm8996-qmp-ufs-phy.yaml         | 244 ------------------
+ .../phy/qcom,sc8280xp-qmp-ufs-phy.yaml        |  48 +++-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |  25 +-
+ arch/arm64/boot/dts/qcom/msm8998.dtsi         |  18 +-
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          |  19 +-
+ arch/arm64/boot/dts/qcom/sm6115.dtsi          |  17 +-
+ arch/arm64/boot/dts/qcom/sm6350.dtsi          |  18 +-
+ arch/arm64/boot/dts/qcom/sm8150.dtsi          |  20 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi          |  20 +-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi          |  28 +-
+ arch/arm64/boot/dts/qcom/sm8450.dtsi          |  28 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-ufs.c       |  10 +
+ 12 files changed, 114 insertions(+), 381 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/phy/qcom,msm8996-qmp-ufs-phy.yaml
+
+-- 
+2.39.2
 
