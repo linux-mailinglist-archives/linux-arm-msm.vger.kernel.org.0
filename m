@@ -2,153 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8631970E66B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 22:27:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2756670E683
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 22:33:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232824AbjEWU1k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 16:27:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33424 "EHLO
+        id S238397AbjEWUdJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 16:33:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233333AbjEWU1j (ORCPT
+        with ESMTP id S238404AbjEWUdI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 16:27:39 -0400
-Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E3AF130
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 13:27:38 -0700 (PDT)
-Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-561c1768bacso1218657b3.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 13:27:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684873657; x=1687465657;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=P4zhdFMMFweNQjmQzA41UGsWmlCSqKzpzycx7+iVS7A=;
-        b=fDtpR5bYRVSCUwJDVAyWboPY+JdRGy0K4KFzM+mm4bi0GIkXlvypRgGdw/mbiKiAd9
-         qU++VSmcOgWjna2PlbW606CGM5eAPgaiQrAic6cABd3eMYrSukjFLLG1u6XffjbmwaiM
-         /VDfRzNctQWfN8olq6nOJ9eOfCKfAUen2RlfanwaV0T55oxkWMJVGk0mPMNuZB9tAXWh
-         BwbjVkeQeA+lNMvG8ShcXRC1uCONL4syOdUrzcJryCWwryQIUJaw10e7dKrQYer3MVFF
-         QX7tVj4bilwR2G52phZ6bMXMpXpO+Ur2umF3L7BZi3qngUSMaadzoBuQHWuKvrfpQ024
-         65qg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684873657; x=1687465657;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=P4zhdFMMFweNQjmQzA41UGsWmlCSqKzpzycx7+iVS7A=;
-        b=MDVU6Wzp/BOn6grlGRIl6u9btZRM2EbXSu5AdiZLO7RYctt8m79Q/oonqoGQdbHRW/
-         eGF+CuFHqc2tzl3mvWb9+uZDG8NKtdEs/eQ9CwJd9SjJbgEuOdTo9XlX9HKvwF+OSosG
-         gcpbJEUlNYEGTTY4A7i1fNXK71y+bq56p8wuZRAlQRjBl9xE8AddH8HVH6Vvq91wm5bV
-         ioRF++cfFNho2zxYUhXLQrCck3rsCJyFdGGGXmlpAwLoF69NhXBM6D95JyWV1g6z9c3Y
-         Jy0xPQcdiYeUYw9gvXj7VBrjPHOwSC4YkLso5deEX4dJcw4Gb4UR3iCWU5iXjHY/4cBU
-         NQag==
-X-Gm-Message-State: AC+VfDxQV8+8OY3chLryBBbByBrYEnf/IupTpo3A1xFLhY/dm8LL34NH
-        KPUNU//up3dp+wvOiXhj5oqMtoVaq3zIfhbtgOteBx/aVfrxmaKK
-X-Google-Smtp-Source: ACHHUZ5dsaAmJeAPGWQj1PMa6KvCSz/ESzcoCqojES3xKY2lidhpDE6B1Numzio7gc+OYpyBK0255R1DeS0u0zoQyeU=
-X-Received: by 2002:a0d:ca0b:0:b0:561:bb2a:5d88 with SMTP id
- m11-20020a0dca0b000000b00561bb2a5d88mr17220176ywd.7.1684873655780; Tue, 23
- May 2023 13:27:35 -0700 (PDT)
+        Tue, 23 May 2023 16:33:08 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA065DD;
+        Tue, 23 May 2023 13:33:07 -0700 (PDT)
+Received: from [192.168.122.1] (84-115-214-73.cable.dynamic.surfer.at [84.115.214.73])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 717BACFB2A;
+        Tue, 23 May 2023 20:33:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1684873985; bh=4Fi/VxwOwD866PDaqJ+pluJDA2/P40kdcSvWCGnuZ74=;
+        h=From:Date:Subject:To:Cc;
+        b=d7W35bq6ZwD5YwlSXfeidpm5iuuSlPzZVUjz5ex5hVw3/WLvIrh6AiLjCbPCGLCra
+         XxcepkWoZCJ0aJRBVt27qBltG2KJ/LIMAJBlzkve10X88Q7K+sqYCZxN+9qQj3ot1e
+         MtG8+dHqARsd9NtpsUnAa9ZrEbWVy++/qA3kHQbg=
+From:   Luca Weiss <luca@z3ntu.xyz>
+Date:   Tue, 23 May 2023 22:32:52 +0200
+Subject: [PATCH v2] soc: qcom: ocmem: Add OCMEM hardware version print
 MIME-Version: 1.0
-References: <20230521172147.4163085-1-dmitry.baryshkov@linaro.org> <300fc53c-2a58-714c-855a-08a0dbef3ed9@quicinc.com>
-In-Reply-To: <300fc53c-2a58-714c-855a-08a0dbef3ed9@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 23 May 2023 23:27:24 +0300
-Message-ID: <CAA8EJprPuwo4z=WoRJOzg2WMWdEkuXwgzoAe6X+Dv_Wgi1X9nQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] drm/msm/dpu: drop SSPP register dumpers
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230509-ocmem-hwver-v2-1-8c8793a07dfc@z3ntu.xyz>
+X-B4-Tracking: v=1; b=H4sIAPMibWQC/22OzRKCIBSFX8Vh3XUQzLBV79G4ELoGC6DAyJ/x3
+ UPXLb8z55tzVhIxGIzkWqwkYDLReJeBnQqidO+eCOaRmTDKOD3TFryyaEF/EwZoW6kk55IyIUk
+ 2ZB8RZOid0rvzVt6CjVa0lxqasi7nvfQKOJjpmLx3mbWJow/z8SBVe/p/LFVQgRQcFfKBVY24L
+ dyNn3KaF9Jt2/YDOLYv3csAAAA=
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Content-Type: text/plain; charset="UTF-8"
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Brian Masney <masneyb@onstation.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1992; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=4Fi/VxwOwD866PDaqJ+pluJDA2/P40kdcSvWCGnuZ74=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBkbSL0CmSMn/+CDWJmaln7Jw3BulA6nbLWEEjAZ
+ /lrRFmktYyJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZG0i9AAKCRBy2EO4nU3X
+ VtwlEADY7o2LKFkknKLLi+72sn4OP2pKygUyIcWdgA4RZXyFkV45uzoh5L6JATSZG0k4CdinVa7
+ 4QlguJTGXyQLaKuzPPLxeAOyXHwHeyE/7RVOQrWiVwv+03PNwR+KgCHGkWnKZ6xtOJu7Op1J/xR
+ D4dlTiPuOjqtcJ3vVkGesWokPoDonIArtQNalXgP1bjgvu0HC8M6y9TeoeTB/hTRQx/akOyIF/H
+ FmWMJjd22B21cnsuGcHhkINjlwClq/6d3W/uaoG2eJgy9c2+3jTtGJEsgkiltNeTo7TZ+Mh6ou2
+ 9sV/vT2a1Fb3fhVT1qQtkYB7W2RJpP2hH6Ml+3KO59KtBQIN8OJIr6/FuwbkbaWRZiSGV7lQNMB
+ f3U7dfkyOLq3VgcxJFtM4YDqmk6ht627Rv5Nr1dpsF9eQaBb1QXr7dKz/h29wCs1ICSUXWXgKoa
+ 3MgooYQYCJq0Iw2Bgly1sZFF3fXBlF8pg1nrcQmoEZDMc7MhGUhs6ktwNePv16HajrSYn/dvbgw
+ ARsRrRbNOcJZ4+wQwtRu6w71SVuoQkdALayJCfnnOYB6YFcyTx+OsPv2zSyVu2LdUF4xpLgTfNb
+ q62CjUHNtlPkT4TqK5Aghruc0uMEk/BuHANWnFYyYCC73DfaierJVDOCWm97Ey4l+IVvyQsX47H
+ uKq5LfZznWGb7jQ==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 23 May 2023 at 23:01, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
->
->
-> On 5/21/2023 10:21 AM, Dmitry Baryshkov wrote:
-> > Drop SSPP-specifig debugfs register dumps in favour of using
-> > debugfs/dri/0/kms or devcoredump.
-> >
->
-> I did see another series which removes src_blk from the catalog (I am
-> yet to review that one) . Lets assume that one is fine and this change
-> will be going on top of that one right?
->
-> The concern I have with this change is that although I do agree that we
-> should be in favor of using debugfs/dri/0/kms ( i have used it a few
-> times and it works pretty well ), devcoredump does not have the support
-> to dump sub-blocks . Something which we should add with priority because
-> even with DSC blocks with the separation of enc/ctl blocks we need that
-> like I wrote in one of the responses.
->
-> So the "len" of the blocks having sub-blocks will be ignored in favor of
-> the len of the sub-blocks.
->
-> If we remove this without adding that support first, its a loss of debug
-> functionality.
->
-> Can we retain these blocks and remove dpu_debugfs_create_regset32 in a
-> different way?
+It might be useful to know what hardware version of the OCMEM block the
+SoC contains. Add a debug print for that.
 
-Let's add subblocks dumping. This sounds like a good idea. I'll take a
-look closer to the weekend.
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+This patch is depends on [0] but could also be applied in the other
+order, if conflicts are resolved.
 
->
->
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 25 ---------------------
-> >   1 file changed, 25 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> > index bfd82c2921af..6c5ebee2f7cd 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-> > @@ -727,31 +727,6 @@ int _dpu_hw_sspp_init_debugfs(struct dpu_hw_sspp *hw_pipe, struct dpu_kms *kms,
-> >       debugfs_create_xul("features", 0600,
-> >                       debugfs_root, (unsigned long *)&hw_pipe->cap->features);
-> >
-> > -     /* add register dump support */
-> > -     dpu_debugfs_create_regset32("src_blk", 0400,
-> > -                     debugfs_root,
-> > -                     sblk->src_blk.base + cfg->base,
-> > -                     sblk->src_blk.len,
-> > -                     kms);
-> > -
-> > -     if (cfg->features & BIT(DPU_SSPP_SCALER_QSEED3) ||
-> > -                     cfg->features & BIT(DPU_SSPP_SCALER_QSEED3LITE) ||
-> > -                     cfg->features & BIT(DPU_SSPP_SCALER_QSEED2) ||
-> > -                     cfg->features & BIT(DPU_SSPP_SCALER_QSEED4))
-> > -             dpu_debugfs_create_regset32("scaler_blk", 0400,
-> > -                             debugfs_root,
-> > -                             sblk->scaler_blk.base + cfg->base,
-> > -                             sblk->scaler_blk.len,
-> > -                             kms);
-> > -
-> > -     if (cfg->features & BIT(DPU_SSPP_CSC) ||
-> > -                     cfg->features & BIT(DPU_SSPP_CSC_10BIT))
-> > -             dpu_debugfs_create_regset32("csc_blk", 0400,
-> > -                             debugfs_root,
-> > -                             sblk->csc_blk.base + cfg->base,
-> > -                             sblk->csc_blk.len,
-> > -                             kms);
-> > -
-> >       debugfs_create_u32("xin_id",
-> >                       0400,
-> >                       debugfs_root,
+[0] https://lore.kernel.org/linux-arm-msm/20230506-msm8226-ocmem-v1-1-3e24e2724f01@z3ntu.xyz/
+---
+Changes in v2:
+- Use FIELD_GET macros for getting correct bits from register (take
+  wording from mdp5: major, minor, step which hopefully is sort of
+  accurate)
+- Link to v1: https://lore.kernel.org/r/20230509-ocmem-hwver-v1-1-b83ece3f2168@z3ntu.xyz
+---
+ drivers/soc/qcom/ocmem.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
+diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
+index c3e78411c637..9f7c3348cbb9 100644
+--- a/drivers/soc/qcom/ocmem.c
++++ b/drivers/soc/qcom/ocmem.c
+@@ -76,6 +76,10 @@ struct ocmem {
+ #define OCMEM_REG_GFX_MPU_START			0x00001004
+ #define OCMEM_REG_GFX_MPU_END			0x00001008
+ 
++#define OCMEM_HW_VERSION_MAJOR(val)		FIELD_GET(GENMASK(31, 28), val)
++#define OCMEM_HW_VERSION_MINOR(val)		FIELD_GET(GENMASK(27, 16), val)
++#define OCMEM_HW_VERSION_STEP(val)		FIELD_GET(GENMASK(15, 0), val)
++
+ #define OCMEM_HW_PROFILE_NUM_PORTS(val)		FIELD_GET(0x0000000f, (val))
+ #define OCMEM_HW_PROFILE_NUM_MACROS(val)	FIELD_GET(0x00003f00, (val))
+ 
+@@ -355,6 +359,11 @@ static int ocmem_dev_probe(struct platform_device *pdev)
+ 		}
+ 	}
+ 
++	reg = ocmem_read(ocmem, OCMEM_REG_HW_VERSION);
++	dev_dbg(dev, "OCMEM hardware version: %ld.%ld.%ld\n",
++		OCMEM_HW_VERSION_MAJOR(reg), OCMEM_HW_VERSION_MINOR(reg),
++		OCMEM_HW_VERSION_STEP(reg));
++
+ 	reg = ocmem_read(ocmem, OCMEM_REG_HW_PROFILE);
+ 	ocmem->num_ports = OCMEM_HW_PROFILE_NUM_PORTS(reg);
+ 	ocmem->num_macros = OCMEM_HW_PROFILE_NUM_MACROS(reg);
 
+---
+base-commit: 8705151771af822ac794b44504cd72eebc423499
+change-id: 20230509-ocmem-hwver-99bcb33b028b
 
+Best regards,
 -- 
-With best wishes
-Dmitry
+Luca Weiss <luca@z3ntu.xyz>
+
