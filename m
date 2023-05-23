@@ -2,147 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 51CD070DFB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 16:53:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12D0770E03A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 17:18:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237108AbjEWOxM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 10:53:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44900 "EHLO
+        id S237273AbjEWPR6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 11:17:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57854 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236276AbjEWOxM (ORCPT
+        with ESMTP id S237564AbjEWPRs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 10:53:12 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 8C36DE9;
-        Tue, 23 May 2023 07:53:10 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3925A139F;
-        Tue, 23 May 2023 07:53:55 -0700 (PDT)
-Received: from [10.57.73.71] (unknown [10.57.73.71])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8FB673F840;
-        Tue, 23 May 2023 07:53:07 -0700 (PDT)
-Message-ID: <0947825d-5c2f-0e75-cfe8-ef4c6fa8d502@arm.com>
-Date:   Tue, 23 May 2023 15:53:06 +0100
+        Tue, 23 May 2023 11:17:48 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7522A189;
+        Tue, 23 May 2023 08:17:42 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 07406623F1;
+        Tue, 23 May 2023 15:17:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6381BC433D2;
+        Tue, 23 May 2023 15:17:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1684855061;
+        bh=D2TI28zRqMeP33qD4AGJWV2hUnE/pn90ek046LImn8g=;
+        h=From:To:Cc:Subject:Date:From;
+        b=aCoBt0h0f7NnX7GHkpKHx5gX/kOf9gAf60zsdhyzmiEFf+xCbWPbmRlqVY2L+G3uB
+         qHsIFCdiq1Vo2YL79EGMRddXfA7JRKvA2aXHN0efIAUqdMgUpU70iS9t8yoNaPh4KZ
+         DyrY+bUPUsYjBE6py0YTCxEurL/YMVOizJBEywAwYU5NHi4oUJaHRd+XeYfAgLuyZM
+         0z0XPl9Zw2kcaFZWuqLwG09mIZVspbZef7/Yz3A5M7mw6llm7VBYZ3skX6OCps4Jpx
+         zj9Lh+ZaiZVKPIBANRvV69ER6euCgEo++kYy6qqBNCFycbhItcIyZKJY30Y9NKIhgv
+         Dsmk9u8YB0CZw==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan+linaro@kernel.org>)
+        id 1q1Tlg-0007O5-3D; Tue, 23 May 2023 17:17:44 +0200
+From:   Johan Hovold <johan+linaro@kernel.org>
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Johan Hovold <johan+linaro@kernel.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>
+Subject: [PATCH] Revert "drm/msm/dp: set self refresh aware based on PSR support"
+Date:   Tue, 23 May 2023 17:16:46 +0200
+Message-Id: <20230523151646.28366-1-johan+linaro@kernel.org>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.11.0
-Subject: Re: [PATCH v4 04/11] coresight-tpdm: Add reset node to TPDM node
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1682586037-25973-1-git-send-email-quic_taozha@quicinc.com>
- <1682586037-25973-5-git-send-email-quic_taozha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1682586037-25973-5-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/04/2023 10:00, Tao Zhang wrote:
-> TPDM device need a node to reset the configurations and status of
-> it. This change provides a node to reset the configurations and
-> disable the TPDM if it has been enabled.
-> 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> ---
->   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 10 ++++++++
->   drivers/hwtracing/coresight/coresight-tpdm.c       | 27 ++++++++++++++++++++++
->   2 files changed, 37 insertions(+)
-> 
-> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> index 4a58e64..686bdde 100644
-> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> @@ -11,3 +11,13 @@ Description:
->   		Accepts only one of the 2 values -  1 or 2.
->   		1 : Generate 64 bits data
->   		2 : Generate 32 bits data
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/reset
-> +Date:		March 2023
-> +KernelVersion	6.3
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		(Write) Reset the dataset of the tpdm, and disable the tpdm.
-> +
-> +		Accepts only one value -  1.
-> +		1 : Reset the dataset of the tpdm
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index 6f8a8ab..2e64cfd 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -164,6 +164,32 @@ static int tpdm_datasets_setup(struct tpdm_drvdata *drvdata)
->   	return 0;
->   }
->   
-> +static ssize_t reset_store(struct device *dev,
-> +					  struct device_attribute *attr,
-> +					  const char *buf,
-> +					  size_t size)
-> +{
-> +	int ret = 0;
-> +	unsigned long val;
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +
-> +	ret = kstrtoul(buf, 10, &val);
-> +	if (ret || val != 1)
-> +		return -EINVAL;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	tpdm_reset_datasets(drvdata);
-> +
-> +	spin_unlock(&drvdata->spinlock);
-> +
-> +	/* Disable tpdm if enabled */
-> +	if (drvdata->enable)
-> +		coresight_disable_source(drvdata->csdev, NULL);
+This reverts commit 1844e680d56bb0c4e0489138f2b7ba2dc1c988e3.
 
-I am not really keen on doing this behind the back. What about the path 
-of components ? We could simply reject the request when the TPDA is 
-enabled and let the user alway follow :
-	1) Disable the TPDM manually via sysfs
-   	2) Reset the TPDM.
+PSR support clearly is not ready for mainline and specifically breaks
+virtual terminals which are no longer updated when PSR is enabled (e.g.
+no keyboard input is echoed, no cursor blink).
 
-So, please remove the disable step here.
+Disable PSR support for now by reverting commit 1844e680d56b
+("drm/msm/dp: set self refresh aware based on PSR support").
 
-Suzuki
+Cc: Vinod Polimera <quic_vpolimer@quicinc.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+---
+
+Bjorn reported that PSR support broke virtual terminals two months ago, 
+but this is still broken in 6.4-rc3:
+
+	https://lore.kernel.org/lkml/20230326162723.3lo6pnsfdwzsvbhj@ripper/
+
+despite the following series that claimed to address this:
+
+	https://lore.kernel.org/lkml/1680271114-1534-1-git-send-email-quic_vpolimer@quicinc.com
+
+Let's revert until this has been fixed properly.
+
+Johan
 
 
-> +
-> +	return size;
-> +}
-> +static DEVICE_ATTR_WO(reset);
-> +
->   /*
->    * value 1: 64 bits test data
->    * value 2: 32 bits test data
-> @@ -204,6 +230,7 @@ static ssize_t integration_test_store(struct device *dev,
->   static DEVICE_ATTR_WO(integration_test);
->   
->   static struct attribute *tpdm_attrs[] = {
-> +	&dev_attr_reset.attr,
->   	&dev_attr_integration_test.attr,
->   	NULL,
->   };
+ drivers/gpu/drm/msm/dp/dp_drm.c | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_drm.c b/drivers/gpu/drm/msm/dp/dp_drm.c
+index 785d76639497..029e08c5bb06 100644
+--- a/drivers/gpu/drm/msm/dp/dp_drm.c
++++ b/drivers/gpu/drm/msm/dp/dp_drm.c
+@@ -117,8 +117,6 @@ static int edp_bridge_atomic_check(struct drm_bridge *drm_bridge,
+ 	if (WARN_ON(!conn_state))
+ 		return -ENODEV;
+ 
+-	conn_state->self_refresh_aware = dp->psr_supported;
+-
+ 	if (!conn_state->crtc || !crtc_state)
+ 		return 0;
+ 
+-- 
+2.39.3
 
