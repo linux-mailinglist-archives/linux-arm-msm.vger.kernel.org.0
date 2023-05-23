@@ -2,187 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 99E6670CF18
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 02:24:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93CE070CF7B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 02:40:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233410AbjEWAYw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 22 May 2023 20:24:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38322 "EHLO
+        id S232346AbjEWAkB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 22 May 2023 20:40:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235162AbjEWAM4 (ORCPT
+        with ESMTP id S235364AbjEWA25 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 22 May 2023 20:12:56 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E2E92126;
-        Mon, 22 May 2023 17:01:12 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34MNiQxD023670;
-        Tue, 23 May 2023 00:01:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=PFalLILKfIjbCKaYneMK+rufaWTVpgJFk4nGgwR2k9A=;
- b=REBF/Ee9s6I3twABHYt3lEieMW+eWaVVN806DBBaXWnhJ+0BhEHE8p+kfYCzGvGZtnSu
- vlOd9OePN5bCT9l7Wg5PtNHNI3+LUTKwwgO8besYSJliI1jPnDT9z8xSfYePw+fDlB3w
- ya+BgJ6PrnbqaoKZUBMoMMP2xLDF0J4EALn898lTeSCj4nJRGJtTGXXrcAEi9YXO3xAm
- 5aS8zPzwuLzrve91ff0v4l+9y6Y5jtKbxzPZKXoeZd3GqxtHBAyB/vO2xSUPJJ1XCXEW
- 3MBvSG88+6gZ25cGtnD0Iu8JP6mEIwyPd1Ss3FRlm3A6DUTLLWt3UavoLXrig6q1ZGjo rA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qracsh0km-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 23 May 2023 00:01:04 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34N013bR030083
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 23 May 2023 00:01:03 GMT
-Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Mon, 22 May 2023 17:01:02 -0700
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <andersson@kernel.org>
-CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v13 10/10] drm/msm/dpu: tear down DSC data path when DSC disabled
-Date:   Mon, 22 May 2023 17:00:39 -0700
-Message-ID: <1684800039-18231-11-git-send-email-quic_khsieh@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1684800039-18231-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1684800039-18231-1-git-send-email-quic_khsieh@quicinc.com>
+        Mon, 22 May 2023 20:28:57 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 868092102;
+        Mon, 22 May 2023 17:17:31 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-96f53c06babso891469266b.3;
+        Mon, 22 May 2023 17:17:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684801050; x=1687393050;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=VvJrClLjnc7GTwo//Bcl7YXcX48efgizj6CzwviQgvQ=;
+        b=bvGtXUuh02M6wX2vqbbNUCwtlmzdcXicrq+Ko5UE6ihY1RT0tRKajdOv+r6iAHdByq
+         SjIgqAwjEVEmKbNdHLWb1jo7vev9X5lBvC0kFtiDQrFSkoQmg/bZnQqpA0K/jGIOPlSK
+         PzvaMoQnZUFgIaAGbae2fH91K9sly+pyChl4WBFLwu1xtH7m3AvgeKbOIRMRUqJh0Sqj
+         pDQGNhWeL9IyyAF0ATkVbIzAsERM9ftGF0h1d9WBZfHhXYnYplkAaOByIBMZLKHFSodG
+         gixAne+NV7YCsBACXo0TufuJ01cmJdHYxWYiRgbxKosdc96JFCG+/lA33amnZ8p+I/Vs
+         LzmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684801050; x=1687393050;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VvJrClLjnc7GTwo//Bcl7YXcX48efgizj6CzwviQgvQ=;
+        b=LEm08EFpant2zXhiP0JflZ7g6BB+hqECQOorX9PDVwYgf5RFG4yxaPOxm2ZdKwPWE+
+         wTixtyljTHPiIYA+6v0YSk0n5nzklbxFdGioGneiS1hSstJ+Uj2f4+F16jO4E4Zk7zqC
+         bIdvxVeei6uiUNQ3jUzWOnowz6yGhqztTG55UraBaLIDsTk7K6f1HmgETSBBbPOlhhVc
+         UHSWobIhnkoG0J8k0OT3aSRm98B+EMfGjchTzkgBWrMh9uwWzEZCHBXP5giOZBGLLAhR
+         DXDvJT3WUbzQ23e6JxFDq5AasRt85ipMI/g+mhWrxQ/ESPkFOm5dnnQQ/+oHuD/xqTiU
+         VnLw==
+X-Gm-Message-State: AC+VfDyNZq4/egndOrRQ9qX17/ErZp1iIdOa3t1h7CdlhIVTMgP+4h6N
+        OpXWU+hT8BKSn1dtyq6wbPS4VmeObos7NfaAz95mnBIupWCrig==
+X-Google-Smtp-Source: ACHHUZ7gqfEHsJdFyQ6JccHcryfi/wSUCZIxFV/oqNefiC8lPfL2a5gGOIDwxQKYBgZav5BuqRdZuLBsAvEUzUjhgaA=
+X-Received: by 2002:a17:906:9743:b0:96f:32ae:a7e1 with SMTP id
+ o3-20020a170906974300b0096f32aea7e1mr13882790ejy.63.1684801049644; Mon, 22
+ May 2023 17:17:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZCI698JQ102RgcIkMWXJ54OAAGtk8g0q
-X-Proofpoint-ORIG-GUID: ZCI698JQ102RgcIkMWXJ54OAAGtk8g0q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-22_18,2023-05-22_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=945 spamscore=0
- malwarescore=0 phishscore=0 impostorscore=0 clxscore=1015 adultscore=0
- mlxscore=0 bulkscore=0 suspectscore=0 priorityscore=1501
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305220203
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+References: <20230515143023.801167-1-robdclark@gmail.com> <da1f7aa1-f560-31f4-6114-e400f35d325b@linaro.org>
+In-Reply-To: <da1f7aa1-f560-31f4-6114-e400f35d325b@linaro.org>
+From:   Dave Airlie <airlied@gmail.com>
+Date:   Tue, 23 May 2023 10:17:17 +1000
+Message-ID: <CAPM=9tyc+N0i+vXkZ-8Mf6kBN5BJHeL=tvbnp=LKCW6T5gPGfg@mail.gmail.com>
+Subject: Re: [PATCH v4 0/9] drm: fdinfo memory stats
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
+        "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Lijo Lazar <lijo.lazar@amd.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        =?UTF-8?Q?Michel_D=C3=A4nzer?= <mdaenzer@redhat.com>,
+        YiPeng Chai <YiPeng.Chai@amd.com>,
+        Mario Limonciello <mario.limonciello@amd.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Guchun Chen <guchun.chen@amd.com>,
+        Shashank Sharma <shashank.sharma@amd.com>,
+        "open list:RADEON and AMDGPU DRM DRIVERS" 
+        <amd-gfx@lists.freedesktop.org>,
+        Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>, Sean Paul <sean@poorly.run>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Peter Maucher <bellosilicio@gmail.com>,
+        Emil Velikov <emil.l.velikov@gmail.com>,
+        Christopher Healy <healych@amazon.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        freedreno@lists.freedesktop.org,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Unset DSC_ACTIVE bit at dpu_hw_ctl_reset_intf_cfg_v1(),
-dpu_encoder_unprep_dsc() and dpu_encoder_dsc_pipe_clr() functions
-to tear down DSC data path if DSC data path was setup previous.
+On Sun, 21 May 2023 at 10:03, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On 15/05/2023 17:30, Rob Clark wrote:
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > Similar motivation to other similar recent attempt[1].  But with an
+> > attempt to have some shared code for this.  As well as documentation.
+> >
+> > It is probably a bit UMA-centric, I guess devices with VRAM might want
+> > some placement stats as well.  But this seems like a reasonable start.
+> >
+> > Basic gputop support: https://patchwork.freedesktop.org/series/116236/
+> > And already nvtop support: https://github.com/Syllo/nvtop/pull/204
+> >
+> > I've combined the separate series to add comm/cmdline override onto
+> > the end of this, simply out of convenience (they would otherwise
+> > conflict in a bunch of places).
+> >
+> > v2: Extend things to allow for multiple regions other than just system
+> >      "memory", make drm_show_memory_stats() a helper so that, drivers
+> >      can use it or not based on their needs (but in either case, re-
+> >      use drm_print_memory_stats()
+> > v3: Docs fixes
+> > v4: use u64 for drm_memory_stats, small docs update and collected
+> >      Tvrtko's a-b
+> >
+> > [1] https://patchwork.freedesktop.org/series/112397/
+> >
+> > Rob Clark (9):
+> >    drm/docs: Fix usage stats typos
+> >    drm: Add common fdinfo helper
+> >    drm/msm: Switch to fdinfo helper
+> >    drm/amdgpu: Switch to fdinfo helper
+> >    drm: Add fdinfo memory stats
+> >    drm/msm: Add memory stats to fdinfo
+> >    drm/doc: Relax fdinfo string constraints
+> >    drm/fdinfo: Add comm/cmdline override fields
+> >    drm/msm: Wire up comm/cmdline override for fdinfo
+> >
+> >   Documentation/gpu/drm-usage-stats.rst      | 101 ++++++++++----
+> >   drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c    |   3 +-
+> >   drivers/gpu/drm/amd/amdgpu/amdgpu_fdinfo.c |  16 +--
+> >   drivers/gpu/drm/amd/amdgpu/amdgpu_fdinfo.h |   2 +-
+> >   drivers/gpu/drm/drm_file.c                 | 147 +++++++++++++++++++++
+> >   drivers/gpu/drm/msm/adreno/adreno_gpu.c    |  24 +++-
+> >   drivers/gpu/drm/msm/msm_drv.c              |  15 ++-
+> >   drivers/gpu/drm/msm/msm_gem.c              |  15 +++
+> >   drivers/gpu/drm/msm/msm_gpu.c              |   2 -
+> >   drivers/gpu/drm/msm/msm_gpu.h              |  10 ++
+> >   include/drm/drm_drv.h                      |   7 +
+> >   include/drm/drm_file.h                     |  51 +++++++
+> >   include/drm/drm_gem.h                      |  32 +++++
+> >   13 files changed, 378 insertions(+), 47 deletions(-)
+>
+> What is the expected merge plan for this series? msm-next? drm-misc?
 
-Changes in V10:
--- pass ctl directly instead of dpu_enc to dsc_pipe_cfg()
--- move both dpu_encoder_unprep_dsc() and dpu_encoder_dsc_pipe_clr() to above phys_cleanup()
+I'm fine with this going via drm-misc,
 
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 39 +++++++++++++++++++++++++++++
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c  |  7 ++++++
- 2 files changed, 46 insertions(+)
+Acked-by: Dave Airlie <airlied@redhat.com> if that is the plan.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 7fca09e..3b416e1 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -2036,6 +2036,41 @@ static void dpu_encoder_helper_reset_mixers(struct dpu_encoder_phys *phys_enc)
- 	}
- }
- 
-+static void dpu_encoder_dsc_pipe_clr(struct dpu_hw_ctl *ctl,
-+				     struct dpu_hw_dsc *hw_dsc,
-+				     struct dpu_hw_pingpong *hw_pp)
-+{
-+	if (hw_dsc->ops.dsc_disable)
-+		hw_dsc->ops.dsc_disable(hw_dsc);
-+
-+	if (hw_pp->ops.disable_dsc)
-+		hw_pp->ops.disable_dsc(hw_pp);
-+
-+	if (hw_dsc->ops.dsc_bind_pingpong_blk)
-+		hw_dsc->ops.dsc_bind_pingpong_blk(hw_dsc, PINGPONG_NONE);
-+
-+	if (ctl->ops.update_pending_flush_dsc)
-+		ctl->ops.update_pending_flush_dsc(ctl, hw_dsc->idx);
-+}
-+
-+static void dpu_encoder_unprep_dsc(struct dpu_encoder_virt *dpu_enc)
-+{
-+	/* coding only for 2LM, 2enc, 1 dsc config */
-+	struct dpu_encoder_phys *enc_master = dpu_enc->cur_master;
-+	struct dpu_hw_ctl *ctl = enc_master->hw_ctl;
-+	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
-+	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
-+	int i;
-+
-+	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
-+		hw_pp[i] = dpu_enc->hw_pp[i];
-+		hw_dsc[i] = dpu_enc->hw_dsc[i];
-+
-+		if (hw_pp[i] && hw_dsc[i])
-+			dpu_encoder_dsc_pipe_clr(ctl, hw_dsc[i], hw_pp[i]);
-+	}
-+}
-+
- void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
- {
- 	struct dpu_hw_ctl *ctl = phys_enc->hw_ctl;
-@@ -2086,8 +2121,12 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
- 					phys_enc->hw_pp->merge_3d->idx);
- 	}
- 
-+	if (dpu_enc->dsc)
-+		dpu_encoder_unprep_dsc(dpu_enc);
-+
- 	intf_cfg.stream_sel = 0; /* Don't care value for video mode */
- 	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
-+	intf_cfg.dsc = dpu_encoder_helper_get_dsc(phys_enc);
- 
- 	if (phys_enc->hw_intf)
- 		intf_cfg.intf = phys_enc->hw_intf->idx;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-index ad6983e..e28e8f8 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-@@ -582,6 +582,7 @@ static void dpu_hw_ctl_reset_intf_cfg_v1(struct dpu_hw_ctl *ctx,
- 	u32 intf_active = 0;
- 	u32 wb_active = 0;
- 	u32 merge3d_active = 0;
-+	u32 dsc_active;
- 
- 	/*
- 	 * This API resets each portion of the CTL path namely,
-@@ -611,6 +612,12 @@ static void dpu_hw_ctl_reset_intf_cfg_v1(struct dpu_hw_ctl *ctx,
- 		wb_active &= ~BIT(cfg->wb - WB_0);
- 		DPU_REG_WRITE(c, CTL_WB_ACTIVE, wb_active);
- 	}
-+
-+	if (cfg->dsc) {
-+		dsc_active = DPU_REG_READ(c, CTL_DSC_ACTIVE);
-+		dsc_active &= ~cfg->dsc;
-+		DPU_REG_WRITE(c, CTL_DSC_ACTIVE, dsc_active);
-+	}
- }
- 
- static void dpu_hw_ctl_set_fetch_pipe_active(struct dpu_hw_ctl *ctx,
--- 
-2.7.4
-
+Dave.
