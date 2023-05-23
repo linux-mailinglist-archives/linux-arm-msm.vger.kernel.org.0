@@ -2,277 +2,314 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27B5170D762
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 10:26:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9053C70D781
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 10:34:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236042AbjEWI01 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 04:26:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44200 "EHLO
+        id S236169AbjEWIeC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 04:34:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236343AbjEWIZI (ORCPT
+        with ESMTP id S235364AbjEWIdY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 04:25:08 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA0A410D3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 01:23:26 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id 41be03b00d2f7-517c840f181so3852554a12.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 01:23:26 -0700 (PDT)
+        Tue, 23 May 2023 04:33:24 -0400
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A7812696
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 01:30:02 -0700 (PDT)
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-2af2c7f2883so39535971fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 01:30:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1684830206; x=1687422206;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=uL1K7Jn4HAic+IgVkKP1XlX31FYJK1MaHHXhjAWowJ0=;
-        b=K8t6nEGPIf7y3OejF9cTpMxnD9f+IW2kWI9UIlGC20nPW30gOWHERdjr6twKYnrIQb
-         QkNF4wUUq8oTWG92/932f0pd2DK0OK+b7dhpcbaHPj/r9W9lHWUg6/WvFBf1Sl28+o7N
-         kC2FdVg2RL14xlZe11fCBnzKut3m/jcfchZH8=
+        d=linaro.org; s=google; t=1684830541; x=1687422541;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ru8/Ayqf4dTtmxHSBTZW4Z/WyG04tjjI1uvhJ1HwfeI=;
+        b=abJjwkmDgJj5c2H3Ph/PaFWs5c3ixfxVuxTVw6cdn0Sl5+HIwtdFR0r2wAmVtzNdTN
+         AazJsKfhIiipws0rgDYu5IZ8lN/amDTcBOIwQHOREIkh+o9OmnEt4x+I7LEow3bxxTcq
+         3k5PYk7/e2VEDw+dBu8ynUPX6FkwfvS724LdiRKYHBgHyY+Ng6P75dP/eufPhOXJUJCj
+         v4Huuvj6qOxVJ28ntsfINKdAy/7XFwqgvblBZsOr/apNa/CBOBGkOw8Qy//fqF4lU9Os
+         k7ZqeeO9wl4UiKV0Gb3fjqwoR2+ia/oZH6S00HacjPDlAYG7GsSVeTbNz9BKdQRvbgFV
+         5DTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684830206; x=1687422206;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uL1K7Jn4HAic+IgVkKP1XlX31FYJK1MaHHXhjAWowJ0=;
-        b=fk6preV80kpNjxdJ2q+L6bxYE+VXGyK8b1648ou3zoPJO/4PGkhSpJLOicxHjIBq+z
-         trio8KzIkQhdd6QsvcpbhUXw44IkAOCuMQS23eBntffVgl6yrBAHI9X97ciLdcCF6q2U
-         1h34GQRy7nZTTurrtoBlYF7A8U5XCSrmXlsw4VouaLAZiJDTFNnDdSw22zKlkPLQxaZk
-         DW3n8wSpiEd+c+lB3604a8XhSvFtNuiVTUc0mjc0wDbTKxogQos/n/AVuWro2IJEwxUG
-         fF0vfhwgfmQCMJqUFBOcs8YNGQBoXYoheZ3K4UrS4M/tHutuB1Ct/Pn6C9BXNgyK7Hpl
-         fcsw==
-X-Gm-Message-State: AC+VfDwOsXKuGOG2DcE5tmB5knAvT6pCQdqw2mqsnFQhb59qhSivszLr
-        QNxB5CLFRHsnex9qCiGzLIPE7A==
-X-Google-Smtp-Source: ACHHUZ7C/3gK4tglhoWtOSFtZQTN5c+zYptt2miKmcxSqwrtjSbJ8p63MmXN4dsy/YUXayz5Xy+O5A==
-X-Received: by 2002:a17:903:2796:b0:1ac:65ab:cf7b with SMTP id jw22-20020a170903279600b001ac65abcf7bmr13865631plb.9.1684830206026;
-        Tue, 23 May 2023 01:23:26 -0700 (PDT)
-Received: from chromium.org (0.223.81.34.bc.googleusercontent.com. [34.81.223.0])
-        by smtp.gmail.com with ESMTPSA id g23-20020a170902869700b001aafa2e4716sm6134855plo.264.2023.05.23.01.23.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 May 2023 01:23:25 -0700 (PDT)
-Date:   Tue, 23 May 2023 08:23:20 +0000
-From:   Tomasz Figa <tfiga@chromium.org>
-To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>
-Cc:     m.szyprowski@samsung.com, mchehab@kernel.org, ming.qian@nxp.com,
-        shijie.qin@nxp.com, eagle.zhou@nxp.com, bin.liu@mediatek.com,
-        matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
-        tiffany.lin@mediatek.com, andrew-ct.chen@mediatek.com,
-        yunfei.dong@mediatek.com, stanimir.k.varbanov@gmail.com,
-        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, daniel.almeida@collabora.com,
-        hverkuil-cisco@xs4all.nl, laurent.pinchart@ideasonboard.com,
-        jernel@kernel.org, linux-media@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, kernel@collabora.com
-Subject: Re: [PATCH v2 5/8] media: v4l2: Add DELETE_BUF ioctl
-Message-ID: <20230523082320.akofzwevkhwswosm@chromium.org>
-References: <20230321102855.346732-1-benjamin.gaignard@collabora.com>
- <20230321102855.346732-6-benjamin.gaignard@collabora.com>
+        d=1e100.net; s=20221208; t=1684830541; x=1687422541;
+        h=content-transfer-encoding:in-reply-to:references:cc:to:from
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ru8/Ayqf4dTtmxHSBTZW4Z/WyG04tjjI1uvhJ1HwfeI=;
+        b=AobtxftCVR247PwCa8LgQNxcwBcMbUVkX1XMRg/7fSio6ehCUWYRi1alEIlho1zq+n
+         w8ol0DTqiVLWQPF8vBiFkyEn5wv8guzaaMaEXCbHfx8pxKspSicC/ZU7+MQgY6mknGpf
+         XQomIPb1RFktvqiCJdxYxxpB7WeHWtw2F0Tq10nhXz+i5q0LzquHlHtE5Q0h1Sw620B0
+         4G6I1x4mvgBfWYONwofVCmIwiRZoniWiOOIWzCVQ/Q8bFftKqG74+VEJDQ9OqBQXU+aI
+         5+cIAPoj1qFwmfCFXvG3QBiCmTO2GyW3IFOERr1lbL/PtsLX8vOBZ3UqIFwg8AF4MdVI
+         Ggaw==
+X-Gm-Message-State: AC+VfDzaFdrdi/i9CYLOZphla6KHkNerY/bHxIfnLxk6Qus81wsSoGh0
+        2MwjYP9zGoSe+IEQjD4+mycNnw==
+X-Google-Smtp-Source: ACHHUZ7Z6KxAfOGRGBcH8la8DINFLT/esIUVa3YUF9vwrpNYh17uiO2t/tJt2bcDRLkVCG33/nVWUw==
+X-Received: by 2002:a2e:3809:0:b0:2ad:94cd:3cb7 with SMTP id f9-20020a2e3809000000b002ad94cd3cb7mr4535421lja.51.1684830540807;
+        Tue, 23 May 2023 01:29:00 -0700 (PDT)
+Received: from [192.168.1.101] (abyk138.neoplus.adsl.tpnet.pl. [83.9.30.138])
+        by smtp.gmail.com with ESMTPSA id y14-20020a2eb00e000000b002af0464353bsm1465866ljk.106.2023.05.23.01.28.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 May 2023 01:29:00 -0700 (PDT)
+Message-ID: <df1b3440-d007-0658-0739-9a939b143a32@linaro.org>
+Date:   Tue, 23 May 2023 10:28:58 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230321102855.346732-6-benjamin.gaignard@collabora.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sc8280xp: Add GPU related nodes
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, johan@kernel.org, mani@kernel.org
+References: <20230523011522.65351-1-quic_bjorande@quicinc.com>
+ <20230523011522.65351-3-quic_bjorande@quicinc.com>
+ <097944b0-fa7a-ad4d-1c3d-e74ab2b977de@linaro.org>
+In-Reply-To: <097944b0-fa7a-ad4d-1c3d-e74ab2b977de@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Mar 21, 2023 at 11:28:52AM +0100, Benjamin Gaignard wrote:
-> VIDIOC_DELETE_BUF ioctl allows to delete a buffer from a queue.
+
+
+On 23.05.2023 09:59, Konrad Dybcio wrote:
 > 
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> ---
->  .../userspace-api/media/v4l/user-func.rst     |  1 +
->  .../media/v4l/vidioc-delete-buf.rst           | 51 ++++++++++++++++
->  .../media/common/videobuf2/videobuf2-core.c   | 59 ++++++++++++++++++-
->  .../media/common/videobuf2/videobuf2-v4l2.c   |  6 ++
->  drivers/media/v4l2-core/v4l2-dev.c            |  1 +
->  drivers/media/v4l2-core/v4l2-ioctl.c          | 10 ++++
->  include/media/v4l2-ioctl.h                    |  4 ++
->  include/media/videobuf2-core.h                |  9 +++
->  include/media/videobuf2-v4l2.h                | 11 ++++
->  include/uapi/linux/videodev2.h                |  1 +
->  10 files changed, 152 insertions(+), 1 deletion(-)
->  create mode 100644 Documentation/userspace-api/media/v4l/vidioc-delete-buf.rst
 > 
-> diff --git a/Documentation/userspace-api/media/v4l/user-func.rst b/Documentation/userspace-api/media/v4l/user-func.rst
-> index 228c1521f190..93e0a6a117fc 100644
-> --- a/Documentation/userspace-api/media/v4l/user-func.rst
-> +++ b/Documentation/userspace-api/media/v4l/user-func.rst
-> @@ -17,6 +17,7 @@ Function Reference
->      vidioc-dbg-g-chip-info
->      vidioc-dbg-g-register
->      vidioc-decoder-cmd
-> +    vidioc-delete-buf
->      vidioc-dqevent
->      vidioc-dv-timings-cap
->      vidioc-encoder-cmd
-> diff --git a/Documentation/userspace-api/media/v4l/vidioc-delete-buf.rst b/Documentation/userspace-api/media/v4l/vidioc-delete-buf.rst
-> new file mode 100644
-> index 000000000000..0e7ce58f91bc
-> --- /dev/null
-> +++ b/Documentation/userspace-api/media/v4l/vidioc-delete-buf.rst
-> @@ -0,0 +1,51 @@
-> +.. SPDX-License-Identifier: GFDL-1.1-no-invariants-or-later
-> +.. c:namespace:: V4L
-> +
-> +.. _VIDIOC_DELETE_BUF:
-> +
-> +************************
-> +ioctl VIDIOC_DELETE_BUF
-> +************************
-> +
-> +Name
-> +====
-> +
-> +VIDIOC_DELETE_BUF - Delete a buffer from a queue
-> +
-> +Synopsis
-> +========
-> +
-> +.. c:macro:: VIDIOC_DELETE_BUF
-> +
-> +``int ioctl(int fd, VIDIOC_DELETE_BUF, struct v4l2_buffer *argp)``
-> +
-> +Arguments
-> +=========
-> +
-> +``fd``
-> +    File descriptor returned by :c:func:`open()`.
-> +
-> +``argp``
-> +    Pointer to struct :c:type:`v4l2_buffer`.
+> On 23.05.2023 03:15, Bjorn Andersson wrote:
+>> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>
+>> Add Adreno SMMU, GPU clock controller, GMU and GPU nodes for the
+>> SC8280XP.
+>>
+>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+>> ---
+> It does not look like you tested the DTS against bindings. Please run
+> `make dtbs_check` (see
+> Documentation/devicetree/bindings/writing-schema.rst for instructions).
+> 
+>>
+>> Changes since v1:
+>> - Dropped gmu_pdc_seq region from &gmu, as it shouldn't have been used.
+>> - Added missing compatible to &adreno_smmu.
+>> - Dropped aoss_qmp clock in &gmu and &adreno_smmu.
+>>  
+>>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 169 +++++++++++++++++++++++++
+>>  1 file changed, 169 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> index d2a2224d138a..329ec2119ecf 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
+>> @@ -6,6 +6,7 @@
+>>  
+>>  #include <dt-bindings/clock/qcom,dispcc-sc8280xp.h>
+>>  #include <dt-bindings/clock/qcom,gcc-sc8280xp.h>
+>> +#include <dt-bindings/clock/qcom,gpucc-sc8280xp.h>
+>>  #include <dt-bindings/clock/qcom,rpmh.h>
+>>  #include <dt-bindings/interconnect/qcom,osm-l3.h>
+>>  #include <dt-bindings/interconnect/qcom,sc8280xp.h>
+>> @@ -2331,6 +2332,174 @@ tcsr: syscon@1fc0000 {
+>>  			reg = <0x0 0x01fc0000 0x0 0x30000>;
+>>  		};
+>>  
+>> +		gpu: gpu@3d00000 {
+>> +			compatible = "qcom,adreno-690.0", "qcom,adreno";
+>> +
+>> +			reg = <0 0x03d00000 0 0x40000>,
+>> +			      <0 0x03d9e000 0 0x1000>,
+>> +			      <0 0x03d61000 0 0x800>;
+>> +			reg-names = "kgsl_3d0_reg_memory",
+>> +				    "cx_mem",
+>> +				    "cx_dbgc";
+>> +			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
+>> +			iommus = <&adreno_smmu 0 0xc00>, <&adreno_smmu 1 0xc00>;
+>> +			operating-points-v2 = <&gpu_opp_table>;
+>> +
+>> +			qcom,gmu = <&gmu>;
+>> +			interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
+>> +			interconnect-names = "gfx-mem";
+I also noticed downstream adds additional votes for L3 (*not* LLCC), should
+we explore that?
 
-Would struct v4l2_create_buffers make more sense here? With it, we could
-actually make this ioctl VIDIOC_DELETE_BUF*S*, consistently with
-VIDIOC_CREATE_BUF*S* and allow the user space to remove a block of buffers
-the same way it created a block of buffers in the first place.
-
-> +
-> +Description
-> +===========
-> +
-> +Applications can optionally call the :ref:`VIDIOC_DELETE_BUF` ioctl to
-> +delete a buffer from a queue.
-> +
-> +The struct :c:type:`v4l2_buffer` structure is specified in
-> +:ref:`buffer`.
-> +
-> +Return Value
-> +============
-> +
-> +On success 0 is returned, on error -1 and the ``errno`` variable is set
-> +appropriately. The generic error codes are described at the
-> +:ref:`Generic Error Codes <gen-errors>` chapter.
-> +
-> +EBUSY
-> +    File I/O is in progress.
-> +
-> +EINVAL
-> +    The buffer ``index`` doesn't exist in the queue.
-> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-> index 3c6ced360770..ec241d726fe6 100644
-> --- a/drivers/media/common/videobuf2/videobuf2-core.c
-> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
-> @@ -401,6 +401,24 @@ static void init_buffer_cache_hints(struct vb2_queue *q, struct vb2_buffer *vb)
->  		vb->skip_cache_sync_on_finish = 1;
->  }
->  
-> +/*
-> + * __vb2_queue_get_free_index() - find a free index in the queue for vb2 buffer.
-> + *
-> + * Returns an index for vb2 buffer.
-> + */
-> +static int __vb2_queue_get_free_index(struct vb2_queue *q)
-> +{
-> +	int i;
-> +
-> +	spin_lock(&q->bufs_lock);
-> +	for (i = 0; i < q->max_num_bufs; i++)
-> +		if (!q->bufs[i])
-> +			break;
-> +	spin_unlock(&q->bufs_lock);
-> +
-> +	return i;
-> +}
-
-Another reason to go with XArray, so that we don't have to open code
-index reclaim.
-
-> +
->  /*
->   * __vb2_queue_alloc() - allocate vb2 buffer structures and (for MMAP type)
->   * video buffer memory for all buffers/planes on the queue and initializes the
-> @@ -427,7 +445,7 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
->  		vb->state = VB2_BUF_STATE_DEQUEUED;
->  		vb->vb2_queue = q;
->  		vb->num_planes = num_planes;
-> -		vb->index = q->num_buffers + buffer;
-> +		vb->index = __vb2_queue_get_free_index(q);
->  		vb->type = q->type;
->  		vb->memory = memory;
->  		init_buffer_cache_hints(q, vb);
-> @@ -1570,6 +1588,45 @@ int vb2_core_prepare_buf(struct vb2_queue *q, unsigned int index, void *pb)
->  }
->  EXPORT_SYMBOL_GPL(vb2_core_prepare_buf);
->  
-> +int vb2_core_delete_buf(struct vb2_queue *q, unsigned int index)
-> +{
-> +	struct vb2_buffer *vb;
-> +
-> +	vb = vb2_get_buffer(q, index);
-> +	if (!vb) {
-> +		dprintk(q, 1, "invalid buffer index %d\n", index);
-> +		return -EINVAL;
-> +	}
-> +
-> +	if (vb->state == VB2_BUF_STATE_QUEUED) {
-
-How about other states? I'd probably only allow this when the state is
-DEQUEUED for simplicity. Is there a need to allow deleting buffers in
-other states?
-
-Also, do we need to synchronize this with other contexts which could change
-the buffer state?
-
-> +		dprintk(q, 1, "can't delete queued buffer index %d\n", index);
-> +		return -EINVAL;
-> +	}
-> +
-
-Don't we also need to hold q->mmap_lock to prevent racing with an attempt
-to mmap the buffer?
-
-> +	if (vb && vb->planes[0].mem_priv)
-
-nit: At this point it's not possible for vb to be NULL, since we already
-ruled that out a few lines above.
-
-> +		call_void_vb_qop(vb, buf_cleanup, vb);
-> +
-> +	/* Free MMAP buffers or release USERPTR buffers */
-> +	if (q->memory == VB2_MEMORY_MMAP)
-> +		__vb2_buf_mem_free(vb);
-> +	else if (q->memory == VB2_MEMORY_DMABUF)
-> +		__vb2_buf_dmabuf_put(vb);
-> +	else
-> +		__vb2_buf_userptr_put(vb);
-> +
-> +	vb2_queue_remove_buffer(q, vb);
-> +	kfree(vb);
-> +
-> +	q->num_buffers--;
-> +	if (!q->num_buffers) {
-> +		q->memory = VB2_MEMORY_UNKNOWN;
-> +		INIT_LIST_HEAD(&q->queued_list);
-> +	}
-
-Would it make sense to refactor __vb2_queue_free() instead to take a
-range of buffer indexes rather than duplicating the code here?
-
-Best regards,
-Tomasz
-
+Konrad
+>> +			#cooling-cells = <2>;
+>> +
+>> +			status = "disabled";
+>> +
+>> +			gpu_opp_table: opp-table {
+>> +				compatible = "operating-points-v2";
+>> +
+>> +				opp-270000000 {
+>> +					opp-hz = /bits/ 64 <270000000>;
+>> +					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+>> +					opp-peak-kBps = <451000>;
+>> +				};
+>> +
+>> +				opp-410000000 {
+>> +					opp-hz = /bits/ 64 <410000000>;
+>> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
+>> +					opp-peak-kBps = <1555000>;
+>> +				};
+>> +
+>> +				opp-500000000 {
+>> +					opp-hz = /bits/ 64 <500000000>;
+>> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
+>> +					opp-peak-kBps = <1555000>;
+>> +				};
+>> +
+>> +				opp-547000000 {
+>> +					opp-hz = /bits/ 64 <547000000>;
+>> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
+>> +					opp-peak-kBps = <1555000>;
+>> +				};
+>> +
+>> +				opp-606000000 {
+>> +					opp-hz = /bits/ 64 <606000000>;
+>> +					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
+>> +					opp-peak-kBps = <2736000>;
+>> +				};
+>> +
+>> +				opp-640000000 {
+>> +					opp-hz = /bits/ 64 <640000000>;
+>> +					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
+>> +					opp-peak-kBps = <2736000>;
+>> +				};
+>> +
+>> +				opp-690000000 {
+>> +					opp-hz = /bits/ 64 <690000000>;
+>> +					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
+>> +					opp-peak-kBps = <2736000>;
+>> +				};
+>> +			};
+>> +		};
+>> +
+>> +		gmu: gmu@3d6a000 {
+>> +			compatible = "qcom,adreno-gmu-690.0", "qcom,adreno-gmu";
+>> +			reg = <0 0x03d6a000 0 0x34000>,
+>> +			      <0 0x03de0000 0 0x10000>,
+>> +			      <0 0x0b290000 0 0x10000>;
+>> +			reg-names = "gmu", "rscc", "gmu_pdc";
+>> +			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
+>> +			interrupt-names = "hfi", "gmu";
+>> +			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
+>> +				 <&gpucc GPU_CC_CXO_CLK>,
+>> +				 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
+>> +				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+>> +				 <&gpucc GPU_CC_AHB_CLK>,
+>> +				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
+>> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>;
+>> +			clock-names = "gmu",
+>> +				      "cxo",
+>> +				      "axi",
+>> +				      "memnoc",
+>> +				      "ahb",
+>> +				      "hub",
+>> +				      "smmu_vote";
+>> +			power-domains = <&gpucc GPU_CC_CX_GDSC>,
+>> +					<&gpucc GPU_CC_GX_GDSC>;
+>> +			power-domain-names = "cx",
+>> +					     "gx";
+>> +			iommus = <&adreno_smmu 5 0xc00>;
+>> +			operating-points-v2 = <&gmu_opp_table>;
+>> +
+>> +			status = "disabled";
+> I've recently discovered that - and I am not 100% sure - all GMUs are
+> cache-coherent. Could you please ask somebody at qc about this?
+> 
+>> +
+>> +			gmu_opp_table: opp-table {
+>> +				compatible = "operating-points-v2";
+>> +
+>> +				opp-200000000 {
+>> +					opp-hz = /bits/ 64 <200000000>;
+>> +					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
+>> +				};
+> Missing 500MHz + RPMH_REGULATOR_LEVEL_SVS
+> 
+> (that may be used in the future for hw scheduling)
+>> +			};
+>> +		};
+>> +
+>> +		gpucc: clock-controller@3d90000 {
+>> +			compatible = "qcom,sc8280xp-gpucc";
+>> +			reg = <0 0x03d90000 0 0x9000>;
+>> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
+>> +				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
+>> +				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
+>> +			clock-names = "bi_tcxo",
+>> +				      "gcc_gpu_gpll0_clk_src",
+>> +				      "gcc_gpu_gpll0_div_clk_src";
+> FWIW the driver doesn't use clock-names, but the binding defines it,
+> so I suppose it's fine
+> 
+>> +
+>> +			power-domains = <&rpmhpd SC8280XP_GFX>;
+>> +			#clock-cells = <1>;
+>> +			#reset-cells = <1>;
+>> +			#power-domain-cells = <1>;
+>> +
+>> +			status = "disabled";
+>> +		};
+>> +
+>> +		adreno_smmu: iommu@3da0000 {
+>> +			compatible = "qcom,sc8280xp-smmu-500", "qcom,adreno-smmu",
+>> +				     "qcom,smmu-500", "arm,mmu-500";
+>> +			reg = <0 0x03da0000 0 0x20000>;
+>> +			#iommu-cells = <2>;
+>> +			#global-interrupts = <2>;
+>> +			interrupts = <GIC_SPI 672 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 688 IRQ_TYPE_LEVEL_HIGH>,
+>> +				     <GIC_SPI 689 IRQ_TYPE_LEVEL_HIGH>;
+>> +
+>> +			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+>> +				 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
+>> +				 <&gpucc GPU_CC_AHB_CLK>,
+>> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
+>> +				 <&gpucc GPU_CC_CX_GMU_CLK>,
+>> +				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
+>> +				 <&gpucc GPU_CC_HUB_AON_CLK>;
+>> +			clock-names = "gcc_gpu_memnoc_gfx_clk",
+>> +				      "gcc_gpu_snoc_dvm_gfx_clk",
+>> +				      "gpu_cc_ahb_clk",
+>> +				      "gpu_cc_hlos1_vote_gpu_smmu_clk",
+>> +				      "gpu_cc_cx_gmu_clk",
+>> +				      "gpu_cc_hub_cx_int_clk",
+>> +				      "gpu_cc_hub_aon_clk";
+>> +
+>> +			power-domains = <&gpucc GPU_CC_CX_GDSC>;
+>> +
+>> +			status = "disabled";
+> This one should be dma-coherent (per downstream, plus 8350's mmu is for sure)
+> 
+> Konrad
+>> +		};
+>> +
+>>  		usb_0_hsphy: phy@88e5000 {
+>>  			compatible = "qcom,sc8280xp-usb-hs-phy",
+>>  				     "qcom,usb-snps-hs-5nm-phy";
