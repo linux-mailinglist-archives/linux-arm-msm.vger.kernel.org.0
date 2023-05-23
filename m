@@ -2,78 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6090770E72A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 23:11:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E338E70E738
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 23:15:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230059AbjEWVLh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 17:11:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54514 "EHLO
+        id S230214AbjEWVPD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 17:15:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229574AbjEWVLh (ORCPT
+        with ESMTP id S238563AbjEWVOk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 17:11:37 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDDE8BB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 14:11:35 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f122ff663eso398457e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 14:11:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684876294; x=1687468294;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VwIhmrsQJ7QnwL7e4eq0vww7jWtKFFsjD60ecviXONI=;
-        b=QudcRyYAP6hxa8i19Pfje/JYk1suIs8GeAR66+BIieeRu+Q+L7AzIwyWGaZwav5aeG
-         ktISua9geZswTQGhYdO3vIrcJ/Ne+0XCMRZs0kPXR/CzbJRYkqFR4SfQdDHOm28JTpGF
-         aB0CrDKneInYUwtXvFSFJ8rBNnl5xqiEn0Y0D/udWkpzyZTBhyO4y0fCHxJbbpKwGTfj
-         DHVaB5TRZzbljaEuZI+7kiDIsYEHmMdmD84M4HOFhWH2vqjsBF89DumiWMJORbT5QWiM
-         UfQEgv11F0R3XV5S/Jyfu0kzfe0dUN9jACVA22Wx3iNlX4qx/o4F6GKRqsEE2/rrvei3
-         kWXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684876294; x=1687468294;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VwIhmrsQJ7QnwL7e4eq0vww7jWtKFFsjD60ecviXONI=;
-        b=NZ3TqTFczVJM1sNhL6Px0CYLaIqcahb/IyEpaD0QXx/0FnixEvk9O9BVQuvIi7yQ4o
-         KggcqUxHuvpc1003RX063OLL6PHhJCADTJP87GbOIOaXkJzL/9ERDip3u2vJdjz6ybqs
-         zRa2tuQevVJW3RXHmDz6ruMVj0IhchqJYzzjdxboASknYZrPJlii8VgkZVuyfnvrTmUn
-         rSdhQ3clXsCwmG7e+u32wAO2tlkRw6Wko8uCQ+mjCkIWxT6BBhI5D1/Y1/69jKYIJ7Dc
-         GAVOCL/PmSrjCvbvYUqPqNKmzIoSI0Rd36U1G/wFDXDNxTINfBeuH3SHRSNMQOiPb21p
-         vNzA==
-X-Gm-Message-State: AC+VfDzV9O6n09XFvRn1f0MX5N5AsG4vXsMGeiyrCEwdxu3K0ifCgiUU
-        YQHWilhJ1mcqvy9c1sgjfrHyKA==
-X-Google-Smtp-Source: ACHHUZ72lhmju7p99i7g5ka41ue3CdFXr+eThZetSZtVFbM49HxjPrQ9kj8HfJQG/FuH42QQL2tsfQ==
-X-Received: by 2002:a05:6512:38d1:b0:4f3:96ac:6dd8 with SMTP id p17-20020a05651238d100b004f396ac6dd8mr5115269lft.4.1684876293846;
-        Tue, 23 May 2023 14:11:33 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id b1-20020ac25e81000000b004f14591a942sm1446151lfq.271.2023.05.23.14.11.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 May 2023 14:11:33 -0700 (PDT)
-Message-ID: <bacae75a-6030-ff8b-179f-7d662140bae7@linaro.org>
-Date:   Wed, 24 May 2023 00:11:32 +0300
+        Tue, 23 May 2023 17:14:40 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F37A612B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 14:14:38 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34NKOQ0S014492;
+        Tue, 23 May 2023 21:14:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Q0WFDeLy9CaQPGLDkV6wAF624X8koEHaM1rhdA9Julo=;
+ b=K8CjS4ge7/mhqQzVneriGIW6KvJeSeZL1WCpsH9C9yChZJCypoTdAdN6B2tcSxcvXAsA
+ 1kEkxa8cf/hla5FIFwpaJZpqLvCboWJ1UWHXogzqN/lFsY1bMwGp29n94QlsJpAWOhoo
+ 5rAnQi9mFsIERv0NGr9wSIQoM//tjpU3ks1zvHwUCq2WgfFbMHNdZJ2qr25w73S90Z9e
+ BZbEgBH25AK+99lekajxpGnQlq4RNWnMmgbloetWD5JdwD9CS28zubLcM1hvgapdCMRW
+ Xcs6/vSQQUd2GSo3Ykf6irGK3EBBpUFwz7W9aK+roRJ0qpTwZM0/eHmePfIIV68CL2vR Cw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qs42ur4eh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 23 May 2023 21:14:31 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34NLEU5r012629
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 23 May 2023 21:14:30 GMT
+Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 23 May
+ 2023 14:14:30 -0700
+Message-ID: <8267cc85-f35c-628b-8270-869cf64362d5@quicinc.com>
+Date:   Tue, 23 May 2023 14:14:29 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH 3/5] arm64: defconfig: Build interconnect driver for
- QCM2290
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Arnd Bergmann <arnd@arndb.de>
-Cc:     Will Deacon <will@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-References: <20230523165411.1136102-1-vladimir.zapolskiy@linaro.org>
- <20230523165411.1136102-4-vladimir.zapolskiy@linaro.org>
- <21baf481-347f-d4b1-87df-833ed16cb729@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <21baf481-347f-d4b1-87df-833ed16cb729@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v7] drm/msm: stop storing the array of CRTCs in struct
+ msm_drm_private
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230519150734.3879916-1-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230519150734.3879916-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 9-1r9pIwEpRy8TC1Fh4N2hsd1QpWBlgH
+X-Proofpoint-GUID: 9-1r9pIwEpRy8TC1Fh4N2hsd1QpWBlgH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-23_14,2023-05-23_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 spamscore=0 mlxscore=0
+ phishscore=0 suspectscore=0 malwarescore=0 mlxlogscore=625 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305230169
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,42 +85,21 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/05/2023 20:30, Konrad Dybcio wrote:
-> 
-> 
-> On 23.05.2023 18:54, Vladimir Zapolskiy wrote:
->> Build Qualcomm QCM2290 interconnect driver.
->>
->> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->> ---
-> Do we know why some are =y and some are =m?
-> 
-> I'm for =y either way, if we can.
 
-I think this might change from platform to platform. What is the 
-condition for selecting 'y' or 'm' for the core drivers? Is it 'should 
-boot to rootfs without modules' or 'should boot to UART and load initrd 
-without modules' ?
 
+On 5/19/2023 8:07 AM, Dmitry Baryshkov wrote:
+> The array of CRTC in the struct msm_drm_private duplicates a list of
+> CRTCs in the drm_device. Drop it and use the existing list for CRTC
+> enumeration.
 > 
-> Konrad
->>   arch/arm64/configs/defconfig | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
->> index e2f6a352a0ad..ec9b828b14e2 100644
->> --- a/arch/arm64/configs/defconfig
->> +++ b/arch/arm64/configs/defconfig
->> @@ -1415,6 +1415,7 @@ CONFIG_INTERCONNECT_QCOM=y
->>   CONFIG_INTERCONNECT_QCOM_MSM8916=m
->>   CONFIG_INTERCONNECT_QCOM_MSM8996=m
->>   CONFIG_INTERCONNECT_QCOM_OSM_L3=m
->> +CONFIG_INTERCONNECT_QCOM_QCM2290=y
->>   CONFIG_INTERCONNECT_QCOM_QCS404=m
->>   CONFIG_INTERCONNECT_QCOM_SA8775P=y
->>   CONFIG_INTERCONNECT_QCOM_SC7180=y
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+> This was a part of https://patchwork.freedesktop.org/series/105302/
+> 
+> Changes since v6:
+> - Dropped applied patches
+> - Dropped msm_drm_thread::crtc as suggested by Abhinav
+> 
+> ---
 
--- 
-With best wishes
-Dmitry
-
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
