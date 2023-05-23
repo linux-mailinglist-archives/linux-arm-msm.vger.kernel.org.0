@@ -2,528 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E2E170DC06
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 14:10:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CC8F70DC35
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 14:16:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236631AbjEWMJt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 08:09:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43794 "EHLO
+        id S236731AbjEWMQC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 08:16:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236659AbjEWMJq (ORCPT
+        with ESMTP id S236650AbjEWMQC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 08:09:46 -0400
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0964818E;
-        Tue, 23 May 2023 05:09:36 -0700 (PDT)
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34NBu59s011498;
-        Tue, 23 May 2023 12:03:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
- from : to : cc : date : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=GKYjosqXXClUpptGSo+WqClf2Qp4Kx9XS8p1Izd85Ck=;
- b=euoa/AzC8tQz0kG2m/kUYwiBGNBVXfQVZvP4AxrxL9ylnsBel++r9O3mJd0UMZWgh+on
- fagwfdO7lRBgDIf39dH6nKbIfQvD6StBUAaJfsVPji4fDsb4DGJ49CKEHgKOEHXFy6AE
- 1NqN29WnK63ZEJUB9mfC8nwX8x5rGqd6CNFgBt1+zb8Hb23nOUoaFN9VlBOCP6h5XF/S
- hyqIjr2vUWnv4tHQ5nbYWlajAA/XkXCFoghD1k2Z5/lJ6p3XyEt12MD7wpcmOoe+IRL0
- z7zE6jQYGeLtnzn7ZajbepPZ82DogIu8knyeNWytT5tyV/pasyThcZDm+C1Go1R2Gt4s nw== 
-Received: from pps.reinject (localhost [127.0.0.1])
-        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qrw2488jv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 23 May 2023 12:03:21 +0000
-Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 34NBuYuI013546;
-        Tue, 23 May 2023 12:03:07 GMT
-Received: from ppma04fra.de.ibm.com (6a.4a.5195.ip4.static.sl-reverse.com [149.81.74.106])
-        by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qrw2487u7-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 23 May 2023 12:03:06 +0000
-Received: from pps.filterd (ppma04fra.de.ibm.com [127.0.0.1])
-        by ppma04fra.de.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 34N309RA030369;
-        Tue, 23 May 2023 12:02:54 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
-        by ppma04fra.de.ibm.com (PPS) with ESMTPS id 3qppcf170c-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 23 May 2023 12:02:54 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
-        by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 34NC2ojO13500984
-        (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-        Tue, 23 May 2023 12:02:50 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id 91C2320043;
-        Tue, 23 May 2023 12:02:50 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
-        by IMSVA (Postfix) with ESMTP id E8AC420040;
-        Tue, 23 May 2023 12:02:47 +0000 (GMT)
-Received: from [9.171.22.235] (unknown [9.171.22.235])
-        by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
-        Tue, 23 May 2023 12:02:47 +0000 (GMT)
-Message-ID: <0d9e3f86cf9a1a3d69e650fb631809498c2cd01e.camel@linux.ibm.com>
-Subject: Re: [PATCH v9 5/6] iommu/dma: Allow a single FQ in addition to
- per-CPU FQs
-From:   Niklas Schnelle <schnelle@linux.ibm.com>
-To:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Will Deacon <will@kernel.org>,
-        Wenjia Zhang <wenjia@linux.ibm.com>,
-        Jason Gunthorpe <jgg@ziepe.ca>
-Cc:     Gerd Bayer <gbayer@linux.ibm.com>,
-        Julian Ruess <julianr@linux.ibm.com>,
-        Pierre Morel <pmorel@linux.ibm.com>,
-        Alexandra Winter <wintera@linux.ibm.com>,
-        Heiko Carstens <hca@linux.ibm.com>,
-        Vasily Gorbik <gor@linux.ibm.com>,
-        Alexander Gordeev <agordeev@linux.ibm.com>,
-        Christian Borntraeger <borntraeger@linux.ibm.com>,
-        Sven Schnelle <svens@linux.ibm.com>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        David Woodhouse <dwmw2@infradead.org>,
-        Lu Baolu <baolu.lu@linux.intel.com>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 23 May 2023 08:16:02 -0400
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D85E2189
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 05:15:57 -0700 (PDT)
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-4f13d8f74abso8008694e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 05:15:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684844096; x=1687436096;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pTCAzPM+XQkFg/kFCaBKSjHD1xHDAZL557+xzbBW8Pg=;
+        b=O8aNdpq+aoUCR9LbZKAbhLlmkuzkiVY85MB2hAG8Scazsh0ub2rc7iFpIS4M6eiUXN
+         g3jEZFhvA9ItaV3f2qU8Nr3Tmjbkej0i4P9JBguM8W5xUsZ5cFJoiRRipHZj/Y6Ss+p6
+         aipwqZW8JRryms+XDdyHx+n7OyPqun8D0WmZ+T/1g4pQTcRoPvMEoBT1nTa5yXYR/64m
+         V/ZCuIkWjF/p8q/A4WQ4xK9/FK21kcu0Rhf3NLzwm1AwR0ZqtwqYJhd8+ALqp8PY2vEU
+         UClCH9e0m0xRZ8XTD9Z1ZsHGO2gu5apuZVMqtQSABO5JG3azZYxjZBe8aSka9U5CHFAE
+         bJmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684844096; x=1687436096;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pTCAzPM+XQkFg/kFCaBKSjHD1xHDAZL557+xzbBW8Pg=;
+        b=ESQ83KMVDg56osrDJIhUvMDb+jD8wpW5al6Kz98Ppkd1187Qydk97yfSj3jFFPNSbD
+         mPhM1LHlyEPmZXnp1W+OMLRtqLB/BSdusyg2/6XCfZLYEFlEAz9ByzBphrWYv254YlVc
+         c0dobB1LwEyzhGgyLLKH/+IePboKkHsnzH1JEKeuaOFGseoeDND+12bNTLBYq3Q98bCc
+         3//qcDQ87NeAJnAZe1N9CtfVcbKHYS8+TKXyamUTTJ2JlLlVoMW/sHPwHJaXp3euPgtr
+         +mv24m1OJlx/b6ejsY/v3qxLJup5pfQDl3M223TMvJyarvNMwV82I8k36nICO1Hq1QrG
+         lNtw==
+X-Gm-Message-State: AC+VfDwLSOcmYOuTfXmUSGxayTTisUqOLKQKCs0b5RChaVgeADu5RSLg
+        gk/oyCyg8PaZLvvEMRzrA98bSg==
+X-Google-Smtp-Source: ACHHUZ6wZYLIhMnucl76GusJYLoBy4vUy3JkQdEWTKTTJuSuVlVOIIMGz3REICRMgRokSSTOA4O5tg==
+X-Received: by 2002:ac2:46ef:0:b0:4f3:a556:61b6 with SMTP id q15-20020ac246ef000000b004f3a55661b6mr4318822lfo.3.1684844096123;
+        Tue, 23 May 2023 05:14:56 -0700 (PDT)
+Received: from eriador.lan ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id c26-20020ac2531a000000b004f160559d4asm1319616lfh.183.2023.05.23.05.14.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 May 2023 05:14:55 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jonathan Corbet <corbet@lwn.net>, linux-s390@vger.kernel.org,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        iommu@lists.linux.dev, asahi@lists.linux.dev,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
-        linux-doc@vger.kernel.org
-Date:   Tue, 23 May 2023 14:02:47 +0200
-In-Reply-To: <b1e53f39-5e0b-a09d-2954-cdc9e8592b67@arm.com>
-References: <20230310-dma_iommu-v9-0-65bb8edd2beb@linux.ibm.com>
-         <20230310-dma_iommu-v9-5-65bb8edd2beb@linux.ibm.com>
-         <b1e53f39-5e0b-a09d-2954-cdc9e8592b67@arm.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.48.1 (3.48.1-1.fc38) 
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: CX4CMTbjS9rN7JA4wHUdJpnk4TEt6Js2
-X-Proofpoint-ORIG-GUID: vQuNIviFptwQDoD71zzcOEgdj_w8Gdy7
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-phy@lists.infradead.org
+Subject: [PATCH 00/15] drm/msm/hdmi & phy: use generic PHY framework
+Date:   Tue, 23 May 2023 15:14:39 +0300
+Message-Id: <20230523121454.3460634-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-23_08,2023-05-23_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
- bulkscore=0 lowpriorityscore=0 mlxlogscore=999 adultscore=0
- impostorscore=0 priorityscore=1501 spamscore=0 phishscore=0 malwarescore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305230095
-X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 2023-05-22 at 17:26 +0100, Robin Murphy wrote:
-> On 2023-05-15 10:15, Niklas Schnelle wrote:
-> > In some virtualized environments, including s390 paged memory guests,
-> > IOTLB flushes are used to update IOMMU shadow tables. Due to this, they
-> > are much more expensive than in typical bare metal environments or
-> > non-paged s390 guests. In addition they may parallelize more poorly in
-> > virtualized environments. This changes the trade off for flushing IOVAs
-> > such that minimizing the number of IOTLB flushes trumps any benefit of
-> > cheaper queuing operations or increased paralellism.
-> >=20
-> > In this scenario per-CPU flush queues pose several problems. Firstly
-> > per-CPU memory is often quite limited prohibiting larger queues.
-> > Secondly collecting IOVAs per-CPU but flushing via a global timeout
-> > reduces the number of IOVAs flushed for each timeout especially on s390
-> > where PCI interrupts may not be bound to a specific CPU.
-> >=20
-> > Let's introduce a single flush queue mode that reuses the same queue
-> > logic but only allocates a single global queue. This mode can be
-> > selected as a flag bit in a new dma_iommu_options struct which can be
-> > modified from its defaults by IOMMU drivers implementing a new
-> > ops.tune_dma_iommu() callback. As a first user the s390 IOMMU driver
-> > selects the single queue mode if IOTLB flushes are needed on map which
-> > indicates shadow table use. With the unchanged small FQ size and
-> > timeouts this setting is worse than per-CPU queues but a follow up patch
-> > will make the FQ size and timeout variable. Together this allows the
-> > common IOVA flushing code to more closely resemble the global flush
-> > behavior used on s390's previous internal DMA API implementation.
-> >=20
-> > Link: https://lore.kernel.org/linux-iommu/3e402947-61f9-b7e8-1414-fde00=
-6257b6f@arm.com/
-> > Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com> #s390
-> > Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-> > ---
-> >   drivers/iommu/dma-iommu.c  | 163 ++++++++++++++++++++++++++++++++++--=
----------
-> >   drivers/iommu/dma-iommu.h  |   4 +-
-> >   drivers/iommu/iommu.c      |  18 +++--
-> >   drivers/iommu/s390-iommu.c |  10 +++
-> >   include/linux/iommu.h      |  21 ++++++
-> >   5 files changed, 169 insertions(+), 47 deletions(-)
-> >=20
-> > diff --git a/drivers/iommu/dma-iommu.c b/drivers/iommu/dma-iommu.c
-> > index 7a9f0b0bddbd..be4cab6b4fe4 100644
-> > --- a/drivers/iommu/dma-iommu.c
-> > +++ b/drivers/iommu/dma-iommu.c
-> > @@ -49,8 +49,11 @@ struct iommu_dma_cookie {
-> >   		/* Full allocator for IOMMU_DMA_IOVA_COOKIE */
-> >   		struct {
-> >   			struct iova_domain	iovad;
-> > -
-> > -			struct iova_fq __percpu *fq;	/* Flush queue */
-> > +			/* Flush queue */
-> > +			union {
-> > +				struct iova_fq	*single_fq;
-> > +				struct iova_fq	__percpu *percpu_fq;
-> > +			};
-> >   			/* Number of TLB flushes that have been started */
-> >   			atomic64_t		fq_flush_start_cnt;
-> >   			/* Number of TLB flushes that have been finished */
-> > @@ -67,6 +70,8 @@ struct iommu_dma_cookie {
-> >=20=20=20
-> >   	/* Domain for flush queue callback; NULL if flush queue not in use */
-> >   	struct iommu_domain		*fq_domain;
-> > +	/* Options for dma-iommu use */
-> > +	struct dma_iommu_options	options;
-> >   	struct mutex			mutex;
-> >   };
-> >=20=20=20
-> > @@ -152,25 +157,44 @@ static void fq_flush_iotlb(struct iommu_dma_cooki=
-e *cookie)
-> >   	atomic64_inc(&cookie->fq_flush_finish_cnt);
-> >   }
-> >=20=20=20
-> > -static void fq_flush_timeout(struct timer_list *t)
-> > +static void fq_flush_percpu(struct iommu_dma_cookie *cookie)
-> >   {
-> > -	struct iommu_dma_cookie *cookie =3D from_timer(cookie, t, fq_timer);
-> >   	int cpu;
-> >=20=20=20
-> > -	atomic_set(&cookie->fq_timer_on, 0);
-> > -	fq_flush_iotlb(cookie);
-> > -
-> >   	for_each_possible_cpu(cpu) {
-> >   		unsigned long flags;
-> >   		struct iova_fq *fq;
-> >=20=20=20
-> > -		fq =3D per_cpu_ptr(cookie->fq, cpu);
-> > +		fq =3D per_cpu_ptr(cookie->percpu_fq, cpu);
-> >   		spin_lock_irqsave(&fq->lock, flags);
-> >   		fq_ring_free(cookie, fq);
-> >   		spin_unlock_irqrestore(&fq->lock, flags);
-> >   	}
-> >   }
-> >=20=20=20
-> > +static void fq_flush_single(struct iommu_dma_cookie *cookie)
-> > +{
-> > +	struct iova_fq *fq =3D cookie->single_fq;
-> > +	unsigned long flags;
-> > +
-> > +	spin_lock_irqsave(&fq->lock, flags);
-> > +	fq_ring_free(cookie, fq);
-> > +	spin_unlock_irqrestore(&fq->lock, flags)
->=20
-> Nit: this should clearly just be a self-locked version of fq_ring_free()=
-=20
-> that takes fq as an argument, then both the new case and the existing=20
-> loop body become trivial one-line calls.
+The MSM HDMI PHYs have been using the ad-hoc approach / API instead of
+using the generic API framework. Move all the PHYs to
+drivers/phy/qualcomm and rework them to use generic PHY framework. This
+way all the QMP-related code is kept close. Also in future this will
+allow us to use a common set of functions to setup msm8974 HDMI PHY,
+28nm DSI PHY and apq8964 SATA PHY (which all use UNI PLL internally).
 
-Sure will do. Just one question about names. As an example
-pci_reset_function_locked() means that the relevant lock is already
-taken with pci_reset_function() adding the lock/unlock. In your wording
-the implied function names sound the other way around. I can't find
-anything similar in drivers/iommu so would you mind going the PCI way
-and having:
+This also causes some design changes. Currently on msm8996 the HDMI PLL
+implements clock's set_rate(), while other HDMI PHY drivers used the
+ad-hoc PHY API for setting the PLL rate (this includes in-tree msm8960
+driver and posted, but not merged, msm8974 driver). This might result in
+the PLL being set to one rate, while the rest of the PHY being tuned to
+work at another rate. Adopt the latter idea and always use
+phy_configure() to tune the PHY and set the PLL rate.
 
-fq_ring_free_locked(): Called in queue_iova() with the lock held
-fr_ring_free(): Called in fq_flush_timeout() takes the lock itself
+Dmitry Baryshkov (14):
+  phy: qualcomm: add QMP HDMI PHY driver
+  phy: qualcomm: add MSM8960 HDMI PHY driver
+  phy: qualcomm: add MSM8x60 HDMI PHY driver
+  phy: qcom: apq8064-sata: extract UNI PLL register defines
+  phy: qcom-uniphy: add more registers from display PHYs
+  phy: qualcomm: add MSM8974 HDMI PHY driver
+  drm/msm/hdmi: move the alt_iface clock to the hpd list
+  drm/msm/hdmi: simplify extp clock handling
+  drm/msm/hdmi: correct indentation of HDMI bridge functions
+  drm/msm/hdmi: switch to atomic_pre_enable/post_disable
+  drm/msm/hdmi: set infoframes on all pre_enable calls
+  drm/msm/hdmi: pair msm_hdmi_phy_powerup with msm_hdmi_phy_powerdown
+  drm/msm/hdmi: switch to generic PHY subsystem
+  drm/msm/hdmi: drop old HDMI PHY code
 
-Or maybe I'm just biased because I've used the PCI ..locked() functions
-before and there is a better convention.
+Sandor Yu (1):
+  phy: Add HDMI configuration options
 
->=20
-> > +}
-> > +
-> > +static void fq_flush_timeout(struct timer_list *t)
-> > +{
-> > +	struct iommu_dma_cookie *cookie =3D from_timer(cookie, t, fq_timer);
-> > +
-> > +	atomic_set(&cookie->fq_timer_on, 0);
-> > +	fq_flush_iotlb(cookie);
-> > +
-> > +	if (cookie->options.flags & IOMMU_DMA_OPTS_SINGLE_QUEUE)
-> > +		fq_flush_single(cookie);
-> > +	else
-> > +		fq_flush_percpu(cookie);
-> > +}
-> > +
-> >   static void queue_iova(struct iommu_dma_cookie *cookie,
-> >   		unsigned long pfn, unsigned long pages,
-> >   		struct list_head *freelist)
-> > @@ -188,7 +212,11 @@ static void queue_iova(struct iommu_dma_cookie *co=
-okie,
-> >   	 */
-> >   	smp_mb();
-> >=20=20=20
-> > -	fq =3D raw_cpu_ptr(cookie->fq);
-> > +	if (cookie->options.flags & IOMMU_DMA_OPTS_SINGLE_QUEUE)
-> > +		fq =3D cookie->single_fq;
-> > +	else
-> > +		fq =3D raw_cpu_ptr(cookie->percpu_fq);
-> > +
-> >   	spin_lock_irqsave(&fq->lock, flags);
-> >=20=20=20
-> >   	/*
-> > @@ -219,58 +247,114 @@ static void queue_iova(struct iommu_dma_cookie *=
-cookie,
-> >   			  jiffies + msecs_to_jiffies(IOVA_FQ_TIMEOUT));
-> >   }
-> >=20=20=20
-> > -static void iommu_dma_free_fq(struct iommu_dma_cookie *cookie)
-> > +static void iommu_dma_free_fq_single(struct iova_fq *fq)
-> > +{
-> > +	int idx;
-> > +
-> > +	if (!fq)
-> > +		return;
-> > +	fq_ring_for_each(idx, fq)
-> > +		put_pages_list(&fq->entries[idx].freelist);
-> > +	vfree(fq);
-> > +}
-> > +
-> > +static void iommu_dma_free_fq_percpu(struct iova_fq __percpu *percpu_f=
-q)
-> >   {
-> >   	int cpu, idx;
-> >=20=20=20
-> > -	if (!cookie->fq)
-> > -		return;
-> > -
-> > -	del_timer_sync(&cookie->fq_timer);
-> >   	/* The IOVAs will be torn down separately, so just free our queued p=
-ages */
-> >   	for_each_possible_cpu(cpu) {
-> > -		struct iova_fq *fq =3D per_cpu_ptr(cookie->fq, cpu);
-> > +		struct iova_fq *fq =3D per_cpu_ptr(percpu_fq, cpu);
-> >=20=20=20
-> >   		fq_ring_for_each(idx, fq)
-> >   			put_pages_list(&fq->entries[idx].freelist);
-> >   	}
-> >=20=20=20
-> > -	free_percpu(cookie->fq);
-> > +	free_percpu(percpu_fq);
-> > +}
-> > +
-> > +static void iommu_dma_free_fq(struct iommu_dma_cookie *cookie)
-> > +{
-> > +	if (!cookie->fq_domain)
-> > +		return;
-> > +
-> > +	del_timer_sync(&cookie->fq_timer);
-> > +	if (cookie->options.flags & IOMMU_DMA_OPTS_SINGLE_QUEUE)
-> > +		iommu_dma_free_fq_single(cookie->single_fq);
-> > +	else
-> > +		iommu_dma_free_fq_percpu(cookie->percpu_fq);
-> > +}
-> > +
-> > +
-> > +static void iommu_dma_init_one_fq(struct iova_fq *fq)
-> > +{
-> > +	int i;
-> > +
-> > +	fq->head =3D 0;
-> > +	fq->tail =3D 0;
-> > +
-> > +	spin_lock_init(&fq->lock);
-> > +
-> > +	for (i =3D 0; i < IOVA_FQ_SIZE; i++)
-> > +		INIT_LIST_HEAD(&fq->entries[i].freelist);
-> > +}
-> > +
-> > +static int iommu_dma_init_fq_single(struct iommu_dma_cookie *cookie)
-> > +{
-> > +	struct iova_fq *queue;
-> > +
-> > +	queue =3D vzalloc(sizeof(*queue));
-> > +	if (!queue)
-> > +		return -ENOMEM;
-> > +	iommu_dma_init_one_fq(queue);
-> > +	cookie->single_fq =3D queue;
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int iommu_dma_init_fq_percpu(struct iommu_dma_cookie *cookie)
-> > +{
-> > +	struct iova_fq __percpu *queue;
-> > +	int cpu;
-> > +
-> > +	queue =3D alloc_percpu(struct iova_fq);
-> > +	if (!queue)
-> > +		return -ENOMEM;
-> > +
-> > +	for_each_possible_cpu(cpu)
-> > +		iommu_dma_init_one_fq(per_cpu_ptr(queue, cpu));
-> > +	cookie->percpu_fq =3D queue;
-> > +	return 0;
-> >   }
-> >=20=20=20
-> >   /* sysfs updates are serialised by the mutex of the group owning @dom=
-ain */
-> > -int iommu_dma_init_fq(struct iommu_domain *domain)
-> > +int iommu_dma_init_fq(struct device *dev, struct iommu_domain *domain)
-> >   {
-> >   	struct iommu_dma_cookie *cookie =3D domain->iova_cookie;
-> > -	struct iova_fq __percpu *queue;
-> > -	int i, cpu;
-> > +	const struct iommu_ops *ops =3D dev_iommu_ops(dev);
-> > +	int rc;
-> >=20=20=20
-> >   	if (cookie->fq_domain)
-> >   		return 0;
-> >=20=20=20
-> > +	if (ops->tune_dma_iommu)
-> > +		ops->tune_dma_iommu(dev, &cookie->options);
-> > +
-> >   	atomic64_set(&cookie->fq_flush_start_cnt,  0);
-> >   	atomic64_set(&cookie->fq_flush_finish_cnt, 0);
-> >=20=20=20
-> > -	queue =3D alloc_percpu(struct iova_fq);
-> > -	if (!queue) {
-> > +	if (cookie->options.flags & IOMMU_DMA_OPTS_SINGLE_QUEUE)
-> > +		rc =3D iommu_dma_init_fq_single(cookie);
-> > +	else
-> > +		rc =3D iommu_dma_init_fq_percpu(cookie);
-> > +
-> > +	if (rc) {
-> >   		pr_warn("iova flush queue initialization failed\n");
-> > -		return -ENOMEM;
-> > +		/* fall back to strict mode */
-> > +		domain->type =3D IOMMU_DOMAIN_DMA;
->=20
-> Why move this? It doesn't logically belong to FQ initialisation itself.
+ drivers/gpu/drm/msm/Makefile                  |   6 -
+ drivers/gpu/drm/msm/hdmi/hdmi.c               |  86 +-
+ drivers/gpu/drm/msm/hdmi/hdmi.h               |  79 +-
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c        | 108 ++-
+ drivers/gpu/drm/msm/hdmi/hdmi_phy.c           | 217 -----
+ drivers/gpu/drm/msm/hdmi/hdmi_phy_8960.c      |  51 --
+ drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c      | 765 ------------------
+ drivers/gpu/drm/msm/hdmi/hdmi_phy_8x60.c      | 141 ----
+ drivers/gpu/drm/msm/hdmi/hdmi_phy_8x74.c      |  44 -
+ drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c      | 458 -----------
+ drivers/phy/qualcomm/Kconfig                  |  40 +
+ drivers/phy/qualcomm/Makefile                 |   8 +
+ drivers/phy/qualcomm/phy-qcom-apq8064-sata.c  |  23 +-
+ drivers/phy/qualcomm/phy-qcom-hdmi-msm8960.c  | 744 +++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-hdmi-msm8974.c  | 531 ++++++++++++
+ drivers/phy/qualcomm/phy-qcom-hdmi-msm8x60.c  | 353 ++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp-hdmi-base.c | 184 +++++
+ .../phy/qualcomm/phy-qcom-qmp-hdmi-msm8996.c  | 441 ++++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp-hdmi.h      |  75 ++
+ drivers/phy/qualcomm/phy-qcom-uniphy.h        |  65 ++
+ include/linux/phy/phy-hdmi.h                  |  33 +
+ include/linux/phy/phy.h                       |   7 +-
+ 22 files changed, 2562 insertions(+), 1897 deletions(-)
+ delete mode 100644 drivers/gpu/drm/msm/hdmi/hdmi_phy.c
+ delete mode 100644 drivers/gpu/drm/msm/hdmi/hdmi_phy_8960.c
+ delete mode 100644 drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
+ delete mode 100644 drivers/gpu/drm/msm/hdmi/hdmi_phy_8x60.c
+ delete mode 100644 drivers/gpu/drm/msm/hdmi/hdmi_phy_8x74.c
+ delete mode 100644 drivers/gpu/drm/msm/hdmi/hdmi_pll_8960.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-hdmi-msm8960.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-hdmi-msm8974.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-hdmi-msm8x60.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-hdmi-base.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-hdmi-msm8996.c
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-hdmi.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-uniphy.h
+ create mode 100644 include/linux/phy/phy-hdmi.h
 
-Ah yes this is not needed anymore. Previously when I had a new domain
-type I think I needed to set domain->type in here and moved the
-fallback for consistency. Will remove that change.
-
->=20
-> > +		return rc;
-> >   	}
-> >=20=20=20
-> > -	for_each_possible_cpu(cpu) {
-> > -		struct iova_fq *fq =3D per_cpu_ptr(queue, cpu);
-> > -
-> > -		fq->head =3D 0;
-> > -		fq->tail =3D 0;
-> > -
-> > -		spin_lock_init(&fq->lock);
-> > -
-> > -		for (i =3D 0; i < IOVA_FQ_SIZE; i++)
-> > -			INIT_LIST_HEAD(&fq->entries[i].freelist);
-> > -	}
-> > -
-> > -	cookie->fq =3D queue;
-> > -
-> >   	timer_setup(&cookie->fq_timer, fq_flush_timeout, 0);
-> >   	atomic_set(&cookie->fq_timer_on, 0);
-> >   	/*
-> >=20
----8<---
-> >   static struct iommu_device *s390_iommu_probe_device(struct device *de=
-v)
-> >   {
-> >   	struct zpci_dev *zdev;
-> > @@ -793,6 +802,7 @@ static const struct iommu_ops s390_iommu_ops =3D {
-> >   	.device_group =3D generic_device_group,
-> >   	.pgsize_bitmap =3D SZ_4K,
-> >   	.get_resv_regions =3D s390_iommu_get_resv_regions,
-> > +	.tune_dma_iommu =3D s390_iommu_tune_dma_iommu,
-> >   	.default_domain_ops =3D &(const struct iommu_domain_ops) {
-> >   		.attach_dev	=3D s390_iommu_attach_device,
-> >   		.map_pages	=3D s390_iommu_map_pages,
-> > diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> > index 58891eddc2c4..3649a17256a5 100644
-> > --- a/include/linux/iommu.h
-> > +++ b/include/linux/iommu.h
-> > @@ -219,6 +219,21 @@ struct iommu_iotlb_gather {
-> >   	bool			queued;
-> >   };
-> >=20=20=20
-> > +/**
-> > + * struct dma_iommu_options - Options for dma-iommu
-> > + *
-> > + * @flags: Flag bits for enabling/disabling dma-iommu settings
-> > + *
-> > + * This structure is intended to provide IOMMU drivers a way to influe=
-nce the
-> > + * behavior of the dma-iommu DMA API implementation. This allows optim=
-izing for
-> > + * example for a virtualized environment with slow IOTLB flushes.
-> > + */
-> > +struct dma_iommu_options {
-> > +#define IOMMU_DMA_OPTS_PER_CPU_QUEUE	(0L << 0)
-> > +#define IOMMU_DMA_OPTS_SINGLE_QUEUE	(1L << 0)
-> > +	u64	flags;
-> > +};
->=20
-> I think for now this can just use a bit in dev_iommu to indicate that=20
-> the device will prefer a global flush queue; s390 can set that in=20
-> .probe_device, then iommu_dma_init_domain() can propagate it to an=20
-> equivalent flag in the cookie (possibly even a new cookie type?) that=20
-> iommu_dma_init_fq() can then consume. Then just make the s390 parameters=
-=20
-> from patch #6 the standard parameters for a global queue.
->=20
-> Thanks,
-> Robin.
-
-Sounds good.
-
->=20
-> > +
-> >   /**
-> >    * struct iommu_ops - iommu ops and capabilities
-> >    * @capable: check capability
-> > @@ -242,6 +257,9 @@ struct iommu_iotlb_gather {
-> >    *		- IOMMU_DOMAIN_IDENTITY: must use an identity domain
-> >    *		- IOMMU_DOMAIN_DMA: must use a dma domain
-> >    *		- 0: use the default setting
-> > + * @tune_dma_iommu: Allows the IOMMU driver to modify the default
-> > + *		    options of the dma-iommu layer for a specific
-> > + *		    device.
-> >    * @default_domain_ops: the default ops for domains
-> >    * @remove_dev_pasid: Remove any translation configurations of a spec=
-ific
-> >    *                    pasid, so that any DMA transactions with this p=
-asid
-> > @@ -278,6 +296,9 @@ struct iommu_ops {
-> >   	int (*def_domain_type)(struct device *dev);
-> >   	void (*remove_dev_pasid)(struct device *dev, ioasid_t pasid);
-> >=20=20=20
-> > +	void (*tune_dma_iommu)(struct device *dev,
-> > +			       struct dma_iommu_options *options);
-> > +
-> >   	const struct iommu_domain_ops *default_domain_ops;
-> >   	unsigned long pgsize_bitmap;
-> >   	struct module *owner;
-> >=20
->=20
+-- 
+2.39.2
 
