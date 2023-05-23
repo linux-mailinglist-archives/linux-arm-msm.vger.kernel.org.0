@@ -2,118 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1C9070DF84
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 16:40:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9FA8070DF9F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 16:48:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236110AbjEWOky (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 10:40:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38492 "EHLO
+        id S235471AbjEWOs6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 10:48:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237339AbjEWOkw (ORCPT
+        with ESMTP id S232287AbjEWOs5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 10:40:52 -0400
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACBFC139
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 07:40:49 -0700 (PDT)
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so2303327e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 07:40:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684852788; x=1687444788;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xfPbF+pfNryuLeOwunW5hBDLem6I21D/ZP6zdS6Z5fE=;
-        b=CChN9vLcknEVg4w5lLAaXPgLtbpQPQfKDDmz5zBDRZ24x+C6ngTmvM5OwtBT972K5O
-         nBQeVgu//hzmedk0OsJtMEM0BPk6ZOLK9O9Kx7y3zrrt6k6eAUOsgOhspYnVmWh462pC
-         nQ8eFxu6Emp93yLuPAibGaAf8koQwBXrgMin1C9e4/tUXCE3HsUH/hP0lLa8isD82sfX
-         9cNWSKtFzZ1Ay865MOGAIpkZdOh3GmOYHIo1tBUWffTbxup3qM57h9wNMKG6Cbp0c4sS
-         LPHu8SEW06V4pvLO9YoJehKXGQsHhSIK2uxpbXGqL5hgIb/l9WYJNGlsHtFmtUWVOT7i
-         ZGQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684852788; x=1687444788;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xfPbF+pfNryuLeOwunW5hBDLem6I21D/ZP6zdS6Z5fE=;
-        b=atueex6+q/uQ22g8938uph4gkYBviCoEdlM7PTYSKPR5omdWfzgO917RJBguLJGh11
-         v2c2KpOJ1FdZIu6ekC+FbJwfYJr6IxRLPqYZa3uDxZC+qexmTtgObDRgJCeuNpWmXmgd
-         EsYxJWLPUUHpGOxx2245qc0arP4Vs/ki+UKy/Y31+3ishwfXjz7nfLFvDsCXCIR7rU6+
-         5NI2r0YjGqyL1XM1tMEdpB7L+jWTQVHcG217qZjWc+0ZWzG10rTHMdfCN0HvEV2dV2Yi
-         k6lC3aa6B94czwRh3MOXTIIXIqXMrFuE1aHfsyK8cJDdzv0XhOauagwWAj4B5uVsojfA
-         hkIQ==
-X-Gm-Message-State: AC+VfDx6UPNrJXRaVqDs6vzF3Beeny13Kl9B3d2AWiM8s8kp4y0yNeOz
-        VoAeXPb6fQAMOtmGya3DsO5jEw==
-X-Google-Smtp-Source: ACHHUZ4B/K8ujjGFZUtWcWYxYqD1Y6WKumhmX64ROwFpyvkogGPmqosOwd2FjPNL/SWIbp2gmxEmww==
-X-Received: by 2002:ac2:5ed1:0:b0:4f1:4fe6:56c8 with SMTP id d17-20020ac25ed1000000b004f14fe656c8mr4710296lfq.34.1684852787926;
-        Tue, 23 May 2023 07:39:47 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id v17-20020ac25591000000b004f37918bb20sm1366684lfg.248.2023.05.23.07.39.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 May 2023 07:39:47 -0700 (PDT)
-Message-ID: <358e3015-0e42-4f8c-8c1c-ce27106984cc@linaro.org>
-Date:   Tue, 23 May 2023 17:39:46 +0300
+        Tue, 23 May 2023 10:48:57 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 8CA7ACD;
+        Tue, 23 May 2023 07:48:55 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id EE5CF139F;
+        Tue, 23 May 2023 07:49:39 -0700 (PDT)
+Received: from [10.57.73.71] (unknown [10.57.73.71])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5CB453F840;
+        Tue, 23 May 2023 07:48:52 -0700 (PDT)
+Message-ID: <e2e4b998-e6d8-59e9-fce7-0072954001dd@arm.com>
+Date:   Tue, 23 May 2023 15:48:50 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v5 06/12] drm/msm/dpu: Add SM6350 support
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.11.0
+Subject: Re: [PATCH v4 02/11] coresight-tpda: Add DSB dataset support
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux.dev, Konrad Dybcio <konrad.dybcio@somainline.org>
-References: <20230411-topic-straitlagoon_mdss-v5-0-998b4d2f7dd1@linaro.org>
- <20230411-topic-straitlagoon_mdss-v5-6-998b4d2f7dd1@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230411-topic-straitlagoon_mdss-v5-6-998b4d2f7dd1@linaro.org>
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org
+References: <1682586037-25973-1-git-send-email-quic_taozha@quicinc.com>
+ <1682586037-25973-3-git-send-email-quic_taozha@quicinc.com>
+ <444bc278-a3e3-7d99-6020-7c3337371f66@arm.com>
+In-Reply-To: <444bc278-a3e3-7d99-6020-7c3337371f66@arm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/05/2023 10:46, Konrad Dybcio wrote:
-> Add SM6350 support to the DPU1 driver to enable display output.
+On 23/05/2023 11:07, Suzuki K Poulose wrote:
+> On 27/04/2023 10:00, Tao Zhang wrote:
+>> Read the DSB element size from the device tree. Set the register
+>> bit that controls the DSB element size of the corresponding port.
+>>
+>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>> ---
+>>   drivers/hwtracing/coresight/coresight-core.c |  1 +
+>>   drivers/hwtracing/coresight/coresight-tpda.c | 92 
+>> +++++++++++++++++++++++++---
+>>   drivers/hwtracing/coresight/coresight-tpda.h |  4 ++
+>>   drivers/hwtracing/coresight/coresight-tpdm.c |  2 +-
+>>   include/linux/coresight.h                    |  1 +
+>>   5 files changed, 90 insertions(+), 10 deletions(-)
+>>
+>> diff --git a/drivers/hwtracing/coresight/coresight-core.c 
+>> b/drivers/hwtracing/coresight/coresight-core.c
+>> index 2af416b..f1eacbb 100644
+>> --- a/drivers/hwtracing/coresight/coresight-core.c
+>> +++ b/drivers/hwtracing/coresight/coresight-core.c
+>> @@ -1092,6 +1092,7 @@ static int coresight_validate_source(struct 
+>> coresight_device *csdev,
+>>       if (subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_PROC &&
+>>           subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE &&
+>> +        subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM &&
+>>           subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS) {
+>>           dev_err(&csdev->dev, "wrong device subtype in %s\n", function);
+>>           return -EINVAL;
 > 
-> It's worth noting that one entry dpu_qos_lut_entry was trimmed off:
+> Please see the comment at the bottom.
 > 
-> {.fl = 0, .lut = 0x0011223344556677 },
-> 
-> due to the lack of support for selecting between portrait and landscape
-> LUT settings (for danger and safe LUTs) and no full support for
-> qseed/non-qseed usescases (for QoS LUT).
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h | 173 +++++++++++++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   5 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
->   4 files changed, 180 insertions(+)
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c 
+>> b/drivers/hwtracing/coresight/coresight-tpda.c
+>> index 8d2b9d2..af9c72f 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpda.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
+>> @@ -21,6 +21,56 @@
+>>   DEFINE_CORESIGHT_DEVLIST(tpda_devs, "tpda");
+>> +/* Search and read element data size from the TPDM node in
+>> + * the devicetree. Each input port of TPDA is connected to
+>> + * a TPDM. Different TPDM supports different types of dataset,
+>> + * and some may support more than one type of dataset.
+>> + * Parameter "inport" is used to pass in the input port number
+>> + * of TPDA, and it is set to 0 in the recursize call.
+>> + * Parameter "parent" is used to pass in the original call.
+>> + */
+>> +static int tpda_set_element_size(struct tpda_drvdata *drvdata,
+>> +               struct coresight_device *csdev, int inport, bool parent)
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+The name parent is a bit confusing. It could imply parent device ? That
+is kind of inverse ? because, parent = true, indicates the parent device
+of tpda, which is not true. Could we simply say
 
--- 
-With best wishes
-Dmitry
+bool match_inport => When true, the dest_port of the connection from the
+csdev must match the inport ? And ...
+
+>> +{
+>> +    static int nr_inport;
+>> +    int i;
+>> +    static bool tpdm_found;
+>> +    struct coresight_device *in_csdev;
+>> +
+>> +    if (inport > (TPDA_MAX_INPORTS - 1))
+>> +        return -EINVAL;
+>> +
+>> +    if (parent) {
+>> +        nr_inport = inport;
+>> +        tpdm_found = false;
+>> +    }
+>> +
+>> +    for (i = 0; i < csdev->pdata->nr_inconns; i++) {
+>> +        in_csdev = csdev->pdata->in_conns[i]->src_dev;
+>> +        if (!in_csdev)
+>> +            break;
+>> +
+>> +        if (parent)
+>> +            if (csdev->pdata->in_conns[i]->dest_port != inport)
+>> +                continue;
+
+The above can become :
+
+	    if (match_inport &&
+		csdev->pdata->in_conns[i]->dest_port != inport)
+		continue;
+
+Suzuki
 
