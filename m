@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75E0070D4BC
+	by mail.lfdr.de (Postfix) with ESMTP id C282A70D4BD
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 09:17:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235469AbjEWHQZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 03:16:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55950 "EHLO
+        id S235423AbjEWHQ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 03:16:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55730 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235423AbjEWHQK (ORCPT
+        with ESMTP id S235426AbjEWHQQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 03:16:10 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A2E7132
+        Tue, 23 May 2023 03:16:16 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E41871B1
         for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 00:15:58 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-3093d10442aso4440586f8f.1
+Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-309d3e8777cso2247101f8f.0
         for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 00:15:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684826156; x=1687418156;
+        d=linaro.org; s=google; t=1684826157; x=1687418157;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=BIFzUJ/Fo8Ahtm/+Q0i0RdjV4Wsb9+gZKMClGpdw4TU=;
-        b=y1pRU7i1YZlPtpVTMvlPg7VJjN5SENwi2EO1DAZDBQatuebpBOu+bvFsXCmpdIQ6e9
-         2En8H8JNUeTFMDGTgtAPQ6eJHaBReX77CCJECOfqVoRMohVv6yVs9knWduoJBD+4tYqb
-         krU4QFJWHqmQjTrHEVB718oUAE6igdkEWME90QzwkmQ/XcgkeBe5yy6azQ9XechYb5cg
-         HGe0BhsyUdEWgRKaJaUMXtowhpmzVGYIU/gbVbHjypAUwLEBbeiKq428V5wQB5DtzVa6
-         E0XoMPIGmj9Y3GRNOvFhPxQMGHKkXqY2rt6D3wJ6cx0yp3mrfoLEdRtRpHD8u5+3TIG4
-         yzfw==
+        bh=dqfFtZjpBwpHnbanMeS8saew2f7WSD17vQFnp7exxSY=;
+        b=ELwx8MuM+3lQ8JRNfRhIcN5j/fhD7qpkvAgmUfa15HXJL+N3iftke1aNpTr3LOk3AF
+         w6AbAG203Dlubntrv+qxc4Sw6J56ZZrHTTDqaFw7FVL4kKmvq5dUQsXiIdmLXgnC4Oma
+         Hl0JZ80utXtGC+wlkrHQC8rkRSYcI3BciBQPpfLVUKBOO7ZYBNbwvfVYFC+JyJp3G+7y
+         a0KTjIEAyRRLlw0Zu76PaUL4qNH/KYWPo4MuDYC+q9UqGVvMFW63/swtfuCVCcqVF21P
+         gpfDrCWT0Jaxb86D1Xn5LZvmZXCuKXkJx7mvjMef0d4HOoulLNP4OofTFfcH2NFPzNXJ
+         upZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684826156; x=1687418156;
+        d=1e100.net; s=20221208; t=1684826157; x=1687418157;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BIFzUJ/Fo8Ahtm/+Q0i0RdjV4Wsb9+gZKMClGpdw4TU=;
-        b=VJTSDh0HC5UuwfSovSQ8J3PwI01rGyB8Rbyc2eAwC0P7FhIuV15nL7dHSsrFWbBAHZ
-         OxBdO98YqJXlbiOk/8qwCm6jdIJtHK48O2wJO64bDkLaB9JVPStdkv7wHi5i/U8yOTW7
-         7tYub9TcMEbAPdiDqhn8bLBucxGSH4oLc0ZwYUtBSpYhPZtV9UwOgYO8usrWeV2NSESe
-         Htxq1IG/BLU7nOkplFJ7qLS7+Wsswl+/2/d0vZqqfLvh5IUL/z3mYFoCrS2UWX/MyodY
-         lOk+5cBqEZY0owXquQtcdguIdlMT03N7KgoTqRDnxrFG6+d0YnkP2cqfDZFd7rdGopWH
-         XQVw==
-X-Gm-Message-State: AC+VfDxbuSCrE7bJzuz3vyXcDALMN5FC4DZeFmXcKXCxsfN79wv3qZSl
-        DOTPzVgjj0hbqxQ+PHCv/uhiRg==
-X-Google-Smtp-Source: ACHHUZ5swly8Ef9OlVNzaWFCSNvV/5xAtLoC4oKSesRPpd8XQCqS6VROE3AbYDBRqNj7UHKdNrz0Iw==
-X-Received: by 2002:adf:ce08:0:b0:2f2:783f:ae4a with SMTP id p8-20020adfce08000000b002f2783fae4amr9255461wrn.32.1684826156668;
-        Tue, 23 May 2023 00:15:56 -0700 (PDT)
+        bh=dqfFtZjpBwpHnbanMeS8saew2f7WSD17vQFnp7exxSY=;
+        b=VW1+uWQ6Vlj7XNtLwrNxv8g0jmEOOCqeXUTbaeqOgYspOnfK3e0YfU/d9MGKWZxcpG
+         vJq93zljZ1DrARk7SN9e7iKDjdcYmpMPR/MZio0HnVNKhlH8EwtGrAjeq4k6PlSJYwjs
+         Q02qyU/9Tnfw6tURZhD8Epv7mmrUvYf2ILZZ7RGKTtBgziQVm5J1mwyAXSthkvBVfvIq
+         zn0/sb8M43qGrJPoLoAEyUcRO9GX13XGMg8pMeTqrahBdJHf58VnVJOEQ79KDOeIutHg
+         xH8EmfVva2J/9yXqTcbhz7+XhXY60DCrU0+s0xN+dQ1rc0QUKSBTjaWSFb08YYDOoJVD
+         JA1A==
+X-Gm-Message-State: AC+VfDzREx08Rmz0Sc/WCdiYAcMrQP6k67ESM5jiI0wkmOGRhAdjkUhN
+        vTaWMCi0oAxc6Ees/CJeOjgI/g==
+X-Google-Smtp-Source: ACHHUZ5zuYspmr1qTK+GSeX740r9P7sdIPRlFZuzTwCaKyhcWCwH1W3y06lAgoOlsBNlb6Ot0IvRVw==
+X-Received: by 2002:adf:dc8b:0:b0:303:daff:f1a3 with SMTP id r11-20020adfdc8b000000b00303dafff1a3mr10861571wrj.1.1684826157493;
+        Tue, 23 May 2023 00:15:57 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id x15-20020a5d490f000000b00306299be5a2sm10096239wrq.72.2023.05.23.00.15.55
+        by smtp.gmail.com with ESMTPSA id x15-20020a5d490f000000b00306299be5a2sm10096239wrq.72.2023.05.23.00.15.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 May 2023 00:15:56 -0700 (PDT)
+        Tue, 23 May 2023 00:15:57 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Tue, 23 May 2023 09:15:49 +0200
-Subject: [PATCH v3 5/6] arm64: defconfig: enable FSA4480 driver as module
+Date:   Tue, 23 May 2023 09:15:50 +0200
+Subject: [PATCH v3 6/6] qcom: pmic_glink: enable altmode for SM8450
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230503-topic-sm8450-graphics-dp-next-v3-5-6c43d293995f@linaro.org>
+Message-Id: <20230503-topic-sm8450-graphics-dp-next-v3-6-6c43d293995f@linaro.org>
 References: <20230503-topic-sm8450-graphics-dp-next-v3-0-6c43d293995f@linaro.org>
 In-Reply-To: <20230503-topic-sm8450-graphics-dp-next-v3-0-6c43d293995f@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -68,23 +68,22 @@ To:     Andy Gross <agross@kernel.org>,
         Will Deacon <will@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=734;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1399;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=B3Sqs44Cj2/7LrYQ/8MFFmf/0AlhDqUQcfHJIvUSGLY=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkbGgmrjeORaFDWpBBmGeK+GzFZuWvuDn0ehBtZ7qL
- bhu1YTaJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZGxoJgAKCRB33NvayMhJ0f4ND/
- wO1tb/ixvvyAtMGcDKbTh4uaw90aBRWSOLKwlB/y8Tfh7Xb5vTQJNWCZFT62V8jndi4xitBfuhvRL2
- 3Wuuw10qxsbV1CTsRpCJDdgTCgwwmMQUqzlgFVFs9fhR0mfbsueWV5SlSi4FnoqVAx/2ljS1G2g8MA
- 4vaDc63w3gHc6rbGGz5fTObpdKn6nPHg0cM1ZHTVqte57VxiNqUU1CJN4lvye6/JI6+/82yOFepX65
- y4TdaJECEa5hRYJnPRrsUZ49r7ps34N47RVyxM5Fs/M8YS+aeopKMds3XM5kDWAdzC8KH4t4VWJksb
- VxhPpxvsAhvX0TC9ea81lhblZJnj0D8vU2fLXi7RYRRhpScVF05Hit9009yPnsunJfUABswgYPueTv
- u+3yeZj2IJl80Cc56pcefuMj9O9MT08B0W6WZjlk/KyzPcXvaID6WW9bAfv4IcTihByNXovi6HLjQK
- e63YkRFGhVnHwYmxAnvnUSch75rRBelMGoGQpZVMKfSgof/1F2o5P6lfPkK9LGwkMqBMM+JXl4xA3c
- Th+j0PRp8KzpJidaFjdxwcKUOhklbZtj0Ii5ZVze+2SzzOl7DZ928rD6QmbQPxCloy3JOFA3bdcZ0l
- 5XA/6loF1hXjZqGCvTxYhoFfAeGA9Zh9Alw0L0FKua2nPkIcD91YGCDAkBOQ==
+ bh=qkASJFOC8Sum3nf8ciK4XNKG+cxf4hgwBJ+cUAn3rO4=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkbGgm6WlljbzOT5Ebr1dohSDk9ClWJzy9HlvwA/f0
+ A/9B+JWJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZGxoJgAKCRB33NvayMhJ0SPgEA
+ DEDRyKtKbsbfDCe80qP4eiPCG5tzJ8+4FRj5EMisHLJdYofti/C0lzSjEjbpFMV79pMP1Mvus8pGRY
+ 17EvHxpYpQJtB4kwHo1pUtvKXFW87g1RRY3BYT8eXLIVe2orFLAAhBCZBqLYHqrRyj2tsEpC60ybQV
+ Iw0d0nm81h+NmSRxis5hel0FdMvdF5PbA2E1ibczb7xQ71hPc3ZPHfjma2RQdgTZPGMrmlkR1vtVo+
+ UzHmZaYgbkzTWYL5NOlLk//waI1zzGgay7/KMIumVFEEpYKaFpAAFkwq32AZ5n8S2mbCrdh6Mf5QG2
+ nofnyrh3ckMWoVo8IE9izjAxUIhTSTkyZmOjc7Ldptg7PnunrvCQnwGrGksbysemjBuSa1nhbXEP2C
+ kgaBlhUJKSCpDKfUnfSrmTp0BtZuJ+72o6QDYh9/oQpxauLTbV5O2fwyq6Hzlos8HHUmlS/KMexqi8
+ WkPhF60nmo+AKAQVQhqrUlZ/pD4/S4B64yYTv2CYYgNr7HP1RD+Vx/Ri4LW+IflLuY47hu9Umdv0V3
+ pGAglRRKprzWmIftNxn0MlSKQQqgqV3B5odwLdS8cBTw+bIHj0P3dSw0ozpYPuSjxU0my37eTrfw5s
+ Kry1pklsjRGvXp+L9LevylGWGeKQfQygn5Qnd4YU25u6b9W6o60nwK2dVskQ==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -97,27 +96,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the FSA4480 driver as module for Qualcomm HDK8350 and HDK8450
-platforms to permit USB-C Altmode support.
+Create a separate bitmask for sm8550 and enable altmode aux driver
+for sm8450 platform to enable pmic-glink altmode events.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- arch/arm64/configs/defconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/soc/qcom/pmic_glink.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 052e83197760..57ceb528426d 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -996,6 +996,7 @@ CONFIG_TYPEC_FUSB302=m
- CONFIG_TYPEC_TPS6598X=m
- CONFIG_TYPEC_HD3SS3220=m
- CONFIG_TYPEC_UCSI=m
-+CONFIG_TYPEC_MUX_FSA4480=m
- CONFIG_UCSI_CCG=m
- CONFIG_TYPEC_MUX_GPIO_SBU=m
- CONFIG_MMC=y
+diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
+index 8bf95df0a56a..c87056769ebd 100644
+--- a/drivers/soc/qcom/pmic_glink.c
++++ b/drivers/soc/qcom/pmic_glink.c
+@@ -338,13 +338,17 @@ static int pmic_glink_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-/* Do not handle altmode for now on those platforms */
+ static const unsigned long pmic_glink_sm8450_client_mask = BIT(PMIC_GLINK_CLIENT_BATT) |
++							   BIT(PMIC_GLINK_CLIENT_ALTMODE) |
++							   BIT(PMIC_GLINK_CLIENT_UCSI);
++
++/* Do not handle altmode for now on those platforms */
++static const unsigned long pmic_glink_sm8550_client_mask = BIT(PMIC_GLINK_CLIENT_BATT) |
+ 							   BIT(PMIC_GLINK_CLIENT_UCSI);
+ 
+ static const struct of_device_id pmic_glink_of_match[] = {
+ 	{ .compatible = "qcom,sm8450-pmic-glink", .data = &pmic_glink_sm8450_client_mask },
+-	{ .compatible = "qcom,sm8550-pmic-glink", .data = &pmic_glink_sm8450_client_mask },
++	{ .compatible = "qcom,sm8550-pmic-glink", .data = &pmic_glink_sm8550_client_mask },
+ 	{ .compatible = "qcom,pmic-glink" },
+ 	{}
+ };
 
 -- 
 2.34.1
