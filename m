@@ -2,310 +2,329 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 110EC70D9F2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 12:07:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86F7370DA3E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 12:19:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236362AbjEWKHJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 06:07:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46176 "EHLO
+        id S236024AbjEWKTr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 06:19:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236192AbjEWKHI (ORCPT
+        with ESMTP id S236512AbjEWKTr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 06:07:08 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3034A94;
-        Tue, 23 May 2023 03:07:06 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DA057139F;
-        Tue, 23 May 2023 03:07:50 -0700 (PDT)
-Received: from [10.57.74.49] (unknown [10.57.74.49])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 47F213F6C4;
-        Tue, 23 May 2023 03:07:03 -0700 (PDT)
-Message-ID: <444bc278-a3e3-7d99-6020-7c3337371f66@arm.com>
-Date:   Tue, 23 May 2023 11:07:01 +0100
+        Tue, 23 May 2023 06:19:47 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FB9F94;
+        Tue, 23 May 2023 03:19:45 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34NA82RB009845;
+        Tue, 23 May 2023 10:19:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=dk8HLLZPWZ+CSPzJuc18BjNfkPZ4Kmk0/japlqgqybc=;
+ b=OTGY0hWe7O5lQh9jFtO5z60jHjBzvG1yhXPCqpRwCoyYLmNk1+asXcVFVqDoyNkJU7C3
+ 5yWsm4N3WPLa46AMcBzP+XZFuM8gRby4QX+XdPTGekTr4aK5Y4l+FHouSuAfTQhfm3j1
+ 2QmFQWcEf2akei53loEJJMFqdNvh6EPheoICpjOodiNaKpCvEJwu+CVU9+VrDwiD0bBd
+ t0ygLorshP4B8y36wIKT97u0YR9Xlqm5sUR1imYBsxBTcODsSgGyXLxeycHEWcCdmw7i
+ Sv9j9IVoPwCRJgVkI7A0DqKsP+dibJ0HbKzngl3NKBLYH5yxh+TC6RBo1xlAkW1K0yLn cA== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qrpmm0uvm-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 23 May 2023 10:19:13 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34NAJDuc000506
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 23 May 2023 10:19:13 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 23 May 2023 03:19:08 -0700
+Date:   Tue, 23 May 2023 15:49:04 +0530
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <amitk@kernel.org>,
+        <thara.gopinath@gmail.com>, <rafael@kernel.org>,
+        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Praveenkumar I <quic_ipkumar@quicinc.com>
+Subject: Re: [PATCH v3 2/4] dt-bindings: thermal: tsens: Add ipq9574
+ compatible
+Message-ID: <20230523101903.GA31656@varda-linux.qualcomm.com>
+References: <37adcf5d8d545a076e8ed971a4fb6c6c2833ef3c.1684140883.git.quic_varada@quicinc.com>
+ <b7e749ff-f4f0-0e61-9aae-876db4278fbc@linaro.org>
+ <20230516120426.GA1679@varda-linux.qualcomm.com>
+ <1999753b-ceee-d66c-9a48-cbcbb8e6236e@linaro.org>
+ <20230517055726.GA3165@varda-linux.qualcomm.com>
+ <cfba78d7-e563-4544-00f3-0991b91eb1f3@linaro.org>
+ <20230518054054.GA998@varda-linux.qualcomm.com>
+ <fe1d81d2-52e6-7d2d-8d6c-ffdcbb8ccc89@linaro.org>
+ <20230518090503.GA9173@varda-linux.qualcomm.com>
+ <24b60ca3-b6b9-662f-03c8-df1536b52bc9@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.11.0
-Subject: Re: [PATCH v4 02/11] coresight-tpda: Add DSB dataset support
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1682586037-25973-1-git-send-email-quic_taozha@quicinc.com>
- <1682586037-25973-3-git-send-email-quic_taozha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1682586037-25973-3-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <24b60ca3-b6b9-662f-03c8-df1536b52bc9@linaro.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 8xDTVSq8aSk1mu5vyVJO804DDkQ_zO5A
+X-Proofpoint-GUID: 8xDTVSq8aSk1mu5vyVJO804DDkQ_zO5A
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-23_06,2023-05-23_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
+ mlxscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0 bulkscore=0
+ adultscore=0 mlxlogscore=999 spamscore=0 malwarescore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305230084
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/04/2023 10:00, Tao Zhang wrote:
-> Read the DSB element size from the device tree. Set the register
-> bit that controls the DSB element size of the corresponding port.
-> 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
-> ---
->   drivers/hwtracing/coresight/coresight-core.c |  1 +
->   drivers/hwtracing/coresight/coresight-tpda.c | 92 +++++++++++++++++++++++++---
->   drivers/hwtracing/coresight/coresight-tpda.h |  4 ++
->   drivers/hwtracing/coresight/coresight-tpdm.c |  2 +-
->   include/linux/coresight.h                    |  1 +
->   5 files changed, 90 insertions(+), 10 deletions(-)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-core.c b/drivers/hwtracing/coresight/coresight-core.c
-> index 2af416b..f1eacbb 100644
-> --- a/drivers/hwtracing/coresight/coresight-core.c
-> +++ b/drivers/hwtracing/coresight/coresight-core.c
-> @@ -1092,6 +1092,7 @@ static int coresight_validate_source(struct coresight_device *csdev,
->   
->   	if (subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_PROC &&
->   	    subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE &&
-> +		subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM &&
->   	    subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS) {
->   		dev_err(&csdev->dev, "wrong device subtype in %s\n", function);
->   		return -EINVAL;
+On Thu, May 18, 2023 at 01:06:49PM +0200, Krzysztof Kozlowski wrote:
+> On 18/05/2023 11:05, Varadarajan Narayanan wrote:
+> > On Thu, May 18, 2023 at 09:09:12AM +0200, Krzysztof Kozlowski wrote:
+> >> On 18/05/2023 07:40, Varadarajan Narayanan wrote:
+> >>> On Wed, May 17, 2023 at 09:00:49AM +0200, Krzysztof Kozlowski wrote:
+> >>>> On 17/05/2023 07:57, Varadarajan Narayanan wrote:
+> >>>>> Part-1 is adding the 'const' entries at the beginning i.e.
+> >>>>>
+> >>>>> 	+      - const: qcom,tsens-v0_1
+> >>>>> 	+      - const: qcom,tsens-v1
+> >>>>> 	+      - const: qcom,tsens-v2
+> >>>>> 	+      - const: qcom,ipq8074-tsens
+> >>>>>
+> >>>>> Part-2 is changing from one valid syntax to another i.e.
+> >>>>>
+> >>>>> 	+        items:
+> >>>>> 	+          - enum:
+> >>>>> 	+              - qcom,ipq9574-tsens
+> >>>>> 	+          - const: qcom,ipq8074-tsens
+> >>>>>
+> >>>>> Without both of the above changes, either or both of dtbs_check
+> >>>>> & dt_binding_check fails. So, it is not possible to just add the
+> >>>>> "valid hunk" (part-2) alone.
+> >>>>
+> >>>> Of course it is. All schema files work like that...
+> >>>>>
+> >>>>> If having both part-1 and part-2 in the same patch is not
+> >>>>> acceptable, shall I split them into two patches? Please let me know.
+> >>>>
+> >>>> No, hunk one is not justified.
+> >>>
+> >>> For the other compatibles, the enum entries and const/fallback
+> >>> entries are different. For the 9574 & 8074 case, we want to have
+> >>> qcom,ipq8074-tsens as both enum and const/fallback entry. Hence,
+> >>> if we don't have the first hunk, dtbs_check fails for 8074
+> >>> related dtbs
+> >>>
+> >>> 	ipq8074-hk01.dtb: thermal-sensor@4a9000: compatible: 'oneOf' condition
+> >>> 		['qcom,ipq8074-tsens'] is too short
+> >>
+> >> Why? It is already there. Open the file and you will see that this is
+> >> already covered.
+> >
+> > I guess dtbs_check doesn't like the same value being a const and
+> > a oneof entry.
+>
+> I don't understand.
 
-Please see the comment at the bottom.
+      - description: v2 of TSENS with combined interrupt
+        items:
+          - enum:
+              - qcom,ipq9574-tsens	<--- one of the compatible entries
+          - const: qcom,ipq8074-tsens	<--- fallback entry
 
-> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
-> index 8d2b9d2..af9c72f 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpda.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
-> @@ -21,6 +21,56 @@
->   
->   DEFINE_CORESIGHT_DEVLIST(tpda_devs, "tpda");
->   
-> +/* Search and read element data size from the TPDM node in
-> + * the devicetree. Each input port of TPDA is connected to
-> + * a TPDM. Different TPDM supports different types of dataset,
-> + * and some may support more than one type of dataset.
-> + * Parameter "inport" is used to pass in the input port number
-> + * of TPDA, and it is set to 0 in the recursize call.
-> + * Parameter "parent" is used to pass in the original call.
-> + */
-> +static int tpda_set_element_size(struct tpda_drvdata *drvdata,
-> +			   struct coresight_device *csdev, int inport, bool parent)
-> +{
-> +	static int nr_inport;
-> +	int i;
-> +	static bool tpdm_found;
-> +	struct coresight_device *in_csdev;
-> +
-> +	if (inport > (TPDA_MAX_INPORTS - 1))
-> +		return -EINVAL;
-> +
-> +	if (parent) {
-> +		nr_inport = inport;
-> +		tpdm_found = false;
-> +	}
-> +
-> +	for (i = 0; i < csdev->pdata->nr_inconns; i++) {
-> +		in_csdev = csdev->pdata->in_conns[i]->src_dev;
-> +		if (!in_csdev)
-> +			break;
-> +
-> +		if (parent)
-> +			if (csdev->pdata->in_conns[i]->dest_port != inport)
-> +				continue;
-> +
-> +		if (in_csdev->subtype.source_subtype
+In this patch, we want 8074 to act as a compatible entry for
+ipq8074*.dts and fallback entry for ipq9574.dtsi. That is why I
+believe we are not able to just add 9574 and get it to pass
+dtbs_check and dt_binding_check.
 
-We must match the in_csdev->type to be SOURCE && the subtype.
+> >  Have attached the file, please see if something is
+> > not in order.
+>
+> I don't know what changed there. Please work on patches.
+>
+> >
+> >> If you remove it, then yes, you will see errors and the answer is: do
+> >> not remove it.
+> >
+> > I haven't removed it.
+>
+> You did. Look:
+>
+>        - description: v2 of TSENS with combined interrupt
+> -        enum:
+> -          - qcom,ipq8074-tsens
+>
+> The first character in the diff (-) means removal.
 
-> +				   == CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM) {
-> +			of_property_read_u8(in_csdev->dev.parent->of_node,
-> +					"qcom,dsb-element-size", &drvdata->dsb_esize[nr_inport]);
-> +			if (!tpdm_found)
-> +				tpdm_found = true;
-> +			else
-> +				dev_warn(drvdata->dev,
-> +					"More than one TPDM is mapped to the TPDA input port %d.\n",
-> +					nr_inport);
+It changed from 'enum' to 'const', that is why I said it is not
+removed.
 
-When we know, we have found a source device, we don't need to recurse
-down and could simply 'continue' to the next one in the list and skip
-the call below.
+> > For this patch, ipq8074-tsens changed from
+> > being an oneof enum entry to a const entry. Probably, that is why
+> > dtbs_check is giving these errors.
+>
+> You removed the entry which you should not have touched.
+>
+> >
+> >>> 	ipq8074-hk10-c2.dtb: thermal-sensor@4a9000: compatible: 'oneOf' condition
+> >>> 		['qcom,ipq8074-tsens'] is too short
+> >>>
+> >>> 	ipq8074-hk10-c1.dtb: thermal-sensor@4a9000: compatible: 'oneOf' condition
+> >>> 		['qcom,ipq8074-tsens'] is too short
+> >>>
+> >>> I'm not sure of the correct solution. Having the first hunk
+> >>> solves the above dtbs_check errors, so went with it. I'm able to
+> >>> avoid dtbs_check errors with just one entry in the first hunk.
+> >>
+> >> You made multiple changes in one patch which is not correct. Your goal
+> >> is to add only one change - ipq9574 followed by ipq8074. Add this one.
+> >> Don't touch others.
+> >
+> > But that breaks dtbs_check.
+>
+> All other cases, hundreds of other binding files, do not have problem.
+> Only this one "breaks dtbs_check". No, it does not.
+>
+> Whatever is broken is result of your removal of unrelated pieces.
 
-> +		}
-> +		tpda_set_element_size(drvdata, in_csdev, 0, false);
-> +	}
-> +
-> +	return 0;
-> +}
-> +
->   /* Settings pre enabling port control register */
->   static void tpda_enable_pre_port(struct tpda_drvdata *drvdata)
->   {
-> @@ -32,26 +82,43 @@ static void tpda_enable_pre_port(struct tpda_drvdata *drvdata)
->   	writel_relaxed(val, drvdata->base + TPDA_CR);
->   }
->   
-> -static void tpda_enable_port(struct tpda_drvdata *drvdata, int port)
-> +static int tpda_enable_port(struct tpda_drvdata *drvdata, int port)
->   {
->   	u32 val;
->   
->   	val = readl_relaxed(drvdata->base + TPDA_Pn_CR(port));
-> +	/*
-> +	 * Configure aggregator port n DSB data set element size
-> +	 * Set the bit to 0 if the size is 32
-> +	 * Set the bit to 1 if the size is 64
-> +	 */
-> +	if (drvdata->dsb_esize[port] == 32)
-> +		val &= ~TPDA_Pn_CR_DSBSIZE;
-> +	else if (drvdata->dsb_esize[port] == 64)
-> +		val |= TPDA_Pn_CR_DSBSIZE;
-> +	else
-> +		return -EINVAL;
-> +
->   	/* Enable the port */
->   	val |= TPDA_Pn_CR_ENA;
->   	writel_relaxed(val, drvdata->base + TPDA_Pn_CR(port));
-> +
-> +	return 0;
->   }
->   
-> -static void __tpda_enable(struct tpda_drvdata *drvdata, int port)
-> +static int __tpda_enable(struct tpda_drvdata *drvdata, int port)
->   {
-> +	int ret;
-> +
->   	CS_UNLOCK(drvdata->base);
->   
->   	if (!drvdata->csdev->enable)
->   		tpda_enable_pre_port(drvdata);
->   
-> -	tpda_enable_port(drvdata, port);
-> -
-> +	ret = tpda_enable_port(drvdata, port);
->   	CS_LOCK(drvdata->base);
-> +
-> +	return ret;
->   }
->   
->   static int tpda_enable(struct coresight_device *csdev,
-> @@ -59,16 +126,23 @@ static int tpda_enable(struct coresight_device *csdev,
->   		       struct coresight_connection *out)
->   {
->   	struct tpda_drvdata *drvdata = dev_get_drvdata(csdev->dev.parent);
-> +	int ret;
-> +
-> +	ret = tpda_set_element_size(drvdata, csdev, in->dest_port, true);
-> +	if (ret)
-> +		return ret;
->   
->   	spin_lock(&drvdata->spinlock);
-> -	if (atomic_read(&in->dest_refcnt) == 0)
-> +	if (atomic_read(&in->dest_refcnt) == 0) {
->   		__tpda_enable(drvdata, in->dest_port);
+Not sure about other binding files. Probably they don't have the
+same value for fallback and normal compatible. If there is such
+an example binding file, will replicate that syntax/structure for
+ipq9574 too.
 
-ret = ... ?
+In the 'nvidia,tegra210-ope' example (https://elixir.bootlin.com/linux/v6.3-rc6/source/Documentation/devicetree/bindings/sound/nvidia,tegra210-ope.yaml#L25)
+too 'nvidia,tegra210-ope' is listed twice
 
-> +		if (!ret) {
+      - const: nvidia,tegra210-ope	<===
+      - items:
+          - enum:
+              - nvidia,tegra234-ope
+              - nvidia,tegra194-ope
+              - nvidia,tegra186-ope
+          - const: nvidia,tegra210-ope	<===
+
+> >>>  	+      - const: qcom,ipq8074-tsens
+> >>>
+> >>> Please let me know if there is a better way to resolve this or we
+> >>> can have just the 8074 entry in the first hunk.
+> >>
+> >> You only need to add new item on the oneOf list:
+> >>  - enum
+> >>      - ipq9574
+> >>  - const: ipq8074
+> >
+> > The "['qcom,ipq8074-tsens'] is too short" errors were generated
+> > with the above snippet only. Please see the attachment
+>
+> It's not true. The error you see is result because you removed something
+> you should not. I did not ask you to remove anything. So repeating -
+> "add new item". Adding is not "removal and adding". Adding is just "adding".
+
+See below for the changes that were tried and the corresponding errors.
+
+(1) No lines removed
+
+	@@ -66,6 +66,7 @@
+	       - description: v2 of TSENS with combined interrupt
+		 enum:
+		   - qcom,ipq8074-tsens
+	+          - qcom,ipq9574-tsens
+
+	   reg:
+	     items:
+
+	dt_binding_check: No errors
+
+	dtbs_check	:
+		arch/arm64/boot/dts/qcom/ipq9574-rdp433.dtb: thermal-sensor@4a9000: compatible: 'oneOf' conditional failed, one must be fixed:
+	        ['qcom,ipq9574-tsens', 'qcom,ipq8074-tsens'] is too long
+
+(2) No lines removed
+
+	@@ -66,6 +66,8 @@
+	       - description: v2 of TSENS with combined interrupt
+		 enum:
+		   - qcom,ipq8074-tsens
+	+          - qcom,ipq9574-tsens
+	+        - const: qcom,ipq8074-tsens
+
+	   reg:
+	     items:
+
+	dt_binding_check: No errors
+
+	dtbs_check	: Gives errors for all the DTS files that have tsens-v0_1, tsens-v2, tsens-v1. Copy pasted a sample for each one of them
+		arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dtb: /soc@0/thermal-sensor@4a9000: failed to match any schema with compatible: ['qcom,msm8916-tsens', 'qcom,tsens-v0_1']
+		arch/arm64/boot/dts/qcom/msm8953-xiaomi-tissot.dtb: /soc@0/thermal-sensor@4a9000: failed to match any schema with compatible: ['qcom,msm8953-tsens', 'qcom,tsens-v2']
+		arch/arm64/boot/dts/qcom/msm8956-sony-xperia-loire-suzu.dtb: /soc@0/thermal-sensor@4a9000: failed to match any schema with compatible: ['qcom,msm8956-tsens', 'qcom,tsens-v1']
 
 
+(3) No lines removed
+	@@ -19,6 +19,7 @@
+	 properties:
+	   compatible:
+	     oneOf:
+	+      - const: qcom,ipq8074-tsens
+	       - description: msm8960 TSENS based
+		 items:
+		   - enum:
+	@@ -66,6 +67,8 @@
+	       - description: v2 of TSENS with combined interrupt
+		 enum:
+		   - qcom,ipq8074-tsens
+	+          - qcom,ipq9574-tsens
+	+        - const: qcom,ipq8074-tsens
 
-> +			atomic_inc(&in->dest_refcnt);
-> +			dev_dbg(drvdata->dev, "TPDA inport %d enabled.\n", in->dest_port);
-> +		}
-> +	}
+	   reg:
+	     items:
 
->   
-> -	atomic_inc(&in->dest_refcnt);
+	dt_binding_check: Same as above
 
-This seems wrong, as we may fail to hold additional refcounts for the
-additional sessions ?
+	dtbs_check	: Same as above
 
->   	spin_unlock(&drvdata->spinlock);
-> -
-> -	dev_dbg(drvdata->dev, "TPDA inport %d enabled.\n", in->dest_port);
-> -	return 0;
-> +	return ret;
->   }
->   
->   static void __tpda_disable(struct tpda_drvdata *drvdata, int port)
-> diff --git a/drivers/hwtracing/coresight/coresight-tpda.h b/drivers/hwtracing/coresight/coresight-tpda.h
-> index 0399678..7332e9c 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpda.h
-> +++ b/drivers/hwtracing/coresight/coresight-tpda.h
-> @@ -10,6 +10,8 @@
->   #define TPDA_Pn_CR(n)		(0x004 + (n * 4))
->   /* Aggregator port enable bit */
->   #define TPDA_Pn_CR_ENA		BIT(0)
-> +/* Aggregator port DSB data set element size bit */
-> +#define TPDA_Pn_CR_DSBSIZE		BIT(8)
->   
->   #define TPDA_MAX_INPORTS	32
->   
-> @@ -23,6 +25,7 @@
->    * @csdev:      component vitals needed by the framework.
->    * @spinlock:   lock for the drvdata value.
->    * @enable:     enable status of the component.
-> + * @dsb_esize:  DSB element size, it must be 32 or 64.
+(4) Change 8074 from enum to const
+	@@ -19,6 +19,7 @@
+	 properties:
+	   compatible:
+	     oneOf:
+	+      - const: qcom,ipq8074-tsens
+	       - description: msm8960 TSENS based
+		 items:
+		   - enum:
+	@@ -64,8 +65,10 @@
+		   - const: qcom,tsens-v2
 
-minor nit:
+	       - description: v2 of TSENS with combined interrupt
+	-        enum:
+	-          - qcom,ipq8074-tsens
+	+        items:
+	+          - enum:
+	+              - qcom,ipq9574-tsens
+	+          - const: qcom,ipq8074-tsens
 
-DSB element size for each inport, it must be 32 or 64
+	   reg:
+	     items:
 
->    */
->   struct tpda_drvdata {
->   	void __iomem		*base;
-> @@ -30,6 +33,7 @@ struct tpda_drvdata {
->   	struct coresight_device	*csdev;
->   	spinlock_t		spinlock;
->   	u8			atid;
-> +	u8			dsb_esize[TPDA_MAX_INPORTS];
->   };
->   
->   #endif  /* _CORESIGHT_CORESIGHT_TPDA_H */
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index f4854af..ba1867f 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -205,7 +205,7 @@ static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
->   	if (!desc.name)
->   		return -ENOMEM;
->   	desc.type = CORESIGHT_DEV_TYPE_SOURCE;
-> -	desc.subtype.source_subtype = CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS;
-> +	desc.subtype.source_subtype = CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM;
->   	desc.ops = &tpdm_cs_ops;
->   	desc.pdata = adev->dev.platform_data;
->   	desc.dev = &adev->dev;
+	dt_binding_check: No errors
 
-Please could you split this change, i.e., introduction of
-SUBTYPE_SOURCE_TPDM and using this in TPDM driver,
-  in a separate patch before this change.
+	dtbs_check	: No errors
 
-> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
-> index 225a5fa..6563896 100644
-> --- a/include/linux/coresight.h
-> +++ b/include/linux/coresight.h
-> @@ -60,6 +60,7 @@ enum coresight_dev_subtype_source {
->   	CORESIGHT_DEV_SUBTYPE_SOURCE_PROC,
->   	CORESIGHT_DEV_SUBTYPE_SOURCE_BUS,
->   	CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE,
-> +	CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM,
->   	CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS,
->   };
->   
+But (4) doesn't seem acceptable. Any other alternative to resolve this?
 
+Thanks
+Varada
