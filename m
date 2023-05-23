@@ -2,90 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C282A70D4BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 09:17:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3945670D4CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 09:21:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235423AbjEWHQ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 03:16:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55730 "EHLO
+        id S235304AbjEWHVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 03:21:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56662 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235426AbjEWHQQ (ORCPT
+        with ESMTP id S235441AbjEWHUh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 03:16:16 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E41871B1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 00:15:58 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-309d3e8777cso2247101f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 00:15:58 -0700 (PDT)
+        Tue, 23 May 2023 03:20:37 -0400
+Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B64DA10DE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 00:20:12 -0700 (PDT)
+Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-56190515833so67098537b3.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 00:20:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684826157; x=1687418157;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dqfFtZjpBwpHnbanMeS8saew2f7WSD17vQFnp7exxSY=;
-        b=ELwx8MuM+3lQ8JRNfRhIcN5j/fhD7qpkvAgmUfa15HXJL+N3iftke1aNpTr3LOk3AF
-         w6AbAG203Dlubntrv+qxc4Sw6J56ZZrHTTDqaFw7FVL4kKmvq5dUQsXiIdmLXgnC4Oma
-         Hl0JZ80utXtGC+wlkrHQC8rkRSYcI3BciBQPpfLVUKBOO7ZYBNbwvfVYFC+JyJp3G+7y
-         a0KTjIEAyRRLlw0Zu76PaUL4qNH/KYWPo4MuDYC+q9UqGVvMFW63/swtfuCVCcqVF21P
-         gpfDrCWT0Jaxb86D1Xn5LZvmZXCuKXkJx7mvjMef0d4HOoulLNP4OofTFfcH2NFPzNXJ
-         upZw==
+        d=linaro.org; s=google; t=1684826412; x=1687418412;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ms2Z+39mDMVo35dL1mx9T/boJmFobIlJgfkKwKncnys=;
+        b=DS1T6leVnIRLikXL4zCbd0GhmmcuSC4fDJJ0eZBApkEzBPC+fMOUS/WE5w9+UZj6JW
+         +qjbSE9CDqdfhUMwIBrvrwzEOUOkYYUrwJ+jyummdkBBiGuFUgNK7hDY/QXa9H+vTX79
+         XYxfHoC668JBQvb7RXu9kc342ihnygBj1bHI4CMGU2GgqoAd1sDTWZ+05aU/92mtMfpK
+         /AVpXziqW+bKvZ8dT0+ahO1uBdmadXYqSp0hrLemJJBnFuQ+B5XLWjZKVm11roeFeEjy
+         YiPGMulbh+pgsTaBuzJqBQ3a/r2X1yLqxJ84ENvk+xDntYbiJKEw6WZl/JoU3zBII5dQ
+         gZsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684826157; x=1687418157;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dqfFtZjpBwpHnbanMeS8saew2f7WSD17vQFnp7exxSY=;
-        b=VW1+uWQ6Vlj7XNtLwrNxv8g0jmEOOCqeXUTbaeqOgYspOnfK3e0YfU/d9MGKWZxcpG
-         vJq93zljZ1DrARk7SN9e7iKDjdcYmpMPR/MZio0HnVNKhlH8EwtGrAjeq4k6PlSJYwjs
-         Q02qyU/9Tnfw6tURZhD8Epv7mmrUvYf2ILZZ7RGKTtBgziQVm5J1mwyAXSthkvBVfvIq
-         zn0/sb8M43qGrJPoLoAEyUcRO9GX13XGMg8pMeTqrahBdJHf58VnVJOEQ79KDOeIutHg
-         xH8EmfVva2J/9yXqTcbhz7+XhXY60DCrU0+s0xN+dQ1rc0QUKSBTjaWSFb08YYDOoJVD
-         JA1A==
-X-Gm-Message-State: AC+VfDzREx08Rmz0Sc/WCdiYAcMrQP6k67ESM5jiI0wkmOGRhAdjkUhN
-        vTaWMCi0oAxc6Ees/CJeOjgI/g==
-X-Google-Smtp-Source: ACHHUZ5zuYspmr1qTK+GSeX740r9P7sdIPRlFZuzTwCaKyhcWCwH1W3y06lAgoOlsBNlb6Ot0IvRVw==
-X-Received: by 2002:adf:dc8b:0:b0:303:daff:f1a3 with SMTP id r11-20020adfdc8b000000b00303dafff1a3mr10861571wrj.1.1684826157493;
-        Tue, 23 May 2023 00:15:57 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id x15-20020a5d490f000000b00306299be5a2sm10096239wrq.72.2023.05.23.00.15.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 May 2023 00:15:57 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Tue, 23 May 2023 09:15:50 +0200
-Subject: [PATCH v3 6/6] qcom: pmic_glink: enable altmode for SM8450
+        d=1e100.net; s=20221208; t=1684826412; x=1687418412;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ms2Z+39mDMVo35dL1mx9T/boJmFobIlJgfkKwKncnys=;
+        b=UEiBhbURoEAUlRhN7h1xYl3VTrmWaeD9UJUJEiLtPX6AsR0//cRHtP+nhlmjOfdj9z
+         iQJOolEHOD9js7ADSldO//vcVkwFBCR1ynxunbtGNzKjVN4gbocK5pW060ixv6sAu5Yi
+         iTTij62s1H9M88yGxUt9YNHpCuREtwD2dCnfDziPiCE7EqASRc7/8vxl8YhPxYNLg2Zr
+         TzdM2uIVcyzq09rXP49dMXl1EcMJWtVx58TeWQFQQU85V06P0MFqJhXTQNYQT1Bnu0hG
+         U9o7eUU0MyFgpzFPQfINWPfcMBTMe5SRMWgr188Va4yoHHW/2vT6F9bhnMxogw6s5wB5
+         /lKg==
+X-Gm-Message-State: AC+VfDxN8TL+Nq5ADua5Tc6MvaQIXYmhrkyKPvOpJ4mq3r3u9cnGQNiR
+        2BGc3fk40I3A65EXGMtb+rlK6I2DuxxwdEQMojGyjmycGO5JYo8e
+X-Google-Smtp-Source: ACHHUZ4dVDuvZbgczwrU9xuM2MLuDG609rhoPRz3LEihgVs/v2KsXLh237BeTMSa0tknVxyLC8UQ4A0t8g58et1DB1U=
+X-Received: by 2002:a81:788f:0:b0:55d:9f32:f6c with SMTP id
+ t137-20020a81788f000000b0055d9f320f6cmr13731962ywc.15.1684826411847; Tue, 23
+ May 2023 00:20:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230503-topic-sm8450-graphics-dp-next-v3-6-6c43d293995f@linaro.org>
-References: <20230503-topic-sm8450-graphics-dp-next-v3-0-6c43d293995f@linaro.org>
-In-Reply-To: <20230503-topic-sm8450-graphics-dp-next-v3-0-6c43d293995f@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+References: <20230519023855.3840907-1-dmitry.baryshkov@linaro.org> <557a8aee-37b9-5654-c82c-97206576ab44@quicinc.com>
+In-Reply-To: <557a8aee-37b9-5654-c82c-97206576ab44@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 23 May 2023 10:20:00 +0300
+Message-ID: <CAA8EJpp+ODZZu13ehAN-9Ehz87HCdXsXvO3DQ-oxAhKcb2rqtA@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH v2 0/7] drm/msm/dpu: simplify DPU encoder init
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1399;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=qkASJFOC8Sum3nf8ciK4XNKG+cxf4hgwBJ+cUAn3rO4=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkbGgm6WlljbzOT5Ebr1dohSDk9ClWJzy9HlvwA/f0
- A/9B+JWJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZGxoJgAKCRB33NvayMhJ0SPgEA
- DEDRyKtKbsbfDCe80qP4eiPCG5tzJ8+4FRj5EMisHLJdYofti/C0lzSjEjbpFMV79pMP1Mvus8pGRY
- 17EvHxpYpQJtB4kwHo1pUtvKXFW87g1RRY3BYT8eXLIVe2orFLAAhBCZBqLYHqrRyj2tsEpC60ybQV
- Iw0d0nm81h+NmSRxis5hel0FdMvdF5PbA2E1ibczb7xQ71hPc3ZPHfjma2RQdgTZPGMrmlkR1vtVo+
- UzHmZaYgbkzTWYL5NOlLk//waI1zzGgay7/KMIumVFEEpYKaFpAAFkwq32AZ5n8S2mbCrdh6Mf5QG2
- nofnyrh3ckMWoVo8IE9izjAxUIhTSTkyZmOjc7Ldptg7PnunrvCQnwGrGksbysemjBuSa1nhbXEP2C
- kgaBlhUJKSCpDKfUnfSrmTp0BtZuJ+72o6QDYh9/oQpxauLTbV5O2fwyq6Hzlos8HHUmlS/KMexqi8
- WkPhF60nmo+AKAQVQhqrUlZ/pD4/S4B64yYTv2CYYgNr7HP1RD+Vx/Ri4LW+IflLuY47hu9Umdv0V3
- pGAglRRKprzWmIftNxn0MlSKQQqgqV3B5odwLdS8cBTw+bIHj0P3dSw0ozpYPuSjxU0my37eTrfw5s
- Kry1pklsjRGvXp+L9LevylGWGeKQfQygn5Qnd4YU25u6b9W6o60nwK2dVskQ==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -96,39 +72,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Create a separate bitmask for sm8550 and enable altmode aux driver
-for sm8450 platform to enable pmic-glink altmode events.
+On Tue, 23 May 2023 at 04:58, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 5/18/2023 7:38 PM, Dmitry Baryshkov wrote:
+> > Rework dpu_encoder initialization code, simplifying calling sequences
+> > and separating common init parts.
+> >
+> > Changes since v1:
+> > - Withdrawn two pathes for a later consideration
+> > - Changed dpu_encoder_phys_init() to return void (Abhinav)
+> > - Added small simplifications of dpu_encoder_phys_cmd_init() and
+> >    dpu_encoder_phys_wb_init()
+> >
+>
+> I had previously given these comments on the cover letter of v1, so
+> giving it again.
+>
+> Please mention that your series was made on top of
+> https://patchwork.freedesktop.org/series/116530/.
+>
+> Figured it out when I tried to apply it to my branch to test.
+>
+> I had tested v1, and between v1 and v2 i only see very trivial change,
+> so i think its okay to retain:
+>
+> Tested-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # sc7280
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/soc/qcom/pmic_glink.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+Unfortunately patchwork ignores tags sent in the cover letter thread.
 
-diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
-index 8bf95df0a56a..c87056769ebd 100644
---- a/drivers/soc/qcom/pmic_glink.c
-+++ b/drivers/soc/qcom/pmic_glink.c
-@@ -338,13 +338,17 @@ static int pmic_glink_remove(struct platform_device *pdev)
- 	return 0;
- }
- 
--/* Do not handle altmode for now on those platforms */
- static const unsigned long pmic_glink_sm8450_client_mask = BIT(PMIC_GLINK_CLIENT_BATT) |
-+							   BIT(PMIC_GLINK_CLIENT_ALTMODE) |
-+							   BIT(PMIC_GLINK_CLIENT_UCSI);
-+
-+/* Do not handle altmode for now on those platforms */
-+static const unsigned long pmic_glink_sm8550_client_mask = BIT(PMIC_GLINK_CLIENT_BATT) |
- 							   BIT(PMIC_GLINK_CLIENT_UCSI);
- 
- static const struct of_device_id pmic_glink_of_match[] = {
- 	{ .compatible = "qcom,sm8450-pmic-glink", .data = &pmic_glink_sm8450_client_mask },
--	{ .compatible = "qcom,sm8550-pmic-glink", .data = &pmic_glink_sm8450_client_mask },
-+	{ .compatible = "qcom,sm8550-pmic-glink", .data = &pmic_glink_sm8550_client_mask },
- 	{ .compatible = "qcom,pmic-glink" },
- 	{}
- };
+>
+> > Dmitry Baryshkov (7):
+> >    drm/msm/dpu: merge dpu_encoder_init() and dpu_encoder_setup()
+> >    drm/msm/dpu: separate common function to init physical encoder
+> >    drm/msm/dpu: drop duplicated intf/wb indices from encoder structs
+> >    drm/msm/dpu: inline dpu_encoder_get_wb()
+> >    drm/msm/dpu: call dpu_rm_get_intf() from dpu_encoder_get_intf()
+> >    drm/msm/dpu: drop temp variable from dpu_encoder_phys_cmd_init()
+> >    drm/msm/dpu: simplify dpu_encoder_phys_wb_init()
+> >
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 178 ++++++++----------
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   |  14 +-
+> >   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  15 +-
+> >   .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |  35 ++--
+> >   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |  19 +-
+> >   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  35 +---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  87 ++++-----
+> >   7 files changed, 140 insertions(+), 243 deletions(-)
+> >
+
+
 
 -- 
-2.34.1
-
+With best wishes
+Dmitry
