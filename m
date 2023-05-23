@@ -2,68 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3945670D4CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 09:21:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 715E970D4E8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 09:27:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235304AbjEWHVI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 03:21:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56662 "EHLO
+        id S235334AbjEWH1c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 03:27:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235441AbjEWHUh (ORCPT
+        with ESMTP id S235490AbjEWH10 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 03:20:37 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B64DA10DE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 00:20:12 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-56190515833so67098537b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 00:20:12 -0700 (PDT)
+        Tue, 23 May 2023 03:27:26 -0400
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00E10130
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 00:27:01 -0700 (PDT)
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-4eed764a10cso7629920e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 00:27:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684826412; x=1687418412;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ms2Z+39mDMVo35dL1mx9T/boJmFobIlJgfkKwKncnys=;
-        b=DS1T6leVnIRLikXL4zCbd0GhmmcuSC4fDJJ0eZBApkEzBPC+fMOUS/WE5w9+UZj6JW
-         +qjbSE9CDqdfhUMwIBrvrwzEOUOkYYUrwJ+jyummdkBBiGuFUgNK7hDY/QXa9H+vTX79
-         XYxfHoC668JBQvb7RXu9kc342ihnygBj1bHI4CMGU2GgqoAd1sDTWZ+05aU/92mtMfpK
-         /AVpXziqW+bKvZ8dT0+ahO1uBdmadXYqSp0hrLemJJBnFuQ+B5XLWjZKVm11roeFeEjy
-         YiPGMulbh+pgsTaBuzJqBQ3a/r2X1yLqxJ84ENvk+xDntYbiJKEw6WZl/JoU3zBII5dQ
-         gZsA==
+        d=linaro.org; s=google; t=1684826760; x=1687418760;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=2RRVVPdjPYMfb5LcuanGe7TjuH1tUUrDPIxP2XvP3tA=;
+        b=VxdO1IEXwTY19NdveTqoOqoPN2kVBbvrbAtZHLe9Bl4mBOxPAx7XZJJwDYNRL0X5IW
+         iBgusAgLtC2smNj7dhlX7V2l5A/020ie7t4zHV9jBat7EwofssDrFXZfC2KgLE+RW+cK
+         DQOqbFnNspx39Fq41qgAyFovhH/N7gYLJf580nB9Jalp3MWMc8MY2IADeqDSTodtxbdO
+         YGO1jdCuy8D1W8wsrWxvSRnRao2cAoKFXUZ/3nuo8Bn9uoa3SJXY1/QaVuDN8RY0sUs8
+         Y81ZzIt1Sc9gDMlUNhY4k4MDP9OKx7MBihCqdhx76wYkUY4RERyJBbMSbd95Bsu5GNcP
+         26Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684826412; x=1687418412;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ms2Z+39mDMVo35dL1mx9T/boJmFobIlJgfkKwKncnys=;
-        b=UEiBhbURoEAUlRhN7h1xYl3VTrmWaeD9UJUJEiLtPX6AsR0//cRHtP+nhlmjOfdj9z
-         iQJOolEHOD9js7ADSldO//vcVkwFBCR1ynxunbtGNzKjVN4gbocK5pW060ixv6sAu5Yi
-         iTTij62s1H9M88yGxUt9YNHpCuREtwD2dCnfDziPiCE7EqASRc7/8vxl8YhPxYNLg2Zr
-         TzdM2uIVcyzq09rXP49dMXl1EcMJWtVx58TeWQFQQU85V06P0MFqJhXTQNYQT1Bnu0hG
-         U9o7eUU0MyFgpzFPQfINWPfcMBTMe5SRMWgr188Va4yoHHW/2vT6F9bhnMxogw6s5wB5
-         /lKg==
-X-Gm-Message-State: AC+VfDxN8TL+Nq5ADua5Tc6MvaQIXYmhrkyKPvOpJ4mq3r3u9cnGQNiR
-        2BGc3fk40I3A65EXGMtb+rlK6I2DuxxwdEQMojGyjmycGO5JYo8e
-X-Google-Smtp-Source: ACHHUZ4dVDuvZbgczwrU9xuM2MLuDG609rhoPRz3LEihgVs/v2KsXLh237BeTMSa0tknVxyLC8UQ4A0t8g58et1DB1U=
-X-Received: by 2002:a81:788f:0:b0:55d:9f32:f6c with SMTP id
- t137-20020a81788f000000b0055d9f320f6cmr13731962ywc.15.1684826411847; Tue, 23
- May 2023 00:20:11 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1684826760; x=1687418760;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2RRVVPdjPYMfb5LcuanGe7TjuH1tUUrDPIxP2XvP3tA=;
+        b=T69PfvK2W5Ea9P+6agU2SVvHB1h0lXGl2X9aKFd8KwtDx6OdT2CtYDP1zYpPX2dKTx
+         Dy8eW5Zvznsa7CcqxaQgSh+mJfdPkTNxuSnQWAmv6dD8QmBBaLGCo7TUoEXtoq+u9/da
+         /JhzYM2rGt1++lYMa3Urn0AzcodHTlfVC9SRI+s61Xa6u+En6DB5h8IkKq+QVMH0YVcl
+         QlgSTukycS1e18BY+xuI7xnQWN+2LTPTS0dFc/MmXODlJ3jNBcl+2Po7fzD+fryL/sUs
+         OxZfl/NJbn37vFbsP41QTF4e1bZdYlzurEHrCqx7tNUTVIsJg3PisBIoSi7UU4MhYxYY
+         wMCg==
+X-Gm-Message-State: AC+VfDxWRNVLyS8Qbfau5i2EW39UrkrOZHr8LmBLvjM2jWtSm2riWtkE
+        xzq0S3pxodLcjsAcUXtpemRvFg==
+X-Google-Smtp-Source: ACHHUZ7tfwO1DEcx489zNOHBK5BZGEB7Xduxhi+LIoBu6F/UqYxbikP/4BneRmzO82Y5Vce/AGSXVQ==
+X-Received: by 2002:ac2:544e:0:b0:4f2:6817:2379 with SMTP id d14-20020ac2544e000000b004f268172379mr3847395lfn.23.1684826760225;
+        Tue, 23 May 2023 00:26:00 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id j23-20020a2e6e17000000b002a9f1b23604sm1486280ljc.93.2023.05.23.00.25.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 23 May 2023 00:25:59 -0700 (PDT)
+Message-ID: <5bcfb2dd-5cf4-b4cb-414a-9f6ad3838d36@linaro.org>
+Date:   Tue, 23 May 2023 10:25:59 +0300
 MIME-Version: 1.0
-References: <20230519023855.3840907-1-dmitry.baryshkov@linaro.org> <557a8aee-37b9-5654-c82c-97206576ab44@quicinc.com>
-In-Reply-To: <557a8aee-37b9-5654-c82c-97206576ab44@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 23 May 2023 10:20:00 +0300
-Message-ID: <CAA8EJpp+ODZZu13ehAN-9Ehz87HCdXsXvO3DQ-oxAhKcb2rqtA@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH v2 0/7] drm/msm/dpu: simplify DPU encoder init
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [Freedreno] [RFC PATCH v2 06/13] drm/msm/dpu: switch RM to use
+ crtc_id rather than enc_id for allocation
+Content-Language: en-GB
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
         dri-devel@lists.freedesktop.org,
         Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         David Airlie <airlied@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+References: <20230321011821.635977-1-dmitry.baryshkov@linaro.org>
+ <20230321011821.635977-7-dmitry.baryshkov@linaro.org>
+ <29c1aa19-f1c7-4aff-0f48-b4e849547ebd@quicinc.com>
+ <bf12ab07-4901-0a97-6e97-77d537a2cfe3@linaro.org>
+ <266dcc31-18dc-10ad-6e2a-4e21239a74dc@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <266dcc31-18dc-10ad-6e2a-4e21239a74dc@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -72,58 +85,230 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 23 May 2023 at 04:58, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
->
->
-> On 5/18/2023 7:38 PM, Dmitry Baryshkov wrote:
-> > Rework dpu_encoder initialization code, simplifying calling sequences
-> > and separating common init parts.
-> >
-> > Changes since v1:
-> > - Withdrawn two pathes for a later consideration
-> > - Changed dpu_encoder_phys_init() to return void (Abhinav)
-> > - Added small simplifications of dpu_encoder_phys_cmd_init() and
-> >    dpu_encoder_phys_wb_init()
-> >
->
-> I had previously given these comments on the cover letter of v1, so
-> giving it again.
->
-> Please mention that your series was made on top of
-> https://patchwork.freedesktop.org/series/116530/.
->
-> Figured it out when I tried to apply it to my branch to test.
->
-> I had tested v1, and between v1 and v2 i only see very trivial change,
-> so i think its okay to retain:
->
-> Tested-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # sc7280
+On 23/05/2023 01:22, Abhinav Kumar wrote:
+> Sorry for the delay, other topics delayed my response on this one.
+> 
+> On 5/18/2023 6:50 PM, Dmitry Baryshkov wrote:
+>> On 19/05/2023 02:46, Abhinav Kumar wrote:
+>>>
+>>>
+>>> On 3/20/2023 6:18 PM, Dmitry Baryshkov wrote:
+>>>> Up to now the driver has been using encoder to allocate hardware
+>>>> resources. Switch it to use CRTC id in preparation for the next step.
+>>>>
+>>>
+>>> This decision to use encoder id instead of CRTC has been there 
+>>> downstream for quite sometime. So most of the delay in reviewing this 
+>>> series was trying to understand why we had this in the first place 
+>>> and who knew that story.
+>>>
+>>> You are right that from the perspective of clone mode mapping 
+>>> resources to CRTC is correct but using encoder id is what has been 
+>>> working so far without too much difficulty with a little more 
+>>> management  But another use-case can get simplified with this.
+>>
+>> Thank you for the historical perspective and for the feedback.
+>>
+>> I think that keeping resource allocation in dpu_encoder was required 
+>> when INTF/WB themselves were allocated through the RM. However as 
+>> INTF/WB blocks are now allocated in a static way, it doesn't make so 
+>> much sense anymore.
+>>
+> 
+> No, whether intf/wb block themselves are allocated through RM or not did 
+> not really go into this. It was just about considering where all 
+> hardware blocks make sense to be mapped : crtc or encoder. At the end, 
+> considering the dsc, cwb and some more blocks encoder id was used.
 
-Unfortunately patchwork ignores tags sent in the cover letter thread.
+Ack, thanks for the historical perspective. Didn't know that.
 
->
-> > Dmitry Baryshkov (7):
-> >    drm/msm/dpu: merge dpu_encoder_init() and dpu_encoder_setup()
-> >    drm/msm/dpu: separate common function to init physical encoder
-> >    drm/msm/dpu: drop duplicated intf/wb indices from encoder structs
-> >    drm/msm/dpu: inline dpu_encoder_get_wb()
-> >    drm/msm/dpu: call dpu_rm_get_intf() from dpu_encoder_get_intf()
-> >    drm/msm/dpu: drop temp variable from dpu_encoder_phys_cmd_init()
-> >    drm/msm/dpu: simplify dpu_encoder_phys_wb_init()
-> >
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 178 ++++++++----------
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   |  14 +-
-> >   .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  15 +-
-> >   .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |  35 ++--
-> >   .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |  19 +-
-> >   .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  35 +---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  87 ++++-----
-> >   7 files changed, 140 insertions(+), 243 deletions(-)
-> >
+> 
+>>>
+>>> There is another angle to this. There are hardware blocks which can 
+>>> do writeback and the physical display concurrently. We call it 
+>>> concurrent writeback or CWB. This is present even on some of the 
+>>> chipsets already supported upstream.
+>>>
+>>> Now, lets say we start a concurrent writeback session , in todays 
+>>> code we will allocate the resources with the encoder id of the 
+>>> writeback's encoder and the other physical display's encoder.
+>>>
+>>> When the session stops, we can just deallocate the resources of the 
+>>> writeback encoder without touching the other encoder. So it will 
+>>> become easier to just free up the resources mapped to the encoder.
+>>
+>> I have not looked into CWB programming. However from your description 
+>> it would be as easy to do a full reallocation of the pipeline as just 
+>> dropping the CWB/extra encoder. In fact this is what the driver was 
+>> doing: in case of a modeset, drop all old resources and allocate full 
+>> set of resources.
+>>
+> 
+> Correct and the reason it was able to seamlessly drop all the old 
+> resources was because of the encoder_id mapping, for the cwb use-case 
+> using crtc id will not be so seamless to release the resources.
 
+Can you please tell, why? At all the times we can drop all resources and 
+then reacquire them. In the worst case it results in wasted time, but 
+there should no be troubles doing this acquisition.
 
+Also see below.	
+
+>>> With clone mode implemented with CRTC id to map resources, we will 
+>>> have to probably do some extra book-keeping to handle concurrent 
+>>> writeback.
+>>
+>> Probably not much. We'd have to describe the topology/requirements and 
+>> then pass that to RM. I have been waiting for this patchset (and up to 
+>> some point the DSC/ctl) to be reviewed before finalizing/submitting 
+>> the patches that rework the CTL interface to use this kind of data 
+>> structure.
+>>
+> 
+> There is some effort there from what I can see in the cwb case. I am 
+> unable to visualize how your rework will help that case. If you want to 
+> move this mapping to crtc id to that series to convince us how, then it 
+> is a better fit for that series.
+
+-ENOTFINISHED. Anyway, I think it is separate from the topology changes too.
+
+> 
+>>> Thats the use-case which gets impacted with this but for others, 
+>>> there shouldnt be a major impact from what we see.
+>>>
+>>> That being said, what benefit are you seeing from making that change 
+>>> now for this series? Why is it specifically needed for virtual planes?
+>>>
+>>> I see in the commit text that you have mentioned this is in 
+>>> preparation for next step and next step talks about clone mode. But 
+>>> clone mode is not there yet. So why this change now?
+>>
+>> There were several items that triggered this review.
+>>
+>> First thing first. Current design allocates resources from 
+>> dpu_encoder_virt_atomic_check(), then in 
+>> dpu_encoder_virt_atomic_mode_set() the driver has to poke manually in 
+>> the cstate and fill CTL and LM. This kept on bugging me for some time. 
+>> The encoder should not be poking into the CRTC state.
+>>
+> 
+> Interesting point, but the DRM documentation seems to allow that and I 
+> think now thats one of the positives to have things in encoder's atomic 
+> check.
+> 
+> 803      * This callback is used to validate encoder state for atomic 
+> drivers.
+> 804      * Since the encoder is the object connecting the CRTC and 
+> connector it
+> 805      * gets passed both states, to be able to validate interactions and
+> 806      * update the CRTC to match what the encoder needs for the 
+> requested
+> 807      * connector.
+> 808      *
+> 
+> Encoder is the place where we have both the crtc and the connector state 
+> being passed down to. the crtc's atomic check doesnt have the states of 
+> encoder. So it just seems the encoder's atomic check is more centralized 
+> for the entire pipeline.
+
+First. Once [1] lands, the driver will not use connector state.
+
+Regarding the encoder vs crtc state. Currently the CRTC's atomic_check() 
+code can not influence resource allocation. Encoder's atomic_check() 
+happens earlier. This results in code like msm_atomic_check().
+
+If display resources are allocated from CRTC's atomic_check(), the 
+mentioned function can go away by moving this check to 
+dpu_crtc_atomic_check().
+
+Last, but not least, let me point our the text you have quoted: "... 
+update the CRTC to match what the encoder needs for the requested 
+connector.". In our case the driver doesn't update the CRTC state 
+according to the needs of the requested connector. Instead, it updates 
+the CRTC state for what is needed for the CRTC. It is the CRTC itself 
+who needs one or two LMs, not the connector.
+
+[1] https://patchwork.freedesktop.org/series/117979/
+
+> 
+>> Then came the virtual planes. I think you'd agree that for the virtual 
+>> planes we assign SSPPs to the CRTCs. My initial design kept enc_id for 
+>> all the resources except the SSPP blocks (which were allocated per 
+>> crtc_id). This was not perfect from the symmetry point of view.
+>>
+> 
+> Yes for SSPPs, since they are connected to LMs and LM is mapped to CRTC 
+> yes its right that it will be better of to map to CRTC , only if we 
+> think about these two blocks in isolation. But if I would think that if 
+> we want to validate the pipeline encoder is more central.
+
+I don't agree here. Especially if we have cloned output (=CWB?) support.
+There will be two encoders/bridge-chains/connectors being driven by a 
+single CRTC. CRTC is the spider in the centre of the web with the 
+threads going around to the connectors.
+
+And this is pretty much supported by the fact that the encoder doesn't 
+have its own atomic_state. IIRC, quite frequently encoder is just a shim 
+between the CRTC and bridge-chain/connector.
+
+>> Above all, filling the cstate in mode_set was too late for 
+>> atomic_check to look into allocated LM to see if it supports 
+>> MIXER_SOURCESPLIT or not. See dpu_plane_atomic_check().
+>>
+>> I started by moving the cstate filling from the 
+>> dpu_encoder_virt_atomic_mode_set() to dpu_encoder_virt_atomic_check(). 
+>> And then it just became natural to turn it to be CRTC-centric code. 
+>> The encoder doesn't have to peek into CRTC state. CRTC/plane do not 
+>> have to delay the checks becasuse the necessary data is provided by 
+>> the other party at a later point.
+>>
+> 
+> I agree that moving from mode_set() to atomic_check() for the cstate had 
+> to be done. But like I wrote encoder being passed a crtc state is 
+> exactly for this purpose as its central to crtc and connector.
+> 
+>>> Resource allocation is centered around LMs for the blocks we have 
+>>> seen so far like LM, SSPP  but  ....
+>>
+>> And LM is a CRTC.
+>>
+>>> DSC is already an exception because in earlier chipsets we saw that 
+>>> PP and DSC go together and cannot be muxed but later on that changed.
+>>>
+>>> Now, I have explained this case but I am not getting why we need to 
+>>> make the change for this series. Is it absolutely necessary?
+>>
+>> Strictly, we don't. I can work around all the deficiencies of the 
+>> current code. But it is more natural to do it now rather than later.
+>>
+> 
+> Overall, like I wrote in my last response, I am not against the idea but 
+> from your reasoning so far and from the responses i have given above, I 
+> do not think that this series demands this change necessarily. I think 
+> without this change, the virtual plane series itself is pretty small to 
+> review and will be an easier task to land that first. We should deal 
+> with it on a need basis rather than just deciding to use virtual planes 
+> to make this design change.
+
+To save time on arguing, I'll take a look at rebasing patches. Please 
+continue review with patches 1,2,9-13.
+
+> 
+>>>
+>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>> ---
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c |  16 +--
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h     |  10 +-
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c      | 119 
+>>>> ++++++++++----------
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h      |  15 ++-
+>>>>   4 files changed, 77 insertions(+), 83 deletions(-)
+>>
+>>
+>> [trimmed the patch contents, it is not relevant to this discussion]
+>>
 
 -- 
 With best wishes
 Dmitry
+
