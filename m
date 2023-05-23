@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E07E70E33F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 19:46:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF12570E3C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 19:47:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231334AbjEWQy1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 12:54:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32942 "EHLO
+        id S232954AbjEWQy3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 12:54:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237843AbjEWQy1 (ORCPT
+        with ESMTP id S237601AbjEWQy2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 12:54:27 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7AC6C2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 09:54:25 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f13c41c957so12627e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 09:54:25 -0700 (PDT)
+        Tue, 23 May 2023 12:54:28 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05C31E6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 09:54:27 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2aeea823a5eso132861fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 09:54:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684860864; x=1687452864;
+        d=linaro.org; s=google; t=1684860865; x=1687452865;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=iIS9SFexITirFRd16yXcUHPU7FYqwbhVnhTW6RRL/rs=;
-        b=BuUfxZ5VHPUlq9N3QgZHPlgVqzU40vp05EbtoiO86hamkd9lY18OtLKKU0zCgAmFL/
-         W2tLrSQE0HTF2j5QNDY+FLVIM9Idg+CGhXWk768wF4Zmj3mCnmA1Yr9Eo0MlhgpTssrX
-         gT6f1fFRz95IwgW3r8zLGNFQ7ZfXsmaHk585J6EmFFURGTnCJmRDyj/j8taFY7/DikCJ
-         zNit3ec0kjbr/Cxkpze549UOiOgAEDP8PJVKw23SK4M6t6zgKB6VHbu/ePnidaUMN/+c
-         QEY/huicuZ4QTV3YUKSk9OLUs3igy/FG0tPXPoPnrMUZhpJ7iydyS56nz4HvXOKfY0qc
-         JUpA==
+        bh=uEVdSBl05HoD3jKmlqjtQqmkZDEcCVv5n8JBsOat61I=;
+        b=hBAj9Wj7K+uW/BDjOGtQKuP5VOdvMYmOHD4EI2cXLyst0UcJMGbnBWeKyoEljG2VrN
+         V0Wkg4njoabS+e1harAzZwFzWxHKxHYj4YkqWkS0v58XSkKHDxtQLXoHs8NjnnnYbWEU
+         Tmlp6qg0a+6rUl9LscIAReCdBNz2uVAh/+UNlO5MItFc44MmLNhk4JBVMxxw/DWQdeP8
+         auhH6w4EYzKYkFMgG7VzYmvPxrZ1RUFXCmqOCwG8XG2a/waYXMgoXPML1BSql7WAG725
+         rgxO9GUwNLjqVw8LWxXq14hA4dZbE+1k0PVYGl7QfJIMop2DuW25IXFRTDbqhTJriBeJ
+         bg3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684860864; x=1687452864;
+        d=1e100.net; s=20221208; t=1684860865; x=1687452865;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=iIS9SFexITirFRd16yXcUHPU7FYqwbhVnhTW6RRL/rs=;
-        b=CJnWQdzwR2EyrOWrwpHW6i4Ir78+5DdqbHGjZjxLRp6ju62Llfe17EImu7dwD45jJt
-         Jyq+yxJ8SnqbNTT5Nk9Hv8yRXsFYpYQi9iU8db5bxCeXxqGIyA6MJ+b2d5XY5Iq7QftU
-         3AKgZkIUeV0hwhXtAfWV//Nag9XlGOU9Dkwd1oxDt6+G0hwQbcFDXgrpWvaaeLeS+2x0
-         27kEcnX1GJafCNbbmzSu6MBC7pC+sA6Vb5FjiGWCHc+YARyIBEPoWobb6JZ4REEWyOT7
-         PI9Cgjt9ykSUpPbysljjKZqMFhBIt517vGnU/PYI7pxwnB229bMgRHw68VZ0VF4Isfzf
-         7vaA==
-X-Gm-Message-State: AC+VfDyZFSss2oZt8uiiycS8UwDZfzRi3hbzutcn1/rvUBPcyjgLFyeS
-        KWpBmME3iUqSj4XY7+/PXkFitw==
-X-Google-Smtp-Source: ACHHUZ4oD0MF6jhp1y+19w18CniTY7S0GWpfvPabRhBF13xWh1QDmw6FECc59cklj16ZNzUjLUx6Lg==
-X-Received: by 2002:a2e:b533:0:b0:2ac:767c:fba0 with SMTP id z19-20020a2eb533000000b002ac767cfba0mr4960152ljm.2.1684860864182;
-        Tue, 23 May 2023 09:54:24 -0700 (PDT)
+        bh=uEVdSBl05HoD3jKmlqjtQqmkZDEcCVv5n8JBsOat61I=;
+        b=LeSvvZrQpSc/+WmXWFja8yE/X8zZ/jfjfgFvuGaN6XHp3iJLlE6zXReoyPB+LZuLZk
+         O1sBwADPxs14TTYvEBJ/y0sz7SQ3LoyjJtUCEWTGftclFQrdODmk+tAc0KZGkX+1QGFx
+         +Os03KQXhrfjGGN2uJ8j+mgsqx0fNIzlKToiHLX5DVJixzz/7tvmLtEgZtOXCw8WLDN1
+         EQj7ztJRhEMHAqHRgFBIzBl5UxCpC2lES02+BgCHVwDqvej4FTcln6AEUE2fbGNinvjR
+         TYMfT693WRmRhxt4CTVxeuLOePF05UH1N2EGCT/t6fAvQ+Fm8qZtWMchSZAIsQ9FnqJ8
+         IYtA==
+X-Gm-Message-State: AC+VfDwx+G/ndJsx/OFL7haOpiksdIxeHS1QJ913HTAwiiwG8ji/8EY9
+        cEahZemmvCYcNe8f+LKKXjxoGw==
+X-Google-Smtp-Source: ACHHUZ6tdhUz4fTAhkihts16HSJpJS6Gm7CPkUB5T0GPXcJf+35nZnauKeNrtT49NsuS7l4sgU071g==
+X-Received: by 2002:a05:651c:2ce:b0:2a8:cfa9:a2b7 with SMTP id f14-20020a05651c02ce00b002a8cfa9a2b7mr4733903ljo.1.1684860865377;
+        Tue, 23 May 2023 09:54:25 -0700 (PDT)
 Received: from localhost.localdomain (88-112-131-206.elisa-laajakaista.fi. [88.112.131.206])
-        by smtp.gmail.com with ESMTPSA id q2-20020a2e84c2000000b002adbf24212esm1695245ljh.49.2023.05.23.09.54.23
+        by smtp.gmail.com with ESMTPSA id q2-20020a2e84c2000000b002adbf24212esm1695245ljh.49.2023.05.23.09.54.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 May 2023 09:54:23 -0700 (PDT)
+        Tue, 23 May 2023 09:54:24 -0700 (PDT)
 From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
         Arnd Bergmann <arnd@arndb.de>
@@ -57,9 +57,9 @@ Cc:     Will Deacon <will@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH 3/5] arm64: defconfig: Build interconnect driver for QCM2290
-Date:   Tue, 23 May 2023 19:54:09 +0300
-Message-Id: <20230523165411.1136102-4-vladimir.zapolskiy@linaro.org>
+Subject: [PATCH 4/5] arm64: defconfig: Build display clock controller driver for QCM2290
+Date:   Tue, 23 May 2023 19:54:10 +0300
+Message-Id: <20230523165411.1136102-5-vladimir.zapolskiy@linaro.org>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20230523165411.1136102-1-vladimir.zapolskiy@linaro.org>
 References: <20230523165411.1136102-1-vladimir.zapolskiy@linaro.org>
@@ -75,7 +75,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Build Qualcomm QCM2290 interconnect driver.
+Build display clock controller driver for Qualcomm QCM2290 platform.
 
 Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 ---
@@ -83,17 +83,17 @@ Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
  1 file changed, 1 insertion(+)
 
 diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index e2f6a352a0ad..ec9b828b14e2 100644
+index ec9b828b14e2..3ec556cdfac3 100644
 --- a/arch/arm64/configs/defconfig
 +++ b/arch/arm64/configs/defconfig
-@@ -1415,6 +1415,7 @@ CONFIG_INTERCONNECT_QCOM=y
- CONFIG_INTERCONNECT_QCOM_MSM8916=m
- CONFIG_INTERCONNECT_QCOM_MSM8996=m
- CONFIG_INTERCONNECT_QCOM_OSM_L3=m
-+CONFIG_INTERCONNECT_QCOM_QCM2290=y
- CONFIG_INTERCONNECT_QCOM_QCS404=m
- CONFIG_INTERCONNECT_QCOM_SA8775P=y
- CONFIG_INTERCONNECT_QCOM_SC7180=y
+@@ -1164,6 +1164,7 @@ CONFIG_MSM_MMCC_8996=m
+ CONFIG_MSM_MMCC_8998=m
+ CONFIG_MSM_GCC_8998=y
+ CONFIG_QCM_GCC_2290=y
++CONFIG_QCM_DISPCC_2290=m
+ CONFIG_QCS_GCC_404=y
+ CONFIG_SA_GCC_8775P=y
+ CONFIG_SC_DISPCC_8280XP=m
 -- 
 2.33.0
 
