@@ -2,113 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F3FF70DA91
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 12:30:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE5EB70DAF1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 12:54:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236041AbjEWKan (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 06:30:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57248 "EHLO
+        id S236336AbjEWKyx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 06:54:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232951AbjEWKam (ORCPT
+        with ESMTP id S232855AbjEWKyw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 06:30:42 -0400
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E310FE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 03:30:40 -0700 (PDT)
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-4f3b314b1d7so4230503e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 03:30:40 -0700 (PDT)
+        Tue, 23 May 2023 06:54:52 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D9BA11A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 03:54:51 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id 5b1f17b1804b1-3f6077660c6so12683315e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 03:54:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684837778; x=1687429778;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/T9opHzMSw2R0AZ40N9B37p3pMgsnkJKDx5J8AZzmBw=;
-        b=tRCziY5FD1lkGf8nKeQnWUtC2+ERps6DDPpk5yUmC55lO42H5ojtarEofe+3Xcm6rP
-         2bjfgs8JMr68U5JjKwaCkXMaSWFL8LCooihu9NoITjoxZ9kN6KTw+Jdb9fz8NCY5H5Qy
-         Gup1Tnx01gCFsPphfjbRg4/TJ8awUbbHTEbHchk3A+Nz4EBhFkgOEYUo23fnR7kH/2Yw
-         1mPYJSAx77KMtXmkTcPX9tR/nbVjhbcTYHpL1YTHQQGiuc0SqyU1Jc69dmPjBZsw5M75
-         7AwwsfE5NOWtWBw9HcnUPDCBj6ubXCvCsflSUGoWYlYA/96SJNIdMztOnNL4MnTTdLB3
-         cL8A==
+        d=linaro.org; s=google; t=1684839289; x=1687431289;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=/3WjXgsNuqa7/WDZdFims98+tDEhGOYyjkquS66fJPs=;
+        b=GRPH6+30lAf//AJM9pWiPwjzF5resuZuGFlvxrJZigGSKauVKhCG67QuBSxJIpJm9U
+         UqO8OPb6Abqjc4UsG8oYtlAIVKSqo2vxyuSfQyWCumvIMPaR4MwQJ7Z0Ju+VoZTxeBkO
+         EVsOiQ08u3o1NpB8UMrRYa9vZDkXWkoowif5QStMG5MDDhTyatuwZIjDeaUeaXd+LFPl
+         WGsxrky31gmDvppGRukw6KgXVPFf1ZjQBRuky5u4p7SmyiU17zYITeNa/9JloaRpIv9d
+         v5SgyDMHDqwKmIQG8gD3aogHnsCvpF1NiJ+OODHOl7+VXJvQ8iCL3fFJ+AZeaMK0d+1H
+         UrbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684837778; x=1687429778;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/T9opHzMSw2R0AZ40N9B37p3pMgsnkJKDx5J8AZzmBw=;
-        b=QLcpghfwXkICt4CrajfnMOTs1QvP2yGWtgX4FhvMZ3gNALxmJBnPRfna3ayTpITuiM
-         3uYxZhyhMg8NeYL+3LXI6mvG8XsrweKXiiD/+GaBy7Tmii+N2h8RfZlaC5o8BMFUpMSo
-         gKXfC6+9UgbUeTuwPJzjS/V7iqacl1CXuVP3NucLvWOgJIDo0NVL8IoVXU+4fPKWg25p
-         yF//OlFlMBlF73eNEW+GscJEnfBdIe73i6ebRWkgNqiGtIdW9NAGfiyygy3z/uUH3B0v
-         d/iqjNn6zBQN1pkALzYRKuVujKq1qOg7Z3kgSlhsexInnoWe/9IVTBAJ6m91Zs6yDVeT
-         2s2Q==
-X-Gm-Message-State: AC+VfDz4PcL1+2atfQKFVPFIPh087eV6+o8LX4kdqhy1g8chVniziwGp
-        dyOvBXCeRWMe0wqrG7h7ltksNQ==
-X-Google-Smtp-Source: ACHHUZ7NlztXsyfEPG7uRIrR/BDOKoTQuncAxl6jYjrOJQ0nYDERu3ZThn0B0l/rvpMhua0FzNqdag==
-X-Received: by 2002:ac2:4c8e:0:b0:4f3:b97c:2d88 with SMTP id d14-20020ac24c8e000000b004f3b97c2d88mr3307217lfl.63.1684837778508;
-        Tue, 23 May 2023 03:29:38 -0700 (PDT)
-Received: from [192.168.1.101] (abyk138.neoplus.adsl.tpnet.pl. [83.9.30.138])
-        by smtp.gmail.com with ESMTPSA id b1-20020ac25e81000000b004f14591a942sm1279869lfq.271.2023.05.23.03.29.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 May 2023 03:29:38 -0700 (PDT)
-Message-ID: <87b5dda1-be2b-d123-e026-176d4c732b3f@linaro.org>
-Date:   Tue, 23 May 2023 12:29:36 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2] interconnect: qcom: rpm: allocate enough data in
- probe()
-Content-Language: en-US
-To:     Dan Carpenter <dan.carpenter@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        d=1e100.net; s=20221208; t=1684839289; x=1687431289;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/3WjXgsNuqa7/WDZdFims98+tDEhGOYyjkquS66fJPs=;
+        b=dXkkpMF5R1FG6Ylo1eVYc3fQrT0G5/gekWleeBKumsqBd7Q7cgCfv2cRBic7DDKube
+         cm5qhXEY4Eol/khdOCaLDDgcqk/CqzmsL0Q4R5gFgeVaFRFoeWdHp4VAgNYAqPt/91fN
+         oii+19YQJan3/AdosBrc+7njFSjcIp95razEHdpF8NoF7S0GV2dGMcQH4zbXW5qSTsWO
+         /e553ye9YZgUXS6eq/b2Mrjnr7zsuhsfXeJ3+pLwmq9SN7KR13a0gmd6TF2s4dfMHm6p
+         4GVMbBTkcPymWyxmJO3MhFdKQb7pCIjfSisCxBV3KzEbOtkavD8OB0lb2dMKVB0bIIp+
+         6eSg==
+X-Gm-Message-State: AC+VfDwfLGl0yVcce6ctP6Rpmedxq/D6sYPi3xAUZdlEi9HwwzzuaAtX
+        0gwyeso6AM0X5jGEGoK3cGBvrlYc4L9GIvb5xrY=
+X-Google-Smtp-Source: ACHHUZ6b5/OXboW+vGmX4shXePUEyDe7NDvlwNpoxezhMOSU58x9BGVbiVKV8bYmalzS4dohoNrkqQ==
+X-Received: by 2002:a05:600c:2152:b0:3f6:938:1001 with SMTP id v18-20020a05600c215200b003f609381001mr2059704wml.8.1684839289624;
+        Tue, 23 May 2023 03:54:49 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id n22-20020a1c7216000000b003f60482024fsm6072367wmc.30.2023.05.23.03.54.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 May 2023 03:54:48 -0700 (PDT)
+Date:   Tue, 23 May 2023 13:54:23 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Jeykumar Sankaran <jsanka@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Archit Taneja <architt@codeaurora.org>,
+        Sravanthi Kollukuduru <skolluku@codeaurora.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         kernel-janitors@vger.kernel.org
-References: <e0fa275c-ae63-4342-9c9e-0ffaf6314da1@kili.mountain>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <e0fa275c-ae63-4342-9c9e-0ffaf6314da1@kili.mountain>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+Subject: Re: [PATCH] drm/msm/dpu: signedness bug in
+ dpu_encoder_phys_cmd_tearcheck_config()
+Message-ID: <4abf38cc-20ab-4606-bc39-85255b8bdee8@kili.mountain>
+References: <897779a0-1a1f-4193-9dd3-bc4f87e73e3c@kili.mountain>
+ <wxfpgm77uxae5mhpht35m4kgrcx2givdp2duncxduz7hrlcofz@sp5wxfqx63fg>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <wxfpgm77uxae5mhpht35m4kgrcx2givdp2duncxduz7hrlcofz@sp5wxfqx63fg>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 23.05.2023 12:27, Dan Carpenter wrote:
-> This was not allocating enough bytes.  There are two issue here.
-> First, there was a typo where it was taking the size of the pointer
-> instead of the size of the struct, "sizeof(qp->intf_clks)" vs
-> "sizeof(*qp->intf_clks)".  Second, it's an array of "cd_num" clocks so
-> we need to allocate space for more than one element.
+On Mon, May 22, 2023 at 10:47:50AM +0200, Marijn Suijten wrote:
+> On 2023-05-22 10:48:01, Dan Carpenter wrote:
+> > The "vsync_hz" variable is used to store negative error codes so it
+> > needs to be signed for the error checking to work correctly.
 > 
-> Fixes: 2e2113c8a64f ("interconnect: qcom: rpm: Handle interface clocks")
-> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Nicely spotted, but it it looks like we have more to fix then.  The type
+> returned by dpu_kms_get_clk_rate() is u64:
+> 
 
-Konrad
-> v2: allocate enough space for the array
-> 
->  drivers/interconnect/qcom/icc-rpm.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-> index f4627c4a1bdd..6acc7686ed38 100644
-> --- a/drivers/interconnect/qcom/icc-rpm.c
-> +++ b/drivers/interconnect/qcom/icc-rpm.c
-> @@ -436,7 +436,7 @@ int qnoc_probe(struct platform_device *pdev)
->  	if (!qp)
->  		return -ENOMEM;
->  
-> -	qp->intf_clks = devm_kzalloc(dev, sizeof(qp->intf_clks), GFP_KERNEL);
-> +	qp->intf_clks = devm_kcalloc(dev, cd_num, sizeof(*qp->intf_clks), GFP_KERNEL);
->  	if (!qp->intf_clks)
->  		return -ENOMEM;
->  
+That's a good point.  Although the type of clk_get_rate() is unsigned
+long so probably unsigned long is enough.
+
+> - Perhaps the int used in this patch is too small (though 19.2MHz vsync
+>   clock ought to fit);
+> - That function should also return a signed number as part of this
+>   contract.
+
+What about if we just return 0 instead of -EINVAL?  That would match
+what clk_get_rate() does.  Also let me change the type to unsigned long.
+
+regards,
+dan carpenter
