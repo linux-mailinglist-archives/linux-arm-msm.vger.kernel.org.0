@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9002270DC42
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 14:16:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9335470DC44
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 14:16:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236762AbjEWMQT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 08:16:19 -0400
+        id S236764AbjEWMQU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 08:16:20 -0400
 Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236764AbjEWMQP (ORCPT
+        with ESMTP id S236759AbjEWMQQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 08:16:15 -0400
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D943F18E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 05:16:08 -0700 (PDT)
-Received: by mail-lf1-f44.google.com with SMTP id 2adb3069b0e04-4f3b4ed6fdeso3930090e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 05:16:08 -0700 (PDT)
+        Tue, 23 May 2023 08:16:16 -0400
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDEE918F
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 05:16:09 -0700 (PDT)
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-4f3ba703b67so3470089e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 05:16:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684844107; x=1687436107;
+        d=linaro.org; s=google; t=1684844108; x=1687436108;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kMftiAUxeR8BPoZkZvXeNvb1WLgqdhL6DsPjfLjpExg=;
-        b=ETX+jpQh1MkS/oEmbkm1RFkjIuPTjVkoKZKMQyqb44Ujy6MPxqvuFFRR5Ozv1N0fPL
-         IyRB8EvrCQUBDzkstsPROcFAYQ7O6UofNHKb4BgRFu8BpUTjlKD5eVx0dhx3mVAHQr+e
-         ozCd+EVp6H33iBFNoDaAnD5i2WIfckcUzBL91i4FYMXFEn7vvogAnsjs9zn53E/hJkK3
-         LElwG+XWm/cAFZrLhqcdOPkbMVV/f7Z65RHR/MDV4Mm2ULcy2ilkir4TjCbvjfiTc8iB
-         BnpqO61RlUfjK6tn/iGB7tqivbti3PaXHqJ4yeetkBiZ9/Exc43+iHe9sV9rqRdhlFe8
-         Px/A==
+        bh=enSUc5wVEHF7eZy9e0DAWbElAzfosEhYHkkqQR9evEU=;
+        b=cLSxKqmrFivha60kjqdkAq/2GXt9zXw+KGWMkRMtnGfSoqc+rEbGIY9SPFp3raR+tL
+         Fvve4+1DQYi2PZ2Uk+JYU1ZJHEpz7EtzCFXCqQ4nutMAoROslrRjO/0UMoGpS3F3PoLF
+         b66oDK+O3wB+Kad+4bZv7mmK5nHfbLakmzppjNLiji1FtxYNYvhmsFa41D5FrKjbmdOp
+         rGkgZ1zXw6baayCE5w1FciCQFkd3PAedqX2dE/XVUQBO6CdcCCjqBs+KpHQtjGAiY/44
+         fX8XjppzEo8N+XyYR0YxjjNW/xd/cvw3Ha1RuV9t1+FNXekSLqTGUystJEhzUatiIUt+
+         HICw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684844107; x=1687436107;
+        d=1e100.net; s=20221208; t=1684844108; x=1687436108;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=kMftiAUxeR8BPoZkZvXeNvb1WLgqdhL6DsPjfLjpExg=;
-        b=PJOg0hembwxq0l6MKhW3hEYdp+xEJwAv7sd0cFAMtoSZtfb8DT4N8UI4y7pjqgqiZU
-         9Pu988OKueYHVZNKLreqjJRgywwsKpntLcTug1QCoJRLTjhayYjF+RikSSLrYmVbiNN7
-         JQATtb7xsExUdjc5894+DpxxVqDPTWbjBBfu/ExkPSY/27e5vj79hcUpRNIMDpnjmomx
-         epmmiwK2ShHeDIGAyhQba1LddTIcCf4Dh8m1s1c0dYvayHptfniUq2XhNN92Tl/iPDDm
-         pvvyAha4DpHNFCAKhnmxmlvPTXKbsexTLiQVa1HY6Fpshy0uxkg6wzHcQbPon6bDLTC9
-         ccdw==
-X-Gm-Message-State: AC+VfDwbUGs4wCMMa9ASceWtDt0JRnnTONPGAtn/V6X47C83Oz8x96oy
-        z+0ZYhVbUhoNy+w4OugGbSqdhA==
-X-Google-Smtp-Source: ACHHUZ43GR6mi7FCfEihpvwLYVmk40w1hC6t0c87laL1uoecXBbBd/pseUpVwOps9C9xtYnTi/b2Gw==
-X-Received: by 2002:ac2:5fae:0:b0:4ed:b4f9:28c7 with SMTP id s14-20020ac25fae000000b004edb4f928c7mr4155100lfe.6.1684844107381;
-        Tue, 23 May 2023 05:15:07 -0700 (PDT)
+        bh=enSUc5wVEHF7eZy9e0DAWbElAzfosEhYHkkqQR9evEU=;
+        b=S7sQXWYS/ltP6qdO7ZuuC2HP02taiJj/Kh+ILMdcvPhqdjz7+dSor1ywd5843XHnmQ
+         Rhv2vauJ+aru9sWbP6wHuFHywlZuyPpVzL34Rquc8B6LG4phRafPxceyqvgBRGrpkriI
+         skEV00Ab4A28amY/UiAbGoqwAzueH4+lFVCrBlReNkEQ24AzGokXpsFQtoZrISOXWKO+
+         bwNc4ujMh84OW/BwChOyu8TYbvUeljqBLgvSR7uOViBKmmjeZ1+s7dBiDxK1K1m6nrYC
+         sCva9BPJfD56+09eK6e6tHL7qM6cWWic5ksH5eg3z1DKNXqPHQd246e+OCj5GWRYswub
+         ya1Q==
+X-Gm-Message-State: AC+VfDxQVgQ88K3dpuf44/ifmNxIwAkCnBF9QNvtr3vYV3R96Iega8p6
+        0D1IccFaJN4lHc9gAP0JwpxdRg==
+X-Google-Smtp-Source: ACHHUZ5WxYFiA0x3xgvZXvUWQdi/r/0i5DuVqgDFMuE7nU4AygQeYTf069U5/4/emwtjx39IRyOE/A==
+X-Received: by 2002:a19:7003:0:b0:4f3:a99f:1ea3 with SMTP id h3-20020a197003000000b004f3a99f1ea3mr4008960lfc.32.1684844108297;
+        Tue, 23 May 2023 05:15:08 -0700 (PDT)
 Received: from eriador.lan ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id c26-20020ac2531a000000b004f160559d4asm1319616lfh.183.2023.05.23.05.15.06
+        by smtp.gmail.com with ESMTPSA id c26-20020ac2531a000000b004f160559d4asm1319616lfh.183.2023.05.23.05.15.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 23 May 2023 05:15:07 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -64,9 +64,9 @@ Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-phy@lists.infradead.org
-Subject: [PATCH 12/15] drm/msm/hdmi: set infoframes on all pre_enable calls
-Date:   Tue, 23 May 2023 15:14:51 +0300
-Message-Id: <20230523121454.3460634-13-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 13/15] drm/msm/hdmi: pair msm_hdmi_phy_powerup with msm_hdmi_phy_powerdown
+Date:   Tue, 23 May 2023 15:14:52 +0300
+Message-Id: <20230523121454.3460634-14-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230523121454.3460634-1-dmitry.baryshkov@linaro.org>
 References: <20230523121454.3460634-1-dmitry.baryshkov@linaro.org>
@@ -82,36 +82,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In consequent modeset calls, the atomic_pre_enable() will be called
-several times without calling atomic_post_disable() inbetween. Thus
-iframes will not be updated for the next mode. Fix this by setting the
-iframe outside of the !power_on check.
+In preparation to converting MSM HDMI driver to use PHY framework, which
+requires phy_power_on() calls to be paired with phy_power_off(), add a
+conditional call to msm_hdmi_phy_powerdown() before the call to
+msm_hdmi_phy_powerup().
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/msm/hdmi/hdmi.h        | 1 +
+ drivers/gpu/drm/msm/hdmi/hdmi_bridge.c | 5 +++++
+ 2 files changed, 6 insertions(+)
 
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.h b/drivers/gpu/drm/msm/hdmi/hdmi.h
+index 2d405da63bd0..46ae7ef9bc98 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi.h
++++ b/drivers/gpu/drm/msm/hdmi/hdmi.h
+@@ -42,6 +42,7 @@ struct hdmi {
+ 
+ 	/* video state: */
+ 	bool power_on;
++	bool phy_power_on;
+ 	unsigned long int pixclock;
+ 
+ 	void __iomem *mmio;
 diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-index f9293f7d8f34..bb10b35194ff 100644
+index bb10b35194ff..1bbd76e595af 100644
 --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
 +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-@@ -141,10 +141,11 @@ static void msm_hdmi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
- 		msm_hdmi_phy_resource_enable(phy);
- 		msm_hdmi_power_on(bridge);
- 		hdmi->power_on = true;
--		if (hdmi->hdmi_mode) {
--			msm_hdmi_config_avi_infoframe(hdmi);
--			msm_hdmi_audio_update(hdmi);
--		}
-+	}
-+
-+	if (hdmi->hdmi_mode) {
-+		msm_hdmi_config_avi_infoframe(hdmi);
-+		msm_hdmi_audio_update(hdmi);
+@@ -148,7 +148,11 @@ static void msm_hdmi_bridge_atomic_pre_enable(struct drm_bridge *bridge,
+ 		msm_hdmi_audio_update(hdmi);
  	}
  
++	if (hdmi->phy_power_on)
++		msm_hdmi_phy_powerdown(phy);
++
  	msm_hdmi_phy_powerup(phy, hdmi->pixclock);
++	hdmi->phy_power_on = true;
+ 
+ 	msm_hdmi_set_mode(hdmi, true);
+ 
+@@ -170,6 +174,7 @@ static void msm_hdmi_bridge_atomic_post_disable(struct drm_bridge *bridge,
+ 	msm_hdmi_set_mode(hdmi, false);
+ 
+ 	msm_hdmi_phy_powerdown(phy);
++	hdmi->phy_power_on = false;
+ 
+ 	if (hdmi->power_on) {
+ 		power_off(bridge);
 -- 
 2.39.2
 
