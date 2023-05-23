@@ -2,83 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E638570D7C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 10:42:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C160C70D953
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 11:42:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232855AbjEWImc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 04:42:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53262 "EHLO
+        id S236326AbjEWJmn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 05:42:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59332 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235778AbjEWImO (ORCPT
+        with ESMTP id S236355AbjEWJml (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 04:42:14 -0400
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F4C1118
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 01:42:13 -0700 (PDT)
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-4f3bb395e69so3154452e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 01:42:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684831271; x=1687423271;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mq0OsCPMU5Vo6tNW2wEnQJFjDwC7c5GtRXgcuxXmz8g=;
-        b=YTQgpwbjdimEfN7EQMD0MCj66DvIGcvOUcAYPYtVN2m3rbuW51HaB88o0vIMZOH9U1
-         8hZxsSuwEFyIxSJU4AC4RP187cfQeFG3C/bSTk+xx6YrZt9RIFB4FidH1rsCGWbHcoPo
-         E3vJ5rnmKe2zx9SxIMFv6WKV34xuthSsgBV6k2yzCPKK3o2UqiQSUNvvfG7QzXaxw5yt
-         Qzd0FqZR5utVptHfD4n9uR81G0VSt/AyTC9jbIwsoKSqUV3vE2H5maFpO8t06MBV/GKD
-         MV1ReKB6gMinpjjDyxPw37Uvn2XcbeUJtAQZkS520StalLp9b8ODT/ZQkTntJIXT6vD1
-         y4dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684831271; x=1687423271;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mq0OsCPMU5Vo6tNW2wEnQJFjDwC7c5GtRXgcuxXmz8g=;
-        b=YejiH2niXTwZLRxO+mDkkTOdDKdYTWe2DLOYJrzJnVHuBPTWIQaHzs//r6qKOGQ+q4
-         3CgqX5+khegrJV2iSL55nhM+y2EayM8lEcPlKX4Z/J9Dlg4D7tmKLyrgJkPg10GsezyU
-         sq9Of1CUh60+WwsRoTNiajN4+VeUBhgpPuobXybt6G1MDOob87yeipzjhaJxD8GLy2K/
-         CxNQhusYBHigrUvcyWctnwobFNYlR5S9WVG0/LTqLn6GGXEOTR+xi/W3kqYN4PLp0Y5O
-         2WcIMmo7xb7/rp33D4LS5Yhq7aLrbSOaCJM0aJgl+dSv39qsL5zXIkzx2ovCdKa4vpgr
-         XDYQ==
-X-Gm-Message-State: AC+VfDwbxBrljgq78avw/gWVAvSFjp220AJWJweRkcOhSTQj1GUcwYi6
-        2utpzemWXoVkFNZ9sfcBfeMTag==
-X-Google-Smtp-Source: ACHHUZ6mu5c54nkC3e1haaXh8hXhzAlko6vafPXaQqAEpS1kUghA9tz8uJGsl/soeweM5iHHYS4SfA==
-X-Received: by 2002:ac2:4c39:0:b0:4f1:2986:3920 with SMTP id u25-20020ac24c39000000b004f129863920mr4011584lfq.41.1684831271196;
-        Tue, 23 May 2023 01:41:11 -0700 (PDT)
-Received: from [192.168.1.101] (abyk138.neoplus.adsl.tpnet.pl. [83.9.30.138])
-        by smtp.gmail.com with ESMTPSA id x12-20020a19f60c000000b004f142edb3bcsm1240878lfe.199.2023.05.23.01.41.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 May 2023 01:41:10 -0700 (PDT)
-Message-ID: <2d5b28d3-83f9-15c4-84e0-e6edb3f3333d@linaro.org>
-Date:   Tue, 23 May 2023 10:41:09 +0200
+        Tue, 23 May 2023 05:42:41 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C236194;
+        Tue, 23 May 2023 02:42:39 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34N5LQVf029700;
+        Tue, 23 May 2023 09:42:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Wx4vzQMGh0QMOVeZ5m8BC4+mW94IjdyG1lF5Fe88bvg=;
+ b=MP/7BDPR65h2VIvZWd9VPR0DVPyMZvmreKmEVJl721YgckNZruUYyXi4mnpXpjTJu4RD
+ 8Sle+afTzTeTiZiVraNEo7Ih6Yg6TZSJm7yCm4BjSGLOIjjxSfJa5ijSFQDEkxDfPTOo
+ SIIben13VkZKoYCwskAUNAepuWDt21vwTFQiDy9H5bgC/sZUjnUBoVkiRqG9XokE40lA
+ tBnGdMIsGjFnakDvw6GzNFechoNJDTO9bitYjsXWdG3nOloAcZd3e2Z/FRxS2+R4pboH
+ Dj3TU8j2VpmOHK6W9sJVOvJbd0IZ2u8zULGBH4AA4B1IBFCWkI9Sqm5B3JYLyX7zxJRU zQ== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qraast4d3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 23 May 2023 09:42:35 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34N9gYoQ022748
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 23 May 2023 09:42:34 GMT
+Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 23 May
+ 2023 02:42:31 -0700
+Message-ID: <cd2c808c-bcb8-85fe-2c56-7accd4853160@quicinc.com>
+Date:   Tue, 23 May 2023 15:12:28 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 05/10] arm64: dts: qcom: sc7180: switch USB+DP QMP PHY
- to new style of bindings
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v3] firmware: qcom_scm: Clear download bit during reboot
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-References: <20230521202321.19778-1-dmitry.baryshkov@linaro.org>
- <20230521202321.19778-6-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230521202321.19778-6-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Robert Marko <robimarko@gmail.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1678979666-551-1-git-send-email-quic_mojha@quicinc.com>
+ <76943268-3982-deaf-9736-429dd51e01b0@gmail.com>
+ <0e645486-f0be-4468-18ad-9e49088dee0b@quicinc.com>
+ <CAOX2RU4xPNq4-OHUoMZtfZu05QEdpk1UtawZb1xQMrtc5ao84Q@mail.gmail.com>
+ <a6c48095-179a-7e72-a282-fbc28af374cb@quicinc.com>
+ <CAOX2RU6S-x-KrQ-qQLW-qxu4bph79d+Yq9Vj=PQwWW4o-yG2xA@mail.gmail.com>
+ <CAOX2RU6rv0jcnTRAa=kiWHPk1A=DW=smS72df_t+tufOZ9XGfA@mail.gmail.com>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <CAOX2RU6rv0jcnTRAa=kiWHPk1A=DW=smS72df_t+tufOZ9XGfA@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ZljVx8EmCU4izf7ai3YxY4pl45xVL3Ot
+X-Proofpoint-ORIG-GUID: ZljVx8EmCU4izf7ai3YxY4pl45xVL3Ot
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-23_06,2023-05-22_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
+ priorityscore=1501 mlxscore=0 lowpriorityscore=0 mlxlogscore=999
+ spamscore=0 impostorscore=0 bulkscore=0 malwarescore=0 phishscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305230079
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -87,126 +88,173 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 21.05.2023 22:23, Dmitry Baryshkov wrote:
-> Change the USB QMP PHY to use newer style of QMP PHY bindings (single
-> resource region, no per-PHY subnodes).
+On 5/22/2023 3:34 PM, Robert Marko wrote:
+> On Mon, 22 May 2023 at 11:26, Robert Marko <robimarko@gmail.com> wrote:
+>>
+>> On Mon, 22 May 2023 at 11:11, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
+>>>
+>>>
+>>>
+>>> On 5/22/2023 2:29 PM, Robert Marko wrote:
+>>>> On Mon, 22 May 2023 at 08:11, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
+>>>>>
+>>>>>
+>>>>>
+>>>>> On 5/18/2023 3:45 PM, Robert Marko wrote:
+>>>>>>
+>>>>>> On 16. 03. 2023. 16:14, Mukesh Ojha wrote:
+>>>>>>> During normal restart of a system download bit should
+>>>>>>> be cleared irrespective of whether download mode is
+>>>>>>> set or not.
+>>>>>>>
+>>>>>>> Fixes: 8c1b7dc9ba22 ("firmware: qcom: scm: Expose download-mode control")
+>>>>>>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>>>>>>
+>>>>>> Hi, this has been backported to 5.15.111, however it seems to be
+>>>>>> breaking reboot
+>>>>>> on IPQ4019 by causing the board to then hang in SBL with:
+>>>>>> root@OpenWrt:/# reboot
+>>>>>> root@OpenWrt:/# [   76.473541] device lan1 left promiscuous mode
+>>>>>> [   76.474204] br-lan: port 1(lan1) entered disabled state
+>>>>>> [   76.527975] device lan2 left promiscuous mode
+>>>>>> [   76.530301] br-lan: port 2(lan2) entered disabled state
+>>>>>> [   76.579376] device lan3 left promiscuous mode
+>>>>>> [   76.581698] br-lan: port 3(lan3) entered disabled state
+>>>>>> [   76.638434] device lan4 left promiscuous mode
+>>>>>> [   76.638777] br-lan: port 4(lan4) entered disabled state
+>>>>>> [   76.978489] qca8k-ipq4019 c000000.switch wan: Link is Down
+>>>>>> [   76.978883] device eth0 left promiscuous mode
+>>>>>> [   76.987077] ipqess-edma c080000.ethernet eth0: Link is Down
+>>>>>> [
+>>>>>> Format: Log Type - Time(microsec) - Message - Optional Info
+>>>>>> Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+>>>>>> S - QC_IMAGE_VERSION_STRING=BOOT.BF.3.1.1-00123
+>>>>>> S - IMAGE_VARIANT_STRING=DAABANAZA
+>>>>>> S - OEM_IMAGE_VERSION_STRING=CRM
+>>>>>> S - Boot Config, 0x00000021
+>>>>>> S - Reset status Config, 0x00000010
+>>>>>> S - Core 0 Frequency, 0 MHz
+>>>>>> B -       261 - PBL, Start
+>>>>>> B -      1339 - bootable_media_detect_entry, Start
+>>>>>> B -      1679 - bootable_media_detect_success, Start
+>>>>>> B -      1693 - elf_loader_entry, Start
+>>>>>> B -      5076 - auth_hash_seg_entry, Start
+>>>>>> B -      7223 - auth_hash_seg_exit, Start
+>>>>>> B -    578349 - elf_segs_hash_verify_entry, Start
+>>>>>> B -    696356 - PBL, End
+>>>>>> B -    696380 - SBL1, Start
+>>>>>> B -    787236 - pm_device_init, Start
+>>>>>> D -         7 - pm_device_init, Delta
+>>>>>> B -    788701 - boot_flash_init, Start
+>>>>>> D -     52782 - boot_flash_init, Delta
+>>>>>> B -    845625 - boot_config_data_table_init, Start
+>>>>>> D -      3836 - boot_config_data_table_init, Delta - (419 Bytes)
+>>>>>> B -    852841 - clock_init, Start
+>>>>>> D -      7566 - clock_init, Delta
+>>>>>> B -    864883 - CDT version:2,Platform ID:9,Major ID:0,Minor
+>>>>>> ID:0,Subtype:64
+>>>>>> B -    868413 - sbl1_ddr_set_params, Start
+>>>>>> B -    873402 - cpr_init, Start
+>>>>>> D -         2 - cpr_init, Delta
+>>>>>> B -    877842 - Pre_DDR_clock_init, Start
+>>>>>> D -         4 - Pre_DDR_clock_init, Delta
+>>>>>> D -     13234 - sbl1_ddr_set_params, Delta
+>>>>>> B -    891155 - pm_driver_init, Start
+>>>>>> D -         2 - pm_driver_init, Delta
+>>>>>> B -    909105 - Image Load, Start
+>>>>>> B -   1030210 - Boot error ocuured!. Error code: 303d
+>>>>>>
+>>>>>> Reverting the commit fixes rebooting.
+>>>>>
+>>>>> Hi Robert,
+>>>>>
+>>>>> Can you check if disable SDI [1] works with this issue
+>>>>>
+>>>>> https://lore.kernel.org/linux-arm-msm/20230518140224.2248782-1-robimarko@gmail.com/
+>>>>>
+>>>>> [1]
+>>>>>
+>>>>>
+>>>>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>>>>> index fde33acd46b7..01496ceb7136 100644
+>>>>> --- a/drivers/firmware/qcom_scm.c
+>>>>> +++ b/drivers/firmware/qcom_scm.c
+>>>>> @@ -1508,6 +1508,7 @@ static int qcom_scm_probe(struct platform_device
+>>>>> *pdev)
+>>>>>     static void qcom_scm_shutdown(struct platform_device *pdev)
+>>>>>     {
+>>>>>            /* Clean shutdown, disable download mode to allow normal restart */
+>>>>> +       qcom_scm_disable_sdi();
+>>>>>            qcom_scm_set_download_mode(false);
+>>>>>     }
+>>>>
+>>>> Hi,
+>>>> I can confirm reboot works this way as well.
+>>>
+>>> That's great, So, i don't need to revert the patch and you can
+>>> add this in your patch without target specific check ?
+>>
+>> Oh, you mean IPQ4019 not rebooting?
+>> I haven't tested that, give me couple of minutes to try that out.
+>> Cause, the link was just back to the SDI patchset.
 > 
-> Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 57 ++++++++++------------------
->  1 file changed, 19 insertions(+), 38 deletions(-)
+> And, I can confirm that IPQ4019 does not reboot even with SDI disabled if dload
+> mode was set so it still needs a revert.
+
+Ok, So, before we go for revert of the change.
+
+- How do you generally collect the ram dump on your device on crash ?
+   did you check if you get any error when qcom_scm_set_download_mode()
+   get called.
+
+
+-- Mukesh
+
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index ea1ffade1aa1..b07a49e6829a 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -14,6 +14,7 @@
->  #include <dt-bindings/interconnect/qcom,osm-l3.h>
->  #include <dt-bindings/interconnect/qcom,sc7180.h>
->  #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/phy/phy-qcom-qmp.h>
->  #include <dt-bindings/phy/phy-qcom-qusb2.h>
->  #include <dt-bindings/power/qcom-rpmpd.h>
->  #include <dt-bindings/reset/qcom,sdm845-aoss.h>
-> @@ -2718,49 +2719,28 @@ usb_1_hsphy: phy@88e3000 {
->  			nvmem-cells = <&qusb2p_hstx_trim>;
->  		};
->  
-> -		usb_1_qmpphy: phy-wrapper@88e9000 {
-> +		usb_1_qmpphy: phy@88e8000 {
->  			compatible = "qcom,sc7180-qmp-usb3-dp-phy";
-> -			reg = <0 0x088e9000 0 0x18c>,
-> -			      <0 0x088e8000 0 0x3c>,
-> -			      <0 0x088ea000 0 0x18c>;
-> +			reg = <0 0x088e8000 0 0x3000>;
->  			status = "disabled";
-> -			#address-cells = <2>;
-> -			#size-cells = <2>;
-> -			ranges;
->  
->  			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
-> -				 <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
->  				 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
-> -				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>;
-> -			clock-names = "aux", "cfg_ahb", "ref", "com_aux";
-> +				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
-> +				 <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>,
-> +				 <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>;
-These are unaligned
-
-Other than that:
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
-> +			clock-names = "aux",
-> +				      "ref",
-> +				      "com_aux",
-> +				      "usb3_pipe",
-> +				      "cfg_ahb";
->  
->  			resets = <&gcc GCC_USB3_PHY_PRIM_BCR>,
->  				 <&gcc GCC_USB3_DP_PHY_PRIM_BCR>;
->  			reset-names = "phy", "common";
->  
-> -			usb_1_ssphy: usb3-phy@88e9200 {
-> -				reg = <0 0x088e9200 0 0x128>,
-> -				      <0 0x088e9400 0 0x200>,
-> -				      <0 0x088e9c00 0 0x218>,
-> -				      <0 0x088e9600 0 0x128>,
-> -				      <0 0x088e9800 0 0x200>,
-> -				      <0 0x088e9a00 0 0x18>;
-> -				#clock-cells = <0>;
-> -				#phy-cells = <0>;
-> -				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-> -				clock-names = "pipe0";
-> -				clock-output-names = "usb3_phy_pipe_clk_src";
-> -			};
-> -
-> -			dp_phy: dp-phy@88ea200 {
-> -				reg = <0 0x088ea200 0 0x200>,
-> -				      <0 0x088ea400 0 0x200>,
-> -				      <0 0x088eaa00 0 0x200>,
-> -				      <0 0x088ea600 0 0x200>,
-> -				      <0 0x088ea800 0 0x200>;
-> -				#clock-cells = <1>;
-> -				#phy-cells = <0>;
-> -			};
-> +			#clock-cells = <1>;
-> +			#phy-cells = <1>;
->  		};
->  
->  		dc_noc: interconnect@9160000 {
-> @@ -2840,7 +2820,7 @@ usb_1_dwc3: usb@a600000 {
->  				iommus = <&apps_smmu 0x540 0>;
->  				snps,dis_u2_susphy_quirk;
->  				snps,dis_enblslpm_quirk;
-> -				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
-> +				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
->  				phy-names = "usb2-phy", "usb3-phy";
->  				maximum-speed = "super-speed";
->  			};
-> @@ -3148,8 +3128,9 @@ mdss_dp: displayport-controller@ae90000 {
->  					      "ctrl_link_iface", "stream_pixel";
->  				assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
->  						  <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
-> -				assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
-> -				phys = <&dp_phy>;
-> +				assigned-clock-parents = <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
-> +							 <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
-> +				phys = <&usb_1_qmpphy QMP_USB43DP_DP_PHY>;
->  				phy-names = "dp";
->  
->  				operating-points-v2 = <&dp_opp_table>;
-> @@ -3206,8 +3187,8 @@ dispcc: clock-controller@af00000 {
->  				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
->  				 <&dsi_phy 0>,
->  				 <&dsi_phy 1>,
-> -				 <&dp_phy 0>,
-> -				 <&dp_phy 1>;
-> +				 <&usb_1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
-> +				 <&usb_1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
->  			clock-names = "bi_tcxo",
->  				      "gcc_disp_gpll0_clk_src",
->  				      "dsi0_phy_pll_out_byteclk",
+> Regards,
+> Robert
+>>
+>> Regards,
+>> Robert
+>>>
+>>> -- Mukesh
+>>>
+>>>>
+>>>> Regards,
+>>>> Robert
+>>>>>
+>>>>>
+>>>>> -- Mukesh
+>>>>>
+>>>>>>
+>>>>>> Regards,
+>>>>>> Robert
+>>>>>>
+>>>>>>> ---
+>>>>>>> Changes in v3:
+>>>>>>>      - Added Fixes tag.
+>>>>>>>      - Removed it from below patch series, as it makes sense to go this
+>>>>>>> independently.
+>>>>>>>
+>>>>>>> https://lore.kernel.org/lkml/1677664555-30191-1-git-send-email-quic_mojha@quicinc.com/
+>>>>>>>
+>>>>>>> Changes in v2:
+>>>>>>>      - No change.
+>>>>>>>
+>>>>>>>     drivers/firmware/qcom_scm.c | 3 +--
+>>>>>>>     1 file changed, 1 insertion(+), 2 deletions(-)
+>>>>>>>
+>>>>>>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>>>>>>> index 468d4d5..3e020d1 100644
+>>>>>>> --- a/drivers/firmware/qcom_scm.c
+>>>>>>> +++ b/drivers/firmware/qcom_scm.c
+>>>>>>> @@ -1506,8 +1506,7 @@ static int qcom_scm_probe(struct platform_device
+>>>>>>> *pdev)
+>>>>>>>     static void qcom_scm_shutdown(struct platform_device *pdev)
+>>>>>>>     {
+>>>>>>>         /* Clean shutdown, disable download mode to allow normal restart */
+>>>>>>> -    if (download_mode)
+>>>>>>> -        qcom_scm_set_download_mode(false);
+>>>>>>> +    qcom_scm_set_download_mode(false);
+>>>>>>>     }
+>>>>>>>     static const struct of_device_id qcom_scm_dt_match[] = {
