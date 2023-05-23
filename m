@@ -2,124 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C0CE170D666
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 09:58:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80BA570D613
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 09:54:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235960AbjEWH6x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 03:58:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51066 "EHLO
+        id S235835AbjEWHy1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 03:54:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235588AbjEWH6a (ORCPT
+        with ESMTP id S235868AbjEWHyS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 03:58:30 -0400
-Received: from mail-lj1-f180.google.com (mail-lj1-f180.google.com [209.85.208.180])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E59819BB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 00:57:01 -0700 (PDT)
-Received: by mail-lj1-f180.google.com with SMTP id 38308e7fff4ca-2af2e1725bdso38111321fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 00:57:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684828485; x=1687420485;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=71R2q19ZXsGZnOPocAOTBJ3+IZ1FZhz4Wl6PP95R9qE=;
-        b=E9Np0nYqxVmNfucL+4LsBx+RYim8uF7NofAXouuhhBKVMdZ6fDo02uR3UlcwPHEZBt
-         isCEHQ/tu45xDoGRaYVxCMiLLfgLmefxw5gXr3OzJGg+cHCtrABJaCfh6cGdLlI2v/zu
-         qamy398zM52z3NdR8AqSabb8YZcumV1puAmmHPmVBkTl/hygNPfdyPbL9BKYx1yXfCee
-         QAVzRkvc/dXmM0sqEQoy8tNDPa1FmF4bMqzBHFkkF+SYt5d+sDIbhNhRHkftQociBlsw
-         O+kFHlupu0mOZue3T0UqRgdYMY4TpG/xw4dME3denUQGVhlpcY1ALW5w0o39ODds4b6G
-         tqjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684828485; x=1687420485;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=71R2q19ZXsGZnOPocAOTBJ3+IZ1FZhz4Wl6PP95R9qE=;
-        b=GmOYYN1AZ3vkrHXB/L9zFds4pYEzryLMQAITFaYJOl4jvRXqJZDYwFJLLX53qhMFXW
-         3eXi/UXnRcsH7wQCcVS2Q8UPmMv81xYYSgYKzAi9OVRY4C9PhdIYDi07+eHiyEp+TlM0
-         BbhJA9wQh7mj/5p+jGz6PNvC4FH7OlcsceAvJahP1wChfFGrzf8aNOIaPAVcSIDeGt0s
-         sMEhQVz1gQD4ZNkWq9nqT22ckUUAU0HqEJGPy57I3CcrF2vGdd8MLz9A/QitZFwnuCyy
-         CC4lTw7k4iPPRq7MVzNIQwILHI4kk8Hhhl/KF3Ilya6/4BO4vA5WohYhph/DYeoeSeU8
-         +s0g==
-X-Gm-Message-State: AC+VfDyynmBPj4RZdaVWFQtD/RgqJQ34nfQ2H6SGc/FO+/C3cF1+C5/o
-        rByZYCnl+YxE9yzfGQFgwNYU3bGAColNFTIT1BY=
-X-Google-Smtp-Source: ACHHUZ5JTVpp/5NYzr6IYfEXUmBsbC2bmktnK/xToOViR87FZyWOzG7h4gTsSFl8nLwfgfTSrf+jJg==
-X-Received: by 2002:ac2:4847:0:b0:4f3:b242:aa98 with SMTP id 7-20020ac24847000000b004f3b242aa98mr4037954lfy.30.1684828025193;
-        Tue, 23 May 2023 00:47:05 -0700 (PDT)
-Received: from [192.168.1.101] (abyk138.neoplus.adsl.tpnet.pl. [83.9.30.138])
-        by smtp.gmail.com with ESMTPSA id t9-20020ac25489000000b004eb0c51780bsm1257070lfk.29.2023.05.23.00.47.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 May 2023 00:47:04 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 23 May 2023 09:46:23 +0200
-Subject: [PATCH v5 12/12] iommu/arm-smmu-qcom: Add SM6350 DPU compatible
+        Tue, 23 May 2023 03:54:18 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 388BFC5;
+        Tue, 23 May 2023 00:54:04 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34N5mBK6016579;
+        Tue, 23 May 2023 07:53:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=lMTsWnIdpB+KcIi0KcEG0a0vP17nRieN0vuG7xoW+8c=;
+ b=Sha68fJamuXwHbZxcDIPqg7xF74W/JzmlWJPP72dHDfN7lkvtsSIoHjK8HlREFG0yOAH
+ 1WGeBMO0ftWj/9gimS5msvQVBe+tyOUuxZzPynacODV94+yhajPPJyyXyKDd4ftVtkpK
+ GzGTsCORSuOiOLpSS/SxvJWJgDzDhQEL4DXRZ4VIvGmaChr8/4hlswbl3sHe3OuLlKZM
+ Bu9vne2Gh/Oz74chTHd1uNUxkzzLJ8gUGRVeGcFE19SLlgJO6acvPc+iAlQLzqhX1P4V
+ wzKa1GbcOZxG+zss+cyHZqjY4naTJG4NgVl/2XYV2n6IGEumMEYy6ZA9qHeiT8V+OhZt ow== 
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qraasst87-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 23 May 2023 07:53:22 +0000
+Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
+        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34N7rLtM016883
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 23 May 2023 07:53:21 GMT
+Received: from [10.214.66.81] (10.80.80.8) by nasanex01c.na.qualcomm.com
+ (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 23 May
+ 2023 00:53:18 -0700
+Message-ID: <bdef28ed-20f5-3996-55a5-0e955d4c6317@quicinc.com>
+Date:   Tue, 23 May 2023 13:23:15 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH] Revert "firmware: qcom_scm: Clear download bit during
+ reboot"
+Content-Language: en-US
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Robert Marko <robimarko@gmail.com>
+CC:     <agross@kernel.org>, <konrad.dybcio@linaro.org>,
+        <p.zabel@pengutronix.de>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1684408823-5898-1-git-send-email-quic_mojha@quicinc.com>
+ <20230520021201.t2zeermogm4s5fgq@ripper>
+From:   Mukesh Ojha <quic_mojha@quicinc.com>
+In-Reply-To: <20230520021201.t2zeermogm4s5fgq@ripper>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230411-topic-straitlagoon_mdss-v5-12-998b4d2f7dd1@linaro.org>
-References: <20230411-topic-straitlagoon_mdss-v5-0-998b4d2f7dd1@linaro.org>
-In-Reply-To: <20230411-topic-straitlagoon_mdss-v5-0-998b4d2f7dd1@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux.dev, Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1684828003; l=1014;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=CPO6pRkqp9OH9BXcQBO5PamnhFLC+q+SwQwF41wCtLY=;
- b=k7xKsuFLcWfaIkR5AoVwsP5oWEGrwWp29yM+FdNZiowj/uPcFBuemt4KcDaxucF97xazSftcP
- FeLxlwlnyYMCspg0xBeAlehmkXWyCgK+IbNjZK0m2G5efyzBkT9Mgm+
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01c.na.qualcomm.com (10.45.79.139)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: THWoRExtuJUhawgntRkudD-WzIKCHRhF
+X-Proofpoint-ORIG-GUID: THWoRExtuJUhawgntRkudD-WzIKCHRhF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-23_04,2023-05-22_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 suspectscore=0
+ priorityscore=1501 mlxscore=0 lowpriorityscore=0 mlxlogscore=999
+ spamscore=0 impostorscore=0 bulkscore=0 malwarescore=0 phishscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305230064
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Konrad Dybcio <konrad.dybcio@somainline.org>
++Robert
 
-Add the SM6350 DPU compatible to clients compatible list, as it also
-needs the workarounds.
+On 5/20/2023 7:42 AM, Bjorn Andersson wrote:
+> On Thu, May 18, 2023 at 04:50:23PM +0530, Mukesh Ojha wrote:
+>> This reverts commit 781d32d1c970 as it causes regression(reboot
+>> does not work) for target like IPQ4019 that does not support
+>> download mode scm calls end to end.
+>>
+> 
+> What do you mean with "reboot does not work"?
+> 
+> Does qcom_scm_set_download_mode() crash the board? Does the reboot
+> always end up in download mode? Or some other form of "not work"?
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Acked-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+As per the discussion here, it seems qcom_scm_set_download_mode()
+does not work on some legacy target like IPQ4019..may be because
+firmware does not have the support..
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index cc574928c707..bdeb587552c0 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -253,6 +253,7 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
- 	{ .compatible = "qcom,sc8280xp-mdss" },
- 	{ .compatible = "qcom,sdm845-mdss" },
- 	{ .compatible = "qcom,sdm845-mss-pil" },
-+	{ .compatible = "qcom,sm6350-mdss" },
- 	{ .compatible = "qcom,sm6375-mdss" },
- 	{ .compatible = "qcom,sm8150-mdss" },
- 	{ .compatible = "qcom,sm8250-mdss" },
+https://lore.kernel.org/lkml/76943268-3982-deaf-9736-429dd51e01b0@gmail.com/
 
--- 
-2.40.1
+-- Mukesh
 
+> 
+> Regards,
+> Bjorn
+> 
+>> Fixes: 781d32d1c970 ("firmware: qcom_scm: Clear download bit during reboot")
+>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+>> ---
+>>   drivers/firmware/qcom_scm.c | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+>> index fde33acd46b7..a4bb9265d9c0 100644
+>> --- a/drivers/firmware/qcom_scm.c
+>> +++ b/drivers/firmware/qcom_scm.c
+>> @@ -1508,7 +1508,8 @@ static int qcom_scm_probe(struct platform_device *pdev)
+>>   static void qcom_scm_shutdown(struct platform_device *pdev)
+>>   {
+>>   	/* Clean shutdown, disable download mode to allow normal restart */
+>> -	qcom_scm_set_download_mode(false);
+>> +	if (download_mode)
+>> +		qcom_scm_set_download_mode(false);
+>>   }
+>>   
+>>   static const struct of_device_id qcom_scm_dt_match[] = {
+>> -- 
+>> 2.7.4
+>>
