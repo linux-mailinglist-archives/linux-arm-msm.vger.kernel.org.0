@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C090370D66D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 09:59:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C253F70D659
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 09:58:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236077AbjEWH7f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 03:59:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51888 "EHLO
+        id S235971AbjEWH6O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 03:58:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235903AbjEWH7S (ORCPT
+        with ESMTP id S236023AbjEWH5N (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 03:59:18 -0400
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 582AC1702
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 00:58:02 -0700 (PDT)
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so1836693e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 00:58:02 -0700 (PDT)
+        Tue, 23 May 2023 03:57:13 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58B42170B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 00:56:12 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f605d8a8a9so17567425e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 00:56:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684828516; x=1687420516;
+        d=linaro.org; s=google; t=1684828551; x=1687420551;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+njLtj9xbvOIFM7dHEkaORkCFR8dY1HcWLWxadiCjHQ=;
-        b=coe3yjGBo5VlQusGyepMNN69DBuOPrw4HmH4VOBTOBYA/e8F4OSbzGttccbBfftQe2
-         7jYf3XvHr9TLOOP8um/oJaluedU7dyrTEBkUamlkvP14gQdAmzhx/SLmvEGR4y6Igl5K
-         CGaNwsys1CYr/YZlc6onzGx84KbWwzyOuCiOH8M6yntEURSop+X6jBzEPu8wTQD0Y9E4
-         te18P6jK1EIcugvYdHrGDmoyCDLbMVvmmdZx9mIRL4pvAZlJ4BjvTHlMbPNwBSSQ6Ioc
-         R+Akv62Kd/4oiRKu3zea23oNfGsaRqdbUsrV7voc9yA5ZSskJCLUkHSeok8Sh3rMMqYg
-         cMYg==
+        bh=YfCYGehx8jvC84gEQScBvdgxh6j6XnKzcug3iY2u1OA=;
+        b=igdyEwQQzSWmeOOWn5o66H3sip+4qz29HybkmJ8pt1Rl0ILEWAYG+8MpaBf0FA4/z7
+         VHvRNo6b8B+oWBjvIs74wFVAbzfacRA8klJ4lRtrwbIQ5glDp7KYCB7Y+1Lmhl/EDSBw
+         1BkMmesYmsDF9rzUFO/P0FD4IK1EjaAy/qqEk47hd57Ej0SD+y5WuslnTHnPKHflHlmK
+         VstkxXGh6OMcevn3c4GJSjXOgZAzDgdUyW32admZk/3WSjHGVBpdz/xKWCKhT5brRq7J
+         KmOHJYdIRUmNfHSpwvOgs2Yih3Y8tENMdk/Lzz5qsBLhzLYhgLz1qO3CKZvsR2ZXQEQo
+         kwSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684828516; x=1687420516;
+        d=1e100.net; s=20221208; t=1684828551; x=1687420551;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+njLtj9xbvOIFM7dHEkaORkCFR8dY1HcWLWxadiCjHQ=;
-        b=jJff9nRwmAvQB6H0Fy3IHqNQq15W/TtDpP7/cys18HRwffdApLZewamb1cmv/mCZ+n
-         GNnP/Rpl8xjH6moGy1MCq8NVrk77OQK8jkb6uInNIG57C1JH2JT5dzZ1z7LgFiW3liec
-         JHabe2w9kyZzxJya/GinLDjjVfRI79GiFoJgzEmjOSl7qJcVaXbGr3jJkN0/2lehUBox
-         BK+pBIZWDenyQTXDw0vjqsyzKzpImAl+DdE/90cdqdmJTVB5h5FMw7LOdaB82ON4bz5n
-         KIXHyLJ+1TFGHFQ79MWDdBPt2ZZw7Cdt6C5ru+z5u07z2jvsP9cBNUpdZDDoiGLngA1p
-         5ybA==
-X-Gm-Message-State: AC+VfDxFbwTkkGHb1121gWOW+f1ul+AZCzhh6W54FOeM9eqfAHwG1RY7
-        QDS8PkRNrBxBsph+hSXa4WcitdAF2sv40FWErVk=
-X-Google-Smtp-Source: ACHHUZ6Z1IporAEVTmntbzww2mlpou5nSlMKw864voVy8UcwTx7EkZjpX4C/Gxnrt4UFoN9aF+FP5Q==
-X-Received: by 2002:a19:ad02:0:b0:4f3:7b3c:2e16 with SMTP id t2-20020a19ad02000000b004f37b3c2e16mr4243599lfc.39.1684828008720;
-        Tue, 23 May 2023 00:46:48 -0700 (PDT)
+        bh=YfCYGehx8jvC84gEQScBvdgxh6j6XnKzcug3iY2u1OA=;
+        b=a01g3KqHk6AWwJE4nSLRdT28p/R5NRw7Vylwioal8/2uh3STQGLfw6fOe5sTV/QLBE
+         Ye+e1MlbBbVcj8pjln1uvyGtOOY5yNLMyDs/MaJtIfpj7DNKIrk3kz6jhhUPuu03vOvQ
+         flLuUQeDiWFOu7uSsqa9uWWEkDND7fWgrDLmWpW0CF0ot7MWUMg5G9ic7p+PvdqBnv4l
+         afFh6Zp4l0/VHlX2ZajlvOdlYNBbpEh12jvvnaqYG0LfGw5V+MEyJU3YuiJ8YUvKgWrj
+         9PhIy1qUSOxSqITQLvVWUPKw/evWzRyXQ/k2efrZgbTwrIs7F3jShWsUIkyBZswKm2qs
+         A2aQ==
+X-Gm-Message-State: AC+VfDzBks/48+w4yvhHGbd5vHLNf40t0zB/lZhjl8O/SFuOsIlNRuvU
+        fWg9ywwX11rIGi8lUv/mBrTLHes1QBHRSqbF5kc=
+X-Google-Smtp-Source: ACHHUZ4GM3KI0MX70ojcXWHjh2BX5gdvh+2jKGNgOhivEDVOtDyjTmgQcXQe6u/dE+6ErgM8HF3U1w==
+X-Received: by 2002:a05:6512:241:b0:4f3:bbfe:db4d with SMTP id b1-20020a056512024100b004f3bbfedb4dmr2235214lfo.21.1684828017373;
+        Tue, 23 May 2023 00:46:57 -0700 (PDT)
 Received: from [192.168.1.101] (abyk138.neoplus.adsl.tpnet.pl. [83.9.30.138])
-        by smtp.gmail.com with ESMTPSA id t9-20020ac25489000000b004eb0c51780bsm1257070lfk.29.2023.05.23.00.46.47
+        by smtp.gmail.com with ESMTPSA id t9-20020ac25489000000b004eb0c51780bsm1257070lfk.29.2023.05.23.00.46.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 May 2023 00:46:48 -0700 (PDT)
+        Tue, 23 May 2023 00:46:56 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 23 May 2023 09:46:13 +0200
-Subject: [PATCH v5 02/12] dt-bindings: display/msm: dsi-controller-main:
- Add SM6375
+Date:   Tue, 23 May 2023 09:46:18 +0200
+Subject: [PATCH v5 07/12] drm/msm: mdss: Add SM6350 support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230411-topic-straitlagoon_mdss-v5-2-998b4d2f7dd1@linaro.org>
+Message-Id: <20230411-topic-straitlagoon_mdss-v5-7-998b4d2f7dd1@linaro.org>
 References: <20230411-topic-straitlagoon_mdss-v5-0-998b4d2f7dd1@linaro.org>
 In-Reply-To: <20230411-topic-straitlagoon_mdss-v5-0-998b4d2f7dd1@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -76,54 +75,61 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux.dev, Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh@kernel.org>
+        iommu@lists.linux.dev, Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1684828003; l=1145;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1684828003; l=1447;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=1vb4mQXJIaOy+L2bFISsNkN0kUA69WSBSqQBJvQrOv8=;
- b=CBoqH84rn/pGKj9+tRprI5mq7KUtB5xc8n/iP2tnHJB7nuo3bD0S+ruz8fSKu0FIa/VAcT8yg
- /AEykRyGeNKCgjUs5bmGWxRpZkDJKXvjg9dSfvoyQFAbIoAeaTXT/oR
+ bh=0D7OZJvsI1VqBAldTbVtRFbwuC+jJW8mAUrMe9Ykcbs=;
+ b=TAr1B/J8Fw4CbqlqV0fqrm0JKRVpsmTK2l29sM7+FcIchk7aAujxMonXnRCxaIbdOAlYDXrPe
+ hiCF/x7Su9pAxMo2i4IgdPK5fVh9jtF1gNJwi/4saYxWY5K1xE5t3X/
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the DSI host found on SM6375.
+Add support for MDSS on SM6350.
 
-Acked-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/msm/msm_mdss.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-index 43f801a94d79..0cb1198eb3d0 100644
---- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-@@ -27,6 +27,7 @@ properties:
-               - qcom,sdm845-dsi-ctrl
-               - qcom,sm6115-dsi-ctrl
-               - qcom,sm6350-dsi-ctrl
-+              - qcom,sm6375-dsi-ctrl
-               - qcom,sm8150-dsi-ctrl
-               - qcom,sm8250-dsi-ctrl
-               - qcom,sm8350-dsi-ctrl
-@@ -366,6 +367,7 @@ allOf:
-             enum:
-               - qcom,sdm845-dsi-ctrl
-               - qcom,sm6115-dsi-ctrl
-+              - qcom,sm6375-dsi-ctrl
-     then:
-       properties:
-         clocks:
+diff --git a/drivers/gpu/drm/msm/msm_mdss.c b/drivers/gpu/drm/msm/msm_mdss.c
+index e8c93731aaa1..4e3a5f0c303c 100644
+--- a/drivers/gpu/drm/msm/msm_mdss.c
++++ b/drivers/gpu/drm/msm/msm_mdss.c
+@@ -538,6 +538,14 @@ static const struct msm_mdss_data sdm845_data = {
+ 	.highest_bank_bit = 2,
+ };
+ 
++static const struct msm_mdss_data sm6350_data = {
++	.ubwc_version = UBWC_2_0,
++	.ubwc_dec_version = UBWC_2_0,
++	.ubwc_swizzle = 6,
++	.ubwc_static = 0x1e,
++	.highest_bank_bit = 1,
++};
++
+ static const struct msm_mdss_data sm8150_data = {
+ 	.ubwc_version = UBWC_3_0,
+ 	.ubwc_dec_version = UBWC_3_0,
+@@ -571,6 +579,7 @@ static const struct of_device_id mdss_dt_match[] = {
+ 	{ .compatible = "qcom,sc8180x-mdss", .data = &sc8180x_data },
+ 	{ .compatible = "qcom,sc8280xp-mdss", .data = &sc8280xp_data },
+ 	{ .compatible = "qcom,sm6115-mdss", .data = &sm6115_data },
++	{ .compatible = "qcom,sm6350-mdss", .data = &sm6350_data },
+ 	{ .compatible = "qcom,sm8150-mdss", .data = &sm8150_data },
+ 	{ .compatible = "qcom,sm8250-mdss", .data = &sm8250_data },
+ 	{ .compatible = "qcom,sm8350-mdss", .data = &sm8250_data },
 
 -- 
 2.40.1
