@@ -2,110 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D48D70E05B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 17:24:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8670D70E123
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 May 2023 17:56:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236914AbjEWPYD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 23 May 2023 11:24:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34780 "EHLO
+        id S235212AbjEWP46 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 23 May 2023 11:56:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54454 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233132AbjEWPYC (ORCPT
+        with ESMTP id S237273AbjEWP44 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 23 May 2023 11:24:02 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78B1AFA;
-        Tue, 23 May 2023 08:24:01 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0C3B762391;
-        Tue, 23 May 2023 15:24:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B18AC433D2;
-        Tue, 23 May 2023 15:24:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684855440;
-        bh=id6Ze6Hu+PqRUZZVVqJiBhbnqqCMbcdVAtw6ZAFwtmo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mlMhs2i3JhpqXBZbookXDxEtR7hNMdrz5dLT2v8fhPzPvPy+X9NTq89QUWil82lVF
-         NaibKJtMgxicJACKlir1mQaPE0fbnKy30qodJinOqxbkWU34QPQ7rWj4J5u1Qt4Ili
-         IRMl6oOiC+EePCNmK+Ibr2LnISsHo+l9NCF9aN5o1PVDNRtNlo/L86BSRY4Vkrxub/
-         e8fr8Q3cx3an4alHxD8hJko8U6av/pHEwuS4yIAWeQJ6Fm07mNHaFUVsjrt7AdwRZu
-         soz6vppYmVHO+kMOn2keN6Sx/pECMxOwbUEH4+cG62/OsEZTFgFR5AHYZqbXdVQKr2
-         41XeN1uxRyvbQ==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1q1Tro-0007Qn-8f; Tue, 23 May 2023 17:24:04 +0200
-Date:   Tue, 23 May 2023 17:24:04 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, quic_jesszhan@quicinc.com,
-        swboyd@chromium.org, dianders@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dp: add module parameter for PSR
-Message-ID: <ZGzalLjTvUfzEADU@hovoldconsulting.com>
-References: <20230427232848.5200-1-quic_abhinavk@quicinc.com>
- <053819bd-b3c4-a72c-9316-85d974082ad6@linaro.org>
+        Tue, 23 May 2023 11:56:56 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3341713E;
+        Tue, 23 May 2023 08:56:50 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34NFT3JM026262;
+        Tue, 23 May 2023 15:56:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=R05m8COYzrgCWL+/yCx5qzMmm3WKfUMyhZcRluJdZ0s=;
+ b=In037dwq79LL7DsKeQHBhFAxEzu+Zu3P4nJorM1yxZNKuvZBNZpsqVwQ6K+tFuHbXNL3
+ rJKth3MtvChzfj9NVaBGcwtdqDgusaycmWN84YUi4cLZBgq/YQcLsriMItUA2iqgqkV9
+ IaWQwC5w1U6Hqx4pNUMTLzZ6u2LTEZGY3C2MWAdpBw3+yxZcaczdagxd22qIZi4SNmhQ
+ S9H0GrDnyDhksXY3jnCwjxpOuZd2AMvT0Oo2r4Ibm4Owyie1RRT/glk56P2zIaIao2Sp
+ +AoplqjKV37Oe03JZNC7BrEUutSM7YT0+Sd85wRwdDpiuqq9xKEyW9sHSa8yMCUeZjbc ag== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qs05s82aa-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 23 May 2023 15:56:20 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34NFuHeu031157
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 23 May 2023 15:56:18 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 23 May
+ 2023 08:56:16 -0700
+Message-ID: <cd8192e3-7d7d-5976-d795-05d4459cffea@quicinc.com>
+Date:   Tue, 23 May 2023 09:56:16 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <053819bd-b3c4-a72c-9316-85d974082ad6@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v2] accel/qaic: initialize ret variable to 0
+Content-Language: en-US
+To:     <trix@redhat.com>, <ogabbay@kernel.org>, <nathan@kernel.org>,
+        <ndesaulniers@google.com>, <jacek.lawrynowicz@linux.intel.com>,
+        <quic_carlv@quicinc.com>, <stanislaw.gruszka@linux.intel.com>,
+        <quic_pkanojiy@quicinc.com>
+CC:     <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <linux-kernel@vger.kernel.org>, <llvm@lists.linux.dev>
+References: <20230517165605.16770-1-quic_jhugo@quicinc.com>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20230517165605.16770-1-quic_jhugo@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: vRPIXW_3rH41R8uWhGdmgdytuArGKGfS
+X-Proofpoint-ORIG-GUID: vRPIXW_3rH41R8uWhGdmgdytuArGKGfS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-23_10,2023-05-23_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ impostorscore=0 lowpriorityscore=0 mlxscore=0 phishscore=0 clxscore=1015
+ bulkscore=0 mlxlogscore=999 priorityscore=1501 spamscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305230126
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 12, 2023 at 09:13:04PM +0300, Dmitry Baryshkov wrote:
-> On 28/04/2023 02:28, Abhinav Kumar wrote:
-> > On sc7280 where eDP is the primary display, PSR is causing
-> > IGT breakage even for basic test cases like kms_atomic and
-> > kms_atomic_transition. Most often the issue starts with below
-> > stack so providing that as reference
-> > 
-> > Call trace:
-> >   dpu_encoder_assign_crtc+0x64/0x6c
-> >   dpu_crtc_enable+0x188/0x204
-> >   drm_atomic_helper_commit_modeset_enables+0xc0/0x274
-> >   msm_atomic_commit_tail+0x1a8/0x68c
-> >   commit_tail+0xb0/0x160
-> >   drm_atomic_helper_commit+0x11c/0x124
-> >   drm_atomic_commit+0xb0/0xdc
-> >   drm_atomic_connector_commit_dpms+0xf4/0x110
-> >   drm_mode_obj_set_property_ioctl+0x16c/0x3b0
-> >   drm_connector_property_set_ioctl+0x4c/0x74
-> >   drm_ioctl_kernel+0xec/0x15c
-> >   drm_ioctl+0x264/0x408
-> >   __arm64_sys_ioctl+0x9c/0xd4
-> >   invoke_syscall+0x4c/0x110
-> >   el0_svc_common+0x94/0xfc
-> >   do_el0_svc+0x3c/0xb0
-> >   el0_svc+0x2c/0x7c
-> >   el0t_64_sync_handler+0x48/0x114
-> >   el0t_64_sync+0x190/0x194
-> > ---[ end trace 0000000000000000 ]---
-> > [drm-dp] dp_ctrl_push_idle: PUSH_IDLE pattern timedout
-> > 
-> > Other basic use-cases still seem to work fine hence add a
-> > a module parameter to allow toggling psr enable/disable till
-> > PSR related issues are hashed out with IGT.
+On 5/17/2023 10:56 AM, Jeffrey Hugo wrote:
+> From: Tom Rix <trix@redhat.com>
 > 
-> For the reference: Bjorn reported that he has issues with VT on a 
-> PSR-enabled laptops. This patch fixes the issue for him
+> clang static analysis reports
+> drivers/accel/qaic/qaic_data.c:610:2: warning: Undefined or garbage
+>    value returned to caller [core.uninitialized.UndefReturn]
+>          return ret;
+>          ^~~~~~~~~~
+> 
+>  From a code analysis of the function, the ret variable is only set some
+> of the time but is always returned.  This suggests ret can return
+> uninitialized garbage. However BO allocation will ensure ret is always
+> set in reality.
+> 
+> Initialize ret to 0 to silence the warning.
+> 
+> Fixes: ff13be830333 ("accel/qaic: Add datapath")
+> Signed-off-by: Tom Rix <trix@redhat.com>
+> [jhugo: Reword commit text]
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-Module parameters are almost never warranted, and it is definitely not
-the right way to handle a broken implementation.
-
-I've just sent a revert that unconditionally disables PSR support until
-the implementation has been fixed:
-
-	https://lore.kernel.org/lkml/20230523151646.28366-1-johan+linaro@kernel.org/
-
-Johan
+Pushed to drm-misc-fixes
