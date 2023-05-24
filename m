@@ -2,66 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D1C0870F591
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 13:46:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E45EC70F662
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 14:29:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229588AbjEXLqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 07:46:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60062 "EHLO
+        id S229929AbjEXM3C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 08:29:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49848 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230353AbjEXLqc (ORCPT
+        with ESMTP id S230493AbjEXM3B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 07:46:32 -0400
-Received: from devico.uberspace.de (devico.uberspace.de [185.26.156.185])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE367184
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 04:46:23 -0700 (PDT)
-Received: (qmail 19997 invoked by uid 990); 24 May 2023 11:46:21 -0000
-Authentication-Results: devico.uberspace.de;
-        auth=pass (plain)
-MIME-Version: 1.0
-Date:   Wed, 24 May 2023 11:46:21 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From:   "Leonard Lausen" <leonard@lausen.nl>
-Message-ID: <3a11741c9cc699e178f9b705a34342add03ea0df@lausen.nl>
-TLS-Required: No
-Subject: Re: [PATCH v6] drm/msm/dp: enable HDP plugin/unplugged interrupts at
- hpd_enable/disable
-To:     "Kuogee Hsieh" <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, dmitry.baryshkov@linaro.org,
-        andersson@kernel.org, regressions@lists.linux.dev
-Cc:     "Kuogee Hsieh" <quic_khsieh@quicinc.com>,
-        quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
-        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-In-Reply-To: <1684878756-17830-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1684878756-17830-1-git-send-email-quic_khsieh@quicinc.com>
-X-Rspamd-Bar: /
-X-Rspamd-Report: MIME_GOOD(-0.1) BAYES_HAM(-1.80269) SUSPICIOUS_RECIPS(1.5)
-X-Rspamd-Score: -0.40269
-Received: from unknown (HELO unkown) (::1)
-        by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Wed, 24 May 2023 13:46:21 +0200
+        Wed, 24 May 2023 08:29:01 -0400
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F33839C;
+        Wed, 24 May 2023 05:29:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-        d=lausen.nl; s=uberspace;
-        h=from;
-        bh=yvML/N3WJWiB2LyumltXUYRXVUY6T1Z0/T8xB4Juop4=;
-        b=BW79TuMU14I2zQ1/iZDlcMklY9d8hFqDFVqNll7kptlo750aTKf/9+xmPYQuVKOK8D1pPFwgoG
-        CtO/GUTdpodwO1GVY1pDTvEzL8g4Lw0aoz4aNSjSaluTfpqig+jW1v6adCTpPzuI4dw/TJpOGTJe
-        xfemmQFpSMpDe251TKcjHIxN4DJEDRaWfBzPmicXBrooUdIF/dIb2KZND/uh3stRVnqsqJ1nSZnK
-        gMwoWQ8CGwjdBmC/exGcwRpsbUuezc7WRwa+cdR/wT7Qq6o9c9/bkqkHlrObjKYiXeNs+nUF+C4w
-        RFZpIj6UxXScvs1Eg+LvT8VUNnApNhgr8riIg32AAE/67TgFGxMIFV8I9moIUPmwezY022c5adm9
-        KDkx/fQi5VIp1aHEwuPVraOFI4apNz/gaBjt2Vb73DGaZfX6Hyf5a8L1kttx+r9dxOgy9pW2R7oz
-        nqbGNGbBSD16wYwsJ6wPtp05fRBSswm9J8Yjs3dT49YGRJdlGPnWP/Og/UdB/u2jtU0dM4a9cU/Z
-        Suut2A4cQqYzlbFv5oQ+Hl1OIETlT9E1GW5hXrl1m/s6qn1G3rI4p76ZPCKAFskxPRKgcYlQ4fyE
-        eUXQdOGRBnvug3exP9XNUqiB9gQsmh4J6sRE5WCpwPZsy/MZfYsJy65wqW/1Xdz1Hg0uIuOLqztv
-        w=
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1684931340; x=1716467340;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=3klnhOKosPwBrT++R5pTUO9av0C/hZmrxntxsqOzxiU=;
+  b=nje+pa1NGxrkqlS80MrM4SxdlBDPPto0Z2IYecZ3N7etZrbKhquZcj95
+   +YX4AeRlN+45UZTRC6lq2jbFlwAsKK6eUoDZwDT8/tskbrci5xNFUrI5D
+   0Fi5jT8zYdLMr1GZVMGXqXnPD+JaLUsgSQT+Rkawk8nAeoY1BIj4KNbJI
+   nUiQJJ43YuR4Y/OE/VIEY+pDKxfOY17vSuS8DMJ3YAHrFMclNabHPlOJN
+   FuA/kzvsBuv0VWYFkYwRvh9yWiLyEQEQVIVaZ5rMjWkRibDlhEx82EDZQ
+   IM972nvnwFYawOYt+3urxR6IRVRFh4hQBtp3EISQTfieNsrrsuocUyIAL
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10720"; a="333904880"
+X-IronPort-AV: E=Sophos;i="6.00,189,1681196400"; 
+   d="scan'208";a="333904880"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 May 2023 05:29:00 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10720"; a="848731372"
+X-IronPort-AV: E=Sophos;i="6.00,189,1681196400"; 
+   d="scan'208";a="848731372"
+Received: from black.fi.intel.com (HELO black.fi.intel.com.) ([10.237.72.28])
+  by fmsmga001.fm.intel.com with ESMTP; 24 May 2023 05:28:58 -0700
+From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        chrome-platform@lists.linux.dev, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v1 0/2] usb: typec: mux: Remove the "svid" device property checks
+Date:   Wed, 24 May 2023 15:28:59 +0300
+Message-Id: <20230524122901.53659-1-heikki.krogerus@linux.intel.com>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,47 +60,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Kuogee Hsieh <quic_khsieh@quicinc.com> writes:
-> The internal_hpd flag is set to true by dp_bridge_hpd_enable() and set =
-to
-> false by dp_bridge_hpd_disable() to handle GPIO pinmuxed into DP contro=
-ller
-> case. HDP related interrupts can not be enabled until internal_hpd is s=
-et
-> to true. At current implementation dp_display_config_hpd() will initial=
-ize
-> DP host controller first followed by enabling HDP related interrupts if
-> internal_hpd was true at that time. Enable HDP related interrupts depen=
-ds on
-> internal_hpd status may leave system with DP driver host is in running =
-state
-> but without HDP related interrupts being enabled. This will prevent ext=
-ernal
-> display from being detected. Eliminated this dependency by moving HDP r=
-elated
-> interrupts enable/disable be done at dp_bridge_hpd_enable/disable() dir=
-ectly
-> regardless of internal_hpd status.
->
-> Changes in V3:
-> -- dp_catalog_ctrl_hpd_enable() and dp_catalog_ctrl_hpd_disable()
-> -- rewording ocmmit text
->
-> Changes in V4:
-> -- replace dp_display_config_hpd() with dp_display_host_start()
-> -- move enable_irq() at dp_display_host_start();
->
-> Changes in V5:
-> -- replace dp_display_host_start() with dp_display_host_init()
->
-> Changes in V6:
-> -- squash remove enable_irq() and disable_irq()
->
-> Fixes: cd198caddea7 ("drm/msm/dp: Rely on hpd_enable/disable callbacks"=
-)
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Hi,
 
-Cherry-picked on top of v6.3.3 and verified fixes the USB-C DP
-regression on sc7180 lazor. Thank you!
+The background for this change:
+https://lore.kernel.org/lkml/20210726231351.655302-1-bjorn.andersson@linaro.org/
 
-Tested-by: Leonard Lausen <leonard@lausen.nl> # on sc7180 lazor
+The idea with that device property was that it would allow us to
+support separate mode specific switches behind a single port if
+necessary.
+
+Although, I guess it is still possible that we could have that kind of
+separate mode switches, especially now that the mode switch represents
+a kind of virtual aggregate device that can be build from multiple
+physical muxes (so the modes could need different "combos" of the
+muxes), but now no such systems exist.
+
+We can look at how to handle that kind of switches when/if we actually
+have them, but for now, keeping the functions as simple as possible.
+
+thanks,
+
+Heikki Krogerus (2):
+  usb: typec: mux: Clean up mux_fwnode_match()
+  usb: typec: mux: Remove alt mode parameters from the API
+
+ drivers/platform/chrome/cros_ec_typec.c |  2 +-
+ drivers/soc/qcom/pmic_glink_altmode.c   |  5 +-
+ drivers/usb/typec/class.c               |  4 +-
+ drivers/usb/typec/mux.c                 | 61 ++++---------------------
+ include/linux/usb/typec_mux.h           | 11 ++---
+ 5 files changed, 17 insertions(+), 66 deletions(-)
+
+-- 
+2.39.2
+
