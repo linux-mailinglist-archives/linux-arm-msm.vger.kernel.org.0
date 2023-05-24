@@ -2,139 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C434670F84D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 16:07:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BAEF670F865
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 16:13:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235851AbjEXOHg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 10:07:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47810 "EHLO
+        id S235449AbjEXONx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 10:13:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235833AbjEXOHe (ORCPT
+        with ESMTP id S229919AbjEXONw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 10:07:34 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E903312F;
-        Wed, 24 May 2023 07:07:31 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34ODK3KB007487;
-        Wed, 24 May 2023 14:07:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=IiWgxrw+DsmnbsHRWht4wn5W6abzsdX5Av7pdhDTV6o=;
- b=jPs8UZLt55Hk16ctxhVQQGg3eHmVFwNs6DcAc4+bh+FzuBM8OeFHAP5tdVl+V95nMUDy
- I8KoyAcTyFgXqMVPDT5SlTVwjMSdU2mP7T5S/uo1Jn5VoOhJ/x3tsiyWe3hMpu1siu5P
- p6g58livsdXd+v/i3y80Y9DOcwX3c9dMfghODTO3lEHsgMfWM9VMcN5L16IDJ7hn83xS
- +qkrN7OInCOjjbx7RY846fpYm8SwbO0Y6MKs/caK3LpsXuBFRpN/wTDe0xK7hIOTgfGF
- dFHT4Nehb/n45sDfpBXYio80SreL2HgfLMrpibWFTCPfNeiFi0DEMZxz3DC2s788YEjO 6A== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qscpms1ct-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 24 May 2023 14:07:28 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34OE7R32008889
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 24 May 2023 14:07:27 GMT
-Received: from hu-tdas-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 24 May 2023 07:07:23 -0700
-From:   Taniya Das <quic_tdas@quicinc.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>, <quic_jkona@quicinc.com>,
-        <quic_imrashai@quicinc.com>, <quic_ajipan@quicinc.com>
-Subject: [PATCH V5 3/3] arm64: dts: qcom: sm8450: Add video clock controller
-Date:   Wed, 24 May 2023 19:36:56 +0530
-Message-ID: <20230524140656.7076-4-quic_tdas@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230524140656.7076-1-quic_tdas@quicinc.com>
-References: <20230524140656.7076-1-quic_tdas@quicinc.com>
+        Wed, 24 May 2023 10:13:52 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D544E12E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 07:13:50 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-64d341bdedcso734233b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 07:13:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1684937630; x=1687529630;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wO3RSNxA2bvcMwE7iGwPIm41zuTKHIjUu9E4v9/gL8E=;
+        b=fgp9s7kSBrKrbjGdMoq4qs1uiIKiZHyebpai2HjRqwrXnPo1utEpsXXwaxX7uG8xp3
+         aPZbk7/ylkmoPxU6R9MHJJ7G+zkppEUbVWbogyZAugWpkF/+hw3n196IrnY8/mY9/Hpv
+         938OV0hPP1FEzTH0e6QWzScI0p1w5fsci0HCE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684937630; x=1687529630;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wO3RSNxA2bvcMwE7iGwPIm41zuTKHIjUu9E4v9/gL8E=;
+        b=SEAZdgw9a4sj6W+QyVbxNhNXDErnm6ofOoeZ/4LPh62qWio0zD4KhWVA/jd4MO+wfo
+         LqmmrIj74UOYdctD35p8NNVIO7oaHDv+2meYYAJWCWkeUkBueGC24vOFXdR0HLK0328R
+         bHrk2CS8qaMnZaBpsY4KUSnEPLrhVlkWrPc75TxJretnrc9VQa6acsbB3Em9i5Py7GLq
+         sx+PVrccL9VymS/AxbW5WVW2JppBTMuWOUZgcPK/TiE4jVWRIqj5uN4W6CxlJOjFAyBe
+         hZ+Whs04ezUbLlepHBA02zad4JDWzQBZq/QFXIQcvolJSQnf4twSvTueTfdVSAiDkqjF
+         fjKw==
+X-Gm-Message-State: AC+VfDwxweOViwDmd/kBBr2bKSwLM4klUG2H+EU5tjp/ODPJO2G8c6pm
+        oork9IkfwuW3kNLspPRZO3hUag==
+X-Google-Smtp-Source: ACHHUZ4P4sRzt2TYQMCb9B1mSIsTqQyFCrQvyJYBiIM5XwQc3vp6t6VJD39OEfRbHyL/iuAVDfBSEQ==
+X-Received: by 2002:a05:6a00:cd2:b0:63d:4752:4da3 with SMTP id b18-20020a056a000cd200b0063d47524da3mr4035715pfv.25.1684937630019;
+        Wed, 24 May 2023 07:13:50 -0700 (PDT)
+Received: from tigerii.tok.corp.google.com ([2401:fa00:8f:203:9a0f:9704:f5b2:168b])
+        by smtp.gmail.com with ESMTPSA id 22-20020aa79116000000b0063b898b3502sm7528503pfh.153.2023.05.24.07.13.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 May 2023 07:13:49 -0700 (PDT)
+From:   Sergey Senozhatsky <senozhatsky@chromium.org>
+To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Tomasz Figa <tfiga@chromium.org>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Sergey Senozhatsky <senozhatsky@chromium.org>
+Subject: [PATCHv3] media: venus: provide video device lock
+Date:   Wed, 24 May 2023 23:12:48 +0900
+Message-ID: <20230524141312.2558810-1-senozhatsky@chromium.org>
+X-Mailer: git-send-email 2.40.1.698.g37aff9b760-goog
+In-Reply-To: <20230524135737.2557837-1-senozhatsky@chromium.org>
+References: <20230524135737.2557837-1-senozhatsky@chromium.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: dTYX7K3DQsSAzGke1PENKLZsihxqonQj
-X-Proofpoint-GUID: dTYX7K3DQsSAzGke1PENKLZsihxqonQj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-24_09,2023-05-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=999 clxscore=1015 priorityscore=1501 adultscore=0
- malwarescore=0 bulkscore=0 spamscore=0 suspectscore=0 mlxscore=0
- phishscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2304280000 definitions=main-2305240115
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for video clock controller on Qualcomm SM8450 platform.
+Video device has to provide ->lock so that __video_do_ioctl()
+can serialize IOCTL calls. Provided dedicated enc/dec mutex-s
+for that purpose.
 
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 ---
-Changes since V4:
- - Sort the DT node by unit address.
- - include videocc header.
+ drivers/media/platform/qcom/venus/core.h | 4 ++++
+ drivers/media/platform/qcom/venus/vdec.c | 2 ++
+ drivers/media/platform/qcom/venus/venc.c | 2 ++
+ 3 files changed, 8 insertions(+)
 
-Changes since V3:
- - None.
-
-Changes since V2:
- - No changes.
-
-Changes since V1:
- - No changes.
-
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 595533aeafc4..8bc6d1498b57 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -8,6 +8,7 @@
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/clock/qcom,sm8450-camcc.h>
- #include <dt-bindings/clock/qcom,sm8450-dispcc.h>
-+#include <dt-bindings/clock/qcom,sm8450-videocc.h>
- #include <dt-bindings/dma/qcom-gpi.h>
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
-@@ -2572,6 +2573,18 @@
- 			};
- 		};
-
-+		videocc: clock-controller@aaf0000 {
-+			compatible = "qcom,sm8450-videocc";
-+			reg = <0 0x0aaf0000 0 0x10000>;
-+			clocks = <&rpmhcc RPMH_CXO_CLK>,
-+				 <&gcc GCC_VIDEO_AHB_CLK>;
-+			power-domains = <&rpmhpd SM8450_MMCX>;
-+			required-opps = <&rpmhpd_opp_low_svs>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		cci0: cci@ac15000 {
- 			compatible = "qcom,sm8450-cci", "qcom,msm8996-cci";
- 			reg = <0 0x0ac15000 0 0x1000>;
---
-2.17.1
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 4f81669986ba..b6c9a653a007 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -113,7 +113,9 @@ struct venus_format {
+  * @opp_pmdomain: an OPP power-domain
+  * @resets: an array of reset signals
+  * @vdev_dec:	a reference to video device structure for decoder instances
++ * @vdev_dec_lock: decoder instance video device ioctl lock
+  * @vdev_enc:	a reference to video device structure for encoder instances
++ * @vdev_enc_lock: encoder instance video device ioctl lock
+  * @v4l2_dev:	a holder for v4l2 device structure
+  * @res:		a reference to venus resources structure
+  * @dev:		convenience struct device pointer
+@@ -165,7 +167,9 @@ struct venus_core {
+ 	struct device *opp_pmdomain;
+ 	struct reset_control *resets[VIDC_RESETS_NUM_MAX];
+ 	struct video_device *vdev_dec;
++	struct mutex vdev_dec_lock;
+ 	struct video_device *vdev_enc;
++	struct mutex vdev_enc_lock;
+ 	struct v4l2_device v4l2_dev;
+ 	const struct venus_resources *res;
+ 	struct device *dev;
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index 51a53bf82bd3..7e9363714bfb 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1760,6 +1760,7 @@ static int vdec_probe(struct platform_device *pdev)
+ 	if (!vdev)
+ 		return -ENOMEM;
+ 
++	mutex_init(&core->vdev_dec_lock);
+ 	strscpy(vdev->name, "qcom-venus-decoder", sizeof(vdev->name));
+ 	vdev->release = video_device_release;
+ 	vdev->fops = &vdec_fops;
+@@ -1767,6 +1768,7 @@ static int vdec_probe(struct platform_device *pdev)
+ 	vdev->vfl_dir = VFL_DIR_M2M;
+ 	vdev->v4l2_dev = &core->v4l2_dev;
+ 	vdev->device_caps = V4L2_CAP_VIDEO_M2M_MPLANE | V4L2_CAP_STREAMING;
++	vdev->lock = &core->vdev_dec_lock;
+ 
+ 	ret = video_register_device(vdev, VFL_TYPE_VIDEO, -1);
+ 	if (ret)
+diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+index 4666f42feea3..8522ed339d5d 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -1558,6 +1558,7 @@ static int venc_probe(struct platform_device *pdev)
+ 	if (!vdev)
+ 		return -ENOMEM;
+ 
++	mutex_init(&core->vdev_enc_lock);
+ 	strscpy(vdev->name, "qcom-venus-encoder", sizeof(vdev->name));
+ 	vdev->release = video_device_release;
+ 	vdev->fops = &venc_fops;
+@@ -1565,6 +1566,7 @@ static int venc_probe(struct platform_device *pdev)
+ 	vdev->vfl_dir = VFL_DIR_M2M;
+ 	vdev->v4l2_dev = &core->v4l2_dev;
+ 	vdev->device_caps = V4L2_CAP_VIDEO_M2M_MPLANE | V4L2_CAP_STREAMING;
++	vdev->lock = &core->vdev_enc_lock;
+ 
+ 	ret = video_register_device(vdev, VFL_TYPE_VIDEO, -1);
+ 	if (ret)
+-- 
+2.40.1.698.g37aff9b760-goog
 
