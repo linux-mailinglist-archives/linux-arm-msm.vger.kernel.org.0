@@ -2,89 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E861470FC2B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 19:05:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBFBA70FC75
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 19:18:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230494AbjEXRFC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 13:05:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34084 "EHLO
+        id S229521AbjEXRSb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 13:18:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235600AbjEXRE7 (ORCPT
+        with ESMTP id S229742AbjEXRSa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 13:04:59 -0400
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4493CBB
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 10:04:58 -0700 (PDT)
-Received: by mail-pg1-x52e.google.com with SMTP id 41be03b00d2f7-51b4ef5378bso486076a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 10:04:58 -0700 (PDT)
+        Wed, 24 May 2023 13:18:30 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B156BE9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 10:18:27 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3f655a8135bso5082795e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 10:18:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1684947896; x=1687539896;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=linaro.org; s=google; t=1684948706; x=1687540706;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
+         :subject:cc:to:from:user-agent:references:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VSiv7FiHooBNjd2z6gDTYmV/eBkw3m7qogP3ovVg02M=;
-        b=bTJWFVNfL0LR+7cnof9Ti/AGAveHyq2f/71xtfmDw7GPIjSh4TPU072xBxh88jdmWS
-         Di2XWUmUIBuF5XeTeoyvxC42mmXR+ygfj2Bd1icYRdQELDmZdbq+sVcCYUSyPukb4/r5
-         E1ESJNdljwM8F51fA+UkfN0/sqAcq/g8yAJPo=
+        bh=DL0229BoBpNJOI+Nzjlz2oCun7fW2ym7znDfwinMLQM=;
+        b=jj0MwJzaDakiH6V2M55C66XVl7NKA/xqDkbt9zy8hCStHwIC07N6BsrjPdXP5v/oz3
+         yyEjZTqPdYj1Hd1mh7Z2t+8ZRUmwNnEwmEtXsn7Xhbau9CKn4Bv7ID1J2sSdfPpv/9q1
+         XqVNWUrY9dRw4meJnYIURwZRSAWf91CnFX71DqXYLOv71cRiBeOZ24doCwOmrLc1xbr3
+         EweDp3dVMlVDixurzRWNZYFox3mtuHH1o1/1KueqwZzfcsgUdn8ZfTsfi6V8khLGv6fo
+         +qiLB3uBSHIPkqkZXw2Py8TFkrlx75CbG+crEAkMJY7WAcV8Y0E0a8GBYMmRn8afGhY6
+         b2Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684947896; x=1687539896;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VSiv7FiHooBNjd2z6gDTYmV/eBkw3m7qogP3ovVg02M=;
-        b=lSFiPKXBvo6g6g04Y0EcmRXxURbW/YKk86EvUwniC6AZgZOiy3qb6bjLgOYDN4ce9r
-         vcbh4UWpeJgNZlVAsv5Sj39gM1Rthdw0752CojwQOUioHoe+bOADIdt8leW/3P5WsQaq
-         uriiKMbYcv+SvjnrMpIN6TNwICfQWCXHPj19ay7Ir5lwbfHkjOSNjada8ipGGao2qH1v
-         tjQdbO0m7e6iSQPgtfJwxO9HkYLt+LvKHAXtS+io+cm5LSsWepKFBf/o76zK1S05suqA
-         /cy7YfZo0wTrWdc3oUgEFW+Y3J5Zb/b4Zj9qiV761DbYQTof/GwIjxFDEhCmoZaZwXxM
-         NTnw==
-X-Gm-Message-State: AC+VfDw2Yxe4ntnAepaV8tNXvyY18HxIQ3lecfqqjoM9yW597V+svJmi
-        GXwKUPMXYc7J4D7QYaDCWtRhzBjnkpBA6g77lJo=
-X-Google-Smtp-Source: ACHHUZ43JZKdTPcMVYnFv4Wd74McH8KawPnMdLbo3l6nXL20D0YMxwlCmxsmlJQFxZBouh/9PNPPhw==
-X-Received: by 2002:a17:903:2343:b0:1ab:109e:a553 with SMTP id c3-20020a170903234300b001ab109ea553mr22833276plh.62.1684947896586;
-        Wed, 24 May 2023 10:04:56 -0700 (PDT)
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com. [209.85.214.174])
-        by smtp.gmail.com with ESMTPSA id k12-20020a170902694c00b001aaeaa27dd5sm6685586plt.252.2023.05.24.10.04.56
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 May 2023 10:04:56 -0700 (PDT)
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1a950b982d4so5945ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 10:04:56 -0700 (PDT)
-X-Received: by 2002:a05:6e02:156b:b0:32e:561d:b42d with SMTP id
- k11-20020a056e02156b00b0032e561db42dmr271821ilu.16.1684947875310; Wed, 24 May
- 2023 10:04:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230523193017.4109557-1-dianders@chromium.org>
- <20230523122802.2.I59b417d4c29151cc2eff053369ec4822b606f375@changeid> <646e391f.810a0220.214ce.d680@mx.google.com>
-In-Reply-To: <646e391f.810a0220.214ce.d680@mx.google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 24 May 2023 10:04:24 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WEeeRopigfbSa3mU1aHyr_ZZCnqR94FEn7YTeiDDJ-YQ@mail.gmail.com>
-Message-ID: <CAD=FV=WEeeRopigfbSa3mU1aHyr_ZZCnqR94FEn7YTeiDDJ-YQ@mail.gmail.com>
-Subject: Re: [PATCH 2/9] drm/panel: Check for already prepared/enabled in drm_panel
-To:     Chris Morgan <macroalpha82@gmail.com>
-Cc:     Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        d=1e100.net; s=20221208; t=1684948706; x=1687540706;
+        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
+         :subject:cc:to:from:user-agent:references:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=DL0229BoBpNJOI+Nzjlz2oCun7fW2ym7znDfwinMLQM=;
+        b=Y9hB5UjZEjkDOSFko7LK4t0twDWVDExNJs5aH2A9QD33W8OwA9SP3PkupVpQ0fQk7o
+         +gptW1buhl4tRhQ88ASFBefEsJogoZY82KJ10VLsFW7RMMWub6N30m8WNQa9OngVJgV7
+         bPGdpkGraUwI4RWD60Z+3pfRTEmZYF8yP2dhd/w5BzZ8mUcKt/nLIrlsHCVh1IqqfP2j
+         Y17+84UnBRHFVl3GA9t3GLNJInNfwhhE7KYResPg9To7H5gcvSZyCGC+sKN0Cty5INtv
+         LRSbqRG6F1HAORD70GKTY8/eiD6KUCD1RudBR1uq9OmIoabweiMX/AR837aGao8HFzm8
+         eESA==
+X-Gm-Message-State: AC+VfDxh0lIlV7+RHWrMDbCtDNLK9SStMXyf4FLqEkk4U4re8w5EXEh6
+        aDSxaIi5hIn3xETxZS2vVrVVOA==
+X-Google-Smtp-Source: ACHHUZ7EtdSlJtb5r5XsSMh9tkQ/f0DDFMNu9ia48hiYqe6yWGQPoYuj/WNNHA1F/l+o3arN16XDbA==
+X-Received: by 2002:a05:600c:3783:b0:3f6:3486:1396 with SMTP id o3-20020a05600c378300b003f634861396mr346875wmr.33.1684948706082;
+        Wed, 24 May 2023 10:18:26 -0700 (PDT)
+Received: from zen.linaroharston ([85.9.250.243])
+        by smtp.gmail.com with ESMTPSA id i2-20020a05600c290200b003eddc6aa5fasm2917304wmd.39.2023.05.24.10.18.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 May 2023 10:18:25 -0700 (PDT)
+Received: from zen (localhost [127.0.0.1])
+        by zen.linaroharston (Postfix) with ESMTP id 456A41FFBB;
+        Wed, 24 May 2023 18:18:25 +0100 (BST)
+References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
+User-agent: mu4e 1.11.6; emacs 29.0.91
+From:   Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+To:     Elliot Berman <quic_eberman@quicinc.com>
+Cc:     Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        dri-devel@lists.freedesktop.org, linux-input@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>, hsinyi@google.com,
-        devicetree@vger.kernel.org,
-        yangcong5@huaqin.corp-partner.google.com,
-        linux-kernel@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org
-Content-Type: text/plain; charset="UTF-8"
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v13 00/24] Drivers for Gunyah hypervisor
+Date:   Wed, 24 May 2023 18:13:16 +0100
+In-reply-to: <20230509204801.2824351-1-quic_eberman@quicinc.com>
+Message-ID: <87cz2pveam.fsf@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -93,18 +96,76 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Wed, May 24, 2023 at 9:19=E2=80=AFAM Chris Morgan <macroalpha82@gmail.co=
-m> wrote:
+Elliot Berman <quic_eberman@quicinc.com> writes:
+
+> Gunyah is a Type-1 hypervisor independent of any
+> high-level OS kernel, and runs in a higher CPU privilege level. It does
+> not depend on any lower-privileged OS kernel/code for its core
+> functionality. This increases its security and can support a much smaller
+> trusted computing base than a Type-2 hypervisor.
 >
-> Thank you for looking into this more. It's one of the last QOL bugs
-> for some devices I'm working on, even if the end result is no big
-> deal (the other QOL bug involves a WARN on probing a rotated panel).
+<snip>
+>
+> The series relies on two other patches posted separately:
+>  - https://lore.kernel.org/all/20230213181832.3489174-1-quic_eberman@quic=
+inc.com/
+>  -
+> https://lore.kernel.org/all/20230213232537.2040976-2-quic_eberman@quicinc=
+.com/
 
-Glad it'll be helpful!
+I couldn't find this one, but is this what it should have been:
 
-For the WARN on probing a rotated panel I thought there was some
-progress on that front. Commit e3ea1806e4ad ("drm/bridge: panel: Set
-orientation on panel_bridge connector") or commit 15b9ca1641f0 ("drm:
-Config orientation property if panel provides it") didn't help you?
+  b4 am -S -t 20230213232537.2040976-1-quic_eberman@quicinc.com
+  Grabbing thread from lore.kernel.org/all/20230213232537.2040976-1-quic_eb=
+erman%40quicinc.com/t.mbox.gz
+  Analyzing 9 messages in the thread
+  Checking attestation on all messages, may take a moment...
+  ---
+    =E2=9C=93 [PATCH 1/3] mailbox: Allow direct registration to a channel
+      + Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+    =E2=9C=93 [PATCH 2/3] mailbox: omap: Use mbox_bind_client
+      + Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+    =E2=9C=93 [PATCH 3/3] mailbox: pcc: Use mbox_bind_client
+      + Tested-by: Sudeep Holla <sudeep.holla@arm.com>
+    ---
+    =E2=9C=93 Signed: DKIM/quicinc.com
+  ---
+  Total patches: 3
+  ---
+  Cover: ./20230213_quic_eberman_mailbox_allow_direct_registration_to_a_cha=
+nnel.cover
+   Link: https://lore.kernel.org/r/20230213232537.2040976-1-quic_eberman@qu=
+icinc.com
+   Base: base-commit 09e41676e35ab06e4bce8870ea3bf1f191c3cb90 not known, ig=
+noring
+   Base: applies clean to current tree
+         git checkout -b 20230213_quic_eberman_quicinc_com HEAD
+         git am ./20230213_quic_eberman_mailbox_allow_direct_registration_t=
+o_a_channel.mbx
+  =F0=9F=95=9918:10:45 alex@zen:linux.git  on =EE=82=A0 review/gunyah-v12 [=
+$?]=20
+  =E2=9E=9C  git am 20230213_quic_eberman_mailbox_allow_direct_registration=
+_to_a_channel.mbx=20
+  Applying: mailbox: Allow direct registration to a channel
+  Applying: mailbox: omap: Use mbox_bind_client
+  Applying: mailbox: pcc: Use mbox_bind_client
+
+
+<snip>
+>
+> Elliot Berman (24):
+<snip>
+
+>   mailbox: Add Gunyah message queue mailbox
+
+This patch touches a file that isn't in mainline which makes me wonder
+if I've missed another pre-requisite patch?
+
+<snip>
+>  Documentation/virt/gunyah/message-queue.rst   |   8 +
+<snip>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
