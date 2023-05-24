@@ -2,78 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E033970FBB9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 18:33:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA72F70FBC0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 18:36:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230138AbjEXQdc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 12:33:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48686 "EHLO
+        id S229482AbjEXQgY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 12:36:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbjEXQdb (ORCPT
+        with ESMTP id S231217AbjEXQgX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 12:33:31 -0400
+        Wed, 24 May 2023 12:36:23 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C9C4E9;
-        Wed, 24 May 2023 09:33:30 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34OFfUiq008677;
-        Wed, 24 May 2023 16:33:15 GMT
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D5A6123;
+        Wed, 24 May 2023 09:36:21 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34OGXgnN024619;
+        Wed, 24 May 2023 16:36:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=WHPoXP5utHdLTSZGO5wV4RpG8TRwXt/UKLbt8oGZ07Q=;
- b=XJN1T6ZZ31tfgiO02UaluszxxVqkYrjH3og/Q3AxxIWrmACU4GCtscAfupfPrY2nRdGl
- sfy0xLbLP9sdjHIaT2d9Tbq/GcAqoFvlqgm1Ao7io54RQvQxL33sOPabx9V/7+7TFBeY
- ZSfSw9cKnY03J1BfeYcAiniwPyMCPT+gpn7rB0I9IIOjvS7uJzwzGb9mfB9RKS7bJHad
- ZGBG1Z9eZcHz9yRAtdmTLgZc3fLajsjv2C90sGCN45LtUNjAU+DdC3HkdAYCvdC6ZGNz
- 4O/+qC8/mHvqRCrk7VO1dKgggqsnafp+MRIpDAwY1SrvBI8IbkbnW8mz1Wgo0/lHR1qY Qg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qscgmheuk-1
+ bh=vTG9mvZqKviqsRVEIrZVwuT6RML06eXihgrvhA3Nq/Q=;
+ b=VkVQJTDeHnzcNKN5AiCnKmbZZ9rnbP8NCpHzIgCKJj612ximrJBd/r56prjIeQ6QLoe1
+ C6H6XevHgKc3Q9QlleT15YFAYrWVQcZT5/yTBfNfBpzJAwpq4LG+Hg2qtcWIKdUkeOFz
+ tCw7o2n5HETGa84klWWSuF2djb7dYvw4olWfHXej1nQtWWj1qC39B6TRSYET2sjnFpxN
+ 7q+OV8W/gKNnAvJ/xMd6I2E2VHUt3QQkHKzufOL+SdtRIebqqJ/EFeShsa/sqtxj6MqM
+ bQwRcHVEWcEdkfooXAgsrQVOinqzeK9SY5/2mk7Kk5Dwmpq2wo3Q98qlTEdAwGlMhoPj ug== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qsdhh1a9s-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 24 May 2023 16:33:15 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34OGXEjN028531
+        Wed, 24 May 2023 16:36:14 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34OGaDt9011107
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 24 May 2023 16:33:14 GMT
-Received: from [10.71.110.189] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+        Wed, 24 May 2023 16:36:13 GMT
+Received: from [10.252.212.215] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 24 May
- 2023 09:33:13 -0700
-Message-ID: <81399377-cd0b-ba9c-e58f-e1955912b263@quicinc.com>
-Date:   Wed, 24 May 2023 09:33:13 -0700
+ 2023 09:36:10 -0700
+Message-ID: <83cd3dc7-455d-0f26-d2a8-3ebe92d9e33f@quicinc.com>
+Date:   Wed, 24 May 2023 22:06:07 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v13 00/10] add DSC 1.2 dpu supports
+Subject: Re: [PATCHv3] media: venus: provide video device lock
+To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Sergey Senozhatsky <senozhatsky@chromium.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Tomasz Figa <tfiga@chromium.org>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230524135737.2557837-1-senozhatsky@chromium.org>
+ <20230524141312.2558810-1-senozhatsky@chromium.org>
+ <2c732d80-1a18-7a34-03a8-16afb0de5ea2@linaro.org>
+ <f9219cb0-2cac-bace-20f7-27005cd0e6f1@xs4all.nl>
 Content-Language: en-US
-To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
-        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
-        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
-        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <andersson@kernel.org>
-CC:     <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
-        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <1684800039-18231-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
-In-Reply-To: <1684800039-18231-1-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+From:   Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <f9219cb0-2cac-bace-20f7-27005cd0e6f1@xs4all.nl>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1i6xzJ6550qlbC9RKlRvNvBFYClxXQqK
-X-Proofpoint-ORIG-GUID: 1i6xzJ6550qlbC9RKlRvNvBFYClxXQqK
+X-Proofpoint-GUID: 95_k8Tj_02LiiVPwyETwJLraLIqULXah
+X-Proofpoint-ORIG-GUID: 95_k8Tj_02LiiVPwyETwJLraLIqULXah
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
  definitions=2023-05-24_11,2023-05-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=966 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
- adultscore=0 malwarescore=0 phishscore=0 mlxscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ suspectscore=0 clxscore=1011 malwarescore=0 bulkscore=0 spamscore=0
+ mlxscore=0 lowpriorityscore=0 adultscore=0 phishscore=0 impostorscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2304280000 definitions=main-2305240137
 X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
@@ -85,59 +88,111 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry/Marijn,
 
-Are you satisfy with this patch series or any more comments will be added?
+On 5/24/2023 8:14 PM, Hans Verkuil wrote:
+> On 24/05/2023 16:29, Bryan O'Donoghue wrote:
+>> On 24/05/2023 15:12, Sergey Senozhatsky wrote:
+>>> Video device has to provide ->lock so that __video_do_ioctl()
+>>> can serialize IOCTL calls. Provided dedicated enc/dec mutex-s
+>>> for that purpose.
+Why do we need to serialize at device context ? Please share some details on the
+issue faced leading to the serialization. This may impact performance, let say,
+when we have multiple concurrent video sessions running at the same time and the
+ioctl for one session have to wait if the lock is taken by another session ioctl.
 
-Thanks,
+>>>
+>>> Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+> 
+> Since these are m2m devices, I think this should set vfh->m2m_ctx->q_lock
+> instead.
+> 
+> The vb2_queue is per filehandle for such devices, so by just setting
+> vdev->lock you will have all vb2_queues use the same mutex.
+> 
+> Instead the struct v4l2_m2m_ctx q_lock pointer, if set, will use that
+> mutex for all vb2 operations.
+> 
+> I think you can set it to the 'lock' mutex in struct venus_inst.
 
+IIUC, the suggestion is to use the 'lock' in struct venus_inst while
+initializing the queue. This might lead to deadlock as the same lock is used
+during vb2 operations in driver. Might be introducing a new lock for this
+purpose in struct venus_inst would do, unless we are trying to serialize at
+video device (or core) context.
 
-kuogee
-
-
-On 5/22/2023 5:00 PM, Kuogee Hsieh wrote:
-> This series adds the DPU side changes to support DSC 1.2 encoder. This
-> was validated with both DSI DSC 1.2 panel and DP DSC 1.2 monitor.
-> The DSI and DP parts will be pushed later on top of this change.
-> This seriel is rebase on [1], [2] and catalog fixes from rev-4 of [3].
->
-> [1]: https://patchwork.freedesktop.org/series/116851/
-> [2]: https://patchwork.freedesktop.org/series/116615/
-> [3]: https://patchwork.freedesktop.org/series/112332/
->
-> Abhinav Kumar (2):
->    drm/msm/dpu: add dsc blocks to the catalog of MSM8998 and SC8180X
->    drm/msm/dpu: add DSC 1.2 hw blocks for relevant chipsets
->
-> Kuogee Hsieh (8):
->    drm/msm/dpu: set DSC flush bit correctly at MDP CTL flush register
->    drm/msm/dpu: add DPU_PINGPONG_DSC feature bit for DPU < 7.0.0
->    drm/msm/dpu: Guard PINGPONG DSC ops behind DPU_PINGPONG_DSC bit
->    drm/msm/dpu: Introduce PINGPONG_NONE to disconnect DSC from PINGPONG
->    drm/msm/dpu: add support for DSC encoder v1.2 engine
->    drm/msm/dpu: always clear every individual pending flush mask
->    drm/msm/dpu: separate DSC flush update out of interface
->    drm/msm/dpu: tear down DSC data path when DSC disabled
->
->   drivers/gpu/drm/msm/Makefile                       |   1 +
->   .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    |   7 +
->   .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |  11 +
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |  14 +
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |   7 +
->   .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   |  16 +
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |  14 +
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |  14 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  51 ++-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  24 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  35 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  33 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  11 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c         |  14 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h         |  15 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c     | 387 +++++++++++++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   3 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |   9 +-
->   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |   7 +-
->   19 files changed, 644 insertions(+), 29 deletions(-)
->   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c
->
+> 
+> Regards,
+> 
+> 	Hans
+> 
+>>> ---
+>>>   drivers/media/platform/qcom/venus/core.h | 4 ++++
+>>>   drivers/media/platform/qcom/venus/vdec.c | 2 ++
+>>>   drivers/media/platform/qcom/venus/venc.c | 2 ++
+>>>   3 files changed, 8 insertions(+)
+>>>
+>>> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+>>> index 4f81669986ba..b6c9a653a007 100644
+>>> --- a/drivers/media/platform/qcom/venus/core.h
+>>> +++ b/drivers/media/platform/qcom/venus/core.h
+>>> @@ -113,7 +113,9 @@ struct venus_format {
+>>>    * @opp_pmdomain: an OPP power-domain
+>>>    * @resets: an array of reset signals
+>>>    * @vdev_dec:    a reference to video device structure for decoder instances
+>>> + * @vdev_dec_lock: decoder instance video device ioctl lock
+>>>    * @vdev_enc:    a reference to video device structure for encoder instances
+>>> + * @vdev_enc_lock: encoder instance video device ioctl lock
+>>>    * @v4l2_dev:    a holder for v4l2 device structure
+>>>    * @res:        a reference to venus resources structure
+>>>    * @dev:        convenience struct device pointer
+>>> @@ -165,7 +167,9 @@ struct venus_core {
+>>>       struct device *opp_pmdomain;
+>>>       struct reset_control *resets[VIDC_RESETS_NUM_MAX];
+>>>       struct video_device *vdev_dec;
+>>> +    struct mutex vdev_dec_lock;
+>>>       struct video_device *vdev_enc;
+>>> +    struct mutex vdev_enc_lock;
+>>>       struct v4l2_device v4l2_dev;
+>>>       const struct venus_resources *res;
+>>>       struct device *dev;
+>>> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+>>> index 51a53bf82bd3..7e9363714bfb 100644
+>>> --- a/drivers/media/platform/qcom/venus/vdec.c
+>>> +++ b/drivers/media/platform/qcom/venus/vdec.c
+>>> @@ -1760,6 +1760,7 @@ static int vdec_probe(struct platform_device *pdev)
+>>>       if (!vdev)
+>>>           return -ENOMEM;
+>>>   +    mutex_init(&core->vdev_dec_lock);
+>>>       strscpy(vdev->name, "qcom-venus-decoder", sizeof(vdev->name));
+>>>       vdev->release = video_device_release;
+>>>       vdev->fops = &vdec_fops;
+>>> @@ -1767,6 +1768,7 @@ static int vdec_probe(struct platform_device *pdev)
+>>>       vdev->vfl_dir = VFL_DIR_M2M;
+>>>       vdev->v4l2_dev = &core->v4l2_dev;
+>>>       vdev->device_caps = V4L2_CAP_VIDEO_M2M_MPLANE | V4L2_CAP_STREAMING;
+>>> +    vdev->lock = &core->vdev_dec_lock;
+>>>         ret = video_register_device(vdev, VFL_TYPE_VIDEO, -1);
+>>>       if (ret)
+>>> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+>>> index 4666f42feea3..8522ed339d5d 100644
+>>> --- a/drivers/media/platform/qcom/venus/venc.c
+>>> +++ b/drivers/media/platform/qcom/venus/venc.c
+>>> @@ -1558,6 +1558,7 @@ static int venc_probe(struct platform_device *pdev)
+>>>       if (!vdev)
+>>>           return -ENOMEM;
+>>>   +    mutex_init(&core->vdev_enc_lock);
+>>>       strscpy(vdev->name, "qcom-venus-encoder", sizeof(vdev->name));
+>>>       vdev->release = video_device_release;
+>>>       vdev->fops = &venc_fops;
+>>> @@ -1565,6 +1566,7 @@ static int venc_probe(struct platform_device *pdev)
+>>>       vdev->vfl_dir = VFL_DIR_M2M;
+>>>       vdev->v4l2_dev = &core->v4l2_dev;
+>>>       vdev->device_caps = V4L2_CAP_VIDEO_M2M_MPLANE | V4L2_CAP_STREAMING;
+>>> +    vdev->lock = &core->vdev_enc_lock;
+>>>         ret = video_register_device(vdev, VFL_TYPE_VIDEO, -1);
+>>>       if (ret)
+>>
+>> LGTM
+>>
+>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> 
