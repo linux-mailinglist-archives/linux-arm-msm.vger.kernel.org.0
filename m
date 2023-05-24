@@ -2,183 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B49E70FBA0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 18:23:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E033970FBB9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 18:33:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232718AbjEXQXo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 12:23:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44222 "EHLO
+        id S230138AbjEXQdc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 12:33:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233428AbjEXQXk (ORCPT
+        with ESMTP id S229482AbjEXQdb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 12:23:40 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCD2EE9;
-        Wed, 24 May 2023 09:23:37 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-96f683e8855so164346866b.2;
-        Wed, 24 May 2023 09:23:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684945416; x=1687537416;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=utXuBuOV4BNhpTKyYQ/PC8Nvs5FwMBOaU9WF5xMzoa4=;
-        b=EaXQVjYZpCwsP7gl6z2uzhDQD334YQJXgKyj6QjjAmPRDcEszws+8sHWOWgzsW8e+0
-         vE69lzFF93Cls7JebgARoZo/O9GmfjmwRHOYHrq9ORx/RVTqhep6nEXNlk8L0FVua0P5
-         eBPZtpZ0bGVkTy7GJeg1VQpYLgkBkljpTafg40iIT0iQF5QNHUqGJqgIGjdaZZtDkmTb
-         t3oiKUSX7xAwpdGUksLgYcaWHFG4He6FO5uVM53yvo57HAWT8Mn+Q+qeTXMjDUKJroDM
-         n8RRcUhh4Mt20aaamJX/gTv+7ZIqGgzn4c6JcpdzTS6rFhM32z1WetXKJapEQb6Jfejm
-         Swmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684945416; x=1687537416;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=utXuBuOV4BNhpTKyYQ/PC8Nvs5FwMBOaU9WF5xMzoa4=;
-        b=E7uFYaQtI2Zninylbx60ITjpuHLNgn8eTNEkIOpnQg5dZetkGdOuhdP2C4Us0N26RC
-         kHL4N2DYobHch01fH39izAGa3h5Yb6CPtzDBpLIGaavybsjw51uDZnYUdmjiVto21ooh
-         brWer32sfsgodPaOFuhmnOfn2MdfnAg+xcMj3ZjePq2i8LzM7Ag/9YJSn2pNACF3JcIO
-         NBdlLKRgaQMzdo41NKDTNv9bCZ0TqbJaT5UFyPQA1tojTeszpBK2peTyxFKzaxHjSFDd
-         u3gJddfeUpVXLEcqHQ1z3xxl66ZHPsH0NqQQD35DQBEd6VGqvxFykHJVgY2XIUOTv5Mk
-         1gsg==
-X-Gm-Message-State: AC+VfDyClVB0sISqbN+FLRPPRtk1WtI30n9itAtk46AKdZ+5BEI+Bk9h
-        /ifGoowdOvYGLLlnBRRn8is=
-X-Google-Smtp-Source: ACHHUZ4siiTv5Fzmfm6INR4YCNR1UngZT3T3OZwJ/r2h269CsO3xf969qVqHaCT17IyZL2AKFjXRgA==
-X-Received: by 2002:a17:907:2ce5:b0:96a:52e:5379 with SMTP id hz5-20020a1709072ce500b0096a052e5379mr17116756ejc.63.1684945415775;
-        Wed, 24 May 2023 09:23:35 -0700 (PDT)
-Received: from fedora.. ([213.149.38.146])
-        by smtp.googlemail.com with ESMTPSA id p19-20020a170906229300b0096f5b48fe43sm5913793eja.47.2023.05.24.09.23.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 May 2023 09:23:35 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        ilia.lin@kernel.org, rafael@kernel.org, viresh.kumar@linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Cc:     ansuelsmth@gmail.com, Robert Marko <robimarko@gmail.com>
-Subject: [PATCH v2 4/4] cpufreq: qcom-nvmem: use helper to get SMEM SoC ID
-Date:   Wed, 24 May 2023 18:23:29 +0200
-Message-Id: <20230524162329.819770-4-robimarko@gmail.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230524162329.819770-1-robimarko@gmail.com>
-References: <20230524162329.819770-1-robimarko@gmail.com>
+        Wed, 24 May 2023 12:33:31 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C9C4E9;
+        Wed, 24 May 2023 09:33:30 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34OFfUiq008677;
+        Wed, 24 May 2023 16:33:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=WHPoXP5utHdLTSZGO5wV4RpG8TRwXt/UKLbt8oGZ07Q=;
+ b=XJN1T6ZZ31tfgiO02UaluszxxVqkYrjH3og/Q3AxxIWrmACU4GCtscAfupfPrY2nRdGl
+ sfy0xLbLP9sdjHIaT2d9Tbq/GcAqoFvlqgm1Ao7io54RQvQxL33sOPabx9V/7+7TFBeY
+ ZSfSw9cKnY03J1BfeYcAiniwPyMCPT+gpn7rB0I9IIOjvS7uJzwzGb9mfB9RKS7bJHad
+ ZGBG1Z9eZcHz9yRAtdmTLgZc3fLajsjv2C90sGCN45LtUNjAU+DdC3HkdAYCvdC6ZGNz
+ 4O/+qC8/mHvqRCrk7VO1dKgggqsnafp+MRIpDAwY1SrvBI8IbkbnW8mz1Wgo0/lHR1qY Qg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qscgmheuk-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 24 May 2023 16:33:15 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34OGXEjN028531
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 24 May 2023 16:33:14 GMT
+Received: from [10.71.110.189] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 24 May
+ 2023 09:33:13 -0700
+Message-ID: <81399377-cd0b-ba9c-e58f-e1955912b263@quicinc.com>
+Date:   Wed, 24 May 2023 09:33:13 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v13 00/10] add DSC 1.2 dpu supports
+Content-Language: en-US
+To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <andersson@kernel.org>
+CC:     <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <1684800039-18231-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+In-Reply-To: <1684800039-18231-1-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 1i6xzJ6550qlbC9RKlRvNvBFYClxXQqK
+X-Proofpoint-ORIG-GUID: 1i6xzJ6550qlbC9RKlRvNvBFYClxXQqK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-24_11,2023-05-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=966 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
+ adultscore=0 malwarescore=0 phishscore=0 mlxscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305240137
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now that SMEM exports a helper to get the SMEM SoC ID lets utilize it.
-Currently qcom_cpufreq_get_msm_id() is encoding the returned SMEM SoC ID
-into an enum, however there is no reason to do so and we can just match
-directly on the SMEM SoC ID as returned by qcom_smem_get_msm_id().
+Hi Dmitry/Marijn,
 
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
-Changes in v2:
-* Utilize helper exported by SMEM instead of refactoring
-qcom_cpufreq_get_msm_id()
----
- drivers/cpufreq/qcom-cpufreq-nvmem.c | 55 +++++-----------------------
- 1 file changed, 9 insertions(+), 46 deletions(-)
+Are you satisfy with this patch series or any more comments will be added?
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-index 60e99be2d3db..4293e2888797 100644
---- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-+++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-@@ -29,16 +29,8 @@
- #include <linux/slab.h>
- #include <linux/soc/qcom/smem.h>
- 
--#define MSM_ID_SMEM	137
--
- #include <dt-bindings/arm/qcom,ids.h>
- 
--enum _msm8996_version {
--	MSM8996_V3,
--	MSM8996_SG,
--	NUM_OF_MSM8996_VERSIONS,
--};
--
- struct qcom_cpufreq_drv;
- 
- struct qcom_cpufreq_match_data {
-@@ -135,60 +127,31 @@ static void get_krait_bin_format_b(struct device *cpu_dev,
- 	dev_dbg(cpu_dev, "PVS version: %d\n", *pvs_ver);
- }
- 
--static enum _msm8996_version qcom_cpufreq_get_msm_id(void)
--{
--	size_t len;
--	u32 *msm_id;
--	enum _msm8996_version version;
--
--	msm_id = qcom_smem_get(QCOM_SMEM_HOST_ANY, MSM_ID_SMEM, &len);
--	if (IS_ERR(msm_id))
--		return NUM_OF_MSM8996_VERSIONS;
--
--	/* The first 4 bytes are format, next to them is the actual msm-id */
--	msm_id++;
--
--	switch ((enum _msm_id)*msm_id) {
--	case QCOM_ID_MSM8996:
--	case QCOM_ID_APQ8096:
--		version = MSM8996_V3;
--		break;
--	case QCOM_ID_MSM8996SG:
--	case QCOM_ID_APQ8096SG:
--		version = MSM8996_SG;
--		break;
--	default:
--		version = NUM_OF_MSM8996_VERSIONS;
--	}
--
--	return version;
--}
--
- static int qcom_cpufreq_kryo_name_version(struct device *cpu_dev,
- 					  struct nvmem_cell *speedbin_nvmem,
- 					  char **pvs_name,
- 					  struct qcom_cpufreq_drv *drv)
- {
- 	size_t len;
-+	int msm_id;
- 	u8 *speedbin;
--	enum _msm8996_version msm8996_version;
- 	*pvs_name = NULL;
- 
--	msm8996_version = qcom_cpufreq_get_msm_id();
--	if (NUM_OF_MSM8996_VERSIONS == msm8996_version) {
--		dev_err(cpu_dev, "Not Snapdragon 820/821!");
--		return -ENODEV;
--	}
-+	msm_id = qcom_smem_get_msm_id();
-+	if (msm_id < 0)
-+		return msm_id;
- 
- 	speedbin = nvmem_cell_read(speedbin_nvmem, &len);
- 	if (IS_ERR(speedbin))
- 		return PTR_ERR(speedbin);
- 
--	switch (msm8996_version) {
--	case MSM8996_V3:
-+	switch (msm_id) {
-+	case QCOM_ID_MSM8996:
-+	case QCOM_ID_APQ8096:
- 		drv->versions = 1 << (unsigned int)(*speedbin);
- 		break;
--	case MSM8996_SG:
-+	case QCOM_ID_MSM8996SG:
-+	case QCOM_ID_APQ8096SG:
- 		drv->versions = 1 << ((unsigned int)(*speedbin) + 4);
- 		break;
- 	default:
--- 
-2.40.1
+Thanks,
 
+
+kuogee
+
+
+On 5/22/2023 5:00 PM, Kuogee Hsieh wrote:
+> This series adds the DPU side changes to support DSC 1.2 encoder. This
+> was validated with both DSI DSC 1.2 panel and DP DSC 1.2 monitor.
+> The DSI and DP parts will be pushed later on top of this change.
+> This seriel is rebase on [1], [2] and catalog fixes from rev-4 of [3].
+>
+> [1]: https://patchwork.freedesktop.org/series/116851/
+> [2]: https://patchwork.freedesktop.org/series/116615/
+> [3]: https://patchwork.freedesktop.org/series/112332/
+>
+> Abhinav Kumar (2):
+>    drm/msm/dpu: add dsc blocks to the catalog of MSM8998 and SC8180X
+>    drm/msm/dpu: add DSC 1.2 hw blocks for relevant chipsets
+>
+> Kuogee Hsieh (8):
+>    drm/msm/dpu: set DSC flush bit correctly at MDP CTL flush register
+>    drm/msm/dpu: add DPU_PINGPONG_DSC feature bit for DPU < 7.0.0
+>    drm/msm/dpu: Guard PINGPONG DSC ops behind DPU_PINGPONG_DSC bit
+>    drm/msm/dpu: Introduce PINGPONG_NONE to disconnect DSC from PINGPONG
+>    drm/msm/dpu: add support for DSC encoder v1.2 engine
+>    drm/msm/dpu: always clear every individual pending flush mask
+>    drm/msm/dpu: separate DSC flush update out of interface
+>    drm/msm/dpu: tear down DSC data path when DSC disabled
+>
+>   drivers/gpu/drm/msm/Makefile                       |   1 +
+>   .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    |   7 +
+>   .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |  11 +
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |  14 +
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |   7 +
+>   .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   |  16 +
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |  14 +
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |  14 +
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  51 ++-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  24 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  35 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  33 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  11 +
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c         |  14 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h         |  15 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c     | 387 +++++++++++++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   3 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |   9 +-
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |   7 +-
+>   19 files changed, 644 insertions(+), 29 deletions(-)
+>   create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c
+>
