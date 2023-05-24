@@ -2,134 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5ABB670EDD6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 08:29:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D2E370EDE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 08:36:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230101AbjEXG3k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 02:29:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54586 "EHLO
+        id S239721AbjEXGgt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 02:36:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234625AbjEXG3j (ORCPT
+        with ESMTP id S239704AbjEXGgs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 02:29:39 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C708D19D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 23:29:36 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2af318fa2b8so8130071fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 23:29:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684909775; x=1687501775;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ADXbD+WyjY/a3C44OvKKZGai/nGC+LFyoWdYlICKXPU=;
-        b=VhBc9lZ9orvrj2dcBEqriY0TB/eqwSa95I70QFP2EHC5wHBfSTxeow1P+WLdJww3wX
-         6PdfoE25ASVfJ7AhYeeYMXoAROF3x/kvD1q5OoTyo5n0C9aGK5pk/jjnTiLrcolbhkfb
-         uKXsRwOzwIaH5yoZ7fX5ni3Lsqp5eg88BdxhacD2Wz6ysu3jCLM5Z0zBF0Vs4Ec0eAbt
-         gsng+1J95y0U3iMOOU7O8TIg61aA1o/aj8G4+UHqFDF8L1gBd88//M+b+0dut4jlqrdY
-         xp/SCvuiCQFpFPd1DJyPR5+IaT9QAM9HmQp2HABtSUWX7vG9LZOxS15hmqjOk0U/tEbs
-         GXBQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684909775; x=1687501775;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ADXbD+WyjY/a3C44OvKKZGai/nGC+LFyoWdYlICKXPU=;
-        b=BYpQQAUGwDb7BYhPS7J03OaXLYoGs75COBPncxDC2AOoZ1WIPVx8OJglb43ZITtu26
-         BwiDQnk73c302eFeSvBuBM92GMDBntKOgl3Ui/QihrnSxH8CBBXdINoVzvgL2zT7dwnx
-         oV+kpSeznPHjFQMb0zBizSnvWhvhQWdEcEX+pCnSSbXuwjRSuRKL5px3DivNILO2Ji0x
-         Pe9cTUSwuqsYl3vhf5VDzyU+oqEI9RawrNSu7TryL9bVCqcYip3fVoLI+11186Xs+/32
-         vQInoRkc26nsM+rCKvCrTcX3vsCPCm8NM8i5dCVTrN8R1YHhtkwEJJj0/qcZjwdv7pIp
-         GNMQ==
-X-Gm-Message-State: AC+VfDwG1qhXUOhF+Nn4wW6Cfbbladna8M9qJOEhiloVITM5OIVNcgzc
-        Ta/O4a8YwY+m7Bdrlw6tSgjBNg==
-X-Google-Smtp-Source: ACHHUZ66Vr30OJ4X4Ex15iX6UaQMJjBYrDgZH3iNJ2pRZpBzlC+ggVVqpBYvZPJm5yH2tY46yIjh4w==
-X-Received: by 2002:a2e:a30d:0:b0:2b0:45ff:7959 with SMTP id l13-20020a2ea30d000000b002b045ff7959mr579995lje.51.1684909774956;
-        Tue, 23 May 2023 23:29:34 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id x26-20020a2e881a000000b002a8b08882dbsm1962672ljh.55.2023.05.23.23.29.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 23 May 2023 23:29:34 -0700 (PDT)
-Message-ID: <1dca6efc-3020-ce79-18f1-ae56bef4f688@linaro.org>
-Date:   Wed, 24 May 2023 09:29:33 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v13 05/24] mailbox: Add Gunyah message queue mailbox
-Content-Language: en-GB
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Jassi Brar <jassisinghbrar@gmail.com>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
- <20230509204801.2824351-6-quic_eberman@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230509204801.2824351-6-quic_eberman@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Wed, 24 May 2023 02:36:48 -0400
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 942D71A2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 23:36:41 -0700 (PDT)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+        by mailout.nyi.internal (Postfix) with ESMTP id EE14F5C0271;
+        Wed, 24 May 2023 02:36:40 -0400 (EDT)
+Received: from imap51 ([10.202.2.101])
+  by compute6.internal (MEProxy); Wed, 24 May 2023 02:36:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+        :cc:content-type:content-type:date:date:from:from:in-reply-to
+        :in-reply-to:message-id:mime-version:references:reply-to:sender
+        :subject:subject:to:to; s=fm3; t=1684910200; x=1684996600; bh=91
+        5suAEeXe825eovY24TQkPIUR8OuODqtLgTUVs+xw0=; b=TlIOtNSfsdoHoXJuOS
+        8fz4qIYtnBWdUNozHAeZ1svgJrnFZyaFD638wGTIca2Wq/dUtBhpCdq4rA9mmOzo
+        8QeL65ihvucXMBCuZysQHW49jNJD1uC2ikahf3VHOHOgv6su2s0L8lOW/cuDVsSS
+        ca7NZx9gytut67IrNf3WieKd1A5S2dUOs/LG1xJwWRhXS3RIi78Psns9D+S1iblY
+        D45pqDnhfyyGNfUh7EdItxHNcxWmL5G+OKyMXjvP1h4lzGDI6Aa5aTLqDcSVbNfU
+        FdxAl1vysy1+mwsxXggXQRuRhjG5/qF/KJ67PL+u2EJfK3v7Pc5x6x7g5vAN7+mc
+        prZw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:cc:content-type:content-type:date:date
+        :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+        :message-id:mime-version:references:reply-to:sender:subject
+        :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+        :x-sasl-enc; s=fm1; t=1684910200; x=1684996600; bh=915suAEeXe825
+        eovY24TQkPIUR8OuODqtLgTUVs+xw0=; b=nxiP+H2uDP3JLKhfeu3ZisQ+t5u5C
+        9VoUq652VQGb+qwruuGSEu9Nk0YgkuX+pD1HLBKRcCQ6sAkgTbqrK7oj+iOMZw+t
+        4Tc23qT/WCM6mfkq7mEKnpwYODrZRT8MpOWswwQZ9iYBB7zutH5BmEO1+u5fitNT
+        yu28lPoARfyBv7yy02HH1onpUAzvCeLVNaesSDi0PxEti2zxucxThS6c4skjAs53
+        pu/kldnEr5ZX9kbT0RJl8BALwBcH8wGvhrn44S5DH6VIwJ+a6PlZbc+PEiBgbpA+
+        hzAq0RcB3yCtcs2Bj+wnQUfO0UpGLRcQIaRB0Bhfy50EZwbJ1qO5kp9UA==
+X-ME-Sender: <xms:eLBtZKP6X5XbiZmbDXuUzN5kQ0crVY-XDp9DUE4ghKxG5Sq3NKcmTA>
+    <xme:eLBtZI9FRoVh7QS0qig0RHbKX1BMNwD-2vtqG-kkWArBrWOQ9STbnYg1v4Nrw3b0a
+    mvKjd6I_sjIZ-vm-PM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeejgedguddtkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdet
+    rhhnugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrg
+    htthgvrhhnpeffheeugeetiefhgeethfejgfdtuefggeejleehjeeutefhfeeggefhkedt
+    keetffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    grrhhnugesrghrnhgusgdruggv
+X-ME-Proxy: <xmx:eLBtZBRwnvrxyB3OCUT6CeQkpN0WXruRMo19h2PSt_z2t4fD0Lm1lA>
+    <xmx:eLBtZKsce_0QYgEZ5pC1vIWEiDA9vT-yJoy6DPN_So_YxY7ofxsGkA>
+    <xmx:eLBtZCebFH3AKJx1wbwwtTJR4a8CwH6oTKB5lCagkvazKkZE2uu3xA>
+    <xmx:eLBtZPHd2jKR9uBJagVaUwJZ1aWcpF1vxPOV8oE4mqM1Gm5ashesiQ>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+        id B0BD8B60086; Wed, 24 May 2023 02:36:40 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-441-ga3ab13cd6d-fm-20230517.001-ga3ab13cd
+Mime-Version: 1.0
+Message-Id: <179b8c7e-d355-4051-beb4-ac44808bdaaf@app.fastmail.com>
+In-Reply-To: <bacae75a-6030-ff8b-179f-7d662140bae7@linaro.org>
+References: <20230523165411.1136102-1-vladimir.zapolskiy@linaro.org>
+ <20230523165411.1136102-4-vladimir.zapolskiy@linaro.org>
+ <21baf481-347f-d4b1-87df-833ed16cb729@linaro.org>
+ <bacae75a-6030-ff8b-179f-7d662140bae7@linaro.org>
+Date:   Wed, 24 May 2023 08:36:20 +0200
+From:   "Arnd Bergmann" <arnd@arndb.de>
+To:     "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Vladimir Zapolskiy" <vladimir.zapolskiy@linaro.org>,
+        "Bjorn Andersson" <quic_bjorande@quicinc.com>
+Cc:     "Will Deacon" <will@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 3/5] arm64: defconfig: Build interconnect driver for QCM2290
+Content-Type: text/plain
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/05/2023 23:47, Elliot Berman wrote:
-> Gunyah message queues are a unidirectional inter-VM pipe for messages up
-> to 1024 bytes. This driver supports pairing a receiver message queue and
-> a transmitter message queue to expose a single mailbox channel.
-> 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> ---
->   Documentation/virt/gunyah/message-queue.rst |   8 +
->   drivers/mailbox/Makefile                    |   2 +
->   drivers/mailbox/gunyah-msgq.c               | 212 ++++++++++++++++++++
->   include/linux/gunyah.h                      |  57 ++++++
->   4 files changed, 279 insertions(+)
->   create mode 100644 drivers/mailbox/gunyah-msgq.c
-> 
-> diff --git a/Documentation/virt/gunyah/message-queue.rst b/Documentation/virt/gunyah/message-queue.rst
-> index b352918ae54b..70d82a4ef32d 100644
-> --- a/Documentation/virt/gunyah/message-queue.rst
-> +++ b/Documentation/virt/gunyah/message-queue.rst
+On Tue, May 23, 2023, at 23:11, Dmitry Baryshkov wrote:
+> On 23/05/2023 20:30, Konrad Dybcio wrote:
+>> 
+>> 
+>> On 23.05.2023 18:54, Vladimir Zapolskiy wrote:
+>>> Build Qualcomm QCM2290 interconnect driver.
+>>>
+>>> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>>> ---
+>> Do we know why some are =y and some are =m?
+>> 
+>> I'm for =y either way, if we can.
+>
+> I think this might change from platform to platform. What is the 
+> condition for selecting 'y' or 'm' for the core drivers? Is it 'should 
+> boot to rootfs without modules' or 'should boot to UART and load initrd 
+> without modules' ?
 
-Note, this file is not a part of the patchset. Trying to apply the 
-patchset results in rejects. Probably you missed the documentation patch 
-when sending this series.
+I think we are a bit inconsistent here. I'm generally fine taking
+changes that are required to boot into rootfs without initramfs,
+but would like everything else to be loadable modules.
 
-> @@ -61,3 +61,11 @@ vIRQ: two TX message queues will have two vIRQs (and two capability IDs).
->         |               |         |                 |         |               |
->         |               |         |                 |         |               |
->         +---------------+         +-----------------+         +---------------+
-> +
-> +Gunyah message queues are exposed as mailboxes. To create the mailbox, create
-> +a mbox_client and call `gh_msgq_init()`. On receipt of the RX_READY interrupt,
-> +all messages in the RX message queue are read and pushed via the `rx_callback`
-> +of the registered mbox_client.
-> +
-> +.. kernel-doc:: drivers/mailbox/gunyah-msgq.c
-> +   :identifiers: gh_msgq_init-- 
-With best wishes
-Dmitry
+Android tends to want everything as modules and require an initramfs
+for loading them, so I think platforms that are mostly Android
+specific lean towards that even for core drivers.
 
+     Arnd
