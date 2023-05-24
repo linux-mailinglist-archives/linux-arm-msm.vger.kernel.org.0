@@ -2,64 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF75A70F888
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 16:22:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D3C7E70F8B9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 16:27:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235837AbjEXOWg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 10:22:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54946 "EHLO
+        id S233937AbjEXO1t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 10:27:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55978 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229919AbjEXOWf (ORCPT
+        with ESMTP id S229524AbjEXO1t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 10:22:35 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C34F512E;
-        Wed, 24 May 2023 07:22:34 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6132563DD1;
-        Wed, 24 May 2023 14:22:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE479C433D2;
-        Wed, 24 May 2023 14:22:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684938153;
-        bh=Ti7srOHrHydlQp6V2XYkCscD2SeIBeXLguWZIPuModw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=FUdNlK6L8Loy0wWd0CgvfG/kzrVJSH6+DoP2oyLBHUy3mUEGYxjq1u5nRx7yhmf82
-         sWXfBZPdyAqklc7UG80vYzr5gbepP3tjP7RphgyzSOd462PuNQb9v+9RxpAuoxHEKm
-         rLXLdpzBi7pbDwlCuOvp/XzJZDWjwn99U1veGzW8lPyYK4R/nRxAgW55BiN+Xw2x9z
-         tmCjcfQhYUvYbUOW/8JsW7w7SjasRGRAGZU6mRPiILVz+nvvM85qFZzUMST1WAH3tv
-         qYHd5WjW9GjgI3LuxZ2LZsxUTgT2BTnil8gQqptQgkuNSAa384KQoCDaYYbbulmijF
-         HBE6/zmMN/f0w==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1q1pNv-0000eS-Pz; Wed, 24 May 2023 16:22:39 +0200
-Date:   Wed, 24 May 2023 16:22:39 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, quic_jesszhan@quicinc.com,
-        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dp: add module parameter for PSR
-Message-ID: <ZG4dry_GOJPSyrWC@hovoldconsulting.com>
-References: <20230427232848.5200-1-quic_abhinavk@quicinc.com>
- <053819bd-b3c4-a72c-9316-85d974082ad6@linaro.org>
- <ZGzalLjTvUfzEADU@hovoldconsulting.com>
- <f530691b-989d-b059-6b06-e66abb740bdb@quicinc.com>
- <ZG216qoxK9hQ-kQs@hovoldconsulting.com>
- <4f2556e2-52ab-eb1d-b388-52546044f460@linaro.org>
+        Wed, 24 May 2023 10:27:49 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D88B11D;
+        Wed, 24 May 2023 07:27:47 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34OAxHfj012125;
+        Wed, 24 May 2023 14:27:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=2T2sktktkW44kPXRJS6VTyFM0EcE2KDWn+A8955T2/k=;
+ b=KnyVnaY1jyg7pDClKfn9Bpx0M+og6hLvXVZhybz7PQQ/FbXaO8nCbgLD9TbNocuMDjKq
+ oWTEwmDKMuNI+Qs75yhy5v5px4m5gYOp3LAk4rhQsK1NmhznjvVUFURDXH2tg9ug8yuc
+ 54ExcC3sICfFXS9MT/US21+JFBJA4BVizDJlIMn4ef+DSbuFi7isKUMSeU4n0pwTSi1b
+ Am/KPMU9njsA0QdHAdM9JHDucKpCxYhtJvPT5giYBMX6cHwoIYeFwX4OZWiMf2pJye1B
+ I590/ils36k1qKDN02ix8NGqJyvVcZOCjCNjDwGUiSvb4OlKUi9D8NhkM2xGTG3JUWm5 Sg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qs9wesdyc-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 24 May 2023 14:27:43 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34OERgH4011769
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 24 May 2023 14:27:42 GMT
+Received: from [10.217.216.177] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 24 May
+ 2023 07:27:38 -0700
+Message-ID: <b7590456-1cd6-8413-e1c6-561d27e804de@quicinc.com>
+Date:   Wed, 24 May 2023 19:57:36 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4f2556e2-52ab-eb1d-b388-52546044f460@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 1/4] clk: qcom: clk-alpha-pll: Add support for lucid ole
+ pll ops
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Conor Dooley <conor+dt@kernel.org>
+CC:     Bjorn Andersson <andersson@kernel.org>,
+        Taniya Das <quic_tdas@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20230509161218.11979-1-quic_jkona@quicinc.com>
+ <20230509161218.11979-2-quic_jkona@quicinc.com>
+ <019999fd-3c86-8c85-76c7-8d0206e60f4d@linaro.org>
+ <55fc32df-f01b-1ba3-3813-26a5f8c7f730@quicinc.com>
+ <4a9248c0-96ec-1986-d874-1cb7d8aac0ac@linaro.org>
+From:   Jagadeesh Kona <quic_jkona@quicinc.com>
+In-Reply-To: <4a9248c0-96ec-1986-d874-1cb7d8aac0ac@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 7gzKJotjpo0t6tn6swDPpGE6zGFkpjlm
+X-Proofpoint-GUID: 7gzKJotjpo0t6tn6swDPpGE6zGFkpjlm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-24_09,2023-05-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ mlxlogscore=410 impostorscore=0 lowpriorityscore=0 mlxscore=0 phishscore=0
+ spamscore=0 clxscore=1015 adultscore=0 suspectscore=0 bulkscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305240118
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -68,26 +90,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 24, 2023 at 11:06:03AM +0300, Dmitry Baryshkov wrote:
-> On 24/05/2023 09:59, Johan Hovold wrote:
+Hi Konrad,
 
-> > Regressions happen and sometimes there are corner cases that are harder
-> > to find, but this is a breakage of a fundamental feature that was
-> > reported before the code was even merged into mainline.
-> > 
-> >> We should have ideally gone with the modparam with the feature patches
-> >> itself knowing that it gets enabled for all sinks if PSR is supported.
-> > 
-> > Modparams are things of the past should not be used to enable broken
-> > features so that some vendor can tick of their internal lists of
-> > features that have been "mainlined".
+Thanks for your review!
+
+On 5/19/2023 6:39 PM, Konrad Dybcio wrote:
 > 
-> We have had a history of using modparam with i915 and IIRC amdgpu / 
-> radeon drivers to allow users to easily check whether new feature works 
-> for their hardware. My current understanding is that PSR+VT works for on 
-> some laptops and doesn't on some other laptops, which makes it a valid case.
+> 
+> On 19.05.2023 14:49, Jagadeesh Kona wrote:
+>> Hi,
+>>
+>> Thanks Konrad for your review!
+>>
+>> On 5/10/2023 1:36 AM, Konrad Dybcio wrote:
+>>>
+>>>
+>>> On 9.05.2023 18:12, Jagadeesh Kona wrote:
+>>>> From: Taniya Das <quic_tdas@quicinc.com>
+>>>>
+>>>> Add support for lucid ole pll ops to configure and control the
+>>>> lucid ole pll. The lucid ole pll has an additional test control
+>>>> register which is required to be programmed, add support to
+>>>> program the same.
+>>>>
+>>>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+>>>> ---
+>>> Isn't this commit "write to PLL_TEST_CTL_U2 on LUCID_EVO" instead?
+>>>
+>>> Meaninglessly duplicating ops does not seem useful.
+>>>
+>>> Konrad
+>>
+>> Though we are reusing same ops for EVO and OLE, PLL_TEST_CTL_U2 register programming is applicable only to OLE PLL type.
+> Well, your patch makes it unconditional (modulo programmer error) so
+> I think that makes little sense.. A comment would be enough, imo.
+> 
+> Konrad
+Yes, will remove the duplicate definitions and will reuse the existing ops.
 
-But here it does not seem to be the hardware that's the issue, but
-rather that the implementation is incorrect or incomplete.
+> And PLL type is useful to properly refer respective hardware datasheets. Hence added separate ops for OLE PLL type.
+>>
 
-Johan
+Thanks & Regards,
+Jagadeesh
