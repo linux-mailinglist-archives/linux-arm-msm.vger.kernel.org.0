@@ -2,78 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C665F70F8BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 16:29:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D47070F8C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 16:32:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234198AbjEXO3X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 10:29:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56380 "EHLO
+        id S232950AbjEXOcd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 10:32:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57220 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231929AbjEXO3W (ORCPT
+        with ESMTP id S229524AbjEXOcd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 10:29:22 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3BF212F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 07:29:19 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f42ba32e24so9006735e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 07:29:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684938558; x=1687530558;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AT5z1mA2kOm4EGdcOTdshFYi0CZutnenOwVHYiSx3gk=;
-        b=zRDwLlOSHYlY2If03FDmrhtJ84GwA6KFcdxpm8u56lWolhpSTQcT6fMzE/hIw8/LOY
-         yKfvw3UEs6bbXM3+bduxVFGAtBY7gdTYLvhsjBfEeh69mYgH58hB2yG/i1QPJkK+3iPt
-         oJCRy+MRavUOODVZgIj+9nwVFx+6M1Oapc5Z/eJUTsELFSx/UsvGySKW3aOJeq3ZkD1V
-         hhu+D3AgKx2eK47FwzERYS4XUnS5KHq20z0EeMqe55ECc4QA+/jhkT/q+LEC77vclG66
-         rWeE/yGWAf5nsLR6yGtr23QhDssifYuEB6nQP4n/2lNtU49sduDkwszX4hpc7JtHn8Xg
-         dFEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684938558; x=1687530558;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AT5z1mA2kOm4EGdcOTdshFYi0CZutnenOwVHYiSx3gk=;
-        b=ZglKvzXmOnPVX5e5y3TRN2dPBiYqsEm6I6fgu0Dnl3ExDx+FU89beq+IwrSvWAAK/B
-         Dq7wviPvivfS/u/v1+XkaQ2iTceDEwxReumS/XY4LNs/AL8JxscIKY05Cb5euUa+2UeS
-         h1hPuC28fD/fG6rbyl+PLe8Dvv87PH5hNNgQeGAfpUbu59lvyGvDXnJI8F3dyVgLhrN9
-         2nEEkfj1CW93Br4XlGarrwlH5MDiwBpmqmX0LmP4ZgXl9h+NMAYde0Ei37gxcyQxHI/A
-         KUIZ1K9iJGruMuJgwD9HW9u5WwRDLZO2fxSnFWAk6XafCtQXVlgSmdtRdqaNUipel6S3
-         ibyw==
-X-Gm-Message-State: AC+VfDwQc6wlcV3Q//D2FM6huQ/QDwSn4mFoxtUXTnPvRYIZ7jwzc49t
-        0Zfbe/zdcwF/PH89/3aH3ZEp3A==
-X-Google-Smtp-Source: ACHHUZ6h+NITTapaVVRTKW+74hkwlDusonQIXdEoNDqEl/VWTijFKesVDGYIMerqKsYKcxchJPqyIA==
-X-Received: by 2002:a05:600c:290c:b0:3f5:878:c0c2 with SMTP id i12-20020a05600c290c00b003f50878c0c2mr8484wmd.3.1684938558326;
-        Wed, 24 May 2023 07:29:18 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id f5-20020a5d4dc5000000b002fe13ec49fasm14607444wru.98.2023.05.24.07.29.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 May 2023 07:29:17 -0700 (PDT)
-Message-ID: <2c732d80-1a18-7a34-03a8-16afb0de5ea2@linaro.org>
-Date:   Wed, 24 May 2023 15:29:16 +0100
+        Wed, 24 May 2023 10:32:33 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CCFF12E;
+        Wed, 24 May 2023 07:32:32 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B038D63DCE;
+        Wed, 24 May 2023 14:32:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157BAC433EF;
+        Wed, 24 May 2023 14:32:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1684938751;
+        bh=ifJBDlw42lQEKWaVj8j5eUTS/S5Ep1/jzziFfDLCiO4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=melxsfpBFtterXW0JEI2hR1uTm+mQVU/WRPDBctYpMXB5oHsEhxirRtVJoWadJbB+
+         wm+j+6QppuphP9oXHCaBdahw5H1ZYuPJUGdgtdFdW95izchtrOT21G3jnyq5mUw0lJ
+         da0i404+4aND5DSCX7KkT6yqfSSozVbvxwxa5GR+IW0ZKRMG8NLMIqO+9wzfZ8WoRg
+         mcJuRH4XY3/uDJ7sSeKYUETKI3wLbdr7RANte6nVYD1eIH7ngUhE1mz4k1CB/j9IzN
+         w41+PPU/Eu6FyDYyf13bHZEbaY7cUa/XxVEZexzaGtTJXHdMUTf+JaXpocqTBk0jp8
+         h8MWRCYi6pl5Q==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1q1pXY-0000jp-U7; Wed, 24 May 2023 16:32:37 +0200
+Date:   Wed, 24 May 2023 16:32:36 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>
+Cc:     Anjelique Melendez <quic_amelende@quicinc.com>,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, linux-leds@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Steev Klimaszewski <steev@kali.org>
+Subject: Re: [PATCH v2] leds: qcom-lpg: Fix PWM period limits
+Message-ID: <ZG4gBE1rqkMIllV3@hovoldconsulting.com>
+References: <20230515162604.649203-1-quic_bjorande@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCHv3] media: venus: provide video device lock
-Content-Language: en-US
-To:     Sergey Senozhatsky <senozhatsky@chromium.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Tomasz Figa <tfiga@chromium.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20230524135737.2557837-1-senozhatsky@chromium.org>
- <20230524141312.2558810-1-senozhatsky@chromium.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230524141312.2558810-1-senozhatsky@chromium.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230515162604.649203-1-quic_bjorande@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,83 +62,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/05/2023 15:12, Sergey Senozhatsky wrote:
-> Video device has to provide ->lock so that __video_do_ioctl()
-> can serialize IOCTL calls. Provided dedicated enc/dec mutex-s
-> for that purpose.
+On Mon, May 15, 2023 at 09:26:04AM -0700, Bjorn Andersson wrote:
+> The introduction of high resolution PWM support changed the order of the
+> operations in the calculation of min and max period. The result in both
+> divisions is in most cases a truncation to 0, which limits the period to
+> the range of [0, 0].
 > 
-> Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+> Both numerators (and denominators) are within 64 bits, so the whole
+> expression can be put directly into the div64_u64, instead of doing it
+> partially.
+> 
+> Fixes: b00d2ed37617 ("leds: rgb: leds-qcom-lpg: Add support for high resolution PWM")
+> Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+> Tested-by: Steev Klimaszewski <steev@kali.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+
+Tested-by: Johan Hovold <johan+linaro@kernel.org>
+
+Pavel or Lee, could you pick this one up for 6.4 as it fixes a
+regression (e.g. broken backlight on a number of laptops like the X13s)?
+
 > ---
->   drivers/media/platform/qcom/venus/core.h | 4 ++++
->   drivers/media/platform/qcom/venus/vdec.c | 2 ++
->   drivers/media/platform/qcom/venus/venc.c | 2 ++
->   3 files changed, 8 insertions(+)
 > 
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 4f81669986ba..b6c9a653a007 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -113,7 +113,9 @@ struct venus_format {
->    * @opp_pmdomain: an OPP power-domain
->    * @resets: an array of reset signals
->    * @vdev_dec:	a reference to video device structure for decoder instances
-> + * @vdev_dec_lock: decoder instance video device ioctl lock
->    * @vdev_enc:	a reference to video device structure for encoder instances
-> + * @vdev_enc_lock: encoder instance video device ioctl lock
->    * @v4l2_dev:	a holder for v4l2 device structure
->    * @res:		a reference to venus resources structure
->    * @dev:		convenience struct device pointer
-> @@ -165,7 +167,9 @@ struct venus_core {
->   	struct device *opp_pmdomain;
->   	struct reset_control *resets[VIDC_RESETS_NUM_MAX];
->   	struct video_device *vdev_dec;
-> +	struct mutex vdev_dec_lock;
->   	struct video_device *vdev_enc;
-> +	struct mutex vdev_enc_lock;
->   	struct v4l2_device v4l2_dev;
->   	const struct venus_resources *res;
->   	struct device *dev;
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 51a53bf82bd3..7e9363714bfb 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -1760,6 +1760,7 @@ static int vdec_probe(struct platform_device *pdev)
->   	if (!vdev)
->   		return -ENOMEM;
->   
-> +	mutex_init(&core->vdev_dec_lock);
->   	strscpy(vdev->name, "qcom-venus-decoder", sizeof(vdev->name));
->   	vdev->release = video_device_release;
->   	vdev->fops = &vdec_fops;
-> @@ -1767,6 +1768,7 @@ static int vdec_probe(struct platform_device *pdev)
->   	vdev->vfl_dir = VFL_DIR_M2M;
->   	vdev->v4l2_dev = &core->v4l2_dev;
->   	vdev->device_caps = V4L2_CAP_VIDEO_M2M_MPLANE | V4L2_CAP_STREAMING;
-> +	vdev->lock = &core->vdev_dec_lock;
->   
->   	ret = video_register_device(vdev, VFL_TYPE_VIDEO, -1);
->   	if (ret)
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index 4666f42feea3..8522ed339d5d 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -1558,6 +1558,7 @@ static int venc_probe(struct platform_device *pdev)
->   	if (!vdev)
->   		return -ENOMEM;
->   
-> +	mutex_init(&core->vdev_enc_lock);
->   	strscpy(vdev->name, "qcom-venus-encoder", sizeof(vdev->name));
->   	vdev->release = video_device_release;
->   	vdev->fops = &venc_fops;
-> @@ -1565,6 +1566,7 @@ static int venc_probe(struct platform_device *pdev)
->   	vdev->vfl_dir = VFL_DIR_M2M;
->   	vdev->v4l2_dev = &core->v4l2_dev;
->   	vdev->device_caps = V4L2_CAP_VIDEO_M2M_MPLANE | V4L2_CAP_STREAMING;
-> +	vdev->lock = &core->vdev_enc_lock;
->   
->   	ret = video_register_device(vdev, VFL_TYPE_VIDEO, -1);
->   	if (ret)
+> Changes since v1:
+> - Reworded first sentence to express that it's the order and not the
+>   previously non-existent parenthesis that changed...
+> - Picked up review tags.
+> 
+>  drivers/leds/rgb/leds-qcom-lpg.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
+> index c9cea797a697..7287fadc00df 100644
+> --- a/drivers/leds/rgb/leds-qcom-lpg.c
+> +++ b/drivers/leds/rgb/leds-qcom-lpg.c
+> @@ -312,14 +312,14 @@ static int lpg_calc_freq(struct lpg_channel *chan, uint64_t period)
+>  		max_res = LPG_RESOLUTION_9BIT;
+>  	}
+>  
+> -	min_period = (u64)NSEC_PER_SEC *
+> -			div64_u64((1 << pwm_resolution_arr[0]), clk_rate_arr[clk_len - 1]);
+> +	min_period = div64_u64((u64)NSEC_PER_SEC * (1 << pwm_resolution_arr[0]),
+> +			       clk_rate_arr[clk_len - 1]);
+>  	if (period <= min_period)
+>  		return -EINVAL;
+>  
+>  	/* Limit period to largest possible value, to avoid overflows */
+> -	max_period = (u64)NSEC_PER_SEC * max_res * LPG_MAX_PREDIV *
+> -			div64_u64((1 << LPG_MAX_M), 1024);
+> +	max_period = div64_u64((u64)NSEC_PER_SEC * max_res * LPG_MAX_PREDIV * (1 << LPG_MAX_M),
+> +			       1024);
+>  	if (period > max_period)
+>  		period = max_period;
 
-LGTM
-
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Johan
