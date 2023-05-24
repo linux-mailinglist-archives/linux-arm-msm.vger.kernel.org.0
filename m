@@ -2,156 +2,236 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7510F70FF7E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 22:54:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8147170FF89
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 22:57:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229447AbjEXUyG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 16:54:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47512 "EHLO
+        id S230173AbjEXU51 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 16:57:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49012 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229451AbjEXUyF (ORCPT
+        with ESMTP id S229646AbjEXU50 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 16:54:05 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74E3812B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 13:54:03 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f3a99b9177so1492404e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 13:54:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684961642; x=1687553642;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RghDh28+7g+TaguFQxnhYvL8i8BlC9jxTCIf1i/XiNU=;
-        b=jm1uPR4NGQIKoPJlqVurWr93RpffzLVO8sirXr/usFhSwkmA2UR7Hyvx6vDagsOCdj
-         8GPQxhuBS4l7I4KuG2msHW/8wBLGLzHlbhscsiKYDE63YhH6TtmuVS3Kf2Aji1Ww+25e
-         aK5N3bjKrEgf2oklTSuSYKL2pwIGL8x6VitXDweQp1ybzjh3cXotbkFRz2y08NMTS77e
-         Q2Q8r+SiDRzxVhSaFKXuzQLwOm+nHtdGzFdpssKTosxNh7tU9FW9jHLv5MSABegmBsjE
-         g/xsLKHuRDXGrrHfYFySIqOmJfsizpPpM0sVclvPjc7nht/qUTqrxSSdVhb+rK/Pigs7
-         wFNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684961642; x=1687553642;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RghDh28+7g+TaguFQxnhYvL8i8BlC9jxTCIf1i/XiNU=;
-        b=V72ytRxH7tNaorX9PJH2tjwUFbdn3hijUwSTwPOyEP+LQ92JLW47e1yLu5UFim0CC0
-         nzX7gy7dAF6QWZja3Z2/B3TvFAMHDp9It0zTCtY3klQ3lzG1M8YnnSYm5VOqZeeIrFrU
-         MajqTtTRL+AwiGr8X2hqBrdBVpfkO7XKRnnJytT9FGG0X533SQoea8PEvpmvepUlSArF
-         3yjFQ5PwvTpvU6GcwAv0L6XIl1+PQoh9IDtUPKGLoW+TTlim5+sMOLylOULbqfXrRrNk
-         C4POWVQqyBkSzXlqaz55BqYGu6DLObjU0aNPH5vYFm3mPJrTOGt+xbA49l4cbx60IWXd
-         cVQw==
-X-Gm-Message-State: AC+VfDzKZPH30+V43sgs1FPyLrLJUk8edixuhVUEDeKPOl7p6lLd9uex
-        fCwd4QI0YvU7wIyhJ9JX8s6VkA==
-X-Google-Smtp-Source: ACHHUZ6ykTSJV1djGpNWri0xeikO1g6KbWvJrrnGQsinyvFLuwSwswDJLWUnUa92++AD9z6FWaMkSw==
-X-Received: by 2002:ac2:4118:0:b0:4ef:d742:4dfe with SMTP id b24-20020ac24118000000b004efd7424dfemr5119019lfi.65.1684961641679;
-        Wed, 24 May 2023 13:54:01 -0700 (PDT)
-Received: from [192.168.1.101] (abyk138.neoplus.adsl.tpnet.pl. [83.9.30.138])
-        by smtp.gmail.com with ESMTPSA id p15-20020ac246cf000000b004f0c9120a41sm1824882lfo.214.2023.05.24.13.54.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 May 2023 13:54:01 -0700 (PDT)
-Message-ID: <d50f56c0-96a3-356b-3027-961108532109@linaro.org>
-Date:   Wed, 24 May 2023 22:53:59 +0200
+        Wed, 24 May 2023 16:57:26 -0400
+Received: from 189.cn (ptr.189.cn [183.61.185.103])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id F37AE12B;
+        Wed, 24 May 2023 13:57:23 -0700 (PDT)
+HMM_SOURCE_IP: 10.64.8.41:58142.1244876690
+HMM_ATTACHE_NUM: 0000
+HMM_SOURCE_TYPE: SMTP
+Received: from clientip-114.242.206.180 (unknown [10.64.8.41])
+        by 189.cn (HERMES) with SMTP id 51D8A100213;
+        Thu, 25 May 2023 04:57:21 +0800 (CST)
+Received: from  ([114.242.206.180])
+        by gateway-151646-dep-75648544bd-xwndj with ESMTP id e61342de702a4626938f836262ec9ff2 for tzimmermann@suse.de;
+        Thu, 25 May 2023 04:57:23 CST
+X-Transaction-ID: e61342de702a4626938f836262ec9ff2
+X-Real-From: 15330273260@189.cn
+X-Receive-IP: 114.242.206.180
+X-MEDUSA-Status: 0
+Sender: 15330273260@189.cn
+Message-ID: <07e6077f-8a5c-54b9-29d0-57f1bc868fef@189.cn>
+Date:   Thu, 25 May 2023 04:57:21 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v2 2/4] soc: qcom: smem: introduce qcom_smem_get_msm_id()
+Subject: Re: [v4,02/13] fbdev: Add initializer macros for struct fb_ops
 Content-Language: en-US
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Trilok Soni <quic_tsoni@quicinc.com>,
-        Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        andersson@kernel.org, ilia.lin@kernel.org, rafael@kernel.org,
-        viresh.kumar@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20230524162329.819770-1-robimarko@gmail.com>
- <20230524162329.819770-2-robimarko@gmail.com>
- <47c0faf0-f855-d3c4-6825-e51a1a1a7c83@quicinc.com>
- <d9406953-6452-2394-ab3f-4ce1d8986fce@linaro.org>
- <646e6c18.050a0220.12e7c.6043@mx.google.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <646e6c18.050a0220.12e7c.6043@mx.google.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
+        airlied@gmail.com, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, javierm@redhat.com, sam@ravnborg.org
+Cc:     linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230524092150.11776-3-tzimmermann@suse.de>
+From:   Sui Jingfeng <15330273260@189.cn>
+In-Reply-To: <20230524092150.11776-3-tzimmermann@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,FROM_LOCAL_DIGITS,
+        FROM_LOCAL_HEX,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
 
-On 24.05.2023 21:57, Christian Marangi wrote:
-> On Wed, May 24, 2023 at 08:27:03PM +0200, Konrad Dybcio wrote:
->>
->>
->> On 24.05.2023 20:16, Trilok Soni wrote:
->>> On 5/24/2023 9:23 AM, Robert Marko wrote:
->>>> Introduce a helper to return the SoC SMEM ID, which is used to identify the
->>>> exact SoC model as there may be differences in the same SoC family.
->>>>
->>>> Currently, cpufreq-nvmem does this completely in the driver and there has
->>>> been more interest expresed for other drivers to use this information so
->>>> lets expose a common helper to prevent redoing it in individual drivers
->>>> since this field is present on every SMEM table version.
->>>>
->>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
->>>> ---
->>>>   drivers/soc/qcom/smem.c       | 19 +++++++++++++++++++
->>>>   include/linux/soc/qcom/smem.h |  2 ++
->>>>   2 files changed, 21 insertions(+)
->>>>
->>>> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
->>>> index 6be7ea93c78c..0d6ba9bce8cb 100644
->>>> --- a/drivers/soc/qcom/smem.c
->>>> +++ b/drivers/soc/qcom/smem.c
->>>> @@ -14,6 +14,7 @@
->>>>   #include <linux/sizes.h>
->>>>   #include <linux/slab.h>
->>>>   #include <linux/soc/qcom/smem.h>
->>>> +#include <linux/soc/qcom/socinfo.h>
->>>>     /*
->>>>    * The Qualcomm shared memory system is a allocate only heap structure that
->>>> @@ -772,6 +773,24 @@ phys_addr_t qcom_smem_virt_to_phys(void *p)
->>>>   }
->>>>   EXPORT_SYMBOL(qcom_smem_virt_to_phys);
->>>>   +/**
->>>> + * qcom_smem_get_msm_id() - return the SoC ID
->>>> + *
->>>> + * Look up SoC ID from HW/SW build ID and return it.
->>>> + */
->>>> +int qcom_smem_get_msm_id(void)
->> On top of Trilok's point, this should return le32, or at least unsigned int.
->>
-> 
-> Mhhh why unsigned? We would lose error and qcom_smem_get can return all
-> sort of errors. Also I think le32 is problematic as we are converting
-> the value with __le32_to_cpu.
-Hm right.. Qcom didn't really think this through then, but hopefully
-they don't randomly jump from e.g. 547 to 1<<31
+we love your patch:
 
-Konrad
-> 
->>>> +{
->>>> +    size_t len;
->>>> +    struct socinfo *info;
->>>> +
->>>> +    info = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_HW_SW_BUILD_ID, &len);
->>>> +    if (IS_ERR(info))
->>>> +        return PTR_ERR(info);
->>>> +
->>>> +    return __le32_to_cpu(info->id);
->>>> +}
->>>> +EXPORT_SYMBOL(qcom_smem_get_msm_id);
->>>
->>> EXPORT_SYMBOL_GPL please?
->>>
->>> Please change it for other symbols in the driver as well w/ separate patch.
->>>
->>> ---Trilok Soni
->>>
->>>
-> 
+
+On 2023/5/24 17:21, Thomas Zimmermann wrote:
+> For framebuffers in I/O and system memory, add macros that set
+> struct fb_ops to the respective callback functions.
+>
+> For deferred I/O, add macros that generate callback functions with
+> damage handling. Add initializer macros that set struct fb_ops to
+> the generated callbacks.
+>
+> These macros can remove a lot boilerplate code from fbdev drivers.
+> The drivers are supposed to use the macro that is required for its
+> framebuffer. Each macro is split into smaller helpers, so that
+> drivers with non-standard callbacks can pick and customize callbacks
+> as needed. There are individual helper macros for read/write, mmap
+> and drawing.
+>
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+> ---
+>   include/linux/fb.h | 112 +++++++++++++++++++++++++++++++++++++++++++++
+>   1 file changed, 112 insertions(+)
+>
+> diff --git a/include/linux/fb.h b/include/linux/fb.h
+> index 2cf8efcb9e32..731472a2bb62 100644
+> --- a/include/linux/fb.h
+> +++ b/include/linux/fb.h
+> @@ -538,9 +538,31 @@ extern ssize_t fb_io_read(struct fb_info *info, char __user *buf,
+>   extern ssize_t fb_io_write(struct fb_info *info, const char __user *buf,
+>   			   size_t count, loff_t *ppos);
+>   
+> +/*
+> + * Initializes struct fb_ops for framebuffers in I/O memory.
+> + */
+> +
+> +#define __FB_DEFAULT_IO_OPS_RDWR \
+> +	.fb_read	= fb_io_read, \
+> +	.fb_write	= fb_io_write
+> +
+> +#define __FB_DEFAULT_IO_OPS_DRAW \
+> +        .fb_fillrect	= cfb_fillrect, \
+> +        .fb_copyarea	= cfb_copyarea, \
+> +        .fb_imageblit	= cfb_imageblit
+
+Here,  it seems that your text editor replace the tap with space, but 
+I'm OK.
+
+I'm asking because I see other __FB__DEFAULT_* macro begin with tabs.
+
+> +#define __FB_DEFAULT_IO_OPS_MMAP \
+> +	.fb_mmap	= NULL // default implementation
+> +
+> +#define FB_DEFAULT_IO_OPS \
+> +	__FB_DEFAULT_IO_OPS_RDWR, \
+> +	__FB_DEFAULT_IO_OPS_DRAW, \
+> +	__FB_DEFAULT_IO_OPS_MMAP
+> +
+>   /*
+>    * Drawing operations where framebuffer is in system RAM
+>    */
+> +
+>   extern void sys_fillrect(struct fb_info *info, const struct fb_fillrect *rect);
+>   extern void sys_copyarea(struct fb_info *info, const struct fb_copyarea *area);
+>   extern void sys_imageblit(struct fb_info *info, const struct fb_image *image);
+> @@ -549,6 +571,27 @@ extern ssize_t fb_sys_read(struct fb_info *info, char __user *buf,
+>   extern ssize_t fb_sys_write(struct fb_info *info, const char __user *buf,
+>   			    size_t count, loff_t *ppos);
+>   
+> +/*
+> + * Initializes struct fb_ops for framebuffers in system memory.
+> + */
+> +
+> +#define __FB_DEFAULT_SYS_OPS_RDWR \
+> +	.fb_read	= fb_sys_read, \
+> +	.fb_write	= fb_sys_write
+> +
+> +#define __FB_DEFAULT_SYS_OPS_DRAW \
+> +        .fb_fillrect	= sys_fillrect, \
+> +        .fb_copyarea	= sys_copyarea, \
+> +        .fb_imageblit	= sys_imageblit
+> +
+> +#define __FB_DEFAULT_SYS_OPS_MMAP \
+> +	.fb_mmap	= NULL // default implementation
+> +
+> +#define FB_DEFAULT_SYS_OPS \
+> +	__FB_DEFAULT_SYS_OPS_RDWR, \
+> +	__FB_DEFAULT_SYS_OPS_DRAW, \
+> +	__FB_DEFAULT_SYS_OPS_MMAP
+> +
+>   /* drivers/video/fbmem.c */
+>   extern int register_framebuffer(struct fb_info *fb_info);
+>   extern void unregister_framebuffer(struct fb_info *fb_info);
+> @@ -604,6 +647,75 @@ extern void fb_deferred_io_cleanup(struct fb_info *info);
+>   extern int fb_deferred_io_fsync(struct file *file, loff_t start,
+>   				loff_t end, int datasync);
+>   
+> +/*
+> + * Generate callbacks for deferred I/O
+> + */
+> +
+> +#define __FB_GEN_DEFAULT_DEFERRED_OPS_RDWR(__prefix, __damage_range, __mode) \
+> +	static ssize_t __prefix ## _defio_read(struct fb_info *info, char __user *buf, \
+> +					       size_t count, loff_t *ppos) \
+> +	{ \
+> +		return fb_ ## __mode ## _read(info, buf, count, ppos); \
+> +	} \
+> +	static ssize_t __prefix ## _defio_write(struct fb_info *info, const char __user *buf, \
+> +						size_t count, loff_t *ppos) \
+> +	{ \
+> +		unsigned long offset = *ppos; \
+> +		ssize_t ret = fb_ ## __mode ## _write(info, buf, count, ppos); \
+> +		if (ret > 0) \
+> +			__damage_range(info, offset, ret); \
+> +		return ret; \
+> +	}
+> +
+> +#define __FB_GEN_DEFAULT_DEFERRED_OPS_DRAW(__prefix, __damage_area, __mode) \
+> +	static void __prefix ## _defio_fillrect(struct fb_info *info, \
+> +						const struct fb_fillrect *rect) \
+> +	{ \
+> +		__mode ## _fillrect(info, rect); \
+> +		__damage_area(info, rect->dx, rect->dy, rect->width, rect->height); \
+> +	} \
+> +	static void __prefix ## _defio_copyarea(struct fb_info *info, \
+> +						const struct fb_copyarea *area) \
+> +	{ \
+> +		__mode ## _copyarea(info, area); \
+> +		__damage_area(info, area->dx, area->dy, area->width, area->height); \
+> +	} \
+> +	static void __prefix ## _defio_imageblit(struct fb_info *info, \
+> +						 const struct fb_image *image) \
+> +	{ \
+> +		__mode ## _imageblit(info, image); \
+> +		__damage_area(info, image->dx, image->dy, image->width, image->height); \
+> +	}
+> +
+> +#define FB_GEN_DEFAULT_DEFERRED_IO_OPS(__prefix, __damage_range, __damage_area) \
+> +	__FB_GEN_DEFAULT_DEFERRED_OPS_RDWR(__prefix, __damage_range, io) \
+> +	__FB_GEN_DEFAULT_DEFERRED_OPS_DRAW(__prefix, __damage_area, cfb)
+> +
+> +#define FB_GEN_DEFAULT_DEFERRED_SYS_OPS(__prefix, __damage_range, __damage_area) \
+> +	__FB_GEN_DEFAULT_DEFERRED_OPS_RDWR(__prefix, __damage_range, sys) \
+> +	__FB_GEN_DEFAULT_DEFERRED_OPS_DRAW(__prefix, __damage_area, sys)
+> +
+> +/*
+> + * Initializes struct fb_ops for deferred I/O.
+> + */
+> +
+> +#define __FB_DEFAULT_DEFERRED_OPS_RDWR(__prefix) \
+> +	.fb_read	= __prefix ## _defio_read, \
+> +	.fb_write	= __prefix ## _defio_write
+> +
+> +#define __FB_DEFAULT_DEFERRED_OPS_DRAW(__prefix) \
+> +        .fb_fillrect	= __prefix ## _defio_fillrect, \
+> +        .fb_copyarea	= __prefix ## _defio_copyarea, \
+> +        .fb_imageblit	= __prefix ## _defio_imageblit
+
+Here also,  '.fb_fillrect', '.fb_copyarea' and '.fb_imageblit' begin 
+with space, but I'm OK.
+
+I'm asking because I see other __FB__DEFAULT_* macro begin with tabs.
+
+> +#define __FB_DEFAULT_DEFERRED_OPS_MMAP(__prefix) \
+> +	.fb_mmap	= fb_deferred_io_mmap
+> +
+> +#define FB_DEFAULT_DEFERRED_OPS(__prefix) \
+> +	__FB_DEFAULT_DEFERRED_OPS_RDWR(__prefix), \
+> +	__FB_DEFAULT_DEFERRED_OPS_DRAW(__prefix), \
+> +	__FB_DEFAULT_DEFERRED_OPS_MMAP(__prefix)
+> +
+>   static inline bool fb_be_math(struct fb_info *info)
+>   {
+>   #ifdef CONFIG_FB_FOREIGN_ENDIAN
