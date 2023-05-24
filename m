@@ -2,68 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6323570FDCE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 20:24:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A866770FDD7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 20:27:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236396AbjEXSYG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 14:24:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54104 "EHLO
+        id S235797AbjEXS1K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 14:27:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231526AbjEXSYF (ORCPT
+        with ESMTP id S232281AbjEXS1J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 14:24:05 -0400
-Received: from mail-ot1-f47.google.com (mail-ot1-f47.google.com [209.85.210.47])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6402C98;
-        Wed, 24 May 2023 11:24:04 -0700 (PDT)
-Received: by mail-ot1-f47.google.com with SMTP id 46e09a7af769-6a984993740so272645a34.2;
-        Wed, 24 May 2023 11:24:04 -0700 (PDT)
+        Wed, 24 May 2023 14:27:09 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D852610B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 11:27:07 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2af2f4e719eso16203431fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 11:27:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684952826; x=1687544826;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=tfKnZIxC0JL8VLQrcWzDaxmhfBN8ntq0FbYcgqoCQhc=;
+        b=CF1PzLA2QoGZkxxXO74l+SIe9Dc15AdAkdOyw5EphMID+DJlECU3Pa2TnDHM229WY4
+         E6O5d+1RSEnM94pf0w1LhcOgnQOR9rM5VEuTzqKtODerUnXpZLBygmfZfVP3Wwb1KnHw
+         9gakozGT7CqyMm5DtBdp+axBPaaMDMVUNploEzqwK7jO6RGvvi+pVGZVd88JLmjEIFNj
+         q9ws1at8E/Vzaquhg2Eq139aytsNENUmVMzjY8+Bul0so6asKF1aoGfyxPKgARe8yRhN
+         THSSqW9DPpN5wit2iJoIzHg0ElyvEJpcY5wVHbPDzH1QYVlHiTRchcYaYCPw4PhDkgQS
+         mV6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684952643; x=1687544643;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=8bcNBSFf0r6rM89+plD7hrjF2xX7NyiQ83JQGrpkWFM=;
-        b=OuFtSZahaE4BMPBkB6gb1nsyAFDcXSpoPJwpwb0rX0UvYTSMQcP1X65XAW1u6gcj1F
-         m/tGWMkPIoFycydW3J4hLQG740uGiLG62cP+BNW/9EdYEFuuiHCR8r+QGE5ic6v6aTu3
-         XaZlajcqSM9xShlyoqxV1HniVz1m7V2ppCInfjJPBNZOz66SaNl8hi5y++NlULvg3VRh
-         YVSimpwbT3P+cN04w6f4toM4xnzG7DyjwCvkZV4zownrWSEbyl0mNe27QlNti6Gr7CdX
-         IiV1F5YUJs/rexknECB4h7CIAmy99MHU/Jrit+TYeGFSnSU8lCD3CA/cTW20ERdXAFz2
-         H1ng==
-X-Gm-Message-State: AC+VfDzjH+7Sn8P07GfcGAAfufb9TQ+GxbYdF4YKvnxkp17sS9wNabDv
-        SL6qHwNJt7NeVBE0YJ7pSw==
-X-Google-Smtp-Source: ACHHUZ5VwAG4ALDtmwg2oVBuz75YfVWoi3IFWgKU8VxJs/MbWsV0LwP02+JOp6CWVkAl1jN/8qSkmg==
-X-Received: by 2002:a05:6830:1bcc:b0:6a5:f147:5255 with SMTP id v12-20020a0568301bcc00b006a5f1475255mr9857122ota.6.1684952643543;
-        Wed, 24 May 2023 11:24:03 -0700 (PDT)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id m10-20020a056830328a00b006a6558ef17fsm4829900ott.30.2023.05.24.11.24.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 May 2023 11:24:02 -0700 (PDT)
-Received: (nullmailer pid 4092086 invoked by uid 1000);
-        Wed, 24 May 2023 18:24:02 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20221208; t=1684952826; x=1687544826;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=tfKnZIxC0JL8VLQrcWzDaxmhfBN8ntq0FbYcgqoCQhc=;
+        b=GN3Vg7kD7TSrFTDpBgHY+bWlU8RRSzEGj/GUON3DaOh/7nDedQGGJUXC5fQ7AWEVMt
+         Gjmr3CSP5Tb1QM8ukXW3+lApKCEbSZ91x98x00AcY9yAYK+03D2brAXj+ed6AN0zWwaV
+         flJ+j58LA0XYifFr/h0PTlTOa4v+TSG9RXPkngCqb/L0Y+Q42sx4wwoMcqX2XO+z71u4
+         /2znMh6GuWAFlSR5MOAbU40OZo+9sTgIumabwpKEUuDuBF0F9KhYDQ81dl5BN9qMku8Q
+         uR/jUtcSnryfD4+AzbDlw9vNxSnTnZSeyLOo7npPeVxsiPFurfpA+o0Kr6JbnE9tw11H
+         iW2w==
+X-Gm-Message-State: AC+VfDw09aI9SauplXlIbPaGFnan/T8knVtnSVnzdG7aof3KDHxeXsHm
+        oaZeIo1yYTb/cpI69X0QHbyH6A==
+X-Google-Smtp-Source: ACHHUZ53s+1JYl6CEH3ubn0GSuqkpR8K2gcslO9ixtAuphFogsYm2SvEIOGtYxAddznY9XafHuL+QQ==
+X-Received: by 2002:a2e:87ce:0:b0:2ad:9c36:d4aa with SMTP id v14-20020a2e87ce000000b002ad9c36d4aamr223186ljj.17.1684952826029;
+        Wed, 24 May 2023 11:27:06 -0700 (PDT)
+Received: from [192.168.1.101] (abyk138.neoplus.adsl.tpnet.pl. [83.9.30.138])
+        by smtp.gmail.com with ESMTPSA id k23-20020a2e2417000000b002ab1536377fsm2088738ljk.105.2023.05.24.11.27.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 24 May 2023 11:27:05 -0700 (PDT)
+Message-ID: <d9406953-6452-2394-ab3f-4ce1d8986fce@linaro.org>
+Date:   Wed, 24 May 2023 20:27:03 +0200
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>
-In-Reply-To: <20230524-pmi8998-charger-dts-v1-1-f9334afc4505@linaro.org>
-References: <20230524-pmi8998-charger-dts-v1-0-f9334afc4505@linaro.org>
- <20230524-pmi8998-charger-dts-v1-1-f9334afc4505@linaro.org>
-Message-Id: <168495264200.4092051.1331327210839405499.robh@kernel.org>
-Subject: Re: [PATCH 1/6] dt-bindings: mfd: qcom,spmi-pmic: Document pmi8998
- charger
-Date:   Wed, 24 May 2023 13:24:02 -0500
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,
-        RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2 2/4] soc: qcom: smem: introduce qcom_smem_get_msm_id()
+To:     Trilok Soni <quic_tsoni@quicinc.com>,
+        Robert Marko <robimarko@gmail.com>, agross@kernel.org,
+        andersson@kernel.org, ilia.lin@kernel.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+Cc:     ansuelsmth@gmail.com
+References: <20230524162329.819770-1-robimarko@gmail.com>
+ <20230524162329.819770-2-robimarko@gmail.com>
+ <47c0faf0-f855-d3c4-6825-e51a1a1a7c83@quicinc.com>
+Content-Language: en-US
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <47c0faf0-f855-d3c4-6825-e51a1a1a7c83@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -71,37 +81,62 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On Wed, 24 May 2023 18:38:52 +0100, Caleb Connolly wrote:
-> Document the new pmi8998 charger bindings
+
+On 24.05.2023 20:16, Trilok Soni wrote:
+> On 5/24/2023 9:23 AM, Robert Marko wrote:
+>> Introduce a helper to return the SoC SMEM ID, which is used to identify the
+>> exact SoC model as there may be differences in the same SoC family.
+>>
+>> Currently, cpufreq-nvmem does this completely in the driver and there has
+>> been more interest expresed for other drivers to use this information so
+>> lets expose a common helper to prevent redoing it in individual drivers
+>> since this field is present on every SMEM table version.
+>>
+>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+>> ---
+>>   drivers/soc/qcom/smem.c       | 19 +++++++++++++++++++
+>>   include/linux/soc/qcom/smem.h |  2 ++
+>>   2 files changed, 21 insertions(+)
+>>
+>> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+>> index 6be7ea93c78c..0d6ba9bce8cb 100644
+>> --- a/drivers/soc/qcom/smem.c
+>> +++ b/drivers/soc/qcom/smem.c
+>> @@ -14,6 +14,7 @@
+>>   #include <linux/sizes.h>
+>>   #include <linux/slab.h>
+>>   #include <linux/soc/qcom/smem.h>
+>> +#include <linux/soc/qcom/socinfo.h>
+>>     /*
+>>    * The Qualcomm shared memory system is a allocate only heap structure that
+>> @@ -772,6 +773,24 @@ phys_addr_t qcom_smem_virt_to_phys(void *p)
+>>   }
+>>   EXPORT_SYMBOL(qcom_smem_virt_to_phys);
+>>   +/**
+>> + * qcom_smem_get_msm_id() - return the SoC ID
+>> + *
+>> + * Look up SoC ID from HW/SW build ID and return it.
+>> + */
+>> +int qcom_smem_get_msm_id(void)
+On top of Trilok's point, this should return le32, or at least unsigned int.
+
+Konrad
+>> +{
+>> +    size_t len;
+>> +    struct socinfo *info;
+>> +
+>> +    info = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_HW_SW_BUILD_ID, &len);
+>> +    if (IS_ERR(info))
+>> +        return PTR_ERR(info);
+>> +
+>> +    return __le32_to_cpu(info->id);
+>> +}
+>> +EXPORT_SYMBOL(qcom_smem_get_msm_id);
 > 
-> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
-> ---
->  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 1 +
->  1 file changed, 1 insertion(+)
+> EXPORT_SYMBOL_GPL please?
 > 
-
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-./Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/power/supply/qcom,pmi8998-charger.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230524-pmi8998-charger-dts-v1-1-f9334afc4505@linaro.org
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+> Please change it for other symbols in the driver as well w/ separate patch.
+> 
+> ---Trilok Soni
+> 
+> 
