@@ -2,100 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A359871011B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 00:46:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 985D871016A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 01:04:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236703AbjEXWqh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 18:46:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38304 "EHLO
+        id S229551AbjEXXEk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 19:04:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47556 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230136AbjEXWqh (ORCPT
+        with ESMTP id S230136AbjEXXEj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 18:46:37 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EAC6A9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 15:46:33 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34OMCKbe003194;
-        Wed, 24 May 2023 22:46:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=EGTIICS+z2ZD4zAuqwaypE6qeaQhq4jHugYQnQ0MufU=;
- b=Iq9eRLuBdL4Nk9GkL/guvNMvEw8gIQyDsIaZ7IwPckPvqsdgCKug0OMNxfqCCbLt73lY
- esVIcs44/wNW1SBAq6R+paCBReoKG0Y6lJOnkiUSaKf2hl5PGyvRCEvAY6ZAiKhqXNuO
- 9qUzsRuftvOjDPAhJBnB78vtF5kbq08kUvvKtLbDnZ9pwsmGMiROX+B9uk1bDZBSnJFQ
- TfVEMTVyOCxaDsMSvlcXmltpkfyjfkN69HiWKhNjGfRYslD+7B+VvvzChU8TvytZqW4p
- zvrLbxzAGe6pRyrhQGn/xnODSDVoenfiR6p4al0bZuvUpMDsA+dV8CuwiDW6oXcJLHFx EA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qsp508qkb-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 24 May 2023 22:46:26 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34OMkPu5005350
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 24 May 2023 22:46:25 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 24 May
- 2023 15:46:24 -0700
-Message-ID: <4af411bf-290c-0818-bdf2-878b2da15146@quicinc.com>
-Date:   Wed, 24 May 2023 15:46:23 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [RFC PATCH v2 09/13] drm/msm/dpu: move pstate->pipe
- initialization to dpu_plane_atomic_check
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Wed, 24 May 2023 19:04:39 -0400
+Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0751E73;
+        Wed, 24 May 2023 16:04:10 -0700 (PDT)
+Received: by mail-qt1-x82b.google.com with SMTP id d75a77b69052e-3f697a1da09so1767071cf.3;
+        Wed, 24 May 2023 16:04:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1684969449; x=1687561449;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OoTnwldgTHnhUuNWL04YkEejXlnGtSWGcde0hm+P0A8=;
+        b=Z3AO/wfVMDTFVpsingvFFnZdKWcTKkweyn7Eu9sYVITZzzmtHpfhVzmjFHaKY7H8OL
+         EEFxmdZIqVxNrCX/M3WZKnFMLlxnK4D5EvVywt3WHVR2XHxVMjtT3gs+uwnGRzJprO22
+         ckXXq7DT20gtB0dIqRkG1PcMoVGBd5akcIxFiDYvgMDVZur8GFG+9ckij3ZvZg653z5b
+         Sc/Xyu7rxiw8EJe+NznqWHfjA5gPx49riLQ3CZ8fLra01s0fF//jSc/o2Qsqjjam80l0
+         BjQuG4K4unAVcNNi5awldSckSXlGrWYqIABIxCkbIsH/I0CC1kSRGxLHd5bve2vrvlbW
+         L8lA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684969449; x=1687561449;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OoTnwldgTHnhUuNWL04YkEejXlnGtSWGcde0hm+P0A8=;
+        b=T0Z70PiQtQXD2EBJSc1EW++3dtF1Zn/vbNGFQgSzEP508yjaQo7yz/7bf5JY2BjIio
+         v79Woz3S1B2Ty9njykiFwajVeov9XGzLsvgbPUZL0+FBEo5t55hfYPHIMtG9yyxCwCbh
+         XEHGX+FMt579XTVKgK4Bm8WaHuiDc9tu+tzeNhnuNQFNSc4qy5Dj8631Rp+9RrmyS7Zk
+         7Mywjm6gfPrhF8BZIW03gO08K4HCb2aFuYZTW6zHizYs7MC+p58TkWlDbQutny19aavq
+         8nxt0TFJw0Q4sRpoHH01uqqYmd3mItUpTW+UsO8H/bUnoGepqrKlhc2TJ8lxlxxHl+4w
+         qQMA==
+X-Gm-Message-State: AC+VfDyQLTOPwZQdRXCzcOaBRNp0s6nRDEPiKhV6jgLYMUXVaRwRqyVL
+        AzHoX2nbgSBAOsTvQN5NjXQCm8JviMzlkw==
+X-Google-Smtp-Source: ACHHUZ4RZOOSVikIYLXezOIlVZwKU+GPBXK09N1oVnSS3lZAOgd3AjSlbPFXBD9AeJf9c+dCLcUrqA==
+X-Received: by 2002:ac8:58d4:0:b0:3f5:2be9:89fe with SMTP id u20-20020ac858d4000000b003f52be989femr30105447qta.35.1684969449286;
+        Wed, 24 May 2023 16:04:09 -0700 (PDT)
+Received: from Latitude-E6420.mynetworksettings.com ([2600:4040:2007:9800:650f:ad8b:38f6:d091])
+        by smtp.gmail.com with ESMTPSA id i24-20020ac84898000000b003e388264753sm4073322qtq.65.2023.05.24.16.04.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 May 2023 16:04:08 -0700 (PDT)
+From:   Rudraksha Gupta <guptarud@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230321011821.635977-1-dmitry.baryshkov@linaro.org>
- <20230321011821.635977-10-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230321011821.635977-10-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: e5SxxxjwqRy96Oj6nTxk-K0W4SScXWJP
-X-Proofpoint-ORIG-GUID: e5SxxxjwqRy96Oj6nTxk-K0W4SScXWJP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-24_15,2023-05-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 impostorscore=0 spamscore=0
- suspectscore=0 priorityscore=1501 mlxscore=0 mlxlogscore=776 clxscore=1015
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305240190
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     david@ixit.cz, Rudraksha Gupta <guptarud@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] ARM: Add missing msm8960 for list of strings
+Date:   Wed, 24 May 2023 19:03:37 -0400
+Message-Id: <20230524230338.120619-1-guptarud@gmail.com>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+The list of supported 'SoC's didn't include msm8960 even though
+qcom,msm8960-cdp exists.
 
+Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-On 3/20/2023 6:18 PM, Dmitry Baryshkov wrote:
-> In preparation to virtualized planes support, move pstate->pipe
-> initialization from dpu_plane_reset() to dpu_plane_atomic_check(). In
-> case of virtual planes the plane's pipe will not be known up to the
-> point of atomic_check() callback.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index d9dd25695c3d..3ffa682cd079 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -40,6 +40,7 @@ description: |
+         msm8939
+         msm8953
+         msm8956
++        msm8960
+         msm8974
+         msm8976
+         msm8992
+-- 
+2.34.1
 
-Will legacy paths be broken with this? So lets say there is no 
-atomic_check we will not have a valid sspp anymore.
