@@ -2,84 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBAA970ECBF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 06:55:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 905B770ECD2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 07:02:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233010AbjEXEzh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 00:55:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46058 "EHLO
+        id S239146AbjEXFCP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 01:02:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229777AbjEXEzg (ORCPT
+        with ESMTP id S232705AbjEXFCL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 00:55:36 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45700189;
-        Tue, 23 May 2023 21:55:34 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34O4pR7N009573;
-        Wed, 24 May 2023 04:55:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=sQGuP7CbivSEP8G9iZa69wDlnigimCf1yCUJdCvT3PY=;
- b=QUPIw7sDEYiYUxS8aAgF/YVuQKy3cddR5JrQ3LDmH4twECBR7LlHbBvr0aGnmP4sJoEr
- VBxmCyObyMoKlQtlef/BYkAOOTFDT5VB3C1JQFKxwgkOQlqJji8/cFI5MH2d0PleyQ90
- 0ZkNbKJBDXoBqwGIs6C+TKCWsSEotAd8lIC6C4CqghEIfoZM1fkKMEoiWINPen7R4RaI
- m4f4d23q9m11px8wq1pGy0KHEH6DElRrvm2Mq9OUOKqSuJaQIdAhJWqdaepQPS/r2EDh
- lUaIlbc2GNXw+rB+Qd15Z9QhvyJTqs7nCtE3Xtm4TwQ+0Sx++aV/3Cz5bLiHP+6qj+hu FA== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qrf77bums-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 24 May 2023 04:55:17 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34O4tFYb010936
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 24 May 2023 04:55:16 GMT
-Received: from [10.50.15.164] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 23 May
- 2023 21:55:11 -0700
-Message-ID: <53774bff-0216-6d40-4721-923dfd0c2081@quicinc.com>
-Date:   Wed, 24 May 2023 10:25:08 +0530
+        Wed, 24 May 2023 01:02:11 -0400
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD8A9189
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 22:02:08 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-56187339d6eso7238257b3.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 May 2023 22:02:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684904528; x=1687496528;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=3zOGAGWU8ppE8uxbVbBgAIQq2grz/vGUNZMK9IfgwSA=;
+        b=vWlmwdjM4Qiw8ZUQ2Ix+j8MV7o8J2mxhkgCKGA90oNSMKv+/+1QP1g86b69vDVG71S
+         s2MFMZapVg+0ZHN3gc6aMKalpgVd6h4eewyZGXzqUh5VCaXB4Ai37KAeF9QxRPGTVa3i
+         2dW7qg2Tp9OFFfxDc2KU0O3rUicA9H1wDyJmUbOB1hv+evB5uYt1MqSsT7QN3hxWLkQ2
+         aue2PJGov1bWQOxrybhprcFv9BqJPX99Q9RQk4twj4h46EDe+76hNs8Obh2+JivvRRr/
+         frvwZ9v53tWAelAudPHNp82ffgTx5+eCNfpaejYpze+WAOikoaLcIRNlU/bvz5geglxP
+         ROzw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684904528; x=1687496528;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3zOGAGWU8ppE8uxbVbBgAIQq2grz/vGUNZMK9IfgwSA=;
+        b=ajBSihQ9ypmdbEuBk8CzcxMOINLs+90B+qzCleZdtGxT28pdWwTTLD+r4/e/I20Jcc
+         JOTGlLIM+eGU6WzQB0jz008l7DFqULAjLRLpayaf4VA/eexoFL3GDmzmj7aHEMIRJIqc
+         aUsTqWVFrBR/TZDRKI+RiHU7+O69yVj93AhhtXZo+4+brmF7+BH5z8osym5r7e4BhWgB
+         5BL+/7m800Dw0Hh7/9feGqw/8Mz/fkq/MvxWHT88pTtFgVksAMXPZMVRtrIi3zoz5nIU
+         tQgcYGvAyRGvqw7TEt01/fPc9szgY2/D0c4pJO+vVYLKFqOW9PGGCUsuZMm724G7Y8iD
+         la8w==
+X-Gm-Message-State: AC+VfDxkLwkFnB57CAcDjUxPs8OqqieP+em466Dzn3Wxgqk4zTaTwaqV
+        I6XmzSyg1rZ5xb14O08DE9wtHC507dmkTCqhALH+x/5/vFouhR3KWJs=
+X-Google-Smtp-Source: ACHHUZ535Obk8h9GvFw5MrDYAprAzu0l7CAOlD5MBy6v/AqVn+TLZhofLV7m6WUlrlYoiw5TRnrlZEuVwgfwXvP2Km8=
+X-Received: by 2002:a81:4e52:0:b0:561:a41d:aabb with SMTP id
+ c79-20020a814e52000000b00561a41daabbmr17316168ywb.16.1684904527629; Tue, 23
+ May 2023 22:02:07 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH V23 0/3] misc: Add driver support for Data Capture and
- Compare unit(DCC)
-To:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+References: <20230521192230.9747-1-dmitry.baryshkov@linaro.org>
+ <20230521192230.9747-3-dmitry.baryshkov@linaro.org> <8268a40f-7605-207f-3a6c-8965a8a49b60@quicinc.com>
+ <CAA8EJpoo_tYcu=j_CavcZK5S-vZCTQd+nyyKq0bMk1xoVRpFNA@mail.gmail.com> <21bc10b1-258d-e095-88d0-0e964f4c20ea@quicinc.com>
+In-Reply-To: <21bc10b1-258d-e095-88d0-0e964f4c20ea@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 24 May 2023 08:01:56 +0300
+Message-ID: <CAA8EJpo9aNCohaxvOH+d5n33vHrrOGitvOuA-QjgxydcFs3auA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] drm/msm/dpu: switch dpu_encoder to use drm_debugfs_add_file()
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC:     <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>
-References: <cover.1683265984.git.quic_schowdhu@quicinc.com>
-Content-Language: en-US
-From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-In-Reply-To: <cover.1683265984.git.quic_schowdhu@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: WycRGOUlmVu3v4zlLs3z4C0anKzcsql_
-X-Proofpoint-ORIG-GUID: WycRGOUlmVu3v4zlLs3z4C0anKzcsql_
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-24_02,2023-05-23_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 impostorscore=0
- bulkscore=0 clxscore=1011 priorityscore=1501 suspectscore=0
- lowpriorityscore=0 mlxlogscore=999 malwarescore=0 mlxscore=0 spamscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305240040
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,127 +75,171 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, 24 May 2023 at 03:10, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 5/23/2023 4:53 PM, Dmitry Baryshkov wrote:
+> > On Wed, 24 May 2023 at 02:37, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> >>
+> >>
+> >>
+> >> On 5/21/2023 12:22 PM, Dmitry Baryshkov wrote:
+> >>> Use drm_debugfs_add_file() for encoder's status file. This changes the
+> >>> name of the status file from encoder%d/status to just encoder%d.
+> >>>
+> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>
+> >> This patch depends on
+> >> https://patchwork.freedesktop.org/patch/538294/?series=118079&rev=1 right?
+> >
+> > No, there is no dependency. I have sent that patch as we discussed it
+> > earlier. But this one is a reimplementation of the previous idea.
+> >
+>
+> In this patch you are also removing the early_unregister callback.
+>
+> .early_unregister = dpu_encoder_early_unregister
+>
+> Which we discussed was needed to balance the corner case we discussed.
+> The DRM core patch fixes the corner case by calling debugfs_cleanup()
+> even when drm_modeset_register_all() fails.
+>
+> So isnt there a dependency?
+
+No. There is no remove counterpart for drm_debugfs_add_file(). DRM
+subsystem handles everything internally.
+
+>
+> >>
+> >> What is wrong with having a per encoder directory and reading from
+> >> there? It gives room for expanding this to dump more encoder specific
+> >> information.
+> >>
+> >> At the moment it looks light because we have only status but better to
+> >> have a directory per encoder right?
+> >
+> > I started writing that I can not imagine additional per-encoder data,
+> > but then I found the generic enough piece: bridge chain enumeration.
+> > I'll give it additional thought and maybe I'll refactor this patch
+> > further.
+> >
+>
+> Ack,
+> >>
+> >>> ---
+> >>>    drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 40 ++++++---------------
+> >>>    1 file changed, 11 insertions(+), 29 deletions(-)
+> >>>
+> >>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >>> index af34932729db..0ac68f44ec74 100644
+> >>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> >>> @@ -14,6 +14,7 @@
+> >>>
+> >>>    #include <drm/drm_atomic.h>
+> >>>    #include <drm/drm_crtc.h>
+> >>> +#include <drm/drm_debugfs.h>
+> >>>    #include <drm/drm_file.h>
+> >>>    #include <drm/drm_probe_helper.h>
+> >>>
+> >>> @@ -142,7 +143,6 @@ enum dpu_enc_rc_states {
+> >>>     * @crtc_kickoff_cb:                Callback into CRTC that will flush & start
+> >>>     *                          all CTL paths
+> >>>     * @crtc_kickoff_cb_data:   Opaque user data given to crtc_kickoff_cb
+> >>> - * @debugfs_root:            Debug file system root file node
+> >>>     * @enc_lock:                       Lock around physical encoder
+> >>>     *                          create/destroy/enable/disable
+> >>>     * @frame_busy_mask:                Bitmask tracking which phys_enc we are still
+> >>> @@ -186,7 +186,6 @@ struct dpu_encoder_virt {
+> >>>        struct drm_crtc *crtc;
+> >>>        struct drm_connector *connector;
+> >>>
+> >>> -     struct dentry *debugfs_root;
+> >>>        struct mutex enc_lock;
+> >>>        DECLARE_BITMAP(frame_busy_mask, MAX_PHYS_ENCODERS_PER_VIRTUAL);
+> >>>        void (*crtc_frame_event_cb)(void *, u32 event);
+> >>> @@ -2091,7 +2090,8 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
+> >>>    #ifdef CONFIG_DEBUG_FS
+> >>>    static int _dpu_encoder_status_show(struct seq_file *s, void *data)
+> >>>    {
+> >>> -     struct dpu_encoder_virt *dpu_enc = s->private;
+> >>> +     struct drm_debugfs_entry *entry = s->private;
+> >>> +     struct dpu_encoder_virt *dpu_enc = entry->file.data;
+> >>>        int i;
+> >>>
+> >>>        mutex_lock(&dpu_enc->enc_lock);
+> >>> @@ -2110,48 +2110,31 @@ static int _dpu_encoder_status_show(struct seq_file *s, void *data)
+> >>>        return 0;
+> >>>    }
+> >>>
+> >>> -DEFINE_SHOW_ATTRIBUTE(_dpu_encoder_status);
+> >>> -
+> >>> -static int _dpu_encoder_init_debugfs(struct drm_encoder *drm_enc)
+> >>> +static void _dpu_encoder_init_debugfs(struct drm_encoder *drm_enc)
+> >>>    {
+> >>>        struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(drm_enc);
+> >>> -
+> >>> -     char name[12];
+> >>> +     char *name;
+> >>>
+> >>>        if (!drm_enc->dev) {
+> >>>                DPU_ERROR("invalid encoder or kms\n");
+> >>> -             return -EINVAL;
+> >>> +             return;
+> >>>        }
+> >>>
+> >>> -     snprintf(name, sizeof(name), "encoder%u", drm_enc->base.id);
+> >>> +     name = devm_kasprintf(drm_enc->dev->dev, GFP_KERNEL, "encoder%u", drm_enc->base.id);
+> >>>
+> >>> -     /* create overall sub-directory for the encoder */
+> >>> -     dpu_enc->debugfs_root = debugfs_create_dir(name,
+> >>> -                     drm_enc->dev->primary->debugfs_root);
+> >>> -
+> >>> -     /* don't error check these */
+> >>> -     debugfs_create_file("status", 0600,
+> >>> -             dpu_enc->debugfs_root, dpu_enc, &_dpu_encoder_status_fops);
+> >>> -
+> >>> -     return 0;
+> >>> +     drm_debugfs_add_file(drm_enc->dev, name, _dpu_encoder_status_show, dpu_enc);
+> >>>    }
+> >>>    #else
+> >>> -static int _dpu_encoder_init_debugfs(struct drm_encoder *drm_enc)
+> >>> +static void _dpu_encoder_init_debugfs(struct drm_encoder *drm_enc)
+> >>>    {
+> >>> -     return 0;
+> >>>    }
+> >>>    #endif
+> >>>
+> >>>    static int dpu_encoder_late_register(struct drm_encoder *encoder)
+> >>>    {
+> >>> -     return _dpu_encoder_init_debugfs(encoder);
+> >>> -}
+> >>> -
+> >>> -static void dpu_encoder_early_unregister(struct drm_encoder *encoder)
+> >>> -{
+> >>> -     struct dpu_encoder_virt *dpu_enc = to_dpu_encoder_virt(encoder);
+> >>> +     _dpu_encoder_init_debugfs(encoder);
+> >>>
+> >>> -     debugfs_remove_recursive(dpu_enc->debugfs_root);
+> >>> +     return 0;
+> >>>    }
+> >>>
+> >>>    static int dpu_encoder_virt_add_phys_encs(
+> >>> @@ -2380,7 +2363,6 @@ static const struct drm_encoder_helper_funcs dpu_encoder_helper_funcs = {
+> >>>    static const struct drm_encoder_funcs dpu_encoder_funcs = {
+> >>>                .destroy = dpu_encoder_destroy,
+> >>>                .late_register = dpu_encoder_late_register,
+> >>> -             .early_unregister = dpu_encoder_early_unregister,
+> >>>    };
+> >>>
+> >>>    int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
+> >
+> >
+> >
 
 
-On 5/5/2023 12:06 PM, Souradeep Chowdhury wrote:
-> DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.
-> In case of a system crash or manual software triggers by the user the DCC hardware
-> stores the value at the register addresses which can be used for debugging purposes.
-> The DCC driver provides the user with debugfs interface to configure the register
-> addresses. The options that the DCC hardware provides include reading from registers,
-> writing to registers, first reading and then writing to registers and looping
-> through the values of the same register.
-> 
-> In certain cases a register write needs to be executed for accessing the rest of the
-> registers, also the user might want to record the changing values of a register with
-> time for which he has the option to use the loop feature.
-> 
-> The options mentioned above are exposed to the user by debugfs files once the driver
-> is probed. The details and usage of this debugfs files are documented in
-> Documentation/ABI/testing/debugfs-driver-dcc.
-> 
-> As an example let us consider a couple of debug scenarios where DCC has been proved to be
-> effective for debugging purposes:-
-> 
-> i)TimeStamp Related Issue
-> 
-> On SC7180, there was a coresight timestamp issue where it would occasionally be all 0
-> instead of proper timestamp values.
-> 
-> Proper timestamp:
-> Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
-> 
-> Zero timestamp:
-> Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
-> 
-> Now this is a non-fatal issue and doesn't need a system reset, but still needs
-> to be rootcaused and fixed for those who do care about coresight etm traces.
-> Since this is a timestamp issue, we would be looking for any timestamp related
-> clocks and such.
-> 
-> We get all the clk register details from IP documentation and configure it
-> via DCC config_read debugfs node. Before that we set the current linked list.
-> 
-> /* Program the linked list with the addresses */
-> echo R 0x10c004 > /sys/kernel/debug/qcom-dcc/../3/config
-> echo R 0x10c008 > /sys/kernel/debug/qcom-dcc/../3/config
-> echo R 0x10c00c > /sys/kernel/debug/qcom-dcc/../3/config
-> echo R 0x10c010 > /sys/kernel/debug/qcom-dcc/../3/config
-> ..... and so on for other timestamp related clk registers
-> 
-> /* Other way of specifying is in "addr len" pair, in below case it
-> specifies to capture 4 words starting 0x10C004 */
-> 
-> echo R 0x10C004 4 > /sys/kernel/debug/qcom-dcc/../3/config_read
-> 
-> /* Enable DCC */
-> echo 1 > /sys/kernel/debug/qcom-dcc/../3/enable
-> 
-> /* Run the timestamp test for working case */
-> 
-> /* Send SW trigger */
-> echo 1 > /sys/kernel/debug/qcom-dcc/../trigger
-> 
-> /* Read SRAM */
-> cat /dev/dcc_sram > dcc_sram1.bin
-> 
-> /* Run the timestamp test for non-working case */
-> 
-> /* Send SW trigger */
-> echo 1 > /sys/kernel/debug/qcom-dcc/../trigger
-> 
-> /* Read SRAM */
-> cat /dev/dcc_sram > dcc_sram2.bin
-> 
-> Get the parser from [1] and checkout the latest branch.
-> 
-> /* Parse the SRAM bin */
-> python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
-> python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
-> 
-> Sample parsed output of dcc_sram1.bin:
-> 
-> <hwioDump version="1">
->           <timestamp>03/14/21</timestamp>
->               <generator>Linux DCC Parser</generator>
->                   <chip name="None" version="None">
->                   <register address="0x0010c004" value="0x80000000" />
->                   <register address="0x0010c008" value="0x00000008" />
->                   <register address="0x0010c00c" value="0x80004220" />
->                   <register address="0x0010c010" value="0x80000000" />
->               </chip>
->       <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
-> </hwioDump>
-> 
-> ii)NOC register errors
-> 
-> A particular class of registers called NOC which are functional registers was reporting
-> errors while logging the values.To trace these errors the DCC has been used effectively.
-> The steps followed were similar to the ones mentioned above.
-> In addition to NOC registers a few other dependent registers were configured in DCC to
-> monitor it's values during a crash. A look at the dependent register values revealed that
-> the crash was happening due to a secured access to one of these dependent registers.
-> All these debugging activity and finding the root cause was achieved using DCC.
-> 
-> DCC parser is available at the following open source location
-> 
-> https://git.codelinaro.org/clo/le/platform/vendor/qcom-opensource/tools/-/tree/opensource-tools.lnx.1.0.r176-rel/dcc_parser
-> 
-> Souradeep Chowdhury (3):
->    dt-bindings: misc: qcom,dcc: Add the dtschema
->    misc: dcc: Add driver support for Data Capture and Compare unit(DCC)
->    MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
->      support
-> 
->   Documentation/ABI/testing/debugfs-driver-dcc  |   10 +-
->   .../devicetree/bindings/misc/qcom,dcc.yaml    |   44 +
->   MAINTAINERS                                   |    8 +
->   drivers/misc/Kconfig                          |    9 +
->   drivers/misc/Makefile                         |    1 +
->   drivers/misc/qcom-dcc.c                       | 1325 +++++++++++++++++
->   6 files changed, 1392 insertions(+), 5 deletions(-)
->   create mode 100644 Documentation/devicetree/bindings/misc/qcom,dcc.yaml
->   create mode 100644 drivers/misc/qcom-dcc.c
-> 
 
-Gentle Ping
+-- 
+With best wishes
+Dmitry
