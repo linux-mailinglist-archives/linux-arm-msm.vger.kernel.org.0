@@ -2,384 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 756D170FFFC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 23:25:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B13FB71009A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 00:05:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229451AbjEXVZv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 17:25:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58244 "EHLO
+        id S229885AbjEXWFs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 18:05:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229447AbjEXVZv (ORCPT
+        with ESMTP id S229547AbjEXWFq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 17:25:51 -0400
-Received: from 189.cn (ptr.189.cn [183.61.185.101])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D3429FC;
-        Wed, 24 May 2023 14:25:47 -0700 (PDT)
-HMM_SOURCE_IP: 10.64.8.43:60750.2065150534
-HMM_ATTACHE_NUM: 0000
-HMM_SOURCE_TYPE: SMTP
-Received: from clientip-114.242.206.180 (unknown [10.64.8.43])
-        by 189.cn (HERMES) with SMTP id 0DB1A1001E9;
-        Thu, 25 May 2023 05:25:44 +0800 (CST)
-Received: from  ([114.242.206.180])
-        by gateway-151646-dep-75648544bd-7vx9t with ESMTP id 2a16eb5e949146d3b81ea9ab1574803f for tzimmermann@suse.de;
-        Thu, 25 May 2023 05:25:46 CST
-X-Transaction-ID: 2a16eb5e949146d3b81ea9ab1574803f
-X-Real-From: 15330273260@189.cn
-X-Receive-IP: 114.242.206.180
-X-MEDUSA-Status: 0
-Sender: 15330273260@189.cn
-Message-ID: <9a7e0db2-6dc1-5e48-6344-b941726df5ba@189.cn>
-Date:   Thu, 25 May 2023 05:25:43 +0800
+        Wed, 24 May 2023 18:05:46 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58A27122
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 15:05:45 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34OLogxT024046;
+        Wed, 24 May 2023 22:05:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=8t3nrEenpvpNdqNgDbj2dS5oJc4ywW4RI502eHu0V6Q=;
+ b=CVYubd5i9Aa1dSdjrMzYCMpr2fBea2VFXFMwypIOz85fc2iOMGJtj8c6euZbVMwY51zW
+ j3eNG2YkC6y5ouTWyKUHY0368U+J2njUbMFx++Id6cyocGhMn4uhOlE07OaCOALWWzBl
+ yV1m+CfI/m9iQBJEUUMIsyXcc/GnGfVOWe3ROU2FRWEatGoe/NBPBC8dWAChYfyXmOFE
+ CSHgkvWscg+z7JuHxWWyk6lqk4FrdMl4hso4CoGv46hRgjmmjLyg1xgudHWur75qyqke
+ KjXY3MH6Inrw3q++uxuMlfdaBpUcmlAX2PU2U3S7RDHQ1zVOr0hM5nrKjZJ4CJKcUCyt yw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qsqqj8d45-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 24 May 2023 22:05:37 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34OM5aAc018914
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 24 May 2023 22:05:36 GMT
+Received: from [10.110.33.8] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 24 May
+ 2023 15:05:35 -0700
+Message-ID: <2142e4cd-ac1c-3a17-a14d-76a3672e7d9b@quicinc.com>
+Date:   Wed, 24 May 2023 15:05:07 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [v4,13/13] drm/i915: Implement dedicated fbdev I/O helpers
+Subject: Re: [PATCH v3 1/9] drm/msm/dpu: fix SSPP register definitions
 Content-Language: en-US
-To:     Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
-        airlied@gmail.com, maarten.lankhorst@linux.intel.com,
-        mripard@kernel.org, javierm@redhat.com, sam@ravnborg.org
-Cc:     Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        intel-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        linux-tegra@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230524092150.11776-14-tzimmermann@suse.de>
-From:   Sui Jingfeng <15330273260@189.cn>
-In-Reply-To: <20230524092150.11776-14-tzimmermann@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,FROM_LOCAL_DIGITS,
-        FROM_LOCAL_HEX,NICE_REPLY_A,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230518222238.3815293-1-dmitry.baryshkov@linaro.org>
+ <20230518222238.3815293-2-dmitry.baryshkov@linaro.org>
+From:   Jeykumar Sankaran <quic_jeykumar@quicinc.com>
+In-Reply-To: <20230518222238.3815293-2-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: avwOsohci7pkt_I44X8t8CAVdU9aaYsH
+X-Proofpoint-ORIG-GUID: avwOsohci7pkt_I44X8t8CAVdU9aaYsH
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-24_15,2023-05-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 bulkscore=0 adultscore=0 suspectscore=0 clxscore=1011
+ lowpriorityscore=0 spamscore=0 phishscore=0 mlxscore=0 malwarescore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305240185
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,UPPERCASE_50_75
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
 
-I have just tested this patch on my i3-8100@3.6Ghz cpu + h110 
-motherboard with fbtest:
-
-
-Benchmarking... 10x10 squares: 26.44 Mpixels/s
-Benchmarking... 20x20 squares: 52.54 Mpixels/s
-Benchmarking... 50x50 squares: 128.13 Mpixels/s
-Benchmarking... 100x100 squares: 252.21 Mpixels/s
-Benchmarking... 200x200 squares: 489.48 Mpixels/s
-Benchmarking... 500x500 squares: 1073.42 Mpixels/s
-Benchmarking... 1000x1000 squares: 1823.72 Mpixels/s
-Benchmarking... R5 circles: 18.73 Mpixels/s
-Benchmarking... R10 circles: 39.05 Mpixels/s
-Benchmarking... R25 circles: 98.60 Mpixels/s
-Benchmarking... R50 circles: 196.31 Mpixels/s
-Benchmarking... R100 circles: 382.81 Mpixels/s
-Benchmarking... R250 circles: 872.09 Mpixels/s
-Benchmarking... R500 circles: 1511.50 Mpixels/s
-
-
-Then I mount ast2400 card on the same motherboard:
-
-
-Benchmarking... 10x10 squares: 261.75 Mpixels/s
-Benchmarking... 20x20 squares: 539.37 Mpixels/s
-Benchmarking... 50x50 squares: 1161.53 Mpixels/s
-Benchmarking... 100x100 squares: 1624.30 Mpixels/s
-Benchmarking... 200x200 squares: 2089.74 Mpixels/s
-Benchmarking... 500x500 squares: 2779.27 Mpixels/s
-Benchmarking... 1000x1000 squares: 2382.28 Mpixels/s
-Benchmarking... R5 circles: 151.03 Mpixels/s
-Benchmarking... R10 circles: 311.34 Mpixels/s
-Benchmarking... R25 circles: 698.63 Mpixels/s
-Benchmarking... R50 circles: 1184.14 Mpixels/s
-Benchmarking... R100 circles: 1791.60 Mpixels/s
-Benchmarking... R250 circles: 2641.76 Mpixels/s
-Benchmarking... R500 circles: 2669.38 Mpixels/s
-
-
-The logs of fbtest and fbdev of IGT say passed.
-
-
-On 2023/5/24 17:21, Thomas Zimmermann wrote:
-> Implement dedicated fbdev helpers for framebuffer I/O instead
-> of using DRM's helpers. Use an fbdev generator macro for
-> deferred I/O to create the fbdev callbacks. i915 was the only
-> caller of the DRM helpers, so remove them from the helper module.
->
-> i915's fbdev emulation is still incomplete as it doesn't implement
-> deferred I/O and damage handling for mmaped pages.
->
-> v4:
-> 	* generate deferred-I/O helpers
-> 	* use initializer macros for fb_ops
-> v2:
-> 	* use FB_IO_HELPERS options
->
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> Cc: Jani Nikula <jani.nikula@linux.intel.com>
-> Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-> Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-> Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-> Cc: "Ville Syrjälä" <ville.syrjala@linux.intel.com>
+On 5/18/2023 3:22 PM, Dmitry Baryshkov wrote:
+> Reorder SSPP register definitions to sort them in the ascending order.
+> Move register bitfields after the register definitions.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->   drivers/gpu/drm/Kconfig                    |   3 -
->   drivers/gpu/drm/drm_fb_helper.c            | 107 ---------------------
->   drivers/gpu/drm/i915/Kconfig               |   1 +
->   drivers/gpu/drm/i915/display/intel_fbdev.c |  14 +--
->   include/drm/drm_fb_helper.h                |  39 --------
->   5 files changed, 9 insertions(+), 155 deletions(-)
->
-> diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
-> index 92a782827b7b..bb2e48cc6cd6 100644
-> --- a/drivers/gpu/drm/Kconfig
-> +++ b/drivers/gpu/drm/Kconfig
-> @@ -133,9 +133,6 @@ config DRM_FBDEV_EMULATION
->   	bool "Enable legacy fbdev support for your modesetting driver"
->   	depends on DRM_KMS_HELPER
->   	depends on FB=y || FB=DRM_KMS_HELPER
-> -	select FB_CFB_FILLRECT
-> -	select FB_CFB_COPYAREA
-> -	select FB_CFB_IMAGEBLIT
->   	select FRAMEBUFFER_CONSOLE if !EXPERT
->   	select FRAMEBUFFER_CONSOLE_DETECT_PRIMARY if FRAMEBUFFER_CONSOLE
->   	default y
-> diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
-> index bab6b252f02a..9978147bbc8a 100644
-> --- a/drivers/gpu/drm/drm_fb_helper.c
-> +++ b/drivers/gpu/drm/drm_fb_helper.c
-> @@ -736,113 +736,6 @@ void drm_fb_helper_deferred_io(struct fb_info *info, struct list_head *pagerefli
->   }
->   EXPORT_SYMBOL(drm_fb_helper_deferred_io);
->   
-> -/**
-> - * drm_fb_helper_cfb_read - Implements struct &fb_ops.fb_read for I/O memory
-> - * @info: fb_info struct pointer
-> - * @buf: userspace buffer to read from framebuffer memory
-> - * @count: number of bytes to read from framebuffer memory
-> - * @ppos: read offset within framebuffer memory
-> - *
-> - * Returns:
-> - * The number of bytes read on success, or an error code otherwise.
-> - */
-> -ssize_t drm_fb_helper_cfb_read(struct fb_info *info, char __user *buf,
-> -			       size_t count, loff_t *ppos)
-> -{
-> -	return fb_io_read(info, buf, count, ppos);
-> -}
-> -EXPORT_SYMBOL(drm_fb_helper_cfb_read);
+Reviewed-by: Jeykumar Sankaran <quic_jeykumar@quicinc.com>
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 64 ++++++++++-----------
+>   1 file changed, 32 insertions(+), 32 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> index 6b68ec5c7a5a..08098880b7d5 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+> @@ -26,45 +26,18 @@
+>   #define SSPP_SRC_FORMAT                    0x30
+>   #define SSPP_SRC_UNPACK_PATTERN            0x34
+>   #define SSPP_SRC_OP_MODE                   0x38
 > -
-> -/**
-> - * drm_fb_helper_cfb_write - Implements struct &fb_ops.fb_write for I/O memory
-> - * @info: fb_info struct pointer
-> - * @buf: userspace buffer to write to framebuffer memory
-> - * @count: number of bytes to write to framebuffer memory
-> - * @ppos: write offset within framebuffer memory
-> - *
-> - * Returns:
-> - * The number of bytes written on success, or an error code otherwise.
-> - */
-> -ssize_t drm_fb_helper_cfb_write(struct fb_info *info, const char __user *buf,
-> -				size_t count, loff_t *ppos)
-> -{
-> -	struct drm_fb_helper *helper = info->par;
-> -	loff_t pos = *ppos;
-> -	ssize_t ret;
-> -	struct drm_rect damage_area;
+> -/* SSPP_MULTIRECT*/
+> -#define SSPP_SRC_SIZE_REC1                 0x16C
+> -#define SSPP_SRC_XY_REC1                   0x168
+> -#define SSPP_OUT_SIZE_REC1                 0x160
+> -#define SSPP_OUT_XY_REC1                   0x164
+> -#define SSPP_SRC_FORMAT_REC1               0x174
+> -#define SSPP_SRC_UNPACK_PATTERN_REC1       0x178
+> -#define SSPP_SRC_OP_MODE_REC1              0x17C
+> -#define SSPP_MULTIRECT_OPMODE              0x170
+> -#define SSPP_SRC_CONSTANT_COLOR_REC1       0x180
+> -#define SSPP_EXCL_REC_SIZE_REC1            0x184
+> -#define SSPP_EXCL_REC_XY_REC1              0x188
 > -
-> -	ret = fb_io_write(info, buf, count, ppos);
-> -	if (ret <= 0)
-> -		return ret;
+> -#define MDSS_MDP_OP_DEINTERLACE            BIT(22)
+> -#define MDSS_MDP_OP_DEINTERLACE_ODD        BIT(23)
+> -#define MDSS_MDP_OP_IGC_ROM_1              BIT(18)
+> -#define MDSS_MDP_OP_IGC_ROM_0              BIT(17)
+> -#define MDSS_MDP_OP_IGC_EN                 BIT(16)
+> -#define MDSS_MDP_OP_FLIP_UD                BIT(14)
+> -#define MDSS_MDP_OP_FLIP_LR                BIT(13)
+> -#define MDSS_MDP_OP_BWC_EN                 BIT(0)
+> -#define MDSS_MDP_OP_PE_OVERRIDE            BIT(31)
+> -#define MDSS_MDP_OP_BWC_LOSSLESS           (0 << 1)
+> -#define MDSS_MDP_OP_BWC_Q_HIGH             (1 << 1)
+> -#define MDSS_MDP_OP_BWC_Q_MED              (2 << 1)
 > -
-> -	if (helper->funcs->fb_dirty) {
-> -		drm_fb_helper_memory_range_to_clip(info, pos, ret, &damage_area);
-> -		drm_fb_helper_damage(helper, damage_area.x1, damage_area.y1,
-> -				     drm_rect_width(&damage_area),
-> -				     drm_rect_height(&damage_area));
-> -	}
-> -
-> -	return ret;
-> -}
-> -EXPORT_SYMBOL(drm_fb_helper_cfb_write);
-> -
-> -/**
-> - * drm_fb_helper_cfb_fillrect - wrapper around cfb_fillrect
-> - * @info: fbdev registered by the helper
-> - * @rect: info about rectangle to fill
-> - *
-> - * A wrapper around cfb_fillrect implemented by fbdev core
-> - */
-> -void drm_fb_helper_cfb_fillrect(struct fb_info *info,
-> -				const struct fb_fillrect *rect)
-> -{
-> -	struct drm_fb_helper *helper = info->par;
-> -
-> -	cfb_fillrect(info, rect);
-> -
-> -	if (helper->funcs->fb_dirty)
-> -		drm_fb_helper_damage(helper, rect->dx, rect->dy, rect->width, rect->height);
-> -}
-> -EXPORT_SYMBOL(drm_fb_helper_cfb_fillrect);
-> -
-> -/**
-> - * drm_fb_helper_cfb_copyarea - wrapper around cfb_copyarea
-> - * @info: fbdev registered by the helper
-> - * @area: info about area to copy
-> - *
-> - * A wrapper around cfb_copyarea implemented by fbdev core
-> - */
-> -void drm_fb_helper_cfb_copyarea(struct fb_info *info,
-> -				const struct fb_copyarea *area)
-> -{
-> -	struct drm_fb_helper *helper = info->par;
-> -
-> -	cfb_copyarea(info, area);
-> -
-> -	if (helper->funcs->fb_dirty)
-> -		drm_fb_helper_damage(helper, area->dx, area->dy, area->width, area->height);
-> -}
-> -EXPORT_SYMBOL(drm_fb_helper_cfb_copyarea);
-> -
-> -/**
-> - * drm_fb_helper_cfb_imageblit - wrapper around cfb_imageblit
-> - * @info: fbdev registered by the helper
-> - * @image: info about image to blit
-> - *
-> - * A wrapper around cfb_imageblit implemented by fbdev core
-> - */
-> -void drm_fb_helper_cfb_imageblit(struct fb_info *info,
-> -				 const struct fb_image *image)
-> -{
-> -	struct drm_fb_helper *helper = info->par;
-> -
-> -	cfb_imageblit(info, image);
-> -
-> -	if (helper->funcs->fb_dirty)
-> -		drm_fb_helper_damage(helper, image->dx, image->dy, image->width, image->height);
-> -}
-> -EXPORT_SYMBOL(drm_fb_helper_cfb_imageblit);
-> -
->   /**
->    * drm_fb_helper_set_suspend - wrapper around fb_set_suspend
->    * @fb_helper: driver-allocated fbdev helper, can be NULL
-> diff --git a/drivers/gpu/drm/i915/Kconfig b/drivers/gpu/drm/i915/Kconfig
-> index e4f4d2e3fdfe..01b5a8272a27 100644
-> --- a/drivers/gpu/drm/i915/Kconfig
-> +++ b/drivers/gpu/drm/i915/Kconfig
-> @@ -17,6 +17,7 @@ config DRM_I915
->   	select DRM_KMS_HELPER
->   	select DRM_PANEL
->   	select DRM_MIPI_DSI
-> +	select FB_IO_HELPERS if DRM_FBDEV_EMULATION
->   	select RELAY
->   	select I2C
->   	select I2C_ALGOBIT
-> diff --git a/drivers/gpu/drm/i915/display/intel_fbdev.c b/drivers/gpu/drm/i915/display/intel_fbdev.c
-> index aab1ae74a8f7..eccaceaf8b9d 100644
-> --- a/drivers/gpu/drm/i915/display/intel_fbdev.c
-> +++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
-> @@ -28,6 +28,7 @@
->   #include <linux/console.h>
->   #include <linux/delay.h>
->   #include <linux/errno.h>
-> +#include <linux/fb.h>
->   #include <linux/init.h>
->   #include <linux/kernel.h>
->   #include <linux/mm.h>
-> @@ -84,6 +85,10 @@ static void intel_fbdev_invalidate(struct intel_fbdev *ifbdev)
->   	intel_frontbuffer_invalidate(to_frontbuffer(ifbdev), ORIGIN_CPU);
->   }
->   
-> +FB_GEN_DEFAULT_DEFERRED_IO_OPS(intel_fbdev,
-> +			       drm_fb_helper_damage_range,
-> +			       drm_fb_helper_damage_area)
+>   #define SSPP_SRC_CONSTANT_COLOR            0x3c
+>   #define SSPP_EXCL_REC_CTL                  0x40
+>   #define SSPP_UBWC_STATIC_CTRL              0x44
+> -#define SSPP_FETCH_CONFIG                  0x048
+> +#define SSPP_FETCH_CONFIG                  0x48
+>   #define SSPP_DANGER_LUT                    0x60
+>   #define SSPP_SAFE_LUT                      0x64
+>   #define SSPP_CREQ_LUT                      0x68
+>   #define SSPP_QOS_CTRL                      0x6C
+> -#define SSPP_DECIMATION_CONFIG             0xB4
+>   #define SSPP_SRC_ADDR_SW_STATUS            0x70
+>   #define SSPP_CREQ_LUT_0                    0x74
+>   #define SSPP_CREQ_LUT_1                    0x78
+> +#define SSPP_DECIMATION_CONFIG             0xB4
+>   #define SSPP_SW_PIX_EXT_C0_LR              0x100
+>   #define SSPP_SW_PIX_EXT_C0_TB              0x104
+>   #define SSPP_SW_PIX_EXT_C0_REQ_PIXELS      0x108
+> @@ -81,11 +54,33 @@
+>   #define SSPP_TRAFFIC_SHAPER_PREFILL        0x150
+>   #define SSPP_TRAFFIC_SHAPER_REC1_PREFILL   0x154
+>   #define SSPP_TRAFFIC_SHAPER_REC1           0x158
+> +#define SSPP_OUT_SIZE_REC1                 0x160
+> +#define SSPP_OUT_XY_REC1                   0x164
+> +#define SSPP_SRC_XY_REC1                   0x168
+> +#define SSPP_SRC_SIZE_REC1                 0x16C
+> +#define SSPP_MULTIRECT_OPMODE              0x170
+> +#define SSPP_SRC_FORMAT_REC1               0x174
+> +#define SSPP_SRC_UNPACK_PATTERN_REC1       0x178
+> +#define SSPP_SRC_OP_MODE_REC1              0x17C
+> +#define SSPP_SRC_CONSTANT_COLOR_REC1       0x180
+> +#define SSPP_EXCL_REC_SIZE_REC1            0x184
+> +#define SSPP_EXCL_REC_XY_REC1              0x188
+>   #define SSPP_EXCL_REC_SIZE                 0x1B4
+>   #define SSPP_EXCL_REC_XY                   0x1B8
+> -#define SSPP_VIG_OP_MODE                   0x0
+> -#define SSPP_VIG_CSC_10_OP_MODE            0x0
+> -#define SSPP_TRAFFIC_SHAPER_BPC_MAX        0xFF
 > +
->   static int intel_fbdev_set_par(struct fb_info *info)
->   {
->   	struct intel_fbdev *ifbdev = to_intel_fbdev(info->par);
-> @@ -132,15 +137,12 @@ static int intel_fbdev_mmap(struct fb_info *info, struct vm_area_struct *vma)
+> +/* SSPP_SRC_OP_MODE & OP_MODE_REC1 */
+> +#define MDSS_MDP_OP_DEINTERLACE            BIT(22)
+> +#define MDSS_MDP_OP_DEINTERLACE_ODD        BIT(23)
+> +#define MDSS_MDP_OP_IGC_ROM_1              BIT(18)
+> +#define MDSS_MDP_OP_IGC_ROM_0              BIT(17)
+> +#define MDSS_MDP_OP_IGC_EN                 BIT(16)
+> +#define MDSS_MDP_OP_FLIP_UD                BIT(14)
+> +#define MDSS_MDP_OP_FLIP_LR                BIT(13)
+> +#define MDSS_MDP_OP_BWC_EN                 BIT(0)
+> +#define MDSS_MDP_OP_PE_OVERRIDE            BIT(31)
+> +#define MDSS_MDP_OP_BWC_LOSSLESS           (0 << 1)
+> +#define MDSS_MDP_OP_BWC_Q_HIGH             (1 << 1)
+> +#define MDSS_MDP_OP_BWC_Q_MED              (2 << 1)
 >   
->   static const struct fb_ops intelfb_ops = {
->   	.owner = THIS_MODULE,
-> +	__FB_DEFAULT_DEFERRED_OPS_RDWR(intel_fbdev),
->   	DRM_FB_HELPER_DEFAULT_OPS,
->   	.fb_set_par = intel_fbdev_set_par,
-> -	.fb_read = drm_fb_helper_cfb_read,
-> -	.fb_write = drm_fb_helper_cfb_write,
-> -	.fb_fillrect = drm_fb_helper_cfb_fillrect,
-> -	.fb_copyarea = drm_fb_helper_cfb_copyarea,
-> -	.fb_imageblit = drm_fb_helper_cfb_imageblit,
-> -	.fb_pan_display = intel_fbdev_pan_display,
->   	.fb_blank = intel_fbdev_blank,
-> +	.fb_pan_display = intel_fbdev_pan_display,
-This override the default implements(drm_fb_helper_blank, 
-drm_fb_helper_pan_display and drm_fb_helper_set_par) defined in
-
-DRM_FB_HELPER_DEFAULT_OPS, but I think this intended.
-
-> +	__FB_DEFAULT_DEFERRED_OPS_DRAW(intel_fbdev),
->   	.fb_mmap = intel_fbdev_mmap,
->   };
+>   /* SSPP_QOS_CTRL */
+>   #define SSPP_QOS_CTRL_VBLANK_EN            BIT(16)
+> @@ -96,6 +91,7 @@
+>   #define SSPP_QOS_CTRL_CREQ_VBLANK_OFF      20
 >   
-> diff --git a/include/drm/drm_fb_helper.h b/include/drm/drm_fb_helper.h
-> index b50fd0c0b713..4863b0f8299e 100644
-> --- a/include/drm/drm_fb_helper.h
-> +++ b/include/drm/drm_fb_helper.h
-> @@ -258,18 +258,6 @@ void drm_fb_helper_damage_area(struct fb_info *info, u32 x, u32 y, u32 width, u3
+>   /* DPU_SSPP_SCALER_QSEED2 */
+> +#define SSPP_VIG_OP_MODE                   0x0
+>   #define SCALE_CONFIG                       0x04
+>   #define COMP0_3_PHASE_STEP_X               0x10
+>   #define COMP0_3_PHASE_STEP_Y               0x14
+> @@ -107,6 +103,9 @@
+>   #define COMP1_2_INIT_PHASE_Y               0x2C
+>   #define VIG_0_QSEED2_SHARP                 0x30
 >   
->   void drm_fb_helper_deferred_io(struct fb_info *info, struct list_head *pagereflist);
->   
-> -ssize_t drm_fb_helper_cfb_read(struct fb_info *info, char __user *buf,
-> -			       size_t count, loff_t *ppos);
-> -ssize_t drm_fb_helper_cfb_write(struct fb_info *info, const char __user *buf,
-> -				size_t count, loff_t *ppos);
-> -
-> -void drm_fb_helper_cfb_fillrect(struct fb_info *info,
-> -				const struct fb_fillrect *rect);
-> -void drm_fb_helper_cfb_copyarea(struct fb_info *info,
-> -				const struct fb_copyarea *area);
-> -void drm_fb_helper_cfb_imageblit(struct fb_info *info,
-> -				 const struct fb_image *image);
-> -
->   void drm_fb_helper_set_suspend(struct drm_fb_helper *fb_helper, bool suspend);
->   void drm_fb_helper_set_suspend_unlocked(struct drm_fb_helper *fb_helper,
->   					bool suspend);
-> @@ -385,33 +373,6 @@ static inline int drm_fb_helper_defio_init(struct drm_fb_helper *fb_helper)
->   	return -ENODEV;
->   }
->   
-> -static inline ssize_t drm_fb_helper_cfb_read(struct fb_info *info, char __user *buf,
-> -					     size_t count, loff_t *ppos)
-> -{
-> -	return -ENODEV;
-> -}
-> -
-> -static inline ssize_t drm_fb_helper_cfb_write(struct fb_info *info, const char __user *buf,
-> -					      size_t count, loff_t *ppos)
-> -{
-> -	return -ENODEV;
-> -}
-> -
-> -static inline void drm_fb_helper_cfb_fillrect(struct fb_info *info,
-> -					      const struct fb_fillrect *rect)
-> -{
-> -}
-> -
-> -static inline void drm_fb_helper_cfb_copyarea(struct fb_info *info,
-> -					      const struct fb_copyarea *area)
-> -{
-> -}
-> -
-> -static inline void drm_fb_helper_cfb_imageblit(struct fb_info *info,
-> -					       const struct fb_image *image)
-> -{
-> -}
-> -
->   static inline void drm_fb_helper_set_suspend(struct drm_fb_helper *fb_helper,
->   					     bool suspend)
->   {
+> +/* SSPP_TRAFFIC_SHAPER and _REC1 */
+> +#define SSPP_TRAFFIC_SHAPER_BPC_MAX        0xFF
+> +
+>   /*
+>    * Definitions for ViG op modes
+>    */
+> @@ -128,6 +127,7 @@
+>   /*
+>    * Definitions for CSC 10 op modes
+>    */
+> +#define SSPP_VIG_CSC_10_OP_MODE            0x0
+>   #define VIG_CSC_10_SRC_DATAFMT BIT(1)
+>   #define VIG_CSC_10_EN          BIT(0)
+>   #define CSC_10BIT_OFFSET       4
