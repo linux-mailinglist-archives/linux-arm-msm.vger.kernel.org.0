@@ -2,359 +2,353 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D48B470F291
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 11:22:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D330670F2AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 11:25:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240713AbjEXJWl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 05:22:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46698 "EHLO
+        id S240643AbjEXJZI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 05:25:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240709AbjEXJWk (ORCPT
+        with ESMTP id S240582AbjEXJZF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 05:22:40 -0400
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [IPv6:2001:67c:2178:6::1d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3585131;
-        Wed, 24 May 2023 02:22:13 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id EC1031FE27;
-        Wed, 24 May 2023 09:21:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1684920117; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=tNm/VjzKJfYTTelMWAwWaGOR8nslqSNZSJW0IOCyjHU=;
-        b=nXzQqku3whw80151lpW6EvXw1aCMuglbOLWh7yxjt165tl+cgc5XDSWv7cQrJMvzhyUsfq
-        253hJeB3Si/5q1SJSkG/iA0mTKkIPan4w/9jKx3hBVTvmJDYJwsjWEdiGJ3IhVPZPj0jHY
-        0CyLH1ZRVRNlr0BK6AWg6ilw0n1YwbA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1684920117;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=tNm/VjzKJfYTTelMWAwWaGOR8nslqSNZSJW0IOCyjHU=;
-        b=UYtRX8Dwfbc6qDFhHIgkjxSZ20MW1+gmZTVzKERzDOP9iY+mRM7zyZq22EiEwKsFQfS6Xe
-        VuT3ZAhytvhKhIDA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 91EE113A10;
-        Wed, 24 May 2023 09:21:57 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id eGLBIjXXbWTHewAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Wed, 24 May 2023 09:21:57 +0000
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-To:     daniel@ffwll.ch, airlied@gmail.com,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        javierm@redhat.com, sam@ravnborg.org
-Cc:     dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        =?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= 
-        <ville.syrjala@linux.intel.com>
-Subject: [PATCH v4 13/13] drm/i915: Implement dedicated fbdev I/O helpers
-Date:   Wed, 24 May 2023 11:21:50 +0200
-Message-Id: <20230524092150.11776-14-tzimmermann@suse.de>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230524092150.11776-1-tzimmermann@suse.de>
-References: <20230524092150.11776-1-tzimmermann@suse.de>
+        Wed, 24 May 2023 05:25:05 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B1B8132;
+        Wed, 24 May 2023 02:25:00 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34O69Xba020041;
+        Wed, 24 May 2023 09:24:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=jR8xbN02g1iVFrHNjVDXGt7T+04Pj6aXBV8NXmKY83g=;
+ b=jTJ5f6jmEMApNaatcLsmfsAG4+a8x5RqMwiTimZGBUSRsPBQXu1Y/hgfG9J407ovEfDV
+ Ja0nS5NRd1Do7kKLt3nZIv3BCt2NcA2ECtf6+0v8Ni1aSG5RSFbhWAydtY4jB0lKXkf+
+ wLV9q6Yevp97uF6ARq9h2Hz8xkoO5+UyGYP7/Asy7ezcA3W5RQcoZkX+Cr/xIZ5asRAh
+ 49qV/KZ1PJXJy5JmaxHvqkXPfucRQ+adbW3CqIAuRRKn5TQ1WfAtYaZHu1u/UoaG0du7
+ 9V/gyo+NihoZbowscMp2phTu3fdjCVToWO5hdPPvXF1oqno1rIENPgiTVIl68NWx9Bsl /w== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qs42uscwg-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 24 May 2023 09:24:41 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34O9OeDC008843
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 24 May 2023 09:24:40 GMT
+Received: from [10.201.3.104] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 24 May
+ 2023 02:24:37 -0700
+Message-ID: <a92d2d3f-34b5-9cf1-ed40-1c812cbd0125@quicinc.com>
+Date:   Wed, 24 May 2023 14:54:34 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH v2 2/5] mtd: rawnand: qcom: Add support for reset, readid,
+ status exec_op
+Content-Language: en-US
+To:     Miquel Raynal <miquel.raynal@bootlin.com>
+CC:     <mani@kernel.org>, <richard@nod.at>, <vigneshr@ti.com>,
+        <linux-mtd@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>
+References: <20230511133017.6307-1-quic_mdalam@quicinc.com>
+ <20230511133017.6307-3-quic_mdalam@quicinc.com>
+ <20230522154507.0255d902@xps-13>
+From:   Md Sadre Alam <quic_mdalam@quicinc.com>
+In-Reply-To: <20230522154507.0255d902@xps-13>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 7AO6XZuIieta8a0nJxV6HKAewInfFnIX
+X-Proofpoint-GUID: 7AO6XZuIieta8a0nJxV6HKAewInfFnIX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-24_05,2023-05-23_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 bulkscore=0
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 spamscore=0 mlxscore=0
+ phishscore=0 suspectscore=0 malwarescore=0 mlxlogscore=999 impostorscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2305240079
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Implement dedicated fbdev helpers for framebuffer I/O instead
-of using DRM's helpers. Use an fbdev generator macro for
-deferred I/O to create the fbdev callbacks. i915 was the only
-caller of the DRM helpers, so remove them from the helper module.
 
-i915's fbdev emulation is still incomplete as it doesn't implement
-deferred I/O and damage handling for mmaped pages.
 
-v4:
-	* generate deferred-I/O helpers
-	* use initializer macros for fb_ops
-v2:
-	* use FB_IO_HELPERS options
+On 5/22/2023 7:15 PM, Miquel Raynal wrote:
+> Hi Md,
+> 
+> quic_mdalam@quicinc.com wrote on Thu, 11 May 2023 19:00:14 +0530:
+> 
+>> This change will add exec_ops support for RESET , READ_ID, STATUS
+>> command.
+>>
+>> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+>> ---
+>> Change in [v2]
+>>
+>> * Missed to post Cover-letter, so posting v2 patch with cover-letter
+>>
+>>   drivers/mtd/nand/raw/qcom_nandc.c | 166 +++++++++++++++++++++++++++++-
+>>   1 file changed, 163 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+>> index dae460e2aa0b..d2f2a8971907 100644
+>> --- a/drivers/mtd/nand/raw/qcom_nandc.c
+>> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+>> @@ -384,6 +384,9 @@ struct nandc_regs {
+>>    * @reg_read_pos:		marker for data read in reg_read_buf
+>>    *
+>>    * @cmd1/vld:			some fixed controller register values
+>> + *
+>> + * @exec_opwrite:		flag to select correct number of code word
+>> + *				while reading status
+>>    */
+>>   struct qcom_nand_controller {
+>>   	struct device *dev;
+>> @@ -434,6 +437,7 @@ struct qcom_nand_controller {
+>>   	int reg_read_pos;
+>>   
+>>   	u32 cmd1, vld;
+>> +	bool exec_opwrite;
+>>   };
+>>   
+>>   /*
+>> @@ -2920,6 +2924,8 @@ static int qcom_op_cmd_mapping(struct qcom_nand_controller *nandc, u8 cmd,
+>>   		break;
+>>   	case NAND_CMD_PAGEPROG:
+>>   		ret = OP_PROGRAM_PAGE;
+>> +		q_op->flag = NAND_CMD_PAGEPROG;
+> 
+> Just use the instruction value?
 
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: "Ville Syrjälä" <ville.syrjala@linux.intel.com>
----
- drivers/gpu/drm/Kconfig                    |   3 -
- drivers/gpu/drm/drm_fb_helper.c            | 107 ---------------------
- drivers/gpu/drm/i915/Kconfig               |   1 +
- drivers/gpu/drm/i915/display/intel_fbdev.c |  14 +--
- include/drm/drm_fb_helper.h                |  39 --------
- 5 files changed, 9 insertions(+), 155 deletions(-)
+   Sure , will fix this in next patch V3.
+> 
+>> +		nandc->exec_opwrite = true;
+>>   		break;
+>>   	default:
+>>   		break;
+>> @@ -2982,10 +2988,95 @@ static void qcom_parse_instructions(struct nand_chip *chip,
+>>   	}
+>>   }
+>>   
+>> +static void qcom_delay_ns(unsigned int ns)
+>> +{
+>> +	if (!ns)
+>> +		return;
+>> +
+>> +	if (ns < 10000)
+>> +		ndelay(ns);
+>> +	else
+>> +		udelay(DIV_ROUND_UP(ns, 1000));
+>> +}
+>> +
+>> +static int qcom_wait_rdy_poll(struct nand_chip *chip, unsigned int time_ms)
+>> +{
+>> +	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
+>> +	unsigned long start = jiffies + msecs_to_jiffies(time_ms);
+>> +	u32 flash;
+>> +
+>> +	nandc_read_buffer_sync(nandc, true);
+>> +
+>> +	do {
+>> +		flash = le32_to_cpu(nandc->reg_read_buf[0]);
+>> +		if (flash & FS_READY_BSY_N)
+>> +			return 0;
+>> +		cpu_relax();
+>> +	} while (time_after(start, jiffies));
+>> +
+>> +	dev_err(nandc->dev, "Timeout waiting for device to be ready:0x%08x\n", flash);
+>> +
+>> +	return -ETIMEDOUT;
+>> +}
+>> +
+>>   static int qcom_read_status_exec(struct nand_chip *chip,
+>>   				 const struct nand_subop *subop)
+>>   {
+>> -	return 0;
+>> +	struct qcom_nand_host *host = to_qcom_nand_host(chip);
+>> +	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
+>> +	struct nand_ecc_ctrl *ecc = &chip->ecc;
+>> +	struct qcom_op q_op;
+>> +	const struct nand_op_instr *instr = NULL;
+>> +	unsigned int op_id = 0;
+>> +	unsigned int len = 0;
+>> +	int ret = 0, num_cw = 1, i;
+>> +	u32 flash_status;
+>> +
+>> +	host->status = NAND_STATUS_READY | NAND_STATUS_WP;
+>> +
+>> +	qcom_parse_instructions(chip, subop, &q_op);
+>> +
+>> +	if (nandc->exec_opwrite) {
+> 
+> I definitely don't understand this flag at all.
 
-diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
-index 92a782827b7b..bb2e48cc6cd6 100644
---- a/drivers/gpu/drm/Kconfig
-+++ b/drivers/gpu/drm/Kconfig
-@@ -133,9 +133,6 @@ config DRM_FBDEV_EMULATION
- 	bool "Enable legacy fbdev support for your modesetting driver"
- 	depends on DRM_KMS_HELPER
- 	depends on FB=y || FB=DRM_KMS_HELPER
--	select FB_CFB_FILLRECT
--	select FB_CFB_COPYAREA
--	select FB_CFB_IMAGEBLIT
- 	select FRAMEBUFFER_CONSOLE if !EXPERT
- 	select FRAMEBUFFER_CONSOLE_DETECT_PRIMARY if FRAMEBUFFER_CONSOLE
- 	default y
-diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
-index bab6b252f02a..9978147bbc8a 100644
---- a/drivers/gpu/drm/drm_fb_helper.c
-+++ b/drivers/gpu/drm/drm_fb_helper.c
-@@ -736,113 +736,6 @@ void drm_fb_helper_deferred_io(struct fb_info *info, struct list_head *pagerefli
- }
- EXPORT_SYMBOL(drm_fb_helper_deferred_io);
- 
--/**
-- * drm_fb_helper_cfb_read - Implements struct &fb_ops.fb_read for I/O memory
-- * @info: fb_info struct pointer
-- * @buf: userspace buffer to read from framebuffer memory
-- * @count: number of bytes to read from framebuffer memory
-- * @ppos: read offset within framebuffer memory
-- *
-- * Returns:
-- * The number of bytes read on success, or an error code otherwise.
-- */
--ssize_t drm_fb_helper_cfb_read(struct fb_info *info, char __user *buf,
--			       size_t count, loff_t *ppos)
--{
--	return fb_io_read(info, buf, count, ppos);
--}
--EXPORT_SYMBOL(drm_fb_helper_cfb_read);
--
--/**
-- * drm_fb_helper_cfb_write - Implements struct &fb_ops.fb_write for I/O memory
-- * @info: fb_info struct pointer
-- * @buf: userspace buffer to write to framebuffer memory
-- * @count: number of bytes to write to framebuffer memory
-- * @ppos: write offset within framebuffer memory
-- *
-- * Returns:
-- * The number of bytes written on success, or an error code otherwise.
-- */
--ssize_t drm_fb_helper_cfb_write(struct fb_info *info, const char __user *buf,
--				size_t count, loff_t *ppos)
--{
--	struct drm_fb_helper *helper = info->par;
--	loff_t pos = *ppos;
--	ssize_t ret;
--	struct drm_rect damage_area;
--
--	ret = fb_io_write(info, buf, count, ppos);
--	if (ret <= 0)
--		return ret;
--
--	if (helper->funcs->fb_dirty) {
--		drm_fb_helper_memory_range_to_clip(info, pos, ret, &damage_area);
--		drm_fb_helper_damage(helper, damage_area.x1, damage_area.y1,
--				     drm_rect_width(&damage_area),
--				     drm_rect_height(&damage_area));
--	}
--
--	return ret;
--}
--EXPORT_SYMBOL(drm_fb_helper_cfb_write);
--
--/**
-- * drm_fb_helper_cfb_fillrect - wrapper around cfb_fillrect
-- * @info: fbdev registered by the helper
-- * @rect: info about rectangle to fill
-- *
-- * A wrapper around cfb_fillrect implemented by fbdev core
-- */
--void drm_fb_helper_cfb_fillrect(struct fb_info *info,
--				const struct fb_fillrect *rect)
--{
--	struct drm_fb_helper *helper = info->par;
--
--	cfb_fillrect(info, rect);
--
--	if (helper->funcs->fb_dirty)
--		drm_fb_helper_damage(helper, rect->dx, rect->dy, rect->width, rect->height);
--}
--EXPORT_SYMBOL(drm_fb_helper_cfb_fillrect);
--
--/**
-- * drm_fb_helper_cfb_copyarea - wrapper around cfb_copyarea
-- * @info: fbdev registered by the helper
-- * @area: info about area to copy
-- *
-- * A wrapper around cfb_copyarea implemented by fbdev core
-- */
--void drm_fb_helper_cfb_copyarea(struct fb_info *info,
--				const struct fb_copyarea *area)
--{
--	struct drm_fb_helper *helper = info->par;
--
--	cfb_copyarea(info, area);
--
--	if (helper->funcs->fb_dirty)
--		drm_fb_helper_damage(helper, area->dx, area->dy, area->width, area->height);
--}
--EXPORT_SYMBOL(drm_fb_helper_cfb_copyarea);
--
--/**
-- * drm_fb_helper_cfb_imageblit - wrapper around cfb_imageblit
-- * @info: fbdev registered by the helper
-- * @image: info about image to blit
-- *
-- * A wrapper around cfb_imageblit implemented by fbdev core
-- */
--void drm_fb_helper_cfb_imageblit(struct fb_info *info,
--				 const struct fb_image *image)
--{
--	struct drm_fb_helper *helper = info->par;
--
--	cfb_imageblit(info, image);
--
--	if (helper->funcs->fb_dirty)
--		drm_fb_helper_damage(helper, image->dx, image->dy, image->width, image->height);
--}
--EXPORT_SYMBOL(drm_fb_helper_cfb_imageblit);
--
- /**
-  * drm_fb_helper_set_suspend - wrapper around fb_set_suspend
-  * @fb_helper: driver-allocated fbdev helper, can be NULL
-diff --git a/drivers/gpu/drm/i915/Kconfig b/drivers/gpu/drm/i915/Kconfig
-index e4f4d2e3fdfe..01b5a8272a27 100644
---- a/drivers/gpu/drm/i915/Kconfig
-+++ b/drivers/gpu/drm/i915/Kconfig
-@@ -17,6 +17,7 @@ config DRM_I915
- 	select DRM_KMS_HELPER
- 	select DRM_PANEL
- 	select DRM_MIPI_DSI
-+	select FB_IO_HELPERS if DRM_FBDEV_EMULATION
- 	select RELAY
- 	select I2C
- 	select I2C_ALGOBIT
-diff --git a/drivers/gpu/drm/i915/display/intel_fbdev.c b/drivers/gpu/drm/i915/display/intel_fbdev.c
-index aab1ae74a8f7..eccaceaf8b9d 100644
---- a/drivers/gpu/drm/i915/display/intel_fbdev.c
-+++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
-@@ -28,6 +28,7 @@
- #include <linux/console.h>
- #include <linux/delay.h>
- #include <linux/errno.h>
-+#include <linux/fb.h>
- #include <linux/init.h>
- #include <linux/kernel.h>
- #include <linux/mm.h>
-@@ -84,6 +85,10 @@ static void intel_fbdev_invalidate(struct intel_fbdev *ifbdev)
- 	intel_frontbuffer_invalidate(to_frontbuffer(ifbdev), ORIGIN_CPU);
- }
- 
-+FB_GEN_DEFAULT_DEFERRED_IO_OPS(intel_fbdev,
-+			       drm_fb_helper_damage_range,
-+			       drm_fb_helper_damage_area)
-+
- static int intel_fbdev_set_par(struct fb_info *info)
- {
- 	struct intel_fbdev *ifbdev = to_intel_fbdev(info->par);
-@@ -132,15 +137,12 @@ static int intel_fbdev_mmap(struct fb_info *info, struct vm_area_struct *vma)
- 
- static const struct fb_ops intelfb_ops = {
- 	.owner = THIS_MODULE,
-+	__FB_DEFAULT_DEFERRED_OPS_RDWR(intel_fbdev),
- 	DRM_FB_HELPER_DEFAULT_OPS,
- 	.fb_set_par = intel_fbdev_set_par,
--	.fb_read = drm_fb_helper_cfb_read,
--	.fb_write = drm_fb_helper_cfb_write,
--	.fb_fillrect = drm_fb_helper_cfb_fillrect,
--	.fb_copyarea = drm_fb_helper_cfb_copyarea,
--	.fb_imageblit = drm_fb_helper_cfb_imageblit,
--	.fb_pan_display = intel_fbdev_pan_display,
- 	.fb_blank = intel_fbdev_blank,
-+	.fb_pan_display = intel_fbdev_pan_display,
-+	__FB_DEFAULT_DEFERRED_OPS_DRAW(intel_fbdev),
- 	.fb_mmap = intel_fbdev_mmap,
- };
- 
-diff --git a/include/drm/drm_fb_helper.h b/include/drm/drm_fb_helper.h
-index b50fd0c0b713..4863b0f8299e 100644
---- a/include/drm/drm_fb_helper.h
-+++ b/include/drm/drm_fb_helper.h
-@@ -258,18 +258,6 @@ void drm_fb_helper_damage_area(struct fb_info *info, u32 x, u32 y, u32 width, u3
- 
- void drm_fb_helper_deferred_io(struct fb_info *info, struct list_head *pagereflist);
- 
--ssize_t drm_fb_helper_cfb_read(struct fb_info *info, char __user *buf,
--			       size_t count, loff_t *ppos);
--ssize_t drm_fb_helper_cfb_write(struct fb_info *info, const char __user *buf,
--				size_t count, loff_t *ppos);
--
--void drm_fb_helper_cfb_fillrect(struct fb_info *info,
--				const struct fb_fillrect *rect);
--void drm_fb_helper_cfb_copyarea(struct fb_info *info,
--				const struct fb_copyarea *area);
--void drm_fb_helper_cfb_imageblit(struct fb_info *info,
--				 const struct fb_image *image);
--
- void drm_fb_helper_set_suspend(struct drm_fb_helper *fb_helper, bool suspend);
- void drm_fb_helper_set_suspend_unlocked(struct drm_fb_helper *fb_helper,
- 					bool suspend);
-@@ -385,33 +373,6 @@ static inline int drm_fb_helper_defio_init(struct drm_fb_helper *fb_helper)
- 	return -ENODEV;
- }
- 
--static inline ssize_t drm_fb_helper_cfb_read(struct fb_info *info, char __user *buf,
--					     size_t count, loff_t *ppos)
--{
--	return -ENODEV;
--}
--
--static inline ssize_t drm_fb_helper_cfb_write(struct fb_info *info, const char __user *buf,
--					      size_t count, loff_t *ppos)
--{
--	return -ENODEV;
--}
--
--static inline void drm_fb_helper_cfb_fillrect(struct fb_info *info,
--					      const struct fb_fillrect *rect)
--{
--}
--
--static inline void drm_fb_helper_cfb_copyarea(struct fb_info *info,
--					      const struct fb_copyarea *area)
--{
--}
--
--static inline void drm_fb_helper_cfb_imageblit(struct fb_info *info,
--					       const struct fb_image *image)
--{
--}
--
- static inline void drm_fb_helper_set_suspend(struct drm_fb_helper *fb_helper,
- 					     bool suspend)
- {
--- 
-2.40.1
+   This flag is to get the status for all code word in case of program page operation.
+   Since this read status is common for reading status for all kind of operation.
+   so in page program operation it needs to get status for all code word i.e 4 in 2K page.
+   but for normal operation number of code word will be 1.
+> 
+>> +		num_cw = ecc->steps;
+>> +		nandc->exec_opwrite = false;
+>> +	}
+>> +
+>> +	pre_command(host, NAND_CMD_STATUS);
+>> +
+>> +	nandc_set_reg(chip, NAND_FLASH_CMD, q_op.cmd_reg);
+>> +	nandc_set_reg(chip, NAND_EXEC_CMD, 1);
+>> +
+>> +	write_reg_dma(nandc, NAND_FLASH_CMD, 1, NAND_BAM_NEXT_SGL);
+>> +	write_reg_dma(nandc, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
+>> +
+>> +	read_reg_dma(nandc, NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
+>> +
+>> +	ret = submit_descs(nandc);
+>> +	if (ret)
+>> +		dev_err(nandc->dev, "failure in sbumitting status descriptor\n");
+>> +
+>> +	free_descs(nandc);
+>> +
+>> +	nandc_read_buffer_sync(nandc, true);
+>> +	for (i = 0; i < num_cw; i++) {
+>> +		flash_status = le32_to_cpu(nandc->reg_read_buf[i]);
+>> +
+>> +	if (flash_status & FS_MPU_ERR)
+>> +		host->status &= ~NAND_STATUS_WP;
+>> +
+>> +	if (flash_status & FS_OP_ERR || (i == (num_cw - 1) &&
+>> +					 (flash_status & FS_DEVICE_STS_ERR)))
+>> +		host->status |= NAND_STATUS_FAIL;
+> 
+> If there is a failure detected, error out (everywhere).
 
+   Sure, will fix it in next patch V3.
+> 
+>> +	}
+>> +
+>> +	flash_status = host->status;
+>> +
+>> +	instr = q_op.data_instr;
+>> +	op_id = q_op.data_instr_idx;
+>> +	len = nand_subop_get_data_len(subop, op_id);
+>> +	memcpy(instr->ctx.data.buf.in, &flash_status, len);
+>> +
+>> +	return ret;
+>>   }
+>>   
+>>   static int qcom_erase_cmd_type_exec(struct nand_chip *chip, const struct nand_subop *subop)
+>> @@ -3000,12 +3091,81 @@ static int qcom_param_page_type_exec(struct nand_chip *chip,  const struct nand_
+>>   
+>>   static int qcom_read_id_type_exec(struct nand_chip *chip, const struct nand_subop *subop)
+>>   {
+>> -	return 0;
+>> +	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
+>> +	struct qcom_nand_host *host = to_qcom_nand_host(chip);
+>> +	struct qcom_op q_op;
+>> +	const struct nand_op_instr *instr = NULL;
+>> +	unsigned int op_id = 0;
+>> +	unsigned int len = 0;
+>> +	int ret = 0;
+>> +
+>> +	qcom_parse_instructions(chip, subop, &q_op);
+>> +
+>> +	pre_command(host, NAND_CMD_READID);
+>> +
+>> +	nandc_set_reg(chip, NAND_FLASH_CMD, q_op.cmd_reg);
+>> +	nandc_set_reg(chip, NAND_ADDR0, q_op.addr1_reg);
+>> +	nandc_set_reg(chip, NAND_ADDR1, q_op.addr2_reg);
+>> +	nandc_set_reg(chip, NAND_FLASH_CHIP_SELECT,
+>> +		      nandc->props->is_bam ? 0 : DM_EN);
+>> +
+>> +	nandc_set_reg(chip, NAND_EXEC_CMD, 1);
+>> +
+>> +	write_reg_dma(nandc, NAND_FLASH_CMD, 4, NAND_BAM_NEXT_SGL);
+>> +	write_reg_dma(nandc, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
+>> +
+>> +	read_reg_dma(nandc, NAND_READ_ID, 1, NAND_BAM_NEXT_SGL);
+>> +
+>> +	ret = submit_descs(nandc);
+>> +	if (ret)
+>> +		dev_err(nandc->dev, "failure in sbumitting read id descriptor\n");
+>> +
+>> +	free_descs(nandc);
+>> +
+>> +	instr = q_op.data_instr;
+>> +	op_id = q_op.data_instr_idx;
+>> +	len = nand_subop_get_data_len(subop, op_id);
+>> +
+>> +	nandc_read_buffer_sync(nandc, true);
+>> +	memcpy(instr->ctx.data.buf.in, nandc->reg_read_buf, len);
+>> +
+>> +	return ret;
+>>   }
+>>   
+>>   static int qcom_misc_cmd_type_exec(struct nand_chip *chip, const struct nand_subop *subop)
+>>   {
+>> -	return 0;
+>> +	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
+>> +	struct qcom_nand_host *host = to_qcom_nand_host(chip);
+>> +	struct qcom_op q_op;
+>> +	int ret = 0;
+>> +
+>> +	qcom_parse_instructions(chip, subop, &q_op);
+>> +
+>> +	if (q_op.flag == NAND_CMD_PAGEPROG)
+>> +		goto wait_rdy;
+>> +
+>> +	pre_command(host, NAND_CMD_RESET);
+> 
+> ???
+
+   Will fix it in next patch V3.
+> 
+>> +
+>> +	nandc_set_reg(chip, NAND_FLASH_CMD, q_op.cmd_reg);
+>> +	nandc_set_reg(chip, NAND_EXEC_CMD, 1);
+>> +
+>> +	write_reg_dma(nandc, NAND_FLASH_CMD, 1, NAND_BAM_NEXT_SGL);
+>> +	write_reg_dma(nandc, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
+>> +
+>> +	read_reg_dma(nandc, NAND_FLASH_STATUS, 1, NAND_BAM_NEXT_SGL);
+>> +
+>> +	ret = submit_descs(nandc);
+>> +	if (ret)
+>> +		dev_err(nandc->dev, "failure in sbumitting misc descriptor\n");
+> 
+> Typo                                             ^
+> 
+> Same above.
+> 
+> You should error out immediately when something wrong happens.
+
+   Sure, will fix it in next patch V3.
+> 
+>> +
+>> +	free_descs(nandc);
+>> +
+>> +wait_rdy:
+>> +	qcom_delay_ns(q_op.rdy_delay_ns);
+>> +
+>> +	ret = qcom_wait_rdy_poll(chip, q_op.rdy_timeout_ms);
+>> +
+>> +	return ret;
+>>   }
+>>   
+>>   static int qcom_data_read_type_exec(struct nand_chip *chip, const struct nand_subop *subop)
+> 
+> 
+> Thanks,
+> Miquèl
