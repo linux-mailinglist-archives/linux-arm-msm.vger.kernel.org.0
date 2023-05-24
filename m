@@ -2,275 +2,254 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0988970FB8C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 18:20:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40FE170FB9A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 18:23:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230189AbjEXQUG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 12:20:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42344 "EHLO
+        id S233744AbjEXQXl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 12:23:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229509AbjEXQTs (ORCPT
+        with ESMTP id S233790AbjEXQXi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 12:19:48 -0400
-Received: from mail-yw1-x1134.google.com (mail-yw1-x1134.google.com [IPv6:2607:f8b0:4864:20::1134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D01F97;
-        Wed, 24 May 2023 09:19:45 -0700 (PDT)
-Received: by mail-yw1-x1134.google.com with SMTP id 00721157ae682-563874afe98so16473827b3.1;
-        Wed, 24 May 2023 09:19:45 -0700 (PDT)
+        Wed, 24 May 2023 12:23:38 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA97F1A1;
+        Wed, 24 May 2023 09:23:33 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-96f7bf29550so165694766b.3;
+        Wed, 24 May 2023 09:23:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1684945184; x=1687537184;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=018YvOWAcdcg4cdLKbpOufJYj9QVDv2gy3gIrmoKQKg=;
-        b=Wa8V5gJIuIi/HjdB5F4Y2PGvisVrMUAJnFGvrzfD1u2HXdR6zXxboSfOC1sUrut5po
-         7bNg7le53ocLYAGxLB05/n58D3uLqxmro6+YJyffgM0QGKXc205MLe7yimmoHPz3LkIA
-         4PGEYMHODtR+rC9x/mlREd5X3+sMDCl8fU9vHYdEcn4j7SGUvL4HPIuTyW8+lEOpHUT8
-         pdNDwfTyhOh6hEokocrgODZqf6OL8KJ1K4BKRlDJmsYfq69c53iCESicsHUoztZ/S3lk
-         mrdl5jHlthTHZSX6bD05vLPbatIlgri3J+u3Z+s0zkUIl9ccWUgq0lkwwEkDxk7ch6I0
-         7Yxg==
+        d=gmail.com; s=20221208; t=1684945412; x=1687537412;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rcZFua0EILx4UgL94m890/UaW7590iqXfYJZcRYRhjI=;
+        b=EgcdO6RXFPfL6eBdltvYTZUiOyGda0B1gegV+CvUUfOfBC5zfmPe2jHKJyOK9cKVts
+         iqfyyS6/5rcO3RyLjmPJqkLVU1O0jis+c06TZwWZvUaJVtoaLX5TC9sJ4ypVevPWprod
+         ycTTRDKB2UQxxpaFXMShAZUtXLGv39DWLlePdPx+zVQbhZ5C629Tgvpo5K+3KdzpDX6q
+         AwQ2Ltb8v1sfZiCEXMo0Q3FUVzY8LHCcHVQ+cU+G2lQ4f/rkIj2O7g9JLnMGVWUFGh2S
+         E5SVdSO60oLZ3hvw7NTTTlH6X/pOB8+VbxrVvesQQVI8tCFbamlSfwTg9bNb/tPyviZV
+         NrIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684945184; x=1687537184;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=018YvOWAcdcg4cdLKbpOufJYj9QVDv2gy3gIrmoKQKg=;
-        b=TwdDIztjiQxuVbM0qsJAie8BmwEyBS8bcSWFPsbeecKKoxkn4tQeoPO0M2F+bff3/m
-         +gd3yIVn4cx1yloeaUsjylQeiGm5R1lIcG7VO80a59SrHe7hZa0U1njkZzhWjNX8NzR/
-         koyEtYoXhwt49ORM4p5E6+PEJ+RjQ1xfWIOMjvvzYoAzqVQ2hBgN8HZVLOGbtDnSa7BM
-         BxE/DdVDkGN555H3zKXGYas0/thXbz9fgOnKu6oMnOezxQwTuwmY3PHCjit0SXVIO/j7
-         282vSqK4vw2KZvkXWokoOeq/MbW8dGXem5ThRNXVMcFvz6fdRpQPiEko5+hKhFGhvWXG
-         Szyw==
-X-Gm-Message-State: AC+VfDy5KLc9AOsRMnByVKpygEQm13O5zLRztGWDi/1mw58DMgXzMQe7
-        21nPw8YaIUS+3ys/IhXUny0=
-X-Google-Smtp-Source: ACHHUZ7vhhqH0VHsvmRA7Q5a/lNB0v3XWfrfsCFRB6Atoya+E5v9ROZaj2cmk3czG9umDFUahZwTOQ==
-X-Received: by 2002:a0d:cc95:0:b0:561:7ec:cf90 with SMTP id o143-20020a0dcc95000000b0056107eccf90mr19259741ywd.42.1684945184195;
-        Wed, 24 May 2023 09:19:44 -0700 (PDT)
-Received: from neuromancer. ([75.28.21.198])
-        by smtp.gmail.com with ESMTPSA id r63-20020a815d42000000b00555df877a4csm3768852ywb.102.2023.05.24.09.19.43
+        d=1e100.net; s=20221208; t=1684945412; x=1687537412;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rcZFua0EILx4UgL94m890/UaW7590iqXfYJZcRYRhjI=;
+        b=bH/4uaeKjgXqcGRKAWqHENHhvTrJc7dKuJMNiunLdWhczD/Ozs3JjmkIdOqgVzWhOg
+         CwJOeM1CWcfZNo+x5seDjyLIFFp/ykNpEzboWjtu3oRKtGRXk5kCuZNilJVW2VZGzFMK
+         hng3bMQqvTG6zASAIR/nxBVsbYf+U3FlMm0xxkVQihAaYJdsTa6WK2V2F3IETX+vcCKg
+         aw8q4cQxBIoa/cUwgiRvmg5V0T5PcyhtJkkLMg/Tv4MwsmcB3aRbuaelaukdeP0ZGqfs
+         o4O+q8zIkApMGO45xdM6b6GOQhAHtcFHFlLQDKAd3tbl9EwbZ2B75SJXktID0fd1Q+11
+         iCRQ==
+X-Gm-Message-State: AC+VfDzoPvZBruccCQg1dyYnRSKuGR8gBy0WO75BrkkMe3PQV52a70Nz
+        rR/rgUcsM/zBYTDgUaW+H9A=
+X-Google-Smtp-Source: ACHHUZ7GY/kjeflUQBa1lyl/SZGBr2rAqBV39gatAwOEZy3sr8Xt70onymuJk/AlwF7sAIOj77180Q==
+X-Received: by 2002:a17:907:8a03:b0:96f:912e:5ec4 with SMTP id sc3-20020a1709078a0300b0096f912e5ec4mr16215583ejc.16.1684945411968;
+        Wed, 24 May 2023 09:23:31 -0700 (PDT)
+Received: from fedora.. ([213.149.38.146])
+        by smtp.googlemail.com with ESMTPSA id p19-20020a170906229300b0096f5b48fe43sm5913793eja.47.2023.05.24.09.23.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 May 2023 09:19:43 -0700 (PDT)
-Message-ID: <646e391f.810a0220.214ce.d680@mx.google.com>
-X-Google-Original-Message-ID: <ZG45HLgD+PiDZlqX@neuromancer.>
-Date:   Wed, 24 May 2023 11:19:40 -0500
-From:   Chris Morgan <macroalpha82@gmail.com>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        dri-devel@lists.freedesktop.org, linux-input@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>, hsinyi@google.com,
-        devicetree@vger.kernel.org,
-        yangcong5@huaqin.corp-partner.google.com,
-        linux-kernel@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org
-Subject: Re: [PATCH 2/9] drm/panel: Check for already prepared/enabled in
- drm_panel
-References: <20230523193017.4109557-1-dianders@chromium.org>
- <20230523122802.2.I59b417d4c29151cc2eff053369ec4822b606f375@changeid>
+        Wed, 24 May 2023 09:23:31 -0700 (PDT)
+From:   Robert Marko <robimarko@gmail.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        ilia.lin@kernel.org, rafael@kernel.org, viresh.kumar@linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Cc:     ansuelsmth@gmail.com, Robert Marko <robimarko@gmail.com>
+Subject: [PATCH v2 1/4] soc: qcom: socinfo: move SMEM item struct and defines to a header
+Date:   Wed, 24 May 2023 18:23:26 +0200
+Message-Id: <20230524162329.819770-1-robimarko@gmail.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230523122802.2.I59b417d4c29151cc2eff053369ec4822b606f375@changeid>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 23, 2023 at 12:27:56PM -0700, Douglas Anderson wrote:
-> In a whole pile of panel drivers, we have code to make the
-> prepare/unprepare/enable/disable callbacks behave as no-ops if they've
-> already been called. It's silly to have this code duplicated
-> everywhere. Add it to the core instead so that we can eventually
-> delete it from all the drivers. Note: to get some idea of the
-> duplicated code, try:
->   git grep 'if.*>prepared' -- drivers/gpu/drm/panel
->   git grep 'if.*>enabled' -- drivers/gpu/drm/panel
-> 
-> NOTE: arguably, the right thing to do here is actually to skip this
-> patch and simply remove all the extra checks from the individual
-> drivers. Perhaps the checks were needed at some point in time in the
-> past but maybe they no longer are? Certainly as we continue
+Move SMEM item struct and related defines to a header in order to be able
+to reuse them in the SMEM driver instead of duplicating them.
 
-For some reason I haven't dug into in greater detail on my RK3326 and
-RK3568 boards I hit an issue on suspend/shutdown whereby the unprepare
-is called multiple times. I suspect it's the dw-mipi-dsi-rockchip.c
-driver and the dw-mipi-dsi.c drivers both calling the unprepare, but
-I haven't been able to debug it completely yet.
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+---
+ drivers/soc/qcom/socinfo.c       | 67 +-----------------------------
+ include/linux/soc/qcom/socinfo.h | 70 ++++++++++++++++++++++++++++++++
+ 2 files changed, 71 insertions(+), 66 deletions(-)
+ create mode 100644 include/linux/soc/qcom/socinfo.h
 
-> transitioning over to "panel_bridge" then we expect there to be much
-> less variety in how these calls are made. When we're called as part of
-> the bridge chain, things should be pretty simple. In fact, there was
-> some discussion in the past about these checks [1], including a
-> discussion about whether the checks were needed and whether the calls
-> ought to be refcounted. At the time, I decided not to mess with it
-> because it felt too risky.
-> 
-> Looking closer at it now, I'm fairly certain that nothing in the
-> existing codebase is expecting these calls to be refcounted. The only
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index c2e4a57dd666..ee6bbf76d941 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -11,6 +11,7 @@
+ #include <linux/random.h>
+ #include <linux/slab.h>
+ #include <linux/soc/qcom/smem.h>
++#include <linux/soc/qcom/socinfo.h>
+ #include <linux/string.h>
+ #include <linux/stringify.h>
+ #include <linux/sys_soc.h>
+@@ -32,15 +33,6 @@
+ #define qcom_board_id(id) QCOM_ID_ ## id, __stringify(id)
+ #define qcom_board_id_named(id, name) QCOM_ID_ ## id, (name)
+ 
+-#define SMEM_SOCINFO_BUILD_ID_LENGTH           32
+-#define SMEM_SOCINFO_CHIP_ID_LENGTH            32
+-
+-/*
+- * SMEM item id, used to acquire handles to respective
+- * SMEM region.
+- */
+-#define SMEM_HW_SW_BUILD_ID            137
+-
+ #ifdef CONFIG_DEBUG_FS
+ #define SMEM_IMAGE_VERSION_BLOCKS_COUNT        32
+ #define SMEM_IMAGE_VERSION_SIZE                4096
+@@ -126,64 +118,7 @@ static const char *const pmic_models[] = {
+ 	[58] = "PM8450",
+ 	[65] = "PM8010",
+ };
+-#endif /* CONFIG_DEBUG_FS */
+-
+-/* Socinfo SMEM item structure */
+-struct socinfo {
+-	__le32 fmt;
+-	__le32 id;
+-	__le32 ver;
+-	char build_id[SMEM_SOCINFO_BUILD_ID_LENGTH];
+-	/* Version 2 */
+-	__le32 raw_id;
+-	__le32 raw_ver;
+-	/* Version 3 */
+-	__le32 hw_plat;
+-	/* Version 4 */
+-	__le32 plat_ver;
+-	/* Version 5 */
+-	__le32 accessory_chip;
+-	/* Version 6 */
+-	__le32 hw_plat_subtype;
+-	/* Version 7 */
+-	__le32 pmic_model;
+-	__le32 pmic_die_rev;
+-	/* Version 8 */
+-	__le32 pmic_model_1;
+-	__le32 pmic_die_rev_1;
+-	__le32 pmic_model_2;
+-	__le32 pmic_die_rev_2;
+-	/* Version 9 */
+-	__le32 foundry_id;
+-	/* Version 10 */
+-	__le32 serial_num;
+-	/* Version 11 */
+-	__le32 num_pmics;
+-	__le32 pmic_array_offset;
+-	/* Version 12 */
+-	__le32 chip_family;
+-	__le32 raw_device_family;
+-	__le32 raw_device_num;
+-	/* Version 13 */
+-	__le32 nproduct_id;
+-	char chip_id[SMEM_SOCINFO_CHIP_ID_LENGTH];
+-	/* Version 14 */
+-	__le32 num_clusters;
+-	__le32 ncluster_array_offset;
+-	__le32 num_defective_parts;
+-	__le32 ndefective_parts_array_offset;
+-	/* Version 15 */
+-	__le32 nmodem_supported;
+-	/* Version 16 */
+-	__le32  feature_code;
+-	__le32  pcode;
+-	__le32  npartnamemap_offset;
+-	__le32  nnum_partname_mapping;
+-	/* Version 17 */
+-	__le32 oem_variant;
+-};
+ 
+-#ifdef CONFIG_DEBUG_FS
+ struct socinfo_params {
+ 	u32 raw_device_family;
+ 	u32 hw_plat_subtype;
+diff --git a/include/linux/soc/qcom/socinfo.h b/include/linux/soc/qcom/socinfo.h
+new file mode 100644
+index 000000000000..d1cbc49a2a2d
+--- /dev/null
++++ b/include/linux/soc/qcom/socinfo.h
+@@ -0,0 +1,70 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++
++#ifndef __QCOM_SOCINFO_H__
++#define __QCOM_SOCINFO_H__
++
++/*
++ * SMEM item id, used to acquire handles to respective
++ * SMEM region.
++ */
++#define SMEM_HW_SW_BUILD_ID		137
++
++#define SMEM_SOCINFO_BUILD_ID_LENGTH	32
++#define SMEM_SOCINFO_CHIP_ID_LENGTH	32
++
++/* Socinfo SMEM item structure */
++struct socinfo {
++	__le32 fmt;
++	__le32 id;
++	__le32 ver;
++	char build_id[SMEM_SOCINFO_BUILD_ID_LENGTH];
++	/* Version 2 */
++	__le32 raw_id;
++	__le32 raw_ver;
++	/* Version 3 */
++	__le32 hw_plat;
++	/* Version 4 */
++	__le32 plat_ver;
++	/* Version 5 */
++	__le32 accessory_chip;
++	/* Version 6 */
++	__le32 hw_plat_subtype;
++	/* Version 7 */
++	__le32 pmic_model;
++	__le32 pmic_die_rev;
++	/* Version 8 */
++	__le32 pmic_model_1;
++	__le32 pmic_die_rev_1;
++	__le32 pmic_model_2;
++	__le32 pmic_die_rev_2;
++	/* Version 9 */
++	__le32 foundry_id;
++	/* Version 10 */
++	__le32 serial_num;
++	/* Version 11 */
++	__le32 num_pmics;
++	__le32 pmic_array_offset;
++	/* Version 12 */
++	__le32 chip_family;
++	__le32 raw_device_family;
++	__le32 raw_device_num;
++	/* Version 13 */
++	__le32 nproduct_id;
++	char chip_id[SMEM_SOCINFO_CHIP_ID_LENGTH];
++	/* Version 14 */
++	__le32 num_clusters;
++	__le32 ncluster_array_offset;
++	__le32 num_defective_parts;
++	__le32 ndefective_parts_array_offset;
++	/* Version 15 */
++	__le32 nmodem_supported;
++	/* Version 16 */
++	__le32  feature_code;
++	__le32  pcode;
++	__le32  npartnamemap_offset;
++	__le32  nnum_partname_mapping;
++	/* Version 17 */
++	__le32 oem_variant;
++};
++
++#endif
+-- 
+2.40.1
 
-Regulator unbalanced disables are a bane of my existence. For the
-panel-newvision-nv3051d.c driver I upstreamed a few releases ago I was
-told to not include the is_enabled logic and as a result I get a
-warning on suspend or shutdown when it disables the panel. Unprepare
-gets called twice and that results in an unbalanced regulator disable.
-
-> real question is whether someone is already doing something to ensure
-> prepare()/unprepare() match and enabled()/disable() match. I would say
-> that, even if there is something else ensuring that things match,
-> there's enough complexity that adding an extra bool and an extra
-> double-check here is a good idea. Let's add a drm_warn() to let people
-> know that it's considered a minor error to take advantage of
-> drm_panel's double-checking but we'll still make things work fine.
-> 
-> [1] https://lore.kernel.org/r/20210416153909.v4.27.I502f2a92ddd36c3d28d014dd75e170c2d405a0a5@changeid
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> 
->  drivers/gpu/drm/drm_panel.c | 49 ++++++++++++++++++++++++++++++++-----
->  include/drm/drm_panel.h     | 14 +++++++++++
->  2 files changed, 57 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c
-> index f634371c717a..4e1c4e42575b 100644
-> --- a/drivers/gpu/drm/drm_panel.c
-> +++ b/drivers/gpu/drm/drm_panel.c
-> @@ -105,11 +105,22 @@ EXPORT_SYMBOL(drm_panel_remove);
->   */
->  int drm_panel_prepare(struct drm_panel *panel)
->  {
-> +	int ret;
-> +
->  	if (!panel)
->  		return -EINVAL;
->  
-> -	if (panel->funcs && panel->funcs->prepare)
-> -		return panel->funcs->prepare(panel);
-> +	if (panel->prepared) {
-> +		dev_warn(panel->dev, "Skipping prepare of already prepared panel\n");
-> +		return 0;
-> +	}
-> +
-> +	if (panel->funcs && panel->funcs->prepare) {
-> +		ret = panel->funcs->prepare(panel);
-> +		if (ret < 0)
-> +			return ret;
-> +	}
-> +	panel->prepared = true;
->  
->  	return 0;
->  }
-> @@ -128,11 +139,22 @@ EXPORT_SYMBOL(drm_panel_prepare);
->   */
->  int drm_panel_unprepare(struct drm_panel *panel)
->  {
-> +	int ret;
-> +
->  	if (!panel)
->  		return -EINVAL;
->  
-> -	if (panel->funcs && panel->funcs->unprepare)
-> -		return panel->funcs->unprepare(panel);
-> +	if (!panel->prepared) {
-> +		dev_warn(panel->dev, "Skipping unprepare of already unprepared panel\n");
-> +		return 0;
-> +	}
-> +
-> +	if (panel->funcs && panel->funcs->unprepare) {
-> +		ret = panel->funcs->unprepare(panel);
-> +		if (ret < 0)
-> +			return ret;
-> +	}
-> +	panel->prepared = false;
->  
->  	return 0;
->  }
-> @@ -155,11 +177,17 @@ int drm_panel_enable(struct drm_panel *panel)
->  	if (!panel)
->  		return -EINVAL;
->  
-> +	if (panel->enabled) {
-> +		dev_warn(panel->dev, "Skipping enable of already enabled panel\n");
-> +		return 0;
-> +	}
-> +
->  	if (panel->funcs && panel->funcs->enable) {
->  		ret = panel->funcs->enable(panel);
->  		if (ret < 0)
->  			return ret;
->  	}
-> +	panel->enabled = true;
->  
->  	ret = backlight_enable(panel->backlight);
->  	if (ret < 0)
-> @@ -187,13 +215,22 @@ int drm_panel_disable(struct drm_panel *panel)
->  	if (!panel)
->  		return -EINVAL;
->  
-> +	if (!panel->enabled) {
-> +		dev_warn(panel->dev, "Skipping disable of already disabled panel\n");
-> +		return 0;
-> +	}
-> +
->  	ret = backlight_disable(panel->backlight);
->  	if (ret < 0)
->  		DRM_DEV_INFO(panel->dev, "failed to disable backlight: %d\n",
->  			     ret);
->  
-> -	if (panel->funcs && panel->funcs->disable)
-> -		return panel->funcs->disable(panel);
-> +	if (panel->funcs && panel->funcs->disable) {
-> +		ret = panel->funcs->disable(panel);
-> +		if (ret < 0)
-> +			return ret;
-> +	}
-> +	panel->enabled = false;
->  
->  	return 0;
->  }
-> diff --git a/include/drm/drm_panel.h b/include/drm/drm_panel.h
-> index 432fab2347eb..c6cf75909389 100644
-> --- a/include/drm/drm_panel.h
-> +++ b/include/drm/drm_panel.h
-> @@ -198,6 +198,20 @@ struct drm_panel {
->  	 * the panel is powered up.
->  	 */
->  	bool prepare_prev_first;
-> +
-> +	/**
-> +	 * @prepared:
-> +	 *
-> +	 * If true then the panel has been prepared.
-> +	 */
-> +	bool prepared;
-> +
-> +	/**
-> +	 * @enabled:
-> +	 *
-> +	 * If true then the panel has been enabled.
-> +	 */
-> +	bool enabled;
->  };
->  
->  void drm_panel_init(struct drm_panel *panel, struct device *dev,
-> -- 
-> 2.40.1.698.g37aff9b760-goog
-> 
-
-Thank you for looking into this more. It's one of the last QOL bugs
-for some devices I'm working on, even if the end result is no big
-deal (the other QOL bug involves a WARN on probing a rotated panel).
