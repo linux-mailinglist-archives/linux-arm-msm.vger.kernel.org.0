@@ -2,151 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B0B270FD92
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 20:15:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1119E70FD9A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 20:16:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231688AbjEXSPB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 14:15:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47658 "EHLO
+        id S235685AbjEXSQz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 14:16:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229591AbjEXSPA (ORCPT
+        with ESMTP id S235996AbjEXSQw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 14:15:00 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8737798;
-        Wed, 24 May 2023 11:14:58 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1684952085; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=Bi+o9EhqUBz+vngYotyvibyzjoU5I0xOePtrwM/AbFH0OVmr6UqXFWM4OleDSBtfyw
-    Wty1QmVi5ZwsApOg0c4k9Wn9FECPB1B9Nau4rVDrI41Kv1kLqi81qrOxn2E85WrGtuQI
-    20HE1hCJohJaWkL3H3vMozZYIxxlJXQQINUuNvznKoY5FCCP7O8kSTMZgpHEprKfA3mm
-    +WKRSQE0u2GmDVoF9zHUAyXqqNUyoCkTWG0fE0qUBa0XcGhrMtxVOOTnrfokzJQJb1ad
-    WIi4ma7Gb/TvTmuYZ4bPrflMspiEoa9XvRgS2XrBTHICNqMgKZVJ6ot/+jA7Q8UZV6yv
-    ePOw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1684952085;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=ebMjJAQLyC7d5uZBcrDbK4kzzjssGBQJQs+ymJkCW0o=;
-    b=PY6chqOzsqwO9h8bnO+gFbOB3sYwqDA4SnMqy6NFcP0So1544F1s8S0NlLli4G+jWu
-    8Tp9Ivp5c7SW6OmMhHzyxd92k60g2kYVn4mmkRbU/cwZLDFA9LpAxP+MNK0dlWN40RcT
-    z7LOcxU1UhIKK7Nqi8j01QPnucoHY7iVoVREHWfygmcYTouFue1817dFSSQZRoJOQmhr
-    qu/OauQrfzs+TKP4LDP8Kc9rM+4w96LyOeaRZ77YaQjqDzAmMShQpuqmAe5TeAz3FHq8
-    6Ukp7ItOCrtYN87M3Q6SZZg9e4bkVtA/AUUqqbm88/d+PDgjatEes2nfsxhyvaaC0AnK
-    +xOg==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1684952085;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=ebMjJAQLyC7d5uZBcrDbK4kzzjssGBQJQs+ymJkCW0o=;
-    b=gCipYpstZUxMWzmMtbzfYywFa0p7z1r/hLWElZmhBqoH9+xnxOTnGvbmrbebQzF8ku
-    VIjTS6HDXMz3SAmBjT5fF9LIMA3k/gRZo/ldHkuFTwLIT7LTfITIRWn3lbX0bqkYS3s0
-    oIcfDvImfnwBYQVRCHshRNKgQCUE9BCJdUr9iZKOjRhJSyJDSVbzmymbBxphmIjWA+O2
-    HONv+hCrCLSoPUo//JxfIQmNYV8ctMEhamOikibbJ46l9r9LxAuef1VqVmQpNVV7DwSc
-    WQyYns8TYpLLdzFc3OQjRoGsJKcGnncsPBDHA10k2zh6wWOMJvX9BP8+kgNlmnn3smjL
-    1wKw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1684952085;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=ebMjJAQLyC7d5uZBcrDbK4kzzjssGBQJQs+ymJkCW0o=;
-    b=AcHTJRa7hcIGqmJtHAZLEtrKxDeYEgt/omI4t5D46LvbJmpSYt2Nj3nt9uSiaXMA9H
-    2QTiM4FiZxIrQWWnibDQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8Z+J1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
-    with ESMTPSA id j6420az4OIEiUJW
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Wed, 24 May 2023 20:14:44 +0200 (CEST)
-Date:   Wed, 24 May 2023 20:14:37 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: msm8953: Add BLSP DMAs for I2C
-Message-ID: <ZG5UDYXLkfRK0dTy@gerhold.net>
-References: <20230422-msm8953-blsp-dma-v2-1-076134481b1b@z3ntu.xyz>
+        Wed, 24 May 2023 14:16:52 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F96D12E;
+        Wed, 24 May 2023 11:16:46 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34OGnG4U031495;
+        Wed, 24 May 2023 18:16:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=NJhzwIdM1BxN04Etl/rJz3AbfoxN539FZSAiRZAPW+g=;
+ b=CGWrjTBG8qup/l35niVY9X+MyR8SM0oT+kjFI4CvMkaX7LbIEQflszHHHbpQN8miTHy7
+ vKyB1gXoHZRG38vJdHvW3YmqvkFQl7J/vnvOWmADfsppnRQkWivTbwUpNQ44i1/U+0fe
+ Z2yab7te8inva1y1MASHxJTZ/EwxtDOjKt6GJsneQN2oOLqi+puILwQmQ/OMxmnRRQXP
+ lXPxeL2pVqXlcYm6zvllVXRmpbdTWeAJlZXpA/E6TOpLMnm6q/UJjh1lbxKrSS+6TSeR
+ jsMZme7CMsMh4oIZ1TllYurMu2e5H7zOR3KrKT7Krb/ydoR+7XOLPbl2hDT2bOy+WUHq dQ== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qscpmspev-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 24 May 2023 18:16:41 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34OIGeM0008093
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 24 May 2023 18:16:40 GMT
+Received: from [10.110.74.38] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 24 May
+ 2023 11:16:40 -0700
+Message-ID: <47c0faf0-f855-d3c4-6825-e51a1a1a7c83@quicinc.com>
+Date:   Wed, 24 May 2023 11:16:39 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230422-msm8953-blsp-dma-v2-1-076134481b1b@z3ntu.xyz>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH v2 2/4] soc: qcom: smem: introduce qcom_smem_get_msm_id()
+Content-Language: en-US
+To:     Robert Marko <robimarko@gmail.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <ilia.lin@kernel.org>, <rafael@kernel.org>,
+        <viresh.kumar@linaro.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>
+CC:     <ansuelsmth@gmail.com>
+References: <20230524162329.819770-1-robimarko@gmail.com>
+ <20230524162329.819770-2-robimarko@gmail.com>
+From:   Trilok Soni <quic_tsoni@quicinc.com>
+In-Reply-To: <20230524162329.819770-2-robimarko@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: ezDbxQBj6CWonh-ZhtM3ChyaB8MBfrLj
+X-Proofpoint-GUID: ezDbxQBj6CWonh-ZhtM3ChyaB8MBfrLj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-24_13,2023-05-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ mlxlogscore=999 clxscore=1011 priorityscore=1501 adultscore=0
+ malwarescore=0 bulkscore=0 spamscore=0 suspectscore=0 mlxscore=0
+ phishscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2305240151
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 23, 2023 at 10:36:49PM +0200, Luca Weiss wrote:
-> MSM8953 has two DMA controllers for the various I2C, SPI and UART
-> busses. Add the nodes and configure all the I2C nodes so that the driver
-> can use the DMA.
+On 5/24/2023 9:23 AM, Robert Marko wrote:
+> Introduce a helper to return the SoC SMEM ID, which is used to identify the
+> exact SoC model as there may be differences in the same SoC family.
 > 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
-> Changes in v2:
-> - Fix subject line, add "msm8953" (thanks Alexey)
-> - Pick up tags
-> - Link to v1: https://lore.kernel.org/r/20230422-msm8953-blsp-dma-v1-1-0024801bb587@z3ntu.xyz
-> ---
->  arch/arm64/boot/dts/qcom/msm8953.dtsi | 48 +++++++++++++++++++++++++++++++++++
->  1 file changed, 48 insertions(+)
+> Currently, cpufreq-nvmem does this completely in the driver and there has
+> been more interest expresed for other drivers to use this information so
+> lets expose a common helper to prevent redoing it in individual drivers
+> since this field is present on every SMEM table version.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> index 602cb188a635..c9b589353918 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-> @@ -1274,6 +1274,19 @@ opp-200000000 {
->  			};
->  		};
->  
-> +		blsp1_dma: dma-controller@7884000 {
-> +			compatible = "qcom,bam-v1.7.0";
-> +			reg = <0x07884000 0x1f000>;
-> +			interrupts = <GIC_SPI 238 IRQ_TYPE_LEVEL_HIGH>;
-> +			clocks = <&gcc GCC_BLSP1_AHB_CLK>;
-> +			clock-names = "bam_clk";
-> +			num-channels = <12>;
-> +			#dma-cells = <1>;
-> +			qcom,ee = <0>;
-> +			qcom,num-ees = <4>;
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+>   drivers/soc/qcom/smem.c       | 19 +++++++++++++++++++
+>   include/linux/soc/qcom/smem.h |  2 ++
+>   2 files changed, 21 insertions(+)
+> 
+> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+> index 6be7ea93c78c..0d6ba9bce8cb 100644
+> --- a/drivers/soc/qcom/smem.c
+> +++ b/drivers/soc/qcom/smem.c
+> @@ -14,6 +14,7 @@
+>   #include <linux/sizes.h>
+>   #include <linux/slab.h>
+>   #include <linux/soc/qcom/smem.h>
+> +#include <linux/soc/qcom/socinfo.h>
+>   
+>   /*
+>    * The Qualcomm shared memory system is a allocate only heap structure that
+> @@ -772,6 +773,24 @@ phys_addr_t qcom_smem_virt_to_phys(void *p)
+>   }
+>   EXPORT_SYMBOL(qcom_smem_virt_to_phys);
+>   
+> +/**
+> + * qcom_smem_get_msm_id() - return the SoC ID
+> + *
+> + * Look up SoC ID from HW/SW build ID and return it.
+> + */
+> +int qcom_smem_get_msm_id(void)
+> +{
+> +	size_t len;
+> +	struct socinfo *info;
+> +
+> +	info = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_HW_SW_BUILD_ID, &len);
+> +	if (IS_ERR(info))
+> +		return PTR_ERR(info);
+> +
+> +	return __le32_to_cpu(info->id);
+> +}
+> +EXPORT_SYMBOL(qcom_smem_get_msm_id);
 
-You can omit num-channels/qcom,num-ees here if you have a clock.
+EXPORT_SYMBOL_GPL please?
 
-"dmaengine: qcom: bam_dma: allow omitting num-{channels,ees}" [1] helps
-with doing this, although it also works without the patch. (The patch
-just avoids a non-critical error in dmesg...)
+Please change it for other symbols in the driver as well w/ separate patch.
 
-[1]: https://git.kernel.org/pub/scm/linux/kernel/git/vkoul/dmaengine.git/commit/?id=8975dd41a9dbca3b47f7b8dac5bc4dfb23011000
+---Trilok Soni
 
-> +		blsp2_dma: dma-controller@7ac4000 {
-> +			compatible = "qcom,bam-v1.7.0";
-> +			reg = <0x07ac4000 0x1f000>;
-> +			interrupts = <GIC_SPI 239 IRQ_TYPE_LEVEL_HIGH>;
-> +			clocks = <&gcc GCC_BLSP2_AHB_CLK>;
-> +			clock-names = "bam_clk";
-> +			num-channels = <12>;
-> +			#dma-cells = <1>;
-> +			qcom,ee = <0>;
-> +			qcom,num-ees = <4>;
 
-Same here.
-
-Thanks,
-Stephan
