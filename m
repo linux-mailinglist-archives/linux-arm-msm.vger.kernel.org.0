@@ -2,58 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D47070F8C6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 16:32:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C469270F8F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 16:44:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232950AbjEXOcd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 10:32:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57220 "EHLO
+        id S235484AbjEXOoa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 10:44:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229524AbjEXOcd (ORCPT
+        with ESMTP id S231575AbjEXOo3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 10:32:33 -0400
+        Wed, 24 May 2023 10:44:29 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CCFF12E;
-        Wed, 24 May 2023 07:32:32 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 88017C1;
+        Wed, 24 May 2023 07:44:27 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id B038D63DCE;
-        Wed, 24 May 2023 14:32:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 157BAC433EF;
-        Wed, 24 May 2023 14:32:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684938751;
-        bh=ifJBDlw42lQEKWaVj8j5eUTS/S5Ep1/jzziFfDLCiO4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=melxsfpBFtterXW0JEI2hR1uTm+mQVU/WRPDBctYpMXB5oHsEhxirRtVJoWadJbB+
-         wm+j+6QppuphP9oXHCaBdahw5H1ZYuPJUGdgtdFdW95izchtrOT21G3jnyq5mUw0lJ
-         da0i404+4aND5DSCX7KkT6yqfSSozVbvxwxa5GR+IW0ZKRMG8NLMIqO+9wzfZ8WoRg
-         mcJuRH4XY3/uDJ7sSeKYUETKI3wLbdr7RANte6nVYD1eIH7ngUhE1mz4k1CB/j9IzN
-         w41+PPU/Eu6FyDYyf13bHZEbaY7cUa/XxVEZexzaGtTJXHdMUTf+JaXpocqTBk0jp8
-         h8MWRCYi6pl5Q==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1q1pXY-0000jp-U7; Wed, 24 May 2023 16:32:37 +0200
-Date:   Wed, 24 May 2023 16:32:36 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Pavel Machek <pavel@ucw.cz>, Lee Jones <lee@kernel.org>
-Cc:     Anjelique Melendez <quic_amelende@quicinc.com>,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, linux-leds@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Steev Klimaszewski <steev@kali.org>
-Subject: Re: [PATCH v2] leds: qcom-lpg: Fix PWM period limits
-Message-ID: <ZG4gBE1rqkMIllV3@hovoldconsulting.com>
-References: <20230515162604.649203-1-quic_bjorande@quicinc.com>
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2355D63322;
+        Wed, 24 May 2023 14:44:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE7E6C433D2;
+        Wed, 24 May 2023 14:44:24 +0000 (UTC)
+Message-ID: <f9219cb0-2cac-bace-20f7-27005cd0e6f1@xs4all.nl>
+Date:   Wed, 24 May 2023 16:44:22 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230515162604.649203-1-quic_bjorande@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCHv3] media: venus: provide video device lock
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Sergey Senozhatsky <senozhatsky@chromium.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Tomasz Figa <tfiga@chromium.org>, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230524135737.2557837-1-senozhatsky@chromium.org>
+ <20230524141312.2558810-1-senozhatsky@chromium.org>
+ <2c732d80-1a18-7a34-03a8-16afb0de5ea2@linaro.org>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <2c732d80-1a18-7a34-03a8-16afb0de5ea2@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-6.8 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,NICE_REPLY_A,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -62,57 +55,97 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 15, 2023 at 09:26:04AM -0700, Bjorn Andersson wrote:
-> The introduction of high resolution PWM support changed the order of the
-> operations in the calculation of min and max period. The result in both
-> divisions is in most cases a truncation to 0, which limits the period to
-> the range of [0, 0].
-> 
-> Both numerators (and denominators) are within 64 bits, so the whole
-> expression can be put directly into the div64_u64, instead of doing it
-> partially.
-> 
-> Fixes: b00d2ed37617 ("leds: rgb: leds-qcom-lpg: Add support for high resolution PWM")
-> Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-> Tested-by: Steev Klimaszewski <steev@kali.org>
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+On 24/05/2023 16:29, Bryan O'Donoghue wrote:
+> On 24/05/2023 15:12, Sergey Senozhatsky wrote:
+>> Video device has to provide ->lock so that __video_do_ioctl()
+>> can serialize IOCTL calls. Provided dedicated enc/dec mutex-s
+>> for that purpose.
+>>
+>> Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 
-Tested-by: Johan Hovold <johan+linaro@kernel.org>
+Since these are m2m devices, I think this should set vfh->m2m_ctx->q_lock
+instead.
 
-Pavel or Lee, could you pick this one up for 6.4 as it fixes a
-regression (e.g. broken backlight on a number of laptops like the X13s)?
+The vb2_queue is per filehandle for such devices, so by just setting
+vdev->lock you will have all vb2_queues use the same mutex.
 
-> ---
-> 
-> Changes since v1:
-> - Reworded first sentence to express that it's the order and not the
->   previously non-existent parenthesis that changed...
-> - Picked up review tags.
-> 
->  drivers/leds/rgb/leds-qcom-lpg.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
-> index c9cea797a697..7287fadc00df 100644
-> --- a/drivers/leds/rgb/leds-qcom-lpg.c
-> +++ b/drivers/leds/rgb/leds-qcom-lpg.c
-> @@ -312,14 +312,14 @@ static int lpg_calc_freq(struct lpg_channel *chan, uint64_t period)
->  		max_res = LPG_RESOLUTION_9BIT;
->  	}
->  
-> -	min_period = (u64)NSEC_PER_SEC *
-> -			div64_u64((1 << pwm_resolution_arr[0]), clk_rate_arr[clk_len - 1]);
-> +	min_period = div64_u64((u64)NSEC_PER_SEC * (1 << pwm_resolution_arr[0]),
-> +			       clk_rate_arr[clk_len - 1]);
->  	if (period <= min_period)
->  		return -EINVAL;
->  
->  	/* Limit period to largest possible value, to avoid overflows */
-> -	max_period = (u64)NSEC_PER_SEC * max_res * LPG_MAX_PREDIV *
-> -			div64_u64((1 << LPG_MAX_M), 1024);
-> +	max_period = div64_u64((u64)NSEC_PER_SEC * max_res * LPG_MAX_PREDIV * (1 << LPG_MAX_M),
-> +			       1024);
->  	if (period > max_period)
->  		period = max_period;
+Instead the struct v4l2_m2m_ctx q_lock pointer, if set, will use that
+mutex for all vb2 operations.
 
-Johan
+I think you can set it to the 'lock' mutex in struct venus_inst.
+
+Regards,
+
+	Hans
+
+>> ---
+>>   drivers/media/platform/qcom/venus/core.h | 4 ++++
+>>   drivers/media/platform/qcom/venus/vdec.c | 2 ++
+>>   drivers/media/platform/qcom/venus/venc.c | 2 ++
+>>   3 files changed, 8 insertions(+)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+>> index 4f81669986ba..b6c9a653a007 100644
+>> --- a/drivers/media/platform/qcom/venus/core.h
+>> +++ b/drivers/media/platform/qcom/venus/core.h
+>> @@ -113,7 +113,9 @@ struct venus_format {
+>>    * @opp_pmdomain: an OPP power-domain
+>>    * @resets: an array of reset signals
+>>    * @vdev_dec:    a reference to video device structure for decoder instances
+>> + * @vdev_dec_lock: decoder instance video device ioctl lock
+>>    * @vdev_enc:    a reference to video device structure for encoder instances
+>> + * @vdev_enc_lock: encoder instance video device ioctl lock
+>>    * @v4l2_dev:    a holder for v4l2 device structure
+>>    * @res:        a reference to venus resources structure
+>>    * @dev:        convenience struct device pointer
+>> @@ -165,7 +167,9 @@ struct venus_core {
+>>       struct device *opp_pmdomain;
+>>       struct reset_control *resets[VIDC_RESETS_NUM_MAX];
+>>       struct video_device *vdev_dec;
+>> +    struct mutex vdev_dec_lock;
+>>       struct video_device *vdev_enc;
+>> +    struct mutex vdev_enc_lock;
+>>       struct v4l2_device v4l2_dev;
+>>       const struct venus_resources *res;
+>>       struct device *dev;
+>> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+>> index 51a53bf82bd3..7e9363714bfb 100644
+>> --- a/drivers/media/platform/qcom/venus/vdec.c
+>> +++ b/drivers/media/platform/qcom/venus/vdec.c
+>> @@ -1760,6 +1760,7 @@ static int vdec_probe(struct platform_device *pdev)
+>>       if (!vdev)
+>>           return -ENOMEM;
+>>   +    mutex_init(&core->vdev_dec_lock);
+>>       strscpy(vdev->name, "qcom-venus-decoder", sizeof(vdev->name));
+>>       vdev->release = video_device_release;
+>>       vdev->fops = &vdec_fops;
+>> @@ -1767,6 +1768,7 @@ static int vdec_probe(struct platform_device *pdev)
+>>       vdev->vfl_dir = VFL_DIR_M2M;
+>>       vdev->v4l2_dev = &core->v4l2_dev;
+>>       vdev->device_caps = V4L2_CAP_VIDEO_M2M_MPLANE | V4L2_CAP_STREAMING;
+>> +    vdev->lock = &core->vdev_dec_lock;
+>>         ret = video_register_device(vdev, VFL_TYPE_VIDEO, -1);
+>>       if (ret)
+>> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+>> index 4666f42feea3..8522ed339d5d 100644
+>> --- a/drivers/media/platform/qcom/venus/venc.c
+>> +++ b/drivers/media/platform/qcom/venus/venc.c
+>> @@ -1558,6 +1558,7 @@ static int venc_probe(struct platform_device *pdev)
+>>       if (!vdev)
+>>           return -ENOMEM;
+>>   +    mutex_init(&core->vdev_enc_lock);
+>>       strscpy(vdev->name, "qcom-venus-encoder", sizeof(vdev->name));
+>>       vdev->release = video_device_release;
+>>       vdev->fops = &venc_fops;
+>> @@ -1565,6 +1566,7 @@ static int venc_probe(struct platform_device *pdev)
+>>       vdev->vfl_dir = VFL_DIR_M2M;
+>>       vdev->v4l2_dev = &core->v4l2_dev;
+>>       vdev->device_caps = V4L2_CAP_VIDEO_M2M_MPLANE | V4L2_CAP_STREAMING;
+>> +    vdev->lock = &core->vdev_enc_lock;
+>>         ret = video_register_device(vdev, VFL_TYPE_VIDEO, -1);
+>>       if (ret)
+> 
+> LGTM
+> 
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
