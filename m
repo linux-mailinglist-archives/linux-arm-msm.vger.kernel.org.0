@@ -2,71 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 253F070F820
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 15:57:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5946D70F840
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 16:06:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235623AbjEXN5s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 09:57:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44260 "EHLO
+        id S235770AbjEXOGy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 10:06:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234058AbjEXN5r (ORCPT
+        with ESMTP id S232969AbjEXOGx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 09:57:47 -0400
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7287D8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 06:57:45 -0700 (PDT)
-Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-64d41d8bc63so757013b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 06:57:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1684936665; x=1687528665;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QH1xIkjrKZX3F59cGUOpHWW9Vjey4EzboES70oLYSZQ=;
-        b=VUxLRQzNNKri4Tj0XK05U/xiTy3hIP2B+G8geCwkiVx+lypv4H+wmw7wUt3N2Y8EV5
-         tSkRXnqUXK9yuVLKf65tCsMHdLJDFpRmI4vMw9W0ZRLJpfCGsG0vXIjuAyqw9pzU54IC
-         0QEo48DudNfxdZDaVBmqStgRp88cGkN8W0NqA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684936665; x=1687528665;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QH1xIkjrKZX3F59cGUOpHWW9Vjey4EzboES70oLYSZQ=;
-        b=S+JqBtLDd8vmcqi1zOR8rHp6QU3JvtCzuao1kOgGabPVN91PyL4+0nCI1++SNp99jh
-         zwAoiPvS+U0sWoBQ7z/Ydc+f9oFnANPx23OHsgjliy/XalMVlJs2QecPRNSriJOSvETJ
-         ckOBm7BARKdAP+3Xic7f80TgP+QEJPSelK7ZogSUbHfpaFz2E0I3RN/KsbgW5pWO1QoD
-         0AlEWqcj+Lphzmdk+Vf6w5czkjjueA3p8EEgtIQOyyiuQh7vlBCMaN3QsQkNTFcuPp/r
-         m+EsxthNO7s7iXJxM1RfIPpnkskEVJRE0rxfHgGZPvRLODlOQbs1mFn4bzYL8Jh1RG+d
-         0Z/A==
-X-Gm-Message-State: AC+VfDy5QQW8HwtUxVOyfrtiirqYnPv3VrEInDjAnCH0DUraZI5Qdjah
-        cpRFf8CFjHCYbZwMAynerPMW8Q==
-X-Google-Smtp-Source: ACHHUZ7eRyyD0FFws1xLpCMbIUCsVCdWzhM2L/agesnoQb+eXQrXI+dV5EHW7fFQgcz4Fg9N5dHczw==
-X-Received: by 2002:a05:6a00:158e:b0:64d:3e99:83a5 with SMTP id u14-20020a056a00158e00b0064d3e9983a5mr4375430pfk.26.1684936665348;
-        Wed, 24 May 2023 06:57:45 -0700 (PDT)
-Received: from tigerii.tok.corp.google.com ([2401:fa00:8f:203:9a0f:9704:f5b2:168b])
-        by smtp.gmail.com with ESMTPSA id x42-20020a056a000bea00b0064f51ee5b90sm1480370pfu.62.2023.05.24.06.57.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 May 2023 06:57:44 -0700 (PDT)
-From:   Sergey Senozhatsky <senozhatsky@chromium.org>
-To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Tomasz Figa <tfiga@chromium.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Sergey Senozhatsky <senozhatsky@chromium.org>
-Subject: [PATCHv2] media: venus: provide video device lock
-Date:   Wed, 24 May 2023 22:56:16 +0900
-Message-ID: <20230524135737.2557837-1-senozhatsky@chromium.org>
-X-Mailer: git-send-email 2.40.1.698.g37aff9b760-goog
-In-Reply-To: <20230524013732.2503561-1-senozhatsky@chromium.org>
-References: <20230524013732.2503561-1-senozhatsky@chromium.org>
+        Wed, 24 May 2023 10:06:53 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD69111D;
+        Wed, 24 May 2023 07:06:51 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34OC3AWM022584;
+        Wed, 24 May 2023 14:06:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=nnv6g827kCYfW8QRZDbcfbRQb1m9sQ1h0BY5HuW7+dc=;
+ b=pjCMUbIEvi2j7E+mwWPZhEhzLu9Y6N2gkqAj7m78hzsKmBDY5w4zEB3kM6iyfkv3l3w7
+ UGElxhzte7r4sufYWxpyWiXy9mlMwdqoRa/Wu5qRuMrOujwG42t9erbD7DquHY3QWtRW
+ XzW4DBvkBoC14sAJUpFRycueHvgKy9WfUdZutrE/aSQQOUWW9RNq/5QVVgkgpIWym0Ek
+ 3vyv1VskCYb8j/ojBkZprrwgsQV+fGe8/61VZEY4WaVzP3CNBO74Ykxn7gqwHo/39Phe
+ 75FxAQxNjd9AIWUKpUapt0EI8dubgDPP7TL8S7rLALzWV8RYYfZYZlf+Ivwyl3zHRpen xQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qsf880q8a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 24 May 2023 14:06:44 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34OE6hkJ008495
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 24 May 2023 14:06:43 GMT
+Received: from [10.217.216.177] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 24 May
+ 2023 07:06:39 -0700
+Message-ID: <772ad12e-2865-4c14-d6b8-80c99a30d802@quicinc.com>
+Date:   Wed, 24 May 2023 19:36:26 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH V4 2/3] clk: qcom: videocc-sm8450: Add video clock
+ controller driver for SM8450
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>
+CC:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <quic_skakitap@quicinc.com>, <quic_imrashai@quicinc.com>,
+        <quic_ajipan@quicinc.com>
+References: <20230509172148.7627-1-quic_tdas@quicinc.com>
+ <20230509172148.7627-3-quic_tdas@quicinc.com>
+ <CAA8EJprHgOaiH2CFKmz_E+NvJpA+DRNE-r1wQXbSfYi+5qoBmA@mail.gmail.com>
+ <2b013e9d-e4d9-075f-519b-0ce5c4f62894@quicinc.com>
+ <CAA8EJprUd-_9D+Xt=4vrXuzYuadhJFu1mA6Fow3K63U=0N2g5A@mail.gmail.com>
+From:   Jagadeesh Kona <quic_jkona@quicinc.com>
+In-Reply-To: <CAA8EJprUd-_9D+Xt=4vrXuzYuadhJFu1mA6Fow3K63U=0N2g5A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: jL9GJ6AWI6k5EhVxKZofUObgHLhkv7X1
+X-Proofpoint-GUID: jL9GJ6AWI6k5EhVxKZofUObgHLhkv7X1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-24_09,2023-05-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
+ priorityscore=1501 adultscore=0 bulkscore=0 spamscore=0 malwarescore=0
+ lowpriorityscore=0 suspectscore=0 mlxlogscore=999 mlxscore=0 phishscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305240115
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,81 +92,176 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Video device has to provide ->lock so that __video_do_ioctl()
-can serialize IOCTL calls. Provided dedicated enc/dec mutex-s
-for that purpose.
+Hi Dmitry,
 
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
----
- drivers/media/platform/qcom/venus/core.h | 4 ++++
- drivers/media/platform/qcom/venus/vdec.c | 2 ++
- drivers/media/platform/qcom/venus/venc.c | 2 ++
- 3 files changed, 8 insertions(+)
+Thanks for your review!
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 4f81669986ba..23259fa114c7 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -113,7 +113,9 @@ struct venus_format {
-  * @opp_pmdomain: an OPP power-domain
-  * @resets: an array of reset signals
-  * @vdev_dec:	a reference to video device structure for decoder instances
-+ * @@vdev_dec_lock: decoder instance video device ioctl lock
-  * @vdev_enc:	a reference to video device structure for encoder instances
-+ * @@vdev_enc_lock: encoder instance video device ioctl lock
-  * @v4l2_dev:	a holder for v4l2 device structure
-  * @res:		a reference to venus resources structure
-  * @dev:		convenience struct device pointer
-@@ -165,7 +167,9 @@ struct venus_core {
- 	struct device *opp_pmdomain;
- 	struct reset_control *resets[VIDC_RESETS_NUM_MAX];
- 	struct video_device *vdev_dec;
-+	struct mutex vdev_dec_lock;
- 	struct video_device *vdev_enc;
-+	struct mutex vdev_enc_lock;
- 	struct v4l2_device v4l2_dev;
- 	const struct venus_resources *res;
- 	struct device *dev;
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 51a53bf82bd3..7e9363714bfb 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1760,6 +1760,7 @@ static int vdec_probe(struct platform_device *pdev)
- 	if (!vdev)
- 		return -ENOMEM;
- 
-+	mutex_init(&core->vdev_dec_lock);
- 	strscpy(vdev->name, "qcom-venus-decoder", sizeof(vdev->name));
- 	vdev->release = video_device_release;
- 	vdev->fops = &vdec_fops;
-@@ -1767,6 +1768,7 @@ static int vdec_probe(struct platform_device *pdev)
- 	vdev->vfl_dir = VFL_DIR_M2M;
- 	vdev->v4l2_dev = &core->v4l2_dev;
- 	vdev->device_caps = V4L2_CAP_VIDEO_M2M_MPLANE | V4L2_CAP_STREAMING;
-+	vdev->lock = &core->vdev_dec_lock;
- 
- 	ret = video_register_device(vdev, VFL_TYPE_VIDEO, -1);
- 	if (ret)
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 4666f42feea3..8522ed339d5d 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -1558,6 +1558,7 @@ static int venc_probe(struct platform_device *pdev)
- 	if (!vdev)
- 		return -ENOMEM;
- 
-+	mutex_init(&core->vdev_enc_lock);
- 	strscpy(vdev->name, "qcom-venus-encoder", sizeof(vdev->name));
- 	vdev->release = video_device_release;
- 	vdev->fops = &venc_fops;
-@@ -1565,6 +1566,7 @@ static int venc_probe(struct platform_device *pdev)
- 	vdev->vfl_dir = VFL_DIR_M2M;
- 	vdev->v4l2_dev = &core->v4l2_dev;
- 	vdev->device_caps = V4L2_CAP_VIDEO_M2M_MPLANE | V4L2_CAP_STREAMING;
-+	vdev->lock = &core->vdev_enc_lock;
- 
- 	ret = video_register_device(vdev, VFL_TYPE_VIDEO, -1);
- 	if (ret)
--- 
-2.40.1.698.g37aff9b760-goog
+On 5/19/2023 6:19 PM, Dmitry Baryshkov wrote:
+> On Fri, 19 May 2023 at 13:53, Taniya Das <quic_tdas@quicinc.com> wrote:
+>>
+>> Hello Dmitry,
+>>
+>> Thank you for your review.
+>>
+>> On 5/10/2023 2:03 AM, Dmitry Baryshkov wrote:
+>>> On Tue, 9 May 2023 at 20:22, Taniya Das <quic_tdas@quicinc.com> wrote:
+>>>>
+>>>> Add support for the video clock controller driver for peripheral clock
+>>>> clients to be able to request for video cc clocks.
+>>>>
+>>>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>>>> ---
+>>>> Changes since V3:
+>>>>    - Use lower case hex.
+>>>>    - Check the return value here and bail out early on failure in probe.
+>>>>
+>>>> Changes since V2:
+>>>>    - Update the header file name to match the latest upstream header
+>>>>      files.
+>>>>
+>>>> Changes since V1:
+>>>>    - Use DT indices instead of fw_name.
+>>>>    - Replace pm_runtime_enable with devm_pm_runtime_enable.
+>>>>    - Change license to GPL from GPL V2.
+>>>>
+>>>>    drivers/clk/qcom/Kconfig          |   9 +
+>>>>    drivers/clk/qcom/Makefile         |   1 +
+>>>>    drivers/clk/qcom/videocc-sm8450.c | 461 ++++++++++++++++++++++++++++++
+>>>>    3 files changed, 471 insertions(+)
+>>>>    create mode 100644 drivers/clk/qcom/videocc-sm8450.c
+>>>
+>>> [skipped]
+>>>
+>>>
+>>>> +static const struct qcom_reset_map video_cc_sm8450_resets[] = {
+>>>> +       [CVP_VIDEO_CC_INTERFACE_BCR] = { 0x80e0 },
+>>>> +       [CVP_VIDEO_CC_MVS0_BCR] = { 0x8098 },
+>>>> +       [CVP_VIDEO_CC_MVS0C_BCR] = { 0x8048 },
+>>>> +       [CVP_VIDEO_CC_MVS1_BCR] = { 0x80bc },
+>>>> +       [CVP_VIDEO_CC_MVS1C_BCR] = { 0x8070 },
+>>>
+>>> Can we have a common VIDEO_CC prefix here please?
+>>
+>> The BCR names are coming from hardware plan and software interface, thus
+>> we would like to keep them intact.
+> 
+> We have had a similar discussion on the sm8350-videocc driver. While
+> keeping the hardware names is nice, name uniformity also should not be
+> neglected. It is much easier to follow and verify the patches if all
+> videocc resets start with VIDEO_CC name.
+> 
 
+As mentioned earlier, the BCR names are coming from hardware plan. 
+Client drivers also use hardware plan to refer to these names. Hence we 
+would like to keep these names aligned as per the hardware plan.
+
+>>
+>>
+>>>
+>>>> +       [VIDEO_CC_MVS0C_CLK_ARES] = { 0x8064, 2 },
+>>>> +       [VIDEO_CC_MVS1C_CLK_ARES] = { 0x808c, 2 },
+>>>> +};
+>>>> +
+>>
+>> The ARES resets are coming from VideoCC clocks(CBCR), hence the name
+>> starts with VIDEO_CC.
+>>
+>>>> +static const struct regmap_config video_cc_sm8450_regmap_config = {
+>>>> +       .reg_bits = 32,
+>>>> +       .reg_stride = 4,
+>>>> +       .val_bits = 32,
+>>>> +       .max_register = 0x9f4c,
+>>>> +       .fast_io = true,
+>>>> +};
+>>>> +
+>>>> +static struct qcom_cc_desc video_cc_sm8450_desc = {
+>>>> +       .config = &video_cc_sm8450_regmap_config,
+>>>> +       .clks = video_cc_sm8450_clocks,
+>>>> +       .num_clks = ARRAY_SIZE(video_cc_sm8450_clocks),
+>>>> +       .resets = video_cc_sm8450_resets,
+>>>> +       .num_resets = ARRAY_SIZE(video_cc_sm8450_resets),
+>>>> +       .gdscs = video_cc_sm8450_gdscs,
+>>>> +       .num_gdscs = ARRAY_SIZE(video_cc_sm8450_gdscs),
+>>>> +};
+>>>> +
+>>>> +static const struct of_device_id video_cc_sm8450_match_table[] = {
+>>>> +       { .compatible = "qcom,sm8450-videocc" },
+>>>> +       { }
+>>>> +};
+>>>> +MODULE_DEVICE_TABLE(of, video_cc_sm8450_match_table);
+>>>> +
+>>>> +static int video_cc_sm8450_probe(struct platform_device *pdev)
+>>>> +{
+>>>> +       struct regmap *regmap;
+>>>> +       int ret;
+>>>> +
+>>>> +       ret = devm_pm_runtime_enable(&pdev->dev);
+>>>> +       if (ret)
+>>>> +               return ret;
+>>>> +
+>>>> +       ret = pm_runtime_resume_and_get(&pdev->dev);
+>>>> +       if (ret)
+>>>> +               return ret;
+>>>> +
+>>>> +       regmap = qcom_cc_map(pdev, &video_cc_sm8450_desc);
+>>>> +       if (IS_ERR(regmap)) {
+>>>> +               pm_runtime_put(&pdev->dev);
+>>>> +               return PTR_ERR(regmap);
+>>>> +       }
+>>>> +
+>>>> +       clk_lucid_evo_pll_configure(&video_cc_pll0, regmap, &video_cc_pll0_config);
+>>>> +       clk_lucid_evo_pll_configure(&video_cc_pll1, regmap, &video_cc_pll1_config);
+>>>> +
+>>>> +       /*
+>>>> +        * Keep clocks always enabled:
+>>>> +        *      video_cc_ahb_clk
+>>>> +        *      video_cc_sleep_clk
+>>>> +        *      video_cc_xo_clk
+>>>> +        */
+>>>> +       regmap_update_bits(regmap, 0x80e4, BIT(0), BIT(0));
+>>>> +       regmap_update_bits(regmap, 0x8130, BIT(0), BIT(0));
+>>>> +       regmap_update_bits(regmap, 0x8114, BIT(0), BIT(0));
+>>>> +
+>>>> +       ret = qcom_cc_really_probe(pdev, &video_cc_sm8450_desc, regmap);
+>>>> +
+>>>> +       pm_runtime_put(&pdev->dev);
+>>>> +
+>>>> +       return ret;
+>>>> +}
+>>>> +
+>>>> +static struct platform_driver video_cc_sm8450_driver = {
+>>>> +       .probe = video_cc_sm8450_probe,
+>>>> +       .driver = {
+>>>> +               .name = "video_cc-sm8450",
+>>>> +               .of_match_table = video_cc_sm8450_match_table,
+>>>> +       },
+>>>> +};
+>>>> +
+>>>> +static int __init video_cc_sm8450_init(void)
+>>>> +{
+>>>> +       return platform_driver_register(&video_cc_sm8450_driver);
+>>>> +}
+>>>> +subsys_initcall(video_cc_sm8450_init);
+>>>> +
+>>>> +static void __exit video_cc_sm8450_exit(void)
+>>>> +{
+>>>> +       platform_driver_unregister(&video_cc_sm8450_driver);
+>>>> +}
+>>>> +module_exit(video_cc_sm8450_exit);
+>>>
+>>> module_platform_driver() ?
+>>>
+>>
+>> We would like to keep the clock drivers all probed at subsys_initcall.
+>> We could revisit and update as cleanup if we want to move them to module
+>> init.
+> 
+> Any particular reason?
+> 
+
+We need to evaluate and validate if module_initcall works for us in all 
+the scenarios. We will revisit and post a cleanup patch once we conclude
+module_initcall works for us in all scenarios.
+
+Thanks & Regards,
+Jagadeesh
