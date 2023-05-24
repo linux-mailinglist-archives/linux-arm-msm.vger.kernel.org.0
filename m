@@ -2,90 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4329170F97F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 16:59:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38C2A70F9EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 May 2023 17:18:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235820AbjEXO71 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 10:59:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47654 "EHLO
+        id S234593AbjEXPSm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 11:18:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232201AbjEXO70 (ORCPT
+        with ESMTP id S233621AbjEXPSl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 10:59:26 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4759BE61
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 07:58:57 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-309553c5417so950058f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 07:58:57 -0700 (PDT)
+        Wed, 24 May 2023 11:18:41 -0400
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7926410B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 08:18:39 -0700 (PDT)
+Received: by mail-qk1-x72f.google.com with SMTP id af79cd13be357-75b1219506fso85367685a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 08:18:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684940335; x=1687532335;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
-         :subject:cc:to:from:user-agent:references:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dPTeVaA5yO30H5vPCNeErOYkc0AROqP1l6DiC6Tyn6I=;
-        b=vfpIgsnyUzdnKc4dwE+/96PjgIZvHt4dvbZ9oFQJRuK0CVK6zB1ExZEmqyOyDUEaMH
-         BPpbUfdQjZ0taYzA1AsrlvN1tRHUAtaLiRwO/ppPt3tSnmEbi/0JPy5s7QiEBux76KU1
-         +T0ASZwW7J5toOpu/nsp3pq2NfGxQd59XQfjtn70XB6B7U0d/h+ElY2TO2EwqmTVgQFV
-         4Bnu2oFUhNfw46W86ylzigop/8xarM12LGwz50nrnW2lI8914SzNVvR466awvrLz/Th8
-         2RTJ3NEnKOtlLRdaAzbNop6jsJMZCo+OvHfi+l+HAw/OtwY51swRPmgc8oYcxbSkPLMv
-         Jkfw==
+        d=linaro.org; s=google; t=1684941518; x=1687533518;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=R/hFOOQmfGx7+HJRZISAzOkWKz6d91kYsAkJvfc4b1M=;
+        b=GlTpJV4kZRYGt/6lomvT7DI9jwAt1o3eaE6UKh0EbQ9UaYYH7oqHym1V0YSJT9FIzN
+         eIz4btGMno/4jWk0e11WjlRcw5lX1s5gTophRENL8vx49mprjDbGNYDQBTGwK6DDmk8q
+         2+7CRswWoVWQMRvii9AdgvAhzmNcNwU+jh3rWqwFu7YP9WMy1u7504zmB7yLGbAl9l2X
+         eCzb/AQuhfJpNfx2NykzFTZgGGyZdI2ppo3g2Xtaicv8xkOERfxxX+Nu3qGdbHAY0BQg
+         S1JysCiY+l9lEUdkC43zqR5jU021oSve+AiQDwKHE1iZfLiOcMqIKgb8z265k8Q5Uord
+         a6rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684940335; x=1687532335;
-        h=content-transfer-encoding:mime-version:message-id:in-reply-to:date
-         :subject:cc:to:from:user-agent:references:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=dPTeVaA5yO30H5vPCNeErOYkc0AROqP1l6DiC6Tyn6I=;
-        b=CuLmOsW9OmZgflDd3IBZT2XmzooChchuqLhOUtW2W8WZ7oP/ifWumXI+Xe1eq2kbGu
-         8TliHqGIHCb5qbynTzn3978cmu6XBQbvntE0mLeXKQ9i5Xu1VEEkRgBGh/fwKUVSxMLo
-         1UoQwHaTMRebrTmfRSCGc3cvnrO7NoUexg9LVua24qozHvzDwJ5jXKxglBIEoZtzXzVe
-         aOqWGH/SWbX1UitgMl6fmIdl/UZ8BUVLyJ7V/1B8IFHmdJX+czszT67F99KuMEKM3sqh
-         IxvYI2ag7OkWAl56vb5fmkyFe6ekVOYBmyWyyGCzFDig2ED9I/sthWrVzBNjdtPUyYqB
-         W3bg==
-X-Gm-Message-State: AC+VfDwoCJqFvzO47+i/6X8hHWZvORL/ME9yfOraHbfSkKZ1Xk3haNFO
-        GD4EIwdehxzCpX3R6YSqkYJfUQ==
-X-Google-Smtp-Source: ACHHUZ6dUa6XUsPGDzubnTbiGkJc+yNunVFb4E6K7ba0Jf0QKNNJpz+ZBmF7UznoBG5dbpFM0aZNKQ==
-X-Received: by 2002:a1c:7907:0:b0:3f4:2e13:ccdc with SMTP id l7-20020a1c7907000000b003f42e13ccdcmr126352wme.0.1684940335257;
-        Wed, 24 May 2023 07:58:55 -0700 (PDT)
-Received: from zen.linaroharston ([85.9.250.243])
-        by smtp.gmail.com with ESMTPSA id l14-20020a7bc44e000000b003f60514bdd7sm2724611wmi.4.2023.05.24.07.58.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 May 2023 07:58:54 -0700 (PDT)
-Received: from zen (localhost [127.0.0.1])
-        by zen.linaroharston (Postfix) with ESMTP id 5C26E1FFBB;
-        Wed, 24 May 2023 15:58:54 +0100 (BST)
-References: <20230424231558.70911-1-quic_eberman@quicinc.com>
-User-agent: mu4e 1.11.6; emacs 29.0.91
-From:   Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v12 00/25] Drivers for Gunyah hypervisor
-Date:   Wed, 24 May 2023 15:57:42 +0100
-In-reply-to: <20230424231558.70911-1-quic_eberman@quicinc.com>
-Message-ID: <87fs7lwzbl.fsf@linaro.org>
+        d=1e100.net; s=20221208; t=1684941518; x=1687533518;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=R/hFOOQmfGx7+HJRZISAzOkWKz6d91kYsAkJvfc4b1M=;
+        b=LlIbJzlwlQ5izVenUOaKMToOvssIHUpEtAXuJ4EmmjHoa00jkcjsgR3OkmiMxOUW64
+         cqpOcvMiDknpA0od0yHBZjvCei90sxPEj2m0AVSy3q7kLuRioTCybQJ9gxsrNvtiTRWD
+         SkdC0KWQ7BbcbfkYoqMM+jlqJ2bLnB8RKBceHDbMissmEp2S0KIxRiDIYkrPRvf4BOj7
+         ntbDNUuyDxM3YFzIm6iEZIyl9BY8WqCE/PVKB15ms1D2fylWfuns5qY4Gd7xFjaSmac6
+         bMv7pZcMqptxJSX7s0JUy3ZXxXQO+cE2nyuR7bH2tpgxpj0XZvB2l4jtw7HtVqIaciU/
+         TR6g==
+X-Gm-Message-State: AC+VfDyEJnP684eIzeJoohAbdPW47+2SBSG1Kn5cQB4IilTEeECqdcNc
+        oh2clGyVoc3G9orYqy6589PdWKIcv37/EGF16guElNywLOFIxzZ5Am3n5Q==
+X-Google-Smtp-Source: ACHHUZ6kZRLtcm5Ivuq9/3a1vqVOZ2iGg8E7jPD0jtpCtTlhoIPAlGs2c2/MFBo5ONFujkNu2BUbVkjB++892s9FGsY=
+X-Received: by 2002:a37:b55:0:b0:75b:23a1:8e42 with SMTP id
+ 82-20020a370b55000000b0075b23a18e42mr7412299qkl.19.1684941518604; Wed, 24 May
+ 2023 08:18:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+References: <20230515145323.1693044-1-amit.pundir@linaro.org> <36e5798e-72e2-0212-fe61-94d0075099d2@leemhuis.info>
+In-Reply-To: <36e5798e-72e2-0212-fe61-94d0075099d2@leemhuis.info>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Wed, 24 May 2023 20:48:02 +0530
+Message-ID: <CAMi1Hd2ukv2iu343hJ+r9SzQ1eZjGB0YPHUB5oxjKwsJ4XKyww@mail.gmail.com>
+Subject: Re: [PATCH] Revert "regulator: qcom-rpmh: Revert "regulator:
+ qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS""
+To:     Linux regressions mailing list <regressions@lists.linux.dev>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -96,33 +75,59 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-Elliot Berman <quic_eberman@quicinc.com> writes:
-
-> Gunyah is a Type-1 hypervisor independent of any
-> high-level OS kernel, and runs in a higher CPU privilege level. It does
-> not depend on any lower-privileged OS kernel/code for its core
-> functionality. This increases its security and can support a much smaller
-> trusted computing base than a Type-2 hypervisor.
+On Wed, 24 May 2023 at 19:21, Linux regression tracking (Thorsten
+Leemhuis) <regressions@leemhuis.info> wrote:
 >
-<snip>
+> [CCing the regression list, as it should be in the loop for regressions:
+> https://docs.kernel.org/admin-guide/reporting-regressions.html]
 >
-> The series relies on two other patches posted separately:
->  - https://lore.kernel.org/all/20230213181832.3489174-1-quic_eberman@quic=
-inc.com/
->  -
-> https://lore.kernel.org/all/20230213232537.2040976-2-quic_eberman@quicinc=
-.com/
+> On 15.05.23 16:53, Amit Pundir wrote:
+> > This reverts commit ad44ac082fdff7ee57fe125432f7d9d7cb610a23.
+> >
+> > This patch restores the synchronous probing for
+> > qcom-rpmh-regulator because asynchronous probing broke
+> > Dragonboard 845c (SDM845) running AOSP. UFSHC fail to
+> > initialize properly and DB845c fails to boot regardless
+> > of "rootwait" bootarg being present or not
+> > https://bugs.linaro.org/show_bug.cgi?id=5975.
+> >
+> > Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> > ---
+> >  drivers/regulator/qcom-rpmh-regulator.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+> > index b0a58c62b1e2..30659922b0aa 100644
+> > --- a/drivers/regulator/qcom-rpmh-regulator.c
+> > +++ b/drivers/regulator/qcom-rpmh-regulator.c
+> > @@ -1517,7 +1517,7 @@ MODULE_DEVICE_TABLE(of, rpmh_regulator_match_table);
+> >  static struct platform_driver rpmh_regulator_driver = {
+> >       .driver = {
+> >               .name = "qcom-rpmh-regulator",
+> > -             .probe_type = PROBE_PREFER_ASYNCHRONOUS,
+> > +             .probe_type = PROBE_FORCE_SYNCHRONOUS,
+> >               .of_match_table = of_match_ptr(rpmh_regulator_match_table),
+> >       },
+> >       .probe = rpmh_regulator_probe,
+>
+> Amit, just wondering: what happened to this? It seems there was some
+> agreement to go down this route to fix your regression, but then nothing
+> happened anymore since about a week. Or am I missing something?
 
-I was able to apply the first patch but the second patch gives a 404:
+Hi, I didn't get around to try out new things last week as suggested
+on the original thread [1]. I'll get back to debugging it later in the
+week hopefully.
 
-  b4 am -S -t 20230213232537.2040976-2-quic_eberman@quicinc.com
-  Grabbing thread from lore.kernel.org/all/20230213232537.2040976-2-quic_eb=
-erman%40quicinc.com/t.mbox.gz
-  That message-id is not known.
+Regards,
+Amit Pundir
+[1] https://lore.kernel.org/all/CAD=FV=VSFDe445WEVTHXxU1WS_HGUV5jR5E8_Vgd4eyhn3rHyA@mail.gmail.com/
 
-was there a transcription error?
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+>
+> Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
+> --
+> Everything you wanna know about Linux kernel regression tracking:
+> https://linux-regtracking.leemhuis.info/about/#tldr
+> If I did something stupid, please tell me, as explained on that page.
+>
+> #regzbot ^backmonitor:
+> https://lore.kernel.org/lkml/CAMi1Hd1avQDcDQf137m2auz2znov4XL8YGrLZsw5edb-NtRJRw@mail.gmail.com/
