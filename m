@@ -2,85 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E924071022B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 03:06:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72D9271027E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 03:41:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235629AbjEYBGG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 21:06:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47612 "EHLO
+        id S229451AbjEYBlt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 21:41:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233861AbjEYBGG (ORCPT
+        with ESMTP id S229646AbjEYBlr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 21:06:06 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19C54F5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 18:06:02 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34P0TTaT017600;
-        Thu, 25 May 2023 01:05:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=pDfMTnkiMJn6hVr7pJpuj8arEywvWOpepr9hBtJ4bUw=;
- b=BAlwZ54mGWPm7UOVTIK5AXd5DmBsM4lgBEz1YCyuEksXfXZDjUFwJHoED50Z0w2Gvvvv
- vxS2ieaX8NtzDkf3RqeG3n29GofHI36aG4e8waa47NbZj624vJJKHpZmboQVq9Rw7LSa
- 5ikWZyGduwCPO+h5nNXQV5wUqqXm/zSfzEBqA+fFc57wfKvf6i8+WdCgn6rQgE3RYINi
- kqc4ZetZ2yErBBnabR4jCQ0Zte4hiwmO7mp5g0XPXetAE7uvt/TcgaSKKJl3Sk8AM3FX
- KQApvqt/T12CX7weidkzjrav2QF7CMvD5ck/hL0D+att0hjHwDSkhCZkoJhmNTfSRIOZ aA== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qscgmjd53-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 25 May 2023 01:05:53 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34P15qL2029018
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 25 May 2023 01:05:52 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 24 May
- 2023 18:05:51 -0700
-Message-ID: <814707a6-4193-4834-9715-ff132ce3146e@quicinc.com>
-Date:   Wed, 24 May 2023 18:05:51 -0700
+        Wed, 24 May 2023 21:41:47 -0400
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D9E018C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 18:41:17 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-561a33b6d63so293947b3.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 18:41:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1684978868; x=1687570868;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=XPb8KbqWHe/Wn3t/4V1Y6PByW6CmSIRbmZFJX0yAJoA=;
+        b=XEGn6iPd5vpeNYMvA41VmOkgGH9AgDadjqE1Oc6nwCKkxYGx0VVKIIah21F9ex3jaT
+         1nHhokwPrEz1TFiVl1xbQOZE+GlgROeMww3shaz4TNmkPcszLZxuObGeGu7qamQrTWPX
+         ynIrtbnJ4b9huxnbybaPNJdv2AqOvDuH0MOkJjDkGx2ERX9KhfOixkRnWg/TJ4BIqOcQ
+         FUlbOGfNDdTyfq85LGQIrLI+HaUM5XVJy7gZ5Pxm+hgSlbywV0GRspY+T9Nf45p42EB0
+         60u0JNP6aCh+Ci+jel+2+Pl3dkNGz/fp5FYhMJN0iq/ILafCteqzjcaf3c+JwVsgCkue
+         JJMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684978868; x=1687570868;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XPb8KbqWHe/Wn3t/4V1Y6PByW6CmSIRbmZFJX0yAJoA=;
+        b=dORevzkIUO/iCEmOeI11wofc1mOE+pZYpAT5skfvrCgaytrWB1BKAaSkxZ+ImoBX1v
+         GajLpzAAYRzw2gn5vV6hNTKQ+/mwY52rUI98e6Y743l/BxhTjBRdzMEcirukdoVkX8Gu
+         zb/JvDVgUdw1USYBU+QdZezgPkMlhDw0N4Cjo0OmmP5YWNm4gFqhyKZftqjaNqEQWV/k
+         An24KLg2dvXlEtgmgq+0QtWZjbTXb3Tqf5ceSRxNO+kQt3qQe8WCZGARintwl3Mc6J7F
+         /lYBDLrSLG6cVuk1T9PyJHluMRlnSkO5RhcULTQBOya19v2u5BndGRWuejYDx6Uq1mao
+         MQHg==
+X-Gm-Message-State: AC+VfDyaZhmuvGAhGShm22FxKyu83bR38ShhGfTNKk3Vwdfhgob/8W0s
+        lXCsJN+KQrzCf0fRSuzwCbSCZUG9BPJ/bRbSs6cbLg==
+X-Google-Smtp-Source: ACHHUZ4G0fhwhIuSz7DkdGZEtTI+BlzFsHD2f9cKjkO/4yG98O1uck+F/1VwYfyRrvBXQKrB7yHxMzYPav9LLRuna40=
+X-Received: by 2002:a0d:df89:0:b0:54f:ba89:225d with SMTP id
+ i131-20020a0ddf89000000b0054fba89225dmr19776586ywe.19.1684978868444; Wed, 24
+ May 2023 18:41:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v14 1/9] drm/display/dsc: Add flatness and initial scale
- value calculations
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-CC:     <freedreno@lists.freedesktop.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230329-rfc-msm-dsc-helper-v14-0-bafc7be95691@quicinc.com>
- <20230329-rfc-msm-dsc-helper-v14-1-bafc7be95691@quicinc.com>
- <7yzn3lyxpdl447c2ujq3yfh37pbnfvv2t2bvrtziie3j3lxt5n@a6znq7ahjr2a>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <7yzn3lyxpdl447c2ujq3yfh37pbnfvv2t2bvrtziie3j3lxt5n@a6znq7ahjr2a>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: El0rOVlPsLbKQTntm_4yd5eSZb_Wq1dQ
-X-Proofpoint-ORIG-GUID: El0rOVlPsLbKQTntm_4yd5eSZb_Wq1dQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-24_17,2023-05-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=999 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
- adultscore=0 malwarescore=0 phishscore=0 mlxscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305250008
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+References: <20230321011821.635977-1-dmitry.baryshkov@linaro.org>
+ <20230321011821.635977-10-dmitry.baryshkov@linaro.org> <4af411bf-290c-0818-bdf2-878b2da15146@quicinc.com>
+ <f010d346-fdbe-62b9-c403-4928b2e929fc@quicinc.com>
+In-Reply-To: <f010d346-fdbe-62b9-c403-4928b2e929fc@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 25 May 2023 04:40:57 +0300
+Message-ID: <CAA8EJprOQdotGKv914khFuhC1UGLLwLp0nngPBORYtbCXJ5Nfg@mail.gmail.com>
+Subject: Re: [Freedreno] [RFC PATCH v2 09/13] drm/msm/dpu: move pstate->pipe
+ initialization to dpu_plane_atomic_check
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -89,105 +75,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, 25 May 2023 at 02:04, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 5/24/2023 3:46 PM, Abhinav Kumar wrote:
+> >
+> >
+> > On 3/20/2023 6:18 PM, Dmitry Baryshkov wrote:
+> >> In preparation to virtualized planes support, move pstate->pipe
+> >> initialization from dpu_plane_reset() to dpu_plane_atomic_check(). In
+> >> case of virtual planes the plane's pipe will not be known up to the
+> >> point of atomic_check() callback.
+> >>
+> >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >> ---
+> >
+> > Will legacy paths be broken with this? So lets say there is no
+> > atomic_check we will not have a valid sspp anymore.
+>
+> I think it should still work, even if goes through the modeset crtc, it
+> should still call drm_atomic_commit() internally which should have the
+> call to atomic_check, once you confirm this , i can ack this particular
+> change.
 
+Can you please describe the scenario you have in mind? If I got you
+correctly, you were asking about the non-commit IOCTLs. Because of the
+atomic helpers being used (e.g. drm_atomic_helper_set_config()), they
+will also result in a call to drm_atomic_commit(), which invokes
+drm_atomic_check_only().
 
-On 5/24/2023 12:05 PM, Marijn Suijten wrote:
-> On 2023-05-24 10:45:14, Jessica Zhang wrote:
->> Add helpers to calculate det_thresh_flatness and initial_scale_value as
->> these calculations are defined within the DSC spec.
->>
->> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->> ---
->>   drivers/gpu/drm/display/drm_dsc_helper.c | 24 ++++++++++++++++++++++++
->>   include/drm/display/drm_dsc_helper.h     |  2 ++
->>   2 files changed, 26 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/display/drm_dsc_helper.c b/drivers/gpu/drm/display/drm_dsc_helper.c
->> index fc187a8d8873..4efb6236d22c 100644
->> --- a/drivers/gpu/drm/display/drm_dsc_helper.c
->> +++ b/drivers/gpu/drm/display/drm_dsc_helper.c
->> @@ -1413,3 +1413,27 @@ int drm_dsc_compute_rc_parameters(struct drm_dsc_config *vdsc_cfg)
->>   	return 0;
->>   }
->>   EXPORT_SYMBOL(drm_dsc_compute_rc_parameters);
->> +
->> +/**
->> + * drm_dsc_initial_scale_value() - Calculate the initial scale value for the given DSC config
->> + * @dsc: Pointer to DRM DSC config struct
->> + *
->> + * Return: Calculated initial scale value
-> 
-> Perhaps just drop Calculated from Return:?
-> 
->> + */
->> +u8 drm_dsc_initial_scale_value(const struct drm_dsc_config *dsc)
->> +{
->> +	return 8 * dsc->rc_model_size / (dsc->rc_model_size - dsc->initial_offset);
->> +}
->> +EXPORT_SYMBOL(drm_dsc_initial_scale_value);
->> +
->> +/**
->> + * drm_dsc_flatness_det_thresh() - Calculate the flatness_det_thresh for the given DSC config
-> 
-> You've written out the word ("flatness det thresh" and "initial scale
-> value") entirely elsewhere, why the underscores in the doc comment here?
-> 
-> Instead we should have the full meaning here (and in the Return: below),
-> please correct me if I'm wrong but in VESA DSC v1.2a spec 6.8.5.1
-> Encoder Flatness Decision I think this variable means "flatness
-> determination threshold"?  If so, use that in the doc comment :)
-> 
-> (and drop the leading "the", so just "Calculate flatness determination
-> threshold for the given DSC config")
-> 
->> + * @dsc: Pointer to DRM DSC config struct
->> + *
->> + * Return: Calculated flatness det thresh value
-> 
-> Nit: perhaps we can just drop "calculated" here?
-
-
-Hi Marijn,
-
-Sure, I will make these changes if a v15 is necessary.
-
-In the future, can we try to group comments on wording/grammar/patch 
-formatting with comments on the code itself?
-
-I really appreciate your feedback and help in improving the 
-documentation around this feature, however I don't find it very 
-productive to have revisions where the only changes are on (in my 
-opinion) small wording details.
-
-Thanks,
-
-Jessica Zhang
-
-> 
-> - Marijn
-> 
->> + */
->> +u32 drm_dsc_flatness_det_thresh(const struct drm_dsc_config *dsc)
->> +{
->> +	return 2 << (dsc->bits_per_component - 8);
->> +}
->> +EXPORT_SYMBOL(drm_dsc_flatness_det_thresh);
->> diff --git a/include/drm/display/drm_dsc_helper.h b/include/drm/display/drm_dsc_helper.h
->> index fc2104415dcb..71789fb34e17 100644
->> --- a/include/drm/display/drm_dsc_helper.h
->> +++ b/include/drm/display/drm_dsc_helper.h
->> @@ -24,6 +24,8 @@ void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_sdp,
->>   void drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg);
->>   int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg, enum drm_dsc_params_type type);
->>   int drm_dsc_compute_rc_parameters(struct drm_dsc_config *vdsc_cfg);
->> +u8 drm_dsc_initial_scale_value(const struct drm_dsc_config *dsc);
->> +u32 drm_dsc_flatness_det_thresh(const struct drm_dsc_config *dsc);
->>   
->>   #endif /* _DRM_DSC_HELPER_H_ */
->>   
->>
->> -- 
->> 2.40.1
->>
+-- 
+With best wishes
+Dmitry
