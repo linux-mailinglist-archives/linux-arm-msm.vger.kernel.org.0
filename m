@@ -2,49 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D4A7710505
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 06:57:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A703A710508
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 06:58:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240238AbjEYE5o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 00:57:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53938 "EHLO
+        id S239955AbjEYE6G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 00:58:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239857AbjEYEzy (ORCPT
+        with ESMTP id S239626AbjEYE4Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 00:55:54 -0400
+        Thu, 25 May 2023 00:56:25 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E7B2E49;
-        Wed, 24 May 2023 21:52:20 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F7ADE59
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 21:52:25 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BF88264288;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 0C4FE642A4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 04:52:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3556C4339B;
         Thu, 25 May 2023 04:52:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A27C4339B;
-        Thu, 25 May 2023 04:52:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684990327;
-        bh=d4oVeUBU42q3WJHBxZEjzM7+775YK2xmbsXgqd+qmyw=;
+        s=k20201202; t=1684990328;
+        bh=GqihnpYXpUv1Kc0keEdlXYyDgQfAylypBphV9yYJm2Q=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=WP+Zhbsj2viboZ6gfU2jbVtEl1izU+S/UehAQ38axoMBwFSyzqB/4tpLC+7Ng6/N6
-         858vzW14oVLZqJBqa9zdxjZZ8FFnqlgnWEWpmgn+nr0ZHZFkz3KSvrgjMuyAKBXLa8
-         JE6tNwjiUIhVh5kjyS8kH536D8YTTDTTmcsOmW8q64SAXZ9zpLQ8oLlijIJLKZni6C
-         Sfu/iejd7oeIGn+bCQgXhY7JzQj6xjcIs7lGVniJei/Z7UtjGWiAGqgkv7nq3TtJKY
-         mI7qPnceUMITrHaIqZKJW5HbDBJsC1yeqn5g9nEocoDETc4ZKGvoK7kofHRLFEP8Ej
-         2Dp0QiqHdxCbg==
+        b=oWZ/Y9u3c6ca9TGwSsNx6yveJ9fDJ7e9eI2xyIji8oJ8OnzfzltBQiFesqkTvEXjQ
+         Mq6YfBfkjxdY1QGtdfGJxAbpy6MoSuB39WqBZ/hAAPLsJ7pGvB4znwRxjTdmro5Tww
+         9CxiT3ct+/jdA6/MUXlVvoEuT6cZ+wTjlN+nCx4OHT31OaXtOggw8cBtXzukoRf6ek
+         /MYS5XqZ7h3bgj2EJq95Vcnm9oXIKpWLfrnolg4oXgCjpG9LCFpRLCwPbTgsEohV0U
+         r1jCjdePk1V4dNw8OfNy41x5Fpo0M4f8PZOq95sW7XcObM8Yz0+ynjWHxThfrsDn+K
+         iKk7kIg6UtBQA==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-Subject: Re: [PATCH 0/8] arm64: dts: qcom: msm8916: Rework regulator constraints
-Date:   Wed, 24 May 2023 21:54:44 -0700
-Message-Id: <168499048186.3998961.1070779668049062036.b4-ty@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>, kernel@pengutronix.de
+Subject: Re: [PATCH] soc: qcom: ramp_controller: Improve error message for failure in .remove()
+Date:   Wed, 24 May 2023 21:54:46 -0700
+Message-Id: <168499048181.3998961.14520004474661838756.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230510-msm8916-regulators-v1-0-54d4960a05fc@gerhold.net>
-References: <20230510-msm8916-regulators-v1-0-54d4960a05fc@gerhold.net>
+In-Reply-To: <20230415201848.3779001-1-u.kleine-koenig@pengutronix.de>
+References: <20230415201848.3779001-1-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -58,35 +57,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 17 May 2023 20:48:39 +0200, Stephan Gerhold wrote:
-> Rework the regulator constraints for the MSM8916 device trees to be
-> closer to reality. There are several mistakes in there, some of them
-> taken over directly from Qualcomm's vendor kernel. Fortunately, none of
-> the mistakes is absolutely critical because it turns out that the RPM
-> firmware also validates the voltages and silently clamps the requests
-> to a proper range. Still, this behavior should be clearly represented
-> in the device tree rather than pretending to apply the wrong voltages.
+On Sat, 15 Apr 2023 22:18:48 +0200, Uwe Kleine-König wrote:
+> When a platform_driver's .remove() callback returns an error, the driver
+> core emits
+> 
+> 	remove callback returned a non-zero value. This will be ignored.
+> 
+> . Replace this by a more specific error message. Then convert to
+> .remove_new() which is equivalent to returning zero unconditionally in
+> .remove(). See commit 5c5a7680e67b ("platform: Provide a remove callback
+> that returns no value") for its rationale.
 > 
 > [...]
 
 Applied, thanks!
 
-[1/8] arm64: dts: qcom: apq8016-sbc: Fix regulator constraints
-      commit: e27654df20d77ad7549a3cf6739ebaa3aa59a088
-[2/8] arm64: dts: qcom: apq8016-sbc: Fix 1.8V power rail on LS expansion
-      commit: 5500f823db38db073d30557af159b77fb1f2bf26
-[3/8] arm64: dts: qcom: msm8916: Fix regulator constraints
-      commit: 355750828c5519c88de6ac0d09202d2a7e5892c5
-[4/8] arm64: dts: qcom: msm8916: Disable audio codecs by default
-      commit: a5cf21b14666c42912327c7bece38711f6e0d708
-[5/8] arm64: dts: qcom: pm8916: Move default regulator "-supply"s
-      commit: 38218822a72fd31e89affc7fc457d527f65581aa
-[6/8] arm64: dts: qcom: msm8916-pm8916: Clarify purpose
-      commit: f193264986b5944216e574b9962616f2524aac08
-[7/8] arm64: dts: qcom: msm8916: Define regulator constraints next to usage
-      commit: b0a8f16ae4a0eb423122256691849b3ebc64efc2
-[8/8] arm64: dts: qcom: msm8916-pm8916: Mark always-on regulators
-      commit: 8bbd35771f903a9d14fe95bcba8c7b9f07aeb958
+[1/1] soc: qcom: ramp_controller: Improve error message for failure in .remove()
+      commit: c72e31718a8fb9bc070ee99f273446e05caa687d
 
 Best regards,
 -- 
