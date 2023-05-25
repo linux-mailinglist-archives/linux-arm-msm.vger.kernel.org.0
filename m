@@ -2,75 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D95D771021A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 02:53:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E924071022B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 03:06:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229459AbjEYAxU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 20:53:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44590 "EHLO
+        id S235629AbjEYBGG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 21:06:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229661AbjEYAxT (ORCPT
+        with ESMTP id S233861AbjEYBGG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 20:53:19 -0400
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56DDBF5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 17:53:18 -0700 (PDT)
-Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1ae4baa77b2so6681955ad.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 17:53:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1684975998; x=1687567998;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=FUvMPTBA49tNIIepIZR4oNBjuNfKgUVXvOLcX8khE8M=;
-        b=W2UjZt7xXNaPeh18Rot0pJP8kt7jDb1X4nnRAQ5Srl/FEom6b5LEmxbxqdIzGPa66O
-         bJWsXKewY7BBUbcf0L9HR2jfVXcxzerNtb9m6G7a/tL53j0be+O7Azcai3o9ZeYvdVf3
-         qxt4l/XxdKnfu0odskR1IHytfH1KM59yif948=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684975998; x=1687567998;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FUvMPTBA49tNIIepIZR4oNBjuNfKgUVXvOLcX8khE8M=;
-        b=OlmewHsTVg6y9BH9+KR56hoEkP+UIG/HP0D3ZEuLe1WELQqUEA01I+8sK/HbsXOm8V
-         09d7vS5G6gbVz+vDbMqL2XMsACGbkRCO5Uws7iC+VBlkUyvG0QL/3e7gWqtL8HHLF0HI
-         Wa5MyBo/lR2bpPKlIc5R3mvgBTRYP5pI2VkOzxmsAlSMI2bBAQCbiNvtN8R2cbt11MRg
-         O5dG7+tcP0Fm/zgWmdl+VnmnTSGKvhm9WG51U+i0zZ6vdkeMppiySme/tKUcLE7M2dlU
-         0JdrIVOz81mdpm0APBklyOADWp7DxYpO1UZC5kEFPuFesDslhfkfimiKHntZQE2ZT+K2
-         5kxg==
-X-Gm-Message-State: AC+VfDwIeieNj5Pa/a+ynVeo/knE4ZOAKtESYg/qzSLyTb5SiSUsFU5j
-        DyCm7Q/vW5/sMhK2c3lZjxHmrQ==
-X-Google-Smtp-Source: ACHHUZ6BPJrTMmE6q+3KwyvgvqUoCdmn2pOb0V2mUV/yq9VWTvL9ZaWdx8qqDZktiSGiZf9u3mKihg==
-X-Received: by 2002:a17:903:1208:b0:1aa:feca:b616 with SMTP id l8-20020a170903120800b001aafecab616mr20911966plh.65.1684975997791;
-        Wed, 24 May 2023 17:53:17 -0700 (PDT)
-Received: from google.com (KD124209188001.ppp-bb.dion.ne.jp. [124.209.188.1])
-        by smtp.gmail.com with ESMTPSA id j4-20020a170902c08400b001ac2f98e953sm60563pld.216.2023.05.24.17.53.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 May 2023 17:53:16 -0700 (PDT)
-Date:   Thu, 25 May 2023 09:53:12 +0900
-From:   Sergey Senozhatsky <senozhatsky@chromium.org>
-To:     Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Sergey Senozhatsky <senozhatsky@chromium.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Tomasz Figa <tfiga@chromium.org>, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCHv3] media: venus: provide video device lock
-Message-ID: <20230525005312.GC30543@google.com>
-References: <20230524135737.2557837-1-senozhatsky@chromium.org>
- <20230524141312.2558810-1-senozhatsky@chromium.org>
- <2c732d80-1a18-7a34-03a8-16afb0de5ea2@linaro.org>
- <f9219cb0-2cac-bace-20f7-27005cd0e6f1@xs4all.nl>
- <83cd3dc7-455d-0f26-d2a8-3ebe92d9e33f@quicinc.com>
+        Wed, 24 May 2023 21:06:06 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19C54F5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 18:06:02 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34P0TTaT017600;
+        Thu, 25 May 2023 01:05:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=pDfMTnkiMJn6hVr7pJpuj8arEywvWOpepr9hBtJ4bUw=;
+ b=BAlwZ54mGWPm7UOVTIK5AXd5DmBsM4lgBEz1YCyuEksXfXZDjUFwJHoED50Z0w2Gvvvv
+ vxS2ieaX8NtzDkf3RqeG3n29GofHI36aG4e8waa47NbZj624vJJKHpZmboQVq9Rw7LSa
+ 5ikWZyGduwCPO+h5nNXQV5wUqqXm/zSfzEBqA+fFc57wfKvf6i8+WdCgn6rQgE3RYINi
+ kqc4ZetZ2yErBBnabR4jCQ0Zte4hiwmO7mp5g0XPXetAE7uvt/TcgaSKKJl3Sk8AM3FX
+ KQApvqt/T12CX7weidkzjrav2QF7CMvD5ck/hL0D+att0hjHwDSkhCZkoJhmNTfSRIOZ aA== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qscgmjd53-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 25 May 2023 01:05:53 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34P15qL2029018
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 25 May 2023 01:05:52 GMT
+Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 24 May
+ 2023 18:05:51 -0700
+Message-ID: <814707a6-4193-4834-9715-ff132ce3146e@quicinc.com>
+Date:   Wed, 24 May 2023 18:05:51 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <83cd3dc7-455d-0f26-d2a8-3ebe92d9e33f@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v14 1/9] drm/display/dsc: Add flatness and initial scale
+ value calculations
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+CC:     <freedreno@lists.freedesktop.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        "Daniel Vetter" <daniel@ffwll.ch>, Rob Clark <robdclark@gmail.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20230329-rfc-msm-dsc-helper-v14-0-bafc7be95691@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v14-1-bafc7be95691@quicinc.com>
+ <7yzn3lyxpdl447c2ujq3yfh37pbnfvv2t2bvrtziie3j3lxt5n@a6znq7ahjr2a>
+From:   Jessica Zhang <quic_jesszhan@quicinc.com>
+In-Reply-To: <7yzn3lyxpdl447c2ujq3yfh37pbnfvv2t2bvrtziie3j3lxt5n@a6znq7ahjr2a>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: El0rOVlPsLbKQTntm_4yd5eSZb_Wq1dQ
+X-Proofpoint-ORIG-GUID: El0rOVlPsLbKQTntm_4yd5eSZb_Wq1dQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-24_17,2023-05-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
+ adultscore=0 malwarescore=0 phishscore=0 mlxscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305250008
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,111 +89,105 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On (23/05/24 22:06), Vikash Garodia wrote:
-> > Instead the struct v4l2_m2m_ctx q_lock pointer, if set, will use that
-> > mutex for all vb2 operations.
-> > 
-> > I think you can set it to the 'lock' mutex in struct venus_inst.
+
+
+On 5/24/2023 12:05 PM, Marijn Suijten wrote:
+> On 2023-05-24 10:45:14, Jessica Zhang wrote:
+>> Add helpers to calculate det_thresh_flatness and initial_scale_value as
+>> these calculations are defined within the DSC spec.
+>>
+>> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/display/drm_dsc_helper.c | 24 ++++++++++++++++++++++++
+>>   include/drm/display/drm_dsc_helper.h     |  2 ++
+>>   2 files changed, 26 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/display/drm_dsc_helper.c b/drivers/gpu/drm/display/drm_dsc_helper.c
+>> index fc187a8d8873..4efb6236d22c 100644
+>> --- a/drivers/gpu/drm/display/drm_dsc_helper.c
+>> +++ b/drivers/gpu/drm/display/drm_dsc_helper.c
+>> @@ -1413,3 +1413,27 @@ int drm_dsc_compute_rc_parameters(struct drm_dsc_config *vdsc_cfg)
+>>   	return 0;
+>>   }
+>>   EXPORT_SYMBOL(drm_dsc_compute_rc_parameters);
+>> +
+>> +/**
+>> + * drm_dsc_initial_scale_value() - Calculate the initial scale value for the given DSC config
+>> + * @dsc: Pointer to DRM DSC config struct
+>> + *
+>> + * Return: Calculated initial scale value
 > 
-> IIUC, the suggestion is to use the 'lock' in struct venus_inst while
-> initializing the queue. This might lead to deadlock as the same lock is used
-> during vb2 operations in driver. Might be introducing a new lock for this
-> purpose in struct venus_inst would do, unless we are trying to serialize at
-> video device (or core) context.
+> Perhaps just drop Calculated from Return:?
+> 
+>> + */
+>> +u8 drm_dsc_initial_scale_value(const struct drm_dsc_config *dsc)
+>> +{
+>> +	return 8 * dsc->rc_model_size / (dsc->rc_model_size - dsc->initial_offset);
+>> +}
+>> +EXPORT_SYMBOL(drm_dsc_initial_scale_value);
+>> +
+>> +/**
+>> + * drm_dsc_flatness_det_thresh() - Calculate the flatness_det_thresh for the given DSC config
+> 
+> You've written out the word ("flatness det thresh" and "initial scale
+> value") entirely elsewhere, why the underscores in the doc comment here?
+> 
+> Instead we should have the full meaning here (and in the Return: below),
+> please correct me if I'm wrong but in VESA DSC v1.2a spec 6.8.5.1
+> Encoder Flatness Decision I think this variable means "flatness
+> determination threshold"?  If so, use that in the doc comment :)
+> 
+> (and drop the leading "the", so just "Calculate flatness determination
+> threshold for the given DSC config")
+> 
+>> + * @dsc: Pointer to DRM DSC config struct
+>> + *
+>> + * Return: Calculated flatness det thresh value
+> 
+> Nit: perhaps we can just drop "calculated" here?
 
-Something like this?
 
-Video device has to provide a lock so that __video_do_ioctl()
-can serialize IOCTL calls. Introduce a dedicated venus_inst
-mutex (which is set a ctx ->q_lock) for the purpose of vb2
-operations synchronization.
+Hi Marijn,
 
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
----
- drivers/media/platform/qcom/venus/core.h | 2 ++
- drivers/media/platform/qcom/venus/vdec.c | 4 ++++
- drivers/media/platform/qcom/venus/venc.c | 3 +++
- 3 files changed, 9 insertions(+)
+Sure, I will make these changes if a v15 is necessary.
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 4f81669986ba..6ac5236d6888 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -389,6 +389,7 @@ enum venus_inst_modes {
-  * @sequence_out:	a sequence counter for output queue
-  * @m2m_dev:	a reference to m2m device structure
-  * @m2m_ctx:	a reference to m2m context structure
-+ * @ctx_queue_lock:	a lock to serialize video device ioctl calls
-  * @state:	current state of the instance
-  * @done:	a completion for sync HFI operation
-  * @error:	an error returned during last HFI sync operation
-@@ -460,6 +461,7 @@ struct venus_inst {
- 	u32 sequence_out;
- 	struct v4l2_m2m_dev *m2m_dev;
- 	struct v4l2_m2m_ctx *m2m_ctx;
-+	struct mutex ctx_queue_lock;
- 	unsigned int state;
- 	struct completion done;
- 	unsigned int error;
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 51a53bf82bd3..2caeba5b6378 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1641,6 +1641,7 @@ static int vdec_open(struct file *file)
- 	INIT_LIST_HEAD(&inst->internalbufs);
- 	INIT_LIST_HEAD(&inst->list);
- 	mutex_init(&inst->lock);
-+	mutex_init(&inst->ctx_queue_lock);
- 
- 	inst->core = core;
- 	inst->session_type = VIDC_SESSION_TYPE_DEC;
-@@ -1684,8 +1685,10 @@ static int vdec_open(struct file *file)
- 		goto err_m2m_release;
- 	}
- 
-+
- 	v4l2_fh_init(&inst->fh, core->vdev_dec);
- 
-+	inst->m2m_ctx->q_lock = &inst->ctx_queue_lock;
- 	inst->fh.ctrl_handler = &inst->ctrl_handler;
- 	v4l2_fh_add(&inst->fh);
- 	inst->fh.m2m_ctx = inst->m2m_ctx;
-@@ -1716,6 +1719,7 @@ static int vdec_close(struct file *file)
- 	ida_destroy(&inst->dpb_ids);
- 	hfi_session_destroy(inst);
- 	mutex_destroy(&inst->lock);
-+	mutex_destroy(&inst->ctx_queue_lock);
- 	v4l2_fh_del(&inst->fh);
- 	v4l2_fh_exit(&inst->fh);
- 
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 4666f42feea3..4292b299f014 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -1443,6 +1443,7 @@ static int venc_open(struct file *file)
- 	INIT_LIST_HEAD(&inst->internalbufs);
- 	INIT_LIST_HEAD(&inst->list);
- 	mutex_init(&inst->lock);
-+	mutex_init(&inst->ctx_queue_lock);
- 
- 	inst->core = core;
- 	inst->session_type = VIDC_SESSION_TYPE_ENC;
-@@ -1483,6 +1484,7 @@ static int venc_open(struct file *file)
- 
- 	v4l2_fh_init(&inst->fh, core->vdev_enc);
- 
-+	inst->m2m_ctx->q_lock = &inst->ctx_queue_lock;
- 	inst->fh.ctrl_handler = &inst->ctrl_handler;
- 	v4l2_fh_add(&inst->fh);
- 	inst->fh.m2m_ctx = inst->m2m_ctx;
-@@ -1512,6 +1514,7 @@ static int venc_close(struct file *file)
- 	venc_ctrl_deinit(inst);
- 	hfi_session_destroy(inst);
- 	mutex_destroy(&inst->lock);
-+	mutex_destroy(&inst->ctx_queue_lock);
- 	v4l2_fh_del(&inst->fh);
- 	v4l2_fh_exit(&inst->fh);
- 
--- 
-2.40.1.698.g37aff9b760-goog
+In the future, can we try to group comments on wording/grammar/patch 
+formatting with comments on the code itself?
 
+I really appreciate your feedback and help in improving the 
+documentation around this feature, however I don't find it very 
+productive to have revisions where the only changes are on (in my 
+opinion) small wording details.
+
+Thanks,
+
+Jessica Zhang
+
+> 
+> - Marijn
+> 
+>> + */
+>> +u32 drm_dsc_flatness_det_thresh(const struct drm_dsc_config *dsc)
+>> +{
+>> +	return 2 << (dsc->bits_per_component - 8);
+>> +}
+>> +EXPORT_SYMBOL(drm_dsc_flatness_det_thresh);
+>> diff --git a/include/drm/display/drm_dsc_helper.h b/include/drm/display/drm_dsc_helper.h
+>> index fc2104415dcb..71789fb34e17 100644
+>> --- a/include/drm/display/drm_dsc_helper.h
+>> +++ b/include/drm/display/drm_dsc_helper.h
+>> @@ -24,6 +24,8 @@ void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_sdp,
+>>   void drm_dsc_set_rc_buf_thresh(struct drm_dsc_config *vdsc_cfg);
+>>   int drm_dsc_setup_rc_params(struct drm_dsc_config *vdsc_cfg, enum drm_dsc_params_type type);
+>>   int drm_dsc_compute_rc_parameters(struct drm_dsc_config *vdsc_cfg);
+>> +u8 drm_dsc_initial_scale_value(const struct drm_dsc_config *dsc);
+>> +u32 drm_dsc_flatness_det_thresh(const struct drm_dsc_config *dsc);
+>>   
+>>   #endif /* _DRM_DSC_HELPER_H_ */
+>>   
+>>
+>> -- 
+>> 2.40.1
+>>
