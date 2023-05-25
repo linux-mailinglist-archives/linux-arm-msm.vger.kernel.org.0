@@ -2,78 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D96167113AC
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 20:29:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCE5F71163D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 21:07:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234939AbjEYS3h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 14:29:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49204 "EHLO
+        id S242993AbjEYSw3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 14:52:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234600AbjEYS3g (ORCPT
+        with ESMTP id S243437AbjEYSup (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 14:29:36 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48CA7119
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 11:29:35 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f3a99b9177so2845458e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 11:29:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685039373; x=1687631373;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=H+b24C77d9A2u9UTnLoifoUxD5slr2fdLTj++pWst70=;
-        b=fLEkzZfSVZKSHIt49CCsR3FwdXcGBM+yggkoWf6irQPOVz9dI4elnrX6N9qKeRjvZ8
-         DEJlyMRpYESTW8CwsZzEmuSExNZZ8cdJ5iA7uq8zdD+8FoWv9EWlKcqGnr5MqeZwAT9W
-         tgPbbeAaKbkoQROrQn8bbtaTGAccu13e+zC0DBd/9aByAy8AL3Th1V5sNTPnRS6WUmxx
-         WIHZF5+4q7biw21do3UBX1Tdql0b5fXjglVfSV+A8PPdvhi/EltrD7SDLzCoGR8N+dvx
-         NhvtMfVxZA55p/+xiRf4NO/d/aRUF4+S2kVhnmn1kGR8FK8D9fBtjxZbJwP+aoRAtVtc
-         Vw3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685039373; x=1687631373;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=H+b24C77d9A2u9UTnLoifoUxD5slr2fdLTj++pWst70=;
-        b=IkMfteBcSQWGD/x6WBr03/LGfK9hGzcOHJxpbyZxKCqY2CWXYb0jhiVZaNHy+CkpT4
-         9W/8UFWd5R5lNOOOAM7fcENEWaRrXa4uxYZZiimPofRVK4P0rZFaayn2MAEdskvR5qwe
-         1oDqriDOVfZPHlU8W0gmYceg3W9pmkDfTsoXnhN0uu7nokvfB9t/q907K+Y+2CwIc71Y
-         Q0rjG3fhic9VbtIt5WlLmadFp3eT5W73KJ2FuPTDnc503SOaDjoBAluBPzxWfzzgp6z5
-         l2N0wvzomWUBrdgKBc127DiKUsaypZvixqPkzsRwts5EloQhjFmnwxmLghGCxVN4fKK2
-         wO3A==
-X-Gm-Message-State: AC+VfDwlRaYihW2iDGs246edKZRVsP5a17qQUZBUlwSubMA7K1rsq+Tb
-        i8lWkEHrXWoctNwAMGhsPF768A==
-X-Google-Smtp-Source: ACHHUZ4cuZ+XPY8hnX4V/tTQBykGPBXRAE5A+zNP3iexE+m6J8nJtSxLuUXwZj5ASu6EX4nyvgoeew==
-X-Received: by 2002:a19:c517:0:b0:4f3:792c:289d with SMTP id w23-20020a19c517000000b004f3792c289dmr6409992lfe.20.1685039373522;
-        Thu, 25 May 2023 11:29:33 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id k19-20020ac24573000000b004db3eff4b12sm295337lfm.171.2023.05.25.11.29.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 May 2023 11:29:32 -0700 (PDT)
-Message-ID: <85b1c798-bb6e-a37c-d84f-983d19cb96c2@linaro.org>
-Date:   Thu, 25 May 2023 21:29:32 +0300
+        Thu, 25 May 2023 14:50:45 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B567359F;
+        Thu, 25 May 2023 11:44:17 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id F19CD648EF;
+        Thu, 25 May 2023 18:35:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D39C4339C;
+        Thu, 25 May 2023 18:35:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685039748;
+        bh=KpOX9yBY2MN4DXxOyvmtbBMABnM8CIwuq22oglNh8XI=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=o+kfaEqerb2xYTAFaU0hdrDVHlKdgrkD0A0NJr78GWr4Ioal9L+TFwYCyzrPwTvC7
+         YHuA0e2IC9EACkuEmO4YroCPqpWb80ihO0QT3HuikSuA6XczHUavWNLp6f3xPJ4sDI
+         bCyJiWLhW19XV2ejWYHRR41HikGIHlvOL91MGaBwaxs2WzqCW6/c8rZ59ez0s0hnLN
+         OKxlgdGrNFiOGQBAK3fDyWizPQRDt0uNQZdbCwHY3yXJjcp+JUD3l14ssdFoA4+XJr
+         DHuCpMkXjwi2a3M8x+C+S/jAlJOEJ4jR/gS1BZ/ncTl3AlYeXKNrLyJBA3h8JS815p
+         40CUwG7oDpTDQ==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sasha Levin <sashal@kernel.org>, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, airlied@gmail.com, daniel@ffwll.ch,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 6.3 60/67] drm/msm: Be more shouty if per-process pgtables aren't working
+Date:   Thu, 25 May 2023 14:31:37 -0400
+Message-Id: <20230525183144.1717540-60-sashal@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230525183144.1717540-1-sashal@kernel.org>
+References: <20230525183144.1717540-1-sashal@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v6] drm/msm/dp: enable HDP plugin/unplugged interrupts at
- hpd_enable/disable
-Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
-        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
-        leonard@lausen.nl, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <1684878756-17830-1-git-send-email-quic_khsieh@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1684878756-17830-1-git-send-email-quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -82,44 +60,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 24/05/2023 00:52, Kuogee Hsieh wrote:
-> The internal_hpd flag is set to true by dp_bridge_hpd_enable() and set to
-> false by dp_bridge_hpd_disable() to handle GPIO pinmuxed into DP controller
-> case. HDP related interrupts can not be enabled until internal_hpd is set
-> to true. At current implementation dp_display_config_hpd() will initialize
-> DP host controller first followed by enabling HDP related interrupts if
-> internal_hpd was true at that time. Enable HDP related interrupts depends on
-> internal_hpd status may leave system with DP driver host is in running state
-> but without HDP related interrupts being enabled. This will prevent external
-> display from being detected. Eliminated this dependency by moving HDP related
-> interrupts enable/disable be done at dp_bridge_hpd_enable/disable() directly
-> regardless of internal_hpd status.
-> 
-> Changes in V3:
-> -- dp_catalog_ctrl_hpd_enable() and dp_catalog_ctrl_hpd_disable()
-> -- rewording ocmmit text
-> 
-> Changes in V4:
-> -- replace dp_display_config_hpd() with dp_display_host_start()
-> -- move enable_irq() at dp_display_host_start();
-> 
-> Changes in V5:
-> -- replace dp_display_host_start() with dp_display_host_init()
-> 
-> Changes in V6:
-> -- squash remove enable_irq() and disable_irq()
-> 
-> Fixes: cd198caddea7 ("drm/msm/dp: Rely on hpd_enable/disable callbacks")
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/dp/dp_catalog.c | 15 +++++++-
->   drivers/gpu/drm/msm/dp/dp_catalog.h |  3 +-
->   drivers/gpu/drm/msm/dp/dp_display.c | 71 ++++++++++---------------------------
->   3 files changed, 35 insertions(+), 54 deletions(-)
+From: Rob Clark <robdclark@chromium.org>
 
+[ Upstream commit 5c054db54c43a5fcb5cc81012361f5e3fac37637 ]
+
+Otherwise it is not always obvious if a dt or iommu change is causing us
+to fall back to global pgtable.
+
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/537359/
+Link: https://lore.kernel.org/r/20230516222039.907690-2-robdclark@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/msm/msm_iommu.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
+index c2507582ecf34..0d6a69cd6f7a5 100644
+--- a/drivers/gpu/drm/msm/msm_iommu.c
++++ b/drivers/gpu/drm/msm/msm_iommu.c
+@@ -234,7 +234,12 @@ struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
+ 	/* Get the pagetable configuration from the domain */
+ 	if (adreno_smmu->cookie)
+ 		ttbr1_cfg = adreno_smmu->get_ttbr1_cfg(adreno_smmu->cookie);
+-	if (!ttbr1_cfg)
++
++	/*
++	 * If you hit this WARN_ONCE() you are probably missing an entry in
++	 * qcom_smmu_impl_of_match[] in arm-smmu-qcom.c
++	 */
++	if (WARN_ONCE(!ttbr1_cfg, "No per-process page tables"))
+ 		return ERR_PTR(-ENODEV);
+ 
+ 	/*
 -- 
-With best wishes
-Dmitry
+2.39.2
 
