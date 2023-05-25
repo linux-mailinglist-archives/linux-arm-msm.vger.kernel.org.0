@@ -2,97 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A243A711804
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 22:21:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3834D711830
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 22:34:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232445AbjEYUVz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 16:21:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36394 "EHLO
+        id S234289AbjEYUd7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 16:33:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41964 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241062AbjEYUVx (ORCPT
+        with ESMTP id S233384AbjEYUd6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 16:21:53 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DBDFBB;
-        Thu, 25 May 2023 13:21:51 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34PKF3fg004577;
-        Thu, 25 May 2023 20:21:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=+jv0tSUkqXYAsbK/kPqtx+0ChG7JKI02Wxt8hXxY6ic=;
- b=ZF77pkntnQnPZspifzfWSQ/NkR5X4P/Aq2yK8wmd1CS4VT6u9aOufiLWF+r0sLnFnPRN
- o/Kdm0Rr9J6rsUOLDtlIxp/7TUXN5DBg0XAKlNB+pB5637wSgB+NEXMWolIMX6WN4BXG
- aDHXUlliU3ItpXBA0Xc20gUpXHRSb+KO63auMXBjnHBIIh+79Bw4eDGq0Rm45+5b5TTI
- uYJgaGuZfKP9Atmlz9w735W+CA7ZDbmL+WX7nNHlVaSHnZsTDaPh2pGQjF6hZJXZwkCa
- J2cA8RM+SUrF/3gLX8cXyRQIbgALZCTAilE4mNgzvSgTu5SdwtklmuhBrQ2uNnlDamuY Zg== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qsqqjay6v-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 25 May 2023 20:21:47 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34PKLkgw030985
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 25 May 2023 20:21:46 GMT
-Received: from [10.110.51.179] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 25 May
- 2023 13:21:45 -0700
-Message-ID: <44062c19-673c-f65e-2ee9-f49bf38fed1a@quicinc.com>
-Date:   Thu, 25 May 2023 13:21:44 -0700
+        Thu, 25 May 2023 16:33:58 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C63EF18D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 13:33:43 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E0FFB3F73D;
+        Thu, 25 May 2023 22:33:40 +0200 (CEST)
+Date:   Thu, 25 May 2023 22:33:39 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v14 1/9] drm/display/dsc: Add flatness and initial scale
+ value calculations
+Message-ID: <iemmv4nfpoxsrpcf7q6xc4bycnrl4ax4wknswfxx52dz7a5jyp@jis4mxee4flw>
+References: <20230329-rfc-msm-dsc-helper-v14-0-bafc7be95691@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v14-1-bafc7be95691@quicinc.com>
+ <7yzn3lyxpdl447c2ujq3yfh37pbnfvv2t2bvrtziie3j3lxt5n@a6znq7ahjr2a>
+ <814707a6-4193-4834-9715-ff132ce3146e@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH v3 2/5] soc: qcom: smem: Switch to EXPORT_SYMBOL_GPL()
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <ilia.lin@kernel.org>, <rafael@kernel.org>,
-        <viresh.kumar@linaro.org>, <linux-kernel@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>
-CC:     <ansuelsmth@gmail.com>
-References: <20230525120956.3095317-1-robimarko@gmail.com>
- <20230525120956.3095317-2-robimarko@gmail.com>
-From:   Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <20230525120956.3095317-2-robimarko@gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: fzQOidQUoPcouyI1M6lFZZhxiGJJ2l7k
-X-Proofpoint-ORIG-GUID: fzQOidQUoPcouyI1M6lFZZhxiGJJ2l7k
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-25_12,2023-05-25_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- impostorscore=0 bulkscore=0 adultscore=0 suspectscore=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 phishscore=0 mlxscore=0 malwarescore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305250172
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <814707a6-4193-4834-9715-ff132ce3146e@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/25/2023 5:09 AM, Robert Marko wrote:
-> SMEM has been GPL licensed from the start, and there is no reason to use
-> EXPORT_SYMBOL() so switch to the GPL version.
+On 2023-05-24 18:05:51, Jessica Zhang wrote:
+<snip>
+> >> +/**
+> >> + * drm_dsc_initial_scale_value() - Calculate the initial scale value for the given DSC config
+> >> + * @dsc: Pointer to DRM DSC config struct
+> >> + *
+> >> + * Return: Calculated initial scale value
+> > 
+> > Perhaps just drop Calculated from Return:?
+> > 
+> >> + */
+> >> +u8 drm_dsc_initial_scale_value(const struct drm_dsc_config *dsc)
+> >> +{
+> >> +	return 8 * dsc->rc_model_size / (dsc->rc_model_size - dsc->initial_offset);
+> >> +}
+> >> +EXPORT_SYMBOL(drm_dsc_initial_scale_value);
+> >> +
+> >> +/**
+> >> + * drm_dsc_flatness_det_thresh() - Calculate the flatness_det_thresh for the given DSC config
+> > 
+> > You've written out the word ("flatness det thresh" and "initial scale
+> > value") entirely elsewhere, why the underscores in the doc comment here?
+> > 
+> > Instead we should have the full meaning here (and in the Return: below),
+> > please correct me if I'm wrong but in VESA DSC v1.2a spec 6.8.5.1
+> > Encoder Flatness Decision I think this variable means "flatness
+> > determination threshold"?  If so, use that in the doc comment :)
+> > 
+> > (and drop the leading "the", so just "Calculate flatness determination
+> > threshold for the given DSC config")
+> > 
+> >> + * @dsc: Pointer to DRM DSC config struct
+> >> + *
+> >> + * Return: Calculated flatness det thresh value
+> > 
+> > Nit: perhaps we can just drop "calculated" here?
 > 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> 
+> Hi Marijn,
+> 
+> Sure, I will make these changes if a v15 is necessary.
+> 
+> In the future, can we try to group comments on wording/grammar/patch 
+> formatting with comments on the code itself?
 
-Excellent. Thank you.
+Can you clarify what you mean?  v14 here is the first series including
+this doc comment so there was no way for me to have reviewed this
+earlier.  Code contents were already successfully reviewed many
+revisions ago.
 
-Reviewed-by: Trilok Soni <tsoni@quicinc.com>
+> I really appreciate your feedback and help in improving the 
+> documentation around this feature, however I don't find it very 
+> productive to have revisions where the only changes are on (in my 
+> opinion) small wording details.
 
----Trilok Soni
+It is also down to you to have some patience and collect more review
+from other maintainers and batch up changes, instead of spinning another
+revision quickly after a review comment.
 
+But this request can also be turned around: review and scan your own
+series for simple inconsistencies before sending it to the lists, that
+will surely make the time spent by reviewers much more "productive" as
+well.
+(Note that this goes hand in hand with the request to slow down
+ consecutive revisions!)
 
+And finally, as already said before: you can always decide to ignore my
+review nits.  I am not a maintainer and don't have final say on whatever
+is blocking for a patch to get merged.
+But, when another revision is needed, the things I pointed out can at
+least be incorporated, which is why they were shared in the first place.
+
+Thanks for understanding.
+
+- Marijn
