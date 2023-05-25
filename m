@@ -2,76 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E8B4F710FA1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 17:32:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18004710FE2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 17:47:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241814AbjEYPcH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 11:32:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60564 "EHLO
+        id S241816AbjEYPrr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 11:47:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241809AbjEYPcG (ORCPT
+        with ESMTP id S241592AbjEYPrq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 11:32:06 -0400
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B7C1198
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 08:32:04 -0700 (PDT)
-Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-64d341bdedcso1753087b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 08:32:04 -0700 (PDT)
+        Thu, 25 May 2023 11:47:46 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD40E18D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 08:47:43 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f6094cb2ebso5939585e9.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 08:47:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685028723; x=1687620723;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=UmQi8fIzOJff3kyNGKaVTa69XxHyX2JQ/cM/6RRUYVY=;
-        b=fv94K8XOnLGVRz+eN9eeXw5o+qvVgngk6JKw1Zc/4W9HISDqNzb6NTDZBmnff2uF0x
-         s5UovWDO85t7EqIV86tWY8ZU2upyA6OzuFoNhF18Xoyi6iOi9X6ArwTaL9zTBfN7Pzgr
-         kzl9XtnZrOFzXK50ZCTxsObp0OyTd9FkCT+x+ZugTmNn1ciepfVkwk/j/eVPBYVCCzqO
-         oXJP4obDUZFABgjNJ+UUe0wQ35BPiePXyaqyQMA0Ny48yerkpH3uFOFGgERMw8Mv6s5v
-         7fAOt7TTr5MJ8GTgDpy69t1asKioeh5cpxs2rXz60oovYZ4cpnKUeYnsfQVhCK+Vt1ns
-         zqlQ==
+        d=linaro.org; s=google; t=1685029662; x=1687621662;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=qsprdRjm9I2tkvweLJm8m5dib1j+Ex3v712oZU007dg=;
+        b=Tl1L67jWinXK1SRvVzYn2UxjwBvK/l7bl5CREJO1S7plZS2cF6Iikfz1esl/0IWWiz
+         eJnTVh0Bz8gJF3B7hjZvknsvOjy1jzj8Hl0+/x2rfIt3asSioECgTIxbe+DMce90dFe4
+         Ztzsb3OjIrUdIBXsPP33kPi39yRDtEjLy+NzBdevA/KhJq/QvSeWBoSMskMVpXofXie5
+         fLox33mFVR0oQX057T3FbqCxk5B3qkXo064jcb/f4odGVNzD/1iWCKvCjdlp4/dfy5rF
+         3wUDBA88TdTnGjphYcqI2Us7LcS0fcF+s4envxJspsn9YJHedm2I34vKLonBTA4Vulem
+         o4Iw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685028723; x=1687620723;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UmQi8fIzOJff3kyNGKaVTa69XxHyX2JQ/cM/6RRUYVY=;
-        b=iIglxYBeWj3Qx2V66Eae2X7ZwbVzMwz0Pm0VBvcmGSVmJYciFo9HsCmFvzjBGicixk
-         KBzJpDnHOKhJuSkGvfJ2Bu6RY6y4HZppNRG2WIc500aoFeECIKQEhjtTVPggC0mTFkb7
-         oJNwZcsV3LVCkiJFnKOFVwni49uLmOzbDCFsroKH9hY4cj5d+c6yJLBGzpXPV0KCTm/6
-         uisOfRATSlU/nqwGZ+n/WmawNnaJZtYG4dUZp26o6NO3FV/Li8Il1qXjPFYO7jSDcmq6
-         UVyfllt5g14dzqXK3Vg/nvxYbaYewhT6x3hKZvhGa7RtnTU2WxqMk1xmhn2D2mvTPBuI
-         k3fw==
-X-Gm-Message-State: AC+VfDwtnO23MXQGOQtQcxdFhGPG6uv6oNg3eHhAUAcA+gE0j6mP20MT
-        O70HN11SxRn0MbFHutANhriM2w==
-X-Google-Smtp-Source: ACHHUZ46Du0JEr4QEa4hb5TfjiXFSDB8X9bCJLLgtTlTN8tlUOafA+SKBkA/6yJjF+jYQ0axnk4tVg==
-X-Received: by 2002:a17:903:2793:b0:1ad:e633:ee96 with SMTP id jw19-20020a170903279300b001ade633ee96mr2007567plb.55.1685028723461;
-        Thu, 25 May 2023 08:32:03 -0700 (PDT)
-Received: from p14s ([2604:3d09:148c:c800:2825:fb66:f9f3:171d])
-        by smtp.gmail.com with ESMTPSA id bj2-20020a170902850200b001993a1fce7bsm1557285plb.196.2023.05.25.08.32.01
+        d=1e100.net; s=20221208; t=1685029662; x=1687621662;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qsprdRjm9I2tkvweLJm8m5dib1j+Ex3v712oZU007dg=;
+        b=NohLyyA8KB+UeSbuflM3O4IwcHU/cWpCC5qFU1u0xgQo4+sUuds4+wvLru/pFdCpy3
+         MDe2artg+R5sr9VjC8FTKSs1aXzVaGbaHWWnFbWNX5aJ/hkpQ3oaVS7TocdoRa67aKip
+         ab7jVZ8Wy0QNTndc/OzS6Zq3pZYS0yBj+h7e2MpRgjPWbgukbP7qAJslfYHrdFNES1hj
+         PKqV3lo0YKE5r77apaab7mWFyQr4yLihsrk9PtGGSYeVXw8J0knKBnppVf1F1++KFVbb
+         HneCyIY0yHjYTvSl7RSbCF8KddRwu9rZ5HyVpqV8onRKUb6PqHDEDLCVwiM1KlbB2zZ3
+         wtHA==
+X-Gm-Message-State: AC+VfDxKvQ01hno2l7RkAszYVKn5n261u4qZOB7G3+9+/NfzbgZlquVj
+        wUlITJ49pXo7G30Tt5mhsd+k5w==
+X-Google-Smtp-Source: ACHHUZ5t6pREG4ll22UenPbeFrX5UEUPZDY1lxRULlm037wgVtVZWbBxV5PgoeioUdy54m4PHC4cDg==
+X-Received: by 2002:a05:600c:ad8:b0:3f6:cfc7:8bc7 with SMTP id c24-20020a05600c0ad800b003f6cfc78bc7mr1863419wmr.17.1685029662082;
+        Thu, 25 May 2023 08:47:42 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id b3-20020a5d5503000000b002ca864b807csm2275873wrv.0.2023.05.25.08.47.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 May 2023 08:32:02 -0700 (PDT)
-Date:   Thu, 25 May 2023 09:32:00 -0600
-From:   Mathieu Poirier <mathieu.poirier@linaro.org>
-To:     Mohammad Rafi Shaik <quic_mohs@quicinc.com>
-Cc:     linux-remoteproc@vger.kernel.org, agross@kernel.org,
-        andersson@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-        robh+dt@kernel.org, quic_plai@quicinc.com, bgoswami@quicinc.com,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        quic_rohkumar@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org, devicetree@vger.kernel.org,
-        krzysztof.kozlowski@linaro.org, corbet@lwn.net,
-        quic_visr@quicinc.com
-Subject: Re: [PATCH v5 0/2] Update section header name check
-Message-ID: <ZG9/cEMRMg06Pz4u@p14s>
-References: <20230223150559.2429562-1-quic_mohs@quicinc.com>
- <20230302215735.GA1401708@p14s>
- <f9c6fead-d573-a8bc-7e88-a53313ff8bef@quicinc.com>
+        Thu, 25 May 2023 08:47:41 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 0/4] arm64: qcom: sm8550: enable PMIC devices
+Date:   Thu, 25 May 2023 17:47:34 +0200
+Message-Id: <20230525-topic-sm8550-upstream-pm8550-lpg-dt-v1-0-4d5d7602f290@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f9c6fead-d573-a8bc-7e88-a53313ff8bef@quicinc.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABeDb2QC/5WOQQ6DIBQFr2JY9zcIfmu66j0aFwioJAgE0LQx3
+ r3UnqDLmcWbt5Oko9GJ3KudRL2ZZLwrUF8qImfhJg1GFSaMMk6RIWQfjIS0dIgU1pBy1GKB8GM
+ bJlAZJK8bRMXYyFpSlgaRNAxRODmXLbdaW2SIejSvM/3sC88mZR/f55Ot/tr/olsNFAbsGq5uK
+ FrGH9Y4Ef3Vx4n0x3F8AJ10d0fsAAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1345;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=4tYqV/GEkHVwDABrr+uf0cpSsJR6GuD2I924uiTs4kg=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkb4MbgypG5Llc8Ufb0M+A7mIWcy8Tkg64X1L0OMO7
+ +vzE78CJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZG+DGwAKCRB33NvayMhJ0ZtYD/
+ 4swIcl1CWzwligWPpoAVk1R7jaTxYYnDVYF8GkNDTEPXDXan5h2dh5r7rRu63kyA1yFIkNpIve1PSS
+ GgzsvL/ElTJE4uvdONzdRmcG43dzU2CKRVE2+DPkFTzFM2KuzM0rd27iiRrB+LypHUJ3MBCBzQct1R
+ 2KIYGAeQfkPo6sKxq0AC/nynfS4N5w7xiipxzSWrci0/3mLUXon0CqxGaft/jcBgphB2XVLhGAgtQb
+ g70AUIZiQfyPjcjhnYpXKkJuulMowQMr4Qed9k/pUEmkVi19OKwFYe9EdR+fPmIEn48C+m3XmDqSbW
+ aqPHDbrw3Xqvpbg0Ube3mzJCZphInWE6/7/97iqDhuC7ZUurCpbNugNfCJ49lOGdPzr+8+8VtmLS4W
+ kXJxRpnHGSl47I9ul9tSEqS5853qXjmJB5BlPz5H5SpGDW2ErYyO33K2D0vWVh4kv11z3OvuNUiZ0s
+ nbQzD6ORk5VgWrfNFCknp6hEf8OIp97juSV5J6JmZ/jMc7FYCdy0NxY/9soeFOJR7kBrGHtyV+P99+
+ LV+iMTt/uKyycHUZDKsHA+ZFLyR4Ttq9rQoRw8Ha0+BAEhwPjeADtrQYfRAh/7VhAJ/c0ymfIBRL0h
+ OxmaOuMtjIV/lYlr33YftNpfBrxNYynQyxJGIGwoh62dgIypIV4x3MvtYMHQ==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -82,53 +96,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, May 11, 2023 at 10:09:45PM +0530, Mohammad Rafi Shaik wrote:
-> 
-> On 3/3/2023 3:27 AM, Mathieu Poirier wrote:
-> > On Thu, Feb 23, 2023 at 08:35:57PM +0530, Mohammad Rafi Shaik wrote:
-> > > Update section header name check and corresponding documentation.
-> > > Changes since v4:
-> > >      -- Rephrase commit message.
-> > Asked for clarifications on V4 that were never given to me.  This patchset will
-> > not move forward until those have been resolved.
-> The present Qualcomm DSP binary contains resource table name as
-> ".resource_table.ac_bin_process.",
+This enables the following PMIC devices:
+- PWM RGB LED
+- RTC
+- Volume and Power buttons
 
-My questions still haven't been answered:
+on the SM8550 boards.
 
-1. Why do we have to change the kernel because of the way a company specific
-tool generates an ELF?
+Depends on:
+- [1] PWM bindings, merged by Lee
+- [2] functional fix
+- [3] & [4] QRD flash DT changes
 
-2. Why is the "ac_bin_process" part needed at all?
+[1] https://lore.kernel.org/all/20230522-topic-sm8550-upstream-pm8550-lpg-v2-1-c5117f1d41f9@linaro.org/
+[2] https://lore.kernel.org/r/20230515162604.649203-1-quic_bjorande@quicinc.com
+[3] https://lore.kernel.org/r/20230516150202.188655-3-krzysztof.kozlowski@linaro.org
+[4] https://lore.kernel.org/r/20230516150202.188655-2-krzysztof.kozlowski@linaro.org
 
-> so the current logic with strcmp will fail with present comparision  as the
-> binary name is not only .resource_table but resource_table.ac_bin_process So
-> to overcome this issue we modified the way of checking the resource table
-> name to make it generic.
-> 
-> strstarts(name_table + name, ".resource_table");
-> 
-> This logic will perform a string comparison with name ".resouce_table"as our
-> binary name is .resource_table.ac_bin_process it succeeds
-> 
-> > > Changes since v3:
-> > >      -- Rephrase commit message.
-> > > Changes since v2:
-> > >      -- Update the commit message with example.
-> > >      -- Update the documentation text appropriately.
-> > > Changes since v1:
-> > >      -- Update the commit message.
-> > >      -- Use strstarts instead of strstr.
-> > >      -- Update documentation file.
-> > > 
-> > > Srinivasa Rao Mandadapu (2):
-> > >    remoteproc: elf_loader: Update resource table name check
-> > >    docs: remoteproc: Update section header name requirement
-> > > 
-> > >   Documentation/staging/remoteproc.rst       | 5 ++++-
-> > >   drivers/remoteproc/remoteproc_elf_loader.c | 2 +-
-> > >   2 files changed, 5 insertions(+), 2 deletions(-)
-> > > 
-> > > -- 
-> > > 2.25.1
-> > > 
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Neil Armstrong (4):
+      arm64: dts: qcom: pm8550: add PWM controller
+      arm64: dts: qcom: sm8550-qrd: add notification RGB LED
+      arm64: dts: qcom: sm8550: enable PMIC RTC on MTP & QRD boards
+      arm64: dts: qcom: sm8550-qrd: enable PMIC Volume and Power buttons
+
+ arch/arm64/boot/dts/qcom/pm8550.dtsi    | 10 +++++
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts |  4 ++
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 67 +++++++++++++++++++++++++++++++++
+ 3 files changed, 81 insertions(+)
+---
+base-commit: a04eb9aad608ac77e5212edbd46ad3002ea6265f
+change-id: 20230525-topic-sm8550-upstream-pm8550-lpg-dt-c31455d22f26
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
