@@ -2,48 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4972771037E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 05:51:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07D8B7103FC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 06:19:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232831AbjEYDvv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 23:51:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36596 "EHLO
+        id S235094AbjEYET3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 00:19:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229680AbjEYDvu (ORCPT
+        with ESMTP id S236779AbjEYETM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 23:51:50 -0400
+        Thu, 25 May 2023 00:19:12 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0057CE2;
-        Wed, 24 May 2023 20:51:48 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D0DD1B0;
+        Wed, 24 May 2023 21:19:08 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 86D8464259;
-        Thu, 25 May 2023 03:51:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A1FC433D2;
-        Thu, 25 May 2023 03:51:47 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E5A5B6428D;
+        Thu, 25 May 2023 04:19:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B785C433EF;
+        Thu, 25 May 2023 04:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684986707;
-        bh=bk0RnniuXaXu7zObzQhlgQoNOyofQ/cAuLuVklUpRbI=;
+        s=k20201202; t=1684988347;
+        bh=ghov1HDoXV1gHEgBx2lGI+DkEfipVm5dsjd5Jwtu2Ss=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=MQGGBnUWoAIkkvvMOtc6CdLCWiSqHviqUVbtLWISrAPE3Ar06HsbWgc8rcGlcD1SR
-         biqtkppaVI3ifUrSTecR941zfDvDLviEsFPgWnngy4ox17hDsotrGDy4PoIofkuCB4
-         exyihfajFLzirqCYCTI+ogAaW9FpyYRMVoO/gqy+ZNC+eO+70OtHJNYi/TBRQFUqu6
-         MGlbj6+RUISeIFcI2My5GkNE73jEmmf4wHwgnd/Og0rbMqo94blYJ8Tg33k1CBgzn8
-         8DQrMHSZ1zcRT63xm5PS40jPeMKHn1vasBRUT6Bv4rOo6frFkLJX/DjpEBqhEwdbNz
-         Q9xh3HaaP/3BQ==
-Date:   Wed, 24 May 2023 20:55:38 -0700
+        b=S+X8vnmTTdmjnB7P1TQf76X3YuKJlhJJAwOD3HWld/zcGbFy9bDfXbEWwePQ31Xj9
+         Q+Xn42GzJ9yu/zxSJ5dlF/Bet369PAmOMWcPROJMvdC4Ih7EJtLv6TNKgp90Wk+62T
+         HaYWYcGoPLDTqrScJfWS82xh4Or7M/XqfnOJd/pCtC1PULbbWxRWHtwO0lfQjPzbsy
+         FODe62MB6tLITfzpT4WTZFmC+YamB8U7MUeRzNk+c1Q2kOWrsiKzEKJwJ1pn7ypp8W
+         kq+U0bF83bGtmn1vvm2pnAbXfBehbRQz/vDKv69WtuXncjHhUmQFsMuCYA7OpDB3Be
+         2syZUDqOsHreg==
+Date:   Wed, 24 May 2023 21:22:57 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     tremblay.gabriel@gmail.com
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, bhelgaas@google.com,
+        lpieralisi@kernel.org
+Cc:     kw@linux.com, agross@kernel.org, konrad.dybcio@linaro.org,
+        mani@kernel.org, robh@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] Change the interrupt from level_low to edge_falling
-Message-ID: <20230525035538.wcdpqmaumz5ad4r5@ripper>
-References: <20230502-gtremblay-x13s-keyboard-v1-1-6bc3e59b0d39@gmail.com>
+Subject: Re: [PATCH v6 1/5] dt-bindings: PCI: qcom: Add SDX65 SoC
+Message-ID: <20230525042257.merdqif6yuz6ukv4@ripper>
+References: <1684432073-28490-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1684432073-28490-2-git-send-email-quic_rohiagar@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230502-gtremblay-x13s-keyboard-v1-1-6bc3e59b0d39@gmail.com>
+In-Reply-To: <1684432073-28490-2-git-send-email-quic_rohiagar@quicinc.com>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -54,50 +60,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 02, 2023 at 02:31:14PM -0400, Gabriel Tremblay via B4 Relay wrote:
-> From: Gabriel Tremblay <tremblay.gabriel@gmail.com>
+On Thu, May 18, 2023 at 11:17:49PM +0530, Rohit Agarwal wrote:
+> Add PCIe EP compatible string for SDX65 SoC.
 > 
-> 
-> 
-> ---
-> Lenovo's x13s internal keyboard shows responsivity issues when fast
-> typing occurs. The problem is not replicated with external HID keyboard.
-> 
-> This fix tries to alleviate the problem but requires further testing
-> and commenting.
-> 
+> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-This is interesting, can you tell us a little bit more about why/how
-this improves the situation? Perhaps that could help someone with
-schematics to look into this further as well.
+Bjorn, Lorenzo, please pick this patch through the PCI tree (to avoid
+any merge issues).
 
-Regards,
+Thanks,
 Bjorn
 
-> Signed-off-by: Gabriel Tremblay <tremblay.gabriel@gmail.com>
 > ---
->  arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> index bdcba719fc38..e8d7f02c9bf3 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-> @@ -639,7 +639,7 @@ keyboard@68 {
->  		reg = <0x68>;
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> index b3c22eb..8111122 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> @@ -13,6 +13,7 @@ properties:
+>    compatible:
+>      enum:
+>        - qcom,sdx55-pcie-ep
+> +      - qcom,sdx65-pcie-ep
+>        - qcom,sm8450-pcie-ep
 >  
->  		hid-descr-addr = <0x1>;
-> -		interrupts-extended = <&tlmm 104 IRQ_TYPE_LEVEL_LOW>;
-> +		interrupts-extended = <&tlmm 104 IRQ_TYPE_EDGE_FALLING>;
->  		vdd-supply = <&vreg_misc_3p3>;
->  		vddl-supply = <&vreg_s10b>;
->  
-> 
-> ---
-> base-commit: 84e2893b4573da3bc0c9f24e2005442e420e3831
-> change-id: 20230502-gtremblay-x13s-keyboard-289935f922e2
-> 
-> Best regards,
+>    reg:
+> @@ -109,6 +110,7 @@ allOf:
+>            contains:
+>              enum:
+>                - qcom,sdx55-pcie-ep
+> +              - qcom,sdx65-pcie-ep
+>      then:
+>        properties:
+>          clocks:
 > -- 
-> Gabriel Tremblay <tremblay.gabriel@gmail.com>
+> 2.7.4
 > 
