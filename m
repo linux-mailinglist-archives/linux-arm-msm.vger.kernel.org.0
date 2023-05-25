@@ -2,153 +2,198 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68FD67107A7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 10:35:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB0CF710860
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 11:10:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240269AbjEYIfd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 04:35:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58078 "EHLO
+        id S240268AbjEYJKW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 05:10:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240250AbjEYIfQ (ORCPT
+        with ESMTP id S239477AbjEYJKV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 04:35:16 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57B30E54
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 01:34:45 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f4d80bac38so328811e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 01:34:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685003673; x=1687595673;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=aPiUbsAp8X/zENPhpMO+FWccJ40VFSNvpgwqJJhnT34=;
-        b=LzTFXTehBMwT/jfMm6Z7FFXXpHBbNM+rdz9A2tlc6yEKS6GacVYx1Bn9Vn8bnUnnUX
-         ofz31CWuFtLY2+8Q3xHgLVDcxWKJbz+EN06KVbOQ0hH5xpHqoiTujdhpj0Fp5H5MI+Ll
-         wFQkX58KJUYmRY3MuTXNuI/1c5zBuFEzurBbSop3QHxn4g70cMV4rKElNS8yTvp4Gv3P
-         uwK7lIc8FD1xpkBRBudcnMZZK5A+iDGAy5erG+Pofra5RMb+xTNQIRZUlxh6VRsjYFWA
-         F+NjgKkRUa57m8C/7wgop/W4N9GPKpOa+7rVXJH4qyHhM5RQjxd8P/C2F9FMwcsrOmLd
-         kIxA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685003673; x=1687595673;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aPiUbsAp8X/zENPhpMO+FWccJ40VFSNvpgwqJJhnT34=;
-        b=iRkBwLTA6aw7zWPqncTpoNr2J31Fd4FmFYIkN9F8Fipsv66Bg0pBz40m/DCb66oAHe
-         vmsaq35+PYaz6iwygQLdoECKfayW192RF6QXwjjok0J5TIalbrx869My6j+XEZ26zt7K
-         dp6CaK3qVFP1xADQIsIla+yP0zfGJkPRNP0h1yMR4iM0SAXNq6jAhq+sLRHTOQjwXqXz
-         8ZtOaxS1ejja8Hedmt5q+ZAQ4Jwe9vLT67+/zwFpyHyM+yuDJeUvjJrksu4FwFC2LBrL
-         c7kEBUgQMLwm1g3vktJIyMhj9Nca/BRQmdKm/c14U6d9p11S5PaPhhM/zP8NL4XZUD/X
-         7Tag==
-X-Gm-Message-State: AC+VfDwpLCcZzoNmt5kcUAfjTYz8+qFvvDuynIp8go88O4hWvQRWPgJ2
-        Hrt0Oc4d2eMMkATJWl2E+DXqmQ==
-X-Google-Smtp-Source: ACHHUZ7ctQDEQPnR21Ji/EfGSuZ6pLOajSEQfyilwaZ3OgDXUu1vlUTV2RUF3viTLJgLWUIWPJIxAw==
-X-Received: by 2002:ac2:4116:0:b0:4f3:3eeb:20dc with SMTP id b22-20020ac24116000000b004f33eeb20dcmr4786616lfi.16.1685003672719;
-        Thu, 25 May 2023 01:34:32 -0700 (PDT)
-Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id j28-20020ac2551c000000b004ddaea30ba6sm122242lfk.235.2023.05.25.01.34.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 May 2023 01:34:32 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thu, 25 May 2023 05:10:21 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47A1A19D;
+        Thu, 25 May 2023 02:10:20 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34P5wC9D026948;
+        Thu, 25 May 2023 08:36:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=8XmZME8S/hSVxhMmXf5zce++tCkHuKRuDWiKPuahVH8=;
+ b=gw6rijq9KdllokDqWGpqle5MnTTWxcyl7HcfYdrRC86S+q9YIYkbb+15B9jMZ54apZEG
+ OqYU5xOctFUIvlnK76iuiDb4jT9wsTatlGhXXebnYuV7zmHLABlRdY+KHKGXLDDoFt+S
+ 3SOa3xTs27sW0GUvlof1+2a8ah21G0AYvI3jv45nTNUINeeufzTUroCY3nBaLxEqbkeg
+ pEAsu5ChfZbCVZDmWyKFXpy3BNPHIvOjlrc9Zn0Duv98WXTruyJAxb7hRN5dyD7aC+oi
+ obwCtZ6K4JZoaUMa9IoPUY6xfoh4I7iNUNxvQOxgB6gFhHz5XvFmXcCqlJoVyNgG9tUN jg== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qstg3s55d-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 25 May 2023 08:36:22 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34P8aLk8023260
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 25 May 2023 08:36:21 GMT
+Received: from [10.253.35.57] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 25 May
+ 2023 01:36:17 -0700
+Message-ID: <597533f3-9920-1c48-423d-627812b2972d@quicinc.com>
+Date:   Thu, 25 May 2023 16:36:14 +0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH v4 04/11] coresight-tpdm: Add reset node to TPDM node
+Content-Language: en-US
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: pmk8350: disable ADC by default
-Date:   Thu, 25 May 2023 11:34:31 +0300
-Message-Id: <20230525083431.118929-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-MIME-Version: 1.0
+CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
+References: <1682586037-25973-1-git-send-email-quic_taozha@quicinc.com>
+ <1682586037-25973-5-git-send-email-quic_taozha@quicinc.com>
+ <0947825d-5c2f-0e75-cfe8-ef4c6fa8d502@arm.com>
+From:   Tao Zhang <quic_taozha@quicinc.com>
+In-Reply-To: <0947825d-5c2f-0e75-cfe8-ef4c6fa8d502@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: vfeODFJK6-waFgmJm_3Cw2z-o8yCr3p_
+X-Proofpoint-ORIG-GUID: vfeODFJK6-waFgmJm_3Cw2z-o8yCr3p_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-25_04,2023-05-24_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 phishscore=0
+ impostorscore=0 bulkscore=0 priorityscore=1501 lowpriorityscore=0
+ malwarescore=0 spamscore=0 clxscore=1015 mlxlogscore=999 adultscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305250071
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no reason to keep the vADC enabled by default. Turn it off by
-default and only reenable on the platforms which have some channels
-configured.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/pmk8350.dtsi             | 1 +
- arch/arm64/boot/dts/qcom/sc7280-idp.dts           | 2 ++
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi          | 2 ++
- arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi        | 2 ++
- arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts | 2 ++
- 5 files changed, 9 insertions(+)
+On 5/23/2023 10:53 PM, Suzuki K Poulose wrote:
+> On 27/04/2023 10:00, Tao Zhang wrote:
+>> TPDM device need a node to reset the configurations and status of
+>> it. This change provides a node to reset the configurations and
+>> disable the TPDM if it has been enabled.
+>>
+>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>> ---
+>>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 10 ++++++++
+>>   drivers/hwtracing/coresight/coresight-tpdm.c       | 27 
+>> ++++++++++++++++++++++
+>>   2 files changed, 37 insertions(+)
+>>
+>> diff --git 
+>> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm 
+>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> index 4a58e64..686bdde 100644
+>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> @@ -11,3 +11,13 @@ Description:
+>>           Accepts only one of the 2 values -  1 or 2.
+>>           1 : Generate 64 bits data
+>>           2 : Generate 32 bits data
+>> +
+>> +What:        /sys/bus/coresight/devices/<tpdm-name>/reset
+>> +Date:        March 2023
+>> +KernelVersion    6.3
+>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
+>> (QUIC) <quic_taozha@quicinc.com>
+>> +Description:
+>> +        (Write) Reset the dataset of the tpdm, and disable the tpdm.
+>> +
+>> +        Accepts only one value -  1.
+>> +        1 : Reset the dataset of the tpdm
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c 
+>> b/drivers/hwtracing/coresight/coresight-tpdm.c
+>> index 6f8a8ab..2e64cfd 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+>> @@ -164,6 +164,32 @@ static int tpdm_datasets_setup(struct 
+>> tpdm_drvdata *drvdata)
+>>       return 0;
+>>   }
+>>   +static ssize_t reset_store(struct device *dev,
+>> +                      struct device_attribute *attr,
+>> +                      const char *buf,
+>> +                      size_t size)
+>> +{
+>> +    int ret = 0;
+>> +    unsigned long val;
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +
+>> +    ret = kstrtoul(buf, 10, &val);
+>> +    if (ret || val != 1)
+>> +        return -EINVAL;
+>> +
+>> +    spin_lock(&drvdata->spinlock);
+>> +    tpdm_reset_datasets(drvdata);
+>> +
+>> +    spin_unlock(&drvdata->spinlock);
+>> +
+>> +    /* Disable tpdm if enabled */
+>> +    if (drvdata->enable)
+>> +        coresight_disable_source(drvdata->csdev, NULL);
+>
+> I am not really keen on doing this behind the back. What about the 
+> path of components ? We could simply reject the request when the TPDA 
+> is enabled and let the user alway follow :
+>     1) Disable the TPDM manually via sysfs
+>       2) Reset the TPDM.
+>
+> So, please remove the disable step here.
 
-diff --git a/arch/arm64/boot/dts/qcom/pmk8350.dtsi b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-index bc6297e7253e..df3e916e0171 100644
---- a/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmk8350.dtsi
-@@ -56,6 +56,7 @@ pmk8350_vadc: adc@3100 {
- 			#size-cells = <0>;
- 			interrupts = <PMK8350_SID 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
- 			#io-channel-cells = <1>;
-+			status = "disabled";
- 		};
- 
- 		pmk8350_adc_tm: adc-tm@3400 {
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-index 15222e92e3f5..bfeeaf36546f 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-@@ -73,6 +73,8 @@ &nvme_3v3_regulator {
- };
- 
- &pmk8350_vadc {
-+	status = "okay";
-+
- 	pmr735a-die-temp@403 {
- 		reg = <PMR735A_ADC7_DIE_TEMP>;
- 		label = "pmr735a_die_temp";
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index 21027042cf13..7c889ddf2881 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -432,6 +432,8 @@ &pcie1_phy {
- };
- 
- &pmk8350_vadc {
-+	status = "okay";
-+
- 	pmk8350-die-temp@3 {
- 		reg = <PMK8350_ADC7_DIE_TEMP>;
- 		label = "pmk8350_die_temp";
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-index 9137db066d9e..2bae0d0ccfdd 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-@@ -383,6 +383,8 @@ &pm8350c_pwm {
- };
- 
- &pmk8350_vadc {
-+	status = "okay";
-+
- 	pmk8350-die-temp@3 {
- 		reg = <PMK8350_ADC7_DIE_TEMP>;
- 		label = "pmk8350_die_temp";
-diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-index 7ae6aba5d2ec..0f21bea683b7 100644
---- a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-+++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-@@ -515,6 +515,8 @@ &pmk8350_rtc {
- };
- 
- &pmk8350_vadc {
-+	status = "okay";
-+
- 	adc-chan@644 {
- 		reg = <PMK8350_ADC7_AMUX_THM1_100K_PU>;
- 		qcom,ratiometric;
--- 
-2.39.2
+I will update this in the next patch series.
 
+Best,
+
+Tao
+
+>
+> Suzuki
+>
+>
+>> +
+>> +    return size;
+>> +}
+>> +static DEVICE_ATTR_WO(reset);
+>> +
+>>   /*
+>>    * value 1: 64 bits test data
+>>    * value 2: 32 bits test data
+>> @@ -204,6 +230,7 @@ static ssize_t integration_test_store(struct 
+>> device *dev,
+>>   static DEVICE_ATTR_WO(integration_test);
+>>     static struct attribute *tpdm_attrs[] = {
+>> +    &dev_attr_reset.attr,
+>>       &dev_attr_integration_test.attr,
+>>       NULL,
+>>   };
+>
