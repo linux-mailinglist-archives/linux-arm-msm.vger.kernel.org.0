@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCE5F71163D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 21:07:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34A1F71156E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 20:49:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242993AbjEYSw3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 14:52:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40068 "EHLO
+        id S242409AbjEYSoL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 14:44:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243437AbjEYSup (ORCPT
+        with ESMTP id S242380AbjEYSnp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 14:50:45 -0400
+        Thu, 25 May 2023 14:43:45 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B567359F;
-        Thu, 25 May 2023 11:44:17 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CF441999;
+        Thu, 25 May 2023 11:40:26 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id F19CD648EF;
-        Thu, 25 May 2023 18:35:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D39C4339C;
-        Thu, 25 May 2023 18:35:47 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 19DEF647F9;
+        Thu, 25 May 2023 18:38:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CB45C4339B;
+        Thu, 25 May 2023 18:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685039748;
-        bh=KpOX9yBY2MN4DXxOyvmtbBMABnM8CIwuq22oglNh8XI=;
+        s=k20201202; t=1685039917;
+        bh=M4V4JYAJb7JCpNDh95af6IswKlTV3u8pE33X7dJJco0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=o+kfaEqerb2xYTAFaU0hdrDVHlKdgrkD0A0NJr78GWr4Ioal9L+TFwYCyzrPwTvC7
-         YHuA0e2IC9EACkuEmO4YroCPqpWb80ihO0QT3HuikSuA6XczHUavWNLp6f3xPJ4sDI
-         bCyJiWLhW19XV2ejWYHRR41HikGIHlvOL91MGaBwaxs2WzqCW6/c8rZ59ez0s0hnLN
-         OKxlgdGrNFiOGQBAK3fDyWizPQRDt0uNQZdbCwHY3yXJjcp+JUD3l14ssdFoA4+XJr
-         DHuCpMkXjwi2a3M8x+C+S/jAlJOEJ4jR/gS1BZ/ncTl3AlYeXKNrLyJBA3h8JS815p
-         40CUwG7oDpTDQ==
+        b=k2scfiwjPki2/GJ+OJdW23fjhKzpVNyNomysqMFNRgXfDQSRo/RcQvkv7i3e/RPFw
+         94FQdy6RqfCABJe16vTPJwV59b/CM3QMFIOfXNUkzu/R1Jl49JZ2qUynIJlbo2CONm
+         Z/DNiCsMCAwmGcraB2WEIOIdWWnv+fB5cmbZnwEcJphEGvq8h5pTbmR240zvibSoVL
+         gvCWuNbbY4Zgpw2nc5cPYebU8STGCFIkMm+wZqvQPB2vgKIhdA3Q0GhKnV+dEkap6S
+         LCcJVo0DOXHKs1oDgRhENFx25SIkrWRgRJ8hDjKxlkfHTT4skflpzX0oJWX6EXEw5v
+         2QtH6W1hxj+Zw==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Rob Clark <robdclark@chromium.org>,
@@ -40,12 +40,12 @@ Cc:     Rob Clark <robdclark@chromium.org>,
         quic_abhinavk@quicinc.com, airlied@gmail.com, daniel@ffwll.ch,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 6.3 60/67] drm/msm: Be more shouty if per-process pgtables aren't working
-Date:   Thu, 25 May 2023 14:31:37 -0400
-Message-Id: <20230525183144.1717540-60-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.1 50/57] drm/msm: Be more shouty if per-process pgtables aren't working
+Date:   Thu, 25 May 2023 14:36:00 -0400
+Message-Id: <20230525183607.1793983-50-sashal@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230525183144.1717540-1-sashal@kernel.org>
-References: <20230525183144.1717540-1-sashal@kernel.org>
+In-Reply-To: <20230525183607.1793983-1-sashal@kernel.org>
+References: <20230525183607.1793983-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -77,10 +77,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 6 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/msm/msm_iommu.c b/drivers/gpu/drm/msm/msm_iommu.c
-index c2507582ecf34..0d6a69cd6f7a5 100644
+index 5577cea7c0092..d12ba47b37c4f 100644
 --- a/drivers/gpu/drm/msm/msm_iommu.c
 +++ b/drivers/gpu/drm/msm/msm_iommu.c
-@@ -234,7 +234,12 @@ struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
+@@ -227,7 +227,12 @@ struct msm_mmu *msm_iommu_pagetable_create(struct msm_mmu *parent)
  	/* Get the pagetable configuration from the domain */
  	if (adreno_smmu->cookie)
  		ttbr1_cfg = adreno_smmu->get_ttbr1_cfg(adreno_smmu->cookie);
