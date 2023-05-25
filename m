@@ -2,123 +2,129 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4825F71127A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 19:39:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D45E071129B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 19:41:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232561AbjEYRjP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 13:39:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46410 "EHLO
+        id S239626AbjEYRlV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 13:41:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230054AbjEYRjN (ORCPT
+        with ESMTP id S230511AbjEYRlV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 13:39:13 -0400
-Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C78FB6;
-        Thu, 25 May 2023 10:39:12 -0700 (PDT)
-Received: by mail-oo1-xc2f.google.com with SMTP id 006d021491bc7-54fd177fbd4so419515eaf.3;
-        Thu, 25 May 2023 10:39:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685036351; x=1687628351;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=q4D8c9QPyqmoOXQDae1retuejjcC/UV6PHLGp3fhhjw=;
-        b=cWK/TeSz7AD4BvpRQaMJ2AbrRrrf6WKrpQ31ln3A9MDdvoh1Sg6u4XectXi9T9z/Tw
-         AYcM/jmSiuWiW/Y7cSut9dkxmvSSnwynvrd/RkP+sd0XxRZnxS+m/nhwBpUj9pyCG75Q
-         +/Fx/Dda9E8NlcWKvp5PBiYBt5GOwUYvJdn7h4zEzj4f6dKV0Ug8MSbiukNwXryGzGpE
-         JjdQSNxOE4Ed6PLcSO6QunQ4XoQx8q+2pOwv8yPRAdNm8sBNmLYrcuRZ4IAkGRBgdh41
-         aTGtHXos9bezeG3UDyLvDbzDWLyl0jfA4i5JLxhgz5/07y5O7XOsgLfctZEMvW8kbgfa
-         JGtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685036351; x=1687628351;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=q4D8c9QPyqmoOXQDae1retuejjcC/UV6PHLGp3fhhjw=;
-        b=VtTSHVjSRaVLoeWHJlGKX1EimQ75DN4WPAWn5X7hOVXmM96UGnL0Gtp82mHnEaWFRx
-         jzR8SQ4WqCPUOiTWQ5tj9APP6CjsjB+pfW0UOI0M4Gl4DHvlGZDx9wWzT34n64bym3ym
-         JOzSFSax7x3KrLIBldWNlE9FnoHOPkNXmNpvL/qTaN9Q0y2XMdHWlTJuJM1b9xMb1qVz
-         ZuG9Z6a88Iwk/m4po6jIq7XgKJCw7DPKlhlL20mshTYSUTDIl629VcBNRmfopS4GLDBv
-         3VUQLUqLZZDO4I/VUdlfy3XkEM9I5xGDim7/f/Lvu9uuvxtbIeicrn5wwQQlIDWWL7Fq
-         7xTQ==
-X-Gm-Message-State: AC+VfDwzYwfJ6K83ukneR8xSHbm0wKGqRBLZFo2Ck4PnDWonrSbNthsu
-        A3lnMjpTDIAW4HHfbNyHaLx2PQpyj2lK+fV7vCsWOjuY
-X-Google-Smtp-Source: ACHHUZ6vYd/72HrFnILIsPPxkV9WtXgdY0reZpTVE+28Qcv/gfC8YrS3WgW3xvAxoExi5idG0G+2nqlifIhKg3jLxd0=
-X-Received: by 2002:a4a:5782:0:b0:557:cd4e:c116 with SMTP id
- u124-20020a4a5782000000b00557cd4ec116mr65019ooa.1.1685036351462; Thu, 25 May
- 2023 10:39:11 -0700 (PDT)
+        Thu, 25 May 2023 13:41:21 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B517B19D;
+        Thu, 25 May 2023 10:41:19 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34PFCJM5020541;
+        Thu, 25 May 2023 17:41:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=PG5Ag7h7VCcaRLh2LfmjMf7MXYMgpeS4Kg4IZLMuQ6k=;
+ b=LjN9QLffyDBdLP7P+y62NawHGTHptw8WBKyvhgHIPoMspkdv0jb2zpTx5Aq+CJPcRcjv
+ p4qiFN1LDkHqNF7A12BclUzDHxlgSU0EK52JLJIJ1Swfy81QnsplQxQtW26492FBamZg
+ ajfA560T++XKYrYl5jjQn6b1WGkFNM6FEsDr8clM7Rfm/yWFN+2nnJoP1I9yWgBg9lY5
+ vCzVZByO8kfgbB/LgnLZqfSI9SGp3kRJtoP1V+wPHSTcwBMJzejK56IlPV5lB8pxcal5
+ wR2CngZRTvTTkde9g61NngC3b6GFoKnxzX6pI8vOKyK9SKIrgEiXKO69gmM4z1L/AdyC 8A== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qsqqjapfa-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 25 May 2023 17:41:08 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34PHf7Vs022255
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 25 May 2023 17:41:07 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Thu, 25 May 2023 10:41:06 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <andersson@kernel.org>
+CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v14 00/10] add DSC 1.2 dpu supports
+Date:   Thu, 25 May 2023 10:40:48 -0700
+Message-ID: <1685036458-22683-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-References: <20230517-topic-a7xx_prep-v2-0-5b9daa2b2cf0@linaro.org> <20230517-topic-a7xx_prep-v2-2-5b9daa2b2cf0@linaro.org>
-In-Reply-To: <20230517-topic-a7xx_prep-v2-2-5b9daa2b2cf0@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 25 May 2023 10:38:59 -0700
-Message-ID: <CAF6AEGsm=o-KgOtm01FSvMOB_uj6VOaONNu5FUr4phUixYNG3g@mail.gmail.com>
-Subject: Re: [PATCH v2 2/6] drm/msm/a6xx: Explain CP_PROTECT_CNTL writes in a6xx_set_cp_protect
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: BXZKcP67BeUJPN6SQbMinjTyCS9r4ap2
+X-Proofpoint-ORIG-GUID: BXZKcP67BeUJPN6SQbMinjTyCS9r4ap2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-25_10,2023-05-25_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 bulkscore=0 adultscore=0 suspectscore=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 phishscore=0 mlxscore=0 malwarescore=0
+ mlxlogscore=850 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305250147
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 19, 2023 at 6:29=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro=
-.org> wrote:
->
-> We have the necessary information, so explain which bit does what.
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/=
-adreno/a6xx_gpu.c
-> index 9fb214f150dd..deed42675fe2 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -771,9 +771,10 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
->         }
->
->         /*
-> -        * Enable access protection to privileged registers, fault on an =
-access
-> -        * protect violation and select the last span to protect from the=
- start
-> -        * address all the way to the end of the register address space
-> +        * BIT(0) - Enable access protection to privileged registers
-> +        * BIT(1) - Enable fault on an access protect violation
-> +        * BIT(3) - Select the last span to protect from the start
-> +        *          address all the way to the end of the register addres=
-s space
+This series adds the DPU side changes to support DSC 1.2 encoder. This
+was validated with both DSI DSC 1.2 panel and DP DSC 1.2 monitor.
+The DSI and DP parts will be pushed later on top of this change.
+This seriel is rebase on [1], [2] and catalog fixes from rev-4 of [3].
 
-Even better would be to give these bitfields names in the xml, which
-also gets you more meaningful decoding.  We've been better about not
-open-coding a lot of stuff on the mesa side, but it is a bit easier
-with header generation integrated into the build..  but less
-open-coding on the kernel side is still a noble goal
+[1]: https://patchwork.freedesktop.org/series/116851/
+[2]: https://patchwork.freedesktop.org/series/116615/
+[3]: https://patchwork.freedesktop.org/series/112332/
 
-BR,
--R
+Abhinav Kumar (2):
+  drm/msm/dpu: add DSC blocks to the catalog of MSM8998 and SC8180X
+  drm/msm/dpu: add DSC 1.2 hw blocks for relevant chipsets
 
->          */
->         gpu_write(gpu, REG_A6XX_CP_PROTECT_CNTL, BIT(0) | BIT(1) | BIT(3)=
-);
->
->
-> --
-> 2.40.1
->
+Kuogee Hsieh (8):
+  drm/msm/dpu: set DSC flush bit correctly at MDP CTL flush register
+  drm/msm/dpu: add DPU_PINGPONG_DSC feature bit for DPU < 7.0.0
+  drm/msm/dpu: Guard PINGPONG DSC ops behind DPU_PINGPONG_DSC bit
+  drm/msm/dpu: Introduce PINGPONG_NONE to disconnect DSC from PINGPONG
+  drm/msm/dpu: add support for DSC encoder v1.2 engine
+  drm/msm/dpu: always clear every individual pending flush mask
+  drm/msm/dpu: separate DSC flush update out of interface
+  drm/msm/dpu: Tear down DSC datapath on encoder cleanup
+
+ drivers/gpu/drm/msm/Makefile                       |   1 +
+ .../drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h    |   7 +
+ .../drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h    |  11 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h |  14 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h |   7 +
+ .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   |  16 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h |  14 +
+ .../gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h |  14 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  51 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |  24 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |  35 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c         |  33 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.h         |  11 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c         |  14 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.h         |  15 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c     | 387 +++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h        |   3 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c    |   9 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c             |   7 +-
+ 19 files changed, 644 insertions(+), 29 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc_1_2.c
+
+-- 
+2.7.4
+
