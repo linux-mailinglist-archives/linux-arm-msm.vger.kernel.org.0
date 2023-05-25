@@ -2,79 +2,254 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 11E94710B85
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 13:55:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B0C9710BC0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 14:10:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231160AbjEYLyw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 07:54:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41022 "EHLO
+        id S241128AbjEYMKI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 08:10:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241097AbjEYLyf (ORCPT
+        with ESMTP id S240825AbjEYMKF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 07:54:35 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94FD397;
-        Thu, 25 May 2023 04:54:34 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 29B05619D0;
-        Thu, 25 May 2023 11:54:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5AB6C433D2;
-        Thu, 25 May 2023 11:54:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685015673;
-        bh=yXZLjlUFVFHvH63iorAG2OYiK40XGG0ldq70nvT1LEc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=d0lx+BlXBW/xUsIE+/dkKUPR97iPr0VZf9W7k/0jUEs2TRygd2opXRRVm+bguIBxQ
-         rCqG4KVn6tcduP+stzIX8LFPe2XESXTKfn6V8w9jqwK9O8cZwT6maAGc5OqIDei0RC
-         2oeTJld6DZ3M36SmGzvZOuC1660EGo8SilQIpXikG9pmPLn+U/FpRJexcXbOXNJlLI
-         ANeKHJAEZD+igxwusQbcaXvtc/lV4o/IpFk48cDt7zDBETP4l9whNoQQV6ZN1FJO5c
-         Ujr4GlKj7XCVcU6u1oSPCEkBLCbYiSLr69rabudVmMZ6h+8bMDpRPDyQOVFZvMFj6F
-         kUmV3aOXeH+0A==
-Date:   Thu, 25 May 2023 12:54:26 +0100
-From:   Lee Jones <lee@kernel.org>
-To:     Dylan Van Assche <me@dylanvanassche.be>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        pavel@ucw.cz, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        quic_fenglinw@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        amartinz@shiftphones.com,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v3 1/3] dt-bindings: leds: qcom,spmi-flash-led: add
- PMI8998
-Message-ID: <20230525115426.GN423913@google.com>
-References: <20230518133113.273880-1-me@dylanvanassche.be>
- <20230518133113.273880-2-me@dylanvanassche.be>
+        Thu, 25 May 2023 08:10:05 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C05D6E7;
+        Thu, 25 May 2023 05:10:01 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id a640c23a62f3a-96f6a9131fdso79529366b.1;
+        Thu, 25 May 2023 05:10:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685016600; x=1687608600;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rcZFua0EILx4UgL94m890/UaW7590iqXfYJZcRYRhjI=;
+        b=e51ZnOfJ1t/HYqAKC9YQAQk0SSWNN6Gcf6eX15qnKverJ5v2wTq1XItzYrgvLb6Jlc
+         nhS13CzXaongQ9ENjk2B1KGf3BvBL2Y0M6y9AlxFM4iysWL6uB9U25VP6lRXdjP5TbTk
+         w2Ct2rt0kxCfGhR50mAp4HILAlPtkxTzsCi5xumrO/Pj/0Y2mkap5gqJyjiK9zj/0XBo
+         0xReVcHuBoxG9om06U1JiXltUSvNKtm+EWnDUNNtYHCiGVua/zsWiRI8bFRUJ8y4MODi
+         Ss7ewqnkGgO68IVTpCqs4rJL5RTZuzncA2cPhTadyae4YsVGgLL5IIT91uDCAAgsdgaM
+         l2HA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685016600; x=1687608600;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rcZFua0EILx4UgL94m890/UaW7590iqXfYJZcRYRhjI=;
+        b=lvAwIzP4RsZXlposbj3n3VSqZvcQ0ewyq43P9BslIyqucnIyUTYfqlbReMQRf411sv
+         AfZzO9j/mcqey+i8VhDga8ae3vxHIVMuJjKUfWpnss+hfeqAK0XB26iieeN5fsSMuIRk
+         4ywIKtNgBVo0loD+DyC4hjH+jmXb8OF2BARWWNXTSEOwzjTy1qd5kTexC5z41wjfMKO0
+         TRcAKk1kaiNLFiZsra+V9R5lPwMp+PR6Ucc+kNJn3tQTNHHyHN71njVgMtDhnJ5ah1/6
+         I7xKgVrbPXN96ucMga2HVdnWfDfrt+/OSsnI5W1a7fW6wK3ZNE5gFLEDTqHXmaPo6HpR
+         DBdA==
+X-Gm-Message-State: AC+VfDySsFSSMnahpN7MUiD3+VKYVzEefuGtnH7qcDI0C/JI9NEUh5KB
+        frVfwwa7zRzJTKdeskVdoPQ=
+X-Google-Smtp-Source: ACHHUZ7zIdWYYBbfyJFITOB1FxiDdqR7ygd9FU8331naFjWq13i+5GYuWd8Ym1lSFAJSdAzQNFATPg==
+X-Received: by 2002:a17:907:3185:b0:957:862a:9e6e with SMTP id xe5-20020a170907318500b00957862a9e6emr1104852ejb.73.1685016599901;
+        Thu, 25 May 2023 05:09:59 -0700 (PDT)
+Received: from fedora.. ([213.149.38.146])
+        by smtp.googlemail.com with ESMTPSA id d5-20020a170906640500b0094ef923a6ccsm765216ejm.219.2023.05.25.05.09.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 May 2023 05:09:59 -0700 (PDT)
+From:   Robert Marko <robimarko@gmail.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        ilia.lin@kernel.org, rafael@kernel.org, viresh.kumar@linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Cc:     ansuelsmth@gmail.com, Robert Marko <robimarko@gmail.com>
+Subject: [PATCH v3 1/5] soc: qcom: socinfo: move SMEM item struct and defines to a header
+Date:   Thu, 25 May 2023 14:09:52 +0200
+Message-Id: <20230525120956.3095317-1-robimarko@gmail.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230518133113.273880-2-me@dylanvanassche.be>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 18 May 2023, Dylan Van Assche wrote:
+Move SMEM item struct and related defines to a header in order to be able
+to reuse them in the SMEM driver instead of duplicating them.
 
-> Document compatible for PMI8998 Torch and Flash LED controller.
-> 
-> Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
-> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  Documentation/devicetree/bindings/leds/qcom,spmi-flash-led.yaml | 1 +
->  1 file changed, 1 insertion(+)
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+---
+ drivers/soc/qcom/socinfo.c       | 67 +-----------------------------
+ include/linux/soc/qcom/socinfo.h | 70 ++++++++++++++++++++++++++++++++
+ 2 files changed, 71 insertions(+), 66 deletions(-)
+ create mode 100644 include/linux/soc/qcom/socinfo.h
 
-Applied, thanks
-
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index c2e4a57dd666..ee6bbf76d941 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -11,6 +11,7 @@
+ #include <linux/random.h>
+ #include <linux/slab.h>
+ #include <linux/soc/qcom/smem.h>
++#include <linux/soc/qcom/socinfo.h>
+ #include <linux/string.h>
+ #include <linux/stringify.h>
+ #include <linux/sys_soc.h>
+@@ -32,15 +33,6 @@
+ #define qcom_board_id(id) QCOM_ID_ ## id, __stringify(id)
+ #define qcom_board_id_named(id, name) QCOM_ID_ ## id, (name)
+ 
+-#define SMEM_SOCINFO_BUILD_ID_LENGTH           32
+-#define SMEM_SOCINFO_CHIP_ID_LENGTH            32
+-
+-/*
+- * SMEM item id, used to acquire handles to respective
+- * SMEM region.
+- */
+-#define SMEM_HW_SW_BUILD_ID            137
+-
+ #ifdef CONFIG_DEBUG_FS
+ #define SMEM_IMAGE_VERSION_BLOCKS_COUNT        32
+ #define SMEM_IMAGE_VERSION_SIZE                4096
+@@ -126,64 +118,7 @@ static const char *const pmic_models[] = {
+ 	[58] = "PM8450",
+ 	[65] = "PM8010",
+ };
+-#endif /* CONFIG_DEBUG_FS */
+-
+-/* Socinfo SMEM item structure */
+-struct socinfo {
+-	__le32 fmt;
+-	__le32 id;
+-	__le32 ver;
+-	char build_id[SMEM_SOCINFO_BUILD_ID_LENGTH];
+-	/* Version 2 */
+-	__le32 raw_id;
+-	__le32 raw_ver;
+-	/* Version 3 */
+-	__le32 hw_plat;
+-	/* Version 4 */
+-	__le32 plat_ver;
+-	/* Version 5 */
+-	__le32 accessory_chip;
+-	/* Version 6 */
+-	__le32 hw_plat_subtype;
+-	/* Version 7 */
+-	__le32 pmic_model;
+-	__le32 pmic_die_rev;
+-	/* Version 8 */
+-	__le32 pmic_model_1;
+-	__le32 pmic_die_rev_1;
+-	__le32 pmic_model_2;
+-	__le32 pmic_die_rev_2;
+-	/* Version 9 */
+-	__le32 foundry_id;
+-	/* Version 10 */
+-	__le32 serial_num;
+-	/* Version 11 */
+-	__le32 num_pmics;
+-	__le32 pmic_array_offset;
+-	/* Version 12 */
+-	__le32 chip_family;
+-	__le32 raw_device_family;
+-	__le32 raw_device_num;
+-	/* Version 13 */
+-	__le32 nproduct_id;
+-	char chip_id[SMEM_SOCINFO_CHIP_ID_LENGTH];
+-	/* Version 14 */
+-	__le32 num_clusters;
+-	__le32 ncluster_array_offset;
+-	__le32 num_defective_parts;
+-	__le32 ndefective_parts_array_offset;
+-	/* Version 15 */
+-	__le32 nmodem_supported;
+-	/* Version 16 */
+-	__le32  feature_code;
+-	__le32  pcode;
+-	__le32  npartnamemap_offset;
+-	__le32  nnum_partname_mapping;
+-	/* Version 17 */
+-	__le32 oem_variant;
+-};
+ 
+-#ifdef CONFIG_DEBUG_FS
+ struct socinfo_params {
+ 	u32 raw_device_family;
+ 	u32 hw_plat_subtype;
+diff --git a/include/linux/soc/qcom/socinfo.h b/include/linux/soc/qcom/socinfo.h
+new file mode 100644
+index 000000000000..d1cbc49a2a2d
+--- /dev/null
++++ b/include/linux/soc/qcom/socinfo.h
+@@ -0,0 +1,70 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++
++#ifndef __QCOM_SOCINFO_H__
++#define __QCOM_SOCINFO_H__
++
++/*
++ * SMEM item id, used to acquire handles to respective
++ * SMEM region.
++ */
++#define SMEM_HW_SW_BUILD_ID		137
++
++#define SMEM_SOCINFO_BUILD_ID_LENGTH	32
++#define SMEM_SOCINFO_CHIP_ID_LENGTH	32
++
++/* Socinfo SMEM item structure */
++struct socinfo {
++	__le32 fmt;
++	__le32 id;
++	__le32 ver;
++	char build_id[SMEM_SOCINFO_BUILD_ID_LENGTH];
++	/* Version 2 */
++	__le32 raw_id;
++	__le32 raw_ver;
++	/* Version 3 */
++	__le32 hw_plat;
++	/* Version 4 */
++	__le32 plat_ver;
++	/* Version 5 */
++	__le32 accessory_chip;
++	/* Version 6 */
++	__le32 hw_plat_subtype;
++	/* Version 7 */
++	__le32 pmic_model;
++	__le32 pmic_die_rev;
++	/* Version 8 */
++	__le32 pmic_model_1;
++	__le32 pmic_die_rev_1;
++	__le32 pmic_model_2;
++	__le32 pmic_die_rev_2;
++	/* Version 9 */
++	__le32 foundry_id;
++	/* Version 10 */
++	__le32 serial_num;
++	/* Version 11 */
++	__le32 num_pmics;
++	__le32 pmic_array_offset;
++	/* Version 12 */
++	__le32 chip_family;
++	__le32 raw_device_family;
++	__le32 raw_device_num;
++	/* Version 13 */
++	__le32 nproduct_id;
++	char chip_id[SMEM_SOCINFO_CHIP_ID_LENGTH];
++	/* Version 14 */
++	__le32 num_clusters;
++	__le32 ncluster_array_offset;
++	__le32 num_defective_parts;
++	__le32 ndefective_parts_array_offset;
++	/* Version 15 */
++	__le32 nmodem_supported;
++	/* Version 16 */
++	__le32  feature_code;
++	__le32  pcode;
++	__le32  npartnamemap_offset;
++	__le32  nnum_partname_mapping;
++	/* Version 17 */
++	__le32 oem_variant;
++};
++
++#endif
 -- 
-Lee Jones [李琼斯]
+2.40.1
+
