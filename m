@@ -2,85 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B23FF71194C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 23:41:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8247E711969
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 23:44:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240238AbjEYVlJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 17:41:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45372 "EHLO
+        id S233991AbjEYVop (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 17:44:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235791AbjEYVlI (ORCPT
+        with ESMTP id S241975AbjEYVol (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 17:41:08 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C7D21A4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 14:41:03 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34PLL6Bu003162;
-        Thu, 25 May 2023 21:40:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=KDZo71gRcDFSFrx7PRrhULd2+WSgVFYIUueCbZ2Jmu0=;
- b=G/X65j7HCXQN1XAH10dMsryO1ceXDOJPns25BMUNOZsCcwM9c4Mv1XT2q5iyVuESXZnq
- G60WcMXqq6JAAYfnEzQPmompsY05vUnKAwYJIl5E+6SSK2+TDs65f6CHxirkTFsGnIMZ
- aOy9mnhotUrnhkr8LsW3jzYok/BKP70d2YZ8pid9Lhb1XJD8J61b30m62jm/fbxVyJ0A
- UfHlbtDNxuuagGVcto15Olmi6kx3Qj9s307HjFPf6uUrMYmRo0ZebhrUF1CxkD8ur+BK
- OXvN38z6M4YgQvG/4eVWzxUrN/kq6ReeMWTqbmRQw0qAEVypLAS2LcklrdxCg3fZrxql oA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qt47eshnw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 25 May 2023 21:40:52 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34PLepT1006234
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 25 May 2023 21:40:51 GMT
-Received: from [10.110.33.8] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 25 May
- 2023 14:40:50 -0700
-Message-ID: <50c35efe-987b-5138-050e-181c0f6bf191@quicinc.com>
-Date:   Thu, 25 May 2023 14:40:50 -0700
+        Thu, 25 May 2023 17:44:41 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 443B3E55;
+        Thu, 25 May 2023 14:44:12 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1ae5dc9eac4so451275ad.1;
+        Thu, 25 May 2023 14:44:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685051051; x=1687643051;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Rxyu2j+1PUh7NsIHQqAR9oU8vdRakTXh3OF1OAFRUWk=;
+        b=dOC9pXJQHPFtjIBSQfDc/hoLm/IDWFWpUZ5RAVZXlUHejPWoDQYX29h5T0j9I0E8+g
+         o8hrNi3HZlEY6xYU9/TZsBLHfSGkHSmFUvKr5fLvceT0bNRjeRyHZ/4DHk5ttr8OkntX
+         r++Nvj8LtnTiE1OnohdnDOlOCkGOXmRE3bZG3LwGInyLidrYWkvtP2f0DSf097vHKZzS
+         tPBQhzfHjkQqFgsYcKbxok1ME1Hri+D37fvqdH07FKpQt+N7dYEsBA6+sm98n9mlz7My
+         mD5zRhfmSqppL7mqV35DhVapKxDQecSgX9Kjr0+WYCKm3GaECLEuY1SbxuFQ0Ix3cm9f
+         cM/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685051051; x=1687643051;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Rxyu2j+1PUh7NsIHQqAR9oU8vdRakTXh3OF1OAFRUWk=;
+        b=NRbMrf3t361iy6/6FlMx76fU1qv9wK6m0KbkU4sQYsVbmD5dlhoUE92Wn/4dpiDXuu
+         yZJnHEKWOTTLgxrWyzI6d+PBsb7vqWEdz/Lj4u6fX4wrYJgwNztcS14ygV3xQikxvoPG
+         RRLJ/cD0CJ/Rrus0tu3uYuA1xk2t+jOIbTQlrpmgTfmFqYA2e17vg2xq+WxkUjSnA8EE
+         x0wHEmau3aIbPFJ0GQ/Rm1Z6YUYZyz0JnmtMe+EtPtdM73SfcsAE9dnpXY13jcpTA08Y
+         muYD4cSHeCzWNbK3gvznmEGz+sfx8aFHZKrZRvX4AZVg3bpAsYixckrnAnCk0qauFi6P
+         Qk8g==
+X-Gm-Message-State: AC+VfDzzdVpnU3yl000t8efnd7ZwUgUAwJS1CXTd0rJcI9g7wRwnpJ61
+        7xKkCT2Z0+gUK1Szk9upMhphOEZwjiSbppKVB6g=
+X-Google-Smtp-Source: ACHHUZ5i4Npti31efGm+PWBmqnTDD3QYDDNKl4iN2KcZkULAHiNtPyLO9Md1cv6X5sZsq3bA/o7h/Afdxr/b3vpRzD0=
+X-Received: by 2002:a17:902:db05:b0:1ae:89a:9e with SMTP id
+ m5-20020a170902db0500b001ae089a009emr25256plx.61.1685051050628; Thu, 25 May
+ 2023 14:44:10 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [Freedreno] [PATCH v2 3/6] drm/msm/dpu: split interrupt address
- arrays
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        "Stephen Boyd" <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>
-References: <20230522214527.190054-1-dmitry.baryshkov@linaro.org>
- <20230522214527.190054-4-dmitry.baryshkov@linaro.org>
-From:   Jeykumar Sankaran <quic_jeykumar@quicinc.com>
-In-Reply-To: <20230522214527.190054-4-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZwQ8SIK4Se8Umc-w3dhMmN42ZxMqDnfE
-X-Proofpoint-ORIG-GUID: ZwQ8SIK4Se8Umc-w3dhMmN42ZxMqDnfE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-25_12,2023-05-25_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- suspectscore=0 clxscore=1015 adultscore=0 bulkscore=0 malwarescore=0
- priorityscore=1501 impostorscore=0 lowpriorityscore=0 spamscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305250184
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+References: <1678979666-551-1-git-send-email-quic_mojha@quicinc.com>
+ <76943268-3982-deaf-9736-429dd51e01b0@gmail.com> <0e645486-f0be-4468-18ad-9e49088dee0b@quicinc.com>
+ <CAOX2RU4xPNq4-OHUoMZtfZu05QEdpk1UtawZb1xQMrtc5ao84Q@mail.gmail.com>
+ <a6c48095-179a-7e72-a282-fbc28af374cb@quicinc.com> <CAOX2RU6S-x-KrQ-qQLW-qxu4bph79d+Yq9Vj=PQwWW4o-yG2xA@mail.gmail.com>
+ <CAOX2RU6rv0jcnTRAa=kiWHPk1A=DW=smS72df_t+tufOZ9XGfA@mail.gmail.com> <cd2c808c-bcb8-85fe-2c56-7accd4853160@quicinc.com>
+In-Reply-To: <cd2c808c-bcb8-85fe-2c56-7accd4853160@quicinc.com>
+From:   Robert Marko <robimarko@gmail.com>
+Date:   Thu, 25 May 2023 23:43:59 +0200
+Message-ID: <CAOX2RU50+iR0jfyQqzRoTLn0Jydd_c+Ue88rDdhL6PbOKPDMVA@mail.gmail.com>
+Subject: Re: [PATCH v3] firmware: qcom_scm: Clear download bit during reboot
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,369 +71,186 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, 23 May 2023 at 11:42, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
+>
+>
+>
+> On 5/22/2023 3:34 PM, Robert Marko wrote:
+> > On Mon, 22 May 2023 at 11:26, Robert Marko <robimarko@gmail.com> wrote:
+> >>
+> >> On Mon, 22 May 2023 at 11:11, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
+> >>>
+> >>>
+> >>>
+> >>> On 5/22/2023 2:29 PM, Robert Marko wrote:
+> >>>> On Mon, 22 May 2023 at 08:11, Mukesh Ojha <quic_mojha@quicinc.com> wrote:
+> >>>>>
+> >>>>>
+> >>>>>
+> >>>>> On 5/18/2023 3:45 PM, Robert Marko wrote:
+> >>>>>>
+> >>>>>> On 16. 03. 2023. 16:14, Mukesh Ojha wrote:
+> >>>>>>> During normal restart of a system download bit should
+> >>>>>>> be cleared irrespective of whether download mode is
+> >>>>>>> set or not.
+> >>>>>>>
+> >>>>>>> Fixes: 8c1b7dc9ba22 ("firmware: qcom: scm: Expose download-mode control")
+> >>>>>>> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> >>>>>>
+> >>>>>> Hi, this has been backported to 5.15.111, however it seems to be
+> >>>>>> breaking reboot
+> >>>>>> on IPQ4019 by causing the board to then hang in SBL with:
+> >>>>>> root@OpenWrt:/# reboot
+> >>>>>> root@OpenWrt:/# [   76.473541] device lan1 left promiscuous mode
+> >>>>>> [   76.474204] br-lan: port 1(lan1) entered disabled state
+> >>>>>> [   76.527975] device lan2 left promiscuous mode
+> >>>>>> [   76.530301] br-lan: port 2(lan2) entered disabled state
+> >>>>>> [   76.579376] device lan3 left promiscuous mode
+> >>>>>> [   76.581698] br-lan: port 3(lan3) entered disabled state
+> >>>>>> [   76.638434] device lan4 left promiscuous mode
+> >>>>>> [   76.638777] br-lan: port 4(lan4) entered disabled state
+> >>>>>> [   76.978489] qca8k-ipq4019 c000000.switch wan: Link is Down
+> >>>>>> [   76.978883] device eth0 left promiscuous mode
+> >>>>>> [   76.987077] ipqess-edma c080000.ethernet eth0: Link is Down
+> >>>>>> [
+> >>>>>> Format: Log Type - Time(microsec) - Message - Optional Info
+> >>>>>> Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+> >>>>>> S - QC_IMAGE_VERSION_STRING=BOOT.BF.3.1.1-00123
+> >>>>>> S - IMAGE_VARIANT_STRING=DAABANAZA
+> >>>>>> S - OEM_IMAGE_VERSION_STRING=CRM
+> >>>>>> S - Boot Config, 0x00000021
+> >>>>>> S - Reset status Config, 0x00000010
+> >>>>>> S - Core 0 Frequency, 0 MHz
+> >>>>>> B -       261 - PBL, Start
+> >>>>>> B -      1339 - bootable_media_detect_entry, Start
+> >>>>>> B -      1679 - bootable_media_detect_success, Start
+> >>>>>> B -      1693 - elf_loader_entry, Start
+> >>>>>> B -      5076 - auth_hash_seg_entry, Start
+> >>>>>> B -      7223 - auth_hash_seg_exit, Start
+> >>>>>> B -    578349 - elf_segs_hash_verify_entry, Start
+> >>>>>> B -    696356 - PBL, End
+> >>>>>> B -    696380 - SBL1, Start
+> >>>>>> B -    787236 - pm_device_init, Start
+> >>>>>> D -         7 - pm_device_init, Delta
+> >>>>>> B -    788701 - boot_flash_init, Start
+> >>>>>> D -     52782 - boot_flash_init, Delta
+> >>>>>> B -    845625 - boot_config_data_table_init, Start
+> >>>>>> D -      3836 - boot_config_data_table_init, Delta - (419 Bytes)
+> >>>>>> B -    852841 - clock_init, Start
+> >>>>>> D -      7566 - clock_init, Delta
+> >>>>>> B -    864883 - CDT version:2,Platform ID:9,Major ID:0,Minor
+> >>>>>> ID:0,Subtype:64
+> >>>>>> B -    868413 - sbl1_ddr_set_params, Start
+> >>>>>> B -    873402 - cpr_init, Start
+> >>>>>> D -         2 - cpr_init, Delta
+> >>>>>> B -    877842 - Pre_DDR_clock_init, Start
+> >>>>>> D -         4 - Pre_DDR_clock_init, Delta
+> >>>>>> D -     13234 - sbl1_ddr_set_params, Delta
+> >>>>>> B -    891155 - pm_driver_init, Start
+> >>>>>> D -         2 - pm_driver_init, Delta
+> >>>>>> B -    909105 - Image Load, Start
+> >>>>>> B -   1030210 - Boot error ocuured!. Error code: 303d
+> >>>>>>
+> >>>>>> Reverting the commit fixes rebooting.
+> >>>>>
+> >>>>> Hi Robert,
+> >>>>>
+> >>>>> Can you check if disable SDI [1] works with this issue
+> >>>>>
+> >>>>> https://lore.kernel.org/linux-arm-msm/20230518140224.2248782-1-robimarko@gmail.com/
+> >>>>>
+> >>>>> [1]
+> >>>>>
+> >>>>>
+> >>>>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> >>>>> index fde33acd46b7..01496ceb7136 100644
+> >>>>> --- a/drivers/firmware/qcom_scm.c
+> >>>>> +++ b/drivers/firmware/qcom_scm.c
+> >>>>> @@ -1508,6 +1508,7 @@ static int qcom_scm_probe(struct platform_device
+> >>>>> *pdev)
+> >>>>>     static void qcom_scm_shutdown(struct platform_device *pdev)
+> >>>>>     {
+> >>>>>            /* Clean shutdown, disable download mode to allow normal restart */
+> >>>>> +       qcom_scm_disable_sdi();
+> >>>>>            qcom_scm_set_download_mode(false);
+> >>>>>     }
+> >>>>
+> >>>> Hi,
+> >>>> I can confirm reboot works this way as well.
+> >>>
+> >>> That's great, So, i don't need to revert the patch and you can
+> >>> add this in your patch without target specific check ?
+> >>
+> >> Oh, you mean IPQ4019 not rebooting?
+> >> I haven't tested that, give me couple of minutes to try that out.
+> >> Cause, the link was just back to the SDI patchset.
+> >
+> > And, I can confirm that IPQ4019 does not reboot even with SDI disabled if dload
+> > mode was set so it still needs a revert.
+>
+> Ok, So, before we go for revert of the change.
+>
+> - How do you generally collect the ram dump on your device on crash ?
+>    did you check if you get any error when qcom_scm_set_download_mode()
+>    get called.
 
+Hi,
+Unfortunately, I dont have a way to collect the RAM dump in this case.
 
-On 5/22/2023 2:45 PM, Dmitry Baryshkov wrote:
-> There is no point in having a single enum (and a single array) for both
-> DPU < 7.0 and DPU >= 7.0 interrupt registers. Instead define a single
-> enum and two IRQ address arrays.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  1 +
->   .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  1 +
->   .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  1 +
->   .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  1 +
->   .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  1 +
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  2 +
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 82 +++++++++++++------
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h | 28 ++++---
->   8 files changed, 79 insertions(+), 38 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> index 3c1b2c13398d..320cfa4be633 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> @@ -15,6 +15,7 @@ static const struct dpu_caps sm8350_dpu_caps = {
->   	.has_dim_layer = true,
->   	.has_idle_pc = true,
->   	.has_3d_merge = true,
-> +	.has_7xxx_intr = true,
->   	.max_linewidth = 4096,
->   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
->   };
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> index 5d894cbb0a62..9306c7a115e9 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> @@ -13,6 +13,7 @@ static const struct dpu_caps sc7280_dpu_caps = {
->   	.qseed_type = DPU_SSPP_SCALER_QSEED4,
->   	.has_dim_layer = true,
->   	.has_idle_pc = true,
-> +	.has_7xxx_intr = true,
->   	.max_linewidth = 2400,
->   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
->   };
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> index c3f1ae000a21..fc1e17c495f0 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> @@ -15,6 +15,7 @@ static const struct dpu_caps sc8280xp_dpu_caps = {
->   	.has_dim_layer = true,
->   	.has_idle_pc = true,
->   	.has_3d_merge = true,
-> +	.has_7xxx_intr = true,
->   	.max_linewidth = 5120,
->   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
->   };
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> index 86c2e68ebd2c..eb72411c16db 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> @@ -14,6 +14,7 @@ static const struct dpu_caps sm8450_dpu_caps = {
->   	.has_src_split = true,
->   	.has_dim_layer = true,
->   	.has_idle_pc = true,
-> +	.has_7xxx_intr = true,
->   	.has_3d_merge = true,
->   	.max_linewidth = 5120,
->   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> index 85dc34458b88..8209ca317bdc 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> @@ -15,6 +15,7 @@ static const struct dpu_caps sm8550_dpu_caps = {
->   	.has_dim_layer = true,
->   	.has_idle_pc = true,
->   	.has_3d_merge = true,
-> +	.has_7xxx_intr = true,
->   	.max_linewidth = 5120,
->   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
->   };
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 677048cc3b7d..72530ebb0ae6 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -351,6 +351,7 @@ struct dpu_rotation_cfg {
->    * @has_dim_layer      dim layer feature status
->    * @has_idle_pc        indicate if idle power collapse feature is supported
->    * @has_3d_merge       indicate if 3D merge is supported
-> + * @has_7xxx_intr      indicate that INTF/IRQs use addressing for DPU 7.0 and greater
+I checked and __qcom_scm_set_dload_mode returns 0 and there are no
+errors.
 
-I see the requirement to distinguish feature support based on the DPU 
-version in more than one series. Is it a good idea to bring in the DPU 
-version info in chipset catalog? This will relieve us from maintaining 
-such version flags for individual HW sub-blocks.
-
-Thanks and Regards,
-Jeykumar S.
-
->    * @max_linewidth      max linewidth for sspp
->    * @pixel_ram_size     size of latency hiding and de-tiling buffer in bytes
->    * @max_hdeci_exp      max horizontal decimation supported (max is 2^value)
-> @@ -364,6 +365,7 @@ struct dpu_caps {
->   	bool has_dim_layer;
->   	bool has_idle_pc;
->   	bool has_3d_merge;
-> +	bool has_7xxx_intr;
->   	/* SSPP limits */
->   	u32 max_linewidth;
->   	u32 pixel_ram_size;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> index 0776b0f6df4f..a03d826bb9ad 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> @@ -51,11 +51,9 @@ struct dpu_intr_reg {
->   };
->   
->   /*
-> - * struct dpu_intr_reg -  List of DPU interrupt registers
-> - *
-> - * When making changes be sure to sync with dpu_hw_intr_reg
-> + * dpu_intr_set_legacy -  List of DPU interrupt registers for DPU <= 6.x
->    */
-> -static const struct dpu_intr_reg dpu_intr_set[] = {
-> +static const struct dpu_intr_reg dpu_intr_set_legacy[] = {
->   	[MDP_SSPP_TOP0_INTR] = {
->   		INTR_CLEAR,
->   		INTR_EN,
-> @@ -121,57 +119,78 @@ static const struct dpu_intr_reg dpu_intr_set[] = {
->   		MDP_AD4_INTR_EN_OFF(1),
->   		MDP_AD4_INTR_STATUS_OFF(1),
->   	},
-> -	[MDP_INTF0_7xxx_INTR] = {
-> +};
-> +
-> +/*
-> + * dpu_intr_set_7xxx -  List of DPU interrupt registers for DPU >= 7.0
-> + */
-> +static const struct dpu_intr_reg dpu_intr_set_7xxx[] = {
-> +	[MDP_SSPP_TOP0_INTR] = {
-> +		INTR_CLEAR,
-> +		INTR_EN,
-> +		INTR_STATUS
-> +	},
-> +	[MDP_SSPP_TOP0_INTR2] = {
-> +		INTR2_CLEAR,
-> +		INTR2_EN,
-> +		INTR2_STATUS
-> +	},
-> +	[MDP_SSPP_TOP0_HIST_INTR] = {
-> +		HIST_INTR_CLEAR,
-> +		HIST_INTR_EN,
-> +		HIST_INTR_STATUS
-> +	},
-> +	[MDP_INTF0_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(0),
->   		MDP_INTF_REV_7xxx_INTR_EN(0),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(0)
->   	},
-> -	[MDP_INTF1_7xxx_INTR] = {
-> +	[MDP_INTF1_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(1),
->   		MDP_INTF_REV_7xxx_INTR_EN(1),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(1)
->   	},
-> -	[MDP_INTF1_7xxx_TEAR_INTR] = {
-> +	[MDP_INTF1_TEAR_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_TEAR_CLEAR(1),
->   		MDP_INTF_REV_7xxx_INTR_TEAR_EN(1),
->   		MDP_INTF_REV_7xxx_INTR_TEAR_STATUS(1)
->   	},
-> -	[MDP_INTF2_7xxx_INTR] = {
-> +	[MDP_INTF2_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(2),
->   		MDP_INTF_REV_7xxx_INTR_EN(2),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(2)
->   	},
-> -	[MDP_INTF2_7xxx_TEAR_INTR] = {
-> +	[MDP_INTF2_TEAR_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_TEAR_CLEAR(2),
->   		MDP_INTF_REV_7xxx_INTR_TEAR_EN(2),
->   		MDP_INTF_REV_7xxx_INTR_TEAR_STATUS(2)
->   	},
-> -	[MDP_INTF3_7xxx_INTR] = {
-> +	[MDP_INTF3_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(3),
->   		MDP_INTF_REV_7xxx_INTR_EN(3),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(3)
->   	},
-> -	[MDP_INTF4_7xxx_INTR] = {
-> +	[MDP_INTF4_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(4),
->   		MDP_INTF_REV_7xxx_INTR_EN(4),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(4)
->   	},
-> -	[MDP_INTF5_7xxx_INTR] = {
-> +	[MDP_INTF5_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(5),
->   		MDP_INTF_REV_7xxx_INTR_EN(5),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(5)
->   	},
-> -	[MDP_INTF6_7xxx_INTR] = {
-> +	[MDP_INTF6_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(6),
->   		MDP_INTF_REV_7xxx_INTR_EN(6),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(6)
->   	},
-> -	[MDP_INTF7_7xxx_INTR] = {
-> +	[MDP_INTF7_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(7),
->   		MDP_INTF_REV_7xxx_INTR_EN(7),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(7)
->   	},
-> -	[MDP_INTF8_7xxx_INTR] = {
-> +	[MDP_INTF8_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(8),
->   		MDP_INTF_REV_7xxx_INTR_EN(8),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(8)
-> @@ -216,19 +235,19 @@ irqreturn_t dpu_core_irq(struct msm_kms *kms)
->   		return IRQ_NONE;
->   
->   	spin_lock_irqsave(&intr->irq_lock, irq_flags);
-> -	for (reg_idx = 0; reg_idx < ARRAY_SIZE(dpu_intr_set); reg_idx++) {
-> +	for (reg_idx = 0; reg_idx < MDP_INTR_MAX; reg_idx++) {
->   		if (!test_bit(reg_idx, &intr->irq_mask))
->   			continue;
->   
->   		/* Read interrupt status */
-> -		irq_status = DPU_REG_READ(&intr->hw, dpu_intr_set[reg_idx].status_off);
-> +		irq_status = DPU_REG_READ(&intr->hw, intr->intr_set[reg_idx].status_off);
->   
->   		/* Read enable mask */
-> -		enable_mask = DPU_REG_READ(&intr->hw, dpu_intr_set[reg_idx].en_off);
-> +		enable_mask = DPU_REG_READ(&intr->hw, intr->intr_set[reg_idx].en_off);
->   
->   		/* and clear the interrupt */
->   		if (irq_status)
-> -			DPU_REG_WRITE(&intr->hw, dpu_intr_set[reg_idx].clr_off,
-> +			DPU_REG_WRITE(&intr->hw, intr->intr_set[reg_idx].clr_off,
->   				     irq_status);
->   
->   		/* Finally update IRQ status based on enable mask */
-> @@ -285,7 +304,11 @@ static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
->   	assert_spin_locked(&intr->irq_lock);
->   
->   	reg_idx = DPU_IRQ_REG(irq_idx);
-> -	reg = &dpu_intr_set[reg_idx];
-> +	reg = &intr->intr_set[reg_idx];
-> +
-> +	/* Is this interrupt register supported on the platform */
-> +	if (WARN_ON(!reg->en_off))
-> +		return -EINVAL;
->   
->   	cache_irq_mask = intr->cache_irq_mask[reg_idx];
->   	if (cache_irq_mask & DPU_IRQ_MASK(irq_idx)) {
-> @@ -334,7 +357,7 @@ static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
->   	assert_spin_locked(&intr->irq_lock);
->   
->   	reg_idx = DPU_IRQ_REG(irq_idx);
-> -	reg = &dpu_intr_set[reg_idx];
-> +	reg = &intr->intr_set[reg_idx];
->   
->   	cache_irq_mask = intr->cache_irq_mask[reg_idx];
->   	if ((cache_irq_mask & DPU_IRQ_MASK(irq_idx)) == 0) {
-> @@ -368,10 +391,10 @@ static void dpu_clear_irqs(struct dpu_kms *dpu_kms)
->   	if (!intr)
->   		return;
->   
-> -	for (i = 0; i < ARRAY_SIZE(dpu_intr_set); i++) {
-> +	for (i = 0; i < MDP_INTR_MAX; i++) {
->   		if (test_bit(i, &intr->irq_mask))
->   			DPU_REG_WRITE(&intr->hw,
-> -					dpu_intr_set[i].clr_off, 0xffffffff);
-> +					intr->intr_set[i].clr_off, 0xffffffff);
->   	}
->   
->   	/* ensure register writes go through */
-> @@ -386,10 +409,10 @@ static void dpu_disable_all_irqs(struct dpu_kms *dpu_kms)
->   	if (!intr)
->   		return;
->   
-> -	for (i = 0; i < ARRAY_SIZE(dpu_intr_set); i++) {
-> +	for (i = 0; i < MDP_INTR_MAX; i++) {
->   		if (test_bit(i, &intr->irq_mask))
->   			DPU_REG_WRITE(&intr->hw,
-> -					dpu_intr_set[i].en_off, 0x00000000);
-> +					intr->intr_set[i].en_off, 0x00000000);
->   	}
->   
->   	/* ensure register writes go through */
-> @@ -421,10 +444,10 @@ u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx)
->   
->   	reg_idx = DPU_IRQ_REG(irq_idx);
->   	intr_status = DPU_REG_READ(&intr->hw,
-> -			dpu_intr_set[reg_idx].status_off) &
-> +			intr->intr_set[reg_idx].status_off) &
->   		DPU_IRQ_MASK(irq_idx);
->   	if (intr_status)
-> -		DPU_REG_WRITE(&intr->hw, dpu_intr_set[reg_idx].clr_off,
-> +		DPU_REG_WRITE(&intr->hw, intr->intr_set[reg_idx].clr_off,
->   				intr_status);
->   
->   	/* ensure register writes go through */
-> @@ -448,6 +471,11 @@ struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
->   	if (!intr)
->   		return ERR_PTR(-ENOMEM);
->   
-> +	if (m->caps->has_7xxx_intr)
-> +		intr->intr_set = dpu_intr_set_7xxx;
-> +	else
-> +		intr->intr_set = dpu_intr_set_legacy;
-> +
->   	intr->hw.blk_addr = addr + m->mdp[0].base;
->   
->   	intr->total_irqs = nirq;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> index 1f2dabc54c22..f329d6d7f646 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> @@ -23,24 +23,29 @@ enum dpu_hw_intr_reg {
->   	MDP_INTF3_INTR,
->   	MDP_INTF4_INTR,
->   	MDP_INTF5_INTR,
-> +	MDP_INTF6_INTR,
-> +	MDP_INTF7_INTR,
-> +	MDP_INTF8_INTR,
->   	MDP_INTF1_TEAR_INTR,
->   	MDP_INTF2_TEAR_INTR,
->   	MDP_AD4_0_INTR,
->   	MDP_AD4_1_INTR,
-> -	MDP_INTF0_7xxx_INTR,
-> -	MDP_INTF1_7xxx_INTR,
-> -	MDP_INTF1_7xxx_TEAR_INTR,
-> -	MDP_INTF2_7xxx_INTR,
-> -	MDP_INTF2_7xxx_TEAR_INTR,
-> -	MDP_INTF3_7xxx_INTR,
-> -	MDP_INTF4_7xxx_INTR,
-> -	MDP_INTF5_7xxx_INTR,
-> -	MDP_INTF6_7xxx_INTR,
-> -	MDP_INTF7_7xxx_INTR,
-> -	MDP_INTF8_7xxx_INTR,
->   	MDP_INTR_MAX,
->   };
->   
-> +/* compatibility */
-> +#define MDP_INTF0_7xxx_INTR MDP_INTF0_INTR
-> +#define MDP_INTF1_7xxx_INTR MDP_INTF1_INTR
-> +#define MDP_INTF2_7xxx_INTR MDP_INTF2_INTR
-> +#define MDP_INTF3_7xxx_INTR MDP_INTF3_INTR
-> +#define MDP_INTF4_7xxx_INTR MDP_INTF4_INTR
-> +#define MDP_INTF5_7xxx_INTR MDP_INTF5_INTR
-> +#define MDP_INTF6_7xxx_INTR MDP_INTF6_INTR
-> +#define MDP_INTF7_7xxx_INTR MDP_INTF7_INTR
-> +#define MDP_INTF8_7xxx_INTR MDP_INTF8_INTR
-> +#define MDP_INTF1_7xxx_TEAR_INTR MDP_INTF1_TEAR_INTR
-> +#define MDP_INTF2_7xxx_TEAR_INTR MDP_INTF2_TEAR_INTR
-> +
->   #define DPU_IRQ_IDX(reg_idx, offset)	(reg_idx * 32 + offset)
->   
->   /**
-> @@ -60,6 +65,7 @@ struct dpu_hw_intr {
->   	u32 total_irqs;
->   	spinlock_t irq_lock;
->   	unsigned long irq_mask;
-> +	const struct dpu_intr_reg *intr_set;
->   
->   	struct {
->   		void (*cb)(void *arg, int irq_idx);
+Regards,
+Robert
+>
+>
+> -- Mukesh
+>
+> >
+> > Regards,
+> > Robert
+> >>
+> >> Regards,
+> >> Robert
+> >>>
+> >>> -- Mukesh
+> >>>
+> >>>>
+> >>>> Regards,
+> >>>> Robert
+> >>>>>
+> >>>>>
+> >>>>> -- Mukesh
+> >>>>>
+> >>>>>>
+> >>>>>> Regards,
+> >>>>>> Robert
+> >>>>>>
+> >>>>>>> ---
+> >>>>>>> Changes in v3:
+> >>>>>>>      - Added Fixes tag.
+> >>>>>>>      - Removed it from below patch series, as it makes sense to go this
+> >>>>>>> independently.
+> >>>>>>>
+> >>>>>>> https://lore.kernel.org/lkml/1677664555-30191-1-git-send-email-quic_mojha@quicinc.com/
+> >>>>>>>
+> >>>>>>> Changes in v2:
+> >>>>>>>      - No change.
+> >>>>>>>
+> >>>>>>>     drivers/firmware/qcom_scm.c | 3 +--
+> >>>>>>>     1 file changed, 1 insertion(+), 2 deletions(-)
+> >>>>>>>
+> >>>>>>> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> >>>>>>> index 468d4d5..3e020d1 100644
+> >>>>>>> --- a/drivers/firmware/qcom_scm.c
+> >>>>>>> +++ b/drivers/firmware/qcom_scm.c
+> >>>>>>> @@ -1506,8 +1506,7 @@ static int qcom_scm_probe(struct platform_device
+> >>>>>>> *pdev)
+> >>>>>>>     static void qcom_scm_shutdown(struct platform_device *pdev)
+> >>>>>>>     {
+> >>>>>>>         /* Clean shutdown, disable download mode to allow normal restart */
+> >>>>>>> -    if (download_mode)
+> >>>>>>> -        qcom_scm_set_download_mode(false);
+> >>>>>>> +    qcom_scm_set_download_mode(false);
+> >>>>>>>     }
+> >>>>>>>     static const struct of_device_id qcom_scm_dt_match[] = {
