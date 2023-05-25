@@ -2,67 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BF33710A82
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 13:03:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59321710AC2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 13:21:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240851AbjEYLDA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 07:03:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41218 "EHLO
+        id S240626AbjEYLV1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 07:21:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240914AbjEYLCx (ORCPT
+        with ESMTP id S240923AbjEYLVS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 07:02:53 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A45E10B;
-        Thu, 25 May 2023 04:02:51 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34PAq77j017457;
-        Thu, 25 May 2023 11:02:43 GMT
+        Thu, 25 May 2023 07:21:18 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED92A10B;
+        Thu, 25 May 2023 04:21:09 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34P7DZkw025224;
+        Thu, 25 May 2023 11:21:06 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=0bh9YMA8PTzmchNyhzy6JmAdzkdh8yXCRqXXRhUMrro=;
- b=aUsWS2ubBcNlNRAMuSf/WE1Cfk+GroK+SMoJh2cObaZnupIH8p60FoAS2he2LBp3T/SG
- W7VeVWpW5Q0QAQzmNQ+NRp/FWTNOSU/R+FnEXRXzLXYQO6OU/J1rctd9hAP2sQ3d0vZ/
- ALhpR6074K43WLehEWIA9WHUyPUHDSXgd/6rv4a4yb+cUalFSp3TwTv204xDSYwz+qEO
- TLjKdQAkpc/Qu/+RrC6lKv5x76iQc02K4rLYMGn/cSUH6ZiLodawpTjpRUGEd9H1c5In
- PsSsu4JpOpQsQwQZcPDZjaJmRdfsLTIruICWrjdFEXGL5mrSDJ7sqZKlyivGjbeYUoPI Kw== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qsqgysrnf-1
+ bh=MooyYDAvUXB80RnYai+sdhsfLxypM4HoagMpzLxnROc=;
+ b=SkxNKFq9rACtbN1/c3m9ji9InCrHQPhBX+FmmauSPDNm2WdKFD80GvGT/ejINk452ZI3
+ imswCYZGRBSGf1ud4lD3Kpxw9uctDNa4izU7SZfb2OGh9l4ep7JHKyRBBNeK4rYo1WIU
+ DfKAp09b18gHx5Arujpn9fYcJycUCxSHmLJ6lgDmaJnL+LrnwvsfAJDtY9jtDvxf3jTd
+ gvrxzAiFyJWb5TbxobdUMJn6xe+UlJ+1e3ZDUAFulDCi0BCSfB9z31Uo1d7LvHkmJejb
+ Klv/y6xYtgq5X2I2Kox+hp7RxcoVLjK4Zqu4ymhFqalYyQJExDeUdGaZ5z9Fh6b2q8pm Gw== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qt27n0jk3-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 25 May 2023 11:02:43 +0000
+        Thu, 25 May 2023 11:21:06 +0000
 Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34PB2gDm014391
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34PBL5KV030217
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 25 May 2023 11:02:42 GMT
+        Thu, 25 May 2023 11:21:05 GMT
 Received: from [10.216.30.6] (10.80.80.8) by nasanex01a.na.qualcomm.com
  (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 25 May
- 2023 04:02:39 -0700
-Message-ID: <3e395f16-79f0-501f-21f1-70645d6137c2@quicinc.com>
-Date:   Thu, 25 May 2023 16:32:36 +0530
+ 2023 04:21:02 -0700
+Message-ID: <feeb18db-2d7f-5e3b-bc28-57291e2d4255@quicinc.com>
+Date:   Thu, 25 May 2023 16:50:59 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCHv3] media: venus: provide video device lock
+Subject: Re: [PATCH][next] media: venus: Replace one-element arrays with
+ flexible-array members
 Content-Language: en-US
-To:     Sergey Senozhatsky <senozhatsky@chromium.org>
-CC:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+To:     "Gustavo A. R. Silva" <gustavoars@kernel.org>,
         Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Tomasz Figa <tfiga@chromium.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20230524135737.2557837-1-senozhatsky@chromium.org>
- <20230524141312.2558810-1-senozhatsky@chromium.org>
- <2c732d80-1a18-7a34-03a8-16afb0de5ea2@linaro.org>
- <f9219cb0-2cac-bace-20f7-27005cd0e6f1@xs4all.nl>
- <83cd3dc7-455d-0f26-d2a8-3ebe92d9e33f@quicinc.com>
- <20230525005312.GC30543@google.com>
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+CC:     <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-hardening@vger.kernel.org>
+References: <ZGPk3PpvYzjD1+0/@work>
 From:   Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <20230525005312.GC30543@google.com>
+In-Reply-To: <ZGPk3PpvYzjD1+0/@work>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -70,18 +65,18 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01a.na.qualcomm.com (10.52.223.231)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8FTnLIQAGG73WbCTdScckCBm7NWN4-iR
-X-Proofpoint-GUID: 8FTnLIQAGG73WbCTdScckCBm7NWN4-iR
+X-Proofpoint-ORIG-GUID: 4aB8-jSm9D0D8usGY7eJcUsfEfQMTYYd
+X-Proofpoint-GUID: 4aB8-jSm9D0D8usGY7eJcUsfEfQMTYYd
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
  definitions=2023-05-25_06,2023-05-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- lowpriorityscore=0 adultscore=0 malwarescore=0 impostorscore=0 mlxscore=0
- phishscore=0 suspectscore=0 clxscore=1015 spamscore=0 bulkscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305250091
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 spamscore=0
+ mlxlogscore=999 adultscore=0 priorityscore=1501 suspectscore=0
+ clxscore=1011 mlxscore=0 bulkscore=0 malwarescore=0 phishscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305250094
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -91,118 +86,119 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 5/25/2023 6:23 AM, Sergey Senozhatsky wrote:
-> On (23/05/24 22:06), Vikash Garodia wrote:
->>> Instead the struct v4l2_m2m_ctx q_lock pointer, if set, will use that
->>> mutex for all vb2 operations.
->>>
->>> I think you can set it to the 'lock' mutex in struct venus_inst.
->>
->> IIUC, the suggestion is to use the 'lock' in struct venus_inst while
->> initializing the queue. This might lead to deadlock as the same lock is used
->> during vb2 operations in driver. Might be introducing a new lock for this
->> purpose in struct venus_inst would do, unless we are trying to serialize at
->> video device (or core) context.
-> 
-> Something like this?
-> 
-> Video device has to provide a lock so that __video_do_ioctl()
-> can serialize IOCTL calls. Introduce a dedicated venus_inst
-> mutex (which is set a ctx ->q_lock) for the purpose of vb2
-> operations synchronization.
-> 
-> Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-> ---
->  drivers/media/platform/qcom/venus/core.h | 2 ++
->  drivers/media/platform/qcom/venus/vdec.c | 4 ++++
->  drivers/media/platform/qcom/venus/venc.c | 3 +++
->  3 files changed, 9 insertions(+)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 4f81669986ba..6ac5236d6888 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -389,6 +389,7 @@ enum venus_inst_modes {
->   * @sequence_out:	a sequence counter for output queue
->   * @m2m_dev:	a reference to m2m device structure
->   * @m2m_ctx:	a reference to m2m context structure
-> + * @ctx_queue_lock:	a lock to serialize video device ioctl calls
-suggestion: we can keep this as ctx_q_lock.
 
->   * @state:	current state of the instance
->   * @done:	a completion for sync HFI operation
->   * @error:	an error returned during last HFI sync operation
-> @@ -460,6 +461,7 @@ struct venus_inst {
->  	u32 sequence_out;
->  	struct v4l2_m2m_dev *m2m_dev;
->  	struct v4l2_m2m_ctx *m2m_ctx;
-> +	struct mutex ctx_queue_lock;
->  	unsigned int state;
->  	struct completion done;
->  	unsigned int error;
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 51a53bf82bd3..2caeba5b6378 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -1641,6 +1641,7 @@ static int vdec_open(struct file *file)
->  	INIT_LIST_HEAD(&inst->internalbufs);
->  	INIT_LIST_HEAD(&inst->list);
->  	mutex_init(&inst->lock);
-> +	mutex_init(&inst->ctx_queue_lock);
->  
->  	inst->core = core;
->  	inst->session_type = VIDC_SESSION_TYPE_DEC;
-> @@ -1684,8 +1685,10 @@ static int vdec_open(struct file *file)
->  		goto err_m2m_release;
+On 5/17/2023 1:47 AM, Gustavo A. R. Silva wrote:
+> One-element arrays are deprecated, and we are replacing them with flexible
+> array members instead. So, replace one-element arrays with flexible-array
+> members in multiple structures, and refactor the rest of the code,
+> accordingly.
+> 
+> This helps with the ongoing efforts to tighten the FORTIFY_SOURCE
+> routines on memcpy() and help us make progress towards globally
+> enabling -fstrict-flex-arrays=3 [1].
+> 
+> This results in no differences in binary output.
+> 
+> Link: https://github.com/KSPP/linux/issues/79
+> Link: https://github.com/KSPP/linux/issues/291
+> Link: https://gcc.gnu.org/pipermail/gcc-patches/2022-October/602902.html [1]
+> Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+
+The patch looks good to me. It would be nice if we can combine all the patches
+related to flexible array handling in video driver in a single patch series. At
+the moment, there are multiple patches with similar subject.
+
+> ---
+>  drivers/media/platform/qcom/venus/hfi_msgs.c |  4 ++--
+>  drivers/media/platform/qcom/venus/hfi_msgs.h | 14 +++++++-------
+>  2 files changed, 9 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
+> index df96db3761a7..6efd78606d9b 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
+> @@ -233,7 +233,7 @@ static void hfi_sys_init_done(struct venus_core *core, struct venus_inst *inst,
+>  		goto done;
 >  	}
 >  
-> +
->  	v4l2_fh_init(&inst->fh, core->vdev_dec);
+> -	rem_bytes = pkt->hdr.size - sizeof(*pkt) + sizeof(u32);
+> +	rem_bytes = pkt->hdr.size - sizeof(*pkt);
+>  	if (rem_bytes <= 0) {
+>  		/* missing property data */
+>  		error = HFI_ERR_SYS_INSUFFICIENT_RESOURCES;
+> @@ -434,7 +434,7 @@ static void hfi_session_init_done(struct venus_core *core,
+>  	if (!IS_V1(core))
+>  		goto done;
 >  
-> +	inst->m2m_ctx->q_lock = &inst->ctx_queue_lock;
-Better to do this in queue_init callback i.e "m2m_queue_init" in vdec.c.
-src_vq->lock = &inst->ctx_q_lock;
-...
-dst_vq->lock = src_vq->lock;
-
->  	inst->fh.ctrl_handler = &inst->ctrl_handler;
->  	v4l2_fh_add(&inst->fh);
->  	inst->fh.m2m_ctx = inst->m2m_ctx;
-> @@ -1716,6 +1719,7 @@ static int vdec_close(struct file *file)
->  	ida_destroy(&inst->dpb_ids);
->  	hfi_session_destroy(inst);
->  	mutex_destroy(&inst->lock);
-> +	mutex_destroy(&inst->ctx_queue_lock);
->  	v4l2_fh_del(&inst->fh);
->  	v4l2_fh_exit(&inst->fh);
+> -	rem_bytes = pkt->shdr.hdr.size - sizeof(*pkt) + sizeof(u32);
+> +	rem_bytes = pkt->shdr.hdr.size - sizeof(*pkt);
+>  	if (rem_bytes <= 0) {
+>  		error = HFI_ERR_SESSION_INSUFFICIENT_RESOURCES;
+>  		goto done;
+> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.h b/drivers/media/platform/qcom/venus/hfi_msgs.h
+> index 510513697335..8c2e17b0d36f 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_msgs.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.h
+> @@ -50,7 +50,7 @@ struct hfi_msg_event_notify_pkt {
+>  	u32 event_id;
+>  	u32 event_data1;
+>  	u32 event_data2;
+> -	u32 ext_event_data[1];
+> +	u32 ext_event_data[];
+>  };
 >  
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index 4666f42feea3..4292b299f014 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -1443,6 +1443,7 @@ static int venc_open(struct file *file)
->  	INIT_LIST_HEAD(&inst->internalbufs);
->  	INIT_LIST_HEAD(&inst->list);
->  	mutex_init(&inst->lock);
-> +	mutex_init(&inst->ctx_queue_lock);
+>  struct hfi_msg_event_release_buffer_ref_pkt {
+> @@ -63,7 +63,7 @@ struct hfi_msg_sys_init_done_pkt {
+>  	struct hfi_pkt_hdr hdr;
+>  	u32 error_type;
+>  	u32 num_properties;
+> -	u32 data[1];
+> +	u32 data[];
+>  };
 >  
->  	inst->core = core;
->  	inst->session_type = VIDC_SESSION_TYPE_ENC;
-> @@ -1483,6 +1484,7 @@ static int venc_open(struct file *file)
+>  struct hfi_msg_sys_pc_prep_done_pkt {
+> @@ -81,7 +81,7 @@ struct hfi_msg_session_init_done_pkt {
+>  	struct hfi_session_hdr_pkt shdr;
+>  	u32 error_type;
+>  	u32 num_properties;
+> -	u32 data[1];
+> +	u32 data[];
+>  };
 >  
->  	v4l2_fh_init(&inst->fh, core->vdev_enc);
+>  struct hfi_msg_session_end_done_pkt {
+> @@ -228,7 +228,7 @@ struct hfi_msg_session_parse_sequence_header_done_pkt {
+>  	struct hfi_session_hdr_pkt shdr;
+>  	u32 error_type;
+>  	u32 num_properties;
+> -	u32 data[1];
+> +	u32 data[];
+>  };
 >  
-> +	inst->m2m_ctx->q_lock = &inst->ctx_queue_lock;
-Same comment applies here. This can be moved to "m2m_queue_init" in venc.c.
-
->  	inst->fh.ctrl_handler = &inst->ctrl_handler;
->  	v4l2_fh_add(&inst->fh);
->  	inst->fh.m2m_ctx = inst->m2m_ctx;
-> @@ -1512,6 +1514,7 @@ static int venc_close(struct file *file)
->  	venc_ctrl_deinit(inst);
->  	hfi_session_destroy(inst);
->  	mutex_destroy(&inst->lock);
-> +	mutex_destroy(&inst->ctx_queue_lock);
->  	v4l2_fh_del(&inst->fh);
->  	v4l2_fh_exit(&inst->fh);
+>  struct hfi_msg_session_property_info_pkt {
+> @@ -247,7 +247,7 @@ struct hfi_msg_session_release_buffers_done_pkt {
+>  	struct hfi_session_hdr_pkt shdr;
+>  	u32 error_type;
+>  	u32 num_buffers;
+> -	u32 buffer_info[1];
+> +	u32 buffer_info[];
+>  };
 >  
+>  struct hfi_msg_sys_debug_pkt {
+> @@ -256,7 +256,7 @@ struct hfi_msg_sys_debug_pkt {
+>  	u32 msg_size;
+>  	u32 time_stamp_hi;
+>  	u32 time_stamp_lo;
+> -	u8 msg_data[1];
+> +	u8 msg_data[];
+>  };
+>  
+>  struct hfi_msg_sys_coverage_pkt {
+> @@ -264,7 +264,7 @@ struct hfi_msg_sys_coverage_pkt {
+>  	u32 msg_size;
+>  	u32 time_stamp_hi;
+>  	u32 time_stamp_lo;
+> -	u8 msg_data[1];
+> +	u8 msg_data[];
+>  };
+>  
+>  struct venus_core;
