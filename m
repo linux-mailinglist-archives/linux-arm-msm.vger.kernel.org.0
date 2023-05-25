@@ -2,139 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AAC8071120A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 19:22:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4825F71127A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 19:39:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241097AbjEYRW5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 13:22:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38100 "EHLO
+        id S232561AbjEYRjP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 13:39:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241057AbjEYRWx (ORCPT
+        with ESMTP id S230054AbjEYRjN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 13:22:53 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33FA01B0;
-        Thu, 25 May 2023 10:22:43 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34PFA50X019838;
-        Thu, 25 May 2023 17:22:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=C6frukfeGXpvecIDVedYupuFh0HkkzeJimIJCDhca/0=;
- b=GBg1t2me5bUunEBbE8QuPVHF0NpbFgtp6Oz8q7F7fIOilyGO99X26n8Xg2cHe0WTgmPd
- /x377sUTdFwKBFtPTBcz4grOiUa/YLxNcGzDjZRqwTSwrATK5CkIUHTP9S/SfXmCYWpE
- jep4Q8wFRbcAze8sp8G4EOhEA6zUkqpYz15nPWyD1+a4vClBbCo463jyHS6Gsk8PU05l
- yqK9hFn7/kfD8b79qAS3t9gEFKGM7+YIOAjGUUz2d7RN1J9S8LCHS4TcZ2WOmMJRwuzW
- V+U4QrWncOsJRFhCMF6yKU3T0n8jbL2RPA4AHznTHlneHYRe73x/KVSEnpq5nMF0BGC3 kg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qt8tarhxt-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 25 May 2023 17:22:39 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34PHMcnd020730
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 25 May 2023 17:22:38 GMT
-Received: from hu-jkona-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 25 May 2023 10:22:32 -0700
-From:   Jagadeesh Kona <quic_jkona@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        "Satya Priya Kakitapalli" <quic_skakitap@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-Subject: [PATCH V2 6/6] arm64: dts: qcom: sm8550: Add camera clock controller
-Date:   Thu, 25 May 2023 22:51:42 +0530
-Message-ID: <20230525172142.9039-7-quic_jkona@quicinc.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230525172142.9039-1-quic_jkona@quicinc.com>
-References: <20230525172142.9039-1-quic_jkona@quicinc.com>
+        Thu, 25 May 2023 13:39:13 -0400
+Received: from mail-oo1-xc2f.google.com (mail-oo1-xc2f.google.com [IPv6:2607:f8b0:4864:20::c2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C78FB6;
+        Thu, 25 May 2023 10:39:12 -0700 (PDT)
+Received: by mail-oo1-xc2f.google.com with SMTP id 006d021491bc7-54fd177fbd4so419515eaf.3;
+        Thu, 25 May 2023 10:39:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685036351; x=1687628351;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=q4D8c9QPyqmoOXQDae1retuejjcC/UV6PHLGp3fhhjw=;
+        b=cWK/TeSz7AD4BvpRQaMJ2AbrRrrf6WKrpQ31ln3A9MDdvoh1Sg6u4XectXi9T9z/Tw
+         AYcM/jmSiuWiW/Y7cSut9dkxmvSSnwynvrd/RkP+sd0XxRZnxS+m/nhwBpUj9pyCG75Q
+         +/Fx/Dda9E8NlcWKvp5PBiYBt5GOwUYvJdn7h4zEzj4f6dKV0Ug8MSbiukNwXryGzGpE
+         JjdQSNxOE4Ed6PLcSO6QunQ4XoQx8q+2pOwv8yPRAdNm8sBNmLYrcuRZ4IAkGRBgdh41
+         aTGtHXos9bezeG3UDyLvDbzDWLyl0jfA4i5JLxhgz5/07y5O7XOsgLfctZEMvW8kbgfa
+         JGtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685036351; x=1687628351;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=q4D8c9QPyqmoOXQDae1retuejjcC/UV6PHLGp3fhhjw=;
+        b=VtTSHVjSRaVLoeWHJlGKX1EimQ75DN4WPAWn5X7hOVXmM96UGnL0Gtp82mHnEaWFRx
+         jzR8SQ4WqCPUOiTWQ5tj9APP6CjsjB+pfW0UOI0M4Gl4DHvlGZDx9wWzT34n64bym3ym
+         JOzSFSax7x3KrLIBldWNlE9FnoHOPkNXmNpvL/qTaN9Q0y2XMdHWlTJuJM1b9xMb1qVz
+         ZuG9Z6a88Iwk/m4po6jIq7XgKJCw7DPKlhlL20mshTYSUTDIl629VcBNRmfopS4GLDBv
+         3VUQLUqLZZDO4I/VUdlfy3XkEM9I5xGDim7/f/Lvu9uuvxtbIeicrn5wwQQlIDWWL7Fq
+         7xTQ==
+X-Gm-Message-State: AC+VfDwzYwfJ6K83ukneR8xSHbm0wKGqRBLZFo2Ck4PnDWonrSbNthsu
+        A3lnMjpTDIAW4HHfbNyHaLx2PQpyj2lK+fV7vCsWOjuY
+X-Google-Smtp-Source: ACHHUZ6vYd/72HrFnILIsPPxkV9WtXgdY0reZpTVE+28Qcv/gfC8YrS3WgW3xvAxoExi5idG0G+2nqlifIhKg3jLxd0=
+X-Received: by 2002:a4a:5782:0:b0:557:cd4e:c116 with SMTP id
+ u124-20020a4a5782000000b00557cd4ec116mr65019ooa.1.1685036351462; Thu, 25 May
+ 2023 10:39:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: N8v8AUjgh15_ds2NKERZrJYVqAWB_k-l
-X-Proofpoint-ORIG-GUID: N8v8AUjgh15_ds2NKERZrJYVqAWB_k-l
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-25_10,2023-05-25_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 impostorscore=0
- adultscore=0 mlxscore=0 spamscore=0 phishscore=0 suspectscore=0
- bulkscore=0 mlxlogscore=999 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2304280000 definitions=main-2305250144
+References: <20230517-topic-a7xx_prep-v2-0-5b9daa2b2cf0@linaro.org> <20230517-topic-a7xx_prep-v2-2-5b9daa2b2cf0@linaro.org>
+In-Reply-To: <20230517-topic-a7xx_prep-v2-2-5b9daa2b2cf0@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 25 May 2023 10:38:59 -0700
+Message-ID: <CAF6AEGsm=o-KgOtm01FSvMOB_uj6VOaONNu5FUr4phUixYNG3g@mail.gmail.com>
+Subject: Re: [PATCH v2 2/6] drm/msm/a6xx: Explain CP_PROTECT_CNTL writes in a6xx_set_cp_protect
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for camera clock controller on Qualcomm
-SM8550 platform.
+On Fri, May 19, 2023 at 6:29=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
+>
+> We have the necessary information, so explain which bit does what.
+>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/=
+adreno/a6xx_gpu.c
+> index 9fb214f150dd..deed42675fe2 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -771,9 +771,10 @@ static void a6xx_set_cp_protect(struct msm_gpu *gpu)
+>         }
+>
+>         /*
+> -        * Enable access protection to privileged registers, fault on an =
+access
+> -        * protect violation and select the last span to protect from the=
+ start
+> -        * address all the way to the end of the register address space
+> +        * BIT(0) - Enable access protection to privileged registers
+> +        * BIT(1) - Enable fault on an access protect violation
+> +        * BIT(3) - Select the last span to protect from the start
+> +        *          address all the way to the end of the register addres=
+s space
 
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
----
-Changes since V1:
- - Padded non-zero address part to 8 hex digits
+Even better would be to give these bitfields names in the xml, which
+also gets you more meaningful decoding.  We've been better about not
+open-coding a lot of stuff on the mesa side, but it is a bit easier
+with header generation integrated into the build..  but less
+open-coding on the kernel side is still a noble goal
 
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+BR,
+-R
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index bef33b253813..aa41eb4758a5 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -5,6 +5,7 @@
- 
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/clock/qcom,sm8450-videocc.h>
-+#include <dt-bindings/clock/qcom,sm8550-camcc.h>
- #include <dt-bindings/clock/qcom,sm8550-gcc.h>
- #include <dt-bindings/clock/qcom,sm8550-tcsr.h>
- #include <dt-bindings/clock/qcom,sm8550-dispcc.h>
-@@ -2398,6 +2399,20 @@ videocc: clock-controller@aaf0000 {
- 			#power-domain-cells = <1>;
- 		};
- 
-+		camcc: clock-controller@ade0000 {
-+			compatible = "qcom,sm8550-camcc";
-+			reg = <0 0x0ade0000 0 0x20000>;
-+			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-+				 <&bi_tcxo_div2>,
-+				 <&bi_tcxo_ao_div2>,
-+				 <&sleep_clk>;
-+			power-domains = <&rpmhpd SM8550_MMCX>;
-+			required-opps = <&rpmhpd_opp_low_svs>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		mdss: display-subsystem@ae00000 {
- 			compatible = "qcom,sm8550-mdss";
- 			reg = <0 0x0ae00000 0 0x1000>;
--- 
-2.40.1
-
+>          */
+>         gpu_write(gpu, REG_A6XX_CP_PROTECT_CNTL, BIT(0) | BIT(1) | BIT(3)=
+);
+>
+>
+> --
+> 2.40.1
+>
