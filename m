@@ -2,52 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75BE7710444
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 06:51:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BEB571044A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 06:51:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236131AbjEYEvQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 00:51:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53402 "EHLO
+        id S238749AbjEYEv2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 00:51:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53394 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238100AbjEYEvH (ORCPT
+        with ESMTP id S238359AbjEYEvM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 00:51:07 -0400
+        Thu, 25 May 2023 00:51:12 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 729F3183;
-        Wed, 24 May 2023 21:51:06 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D204198;
+        Wed, 24 May 2023 21:51:08 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0B89A60E95;
-        Thu, 25 May 2023 04:51:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90753C433A7;
-        Thu, 25 May 2023 04:51:04 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7DE6B641A5;
+        Thu, 25 May 2023 04:51:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3087C433A0;
+        Thu, 25 May 2023 04:51:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1684990265;
-        bh=uAo09zFgr0x/zTpqTK6MALKgebP9S1ckJK58Mg+Welg=;
+        s=k20201202; t=1684990266;
+        bh=NC5k/dortCaTYYIlrCvaSs13p3N1PuUUuNBljB2ZWuU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=J7jEZ1hg5KP/vC0+uIBsb9u4lNSwrUBm9XdXiMJR/2+I4ENfP+WM9baOGcg8r+avY
-         zoShbPYIlMe1SvE66H8N4PKoyGPHlQ539Ho66st8OXUsN3Z2MWtwLPi6TVRCYObO6e
-         BL6K1ZBRZhQ8Qv8Lrwdr/4s/vPR4G6i+DrOn7sX7S0XJxy+0FOFw1ruTbsmXEfC37Z
-         IR8EmTlqo3Cil9T5MLB8mear61SiiqHsL4WMj8SX2An2kAv4pTIkKxMXgK8lhT/ihg
-         K06OJezKJ0uGOyKf8gcqwIduQuWZJSKiurbQGVHF6Fv4jewMw5i17ekqTwQhGWNnRp
-         FPzghR2B86viQ==
+        b=s3jr1i2YaPyOPc2Qk20qUMPVA9udUiXDduKblAQYXeFn+eRNVqM5fy7apWUpUYMZW
+         UpKSghHkTVFt65vudox8c7fj3KYsecDYpSqkOni5JK6ifYIWH3GkS9XTu8iicdy3Dj
+         c1GKr+Ee3XyiXja146geg34iDl4eVsyvTt2wWs+koIu77qWxnxlm0XJ6XTBQc0OtcK
+         bSfLbLbwMa+s8xLuhVlGEeu5A+MCil2GnZ9N0BdmaeksnB0G2FNaO7UJesf4OHV7++
+         ZMlU7tEP0KY/II650aWrAMRXQkBij5jpjY4Adl6LzYXWWIoSzjc3STXdclGNfCyRMK
+         3/swa8B26rAvw==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        cros-qcom-dts-watchers@chromium.org,
-        Conor Dooley <conor+dt@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7180-lite: Fix SDRAM freq for misidentified sc7180-lite boards
-Date:   Wed, 24 May 2023 21:53:45 -0700
-Message-Id: <168499048185.3998961.4415989565045380045.b4-ty@kernel.org>
+        Rob Clark <robdclark@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org, David Airlie <airlied@gmail.com>,
+        Amit Pundir <amit.pundir@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH] arm64: dts: qcom: enable dual ("bonded") DSI mode for DB845c
+Date:   Wed, 24 May 2023 21:53:46 -0700
+Message-Id: <168499048179.3998961.8259109964158005747.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230515171929.1.Ic8dee2cb79ce39ffc04eab2a344dde47b2f9459f@changeid>
-References: <20230515171929.1.Ic8dee2cb79ce39ffc04eab2a344dde47b2f9459f@changeid>
+In-Reply-To: <20230504160430.4014206-1-dmitry.baryshkov@linaro.org>
+References: <20230504160430.4014206-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -61,21 +67,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 15 May 2023 17:19:29 -0700, Douglas Anderson wrote:
-> In general, the three SKUs of sc7180 (lite, normal, and pro) are
-> handled dynamically.
+On Thu, 4 May 2023 19:04:30 +0300, Dmitry Baryshkov wrote:
+> Now as both lt9611 and drm/msm drivers were updated to handle the 4k
+> modes over DSI, enable "bonded" DSI mode on DB845c. This way the board
+> utilizes both DSI links and thus can support 4k on the HDMI output.
 > 
-> The cpufreq table in sc7180.dtsi includes the superset of all CPU
-> frequencies. The "qcom-cpufreq-hw" driver in Linux shows that we can
-> dynamically detect which frequencies are actually available on the
-> currently running CPU and then we can just enable those ones.
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sc7180-lite: Fix SDRAM freq for misidentified sc7180-lite boards
-      commit: 3a735530c159b75e1402c08abe1ba4eb99a1f7a3
+[1/1] arm64: dts: qcom: enable dual ("bonded") DSI mode for DB845c
+      commit: 8721e18ca6960f3c5a6a7f58245d9ab084ad09dd
 
 Best regards,
 -- 
