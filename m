@@ -2,77 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D22F7118F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 23:21:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7097E7118FE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 23:24:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231964AbjEYVV5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 17:21:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34460 "EHLO
+        id S239614AbjEYVYJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 17:24:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232016AbjEYVV4 (ORCPT
+        with ESMTP id S240673AbjEYVYI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 17:21:56 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2AA5A7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 14:21:53 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f3b337e842so2959597e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 14:21:53 -0700 (PDT)
+        Thu, 25 May 2023 17:24:08 -0400
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFCE41A6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 14:24:05 -0700 (PDT)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-561e5014336so2117407b3.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 14:24:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685049712; x=1687641712;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+qwF+6YmhKpd5O4hzeSwiBSwVBweFBRgPhoIl5cxfrA=;
-        b=VluUz2iOOvo54ViyCpuvxDxaH48t843g64OULxgvGffC1LYxFpH91VShPBfP/VllSk
-         GCgWSeSumTDYja7CKhYPv013Bi1IC3Rxv/P/8xo3JYbmTJT7Jq6NXf7OcBkeWFd1HMLg
-         HUErYh6VjQaHIfI2UIV6DM8ednqT7l+4mljra6RSjzUB2ZT52DR5Z2LHUuoPk4hGjqch
-         iJ0kUfwVLtys7/5YElCFAU6j+0fkPHpqT/A44Hj79ISlpuhkwzB7gcPtEtx2s01jrrvl
-         V4mEOdiLGnq0kqNiNEdvrCvxjBSQmMAYpDAduryKOdvpdKCUGmVJXy0S4FNzhqeeHsBJ
-         IZKQ==
+        d=linaro.org; s=google; t=1685049845; x=1687641845;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=pqBKWrOrEI+zbEK9OlZBpSdzBnSQCmjwQcZsxLNFq34=;
+        b=Keu12C8b9pEdKe7GwX1dC9eCui1aDDVD+Q7tBnATclYFz7PoRomFtL2TdFCKJy75V9
+         Hi1CCszSwVsyuNWuX4NeEl1tRgpVVDcgZHZDYxo5cTbyIBCH4vfte/K7F8lkInEL0Ceq
+         Ta5bQOVbrutBQ+Cn+AuDpKlsna5sjHxsiwrIgyhpFlZvSuYy+veNQ8v4LtCrl3Qli40A
+         8EJOmPJMIUtHjIm6IKFb5/OGNBm+CpnqFh6TMYXX1BN/eLJiweBUBOCa3a+Zj9sCdfDF
+         MlU0B0fTsFgvIjGuhROYoVLT4Asewjvz+t+UBhPSLU/vcQB458hBCo62xXv3VJFmkM8K
+         Eo2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685049712; x=1687641712;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+qwF+6YmhKpd5O4hzeSwiBSwVBweFBRgPhoIl5cxfrA=;
-        b=mBhnYX1yES3yx4qZxtnxucjrpSu/mnnLL/EXJkZziC1BmXeLZOC0KHhu8AVPwUaT4U
-         y/BUfeMhDzEFYAxYmDFHwVcoxkAEuv3iD6jlrmBsV3tJMeU/7z0qEvobVW2W6f006vKt
-         Ek9+govkdVpxVuO+qFvmVZcq4yKS+ajQmbQwRkUYTsJXZ07cl68s2Hcp8naeRkc9QT/F
-         4Wn1WrnbAnegIILDbldWRgulIwNznhqrgo/PL6K8riuTy7pooJbPT5UwjQZ82jdW0eiZ
-         w+qhrXtNjZK95WIp5m/OCeILGv+LiiF30OHh2kbnR3FQvmSLODzAzPv6SxR2wl7bh74B
-         X6Ng==
-X-Gm-Message-State: AC+VfDxOjrMS3BbXaWTkPyKY8OBHSHE3YQvl2O7fygB25p4HJ/2rMgtp
-        qDteCJBaZTaCuObWYMZkm1ZRTg==
-X-Google-Smtp-Source: ACHHUZ51LLNtO14cSOcOqaN20tEI/aWs3buyxUaer4TFc/SL4yS+BO5rCkvIdsms6wfjf87pIb+2lg==
-X-Received: by 2002:ac2:4c90:0:b0:4f1:95cf:11eb with SMTP id d16-20020ac24c90000000b004f195cf11ebmr5878506lfl.6.1685049711871;
-        Thu, 25 May 2023 14:21:51 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id i4-20020a056512006400b004f13b59307asm334592lfo.232.2023.05.25.14.21.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 May 2023 14:21:51 -0700 (PDT)
-Message-ID: <af6f2b60-49f6-3622-7868-a2b3a6bd462f@linaro.org>
-Date:   Thu, 25 May 2023 23:21:50 +0200
+        d=1e100.net; s=20221208; t=1685049845; x=1687641845;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pqBKWrOrEI+zbEK9OlZBpSdzBnSQCmjwQcZsxLNFq34=;
+        b=RITtjHSZCxBExpfwNoYWvWCzCQE1Jlz3JxALc/NIgIWAA/sUv59TrQp1SvSuoIh8TW
+         lYdyvuRd/dmLUweRinpyOyYKdvYwLuxa6rG79/ufYNo8w69A9J+e/WMM8eQqtPyhN+mQ
+         gHR2gzOcf5zn18JmK2psx9k8G9g9dxn1grWrEuA0PCSplWmItc1TB1oGoN6Zpm7bPCDM
+         WPXiUCq/wKgqi4wtqbBPhdEMLpML1Pitd/6Qyt38hS9OeyJKiuGMMcayTTninYMTslxM
+         /+TrryKQARdOKfYftyi89C4LuxyR1INPZ1y1waYzznbsNqXxtajBUlGTQLjEoDI1Y0dm
+         yB+A==
+X-Gm-Message-State: AC+VfDwRByyAXPZNjKxOOEuuECEpOjbn7g7taMInfeqTJjVNdPeEUz/r
+        3i7guowr/SFK/8D9G4IBIQYphd7Yahm+lg40YYmw0w==
+X-Google-Smtp-Source: ACHHUZ4YstKIvO4GH8WsZOBXogGoInnhvvSgR7JQOxu5XIhdLUFoqTlzHFOoauc8qgBelFTIZtCQ3uOGwhBuI8EBMIw=
+X-Received: by 2002:a81:8341:0:b0:55a:8226:6192 with SMTP id
+ t62-20020a818341000000b0055a82266192mr1061968ywf.7.1685049844900; Thu, 25 May
+ 2023 14:24:04 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 3/5] soc: qcom: smem: introduce qcom_smem_get_msm_id()
-Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>,
-        Kathiravan T <quic_kathirav@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, ilia.lin@kernel.org,
-        rafael@kernel.org, viresh.kumar@linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, ansuelsmth@gmail.com
-References: <20230525120956.3095317-1-robimarko@gmail.com>
- <20230525120956.3095317-3-robimarko@gmail.com>
- <c4a50acd-2c0a-7c18-95d8-e9145fa1ff24@quicinc.com>
- <CAOX2RU72PFrdJoJfCGB-Q=V781WD6jEJomjkBeY9jsVPG6MOPQ@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAOX2RU72PFrdJoJfCGB-Q=V781WD6jEJomjkBeY9jsVPG6MOPQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20230329-rfc-msm-dsc-helper-v14-0-bafc7be95691@quicinc.com>
+ <20230329-rfc-msm-dsc-helper-v14-3-bafc7be95691@quicinc.com>
+ <7e5axjbnbhtdbrvtpcqnapp3p2xe2ekgj3aizssps2zesfhs22@trhwxetiif7p>
+ <7ed799fe-1f0a-3d14-3244-7ca351feaf83@quicinc.com> <czjefqca2ye4ntnqw7smy5uiyle3hxnhsxi3so3z3ezigejikd@imtsdfvgr5p4>
+In-Reply-To: <czjefqca2ye4ntnqw7smy5uiyle3hxnhsxi3so3z3ezigejikd@imtsdfvgr5p4>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 26 May 2023 00:23:53 +0300
+Message-ID: <CAA8EJprrwnaXXstJmH-jSXZP-XiPA74reZU40+q07uTCjjav-w@mail.gmail.com>
+Subject: Re: [PATCH v14 3/9] drm/display/dsc: Add drm_dsc_get_bpp_int helper
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@gmail.com>,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,106 +78,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, 25 May 2023 at 23:18, Marijn Suijten
+<marijn.suijten@somainline.org> wrote:
+>
+> On 2023-05-24 15:38:23, Jessica Zhang wrote:
+> <snip>
+> > >> +  WARN_ON_ONCE(vdsc_cfg->bits_per_pixel & 0xf);
+> > >
+> > > You did not add linux/bug.h back, presumably because Dmitry added
+> > > another use of WARN_ON_ONCE to this file in a previous series and it
+> > > compiles fine as the definition trickles in via another header?
+> >
+> > Yep, this compiles fine without any error or warning.
+>
+> Yes it does, just curious (CC Dmitry) if that is expected/intended: I am
+> not familiar enough with the current header includes to say for sure.
+>
+> Dmitry seemed to rely on it already being available in
+> https://git.kernel.org/torvalds/c/2b470e5531f57c1b9bfa129cca0ee17a2ecd2183
+
+I think I did not care about including <linux/bug.h> I checked that
+current set of headers provides WARN_ON_ONCE, that's all.
+
+> but that could have been an oversight?
+>
+> - Marijn
 
 
-On 25.05.2023 17:03, Robert Marko wrote:
-> On Thu, 25 May 2023 at 14:59, Kathiravan T <quic_kathirav@quicinc.com> wrote:
->>
->>
->> On 5/25/2023 5:39 PM, Robert Marko wrote:
->>> Introduce a helper to return the SoC SMEM ID, which is used to identify the
->>> exact SoC model as there may be differences in the same SoC family.
->>>
->>> Currently, cpufreq-nvmem does this completely in the driver and there has
->>> been more interest expresed for other drivers to use this information so
->>> lets expose a common helper to prevent redoing it in individual drivers
->>> since this field is present on every SMEM table version.
->>>
->>> Signed-off-by: Robert Marko <robimarko@gmail.com>
->>> ---
->>> Changes in v3:
->>> * Change export to EXPORT_SYMBOL_GPL
->>> * Use an argument for returning SoC ID
->>> * Update kerneldoc
->>> ---
->>>   drivers/soc/qcom/smem.c       | 24 ++++++++++++++++++++++++
->>>   include/linux/soc/qcom/smem.h |  2 ++
->>>   2 files changed, 26 insertions(+)
->>>
->>> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
->>> index bc98520c4969..185ed0da11a1 100644
->>> --- a/drivers/soc/qcom/smem.c
->>> +++ b/drivers/soc/qcom/smem.c
->>> @@ -14,6 +14,7 @@
->>>   #include <linux/sizes.h>
->>>   #include <linux/slab.h>
->>>   #include <linux/soc/qcom/smem.h>
->>> +#include <linux/soc/qcom/socinfo.h>
->>>
->>>   /*
->>>    * The Qualcomm shared memory system is a allocate only heap structure that
->>> @@ -772,6 +773,29 @@ phys_addr_t qcom_smem_virt_to_phys(void *p)
->>>   }
->>>   EXPORT_SYMBOL_GPL(qcom_smem_virt_to_phys);
->>>
->>> +/**
->>> + * qcom_smem_get_msm_id() - return the SoC ID
->>> + * @id:      On success, we return the SoC ID here.
->>> + *
->>> + * Look up SoC ID from HW/SW build ID and return it.
->>> + *
->>> + * Return: 0 on success, negative errno on failure.
->>> + */
->>> +int qcom_smem_get_msm_id(u32 *id)
->>
->>
->> I think, MSM  is not the only platform which will leverage this API.
->> qcom_smem_get_soc_id() / qcom_smem_get_cpu_id() would make more sense
->> than qcom_smem_get_msm_id() ?
-> 
-> I agree, qcom_smem_get_soc_id() sounds better to me as its not just MSM parts.
->>
->>
->>> +{
->>> +     size_t len;
->>> +     struct socinfo *info;
->>> +
->>> +     info = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_HW_SW_BUILD_ID, &len);
->>
->>
->> len is unused after this, can we just pass NULL? Did a quick check on
->> the code, if we pass the address, size of the item will be updated, else no.
-> 
-> Yes, indeed passing NULL works here for the simple case this helper is handling.
-> Will address in v4.
-Please also consider Bjorn's suggestion of using PTR_ERR
 
-Konrad
-> 
-> Regards,
-> Robert
->>
->>
->>> +     if (IS_ERR(info))
->>> +             return PTR_ERR(info);
->>> +
->>> +     *id = info->id;
->>> +
->>> +     return 0;
->>> +}
->>> +EXPORT_SYMBOL_GPL(qcom_smem_get_msm_id);
->>> +
->>>   static int qcom_smem_get_sbl_version(struct qcom_smem *smem)
->>>   {
->>>       struct smem_header *header;
->>> diff --git a/include/linux/soc/qcom/smem.h b/include/linux/soc/qcom/smem.h
->>> index 86e1b358688a..cb204ad6373c 100644
->>> --- a/include/linux/soc/qcom/smem.h
->>> +++ b/include/linux/soc/qcom/smem.h
->>> @@ -11,4 +11,6 @@ int qcom_smem_get_free_space(unsigned host);
->>>
->>>   phys_addr_t qcom_smem_virt_to_phys(void *p);
->>>
->>> +int qcom_smem_get_msm_id(u32 *id);
->>> +
->>>   #endif
+-- 
+With best wishes
+Dmitry
