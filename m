@@ -2,31 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CCD9871084C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 11:08:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EDDCC71085D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 11:10:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238941AbjEYJIW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 05:08:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47984 "EHLO
+        id S233942AbjEYJKJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 05:10:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229912AbjEYJIV (ORCPT
+        with ESMTP id S239380AbjEYJKA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 05:08:21 -0400
+        Thu, 25 May 2023 05:10:00 -0400
 Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 41F7E19D;
-        Thu, 25 May 2023 02:08:20 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 224A5E4B;
+        Thu, 25 May 2023 02:09:51 -0700 (PDT)
 Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0382F1FB;
-        Thu, 25 May 2023 02:09:05 -0700 (PDT)
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id DC5651042;
+        Thu, 25 May 2023 02:10:35 -0700 (PDT)
 Received: from [10.57.70.156] (unknown [10.57.70.156])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 4DBA83F67D;
-        Thu, 25 May 2023 02:08:17 -0700 (PDT)
-Message-ID: <9f414290-0219-302f-ca8b-231217e68efb@arm.com>
-Date:   Thu, 25 May 2023 10:08:15 +0100
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5DA9A3F67D;
+        Thu, 25 May 2023 02:09:48 -0700 (PDT)
+Message-ID: <320ee3b4-63ed-ec50-03c6-906803e34571@arm.com>
+Date:   Thu, 25 May 2023 10:09:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.11.0
-Subject: Re: [PATCH v4 02/11] coresight-tpda: Add DSB dataset support
+Subject: Re: [PATCH v4 03/11] coresight-tpdm: Initialize DSB subunit
+ configuration
 To:     Tao Zhang <quic_taozha@quicinc.com>,
         Mathieu Poirier <mathieu.poirier@linaro.org>,
         Alexander Shishkin <alexander.shishkin@linux.intel.com>,
@@ -35,7 +36,6 @@ To:     Tao Zhang <quic_taozha@quicinc.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
@@ -45,11 +45,11 @@ Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
         Hao Zhang <quic_hazha@quicinc.com>,
         linux-arm-msm@vger.kernel.org, andersson@kernel.org
 References: <1682586037-25973-1-git-send-email-quic_taozha@quicinc.com>
- <1682586037-25973-3-git-send-email-quic_taozha@quicinc.com>
- <444bc278-a3e3-7d99-6020-7c3337371f66@arm.com>
- <9c4c4ea0-b5dd-d18a-fadf-cd3a65c2cf5a@quicinc.com>
+ <1682586037-25973-4-git-send-email-quic_taozha@quicinc.com>
+ <db575b8f-12e9-dab5-c7f6-b524cbce64d9@arm.com>
+ <92b73ba2-00c5-9f18-ed27-a302f4e79bb2@quicinc.com>
 From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <9c4c4ea0-b5dd-d18a-fadf-cd3a65c2cf5a@quicinc.com>
+In-Reply-To: <92b73ba2-00c5-9f18-ed27-a302f4e79bb2@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
@@ -61,120 +61,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 25/05/2023 08:16, Tao Zhang wrote:
+On 25/05/2023 09:12, Tao Zhang wrote:
 > 
-> On 5/23/2023 6:07 PM, Suzuki K Poulose wrote:
+> On 5/23/2023 9:42 PM, Suzuki K Poulose wrote:
 >> On 27/04/2023 10:00, Tao Zhang wrote:
->>> Read the DSB element size from the device tree. Set the register
->>> bit that controls the DSB element size of the corresponding port.
+>>> DSB is used for monitoring “events”. Events are something that
+>>> occurs at some point in time. It could be a state decode, the
+>>> act of writing/reading a particular address, a FIFO being empty,
+>>> etc. This decoding of the event desired is done outside TPDM.
+>>> DSB subunit need to be configured in enablement and disablement.
+>>> A struct that specifics associated to dsb dataset is needed. It
+>>> saves the configuration and parameters of the dsb datasets. This
+>>> change is to add this struct and initialize the configuration of
+>>> DSB subunit.
 >>>
 >>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>> ---
->>>   drivers/hwtracing/coresight/coresight-core.c |  1 +
->>>   drivers/hwtracing/coresight/coresight-tpda.c | 92 
->>> +++++++++++++++++++++++++---
->>>   drivers/hwtracing/coresight/coresight-tpda.h |  4 ++
->>>   drivers/hwtracing/coresight/coresight-tpdm.c |  2 +-
->>>   include/linux/coresight.h                    |  1 +
->>>   5 files changed, 90 insertions(+), 10 deletions(-)
->>>
->>> diff --git a/drivers/hwtracing/coresight/coresight-core.c 
->>> b/drivers/hwtracing/coresight/coresight-core.c
->>> index 2af416b..f1eacbb 100644
->>> --- a/drivers/hwtracing/coresight/coresight-core.c
->>> +++ b/drivers/hwtracing/coresight/coresight-core.c
->>> @@ -1092,6 +1092,7 @@ static int coresight_validate_source(struct 
->>> coresight_device *csdev,
->>>         if (subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_PROC &&
->>>           subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE &&
->>> +        subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM &&
->>>           subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS) {
->>>           dev_err(&csdev->dev, "wrong device subtype in %s\n", 
->>> function);
->>>           return -EINVAL;
->>
->> Please see the comment at the bottom.
->>
->>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c 
->>> b/drivers/hwtracing/coresight/coresight-tpda.c
->>> index 8d2b9d2..af9c72f 100644
->>> --- a/drivers/hwtracing/coresight/coresight-tpda.c
->>> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
->>> @@ -21,6 +21,56 @@
->>>     DEFINE_CORESIGHT_DEVLIST(tpda_devs, "tpda");
->>>   +/* Search and read element data size from the TPDM node in
->>> + * the devicetree. Each input port of TPDA is connected to
->>> + * a TPDM. Different TPDM supports different types of dataset,
->>> + * and some may support more than one type of dataset.
->>> + * Parameter "inport" is used to pass in the input port number
->>> + * of TPDA, and it is set to 0 in the recursize call.
->>> + * Parameter "parent" is used to pass in the original call.
+
+...
+
+>>> + * dataset types. It covers Basic Counts(BC), Tenure Counts(TC),
+>>> + * Continuous Multi-Bit(CMB), Multi-lane CMB(MCMB) and Discrete Single
+>>> + * Bit(DSB). This function will initialize the configuration according
+>>> + * to the dataset type supported by the TPDM.
 >>> + */
->>> +static int tpda_set_element_size(struct tpda_drvdata *drvdata,
->>> +               struct coresight_device *csdev, int inport, bool parent)
->>> +{
->>> +    static int nr_inport;
->>> +    int i;
->>> +    static bool tpdm_found;
->>> +    struct coresight_device *in_csdev;
->>> +
->>> +    if (inport > (TPDA_MAX_INPORTS - 1))
->>> +        return -EINVAL;
->>> +
->>> +    if (parent) {
->>> +        nr_inport = inport;
->>> +        tpdm_found = false;
->>> +    }
->>> +
->>> +    for (i = 0; i < csdev->pdata->nr_inconns; i++) {
->>> +        in_csdev = csdev->pdata->in_conns[i]->src_dev;
->>> +        if (!in_csdev)
->>> +            break;
->>> +
->>> +        if (parent)
->>> +            if (csdev->pdata->in_conns[i]->dest_port != inport)
->>> +                continue;
->>> +
->>> +        if (in_csdev->subtype.source_subtype
+>>>   static void __tpdm_enable(struct tpdm_drvdata *drvdata)
+>>>   {
+>>>       CS_UNLOCK(drvdata->base);
+>>> @@ -110,15 +144,24 @@ static const struct coresight_ops tpdm_cs_ops = {
+>>>       .source_ops    = &tpdm_source_ops,
+>>>   };
+>>>   -static void tpdm_init_default_data(struct tpdm_drvdata *drvdata)
+>>> +static int tpdm_datasets_setup(struct tpdm_drvdata *drvdata)
+>>>   {
+>>>       u32 pidr;
+>>>   -    CS_UNLOCK(drvdata->base);
+>>>       /*  Get the datasets present on the TPDM. */
+>>>       pidr = readl_relaxed(drvdata->base + CORESIGHT_PERIPHIDR0);
+>>>       drvdata->datasets |= pidr & GENMASK(TPDM_DATASETS - 1, 0);
+>>> -    CS_LOCK(drvdata->base);
 >>
->> We must match the in_csdev->type to be SOURCE && the subtype.
-> Sure, I will update it in the next patch series.
->>
->>> +                   == CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM) {
->>> + of_property_read_u8(in_csdev->dev.parent->of_node,
->>> +                    "qcom,dsb-element-size", 
->>> &drvdata->dsb_esize[nr_inport]);
->>> +            if (!tpdm_found)
->>> +                tpdm_found = true;
->>> +            else
->>> +                dev_warn(drvdata->dev,
->>> +                    "More than one TPDM is mapped to the TPDA input 
->>> port %d.\n",
->>> +                    nr_inport);
->>
->> When we know, we have found a source device, we don't need to recurse
->> down and could simply 'continue' to the next one in the list and skip
->> the call below.
+>> Why are we removing the CS_{UN,}LOCK here ?
 > 
-> Actually, one input port on TPDA only can connect to one TPDM. In the 
-> current design, it will
+> CS_UNLOCK is used before writing data to Coresight registers. Here this 
+> function
 > 
-> find out all the TPDMs on one input port and warn the users all the 
-> TPDMs it found. If we
-> 
-> replace 'recurse down' as 'continue' here, it may not find some TPDMs 
-> that might be connected
-> 
-> incorrectly.
+> doesn't need to write data to any registers, so I remove the 
+> CS_{UN,}LOCK here.
 
-
-What do you mean ? When you enter the if () above, the in_csdev is a
-source and it is TPDM. There must be no input connections TPDM, i.e.
-in_csdev, so no need to go further up the connection chain looking at
-the in_csdev. The loop will continue to analyse this device (where we
-found one TPDM already) and detect any further duplicate TPDMs
-connected.
+Please make this a separate patch to avoid confusing and keep it at the
+beginning of the series.
 
 Suzuki
-
 
