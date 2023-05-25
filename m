@@ -2,58 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CAE0C71177B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 21:35:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47A5F7117F0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 22:15:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241300AbjEYTfY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 15:35:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51388 "EHLO
+        id S231869AbjEYUPf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 16:15:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241647AbjEYTfX (ORCPT
+        with ESMTP id S241716AbjEYUPW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 15:35:23 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF776187;
-        Thu, 25 May 2023 12:34:43 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AFDF8612D6;
-        Thu, 25 May 2023 19:33:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7ADAC433EF;
-        Thu, 25 May 2023 19:33:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685043202;
-        bh=3V9ZIXlDDZor3DAT0CgcWqiGThFIU/g9uSktbalO/hM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=apuSyGxTFMbKlkb7aDeovgx93CL1ZBHh2jzm9D1MDJftJEZbVoYtcStlYN5CO3e5o
-         U9ODL2bH7boDTstjfzWCc9fgH94OCyytWreMcM8uu4zOZRn1aBZg+SwLL9gieUOOLy
-         F9ttqJIg3SVeNsCGcAwxW8O/PEG9FqObPMkskhCJMdxZn56lEovDrR/B3r/EvzUH3b
-         0vADEspQxLOe3tl1eKxX8Iiz5QIPYYgNln9E0W2AGAtWqTeEXM8TeTI4uWQ9cetOv5
-         nlzZK3L1xYxu375cIsRAq+uhm0e8BnndD0nztcKDHxCe2hPlJQv38lJZc/x3vXAeW9
-         BTaE7yQ0MEPNQ==
-Date:   Thu, 25 May 2023 12:37:11 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, dmitry.baryshkov@linaro.org,
-        quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
-        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
-        leonard@lausen.nl, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+        Thu, 25 May 2023 16:15:22 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2ED19D8;
+        Thu, 25 May 2023 13:15:20 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34PI0R47030915;
+        Thu, 25 May 2023 20:14:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=wl9K5q4yBSj7UvRgOUmsizD3SBlxsAevLOS4aGiyrUo=;
+ b=Gpf0bZSXiqkLgHifBzzVgTFj8gF8tg3BzJCNrOkt4F7/TAacx7zZ0BblhYpC3lGXVJ//
+ ChlAX5rZLXrtcbx8kPguTH8d+YJg92P2eeqUrI/7TQYkAPVEA3jlUm7ZMOOtlB6q3uJC
+ DXCqPzlMwl0ozDSL8Y7eG9OvNfbsfqGkMk/QmDDYRGoXuVAzcSuhjygN2CqVz6bmcoFr
+ DWgEAXpwFPJw3M8iBFIVkmpcJqJnQoreEkmXznY8+7ZEE73zlnUIyP/29yMP5Acwyot5
+ Ynl4QWju27NLG02WQQyKY6vHuIfydQq0mKT4ksimSKwobERJFZma3FABusfhAxZMQxzX Qw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qt1tqssep-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 25 May 2023 20:14:57 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34PKEurR026410
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 25 May 2023 20:14:56 GMT
+Received: from [10.110.20.135] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 25 May
+ 2023 13:14:54 -0700
+Message-ID: <3acac6c5-16a5-ed10-11b8-03df44eaf065@quicinc.com>
+Date:   Thu, 25 May 2023 13:14:51 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
 Subject: Re: [PATCH v6] drm/msm/dp: enable HDP plugin/unplugged interrupts at
  hpd_enable/disable
-Message-ID: <20230525193711.in6gf22c7pvtx2eu@ripper>
+Content-Language: en-US
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <andersson@kernel.org>
+CC:     <quic_jesszhan@quicinc.com>, <quic_sbillaka@quicinc.com>,
+        <marijn.suijten@somainline.org>, <leonard@lausen.nl>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
 References: <1684878756-17830-1-git-send-email-quic_khsieh@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
 In-Reply-To: <1684878756-17830-1-git-send-email-quic_khsieh@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: n9tKrbyvt0snvnE4TEvW-1L0iCocw5P9
+X-Proofpoint-GUID: n9tKrbyvt0snvnE4TEvW-1L0iCocw5P9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-25_10,2023-05-25_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 adultscore=0 clxscore=1015 priorityscore=1501 mlxscore=0
+ spamscore=0 bulkscore=0 malwarescore=0 mlxlogscore=489 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305250170
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,7 +87,9 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 23, 2023 at 02:52:36PM -0700, Kuogee Hsieh wrote:
+
+
+On 5/23/2023 2:52 PM, Kuogee Hsieh wrote:
 > The internal_hpd flag is set to true by dp_bridge_hpd_enable() and set to
 > false by dp_bridge_hpd_disable() to handle GPIO pinmuxed into DP controller
 > case. HDP related interrupts can not be enabled until internal_hpd is set
@@ -89,230 +117,7 @@ On Tue, May 23, 2023 at 02:52:36PM -0700, Kuogee Hsieh wrote:
 > -- squash remove enable_irq() and disable_irq()
 > 
 > Fixes: cd198caddea7 ("drm/msm/dp: Rely on hpd_enable/disable callbacks")
-
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Tested-by: Bjorn Andersson <andersson@kernel.org>
-
-Thank you Kuogee,
-Bjorn
-
 > Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
->  drivers/gpu/drm/msm/dp/dp_catalog.c | 15 +++++++-
->  drivers/gpu/drm/msm/dp/dp_catalog.h |  3 +-
->  drivers/gpu/drm/msm/dp/dp_display.c | 71 ++++++++++---------------------------
->  3 files changed, 35 insertions(+), 54 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> index 7a8cf1c..5142aeb 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-> @@ -620,7 +620,7 @@ void dp_catalog_hpd_config_intr(struct dp_catalog *dp_catalog,
->  				config & DP_DP_HPD_INT_MASK);
->  }
->  
-> -void dp_catalog_ctrl_hpd_config(struct dp_catalog *dp_catalog)
-> +void dp_catalog_ctrl_hpd_enable(struct dp_catalog *dp_catalog)
->  {
->  	struct dp_catalog_private *catalog = container_of(dp_catalog,
->  				struct dp_catalog_private, dp_catalog);
-> @@ -635,6 +635,19 @@ void dp_catalog_ctrl_hpd_config(struct dp_catalog *dp_catalog)
->  	dp_write_aux(catalog, REG_DP_DP_HPD_CTRL, DP_DP_HPD_CTRL_HPD_EN);
->  }
->  
-> +void dp_catalog_ctrl_hpd_disable(struct dp_catalog *dp_catalog)
-> +{
-> +	struct dp_catalog_private *catalog = container_of(dp_catalog,
-> +				struct dp_catalog_private, dp_catalog);
-> +
-> +	u32 reftimer = dp_read_aux(catalog, REG_DP_DP_HPD_REFTIMER);
-> +
-> +	reftimer &= ~DP_DP_HPD_REFTIMER_ENABLE;
-> +	dp_write_aux(catalog, REG_DP_DP_HPD_REFTIMER, reftimer);
-> +
-> +	dp_write_aux(catalog, REG_DP_DP_HPD_CTRL, 0);
-> +}
-> +
->  static void dp_catalog_enable_sdp(struct dp_catalog_private *catalog)
->  {
->  	/* trigger sdp */
-> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.h b/drivers/gpu/drm/msm/dp/dp_catalog.h
-> index 82376a2..38786e8 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_catalog.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.h
-> @@ -104,7 +104,8 @@ bool dp_catalog_ctrl_mainlink_ready(struct dp_catalog *dp_catalog);
->  void dp_catalog_ctrl_enable_irq(struct dp_catalog *dp_catalog, bool enable);
->  void dp_catalog_hpd_config_intr(struct dp_catalog *dp_catalog,
->  			u32 intr_mask, bool en);
-> -void dp_catalog_ctrl_hpd_config(struct dp_catalog *dp_catalog);
-> +void dp_catalog_ctrl_hpd_enable(struct dp_catalog *dp_catalog);
-> +void dp_catalog_ctrl_hpd_disable(struct dp_catalog *dp_catalog);
->  void dp_catalog_ctrl_config_psr(struct dp_catalog *dp_catalog);
->  void dp_catalog_ctrl_set_psr(struct dp_catalog *dp_catalog, bool enter);
->  u32 dp_catalog_link_is_connected(struct dp_catalog *dp_catalog);
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 3e13acdf..cb805cf 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -615,12 +615,6 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
->  		dp->hpd_state = ST_MAINLINK_READY;
->  	}
->  
-> -	/* enable HDP irq_hpd/replug interrupt */
-> -	if (dp->dp_display.internal_hpd)
-> -		dp_catalog_hpd_config_intr(dp->catalog,
-> -					   DP_DP_IRQ_HPD_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK,
-> -					   true);
-> -
->  	drm_dbg_dp(dp->drm_dev, "After, type=%d hpd_state=%d\n",
->  			dp->dp_display.connector_type, state);
->  	mutex_unlock(&dp->event_mutex);
-> @@ -658,12 +652,6 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
->  	drm_dbg_dp(dp->drm_dev, "Before, type=%d hpd_state=%d\n",
->  			dp->dp_display.connector_type, state);
->  
-> -	/* disable irq_hpd/replug interrupts */
-> -	if (dp->dp_display.internal_hpd)
-> -		dp_catalog_hpd_config_intr(dp->catalog,
-> -					   DP_DP_IRQ_HPD_INT_MASK | DP_DP_HPD_REPLUG_INT_MASK,
-> -					   false);
-> -
->  	/* unplugged, no more irq_hpd handle */
->  	dp_del_event(dp, EV_IRQ_HPD_INT);
->  
-> @@ -687,10 +675,6 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
->  		return 0;
->  	}
->  
-> -	/* disable HPD plug interrupts */
-> -	if (dp->dp_display.internal_hpd)
-> -		dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, false);
-> -
->  	/*
->  	 * We don't need separate work for disconnect as
->  	 * connect/attention interrupts are disabled
-> @@ -706,10 +690,6 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
->  	/* signal the disconnect event early to ensure proper teardown */
->  	dp_display_handle_plugged_change(&dp->dp_display, false);
->  
-> -	/* enable HDP plug interrupt to prepare for next plugin */
-> -	if (dp->dp_display.internal_hpd)
-> -		dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, true);
-> -
->  	drm_dbg_dp(dp->drm_dev, "After, type=%d hpd_state=%d\n",
->  			dp->dp_display.connector_type, state);
->  
-> @@ -1082,26 +1062,6 @@ void msm_dp_snapshot(struct msm_disp_state *disp_state, struct msm_dp *dp)
->  	mutex_unlock(&dp_display->event_mutex);
->  }
->  
-> -static void dp_display_config_hpd(struct dp_display_private *dp)
-> -{
-> -
-> -	dp_display_host_init(dp);
-> -	dp_catalog_ctrl_hpd_config(dp->catalog);
-> -
-> -	/* Enable plug and unplug interrupts only if requested */
-> -	if (dp->dp_display.internal_hpd)
-> -		dp_catalog_hpd_config_intr(dp->catalog,
-> -				DP_DP_HPD_PLUG_INT_MASK |
-> -				DP_DP_HPD_UNPLUG_INT_MASK,
-> -				true);
-> -
-> -	/* Enable interrupt first time
-> -	 * we are leaving dp clocks on during disconnect
-> -	 * and never disable interrupt
-> -	 */
-> -	enable_irq(dp->irq);
-> -}
-> -
->  void dp_display_set_psr(struct msm_dp *dp_display, bool enter)
->  {
->  	struct dp_display_private *dp;
-> @@ -1176,7 +1136,7 @@ static int hpd_event_thread(void *data)
->  
->  		switch (todo->event_id) {
->  		case EV_HPD_INIT_SETUP:
-> -			dp_display_config_hpd(dp_priv);
-> +			dp_display_host_init(dp_priv);
->  			break;
->  		case EV_HPD_PLUG_INT:
->  			dp_hpd_plug_handle(dp_priv, todo->data);
-> @@ -1282,7 +1242,6 @@ int dp_display_request_irq(struct msm_dp *dp_display)
->  				dp->irq, rc);
->  		return rc;
->  	}
-> -	disable_irq(dp->irq);
->  
->  	return 0;
->  }
-> @@ -1394,13 +1353,8 @@ static int dp_pm_resume(struct device *dev)
->  	/* turn on dp ctrl/phy */
->  	dp_display_host_init(dp);
->  
-> -	dp_catalog_ctrl_hpd_config(dp->catalog);
-> -
-> -	if (dp->dp_display.internal_hpd)
-> -		dp_catalog_hpd_config_intr(dp->catalog,
-> -				DP_DP_HPD_PLUG_INT_MASK |
-> -				DP_DP_HPD_UNPLUG_INT_MASK,
-> -				true);
-> +	if (dp_display->is_edp)
-> +		dp_catalog_ctrl_hpd_enable(dp->catalog);
->  
->  	if (dp_catalog_link_is_connected(dp->catalog)) {
->  		/*
-> @@ -1568,9 +1522,8 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
->  
->  	if (aux_bus && dp->is_edp) {
->  		dp_display_host_init(dp_priv);
-> -		dp_catalog_ctrl_hpd_config(dp_priv->catalog);
-> +		dp_catalog_ctrl_hpd_enable(dp_priv->catalog);
->  		dp_display_host_phy_init(dp_priv);
-> -		enable_irq(dp_priv->irq);
->  
->  		/*
->  		 * The code below assumes that the panel will finish probing
-> @@ -1612,7 +1565,6 @@ static int dp_display_get_next_bridge(struct msm_dp *dp)
->  
->  error:
->  	if (dp->is_edp) {
-> -		disable_irq(dp_priv->irq);
->  		dp_display_host_phy_exit(dp_priv);
->  		dp_display_host_deinit(dp_priv);
->  	}
-> @@ -1801,16 +1753,31 @@ void dp_bridge_hpd_enable(struct drm_bridge *bridge)
->  {
->  	struct msm_dp_bridge *dp_bridge = to_dp_bridge(bridge);
->  	struct msm_dp *dp_display = dp_bridge->dp_display;
-> +	struct dp_display_private *dp = container_of(dp_display, struct dp_display_private, dp_display);
-> +
-> +	mutex_lock(&dp->event_mutex);
-> +	dp_catalog_ctrl_hpd_enable(dp->catalog);
-> +
-> +	/* enable HDP interrupts */
-> +	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_INT_MASK, true);
->  
->  	dp_display->internal_hpd = true;
-> +	mutex_unlock(&dp->event_mutex);
->  }
->  
->  void dp_bridge_hpd_disable(struct drm_bridge *bridge)
->  {
->  	struct msm_dp_bridge *dp_bridge = to_dp_bridge(bridge);
->  	struct msm_dp *dp_display = dp_bridge->dp_display;
-> +	struct dp_display_private *dp = container_of(dp_display, struct dp_display_private, dp_display);
-> +
-> +	mutex_lock(&dp->event_mutex);
-> +	/* disable HDP interrupts */
-> +	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_INT_MASK, false);
-> +	dp_catalog_ctrl_hpd_disable(dp->catalog);
->  
->  	dp_display->internal_hpd = false;
-> +	mutex_unlock(&dp->event_mutex);
->  }
->  
->  void dp_bridge_hpd_notify(struct drm_bridge *bridge,
-> -- 
-> 2.7.4
-> 
+
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
