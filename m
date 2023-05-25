@@ -2,80 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E91E711935
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 23:36:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B23FF71194C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 23:41:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241716AbjEYVgS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 17:36:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42550 "EHLO
+        id S240238AbjEYVlJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 17:41:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232437AbjEYVgR (ORCPT
+        with ESMTP id S235791AbjEYVlI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 17:36:17 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2494FB
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 14:36:14 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f4d80bac38so1240637e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 14:36:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685050573; x=1687642573;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=h4/FnL/3RdSlVyE6Xkxbbh+4KZeaW1VsiE2otyNq+0k=;
-        b=Gd1VGQCj218weDsv3Ax0ruESXqz/Hs6ZisMKKhQCgAGntmiUmMBjI+hIHdTQYaQbOg
-         6qAcKIBf/PPNFD7nkJ+d+Y+uBnHR69M3TaFEV7RazSmPUo0Dk8r223xMcx+z9OvcNlIz
-         WpDvu+E++It1+2XqmdcvL9Y9azfk7flynpytTYOjQLR51ANZqrjvoBA17JXg0F1/0DGv
-         PNEGE6eDBJ07faugbGpRvmpqJ/XXDHnak9E6jAQ000O9zJ5RFQTCZm8y+USXWiBfXZPX
-         MsgwawVxle+I08NZJ4W9FKielyQOcsI0I5tRc2/el0mh2nNU7a5FpdAmC4KjUYQtsILx
-         pTZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685050573; x=1687642573;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=h4/FnL/3RdSlVyE6Xkxbbh+4KZeaW1VsiE2otyNq+0k=;
-        b=HY4w6kyTtY0k2haKjygxa/pU0UldUdMz5LyE9NZqcb8LMTsYw3DMNyBuvktlNqfwr3
-         pK94PDtSw9bhAP6oXSAw+jsjINywKtwLADGRdpnRLZIkE89G6WsyQy87F+I2sHCT8Ark
-         5Kl2n7peD39VbqqvABbRLjaZJ88XpM3W6MhQBFiByY7Wod4QHXzATO9iruk5n4q0zLtM
-         EEQycxBFdy6wIyZE4ey8eXv1aQcBDiIB+9srqtSktM/gYUjcBnULaf84X8tUZHf+ouCZ
-         mOA0u+1TwpE3WWgPb8LcjD0b4KSUdwGciQfuO9GcYQqdUSc0WBid5tCpuDYzoiC18uAX
-         Y1NQ==
-X-Gm-Message-State: AC+VfDzRNoR98NPGGzfRvbOjwcBzsJlu11QzpgkPW2Mx0J+zL0IHHfml
-        WMl892KanXRH3945q28O8GBkfQ==
-X-Google-Smtp-Source: ACHHUZ7Owa9UgNcNm+29fRuSaLnMhZX7/tlwuo26yYQ0Vqy35GaTwXwh9+eYViU+FE43Vn3foR9nUg==
-X-Received: by 2002:ac2:4c14:0:b0:4ed:c5a4:28dc with SMTP id t20-20020ac24c14000000b004edc5a428dcmr6154495lfq.38.1685050573158;
-        Thu, 25 May 2023 14:36:13 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id r13-20020ac25a4d000000b004f4b0493749sm340106lfn.303.2023.05.25.14.36.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 May 2023 14:36:12 -0700 (PDT)
-Message-ID: <e3df6de8-5137-9119-b1de-719cc1336a2e@linaro.org>
-Date:   Thu, 25 May 2023 23:36:11 +0200
+        Thu, 25 May 2023 17:41:08 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C7D21A4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 14:41:03 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34PLL6Bu003162;
+        Thu, 25 May 2023 21:40:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=KDZo71gRcDFSFrx7PRrhULd2+WSgVFYIUueCbZ2Jmu0=;
+ b=G/X65j7HCXQN1XAH10dMsryO1ceXDOJPns25BMUNOZsCcwM9c4Mv1XT2q5iyVuESXZnq
+ G60WcMXqq6JAAYfnEzQPmompsY05vUnKAwYJIl5E+6SSK2+TDs65f6CHxirkTFsGnIMZ
+ aOy9mnhotUrnhkr8LsW3jzYok/BKP70d2YZ8pid9Lhb1XJD8J61b30m62jm/fbxVyJ0A
+ UfHlbtDNxuuagGVcto15Olmi6kx3Qj9s307HjFPf6uUrMYmRo0ZebhrUF1CxkD8ur+BK
+ OXvN38z6M4YgQvG/4eVWzxUrN/kq6ReeMWTqbmRQw0qAEVypLAS2LcklrdxCg3fZrxql oA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qt47eshnw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 25 May 2023 21:40:52 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34PLepT1006234
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 25 May 2023 21:40:51 GMT
+Received: from [10.110.33.8] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 25 May
+ 2023 14:40:50 -0700
+Message-ID: <50c35efe-987b-5138-050e-181c0f6bf191@quicinc.com>
+Date:   Thu, 25 May 2023 14:40:50 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v3 3/5] soc: qcom: smem: introduce qcom_smem_get_msm_id()
+Subject: Re: [Freedreno] [PATCH v2 3/6] drm/msm/dpu: split interrupt address
+ arrays
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     Robert Marko <robimarko@gmail.com>,
-        Kathiravan T <quic_kathirav@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, ilia.lin@kernel.org,
-        rafael@kernel.org, viresh.kumar@linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, ansuelsmth@gmail.com
-References: <20230525120956.3095317-1-robimarko@gmail.com>
- <20230525120956.3095317-3-robimarko@gmail.com>
- <c4a50acd-2c0a-7c18-95d8-e9145fa1ff24@quicinc.com>
- <CAOX2RU72PFrdJoJfCGB-Q=V781WD6jEJomjkBeY9jsVPG6MOPQ@mail.gmail.com>
- <af6f2b60-49f6-3622-7868-a2b3a6bd462f@linaro.org>
-In-Reply-To: <af6f2b60-49f6-3622-7868-a2b3a6bd462f@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        "Stephen Boyd" <swboyd@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>
+References: <20230522214527.190054-1-dmitry.baryshkov@linaro.org>
+ <20230522214527.190054-4-dmitry.baryshkov@linaro.org>
+From:   Jeykumar Sankaran <quic_jeykumar@quicinc.com>
+In-Reply-To: <20230522214527.190054-4-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ZwQ8SIK4Se8Umc-w3dhMmN42ZxMqDnfE
+X-Proofpoint-ORIG-GUID: ZwQ8SIK4Se8Umc-w3dhMmN42ZxMqDnfE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-25_12,2023-05-25_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ suspectscore=0 clxscore=1015 adultscore=0 bulkscore=0 malwarescore=0
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 spamscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305250184
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -84,110 +90,367 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 25.05.2023 23:21, Konrad Dybcio wrote:
+On 5/22/2023 2:45 PM, Dmitry Baryshkov wrote:
+> There is no point in having a single enum (and a single array) for both
+> DPU < 7.0 and DPU >= 7.0 interrupt registers. Instead define a single
+> enum and two IRQ address arrays.
 > 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  1 +
+>   .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  1 +
+>   .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  1 +
+>   .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  1 +
+>   .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  1 +
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  2 +
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 82 +++++++++++++------
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h | 28 ++++---
+>   8 files changed, 79 insertions(+), 38 deletions(-)
 > 
-> On 25.05.2023 17:03, Robert Marko wrote:
->> On Thu, 25 May 2023 at 14:59, Kathiravan T <quic_kathirav@quicinc.com> wrote:
->>>
->>>
->>> On 5/25/2023 5:39 PM, Robert Marko wrote:
->>>> Introduce a helper to return the SoC SMEM ID, which is used to identify the
->>>> exact SoC model as there may be differences in the same SoC family.
->>>>
->>>> Currently, cpufreq-nvmem does this completely in the driver and there has
->>>> been more interest expresed for other drivers to use this information so
->>>> lets expose a common helper to prevent redoing it in individual drivers
->>>> since this field is present on every SMEM table version.
->>>>
->>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
->>>> ---
->>>> Changes in v3:
->>>> * Change export to EXPORT_SYMBOL_GPL
->>>> * Use an argument for returning SoC ID
->>>> * Update kerneldoc
->>>> ---
->>>>   drivers/soc/qcom/smem.c       | 24 ++++++++++++++++++++++++
->>>>   include/linux/soc/qcom/smem.h |  2 ++
->>>>   2 files changed, 26 insertions(+)
->>>>
->>>> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
->>>> index bc98520c4969..185ed0da11a1 100644
->>>> --- a/drivers/soc/qcom/smem.c
->>>> +++ b/drivers/soc/qcom/smem.c
->>>> @@ -14,6 +14,7 @@
->>>>   #include <linux/sizes.h>
->>>>   #include <linux/slab.h>
->>>>   #include <linux/soc/qcom/smem.h>
->>>> +#include <linux/soc/qcom/socinfo.h>
->>>>
->>>>   /*
->>>>    * The Qualcomm shared memory system is a allocate only heap structure that
->>>> @@ -772,6 +773,29 @@ phys_addr_t qcom_smem_virt_to_phys(void *p)
->>>>   }
->>>>   EXPORT_SYMBOL_GPL(qcom_smem_virt_to_phys);
->>>>
->>>> +/**
->>>> + * qcom_smem_get_msm_id() - return the SoC ID
->>>> + * @id:      On success, we return the SoC ID here.
->>>> + *
->>>> + * Look up SoC ID from HW/SW build ID and return it.
->>>> + *
->>>> + * Return: 0 on success, negative errno on failure.
->>>> + */
->>>> +int qcom_smem_get_msm_id(u32 *id)
->>>
->>>
->>> I think, MSM  is not the only platform which will leverage this API.
->>> qcom_smem_get_soc_id() / qcom_smem_get_cpu_id() would make more sense
->>> than qcom_smem_get_msm_id() ?
->>
->> I agree, qcom_smem_get_soc_id() sounds better to me as its not just MSM parts.
->>>
->>>
->>>> +{
->>>> +     size_t len;
->>>> +     struct socinfo *info;
->>>> +
->>>> +     info = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_HW_SW_BUILD_ID, &len);
->>>
->>>
->>> len is unused after this, can we just pass NULL? Did a quick check on
->>> the code, if we pass the address, size of the item will be updated, else no.
->>
->> Yes, indeed passing NULL works here for the simple case this helper is handling.
->> Will address in v4.
-> Please also consider Bjorn's suggestion of using PTR_ERR
-Nevermind, brain too laggy ;)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> index 3c1b2c13398d..320cfa4be633 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> @@ -15,6 +15,7 @@ static const struct dpu_caps sm8350_dpu_caps = {
+>   	.has_dim_layer = true,
+>   	.has_idle_pc = true,
+>   	.has_3d_merge = true,
+> +	.has_7xxx_intr = true,
+>   	.max_linewidth = 4096,
+>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>   };
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> index 5d894cbb0a62..9306c7a115e9 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> @@ -13,6 +13,7 @@ static const struct dpu_caps sc7280_dpu_caps = {
+>   	.qseed_type = DPU_SSPP_SCALER_QSEED4,
+>   	.has_dim_layer = true,
+>   	.has_idle_pc = true,
+> +	.has_7xxx_intr = true,
+>   	.max_linewidth = 2400,
+>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>   };
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> index c3f1ae000a21..fc1e17c495f0 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> @@ -15,6 +15,7 @@ static const struct dpu_caps sc8280xp_dpu_caps = {
+>   	.has_dim_layer = true,
+>   	.has_idle_pc = true,
+>   	.has_3d_merge = true,
+> +	.has_7xxx_intr = true,
+>   	.max_linewidth = 5120,
+>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>   };
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> index 86c2e68ebd2c..eb72411c16db 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> @@ -14,6 +14,7 @@ static const struct dpu_caps sm8450_dpu_caps = {
+>   	.has_src_split = true,
+>   	.has_dim_layer = true,
+>   	.has_idle_pc = true,
+> +	.has_7xxx_intr = true,
+>   	.has_3d_merge = true,
+>   	.max_linewidth = 5120,
+>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> index 85dc34458b88..8209ca317bdc 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> @@ -15,6 +15,7 @@ static const struct dpu_caps sm8550_dpu_caps = {
+>   	.has_dim_layer = true,
+>   	.has_idle_pc = true,
+>   	.has_3d_merge = true,
+> +	.has_7xxx_intr = true,
+>   	.max_linewidth = 5120,
+>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>   };
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index 677048cc3b7d..72530ebb0ae6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -351,6 +351,7 @@ struct dpu_rotation_cfg {
+>    * @has_dim_layer      dim layer feature status
+>    * @has_idle_pc        indicate if idle power collapse feature is supported
+>    * @has_3d_merge       indicate if 3D merge is supported
+> + * @has_7xxx_intr      indicate that INTF/IRQs use addressing for DPU 7.0 and greater
 
-Konrad
-> 
-> Konrad
->>
->> Regards,
->> Robert
->>>
->>>
->>>> +     if (IS_ERR(info))
->>>> +             return PTR_ERR(info);
->>>> +
->>>> +     *id = info->id;
->>>> +
->>>> +     return 0;
->>>> +}
->>>> +EXPORT_SYMBOL_GPL(qcom_smem_get_msm_id);
->>>> +
->>>>   static int qcom_smem_get_sbl_version(struct qcom_smem *smem)
->>>>   {
->>>>       struct smem_header *header;
->>>> diff --git a/include/linux/soc/qcom/smem.h b/include/linux/soc/qcom/smem.h
->>>> index 86e1b358688a..cb204ad6373c 100644
->>>> --- a/include/linux/soc/qcom/smem.h
->>>> +++ b/include/linux/soc/qcom/smem.h
->>>> @@ -11,4 +11,6 @@ int qcom_smem_get_free_space(unsigned host);
->>>>
->>>>   phys_addr_t qcom_smem_virt_to_phys(void *p);
->>>>
->>>> +int qcom_smem_get_msm_id(u32 *id);
->>>> +
->>>>   #endif
+I see the requirement to distinguish feature support based on the DPU 
+version in more than one series. Is it a good idea to bring in the DPU 
+version info in chipset catalog? This will relieve us from maintaining 
+such version flags for individual HW sub-blocks.
+
+Thanks and Regards,
+Jeykumar S.
+
+>    * @max_linewidth      max linewidth for sspp
+>    * @pixel_ram_size     size of latency hiding and de-tiling buffer in bytes
+>    * @max_hdeci_exp      max horizontal decimation supported (max is 2^value)
+> @@ -364,6 +365,7 @@ struct dpu_caps {
+>   	bool has_dim_layer;
+>   	bool has_idle_pc;
+>   	bool has_3d_merge;
+> +	bool has_7xxx_intr;
+>   	/* SSPP limits */
+>   	u32 max_linewidth;
+>   	u32 pixel_ram_size;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> index 0776b0f6df4f..a03d826bb9ad 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> @@ -51,11 +51,9 @@ struct dpu_intr_reg {
+>   };
+>   
+>   /*
+> - * struct dpu_intr_reg -  List of DPU interrupt registers
+> - *
+> - * When making changes be sure to sync with dpu_hw_intr_reg
+> + * dpu_intr_set_legacy -  List of DPU interrupt registers for DPU <= 6.x
+>    */
+> -static const struct dpu_intr_reg dpu_intr_set[] = {
+> +static const struct dpu_intr_reg dpu_intr_set_legacy[] = {
+>   	[MDP_SSPP_TOP0_INTR] = {
+>   		INTR_CLEAR,
+>   		INTR_EN,
+> @@ -121,57 +119,78 @@ static const struct dpu_intr_reg dpu_intr_set[] = {
+>   		MDP_AD4_INTR_EN_OFF(1),
+>   		MDP_AD4_INTR_STATUS_OFF(1),
+>   	},
+> -	[MDP_INTF0_7xxx_INTR] = {
+> +};
+> +
+> +/*
+> + * dpu_intr_set_7xxx -  List of DPU interrupt registers for DPU >= 7.0
+> + */
+> +static const struct dpu_intr_reg dpu_intr_set_7xxx[] = {
+> +	[MDP_SSPP_TOP0_INTR] = {
+> +		INTR_CLEAR,
+> +		INTR_EN,
+> +		INTR_STATUS
+> +	},
+> +	[MDP_SSPP_TOP0_INTR2] = {
+> +		INTR2_CLEAR,
+> +		INTR2_EN,
+> +		INTR2_STATUS
+> +	},
+> +	[MDP_SSPP_TOP0_HIST_INTR] = {
+> +		HIST_INTR_CLEAR,
+> +		HIST_INTR_EN,
+> +		HIST_INTR_STATUS
+> +	},
+> +	[MDP_INTF0_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(0),
+>   		MDP_INTF_REV_7xxx_INTR_EN(0),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(0)
+>   	},
+> -	[MDP_INTF1_7xxx_INTR] = {
+> +	[MDP_INTF1_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(1),
+>   		MDP_INTF_REV_7xxx_INTR_EN(1),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(1)
+>   	},
+> -	[MDP_INTF1_7xxx_TEAR_INTR] = {
+> +	[MDP_INTF1_TEAR_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_TEAR_CLEAR(1),
+>   		MDP_INTF_REV_7xxx_INTR_TEAR_EN(1),
+>   		MDP_INTF_REV_7xxx_INTR_TEAR_STATUS(1)
+>   	},
+> -	[MDP_INTF2_7xxx_INTR] = {
+> +	[MDP_INTF2_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(2),
+>   		MDP_INTF_REV_7xxx_INTR_EN(2),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(2)
+>   	},
+> -	[MDP_INTF2_7xxx_TEAR_INTR] = {
+> +	[MDP_INTF2_TEAR_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_TEAR_CLEAR(2),
+>   		MDP_INTF_REV_7xxx_INTR_TEAR_EN(2),
+>   		MDP_INTF_REV_7xxx_INTR_TEAR_STATUS(2)
+>   	},
+> -	[MDP_INTF3_7xxx_INTR] = {
+> +	[MDP_INTF3_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(3),
+>   		MDP_INTF_REV_7xxx_INTR_EN(3),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(3)
+>   	},
+> -	[MDP_INTF4_7xxx_INTR] = {
+> +	[MDP_INTF4_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(4),
+>   		MDP_INTF_REV_7xxx_INTR_EN(4),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(4)
+>   	},
+> -	[MDP_INTF5_7xxx_INTR] = {
+> +	[MDP_INTF5_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(5),
+>   		MDP_INTF_REV_7xxx_INTR_EN(5),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(5)
+>   	},
+> -	[MDP_INTF6_7xxx_INTR] = {
+> +	[MDP_INTF6_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(6),
+>   		MDP_INTF_REV_7xxx_INTR_EN(6),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(6)
+>   	},
+> -	[MDP_INTF7_7xxx_INTR] = {
+> +	[MDP_INTF7_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(7),
+>   		MDP_INTF_REV_7xxx_INTR_EN(7),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(7)
+>   	},
+> -	[MDP_INTF8_7xxx_INTR] = {
+> +	[MDP_INTF8_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(8),
+>   		MDP_INTF_REV_7xxx_INTR_EN(8),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(8)
+> @@ -216,19 +235,19 @@ irqreturn_t dpu_core_irq(struct msm_kms *kms)
+>   		return IRQ_NONE;
+>   
+>   	spin_lock_irqsave(&intr->irq_lock, irq_flags);
+> -	for (reg_idx = 0; reg_idx < ARRAY_SIZE(dpu_intr_set); reg_idx++) {
+> +	for (reg_idx = 0; reg_idx < MDP_INTR_MAX; reg_idx++) {
+>   		if (!test_bit(reg_idx, &intr->irq_mask))
+>   			continue;
+>   
+>   		/* Read interrupt status */
+> -		irq_status = DPU_REG_READ(&intr->hw, dpu_intr_set[reg_idx].status_off);
+> +		irq_status = DPU_REG_READ(&intr->hw, intr->intr_set[reg_idx].status_off);
+>   
+>   		/* Read enable mask */
+> -		enable_mask = DPU_REG_READ(&intr->hw, dpu_intr_set[reg_idx].en_off);
+> +		enable_mask = DPU_REG_READ(&intr->hw, intr->intr_set[reg_idx].en_off);
+>   
+>   		/* and clear the interrupt */
+>   		if (irq_status)
+> -			DPU_REG_WRITE(&intr->hw, dpu_intr_set[reg_idx].clr_off,
+> +			DPU_REG_WRITE(&intr->hw, intr->intr_set[reg_idx].clr_off,
+>   				     irq_status);
+>   
+>   		/* Finally update IRQ status based on enable mask */
+> @@ -285,7 +304,11 @@ static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
+>   	assert_spin_locked(&intr->irq_lock);
+>   
+>   	reg_idx = DPU_IRQ_REG(irq_idx);
+> -	reg = &dpu_intr_set[reg_idx];
+> +	reg = &intr->intr_set[reg_idx];
+> +
+> +	/* Is this interrupt register supported on the platform */
+> +	if (WARN_ON(!reg->en_off))
+> +		return -EINVAL;
+>   
+>   	cache_irq_mask = intr->cache_irq_mask[reg_idx];
+>   	if (cache_irq_mask & DPU_IRQ_MASK(irq_idx)) {
+> @@ -334,7 +357,7 @@ static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
+>   	assert_spin_locked(&intr->irq_lock);
+>   
+>   	reg_idx = DPU_IRQ_REG(irq_idx);
+> -	reg = &dpu_intr_set[reg_idx];
+> +	reg = &intr->intr_set[reg_idx];
+>   
+>   	cache_irq_mask = intr->cache_irq_mask[reg_idx];
+>   	if ((cache_irq_mask & DPU_IRQ_MASK(irq_idx)) == 0) {
+> @@ -368,10 +391,10 @@ static void dpu_clear_irqs(struct dpu_kms *dpu_kms)
+>   	if (!intr)
+>   		return;
+>   
+> -	for (i = 0; i < ARRAY_SIZE(dpu_intr_set); i++) {
+> +	for (i = 0; i < MDP_INTR_MAX; i++) {
+>   		if (test_bit(i, &intr->irq_mask))
+>   			DPU_REG_WRITE(&intr->hw,
+> -					dpu_intr_set[i].clr_off, 0xffffffff);
+> +					intr->intr_set[i].clr_off, 0xffffffff);
+>   	}
+>   
+>   	/* ensure register writes go through */
+> @@ -386,10 +409,10 @@ static void dpu_disable_all_irqs(struct dpu_kms *dpu_kms)
+>   	if (!intr)
+>   		return;
+>   
+> -	for (i = 0; i < ARRAY_SIZE(dpu_intr_set); i++) {
+> +	for (i = 0; i < MDP_INTR_MAX; i++) {
+>   		if (test_bit(i, &intr->irq_mask))
+>   			DPU_REG_WRITE(&intr->hw,
+> -					dpu_intr_set[i].en_off, 0x00000000);
+> +					intr->intr_set[i].en_off, 0x00000000);
+>   	}
+>   
+>   	/* ensure register writes go through */
+> @@ -421,10 +444,10 @@ u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx)
+>   
+>   	reg_idx = DPU_IRQ_REG(irq_idx);
+>   	intr_status = DPU_REG_READ(&intr->hw,
+> -			dpu_intr_set[reg_idx].status_off) &
+> +			intr->intr_set[reg_idx].status_off) &
+>   		DPU_IRQ_MASK(irq_idx);
+>   	if (intr_status)
+> -		DPU_REG_WRITE(&intr->hw, dpu_intr_set[reg_idx].clr_off,
+> +		DPU_REG_WRITE(&intr->hw, intr->intr_set[reg_idx].clr_off,
+>   				intr_status);
+>   
+>   	/* ensure register writes go through */
+> @@ -448,6 +471,11 @@ struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
+>   	if (!intr)
+>   		return ERR_PTR(-ENOMEM);
+>   
+> +	if (m->caps->has_7xxx_intr)
+> +		intr->intr_set = dpu_intr_set_7xxx;
+> +	else
+> +		intr->intr_set = dpu_intr_set_legacy;
+> +
+>   	intr->hw.blk_addr = addr + m->mdp[0].base;
+>   
+>   	intr->total_irqs = nirq;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+> index 1f2dabc54c22..f329d6d7f646 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+> @@ -23,24 +23,29 @@ enum dpu_hw_intr_reg {
+>   	MDP_INTF3_INTR,
+>   	MDP_INTF4_INTR,
+>   	MDP_INTF5_INTR,
+> +	MDP_INTF6_INTR,
+> +	MDP_INTF7_INTR,
+> +	MDP_INTF8_INTR,
+>   	MDP_INTF1_TEAR_INTR,
+>   	MDP_INTF2_TEAR_INTR,
+>   	MDP_AD4_0_INTR,
+>   	MDP_AD4_1_INTR,
+> -	MDP_INTF0_7xxx_INTR,
+> -	MDP_INTF1_7xxx_INTR,
+> -	MDP_INTF1_7xxx_TEAR_INTR,
+> -	MDP_INTF2_7xxx_INTR,
+> -	MDP_INTF2_7xxx_TEAR_INTR,
+> -	MDP_INTF3_7xxx_INTR,
+> -	MDP_INTF4_7xxx_INTR,
+> -	MDP_INTF5_7xxx_INTR,
+> -	MDP_INTF6_7xxx_INTR,
+> -	MDP_INTF7_7xxx_INTR,
+> -	MDP_INTF8_7xxx_INTR,
+>   	MDP_INTR_MAX,
+>   };
+>   
+> +/* compatibility */
+> +#define MDP_INTF0_7xxx_INTR MDP_INTF0_INTR
+> +#define MDP_INTF1_7xxx_INTR MDP_INTF1_INTR
+> +#define MDP_INTF2_7xxx_INTR MDP_INTF2_INTR
+> +#define MDP_INTF3_7xxx_INTR MDP_INTF3_INTR
+> +#define MDP_INTF4_7xxx_INTR MDP_INTF4_INTR
+> +#define MDP_INTF5_7xxx_INTR MDP_INTF5_INTR
+> +#define MDP_INTF6_7xxx_INTR MDP_INTF6_INTR
+> +#define MDP_INTF7_7xxx_INTR MDP_INTF7_INTR
+> +#define MDP_INTF8_7xxx_INTR MDP_INTF8_INTR
+> +#define MDP_INTF1_7xxx_TEAR_INTR MDP_INTF1_TEAR_INTR
+> +#define MDP_INTF2_7xxx_TEAR_INTR MDP_INTF2_TEAR_INTR
+> +
+>   #define DPU_IRQ_IDX(reg_idx, offset)	(reg_idx * 32 + offset)
+>   
+>   /**
+> @@ -60,6 +65,7 @@ struct dpu_hw_intr {
+>   	u32 total_irqs;
+>   	spinlock_t irq_lock;
+>   	unsigned long irq_mask;
+> +	const struct dpu_intr_reg *intr_set;
+>   
+>   	struct {
+>   		void (*cb)(void *arg, int irq_idx);
