@@ -2,143 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E6CC71019F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 01:20:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D95D771021A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 02:53:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229646AbjEXXUY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 24 May 2023 19:20:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53604 "EHLO
+        id S229459AbjEYAxU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 24 May 2023 20:53:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44590 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229630AbjEXXUX (ORCPT
+        with ESMTP id S229661AbjEYAxT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 24 May 2023 19:20:23 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66CC399
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 16:20:22 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34OMijPi024054;
-        Wed, 24 May 2023 23:20:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=sHWbWoYD+U4m60gnl29hh9XhYZBWFwXBKJId6kvSg40=;
- b=HxbQXMjq3PLHb4yedhkAmDQw53507V/n+dosDK/w09/dlfwgIBkaxV3zl0UQ5QTxpEox
- AJeik7bn+m0vyk2k39JNDDOPyn1UnIgTT+w8HHSVZjq1gPT0Xbakf5pIajKEpS5PNyRp
- ldj/N5z6iV0SBv5ebli3H8y3U7bLTQyfWD17wobDupfz+lmCq0xQaHh2aJqlj4a8DsRu
- nNKzTR+jJOOmng1qFJU/1BWAxye9DArtSeSoXsQYqAaHSCXxE9Q0y40TUi3jaa7MNFgf
- 7CqAxhxNH9TMx8jS2x22m1LsON6eGzXIJMTmlNDDBqNQECtzRrwnRiscHXkz3AcBC1oD 6w== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qscgmj813-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 24 May 2023 23:20:15 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34ONKDML011609
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 24 May 2023 23:20:13 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 24 May
- 2023 16:20:12 -0700
-Message-ID: <9142b3b4-9f19-d187-ac06-4db9780ba194@quicinc.com>
-Date:   Wed, 24 May 2023 16:20:12 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [RFC PATCH v2 11/13] drm/msm/dpu: add a field describing inline
- rotation to dpu_caps
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Wed, 24 May 2023 20:53:19 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56DDBF5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 17:53:18 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1ae4baa77b2so6681955ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 May 2023 17:53:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1684975998; x=1687567998;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=FUvMPTBA49tNIIepIZR4oNBjuNfKgUVXvOLcX8khE8M=;
+        b=W2UjZt7xXNaPeh18Rot0pJP8kt7jDb1X4nnRAQ5Srl/FEom6b5LEmxbxqdIzGPa66O
+         bJWsXKewY7BBUbcf0L9HR2jfVXcxzerNtb9m6G7a/tL53j0be+O7Azcai3o9ZeYvdVf3
+         qxt4l/XxdKnfu0odskR1IHytfH1KM59yif948=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1684975998; x=1687567998;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FUvMPTBA49tNIIepIZR4oNBjuNfKgUVXvOLcX8khE8M=;
+        b=OlmewHsTVg6y9BH9+KR56hoEkP+UIG/HP0D3ZEuLe1WELQqUEA01I+8sK/HbsXOm8V
+         09d7vS5G6gbVz+vDbMqL2XMsACGbkRCO5Uws7iC+VBlkUyvG0QL/3e7gWqtL8HHLF0HI
+         Wa5MyBo/lR2bpPKlIc5R3mvgBTRYP5pI2VkOzxmsAlSMI2bBAQCbiNvtN8R2cbt11MRg
+         O5dG7+tcP0Fm/zgWmdl+VnmnTSGKvhm9WG51U+i0zZ6vdkeMppiySme/tKUcLE7M2dlU
+         0JdrIVOz81mdpm0APBklyOADWp7DxYpO1UZC5kEFPuFesDslhfkfimiKHntZQE2ZT+K2
+         5kxg==
+X-Gm-Message-State: AC+VfDwIeieNj5Pa/a+ynVeo/knE4ZOAKtESYg/qzSLyTb5SiSUsFU5j
+        DyCm7Q/vW5/sMhK2c3lZjxHmrQ==
+X-Google-Smtp-Source: ACHHUZ6BPJrTMmE6q+3KwyvgvqUoCdmn2pOb0V2mUV/yq9VWTvL9ZaWdx8qqDZktiSGiZf9u3mKihg==
+X-Received: by 2002:a17:903:1208:b0:1aa:feca:b616 with SMTP id l8-20020a170903120800b001aafecab616mr20911966plh.65.1684975997791;
+        Wed, 24 May 2023 17:53:17 -0700 (PDT)
+Received: from google.com (KD124209188001.ppp-bb.dion.ne.jp. [124.209.188.1])
+        by smtp.gmail.com with ESMTPSA id j4-20020a170902c08400b001ac2f98e953sm60563pld.216.2023.05.24.17.53.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 May 2023 17:53:16 -0700 (PDT)
+Date:   Thu, 25 May 2023 09:53:12 +0900
+From:   Sergey Senozhatsky <senozhatsky@chromium.org>
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>
+Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Sergey Senozhatsky <senozhatsky@chromium.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230321011821.635977-1-dmitry.baryshkov@linaro.org>
- <20230321011821.635977-12-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230321011821.635977-12-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Mu_1aw6aEv12hpQT2CZ3RT8SUaW8ZEQZ
-X-Proofpoint-ORIG-GUID: Mu_1aw6aEv12hpQT2CZ3RT8SUaW8ZEQZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-24_16,2023-05-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- mlxlogscore=669 impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0
- adultscore=0 malwarescore=0 phishscore=0 mlxscore=0 lowpriorityscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305240195
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Tomasz Figa <tfiga@chromium.org>, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCHv3] media: venus: provide video device lock
+Message-ID: <20230525005312.GC30543@google.com>
+References: <20230524135737.2557837-1-senozhatsky@chromium.org>
+ <20230524141312.2558810-1-senozhatsky@chromium.org>
+ <2c732d80-1a18-7a34-03a8-16afb0de5ea2@linaro.org>
+ <f9219cb0-2cac-bace-20f7-27005cd0e6f1@xs4all.nl>
+ <83cd3dc7-455d-0f26-d2a8-3ebe92d9e33f@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <83cd3dc7-455d-0f26-d2a8-3ebe92d9e33f@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 3/20/2023 6:18 PM, Dmitry Baryshkov wrote:
-> We need to know if the platform supports inline rotation on any of the
-> SSPP blocks or not. Add this information to struct dpu_caps in a form of
-> the boolean field has_inline_rot.
+On (23/05/24 22:06), Vikash Garodia wrote:
+> > Instead the struct v4l2_m2m_ctx q_lock pointer, if set, will use that
+> > mutex for all vb2 operations.
+> > 
+> > I think you can set it to the 'lock' mutex in struct venus_inst.
 > 
+> IIUC, the suggestion is to use the 'lock' in struct venus_inst while
+> initializing the queue. This might lead to deadlock as the same lock is used
+> during vb2 operations in driver. Might be introducing a new lock for this
+> purpose in struct venus_inst would do, unless we are trying to serialize at
+> video device (or core) context.
 
-So even for this one, will a helper to detect it from the list of sspps 
-be better?
+Something like this?
 
-We are now duplicating information from sspp to dpu caps for convenience 
-and nothing wrong with it if the helper will get called like every 
-atomic check .
+Video device has to provide a lock so that __video_do_ioctl()
+can serialize IOCTL calls. Introduce a dedicated venus_inst
+mutex (which is set a ctx ->q_lock) for the purpose of vb2
+operations synchronization.
 
-But looking at the next patch, it seems we use this information only 
-once during dpu_plane_init(), so why not add a helper to find this out?
+Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+---
+ drivers/media/platform/qcom/venus/core.h | 2 ++
+ drivers/media/platform/qcom/venus/vdec.c | 4 ++++
+ drivers/media/platform/qcom/venus/venc.c | 3 +++
+ 3 files changed, 9 insertions(+)
 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 1 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 ++
->   2 files changed, 3 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index 2d6944a9679a..33527ec7c938 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -489,6 +489,7 @@ static const struct dpu_caps sc7280_dpu_caps = {
->   	.ubwc_version = DPU_HW_UBWC_VER_30,
->   	.has_dim_layer = true,
->   	.has_idle_pc = true,
-> +	.has_inline_rot = true,
->   	.max_linewidth = 2400,
->   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
->   	.format_list = plane_formats_yuv,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 4847aae78db2..cc64fb2e815f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -400,6 +400,7 @@ struct dpu_rotation_cfg {
->    * @has_dim_layer      dim layer feature status
->    * @has_idle_pc        indicate if idle power collapse feature is supported
->    * @has_3d_merge       indicate if 3D merge is supported
-> + * @has_inline_rot     indicate if inline rotation is supported
->    * @max_linewidth      max linewidth for sspp
->    * @pixel_ram_size     size of latency hiding and de-tiling buffer in bytes
->    * @max_hdeci_exp      max horizontal decimation supported (max is 2^value)
-> @@ -416,6 +417,7 @@ struct dpu_caps {
->   	bool has_dim_layer;
->   	bool has_idle_pc;
->   	bool has_3d_merge;
-> +	bool has_inline_rot;
->   	/* SSPP limits */
->   	u32 max_linewidth;
->   	u32 pixel_ram_size;
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 4f81669986ba..6ac5236d6888 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -389,6 +389,7 @@ enum venus_inst_modes {
+  * @sequence_out:	a sequence counter for output queue
+  * @m2m_dev:	a reference to m2m device structure
+  * @m2m_ctx:	a reference to m2m context structure
++ * @ctx_queue_lock:	a lock to serialize video device ioctl calls
+  * @state:	current state of the instance
+  * @done:	a completion for sync HFI operation
+  * @error:	an error returned during last HFI sync operation
+@@ -460,6 +461,7 @@ struct venus_inst {
+ 	u32 sequence_out;
+ 	struct v4l2_m2m_dev *m2m_dev;
+ 	struct v4l2_m2m_ctx *m2m_ctx;
++	struct mutex ctx_queue_lock;
+ 	unsigned int state;
+ 	struct completion done;
+ 	unsigned int error;
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index 51a53bf82bd3..2caeba5b6378 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1641,6 +1641,7 @@ static int vdec_open(struct file *file)
+ 	INIT_LIST_HEAD(&inst->internalbufs);
+ 	INIT_LIST_HEAD(&inst->list);
+ 	mutex_init(&inst->lock);
++	mutex_init(&inst->ctx_queue_lock);
+ 
+ 	inst->core = core;
+ 	inst->session_type = VIDC_SESSION_TYPE_DEC;
+@@ -1684,8 +1685,10 @@ static int vdec_open(struct file *file)
+ 		goto err_m2m_release;
+ 	}
+ 
++
+ 	v4l2_fh_init(&inst->fh, core->vdev_dec);
+ 
++	inst->m2m_ctx->q_lock = &inst->ctx_queue_lock;
+ 	inst->fh.ctrl_handler = &inst->ctrl_handler;
+ 	v4l2_fh_add(&inst->fh);
+ 	inst->fh.m2m_ctx = inst->m2m_ctx;
+@@ -1716,6 +1719,7 @@ static int vdec_close(struct file *file)
+ 	ida_destroy(&inst->dpb_ids);
+ 	hfi_session_destroy(inst);
+ 	mutex_destroy(&inst->lock);
++	mutex_destroy(&inst->ctx_queue_lock);
+ 	v4l2_fh_del(&inst->fh);
+ 	v4l2_fh_exit(&inst->fh);
+ 
+diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+index 4666f42feea3..4292b299f014 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -1443,6 +1443,7 @@ static int venc_open(struct file *file)
+ 	INIT_LIST_HEAD(&inst->internalbufs);
+ 	INIT_LIST_HEAD(&inst->list);
+ 	mutex_init(&inst->lock);
++	mutex_init(&inst->ctx_queue_lock);
+ 
+ 	inst->core = core;
+ 	inst->session_type = VIDC_SESSION_TYPE_ENC;
+@@ -1483,6 +1484,7 @@ static int venc_open(struct file *file)
+ 
+ 	v4l2_fh_init(&inst->fh, core->vdev_enc);
+ 
++	inst->m2m_ctx->q_lock = &inst->ctx_queue_lock;
+ 	inst->fh.ctrl_handler = &inst->ctrl_handler;
+ 	v4l2_fh_add(&inst->fh);
+ 	inst->fh.m2m_ctx = inst->m2m_ctx;
+@@ -1512,6 +1514,7 @@ static int venc_close(struct file *file)
+ 	venc_ctrl_deinit(inst);
+ 	hfi_session_destroy(inst);
+ 	mutex_destroy(&inst->lock);
++	mutex_destroy(&inst->ctx_queue_lock);
+ 	v4l2_fh_del(&inst->fh);
+ 	v4l2_fh_exit(&inst->fh);
+ 
+-- 
+2.40.1.698.g37aff9b760-goog
+
