@@ -2,198 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D581710625
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 09:21:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D84F71062C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 May 2023 09:22:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238828AbjEYHV0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 03:21:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52890 "EHLO
+        id S239222AbjEYHW3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 03:22:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234189AbjEYHV0 (ORCPT
+        with ESMTP id S229885AbjEYHW0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 03:21:26 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D276F83;
-        Thu, 25 May 2023 00:21:24 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34P6C3Xn020344;
-        Thu, 25 May 2023 07:21:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=9lxy6iBtU5/k0RHXRlhcdMNyZIJ6KVrxrLG1krZWlAU=;
- b=JSHoUtRe0r2Lf90r3WWQVG42gdI+37ikmLBmdmoIXDNcHre8uJN50VLlDVl0INH7+1XT
- vqiKfB8eq9ybuh5UBEC1+KpofIdXc16u2CrTOQhqfceOcCtWCx9wHhTSZPVeQ7QSsIja
- UOuxOQbD4kvPdwsqf75n5dUxqPCPognwHQO7xCUHgL7+1zG5Jq4zLVDHxWfoLrW9biV5
- mv3XQ4LynNvynK0H8DlvddqzmBxqKJmlt9faxBLn0pYQRzZa3I0UFIvhAJn5rP7jo8dw
- LKJwFwX7GKVZVv1rVjPN5AtPG88bdZHXxrnurYAybZx+yybFvphseOtNFc891EsedQEq FQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qsp509jjw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 25 May 2023 07:21:06 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34P7L4i0030027
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 25 May 2023 07:21:04 GMT
-Received: from [10.253.35.57] (10.80.80.8) by nalasex01c.na.qualcomm.com
- (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 25 May
- 2023 00:21:00 -0700
-Message-ID: <b5dd9d63-fb11-e343-a0a6-4aa8217fd7b3@quicinc.com>
-Date:   Thu, 25 May 2023 15:20:58 +0800
+        Thu, 25 May 2023 03:22:26 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C1C7189;
+        Thu, 25 May 2023 00:22:24 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id AB8DF64327;
+        Thu, 25 May 2023 07:22:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E72C433D2;
+        Thu, 25 May 2023 07:22:20 +0000 (UTC)
+Message-ID: <1eeb16e4-0812-b70b-df5a-1670c21a5221@xs4all.nl>
+Date:   Thu, 25 May 2023 09:22:19 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH v4 02/11] coresight-tpda: Add DSB dataset support
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCHv3] media: venus: provide video device lock
 Content-Language: en-US
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
-References: <1682586037-25973-1-git-send-email-quic_taozha@quicinc.com>
- <1682586037-25973-3-git-send-email-quic_taozha@quicinc.com>
- <444bc278-a3e3-7d99-6020-7c3337371f66@arm.com>
- <e2e4b998-e6d8-59e9-fce7-0072954001dd@arm.com>
-From:   Tao Zhang <quic_taozha@quicinc.com>
-In-Reply-To: <e2e4b998-e6d8-59e9-fce7-0072954001dd@arm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Sergey Senozhatsky <senozhatsky@chromium.org>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Tomasz Figa <tfiga@chromium.org>, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20230524135737.2557837-1-senozhatsky@chromium.org>
+ <20230524141312.2558810-1-senozhatsky@chromium.org>
+ <2c732d80-1a18-7a34-03a8-16afb0de5ea2@linaro.org>
+ <f9219cb0-2cac-bace-20f7-27005cd0e6f1@xs4all.nl>
+ <83cd3dc7-455d-0f26-d2a8-3ebe92d9e33f@quicinc.com>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <83cd3dc7-455d-0f26-d2a8-3ebe92d9e33f@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: fdUvlDcfrRmfVoc5YJTxlOiZhTROTthe
-X-Proofpoint-ORIG-GUID: fdUvlDcfrRmfVoc5YJTxlOiZhTROTthe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-25_03,2023-05-24_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 bulkscore=0
- lowpriorityscore=0 malwarescore=0 impostorscore=0 spamscore=0
- suspectscore=0 priorityscore=1501 mlxscore=0 mlxlogscore=999 clxscore=1015
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305250059
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.1 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 5/23/2023 10:48 PM, Suzuki K Poulose wrote:
-> On 23/05/2023 11:07, Suzuki K Poulose wrote:
->> On 27/04/2023 10:00, Tao Zhang wrote:
->>> Read the DSB element size from the device tree. Set the register
->>> bit that controls the DSB element size of the corresponding port.
->>>
->>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
->>> ---
->>>   drivers/hwtracing/coresight/coresight-core.c |  1 +
->>>   drivers/hwtracing/coresight/coresight-tpda.c | 92 
->>> +++++++++++++++++++++++++---
->>>   drivers/hwtracing/coresight/coresight-tpda.h |  4 ++
->>>   drivers/hwtracing/coresight/coresight-tpdm.c |  2 +-
->>>   include/linux/coresight.h                    |  1 +
->>>   5 files changed, 90 insertions(+), 10 deletions(-)
->>>
->>> diff --git a/drivers/hwtracing/coresight/coresight-core.c 
->>> b/drivers/hwtracing/coresight/coresight-core.c
->>> index 2af416b..f1eacbb 100644
->>> --- a/drivers/hwtracing/coresight/coresight-core.c
->>> +++ b/drivers/hwtracing/coresight/coresight-core.c
->>> @@ -1092,6 +1092,7 @@ static int coresight_validate_source(struct 
->>> coresight_device *csdev,
->>>       if (subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_PROC &&
->>>           subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_SOFTWARE &&
->>> +        subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM &&
->>>           subtype != CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS) {
->>>           dev_err(&csdev->dev, "wrong device subtype in %s\n", 
->>> function);
->>>           return -EINVAL;
+On 24/05/2023 18:36, Vikash Garodia wrote:
+> 
+> On 5/24/2023 8:14 PM, Hans Verkuil wrote:
+>> On 24/05/2023 16:29, Bryan O'Donoghue wrote:
+>>> On 24/05/2023 15:12, Sergey Senozhatsky wrote:
+>>>> Video device has to provide ->lock so that __video_do_ioctl()
+>>>> can serialize IOCTL calls. Provided dedicated enc/dec mutex-s
+>>>> for that purpose.
+> Why do we need to serialize at device context ? Please share some details on the
+> issue faced leading to the serialization. This may impact performance, let say,
+> when we have multiple concurrent video sessions running at the same time and the
+> ioctl for one session have to wait if the lock is taken by another session ioctl.
+> 
+>>>>
+>>>> Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 >>
->> Please see the comment at the bottom.
+>> Since these are m2m devices, I think this should set vfh->m2m_ctx->q_lock
+>> instead.
 >>
->>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c 
->>> b/drivers/hwtracing/coresight/coresight-tpda.c
->>> index 8d2b9d2..af9c72f 100644
->>> --- a/drivers/hwtracing/coresight/coresight-tpda.c
->>> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
->>> @@ -21,6 +21,56 @@
->>>   DEFINE_CORESIGHT_DEVLIST(tpda_devs, "tpda");
->>> +/* Search and read element data size from the TPDM node in
->>> + * the devicetree. Each input port of TPDA is connected to
->>> + * a TPDM. Different TPDM supports different types of dataset,
->>> + * and some may support more than one type of dataset.
->>> + * Parameter "inport" is used to pass in the input port number
->>> + * of TPDA, and it is set to 0 in the recursize call.
->>> + * Parameter "parent" is used to pass in the original call.
->>> + */
->>> +static int tpda_set_element_size(struct tpda_drvdata *drvdata,
->>> +               struct coresight_device *csdev, int inport, bool 
->>> parent)
->
-> The name parent is a bit confusing. It could imply parent device ? That
-> is kind of inverse ? because, parent = true, indicates the parent device
-> of tpda, which is not true. Could we simply say
->
-> bool match_inport => When true, the dest_port of the connection from the
-> csdev must match the inport ? And ...
->
-Sure, I will update this in the next patch series.
->>> +{
->>> +    static int nr_inport;
->>> +    int i;
->>> +    static bool tpdm_found;
->>> +    struct coresight_device *in_csdev;
->>> +
->>> +    if (inport > (TPDA_MAX_INPORTS - 1))
->>> +        return -EINVAL;
->>> +
->>> +    if (parent) {
->>> +        nr_inport = inport;
->>> +        tpdm_found = false;
->>> +    }
->>> +
->>> +    for (i = 0; i < csdev->pdata->nr_inconns; i++) {
->>> +        in_csdev = csdev->pdata->in_conns[i]->src_dev;
->>> +        if (!in_csdev)
->>> +            break;
->>> +
->>> +        if (parent)
->>> +            if (csdev->pdata->in_conns[i]->dest_port != inport)
->>> +                continue;
->
-> The above can become :
->
->         if (match_inport &&
->         csdev->pdata->in_conns[i]->dest_port != inport)
->         continue;
+>> The vb2_queue is per filehandle for such devices, so by just setting
+>> vdev->lock you will have all vb2_queues use the same mutex.
+>>
+>> Instead the struct v4l2_m2m_ctx q_lock pointer, if set, will use that
+>> mutex for all vb2 operations.
+>>
+>> I think you can set it to the 'lock' mutex in struct venus_inst.
+> 
+> IIUC, the suggestion is to use the 'lock' in struct venus_inst while
+> initializing the queue. This might lead to deadlock as the same lock is used
+> during vb2 operations in driver. Might be introducing a new lock for this
+> purpose in struct venus_inst would do, unless we are trying to serialize at
+> video device (or core) context.
 
-Sure, I will update this in the next patch series.
+For the record, I have not analyzed how that lock is used in the driver,
+so if a new mutex has to be added to venus_inst rather than reusing the
+existing one, then that's fine by me.
 
+But it should be a instance-specific mutex, not one at the device level.
 
-Best,
+Regards,
 
-Tao
+	Hans
 
->
-> Suzuki
->
+> 
+>>
+>> Regards,
+>>
+>> 	Hans
+>>
+>>>> ---
+>>>>   drivers/media/platform/qcom/venus/core.h | 4 ++++
+>>>>   drivers/media/platform/qcom/venus/vdec.c | 2 ++
+>>>>   drivers/media/platform/qcom/venus/venc.c | 2 ++
+>>>>   3 files changed, 8 insertions(+)
+>>>>
+>>>> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+>>>> index 4f81669986ba..b6c9a653a007 100644
+>>>> --- a/drivers/media/platform/qcom/venus/core.h
+>>>> +++ b/drivers/media/platform/qcom/venus/core.h
+>>>> @@ -113,7 +113,9 @@ struct venus_format {
+>>>>    * @opp_pmdomain: an OPP power-domain
+>>>>    * @resets: an array of reset signals
+>>>>    * @vdev_dec:    a reference to video device structure for decoder instances
+>>>> + * @vdev_dec_lock: decoder instance video device ioctl lock
+>>>>    * @vdev_enc:    a reference to video device structure for encoder instances
+>>>> + * @vdev_enc_lock: encoder instance video device ioctl lock
+>>>>    * @v4l2_dev:    a holder for v4l2 device structure
+>>>>    * @res:        a reference to venus resources structure
+>>>>    * @dev:        convenience struct device pointer
+>>>> @@ -165,7 +167,9 @@ struct venus_core {
+>>>>       struct device *opp_pmdomain;
+>>>>       struct reset_control *resets[VIDC_RESETS_NUM_MAX];
+>>>>       struct video_device *vdev_dec;
+>>>> +    struct mutex vdev_dec_lock;
+>>>>       struct video_device *vdev_enc;
+>>>> +    struct mutex vdev_enc_lock;
+>>>>       struct v4l2_device v4l2_dev;
+>>>>       const struct venus_resources *res;
+>>>>       struct device *dev;
+>>>> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+>>>> index 51a53bf82bd3..7e9363714bfb 100644
+>>>> --- a/drivers/media/platform/qcom/venus/vdec.c
+>>>> +++ b/drivers/media/platform/qcom/venus/vdec.c
+>>>> @@ -1760,6 +1760,7 @@ static int vdec_probe(struct platform_device *pdev)
+>>>>       if (!vdev)
+>>>>           return -ENOMEM;
+>>>>   +    mutex_init(&core->vdev_dec_lock);
+>>>>       strscpy(vdev->name, "qcom-venus-decoder", sizeof(vdev->name));
+>>>>       vdev->release = video_device_release;
+>>>>       vdev->fops = &vdec_fops;
+>>>> @@ -1767,6 +1768,7 @@ static int vdec_probe(struct platform_device *pdev)
+>>>>       vdev->vfl_dir = VFL_DIR_M2M;
+>>>>       vdev->v4l2_dev = &core->v4l2_dev;
+>>>>       vdev->device_caps = V4L2_CAP_VIDEO_M2M_MPLANE | V4L2_CAP_STREAMING;
+>>>> +    vdev->lock = &core->vdev_dec_lock;
+>>>>         ret = video_register_device(vdev, VFL_TYPE_VIDEO, -1);
+>>>>       if (ret)
+>>>> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+>>>> index 4666f42feea3..8522ed339d5d 100644
+>>>> --- a/drivers/media/platform/qcom/venus/venc.c
+>>>> +++ b/drivers/media/platform/qcom/venus/venc.c
+>>>> @@ -1558,6 +1558,7 @@ static int venc_probe(struct platform_device *pdev)
+>>>>       if (!vdev)
+>>>>           return -ENOMEM;
+>>>>   +    mutex_init(&core->vdev_enc_lock);
+>>>>       strscpy(vdev->name, "qcom-venus-encoder", sizeof(vdev->name));
+>>>>       vdev->release = video_device_release;
+>>>>       vdev->fops = &venc_fops;
+>>>> @@ -1565,6 +1566,7 @@ static int venc_probe(struct platform_device *pdev)
+>>>>       vdev->vfl_dir = VFL_DIR_M2M;
+>>>>       vdev->v4l2_dev = &core->v4l2_dev;
+>>>>       vdev->device_caps = V4L2_CAP_VIDEO_M2M_MPLANE | V4L2_CAP_STREAMING;
+>>>> +    vdev->lock = &core->vdev_enc_lock;
+>>>>         ret = video_register_device(vdev, VFL_TYPE_VIDEO, -1);
+>>>>       if (ret)
+>>>
+>>> LGTM
+>>>
+>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>>
+
