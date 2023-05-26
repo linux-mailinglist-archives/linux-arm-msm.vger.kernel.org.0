@@ -2,153 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89BDA7123BB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 11:34:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00C1B71243A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 12:09:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243247AbjEZJeg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 05:34:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41846 "EHLO
+        id S243216AbjEZKJv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 06:09:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56330 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243223AbjEZJeN (ORCPT
+        with ESMTP id S243222AbjEZKJo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 05:34:13 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 027661BB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 02:33:37 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f4bd608cf4so552546e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 02:33:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685093603; x=1687685603;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=7/oBlibUgPrZBjTfRBirdiuXhFmBs+58msrliDKw+mY=;
-        b=KoGqzYwcPZDy0P7xRldOcnXupUtJ+OB7H0ZpZPKhb1KtMCJj3127Toriic3RgG79sv
-         1FN+feWvMCT5HWrA7sgpFvh4jRJX2kk/pkx3cN8Sg4fRKrzrRZMwz5MdAg4nIcOj+5GF
-         /VGmQUIIqNjUPtgs8j+9TCUzRo6fA53EtKqzb53WSvI9E2Ut8QNd9IAlhZVZNVVww/cF
-         a5Dq5rbMa9f9g+0gVz8cTO2HusCyCJ1+XtHsTty+Ua7uhoGr/Z1tjUUEkJNf50Oj2Zgy
-         PEcPe3A3DC5MRNMLGMBqrN8ogvDJxJYHtD1uTF0DsfMARexZ7wsleU88v54cf8wKhJg1
-         nc/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685093603; x=1687685603;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7/oBlibUgPrZBjTfRBirdiuXhFmBs+58msrliDKw+mY=;
-        b=Shp33peoy2crBKgtQVBAwTaHLPwEy17k5UPFMoBbDst3mAfKdqOV6kMRsmSsVyqno+
-         ZrOiMwF0Ncptqi7/iBbKfXbbV0TGdCqpxbHK/i0XrZyPtCWjjsQwZdQtVDGgxDKlL52M
-         lXV75UE7tojuCTX/x8p+yw9UbUJkZrW4BAMcqdsvi5xG1yZr1zqVh0g7kYlbVitjdZvI
-         hotGE5/Sh/KxcLW4EyA8cO00AMiLwloujqKVX7BVQMM6Y0lnJLfFXL2NQFYgc8bX9rTg
-         1geI8n0Ow2HR8Z2Nb8UhKSOhZfZpluXOM7vnFQuvbTYpas8SX1IOtZlK1IZ4/3u2+FJB
-         ysDA==
-X-Gm-Message-State: AC+VfDxsAUF8NOtpGoUerei5+aZOAYs6PRB188p/LFhhlVC2GiPL/eBb
-        PZmh8kIIwGklgxuVZBkARjONGQ==
-X-Google-Smtp-Source: ACHHUZ5IMHjQOJzbUB1xcWxYldyP1P7V6EO/+PSAu1YT7XY3jrPux0ZQoExBpf+yW22mPCrPp614EA==
-X-Received: by 2002:a19:f80c:0:b0:4f4:cda3:8c99 with SMTP id a12-20020a19f80c000000b004f4cda38c99mr441265lff.42.1685093603377;
-        Fri, 26 May 2023 02:33:23 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id i20-20020ac25234000000b004efe73ee01fsm535345lfl.306.2023.05.26.02.33.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 02:33:22 -0700 (PDT)
-Message-ID: <6e1d098d-03b9-aa63-a0bf-6cf748a0db0d@linaro.org>
-Date:   Fri, 26 May 2023 11:33:21 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH V2 3/6] clk: qcom: clk-alpha-pll: Remove explicit CAL_L
- configuration for EVO PLL
-Content-Language: en-US
-To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Fri, 26 May 2023 06:09:44 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 592BEFB;
+        Fri, 26 May 2023 03:09:42 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34Q9WYhV000523;
+        Fri, 26 May 2023 10:09:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=XrJmn7hRc/ijYuto4qVQonay46Rd9Xrt4/4iIg0qhig=;
+ b=RgsYWP9ljFl8r5JuBVn3SdUchYPNDqXIoK2FNOxySwdoDrTorvWReeV53Q8nWkPBMwAh
+ Be/qyIg7c6dYSikr7MoLW+pH4TMBsXoFv7nGU6L4pTYRkM57zql5xpEfpRgLmcEXt6XA
+ zNZs4IIOA2WTLc950hBxoxTd3gNfv727uqPmN2E64Nya/p1TlRmAi33oeEfBrbz8Qis6
+ hW6tN9n/B+QS8KtHkZqTVtinEG3iF7TyMf4QrfIoV748jcH9e2mKh4gyXAkpf6KmUegS
+ 3kvE7fsbNgY7LjtYsRVGHNCD0SXUHiqj0W/f68vnyTLtIcUbkUPdF7hlmmDhoMfxzj2y 2w== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qtpsp8h4h-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 26 May 2023 10:09:17 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34QA8oWU030657
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 26 May 2023 10:08:50 GMT
+Received: from hazha-gv.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 26 May 2023 03:08:45 -0700
+From:   Hao Zhang <quic_hazha@quicinc.com>
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        James Clark <james.clark@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        "Rob Herring" <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20230525172142.9039-1-quic_jkona@quicinc.com>
- <20230525172142.9039-4-quic_jkona@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230525172142.9039-4-quic_jkona@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Andy Gross <agross@kernel.org>,
+        "Paul Walmsley" <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Jonathan Corbet <corbet@lwn.net>
+CC:     Hao Zhang <quic_hazha@quicinc.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-doc@vger.kernel.org>
+Subject: [PATCH v5 0/3] Add support to configure Coresight Dummy subunit
+Date:   Fri, 26 May 2023 18:07:50 +0800
+Message-ID: <20230526100753.34581-1-quic_hazha@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: LrzZ-V2-nD7DsgsJfB0RxBmO8OcEQz9i
+X-Proofpoint-GUID: LrzZ-V2-nD7DsgsJfB0RxBmO8OcEQz9i
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-26_01,2023-05-25_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 mlxlogscore=999
+ lowpriorityscore=0 clxscore=1015 phishscore=0 malwarescore=0 mlxscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305260088
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Changes in V5:
+1. Follow the alphabetical order for the header files in
+coresight-dummy.c. -- Suzuki K Poulose
+2. Update the maintainers.
+3. Split the Coresight Dummy YAML to 2 schema files. 
+-- Rob Herring & Krzysztof Kozlowski
+4. Update the coresight-dummy.rst file. -- Bagas Sanjaya
 
+Changes in V4:
+1. Remove traceid allocation in dummy_probe function since it is
+currently not in use, will upstream it as the part of ATID filtering
+in the further.  -- Suzuki K Poulose
+2. Remove 'oneOf' as there is only one entry. -- Rob Herring
 
-On 25.05.2023 19:21, Jagadeesh Kona wrote:
-> In lucid evo pll, the CAL_L field is part of L value register itself, and
-> the l value configuration passed from clock controller driver includes
-> CAL_L and L values as well. Hence remove explicit configuration of CAL_L
-> for evo pll.
-> 
-> Fixes: 260e36606a03 ("clk: qcom: clk-alpha-pll: add Lucid EVO PLL configuration interfaces")
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> ---
-Oh that isn't obvious at first sight, nice find!
+Changes in V3:
+1. Use API "dev_dbg" to replace "dev_info". -- Suzuki K Poulose
+2. Drop "qcom" property and take it as a dummy framework.
+-- Suzuki K Poulose
+3. Add new sub-type "CORESIGHT_DEV_SUBTYPE_SINK_DUMMY" to support
+coresight dummy module -- Mike Leach
+4. Use compatibles "arm,coresight-dummy-source" and
+"arm,coresight-dummy-sink" to replace property "qcom,dummy-source" and
+"qcom,dummy-sink". -- Mike Leach
+5. Define source_devs and sink_devs DEVLIST to replace dummy_devs, make
+it clear at the first level. -- Mike Leach
+6. Modify subject of YAML patch, drop "YAML schema". -- Krzysztof Kozlowski
+7. Drop some redundant items and correct syntax errors in yaml file.
+-- Krzysztof Kozlowski & Rob Herring
+8. Correct required property of yaml file, constrain out ports to
+dummy-source and in ports to dummy-sink. -- Mike Leach
+9. Drop "Sysfs files and directories" contents of coresight-dummy.rst.
+-- Suzuki K Poulose/Greg Kroah-Hartman
+10.Correct syntax errors of coresight-dummy.rst. -- Bagas Sanjaya
 
-I'd suggest a different solution though:
+Changes in V2:
+1. Declare dummy_init and dummy_exit as static to fix missing-prototypes
+warnings. -- kernel test robot
+2. Fix the errors of coresight-dummy yaml file. -- Rob Herring
 
-#define LUCID_EVO_PLL_L_LVAL	GENMASK(..
-#define LUCID_EVO_PLL_L_CAL_L	GENMASK(..
+Hao Zhang (3):
+  Coresight: Add coresight dummy driver
+  dt-bindings: arm: Add support for Coresight dummy trace
+  Documentation: trace: Add documentation for Coresight Dummy Trace
 
-lval = FIELD_PREP(LUCID_EVO_PLL_L_LVAL, config->l) |
-       FIELD_PREP(LUCID_EVO_PLL_L_CAL_L, config->cal_l);
+ .../arm/arm,coresight-dummy-sink.yaml         |  73 ++++++++
+ .../arm/arm,coresight-dummy-source.yaml       |  71 ++++++++
+ .../trace/coresight/coresight-dummy.rst       |  32 ++++
+ drivers/hwtracing/coresight/Kconfig           |  11 ++
+ drivers/hwtracing/coresight/Makefile          |   1 +
+ drivers/hwtracing/coresight/coresight-dummy.c | 163 ++++++++++++++++++
+ include/linux/coresight.h                     |   1 +
+ 7 files changed, 352 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/arm/arm,coresight-dummy-sink.yaml
+ create mode 100644 Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
+ create mode 100644 Documentation/trace/coresight/coresight-dummy.rst
+ create mode 100644 drivers/hwtracing/coresight/coresight-dummy.c
 
-This would make the separation between the two parts more explicit
+-- 
+2.17.1
 
-however
-
-config->l would then represent the L value and not the end value
-written to the L register
-
-Up to you, whichever you find saner!
-
-Konrad
-
-> Changes since V1:
->  - Newly added.
-> 
->  drivers/clk/qcom/clk-alpha-pll.c | 6 +-----
->  1 file changed, 1 insertion(+), 5 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-> index f81c7c561352..68a80395997b 100644
-> --- a/drivers/clk/qcom/clk-alpha-pll.c
-> +++ b/drivers/clk/qcom/clk-alpha-pll.c
-> @@ -270,7 +270,6 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
->  #define LUCID_EVO_PCAL_NOT_DONE		BIT(8)
->  #define LUCID_EVO_ENABLE_VOTE_RUN       BIT(25)
->  #define LUCID_EVO_PLL_L_VAL_MASK        GENMASK(15, 0)
-> -#define LUCID_EVO_PLL_CAL_L_VAL_SHIFT	16
->  
->  /* ZONDA PLL specific */
->  #define ZONDA_PLL_OUT_MASK	0xf
-> @@ -2084,10 +2083,7 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_zonda_ops);
->  void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
->  				 const struct alpha_pll_config *config)
->  {
-> -	u32 lval = config->l;
-> -
-> -	lval |= TRION_PLL_CAL_VAL << LUCID_EVO_PLL_CAL_L_VAL_SHIFT;
-> -	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), lval);
-> +	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
->  	clk_alpha_pll_write_config(regmap, PLL_ALPHA_VAL(pll), config->alpha);
->  	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL(pll), config->config_ctl_val);
->  	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U(pll), config->config_ctl_hi_val);
