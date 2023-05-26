@@ -2,56 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D51EF712D63
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 21:27:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F03CA712D94
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 21:35:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230100AbjEZT1C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 15:27:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46154 "EHLO
+        id S230058AbjEZTe6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 15:34:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229694AbjEZT1B (ORCPT
+        with ESMTP id S243937AbjEZTeu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 15:27:01 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59554E49;
-        Fri, 26 May 2023 12:26:54 -0700 (PDT)
+        Fri, 26 May 2023 15:34:50 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68B82D9;
+        Fri, 26 May 2023 12:34:49 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A1021652E4;
-        Fri, 26 May 2023 19:26:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE626C433EF;
-        Fri, 26 May 2023 19:26:51 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 00F2A652F5;
+        Fri, 26 May 2023 19:34:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E95FC433EF;
+        Fri, 26 May 2023 19:34:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685129213;
-        bh=4GZAPINmGGO6pUXYRjc4Tj4oRlXZPVRsIaj2VlbtW5w=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KtTK7ZUiRoFk5OIKCHKTESMdqc1z1tX/j4CJDz++P5a1nXrRr1az/zaO6Ljl1Q8sS
-         cXdsgB3FHl8jxzJrh02GZkYooGDyJCfnuvmtBbEKi4YJ0PHlszuYtVt5HE0P0tCFlE
-         Orvjyze/WdZs8Hzz2qR/IFaxo058yUQ9b2SIuikbo1sbgdtFCcu1LCFVgw+/EdegZu
-         pDHHaCXMl+BZKh35w3ozvT6DlZfUfL1USWZFGnFHvFL8ytvIMeBnx+h+I/TckXzMCL
-         /F5/HWZ2J7A43dcd2Rxqc9Wk0hA2vrpfrkSxpFhGsaxSEryCaorZhqOraP3BINVp9X
-         JhtwgENlPiNgQ==
-Date:   Fri, 26 May 2023 12:30:40 -0700
+        s=k20201202; t=1685129688;
+        bh=9CnqtJ+xZPCklFKySxlmg3pL3aVQfh/FISGl/AWWx7Y=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=R4j69AIkVy1BaUaCF291wHM3aOvJ1ggnVwJR/zeayqJLvGxBluTsRz0jLP5HDb/wM
+         9hp6CGUblOZnSARpfK4lbSGap2gzv6QIOwkgLiyjh4/5CWdGEf6N/84Vn0XlVz2zuW
+         BcS9mnKa7JUL1Anq0bLQh5FHtGMW4cljQYpf0C0AOvilahDH7DRywREZNJuHJOCToe
+         38IcOqRnkfTBEh9uKcyOIp35YlwDu2fbJzoih0Ftx7yK64O+Gr8ANiY9+Jl53hHK8u
+         o1Q9qoVTrNoVD/ROI3n87y7VpouPaMLiRWcPZuOS5CkIURpFuntrri9DLFQ5Kk/5NT
+         PdPFBrnP/M1lA==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>
-Cc:     agross@kernel.org, konrad.dybcio@linaro.org, amitk@kernel.org,
-        thara.gopinath@gmail.com, rafael@kernel.org,
-        daniel.lezcano@linaro.org, rui.zhang@intel.com, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Praveenkumar I <quic_ipkumar@quicinc.com>
-Subject: Re: [PATCH v4 2/3] arm64: dts: qcom: ipq9574: add tsens node
-Message-ID: <20230526193040.2xto63ajkxsx5k5n@ripper>
-References: <cover.1684920389.git.quic_varada@quicinc.com>
- <d507ca1396776782802888e992fcae6ddb72e521.1684920389.git.quic_varada@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Luca Weiss <luca.weiss@fairphone.com>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        phone-devel@vger.kernel.org
+Subject: Re: [PATCH 0/2] Make SID for PM7250B configurable (and a small fixup)
+Date:   Fri, 26 May 2023 12:38:29 -0700
+Message-Id: <168512991477.248818.5074877208402046287.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230407-pm7250b-sid-v1-0-fc648478cc25@fairphone.com>
+References: <20230407-pm7250b-sid-v1-0-fc648478cc25@fairphone.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <d507ca1396776782802888e992fcae6ddb72e521.1684920389.git.quic_varada@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -60,46 +61,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 24, 2023 at 03:06:10PM +0530, Varadarajan Narayanan wrote:
-> IPQ9574 has a tsens v2.3.1 peripheral which monitors temperatures
-> around the various subsystems on the die.
+On Fri, 07 Apr 2023 09:45:43 +0200, Luca Weiss wrote:
+> Like other Qualcomm PMICs the PM7250B can be used on different addresses
+> on the SPMI bus. Use similar defines like the PMK8350 to make this
+> possible.
 > 
-> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
-> ---
-> [v2]:
-> 	Add "qcom,ipq8074-tsens" as fallback compatible
-> ---
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 9 +++++++++
->  1 file changed, 9 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index 0ab5556..15c9447 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -958,6 +958,15 @@
->  			status = "disabled";
->  		};
->  
-> +		tsens: thermal-sensor@4a9000 {
-> +			compatible = "qcom,ipq9574-tsens", "qcom,ipq8074-tsens";
-> +			reg = <0x4a9000 0x1000>, /* TM */
 
-Please pad addresses to 8 digits, and sort nodes by address.
+Applied, thanks!
 
-Regards,
-Bjorn
+[1/2] arm64: dts: qcom: pm7250b: add missing spmi-vadc include
+      commit: 83022f6484b11a60dbf9a95a88c7ef8e59c4b19c
+[2/2] arm64: dts: qcom: pm7250b: make SID configurable
+      (no commit info)
 
-> +			      <0x4a8000 0x1000>; /* SROT */
-> +			interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "combined";
-> +			#qcom,sensors = <16>;
-> +			#thermal-sensor-cells = <1>;
-> +		};
->  	};
->  
->  	timer {
-> -- 
-> 2.7.4
-> 
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
