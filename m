@@ -2,178 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CF016711FF8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 08:30:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35A1E71201D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 08:37:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233339AbjEZGad (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 02:30:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34014 "EHLO
+        id S236735AbjEZGhO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 02:37:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37504 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229770AbjEZGac (ORCPT
+        with ESMTP id S236168AbjEZGhN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 02:30:32 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62CDA125
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 23:30:31 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id 41be03b00d2f7-51452556acdso233666a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 23:30:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1685082631; x=1687674631;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nR7KzXl7P2YYRV8RdliFiqyMRwyWSc20uYe2AWZIokA=;
-        b=RslI4Xl6EXb20x3XdHATLuUOZM3nkwNRXegmeopl7KFsaU+gbDrID+RqLlDuKceiPo
-         v7CKg5twEAtX9c0mrwHaxqN1ojtrGQiynb/sARipfmPGmwUVDNz9CY5uSD7y+fkZOu2L
-         EhgxHUgwxKnqANTA4lngnIh9dRntEKZB7Apec=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685082631; x=1687674631;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nR7KzXl7P2YYRV8RdliFiqyMRwyWSc20uYe2AWZIokA=;
-        b=Qh+0eUEvVcB8IEZ0WxK/5hQUTVjjnwAeV7QcFG8zXRw0xyhoMpuLNfhpFmFWs+YdZx
-         uOInk/6AlOH1IwyuvmWursGMqwlkx/hUAel9K5AtajSGPD0VfJQs8q3gE45T63UmYANx
-         Ja5g/9kftWGGcAcLde3ZeT2ItedvE6Cjy0QewS0SkCTbYSmeVxV8eMdVE6LA7vxl3NPo
-         bejDV5KwfwWPInWSHn25MDSh860DjBI+oSXPln5/95W8U9LvaeJspNTZ2XsP9uM3znwm
-         TaPSFuol1meTIaAMej4Gc/U9bvG8fVtHECJ9CUMqfAlXYNYrjCRC593uTh16NiV847n4
-         edSw==
-X-Gm-Message-State: AC+VfDxWdEnUWV7gN5jcoy8hc222cp4jXGBAVcr89PY3CuRm0OUNe5Uq
-        DvvYSMrByc749tqS9L3SQGLKyA==
-X-Google-Smtp-Source: ACHHUZ78p2BDYZsP+vuO5r/lYtUcwgTw4aNxMb5oKTX9eK2AItc1jo5dGEnT2aW1Vb28XRICcqdcbg==
-X-Received: by 2002:a17:90a:498a:b0:253:6db6:18be with SMTP id d10-20020a17090a498a00b002536db618bemr1216340pjh.14.1685082630825;
-        Thu, 25 May 2023 23:30:30 -0700 (PDT)
-Received: from tigerii.tok.corp.google.com ([2401:fa00:8f:203:54ba:3de1:6fc1:4b25])
-        by smtp.gmail.com with ESMTPSA id j10-20020a17090ae60a00b00246774a9addsm3877001pjy.48.2023.05.25.23.30.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 May 2023 23:30:30 -0700 (PDT)
-From:   Sergey Senozhatsky <senozhatsky@chromium.org>
-To:     Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Fri, 26 May 2023 02:37:13 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04A3A12F;
+        Thu, 25 May 2023 23:37:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1685083027; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=sOYCkzh74IzezBisb9hx7W1184exoAPd3LCsrHfWpsSc6IXf6iceRHLImevPNRYK/e
+    uDiMVWCpf4VvSXfprXNV9LxUQDd2ibDo1D8wPU7I6J7WycnUXik3NrPy4vwBSiECiX2e
+    XrxBfnT4mO01p/+0BS1ofYtc+XWM3tUlbz91cVLyptQByWO6d7N356OLoOrXm6IP0fBm
+    1+OmTUCO1ZfXaiczsWyDXr55KRtNojTP+p9zYDBwhVNJwdW2q9lrvNZqMSpVq+2OHiok
+    65nW0oS0c9rwKB8G/dkwg/XrZsjLpCl0jrZ2YDsiD/KD14r6xnM50Xd5guaDvXaNhS0x
+    wLrw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1685083027;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=KfNANOMCoK7SMpjZ/LaeUtfmlxbZC0YVqX755mC4yLI=;
+    b=jDc7V9sPRHzCahMduX/HhK4ub4Rd1ikpQm3AHBqQzisoV3zN5gH96tH18+ndoNshfH
+    3993ggvyQoRFcY4ZSgJ4/iTHMKxOhiWdJ50TAmGs7s6VRnXyUQWwdOCVhPlMX4hlWKkk
+    qTsCl/rNHOnBh6YoeYkw7BEhBZb3C35MnEynbSckz0xZ/Ce55T2h+0q6cHaK5xu48qQc
+    vT6FuPt5XlBu2ekZeeypGTslW9kQTYgmq6Aa5+dVELx6WhbuJ3zUMPIptT6eZdRxfNbT
+    TexHPIfyaRriqXfyCQ+N51OQnEWpoGbLP6PkgEk5ZGzOyDoyQzW0XmnnDurbdc6HwczF
+    2lmA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1685083027;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=KfNANOMCoK7SMpjZ/LaeUtfmlxbZC0YVqX755mC4yLI=;
+    b=V/thZRWnHpWy0tZKcXZ4DN7Su2FPWL2+H79ynr59A1ej4DthEci+JwcBlrLDh5SUfb
+    3VW9BII81TN48ZFYIsfFSyTSA6nVh0EWmPdyf5xsoKIggb3udDeaaltLYoPL+Idas6uc
+    tJ/hBjFkgzxXQvG6iKpCZ7wZt+Ev9fCnnsORuyxi2BVAxQxvSPXXo+FKl0FTN/9gUbPT
+    uECrXm55HRRBIopqLDPPgjrvtoghM1MK9mutg6o0cK1LybDpxje1pM2b7Q+eWL1OZP1c
+    LdjsMbITOHSrnnNsPz/S0CfRLjkya4/5QjKJGk6HLBDHaIlFiSj/eNrixvCo37eNs775
+    2oIQ==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1685083027;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=KfNANOMCoK7SMpjZ/LaeUtfmlxbZC0YVqX755mC4yLI=;
+    b=mZXaSwGzgu+Q2s4xwGLOAKCrXKM+sqdYTbeV8uc7eZcvw/+GQRitYl8jREO7bJd4KJ
+    gv+R4/2zLYoP9YhAQrCw==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA95nh"
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
+    with ESMTPSA id j6420az4Q6b6ZDV
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Fri, 26 May 2023 08:37:06 +0200 (CEST)
+Date:   Fri, 26 May 2023 08:36:59 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Sergey Senozhatsky <senozhatsky@chromium.org>
-Subject: [PATCHv4] media: venus: provide ctx queue lock for ioctl synchronization
-Date:   Fri, 26 May 2023 15:29:34 +0900
-Message-ID: <20230526063024.2827883-1-senozhatsky@chromium.org>
-X-Mailer: git-send-email 2.41.0.rc0.172.g3f132b7071-goog
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH 8/8] arm64: dts: qcom: msm8916-pm8916: Mark always-on
+ regulators
+Message-ID: <ZHBTi-j657tW3jIu@gerhold.net>
+References: <20230510-msm8916-regulators-v1-0-54d4960a05fc@gerhold.net>
+ <20230510-msm8916-regulators-v1-8-54d4960a05fc@gerhold.net>
+ <ea53525b-749b-25e2-6dde-662a8e273597@linaro.org>
+ <ef7b7335-d20c-3ddc-52df-b2801fa40283@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ef7b7335-d20c-3ddc-52df-b2801fa40283@linaro.org>
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Video device has to provide a lock so that __video_do_ioctl()
-can serialize IOCTL calls. Introduce a dedicated venus_inst
-mutex for the purpose of vb2 operations synchronization.
+On Fri, May 26, 2023 at 02:28:52AM +0200, Konrad Dybcio wrote:
+> On 26.05.2023 01:39, Konrad Dybcio wrote:
+> > On 17.05.2023 20:48, Stephan Gerhold wrote:
+> >> Some of the regulators must be always-on to ensure correct operation of
+> >> the system, e.g. PM8916 L2 for the LPDDR RAM, L5 for most digital I/O
+> >> and L7 for the CPU PLL (strictly speaking the CPU PLL might only need
+> >> an active-only vote but this is not supported for regulators in
+> >> mainline currently).
+> > Would you be interested in implementing this?
 
-Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
----
- drivers/media/platform/qcom/venus/core.h | 2 ++
- drivers/media/platform/qcom/venus/vdec.c | 4 ++++
- drivers/media/platform/qcom/venus/venc.c | 4 ++++
- 3 files changed, 10 insertions(+)
+At least on MSM8916 there is currently no advantage implementing this.
+The "active-only" votes only have the CPU as limited use case. S1 (aka
+MSM8916_VDDCX) and L3 (MSM8916_VDDMX) are both used via rpmpd/power
+domains which already provides separate active-only variants. L7 (for
+the CPU PLL) is the only other regulator used in "active-only" mode.
+However, at least on MSM8916 L7 seems to stay always-on no matter what I
+do, so having an active-only vote on L7 doesn't provide any advantage.
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 4f81669986ba..06ed7b0d3262 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -389,6 +389,7 @@ enum venus_inst_modes {
-  * @sequence_out:	a sequence counter for output queue
-  * @m2m_dev:	a reference to m2m device structure
-  * @m2m_ctx:	a reference to m2m context structure
-+ * @ctx_q_lock:	a lock to serialize video device ioctl calls
-  * @state:	current state of the instance
-  * @done:	a completion for sync HFI operation
-  * @error:	an error returned during last HFI sync operation
-@@ -460,6 +461,7 @@ struct venus_inst {
- 	u32 sequence_out;
- 	struct v4l2_m2m_dev *m2m_dev;
- 	struct v4l2_m2m_ctx *m2m_ctx;
-+	struct mutex ctx_q_lock;
- 	unsigned int state;
- 	struct completion done;
- 	unsigned int error;
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 51a53bf82bd3..be3f8c4cda08 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1609,6 +1609,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
- 	src_vq->allow_zero_bytesused = 1;
- 	src_vq->min_buffers_needed = 0;
- 	src_vq->dev = inst->core->dev;
-+	src_vq->lock = &inst->ctx_q_lock;
- 	ret = vb2_queue_init(src_vq);
- 	if (ret)
- 		return ret;
-@@ -1623,6 +1624,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
- 	dst_vq->allow_zero_bytesused = 1;
- 	dst_vq->min_buffers_needed = 0;
- 	dst_vq->dev = inst->core->dev;
-+	dst_vq->lock = &inst->ctx_q_lock;
- 	return vb2_queue_init(dst_vq);
- }
- 
-@@ -1641,6 +1643,7 @@ static int vdec_open(struct file *file)
- 	INIT_LIST_HEAD(&inst->internalbufs);
- 	INIT_LIST_HEAD(&inst->list);
- 	mutex_init(&inst->lock);
-+	mutex_init(&inst->ctx_q_lock);
- 
- 	inst->core = core;
- 	inst->session_type = VIDC_SESSION_TYPE_DEC;
-@@ -1716,6 +1719,7 @@ static int vdec_close(struct file *file)
- 	ida_destroy(&inst->dpb_ids);
- 	hfi_session_destroy(inst);
- 	mutex_destroy(&inst->lock);
-+	mutex_destroy(&inst->ctx_q_lock);
- 	v4l2_fh_del(&inst->fh);
- 	v4l2_fh_exit(&inst->fh);
- 
-diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-index 4666f42feea3..8b86873f2458 100644
---- a/drivers/media/platform/qcom/venus/venc.c
-+++ b/drivers/media/platform/qcom/venus/venc.c
-@@ -1395,6 +1395,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
- 	src_vq->allow_zero_bytesused = 1;
- 	src_vq->min_buffers_needed = 1;
- 	src_vq->dev = inst->core->dev;
-+	src_vq->lock = &inst->ctx_q_lock;
- 	if (inst->core->res->hfi_version == HFI_VERSION_1XX)
- 		src_vq->bidirectional = 1;
- 	ret = vb2_queue_init(src_vq);
-@@ -1411,6 +1412,7 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
- 	dst_vq->allow_zero_bytesused = 1;
- 	dst_vq->min_buffers_needed = 1;
- 	dst_vq->dev = inst->core->dev;
-+	dst_vq->lock = &inst->ctx_q_lock;
- 	return vb2_queue_init(dst_vq);
- }
- 
-@@ -1443,6 +1445,7 @@ static int venc_open(struct file *file)
- 	INIT_LIST_HEAD(&inst->internalbufs);
- 	INIT_LIST_HEAD(&inst->list);
- 	mutex_init(&inst->lock);
-+	mutex_init(&inst->ctx_q_lock);
- 
- 	inst->core = core;
- 	inst->session_type = VIDC_SESSION_TYPE_ENC;
-@@ -1512,6 +1515,7 @@ static int venc_close(struct file *file)
- 	venc_ctrl_deinit(inst);
- 	hfi_session_destroy(inst);
- 	mutex_destroy(&inst->lock);
-+	mutex_destroy(&inst->ctx_q_lock);
- 	v4l2_fh_del(&inst->fh);
- 	v4l2_fh_exit(&inst->fh);
- 
--- 
-2.41.0.rc0.172.g3f132b7071-goog
+> Actually, I think currently all votes are active-only votes and what
+> we're missing is sleep-only (and active-sleep if we vote on both)
 
+If you only send the "active" votes but no "sleep" votes for a resource
+then the RPM firmware treats it as active+sleep, see [1].
+The active/sleep separation only starts once a separate sleep vote has
+been sent for a resource for the first time.
+
+Therefore, all requests from the SMD regulator driver apply for both
+active+sleep at the moment.
+
+[1]: https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/blob/LA.BR.1.2.9.1-02310-8x16.0/drivers/regulator/rpm-smd-regulator.c#L202-204
+
+> > 
+> > Ancient downstream defines a second device (vregname_ao) and basically
+> > seems to select QCOM_SMD_(ACTIVE/SLEEP)_STATE based on that..
+> > 
+> > Looks like `struct regulator` stores voltage in an array that wouldn't
+> > you know it, depends on the PM state. Perhaps that could be something
+> > to explore!
+> > 
+
+Don't get confused by the similar naming here. RPM sleep votes are
+unrelated to the "system suspend" voltages the regulator framework
+supports. :)
+
+RPM sleep votes become active if the cpuidle reaches the deepest state
+for the (cpu/)cluster(/CCI). This can happen anytime at runtime when the
+system is idle long enough. On the other hand, the regulator suspend
+voltages are meant to become active during system suspend (where all the
+devices get suspended as well).
+
+Since we do have "active-only" support in rpmpd I think the question is
+if it is worth bringing the feature also to regulators. Perhaps one
+could simply treat all regulators that are needed by the CPU as power
+domain.
+
+For example, L7 on MSM8916 is fixed at 1.8V so while it doesn't have
+corners the simple enable/disable votes could also be sent via rpmpd.
+In some places in downstream L7 is also called VDDPX, similar to
+VDDCX and VDDMX which are already in rpmpd.
+
+Thanks,
+Stephan
