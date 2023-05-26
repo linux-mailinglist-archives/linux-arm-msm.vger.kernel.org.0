@@ -2,92 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7C20A712168
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 09:45:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B24C712276
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 10:43:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236721AbjEZHpz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 03:45:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41900 "EHLO
+        id S242532AbjEZInN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 04:43:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42480 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236450AbjEZHpy (ORCPT
+        with ESMTP id S242487AbjEZInM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 03:45:54 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AA75135;
-        Fri, 26 May 2023 00:45:52 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34Q6spIC013493;
-        Fri, 26 May 2023 07:45:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=qx7hd8oBt1J4hdA6yL52+8qA+xDo1uyDOlnpolg7WI8=;
- b=L/cXIbwyHksPBLwJk7cqqjty7TFuVFSzaiB2WkVe/qichvTxxx6u9W+izpcbUM4T215m
- ZfgZguZFjGfLEdarmQCLljYTzcpAQZmbEPGfBWPPp/GA4DPFVCoStVkBkeeQQ7zKLzq4
- APSHiXXjQwWFWOCHxdD3zh0wv+2o9VRg8wnCDyNBWeRp30pcOVB0cc5RAUJhnifjelvA
- TYZg4EFMnQCKyk9W6w0XCcLjrByvNBL7K4Y+YQptaqnSMuWKTsr9Jye9gBJl6MEutE04
- 7RjvC4IlINpLZz9vq0ku4rLjmieLuC7Vfo1DP4kx5WVGB3a473ZNi07rnJTfee2cjBDN KA== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qtpsp8855-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 26 May 2023 07:45:17 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34Q7jGdK001261
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 26 May 2023 07:45:16 GMT
-Received: from [10.216.39.111] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 26 May
- 2023 00:45:12 -0700
-Message-ID: <6d16e2af-b3f6-93bd-4517-eca9128ba57e@quicinc.com>
-Date:   Fri, 26 May 2023 13:15:09 +0530
+        Fri, 26 May 2023 04:43:12 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CA7A1A4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 01:43:02 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f37b860173so494413e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 01:43:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685090580; x=1687682580;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=H5Kfhw+9CaJ0j/V6VRJ6bWfGNa0fy6gbb/Nv+Rehbro=;
+        b=lufWUASwRJoazthcTBLZC58sQdGPlHgAgHDTZyFwkiCwme590hANNyz8Alj9AaFKc/
+         +ABWkshV5xjFIP/C1OgDN6Q7DK6C2IbTehKPs7RatOW86oE41rms68c03eHPnPdQbuMp
+         b5zDP5j2VTrOPR+n+1l+wWAF3tLoOvFUqa0jUq1vedAsawwr7K++gubmcIfFo5hi1Vu9
+         2+ngUvCPQQscshVJS5rIWJXY5XCSQjEuSwj6zgo7sEQshInWOSS9Ja7dfaaPNhuR7m+k
+         ePs5J/OuB7A8jCz9JXA/AL+UpWop2v2FHExkIuAXFTOGM2ag/Pph1smxCz9rlXCd6MC4
+         uP+w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685090580; x=1687682580;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=H5Kfhw+9CaJ0j/V6VRJ6bWfGNa0fy6gbb/Nv+Rehbro=;
+        b=Tr+nnXP/94KhBDnpMCuMeIeC0J0a/0SmmaxNHzP+8o3q6klsvfczNRfmF/QTcNsF/3
+         aeeS4pyba07MtVS412pRcG2Y+G1DJoc0+pwTBCkPSCR6+QL3b7refYUdZUJSoa7MlJo6
+         glgqKWvZbcKDmhySFTpGPKKj3vHGLVbr1pJH0ICQ3p6PY+DyBIW86BkzCxGzOWdH9ttQ
+         0lQvJcf9mgFOaxzMzrzkIwgCs0TZqQgaBBzDkGJY/Z+0KU86Zi1Gz2ZezUiEJFDQYvgK
+         DHChkR+UpcPM+HVqnAR4mQ3xa4opoTEKl2l4L9zNVG/NNXeuq6tf03uPb72uvaxCzMhD
+         GT2g==
+X-Gm-Message-State: AC+VfDxeNGdYU89E+SLIg4MfC5/C7AO02sUYI4ojP7pYFNFGY2DRS26y
+        0E6b0lqxWpXllzJW1/JEubyO/g==
+X-Google-Smtp-Source: ACHHUZ5QjAdqKQi45/6vwRz5lVDs1bwVz+ievEd0FHtpAv1KWZ8vWv4hA6/3H4ST0UD1AC8IfMEv1Q==
+X-Received: by 2002:a2e:84c1:0:b0:2ac:8a05:b2c7 with SMTP id q1-20020a2e84c1000000b002ac8a05b2c7mr469389ljh.7.1685090580528;
+        Fri, 26 May 2023 01:43:00 -0700 (PDT)
+Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
+        by smtp.gmail.com with ESMTPSA id t4-20020a2e9c44000000b002ad99aa3fa8sm617332ljj.13.2023.05.26.01.42.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 May 2023 01:43:00 -0700 (PDT)
+Message-ID: <ed1f3496-184c-c9e1-8c46-1602d35effde@linaro.org>
+Date:   Fri, 26 May 2023 10:42:58 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v3 12/17] media: venus: firmware: Correct IS_V6() checks
+Subject: Re: [PATCH v4 3/5] soc: qcom: smem: introduce qcom_smem_get_soc_id()
 Content-Language: en-US
-To:     Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Hans Verkuil <hans.verkuil@cisco.com>
-CC:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        "Marijn Suijten" <marijn.suijten@somainline.org>
-References: <20230228-topic-venus-v3-0-6092ae43b58f@linaro.org>
- <20230228-topic-venus-v3-12-6092ae43b58f@linaro.org>
- <76f0d91e-eff0-3044-fd99-9371a9ce0cb3@quicinc.com>
-From:   Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <76f0d91e-eff0-3044-fd99-9371a9ce0cb3@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
+        ilia.lin@kernel.org, rafael@kernel.org, viresh.kumar@linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, ansuelsmth@gmail.com
+References: <20230525210214.78235-1-robimarko@gmail.com>
+ <20230525210214.78235-3-robimarko@gmail.com>
+ <a196330e-9d70-1bbd-6fae-7d60eb06e478@linaro.org>
+ <20230526023325.y7iqygmbtjmbf4zo@ripper>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230526023325.y7iqygmbtjmbf4zo@ripper>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Y-W0IEgPbxUvbx7evLhLf4NkdQhC6eYk
-X-Proofpoint-GUID: Y-W0IEgPbxUvbx7evLhLf4NkdQhC6eYk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-26_01,2023-05-25_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- priorityscore=1501 bulkscore=0 impostorscore=0 mlxlogscore=999
- lowpriorityscore=0 clxscore=1015 phishscore=0 malwarescore=0 mlxscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305260065
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -95,93 +81,102 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-On 5/26/2023 12:33 PM, Dikshita Agarwal wrote:
-> 
-> 
-> On 5/18/2023 2:44 AM, Konrad Dybcio wrote:
->> Most of these checks should have checked for TZ presence (or well,
->> absence), as we shouldn't really be doing things that the black box
->> does for us on non-CrOS platforms.
->>
->> The IS_V6() check in venus_shutdown_no_tz() should have checked
->> whether the core version is IRIS2_1 (so, SC7280). Correct that.
->>
->> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  drivers/media/platform/qcom/venus/firmware.c | 12 ++++++++----
->>  1 file changed, 8 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
->> index 572b649c56f3..ceb917f2e0d4 100644
->> --- a/drivers/media/platform/qcom/venus/firmware.c
->> +++ b/drivers/media/platform/qcom/venus/firmware.c
->> @@ -29,7 +29,11 @@ static void venus_reset_cpu(struct venus_core *core)
->>  	u32 fw_size = core->fw.mapped_mem_size;
->>  	void __iomem *wrapper_base;
->>  
->> -	if (IS_V6(core))
->> +	/*
->> +	 * When there's no Qualcomm TZ (like on Chromebooks), the OS is
->> +	 * responsible for bringing up the hardware instead.
->> +	 */
->> +	if (!core->use_tz)
->>  		wrapper_base = core->wrapper_tz_base;
->>  	else
->>  		wrapper_base = core->wrapper_base;
-> this is invoked only for platforms not using TZ.
-> The version checks are kept to differentiate between different TZ base offset.
-> wrapper base offset for V6 (IRIS2_1) is calculated as
-> 	wrapper_base = core->wrapper_tz_base
-> while for others (non V6) wrapper base is calculated as
-> 	wrapper_base = core->wrapper_base;
-> 
-> so this change in not correct.
-> V6 check can be replaced with VPU version(IRIS2_1) check.
 
-This patch is causing boot failure for sc7180. Dropping the patch could boot the
-target. Addressing the comments should fix the issue.
-
-Thanks,
-Vikash
->> @@ -41,7 +45,7 @@ static void venus_reset_cpu(struct venus_core *core)
->>  	writel(fw_size, wrapper_base + WRAPPER_NONPIX_START_ADDR);
->>  	writel(fw_size, wrapper_base + WRAPPER_NONPIX_END_ADDR);
->>  
->> -	if (IS_V6(core)) {
->> +	if (!core->use_tz) {
->>  		/* Bring XTSS out of reset */
->>  		writel(0, wrapper_base + WRAPPER_TZ_XTSS_SW_RESET);
->>  	} else {
->> @@ -67,7 +71,7 @@ int venus_set_hw_state(struct venus_core *core, bool resume)
->>  	if (resume) {
->>  		venus_reset_cpu(core);
->>  	} else {
->> -		if (IS_V6(core))
->> +		if (!core->use_tz)
->>  			writel(WRAPPER_XTSS_SW_RESET_BIT,
->>  			       core->wrapper_tz_base + WRAPPER_TZ_XTSS_SW_RESET);
->>  		else
-> 
-> this part of the code will only be executed for non TZ platform.
-> for TZ based platforms it will return few instructions earlier in the same API.
-> Again, version checks are kept to differentiate between different TZ base
-> offset. V6 check can be replaced with VPU version(IRIS2_1) check.
-> 
-> Thanks,
-> Dikshita
->> @@ -179,7 +183,7 @@ static int venus_shutdown_no_tz(struct venus_core *core)
->>  	void __iomem *wrapper_base = core->wrapper_base;
->>  	void __iomem *wrapper_tz_base = core->wrapper_tz_base;
->>  
->> -	if (IS_V6(core)) {
->> +	if (IS_IRIS2_1(core)) {
->>  		/* Assert the reset to XTSS */
->>  		reg = readl(wrapper_tz_base + WRAPPER_TZ_XTSS_SW_RESET);
->>  		reg |= WRAPPER_XTSS_SW_RESET_BIT;
+On 26.05.2023 04:33, Bjorn Andersson wrote:
+> On Fri, May 26, 2023 at 01:18:17AM +0200, Konrad Dybcio wrote:
+>>
+>>
+>> On 25.05.2023 23:02, Robert Marko wrote:
+>>> Introduce a helper to return the SoC SMEM ID, which is used to identify the
+>>> exact SoC model as there may be differences in the same SoC family.
+>>>
+>>> Currently, cpufreq-nvmem does this completely in the driver and there has
+>>> been more interest expresed for other drivers to use this information so
+>>> lets expose a common helper to prevent redoing it in individual drivers
+>>> since this field is present on every SMEM table version.
+>>>
+>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
+>>> ---
+>>> Changes in v4:
+>>> * Change helper name to qcom_smem_get_soc_id()
+>>> * Remove len and just pass NULL, that is sufficient here
+>>>
+>>> Changes in v3:
+>>> * Change export to EXPORT_SYMBOL_GPL
+>>> * Use an argument for returning SoC ID
+>>> * Update kerneldoc
+>>> ---
+>>>  drivers/soc/qcom/smem.c       | 23 +++++++++++++++++++++++
+>>>  include/linux/soc/qcom/smem.h |  2 ++
+>>>  2 files changed, 25 insertions(+)
+>>>
+>>> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+>>> index bc98520c4969..78cf79ea4924 100644
+>>> --- a/drivers/soc/qcom/smem.c
+>>> +++ b/drivers/soc/qcom/smem.c
+>>> @@ -14,6 +14,7 @@
+>>>  #include <linux/sizes.h>
+>>>  #include <linux/slab.h>
+>>>  #include <linux/soc/qcom/smem.h>
+>>> +#include <linux/soc/qcom/socinfo.h>
+>>>  
+>>>  /*
+>>>   * The Qualcomm shared memory system is a allocate only heap structure that
+>>> @@ -772,6 +773,28 @@ phys_addr_t qcom_smem_virt_to_phys(void *p)
+>>>  }
+>>>  EXPORT_SYMBOL_GPL(qcom_smem_virt_to_phys);
+>>>  
+>>> +/**
+>>> + * qcom_smem_get_soc_id() - return the SoC ID
+>>> + * @id:	On success, we return the SoC ID here.
+>>> + *
+>>> + * Look up SoC ID from HW/SW build ID and return it.
+>>> + *
+>>> + * Return: 0 on success, negative errno on failure.
+>>> + */
+>>> +int qcom_smem_get_soc_id(u32 *id)
+>> __le32 *id
 >>
 > 
+> Why do you want this passed back to the user in little endian? When is
+> it not going to be compared to a cpu-endian constant?
+Ugh. You're right. This makes no sense.
+
+Konrad
 > 
+>> LGTM otherwise!
+>>
+>> Konrad
+>>> +{
+>>> +	struct socinfo *info;
+>>> +
+>>> +	info = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_HW_SW_BUILD_ID, NULL);
+>>> +	if (IS_ERR(info))
+>>> +		return PTR_ERR(info);
+>>> +
+>>> +	*id = info->id;
 > 
+> This should be __le32_to_cpu() though...
 > 
+> Regards,
+> Bjorn
 > 
+>>> +
+>>> +	return 0;
+>>> +}
+>>> +EXPORT_SYMBOL_GPL(qcom_smem_get_soc_id);
+>>> +
+>>>  static int qcom_smem_get_sbl_version(struct qcom_smem *smem)
+>>>  {
+>>>  	struct smem_header *header;
+>>> diff --git a/include/linux/soc/qcom/smem.h b/include/linux/soc/qcom/smem.h
+>>> index 86e1b358688a..223db6a9c733 100644
+>>> --- a/include/linux/soc/qcom/smem.h
+>>> +++ b/include/linux/soc/qcom/smem.h
+>>> @@ -11,4 +11,6 @@ int qcom_smem_get_free_space(unsigned host);
+>>>  
+>>>  phys_addr_t qcom_smem_virt_to_phys(void *p);
+>>>  
+>>> +int qcom_smem_get_soc_id(u32 *id);
+>>> +
+>>>  #endif
