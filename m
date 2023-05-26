@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5004F712CED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 20:58:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5478712CF6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 21:00:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231159AbjEZS6h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 14:58:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33502 "EHLO
+        id S243710AbjEZTAw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 15:00:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230328AbjEZS6g (ORCPT
+        with ESMTP id S236236AbjEZTAv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 14:58:36 -0400
+        Fri, 26 May 2023 15:00:51 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B510135;
-        Fri, 26 May 2023 11:58:35 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12B4D13D;
+        Fri, 26 May 2023 12:00:50 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 38217637F7;
-        Fri, 26 May 2023 18:58:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0A2CC433EF;
-        Fri, 26 May 2023 18:58:33 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 8CE9165144;
+        Fri, 26 May 2023 19:00:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419D9C433EF;
+        Fri, 26 May 2023 19:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685127514;
-        bh=CqdMwZ4bk5DlDgrri3qNV5ero1jQrn4fYGUAfHX4GI0=;
+        s=k20201202; t=1685127649;
+        bh=OwGBBeqTi3pB0gviL0C1z2nfWpb8FMmWo3zLKT7MarI=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nNmOttSNBunNfBl45V3AOvpdHcU8RAMknFnb9vdZDwwauyeyozyaVoQYkyEwBgHnt
-         InThQNCXF91iIRALCrBx6cKHtIOw6cbemr+h/tL96SzhVk4liLo8P60rIiS6eXFE2A
-         iNSuIHEAmzP6t1TAzH/A1nKRuca0ILD04tHXuT+rJtdYKP5pNQ7s0Gaqfb0G0rRt2Y
-         mdZ3BOh/DgbrCfspTpWLEip6CQtMU5/axPsc49MTmdZkfmPDYyadj7olU0j98Qw+7b
-         HdhY1xkJM/pdiaqfyni5TA30jIOM/F1iH8vvFGDCYhRMZcfnqvsv4oVT4BeLyUClSG
-         2KJhR4M7aMawg==
-Date:   Fri, 26 May 2023 12:02:22 -0700
+        b=SNEkqlUUNQ86iDvEAzsq00H0pEF/yG3+MmmM0l37a9cYlJ7BaypvkufQ5YvV5oHOG
+         K2Z/hlBTskyHfTXE6HesqqrV3W2CDzNsAS60zHKjWxe4Dx1p52nf2PPjrKdYQau5b7
+         uZd+umnarv+G9FF8lCVpOQrrxr3qdcRUi4hBcJDvkCqvA2ClfOritDArzqMpiYPwxv
+         s+w96TmLtjOgvZgTCPw0hSulsZ8D5i4MAzeGgQTXkaS9fWFb1MmHCZo+wQsmR+Ewit
+         j2AUS4XKzhITSce1JrExpjRw9NlyoYa6VxGjYHPmTyMQS0ZVCTeisKLRYrCCUhzVEt
+         qj26cPqCZ/CRw==
+Date:   Fri, 26 May 2023 12:04:37 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, quic_schowdhu@quicinc.com,
-        agross@kernel.org, konrad.dybcio@linaro.org,
-        linux-kernel@vger.kernel.org, bhupesh.linux@gmail.com,
-        robh+dt@kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3] arm64: dts: qcom: sm6115: Add EUD dt node and dwc3
- connector
-Message-ID: <20230526190222.2dyopipjz2llclus@ripper>
-References: <20230104101228.3964304-1-bhupesh.sharma@linaro.org>
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     agross@kernel.org, konrad.dybcio@linaro.org, ilia.lin@kernel.org,
+        rafael@kernel.org, viresh.kumar@linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, ansuelsmth@gmail.com
+Subject: Re: [PATCH v4 3/5] soc: qcom: smem: introduce qcom_smem_get_soc_id()
+Message-ID: <20230526190437.yekx5ufpwxkowlrp@ripper>
+References: <20230525210214.78235-1-robimarko@gmail.com>
+ <20230525210214.78235-3-robimarko@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230104101228.3964304-1-bhupesh.sharma@linaro.org>
+In-Reply-To: <20230525210214.78235-3-robimarko@gmail.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -57,126 +57,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jan 04, 2023 at 03:42:28PM +0530, Bhupesh Sharma wrote:
-> Add the Embedded USB Debugger(EUD) device tree node for
-> SM6115 / SM4250 SoC.
+On Thu, May 25, 2023 at 11:02:12PM +0200, Robert Marko wrote:
+> Introduce a helper to return the SoC SMEM ID, which is used to identify the
+> exact SoC model as there may be differences in the same SoC family.
 > 
-> The node contains EUD base register region, EUD mode manager
-> register region and TCSR Check register region along with the
-> interrupt entry.
+> Currently, cpufreq-nvmem does this completely in the driver and there has
+> been more interest expresed for other drivers to use this information so
+> lets expose a common helper to prevent redoing it in individual drivers
+> since this field is present on every SMEM table version.
 > 
-> Also add the typec connector node for EUD which is attached to
-> EUD node via port. EUD is also attached to DWC3 node via port.
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+> Changes in v4:
+> * Change helper name to qcom_smem_get_soc_id()
+> * Remove len and just pass NULL, that is sufficient here
 > 
-> To enable the role switch, we need to set dr_mode = "otg" property
-> for 'usb_dwc3' sub-node in the board dts file.
+> Changes in v3:
+> * Change export to EXPORT_SYMBOL_GPL
+> * Use an argument for returning SoC ID
+> * Update kerneldoc
+> ---
+>  drivers/soc/qcom/smem.c       | 23 +++++++++++++++++++++++
+>  include/linux/soc/qcom/smem.h |  2 ++
+>  2 files changed, 25 insertions(+)
 > 
-> Also the EUD device can be enabled on a board once linux is boot'ed
-> by setting:
->  $ echo 1 > /sys/bus/platform/drivers/qcom_eud/../enable
-> 
+> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+> index bc98520c4969..78cf79ea4924 100644
+> --- a/drivers/soc/qcom/smem.c
+> +++ b/drivers/soc/qcom/smem.c
+> @@ -14,6 +14,7 @@
+>  #include <linux/sizes.h>
+>  #include <linux/slab.h>
+>  #include <linux/soc/qcom/smem.h>
+> +#include <linux/soc/qcom/socinfo.h>
+>  
+>  /*
+>   * The Qualcomm shared memory system is a allocate only heap structure that
+> @@ -772,6 +773,28 @@ phys_addr_t qcom_smem_virt_to_phys(void *p)
+>  }
+>  EXPORT_SYMBOL_GPL(qcom_smem_virt_to_phys);
+>  
+> +/**
+> + * qcom_smem_get_soc_id() - return the SoC ID
+> + * @id:	On success, we return the SoC ID here.
+> + *
+> + * Look up SoC ID from HW/SW build ID and return it.
+> + *
+> + * Return: 0 on success, negative errno on failure.
+> + */
+> +int qcom_smem_get_soc_id(u32 *id)
+> +{
+> +	struct socinfo *info;
+> +
+> +	info = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_HW_SW_BUILD_ID, NULL);
+> +	if (IS_ERR(info))
+> +		return PTR_ERR(info);
+> +
+> +	*id = info->id;
 
-I was under the impression that you where working on some updates to EUD
-and was going to resend this, but I don't find a new version, and I
-don't see an on-list reply from me.
-
-So just to make sure this isn't lost any longer... Can you please respin
-this to correct the dtc warnings?
+So just to make the discussion between Konrad and me clear, please wrap
+the info->id access in __le32_to_cpu() and the series is ready to go.
 
 Thanks,
 Bjorn
 
-> Cc: Souradeep Chowdhury <quic_schowdhu@quicinc.com>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
-> - v2 can be viewed here: https://lore.kernel.org/linux-arm-msm/20230104052047.3945983-1-bhupesh.sharma@linaro.org
-> - In v3, fix the errors reported by '$ make dtbs_check' for the port sub node:
->   ports:
->     'oneOf' conditional failed, one must be fixed:
->         'port' is a required property
->         '#address-cells' is a required property
->         '#size-cells' is a required property
-> - This patch is based on my earlier sm6115 usb related changes, which can
->   be seen here:
->   https://lore.kernel.org/linux-arm-msm/20221215094532.589291-1-bhupesh.sharma@linaro.org/
-> - This patch is also dependent on my sm6115 eud dt-binding and driver changes
->   (v2) sent earlier, which can be seen here:
->   https://lore.kernel.org/linux-arm-msm/20230103150419.3923421-1-bhupesh.sharma@linaro.org/
-> 
->  arch/arm64/boot/dts/qcom/sm6115.dtsi | 46 ++++++++++++++++++++++++++++
->  1 file changed, 46 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm6115.dtsi b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> index 030763187cc3f..a1a4f659587f3 100644
-> --- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-> @@ -170,6 +170,18 @@ core3 {
->  		};
->  	};
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_smem_get_soc_id);
+> +
+>  static int qcom_smem_get_sbl_version(struct qcom_smem *smem)
+>  {
+>  	struct smem_header *header;
+> diff --git a/include/linux/soc/qcom/smem.h b/include/linux/soc/qcom/smem.h
+> index 86e1b358688a..223db6a9c733 100644
+> --- a/include/linux/soc/qcom/smem.h
+> +++ b/include/linux/soc/qcom/smem.h
+> @@ -11,4 +11,6 @@ int qcom_smem_get_free_space(unsigned host);
 >  
-> +	eud_typec: connector {
-> +		compatible = "usb-c-connector";
-> +
-> +		ports {
-> +			port@0 {
-> +				con_eud: endpoint {
-> +					remote-endpoint = <&eud_con>;
-> +				};
-> +			};
-> +		};
-> +	};
-> +
->  	firmware {
->  		scm: scm {
->  			compatible = "qcom,scm-sm6115", "qcom,scm";
-> @@ -565,6 +577,33 @@ gcc: clock-controller@1400000 {
->  			#power-domain-cells = <1>;
->  		};
+>  phys_addr_t qcom_smem_virt_to_phys(void *p);
 >  
-> +		eud: eud@1610000 {
-> +			compatible = "qcom,sm6115-eud", "qcom,eud";
-> +			reg = <0x01610000 0x2000>,
-> +			      <0x01612000 0x1000>,
-> +			      <0x003e5018 0x4>;
-> +			interrupts = <GIC_SPI 189 IRQ_TYPE_LEVEL_HIGH>;
-> +			status = "disabled";
+> +int qcom_smem_get_soc_id(u32 *id);
 > +
-> +			ports {
-> +				#address-cells = <1>;
-> +				#size-cells = <0>;
-> +				port@0 {
-> +					reg = <0>;
-> +					eud_ep: endpoint {
-> +						remote-endpoint = <&usb2_role_switch>;
-> +					};
-> +				};
-> +
-> +				port@1 {
-> +					reg = <1>;
-> +					eud_con: endpoint {
-> +						remote-endpoint = <&con_eud>;
-> +					};
-> +				};
-> +			};
-> +		};
-> +
->  		usb_hsphy: phy@1613000 {
->  			compatible = "qcom,sm6115-qusb2-phy";
->  			reg = <0x01613000 0x180>;
-> @@ -1064,6 +1103,13 @@ usb_dwc3: usb@4e00000 {
->  				snps,has-lpm-erratum;
->  				snps,hird-threshold = /bits/ 8 <0x10>;
->  				snps,usb3_lpm_capable;
-> +				usb-role-switch;
-> +
-> +				port {
-> +					usb2_role_switch: endpoint {
-> +						remote-endpoint = <&eud_ep>;
-> +					};
-> +				};
->  			};
->  		};
->  
+>  #endif
 > -- 
-> 2.38.1
+> 2.40.1
 > 
