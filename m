@@ -2,69 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DBD4712DB8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 21:39:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1521D712DC2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 21:42:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230327AbjEZTj6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 15:39:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56008 "EHLO
+        id S237475AbjEZTmC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 15:42:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229901AbjEZTju (ORCPT
+        with ESMTP id S237506AbjEZTmB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 15:39:50 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04F52A4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 12:39:48 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f4b256a0c9so1195855e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 12:39:47 -0700 (PDT)
+        Fri, 26 May 2023 15:42:01 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D81BD194
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 12:41:57 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f1411e8111so1294258e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 12:41:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685129986; x=1687721986;
+        d=linaro.org; s=google; t=1685130116; x=1687722116;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=5WI2LTwzJHU557PoCZSLz2JLeX8daKZdszLEHuH3r0E=;
-        b=Eo5uxTlt/6W269kAamuYc/3SjguYbwh5M1sJgy4c320v9hHZRg/kgnJ0TUrK6WLz0i
-         ayO9E/XVGysp6jY1fUCGmcOHPuTkNP6zqkfqlV5BWyGOmfudoEZKkf5jFoi3Wn/s8WvT
-         MGwQ7ltdtLNW0x83zgy1gNu08LY8mfCmta1x+/7XkK1NLvUjrzdqhsXI7XcZsKAaZ5cu
-         NxYER1KlzLbyl0mLs66/QsCNs5NUESj3BJIvY6Y7L9uSipohVGQVohnw26BwXKDrTULO
-         p7/A+LfQEAq3mjxrEM+KNJ0yq3Uzgj75I89bmtukj24zx1lWgjERCzO66oB+M1h9Pl/A
-         lGQA==
+        bh=FSe8dTaK8x4aBUD/jMFuOWtPgrWFHesEVp3wlm3KGkk=;
+        b=ha1QwaR1QQdIGvTgl7YfQKTBclcjdV8nvj4Meclx31HBbHsAPMAqdge8vlskJcF97f
+         YA9NDySXWPE5zGwNGWbPLR67cmLh3F2mv2OTW+D7V8Pi7jXuztbkX+gnb2F8/vEv0pZY
+         pu7BPT1Wckyr565XhI9Ckk/rtz6wjqGxZ97ZR8C4a32IfRXg0PbDHYLZo18glGZqK27x
+         llnkzsuJ+UaTIgdoC2LAqRYfc5eVT0RqV5ZE7vd+t2QaowwmevzOIWyitJUG7QhkcU/f
+         mHRcFVOwTvBpqKBWP64uLhxnknXCYVVX174j3czZ9UbeuUIBCQLe4m0k8GgfQvFcJFnw
+         51lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685129986; x=1687721986;
+        d=1e100.net; s=20221208; t=1685130116; x=1687722116;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5WI2LTwzJHU557PoCZSLz2JLeX8daKZdszLEHuH3r0E=;
-        b=KVS2V+2uMH8hYZMaLepFEKvAVqy3bDj/4TRkv4WgggUOaFwlIXh0CwDgxYSECUorTf
-         EELoOafVHGr7yrUr5WIMCVrnD8PuisoMFZPf1LwwA6rRAtoKPaD91KlD7UfvvYiKCP4r
-         TEdQR7CuVIjTeoau1w1nKLv/RbDofJCmdi0eSPMrE3WGKDe0DN9DsaM6sHJ9PiXOI9Sk
-         NQdy/iQVjei+50rxEuQdLeS+aHP4U5Ts0+Rl6RfoGSU1FdXu20WMBYSYBWHnBJMOKH8R
-         OMJXGf9ksR3r8MvlijdoSYWcyCHwhFjtsivyY3Mzs4bg6iZhyz0vTJb/w1z6wyCvtB2x
-         cDYA==
-X-Gm-Message-State: AC+VfDwDzxflQwwDen36q6OoWnKzTKYHLGriXzHUu97CUa2m71G/4NlC
-        THEUG6aRtjLaRxNpqHrukJZeiA==
-X-Google-Smtp-Source: ACHHUZ7UJCwOLtq5QxseZ5COplXCOHeuL++AWt2jw96lbOL6anuJG5/xRTT2MrbBWIY9RgnCjvNeoA==
-X-Received: by 2002:ac2:4a9a:0:b0:4f4:b3a6:4135 with SMTP id l26-20020ac24a9a000000b004f4b3a64135mr857536lfp.55.1685129986199;
-        Fri, 26 May 2023 12:39:46 -0700 (PDT)
+        bh=FSe8dTaK8x4aBUD/jMFuOWtPgrWFHesEVp3wlm3KGkk=;
+        b=GgVky4E9m5l8N9GA4qn4f87UyxpKYYYhDPwoz4M1MXRrWkdS+2dYX55e/5R5+bcSQF
+         WRGD38LWevIcbP89YNj7Hk6KbxptYb4Hq/WAxqSPA5S7z4md5tT8bOUSJIbu2tBp2lb1
+         k5ZRwKKES4TJBHpxkfg63Cii3x4xLfeW/nyrSlNG+k71a+JBb1/jxXlQfn6TIvC+CHuS
+         HjA4fdGuKZEOTsuIzvOkPgZi2cwoTN2T7Zd8EjoHM73tJR27UK0IJQuQnCOgliiJc0sc
+         j3tMACzmDNzSKb8D7HktuLdhkOoRsqihjWW7FRhwyU+aA0Bg05MkA2ufYhEBLrw9mDAx
+         pnWg==
+X-Gm-Message-State: AC+VfDxw42ou2cVQosfW6qzl1XtQKhf+TgQhRa9uifKd/cPsA0iIZyqd
+        CtEc2dMOUY71224YKH3MNdwbvg==
+X-Google-Smtp-Source: ACHHUZ6T1cUYaGXiFt+9m4Oaj8GpUS+9Sh/LhkT7fJ1Q60tcGrFF4cp3WGcLFm7trLws+/urkErSjg==
+X-Received: by 2002:a19:f715:0:b0:4f2:40dd:e2cf with SMTP id z21-20020a19f715000000b004f240dde2cfmr875000lfe.55.1685130115941;
+        Fri, 26 May 2023 12:41:55 -0700 (PDT)
 Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id p1-20020a19f001000000b004f1406b059asm747276lfc.219.2023.05.26.12.39.45
+        by smtp.gmail.com with ESMTPSA id p18-20020ac246d2000000b004f387d97dafsm754263lfo.147.2023.05.26.12.41.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 12:39:45 -0700 (PDT)
-Message-ID: <cac92fae-310f-79b1-7204-ac9deb2c3319@linaro.org>
-Date:   Fri, 26 May 2023 21:39:44 +0200
+        Fri, 26 May 2023 12:41:55 -0700 (PDT)
+Message-ID: <de0512b1-a8c7-2dc9-ab48-158a47e6d5a6@linaro.org>
+Date:   Fri, 26 May 2023 21:41:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v2] soc: qcom: ocmem: Add OCMEM hardware version print
+Subject: Re: [PATCH] clk: qcom: mmcc-msm8974: Add OXILICX_GDSC for msm8226
 Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+To:     Luca Weiss <luca@z3ntu.xyz>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
-        Brian Masney <masneyb@onstation.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230509-ocmem-hwver-v2-1-8c8793a07dfc@z3ntu.xyz>
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230506-msm8226-oxilicx-v1-1-52e34b94ff22@z3ntu.xyz>
+ <2528191.PYKUYFuaPT@z3ntu.xyz>
+ <275c997a-a09d-113f-631d-bb677a05ac5f@linaro.org>
+ <2679976.mvXUDI8C0e@z3ntu.xyz>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230509-ocmem-hwver-v2-1-8c8793a07dfc@z3ntu.xyz>
+In-Reply-To: <2679976.mvXUDI8C0e@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -79,64 +87,160 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 23.05.2023 22:32, Luca Weiss wrote:
-> It might be useful to know what hardware version of the OCMEM block the
-> SoC contains. Add a debug print for that.
+On 23.05.2023 22:44, Luca Weiss wrote:
+> On Dienstag, 16. Mai 2023 02:15:06 CEST Konrad Dybcio wrote:
+>> On 9.05.2023 18:57, Luca Weiss wrote:
+>>> On Montag, 8. Mai 2023 13:35:07 CEST Konrad Dybcio wrote:
+>>>> On 8.05.2023 13:32, Dmitry Baryshkov wrote:
+>>>>> On 08/05/2023 10:23, Konrad Dybcio wrote:
+>>>>>> On 6.05.2023 23:20, Luca Weiss wrote:
+>>>>>>> On msm8226 we also have OXILICX_GDSC but we need a slighly different
+>>>>>>> config, with a .cxcs defined for clock but with no parent.
+>>>>>>
+>>>>>> Hm, on newer (a5xx+) GPUs, CX needs to be turned on first and
+>>>>>> to achieve that, we sometimes define it to be the GX's (also
+>>>>>> implicitly known as "oxili-non-CX" in before-a6xx-times) parent..
+>>>>>>
+>>>>>> Roughly speaking CX powers the "GPU hardware owned by the broader
+>>>>>> SoC that may not need the GPU core clock to be up" and GX powers
+>>>>>> the "GPU hardware owned strictly by the GPU that needs at least some
+>>>>>> GPU clocks to be enabled"
+>>>>>>
+>>>>>> Maybe 8974 simply has a bug in the driver that would do the reverse?
+>>>>>> Could you (and perhaps Dmitry on his shiny new 13yo board) test that
+>>>>>> theory, preferably on both SoCs?
+>>>>>>
+>>>>>> --- a/drivers/clk/qcom/mmcc-msm8974.c
+>>>>>> +++ b/drivers/clk/qcom/mmcc-msm8974.c
+>>>>>> @@ -2431,6 +2431,7 @@ static struct gdsc oxili_gdsc = {
+>>>>>>
+>>>>>>          .pd = {
+>>>>>>          
+>>>>>>                  .name = "oxili",
+>>>>>>          
+>>>>>>          },
+>>>>>>
+>>>>>> +       .parent = &oxili_gdsc.pd,
+>>>>>>
+>>>>>>          .pwrsts = PWRSTS_OFF_ON,
+>>>>>>   
+>>>>>>   };
+>>>>>
+>>>>> Are you declaring oxili_gdsc to be a parent of itself?
+>>>>
+>>>> lol.. nice catch of course this line should have been
+>>>>
+>>>> +       .parent = &oxilicx_gdsc.pd,
+>>>>
+>>>> and the definitions would need to be swapped
+>>>
+>>> The 0x4024 oxili_gdsc (downstream name gdsc_oxili_gx) is disabled in 8226
+>>> dts.
+>>>
+>>> Only in downstream msm8974.dtsi this gdsc gets "parent-supply =
+>>> <&pm8841_s4_corner>;", on 8226 there's no parent-supply. And the gdsc
+>>> parent doesn't even seem to be described there.
+>>>
+>>> Should I still try?
+>>
+>> No, nevermind, this SoC is cut down more than I had initially thought.
+>>
+>> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>
+>> with a minor nit: oxilicx -> oxili_cx
 > 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
-> This patch is depends on [0] but could also be applied in the other
-> order, if conflicts are resolved.
+> Hi Konrad,
 > 
-> [0] https://lore.kernel.org/linux-arm-msm/20230506-msm8226-ocmem-v1-1-3e24e2724f01@z3ntu.xyz/
-> ---
-> Changes in v2:
-> - Use FIELD_GET macros for getting correct bits from register (take
->   wording from mdp5: major, minor, step which hopefully is sort of
->   accurate)
-Qualcomm uses that (or that-ish) nomenclature for many hw blocks, so
-it's likely spot on.
+> where do you want this changed? Just the .name field?
+Yes and maybe the struct name. We shouldn't be messing with bindings
+since it's cosmetic.
 
-> - Link to v1: https://lore.kernel.org/r/20230509-ocmem-hwver-v1-1-b83ece3f2168@z3ntu.xyz
-> ---
->  drivers/soc/qcom/ocmem.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
-> index c3e78411c637..9f7c3348cbb9 100644
-> --- a/drivers/soc/qcom/ocmem.c
-> +++ b/drivers/soc/qcom/ocmem.c
-> @@ -76,6 +76,10 @@ struct ocmem {
->  #define OCMEM_REG_GFX_MPU_START			0x00001004
->  #define OCMEM_REG_GFX_MPU_END			0x00001008
->  
-> +#define OCMEM_HW_VERSION_MAJOR(val)		FIELD_GET(GENMASK(31, 28), val)
-> +#define OCMEM_HW_VERSION_MINOR(val)		FIELD_GET(GENMASK(27, 16), val)
-> +#define OCMEM_HW_VERSION_STEP(val)		FIELD_GET(GENMASK(15, 0), val)
-> +
->  #define OCMEM_HW_PROFILE_NUM_PORTS(val)		FIELD_GET(0x0000000f, (val))
->  #define OCMEM_HW_PROFILE_NUM_MACROS(val)	FIELD_GET(0x00003f00, (val))
->  
-> @@ -355,6 +359,11 @@ static int ocmem_dev_probe(struct platform_device *pdev)
->  		}
->  	}
->  
-> +	reg = ocmem_read(ocmem, OCMEM_REG_HW_VERSION);
-> +	dev_dbg(dev, "OCMEM hardware version: %ld.%ld.%ld\n",
-reg is an unsigned long (u32), this should probably be %u
-
-> +		OCMEM_HW_VERSION_MAJOR(reg), OCMEM_HW_VERSION_MINOR(reg),
-> +		OCMEM_HW_VERSION_STEP(reg));
-Nit: one per line would make this the tiniest bit easier to read
+ But even that one is now 
+> matching the other oxilicx variant. And there's also gdscs like 
+> oxilicx_ahb_clk.
+oxilicx literally means "the CX side of OXILI", or translating from
+Qualcommish to English "GPU registers accessible from the AP, not
+necessarily the GPU itself"
 
 Konrad
-> +
->  	reg = ocmem_read(ocmem, OCMEM_REG_HW_PROFILE);
->  	ocmem->num_ports = OCMEM_HW_PROFILE_NUM_PORTS(reg);
->  	ocmem->num_macros = OCMEM_HW_PROFILE_NUM_MACROS(reg);
 > 
-> ---
-> base-commit: 8705151771af822ac794b44504cd72eebc423499
-> change-id: 20230509-ocmem-hwver-99bcb33b028b
+> Let me know.
 > 
-> Best regards,
+> Regards
+> Luca
+> 
+>>
+>> Konrad
+>>
+>>>> Konrad
+>>>>
+>>>>>>   @@ -2439,7 +2440,6 @@ static struct gdsc oxilicx_gdsc = {
+>>>>>>   
+>>>>>>          .pd = {
+>>>>>>          
+>>>>>>                  .name = "oxilicx",
+>>>>>>          
+>>>>>>          },
+>>>>>>
+>>>>>> -       .parent = &oxili_gdsc.pd,
+>>>>>>
+>>>>>>          .pwrsts = PWRSTS_OFF_ON,
+>>>>>>   
+>>>>>>   };
+>>>>>>
+>>>>>> Konrad
+>>>>>>
+>>>>>>> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+>>>>>>> ---
+>>>>>>>
+>>>>>>>   drivers/clk/qcom/mmcc-msm8974.c | 11 +++++++++++
+>>>>>>>   1 file changed, 11 insertions(+)
+>>>>>>>
+>>>>>>> diff --git a/drivers/clk/qcom/mmcc-msm8974.c
+>>>>>>> b/drivers/clk/qcom/mmcc-msm8974.c index 4273fce9a4a4..39ee3953567c
+>>>>>>> 100644
+>>>>>>> --- a/drivers/clk/qcom/mmcc-msm8974.c
+>>>>>>> +++ b/drivers/clk/qcom/mmcc-msm8974.c
+>>>>>>> @@ -2443,6 +2443,16 @@ static struct gdsc oxilicx_gdsc = {
+>>>>>>>
+>>>>>>>       .pwrsts = PWRSTS_OFF_ON,
+>>>>>>>   
+>>>>>>>   };
+>>>>>>>   +static struct gdsc oxilicx_gdsc_msm8226 = {
+>>>>>>>
+>>>>>>> +    .gdscr = 0x4034,
+>>>>>>> +    .cxcs = (unsigned int []){ 0x4028 },
+>>>>>>> +    .cxc_count = 1,
+>>>>>>> +    .pd = {
+>>>>>>> +        .name = "oxilicx",
+>>>>>>> +    },
+>>>>>>> +    .pwrsts = PWRSTS_OFF_ON,
+>>>>>>> +};
+>>>>>>> +
+>>>>>>>
+>>>>>>>   static struct clk_regmap *mmcc_msm8226_clocks[] = {
+>>>>>>>   
+>>>>>>>       [MMSS_AHB_CLK_SRC] = &mmss_ahb_clk_src.clkr,
+>>>>>>>       [MMSS_AXI_CLK_SRC] = &mmss_axi_clk_src.clkr,
+>>>>>>>
+>>>>>>> @@ -2533,6 +2543,7 @@ static struct gdsc *mmcc_msm8226_gdscs[] = {
+>>>>>>>
+>>>>>>>       [MDSS_GDSC] = &mdss_gdsc,
+>>>>>>>       [CAMSS_JPEG_GDSC] = &camss_jpeg_gdsc,
+>>>>>>>       [CAMSS_VFE_GDSC] = &camss_vfe_gdsc,
+>>>>>>>
+>>>>>>> +    [OXILICX_GDSC] = &oxilicx_gdsc_msm8226,
+>>>>>>>
+>>>>>>>   };
+>>>>>>>   
+>>>>>>>     static const struct regmap_config mmcc_msm8226_regmap_config = {
+>>>>>>>
+>>>>>>> ---
+>>>>>>> base-commit: dd9e11d6477a52ede9ebe575c83285e79e823889
+>>>>>>> change-id: 20230506-msm8226-oxilicx-7f3f0f8e491d
+>>>>>>>
+>>>>>>> Best regards,
+> 
+> 
+> 
+> 
