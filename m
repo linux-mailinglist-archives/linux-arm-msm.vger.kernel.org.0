@@ -2,76 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 254F6712EAC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 23:06:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F298F712EC6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 23:11:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243601AbjEZVGS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 17:06:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60394 "EHLO
+        id S237915AbjEZVLv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 17:11:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237120AbjEZVGR (ORCPT
+        with ESMTP id S237905AbjEZVLu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 17:06:17 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D46B4BC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:06:14 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f4b256a0c9so1272576e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:06:14 -0700 (PDT)
+        Fri, 26 May 2023 17:11:50 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC1A5BC
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:11:47 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f3edc05aa5so1294927e87.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:11:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685135173; x=1687727173;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HCC2tysqUqqkaNpnqdNWnUBouxAoiiM0e8gfRKPQ5dg=;
-        b=GGJ9BfMkvOG0mXaVIBEMdVdTuzayT86InEdbaj8/tl/frdzfg7m+DgT5B7mt9rJbCQ
-         /GokqKGTpWO20celynhnQeyQKVa+AsnJR+4qAHpGRgnpyajFD740ib+hhbInDq2K8w2J
-         VC5LeTqwhbR8GtA38Vii7gBHV5Dvn4LhJb42e70mAdYQ6zkXXsWqU31ylNa2QhqL3zHr
-         MXDxW6Trk4rH+HEn5Oh2mOn383z0WaYjSsNojkKwo33YZaKxS6WzS/KhVPR6J8QCRu6H
-         UsXwr4KpGjBiPtDtK8gsOtqlwwpDBAmMSePqC0DlZRgLs/7BISJjiyWGBmVdnXglMDTW
-         AA6w==
+        d=linaro.org; s=google; t=1685135506; x=1687727506;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1L+ycxs8nT0k5qZvWSokMUtOJErTXYk5ocz+vVaSWnw=;
+        b=Dr45UR/vjmG+V2DhYmc/+Z94k1T50oJR3bZmR/3QdgjNmgX8VS+huSL+ilAYotiOWG
+         5VdCz5PEq2JwDhTLXslGE0StQ1HuAk3HhQlag3EHYkrelF/g2wyQaMtSrkLHaKxEbbWB
+         gpFB9raWzZQSLe3PNDaF71eC0btdoGnDru5LtEtAQXHDSICUtxPCVQsxQRcUaYsss0rk
+         13hajfXAkNVUjLa15uQHSc9w4KJu02h4mgP6N+yP6kIqNiqGFwPtW/gUjTlzCEQw8Jm5
+         +/ydHKgdZUmSAUAq3vXtd2abEFRWHioaWImcKfJ5atyD4UKPGUUBm5mChNxZo1a+jleh
+         Gcfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685135173; x=1687727173;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1685135506; x=1687727506;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HCC2tysqUqqkaNpnqdNWnUBouxAoiiM0e8gfRKPQ5dg=;
-        b=Z6e4v++917pjgqKycTjD+4rp8hi9wIVFN/A0DAt57Ef/7GVYBO8jMugYGREDhtG6GC
-         KEkS53IeXUfF8y3Cw1OWQdPtUboFGcVycz6YOLAQqTpHHYJgm4P30qLGZruXmPT15Txc
-         WpMI834csl9brp5Em+XmX6MWXAQynOpAVnji7YmB7POpKWHMPSZLpLEeGWg1w3zooVdO
-         IRU/Cv05VnnmA9DAs+OXkNLIFnf7fMgx3stkmnLNOCQDvdrHm5FL8T5oL6FHLn4erzI0
-         87skY3qyPtO7CYrPm3zKVWtbTMyd7x9LGnsmIwERNfu7O35ClzppUIOFqx/1RMVJYu6B
-         6lOw==
-X-Gm-Message-State: AC+VfDyN/qhU0GbJnzIggP/uqYN+PJTWuWvJQjvdO5TGWrIxMSgGExUk
-        Tu2jfXimYknqLpUydRhhIS14kw==
-X-Google-Smtp-Source: ACHHUZ7B4FIban15l1ISJAPvtW7ZjsrwGVWbiw5WbYtvCRaYlaZVzhno4m4NHbLnSWar9vL/kiiz9A==
-X-Received: by 2002:a05:6512:21e:b0:4e8:5e39:6234 with SMTP id a30-20020a056512021e00b004e85e396234mr746343lfo.16.1685135173104;
-        Fri, 26 May 2023 14:06:13 -0700 (PDT)
+        bh=1L+ycxs8nT0k5qZvWSokMUtOJErTXYk5ocz+vVaSWnw=;
+        b=iGu9ZGsW5rGRqaQeBD/ajlsgGZXgXJ5AL/B16aPbfjPFDJy7afQFi16Mlk7phOH5ob
+         kWYOputpN6r0BNCY9spZWsaoXcuivW2nCUW2a8aKtJs+uZ7yaUNR0B7eY9yaFD4PkoUd
+         EP9fA6zrqicfTX7vKfxE0O/hULiCxh7rj7izCPEs1RKeSDYun/+WmOuIBb8aulhdq6O7
+         Q43RFStzCRdfqPzJ9fFevqG2dFPcq3j8G7H3nVeIk58UbbfT6j2G6kuDgoPOd+wAs+xM
+         IvTDMqB7hW7zLNt3/XiL58t4DJi5X3N8NAOclaqa4l4wMmUDZyipWgz2+qsVghbH+0U+
+         2SFw==
+X-Gm-Message-State: AC+VfDyn4o5keuj2wj5TUHx8faPWG395LSAJNVdiUavONrZgIfP1mYnh
+        TB4lY0QdMqaCKMpmLutto6MfLQ==
+X-Google-Smtp-Source: ACHHUZ5cemCoNqzhRRERX6I4HzjQMrvTEWDuDE93LE/pVDCsDJENXaFbS/q8p5n9/kFtuNQarEdlnQ==
+X-Received: by 2002:ac2:4c09:0:b0:4ef:6ed9:7af2 with SMTP id t9-20020ac24c09000000b004ef6ed97af2mr860215lfq.8.1685135506191;
+        Fri, 26 May 2023 14:11:46 -0700 (PDT)
 Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id n7-20020a195507000000b004efedad4604sm794156lfe.18.2023.05.26.14.06.12
+        by smtp.gmail.com with ESMTPSA id y26-20020ac2447a000000b004f24ee39661sm787480lfl.137.2023.05.26.14.11.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 14:06:12 -0700 (PDT)
-Message-ID: <04a57d7a-8e9f-c4df-b6a7-6161c9e83b38@linaro.org>
-Date:   Fri, 26 May 2023 23:06:11 +0200
+        Fri, 26 May 2023 14:11:45 -0700 (PDT)
+Message-ID: <02543b3b-a94d-fd3a-7b28-3e55f4414137@linaro.org>
+Date:   Fri, 26 May 2023 23:11:44 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v5 5/5] cpufreq: qcom-nvmem: use helper to get SMEM SoC ID
 Content-Language: en-US
-To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        andersson@kernel.org, ilia.lin@kernel.org, rafael@kernel.org,
-        viresh.kumar@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
-Cc:     ansuelsmth@gmail.com
-References: <20230526204802.3081168-1-robimarko@gmail.com>
- <20230526204802.3081168-5-robimarko@gmail.com>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20230510-msm8916-regulators-v1-0-54d4960a05fc@gerhold.net>
+ <20230510-msm8916-regulators-v1-7-54d4960a05fc@gerhold.net>
+ <9f474fe8-523c-3668-540a-a8fc04ed64a6@linaro.org>
+ <ZHBV-mBPhoqy8yvs@gerhold.net>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230526204802.3081168-5-robimarko@gmail.com>
+Subject: Re: [PATCH 7/8] arm64: dts: qcom: msm8916: Define regulator
+ constraints next to usage
+In-Reply-To: <ZHBV-mBPhoqy8yvs@gerhold.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -80,120 +85,105 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 26.05.2023 22:48, Robert Marko wrote:
-> Now that SMEM exports a helper to get the SMEM SoC ID lets utilize it.
-> Currently qcom_cpufreq_get_msm_id() is encoding the returned SMEM SoC ID
-> into an enum, however there is no reason to do so and we can just match
-> directly on the SMEM SoC ID as returned by qcom_smem_get_soc_id().
+On 26.05.2023 08:47, Stephan Gerhold wrote:
+> On Fri, May 26, 2023 at 01:35:06AM +0200, Konrad Dybcio wrote:
+>> On 17.05.2023 20:48, Stephan Gerhold wrote:
+>>> Right now each MSM8916 device has a huge block of regulator constraints
+>>> with allowed voltages for each regulator. For lack of better
+>>> documentation these voltages are often copied as-is from the vendor
+>>> device tree, without much extra thought.
+>>>
+>>> Unfortunately, the voltages in the vendor device trees are often
+>>> misleading or even wrong, e.g. because:
+>>>
+>>>  - There is a large voltage range allowed and the actual voltage is
+>>>    only set somewhere hidden in some messy vendor driver. This is often
+>>>    the case for pm8916_{l14,l15,l16} because they have a broad range of
+>>>    1.8-3.3V by default.
+>>>
+>>>  - The voltage is actually wrong but thanks to the voltage constraints
+>>>    in the RPM firmware it still ends up applying the correct voltage.
+>>>
+>>> To have proper regulator constraints it is important to review them in
+>>> context of the usage. The current setup in the MSM8916 device trees
+>>> makes this quite hard because each device duplicates the standard
+>>> voltages for components of the SoC and mixes those with minor
+>>> device-specific additions and dummy voltages for completely unused
+>>> regulators.
+>>>
+>>> The actual usage of the regulators for the SoC components is in
+>>> msm8916-pm8916.dtsi, so it can and should also define the related
+>>> voltage constraints. These are not board-specific but defined in the
+>>> APQ8016E/PM8916 Device Specification. The board DT can then focus on
+>>> describing the actual board-specific regulators, which makes it much
+>>> easier to review and spot potential mistakes there.
+>>>
+>>> Note that this commit does not make any functional change. All used
+>>> regulators still have the same regulator constraints as before. Unused
+>>> regulators do not have regulator constraints anymore because most of
+>>> these were too broad or even entirely wrong. They should be added back
+>>> with proper voltage constraints when there is an actual usage.
+>>>
+>>> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+>>> ---
+>> I'm a bit torn between saying "this is very nice already" and "we should
+>> probably override each regulator individually" like so:
+>>
+>> &pm8916_l17 {
+>> 	[...]
+>> }
+>>
+>> to minimize mistakes..
+>>
+>> Not sure what to make of it, I see Bjorn already applied this, so I guess
+>> I'm just leaving some potential ideas for the future here.
+>>
 > 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-> ---
-> Changes in v4:
-> * Adapt to name change to qcom_smem_get_soc_id()
+> Sorry, could you elaborate a bit on what changes you would make exactly?
+Assigning the voltage ranges through direct reference to each individual
+regulator, instead of overwriting them through referencing the
+pm8916_rpm_regulators label and (essentially) redefining them.
+
 > 
-> Changes in v3:
-> * Adapt to helper using argument now
+> The way it works in this patch is that regulators that are used by the
+> SoC are defined in msm8916-pm8916.dtsi. All other (board-specific)
+> regulators must be defined together with proper voltages in the board DT.
 > 
-> Changes in v2:
-> * Utilize helper exported by SMEM instead of refactoring
-> qcom_cpufreq_get_msm_id()
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> What kind of mistake are you thinking of?
+Fat fingers, mostly
+
+So suppose your device needs a different voltage on L18, so you do
+
+&pm8916_rpm_regulators {
+	l19 { //fat fingers burn devices
+		regulator-min-microvolt = <12341234>;
+		regulator-max-microvolt = <43143144>;
+	};
+};
+
+DTC will happily eat that
+
+
+since we use labels, one would have to fatfinger twice, like so:
+&pm8916_rpm_regulators {
+	pm8916_l19: l19 { //this was still supposed to be l18
+...
+
+
+as these two combinations will trigger a build error
+
+
+&pm8916_rpm_regulators {
+	pm8916_l19: l18 { //duplicate label vs actual l19
+
+---
+
+&pm8916_rpm_regulators {
+	pm8916_l18: l19 { //duplicate label vs actual l18
+
 
 Konrad
->  drivers/cpufreq/qcom-cpufreq-nvmem.c | 56 +++++-----------------------
->  1 file changed, 10 insertions(+), 46 deletions(-)
+
 > 
-> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> index 60e99be2d3db..a88b6fe5db50 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> @@ -29,16 +29,8 @@
->  #include <linux/slab.h>
->  #include <linux/soc/qcom/smem.h>
->  
-> -#define MSM_ID_SMEM	137
-> -
->  #include <dt-bindings/arm/qcom,ids.h>
->  
-> -enum _msm8996_version {
-> -	MSM8996_V3,
-> -	MSM8996_SG,
-> -	NUM_OF_MSM8996_VERSIONS,
-> -};
-> -
->  struct qcom_cpufreq_drv;
->  
->  struct qcom_cpufreq_match_data {
-> @@ -135,60 +127,32 @@ static void get_krait_bin_format_b(struct device *cpu_dev,
->  	dev_dbg(cpu_dev, "PVS version: %d\n", *pvs_ver);
->  }
->  
-> -static enum _msm8996_version qcom_cpufreq_get_msm_id(void)
-> -{
-> -	size_t len;
-> -	u32 *msm_id;
-> -	enum _msm8996_version version;
-> -
-> -	msm_id = qcom_smem_get(QCOM_SMEM_HOST_ANY, MSM_ID_SMEM, &len);
-> -	if (IS_ERR(msm_id))
-> -		return NUM_OF_MSM8996_VERSIONS;
-> -
-> -	/* The first 4 bytes are format, next to them is the actual msm-id */
-> -	msm_id++;
-> -
-> -	switch ((enum _msm_id)*msm_id) {
-> -	case QCOM_ID_MSM8996:
-> -	case QCOM_ID_APQ8096:
-> -		version = MSM8996_V3;
-> -		break;
-> -	case QCOM_ID_MSM8996SG:
-> -	case QCOM_ID_APQ8096SG:
-> -		version = MSM8996_SG;
-> -		break;
-> -	default:
-> -		version = NUM_OF_MSM8996_VERSIONS;
-> -	}
-> -
-> -	return version;
-> -}
-> -
->  static int qcom_cpufreq_kryo_name_version(struct device *cpu_dev,
->  					  struct nvmem_cell *speedbin_nvmem,
->  					  char **pvs_name,
->  					  struct qcom_cpufreq_drv *drv)
->  {
->  	size_t len;
-> +	u32 msm_id;
->  	u8 *speedbin;
-> -	enum _msm8996_version msm8996_version;
-> +	int ret;
->  	*pvs_name = NULL;
->  
-> -	msm8996_version = qcom_cpufreq_get_msm_id();
-> -	if (NUM_OF_MSM8996_VERSIONS == msm8996_version) {
-> -		dev_err(cpu_dev, "Not Snapdragon 820/821!");
-> -		return -ENODEV;
-> -	}
-> +	ret = qcom_smem_get_soc_id(&msm_id);
-> +	if (ret)
-> +		return ret;
->  
->  	speedbin = nvmem_cell_read(speedbin_nvmem, &len);
->  	if (IS_ERR(speedbin))
->  		return PTR_ERR(speedbin);
->  
-> -	switch (msm8996_version) {
-> -	case MSM8996_V3:
-> +	switch (msm_id) {
-> +	case QCOM_ID_MSM8996:
-> +	case QCOM_ID_APQ8096:
->  		drv->versions = 1 << (unsigned int)(*speedbin);
->  		break;
-> -	case MSM8996_SG:
-> +	case QCOM_ID_MSM8996SG:
-> +	case QCOM_ID_APQ8096SG:
->  		drv->versions = 1 << ((unsigned int)(*speedbin) + 4);
->  		break;
->  	default:
+> Thanks,
+> Stephan
