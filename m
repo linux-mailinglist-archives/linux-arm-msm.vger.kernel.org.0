@@ -2,73 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F32C871238D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 11:27:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 89BDA7123BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 11:34:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243022AbjEZJ1Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 05:27:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37544 "EHLO
+        id S243247AbjEZJeg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 05:34:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243117AbjEZJ1V (ORCPT
+        with ESMTP id S243223AbjEZJeN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 05:27:21 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD5EF1BB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 02:27:16 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2af1822b710so5237021fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 02:27:16 -0700 (PDT)
+        Fri, 26 May 2023 05:34:13 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 027661BB
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 02:33:37 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f4bd608cf4so552546e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 02:33:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685093235; x=1687685235;
+        d=linaro.org; s=google; t=1685093603; x=1687685603;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=LWY6DpPavWVM1/OV1R8NKim5vOgtapaTjgty3qjQSRk=;
-        b=sKPpbV3i/F+WXcUkFLlNIXGaLW0Ro8KTEkTLW5HjsV1Aymj3soXrG2/LScpefhNikD
-         9EuJsDyLIcGhsaya5NvrKKYfIurUbGVxYLjni1DqmFumcps31LRNQYRg4PnXiD5OiMA/
-         0m7+7+4tK831HUt68QNgjLQLEWLevnJigZnlBPLttxttRDdd2TeEOpTwh/mgYW5yqstC
-         Jo0cuXc0EEIGXcODbgR4o3s+HL7BCc+hkRPRsrEvJqCYxSD5RHQOYYgS8Az4+bZ2tftR
-         10dCppKsa0a6g6SHd2FnImg3ds/snfIFKGjR7NxlFiUkQzGt9Hn/T+H29bQ7gDFUGB96
-         D6Mg==
+        bh=7/oBlibUgPrZBjTfRBirdiuXhFmBs+58msrliDKw+mY=;
+        b=KoGqzYwcPZDy0P7xRldOcnXupUtJ+OB7H0ZpZPKhb1KtMCJj3127Toriic3RgG79sv
+         1FN+feWvMCT5HWrA7sgpFvh4jRJX2kk/pkx3cN8Sg4fRKrzrRZMwz5MdAg4nIcOj+5GF
+         /VGmQUIIqNjUPtgs8j+9TCUzRo6fA53EtKqzb53WSvI9E2Ut8QNd9IAlhZVZNVVww/cF
+         a5Dq5rbMa9f9g+0gVz8cTO2HusCyCJ1+XtHsTty+Ua7uhoGr/Z1tjUUEkJNf50Oj2Zgy
+         PEcPe3A3DC5MRNMLGMBqrN8ogvDJxJYHtD1uTF0DsfMARexZ7wsleU88v54cf8wKhJg1
+         nc/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685093235; x=1687685235;
+        d=1e100.net; s=20221208; t=1685093603; x=1687685603;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LWY6DpPavWVM1/OV1R8NKim5vOgtapaTjgty3qjQSRk=;
-        b=MDZ8z0eVxZ5wD1/eEU2OQv9lyan2sYLqyLop7Vu4UbdFDsecvBj9InSpHNSpebLyGG
-         6gPXSFB9/5oiChwaZJ69uh36zkZ9M0oeVT0LQb8pIZcom4yr7Dq1q+f5SOzS1lZ+awk+
-         WsyCKDvAev85PdnaCZuXFPovl2erEpF26fH8YlRXVqCBB8CAHH3M7KAhZb070j7sMSl2
-         P5lEkALEA2FEwjKjEELvmgWn6mKl9tnvku3Gos/ij2Mh1bI9dIKFmr1Gjb31XbnK2wzl
-         80XybbgSCkEt2A6J5OnUn4DJZiouLg8mQ/FiC+omfFonL1eaWzYSBW2KZ2P3JA8H4357
-         mHrg==
-X-Gm-Message-State: AC+VfDy809GVUGq6dJ5HMXwEA4ruapV9QKf/r6ilpDwtjXce3HN1uD2P
-        yXco34hmH1P6ycSSk/9ji0YzCQ==
-X-Google-Smtp-Source: ACHHUZ6ltL32f+pELojB+JCGwt/0k+SKroDtrl5xjXEHrWHnBK2DNAtZmefxNCZAqo5wLN7qGyUxWg==
-X-Received: by 2002:a19:f816:0:b0:4f3:a812:5ae with SMTP id a22-20020a19f816000000b004f3a81205aemr375578lff.37.1685093234954;
-        Fri, 26 May 2023 02:27:14 -0700 (PDT)
+        bh=7/oBlibUgPrZBjTfRBirdiuXhFmBs+58msrliDKw+mY=;
+        b=Shp33peoy2crBKgtQVBAwTaHLPwEy17k5UPFMoBbDst3mAfKdqOV6kMRsmSsVyqno+
+         ZrOiMwF0Ncptqi7/iBbKfXbbV0TGdCqpxbHK/i0XrZyPtCWjjsQwZdQtVDGgxDKlL52M
+         lXV75UE7tojuCTX/x8p+yw9UbUJkZrW4BAMcqdsvi5xG1yZr1zqVh0g7kYlbVitjdZvI
+         hotGE5/Sh/KxcLW4EyA8cO00AMiLwloujqKVX7BVQMM6Y0lnJLfFXL2NQFYgc8bX9rTg
+         1geI8n0Ow2HR8Z2Nb8UhKSOhZfZpluXOM7vnFQuvbTYpas8SX1IOtZlK1IZ4/3u2+FJB
+         ysDA==
+X-Gm-Message-State: AC+VfDxsAUF8NOtpGoUerei5+aZOAYs6PRB188p/LFhhlVC2GiPL/eBb
+        PZmh8kIIwGklgxuVZBkARjONGQ==
+X-Google-Smtp-Source: ACHHUZ5IMHjQOJzbUB1xcWxYldyP1P7V6EO/+PSAu1YT7XY3jrPux0ZQoExBpf+yW22mPCrPp614EA==
+X-Received: by 2002:a19:f80c:0:b0:4f4:cda3:8c99 with SMTP id a12-20020a19f80c000000b004f4cda38c99mr441265lff.42.1685093603377;
+        Fri, 26 May 2023 02:33:23 -0700 (PDT)
 Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id v26-20020a19741a000000b004f138ecab11sm543964lfe.24.2023.05.26.02.27.14
+        by smtp.gmail.com with ESMTPSA id i20-20020ac25234000000b004efe73ee01fsm535345lfl.306.2023.05.26.02.33.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 02:27:14 -0700 (PDT)
-Message-ID: <a1d60d67-49cc-4936-4b89-394c8fbdddf3@linaro.org>
-Date:   Fri, 26 May 2023 11:27:13 +0200
+        Fri, 26 May 2023 02:33:22 -0700 (PDT)
+Message-ID: <6e1d098d-03b9-aa63-a0bf-6cf748a0db0d@linaro.org>
+Date:   Fri, 26 May 2023 11:33:21 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH 1/2] mfd: pm8008: fix module autoloading
+Subject: Re: [PATCH V2 3/6] clk: qcom: clk-alpha-pll: Remove explicit CAL_L
+ configuration for EVO PLL
 Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-Cc:     Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>,
+To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-References: <20230526091646.17318-1-johan+linaro@kernel.org>
- <20230526091646.17318-2-johan+linaro@kernel.org>
- <a5891478-bf4a-8389-e1c9-00244c5b406e@linaro.org>
- <ZHB7Gy7RMGa41KI9@hovoldconsulting.com>
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>
+References: <20230525172142.9039-1-quic_jkona@quicinc.com>
+ <20230525172142.9039-4-quic_jkona@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZHB7Gy7RMGa41KI9@hovoldconsulting.com>
+In-Reply-To: <20230525172142.9039-4-quic_jkona@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -83,25 +91,64 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 26.05.2023 11:25, Johan Hovold wrote:
-> On Fri, May 26, 2023 at 11:22:27AM +0200, Konrad Dybcio wrote:
->> On 26.05.2023 11:16, Johan Hovold wrote:
->>> Add the missing module device table alias to that the driver can be
->>> autoloaded when built as a module.
->>>
->>> Fixes: 6b149f3310a4 ("mfd: pm8008: Add driver for QCOM PM8008 PMIC")
->>> Cc: stable@vger.kernel.org      # 5.14
+On 25.05.2023 19:21, Jagadeesh Kona wrote:
+> In lucid evo pll, the CAL_L field is part of L value register itself, and
+> the l value configuration passed from clock controller driver includes
+> CAL_L and L values as well. Hence remove explicit configuration of CAL_L
+> for evo pll.
 > 
->> Looks like the commit referenced in Fixes is from 5.13-rc1, perhaps
->> 5.13 would be more fitting here?
-> 
-> No, I just double checked. This driver was not present 5.13.
-Odd, I see the same thing.
+> Fixes: 260e36606a03 ("clk: qcom: clk-alpha-pll: add Lucid EVO PLL configuration interfaces")
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+> ---
+Oh that isn't obvious at first sight, nice find!
 
-Anyway
+I'd suggest a different solution though:
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+#define LUCID_EVO_PLL_L_LVAL	GENMASK(..
+#define LUCID_EVO_PLL_L_CAL_L	GENMASK(..
+
+lval = FIELD_PREP(LUCID_EVO_PLL_L_LVAL, config->l) |
+       FIELD_PREP(LUCID_EVO_PLL_L_CAL_L, config->cal_l);
+
+This would make the separation between the two parts more explicit
+
+however
+
+config->l would then represent the L value and not the end value
+written to the L register
+
+Up to you, whichever you find saner!
 
 Konrad
+
+> Changes since V1:
+>  - Newly added.
 > 
-> Johan
+>  drivers/clk/qcom/clk-alpha-pll.c | 6 +-----
+>  1 file changed, 1 insertion(+), 5 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+> index f81c7c561352..68a80395997b 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.c
+> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> @@ -270,7 +270,6 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
+>  #define LUCID_EVO_PCAL_NOT_DONE		BIT(8)
+>  #define LUCID_EVO_ENABLE_VOTE_RUN       BIT(25)
+>  #define LUCID_EVO_PLL_L_VAL_MASK        GENMASK(15, 0)
+> -#define LUCID_EVO_PLL_CAL_L_VAL_SHIFT	16
+>  
+>  /* ZONDA PLL specific */
+>  #define ZONDA_PLL_OUT_MASK	0xf
+> @@ -2084,10 +2083,7 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_zonda_ops);
+>  void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+>  				 const struct alpha_pll_config *config)
+>  {
+> -	u32 lval = config->l;
+> -
+> -	lval |= TRION_PLL_CAL_VAL << LUCID_EVO_PLL_CAL_L_VAL_SHIFT;
+> -	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), lval);
+> +	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
+>  	clk_alpha_pll_write_config(regmap, PLL_ALPHA_VAL(pll), config->alpha);
+>  	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL(pll), config->config_ctl_val);
+>  	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U(pll), config->config_ctl_hi_val);
