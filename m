@@ -2,66 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6454F712DD1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 21:46:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79308712DD4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 21:46:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230185AbjEZTqR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 15:46:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59434 "EHLO
+        id S237033AbjEZTqc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 15:46:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229523AbjEZTqQ (ORCPT
+        with ESMTP id S231899AbjEZTqb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 15:46:16 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0F09B6;
-        Fri, 26 May 2023 12:46:15 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4625465300;
-        Fri, 26 May 2023 19:46:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F0CC433EF;
-        Fri, 26 May 2023 19:46:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685130374;
-        bh=HXsQb8OTNsgkJnd1fl608LKgHplT+hhrh89UYaD87Fs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=nirNaDI1awCONOmsX+vCTz6UYlNgLRVjjGbqThGHfDpj7l+c8utdYi7ucRpgLf7ju
-         2qDXOGkon1BQSUjYhrPs6uBgD+HmIFPd9iv8vQYCnlBwKI6s8WMTBGMYxXh7pbt0wo
-         KZspfv0bWJfc9vdb3t6sGfK9YjxADg4OsvY7Zbg7DCTP/UJMo5Lz/74W96o+4PSXb2
-         XPAeEYdLjL6Ui14MFTnfEfIBxgrUdTcSP3tf1wrsP4NraiTbjlz43juMhkMb/d7viU
-         LaMLkrPj9ElqNXbO5etcYDwmsWjqA6J6s2o9Yb9BFUkcc0jvcfrEYtvAsS+cnembd1
-         43YxktP77VdcA==
-Date:   Fri, 26 May 2023 20:46:08 +0100
-From:   Conor Dooley <conor@kernel.org>
-To:     Yassine Oudjana <yassine.oudjana@gmail.com>
-Cc:     Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Fri, 26 May 2023 15:46:31 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ED4D7B6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 12:46:28 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f3a9ad31dbso1288102e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 12:46:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685130387; x=1687722387;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XGRmQVz2qOO/JHGqdPvAPL5aOAN7tSdjqi8YZkSo1xs=;
+        b=voBhsyIBCO5EPlcOz0jKXU8ijOs06ei0PEKdaElwd3YFnKM4vSmbg7X/adzwx+OGEE
+         wssOaRNAVuKinyffQoY0hE0CVdQBKGTcgRsPfJrOTaL5hTIXWS2Nwyat4FpMkGeNQ3wX
+         hiECqW/PwwytXVaZeImaQBnKdrhq/4oxCQexJ017nwtLvCc9OqqSpdWd9IC7BRT6Endu
+         ZqDajo81sQ3I/t9BH2+FXjkY/uG/PsATnzgnt9WCiS4PmIEo9W85bAOJlBP/OLFox1un
+         ZkZyrPqKXUF67qU3Yq/DYubaOHgvqYoZtnlJPp/m0tOZ+eSJRhK1K7C5DtWx1yYloAO5
+         Blqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685130387; x=1687722387;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XGRmQVz2qOO/JHGqdPvAPL5aOAN7tSdjqi8YZkSo1xs=;
+        b=DIy9CQnEA7XB6Menm4wSL0D4vI/v63P7OKvv/lCTra9qUcZK2o8sV0i9RSm5Dz1y0o
+         jEIePgKJFMdESJ92fKa+J7G+3TYR/QpY727gzGYBfREcLN0azHuBPi7Kby5ofYtnWxLw
+         Q6O2lk9Mrg36n/SdP8T7QVeh0fnoFa/Eik7v86GxwbowuQrYWE9tRTSoIGo7lWETtu/4
+         gI9VxIMKwRdxoxLKyDRcE5wizUNX/ytlEfT5YqLwxbi9t40EgvL2oBeQxuC+I48oryAt
+         XgzJgtwdsco5XdP8Q2GkAjsxr6WQ59ebEW9II9ge8mxyaE0eoyIr42O4//QCxmTxVcvY
+         orwA==
+X-Gm-Message-State: AC+VfDyaTOCT0fHz1nEcMq78S+zJwqaXNZ2pEhkttldz6zYW4NbzENvM
+        CTQNk57Pw+Sc8jxKw15xSII9ww==
+X-Google-Smtp-Source: ACHHUZ4oVU/CuIh38JWiwcfSKfq4DCuUPWaxrg5aT4d8kWdUFMenhjIRlFtDPog3S+d3vemyn3407Q==
+X-Received: by 2002:ac2:51ad:0:b0:4e0:a426:6ddc with SMTP id f13-20020ac251ad000000b004e0a4266ddcmr931823lfk.0.1685130387203;
+        Fri, 26 May 2023 12:46:27 -0700 (PDT)
+Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
+        by smtp.gmail.com with ESMTPSA id i7-20020a056512006700b004eb4074f40fsm747155lfo.241.2023.05.26.12.46.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 May 2023 12:46:26 -0700 (PDT)
+Message-ID: <e7786af1-f19d-abb4-59ce-d08fb25bd091@linaro.org>
+Date:   Fri, 26 May 2023 21:46:25 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 3/6] arm64: dts: qcom: pmi8998: add charger node
+Content-Language: en-US
+To:     Caleb Connolly <caleb.connolly@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Hans Verkuil <hansverk@cisco.com>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] dt-bindings: media: camss: qcom,msm8996-camss:
- Add CAMSS power domain
-Message-ID: <20230526-obstruct-venus-5833511a58af@spud>
-References: <20230526180712.8481-1-y.oudjana@protonmail.com>
- <20230526180712.8481-2-y.oudjana@protonmail.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="Uk9rvZ9fwek1OCj4"
-Content-Disposition: inline
-In-Reply-To: <20230526180712.8481-2-y.oudjana@protonmail.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        phone-devel@vger.kernel.org
+References: <20230524-pmi8998-charger-dts-v1-0-f9334afc4505@linaro.org>
+ <20230524-pmi8998-charger-dts-v1-3-f9334afc4505@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230524-pmi8998-charger-dts-v1-3-f9334afc4505@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -69,87 +82,48 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---Uk9rvZ9fwek1OCj4
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Yo Yassine,
-
-On Fri, May 26, 2023 at 09:07:10PM +0300, Yassine Oudjana wrote:
-> From: Yassine Oudjana <y.oudjana@protonmail.com>
->=20
-> Add the CAMSS power domain which is needed for the proper operation of
-> CAMSS, and add power-domain-names to ease fetching it as well as the other
-> power domains.
->=20
-> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+On 24.05.2023 19:38, Caleb Connolly wrote:
+> Add a node for the smb2 charger hardware found on the pmi8998 pmic
+> following the DT bindings.
+> 
+> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 > ---
->  .../bindings/media/qcom,msm8996-camss.yaml          | 13 ++++++++++++-
->  1 file changed, 12 insertions(+), 1 deletion(-)
->=20
-> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.y=
-aml b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
-> index 8a10aa1cafc5..27c9a11f0df9 100644
-> --- a/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
-> +++ b/Documentation/devicetree/bindings/media/qcom,msm8996-camss.yaml
-> @@ -85,6 +85,13 @@ properties:
->      items:
->        - description: VFE0 GDSC - Video Front End, Global Distributed Swi=
-tch Controller.
->        - description: VFE1 GDSC - Video Front End, Global Distributed Swi=
-tch Controller.
-> +      - description: CAMSS GDSC - Camera Subsystem, Global Distributed S=
-witch Controller.
+>  arch/arm64/boot/dts/qcom/pmi8998.dtsi | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/pmi8998.dtsi b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> index be6f60bfc26c..73f51451d21d 100644
+> --- a/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
+> @@ -9,6 +9,26 @@ pmi8998_lsid0: pmic@2 {
+>  		#address-cells = <1>;
+>  		#size-cells = <0>;
+>  
+> +		pmi8998_charger: charger@1000 {
+> +			compatible = "qcom,pmi8998-charger";
+> +			reg = <0x1000>;
 > +
-> +  power-domain-names:
-> +    items:
-> +      - const: vfe0
-> +      - const: vfe1
-> +      - const: camss
-> =20
->    ports:
->      $ref: /schemas/graph.yaml#/properties/ports
-> @@ -209,6 +216,7 @@ required:
->    - interrupts
->    - iommus
->    - power-domains
-> +  - power-domain-names
-
-Why is this now required?
-
-Thanks,
-Conor.
-
->    - reg
->    - reg-names
->    - vdda-supply
-> @@ -326,7 +334,10 @@ examples:
->           <&vfe_smmu 3>;
-> =20
->        power-domains =3D <&mmcc VFE0_GDSC>,
-> -        <&mmcc VFE1_GDSC>;
-> +        <&mmcc VFE1_GDSC>,
-> +        <&mmcc CAMSS_GDSC>;
+> +			interrupts = <0x2 0x13 0x4 IRQ_TYPE_EDGE_BOTH>,
+> +				     <0x2 0x12 0x2 IRQ_TYPE_EDGE_BOTH>,
+> +				     <0x2 0x16 0x1 IRQ_TYPE_EDGE_RISING>,
+> +				     <0x2 0x13 0x6 IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "usb-plugin",
+> +					  "bat-ov",
+> +					  "wdog-bark",
+> +					  "usbin-icl-change";
 > +
-> +      power-domain-names =3D "vfe0", "vfe1", "camss";
-> =20
->        reg =3D <0x00a34000 0x1000>,
->          <0x00a00030 0x4>,
-> --=20
-> 2.40.1
->=20
+> +			io-channels = <&pmi8998_rradc 3>,
+> +				      <&pmi8998_rradc 4>;
+> +			io-channel-names = "usbin_i", "usbin_v";
+Are these hard-wired internally?
 
---Uk9rvZ9fwek1OCj4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZHEMgAAKCRB4tDGHoIJi
-0mqGAQDnSs0kFgIjPFo7PgHn8Y5SILvoeUHvW3dbMPU5/SfohgD+MLqmFsqafGIP
-XDQJpXUjsm0aicwi1Tj3LbvTvLbf6gM=
-=d7a5
------END PGP SIGNATURE-----
-
---Uk9rvZ9fwek1OCj4--
+Konrad
+> +
+> +			status = "disabled";
+> +		};
+> +
+>  		pmi8998_gpios: gpio@c000 {
+>  			compatible = "qcom,pmi8998-gpio", "qcom,spmi-gpio";
+>  			reg = <0xc000>;
+> 
