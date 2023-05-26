@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DB86712EEB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 23:28:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12A12712EFA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 23:38:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231339AbjEZV21 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 17:28:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39914 "EHLO
+        id S243254AbjEZVix (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 17:38:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230314AbjEZV20 (ORCPT
+        with ESMTP id S242466AbjEZViu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 17:28:26 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CFEFA7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:28:24 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f4d80bac38so1282911e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:28:24 -0700 (PDT)
+        Fri, 26 May 2023 17:38:50 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9D0DD9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:38:47 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-3093a6311dcso1128824f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:38:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685136503; x=1687728503;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JWrYwqLO2cetwUA7DafSqXD88NMBHAPCQm2ei3HiVNM=;
-        b=CuOlu2l2gmelHyKJeuTf7MNiFBEP4e2BSjTj6lkTWLlsKgAGzZm1slrTQQQySoOns0
-         ientLCFYLx4Ta75o5aCl5br0XyblAJC+UNcVAlxGrS4wouicPkx+in/s+89Yf1LHB+n3
-         r4ycMWqr2IATlJASXYKTpMHgIyfrf5kPrXmr0eGF4Sa2G+dv7m/5rC8A8omUeYYwsHGZ
-         Mh5+8M1DTgYsQKYjESW4nmN4s+ON3EMtbG4onkGhRSHlO8JLKBKKvurS//ywAr3qfIyX
-         v30gFBJC4V/yZ8NN/Fqnc73GaTn3ENtGu1XD+0gCDuqxwgyGYPyyc3WHoXifuxhPEG8m
-         sCXA==
+        d=linaro.org; s=google; t=1685137126; x=1687729126;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ng9N+c2e3Bp89DkXhUcd8ADdwRno1HXC51mA1TZCgUA=;
+        b=EtviSR0fErEt4WWVQjfkI6LVdNQwfETpMq9eitcy8l1haPH/ngYCo8N/Sr/mQP7rWQ
+         dzWn/u4E5OxQqMjYDdMbKNIyZ+x5XgBfvzNlLg1dEAd1kGZ2H9kAf7BtkHR3/ulfsumo
+         9nR7KJn+aCR2C8CIX26E5Nk4k77lDS/QqS0rloi0+6MewFdTmClazXlCtBON2XPQSUNn
+         zWxt3QfHeaMUkowNi/GtntIQavK4Lrv9CYTNDj+AmiJ9HcknuTdSkJCiFUJaoa/RHa5A
+         wMWYTJcRn+YxUKIc3HmWQ56hk1RZZk5cdUYhshTEOc8jZuBd9BBx2UogBVa5HFHzCA5C
+         DwWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685136503; x=1687728503;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1685137126; x=1687729126;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JWrYwqLO2cetwUA7DafSqXD88NMBHAPCQm2ei3HiVNM=;
-        b=fwZH8fLm9mEkXGN+uV3RaUbxs2J0eaGF5ViCBJjTt03D/Yh8KJ47JqcO8PvFMfiKIA
-         5ITF25bKoLMBdZZo99wakNqrTXIx6sW7J3DXgM1zWKB/iPk39K+1EudlFR9VWNievXSN
-         azH41cybQpbWZ0zrnebaxbhhmGq1C+SbWguq+FnOeyoqhWPOebIRVvfZAPvgaCYNkf34
-         Dr9P+FgGhb3Tzvr3q8XMUQDk6Y6QA/xu4Y51j4f3SvUF/7yzMKv/8rrfxWA/4JwcdT0l
-         JLVVMxImLmdTcOGX3jjgRYhtsQ44hrvMc+L/qcu0VGKLs+RobcWeDI0s4+VhJCX/Cxgw
-         gMJQ==
-X-Gm-Message-State: AC+VfDysVLsBsVmuFu/WlBHWf0B7UeD1loT7g/ZI/1RMTy3jAODXWbvL
-        JXcOX0PhVXsaYmATZH6V4ifLkA==
-X-Google-Smtp-Source: ACHHUZ41HYIYBc7y+GfDWv666csmOfIZGa8LBxVMS0pcw3wzklkAUrHPe7LfHiLgXa0sPLVFzSBrdw==
-X-Received: by 2002:a19:760b:0:b0:4ee:e0c7:434d with SMTP id c11-20020a19760b000000b004eee0c7434dmr979262lff.51.1685136502904;
-        Fri, 26 May 2023 14:28:22 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id c1-20020ac244a1000000b004db0d26adb4sm791257lfm.182.2023.05.26.14.28.21
+        bh=ng9N+c2e3Bp89DkXhUcd8ADdwRno1HXC51mA1TZCgUA=;
+        b=UALQohdKqRzJD36aboAtIQeM9s4jRPTZxHS796AzJqB1wB0L7TulYzwTY+jZF9w671
+         b+2gDxwwccgd4FvS/WZ2nP5oPbCxSNr3gNSon3OPOod9ql0Zuz+u/HnP2kolxKCTFg4Y
+         lFO0FA1uK7H1p8YBbC6p+o5H0xpQVKdQDf/5KQUcsukSY6MqoHqJhSvSvoNizuIr4VOS
+         9k008QaA9DSb5HjW3qXtIbs+hdqHOssIrLKoFxcJWl/7KUH+yj9JzEUsZr1qkdO9hCag
+         kvdTU9Q+TFTmj9MM2FXnk9kxkDJT7eHCBkpG7nMN5kAB+fmjhjpWA0y8FSdn5uVLprxx
+         BEpA==
+X-Gm-Message-State: AC+VfDwLtyfwhLfM0zcHgn/aApimw0McRoxgyxWTz+V1tk8d3fCmCY/z
+        N9UQsEnQHlRmgUvVwssu0UFQNQ==
+X-Google-Smtp-Source: ACHHUZ4RoW3fv+qUTi3BXgPtTHI02fQwYPSqH55n/ATO2lnC5wV9gvB0eua6YxhI1bQUJpM5igvwBw==
+X-Received: by 2002:a5d:69c8:0:b0:2f8:96f5:cb0f with SMTP id s8-20020a5d69c8000000b002f896f5cb0fmr2379735wrw.23.1685137126404;
+        Fri, 26 May 2023 14:38:46 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id a15-20020a5d508f000000b002ceacff44c7sm6107425wrt.83.2023.05.26.14.38.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 14:28:22 -0700 (PDT)
-Message-ID: <7257f5bb-16a3-846c-fc84-262a775e54f4@linaro.org>
-Date:   Fri, 26 May 2023 23:28:20 +0200
+        Fri, 26 May 2023 14:38:45 -0700 (PDT)
+Message-ID: <5074b544-741f-9873-83ae-9c8d0d057606@linaro.org>
+Date:   Fri, 26 May 2023 22:38:44 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 3/3] media: camss: Link CAMSS power domain
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Yassine Oudjana <yassine.oudjana@gmail.com>,
         Robert Foss <rfoss@kernel.org>,
         Todor Tomov <todor.too@gmail.com>,
@@ -75,10 +76,10 @@ References: <20230526180712.8481-1-y.oudjana@protonmail.com>
  <fa395680-0e6c-3eb0-9d5a-f90a95c394b8@linaro.org>
  <e755eabf-f8d7-c2cd-aa5a-bc48c7a5d5ae@linaro.org>
  <7bbbf520-d70f-5df6-33ce-a888bf364aa5@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH v2 3/3] media: camss: Link CAMSS power domain
-In-Reply-To: <7bbbf520-d70f-5df6-33ce-a888bf364aa5@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+ <7257f5bb-16a3-846c-fc84-262a775e54f4@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <7257f5bb-16a3-846c-fc84-262a775e54f4@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -90,88 +91,111 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 26.05.2023 23:17, Bryan O'Donoghue wrote:
-> On 26/05/2023 21:57, Konrad Dybcio wrote:
->> This code contains a whole bunch of hacky counting logic that should have
->> been substituted with _byname, but now we're stuck with indices to keep
->> compatibility with old DTs :/
+On 26/05/2023 22:28, Konrad Dybcio wrote:
+> 
+> 
+> On 26.05.2023 23:17, Bryan O'Donoghue wrote:
+>> On 26/05/2023 21:57, Konrad Dybcio wrote:
+>>> This code contains a whole bunch of hacky counting logic that should have
+>>> been substituted with _byname, but now we're stuck with indices to keep
+>>> compatibility with old DTs :/
+>>>
+>>> If CAMSS_GDSC (talking about pre-TITAN hw) was a parent of all the other
+>>> CAMSS-related GDSCs, we could make it their parent in the clock driver
+>>> and call it a day.
 >>
->> If CAMSS_GDSC (talking about pre-TITAN hw) was a parent of all the other
->> CAMSS-related GDSCs, we could make it their parent in the clock driver
->> and call it a day.
+>> I mean, it wouldn't make much sense from a hw design POV if that weren't the case..
+>>
+>> Hmm looks like its already there.
+>>
+>> static struct gdsc vfe0_gdsc = {
+>>          .gdscr = 0x3664,
+>>          .cxcs = (unsigned int []){ 0x36a8 },
+>>          .cxc_count = 1,
+>>          .pd = {
+>>                  .name = "vfe0",
+>>          },
+>>          .parent = &camss_gdsc.pd,
+>>          .pwrsts = PWRSTS_OFF_ON,
+>> };
+>>
+>> static struct gdsc vfe1_gdsc = {
+>>          .gdscr = 0x3674,
+>>          .cxcs = (unsigned int []){ 0x36ac },
+>>          .cxc_count = 1,
+>>          .pd = {
+>>                  .name = "vfe1",
+>>          },
+>>          .parent = &camss_gdsc.pd,
+>>          .pwrsts = PWRSTS_OFF_ON,
+>> };
+>>
+>> I feel this is probably a problem in the description of dependencies for the CSIPHY in the dts for the 8996..
+>>
+>> I.e. the CSIPHY requires some clocks and power-rails to be switched on ah..
+>>
+>> static const struct resources csiphy_res_8x96[] = {
+>>          /* CSIPHY0 */
+>>          {
+>>                  .regulators = {},
+>>                  .clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy0_timer" },
+>>
+>>
+>> should probably look something like
+>>
+>> static const struct resources csiphy_res_8x96[] = {
+>>          /* CSIPHY0 */
+>>          {
+>>                  .regulators = {},
+>>                  .clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy0_timer", "vfe0"},
+>>
+>> But basically yeah, we haven't modeled the dependency to the CAMSS_GDSC via the VFEx
+> I have little idea how CAMSS is tied together, but the VFEn clocks
+> are assigned in vfe_res_8x96.clock and ispif_res_8x96.clock_for_reset.
 > 
-> I mean, it wouldn't make much sense from a hw design POV if that weren't the case..
+> FWIW the ancient msm-3.18 doesn't reference the VFE clocks in CSIPHY.
 > 
-> Hmm looks like its already there.
+> Anyway, looks like the issue here is that we're not toggling the
+> GDSC early enough in cases where something that's not VFE needs it.
 > 
-> static struct gdsc vfe0_gdsc = {
->         .gdscr = 0x3664,
->         .cxcs = (unsigned int []){ 0x36a8 },
->         .cxc_count = 1,
->         .pd = {
->                 .name = "vfe0",
->         },
->         .parent = &camss_gdsc.pd,
->         .pwrsts = PWRSTS_OFF_ON,
-> };
+>>
+>> Hmm wait - why haven't we included the CAMSS_GDSC in the dtsi for the 8996 ?
+> Since both VFE GDSCs are children of CAMSS_GDSC and (as mentioned in the
+> commit message) the power sequencing used to be different, it just seems
+> to me like we've been piggybacking on lucky ordering since the introduction
+> of 8996 support.
 > 
-> static struct gdsc vfe1_gdsc = {
->         .gdscr = 0x3674,
->         .cxcs = (unsigned int []){ 0x36ac },
->         .cxc_count = 1,
->         .pd = {
->                 .name = "vfe1",
->         },
->         .parent = &camss_gdsc.pd,
->         .pwrsts = PWRSTS_OFF_ON,
-> };
+> For comparison, 8916 doesn't define it because it doesn't have it and newer
+> SoCs use TITAN.
 > 
-> I feel this is probably a problem in the description of dependencies for the CSIPHY in the dts for the 8996..
-> 
-> I.e. the CSIPHY requires some clocks and power-rails to be switched on ah..
-> 
-> static const struct resources csiphy_res_8x96[] = {
->         /* CSIPHY0 */
->         {
->                 .regulators = {},
->                 .clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy0_timer" },
+> SDM630 doesn't define it, but nobody touched it since like 2021 (except
+> Dmitry's fixups when he got his hands on the inforce baord) so it's
+> probably broken as well..
 > 
 > 
-> should probably look something like
-> 
-> static const struct resources csiphy_res_8x96[] = {
->         /* CSIPHY0 */
->         {
->                 .regulators = {},
->                 .clock = { "top_ahb", "ispif_ahb", "ahb", "csiphy0_timer", "vfe0"},
-> 
-> But basically yeah, we haven't modeled the dependency to the CAMSS_GDSC via the VFEx
-I have little idea how CAMSS is tied together, but the VFEn clocks
-are assigned in vfe_res_8x96.clock and ispif_res_8x96.clock_for_reset.
+> Konrad
+>>
+>> ---
+>> bod
 
-FWIW the ancient msm-3.18 doesn't reference the VFE clocks in CSIPHY.
+Hmm, so what I suggested is what Yassine has i.e. adds <&mmcc 
+CAMSS_GDSC>; to the top-level camss node.
 
-Anyway, looks like the issue here is that we're not toggling the
-GDSC early enough in cases where something that's not VFE needs it.
+Without testing, this _looks_ right to me. I just think, like Conor 
+flagged we don't need to add a dependency on the power-domain names.
 
-> 
-> Hmm wait - why haven't we included the CAMSS_GDSC in the dtsi for the 8996 ?
-Since both VFE GDSCs are children of CAMSS_GDSC and (as mentioned in the
-commit message) the power sequencing used to be different, it just seems
-to me like we've been piggybacking on lucky ordering since the introduction
-of 8996 support.
+I don't quite know whats the reference for downstream you are looking at 
+but, just generally it is possible to waggle the CSIPHY, VFE, IFE - my 
+guess would be that CAMX @ the time of 8996 always had the CAMSS_GDSC or 
+the VFEx - and hence the VFE -> CAMSS_GDSC on by the time the CSIPHY cod 
+ran.
 
-For comparison, 8916 doesn't define it because it doesn't have it and newer
-SoCs use TITAN.
+Anyway my comments here still stand.
 
-SDM630 doesn't define it, but nobody touched it since like 2021 (except
-Dmitry's fixups when he got his hands on the inforce baord) so it's
-probably broken as well..
+- I don't think we need to nor should be counting power-domain names
+- I do think we should be adding CAMSS_GDSC to the 8996 top-level CAMSS node
 
+Yassine ? Can you take a stab at that ?
 
-Konrad
-> 
-> ---
-> bod
+---
+bod
