@@ -2,225 +2,444 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2346712287
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 10:44:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C30071229D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 10:48:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242782AbjEZIob (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 04:44:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43618 "EHLO
+        id S242616AbjEZIsj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 04:48:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242796AbjEZIoZ (ORCPT
+        with ESMTP id S242614AbjEZIsi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 04:44:25 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0AD51BC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 01:44:21 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f3b314b1d7so456181e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 01:44:21 -0700 (PDT)
+        Fri, 26 May 2023 04:48:38 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA37899
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 01:48:35 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3f60e536250so10666135e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 01:48:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685090660; x=1687682660;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IVnDaE09fpwuijeo62SjM0LPoo+TZrYZ+he/bLhSsMI=;
-        b=sUnFonjQy77BbmupE9PtTuA2GIbMWh1dFcdM/bmc8v1nNcizK7zwqVvypFgEta8lzf
-         eMrXAso6d3muk/d5xWTPPvlEbv33Ea9oFJsM5GmrJE8S27VAo4YvhWp6aQ87sinfSJeY
-         YdsLxry74R0fj9JFxWgpoyflTDMoZSVkfrRLt9clZez7XQYqgnPW9Om8s/PeZgPLdhJB
-         j8kppvO8WJvVaCgUSESBultDeysZRhcnIrUCpovStUVd1P7Ui4wGCuBhbG54ziwTJj3b
-         V+ROvcik9IK58stHuaZkbuo4giKIMeM2dn4mIllAB8qyQfT2hVoNr6F5aztkNYEXww/8
-         hZEw==
+        d=linaro.org; s=google; t=1685090914; x=1687682914;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=rll7GWfG/sLOPy0cxeHu/HcyP+FoKo06l7zF9fa6a6E=;
+        b=v/W4IfFFAosHRfTdGdNGVy6M5uS6lOikAzwMe2xu9QF8btOzgepIgGxgvi5NB1P3I0
+         rPfnXA8+gpApnyQns7t5p7u7WESJJtH56PBrBgYusObI1QtyylfnyElDGKaXYOxwVmFA
+         hDeKq8MMMfK91ln3+4z6p/nIAmtM3F5m40OunO/N0kgMY6M4057puGfUVFIv0hW0oDeb
+         bIDRGNagjioQxgx+tqrlez1s5odS89UgQ/LtFo3SBLquKpsavb1pcKV/ByGZzCBHLGFw
+         +hx7pHRg9bkCZRjCpw/JlKva4aXLob6oyLrzVQNpgQ/NH3rY+QMTDLLRdXqECQ/smSiA
+         TM+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685090660; x=1687682660;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IVnDaE09fpwuijeo62SjM0LPoo+TZrYZ+he/bLhSsMI=;
-        b=JlgKhxjwzCQzV2+Pey9smuLNY1W1PSQu6GJidjOZEGkmVfN4gwsTCHlWsdAXtEmbrh
-         K0/xj07naec/boONtCDJ4RoaIcVcw2+GJyKQxZXx2Rf41/lGTWaMgBdsZE0iVnOZUNbV
-         NhLgU9vPJgOcQkjqTopgIo1H7zqreCepkb41xbfQ+onr8i35V/F6cpcLYe3ymJ/q9D1l
-         cGmPqrkkMmJQbiBU+IpYhCAcjC6eWLXP5vAzQLoKulu05LAyH48WPogpxNInHLVMqwDA
-         mEH9KcIIzHNv0iSawbMy+58fCSyWBbkWZbg65VjucjqDWlv1ZofZJxG5S2bl7YAWOkzM
-         BcUg==
-X-Gm-Message-State: AC+VfDws81sWKmrueJytQ7qzzr+5YLIVSg0yrFXmZQ0x65WqhwD/+rEW
-        zwyGKVG1cbrOLm/GVcwwZWimKQ==
-X-Google-Smtp-Source: ACHHUZ5NitM/a17W7+HylbMoqxSys4Jq3GzGcXgowZdZmdyMa1JgNFeNSIoahSjhURF8Qx0MwJp6eg==
-X-Received: by 2002:ac2:5623:0:b0:4f1:40fe:a976 with SMTP id b3-20020ac25623000000b004f140fea976mr255443lff.30.1685090659696;
-        Fri, 26 May 2023 01:44:19 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id q27-20020ac2529b000000b004f4b2c91c2esm520785lfm.231.2023.05.26.01.44.18
+        d=1e100.net; s=20221208; t=1685090914; x=1687682914;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :cc:to:content-language:subject:reply-to:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rll7GWfG/sLOPy0cxeHu/HcyP+FoKo06l7zF9fa6a6E=;
+        b=ZgdoONfo50lfocQNXi9r972usv2wtc2N/83Vt2EMEFcb/f04GaBAvSi3AWxpdewsse
+         wtyi52dWoqyGjWs1SzNp7J9o9iaVRuar2fjod31Be3TUBsQLz5QIOZWEkiP9C/APh41X
+         59AsKzfI/xqoeenFqNFxolIclsHxxtsblaTBvDk/0mhrIcrrS2Xhcl4OeBwIrLYs7Sv0
+         cpNZvugOS64N5wLVathrmg3OHyeCBGjqXm4W3inrkJraZKFe8qwYZJBYNUt7hv2X6GLu
+         nHqDnbEYj6DdoXz9fmi3jABToEeC2ZC4RFi7LGqcJ0qEIEWPpauF7d4g5kOZpaP0ua98
+         Zg7Q==
+X-Gm-Message-State: AC+VfDy/3QfMqQjVcqv0c28/gaa/ceqdFXMvDw4rFK4WXt2bp74U7BIz
+        fBZfIUDovizxDObTYTb7XDPJeg==
+X-Google-Smtp-Source: ACHHUZ5O6SzyE1EdhJ/kuSxcEqr0Z8pvzf756qORAchH8TPzfylPJC2ee/a1llhaNSgPhdAaO7KQlQ==
+X-Received: by 2002:a05:600c:1c8b:b0:3f6:d41:76ed with SMTP id k11-20020a05600c1c8b00b003f60d4176edmr4365078wms.5.1685090914182;
+        Fri, 26 May 2023 01:48:34 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:15d9:4dfb:95d6:f5a0? ([2a01:e0a:982:cbb0:15d9:4dfb:95d6:f5a0])
+        by smtp.gmail.com with ESMTPSA id q1-20020a1ce901000000b003f423dfc686sm4424349wmc.45.2023.05.26.01.48.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 01:44:19 -0700 (PDT)
-Message-ID: <d8d50268-96ae-d843-9dc5-37b30d87d238@linaro.org>
-Date:   Fri, 26 May 2023 10:44:18 +0200
+        Fri, 26 May 2023 01:48:33 -0700 (PDT)
+Message-ID: <2e3b64a6-0ffe-f083-666a-f829a6faee6c@linaro.org>
+Date:   Fri, 26 May 2023 10:48:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v4 5/5] cpufreq: qcom-nvmem: use helper to get SMEM SoC ID
+ Thunderbird/102.10.1
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v2 3/6] drm/msm/dpu: split interrupt address arrays
 Content-Language: en-US
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
-        ilia.lin@kernel.org, rafael@kernel.org, viresh.kumar@linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, ansuelsmth@gmail.com
-References: <20230525210214.78235-1-robimarko@gmail.com>
- <20230525210214.78235-5-robimarko@gmail.com>
- <5382b518-7691-ee70-c522-9ce0b14d60c1@linaro.org>
- <20230526024317.3t6nfv2aw27mrlj5@ripper>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230526024317.3t6nfv2aw27mrlj5@ripper>
-Content-Type: text/plain; charset=UTF-8
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230522214527.190054-1-dmitry.baryshkov@linaro.org>
+ <20230522214527.190054-4-dmitry.baryshkov@linaro.org>
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <20230522214527.190054-4-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 22/05/2023 23:45, Dmitry Baryshkov wrote:
+> There is no point in having a single enum (and a single array) for both
+> DPU < 7.0 and DPU >= 7.0 interrupt registers. Instead define a single
+> enum and two IRQ address arrays.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  1 +
+>   .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  1 +
+>   .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  1 +
+>   .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  1 +
+>   .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  1 +
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  2 +
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 82 +++++++++++++------
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h | 28 ++++---
+>   8 files changed, 79 insertions(+), 38 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> index 3c1b2c13398d..320cfa4be633 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> @@ -15,6 +15,7 @@ static const struct dpu_caps sm8350_dpu_caps = {
+>   	.has_dim_layer = true,
+>   	.has_idle_pc = true,
+>   	.has_3d_merge = true,
+> +	.has_7xxx_intr = true,
+>   	.max_linewidth = 4096,
+>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>   };
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> index 5d894cbb0a62..9306c7a115e9 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> @@ -13,6 +13,7 @@ static const struct dpu_caps sc7280_dpu_caps = {
+>   	.qseed_type = DPU_SSPP_SCALER_QSEED4,
+>   	.has_dim_layer = true,
+>   	.has_idle_pc = true,
+> +	.has_7xxx_intr = true,
+>   	.max_linewidth = 2400,
+>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>   };
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> index c3f1ae000a21..fc1e17c495f0 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> @@ -15,6 +15,7 @@ static const struct dpu_caps sc8280xp_dpu_caps = {
+>   	.has_dim_layer = true,
+>   	.has_idle_pc = true,
+>   	.has_3d_merge = true,
+> +	.has_7xxx_intr = true,
+>   	.max_linewidth = 5120,
+>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>   };
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> index 86c2e68ebd2c..eb72411c16db 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> @@ -14,6 +14,7 @@ static const struct dpu_caps sm8450_dpu_caps = {
+>   	.has_src_split = true,
+>   	.has_dim_layer = true,
+>   	.has_idle_pc = true,
+> +	.has_7xxx_intr = true,
+>   	.has_3d_merge = true,
+>   	.max_linewidth = 5120,
+>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> index 85dc34458b88..8209ca317bdc 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> @@ -15,6 +15,7 @@ static const struct dpu_caps sm8550_dpu_caps = {
+>   	.has_dim_layer = true,
+>   	.has_idle_pc = true,
+>   	.has_3d_merge = true,
+> +	.has_7xxx_intr = true,
+>   	.max_linewidth = 5120,
+>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>   };
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index 677048cc3b7d..72530ebb0ae6 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -351,6 +351,7 @@ struct dpu_rotation_cfg {
+>    * @has_dim_layer      dim layer feature status
+>    * @has_idle_pc        indicate if idle power collapse feature is supported
+>    * @has_3d_merge       indicate if 3D merge is supported
+> + * @has_7xxx_intr      indicate that INTF/IRQs use addressing for DPU 7.0 and greater
+>    * @max_linewidth      max linewidth for sspp
+>    * @pixel_ram_size     size of latency hiding and de-tiling buffer in bytes
+>    * @max_hdeci_exp      max horizontal decimation supported (max is 2^value)
+> @@ -364,6 +365,7 @@ struct dpu_caps {
+>   	bool has_dim_layer;
+>   	bool has_idle_pc;
+>   	bool has_3d_merge;
+> +	bool has_7xxx_intr;
+>   	/* SSPP limits */
+>   	u32 max_linewidth;
+>   	u32 pixel_ram_size;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> index 0776b0f6df4f..a03d826bb9ad 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
+> @@ -51,11 +51,9 @@ struct dpu_intr_reg {
+>   };
+>   
+>   /*
+> - * struct dpu_intr_reg -  List of DPU interrupt registers
+> - *
+> - * When making changes be sure to sync with dpu_hw_intr_reg
+> + * dpu_intr_set_legacy -  List of DPU interrupt registers for DPU <= 6.x
+>    */
+> -static const struct dpu_intr_reg dpu_intr_set[] = {
+> +static const struct dpu_intr_reg dpu_intr_set_legacy[] = {
+>   	[MDP_SSPP_TOP0_INTR] = {
+>   		INTR_CLEAR,
+>   		INTR_EN,
+> @@ -121,57 +119,78 @@ static const struct dpu_intr_reg dpu_intr_set[] = {
+>   		MDP_AD4_INTR_EN_OFF(1),
+>   		MDP_AD4_INTR_STATUS_OFF(1),
+>   	},
+> -	[MDP_INTF0_7xxx_INTR] = {
+> +};
+> +
+> +/*
+> + * dpu_intr_set_7xxx -  List of DPU interrupt registers for DPU >= 7.0
+> + */
+> +static const struct dpu_intr_reg dpu_intr_set_7xxx[] = {
+> +	[MDP_SSPP_TOP0_INTR] = {
+> +		INTR_CLEAR,
+> +		INTR_EN,
+> +		INTR_STATUS
+> +	},
+> +	[MDP_SSPP_TOP0_INTR2] = {
+> +		INTR2_CLEAR,
+> +		INTR2_EN,
+> +		INTR2_STATUS
+> +	},
+> +	[MDP_SSPP_TOP0_HIST_INTR] = {
+> +		HIST_INTR_CLEAR,
+> +		HIST_INTR_EN,
+> +		HIST_INTR_STATUS
+> +	},
+> +	[MDP_INTF0_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(0),
+>   		MDP_INTF_REV_7xxx_INTR_EN(0),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(0)
+>   	},
+> -	[MDP_INTF1_7xxx_INTR] = {
+> +	[MDP_INTF1_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(1),
+>   		MDP_INTF_REV_7xxx_INTR_EN(1),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(1)
+>   	},
+> -	[MDP_INTF1_7xxx_TEAR_INTR] = {
+> +	[MDP_INTF1_TEAR_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_TEAR_CLEAR(1),
+>   		MDP_INTF_REV_7xxx_INTR_TEAR_EN(1),
+>   		MDP_INTF_REV_7xxx_INTR_TEAR_STATUS(1)
+>   	},
+> -	[MDP_INTF2_7xxx_INTR] = {
+> +	[MDP_INTF2_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(2),
+>   		MDP_INTF_REV_7xxx_INTR_EN(2),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(2)
+>   	},
+> -	[MDP_INTF2_7xxx_TEAR_INTR] = {
+> +	[MDP_INTF2_TEAR_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_TEAR_CLEAR(2),
+>   		MDP_INTF_REV_7xxx_INTR_TEAR_EN(2),
+>   		MDP_INTF_REV_7xxx_INTR_TEAR_STATUS(2)
+>   	},
+> -	[MDP_INTF3_7xxx_INTR] = {
+> +	[MDP_INTF3_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(3),
+>   		MDP_INTF_REV_7xxx_INTR_EN(3),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(3)
+>   	},
+> -	[MDP_INTF4_7xxx_INTR] = {
+> +	[MDP_INTF4_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(4),
+>   		MDP_INTF_REV_7xxx_INTR_EN(4),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(4)
+>   	},
+> -	[MDP_INTF5_7xxx_INTR] = {
+> +	[MDP_INTF5_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(5),
+>   		MDP_INTF_REV_7xxx_INTR_EN(5),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(5)
+>   	},
+> -	[MDP_INTF6_7xxx_INTR] = {
+> +	[MDP_INTF6_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(6),
+>   		MDP_INTF_REV_7xxx_INTR_EN(6),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(6)
+>   	},
+> -	[MDP_INTF7_7xxx_INTR] = {
+> +	[MDP_INTF7_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(7),
+>   		MDP_INTF_REV_7xxx_INTR_EN(7),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(7)
+>   	},
+> -	[MDP_INTF8_7xxx_INTR] = {
+> +	[MDP_INTF8_INTR] = {
+>   		MDP_INTF_REV_7xxx_INTR_CLEAR(8),
+>   		MDP_INTF_REV_7xxx_INTR_EN(8),
+>   		MDP_INTF_REV_7xxx_INTR_STATUS(8)
+> @@ -216,19 +235,19 @@ irqreturn_t dpu_core_irq(struct msm_kms *kms)
+>   		return IRQ_NONE;
+>   
+>   	spin_lock_irqsave(&intr->irq_lock, irq_flags);
+> -	for (reg_idx = 0; reg_idx < ARRAY_SIZE(dpu_intr_set); reg_idx++) {
+> +	for (reg_idx = 0; reg_idx < MDP_INTR_MAX; reg_idx++) {
+>   		if (!test_bit(reg_idx, &intr->irq_mask))
+>   			continue;
+>   
+>   		/* Read interrupt status */
+> -		irq_status = DPU_REG_READ(&intr->hw, dpu_intr_set[reg_idx].status_off);
+> +		irq_status = DPU_REG_READ(&intr->hw, intr->intr_set[reg_idx].status_off);
+>   
+>   		/* Read enable mask */
+> -		enable_mask = DPU_REG_READ(&intr->hw, dpu_intr_set[reg_idx].en_off);
+> +		enable_mask = DPU_REG_READ(&intr->hw, intr->intr_set[reg_idx].en_off);
+>   
+>   		/* and clear the interrupt */
+>   		if (irq_status)
+> -			DPU_REG_WRITE(&intr->hw, dpu_intr_set[reg_idx].clr_off,
+> +			DPU_REG_WRITE(&intr->hw, intr->intr_set[reg_idx].clr_off,
+>   				     irq_status);
+>   
+>   		/* Finally update IRQ status based on enable mask */
+> @@ -285,7 +304,11 @@ static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
+>   	assert_spin_locked(&intr->irq_lock);
+>   
+>   	reg_idx = DPU_IRQ_REG(irq_idx);
+> -	reg = &dpu_intr_set[reg_idx];
+> +	reg = &intr->intr_set[reg_idx];
+> +
+> +	/* Is this interrupt register supported on the platform */
+> +	if (WARN_ON(!reg->en_off))
+> +		return -EINVAL;
+>   
+>   	cache_irq_mask = intr->cache_irq_mask[reg_idx];
+>   	if (cache_irq_mask & DPU_IRQ_MASK(irq_idx)) {
+> @@ -334,7 +357,7 @@ static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
+>   	assert_spin_locked(&intr->irq_lock);
+>   
+>   	reg_idx = DPU_IRQ_REG(irq_idx);
+> -	reg = &dpu_intr_set[reg_idx];
+> +	reg = &intr->intr_set[reg_idx];
+>   
+>   	cache_irq_mask = intr->cache_irq_mask[reg_idx];
+>   	if ((cache_irq_mask & DPU_IRQ_MASK(irq_idx)) == 0) {
+> @@ -368,10 +391,10 @@ static void dpu_clear_irqs(struct dpu_kms *dpu_kms)
+>   	if (!intr)
+>   		return;
+>   
+> -	for (i = 0; i < ARRAY_SIZE(dpu_intr_set); i++) {
+> +	for (i = 0; i < MDP_INTR_MAX; i++) {
+>   		if (test_bit(i, &intr->irq_mask))
+>   			DPU_REG_WRITE(&intr->hw,
+> -					dpu_intr_set[i].clr_off, 0xffffffff);
+> +					intr->intr_set[i].clr_off, 0xffffffff);
+>   	}
+>   
+>   	/* ensure register writes go through */
+> @@ -386,10 +409,10 @@ static void dpu_disable_all_irqs(struct dpu_kms *dpu_kms)
+>   	if (!intr)
+>   		return;
+>   
+> -	for (i = 0; i < ARRAY_SIZE(dpu_intr_set); i++) {
+> +	for (i = 0; i < MDP_INTR_MAX; i++) {
+>   		if (test_bit(i, &intr->irq_mask))
+>   			DPU_REG_WRITE(&intr->hw,
+> -					dpu_intr_set[i].en_off, 0x00000000);
+> +					intr->intr_set[i].en_off, 0x00000000);
+>   	}
+>   
+>   	/* ensure register writes go through */
+> @@ -421,10 +444,10 @@ u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx)
+>   
+>   	reg_idx = DPU_IRQ_REG(irq_idx);
+>   	intr_status = DPU_REG_READ(&intr->hw,
+> -			dpu_intr_set[reg_idx].status_off) &
+> +			intr->intr_set[reg_idx].status_off) &
+>   		DPU_IRQ_MASK(irq_idx);
+>   	if (intr_status)
+> -		DPU_REG_WRITE(&intr->hw, dpu_intr_set[reg_idx].clr_off,
+> +		DPU_REG_WRITE(&intr->hw, intr->intr_set[reg_idx].clr_off,
+>   				intr_status);
+>   
+>   	/* ensure register writes go through */
+> @@ -448,6 +471,11 @@ struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
+>   	if (!intr)
+>   		return ERR_PTR(-ENOMEM);
+>   
+> +	if (m->caps->has_7xxx_intr)
+> +		intr->intr_set = dpu_intr_set_7xxx;
+> +	else
+> +		intr->intr_set = dpu_intr_set_legacy;
+> +
+>   	intr->hw.blk_addr = addr + m->mdp[0].base;
+>   
+>   	intr->total_irqs = nirq;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+> index 1f2dabc54c22..f329d6d7f646 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
+> @@ -23,24 +23,29 @@ enum dpu_hw_intr_reg {
+>   	MDP_INTF3_INTR,
+>   	MDP_INTF4_INTR,
+>   	MDP_INTF5_INTR,
+> +	MDP_INTF6_INTR,
+> +	MDP_INTF7_INTR,
+> +	MDP_INTF8_INTR,
+>   	MDP_INTF1_TEAR_INTR,
+>   	MDP_INTF2_TEAR_INTR,
+>   	MDP_AD4_0_INTR,
+>   	MDP_AD4_1_INTR,
+> -	MDP_INTF0_7xxx_INTR,
+> -	MDP_INTF1_7xxx_INTR,
+> -	MDP_INTF1_7xxx_TEAR_INTR,
+> -	MDP_INTF2_7xxx_INTR,
+> -	MDP_INTF2_7xxx_TEAR_INTR,
+> -	MDP_INTF3_7xxx_INTR,
+> -	MDP_INTF4_7xxx_INTR,
+> -	MDP_INTF5_7xxx_INTR,
+> -	MDP_INTF6_7xxx_INTR,
+> -	MDP_INTF7_7xxx_INTR,
+> -	MDP_INTF8_7xxx_INTR,
+>   	MDP_INTR_MAX,
+>   };
+>   
+> +/* compatibility */
+> +#define MDP_INTF0_7xxx_INTR MDP_INTF0_INTR
+> +#define MDP_INTF1_7xxx_INTR MDP_INTF1_INTR
+> +#define MDP_INTF2_7xxx_INTR MDP_INTF2_INTR
+> +#define MDP_INTF3_7xxx_INTR MDP_INTF3_INTR
+> +#define MDP_INTF4_7xxx_INTR MDP_INTF4_INTR
+> +#define MDP_INTF5_7xxx_INTR MDP_INTF5_INTR
+> +#define MDP_INTF6_7xxx_INTR MDP_INTF6_INTR
+> +#define MDP_INTF7_7xxx_INTR MDP_INTF7_INTR
+> +#define MDP_INTF8_7xxx_INTR MDP_INTF8_INTR
+> +#define MDP_INTF1_7xxx_TEAR_INTR MDP_INTF1_TEAR_INTR
+> +#define MDP_INTF2_7xxx_TEAR_INTR MDP_INTF2_TEAR_INTR
+> +
+>   #define DPU_IRQ_IDX(reg_idx, offset)	(reg_idx * 32 + offset)
+>   
+>   /**
+> @@ -60,6 +65,7 @@ struct dpu_hw_intr {
+>   	u32 total_irqs;
+>   	spinlock_t irq_lock;
+>   	unsigned long irq_mask;
+> +	const struct dpu_intr_reg *intr_set;
+>   
+>   	struct {
+>   		void (*cb)(void *arg, int irq_idx);
 
-
-On 26.05.2023 04:43, Bjorn Andersson wrote:
-> On Fri, May 26, 2023 at 01:18:02AM +0200, Konrad Dybcio wrote:
->>
->>
->> On 25.05.2023 23:02, Robert Marko wrote:
->>> Now that SMEM exports a helper to get the SMEM SoC ID lets utilize it.
->>> Currently qcom_cpufreq_get_msm_id() is encoding the returned SMEM SoC ID
->>> into an enum, however there is no reason to do so and we can just match
->>> directly on the SMEM SoC ID as returned by qcom_smem_get_soc_id().
->>>
->>> Signed-off-by: Robert Marko <robimarko@gmail.com>
->>> Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
->>> ---
->>> Changes in v4:
->>> * Adapt to name change to qcom_smem_get_soc_id()
->>>
->>> Changes in v3:
->>> * Adapt to helper using argument now
->>>
->>> Changes in v2:
->>> * Utilize helper exported by SMEM instead of refactoring
->>> qcom_cpufreq_get_msm_id()
->>> ---
->>>  drivers/cpufreq/qcom-cpufreq-nvmem.c | 56 +++++-----------------------
->>>  1 file changed, 10 insertions(+), 46 deletions(-)
->>>
->>> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
->>> index 60e99be2d3db..a88b6fe5db50 100644
->>> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
->>> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
->>> @@ -29,16 +29,8 @@
->>>  #include <linux/slab.h>
->>>  #include <linux/soc/qcom/smem.h>
->>>  
->>> -#define MSM_ID_SMEM	137
->>> -
->>>  #include <dt-bindings/arm/qcom,ids.h>
->>>  
->>> -enum _msm8996_version {
->>> -	MSM8996_V3,
->>> -	MSM8996_SG,
->>> -	NUM_OF_MSM8996_VERSIONS,
->>> -};
->>> -
->>>  struct qcom_cpufreq_drv;
->>>  
->>>  struct qcom_cpufreq_match_data {
->>> @@ -135,60 +127,32 @@ static void get_krait_bin_format_b(struct device *cpu_dev,
->>>  	dev_dbg(cpu_dev, "PVS version: %d\n", *pvs_ver);
->>>  }
->>>  
->>> -static enum _msm8996_version qcom_cpufreq_get_msm_id(void)
->>> -{
->>> -	size_t len;
->>> -	u32 *msm_id;
->>> -	enum _msm8996_version version;
->>> -
->>> -	msm_id = qcom_smem_get(QCOM_SMEM_HOST_ANY, MSM_ID_SMEM, &len);
->>> -	if (IS_ERR(msm_id))
->>> -		return NUM_OF_MSM8996_VERSIONS;
->>> -
->>> -	/* The first 4 bytes are format, next to them is the actual msm-id */
->>> -	msm_id++;
->>> -
->>> -	switch ((enum _msm_id)*msm_id) {
->>> -	case QCOM_ID_MSM8996:
->>> -	case QCOM_ID_APQ8096:
->>> -		version = MSM8996_V3;
->>> -		break;
->>> -	case QCOM_ID_MSM8996SG:
->>> -	case QCOM_ID_APQ8096SG:
->>> -		version = MSM8996_SG;
->>> -		break;
->>> -	default:
->>> -		version = NUM_OF_MSM8996_VERSIONS;
->>> -	}
->>> -
->>> -	return version;
->>> -}
->>> -
->>>  static int qcom_cpufreq_kryo_name_version(struct device *cpu_dev,
->>>  					  struct nvmem_cell *speedbin_nvmem,
->>>  					  char **pvs_name,
->>>  					  struct qcom_cpufreq_drv *drv)
->>>  {
->>>  	size_t len;
->>> +	u32 msm_id;
->> __le32
->>
->>>  	u8 *speedbin;
->>> -	enum _msm8996_version msm8996_version;
->>> +	int ret;
->>>  	*pvs_name = NULL;
->>>  
->>> -	msm8996_version = qcom_cpufreq_get_msm_id();
->>> -	if (NUM_OF_MSM8996_VERSIONS == msm8996_version) {
->>> -		dev_err(cpu_dev, "Not Snapdragon 820/821!");
->>> -		return -ENODEV;
->>> -	}
->>> +	ret = qcom_smem_get_soc_id(&msm_id);
->>> +	if (ret)
->>> +		return ret;
->> Now since it can return a PTR_ERR, you should check for IS_ERR
->> and return ERR_PTR if that happens
-> 
-> No, the PTR_ERR() extracted the error value out of the pointer, so it's
-> just an integer now (or zero on success). So this is looking correct to
-> me.
-Riiight the function that returns a pointer to an error is *within*
-the one we're calling.. So much so for me reviewing late at night..
-
-Konrad
-> 
->>
->> LGTM otherwise!
->>
->> Konrad
->>>  
->>>  	speedbin = nvmem_cell_read(speedbin_nvmem, &len);
->>>  	if (IS_ERR(speedbin))
->>>  		return PTR_ERR(speedbin);
->>>  
->>> -	switch (msm8996_version) {
->>> -	case MSM8996_V3:
->>> +	switch (msm_id) {
->>> +	case QCOM_ID_MSM8996:
-> 
-> And here are those cpu-endian constants... If msm_id is a __le32 then
-> all these constants needs to be cpu_to_le32().
-> 
-> Regards,
-> Bjorn
-> 
->>> +	case QCOM_ID_APQ8096:
->>>  		drv->versions = 1 << (unsigned int)(*speedbin);
->>>  		break;
->>> -	case MSM8996_SG:
->>> +	case QCOM_ID_MSM8996SG:
->>> +	case QCOM_ID_APQ8096SG:
->>>  		drv->versions = 1 << ((unsigned int)(*speedbin) + 4);
->>>  		break;
->>>  	default:
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
