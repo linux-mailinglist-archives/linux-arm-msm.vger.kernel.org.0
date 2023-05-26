@@ -2,75 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F194712DEF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 21:53:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5E6F712DFE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 22:05:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242887AbjEZTxM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 15:53:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34616 "EHLO
+        id S236757AbjEZUFx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 16:05:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233433AbjEZTxL (ORCPT
+        with ESMTP id S230024AbjEZUFw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 15:53:11 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD6201B3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 12:53:09 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2af225e5b4bso11224431fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 12:53:09 -0700 (PDT)
+        Fri, 26 May 2023 16:05:52 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DC7FF3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 13:05:51 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f6d01d390bso12167445e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 13:05:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685130788; x=1687722788;
+        d=linaro.org; s=google; t=1685131549; x=1687723549;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=EdOxC7pmuf6A/Xakhco3OcLae3tnkD2fShwausc2Awo=;
-        b=HOrZeNPoR3ZYMQxO8fqChg/oAGdcW3K8v9RhXw3PAtxwsL3JS1D7LydUT65LwFS8rd
-         d8oanhI4eQEI5hcOLZ5PILzZm/xBDSbUUEiMz/bJtc5x1x0tgYnASt4sBHAhLnerxMiP
-         X9uJiiH05lY6LeC1Pg1nP49h/dzQH+A5tcltvwAQyR7NUB5a2r5UaaULBndvd5OmNq65
-         XAGy6ZRhI8ZTJAV5wOZz2JgXR1FrOlBVIRuVFk3dvsjulvIXqM/X84c02PpZhU6srX4E
-         KG/DohoNiI1JrAJBaWw6OFY2jly2qMhqe4f8ttYtqI/HpmKNgJaE7Fns3qDR5yAM/CGf
-         XbPg==
+        bh=ii7jUw037eoZ8vAATSpOVlCd9Yy79Gi5wawq+sGoAE8=;
+        b=woFwrMq2FfrFElY2FeQHOclRdLKxz2KbuCG30v1NLnuj76HybVAEj0w5LlqVUwsq0Y
+         8GpDEy334I1EymTkGxF/wO6OZ0p2MXZ3mhAgPtswJSuv2vVuzgXwlTWPA9wXA/7nPh4y
+         zwlMcvjv72hjGUpQ2ThqoABjzRGj7XjjZlPMCn4mKP6SQleWckzrTFniImmfZ+JJeNWV
+         YLl3n7llJ5VwCqmp0ktf3E6kjDARDiFIUYPTLLaw/bAPqx6l62noIadNh8fg+8JuyCcs
+         Il1JA/KT1ZN8fJVCMEYdZPtkJ2d21GeLxe8VnOGLkiJB7Xw5+QNN0X+Cm/4DxCkbI4+X
+         pCqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685130788; x=1687722788;
+        d=1e100.net; s=20221208; t=1685131549; x=1687723549;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EdOxC7pmuf6A/Xakhco3OcLae3tnkD2fShwausc2Awo=;
-        b=cIDw9HBR0yZ7UBfCGxShVnkC11sQdMUbtmdSWsIC1OAoTrOndsPX67zguxtE4q28kl
-         x4kx+fOGJc9NX+DO/Yjt0NRt9WAqB35Xo+Ylc6oXneJ92hNlZaNOpFuJWergHqUWZKzT
-         BDOqdkB/Y7Mse1QlhFUOX+9L1gWw4KtckioK/ok8EhkesMBL2oLB0RdaBEq4FsyAxSVz
-         /KMd7/zZUinDSwrwT6mOCFTx8DWotBGjv1Z363bwo9/XbNVMCBmuR08rPGUpszGh7npW
-         e3Oj/JER6h7nAHaeIFgslChDxwIADdEbSslKImdeiFdy7cnyz3TwUacVRZZrDby8if4g
-         cPRw==
-X-Gm-Message-State: AC+VfDz5AoNawBKkgXWvODNErZ+dbnEup32s4XleQA7/d1w8JnZPLgnm
-        6FT1VA5NoUH/DSCoswec939csw==
-X-Google-Smtp-Source: ACHHUZ4khPTysmRopzYaR5zjx+FiCgvNlpBkbFBZniRUlr/Zm+W/qbEL2Eup6UXRtM1OFsiXiiwbAg==
-X-Received: by 2002:a2e:808c:0:b0:2ad:92b9:83b4 with SMTP id i12-20020a2e808c000000b002ad92b983b4mr1228070ljg.5.1685130787979;
-        Fri, 26 May 2023 12:53:07 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id f6-20020a2e3806000000b002adb36f7343sm900375lja.77.2023.05.26.12.53.07
+        bh=ii7jUw037eoZ8vAATSpOVlCd9Yy79Gi5wawq+sGoAE8=;
+        b=GyNvYuWpe52ucIS8R0K3/LRfg1bEVax2Dbobt93dwXpjCnrpTWDXZ232XWYpIANSHY
+         y7qH2jvhiCdjoVJXh9FpYm+lvnip6yrcOD4GeDc0S+0nrOCHmb/v0s0cG+beI7URPoh+
+         X4Pvit96Ywrj18dMYJL+rsg4rZ6OtZ6My/ipwwWxBQ+XZBm4R3ujmlCpihKOoFjJFsYX
+         /8UVTkbswCPbx/WiuTgVJ45N5DVBEnXLuE73D5moOSplIvTLp+qvVtqydNkKRfqwUX/K
+         94HzgaSIcN9BIs5UWXlmugsjHUSR70FnEqEIHPaZeEQb+ICtfBmCX7oHBTMc0+bPn+kl
+         jI9g==
+X-Gm-Message-State: AC+VfDydIzMhgPcKtl/52QQJ9bvNcfA8Wuw573MPYVJJU7GhC1Y3Falo
+        SFa1Lab2hbHGwnY4ILrFogh/1g==
+X-Google-Smtp-Source: ACHHUZ5Wod0UWR630OobbVnuFuY+mY60QpYFhW+Ur6XxZ5rGEw1+JnvaJw+RyGPhw/lbn+cq9ZgXHw==
+X-Received: by 2002:a7b:cb90:0:b0:3f6:c7b:d3c8 with SMTP id m16-20020a7bcb90000000b003f60c7bd3c8mr2803322wmi.16.1685131549510;
+        Fri, 26 May 2023 13:05:49 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id a18-20020adfe5d2000000b003079c402762sm5948414wrn.19.2023.05.26.13.05.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 12:53:07 -0700 (PDT)
-Message-ID: <be3f426e-6831-9efd-19c3-1b679cc3ea7e@linaro.org>
-Date:   Fri, 26 May 2023 21:53:06 +0200
+        Fri, 26 May 2023 13:05:48 -0700 (PDT)
+Message-ID: <838b134d-46cb-6237-49b0-0c287141ebb3@linaro.org>
+Date:   Fri, 26 May 2023 21:05:47 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm8550-qrd: enable PMIC Volume and
- Power buttons
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 1/3] dt-bindings: media: camss: qcom,msm8996-camss: Add
+ CAMSS power domain
 Content-Language: en-US
-To:     Neil Armstrong <neil.armstrong@linaro.org>,
+To:     Conor Dooley <conor@kernel.org>,
+        Yassine Oudjana <yassine.oudjana@gmail.com>
+Cc:     Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230525-topic-sm8550-upstream-pm8550-lpg-dt-v1-0-4d5d7602f290@linaro.org>
- <20230525-topic-sm8550-upstream-pm8550-lpg-dt-v1-4-4d5d7602f290@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230525-topic-sm8550-upstream-pm8550-lpg-dt-v1-4-4d5d7602f290@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        Hans Verkuil <hansverk@cisco.com>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230526180712.8481-1-y.oudjana@protonmail.com>
+ <20230526180712.8481-2-y.oudjana@protonmail.com>
+ <20230526-obstruct-venus-5833511a58af@spud>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230526-obstruct-venus-5833511a58af@spud>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -82,85 +89,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 25.05.2023 17:47, Neil Armstrong wrote:
-> The Volume Down & Power buttons are controlled by the PMIC via
-> the PON hardware, and the Volume Up is connected to a PMIC gpio.
+On 26/05/2023 20:46, Conor Dooley wrote:
+>> +  - power-domain-names
+> Why is this now required?
 > 
-> Enable the necessary hardware and setup the GPIO state for the
-> Volume Up gpio key.
+> Thanks,
+> Conor.
 > 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 36 +++++++++++++++++++++++++++++++++
->  1 file changed, 36 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-> index b08a8201ad23..c354dcc12621 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-> +++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-> @@ -28,6 +28,22 @@ chosen {
->  		stdout-path = "serial0:115200n8";
->  	};
->  
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +
-> +		pinctrl-names = "default";
-> +		pinctrl-0 = <&volume_up_n>;
-property-n
-property-names
 
-> +
-> +		key-volume-up {
-> +			label = "Volume Up";
-> +			linux,code = <KEY_VOLUMEUP>;
-> +			gpios = <&pm8550_gpios 6 GPIO_ACTIVE_LOW>;
-> +			debounce-interval = <15>;
-> +			linux,can-disable;
-> +			wakeup-source;
-> +		};
-> +	};
-> +
->  	pmic-glink {
->  		compatible = "qcom,sm8550-pmic-glink", "qcom,pmic-glink";
->  		#address-cells = <1>;
-> @@ -426,6 +442,16 @@ &pcie0_phy {
->  	status = "okay";
->  };
->  
-> +&pon_pwrkey {
-> +	status = "okay";
-> +};
-> +
-> +&pon_resin {
-Not alphabetically ordered
+Its an accurate description of the power/clock tree to have the top 
+power domain be switched on prior to the clocks that depend on it.
 
-Konrad
-> +	linux,code = <KEY_VOLUMEDOWN>;
-> +
-> +	status = "okay";
-> +};
-> +
->  &pm8550_flash {
->  	status = "okay";
->  
-> @@ -450,6 +476,16 @@ led-1 {
->  	};
->  };
->  
-> +&pm8550_gpios {
-> +	volume_up_n: volume-up-n-state {
-> +		pins = "gpio6";
-> +		function = "normal";
-> +		power-source = <1>;
-> +		bias-pull-up;
-> +		input-enable;
-> +	};
-> +};
-> +
->  &pm8550_pwm {
->  	status = "okay";
->  
-> 
+I think Yassine, you could probably include the majority of your 
+cover-letter text in this commit to explain this change a bit better.
+
+---
+bod
