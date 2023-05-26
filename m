@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 12A8A712C9A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 20:40:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 34543712CD6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 20:51:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237092AbjEZSjv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 14:39:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48990 "EHLO
+        id S243323AbjEZSvN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 14:51:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57972 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230172AbjEZSju (ORCPT
+        with ESMTP id S243417AbjEZSvM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 14:39:50 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AE4F10C1;
-        Fri, 26 May 2023 11:39:20 -0700 (PDT)
+        Fri, 26 May 2023 14:51:12 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD179E50;
+        Fri, 26 May 2023 11:50:59 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AFE8A6527E;
-        Fri, 26 May 2023 18:38:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A7B8C433EF;
-        Fri, 26 May 2023 18:38:40 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4109D60FB1;
+        Fri, 26 May 2023 18:50:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F13C433EF;
+        Fri, 26 May 2023 18:50:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685126324;
-        bh=NrFb9Wj74u9c5ZnvWwv73iHlGH1QgmDSGvk+pcpUcSs=;
+        s=k20201202; t=1685127058;
+        bh=qwWvD+SDS8uafhcLh9NhqGJWERJTfArj7SSjyAz4TNE=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=oMAPgrdZbjnDJ1S6wkyhOCn5RcKJJjjngqwJI9pYU3mGqPYYwzSrVYFQgPBc9rOOt
-         m6RT5liSkbpnFfiyNsrHV5R0HWuNsaN1Ebl/Svea8buwve4QjO5B2NwtKaROh7o2vt
-         7IxOoM3GDH8LXrOhV84T7vr0NdnwSICEClQc0R+pi1RZOJLw/vD/CU6DGO35DMbFod
-         VusnnL3yN0HdfsxRNGOf7skQnp0npLYQuJHri2qlaTflAni4U8rshFu56MpSRQoTe9
-         k5W5Wego72vQMmrKyCis/xnhMAOw1jjRuWGnmVtTq3ic2bdsbEUrMLym4/rReK/NdG
-         BG9MFoF+eKMTw==
-Date:   Fri, 26 May 2023 19:38:38 +0100
+        b=csoNAlrEiArbNIaIuxOXduyyA4FitbwavUxYoUnjaDCylvGiaYr0b4yE2pRfzZCm/
+         C1kiHyUounMOgLEuHls/4yxz2PqG0pxupggaCq01ivaArFGk3ZdU1pp/PuX0he5B3P
+         Lwts0eSvDw8nkUmY7pTq4q44C6SG6kqUI6850yiR5RzdMbPqXlJbUmrhGwvruU9YJl
+         34ChWXWEMDd+OWKMmS8ECfEY5uJt6I4ZfTSK4MxHFki+sJF0mH40uQrVAMvmLiMti0
+         3NByjKpblpwMXhrMORGdn+43Td1w7dLYG9GNklFMjIkBpYGE8nWjEviK9se7nkmGnK
+         sb0PqNDuyPn6g==
+Date:   Fri, 26 May 2023 19:50:53 +0100
 From:   Conor Dooley <conor@kernel.org>
-To:     Vignesh Viswanathan <quic_viswanat@quicinc.com>
+To:     Devi Priya <quic_devipriy@quicinc.com>
 Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        lee@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_kathirav@quicinc.com,
-        quic_anusha@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_srichara@quicinc.com, quic_varada@quicinc.com
-Subject: Re: [PATCH 1/3] dt-bindings: mfd: qcom,tcsr: add the compatible for
- IPQ8074
-Message-ID: <20230526-race-ripping-d099a2772fd1@spud>
-References: <20230526110653.27777-1-quic_viswanat@quicinc.com>
- <20230526110653.27777-2-quic_viswanat@quicinc.com>
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
+        quic_anusha@quicinc.com
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: document AL02-C8 board based
+ on IPQ9574 family
+Message-ID: <20230526-calamity-boned-670e1bad7a6c@spud>
+References: <20230526153152.777-1-quic_devipriy@quicinc.com>
+ <20230526153152.777-2-quic_devipriy@quicinc.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="aSf09WvGUhoAHRN5"
+        protocol="application/pgp-signature"; boundary="vcXuDeNW1ivsfzBs"
 Content-Disposition: inline
-In-Reply-To: <20230526110653.27777-2-quic_viswanat@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+In-Reply-To: <20230526153152.777-2-quic_devipriy@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -63,30 +63,31 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---aSf09WvGUhoAHRN5
+--vcXuDeNW1ivsfzBs
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 26, 2023 at 04:36:51PM +0530, Vignesh Viswanathan wrote:
-> Document the qcom,tcsr-ipq8074 compatible.
+On Fri, May 26, 2023 at 09:01:51PM +0530, Devi Priya wrote:
+> Document AL02-C8 (Reference Design Platform 453) board based on IPQ9574
+> family of SoCs.
 >=20
-> Signed-off-by: Vignesh Viswanathan <quic_viswanat@quicinc.com>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 
 Acked-by: Conor Dooley <conor.dooley@microchip.com>
 
 Thanks,
 Conor.
 
---aSf09WvGUhoAHRN5
+--vcXuDeNW1ivsfzBs
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZHD8rgAKCRB4tDGHoIJi
-0pRrAP9hGS2J0BQmIrvtEq6pLs3XL3dSjzMJA4b1V9Se1Dt5JQD/UqvlEoB4fTNV
-vHlkAagembC7ao8ICTkyf/fTbowYJw8=
-=+N3/
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZHD/jQAKCRB4tDGHoIJi
+0sPUAQCpG0E60EZwCFggBm7I1+72+WdMwQy4GYNpg9aN3s9o+AEAjqzgMD4DEWAR
+f8CElr1TM+a5ct5TznVxRlt3BkrVNgQ=
+=JAKI
 -----END PGP SIGNATURE-----
 
---aSf09WvGUhoAHRN5--
+--vcXuDeNW1ivsfzBs--
