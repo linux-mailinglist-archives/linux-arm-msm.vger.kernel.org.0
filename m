@@ -2,120 +2,255 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90DD6712E5A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 22:47:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C815712E5F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 22:48:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242775AbjEZUrm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 16:47:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49346 "EHLO
+        id S243254AbjEZUsR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 16:48:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242689AbjEZUrl (ORCPT
+        with ESMTP id S237856AbjEZUsL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 16:47:41 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCBF81B3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 13:47:38 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-3078cc99232so1046264f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 13:47:38 -0700 (PDT)
+        Fri, 26 May 2023 16:48:11 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D979518D;
+        Fri, 26 May 2023 13:48:06 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-96f7bf3cf9eso223940266b.0;
+        Fri, 26 May 2023 13:48:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685134057; x=1687726057;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SWQNcyZP8KiazdiWKnaP5XYHweBHqUNg+1IkJ9O3dyY=;
-        b=HOP5yi8wL4uZwsx/lN1hkXHAUQcLlHwLeN1NrRSX66ZKHVibVzeVB1VA/mIvQfv5rt
-         pSzJCHCRifpmdaUu1G1hwXNtfwOihWzRtQZ3kRUKJLkJ6qSAZ6Opvv/qsHs0z7cWhCp8
-         YCq+jVuMuoCDwktcu0Vb1Z14142njMpAPjfHakDKuWsWg6D1aJaMwrAmAusd9Ooqlq9w
-         QvuJ7cU+Gl0/X4jgUf7qeQODEA8HIhkX3rAlms2ao9SFHxEnhCKINwjN/X1sTflpUjy1
-         +xOW2hUtRErNSti5nRKNBWvWKknNun1AuJBJRyqSwEydJKDgNY6Y9euyXSwrdPIXEqWk
-         KBXg==
+        d=gmail.com; s=20221208; t=1685134085; x=1687726085;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=0R0NrTV6Cqbu4tkPLJTMsGVN13FV0cFn1qP/yJKlxmM=;
+        b=X2rfpKXipfhG+PEUWJBDIQ1o5PogCoENlvEt+SGQ+7rF8iLBN7SFnV13wRnDdiXT2r
+         NGXjedeOg+tIWRV5stWzQa3BSAAozyh3AzsH/FSAw74GAmCkvfBcJlYAdFockCIgeLyY
+         dYGEp6v6D0GLNAOv5J5dg8XR5yXkpKP9SGDL+OqzS+PxMC2u9T9rVraYige205g+dtZt
+         pmBNSpBVUdbjRp6AA9k6XhyvMLy8LJg4ypDXmkMaLHhEbKP7Yy5XfV+vB2aaEQz+eI/R
+         Yx4YuvzAeRh1YCr4PkNRyTAj0mo6CJfDNjE2c+4pXYGZ3lWMy7HRCcg+UDZR2PJK2b5n
+         wjow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685134057; x=1687726057;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SWQNcyZP8KiazdiWKnaP5XYHweBHqUNg+1IkJ9O3dyY=;
-        b=dkLx77vKWDZnrRix1TA3f8s0sjhSOjsWTTHjxQoszR5WTa68illipgw8edWO2U6hDw
-         PM48oDtI9aAgWkQmZCqIfC6pz6BiXtb8AAtBOD+HWpn2/XK+WNnurGdyUA7vw5soGoPB
-         U+qZY6BvoU6kSr5ETdAB/ftys6UasHd8FYRfGcve2NvRMwUJPUzwI4UP34O2zz3hhoSP
-         uwqMTnpSEM9gidFtbuuWr0qOSBLfhh6nKq3fo4yeOZJ9lPUuf3esm/R4ZWyiJUyokwm8
-         9KdpIG99FDKSgUDqWiIESgT2wepusIUmKYAXTtzhVX471Ng/GnKexjOoZU23cmIheHQq
-         0Buw==
-X-Gm-Message-State: AC+VfDwteDPt8xB+GiDdQ+0t2bh5Kf+KEJN+CIym7epO1Th7nvTC/HFX
-        z7eeuHlo33GTJPOG+Eor9XUC6Q==
-X-Google-Smtp-Source: ACHHUZ58exYPPq57b3uzGOTHpryl+KwllVGqwA4MIB3/qNNft8Red3AAA0R7RVOZ3ZBJrCXeM0EtkA==
-X-Received: by 2002:a05:6000:11c4:b0:306:2e04:5925 with SMTP id i4-20020a05600011c400b003062e045925mr2451387wrx.17.1685134057195;
-        Fri, 26 May 2023 13:47:37 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id p25-20020a7bcc99000000b003f1751016desm6319163wma.28.2023.05.26.13.47.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 13:47:36 -0700 (PDT)
-Message-ID: <2385b00f-3292-3d27-dba2-c1375e5d9dae@linaro.org>
-Date:   Fri, 26 May 2023 21:47:35 +0100
+        d=1e100.net; s=20221208; t=1685134085; x=1687726085;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0R0NrTV6Cqbu4tkPLJTMsGVN13FV0cFn1qP/yJKlxmM=;
+        b=MHs1PYlZqemGFJ3laEajmlbC86p/ThusgY3bQv7UCfAYgp0iTiavJe28Zc/Ghn5+U3
+         cAdh9HzAHhH54NbfePNnty2ZOBQeBCd0CgfZxWXL288YE09UjFBHveS9kre7JeOf3d4P
+         CpqbjhBi67gbWaMMUrpPc5Rjb/vHj/8zXgnIZFtnKWgOJRRn79uC9D3m+Vy0B+Hhql3K
+         wKRvLFVPlVr7RA0t1u2KtlAy2JuC5LIYTBtxMlOluFjRZpvaxd2zYWYQZMQ50KaQC8Vs
+         JqhfhWsach1pF1tESj/25x59zDNbUZdkrtjhjhep31p0Fuxp1Pfo222L6ldfUoTyDNmD
+         k42A==
+X-Gm-Message-State: AC+VfDxVDTUjpW+2jLKpV5EZGoYsIC6GGfNsAAIXj4MwdMus8qOeTGlV
+        z0LieD2ybMr40eMXZH7WUSg=
+X-Google-Smtp-Source: ACHHUZ4tltghkDEs4H+WeAaNWWmoAVTk1B3YVlbFYjpOos6TovJcH77mpK7bVtLFFU/UdEgvlSV3eg==
+X-Received: by 2002:a17:907:60c9:b0:96f:cde5:5f5e with SMTP id hv9-20020a17090760c900b0096fcde55f5emr3233901ejc.29.1685134084976;
+        Fri, 26 May 2023 13:48:04 -0700 (PDT)
+Received: from fedora.. (dh207-98-6.xnet.hr. [88.207.98.6])
+        by smtp.googlemail.com with ESMTPSA id m13-20020a170906160d00b0095342bfb701sm2604413ejd.16.2023.05.26.13.48.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 May 2023 13:48:04 -0700 (PDT)
+From:   Robert Marko <robimarko@gmail.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        ilia.lin@kernel.org, rafael@kernel.org, viresh.kumar@linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Cc:     ansuelsmth@gmail.com, Robert Marko <robimarko@gmail.com>
+Subject: [PATCH v5 1/5] soc: qcom: socinfo: move SMEM item struct and defines to a header
+Date:   Fri, 26 May 2023 22:47:58 +0200
+Message-Id: <20230526204802.3081168-1-robimarko@gmail.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 1/3] dt-bindings: media: camss: qcom,msm8996-camss: Add
- CAMSS power domain
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bryan O'Donoghue <pure.logic@nexus-software.ie>,
-        Conor Dooley <conor@kernel.org>
-Cc:     Yassine Oudjana <yassine.oudjana@gmail.com>,
-        Robert Foss <rfoss@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Hans Verkuil <hansverk@cisco.com>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230526180712.8481-1-y.oudjana@protonmail.com>
- <20230526180712.8481-2-y.oudjana@protonmail.com>
- <20230526-obstruct-venus-5833511a58af@spud>
- <838b134d-46cb-6237-49b0-0c287141ebb3@linaro.org>
- <20230526-street-pox-2ff5ee106c43@spud>
- <8d89c14f-b2c2-7db2-f637-aa6d90273f4d@linaro.org>
- <631e5eec-853b-dce2-c474-62e76e83d7e6@linaro.org>
- <5dc28004-5ff4-2102-0bb3-8f7bee7cfca6@nexus-software.ie>
- <265d1c93-0740-cd87-3ba2-e1ddf70a0c65@linaro.org>
-Content-Language: en-US
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <265d1c93-0740-cd87-3ba2-e1ddf70a0c65@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/05/2023 21:43, Konrad Dybcio wrote:
-> 
-> 
-> On 26.05.2023 22:40, Bryan O'Donoghue wrote:
->> On 26/05/2023 21:36, Konrad Dybcio wrote:
->>>> oh the names
->>>>
->>>> no toss that
->>> this should be
->>>
->>> if:properties:compatible:blahblahmsm8996:then:required:power-domain-names
->>>
->>> Konrad
->>
->> Hmm, we don't depend on the names though.
-> Check patch 3!
+Move SMEM item struct and related defines to a header in order to be able
+to reuse them in the SMEM driver instead of duplicating them.
 
-Hmm but we already count the number of power domains in 
-camss_configure_pd().
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ drivers/soc/qcom/socinfo.c       | 67 +-----------------------------
+ include/linux/soc/qcom/socinfo.h | 70 ++++++++++++++++++++++++++++++++
+ 2 files changed, 71 insertions(+), 66 deletions(-)
+ create mode 100644 include/linux/soc/qcom/socinfo.h
 
-There's no logic in counting it twice using two different methods.
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index c2e4a57dd666..ee6bbf76d941 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -11,6 +11,7 @@
+ #include <linux/random.h>
+ #include <linux/slab.h>
+ #include <linux/soc/qcom/smem.h>
++#include <linux/soc/qcom/socinfo.h>
+ #include <linux/string.h>
+ #include <linux/stringify.h>
+ #include <linux/sys_soc.h>
+@@ -32,15 +33,6 @@
+ #define qcom_board_id(id) QCOM_ID_ ## id, __stringify(id)
+ #define qcom_board_id_named(id, name) QCOM_ID_ ## id, (name)
+ 
+-#define SMEM_SOCINFO_BUILD_ID_LENGTH           32
+-#define SMEM_SOCINFO_CHIP_ID_LENGTH            32
+-
+-/*
+- * SMEM item id, used to acquire handles to respective
+- * SMEM region.
+- */
+-#define SMEM_HW_SW_BUILD_ID            137
+-
+ #ifdef CONFIG_DEBUG_FS
+ #define SMEM_IMAGE_VERSION_BLOCKS_COUNT        32
+ #define SMEM_IMAGE_VERSION_SIZE                4096
+@@ -126,64 +118,7 @@ static const char *const pmic_models[] = {
+ 	[58] = "PM8450",
+ 	[65] = "PM8010",
+ };
+-#endif /* CONFIG_DEBUG_FS */
+-
+-/* Socinfo SMEM item structure */
+-struct socinfo {
+-	__le32 fmt;
+-	__le32 id;
+-	__le32 ver;
+-	char build_id[SMEM_SOCINFO_BUILD_ID_LENGTH];
+-	/* Version 2 */
+-	__le32 raw_id;
+-	__le32 raw_ver;
+-	/* Version 3 */
+-	__le32 hw_plat;
+-	/* Version 4 */
+-	__le32 plat_ver;
+-	/* Version 5 */
+-	__le32 accessory_chip;
+-	/* Version 6 */
+-	__le32 hw_plat_subtype;
+-	/* Version 7 */
+-	__le32 pmic_model;
+-	__le32 pmic_die_rev;
+-	/* Version 8 */
+-	__le32 pmic_model_1;
+-	__le32 pmic_die_rev_1;
+-	__le32 pmic_model_2;
+-	__le32 pmic_die_rev_2;
+-	/* Version 9 */
+-	__le32 foundry_id;
+-	/* Version 10 */
+-	__le32 serial_num;
+-	/* Version 11 */
+-	__le32 num_pmics;
+-	__le32 pmic_array_offset;
+-	/* Version 12 */
+-	__le32 chip_family;
+-	__le32 raw_device_family;
+-	__le32 raw_device_num;
+-	/* Version 13 */
+-	__le32 nproduct_id;
+-	char chip_id[SMEM_SOCINFO_CHIP_ID_LENGTH];
+-	/* Version 14 */
+-	__le32 num_clusters;
+-	__le32 ncluster_array_offset;
+-	__le32 num_defective_parts;
+-	__le32 ndefective_parts_array_offset;
+-	/* Version 15 */
+-	__le32 nmodem_supported;
+-	/* Version 16 */
+-	__le32  feature_code;
+-	__le32  pcode;
+-	__le32  npartnamemap_offset;
+-	__le32  nnum_partname_mapping;
+-	/* Version 17 */
+-	__le32 oem_variant;
+-};
+ 
+-#ifdef CONFIG_DEBUG_FS
+ struct socinfo_params {
+ 	u32 raw_device_family;
+ 	u32 hw_plat_subtype;
+diff --git a/include/linux/soc/qcom/socinfo.h b/include/linux/soc/qcom/socinfo.h
+new file mode 100644
+index 000000000000..d1cbc49a2a2d
+--- /dev/null
++++ b/include/linux/soc/qcom/socinfo.h
+@@ -0,0 +1,70 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++
++#ifndef __QCOM_SOCINFO_H__
++#define __QCOM_SOCINFO_H__
++
++/*
++ * SMEM item id, used to acquire handles to respective
++ * SMEM region.
++ */
++#define SMEM_HW_SW_BUILD_ID		137
++
++#define SMEM_SOCINFO_BUILD_ID_LENGTH	32
++#define SMEM_SOCINFO_CHIP_ID_LENGTH	32
++
++/* Socinfo SMEM item structure */
++struct socinfo {
++	__le32 fmt;
++	__le32 id;
++	__le32 ver;
++	char build_id[SMEM_SOCINFO_BUILD_ID_LENGTH];
++	/* Version 2 */
++	__le32 raw_id;
++	__le32 raw_ver;
++	/* Version 3 */
++	__le32 hw_plat;
++	/* Version 4 */
++	__le32 plat_ver;
++	/* Version 5 */
++	__le32 accessory_chip;
++	/* Version 6 */
++	__le32 hw_plat_subtype;
++	/* Version 7 */
++	__le32 pmic_model;
++	__le32 pmic_die_rev;
++	/* Version 8 */
++	__le32 pmic_model_1;
++	__le32 pmic_die_rev_1;
++	__le32 pmic_model_2;
++	__le32 pmic_die_rev_2;
++	/* Version 9 */
++	__le32 foundry_id;
++	/* Version 10 */
++	__le32 serial_num;
++	/* Version 11 */
++	__le32 num_pmics;
++	__le32 pmic_array_offset;
++	/* Version 12 */
++	__le32 chip_family;
++	__le32 raw_device_family;
++	__le32 raw_device_num;
++	/* Version 13 */
++	__le32 nproduct_id;
++	char chip_id[SMEM_SOCINFO_CHIP_ID_LENGTH];
++	/* Version 14 */
++	__le32 num_clusters;
++	__le32 ncluster_array_offset;
++	__le32 num_defective_parts;
++	__le32 ndefective_parts_array_offset;
++	/* Version 15 */
++	__le32 nmodem_supported;
++	/* Version 16 */
++	__le32  feature_code;
++	__le32  pcode;
++	__le32  npartnamemap_offset;
++	__le32  nnum_partname_mapping;
++	/* Version 17 */
++	__le32 oem_variant;
++};
++
++#endif
+-- 
+2.40.1
 
