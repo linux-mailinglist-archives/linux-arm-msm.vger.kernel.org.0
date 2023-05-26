@@ -2,60 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E80EA712E8B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 22:55:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4B82712EA8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 23:05:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243883AbjEZUzg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 16:55:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54540 "EHLO
+        id S243830AbjEZVFa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 17:05:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59850 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233433AbjEZUzf (ORCPT
+        with ESMTP id S236835AbjEZVF2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 16:55:35 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EC24A3;
-        Fri, 26 May 2023 13:55:34 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id E1C2965399;
-        Fri, 26 May 2023 20:55:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBEA9C433D2;
-        Fri, 26 May 2023 20:55:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685134533;
-        bh=wNFS8qMpN9xjGkOy46fougDPohwpIn+vlopjqdB2Sr8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=QoyYdGl7arYEizSVYRRLhQ4r35A4aBdNP+dWXfwtrMdRlgKHyFslPBQH38lz9HCCG
-         4dGnTzHSxH6YCZgMYEtgbWEwRPido3Ff869pggt9FMU/wrGuXMkdJvo1wWfdHCQ3SF
-         D3Ia0rj187W93RTKZXe/hfrvJiF2JLdW8EtWFx2NGLTpWBan6zGUjHD9UHrmBLnedO
-         3W/3sUen9JZGepNHkwuHoERxPfjv7laOaxjxNxC0Iy1fGKosXBWbV22h0B2yMI0WhV
-         vnw09r1avVxeSHxVIFwxYjhUtmmuaEf5SRyM2L+eltnKysbD0xpWnyVfQnRRo5UdO2
-         S8cLnY9kEcurg==
-Date:   Fri, 26 May 2023 13:59:20 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     kernel test robot <lkp@intel.com>
-Cc:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        tglx@linutronix.de, maz@kernel.org, will@kernel.org,
-        robin.murphy@arm.com, joro@8bytes.org, robimarko@gmail.com,
-        quic_gurus@quicinc.com, llvm@lists.linux.dev,
-        oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        Imran Shaik <quic_imrashai@quicinc.com>
-Subject: Re: [PATCH 6/8] arm64: dts: qcom: Add support for GCC and RPMHCC for
- SDX75
-Message-ID: <20230526205920.vxibspqj7cbizxq7@ripper>
-References: <1684487350-30476-7-git-send-email-quic_rohiagar@quicinc.com>
- <202305201743.PsMD38Vz-lkp@intel.com>
+        Fri, 26 May 2023 17:05:28 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EFE41B1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:05:18 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f37b860173so1365316e87.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:05:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685135117; x=1687727117;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GqzChK2p9Fmsbypm5fA/GYnlAjU1PYB3ZgmsKK+VVus=;
+        b=t2cG7LYWCQ/fIqzKcGIfk8cwHzaznVTEc9PDO/9dcOBDmlYOw89iJUHjEWU/vSWIga
+         uN+5r85b0ymLK9qb/cjnwav6OXL2AQNSx4FUrbqXm2LiD+EJWIOWcA1CWaHGk24z/j5t
+         +iPXTpgeaVuDao1h3fkkw6uk8Hzl9360uPMzJJjBM27071/yl4kEIoCY9Ot7HL95lzwh
+         LJEZ4P1YtgaSqTGP1qA655qKXErtuC81ekYUrvb++UQKoqan/I2wXBE8ZDW9zMok9/6o
+         ohgLcLPkdP2HD81wTynIMiSdSJ/e8KV9RUP+WQUGUjfULLHUn2MnL3hhubMlE2rF6O9x
+         DB2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685135117; x=1687727117;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GqzChK2p9Fmsbypm5fA/GYnlAjU1PYB3ZgmsKK+VVus=;
+        b=UMnBg/C/5iThezP1co0CQYjofG6ACOw8ORdr+qo+bjO+AVFFuHvDXNCl6zYYtlZJk0
+         eCwETOTmAaTCe+QhtwifqToXi81r8uNoGI2/XB3gO3r+MsGcjuk1T/1dSrwNRTq45tTk
+         wmxE82pJvqRd6MZcby+1u7kyHi4fYAKhZUfj2PHG4Vq9SZ7fvEFf106IdhB+wG1SBqhQ
+         fy6sclsHZd+LoTrChh9JFike0azyf+zePBQbGi+MS7NIywonc1EGgTIHRdH6o2wRyQI1
+         McQ84M/HJEUNTp1kE5QBc4SiB9iC/WDfAZbmansqqllGI+LrFcqe8JrA2Z8dFFlD/pte
+         QWJQ==
+X-Gm-Message-State: AC+VfDwbEcwuxHCw4VrtXGaGRXact49PILeqb68+QyeT27H4jyucEHg4
+        i8Hq2Dm6G7lnF/BlQ/rK1Q3HGw==
+X-Google-Smtp-Source: ACHHUZ7O5tQX7gUXjHxxBp9kqHiKWVIiLCI+vuE0LsVKLdoVIEf/7YYM17Gn3NJ68MieU9Pnvc8NSg==
+X-Received: by 2002:a2e:a164:0:b0:2af:b4b:8583 with SMTP id u4-20020a2ea164000000b002af0b4b8583mr1060146ljl.15.1685135116776;
+        Fri, 26 May 2023 14:05:16 -0700 (PDT)
+Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
+        by smtp.gmail.com with ESMTPSA id a24-20020a2e8618000000b002a76c16ad65sm951941lji.87.2023.05.26.14.05.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 May 2023 14:05:16 -0700 (PDT)
+Message-ID: <e8436d49-f9d7-fbb6-a4f7-935dc43c5ce4@linaro.org>
+Date:   Fri, 26 May 2023 23:05:14 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <202305201743.PsMD38Vz-lkp@intel.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v5 3/5] soc: qcom: smem: introduce qcom_smem_get_soc_id()
+Content-Language: en-US
+To:     Robert Marko <robimarko@gmail.com>, agross@kernel.org,
+        andersson@kernel.org, ilia.lin@kernel.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+Cc:     ansuelsmth@gmail.com
+References: <20230526204802.3081168-1-robimarko@gmail.com>
+ <20230526204802.3081168-3-robimarko@gmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230526204802.3081168-3-robimarko@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -64,50 +78,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, May 20, 2023 at 06:08:25PM +0800, kernel test robot wrote:
-> Hi Rohit,
-> 
-> kernel test robot noticed the following build errors:
-> 
-> [auto build test ERROR on robh/for-next]
-> [also build test ERROR on tip/irq/core joro-iommu/next linus/master v6.4-rc2 next-20230519]
-> [If your patch is applied to the wrong git tree, kindly drop us a note.
-> And when submitting patch, we suggest to use '--base' as documented in
-> https://git-scm.com/docs/git-format-patch#_base_tree_information]
-> 
-> url:    https://github.com/intel-lab-lkp/linux/commits/Rohit-Agarwal/dt-bindings-arm-qcom-Document-SDX75-platform-and-boards/20230519-171116
-> base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-> patch link:    https://lore.kernel.org/r/1684487350-30476-7-git-send-email-quic_rohiagar%40quicinc.com
-> patch subject: [PATCH 6/8] arm64: dts: qcom: Add support for GCC and RPMHCC for SDX75
-> config: arm64-randconfig-r006-20230517
-> compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project b0fb98227c90adf2536c9ad644a74d5e92961111)
-> reproduce (this is a W=1 build):
->         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
->         chmod +x ~/bin/make.cross
->         # install arm64 cross compiling tool for clang build
->         # apt-get install binutils-aarch64-linux-gnu
->         # https://github.com/intel-lab-lkp/linux/commit/768f74f2345d9af657bd58a98e7ade22b7a5c3e2
->         git remote add linux-review https://github.com/intel-lab-lkp/linux
->         git fetch --no-tags linux-review Rohit-Agarwal/dt-bindings-arm-qcom-Document-SDX75-platform-and-boards/20230519-171116
->         git checkout 768f74f2345d9af657bd58a98e7ade22b7a5c3e2
->         # save the config file
->         mkdir build_dir && cp config build_dir/.config
->         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 olddefconfig
->         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm64 SHELL=/bin/bash
-> 
-> If you fix the issue, kindly add following tag where applicable
-> | Reported-by: kernel test robot <lkp@intel.com>
-> | Closes: https://lore.kernel.org/oe-kbuild-all/202305201743.PsMD38Vz-lkp@intel.com/
-> 
-> All errors (new ones prefixed by >>):
-> 
->    In file included from arch/arm64/boot/dts/qcom/sdx75-idp.dts:8:
-> >> arch/arm64/boot/dts/qcom/sdx75.dtsi:10:10: fatal error: 'dt-bindings/clock/qcom,sdx75-gcc.h' file not found
->    #include <dt-bindings/clock/qcom,sdx75-gcc.h>
->             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This error can be ignored, I will fix the problem when applying the
-updated patches.
 
-Regards,
-Bjorn
+On 26.05.2023 22:48, Robert Marko wrote:
+> Introduce a helper to return the SoC SMEM ID, which is used to identify the
+> exact SoC model as there may be differences in the same SoC family.
+> 
+> Currently, cpufreq-nvmem does this completely in the driver and there has
+> been more interest expresed for other drivers to use this information so
+> lets expose a common helper to prevent redoing it in individual drivers
+> since this field is present on every SMEM table version.
+> 
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+> Changes in v5:
+> * Convert the __le32 ID to CPU endinaness
+Sorry for the confusion in my previous reviews.
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+> 
+> Changes in v4:
+> * Change helper name to qcom_smem_get_soc_id()
+> * Remove len and just pass NULL, that is sufficient here
+> 
+> Changes in v3:
+> * Change export to EXPORT_SYMBOL_GPL
+> * Use an argument for returning SoC ID
+> * Update kerneldoc
+> ---
+>  drivers/soc/qcom/smem.c       | 23 +++++++++++++++++++++++
+>  include/linux/soc/qcom/smem.h |  2 ++
+>  2 files changed, 25 insertions(+)
+> 
+> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+> index bc98520c4969..b0d59e815c3b 100644
+> --- a/drivers/soc/qcom/smem.c
+> +++ b/drivers/soc/qcom/smem.c
+> @@ -14,6 +14,7 @@
+>  #include <linux/sizes.h>
+>  #include <linux/slab.h>
+>  #include <linux/soc/qcom/smem.h>
+> +#include <linux/soc/qcom/socinfo.h>
+>  
+>  /*
+>   * The Qualcomm shared memory system is a allocate only heap structure that
+> @@ -772,6 +773,28 @@ phys_addr_t qcom_smem_virt_to_phys(void *p)
+>  }
+>  EXPORT_SYMBOL_GPL(qcom_smem_virt_to_phys);
+>  
+> +/**
+> + * qcom_smem_get_soc_id() - return the SoC ID
+> + * @id:	On success, we return the SoC ID here.
+> + *
+> + * Look up SoC ID from HW/SW build ID and return it.
+> + *
+> + * Return: 0 on success, negative errno on failure.
+> + */
+> +int qcom_smem_get_soc_id(u32 *id)
+> +{
+> +	struct socinfo *info;
+> +
+> +	info = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_HW_SW_BUILD_ID, NULL);
+> +	if (IS_ERR(info))
+> +		return PTR_ERR(info);
+> +
+> +	*id = __le32_to_cpu(info->id);
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_smem_get_soc_id);
+> +
+>  static int qcom_smem_get_sbl_version(struct qcom_smem *smem)
+>  {
+>  	struct smem_header *header;
+> diff --git a/include/linux/soc/qcom/smem.h b/include/linux/soc/qcom/smem.h
+> index 86e1b358688a..223db6a9c733 100644
+> --- a/include/linux/soc/qcom/smem.h
+> +++ b/include/linux/soc/qcom/smem.h
+> @@ -11,4 +11,6 @@ int qcom_smem_get_free_space(unsigned host);
+>  
+>  phys_addr_t qcom_smem_virt_to_phys(void *p);
+>  
+> +int qcom_smem_get_soc_id(u32 *id);
+> +
+>  #endif
