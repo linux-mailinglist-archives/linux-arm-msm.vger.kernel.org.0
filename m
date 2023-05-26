@@ -2,208 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D1CE712751
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 15:15:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47385712768
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 15:22:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243612AbjEZNOk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 09:14:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53874 "EHLO
+        id S243652AbjEZNW2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 09:22:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243600AbjEZNOj (ORCPT
+        with ESMTP id S229782AbjEZNW1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 09:14:39 -0400
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C92F712C;
-        Fri, 26 May 2023 06:14:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1685106877; x=1716642877;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=51xbnpVnSv7kK/CIAJA3IJI4ao4C21LGwC97orFloNk=;
-  b=XtT6FHJqTLUl/qFQROwyxiQ3EjaJ2foowIfzqHvJ58gaP7Svn4j4h0mB
-   1E2yAyMfi4H8IXb5RGH3QZOJc0tfYqBhFglhRSZLTuxXChZwuxCjBR817
-   +77qcyOknldU3vslGGqQP1ujlXg+88ZSuTF6lnQXa3kAHQhR/mFQkMbby
-   nM1U9QdqU2zUJ317lfZweESlCDYqz6WfdO7NPOKEV19V5mkvHHeS528bC
-   ABkHEm6ssbZUeNmacKGXgNVLVKhcf3qpMXC2NlemWIcozInLi/aPoixOI
-   K7N2gTWCcXVNsE2qLRVkaPor4zt/SX9OqPZNHsac5Q1B6mJ5oskfUvUxg
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10722"; a="419955118"
-X-IronPort-AV: E=Sophos;i="6.00,194,1681196400"; 
-   d="scan'208";a="419955118"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 May 2023 06:14:37 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10722"; a="849555297"
-X-IronPort-AV: E=Sophos;i="6.00,194,1681196400"; 
-   d="scan'208";a="849555297"
-Received: from black.fi.intel.com (HELO black.fi.intel.com.) ([10.237.72.28])
-  by fmsmga001.fm.intel.com with ESMTP; 26 May 2023 06:14:34 -0700
-From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        chrome-platform@lists.linux.dev, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Prashant Malani <pmalani@chromium.org>
-Subject: [PATCH v2 2/2] usb: typec: mux: Remove alt mode parameters from the API
-Date:   Fri, 26 May 2023 16:14:34 +0300
-Message-Id: <20230526131434.46920-3-heikki.krogerus@linux.intel.com>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230526131434.46920-1-heikki.krogerus@linux.intel.com>
-References: <20230526131434.46920-1-heikki.krogerus@linux.intel.com>
+        Fri, 26 May 2023 09:22:27 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4F5312F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 06:22:25 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-30aa76048fbso459232f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 06:22:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nexus-software-ie.20221208.gappssmtp.com; s=20221208; t=1685107344; x=1687699344;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jRSS0thFL99+lzuHoifF3dKBkoe4uJEbtzhdpwYILHY=;
+        b=VLUzFDnR6LmAKvVf/iHRwZPTSEkBdMW0byWyjFHRJjs/Uoucfx0YumoQ3szeRNCTL3
+         9siep6Ca8Gu8v4TjCTadRwLlCfAaNHLyqn2mltKzfTKAKu4kUuZ+0cfD89seK0LMXm4P
+         yzFHSTWlraCWICfPz071XFS46lz3LkqXHYH2U26T8g3wRuQEkUlmvqkMAAk4rGilsVuW
+         Qovnc/kbwoRnetHqBGeDF2fPdA2V7xqLwQuX5gzjUZqwftlSyPiHOdBaRr0TqZ+vGxsR
+         DahtQN6EIpfPDE5zsHIHB4J5OUzGFMAKGIMAY0YNlKoZP07R0R9N72Hda3NbY56IpXPX
+         9iAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685107344; x=1687699344;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jRSS0thFL99+lzuHoifF3dKBkoe4uJEbtzhdpwYILHY=;
+        b=KotWPBwkABX0Zk/2JzzzrLfCfIhehaYIVvgySdZOOyddu4wV6+w1mpSBuWpZaXnrgp
+         doInJB7jjsDvTfyYjK6VvzXo6/z5v+uoVGJXf7w2q8nyljStFl9DDBn4s8Gx7+aODseZ
+         X62o0my3pwYyB1oMNbRmcn2UCd2eSnjPbbdyY81VrKcYmo7sjVRzLlkBA0F55s/777Ey
+         8MVevmhc8QV1QvGpNG4S5skgtKEUp9VfAijyQUyfRYhqDfRBHownosc8TbMTAlyCLm5B
+         l1BnKUDp4ThHQUcCac3b046VHopSfZgfA/hNs3JUCeVKlYtrOnKN0tjHA8HT+mJaHjoM
+         /8Vg==
+X-Gm-Message-State: AC+VfDxNQdTuMWjOoOo6ti90S3AevHdUJ3lR465rRkBftTLDffjvhZGM
+        kSdtWlAbsTNcdPxmIRZu6D7gZQ==
+X-Google-Smtp-Source: ACHHUZ75vUnzwb3A4ipiR60F8XFG10wwRoZPtxebBNB2iOcxlq7vnIUuGzzo8AeX6KQO8t/SiLNumw==
+X-Received: by 2002:a5d:4b06:0:b0:306:3435:f85c with SMTP id v6-20020a5d4b06000000b003063435f85cmr1467531wrq.30.1685107344084;
+        Fri, 26 May 2023 06:22:24 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id f9-20020adff589000000b0030633152664sm5024803wro.87.2023.05.26.06.22.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 May 2023 06:22:23 -0700 (PDT)
+Message-ID: <76343325-b06c-9329-2d0a-e1d351bcafac@nexus-software.ie>
+Date:   Fri, 26 May 2023 14:22:22 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH V2 2/6] clk: qcom: Update l value configuration for lucid
+ ole and evo plls
+Content-Language: en-US
+To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>
+References: <20230525172142.9039-1-quic_jkona@quicinc.com>
+ <20230525172142.9039-3-quic_jkona@quicinc.com>
+From:   Bryan O'Donoghue <pure.logic@nexus-software.ie>
+In-Reply-To: <20230525172142.9039-3-quic_jkona@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The alt mode descriptor parameters are not used anymore.
+On 25/05/2023 18:21, Jagadeesh Kona wrote:
+> -	.config_ctl_hi1_val = 0x32AA299C,
+> +	.config_ctl_hi1_val = 0x32aa299c,
 
-Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Tested-by: Bjorn Andersson <andersson@kernel.org>
-Acked-by: Prashant Malani <pmalani@chromium.org>
+You should separate out this change from this patch.
+
+There's nothing wrong with having a preliminary patch to change all 
+upper-case HEX to lowercase hex.
+
+You should do that since the log here "update l value" != change UCASE 
+to lcase hex.
+
 ---
-v2: No changes. Adding the Acked-by a Reviewed-by tags.
-
- drivers/platform/chrome/cros_ec_typec.c |  2 +-
- drivers/soc/qcom/pmic_glink_altmode.c   |  5 +----
- drivers/usb/typec/class.c               |  4 ++--
- drivers/usb/typec/mux.c                 |  6 ++----
- include/linux/usb/typec_mux.h           | 11 ++++-------
- 5 files changed, 10 insertions(+), 18 deletions(-)
-
-diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
-index a673c33424706..25f9767c28e82 100644
---- a/drivers/platform/chrome/cros_ec_typec.c
-+++ b/drivers/platform/chrome/cros_ec_typec.c
-@@ -77,7 +77,7 @@ static int cros_typec_get_switch_handles(struct cros_typec_port *port,
- {
- 	int ret = 0;
- 
--	port->mux = fwnode_typec_mux_get(fwnode, NULL);
-+	port->mux = fwnode_typec_mux_get(fwnode);
- 	if (IS_ERR(port->mux)) {
- 		ret = PTR_ERR(port->mux);
- 		dev_dbg(dev, "Mux handle not found: %d.\n", ret);
-diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
-index 4d7895bdeaf2f..df48fbea4b686 100644
---- a/drivers/soc/qcom/pmic_glink_altmode.c
-+++ b/drivers/soc/qcom/pmic_glink_altmode.c
-@@ -369,7 +369,6 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
- {
- 	struct pmic_glink_altmode_port *alt_port;
- 	struct pmic_glink_altmode *altmode;
--	struct typec_altmode_desc mux_desc = {};
- 	const struct of_device_id *match;
- 	struct fwnode_handle *fwnode;
- 	struct device *dev = &adev->dev;
-@@ -427,9 +426,7 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
- 		alt_port->dp_alt.mode = USB_TYPEC_DP_MODE;
- 		alt_port->dp_alt.active = 1;
- 
--		mux_desc.svid = USB_TYPEC_DP_SID;
--		mux_desc.mode = USB_TYPEC_DP_MODE;
--		alt_port->typec_mux = fwnode_typec_mux_get(fwnode, &mux_desc);
-+		alt_port->typec_mux = fwnode_typec_mux_get(fwnode);
- 		if (IS_ERR(alt_port->typec_mux))
- 			return dev_err_probe(dev, PTR_ERR(alt_port->typec_mux),
- 					     "failed to acquire mode-switch for port: %d\n",
-diff --git a/drivers/usb/typec/class.c b/drivers/usb/typec/class.c
-index 349cc2030c903..faa184ae3dac8 100644
---- a/drivers/usb/typec/class.c
-+++ b/drivers/usb/typec/class.c
-@@ -2110,7 +2110,7 @@ typec_port_register_altmode(struct typec_port *port,
- 	struct typec_mux *mux;
- 	struct typec_retimer *retimer;
- 
--	mux = typec_mux_get(&port->dev, desc);
-+	mux = typec_mux_get(&port->dev);
- 	if (IS_ERR(mux))
- 		return ERR_CAST(mux);
- 
-@@ -2274,7 +2274,7 @@ struct typec_port *typec_register_port(struct device *parent,
- 		return ERR_PTR(ret);
- 	}
- 
--	port->mux = typec_mux_get(&port->dev, NULL);
-+	port->mux = typec_mux_get(&port->dev);
- 	if (IS_ERR(port->mux)) {
- 		ret = PTR_ERR(port->mux);
- 		put_device(&port->dev);
-diff --git a/drivers/usb/typec/mux.c b/drivers/usb/typec/mux.c
-index f2eee6322815d..80dd91938d960 100644
---- a/drivers/usb/typec/mux.c
-+++ b/drivers/usb/typec/mux.c
-@@ -287,15 +287,13 @@ static void *typec_mux_match(const struct fwnode_handle *fwnode,
- /**
-  * fwnode_typec_mux_get - Find USB Type-C Multiplexer
-  * @fwnode: The caller device node
-- * @desc: Alt Mode description
-  *
-  * Finds a mux linked to the caller. This function is primarily meant for the
-  * Type-C drivers. Returns a reference to the mux on success, NULL if no
-  * matching connection was found, or ERR_PTR(-EPROBE_DEFER) when a connection
-  * was found but the mux has not been enumerated yet.
-  */
--struct typec_mux *fwnode_typec_mux_get(struct fwnode_handle *fwnode,
--				       const struct typec_altmode_desc *desc)
-+struct typec_mux *fwnode_typec_mux_get(struct fwnode_handle *fwnode)
- {
- 	struct typec_mux_dev *mux_devs[TYPEC_MUX_MAX_DEVS];
- 	struct typec_mux *mux;
-@@ -308,7 +306,7 @@ struct typec_mux *fwnode_typec_mux_get(struct fwnode_handle *fwnode,
- 		return ERR_PTR(-ENOMEM);
- 
- 	count = fwnode_connection_find_matches(fwnode, "mode-switch",
--					       (void *)desc, typec_mux_match,
-+					       NULL, typec_mux_match,
- 					       (void **)mux_devs,
- 					       ARRAY_SIZE(mux_devs));
- 	if (count <= 0) {
-diff --git a/include/linux/usb/typec_mux.h b/include/linux/usb/typec_mux.h
-index 9292f0e078464..11bfa314529fd 100644
---- a/include/linux/usb/typec_mux.h
-+++ b/include/linux/usb/typec_mux.h
-@@ -60,8 +60,7 @@ struct typec_mux_desc {
- 
- #if IS_ENABLED(CONFIG_TYPEC)
- 
--struct typec_mux *fwnode_typec_mux_get(struct fwnode_handle *fwnode,
--				       const struct typec_altmode_desc *desc);
-+struct typec_mux *fwnode_typec_mux_get(struct fwnode_handle *fwnode);
- void typec_mux_put(struct typec_mux *mux);
- int typec_mux_set(struct typec_mux *mux, struct typec_mux_state *state);
- 
-@@ -74,8 +73,7 @@ void *typec_mux_get_drvdata(struct typec_mux_dev *mux);
- 
- #else
- 
--static inline struct typec_mux *fwnode_typec_mux_get(struct fwnode_handle *fwnode,
--				       const struct typec_altmode_desc *desc)
-+static inline struct typec_mux *fwnode_typec_mux_get(struct fwnode_handle *fwnode);
- {
- 	return NULL;
- }
-@@ -102,10 +100,9 @@ static inline void *typec_mux_get_drvdata(struct typec_mux_dev *mux)
- 
- #endif /* CONFIG_TYPEC */
- 
--static inline struct typec_mux *
--typec_mux_get(struct device *dev, const struct typec_altmode_desc *desc)
-+static inline struct typec_mux *typec_mux_get(struct device *dev)
- {
--	return fwnode_typec_mux_get(dev_fwnode(dev), desc);
-+	return fwnode_typec_mux_get(dev_fwnode(dev));
- }
- 
- #endif /* __USB_TYPEC_MUX */
--- 
-2.39.2
-
+0xb0d
