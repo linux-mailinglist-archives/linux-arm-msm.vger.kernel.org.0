@@ -2,199 +2,251 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C67737127CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 15:51:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 641117127F1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 16:04:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237371AbjEZNvm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 09:51:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41946 "EHLO
+        id S243502AbjEZOD7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 10:03:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47904 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231470AbjEZNvm (ORCPT
+        with ESMTP id S231470AbjEZOD6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 09:51:42 -0400
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E361198
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 06:51:40 -0700 (PDT)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-565aa2cc428so7304947b3.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 06:51:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685109100; x=1687701100;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=cPlKY5uQ1aD5fB1ZV1T/1xecwRvFHoEhDShM2qt5HQs=;
-        b=WhWvGdGt3gYVl7SZr4A3fo69aw1Am4Lsf4glnKImC7OUfaRorwNFo7iGKD80hf565q
-         SgwWpGioQHIWT/uk5ZFhrGmwtb3pLBAelmZcAwzsiNMF3pS8YTP8ZmycgfZ9pwAEt/ZZ
-         7rn9bLDHZFOWMcH9x2PmKRuVjeqg5lhrSOE7jNurTE2iglBEdYVAibyfweuXqzp7LPH8
-         ZDFePf4A2vmoEEkZj1BSbZl4/ObfSaNR4RzAdkAJJgHzdywzCtZRpQXt24EYojwUSIdb
-         wkPT9YSrpxhoruXv867R2D7jsnWc6+7Qjfsl98nQ6WtD1F6H1gvpui3lts2xAgFfFfeT
-         YIyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685109100; x=1687701100;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=cPlKY5uQ1aD5fB1ZV1T/1xecwRvFHoEhDShM2qt5HQs=;
-        b=SVtFYNSdXO/Y1U/fHUDld/8QCdoHKsWXEvW1vDepvwT5igY0k1zWxVT5EwUf9tqcY4
-         /Jq2MSo8Gm1NWbmuuuK9D7dFcF55UGkc0G6FcM09L92UoTQcVqIadPey6cCO9FowHY5w
-         W4XyWfUAnlq5WiUAgmfsadyUkpqTXwkdUn1AjQ77VLOoFRmI4mX8BSSavSwZI+kkt8ef
-         Hp4+GkaGWfiOU+8YfOncWaFi/1A83kbJuVdb9H3BBmyvxmPQZXmWmxdRbvLcUuRbUfBv
-         suCfXDNIP9vSriBNFHsI+OhXR4UWvaVUvJNXPmfrl9iH5YeaUh9G5DELHg3uWm64cp+P
-         pExA==
-X-Gm-Message-State: AC+VfDwWLs3wG35R41xZqIohJPyS7QwWiHpaPOmSka2pwKXGkNT3JHqS
-        0k4x/pVJCurTDKc5j8uxl/xptevICUFUCnLoIxbNpg==
-X-Google-Smtp-Source: ACHHUZ7J7SrgIXTx1xRtqpmArFJ0Xvm2/Sg4jNq/X3ZOQg3nZPYtGW8frAJg1hjcnikyxyh0OJjUlqr0Gqtn6vaFKw0=
-X-Received: by 2002:a81:9e50:0:b0:565:347a:46ee with SMTP id
- n16-20020a819e50000000b00565347a46eemr1998277ywj.7.1685109099847; Fri, 26 May
- 2023 06:51:39 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230329-topic-adreno_opp-v1-0-24d34ac6f007@linaro.org>
- <20230329-topic-adreno_opp-v1-3-24d34ac6f007@linaro.org> <CAA8EJpprgiXWZC2W3JSgG3jtTZDtbwoeQ6LBK=pqfpk0oMvNRw@mail.gmail.com>
- <bc5dd7d1-e001-8bd2-55c6-b6827c418371@linaro.org> <0e703d3c-7ad9-6265-fa71-b62650b96e79@linaro.org>
-In-Reply-To: <0e703d3c-7ad9-6265-fa71-b62650b96e79@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 26 May 2023 16:51:28 +0300
-Message-ID: <CAA8EJpoiy-R8ZGL6csUzj9SWq=suORYTMN2WMQiOMEN8T-X9Vw@mail.gmail.com>
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: msm8996: Improve GPU OPP table
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Fri, 26 May 2023 10:03:58 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FFE8DF;
+        Fri, 26 May 2023 07:03:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1685109831; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=hLUup2AF9FjJX3SMqEQuyazTJe76uPhq3N5Y5PXkfpaRiyzM5FpddJu3G6ItAOMuyY
+    ifwKgrDEHeAIbEvTzXH4oTYkchscNRd3Ds8temLtjJWEJeJ+TWzcdDlkuXaC0eWTxjhu
+    DpLq1TZ+xgGbh+5c2qg5N0/00KTUIgm6H0V+sk6BVsAYyffZhPy+6pHHx6T76v1x3Row
+    O2nH+afdd3hRa2VeKwh5AApRy8Vjx5L9JlndeB46Kog6OrXy8ie2VqmzBRVupoUYPYPm
+    IMpk/+8dm22Z4ydb3bXTrpwhiPwNtXUNf3MNbgx+9vvnuvIH/qtouG4HnnyzjhPj1yKf
+    Sd0g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1685109831;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=zhOGk10ygmP7nNAqxT0dbqHX7vPqfMWPQJ7k5CUCTa0=;
+    b=VGHr/FLlie96uxjg+9EXTHmy+BshFP8VAAxMY7Ld1NWVm57J23rpER/5ju7KeR78Q8
+    2AtnPwcg8KavV/Or40kAjYAIx7BTUlpXPgfMc04yMX8jwfd6SSYApsUIuCLtsAN4622d
+    zqK3zPaKckiNBcJAz21HwuFjhKx3WdTuMO7cR4ymhDDdHzgNlTiuQ++NBKqhR7w2IRKR
+    QeW/EcGLZIQHkiXRSqxvbzy+5EtMOp1fQsDOWprq6XYU8fVXMp1Ac9KnTA9a6uBFyBJD
+    wPLcy4UZvR0AF5tDnVnBHSrtUNX84yVS2kJKP3GP3y6wm6IEyGec1fL7ubjOBnBbEHvH
+    Z71w==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1685109831;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=zhOGk10ygmP7nNAqxT0dbqHX7vPqfMWPQJ7k5CUCTa0=;
+    b=f6hJ1FRE/GLVsml2gNyEOZUIjT8T4oSPS0AgMjyaPfwa+twJ2ggOYpzMwQ5UESAlZ/
+    3pPfRn4v7WU3a0HtQa7SG52h79FLsn4iDDDecycyEPhxgMdpEDlO/DA8IpKfuC+nibdv
+    fMcap24ucTRdEOCyOvstv1RXiW+JgzBiPmF42igCdMJuP9Ojo3KY63gb70zi2FQP5jRA
+    sPlTferRFA0jkpZbfvDkuX9eyG4BkAB/WIOW+r6+bOOfgR5WVpt4vLkBMXZ0GK/8pyHU
+    Tg+PB+DRJR60gtdCN2zdKki8Gu0jBaOuFULWIpXZi9QSzaeGqgFmo2CCChL2RKMdXZfq
+    kadA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1685109831;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=zhOGk10ygmP7nNAqxT0dbqHX7vPqfMWPQJ7k5CUCTa0=;
+    b=enApK+9wIHXRh8zq75pO2ifgtcphtLsDfa/ojSAkLIVBkRi+uv9pjitMcWvUAsx8xe
+    FZ1rUG+DdzGOruzhlIAA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA95nh"
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
+    with ESMTPSA id j6420az4QE3obOP
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Fri, 26 May 2023 16:03:50 +0200 (CEST)
+Date:   Fri, 26 May 2023 16:03:42 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Stephen Boyd <sboyd@codeaurora.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <andy.gross@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH 3/8] arm64: dts: qcom: msm8916: Fix regulator constraints
+Message-ID: <ZHC8PhUi0H4o4TUR@gerhold.net>
+References: <20230510-msm8916-regulators-v1-0-54d4960a05fc@gerhold.net>
+ <20230510-msm8916-regulators-v1-3-54d4960a05fc@gerhold.net>
+ <cae30437-f9bc-6e7a-8371-bba7eeff1e8f@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cae30437-f9bc-6e7a-8371-bba7eeff1e8f@linaro.org>
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 26 May 2023 at 16:30, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->
->
->
-> On 30.03.2023 12:57, Konrad Dybcio wrote:
-> >
-> >
-> > On 29.03.2023 23:32, Dmitry Baryshkov wrote:
-> >> On Wed, 29 Mar 2023 at 22:17, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
-> >>>
-> >>> Remove the self-explanatory comment about opp-supported-hw contents,
-> >>> add required-opps to ensure reasonable power domain levels are voted
-> >>> for (currently we've been piggybacking off of miracles and MDP votes)
-> >>> and add newlines between each subnode.
-> >>
-> >> I'm not sure this is 100% correct. The values that you add are correct
-> >> for the voltage scaling case. However, based on the vendor kernel
-> >> sources I think that MX should only be scaled if the voltage is scaled
-> >> too. I might be wrong here.
-> > MX must be >= CX (and GX), so this should bring no harm.
-> >
-> > (citation needed, but that seems to hold true..)
-> With that in mind, would you ack these patches Dmitry?
+On Fri, May 26, 2023 at 02:38:01PM +0100, Bryan O'Donoghue wrote:
+> On 17/05/2023 19:48, Stephan Gerhold wrote:
+> > The regulator constraints for most MSM8916 devices (except DB410c) were
+> > originally taken from Qualcomm's msm-3.10 vendor device tree (for lack
+> > of better documentation). Unfortunately it turns out that Qualcomm's
+> > voltages are slightly off as well and do not match the voltage
+> > constraints applied by the RPM firmware.
+> > 
+> > This means that we sometimes request a specific voltage but the RPM
+> > firmware actually applies a much lower or higher voltage. This is
+> > particularly critical for pm8916_l11 which is used as SD card VMMC
+> > regulator: The SD card can choose a voltage from the current range of
+> > 1.8 - 2.95V. If it chooses to run at 1.8V we pretend that this is fine
+> > but the RPM firmware will still silently end up configuring 2.95V.
+> > This can be easily reproduced with a multimeter or by checking the
+> > SPMI hardware registers of the regulator.
+> > 
+> > Fix this by making the voltages match the actual "specified range" in
+> > the PM8916 Device Specification which is enforced by the RPM firmware.
+> > 
+> > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> > ---
+> >   arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts           | 14 +++++++-------
+> >   arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts       | 14 +++++++-------
+> >   arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts             | 14 +++++++-------
+> >   arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts         | 14 +++++++-------
+> >   arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts             | 12 ++++++------
+> >   arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts       | 14 +++++++-------
+> >   arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts       | 14 +++++++-------
+> >   arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi | 14 +++++++-------
+> >   arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi   | 14 +++++++-------
+> >   arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi    | 14 +++++++-------
+> >   arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts     | 14 +++++++-------
+> >   arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi                  | 14 +++++++-------
+> >   arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts      | 12 ++++++------
+> >   13 files changed, 89 insertions(+), 89 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts b/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts
+> > index 13cd9ad167df..0d517804e44e 100644
+> > --- a/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts
+> > +++ b/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts
+> > @@ -159,13 +159,13 @@ &smd_rpm_regulators {
+> >   	vdd_l7-supply = <&pm8916_s4>;
+> >   	s3 {
+> > -		regulator-min-microvolt = <1200000>;
+> > -		regulator-max-microvolt = <1300000>;
+> > +		regulator-min-microvolt = <1250000>;
+> > +		regulator-max-microvolt = <1350000>;
+> 
+> Where are you getting these 5s from ?
+> 
 
-I remember that we should not overwolt the memory, it might cause
-memory cells degradation. So MX >= CX & MX <= CX + delta.
+I have two explanations for this, one is "documentation", the other is
+"experimental testing". You can choose the one you find more convincing. :)
 
-I have pinged Jordan if he can provide feedback on my a530/540 voltage
-programming attempt ([1]), but got no response from him up to now.
+### Documentation ###
 
-[1] https://git.linaro.org/people/dmitry.baryshkov/kernel.git/log/?h=msm8996-upstream
+For documentation, the S3 range is defined in "PM8916/PM8916-1 Power
+Management ICs - Device Specification - LM80-P0436-35 Rev.C - Table 3-16
+Regulator high-level summary". The "Specified Range" for this regulator
+is 1.25–1.35V.
 
-I will try doing more experiments with the mentioned branch. Maybe it
-breaks because of the missing MX vote or because of something
-suchalike.
-I'm 80% sure in the voltage level (which were generated by the CPR3 on
-my db820c board) and 95% sure in the programming sequence.
+Also, if you look at typical schematics (e.g. DB410c) you can see that
+PM8916 S3 supplies the VDD_xxx_1P3 rails of the WCN3620/WCN3660/WCN3680
+chip. Looking at the defined "Operating conditions" in the datasheets of
+those they define "Min: 1.25V, Typ: 1.3V, Max: 1.38V". As such, 1.2V is
+not even a valid voltage for the actual usage of this regulator.
 
->
-> Konrad
-> >
-> > Konrad
-> >>
-> >>>
-> >>> Fixes: 69cc3114ab0f ("arm64: dts: Add Adreno GPU definitions")
-> >>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> >>> ---
-> >>>  arch/arm64/boot/dts/qcom/msm8996.dtsi | 18 +++++++++++++-----
-> >>>  1 file changed, 13 insertions(+), 5 deletions(-)
-> >>>
-> >>> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> >>> index 4dd37f72e018..62ad30e94f40 100644
-> >>> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> >>> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> >>> @@ -1244,37 +1244,45 @@ gpu: gpu@b00000 {
-> >>>                         gpu_opp_table: opp-table {
-> >>>                                 compatible = "operating-points-v2";
-> >>>
-> >>> -                               /*
-> >>> -                                * 624Mhz is only available on speed bins 0 and 3.
-> >>> -                                * 560Mhz is only available on speed bins 0, 2 and 3.
-> >>> -                                * All the rest are available on all bins of the hardware.
-> >>> -                                */
-> >>>                                 opp-624000000 {
-> >>>                                         opp-hz = /bits/ 64 <624000000>;
-> >>> +                                       required-opps = <&rpmpd_opp_turbo>;
-> >>>                                         opp-supported-hw = <0x09>;
-> >>>                                 };
-> >>> +
-> >>>                                 opp-560000000 {
-> >>>                                         opp-hz = /bits/ 64 <560000000>;
-> >>> +                                       required-opps = <&rpmpd_opp_turbo>;
-> >>>                                         opp-supported-hw = <0x0d>;
-> >>>                                 };
-> >>> +
-> >>>                                 opp-510000000 {
-> >>>                                         opp-hz = /bits/ 64 <510000000>;
-> >>> +                                       required-opps = <&rpmpd_opp_nom>;
-> >>>                                         opp-supported-hw = <0xff>;
-> >>>                                 };
-> >>> +
-> >>>                                 opp-401800000 {
-> >>>                                         opp-hz = /bits/ 64 <401800000>;
-> >>> +                                       required-opps = <&rpmpd_opp_nom>;
-> >>>                                         opp-supported-hw = <0xff>;
-> >>>                                 };
-> >>> +
-> >>>                                 opp-315000000 {
-> >>>                                         opp-hz = /bits/ 64 <315000000>;
-> >>> +                                       required-opps = <&rpmpd_opp_svs>;
-> >>>                                         opp-supported-hw = <0xff>;
-> >>>                                 };
-> >>> +
-> >>>                                 opp-214000000 {
-> >>>                                         opp-hz = /bits/ 64 <214000000>;
-> >>> +                                       required-opps = <&rpmpd_opp_svs>;
-> >>>                                         opp-supported-hw = <0xff>;
-> >>>                                 };
-> >>> +
-> >>>                                 opp-133000000 {
-> >>>                                         opp-hz = /bits/ 64 <133000000>;
-> >>> +                                       required-opps = <&rpmpd_opp_svs>;
-> >>>                                         opp-supported-hw = <0xff>;
-> >>>                                 };
-> >>>                         };
-> >>>
-> >>> --
-> >>> 2.40.0
-> >>>
-> >>
-> >>
+### Experimental Testing ###
 
+The reason why it still works in practice is that the RPM firmware does
+not let you apply invalid voltages here. With experimental testing
+I observed that it keeps the voltage always in the "Specified Range"
+of 1.25–1.35V.
 
+You can reproduce this easily by adding the SPMI regulators in
+pm8916.dtsi. These represent the actual regulator hardware registers:
 
--- 
-With best wishes
-Dmitry
+diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
+index 864bb1cd68db..22ab0f59be4a 100644
+--- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
+@@ -177,5 +177,9 @@ wcd_codec: audio-codec@f000 {
+ 			#sound-dai-cells = <1>;
+ 			status = "disabled";
+ 		};
++
++		regulators {
++			compatible = "qcom,pm8916-regulators";
++		};
+ 	};
+ };
+
+With this each of the regulators will show up twice in /sys/class/regulator.
+Once the RPM version and once the SPMI version. If you check the
+/sys/class/regulator/.../microvolts of the SPMI variant you can see the
+actual voltage that was applied by the RPM firmware.
+
+For example, if you think that 1.2V is really possible then try:
+
+	s3 {
+		regulator-min-microvolt = <1200000>;
+		regulator-max-microvolt = <1200000>;
+	};
+
+In sysfs you will almost certainly see that the SPMI regulator is
+actually configured with 1.25V by the RPM firmware. It does not allow
+setting anything lower.
+
+> >   	};
+> >   	s4 {
+> > -		regulator-min-microvolt = <1800000>;
+> > -		regulator-max-microvolt = <2100000>;
+> > +		regulator-min-microvolt = <1850000>;
+> > +		regulator-max-microvolt = <2150000>;
+> >   	};
+> >   	l1 {
+> > @@ -199,7 +199,7 @@ l7 {
+> >   	};
+> >   	l8 {
+> > -		regulator-min-microvolt = <2850000>;
+> > +		regulator-min-microvolt = <2900000>;
+> >   		regulator-max-microvolt = <2900000>;
+> >   	};
+> > @@ -209,12 +209,12 @@ l9 {
+> >   	};
+> >   	l10 {
+> > -		regulator-min-microvolt = <2700000>;
+> > +		regulator-min-microvolt = <2800000>;
+> >   		regulator-max-microvolt = <2800000>;
+> >   	};
+> >   	l11 {
+> > -		regulator-min-microvolt = <1800000>;
+> > +		regulator-min-microvolt = <2950000>;
+> 
+> Wouldn't 1v8 be the right voltage for eMMC !SD though have you tested eMMC
+> instead of SD ?
+> 
+
+This is the supply voltage (not I/O voltage) which is also 2.9V for the
+eMMC typically. But the point here is that only 2.95V can be set for
+this regulator on most RPM firmware versions.
+
+It does not matter what you connect there. I tried setting
+
+	l11 {
+		regulator-min-microvolt = <1800000>;
+		regulator-max-microvolt = <1800000>;
+	};
+
+but the RPM firmware still applies 2.95V. In this case I even verified
+this with a multimeter. The regulator is always 2.95V, even if you ask
+the RPM firmware to apply 1.8V.
+
+Thanks,
+Stephan
