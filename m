@@ -2,108 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 58EF8712A4D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 18:12:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 43D14712BBD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 19:27:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230437AbjEZQMM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 12:12:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57618 "EHLO
+        id S229966AbjEZR1j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 13:27:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230517AbjEZQMK (ORCPT
+        with ESMTP id S229923AbjEZR1i (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 12:12:10 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 624A1D8;
-        Fri, 26 May 2023 09:12:09 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34QESfH1001649;
-        Fri, 26 May 2023 16:12:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=ocLNVZivHBm9nIkFOcf6ghdiAcejFFgL6X8QXJyXR+A=;
- b=bvM2buVPH6qBkVKTKp5Y+zqqIdaHWcxDI7oOmQ0z3e6WHAOrUGvgY8eJkbu6v/vgRibQ
- o7xM9J1mkVfPhW4anRyS8TV2f0KKCcYSg7VCFJMrtxuY+XuwVTV1AOlnGRD6s4C/hlWp
- SmVL08kQrVZhF8kbfuSSFP6YrYZg00S3jgrt6YvRGyA8m9JaM6Ja3sdKfd+Lp/er3QOH
- 9jO1o/4P29SNRJcp9WyQaGXPVbvj57slUCM35FamdhP7Xw9bURwv60WKjZY+OnEaxETJ
- 5X4bmseo4Zl5tWwBqxHXYvTEIeOz/Cfn1078TWkiS+atdGkgKghQTs/xseGtYKJmxnVN MQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qtncssf6s-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 26 May 2023 16:12:05 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34QGC1CF000446
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 26 May 2023 16:12:02 GMT
-Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 26 May 2023 09:11:58 -0700
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     Kathiravan T <quic_kathirav@quicinc.com>
-Subject: [PATCH] arm64: dts: qcom: ipq6018: correct the qrng node name
-Date:   Fri, 26 May 2023 21:41:38 +0530
-Message-ID: <20230526161138.25497-1-quic_kathirav@quicinc.com>
-X-Mailer: git-send-email 2.17.1
+        Fri, 26 May 2023 13:27:38 -0400
+Received: from relay6-d.mail.gandi.net (relay6-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::226])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9818CF7;
+        Fri, 26 May 2023 10:27:36 -0700 (PDT)
+X-GND-Sasl: miquel.raynal@bootlin.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+        t=1685122055;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding:
+         in-reply-to:in-reply-to:references:references;
+        bh=sLLkkTARqYG2/kq9zm8hqhnR4AX8Ph/c88jn0yKAnqU=;
+        b=j6AmoKuokt9TL+mjt11P5LSYrljI4dAEec4BwDJ6vF3J5DeiGOkx5kcRtPk4dBcV1Q5l0i
+        uKGtfCsVvoD842m+YZ5yJXxCAlWb0/l9bSXIVd7Tn8YBNcKbBhoPOFdy4zk/wF19fFQ4Ix
+        wCnpJh9Og2gf/56IaDe/wkAtqvTd0hTF2BEncqDhoU4LiIXOSgPNR8eNN9AOt0Evro1Xak
+        y6GLycoh4ZHTY7pbaKunrX/+IvNuvthcRHGabMvvh6NnHaoqhGXw3fAKb4bU0C6N+dlKxW
+        OFR2lzz3nxyl7WK9CqUV7umUJrhKyiiCec2QEDFpGxv4BEr0frzgVVLSQ9727A==
+X-GND-Sasl: miquel.raynal@bootlin.com
+X-GND-Sasl: miquel.raynal@bootlin.com
+X-GND-Sasl: miquel.raynal@bootlin.com
+X-GND-Sasl: miquel.raynal@bootlin.com
+X-GND-Sasl: miquel.raynal@bootlin.com
+X-GND-Sasl: miquel.raynal@bootlin.com
+X-GND-Sasl: miquel.raynal@bootlin.com
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 77D28C0003;
+        Fri, 26 May 2023 17:27:34 +0000 (UTC)
+Date:   Fri, 26 May 2023 19:27:33 +0200
+From:   Miquel Raynal <miquel.raynal@bootlin.com>
+To:     Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc:     <mani@kernel.org>, <richard@nod.at>, <vigneshr@ti.com>,
+        <linux-mtd@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_srichara@quicinc.com>
+Subject: Re: [PATCH v2 2/5] mtd: rawnand: qcom: Add support for reset,
+ readid, status exec_op
+Message-ID: <20230526192733.003b5293@xps-13>
+In-Reply-To: <a92d2d3f-34b5-9cf1-ed40-1c812cbd0125@quicinc.com>
+References: <20230511133017.6307-1-quic_mdalam@quicinc.com>
+        <20230511133017.6307-3-quic_mdalam@quicinc.com>
+        <20230522154507.0255d902@xps-13>
+        <a92d2d3f-34b5-9cf1-ed40-1c812cbd0125@quicinc.com>
+Organization: Bootlin
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: eYef2yWRz_jw7y4Ikf6PUZ_UMHzjIMH6
-X-Proofpoint-ORIG-GUID: eYef2yWRz_jw7y4Ikf6PUZ_UMHzjIMH6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-26_06,2023-05-25_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- priorityscore=1501 suspectscore=0 impostorscore=0 phishscore=0 mlxscore=0
- lowpriorityscore=0 spamscore=0 clxscore=1015 bulkscore=0 adultscore=0
- mlxlogscore=668 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305260137
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-qrng node address is mentioned incorrectly. Lets fix it.
+Hi Md,
 
-Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
----
-Note: Only compilation and dtbs_check is checked. Also dependent on the
-below series, no functional dependencies
-https://lore.kernel.org/linux-arm-msm/20230526125305.19626-1-quic_kathirav@quicinc.com/T/#t
+quic_mdalam@quicinc.com wrote on Wed, 24 May 2023 14:54:34 +0530:
 
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> On 5/22/2023 7:15 PM, Miquel Raynal wrote:
+> > Hi Md,
+> >=20
+> > quic_mdalam@quicinc.com wrote on Thu, 11 May 2023 19:00:14 +0530:
+> >  =20
+> >> This change will add exec_ops support for RESET , READ_ID, STATUS
+> >> command.
+> >>
+> >> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> >> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+> >> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> >> ---
+> >> Change in [v2]
+> >>
+> >> * Missed to post Cover-letter, so posting v2 patch with cover-letter
+> >>
+> >>   drivers/mtd/nand/raw/qcom_nandc.c | 166 ++++++++++++++++++++++++++++=
++-
+> >>   1 file changed, 163 insertions(+), 3 deletions(-)
+> >>
+> >> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/=
+qcom_nandc.c
+> >> index dae460e2aa0b..d2f2a8971907 100644
+> >> --- a/drivers/mtd/nand/raw/qcom_nandc.c
+> >> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
+> >> @@ -384,6 +384,9 @@ struct nandc_regs {
+> >>    * @reg_read_pos:		marker for data read in reg_read_buf
+> >>    *
+> >>    * @cmd1/vld:			some fixed controller register values
+> >> + *
+> >> + * @exec_opwrite:		flag to select correct number of code word
+> >> + *				while reading status
+> >>    */
+> >>   struct qcom_nand_controller {
+> >>   	struct device *dev;
+> >> @@ -434,6 +437,7 @@ struct qcom_nand_controller {
+> >>   	int reg_read_pos; =20
+> >>   >>   	u32 cmd1, vld; =20
+> >> +	bool exec_opwrite;
+> >>   }; =20
+> >>   >>   /* =20
+> >> @@ -2920,6 +2924,8 @@ static int qcom_op_cmd_mapping(struct qcom_nand_=
+controller *nandc, u8 cmd,
+> >>   		break;
+> >>   	case NAND_CMD_PAGEPROG:
+> >>   		ret =3D OP_PROGRAM_PAGE;
+> >> +		q_op->flag =3D NAND_CMD_PAGEPROG; =20
+> >=20
+> > Just use the instruction value? =20
+>=20
+>    Sure , will fix this in next patch V3.
+> >  =20
+> >> +		nandc->exec_opwrite =3D true;
+> >>   		break;
+> >>   	default:
+> >>   		break;
+> >> @@ -2982,10 +2988,95 @@ static void qcom_parse_instructions(struct nan=
+d_chip *chip,
+> >>   	}
+> >>   } =20
+> >>   >> +static void qcom_delay_ns(unsigned int ns) =20
+> >> +{
+> >> +	if (!ns)
+> >> +		return;
+> >> +
+> >> +	if (ns < 10000)
+> >> +		ndelay(ns);
+> >> +	else
+> >> +		udelay(DIV_ROUND_UP(ns, 1000));
+> >> +}
+> >> +
+> >> +static int qcom_wait_rdy_poll(struct nand_chip *chip, unsigned int ti=
+me_ms)
+> >> +{
+> >> +	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip=
+);
+> >> +	unsigned long start =3D jiffies + msecs_to_jiffies(time_ms);
+> >> +	u32 flash;
+> >> +
+> >> +	nandc_read_buffer_sync(nandc, true);
+> >> +
+> >> +	do {
+> >> +		flash =3D le32_to_cpu(nandc->reg_read_buf[0]);
+> >> +		if (flash & FS_READY_BSY_N)
+> >> +			return 0;
+> >> +		cpu_relax();
+> >> +	} while (time_after(start, jiffies));
+> >> +
+> >> +	dev_err(nandc->dev, "Timeout waiting for device to be ready:0x%08x\n=
+", flash);
+> >> +
+> >> +	return -ETIMEDOUT;
+> >> +}
+> >> +
+> >>   static int qcom_read_status_exec(struct nand_chip *chip,
+> >>   				 const struct nand_subop *subop)
+> >>   {
+> >> -	return 0;
+> >> +	struct qcom_nand_host *host =3D to_qcom_nand_host(chip);
+> >> +	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip=
+);
+> >> +	struct nand_ecc_ctrl *ecc =3D &chip->ecc;
+> >> +	struct qcom_op q_op;
+> >> +	const struct nand_op_instr *instr =3D NULL;
+> >> +	unsigned int op_id =3D 0;
+> >> +	unsigned int len =3D 0;
+> >> +	int ret =3D 0, num_cw =3D 1, i;
+> >> +	u32 flash_status;
+> >> +
+> >> +	host->status =3D NAND_STATUS_READY | NAND_STATUS_WP;
+> >> +
+> >> +	qcom_parse_instructions(chip, subop, &q_op);
+> >> +
+> >> +	if (nandc->exec_opwrite) { =20
+> >=20
+> > I definitely don't understand this flag at all. =20
+>=20
+>    This flag is to get the status for all code word in case of program pa=
+ge operation.
+>    Since this read status is common for reading status for all kind of op=
+eration.
+>    so in page program operation it needs to get status for all code word =
+i.e 4 in 2K page.
+>    but for normal operation number of code word will be 1.
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index 0f6d6c6daed2..5d2cc0caf5a1 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -309,7 +309,7 @@
- 			#size-cells = <1>;
- 		};
- 
--		prng: qrng@e1000 {
-+		prng: qrng@e3000 {
- 			compatible = "qcom,prng-ee";
- 			reg = <0x0 0x000e3000 0x0 0x1000>;
- 			clocks = <&gcc GCC_PRNG_AHB_CLK>;
--- 
-2.17.1
+Then you don't need that dark flag, just ask for a number of CW to
+check. It will always be 1 unless you're in a page helper and want as
+many CW as chunks.
 
+> >  =20
+> >> +		num_cw =3D ecc->steps;
+> >> +		nandc->exec_opwrite =3D false;
+> >> +	}
+> >> +
+
+Thanks,
+Miqu=C3=A8l
