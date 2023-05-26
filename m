@@ -2,185 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2952C711B2A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 02:29:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A99C711DD8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 04:27:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234563AbjEZA3o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 25 May 2023 20:29:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40980 "EHLO
+        id S234527AbjEZC1U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 25 May 2023 22:27:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233538AbjEZA3o (ORCPT
+        with ESMTP id S229689AbjEZC1T (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 25 May 2023 20:29:44 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E681D1B3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 17:28:55 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f3b5881734so114941e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 May 2023 17:28:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685060934; x=1687652934;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WHS1nKZQCzUqgGxJIZEyDSTgpeKovaxXS5dmIp7B7mY=;
-        b=hb48OX7YswDIW6bgXvhMyWEHilfEU4nfve7nE+bYuTZx0T9EUMAs+2M/7lpaR9rIvq
-         B3ni3hmdQFue8u+rzo2kPPA2xKblgMCKZSzfwtCjDDGZR4o5UEYJHPsf1tv5S3Ltjn+Y
-         PtWgsnH7aUvLbcSZ1zLSmZMuC4+ktixdpuG/STOZ8Jv1oEh+zFo98UvIaMFsYuoaUe7N
-         JhbYct/yNJGYIKlMr7ZDNK5rdWX930m2xVvqXsWDeUoLwY3DReIEFdty2QHlTdtcc19B
-         Xu8IWl02Vpaug1WY/qckzEnZHD0LEliLOJsStW+xsgvUs9VP/PGaVVvJWLBBf3XxZhoh
-         J/lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685060934; x=1687652934;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WHS1nKZQCzUqgGxJIZEyDSTgpeKovaxXS5dmIp7B7mY=;
-        b=Iz2UNaf1vvgQMwY6WlLZ3RZe1VRknb5Vg3oXGmUh3swJai6gFz4YhLQllv5OnVWvU6
-         Tz0FLpXEBJi4YrGA8ZxKvdptZfLw6mob9d4L2zGN+QzCIO+e5/Sv3wyiEhVB9sz29sAY
-         38gHCZHCAh+KW4MDuAUZ1YvVVo7QP3/ne63gdS7u19VRPDo9blvKyIH1LyEq/o/9H5nz
-         QCwL3ouUXMpV6Zooc8fpCiiDi7LTmhoer55LbrPwfwB2BesgXEc7cYe8EibUT/ExYp8k
-         YZDbp7jJ9GHzsYVauGzWArO89hui4EPgWdJLmHN7UYn7HXbu6d7C6sX/nHW7X1DOcpKQ
-         nVvg==
-X-Gm-Message-State: AC+VfDypBzH5rMh6mPH0V8sB8X/BtEiE3A/6us4JUq2xsng5RYAdNlSC
-        SHkVkris3RgvbYONLAclHWCf+lGySwNicERMlhg=
-X-Google-Smtp-Source: ACHHUZ7HMH2gfDV78qkYBjih+sKJV8C+EftnKAOlJTya/1eA3U1ovDXqiVBNax8yy9vDptHy2jzpmw==
-X-Received: by 2002:a19:f816:0:b0:4f3:a49b:121f with SMTP id a22-20020a19f816000000b004f3a49b121fmr7754951lff.40.1685060934020;
-        Thu, 25 May 2023 17:28:54 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id t28-20020ac2549c000000b004f3892d21a5sm390475lfk.69.2023.05.25.17.28.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 May 2023 17:28:53 -0700 (PDT)
-Message-ID: <ef7b7335-d20c-3ddc-52df-b2801fa40283@linaro.org>
-Date:   Fri, 26 May 2023 02:28:52 +0200
+        Thu, 25 May 2023 22:27:19 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C122E9B;
+        Thu, 25 May 2023 19:27:18 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 54C7264B7B;
+        Fri, 26 May 2023 02:27:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1015C433EF;
+        Fri, 26 May 2023 02:27:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685068037;
+        bh=IjyfqYdDittzF4tAOZQdZ6/Y82iHJkRqWBGwxbBg8oQ=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=JFnVko+8k4pihJ0qM+7G/pCT8x9IQmKp/6xd/DnhPw/BE1BSWI0M9TRaOWKePlWVf
+         +lK01wchufp1ksgCy7BKqWVSW3VfAsNCC7+4sir0SlGl73T5YlaP6kw3CSsQKvpTgP
+         nLTz9NpNoBRx9UA2ibHnN2crMc6dpGR36hmizOw1HjDIYJstJHnoxmqKdYoUc6gL8z
+         079roSFb0XrDbXQWZxtR6aNXonDgCXPYrJXRqffLF38yF89yvAL6L65ge5zsky5Lq9
+         +bj3NEmO75zQzNozr1kyBUgqllnA1zYikpR+H3s0d7/1Js4FeMk/8PtN/1rokRYy73
+         tPaMLD1lOYqsw==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     konrad.dybcio@linaro.org, robh+dt@kernel.org, agross@kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        krzysztof.kozlowski+dt@linaro.org, djakov@kernel.org
+Cc:     stephan@gerhold.net, dmitry.baryshkov@linaro.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, benl@squareup.com,
+        linux-arm-msm@vger.kernel.org, leo.yan@linaro.org,
+        fabien.parent@linaro.org, shawn.guo@linaro.org
+Subject: Re: [PATCH v9 0/4] Add MSM8939 SoC support with two devices
+Date:   Thu, 25 May 2023 19:31:07 -0700
+Message-Id: <168506826317.164705.12122160122945640956.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230407194905.611461-1-bryan.odonoghue@linaro.org>
+References: <20230407194905.611461-1-bryan.odonoghue@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 8/8] arm64: dts: qcom: msm8916-pm8916: Mark always-on
- regulators
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20230510-msm8916-regulators-v1-0-54d4960a05fc@gerhold.net>
- <20230510-msm8916-regulators-v1-8-54d4960a05fc@gerhold.net>
- <ea53525b-749b-25e2-6dde-662a8e273597@linaro.org>
-In-Reply-To: <ea53525b-749b-25e2-6dde-662a8e273597@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, 7 Apr 2023 20:49:00 +0100, Bryan O'Donoghue wrote:
+> V9:
+> - Fixes name of tsens
+>   s4 is not present
+>   s4->s5
+>   s5->s6
+>   s6->s7
+>   s7->s8
+>   s8->s9
+>   I erroneously thought the last sensor needed to be brought in but,
+>   as has been pointed out to me, the last sensor isn't used, so
+>   no need to support the reading and reassembly of the non-contiguous
+>   calibration data - Stephan/Dmitry
+> 
+> [...]
 
+Applied, thanks!
 
-On 26.05.2023 01:39, Konrad Dybcio wrote:
-> 
-> 
-> On 17.05.2023 20:48, Stephan Gerhold wrote:
->> Some of the regulators must be always-on to ensure correct operation of
->> the system, e.g. PM8916 L2 for the LPDDR RAM, L5 for most digital I/O
->> and L7 for the CPU PLL (strictly speaking the CPU PLL might only need
->> an active-only vote but this is not supported for regulators in
->> mainline currently).
-> Would you be interested in implementing this?
-Actually, I think currently all votes are active-only votes and what
-we're missing is sleep-only (and active-sleep if we vote on both)
+[1/5] dt-bindings: vendor-prefixes: Add Square
+      commit: 8051c8b83ac076ab7f4fc80cff5e7f8cc3b1eefb
+[2/5] arm64: dts: qcom: Add msm8939 SoC
+      commit: 61550c6c156c3715baf54ab2cdd678c8c35b3803
+[3/5] arm64: dts: qcom: Add msm8939-pm8916.dtsi include
+      commit: 1e6dfe47ba020a192d743c7c820b469fd7253813
+[4/5] arm64: dts: qcom: Add Square apq8039-t2 board
+      commit: 273a3dc13eb746c7b7abe7ea682811a8dacc89d6
+[5/5] arm64: dts: qcom: Add msm8939 Sony Xperia M4 Aqua
+      commit: f1134f738fad68c51a44216ab0f68a0f086a1a5e
 
-Konrad
-> 
-> Ancient downstream defines a second device (vregname_ao) and basically
-> seems to select QCOM_SMD_(ACTIVE/SLEEP)_STATE based on that..
-> 
-> Looks like `struct regulator` stores voltage in an array that wouldn't
-> you know it, depends on the PM state. Perhaps that could be something
-> to explore!
-> 
-> Konrad
-> 
->>
->> The RPM firmware seems to enforce that internally, these supplies stay
->> on even if we vote for them to power off (and there is no other
->> processor running). This means it's pointless to keep sending
->> enable/disable requests because they will just be ignored.
->> Also, drivers are much more likely to get a wrong impression of the
->> regulator status, because regulator_is_enabled() will return false when
->> there are no users, even though the regulator is always on.
->>
->> Describe this properly by marking the regulators as always-on.
->>
->> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
->> ---
->>  arch/arm64/boot/dts/qcom/apq8016-sbc.dts     | 5 -----
->>  arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi | 5 +++++
->>  2 files changed, 5 insertions(+), 5 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
->> index ab8dfd858025..1c5d55854893 100644
->> --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
->> +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dts
->> @@ -358,11 +358,6 @@ pm8916_l17: l17 {
->>  	};
->>  };
->>  
->> -&pm8916_s4 {
->> -	regulator-always-on;
->> -	regulator-boot-on;
->> -};
->> -
->>  &sdhc_1 {
->>  	status = "okay";
->>  
->> diff --git a/arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi
->> index b38eecbd6253..64d7228bee07 100644
->> --- a/arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi
->> @@ -72,11 +72,13 @@ pm8916_rpm_regulators: regulators {
->>  		pm8916_s3: s3 {
->>  			regulator-min-microvolt = <1250000>;
->>  			regulator-max-microvolt = <1350000>;
->> +			regulator-always-on; /* Needed for L2 */
->>  		};
->>  
->>  		pm8916_s4: s4 {
->>  			regulator-min-microvolt = <1850000>;
->>  			regulator-max-microvolt = <2150000>;
->> +			regulator-always-on; /* Needed for L5/L7 */
->>  		};
->>  
->>  		/*
->> @@ -93,6 +95,7 @@ pm8916_s4: s4 {
->>  		pm8916_l2: l2 {
->>  			regulator-min-microvolt = <1200000>;
->>  			regulator-max-microvolt = <1200000>;
->> +			regulator-always-on; /* Needed for LPDDR RAM */
->>  		};
->>  
->>  		/* pm8916_l3 is managed by rpmpd (MSM8916_VDDMX) */
->> @@ -102,6 +105,7 @@ pm8916_l2: l2 {
->>  		pm8916_l5: l5 {
->>  			regulator-min-microvolt = <1800000>;
->>  			regulator-max-microvolt = <1800000>;
->> +			regulator-always-on; /* Needed for most digital I/O */
->>  		};
->>  
->>  		pm8916_l6: l6 {
->> @@ -112,6 +116,7 @@ pm8916_l6: l6 {
->>  		pm8916_l7: l7 {
->>  			regulator-min-microvolt = <1800000>;
->>  			regulator-max-microvolt = <1800000>;
->> +			regulator-always-on; /* Needed for CPU PLL */
->>  		};
->>  
->>  		pm8916_l8: l8 {
->>
+Best regards,
+-- 
+Bjorn Andersson <andersson@kernel.org>
