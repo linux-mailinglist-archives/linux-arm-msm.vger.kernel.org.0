@@ -2,94 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3739F712E4B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 22:43:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B316712E54
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 22:45:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230100AbjEZUnw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 16:43:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47388 "EHLO
+        id S237439AbjEZUpX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 16:45:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48266 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbjEZUnv (ORCPT
+        with ESMTP id S231899AbjEZUpW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 16:43:51 -0400
+        Fri, 26 May 2023 16:45:22 -0400
 Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 963F2189
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 13:43:49 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4ec8eca56cfso1362758e87.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 13:43:49 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEF6B114
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 13:45:20 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f3b5881734so1343690e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 13:45:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685133828; x=1687725828;
+        d=linaro.org; s=google; t=1685133919; x=1687725919;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=/6174Ber5Dhvq9PCiuf7/gpcmZX6TBZczzj1WyeVUqs=;
-        b=DLeHOHHN6h5+N/RAZjKMg4IFFEl2HxU8bvnY4oBeY32U/NZ1rscBtgCgX+JMTC1Ka0
-         4qsVyQg7cYE/pfubShzugG+qFZCNXMR/O4jzvhBIe8r5APXu+/tI/HCnpBnYnivsJbtG
-         PZ8OViniZoRnQabmJNUCmKR0DFk/3HxE8lzpTmwFUrVv1pbas0FLMFjTylUrXbfe1pNq
-         uS6pidrzgs0YJxXqWaMouprb41l40xT4oVRT2ujDxWtAjZwyL8/YaeBlpwAX7CVKIPel
-         E7oOuvcTJBruW7eyM4lPGCuvP3ydVUz6wT1QpIvPtxqihTnzN7m27VLqLilMaYvplkdg
-         kcLA==
+        bh=nQUsiUc283EYxtE5Hqiz7rkWe3kMRurlGcOAgw5fyIE=;
+        b=MljjUl+Kqw50p2r/VrjVx80JauF+5TGhIvHb2vi2vnRRzEcWKSfNIGTNYhV68ceBj8
+         yFAOJcV/FDNcd84TpcYfjUciCy55uo1yNRTJjr7JTqT8XV3LpzTPIGXM/TAFThTghnn9
+         h1vpEtC1JTkXfnEEqoZXIbAOpaDn6xu8w8HV0vT236dJZyImq8wPmLK/MxQZRI+lyH/S
+         6nyVACqE69v9aepMWqSbWjEeNECatICyGYy+TpmAAlMHSgXPwYVtLRklUqyACd3MQdzU
+         64ofOZ2Hb5rE2ni1cLeYN3pLq7LSnZNg2N2Y1GjYFwzxYbQ9w0JTSyUrU5qB1YegHNYM
+         MYJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685133828; x=1687725828;
+        d=1e100.net; s=20221208; t=1685133919; x=1687725919;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/6174Ber5Dhvq9PCiuf7/gpcmZX6TBZczzj1WyeVUqs=;
-        b=RstF/gACCPv6a5MP27ZtiezYu2K/EndxNzq99NzQvWY/QBLQOR1OuaVD6Ll/i0qOkC
-         d5swRZ2Olm1DEp2OsFvLS3+MtUdsvM15orNljt8cgDwZqs3Y+bQez/LpMKw3Zzv5MZdA
-         NeH/i0X1Kk8jfr0zZIuagsWSRToYtEdeD6BmxSI8PPeA8tuuiTm4QzBERBaNRuuWfxWH
-         uJHqKpfNeXuX4CgWT9THyHzSQbn7z6NkOvRxn6CT7RpjAqOMXCSpZT8ntDgvS1YzxNun
-         EBoiJtSVoXDE2RD48tMQjfiy8FON2hiWUEXjRK6uPWAqTaYs8R5Lgwncap34Gfh0qE7l
-         4VmQ==
-X-Gm-Message-State: AC+VfDx3oSgp7AGse9phGnPXjzUhpm+3NpjR33r0LaBkv9onwo0zrspb
-        BBccZDpCgZs/qDdliEcomK1H9w==
-X-Google-Smtp-Source: ACHHUZ4dsoFDZcDnlXVTIkaLAUNQzwlWZcpLdFsQ0CmU+dEqOnfFnPq9c11FVGDpUaepA/R+EjGfpA==
-X-Received: by 2002:ac2:547c:0:b0:4f4:af2c:97e with SMTP id e28-20020ac2547c000000b004f4af2c097emr721113lfn.11.1685133827858;
-        Fri, 26 May 2023 13:43:47 -0700 (PDT)
+        bh=nQUsiUc283EYxtE5Hqiz7rkWe3kMRurlGcOAgw5fyIE=;
+        b=HOAKbFne9qxY1Nv1QE2NKp1c7t+LQppiskcoxI+E8AL6kSIBjVTu5wsxa6E8Tk+SKG
+         7guFgox+RSSnGlaZhLnYeAjahVrVmQ8qStgr+/EMDYUbBQ/XA/Txiu31prA7khY8NYNx
+         M1ndErCGOqmQ4JT21mSICJKpKq6FFi0fFvYV1Xt2sPhGJDgZfyXnAkYXdZhD1BscpWt9
+         iA3I0Anj+DPZwH6wn+JMtafSTPEqEXsnzsbe7wm8gYvRQ71jG/yKChvx5oXUiCcEcqkh
+         usBx9SYO+fLexsjMmnUgpaTYijgJKMDeQR0bvK2fgwNZ9KlAa7u5zYmiLIHrdoBOWfXo
+         VoxA==
+X-Gm-Message-State: AC+VfDzQO845H8y52gA8xAvPJGkN94uZ9+5JsNbvFkp8U6DtmI+eX/2T
+        m7W60PljuWeBuQe1TqvNQRa/3A==
+X-Google-Smtp-Source: ACHHUZ6K/jZkIcAKfF4chTZsej4kPLtI4mwpztHg0Mrn5NNxpOZtb0oH+alw8UzI6F24gQDiI7UjCQ==
+X-Received: by 2002:ac2:514c:0:b0:4e9:a3b7:2360 with SMTP id q12-20020ac2514c000000b004e9a3b72360mr1060267lfd.8.1685133919035;
+        Fri, 26 May 2023 13:45:19 -0700 (PDT)
 Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id v17-20020a056512049100b004e9b307d2c8sm760594lfq.238.2023.05.26.13.43.46
+        by smtp.gmail.com with ESMTPSA id j5-20020ac253a5000000b004efae490c51sm769770lfh.240.2023.05.26.13.45.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 13:43:47 -0700 (PDT)
-Message-ID: <265d1c93-0740-cd87-3ba2-e1ddf70a0c65@linaro.org>
-Date:   Fri, 26 May 2023 22:43:45 +0200
+        Fri, 26 May 2023 13:45:18 -0700 (PDT)
+Message-ID: <61e81ac1-d7e2-a909-2e39-dad315acf8fe@linaro.org>
+Date:   Fri, 26 May 2023 22:45:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v2 1/3] dt-bindings: media: camss: qcom,msm8996-camss: Add
- CAMSS power domain
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: ipq9574: add support for RDP453
+ variant
 Content-Language: en-US
-To:     Bryan O'Donoghue <pure.logic@nexus-software.ie>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Conor Dooley <conor@kernel.org>
-Cc:     Yassine Oudjana <yassine.oudjana@gmail.com>,
-        Robert Foss <rfoss@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Hans Verkuil <hansverk@cisco.com>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230526180712.8481-1-y.oudjana@protonmail.com>
- <20230526180712.8481-2-y.oudjana@protonmail.com>
- <20230526-obstruct-venus-5833511a58af@spud>
- <838b134d-46cb-6237-49b0-0c287141ebb3@linaro.org>
- <20230526-street-pox-2ff5ee106c43@spud>
- <8d89c14f-b2c2-7db2-f637-aa6d90273f4d@linaro.org>
- <631e5eec-853b-dce2-c474-62e76e83d7e6@linaro.org>
- <5dc28004-5ff4-2102-0bb3-8f7bee7cfca6@nexus-software.ie>
+To:     Devi Priya <quic_devipriy@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_arajkuma@quicinc.com,
+        quic_anusha@quicinc.com
+References: <20230526153152.777-1-quic_devipriy@quicinc.com>
+ <20230526153152.777-3-quic_devipriy@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <5dc28004-5ff4-2102-0bb3-8f7bee7cfca6@nexus-software.ie>
+In-Reply-To: <20230526153152.777-3-quic_devipriy@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -98,21 +84,127 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 26.05.2023 22:40, Bryan O'Donoghue wrote:
-> On 26/05/2023 21:36, Konrad Dybcio wrote:
->>> oh the names
->>>
->>> no toss that
->> this should be
->>
->> if:properties:compatible:blahblahmsm8996:then:required:power-domain-names
->>
->> Konrad
+On 26.05.2023 17:31, Devi Priya wrote:
+> Add the initial device tree support for the Reference Design Platform (RDP)
+> 453 based on IPQ9574 family of SoCs. This patch adds support for Console
+> UART, SPI NOR and SMPA1 regulator node.
 > 
-> Hmm, we don't depend on the names though.
-Check patch 3!
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+
+BTW what's the naming scheme for IPQ?
+
+IPQabcd
+
+'a' - tier
+'b' - 0/5 - network generation dependent?
+'cd' - model
+
+?
 
 Konrad
+>  arch/arm64/boot/dts/qcom/Makefile           |  1 +
+>  arch/arm64/boot/dts/qcom/ipq9574-rdp453.dts | 80 +++++++++++++++++++++
+>  2 files changed, 81 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/ipq9574-rdp453.dts
 > 
-> ---
-> bod
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 834e790bec90..56ec3d84ad43 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -12,6 +12,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp418.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp433.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp449.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp453.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp454.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-acer-a1-724.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-alcatel-idol347.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp453.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp453.dts
+> new file mode 100644
+> index 000000000000..f01de6628c3b
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp453.dts
+> @@ -0,0 +1,80 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR BSD-3-Clause)
+> +/*
+> + * IPQ9574 RDP453 board device tree source
+> + *
+> + * Copyright (c) 2020-2021 The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +/dts-v1/;
+> +
+> +#include "ipq9574.dtsi"
+> +
+> +/ {
+> +	model = "Qualcomm Technologies, Inc. IPQ9574/AP-AL02-C8";
+> +	compatible = "qcom,ipq9574-ap-al02-c8", "qcom,ipq9574";
+> +
+> +	aliases {
+> +		serial0 = &blsp1_uart2;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +};
+> +
+> +&blsp1_spi0 {
+> +	pinctrl-0 = <&spi_0_pins>;
+> +	pinctrl-names = "default";
+> +	status = "okay";
+> +
+> +	flash@0 {
+> +		compatible = "micron,n25q128a11", "jedec,spi-nor";
+> +		reg = <0>;
+> +		#address-cells = <1>;
+> +		#size-cells = <1>;
+> +		spi-max-frequency = <50000000>;
+> +	};
+> +};
+> +
+> +&blsp1_uart2 {
+> +	pinctrl-0 = <&uart2_pins>;
+> +	pinctrl-names = "default";
+> +	status = "okay";
+> +};
+> +
+> +&rpm_requests {
+> +	regulators {
+> +		compatible = "qcom,rpm-mp5496-regulators";
+> +
+> +		ipq9574_s1: s1 {
+> +		/*
+> +		 * During kernel bootup, the SoC runs at 800MHz with 875mV set by the bootloaders.
+> +		 * During regulator registration, kernel not knowing the initial voltage,
+> +		 * considers it as zero and brings up the regulators with minimum supported voltage.
+> +		 * Update the regulator-min-microvolt with SVS voltage of 725mV so that
+> +		 * the regulators are brought up with 725mV which is sufficient for all the
+> +		 * corner parts to operate at 800MHz
+> +		 */
+> +			regulator-min-microvolt = <725000>;
+> +			regulator-max-microvolt = <1075000>;
+> +		};
+> +	};
+> +};
+> +
+> +&sleep_clk {
+> +	clock-frequency = <32000>;
+> +};
+> +
+> +&tlmm {
+> +	spi_0_pins: spi-0-state {
+> +		pins = "gpio11", "gpio12", "gpio13", "gpio14";
+> +		function = "blsp0_spi";
+> +		drive-strength = <8>;
+> +		bias-disable;
+> +	};
+> +};
+> +
+> +&xo_board_clk {
+> +	clock-frequency = <24000000>;
+> +};
