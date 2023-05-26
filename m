@@ -2,74 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 15727712347
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 11:19:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7253712365
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 11:22:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243004AbjEZJT3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 05:19:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59070 "EHLO
+        id S243023AbjEZJWp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 05:22:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33678 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243000AbjEZJT1 (ORCPT
+        with ESMTP id S242878AbjEZJWo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 05:19:27 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8A74198
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 02:19:19 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so501806e87.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 02:19:19 -0700 (PDT)
+        Fri, 26 May 2023 05:22:44 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37840E44
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 02:22:31 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4ec8eca56cfso552736e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 02:22:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685092758; x=1687684758;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=linaro.org; s=google; t=1685092949; x=1687684949;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=jslW4E/ppqCPwcnCh6m6ETyqJnFvl3piH+x5euK6EVg=;
-        b=GygImw7JjgZOhqOMX+Nd4w/evFqww5LioBatQjN1Rre3pjix6/xVxmKGWL8iD133IZ
-         /UcnAGQkbwEmm5wVzGRQQYaNL4Ogal0/sFuS9EDvkHo/+A6PnABdmNmW2WHfdKoSi3xI
-         Rxg5b35iJAly4ZOAQLTQ/EJLc7PLzsPRmczN4VAHhoHDBJg2krFaMGpj5r2lWw4nK2hx
-         Fp/NoIQZ3tGQwymJcHmIFcMMvAGoXSiN6ko3OwWsOE2Auly6/GtBk1R0nfIVHN34FbaN
-         6DO9NW3a8+zHse2c7Fdgdqeh8drrnmkL6ywJEiU71tMzV2gYFzHIT93qhbnA9puC/PCL
-         6TZQ==
+        bh=TRfQU9Vgx/AzcJ7ol3cHzzpIjDBNKolCIVxAtbmZ+2k=;
+        b=FBoQT+ybvWYeW9/YpA+U8h2BGehqbh44Y88VaoliiN1jPt+ySVKQTOKP3pPtA3OFaC
+         tPYoxwU8Z7PgZo1QxHxGNVr9d6Fiq4o0HJE5xDAM0Mxs7zoU4YKvffB7Bk2rWr08JvTA
+         FXjjWnP6PGkXX37VkDpY2RbXde/2ypr5CFzmb0yzziMirZ/ogn4GvalIgOx2MVqqPQ7i
+         66hnwsV+pq4QCeYELO2a7Tm3JWXKEGd22JGYPymf4glrFMMh6jK6jvKROA4l19GCWEVr
+         BXXG7bRy3tlT4gqJtlF48xdggvD8hyNF2ot8Hl42Ufb3iMIMcZ3HjGFOhiGEm3NJa25Y
+         nJ4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685092758; x=1687684758;
-        h=content-transfer-encoding:in-reply-to:from:references:to
+        d=1e100.net; s=20221208; t=1685092949; x=1687684949;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jslW4E/ppqCPwcnCh6m6ETyqJnFvl3piH+x5euK6EVg=;
-        b=QDO/tGvIvNBG8EU6tgBkKoo8okAneJeToCEw6M1YuM6FS5uGa6Cd5Seibg1/R41euN
-         wbjY5K32LUZYR++ra977NQ0Aiix95KrqclMOobOGxL1AKmfC8rAsOaEY7zMaowBcpGhA
-         hllnZs2cao9ltB3zUCDidt+bzxe79717UwaIwGQic++qL2DNV7EEXr+bt9Cuz0lCR5WD
-         QVZWSmZ77t/AvcddON1oBIy/TJZ9zyR0kKin4bm2sAtgp94gG/65ZNTSV1PyHZ4uGwyt
-         1AO9hiWdCCxn2hN1q7s5zPjyAe1CAmVG5Nvu8rf8CqLGfEOC4jq8V8BTrvQkfNKchZEI
-         MNCA==
-X-Gm-Message-State: AC+VfDyO14tm0mUseqL5UmGrtt/43qJgSrqa35OELHzyvb2SxTsMkjXY
-        2EZi7O2U+2EvuLDx2N1CGe1Fpw==
-X-Google-Smtp-Source: ACHHUZ6YTvept+AKcZ0zJtYViavpnfwS8Wd/NdqylduX/PxaV9nTcOECiB+vyugP7w3F1x1aOW5EQQ==
-X-Received: by 2002:a19:f00b:0:b0:4f3:822a:786f with SMTP id p11-20020a19f00b000000b004f3822a786fmr337323lfc.57.1685092758202;
-        Fri, 26 May 2023 02:19:18 -0700 (PDT)
+        bh=TRfQU9Vgx/AzcJ7ol3cHzzpIjDBNKolCIVxAtbmZ+2k=;
+        b=Q4LKcRmCiYKfxV6zcDp99dySDAZj+nFkxhWdr//OuoFtOHI+kZ1tMIMs7zJaBiZTp6
+         swTE/rmu+jXzzT+fISuYg4L68GjNh8Rnft3p2H/xhqIkp1AZgxV6hRVztKytDfV7EHI0
+         FDsOn17CqmawBOHUyxemW4AWarJx/PzOMuyZB5q30XgOHGCiI4ByXgoMapXzPE2zXLMB
+         GVSsIwFsbcf1n1To3wJm3T0ZvjANvmGZqcc7K/Yr8qLUybHWtRG56YYfGDULLLHtY/d/
+         v95Cyqj/rEmCqSF/bfMAxTmyIRBGH8cNlKIk+1ayDA44NezhIFwf56FGePEd+IwpLvq8
+         SWbw==
+X-Gm-Message-State: AC+VfDxhq+Ov5bja+ddLgSx8b8gjKjQdTvFdgWC9Nccl5W1UYBtx3/8t
+        IwCKWbzvDeriZwL7UwSgACqPRXOz300oN/767BM=
+X-Google-Smtp-Source: ACHHUZ6RG4YuWSKICAIuktxXn4kzfb0Nie5r9PXVptRAPFG/2zbVsWO2c5h3I7AvD///nnFNOUOi4w==
+X-Received: by 2002:ac2:598a:0:b0:4f0:1a32:ca23 with SMTP id w10-20020ac2598a000000b004f01a32ca23mr387006lfn.40.1685092949431;
+        Fri, 26 May 2023 02:22:29 -0700 (PDT)
 Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id p9-20020a05651211e900b004f019d3eab4sm553347lfs.23.2023.05.26.02.19.17
+        by smtp.gmail.com with ESMTPSA id b25-20020ac25e99000000b004efefb9fcb3sm532702lfq.268.2023.05.26.02.22.28
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 02:19:17 -0700 (PDT)
-Message-ID: <7d14db71-2279-e9b9-012d-47dc50fe797b@linaro.org>
-Date:   Fri, 26 May 2023 11:19:16 +0200
+        Fri, 26 May 2023 02:22:29 -0700 (PDT)
+Message-ID: <a5891478-bf4a-8389-e1c9-00244c5b406e@linaro.org>
+Date:   Fri, 26 May 2023 11:22:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: ipq9574: add QFPROM node
+Subject: Re: [PATCH 1/2] mfd: pm8008: fix module autoloading
 Content-Language: en-US
-To:     Kathiravan T <quic_kathirav@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+To:     Johan Hovold <johan+linaro@kernel.org>, Lee Jones <lee@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230526070421.25406-1-quic_kathirav@quicinc.com>
- <20230526070421.25406-5-quic_kathirav@quicinc.com>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org
+References: <20230526091646.17318-1-johan+linaro@kernel.org>
+ <20230526091646.17318-2-johan+linaro@kernel.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230526070421.25406-5-quic_kathirav@quicinc.com>
+In-Reply-To: <20230526091646.17318-2-johan+linaro@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,34 +80,30 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 26.05.2023 09:04, Kathiravan T wrote:
-> IPQ9574 has efuse region to determine the various HW quirks. Lets
-> add the initial support and the individual fuses will be added as they
-> are required.
+On 26.05.2023 11:16, Johan Hovold wrote:
+> Add the missing module device table alias to that the driver can be
+> autoloaded when built as a module.
 > 
-> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 7 +++++++
->  1 file changed, 7 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index 1a2c813ffd43..715fe51ff567 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -117,6 +117,13 @@
->  		#size-cells = <1>;
->  		ranges = <0 0 0 0xffffffff>;
->  
-> +		qfprom: efuse@a4000 {
-> +			compatible = "qcom,ipq9574-qfprom", "qcom,qfprom";
-> +			reg = <0x000a4000 0x5a1>;
-That's an odd size. Are you sure this is how long the corrected region is?
+> Fixes: 6b149f3310a4 ("mfd: pm8008: Add driver for QCOM PM8008 PMIC")
+> Cc: stable@vger.kernel.org      # 5.14
+Looks like the commit referenced in Fixes is from 5.13-rc1, perhaps
+5.13 would be more fitting here?
 
 Konrad
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +		};
-> +
->  		tlmm: pinctrl@1000000 {
->  			compatible = "qcom,ipq9574-tlmm";
->  			reg = <0x01000000 0x300000>;
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  drivers/mfd/qcom-pm8008.c | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
+> index 837246aab4ac..29ec3901564b 100644
+> --- a/drivers/mfd/qcom-pm8008.c
+> +++ b/drivers/mfd/qcom-pm8008.c
+> @@ -199,6 +199,7 @@ static const struct of_device_id pm8008_match[] = {
+>  	{ .compatible = "qcom,pm8008", },
+>  	{ },
+>  };
+> +MODULE_DEVICE_TABLE(of, pm8008_match);
+>  
+>  static struct i2c_driver pm8008_mfd_driver = {
+>  	.driver = {
