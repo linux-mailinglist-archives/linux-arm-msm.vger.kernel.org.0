@@ -2,106 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5E6F712DFE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 22:05:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2260712E03
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 22:14:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236757AbjEZUFx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 16:05:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36768 "EHLO
+        id S229628AbjEZUOL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 16:14:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230024AbjEZUFw (ORCPT
+        with ESMTP id S229537AbjEZUOK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 16:05:52 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DC7FF3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 13:05:51 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f6d01d390bso12167445e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 13:05:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685131549; x=1687723549;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ii7jUw037eoZ8vAATSpOVlCd9Yy79Gi5wawq+sGoAE8=;
-        b=woFwrMq2FfrFElY2FeQHOclRdLKxz2KbuCG30v1NLnuj76HybVAEj0w5LlqVUwsq0Y
-         8GpDEy334I1EymTkGxF/wO6OZ0p2MXZ3mhAgPtswJSuv2vVuzgXwlTWPA9wXA/7nPh4y
-         zwlMcvjv72hjGUpQ2ThqoABjzRGj7XjjZlPMCn4mKP6SQleWckzrTFniImmfZ+JJeNWV
-         YLl3n7llJ5VwCqmp0ktf3E6kjDARDiFIUYPTLLaw/bAPqx6l62noIadNh8fg+8JuyCcs
-         Il1JA/KT1ZN8fJVCMEYdZPtkJ2d21GeLxe8VnOGLkiJB7Xw5+QNN0X+Cm/4DxCkbI4+X
-         pCqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685131549; x=1687723549;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ii7jUw037eoZ8vAATSpOVlCd9Yy79Gi5wawq+sGoAE8=;
-        b=GyNvYuWpe52ucIS8R0K3/LRfg1bEVax2Dbobt93dwXpjCnrpTWDXZ232XWYpIANSHY
-         y7qH2jvhiCdjoVJXh9FpYm+lvnip6yrcOD4GeDc0S+0nrOCHmb/v0s0cG+beI7URPoh+
-         X4Pvit96Ywrj18dMYJL+rsg4rZ6OtZ6My/ipwwWxBQ+XZBm4R3ujmlCpihKOoFjJFsYX
-         /8UVTkbswCPbx/WiuTgVJ45N5DVBEnXLuE73D5moOSplIvTLp+qvVtqydNkKRfqwUX/K
-         94HzgaSIcN9BIs5UWXlmugsjHUSR70FnEqEIHPaZeEQb+ICtfBmCX7oHBTMc0+bPn+kl
-         jI9g==
-X-Gm-Message-State: AC+VfDydIzMhgPcKtl/52QQJ9bvNcfA8Wuw573MPYVJJU7GhC1Y3Falo
-        SFa1Lab2hbHGwnY4ILrFogh/1g==
-X-Google-Smtp-Source: ACHHUZ5Wod0UWR630OobbVnuFuY+mY60QpYFhW+Ur6XxZ5rGEw1+JnvaJw+RyGPhw/lbn+cq9ZgXHw==
-X-Received: by 2002:a7b:cb90:0:b0:3f6:c7b:d3c8 with SMTP id m16-20020a7bcb90000000b003f60c7bd3c8mr2803322wmi.16.1685131549510;
-        Fri, 26 May 2023 13:05:49 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id a18-20020adfe5d2000000b003079c402762sm5948414wrn.19.2023.05.26.13.05.48
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 13:05:48 -0700 (PDT)
-Message-ID: <838b134d-46cb-6237-49b0-0c287141ebb3@linaro.org>
-Date:   Fri, 26 May 2023 21:05:47 +0100
+        Fri, 26 May 2023 16:14:10 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC913E7;
+        Fri, 26 May 2023 13:14:09 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7905565321;
+        Fri, 26 May 2023 20:14:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41783C433D2;
+        Fri, 26 May 2023 20:14:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685132048;
+        bh=+LH8uYOOMZ4oYEueEi03d6yn1VdMgPEVBQS7nznYJzA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=FftT9q4m/nYrgDG4C/4vRIRMPuyG0OXKj/b3YdkqCsYW497NFdjClPgoqx/Ln3U3s
+         rs4m7DZaID6sDM+9Mg+QtuaDWgV2T4J9KjQIATOOppqT7LGc0aTtb39B5tX0hzGWOB
+         0Tub+A3SPzx2+BBvDVGB8a9COtcfLswA3R5gFazGh62R6uN9+hDO0wz18/pBkJmxz1
+         rDMh15cfNzosvRrER1dq1cWCvk9ZeDGPxFfvLI/TXbD7empLvHHTMYu8gwdBV5bHu4
+         tsaAXQvjPQPAKYeapcJTCEwbsTu2kXQZcLQeVzkex/PKViRsUdExDer49N9HD+aQ/o
+         1ui+1VDj6RZsg==
+Date:   Fri, 26 May 2023 13:17:57 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     agross@kernel.org, konrad.dybcio@linaro.org,
+        linus.walleij@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+Subject: Re: [PATCH v6 3/5] firmware: scm: Modify only the download bits in
+ TCSR register
+Message-ID: <20230526201757.a37hcjbif5atbvmx@ripper>
+References: <1680076012-10785-1-git-send-email-quic_mojha@quicinc.com>
+ <1680076012-10785-4-git-send-email-quic_mojha@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH v2 1/3] dt-bindings: media: camss: qcom,msm8996-camss: Add
- CAMSS power domain
-Content-Language: en-US
-To:     Conor Dooley <conor@kernel.org>,
-        Yassine Oudjana <yassine.oudjana@gmail.com>
-Cc:     Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Hans Verkuil <hansverk@cisco.com>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230526180712.8481-1-y.oudjana@protonmail.com>
- <20230526180712.8481-2-y.oudjana@protonmail.com>
- <20230526-obstruct-venus-5833511a58af@spud>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230526-obstruct-venus-5833511a58af@spud>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1680076012-10785-4-git-send-email-quic_mojha@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/05/2023 20:46, Conor Dooley wrote:
->> +  - power-domain-names
-> Why is this now required?
+On Wed, Mar 29, 2023 at 01:16:50PM +0530, Mukesh Ojha wrote:
+> CrashDump collection is based on the DLOAD bit of TCSR register.
+> To retain other bits, we read the register and modify only the
+> DLOAD bit as the other bits have their own significance.
 > 
-> Thanks,
-> Conor.
+> Signed-off-by: Poovendhan Selvaraj <quic_poovendh@quicinc.com>
+
+With Poovendhan being the first one to sign off the patch, was he the
+author? Or should this be Co-developed-by: Poovendhan ?
+
+Regards,
+Bjorn
+
+> Signed-off-by: Mukesh Ojha <quic_mojha@quicinc.com>
+> ---
+>  drivers/firmware/qcom_scm.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
 > 
-
-Its an accurate description of the power/clock tree to have the top 
-power domain be switched on prior to the clocks that depend on it.
-
-I think Yassine, you could probably include the majority of your 
-cover-letter text in this commit to explain this change a bit better.
-
----
-bod
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index cb0bc32..8e39b97 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -30,6 +30,9 @@ module_param(download_mode, bool, 0);
+>  #define SCM_HAS_IFACE_CLK	BIT(1)
+>  #define SCM_HAS_BUS_CLK		BIT(2)
+>  
+> +#define QCOM_DOWNLOAD_MODE_MASK 0x30
+> +#define QCOM_DOWNLOAD_FULLDUMP	0x1
+> +
+>  struct qcom_scm {
+>  	struct device *dev;
+>  	struct clk *core_clk;
+> @@ -448,8 +451,9 @@ static void qcom_scm_set_download_mode(bool enable)
+>  	if (avail) {
+>  		ret = __qcom_scm_set_dload_mode(__scm->dev, enable);
+>  	} else if (__scm->dload_mode_addr) {
+> -		ret = qcom_scm_io_writel(__scm->dload_mode_addr,
+> -				enable ? QCOM_SCM_BOOT_SET_DLOAD_MODE : 0);
+> +		ret = qcom_scm_io_update_field(__scm->dload_mode_addr,
+> +				QCOM_DOWNLOAD_MODE_MASK,
+> +				enable ? QCOM_DOWNLOAD_FULLDUMP : 0);
+>  	} else {
+>  		dev_err(__scm->dev,
+>  			"No available mechanism for setting download mode\n");
+> -- 
+> 2.7.4
+> 
