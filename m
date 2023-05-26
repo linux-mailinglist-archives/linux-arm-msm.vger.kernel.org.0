@@ -2,80 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A3DC17122A8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 10:51:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 957D7712314
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 11:10:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242799AbjEZIu7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 04:50:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46306 "EHLO
+        id S229669AbjEZJKD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 05:10:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55418 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237004AbjEZIu6 (ORCPT
+        with ESMTP id S236818AbjEZJJu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 04:50:58 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49196128
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 01:50:56 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f3ba703b67so451459e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 01:50:56 -0700 (PDT)
+        Fri, 26 May 2023 05:09:50 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D1DC119
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 02:09:48 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2af31dc49f9so5314971fa.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 02:09:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685091054; x=1687683054;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vFgq2+VVrviL7UALj9pqiFm5m6vdqKFWr7xuBpXEGgk=;
-        b=ME1+1zcdcnrW6W4YFgkJY1I+UtG6/knxC7rNTHRZcgSM65ZRaaM3RkNSBBfDbBa6FU
-         jw/VX2m07hj8QVYd2l74yQUINdMLICa9Oh4jqTlcVTA03+F9s3TdNzDcQIzxUdo40B9d
-         p/O8jNChmQHvRz4y2q7Oe8OzM2C2vfiNu0I+OUyqFXtkKwCX9c1yH8ViS4T6P3FC6SyT
-         NXF5XEPuQ3qeUM4dfs/pS88L7OJOsZE5uOeI7h6OsFYioA53ZA0vO9VC4NYpDB11xS9/
-         MzgWJuFbwum+WYKpWuVHsfpXi7+TAlqfG4Fr9XeObmZCsNWvF/W1mrLQnon99FphY4ix
-         raHQ==
+        d=linaro.org; s=google; t=1685092186; x=1687684186;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Lfip9WRM9noL0Gy0TC2bjz3Y0WgSk0gvAx7c/r1Jxko=;
+        b=tC3msow/rYHS8fmhMtLDMTusljx5I9UlxeUipOQ+QzT+ZBCWBVBdTgzOsw8apyiVWn
+         LfCicP6fAGq1Dsz6bYsGWGZOsUwQAYDHwCyiaGqge3f4jwJfgPQMU5LW4b+V33DxRNiJ
+         cbC0WbRvoheZa8bc6Cto4grBIB0Un2a6u38AoLLBi7sPSf3ZQwZZjkhzSx9Kl4oPH1Yv
+         kuHebrCdxIoXaG6W9nAUVjLLI8s2ukwNPTiXgI+6KBU+F5wMamkAoGcJWOdi20cnWL+c
+         AVQrN7tHZ0SSQkL8NL2t9k/vP+BXrIArUjBYvXiFyc92kLBcjnzwFAF32UfAVIszKAKF
+         zOkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685091054; x=1687683054;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=vFgq2+VVrviL7UALj9pqiFm5m6vdqKFWr7xuBpXEGgk=;
-        b=LByV44OnhDWuVbdrR0t51n0Nn2HdW7ByWAKkG+GwWuuQKrXz2al3cWhjaO+q6Tfh/r
-         ZWbL8arvOz2AM8y+lvNmw01Ki04AAzKXqMUoWSmU1OY4SqeDh3q4lYKIeFpbCsoSPurE
-         rzXcru5RbFGMjCN3fNWwKrABPQYvkI/xYD5piF3fwdS4tlQ9fmad18LkXVn4t1HBVu4s
-         pO+GUgEZJ1CMae6MQMPjDiAjtD6d1YrARzSwhTUHiIzLu4Rb6ZyzSAu1WzBqCDlXEdLC
-         RcqXWoO6GDiG7hWFw4e5MocsSHxvhbEaxfGHO3hKZbbHjllD0G6EgOXEVGGwf7kkj+I/
-         2vUw==
-X-Gm-Message-State: AC+VfDwaBdacb+dFe2AQSKvZ1yorXJKK9vxYigWEL93xiVVPlU4/ljtH
-        7CCY6NhmYNWzhFrSo01UZjnjgQ==
-X-Google-Smtp-Source: ACHHUZ6SBk/LbQLpRdgponALylw72ijErfTNlvdTRC9EnogFDghqyrnhNRt206k+lEMedSeVjT/SeQ==
-X-Received: by 2002:ac2:4571:0:b0:4f3:f98c:77fc with SMTP id k17-20020ac24571000000b004f3f98c77fcmr307628lfm.8.1685091054513;
-        Fri, 26 May 2023 01:50:54 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id d16-20020ac25450000000b004f3b2d3fc25sm542344lfn.10.2023.05.26.01.50.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 01:50:54 -0700 (PDT)
-Message-ID: <41f5b7a9-d927-e468-d1ea-291ad35ba943@linaro.org>
-Date:   Fri, 26 May 2023 10:50:53 +0200
+        d=1e100.net; s=20221208; t=1685092186; x=1687684186;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Lfip9WRM9noL0Gy0TC2bjz3Y0WgSk0gvAx7c/r1Jxko=;
+        b=MGY4LXc/Fa2iMa4Yi8ilM/Ex8pOIDPiNLV/VZreGyBKW88CrQ8+rZKpOcnPQ03BoNS
+         ZJuo+Vrb2fzOLOl/BHkf4jqlhP6biAxvNLY4d6SmgPTKVCAbuEKrBY9EPfw9lgEuEGKV
+         OTqjRTOKGPNCvzbKApOBli9DshABr5l8idIb/wYMMVuYca/cJYQOgRtI8TSesNA58FzE
+         ogPMe3Dp9rg/ic/tteo5KDHrisxcaL+Woy1p9cHXh/jGush6kbcDJTCl2NbhlsZYIsIh
+         TDvCvIIozG1EhLRjOH8WNT5JD+WrS64XB2RAEIQ9x/P+BuozpdCTr4fWVA/1oOsJC6E2
+         fcxA==
+X-Gm-Message-State: AC+VfDzQFZuTc0f9q6n9h82e1Efk7vKKHEB7ukzCEIqRgGnflrMBIIV0
+        yKDDV++x8Nh5fT1/s5U/K7r95g==
+X-Google-Smtp-Source: ACHHUZ7nSrpogwjiwCp+uhudeJqoYumglTZ0HcqOUiICGf86YSnpKgCMPXXDYHYk5q9AWFYo7TD8Kg==
+X-Received: by 2002:ac2:4855:0:b0:4f3:b6b8:dabb with SMTP id 21-20020ac24855000000b004f3b6b8dabbmr395149lfy.13.1685092186562;
+        Fri, 26 May 2023 02:09:46 -0700 (PDT)
+Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id v24-20020ac25618000000b004cb43eb09dfsm538992lfd.123.2023.05.26.02.09.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 May 2023 02:09:46 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm/dpu: use PINGPONG_NONE to unbind INTF from PP
+Date:   Fri, 26 May 2023 12:09:45 +0300
+Message-Id: <20230526090945.439639-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20230510-msm8916-regulators-v1-0-54d4960a05fc@gerhold.net>
- <20230510-msm8916-regulators-v1-8-54d4960a05fc@gerhold.net>
- <ea53525b-749b-25e2-6dde-662a8e273597@linaro.org>
- <ef7b7335-d20c-3ddc-52df-b2801fa40283@linaro.org>
- <ZHBTi-j657tW3jIu@gerhold.net>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH 8/8] arm64: dts: qcom: msm8916-pm8916: Mark always-on
- regulators
-In-Reply-To: <ZHBTi-j657tW3jIu@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -84,86 +75,102 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Currently the driver passes the PINGPONG index to
+dpu_hw_intf_ops::bind_pingpong_blk() callback and uses separate boolean
+flag to tell whether INTF should be bound or unbound. Simplify this by
+passing PINGPONG_NONE in case of unbinding and drop the flag completely.
 
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c          | 4 ++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 4 +---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 1 -
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 3 +--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          | 1 -
+ 5 files changed, 4 insertions(+), 9 deletions(-)
 
-On 26.05.2023 08:36, Stephan Gerhold wrote:
-> On Fri, May 26, 2023 at 02:28:52AM +0200, Konrad Dybcio wrote:
->> On 26.05.2023 01:39, Konrad Dybcio wrote:
->>> On 17.05.2023 20:48, Stephan Gerhold wrote:
->>>> Some of the regulators must be always-on to ensure correct operation of
->>>> the system, e.g. PM8916 L2 for the LPDDR RAM, L5 for most digital I/O
->>>> and L7 for the CPU PLL (strictly speaking the CPU PLL might only need
->>>> an active-only vote but this is not supported for regulators in
->>>> mainline currently).
->>> Would you be interested in implementing this?
-> 
-> At least on MSM8916 there is currently no advantage implementing this.
-> The "active-only" votes only have the CPU as limited use case. S1 (aka
-> MSM8916_VDDCX) and L3 (MSM8916_VDDMX) are both used via rpmpd/power
-> domains which already provides separate active-only variants. L7 (for
-> the CPU PLL) is the only other regulator used in "active-only" mode.
-> However, at least on MSM8916 L7 seems to stay always-on no matter what I
-> do, so having an active-only vote on L7 doesn't provide any advantage.
-In this case it may be more important that we tell RPM that we want it
-to be active-only, even if it ultimately makes a different decision.
-You probably played with this more, but my guess would be that not letting
-off of an a-s vote could confuse the algos
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+index ebe34eda6e50..7fd3a13ac226 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+@@ -2102,8 +2102,8 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
+ 		for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+ 			if (dpu_enc->phys_encs[i] && phys_enc->hw_intf->ops.bind_pingpong_blk)
+ 				phys_enc->hw_intf->ops.bind_pingpong_blk(
+-						dpu_enc->phys_encs[i]->hw_intf, false,
+-						dpu_enc->phys_encs[i]->hw_pp->idx);
++						dpu_enc->phys_encs[i]->hw_intf,
++						PINGPONG_NONE);
+ 
+ 			/* mark INTF flush as pending */
+ 			if (phys_enc->hw_ctl->ops.update_pending_flush_intf)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+index 1a4c20f02312..3130c86a32cc 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+@@ -66,7 +66,6 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
+ 	if (test_bit(DPU_CTL_ACTIVE_CFG, &ctl->caps->features) && phys_enc->hw_intf->ops.bind_pingpong_blk)
+ 		phys_enc->hw_intf->ops.bind_pingpong_blk(
+ 				phys_enc->hw_intf,
+-				true,
+ 				phys_enc->hw_pp->idx);
+ 
+ 	if (phys_enc->hw_intf->ops.enable_compression)
+@@ -556,8 +555,7 @@ static void dpu_encoder_phys_cmd_disable(struct dpu_encoder_phys *phys_enc)
+ 	if (phys_enc->hw_intf->ops.bind_pingpong_blk) {
+ 		phys_enc->hw_intf->ops.bind_pingpong_blk(
+ 				phys_enc->hw_intf,
+-				false,
+-				phys_enc->hw_pp->idx);
++				PINGPONG_NONE);
+ 
+ 		ctl = phys_enc->hw_ctl;
+ 		ctl->ops.update_pending_flush_intf(ctl, phys_enc->intf_idx);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index 3a374292f311..220020273304 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -287,7 +287,6 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
+ 	if (phys_enc->hw_intf->ops.bind_pingpong_blk)
+ 		phys_enc->hw_intf->ops.bind_pingpong_blk(
+ 				phys_enc->hw_intf,
+-				true,
+ 				phys_enc->hw_pp->idx);
+ 
+ 	if (phys_enc->hw_pp->merge_3d)
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+index a2486f99d3c2..918d154848b9 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+@@ -268,7 +268,6 @@ static void dpu_hw_intf_setup_prg_fetch(
+ 
+ static void dpu_hw_intf_bind_pingpong_blk(
+ 		struct dpu_hw_intf *intf,
+-		bool enable,
+ 		const enum dpu_pingpong pp)
+ {
+ 	struct dpu_hw_blk_reg_map *c = &intf->hw;
+@@ -277,7 +276,7 @@ static void dpu_hw_intf_bind_pingpong_blk(
+ 	mux_cfg = DPU_REG_READ(c, INTF_MUX);
+ 	mux_cfg &= ~0xf;
+ 
+-	if (enable)
++	if (pp != PINGPONG_NONE)
+ 		mux_cfg |= (pp - PINGPONG_0) & 0x7;
+ 	else
+ 		mux_cfg |= 0xf;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+index 72fe907729f1..e2d15e89880d 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+@@ -89,7 +89,6 @@ struct dpu_hw_intf_ops {
+ 	u32 (*get_line_count)(struct dpu_hw_intf *intf);
+ 
+ 	void (*bind_pingpong_blk)(struct dpu_hw_intf *intf,
+-			bool enable,
+ 			const enum dpu_pingpong pp);
+ 	void (*setup_misr)(struct dpu_hw_intf *intf, bool enable, u32 frame_count);
+ 	int (*collect_misr)(struct dpu_hw_intf *intf, u32 *misr_value);
+-- 
+2.39.2
 
-> 
->> Actually, I think currently all votes are active-only votes and what
->> we're missing is sleep-only (and active-sleep if we vote on both)
-> 
-> If you only send the "active" votes but no "sleep" votes for a resource
-> then the RPM firmware treats it as active+sleep, see [1].
-> The active/sleep separation only starts once a separate sleep vote has
-> been sent for a resource for the first time.
-> 
-> Therefore, all requests from the SMD regulator driver apply for both
-> active+sleep at the moment.
-> 
-> [1]: https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/blob/LA.BR.1.2.9.1-02310-8x16.0/drivers/regulator/rpm-smd-regulator.c#L202-204
-/me *dies*
-
-that's a design decision if i've ever seen one..
-
-> 
->>>
->>> Ancient downstream defines a second device (vregname_ao) and basically
->>> seems to select QCOM_SMD_(ACTIVE/SLEEP)_STATE based on that..
->>>
->>> Looks like `struct regulator` stores voltage in an array that wouldn't
->>> you know it, depends on the PM state. Perhaps that could be something
->>> to explore!
->>>
-> 
-> Don't get confused by the similar naming here. RPM sleep votes are
-> unrelated to the "system suspend" voltages the regulator framework
-> supports. :)
-> 
-> RPM sleep votes become active if the cpuidle reaches the deepest state
-> for the (cpu/)cluster(/CCI). This can happen anytime at runtime when the
-> system is idle long enough. On the other hand, the regulator suspend
-> voltages are meant to become active during system suspend (where all the
-> devices get suspended as well).
-Yes and pm_genpd tracks that very meticulously, at least in the case of PSCI.
-
-> 
-> Since we do have "active-only" support in rpmpd I think the question is
-> if it is worth bringing the feature also to regulators. Perhaps one
-> could simply treat all regulators that are needed by the CPU as power
-> domain.
-That would make sense..
-
-> 
-> For example, L7 on MSM8916 is fixed at 1.8V so while it doesn't have
-> corners the simple enable/disable votes could also be sent via rpmpd.
-> In some places in downstream L7 is also called VDDPX, similar to
-> VDDCX and VDDMX which are already in rpmpd.
-Yeah, anything available from RPM is only vaguely categorized as being
-a clock/regulator/bus, sometimes wrongly (see: bus clocks in rpmcc) so
-there's some flexibility here.
-
-Konrad
-> 
-> Thanks,
-> Stephan
