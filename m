@@ -2,120 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7D96712A0C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 17:57:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9BC9712A4A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 18:12:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243606AbjEZP5u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 11:57:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52690 "EHLO
+        id S230159AbjEZQML (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 12:12:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57588 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244004AbjEZP5i (ORCPT
+        with ESMTP id S230369AbjEZQMI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 11:57:38 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2398EF7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 08:57:37 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-30a892c45c4so558221f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 08:57:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685116655; x=1687708655;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IOSdHbR4Wu88gf7m1ZCJ5+Wng1YTJWHsPTDZi1tytEc=;
-        b=iZkGp3rzWyMeUUblP834O+UQ2YuoWf08u41UqDcS4Npz1dqcp1O/ImUgSLOxQcl/fc
-         UIWUsLhdRfav36oQ5CxIjNlaxUG2bCO0GxRPFWB4RGK+Qx/EVgMywpN7GBsa5ip2Kpx/
-         tGwc5QvVcRx5poX6nrgiiZ9HdKVC5vABK0y+ZKMbJgxce+ulQQZW58SbR+UIZrHuyXNc
-         hDHZxw4ICeSseGYaKBzAW3fduWCqZv2H7GwlT5YoF56Jwo3BT5f8ollDNt8pWGMQqMpy
-         pj/z1mgCX5HF4HwpNr48W8SGHlSoqgWEdNEulXC+JjA3mDB4Q68SbVIYsCT1ujWI7wSE
-         aDkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685116655; x=1687708655;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IOSdHbR4Wu88gf7m1ZCJ5+Wng1YTJWHsPTDZi1tytEc=;
-        b=c/NZYc47Rksis+/CALpRF+OQwE2meh2FrRVALmXFDEW6h+RHr6qglPUqXyHg9jjvEu
-         zMXKE539mJlQVbPPeLyz518HDLONd0OXU5qz1d8t9es2nf9vdE/IL12ZU/ZXvjhXzBz5
-         wdLtMertbZSt4EjZI2zxUs09G6Bv7k5gxZwLO91NcrpK/unU+SlQg186S2O3oHxGFukO
-         BygcJRshFewbRuY2ludKu26rn04+YfZFs2X1yCIxDYqaFMGyH+FQ+3aINZWSYpLmln/+
-         WZSqLcL7xHgaY6QXPQRLScL3EJjWE5D+1tN1h8pqj3sNCmChUSZHPmwh2esCxGfbPAjC
-         nKDw==
-X-Gm-Message-State: AC+VfDzhOtmXF6TUui3MnnDieQqGhYglcesBm5srdybix+JnvcUEnTPr
-        n/iGkpcd2q49H15NwWOt+UUnAw==
-X-Google-Smtp-Source: ACHHUZ4clmY49xiyKRDx/JFGL5Nn1+FPQLmtPlJxv0UmteciiyDR3G7oPw+szDGZaNj9kvtAynEOUw==
-X-Received: by 2002:a05:6000:1950:b0:2d1:3eb9:c3c2 with SMTP id e16-20020a056000195000b002d13eb9c3c2mr1872627wry.54.1685116655645;
-        Fri, 26 May 2023 08:57:35 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id y15-20020a5d4acf000000b002cea9d931e6sm5465424wrs.78.2023.05.26.08.57.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 08:57:35 -0700 (PDT)
-Message-ID: <58310306-2d70-eab4-4564-e77e1fb638a1@linaro.org>
-Date:   Fri, 26 May 2023 16:57:34 +0100
+        Fri, 26 May 2023 12:12:08 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 82E11194;
+        Fri, 26 May 2023 09:12:07 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34QC0bAA005049;
+        Fri, 26 May 2023 16:11:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=5f8QxYH454fr/3MxMEIQ6nF2pEfAdcsobX+bKB2IjKg=;
+ b=T1G1FjYpoa9v6lUKqxeqXD627zCd9BFxShXF6nuGEVF+Pp32FbEUcfd17Wi9jrRYqBHf
+ q2/4COpaB9ahmZA7+R66GUmK35/4pZSgoTVVmYArZdjzlZ23k1mHsj2z6uG7B61nAdl4
+ oX50lh9jAtmzVZMlb9YWFashWE3n+SzP9SxwmMcegKlDHy9KtMCeGBtnDRIvTV0r48xb
+ 8gpoflNRJTTUkyZUXmQUfdEyIsjATjH48jDDG8VnOfXn5P8JR3/W8u775pECRWO44y9/
+ yZ10pBLSbtq1mqPgSYqUt7t6XexFJ29DK99aANlAejGxuZIrBz1anmMMpBPWvgCR5eDS iQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qtq28h7cq-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 26 May 2023 16:11:55 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34QGBswW007244
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 26 May 2023 16:11:54 GMT
+Received: from anusha-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 26 May 2023 09:11:47 -0700
+From:   Anusha Rao <quic_anusha@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <thara.gopinath@gmail.com>,
+        <herbert@gondor.apana.org.au>, <davem@davemloft.net>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <p.zabel@pengutronix.de>,
+        <bhupesh.sharma@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-crypto@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_kathirav@quicinc.com>,
+        <quic_arajkuma@quicinc.com>, <quic_poovendh@quicinc.com>
+Subject: [PATCH V4 0/4] Enable crypto for ipq9574
+Date:   Fri, 26 May 2023 21:41:25 +0530
+Message-ID: <20230526161129.1454-1-quic_anusha@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH V2 3/6] clk: qcom: clk-alpha-pll: Remove explicit CAL_L
- configuration for EVO PLL
-Content-Language: en-US
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20230525172142.9039-1-quic_jkona@quicinc.com>
- <20230525172142.9039-4-quic_jkona@quicinc.com>
- <240fa683-afb1-eb60-c24f-2b3f1d7f1339@linaro.org>
-In-Reply-To: <240fa683-afb1-eb60-c24f-2b3f1d7f1339@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 9zOKCWi4Men4E7VMFGjcRvDElveEPond
+X-Proofpoint-ORIG-GUID: 9zOKCWi4Men4E7VMFGjcRvDElveEPond
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-26_06,2023-05-25_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ impostorscore=0 mlxlogscore=797 bulkscore=0 adultscore=0
+ lowpriorityscore=0 clxscore=1011 priorityscore=1501 phishscore=0
+ mlxscore=0 spamscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2305260137
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 26/05/2023 16:54, Bryan O'Donoghue wrote:
-> On 25/05/2023 18:21, Jagadeesh Kona wrote:
->> Fixes: 260e36606a03 ("clk: qcom: clk-alpha-pll: add Lucid EVO PLL 
->> configuration interfaces")
-> 
-> Is this a "Fixes" without the previous patch to stuff the CAL_L_VAL and 
-> VAL_L fields ?
-> 
-> [PATCH V2 3/6] clk: qcom: clk-alpha-pll: Remove explicit CAL_L 
-> configuration for EVO PLL
-> 
-> Surely you need _both_ with this patch depending on the previous, per 
-> your comment ?
-> 
-> -    .l = 0x3e,
-> +    /* .l includes CAL_L_VAL, L_VAL fields */
-> +    .l = 0x0044003e,
-> 
-> ---
-> bod
+Update GCC driver to include clocks required for crypto.
+Enable crypto nodes in ipq9574.
 
-i.e. if you pick up this patch on its own you won't populate 
-CAL_L_VAL... right ?
+DTS patch depends on the below series
+https://lore.kernel.org/linux-arm-msm/20230517072806.13170-1-quic_kathirav@quicinc.com/
 
-It would make more sense to squash the two patches.
+Changes in V4:
+	Detailed change logs are added to the respective patches.
 
----
-bod
+V3 can be found at:
+https://lore.kernel.org/linux-arm-msm/20230518141105.24741-1-quic_anusha@quicinc.com/
+
+V2 can be found at:
+https://lore.kernel.org/linux-arm-msm/20230515150722.12196-1-quic_anusha@quicinc.com/
+
+V1 can be found at
+https://lore.kernel.org/linux-arm-msm/20230512090134.9811-1-quic_anusha@quicinc.com/
+
+Anusha Rao (4):
+  dt-bindings: clock: Add crypto clock and reset definitions
+  clk: qcom: gcc-ipq9574: Enable crypto clocks
+  dt-bindings: qcom-qce: add SoC compatible string for ipq9574
+  arm64: dts: qcom: ipq9574: Enable crypto nodes
+
+ .../devicetree/bindings/crypto/qcom-qce.yaml  |  1 +
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi         | 20 ++++++
+ drivers/clk/qcom/gcc-ipq9574.c                | 72 +++++++++++++++++++
+ include/dt-bindings/clock/qcom,ipq9574-gcc.h  |  4 ++
+ include/dt-bindings/reset/qcom,ipq9574-gcc.h  |  1 +
+ 5 files changed, 98 insertions(+)
+
+
+base-commit: aabe491169befbe5481144acf575a0260939764a
+-- 
+2.17.1
+
