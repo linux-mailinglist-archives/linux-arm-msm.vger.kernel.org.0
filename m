@@ -2,134 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DEA12712E2B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 22:36:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2ED59712E30
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 22:37:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236236AbjEZUgj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 16:36:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43868 "EHLO
+        id S237050AbjEZUho (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 16:37:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230311AbjEZUgi (ORCPT
+        with ESMTP id S229628AbjEZUhn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 16:36:38 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEB3A134
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 13:36:36 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f3baf04f0cso1271230e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 13:36:36 -0700 (PDT)
+        Fri, 26 May 2023 16:37:43 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5CD6189
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 13:37:41 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f6e72a1464so8639875e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 13:37:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685133395; x=1687725395;
+        d=linaro.org; s=google; t=1685133460; x=1687725460;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=0QFhrmXQWyPgc4s42uFYQSvB0IVUNfYN59jpnyyV6Vs=;
-        b=uJWgr7gdiQRVYWMqQwr6at476XhkdPRKqV5e+zq3kYUgSg+Vq0zR0rqKQvcdqE80zV
-         ySerW8QnhZC9QcacTabho3bPAe3k4220XZ/Rxpj//ImMZrbB/SlkXLS2aI4uYoGTu5rb
-         7O35mirEZq4n72JQaHdjN41K/PvVtNNIhQ6RcAcgKR+fyAhuxZJQFBFnkhWzhhoewP24
-         OMc+QXO/xSPVno7k8WwVL3Tf//PUC9Zx4LmRoskhFrdlf1v5CfhVGrjFp6jPc4DwRsC4
-         Es5S/5R6Lyk59x+EYckgmsk6fjoWaccyat0y7TYka4uXPxSShMjimp9GWblHiiq56uPj
-         dlBw==
+        bh=EQ1db2emsz/QQgEfwdyQh8xsoHGln0PD39oB3KotcgY=;
+        b=QDV6bXpxgVjdZCYjaueUqC7sDxGlyL+QRshzwuHQeR7Gn3wmiIWHUFw2eSYmlJjsw2
+         x5Sx+UVjmz3agynryaVjr7Ot0/4eMxPn4zGVc1QHnpBM2+SuSvK63DodxFtSK2BT2QoB
+         oYnqg3iebEAz73cKbtYz/BunlclddAHXyXEsZMBSS+UB4eiw4M5rpoeXvXf6jvKkgev7
+         /dSD52XCaQ+lUXUjlqvvwKGdtLSj3srdNJHpgN3u+HbwFKzHUhYohh6LGk8zfFkQyFsu
+         PzMpoZNgTGVvtFOAkUP7DgC/aoSoFxtF20ckANd53E/iHmyB7I7YwSY2sQRpHGLS0kcl
+         4uSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685133395; x=1687725395;
+        d=1e100.net; s=20221208; t=1685133460; x=1687725460;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0QFhrmXQWyPgc4s42uFYQSvB0IVUNfYN59jpnyyV6Vs=;
-        b=Pthoh7iqK3cqTkEhzbAjo25SX4zEYvaO7iVaS2S2s62bBIbdf2xvz8cjiT0BGGxBzT
-         k3+IKNoNIIrQVDSZZaEEVJWcFfSAGfiMDmH1abdQ7P56yWIg0n7n3JghbWYG8Rt8a9vk
-         oF1tnskvR5TKAlJcZeqseEll7WSpuW4mq8bE1bJcbuMLiGR72QeM6dLYWb2MoYDLW6Fh
-         aB8hSH16J/6s16l1f9A4aPqRuV+oFzcbO1lw/F1SjcD6xmBpwLWWeTWaL7ILlsl18fqh
-         TOYNmgRrpZLcklLF9JFKf0uOaTwT61Ki1CaaXOZEtd+Z+0ZtQiYl33MjzVR/1pcrV86Y
-         rJOQ==
-X-Gm-Message-State: AC+VfDwXXrRC3j2a2vhXvhuFAnJBIAttDwvqM49I+DIVKMlwm8QG/6WF
-        OMQTSzIVePhwf60/ohNc+iUbEQ==
-X-Google-Smtp-Source: ACHHUZ6lWok7qQ7Kt8GzUmHwRGY5EScRevrnB5nxrPp83bTTphSpwPirF9ZqNpltX2qMqoQ5yMBvYQ==
-X-Received: by 2002:ac2:5ed0:0:b0:4f3:b207:65ff with SMTP id d16-20020ac25ed0000000b004f3b20765ffmr833070lfq.24.1685133394986;
-        Fri, 26 May 2023 13:36:34 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id w25-20020a05651204d900b004cc8196a308sm774572lfq.98.2023.05.26.13.36.33
+        bh=EQ1db2emsz/QQgEfwdyQh8xsoHGln0PD39oB3KotcgY=;
+        b=Gn5/+PrFXjQZn22oczRI+Q7jvS4O9qfHSiywt5+bJldAF0ahTlbCWkOdEliy/ejNSu
+         4Ika1YR8S+wqSSM0P2v0VWhtia2stAjgifWUamJT2uKKZQ6knVC1SVCEmvKsI8xjBDqs
+         y6ftC0sF8rKtoFoGgqxh2KaX93BrsxIXvsWksDz04BlkYI9iWHjDKuQc/mbKPLqnrCXi
+         yzUfRFD6zuYd2Fz+5BuVdMuIyVeOH36x0P3pM8noyxmAz6fUEScd8s5NkzosVLIbXOgU
+         mfRzHDj59/RXoJFRVv47a0DJX0XVE9fq48ybT1boGyfEBGggi1BaVMlXiB1m2VaXw9BD
+         ZtfA==
+X-Gm-Message-State: AC+VfDySangX9nLorKqtNBPE/yHq1QHuq2B2yF11PwMDRhLMCQsVOPuX
+        AtAwuqXghVimQWu69q+cPpThBMnblXXOwNkDV3eHeA==
+X-Google-Smtp-Source: ACHHUZ40q3XSs5WLQgdVvGo1g5dhMEvKEBPjelsqLzd4jNBV41UNS63K73lTpe8odE+oUKb8vzJ+8A==
+X-Received: by 2002:adf:dcc4:0:b0:306:2b5a:d8db with SMTP id x4-20020adfdcc4000000b003062b5ad8dbmr2083045wrm.23.1685133460270;
+        Fri, 26 May 2023 13:37:40 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id q21-20020a1ce915000000b003f421979398sm9758829wmc.26.2023.05.26.13.37.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 13:36:34 -0700 (PDT)
-Message-ID: <631e5eec-853b-dce2-c474-62e76e83d7e6@linaro.org>
-Date:   Fri, 26 May 2023 22:36:32 +0200
+        Fri, 26 May 2023 13:37:39 -0700 (PDT)
+Message-ID: <66117232-c1c3-f1a0-54fd-9038c299ed55@linaro.org>
+Date:   Fri, 26 May 2023 21:37:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2 1/3] dt-bindings: media: camss: qcom,msm8996-camss: Add
- CAMSS power domain
+ Thunderbird/102.8.0
+Subject: Re: [PATCH V2] clk: qcom: camcc-sc7180: Add parent dependency to all
+ camera GDSCs
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Conor Dooley <conor@kernel.org>
-Cc:     Yassine Oudjana <yassine.oudjana@gmail.com>,
-        Robert Foss <rfoss@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
+To:     "Satya Priya Kakitapalli (Temp)" <quic_skakitap@quicinc.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Hans Verkuil <hansverk@cisco.com>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230526180712.8481-1-y.oudjana@protonmail.com>
- <20230526180712.8481-2-y.oudjana@protonmail.com>
- <20230526-obstruct-venus-5833511a58af@spud>
- <838b134d-46cb-6237-49b0-0c287141ebb3@linaro.org>
- <20230526-street-pox-2ff5ee106c43@spud>
- <8d89c14f-b2c2-7db2-f637-aa6d90273f4d@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <8d89c14f-b2c2-7db2-f637-aa6d90273f4d@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <quic_tdas@quicinc.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_cponnapa@quicinc.com
+References: <20230501142932.13049-1-quic_tdas@quicinc.com>
+ <f450c63a57fc5a9536d3c48df26244cf.sboyd@kernel.org>
+ <08a6ee40-0729-3573-9938-aa44a6ef297c@quicinc.com>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <08a6ee40-0729-3573-9938-aa44a6ef297c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 26.05.2023 22:21, Bryan O'Donoghue wrote:
-> On 26/05/2023 21:19, Conor Dooley wrote:
->> On Fri, May 26, 2023 at 09:05:47PM +0100, Bryan O'Donoghue wrote:
->>> On 26/05/2023 20:46, Conor Dooley wrote:
->>>>> +  - power-domain-names
->>>> Why is this now required?
->>>>
->>>> Thanks,
->>>> Conor.
->>>>
+On 26/05/2023 12:10, Satya Priya Kakitapalli (Temp) wrote:
+> Hi Stephen,
+> 
+> On 5/11/2023 1:02 AM, Stephen Boyd wrote:
+>> Quoting Taniya Das (2023-05-01 07:29:32)
+>>> Camera titan top GDSC is a parent supply to all other camera GDSCs. 
+>>> Titan
+>>> top GDSC is required to be enabled before enabling any other camera 
+>>> GDSCs
+>>> and it should be disabled only after all other camera GDSCs are 
+>>> disabled.
+>>> Ensure this behavior by marking titan top GDSC as parent of all other
+>>> camera GDSCs.
 >>>
->>> Its an accurate description of the power/clock tree to have the top power
->>> domain be switched on prior to the clocks that depend on it.
->>
->> But what does that have to do with the *names* now being required?
+>>> Fixes: 15d09e830bbc ("clk: qcom: camcc: Add camera clock controller 
+>>> driver for SC7180")
+>>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>> Is something broken right now? The commit text doesn't tell me if we
+>> need to backport this to stable kernels or merge it as soon as possible.
+>> What's the priority of this fix?
 > 
-> oh the names
 > 
-> no toss that
-this should be
+> Modularization of camx driver triggered this issue now, but there could 
+> be some other scenarios which could trigger the same issue on stable 
+> kernels.  Hence it needs to be back ported to stable kernels.
+> 
 
-if:properties:compatible:blahblahmsm8996:then:required:power-domain-names
+So ... I'm 99% sure we need to do this for all titan IP blocks, not just 
+for IFE but BPS, IPE...
 
-Konrad
-> 
->>
->>> I think Yassine, you could probably include the majority of your
->>> cover-letter text in this commit to explain this change a bit better.
->>
->> I think it would be good to have that regardless.
->>
->> Cheers,
->> Conor.
->>
->>> bod
->>    ^^^ I've been trying not to think about rugby since the weekend :(
-> 
-> Pockets O'Gara should have his paddy papers rescinded
+I guess I'll spin a series for this.
+
+---
+bod
