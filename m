@@ -2,79 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC8C4712F04
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 23:41:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F32D712F14
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 23:44:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243223AbjEZVld (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 17:41:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42860 "EHLO
+        id S243506AbjEZVol (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 17:44:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242782AbjEZVlc (ORCPT
+        with ESMTP id S243272AbjEZVok (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 17:41:32 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4948F7
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:41:30 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2af1e290921so11786401fa.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:41:30 -0700 (PDT)
+        Fri, 26 May 2023 17:44:40 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A4C5E64
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:44:17 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-30ab87a1897so730825f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:44:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685137289; x=1687729289;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=q7MnQuq2xCXKkoneCObkD2MWK2OHusd2oVYCX6UiHsY=;
-        b=YQ7IS7u4PWDDBj/3b0hHOSzNCsVszGMpEAWMJbg7tT9u3g4cAr6dxbNfK7v27VTCQp
-         TMkevzAo9L8TkYgqYd2HNHiih87lwrslIw5YyX74cxn4NMZE98ljCaMybpMteXXI0fv+
-         N2Z0RRhcYa6hQS7IQ8+r8LeObeBK0G+ED+jGLr1DahvaUkv5AFZMAG0SZazYFqRyIg2j
-         FJTH8zVqjVfP+SEetsP+wGWFZr75jC8b6PfsuYaG9drkyMP9cGxxFtwPPc2lYV6UK0sq
-         U/Nks984csXiwVhuSnoX8QdDSIX2eQhY/nlIbyExquZAyjq0tOef9XTIxeMxoXqntqwI
-         pIjg==
+        d=linaro.org; s=google; t=1685137456; x=1687729456;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=UYFopvK0TbM2VEpCPpkGXSYwRCmtfEBkrHRwu/VEJOc=;
+        b=F/kZ01mNxkvFZgeTbJjlskpUIhbm68Rlr9vZiScRbRrplQHX8VbIoQbljdyzomnydh
+         1jbP7FZAQhNRaaVSoydeBoH9UMCGAwsWbKdKFPRrbPmav4/G4IHL+jdmGpox/2gT0MJJ
+         AbTyP6RZhh0I9GHymf7QI77rMQsLM9AO0vlh4hrbZ91rhH6iV/rkQyA1LGkyrmwmLc9W
+         +845mvxzQ67iQXl7herPj3SdoK+10g1dHk7Y2fepYDPJENzizvaPwU6Cy5iozx9hLyWr
+         XPDiqWAxc4ssZ+q7URsLLRpSNy83CziEydqZerf0aAcinxArUrfCVnsrY8uq+RcjY/zz
+         4o8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685137289; x=1687729289;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q7MnQuq2xCXKkoneCObkD2MWK2OHusd2oVYCX6UiHsY=;
-        b=AVuRivUpz0h0hOtci7C1fNy0zJ25Wl5TkSnA5Zkko6lG+wRmCOssZ3/r9BuJo/vS/i
-         RSLe8GEny6ZYct0EsOz7NO9G/cO5DuS1GY0IwPhHZ+8HrOhpY+Ru71s/X4CU2+rKT4LK
-         tUfUpQsD9cENLVhCXrKLw9leJrBb893W5lA3Sy6WO6UPe9rq5Qo2H3wjih6D7/JdUJ+8
-         vmJ8Av+6iKvIHN+ETlbvkV0yxlejtYP44ony/5Far9aMkuyMW835LC/Wwdub4/PNjWs8
-         uO+YtFjOkkGXMnJgImWSARcd4b2N75AmoCxiCbFJxQIKLbIq52+BCk2QaCa2k8gLtAPY
-         tz8A==
-X-Gm-Message-State: AC+VfDy9ZAU7DtgHb0tGQV725qJuEFhHKaajVmf4XZYQbq3rXP10dP5/
-        rFwHxQwP/lgzTyrvyOwD2PNmPFUeaKQ8u5tsgR0=
-X-Google-Smtp-Source: ACHHUZ6/Dd8FAn51ISZ07qfPMZZahniDuofUK36eY9uRl+9Fe+Fa8ndWLuDKbX+WswG8sxx/k8qgRg==
-X-Received: by 2002:a2e:a30d:0:b0:2b0:2bf6:1448 with SMTP id l13-20020a2ea30d000000b002b02bf61448mr1073333lje.47.1685137289070;
-        Fri, 26 May 2023 14:41:29 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id y7-20020a2e7d07000000b002ad8174d025sm942783ljc.122.2023.05.26.14.41.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 14:41:28 -0700 (PDT)
-Message-ID: <cfb7057f-5a18-d777-8acf-f99ce2cbf7c4@linaro.org>
-Date:   Fri, 26 May 2023 23:41:27 +0200
+        d=1e100.net; s=20221208; t=1685137456; x=1687729456;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UYFopvK0TbM2VEpCPpkGXSYwRCmtfEBkrHRwu/VEJOc=;
+        b=Zhz9XoEWq+ezAJ5PKFzJAftqNRZ6ZSUpRWSJb70mDpYmNKQSmDUiTSoh4dD30aENMy
+         OmBJfI6QDEA+xvNLPQki11zoBLyYrMChqyt/Z3XHgahVMyqhMDDUYir0AHSbxzQdAeHm
+         PSyde2lcOPT919oHbLuFrboDkoKIoTHeL6LqiF8gfqPBkKx5D5WalfbNI9nVMfOrdp0j
+         TSuL++DhjFtlKIMC8qxokk1fymHn1kL3WOG2GB/QniTUSb0FgmeQrSTxyFMx1hFgsCYF
+         syeMmV3OAh2lfg5Mcdm2f6h9BMz5UFYCc7Nfi2g1IX8WaL4EucdG2sZaeDu46YxcxoVe
+         Z5pQ==
+X-Gm-Message-State: AC+VfDxKLKZ0E1pGjjhGiCTXb5E4+Wzr9AOlyCCQMNRWRNM+1szsLxnA
+        DZIoF/cOq8pD8VmyFZKqralg8g==
+X-Google-Smtp-Source: ACHHUZ6ZSG+H1ULJSKW01PE/Ox8Ma/fXVIZNcxWpuXW639bkievCG+xl6m7FFwsBPNcfaPfetl5l+g==
+X-Received: by 2002:adf:f0c5:0:b0:306:2d28:d556 with SMTP id x5-20020adff0c5000000b003062d28d556mr2477923wro.34.1685137455881;
+        Fri, 26 May 2023 14:44:15 -0700 (PDT)
+Received: from lion.localdomain (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id d16-20020adff850000000b0030903d44dbcsm6138905wrq.33.2023.05.26.14.44.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 May 2023 14:44:15 -0700 (PDT)
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+Subject: [PATCH v9 0/2] power: supply: introduce support for the Qualcomm
+ smb2 charger
+Date:   Fri, 26 May 2023 22:44:13 +0100
+Message-Id: <20230524-pmi8998-charger-v9-0-cd7f6d03c0ab@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 3/6] arm64: dts: qcom: pmi8998: add charger node
-Content-Language: en-US
-To:     Caleb Connolly <caleb.connolly@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAC0ocWQC/3WOTQ6DIBCFr2JYF0so6tBV79G4ABmUpIoZGtLGe
+ Pei+y6/95P3NpaQAiZ2rzZGmEMKcSmgLxUbJrOMyIMrzKSQN9FIxdc5gNbAi0sjEgcptLPWd60
+ CVlrWJOSWzDJMRy+5GVRzbWvFHeYjsBL68Dknn33hKaR3pO/5IMOh/h/LwAW30Hk/OA2tco9XW
+ AzFOtLI+n3ff7rKH1fQAAAA
+To:     Sebastian Reichel <sre@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        phone-devel@vger.kernel.org
-References: <20230524-pmi8998-charger-dts-v1-0-f9334afc4505@linaro.org>
- <20230524-pmi8998-charger-dts-v1-3-f9334afc4505@linaro.org>
- <e7786af1-f19d-abb4-59ce-d08fb25bd091@linaro.org>
- <869ed07a-1f9c-75dc-8250-e9533f3d5b88@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <869ed07a-1f9c-75dc-8250-e9533f3d5b88@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Conor Dooley <conor+dt@kernel.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Tom Rix <trix@redhat.com>
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        Joel Selvaraj <joelselvaraj.oss@gmail.com>
+X-Mailer: b4 0.13-dev-46309
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1638;
+ i=caleb.connolly@linaro.org; h=from:subject:message-id;
+ bh=ossN8nvmsJ0dCCuZ5FP76rbpQnytfD6/+O9I3aGsBDw=;
+ b=owEBbQKS/ZANAwAIAQWDMSsZX2S2AcsmYgBkcSguwmasYNUd62k34L/rVRuK2+Jm8FA8pU7EE
+ Yrc4bdHPHCJAjMEAAEIAB0WIQS2UaFGPGq+0GkMVc0FgzErGV9ktgUCZHEoLgAKCRAFgzErGV9k
+ tublD/4yBtake5gCD6+StCy+oKpRyabsjHm2vzy3oftvXH/GyDLklER0cHR04bnBF9vAVhYjpcv
+ Oy08mbDZjlzuV1Mqo6E8zhkAEd8rlkgsthXQ4mzjOl0TWvDm6RAtwoP3AhU2pkGVk5xcjAI/V8h
+ Uzq4kkKJ8YS1f3Rqv32enx4Sx6Kt8QWTTVIE+lu6OUoUdmJ0Fr3PrC6H76dB92iU/L3do4DOmD2
+ rkdvUA9hPEcLhb3p2+s/YHFx9syohDnib1xO0Jcf3/UR/tbcnMsVRk3QPqpQ9Qqg+qmoklhIdkU
+ HcAKaZn+RavNn6m4BF0KAmTcdIHBTwjv9oOSdd2KOD1xMDXBlpjiM/k9N5zLGfp8N8Uopwq0gAL
+ kgyfUt43j7nq5LaV87Yt3TNoIy3UhZEw0eWb+qY2tFIJRr1NUig2wvmq69zBrNo380bgS9rdpif
+ 0K0V1dKSUwQTWh3t0oqglluV9VsfXPhOpye0DoMtFSG//Vf6dB0Rxg3ev7uZO4BAzOUSTwbNsDr
+ tDGHMafPTMSLz1q937Dyw8P9YhI2/3LcjDR+5Rx7yWhi7TtbAXt9wv6nRPfdiH+5ax0hw8W0v6w
+ KTj++vB8nwbc2ni6qvBsYFgotFigfYaSQ1ICKdGoY9xu+X7a5wnS4lcMN8GTlx3iZDpXjUIlJyW
+ yem9YqFQDDqydzw==
+X-Developer-Key: i=caleb.connolly@linaro.org; a=openpgp;
+ fpr=83B24DA7FE145076BC38BB250CD904EB673A7C47
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,67 +103,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add a driver for the Qualcomm PMI8998/PM660 Switch-Mode Battery Charger.
+This is the second generation SMB charger, and replaces the previous
+SMBB hardware found in older PMICs.
 
+Changes since v8:
+ * Add charger bindings reference to qcom,spmi-pmic.yaml
+V8: https://lore.kernel.org/all/20230524-pmi8998-charger-v8-0-b87ffcd9864d@linaro.org/
 
-On 26.05.2023 23:39, Caleb Connolly wrote:
-> 
-> 
-> On 26/05/2023 20:46, Konrad Dybcio wrote:
->>
->>
->> On 24.05.2023 19:38, Caleb Connolly wrote:
->>> Add a node for the smb2 charger hardware found on the pmi8998 pmic
->>> following the DT bindings.
->>>
->>> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
->>> ---
->>>  arch/arm64/boot/dts/qcom/pmi8998.dtsi | 20 ++++++++++++++++++++
->>>  1 file changed, 20 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/pmi8998.dtsi b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
->>> index be6f60bfc26c..73f51451d21d 100644
->>> --- a/arch/arm64/boot/dts/qcom/pmi8998.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/pmi8998.dtsi
->>> @@ -9,6 +9,26 @@ pmi8998_lsid0: pmic@2 {
->>>  		#address-cells = <1>;
->>>  		#size-cells = <0>;
->>>  
->>> +		pmi8998_charger: charger@1000 {
->>> +			compatible = "qcom,pmi8998-charger";
->>> +			reg = <0x1000>;
->>> +
->>> +			interrupts = <0x2 0x13 0x4 IRQ_TYPE_EDGE_BOTH>,
->>> +				     <0x2 0x12 0x2 IRQ_TYPE_EDGE_BOTH>,
->>> +				     <0x2 0x16 0x1 IRQ_TYPE_EDGE_RISING>,
->>> +				     <0x2 0x13 0x6 IRQ_TYPE_EDGE_RISING>;
->>> +			interrupt-names = "usb-plugin",
->>> +					  "bat-ov",
->>> +					  "wdog-bark",
->>> +					  "usbin-icl-change";
->>> +
->>> +			io-channels = <&pmi8998_rradc 3>,
->>> +				      <&pmi8998_rradc 4>;
->>> +			io-channel-names = "usbin_i", "usbin_v";
->> Are these hard-wired internally?
-> 
-> Yes, features like AICL (automatic input current limiting - where the
-> device pulls more and more current until the input voltage drops) are
-> run autonomously and dont rely on the driver to tell the charger block
-> what the readings are.
-> 
-> This is only used to expose the voltage/current values to userspace via
-> the standard psy interface.
-OK cool 
+Changes since v7:
+ * Implement fixes suggested by Sebastian
+ * Fix format warning
+V7: https://lore.kernel.org/linux-arm-msm/20230127230506.3140297-1-caleb.connolly@linaro.org/
 
-Konrad
->>
->> Konrad
->>> +
->>> +			status = "disabled";
->>> +		};
->>> +
->>>  		pmi8998_gpios: gpio@c000 {
->>>  			compatible = "qcom,pmi8998-gpio", "qcom,spmi-gpio";
->>>  			reg = <0xc000>;
->>>
-> 
+To: Sebastian Reichel <sre@kernel.org>
+To: Rob Herring <robh+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+To: Conor Dooley <conor+dt@kernel.org>
+To: Caleb Connolly <caleb.connolly@linaro.org>
+To: Andy Gross <agross@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+To: Konrad Dybcio <konrad.dybcio@linaro.org>
+To: Nathan Chancellor <nathan@kernel.org>
+To: Nick Desaulniers <ndesaulniers@google.com>
+To: Tom Rix <trix@redhat.com>
+
+---
+Caleb Connolly (2):
+      dt-bindings: power: supply: qcom,pmi8998-charger: add bindings for smb2 driver
+      power: supply: add Qualcomm PMI8998 SMB2 Charger driver
+
+ .../devicetree/bindings/mfd/qcom,spmi-pmic.yaml    |    1 +
+ .../power/supply/qcom,pmi8998-charger.yaml         |   82 ++
+ drivers/power/supply/Kconfig                       |    9 +
+ drivers/power/supply/Makefile                      |    1 +
+ drivers/power/supply/qcom_pmi8998_charger.c        | 1059 ++++++++++++++++++++
+ 5 files changed, 1152 insertions(+)
+---
+base-commit: ac9a78681b921877518763ba0e89202254349d1b
+
+// Caleb (they/them)
+
