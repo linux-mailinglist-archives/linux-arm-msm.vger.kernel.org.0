@@ -2,79 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C30071229D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 10:48:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A3DC17122A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 10:51:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242616AbjEZIsj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 04:48:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45648 "EHLO
+        id S242799AbjEZIu7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 04:50:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242614AbjEZIsi (ORCPT
+        with ESMTP id S237004AbjEZIu6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 04:48:38 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA37899
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 01:48:35 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3f60e536250so10666135e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 01:48:35 -0700 (PDT)
+        Fri, 26 May 2023 04:50:58 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49196128
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 01:50:56 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f3ba703b67so451459e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 01:50:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685090914; x=1687682914;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=rll7GWfG/sLOPy0cxeHu/HcyP+FoKo06l7zF9fa6a6E=;
-        b=v/W4IfFFAosHRfTdGdNGVy6M5uS6lOikAzwMe2xu9QF8btOzgepIgGxgvi5NB1P3I0
-         rPfnXA8+gpApnyQns7t5p7u7WESJJtH56PBrBgYusObI1QtyylfnyElDGKaXYOxwVmFA
-         hDeKq8MMMfK91ln3+4z6p/nIAmtM3F5m40OunO/N0kgMY6M4057puGfUVFIv0hW0oDeb
-         bIDRGNagjioQxgx+tqrlez1s5odS89UgQ/LtFo3SBLquKpsavb1pcKV/ByGZzCBHLGFw
-         +hx7pHRg9bkCZRjCpw/JlKva4aXLob6oyLrzVQNpgQ/NH3rY+QMTDLLRdXqECQ/smSiA
-         TM+g==
+        d=linaro.org; s=google; t=1685091054; x=1687683054;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vFgq2+VVrviL7UALj9pqiFm5m6vdqKFWr7xuBpXEGgk=;
+        b=ME1+1zcdcnrW6W4YFgkJY1I+UtG6/knxC7rNTHRZcgSM65ZRaaM3RkNSBBfDbBa6FU
+         jw/VX2m07hj8QVYd2l74yQUINdMLICa9Oh4jqTlcVTA03+F9s3TdNzDcQIzxUdo40B9d
+         p/O8jNChmQHvRz4y2q7Oe8OzM2C2vfiNu0I+OUyqFXtkKwCX9c1yH8ViS4T6P3FC6SyT
+         NXF5XEPuQ3qeUM4dfs/pS88L7OJOsZE5uOeI7h6OsFYioA53ZA0vO9VC4NYpDB11xS9/
+         MzgWJuFbwum+WYKpWuVHsfpXi7+TAlqfG4Fr9XeObmZCsNWvF/W1mrLQnon99FphY4ix
+         raHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685090914; x=1687682914;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rll7GWfG/sLOPy0cxeHu/HcyP+FoKo06l7zF9fa6a6E=;
-        b=ZgdoONfo50lfocQNXi9r972usv2wtc2N/83Vt2EMEFcb/f04GaBAvSi3AWxpdewsse
-         wtyi52dWoqyGjWs1SzNp7J9o9iaVRuar2fjod31Be3TUBsQLz5QIOZWEkiP9C/APh41X
-         59AsKzfI/xqoeenFqNFxolIclsHxxtsblaTBvDk/0mhrIcrrS2Xhcl4OeBwIrLYs7Sv0
-         cpNZvugOS64N5wLVathrmg3OHyeCBGjqXm4W3inrkJraZKFe8qwYZJBYNUt7hv2X6GLu
-         nHqDnbEYj6DdoXz9fmi3jABToEeC2ZC4RFi7LGqcJ0qEIEWPpauF7d4g5kOZpaP0ua98
-         Zg7Q==
-X-Gm-Message-State: AC+VfDy/3QfMqQjVcqv0c28/gaa/ceqdFXMvDw4rFK4WXt2bp74U7BIz
-        fBZfIUDovizxDObTYTb7XDPJeg==
-X-Google-Smtp-Source: ACHHUZ5O6SzyE1EdhJ/kuSxcEqr0Z8pvzf756qORAchH8TPzfylPJC2ee/a1llhaNSgPhdAaO7KQlQ==
-X-Received: by 2002:a05:600c:1c8b:b0:3f6:d41:76ed with SMTP id k11-20020a05600c1c8b00b003f60d4176edmr4365078wms.5.1685090914182;
-        Fri, 26 May 2023 01:48:34 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:15d9:4dfb:95d6:f5a0? ([2a01:e0a:982:cbb0:15d9:4dfb:95d6:f5a0])
-        by smtp.gmail.com with ESMTPSA id q1-20020a1ce901000000b003f423dfc686sm4424349wmc.45.2023.05.26.01.48.33
+        d=1e100.net; s=20221208; t=1685091054; x=1687683054;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vFgq2+VVrviL7UALj9pqiFm5m6vdqKFWr7xuBpXEGgk=;
+        b=LByV44OnhDWuVbdrR0t51n0Nn2HdW7ByWAKkG+GwWuuQKrXz2al3cWhjaO+q6Tfh/r
+         ZWbL8arvOz2AM8y+lvNmw01Ki04AAzKXqMUoWSmU1OY4SqeDh3q4lYKIeFpbCsoSPurE
+         rzXcru5RbFGMjCN3fNWwKrABPQYvkI/xYD5piF3fwdS4tlQ9fmad18LkXVn4t1HBVu4s
+         pO+GUgEZJ1CMae6MQMPjDiAjtD6d1YrARzSwhTUHiIzLu4Rb6ZyzSAu1WzBqCDlXEdLC
+         RcqXWoO6GDiG7hWFw4e5MocsSHxvhbEaxfGHO3hKZbbHjllD0G6EgOXEVGGwf7kkj+I/
+         2vUw==
+X-Gm-Message-State: AC+VfDwaBdacb+dFe2AQSKvZ1yorXJKK9vxYigWEL93xiVVPlU4/ljtH
+        7CCY6NhmYNWzhFrSo01UZjnjgQ==
+X-Google-Smtp-Source: ACHHUZ6SBk/LbQLpRdgponALylw72ijErfTNlvdTRC9EnogFDghqyrnhNRt206k+lEMedSeVjT/SeQ==
+X-Received: by 2002:ac2:4571:0:b0:4f3:f98c:77fc with SMTP id k17-20020ac24571000000b004f3f98c77fcmr307628lfm.8.1685091054513;
+        Fri, 26 May 2023 01:50:54 -0700 (PDT)
+Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
+        by smtp.gmail.com with ESMTPSA id d16-20020ac25450000000b004f3b2d3fc25sm542344lfn.10.2023.05.26.01.50.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 01:48:33 -0700 (PDT)
-Message-ID: <2e3b64a6-0ffe-f083-666a-f829a6faee6c@linaro.org>
-Date:   Fri, 26 May 2023 10:48:32 +0200
+        Fri, 26 May 2023 01:50:54 -0700 (PDT)
+Message-ID: <41f5b7a9-d927-e468-d1ea-291ad35ba943@linaro.org>
+Date:   Fri, 26 May 2023 10:50:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v2 3/6] drm/msm/dpu: split interrupt address arrays
+ Thunderbird/102.11.0
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20230522214527.190054-1-dmitry.baryshkov@linaro.org>
- <20230522214527.190054-4-dmitry.baryshkov@linaro.org>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <20230522214527.190054-4-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20230510-msm8916-regulators-v1-0-54d4960a05fc@gerhold.net>
+ <20230510-msm8916-regulators-v1-8-54d4960a05fc@gerhold.net>
+ <ea53525b-749b-25e2-6dde-662a8e273597@linaro.org>
+ <ef7b7335-d20c-3ddc-52df-b2801fa40283@linaro.org>
+ <ZHBTi-j657tW3jIu@gerhold.net>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH 8/8] arm64: dts: qcom: msm8916-pm8916: Mark always-on
+ regulators
+In-Reply-To: <ZHBTi-j657tW3jIu@gerhold.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -86,360 +84,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/05/2023 23:45, Dmitry Baryshkov wrote:
-> There is no point in having a single enum (and a single array) for both
-> DPU < 7.0 and DPU >= 7.0 interrupt registers. Instead define a single
-> enum and two IRQ address arrays.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  1 +
->   .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  1 +
->   .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  1 +
->   .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  1 +
->   .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  1 +
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  2 +
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 82 +++++++++++++------
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h | 28 ++++---
->   8 files changed, 79 insertions(+), 38 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> index 3c1b2c13398d..320cfa4be633 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
-> @@ -15,6 +15,7 @@ static const struct dpu_caps sm8350_dpu_caps = {
->   	.has_dim_layer = true,
->   	.has_idle_pc = true,
->   	.has_3d_merge = true,
-> +	.has_7xxx_intr = true,
->   	.max_linewidth = 4096,
->   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
->   };
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> index 5d894cbb0a62..9306c7a115e9 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
-> @@ -13,6 +13,7 @@ static const struct dpu_caps sc7280_dpu_caps = {
->   	.qseed_type = DPU_SSPP_SCALER_QSEED4,
->   	.has_dim_layer = true,
->   	.has_idle_pc = true,
-> +	.has_7xxx_intr = true,
->   	.max_linewidth = 2400,
->   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
->   };
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> index c3f1ae000a21..fc1e17c495f0 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
-> @@ -15,6 +15,7 @@ static const struct dpu_caps sc8280xp_dpu_caps = {
->   	.has_dim_layer = true,
->   	.has_idle_pc = true,
->   	.has_3d_merge = true,
-> +	.has_7xxx_intr = true,
->   	.max_linewidth = 5120,
->   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
->   };
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> index 86c2e68ebd2c..eb72411c16db 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-> @@ -14,6 +14,7 @@ static const struct dpu_caps sm8450_dpu_caps = {
->   	.has_src_split = true,
->   	.has_dim_layer = true,
->   	.has_idle_pc = true,
-> +	.has_7xxx_intr = true,
->   	.has_3d_merge = true,
->   	.max_linewidth = 5120,
->   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> index 85dc34458b88..8209ca317bdc 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-> @@ -15,6 +15,7 @@ static const struct dpu_caps sm8550_dpu_caps = {
->   	.has_dim_layer = true,
->   	.has_idle_pc = true,
->   	.has_3d_merge = true,
-> +	.has_7xxx_intr = true,
->   	.max_linewidth = 5120,
->   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
->   };
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index 677048cc3b7d..72530ebb0ae6 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -351,6 +351,7 @@ struct dpu_rotation_cfg {
->    * @has_dim_layer      dim layer feature status
->    * @has_idle_pc        indicate if idle power collapse feature is supported
->    * @has_3d_merge       indicate if 3D merge is supported
-> + * @has_7xxx_intr      indicate that INTF/IRQs use addressing for DPU 7.0 and greater
->    * @max_linewidth      max linewidth for sspp
->    * @pixel_ram_size     size of latency hiding and de-tiling buffer in bytes
->    * @max_hdeci_exp      max horizontal decimation supported (max is 2^value)
-> @@ -364,6 +365,7 @@ struct dpu_caps {
->   	bool has_dim_layer;
->   	bool has_idle_pc;
->   	bool has_3d_merge;
-> +	bool has_7xxx_intr;
->   	/* SSPP limits */
->   	u32 max_linewidth;
->   	u32 pixel_ram_size;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> index 0776b0f6df4f..a03d826bb9ad 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-> @@ -51,11 +51,9 @@ struct dpu_intr_reg {
->   };
->   
->   /*
-> - * struct dpu_intr_reg -  List of DPU interrupt registers
-> - *
-> - * When making changes be sure to sync with dpu_hw_intr_reg
-> + * dpu_intr_set_legacy -  List of DPU interrupt registers for DPU <= 6.x
->    */
-> -static const struct dpu_intr_reg dpu_intr_set[] = {
-> +static const struct dpu_intr_reg dpu_intr_set_legacy[] = {
->   	[MDP_SSPP_TOP0_INTR] = {
->   		INTR_CLEAR,
->   		INTR_EN,
-> @@ -121,57 +119,78 @@ static const struct dpu_intr_reg dpu_intr_set[] = {
->   		MDP_AD4_INTR_EN_OFF(1),
->   		MDP_AD4_INTR_STATUS_OFF(1),
->   	},
-> -	[MDP_INTF0_7xxx_INTR] = {
-> +};
-> +
-> +/*
-> + * dpu_intr_set_7xxx -  List of DPU interrupt registers for DPU >= 7.0
-> + */
-> +static const struct dpu_intr_reg dpu_intr_set_7xxx[] = {
-> +	[MDP_SSPP_TOP0_INTR] = {
-> +		INTR_CLEAR,
-> +		INTR_EN,
-> +		INTR_STATUS
-> +	},
-> +	[MDP_SSPP_TOP0_INTR2] = {
-> +		INTR2_CLEAR,
-> +		INTR2_EN,
-> +		INTR2_STATUS
-> +	},
-> +	[MDP_SSPP_TOP0_HIST_INTR] = {
-> +		HIST_INTR_CLEAR,
-> +		HIST_INTR_EN,
-> +		HIST_INTR_STATUS
-> +	},
-> +	[MDP_INTF0_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(0),
->   		MDP_INTF_REV_7xxx_INTR_EN(0),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(0)
->   	},
-> -	[MDP_INTF1_7xxx_INTR] = {
-> +	[MDP_INTF1_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(1),
->   		MDP_INTF_REV_7xxx_INTR_EN(1),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(1)
->   	},
-> -	[MDP_INTF1_7xxx_TEAR_INTR] = {
-> +	[MDP_INTF1_TEAR_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_TEAR_CLEAR(1),
->   		MDP_INTF_REV_7xxx_INTR_TEAR_EN(1),
->   		MDP_INTF_REV_7xxx_INTR_TEAR_STATUS(1)
->   	},
-> -	[MDP_INTF2_7xxx_INTR] = {
-> +	[MDP_INTF2_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(2),
->   		MDP_INTF_REV_7xxx_INTR_EN(2),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(2)
->   	},
-> -	[MDP_INTF2_7xxx_TEAR_INTR] = {
-> +	[MDP_INTF2_TEAR_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_TEAR_CLEAR(2),
->   		MDP_INTF_REV_7xxx_INTR_TEAR_EN(2),
->   		MDP_INTF_REV_7xxx_INTR_TEAR_STATUS(2)
->   	},
-> -	[MDP_INTF3_7xxx_INTR] = {
-> +	[MDP_INTF3_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(3),
->   		MDP_INTF_REV_7xxx_INTR_EN(3),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(3)
->   	},
-> -	[MDP_INTF4_7xxx_INTR] = {
-> +	[MDP_INTF4_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(4),
->   		MDP_INTF_REV_7xxx_INTR_EN(4),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(4)
->   	},
-> -	[MDP_INTF5_7xxx_INTR] = {
-> +	[MDP_INTF5_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(5),
->   		MDP_INTF_REV_7xxx_INTR_EN(5),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(5)
->   	},
-> -	[MDP_INTF6_7xxx_INTR] = {
-> +	[MDP_INTF6_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(6),
->   		MDP_INTF_REV_7xxx_INTR_EN(6),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(6)
->   	},
-> -	[MDP_INTF7_7xxx_INTR] = {
-> +	[MDP_INTF7_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(7),
->   		MDP_INTF_REV_7xxx_INTR_EN(7),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(7)
->   	},
-> -	[MDP_INTF8_7xxx_INTR] = {
-> +	[MDP_INTF8_INTR] = {
->   		MDP_INTF_REV_7xxx_INTR_CLEAR(8),
->   		MDP_INTF_REV_7xxx_INTR_EN(8),
->   		MDP_INTF_REV_7xxx_INTR_STATUS(8)
-> @@ -216,19 +235,19 @@ irqreturn_t dpu_core_irq(struct msm_kms *kms)
->   		return IRQ_NONE;
->   
->   	spin_lock_irqsave(&intr->irq_lock, irq_flags);
-> -	for (reg_idx = 0; reg_idx < ARRAY_SIZE(dpu_intr_set); reg_idx++) {
-> +	for (reg_idx = 0; reg_idx < MDP_INTR_MAX; reg_idx++) {
->   		if (!test_bit(reg_idx, &intr->irq_mask))
->   			continue;
->   
->   		/* Read interrupt status */
-> -		irq_status = DPU_REG_READ(&intr->hw, dpu_intr_set[reg_idx].status_off);
-> +		irq_status = DPU_REG_READ(&intr->hw, intr->intr_set[reg_idx].status_off);
->   
->   		/* Read enable mask */
-> -		enable_mask = DPU_REG_READ(&intr->hw, dpu_intr_set[reg_idx].en_off);
-> +		enable_mask = DPU_REG_READ(&intr->hw, intr->intr_set[reg_idx].en_off);
->   
->   		/* and clear the interrupt */
->   		if (irq_status)
-> -			DPU_REG_WRITE(&intr->hw, dpu_intr_set[reg_idx].clr_off,
-> +			DPU_REG_WRITE(&intr->hw, intr->intr_set[reg_idx].clr_off,
->   				     irq_status);
->   
->   		/* Finally update IRQ status based on enable mask */
-> @@ -285,7 +304,11 @@ static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
->   	assert_spin_locked(&intr->irq_lock);
->   
->   	reg_idx = DPU_IRQ_REG(irq_idx);
-> -	reg = &dpu_intr_set[reg_idx];
-> +	reg = &intr->intr_set[reg_idx];
-> +
-> +	/* Is this interrupt register supported on the platform */
-> +	if (WARN_ON(!reg->en_off))
-> +		return -EINVAL;
->   
->   	cache_irq_mask = intr->cache_irq_mask[reg_idx];
->   	if (cache_irq_mask & DPU_IRQ_MASK(irq_idx)) {
-> @@ -334,7 +357,7 @@ static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
->   	assert_spin_locked(&intr->irq_lock);
->   
->   	reg_idx = DPU_IRQ_REG(irq_idx);
-> -	reg = &dpu_intr_set[reg_idx];
-> +	reg = &intr->intr_set[reg_idx];
->   
->   	cache_irq_mask = intr->cache_irq_mask[reg_idx];
->   	if ((cache_irq_mask & DPU_IRQ_MASK(irq_idx)) == 0) {
-> @@ -368,10 +391,10 @@ static void dpu_clear_irqs(struct dpu_kms *dpu_kms)
->   	if (!intr)
->   		return;
->   
-> -	for (i = 0; i < ARRAY_SIZE(dpu_intr_set); i++) {
-> +	for (i = 0; i < MDP_INTR_MAX; i++) {
->   		if (test_bit(i, &intr->irq_mask))
->   			DPU_REG_WRITE(&intr->hw,
-> -					dpu_intr_set[i].clr_off, 0xffffffff);
-> +					intr->intr_set[i].clr_off, 0xffffffff);
->   	}
->   
->   	/* ensure register writes go through */
-> @@ -386,10 +409,10 @@ static void dpu_disable_all_irqs(struct dpu_kms *dpu_kms)
->   	if (!intr)
->   		return;
->   
-> -	for (i = 0; i < ARRAY_SIZE(dpu_intr_set); i++) {
-> +	for (i = 0; i < MDP_INTR_MAX; i++) {
->   		if (test_bit(i, &intr->irq_mask))
->   			DPU_REG_WRITE(&intr->hw,
-> -					dpu_intr_set[i].en_off, 0x00000000);
-> +					intr->intr_set[i].en_off, 0x00000000);
->   	}
->   
->   	/* ensure register writes go through */
-> @@ -421,10 +444,10 @@ u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx)
->   
->   	reg_idx = DPU_IRQ_REG(irq_idx);
->   	intr_status = DPU_REG_READ(&intr->hw,
-> -			dpu_intr_set[reg_idx].status_off) &
-> +			intr->intr_set[reg_idx].status_off) &
->   		DPU_IRQ_MASK(irq_idx);
->   	if (intr_status)
-> -		DPU_REG_WRITE(&intr->hw, dpu_intr_set[reg_idx].clr_off,
-> +		DPU_REG_WRITE(&intr->hw, intr->intr_set[reg_idx].clr_off,
->   				intr_status);
->   
->   	/* ensure register writes go through */
-> @@ -448,6 +471,11 @@ struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
->   	if (!intr)
->   		return ERR_PTR(-ENOMEM);
->   
-> +	if (m->caps->has_7xxx_intr)
-> +		intr->intr_set = dpu_intr_set_7xxx;
-> +	else
-> +		intr->intr_set = dpu_intr_set_legacy;
-> +
->   	intr->hw.blk_addr = addr + m->mdp[0].base;
->   
->   	intr->total_irqs = nirq;
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> index 1f2dabc54c22..f329d6d7f646 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-> @@ -23,24 +23,29 @@ enum dpu_hw_intr_reg {
->   	MDP_INTF3_INTR,
->   	MDP_INTF4_INTR,
->   	MDP_INTF5_INTR,
-> +	MDP_INTF6_INTR,
-> +	MDP_INTF7_INTR,
-> +	MDP_INTF8_INTR,
->   	MDP_INTF1_TEAR_INTR,
->   	MDP_INTF2_TEAR_INTR,
->   	MDP_AD4_0_INTR,
->   	MDP_AD4_1_INTR,
-> -	MDP_INTF0_7xxx_INTR,
-> -	MDP_INTF1_7xxx_INTR,
-> -	MDP_INTF1_7xxx_TEAR_INTR,
-> -	MDP_INTF2_7xxx_INTR,
-> -	MDP_INTF2_7xxx_TEAR_INTR,
-> -	MDP_INTF3_7xxx_INTR,
-> -	MDP_INTF4_7xxx_INTR,
-> -	MDP_INTF5_7xxx_INTR,
-> -	MDP_INTF6_7xxx_INTR,
-> -	MDP_INTF7_7xxx_INTR,
-> -	MDP_INTF8_7xxx_INTR,
->   	MDP_INTR_MAX,
->   };
->   
-> +/* compatibility */
-> +#define MDP_INTF0_7xxx_INTR MDP_INTF0_INTR
-> +#define MDP_INTF1_7xxx_INTR MDP_INTF1_INTR
-> +#define MDP_INTF2_7xxx_INTR MDP_INTF2_INTR
-> +#define MDP_INTF3_7xxx_INTR MDP_INTF3_INTR
-> +#define MDP_INTF4_7xxx_INTR MDP_INTF4_INTR
-> +#define MDP_INTF5_7xxx_INTR MDP_INTF5_INTR
-> +#define MDP_INTF6_7xxx_INTR MDP_INTF6_INTR
-> +#define MDP_INTF7_7xxx_INTR MDP_INTF7_INTR
-> +#define MDP_INTF8_7xxx_INTR MDP_INTF8_INTR
-> +#define MDP_INTF1_7xxx_TEAR_INTR MDP_INTF1_TEAR_INTR
-> +#define MDP_INTF2_7xxx_TEAR_INTR MDP_INTF2_TEAR_INTR
-> +
->   #define DPU_IRQ_IDX(reg_idx, offset)	(reg_idx * 32 + offset)
->   
->   /**
-> @@ -60,6 +65,7 @@ struct dpu_hw_intr {
->   	u32 total_irqs;
->   	spinlock_t irq_lock;
->   	unsigned long irq_mask;
-> +	const struct dpu_intr_reg *intr_set;
->   
->   	struct {
->   		void (*cb)(void *arg, int irq_idx);
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+
+On 26.05.2023 08:36, Stephan Gerhold wrote:
+> On Fri, May 26, 2023 at 02:28:52AM +0200, Konrad Dybcio wrote:
+>> On 26.05.2023 01:39, Konrad Dybcio wrote:
+>>> On 17.05.2023 20:48, Stephan Gerhold wrote:
+>>>> Some of the regulators must be always-on to ensure correct operation of
+>>>> the system, e.g. PM8916 L2 for the LPDDR RAM, L5 for most digital I/O
+>>>> and L7 for the CPU PLL (strictly speaking the CPU PLL might only need
+>>>> an active-only vote but this is not supported for regulators in
+>>>> mainline currently).
+>>> Would you be interested in implementing this?
+> 
+> At least on MSM8916 there is currently no advantage implementing this.
+> The "active-only" votes only have the CPU as limited use case. S1 (aka
+> MSM8916_VDDCX) and L3 (MSM8916_VDDMX) are both used via rpmpd/power
+> domains which already provides separate active-only variants. L7 (for
+> the CPU PLL) is the only other regulator used in "active-only" mode.
+> However, at least on MSM8916 L7 seems to stay always-on no matter what I
+> do, so having an active-only vote on L7 doesn't provide any advantage.
+In this case it may be more important that we tell RPM that we want it
+to be active-only, even if it ultimately makes a different decision.
+You probably played with this more, but my guess would be that not letting
+off of an a-s vote could confuse the algos
+
+> 
+>> Actually, I think currently all votes are active-only votes and what
+>> we're missing is sleep-only (and active-sleep if we vote on both)
+> 
+> If you only send the "active" votes but no "sleep" votes for a resource
+> then the RPM firmware treats it as active+sleep, see [1].
+> The active/sleep separation only starts once a separate sleep vote has
+> been sent for a resource for the first time.
+> 
+> Therefore, all requests from the SMD regulator driver apply for both
+> active+sleep at the moment.
+> 
+> [1]: https://git.codelinaro.org/clo/la/kernel/msm-3.10/-/blob/LA.BR.1.2.9.1-02310-8x16.0/drivers/regulator/rpm-smd-regulator.c#L202-204
+/me *dies*
+
+that's a design decision if i've ever seen one..
+
+> 
+>>>
+>>> Ancient downstream defines a second device (vregname_ao) and basically
+>>> seems to select QCOM_SMD_(ACTIVE/SLEEP)_STATE based on that..
+>>>
+>>> Looks like `struct regulator` stores voltage in an array that wouldn't
+>>> you know it, depends on the PM state. Perhaps that could be something
+>>> to explore!
+>>>
+> 
+> Don't get confused by the similar naming here. RPM sleep votes are
+> unrelated to the "system suspend" voltages the regulator framework
+> supports. :)
+> 
+> RPM sleep votes become active if the cpuidle reaches the deepest state
+> for the (cpu/)cluster(/CCI). This can happen anytime at runtime when the
+> system is idle long enough. On the other hand, the regulator suspend
+> voltages are meant to become active during system suspend (where all the
+> devices get suspended as well).
+Yes and pm_genpd tracks that very meticulously, at least in the case of PSCI.
+
+> 
+> Since we do have "active-only" support in rpmpd I think the question is
+> if it is worth bringing the feature also to regulators. Perhaps one
+> could simply treat all regulators that are needed by the CPU as power
+> domain.
+That would make sense..
+
+> 
+> For example, L7 on MSM8916 is fixed at 1.8V so while it doesn't have
+> corners the simple enable/disable votes could also be sent via rpmpd.
+> In some places in downstream L7 is also called VDDPX, similar to
+> VDDCX and VDDMX which are already in rpmpd.
+Yeah, anything available from RPM is only vaguely categorized as being
+a clock/regulator/bus, sometimes wrongly (see: bus clocks in rpmcc) so
+there's some flexibility here.
+
+Konrad
+> 
+> Thanks,
+> Stephan
