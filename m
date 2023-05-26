@@ -2,73 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 006C37129D6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 17:43:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A98DB7129F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 17:53:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243572AbjEZPnz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 11:43:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45944 "EHLO
+        id S244218AbjEZPxy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 11:53:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50576 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244130AbjEZPny (ORCPT
+        with ESMTP id S244219AbjEZPxw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 11:43:54 -0400
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7554C114
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 08:43:52 -0700 (PDT)
-Received: by mail-wm1-x32d.google.com with SMTP id 5b1f17b1804b1-3f6d7abe9a4so6771975e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 08:43:52 -0700 (PDT)
+        Fri, 26 May 2023 11:53:52 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E7D513D
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 08:53:50 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-51478f6106cso1095419a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 08:53:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685115831; x=1687707831;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=linaro.org; s=google; t=1685116428; x=1687708428;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=312Qxv20qtT6z2BiqRrmUkxmiNN8OsfraYgPOBDA1W8=;
-        b=gKwC8mFgz6AhT4BVC44KDGqdc4siWRAA2cwNYRpG+Gj9crgr6dhZ6pYJQsUUCyeVrj
-         REXzngGbGddXxxlwLdb9y0SFXydTR15KsaXewI8Un8LjR9QXDQnvphhmkpaXvGlMvvXE
-         kbgKT9FZix51RWAsK+xC5W2VFV9ZkJfodxXD6DElgUiDTI2Z2oPRbaAsz/7nzvQbhYi/
-         FDsS7Uma40dFkNb4F1DD8FGEcc9Lw53l1FfaOdVnJTE1jaBlo4ezpmnmgVsmIFlJGmlS
-         d43EViDu4edo8XqbvPrft05qomlCWQ/5Dbu0qnoiAIhHqzKW0pfgh3EQ88pZFvQiNnNS
-         rdyg==
+        bh=dn6aRVtsB7lJHlQ+n3cjJ7Hpri7VOVYN2SL9x9E1NRA=;
+        b=Q3L0DQh3ZNrcNumkcoYeh19QFAYjP2+Wit2aWVCaU5p8BCmKAhQiz2Ys+9M+2Vr3ed
+         xDgzXdBwjJkV/cVl7ep7MO5xfuAPkzwI3GGa/pSrrNUE9We2pPNvqY43SW+4SIZEa/M+
+         VXSM00wfEujSPtaG2C/UXVAZPxzSUfCL1IKMczI9oPZILIhtO1eYmREN3GQ3U/CekD1i
+         ri7XKn/wlQwqRyum3s5usItRE6zSo0mc7aJNe1GgqVB2P+9inzVUeinJzLRsT7tu5eEy
+         PeNqOnskk9yc6pMDweKCN/Mx73jBDwxj3Z1mcy85T+GF8sZNmhu02JF8La/ow1sEL3Tm
+         Oc5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685115831; x=1687707831;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1685116428; x=1687708428;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=312Qxv20qtT6z2BiqRrmUkxmiNN8OsfraYgPOBDA1W8=;
-        b=IVAOM9ka+N/gaYCZTvK5ag4NOQW698Cm3o8tnJGtoUD2Hlda8IAxzcGKTK5XSx5gql
-         d71EXQYFtUNvIPr9MBkBHZWAFkPsG9UPnbIOG4uHLOLGY2rlNjLUJcD0mBRrmJr05GLE
-         nAjCx7dLn9oU8hWdrRXNF2eoR+aLYFdc8qOZgKwOA71JIqMYULW+as271/0kP4T63Vkr
-         FeX6SaftuqGPOrF06UqiXUxuwF4KnPnVoYBqj3qlLMsTDw7d5DRtxqBjMu5J5EnEuZLz
-         8ann3MTkP9mS3qY/lLMQuNYAEYbzl1tD9pDaXD1da1NuRLRUcwjh/BMC7W5veMGAA3Rd
-         y1gw==
-X-Gm-Message-State: AC+VfDzS5kzBK041SVi1jGNK18fKPgmfniujmIB+VMoOuL0aEeWXaTQV
-        2DvZCqttkANqFPdNnR3BztSd/TJvBFtXv+ocJXGJTA==
-X-Google-Smtp-Source: ACHHUZ7Q6nwIhAVYfGO39O3z0eWSlyDAMusz11lFgR+cnF8WvUYT41nznEDgEmFKXVCC33L0gLJUvA==
-X-Received: by 2002:adf:e792:0:b0:306:340c:4737 with SMTP id n18-20020adfe792000000b00306340c4737mr1703838wrm.67.1685115830955;
-        Fri, 26 May 2023 08:43:50 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id c2-20020adfed82000000b003078a3f3a24sm5472890wro.114.2023.05.26.08.43.49
+        bh=dn6aRVtsB7lJHlQ+n3cjJ7Hpri7VOVYN2SL9x9E1NRA=;
+        b=CKiCVDUQ6zqjrr6xQ1HbXBQmITm9AX+Pmc7CzZb38CR3hSoT1A/tsr1rRRypX1HMXJ
+         mwiFzRs2yzs0WshdMYT3W7mSDC2sgmPYApJgMEU4UtV1btnMkUs87ExHIcsCI16HoPK/
+         5RAS87xCAAzNEOvxeZ8cI3isMIQBYURo1m3QtzRbsyEjMSod0PTPz9AqLMW6LQO+u7I2
+         1ysCXIjj6rVYbZHbiUjiPsnSbXZr2S244PxzbHErNBPvvL/Ac6vkfgdDv+t226tMKem6
+         PinAXZfy4jVd6Y3PLxhR5VTuevV6ZLucDD98P3aymBqz4BvfYBJyg4T1wumoM3TCV+d5
+         /T+Q==
+X-Gm-Message-State: AC+VfDwRti9zTyF+0prgtfse8GlJ7a4SHGRhnv3Q6QmAG/6UyfakS2Pk
+        2elXZE3UDMNayngAgFoKE+l4IbpI6bywK2OTvvg=
+X-Google-Smtp-Source: ACHHUZ6VEuV8/df/LpPQcZFhpinqdGRwuetT29m9eh7mboiTxmRAM1CNcXRbK/iX7kdA2y4v/XUhTg==
+X-Received: by 2002:aa7:d8d4:0:b0:514:25a4:3074 with SMTP id k20-20020aa7d8d4000000b0051425a43074mr1750283eds.3.1685116428674;
+        Fri, 26 May 2023 08:53:48 -0700 (PDT)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id u14-20020aa7d88e000000b0050da1edb2e4sm85463edq.31.2023.05.26.08.53.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 08:43:50 -0700 (PDT)
-Message-ID: <8bc6aaac-f28a-3ce7-8dea-f8484fd5b6c9@linaro.org>
-Date:   Fri, 26 May 2023 16:43:49 +0100
+        Fri, 26 May 2023 08:53:48 -0700 (PDT)
+Message-ID: <7074f718-a3d5-8a03-3830-77a5a0b15500@linaro.org>
+Date:   Fri, 26 May 2023 18:53:46 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 3/8] arm64: dts: qcom: msm8916: Fix regulator constraints
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20230510-msm8916-regulators-v1-0-54d4960a05fc@gerhold.net>
- <20230510-msm8916-regulators-v1-3-54d4960a05fc@gerhold.net>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230510-msm8916-regulators-v1-3-54d4960a05fc@gerhold.net>
+ Thunderbird/102.11.0
+Subject: Re: [PATCH V2 3/6] clk: qcom: clk-alpha-pll: Remove explicit CAL_L
+ configuration for EVO PLL
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>
+References: <20230525172142.9039-1-quic_jkona@quicinc.com>
+ <20230525172142.9039-4-quic_jkona@quicinc.com>
+ <6e1d098d-03b9-aa63-a0bf-6cf748a0db0d@linaro.org>
+Content-Language: en-GB
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <6e1d098d-03b9-aa63-a0bf-6cf748a0db0d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,41 +91,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/05/2023 19:48, Stephan Gerhold wrote:
-> The regulator constraints for most MSM8916 devices (except DB410c) were
-> originally taken from Qualcomm's msm-3.10 vendor device tree (for lack
-> of better documentation). Unfortunately it turns out that Qualcomm's
-> voltages are slightly off as well and do not match the voltage
-> constraints applied by the RPM firmware.
+On 26/05/2023 12:33, Konrad Dybcio wrote:
 > 
-> This means that we sometimes request a specific voltage but the RPM
-> firmware actually applies a much lower or higher voltage. This is
-> particularly critical for pm8916_l11 which is used as SD card VMMC
-> regulator: The SD card can choose a voltage from the current range of
-> 1.8 - 2.95V. If it chooses to run at 1.8V we pretend that this is fine
-> but the RPM firmware will still silently end up configuring 2.95V.
-> This can be easily reproduced with a multimeter or by checking the
-> SPMI hardware registers of the regulator.
 > 
-> Fix this by making the voltages match the actual "specified range" in
-> the PM8916 Device Specification which is enforced by the RPM firmware.
+> On 25.05.2023 19:21, Jagadeesh Kona wrote:
+>> In lucid evo pll, the CAL_L field is part of L value register itself, and
+>> the l value configuration passed from clock controller driver includes
+>> CAL_L and L values as well. Hence remove explicit configuration of CAL_L
+>> for evo pll.
+>>
+>> Fixes: 260e36606a03 ("clk: qcom: clk-alpha-pll: add Lucid EVO PLL configuration interfaces")
+>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+>> ---
+> Oh that isn't obvious at first sight, nice find!
 > 
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> ---
->   arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts           | 14 +++++++-------
->   arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts       | 14 +++++++-------
->   arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts             | 14 +++++++-------
->   arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts         | 14 +++++++-------
->   arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts             | 12 ++++++------
->   arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts       | 14 +++++++-------
->   arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts       | 14 +++++++-------
->   arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi | 14 +++++++-------
->   arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi   | 14 +++++++-------
->   arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi    | 14 +++++++-------
->   arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts     | 14 +++++++-------
->   arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi                  | 14 +++++++-------
->   arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts      | 12 ++++++------
->   13 files changed, 89 insertions(+), 89 deletions(-)
+> I'd suggest a different solution though:
+> 
+> #define LUCID_EVO_PLL_L_LVAL	GENMASK(..
+> #define LUCID_EVO_PLL_L_CAL_L	GENMASK(..
+> 
+> lval = FIELD_PREP(LUCID_EVO_PLL_L_LVAL, config->l) |
+>         FIELD_PREP(LUCID_EVO_PLL_L_CAL_L, config->cal_l);
+> 
+> This would make the separation between the two parts more explicit
+> 
+> however
+> 
+> config->l would then represent the L value and not the end value
+> written to the L register
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Yes. I think there should be separate config->l and config->cal_l values 
+(and probably ringosc_cal_l, basing on the comment in the source).
+
+Just a question: is camcc-sm8550 using the same PLL type or is it some 
+kind of subtype of lucid_evo PLL?
+
+-- 
+With best wishes
+Dmitry
 
