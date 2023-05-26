@@ -2,76 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F298F712EC6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 23:11:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F1FC0712ED6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 23:17:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237915AbjEZVLv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 17:11:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34526 "EHLO
+        id S242720AbjEZVRL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 17:17:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237905AbjEZVLu (ORCPT
+        with ESMTP id S237674AbjEZVRK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 17:11:50 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC1A5BC
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:11:47 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f3edc05aa5so1294927e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:11:47 -0700 (PDT)
+        Fri, 26 May 2023 17:17:10 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92C6EDF
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:17:09 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3f623adec61so12413335e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 14:17:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685135506; x=1687727506;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1L+ycxs8nT0k5qZvWSokMUtOJErTXYk5ocz+vVaSWnw=;
-        b=Dr45UR/vjmG+V2DhYmc/+Z94k1T50oJR3bZmR/3QdgjNmgX8VS+huSL+ilAYotiOWG
-         5VdCz5PEq2JwDhTLXslGE0StQ1HuAk3HhQlag3EHYkrelF/g2wyQaMtSrkLHaKxEbbWB
-         gpFB9raWzZQSLe3PNDaF71eC0btdoGnDru5LtEtAQXHDSICUtxPCVQsxQRcUaYsss0rk
-         13hajfXAkNVUjLa15uQHSc9w4KJu02h4mgP6N+yP6kIqNiqGFwPtW/gUjTlzCEQw8Jm5
-         +/ydHKgdZUmSAUAq3vXtd2abEFRWHioaWImcKfJ5atyD4UKPGUUBm5mChNxZo1a+jleh
-         Gcfg==
+        d=linaro.org; s=google; t=1685135828; x=1687727828;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OTZ2eTIi+dbM8D638/pa8mpVNPNj7JMHBYTJceqIyYw=;
+        b=HSdLPH4/oJa1eARDfOrecCl7rMzSudwuX7YbfKpsJepRkJEUTOtE7NAgeK7NmY6Mc+
+         QZKj2STMXSR7dTR+WXvkfvrUY66tuDLC4pnXt+BhgIFM48Z2VLWVXHq2vkGCiUeqKkX3
+         PCWQg4kIGzNQzpzxIibTFdtRjsv2+E9juaNW7D1xillrtYAGVXkDtQrZaETbUFSpu+aA
+         cLLk4s8M22vP8rA4k3RLIWHAyzHV75t74rB83Efu1Y3mA5ZICwRa1krG6HmUXx7IrJ9s
+         Ijozp6sNwGxh6UYfnRSPmaONvO5g2eAY68xxO0NplwRJuyHUIy8fqDMlR+Dfp1L4wnb7
+         S7sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685135506; x=1687727506;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1685135828; x=1687727828;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1L+ycxs8nT0k5qZvWSokMUtOJErTXYk5ocz+vVaSWnw=;
-        b=iGu9ZGsW5rGRqaQeBD/ajlsgGZXgXJ5AL/B16aPbfjPFDJy7afQFi16Mlk7phOH5ob
-         kWYOputpN6r0BNCY9spZWsaoXcuivW2nCUW2a8aKtJs+uZ7yaUNR0B7eY9yaFD4PkoUd
-         EP9fA6zrqicfTX7vKfxE0O/hULiCxh7rj7izCPEs1RKeSDYun/+WmOuIBb8aulhdq6O7
-         Q43RFStzCRdfqPzJ9fFevqG2dFPcq3j8G7H3nVeIk58UbbfT6j2G6kuDgoPOd+wAs+xM
-         IvTDMqB7hW7zLNt3/XiL58t4DJi5X3N8NAOclaqa4l4wMmUDZyipWgz2+qsVghbH+0U+
-         2SFw==
-X-Gm-Message-State: AC+VfDyn4o5keuj2wj5TUHx8faPWG395LSAJNVdiUavONrZgIfP1mYnh
-        TB4lY0QdMqaCKMpmLutto6MfLQ==
-X-Google-Smtp-Source: ACHHUZ5cemCoNqzhRRERX6I4HzjQMrvTEWDuDE93LE/pVDCsDJENXaFbS/q8p5n9/kFtuNQarEdlnQ==
-X-Received: by 2002:ac2:4c09:0:b0:4ef:6ed9:7af2 with SMTP id t9-20020ac24c09000000b004ef6ed97af2mr860215lfq.8.1685135506191;
-        Fri, 26 May 2023 14:11:46 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id y26-20020ac2447a000000b004f24ee39661sm787480lfl.137.2023.05.26.14.11.45
+        bh=OTZ2eTIi+dbM8D638/pa8mpVNPNj7JMHBYTJceqIyYw=;
+        b=NFpV15a9bO3/wm5ztD2/034KcMdFkmtS5zx7OaKr1OlByU82E9fI+dYOTi/HIgMW92
+         hacmUU7smSfdTIy3OR4+eZxecZBBOSybtiMNVeH/gGUfGjXzK8HBpc4eYjOh/gM3ZFuW
+         /t/c+cVc4jzm7pxky4m5FFbv6EZimkpv2I3o87tcEoj9Bzf4I5qrwctrHVKWZ4evAhMN
+         MB0Z/Ob6ic7VuVQj7tbf7GQ3pQqjZpxPy7oGBBSwBTXe/kxFIuue2KMQxJr4V8Sbpwcr
+         bWHCq6IQj71MnLzVZ89Nxi0E4hGJwDfciYDvHPBpqmJ9HyUh0K2++gS9Emk7nyHfDNBz
+         v2gg==
+X-Gm-Message-State: AC+VfDxDhKXQWkB6pWkIHXbDDLvC3Zlax8FkDNnQBJUfj9+9ttYMuukl
+        Z2qmFaHW2m/dwsKcc3ibcezW1w==
+X-Google-Smtp-Source: ACHHUZ7mmG08d1oCokGQ0OUOjjya3HeUe1ATW3LFm5q7dy7RvaiKWJRYLkGlsTmSEucp5+EGF0/NZA==
+X-Received: by 2002:a05:600c:228c:b0:3f6:1a9:b9db with SMTP id 12-20020a05600c228c00b003f601a9b9dbmr2388250wmf.21.1685135828039;
+        Fri, 26 May 2023 14:17:08 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id t11-20020a5d49cb000000b0030732d6e104sm6187025wrs.105.2023.05.26.14.17.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 14:11:45 -0700 (PDT)
-Message-ID: <02543b3b-a94d-fd3a-7b28-3e55f4414137@linaro.org>
-Date:   Fri, 26 May 2023 23:11:44 +0200
+        Fri, 26 May 2023 14:17:07 -0700 (PDT)
+Message-ID: <7bbbf520-d70f-5df6-33ce-a888bf364aa5@linaro.org>
+Date:   Fri, 26 May 2023 22:17:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v2 3/3] media: camss: Link CAMSS power domain
 Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Yassine Oudjana <yassine.oudjana@gmail.com>,
+        Robert Foss <rfoss@kernel.org>,
+        Todor Tomov <todor.too@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20230510-msm8916-regulators-v1-0-54d4960a05fc@gerhold.net>
- <20230510-msm8916-regulators-v1-7-54d4960a05fc@gerhold.net>
- <9f474fe8-523c-3668-540a-a8fc04ed64a6@linaro.org>
- <ZHBV-mBPhoqy8yvs@gerhold.net>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH 7/8] arm64: dts: qcom: msm8916: Define regulator
- constraints next to usage
-In-Reply-To: <ZHBV-mBPhoqy8yvs@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
+        Bjorn Andersson <andersson@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Hans Verkuil <hansverk@cisco.com>
+Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230526180712.8481-1-y.oudjana@protonmail.com>
+ <20230526180712.8481-4-y.oudjana@protonmail.com>
+ <fa395680-0e6c-3eb0-9d5a-f90a95c394b8@linaro.org>
+ <e755eabf-f8d7-c2cd-aa5a-bc48c7a5d5ae@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <e755eabf-f8d7-c2cd-aa5a-bc48c7a5d5ae@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -83,107 +89,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 26.05.2023 08:47, Stephan Gerhold wrote:
-> On Fri, May 26, 2023 at 01:35:06AM +0200, Konrad Dybcio wrote:
->> On 17.05.2023 20:48, Stephan Gerhold wrote:
->>> Right now each MSM8916 device has a huge block of regulator constraints
->>> with allowed voltages for each regulator. For lack of better
->>> documentation these voltages are often copied as-is from the vendor
->>> device tree, without much extra thought.
->>>
->>> Unfortunately, the voltages in the vendor device trees are often
->>> misleading or even wrong, e.g. because:
->>>
->>>  - There is a large voltage range allowed and the actual voltage is
->>>    only set somewhere hidden in some messy vendor driver. This is often
->>>    the case for pm8916_{l14,l15,l16} because they have a broad range of
->>>    1.8-3.3V by default.
->>>
->>>  - The voltage is actually wrong but thanks to the voltage constraints
->>>    in the RPM firmware it still ends up applying the correct voltage.
->>>
->>> To have proper regulator constraints it is important to review them in
->>> context of the usage. The current setup in the MSM8916 device trees
->>> makes this quite hard because each device duplicates the standard
->>> voltages for components of the SoC and mixes those with minor
->>> device-specific additions and dummy voltages for completely unused
->>> regulators.
->>>
->>> The actual usage of the regulators for the SoC components is in
->>> msm8916-pm8916.dtsi, so it can and should also define the related
->>> voltage constraints. These are not board-specific but defined in the
->>> APQ8016E/PM8916 Device Specification. The board DT can then focus on
->>> describing the actual board-specific regulators, which makes it much
->>> easier to review and spot potential mistakes there.
->>>
->>> Note that this commit does not make any functional change. All used
->>> regulators still have the same regulator constraints as before. Unused
->>> regulators do not have regulator constraints anymore because most of
->>> these were too broad or even entirely wrong. They should be added back
->>> with proper voltage constraints when there is an actual usage.
->>>
->>> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
->>> ---
->> I'm a bit torn between saying "this is very nice already" and "we should
->> probably override each regulator individually" like so:
->>
->> &pm8916_l17 {
->> 	[...]
->> }
->>
->> to minimize mistakes..
->>
->> Not sure what to make of it, I see Bjorn already applied this, so I guess
->> I'm just leaving some potential ideas for the future here.
->>
+On 26/05/2023 21:57, Konrad Dybcio wrote:
+> This code contains a whole bunch of hacky counting logic that should have
+> been substituted with _byname, but now we're stuck with indices to keep
+> compatibility with old DTs :/
 > 
-> Sorry, could you elaborate a bit on what changes you would make exactly?
-Assigning the voltage ranges through direct reference to each individual
-regulator, instead of overwriting them through referencing the
-pm8916_rpm_regulators label and (essentially) redefining them.
+> If CAMSS_GDSC (talking about pre-TITAN hw) was a parent of all the other
+> CAMSS-related GDSCs, we could make it their parent in the clock driver
+> and call it a day.
 
-> 
-> The way it works in this patch is that regulators that are used by the
-> SoC are defined in msm8916-pm8916.dtsi. All other (board-specific)
-> regulators must be defined together with proper voltages in the board DT.
-> 
-> What kind of mistake are you thinking of?
-Fat fingers, mostly
+I mean, it wouldn't make much sense from a hw design POV if that weren't 
+the case..
 
-So suppose your device needs a different voltage on L18, so you do
+Hmm looks like its already there.
 
-&pm8916_rpm_regulators {
-	l19 { //fat fingers burn devices
-		regulator-min-microvolt = <12341234>;
-		regulator-max-microvolt = <43143144>;
-	};
+static struct gdsc vfe0_gdsc = {
+         .gdscr = 0x3664,
+         .cxcs = (unsigned int []){ 0x36a8 },
+         .cxc_count = 1,
+         .pd = {
+                 .name = "vfe0",
+         },
+         .parent = &camss_gdsc.pd,
+         .pwrsts = PWRSTS_OFF_ON,
 };
 
-DTC will happily eat that
+static struct gdsc vfe1_gdsc = {
+         .gdscr = 0x3674,
+         .cxcs = (unsigned int []){ 0x36ac },
+         .cxc_count = 1,
+         .pd = {
+                 .name = "vfe1",
+         },
+         .parent = &camss_gdsc.pd,
+         .pwrsts = PWRSTS_OFF_ON,
+};
+
+I feel this is probably a problem in the description of dependencies for 
+the CSIPHY in the dts for the 8996..
+
+I.e. the CSIPHY requires some clocks and power-rails to be switched on ah..
+
+static const struct resources csiphy_res_8x96[] = {
+         /* CSIPHY0 */
+         {
+                 .regulators = {},
+                 .clock = { "top_ahb", "ispif_ahb", "ahb", 
+"csiphy0_timer" },
 
 
-since we use labels, one would have to fatfinger twice, like so:
-&pm8916_rpm_regulators {
-	pm8916_l19: l19 { //this was still supposed to be l18
-...
+should probably look something like
 
+static const struct resources csiphy_res_8x96[] = {
+         /* CSIPHY0 */
+         {
+                 .regulators = {},
+                 .clock = { "top_ahb", "ispif_ahb", "ahb", 
+"csiphy0_timer", "vfe0"},
 
-as these two combinations will trigger a build error
+But basically yeah, we haven't modeled the dependency to the CAMSS_GDSC 
+via the VFEx
 
+Hmm wait - why haven't we included the CAMSS_GDSC in the dtsi for the 8996 ?
 
-&pm8916_rpm_regulators {
-	pm8916_l19: l18 { //duplicate label vs actual l19
+git diff
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi 
+b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 30257c07e1279..60e5d3f5336d4 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -2120,7 +2120,8 @@ camss: camss@a00000 {
+                                 "vfe0",
+                                 "vfe1";
+                         power-domains = <&mmcc VFE0_GDSC>,
+-                                       <&mmcc VFE1_GDSC>;
++                                       <&mmcc VFE1_GDSC>,
++                                       <&mmcc CAMSS_GDSC>;
+
+Either of those approaches should mitigate this patch.
 
 ---
-
-&pm8916_rpm_regulators {
-	pm8916_l18: l19 { //duplicate label vs actual l18
-
-
-Konrad
-
-> 
-> Thanks,
-> Stephan
+bod
