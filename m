@@ -2,131 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 54ABB712798
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 15:32:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F5727127B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 May 2023 15:38:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242816AbjEZNc5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 09:32:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36146 "EHLO
+        id S237082AbjEZNiI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 09:38:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243722AbjEZNc4 (ORCPT
+        with ESMTP id S243624AbjEZNiH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 09:32:56 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71E5A194;
-        Fri, 26 May 2023 06:32:34 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34QBmEAf029350;
-        Fri, 26 May 2023 13:32:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=VSVVcA3UWTFx99cnnj2ecn2APXXTbw+x7Nd1w9DzUNU=;
- b=Btq4GyADrWK7cZIQKhsrnRh7c69G8x2mNUKH7q/l8jMzk1L3S1mPAAQYxM2UHeb1MS7u
- Qe7mJgrKNwGlbVDaUQjH1LPDSrVqQvzXAZGhkg04kp6UuMUb6RaLiYjYk3qTT42RcEDE
- PAQDOVz86nfjWhq4uB56qj/R0q6+o44lvJ+5luXqYM1kLMSpG86WtxSOmQi2QVxtiR76
- IpWxPUOmQosEVFoiGdMZXABiA9Ta68xAqv52OjoSMd+D18QZYjmhFOn9Q3PqAj7JsO4p
- jxwax8Uks8GegsBmZjgYwD4DPUtuFykZgRSJ3auR/eTR+PI/YoU06ifFomL+hawmb/Ya dQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qtpsp8wk9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 26 May 2023 13:32:31 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34QDWVk6006374
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 26 May 2023 13:32:31 GMT
-Received: from hu-shazhuss-hyd.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 26 May 2023 06:32:27 -0700
-From:   Shazad Hussain <quic_shazhuss@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>
-CC:     <konrad.dybcio@linaro.org>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v1 5/5] arm64: dts: qcom: sa8775p-ride: enable i2c11
-Date:   Fri, 26 May 2023 19:01:21 +0530
-Message-ID: <20230526133122.16443-6-quic_shazhuss@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230526133122.16443-1-quic_shazhuss@quicinc.com>
-References: <20230526133122.16443-1-quic_shazhuss@quicinc.com>
+        Fri, 26 May 2023 09:38:07 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD3A512F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 06:38:04 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3f6dfc4dffaso5613945e9.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 06:38:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685108283; x=1687700283;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=kRNhz/1ssZp7GmMjGCU/2aCWcpCSy7S5uy3uYHdmw7Y=;
+        b=UK2zb07TRRz408dzHN0N/0vYmIJfV431IB7X8ANOYPkRHJPIfACk52Z+ortc1DPIGR
+         ym3FHdPARthYj9fHb1Y77DWDBlDDxcN6mz8VnzkIC83BfLSOozkYbj6WeZWqN84w5zhB
+         48eJuVq+F92uKNK/YsObvKq0i/YjH6oNpyqSFUqJOYhaJC+bb8iExFUzUgidocdy+UQ7
+         v+fwn+FgrB1OTSQpbGwM5C0/mHtFV4UHHIgIasF4MVW0cfxPC89wAdiYN3fUfwQ4kTEF
+         DjUMj8J6g4qvUnl762VOKsF3aEmswJ4TZUDK1gGmpRlkYSNOvnChdVdAh3HR0Oix55pz
+         EQHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685108283; x=1687700283;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kRNhz/1ssZp7GmMjGCU/2aCWcpCSy7S5uy3uYHdmw7Y=;
+        b=fe2OksltVfQcAYdBxwgQD1C6qIEEi/JDTncvN2OEbCAutEdPehtrQIq/mQTR8QfQid
+         /wXKlwYu92MPUw1YnkceIBNxFPNVSVYdKpC3e1CDbdFesaAo0HLQHX319i9aVORokWVZ
+         42fkKL3+aIRM4ELQeBB9/VnY6GMKjkiyc62tECQl56ge/r40XjIjG5a2cXRXflGS2u+b
+         1XthCJad3JDGFZijIVdwhiCLMT7+cWWaAoAmptMCjz2IxnyH5gr6vmNlojFufJOyy2On
+         SdCU6tp0H6zCEmhvsGwHvJWA0T6raonagSdFcIIYw9fEBhdvG0vvhXKmrxO2/S1ywBnb
+         FeWA==
+X-Gm-Message-State: AC+VfDxiFkE73qODfRzjBYBwXLJH7ur8n1QCqG9dgmQ1Bh/yJ1bqqS4F
+        /DIjMarWyVJ9/R4mxPHf4QYcMw==
+X-Google-Smtp-Source: ACHHUZ4/TvkidQGqm2je1FAQ3GSQm0puIZ2fO6yxBGt5bIoGb3dqxAif8j+LCNz9JMwYn75vWYsdtg==
+X-Received: by 2002:a7b:c412:0:b0:3f5:fa8e:aaa3 with SMTP id k18-20020a7bc412000000b003f5fa8eaaa3mr1595377wmi.28.1685108283226;
+        Fri, 26 May 2023 06:38:03 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id n11-20020a05600c294b00b003f6129d2e30sm8900220wmd.1.2023.05.26.06.38.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 May 2023 06:38:02 -0700 (PDT)
+Message-ID: <cae30437-f9bc-6e7a-8371-bba7eeff1e8f@linaro.org>
+Date:   Fri, 26 May 2023 14:38:01 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: AgdW1uKOA-wunjIC5mfJrgcF5h4JAaMe
-X-Proofpoint-GUID: AgdW1uKOA-wunjIC5mfJrgcF5h4JAaMe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-26_01,2023-05-25_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 spamscore=0
- priorityscore=1501 bulkscore=0 impostorscore=0 mlxlogscore=951
- lowpriorityscore=0 clxscore=1015 phishscore=0 malwarescore=0 mlxscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305260114
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 3/8] arm64: dts: qcom: msm8916: Fix regulator constraints
+Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20230510-msm8916-regulators-v1-0-54d4960a05fc@gerhold.net>
+ <20230510-msm8916-regulators-v1-3-54d4960a05fc@gerhold.net>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230510-msm8916-regulators-v1-3-54d4960a05fc@gerhold.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This enables the i2c11 node on sa8775p-ride board for A2B controller
-and audio port expander.
+On 17/05/2023 19:48, Stephan Gerhold wrote:
+> The regulator constraints for most MSM8916 devices (except DB410c) were
+> originally taken from Qualcomm's msm-3.10 vendor device tree (for lack
+> of better documentation). Unfortunately it turns out that Qualcomm's
+> voltages are slightly off as well and do not match the voltage
+> constraints applied by the RPM firmware.
+> 
+> This means that we sometimes request a specific voltage but the RPM
+> firmware actually applies a much lower or higher voltage. This is
+> particularly critical for pm8916_l11 which is used as SD card VMMC
+> regulator: The SD card can choose a voltage from the current range of
+> 1.8 - 2.95V. If it chooses to run at 1.8V we pretend that this is fine
+> but the RPM firmware will still silently end up configuring 2.95V.
+> This can be easily reproduced with a multimeter or by checking the
+> SPMI hardware registers of the regulator.
+> 
+> Fix this by making the voltages match the actual "specified range" in
+> the PM8916 Device Specification which is enforced by the RPM firmware.
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+>   arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts           | 14 +++++++-------
+>   arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dts       | 14 +++++++-------
+>   arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts             | 14 +++++++-------
+>   arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts         | 14 +++++++-------
+>   arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts             | 12 ++++++------
+>   arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts       | 14 +++++++-------
+>   arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts       | 14 +++++++-------
+>   arch/arm64/boot/dts/qcom/msm8916-samsung-a2015-common.dtsi | 14 +++++++-------
+>   arch/arm64/boot/dts/qcom/msm8916-samsung-gt5-common.dtsi   | 14 +++++++-------
+>   arch/arm64/boot/dts/qcom/msm8916-samsung-j5-common.dtsi    | 14 +++++++-------
+>   arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts     | 14 +++++++-------
+>   arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi                  | 14 +++++++-------
+>   arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts      | 12 ++++++------
+>   13 files changed, 89 insertions(+), 89 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts b/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts
+> index 13cd9ad167df..0d517804e44e 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts
+> +++ b/arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts
+> @@ -159,13 +159,13 @@ &smd_rpm_regulators {
+>   	vdd_l7-supply = <&pm8916_s4>;
+>   
+>   	s3 {
+> -		regulator-min-microvolt = <1200000>;
+> -		regulator-max-microvolt = <1300000>;
+> +		regulator-min-microvolt = <1250000>;
+> +		regulator-max-microvolt = <1350000>;
 
-Signed-off-by: Shazad Hussain <quic_shazhuss@quicinc.com>
+Where are you getting these 5s from ?
+
+>   	};
+>   
+>   	s4 {
+> -		regulator-min-microvolt = <1800000>;
+> -		regulator-max-microvolt = <2100000>;
+> +		regulator-min-microvolt = <1850000>;
+> +		regulator-max-microvolt = <2150000>;
+>   	};
+>   
+>   	l1 {
+> @@ -199,7 +199,7 @@ l7 {
+>   	};
+>   
+>   	l8 {
+> -		regulator-min-microvolt = <2850000>;
+> +		regulator-min-microvolt = <2900000>;
+>   		regulator-max-microvolt = <2900000>;
+>   	};
+>   
+> @@ -209,12 +209,12 @@ l9 {
+>   	};
+>   
+>   	l10 {
+> -		regulator-min-microvolt = <2700000>;
+> +		regulator-min-microvolt = <2800000>;
+>   		regulator-max-microvolt = <2800000>;
+>   	};
+>   
+>   	l11 {
+> -		regulator-min-microvolt = <1800000>;
+> +		regulator-min-microvolt = <2950000>;
+
+Wouldn't 1v8 be the right voltage for eMMC !SD though have you tested 
+eMMC instead of SD ?
+
 ---
- arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-index 4c000a5cb3c4..ab767cfa51ff 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-@@ -19,6 +19,7 @@
- 		serial0 = &uart10;
- 		serial1 = &uart12;
- 		serial2 = &uart17;
-+		i2c11 = &i2c11;
- 		i2c18 = &i2c18;
- 		spi16 = &spi16;
- 		ufshc1 = &ufs_mem_hc;
-@@ -260,6 +261,13 @@
- 	};
- };
- 
-+&i2c11 {
-+	clock-frequency = <400000>;
-+	pinctrl-0 = <&qup_i2c11_default>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
-+
- &i2c18 {
- 	clock-frequency = <400000>;
- 	pinctrl-0 = <&qup_i2c18_default>;
-@@ -370,6 +378,13 @@
- 		bias-disable;
- 	};
- 
-+	qup_i2c11_default: qup-i2c11-state {
-+		pins = "gpio48", "gpio49";
-+		function = "qup1_se4";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
- 	qup_i2c18_default: qup-i2c18-state {
- 		pins = "gpio95", "gpio96";
- 		function = "qup2_se4";
--- 
-2.17.1
+bod
 
