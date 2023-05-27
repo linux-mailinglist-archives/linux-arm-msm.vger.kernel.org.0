@@ -2,82 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FB4D7135B2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 18:16:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C9C37135BE
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 18:44:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229634AbjE0QQT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 May 2023 12:16:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51340 "EHLO
+        id S229499AbjE0QoP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 May 2023 12:44:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229545AbjE0QQS (ORCPT
+        with ESMTP id S229494AbjE0QoO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 May 2023 12:16:18 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F67FE1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 May 2023 09:16:13 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f4f8b94c06so30426e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 May 2023 09:16:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685204171; x=1687796171;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JzqcMXV8aXA/E+ztgmw9/NYRg5djZnCXl7rg+fvKKrc=;
-        b=TtMAQUviQJGDF72CxJTvYtB5tPNXNF9VrGvM7O32PAiE28IptQtNzU5U1Ci0pS3Q91
-         Fg28aqMjXlZQrZU9jIig/mffAquE6EuETpOdOd0ASBJ38c3w8sntsNI3Q7qlIBep++eA
-         /xo70HT+P2aanYp0tqSCWWpa+ojpMu5E6y96isiGlQKtweI1GfYpj86fbpKPF6XqlxvA
-         KmWfi5J7Xa0Cox/8FKrUNRiREiEyGFB0cUjBPxk1PiQbpk4jl8fCMShVHa8uIZlQWY1Q
-         QlQPHeuZsGvBLoaf+QSN77hPQt3+z+iNnPWtyxCQa61eIDmU8rG43o7aVUpYPN5WfVpn
-         a94g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685204171; x=1687796171;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JzqcMXV8aXA/E+ztgmw9/NYRg5djZnCXl7rg+fvKKrc=;
-        b=eo246/eyNG6AwdcsUKOv4JsS04WvvKikHX/jO5eDnH3WvKXCGfzh3WPp7SHfpo1PSb
-         esVXyQUqgyz120k8v8JQIfGpERxmMK4f+3xmktZ28IknEoX/woliTmgu/gnnr7Rs8rzV
-         wnMQdZ9rsY49Us1DJkqju9nvYIwqLL5mQnwZt2EUEP9AUznAqfLi/I5aq+JWkUE8050E
-         CRfIgQT8TdQE1NPVFhyVIaP0AJtSIkEmppw0pssTgeyfwZhDlpo0M9xQDIilShBXdleX
-         7U0X+LgVhmTzEEME3OmYF2+aKvikGOoMZTf+1samUNukwLEyLBQOQ0CjOOilhPBs2xLb
-         rn0A==
-X-Gm-Message-State: AC+VfDw1fV4uKozlC5NUE9P1SkLxn1zuS5G6gSmCtYaGhqtYtYbweOos
-        xFiqz5JunzECDC6M1TcUbN41qg==
-X-Google-Smtp-Source: ACHHUZ4VFGTXe0x62XEJ3vBr9o9yIQ7A76CQBcp/c/JXEH03cAQIi/MjgGe/3z2upGj/n3XlhGanVg==
-X-Received: by 2002:a05:6512:64:b0:4f0:c18:5114 with SMTP id i4-20020a056512006400b004f00c185114mr1623049lfo.26.1685204171275;
-        Sat, 27 May 2023 09:16:11 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id x14-20020a19f60e000000b004efe9a169d2sm1175071lfe.64.2023.05.27.09.16.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 27 May 2023 09:16:10 -0700 (PDT)
-Message-ID: <f2ed6b88-13df-8df7-55e0-5d11bf5a1ef0@linaro.org>
-Date:   Sat, 27 May 2023 18:16:09 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: msm8996pro: Add CBF scaling
- support
-Content-Language: en-US
-To:     Yassine Oudjana <yassine.oudjana@gmail.com>,
+        Sat, 27 May 2023 12:44:14 -0400
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 528229E;
+        Sat, 27 May 2023 09:44:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1685205852; x=1716741852;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Vljc/Pd6Io02Ai7XcnqcqUOa6Gb26xpAfOgGNEwIJt0=;
+  b=UOKWhAZd/73bxZJd1uTydAyi1qC5G/1StHbrrvM7bdtD4VDcCuh2YOo0
+   p1SZasme0hvDD2NoijHQt5Ddjwti2+n8g/dozpx8VXEHERTKqSzwYxNGj
+   B1zWidQzyZDkHer+dIf6UdEZfrdhL3kC64Gwj+3YPvIENMlO8tWL2+5xV
+   WkA1HDmD4WbKDfB4CoTMiMf924SAfbYKB8Bxhc155htHYCAUPXKF/4q+w
+   qFrpoTRJed6EKO5AJHBN0OqBW4YIzjYE4yTEffDCNFRQLZp7BD/nWCeGS
+   NNJXDxaGhYh58bYiFZnGTcYucUN1bP+Nwv3nkXktdh/RlUJLlrmu8q1jT
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10723"; a="351922436"
+X-IronPort-AV: E=Sophos;i="6.00,197,1681196400"; 
+   d="scan'208";a="351922436"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 May 2023 09:44:12 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10723"; a="795420700"
+X-IronPort-AV: E=Sophos;i="6.00,197,1681196400"; 
+   d="scan'208";a="795420700"
+Received: from lkp-server01.sh.intel.com (HELO dea6d5a4f140) ([10.239.97.150])
+  by FMSMGA003.fm.intel.com with ESMTP; 27 May 2023 09:44:07 -0700
+Received: from kbuild by dea6d5a4f140 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1q2x1S-000K4o-3B;
+        Sat, 27 May 2023 16:44:06 +0000
+Date:   Sun, 28 May 2023 00:43:41 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230527093934.101335-1-y.oudjana@protonmail.com>
- <20230527093934.101335-3-y.oudjana@protonmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230527093934.101335-3-y.oudjana@protonmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+        Mao Jinlong <quic_jinlmao@quicinc.com>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>
+Subject: Re: [PATCH v1 2/3] coresight-tmc: byte-cntr: Add support for
+ streaming interface for ETR
+Message-ID: <202305280032.8rkzzoXH-lkp@intel.com>
+References: <20230526153508.6208-3-quic_jinlmao@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230526153508.6208-3-quic_jinlmao@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -85,322 +80,207 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Mao,
+
+kernel test robot noticed the following build errors:
+
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on linus/master v6.4-rc3 next-20230525]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Mao-Jinlong/Coresight-Add-driver-to-support-for-CSR/20230526-233705
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20230526153508.6208-3-quic_jinlmao%40quicinc.com
+patch subject: [PATCH v1 2/3] coresight-tmc: byte-cntr: Add support for streaming interface for ETR
+config: arm-randconfig-r034-20230526 (https://download.01.org/0day-ci/archive/20230528/202305280032.8rkzzoXH-lkp@intel.com/config)
+compiler: clang version 17.0.0 (https://github.com/llvm/llvm-project 4faf3aaf28226a4e950c103a14f6fc1d1fdabb1b)
+reproduce (this is a W=1 build):
+        mkdir -p ~/bin
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm cross compiling tool for clang build
+        # apt-get install binutils-arm-linux-gnueabi
+        # https://github.com/intel-lab-lkp/linux/commit/3c44cc3f9a93e12d206b9428b5ed959c46cf08b5
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Mao-Jinlong/Coresight-Add-driver-to-support-for-CSR/20230526-233705
+        git checkout 3c44cc3f9a93e12d206b9428b5ed959c46cf08b5
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang ~/bin/make.cross W=1 O=build_dir ARCH=arm olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang ~/bin/make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/hwtracing/coresight/
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202305280032.8rkzzoXH-lkp@intel.com/
+
+All error/warnings (new ones prefixed by >>):
+
+>> drivers/hwtracing/coresight/coresight-tmc-core.c:527:9: error: call to undeclared function 'of_get_coresight_csr_name'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+                   ret = of_get_coresight_csr_name(adev->dev.of_node, &drvdata->csr_name);
+                         ^
+   1 error generated.
+--
+>> drivers/hwtracing/coresight/coresight-byte-cntr.c:139:48: error: too few arguments to function call, expected 3, have 2
+           coresight_csr_set_byte_cntr(tmcdrvdata->csr, 0);
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~                   ^
+   drivers/hwtracing/coresight/coresight-csr.h:53:20: note: 'coresight_csr_set_byte_cntr' declared here
+   static inline void coresight_csr_set_byte_cntr(struct coresight_csr *csr, int irqctrl_offset,
+                      ^
+   drivers/hwtracing/coresight/coresight-byte-cntr.c:154:49: error: too few arguments to function call, expected 3, have 2
+                   coresight_csr_set_byte_cntr(tmcdrvdata->csr, 0);
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~                   ^
+   drivers/hwtracing/coresight/coresight-csr.h:53:20: note: 'coresight_csr_set_byte_cntr' declared here
+   static inline void coresight_csr_set_byte_cntr(struct coresight_csr *csr, int irqctrl_offset,
+                      ^
+   drivers/hwtracing/coresight/coresight-byte-cntr.c:187:79: error: too few arguments to function call, expected 3, have 2
+           coresight_csr_set_byte_cntr(tmcdrvdata->csr, (byte_cntr_data->block_size) / 8);
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~                                                  ^
+   drivers/hwtracing/coresight/coresight-csr.h:53:20: note: 'coresight_csr_set_byte_cntr' declared here
+   static inline void coresight_csr_set_byte_cntr(struct coresight_csr *csr, int irqctrl_offset,
+                      ^
+>> drivers/hwtracing/coresight/coresight-byte-cntr.c:297:6: warning: no previous prototype for function 'byte_cntr_remove' [-Wmissing-prototypes]
+   void byte_cntr_remove(struct byte_cntr *byte_cntr_data)
+        ^
+   drivers/hwtracing/coresight/coresight-byte-cntr.c:297:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   void byte_cntr_remove(struct byte_cntr *byte_cntr_data)
+   ^
+   static 
+   1 warning and 3 errors generated.
 
 
-On 27.05.2023 11:39, Yassine Oudjana wrote:
-> From: Yassine Oudjana <y.oudjana@protonmail.com>
-> 
-> Add opp-peak-kBps to CPU OPPs to allow for CBF scaling, and change the
-> CBF compatible to reflect the difference between it and the one on
-> MSM8996.
-> 
-> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+vim +/of_get_coresight_csr_name +527 drivers/hwtracing/coresight/coresight-tmc-core.c
 
-Now let's sprinkle some BWMON, CPR and GPMU and 8996 will be
-fairly complete as far as the core hw goes.. At last!
+   481	
+   482	static int tmc_probe(struct amba_device *adev, const struct amba_id *id)
+   483	{
+   484		int ret = 0;
+   485		u32 devid;
+   486		void __iomem *base;
+   487		struct device *dev = &adev->dev;
+   488		struct coresight_platform_data *pdata = NULL;
+   489		struct tmc_drvdata *drvdata;
+   490		struct resource *res = &adev->res;
+   491		struct coresight_desc desc = { 0 };
+   492		struct coresight_dev_list *dev_list = NULL;
+   493	
+   494		ret = -ENOMEM;
+   495		drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+   496		if (!drvdata)
+   497			goto out;
+   498	
+   499		dev_set_drvdata(dev, drvdata);
+   500	
+   501		/* Validity for the resource is already checked by the AMBA core */
+   502		base = devm_ioremap_resource(dev, res);
+   503		if (IS_ERR(base)) {
+   504			ret = PTR_ERR(base);
+   505			goto out;
+   506		}
+   507	
+   508		drvdata->base = base;
+   509		desc.access = CSDEV_ACCESS_IOMEM(base);
+   510	
+   511		spin_lock_init(&drvdata->spinlock);
+   512	
+   513		devid = readl_relaxed(drvdata->base + CORESIGHT_DEVID);
+   514		drvdata->config_type = BMVAL(devid, 6, 7);
+   515		drvdata->memwidth = tmc_get_memwidth(devid);
+   516		/* This device is not associated with a session */
+   517		drvdata->pid = -1;
+   518	
+   519		if (drvdata->config_type == TMC_CONFIG_TYPE_ETR) {
+   520			drvdata->size = tmc_etr_get_default_buffer_size(dev);
+   521			drvdata->max_burst_size = tmc_etr_get_max_burst_size(dev);
+   522		} else {
+   523			drvdata->size = readl_relaxed(drvdata->base + TMC_RSZ) * 4;
+   524		}
+   525	
+   526		if (drvdata->config_type == TMC_CONFIG_TYPE_ETR) {
+ > 527			ret = of_get_coresight_csr_name(adev->dev.of_node, &drvdata->csr_name);
+   528			if (ret)
+   529				dev_dbg(dev, "No csr data\n");
+   530			else {
+   531				drvdata->csr = coresight_csr_get(drvdata->csr_name);
+   532				if (IS_ERR(drvdata->csr)) {
+   533					dev_dbg(dev, "failed to get csr, defer probe\n");
+   534					return -EPROBE_DEFER;
+   535				}
+   536	
+   537			}
+   538	
+   539		}
+   540	
+   541		desc.dev = dev;
+   542		desc.groups = coresight_tmc_groups;
+   543	
+   544		switch (drvdata->config_type) {
+   545		case TMC_CONFIG_TYPE_ETB:
+   546			desc.type = CORESIGHT_DEV_TYPE_SINK;
+   547			desc.subtype.sink_subtype = CORESIGHT_DEV_SUBTYPE_SINK_BUFFER;
+   548			desc.ops = &tmc_etb_cs_ops;
+   549			dev_list = &etb_devs;
+   550			break;
+   551		case TMC_CONFIG_TYPE_ETR:
+   552			desc.type = CORESIGHT_DEV_TYPE_SINK;
+   553			desc.subtype.sink_subtype = CORESIGHT_DEV_SUBTYPE_SINK_SYSMEM;
+   554			desc.ops = &tmc_etr_cs_ops;
+   555			ret = tmc_etr_setup_caps(dev, devid,
+   556						 coresight_get_uci_data(id));
+   557			if (ret)
+   558				goto out;
+   559			idr_init(&drvdata->idr);
+   560			drvdata->byte_cntr = byte_cntr_init(adev, drvdata);
+   561			mutex_init(&drvdata->idr_mutex);
+   562			dev_list = &etr_devs;
+   563			break;
+   564		case TMC_CONFIG_TYPE_ETF:
+   565			desc.type = CORESIGHT_DEV_TYPE_LINKSINK;
+   566			desc.subtype.sink_subtype = CORESIGHT_DEV_SUBTYPE_SINK_BUFFER;
+   567			desc.subtype.link_subtype = CORESIGHT_DEV_SUBTYPE_LINK_FIFO;
+   568			desc.ops = &tmc_etf_cs_ops;
+   569			dev_list = &etf_devs;
+   570			break;
+   571		default:
+   572			pr_err("%s: Unsupported TMC config\n", desc.name);
+   573			ret = -EINVAL;
+   574			goto out;
+   575		}
+   576	
+   577		desc.name = coresight_alloc_device_name(dev_list, dev);
+   578		if (!desc.name) {
+   579			ret = -ENOMEM;
+   580			goto out;
+   581		}
+   582	
+   583		pdata = coresight_get_platform_data(dev);
+   584		if (IS_ERR(pdata)) {
+   585			ret = PTR_ERR(pdata);
+   586			goto out;
+   587		}
+   588		adev->dev.platform_data = pdata;
+   589		desc.pdata = pdata;
+   590	
+   591		drvdata->csdev = coresight_register(&desc);
+   592		if (IS_ERR(drvdata->csdev)) {
+   593			ret = PTR_ERR(drvdata->csdev);
+   594			goto out;
+   595		}
+   596	
+   597		drvdata->miscdev.name = desc.name;
+   598		drvdata->miscdev.minor = MISC_DYNAMIC_MINOR;
+   599		drvdata->miscdev.fops = &tmc_fops;
+   600		ret = misc_register(&drvdata->miscdev);
+   601		if (ret)
+   602			coresight_unregister(drvdata->csdev);
+   603		else
+   604			pm_runtime_put(&adev->dev);
+   605	out:
+   606		return ret;
+   607	}
+   608	
 
-Konrad
->  arch/arm64/boot/dts/qcom/msm8996pro.dtsi | 51 ++++++++++++++++++++++++
->  1 file changed, 51 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996pro.dtsi b/arch/arm64/boot/dts/qcom/msm8996pro.dtsi
-> index a679a9c0cf99..b74cff06f300 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996pro.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8996pro.dtsi
-> @@ -24,101 +24,121 @@ opp-307200000 {
->  			opp-hz = /bits/ 64 <307200000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <192000>;
->  		};
->  		opp-384000000 {
->  			opp-hz = /bits/ 64 <384000000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <192000>;
->  		};
->  		opp-460800000 {
->  			opp-hz = /bits/ 64 <460800000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <192000>;
->  		};
->  		opp-537600000 {
->  			opp-hz = /bits/ 64 <537600000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <192000>;
->  		};
->  		opp-614400000 {
->  			opp-hz = /bits/ 64 <614400000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <192000>;
->  		};
->  		opp-691200000 {
->  			opp-hz = /bits/ 64 <691200000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <307200>;
->  		};
->  		opp-768000000 {
->  			opp-hz = /bits/ 64 <768000000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <307200>;
->  		};
->  		opp-844800000 {
->  			opp-hz = /bits/ 64 <844800000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <384000>;
->  		};
->  		opp-902400000 {
->  			opp-hz = /bits/ 64 <902400000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <441600>;
->  		};
->  		opp-979200000 {
->  			opp-hz = /bits/ 64 <979200000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <537600>;
->  		};
->  		opp-1056000000 {
->  			opp-hz = /bits/ 64 <1056000000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <614400>;
->  		};
->  		opp-1132800000 {
->  			opp-hz = /bits/ 64 <1132800000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <691200>;
->  		};
->  		opp-1209600000 {
->  			opp-hz = /bits/ 64 <1209600000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <768000>;
->  		};
->  		opp-1286400000 {
->  			opp-hz = /bits/ 64 <1286400000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <844800>;
->  		};
->  		opp-1363200000 {
->  			opp-hz = /bits/ 64 <1363200000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <902400>;
->  		};
->  		opp-1440000000 {
->  			opp-hz = /bits/ 64 <1440000000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <979200>;
->  		};
->  		opp-1516800000 {
->  			opp-hz = /bits/ 64 <1516800000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <1132800>;
->  		};
->  		opp-1593600000 {
->  			opp-hz = /bits/ 64 <1593600000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <1190400>;
->  		};
->  		opp-1996800000 {
->  			opp-hz = /bits/ 64 <1996800000>;
->  			opp-supported-hw = <0x20>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <1516800>;
->  		};
->  		opp-2188800000 {
->  			opp-hz = /bits/ 64 <2188800000>;
->  			opp-supported-hw = <0x10>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <1593600>;
->  		};
->  	};
->  
-> @@ -131,136 +151,163 @@ opp-307200000 {
->  			opp-hz = /bits/ 64 <307200000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <192000>;
->  		};
->  		opp-384000000 {
->  			opp-hz = /bits/ 64 <384000000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <192000>;
->  		};
->  		opp-460800000 {
->  			opp-hz = /bits/ 64 <460800000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <192000>;
->  		};
->  		opp-537600000 {
->  			opp-hz = /bits/ 64 <537600000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <192000>;
->  		};
->  		opp-614400000 {
->  			opp-hz = /bits/ 64 <614400000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <192000>;
->  		};
->  		opp-691200000 {
->  			opp-hz = /bits/ 64 <691200000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <307200>;
->  		};
->  		opp-748800000 {
->  			opp-hz = /bits/ 64 <748800000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <307200>;
->  		};
->  		opp-825600000 {
->  			opp-hz = /bits/ 64 <825600000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <384000>;
->  		};
->  		opp-902400000 {
->  			opp-hz = /bits/ 64 <902400000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <441600>;
->  		};
->  		opp-979200000 {
->  			opp-hz = /bits/ 64 <979200000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <441600>;
->  		};
->  		opp-1056000000 {
->  			opp-hz = /bits/ 64 <1056000000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <537600>;
->  		};
->  		opp-1132800000 {
->  			opp-hz = /bits/ 64 <1132800000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <614400>;
->  		};
->  		opp-1209600000 {
->  			opp-hz = /bits/ 64 <1209600000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <691200>;
->  		};
->  		opp-1286400000 {
->  			opp-hz = /bits/ 64 <1286400000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <768000>;
->  		};
->  		opp-1363200000 {
->  			opp-hz = /bits/ 64 <1363200000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <844800>;
->  		};
->  		opp-1440000000 {
->  			opp-hz = /bits/ 64 <1440000000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <902400>;
->  		};
->  		opp-1516800000 {
->  			opp-hz = /bits/ 64 <1516800000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <979200>;
->  		};
->  		opp-1593600000 {
->  			opp-hz = /bits/ 64 <1593600000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <1056000>;
->  		};
->  		opp-1670400000 {
->  			opp-hz = /bits/ 64 <1670400000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <1132800>;
->  		};
->  		opp-1747200000 {
->  			opp-hz = /bits/ 64 <1747200000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <1190400>;
->  		};
->  		opp-1824000000 {
->  			opp-hz = /bits/ 64 <1824000000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <1286400>;
->  		};
->  		opp-1900800000 {
->  			opp-hz = /bits/ 64 <1900800000>;
->  			opp-supported-hw = <0x70>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <1363200>;
->  		};
->  		opp-1977600000 {
->  			opp-hz = /bits/ 64 <1977600000>;
->  			opp-supported-hw = <0x30>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <1440000>;
->  		};
->  		opp-2054400000 {
->  			opp-hz = /bits/ 64 <2054400000>;
->  			opp-supported-hw = <0x30>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <1516800>;
->  		};
->  		opp-2150400000 {
->  			opp-hz = /bits/ 64 <2150400000>;
->  			opp-supported-hw = <0x30>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <1593600>;
->  		};
->  		opp-2246400000 {
->  			opp-hz = /bits/ 64 <2246400000>;
->  			opp-supported-hw = <0x10>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <1593600>;
->  		};
->  		opp-2342400000 {
->  			opp-hz = /bits/ 64 <2342400000>;
->  			opp-supported-hw = <0x10>;
->  			clock-latency-ns = <200000>;
-> +			opp-peak-kBps = <1593600>;
->  		};
->  	};
->  };
-> @@ -289,3 +336,7 @@ opp-560000000 {
->  	};
->  	/* The rest is inherited from msm8996 */
->  };
-> +
-> +&cbf {
-> +	compatible = "qcom,msm8996pro-cbf";
-> +};
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
