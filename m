@@ -2,53 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DFAC71313F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 03:04:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20BAC7131E5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 04:21:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243871AbjE0BEX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 21:04:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50086 "EHLO
+        id S231414AbjE0CVm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 22:21:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47604 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238356AbjE0BEM (ORCPT
+        with ESMTP id S229732AbjE0CVl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 21:04:12 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BABBE55;
-        Fri, 26 May 2023 18:04:00 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 14251654DE;
-        Sat, 27 May 2023 01:04:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4385C433A8;
-        Sat, 27 May 2023 01:03:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685149439;
-        bh=nfmPm45a2JUKau9DbUMAIuvgdFb3pfdYNCXf9o7mpNM=;
-        h=From:To:Subject:Date:In-Reply-To:References:From;
-        b=IgNuJE/NA2AEktLm50dGDQYgXrz4h43MITaY8Pszg4SllljnohtcOw9crkAF7sh/2
-         ANWWrBj5aWMimJL6bUERi7kZMxc4vCefVDahyk2vtS9/XiCOJsdNde/pBk7W3hk34s
-         PljS8ukMDDW+kKrJ8I6VfimAFCbg168ohyv5SkNRpHEBqhYmZrmP+SC7gFRSKOjGBO
-         c2TJz1VMvdAclMDdfoWeYbdsdRh/I25mSrH8HZsiSBloZzaLTPCxgjjEW027YTdXlz
-         9CjHLOiJTCqc1NlaaZuE34wTqhMFt8Lp3ofK2hNiG1QWMGILAw2LLKicVpv7e9/RLY
-         sqKsk64WpUiUA==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     linux-clk@vger.kernel.org, agross@kernel.org,
-        Robert Marko <robimarko@gmail.com>,
-        linux-kernel@vger.kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, mturquette@baylibre.com,
-        sboyd@kernel.org
-Subject: Re: (subset) [PATCH 1/2] clk: qcom: gcc-ipq6018: update UBI32 PLL
-Date:   Fri, 26 May 2023 18:07:34 -0700
-Message-Id: <168514964949.348612.8816630754645554144.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230526190855.2941291-1-robimarko@gmail.com>
-References: <20230526190855.2941291-1-robimarko@gmail.com>
+        Fri, 26 May 2023 22:21:41 -0400
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7906212A
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 19:21:40 -0700 (PDT)
+Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-64d41763796so1192145b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 19:21:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685154100; x=1687746100;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=4u3wyjxu3pSFjQpLkXWyrv3jN5Nzs8AH5ozbdTcUIpY=;
+        b=x4VxuDsmHMBks19r5vNJ6LF+p9t75igapR7CSfoaA95cfkWGPjc+IYM5i+JrnK/W49
+         8c6lW8uTQAuyBk5/Ru873J0FRM+xjjEVziu1tWvXM4LmqEIR/OUHrASyN2WtbLsoHI0p
+         r8ZJmF7iaXuMDjIzlV9NYChw8Y0vsB0BOOt9wOFcG2ABFWrwN+YHFMRkzB6jGA6QsX1c
+         IokJDsq8rT9W0DNAL483fVt6Ih1W3l84012zF83sQ+8+P3djiphRGvbwSw/6Ppa4f+F/
+         4xhheDOw2EzxuCcVApd3Tmiw5yrEaTLHm9ESZkdchHk7GkFtjsyeXPTyaXMfXcYVYL4u
+         Q8uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685154100; x=1687746100;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4u3wyjxu3pSFjQpLkXWyrv3jN5Nzs8AH5ozbdTcUIpY=;
+        b=bWqyiO4G2jnhlOwRDEQY8EZmiP/wtVhGebTCJWjywnOJa8fMU4edujtM+Zn2BDmnRb
+         aE/yOAN6Hg3yLWMQNi3JzdnalM3fBq1vQ73OlYFiPloqjWMv6rnyro9/MBMizzxKDZlX
+         N49tXXZUHbnuHNTDnqPdYNeI0ZltP1zjLn6shZ61gyzc+T8SYCr3FtvH5EH/QJwG52TG
+         cIS1MgCL+6LIj4APlWc55z7rdNA6aF84dHPs/tRyXjNtYQrfMpDgBg5jvYurjNsE7d76
+         P97aST84PfKYHteMOWsT9AhDxbDhg5Da2R7lRRRmwkzk2XAloBn8/hd/qtlPartPDbf0
+         HEbQ==
+X-Gm-Message-State: AC+VfDxzLECiKGHVW4JBfhqy+KFu3KKfIX2RZ06UN5Q5+ngPEJx2I72f
+        14p3HLTKpGlyHLqncrrT09b3
+X-Google-Smtp-Source: ACHHUZ7y3kt+pLHNlXo1UvK5zsCmkXEuLD0VzVolIcvDXiSRH2li5d7r0Wg8HfFDXbBIUXoiIAfWnw==
+X-Received: by 2002:a05:6a00:c8a:b0:64c:ae1c:3385 with SMTP id a10-20020a056a000c8a00b0064cae1c3385mr6994587pfv.32.1685154099916;
+        Fri, 26 May 2023 19:21:39 -0700 (PDT)
+Received: from thinkpad ([117.216.120.68])
+        by smtp.gmail.com with ESMTPSA id j7-20020aa78d07000000b0064d3a9def35sm3187034pfe.188.2023.05.26.19.21.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 May 2023 19:21:39 -0700 (PDT)
+Date:   Sat, 27 May 2023 07:51:32 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Frank Li <frank.li@nxp.com>
+Cc:     "lpieralisi@kernel.org" <lpieralisi@kernel.org>,
+        "kw@linux.com" <kw@linux.com>,
+        "kishon@kernel.org" <kishon@kernel.org>,
+        "bhelgaas@google.com" <bhelgaas@google.com>,
+        "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+Subject: Re: [EXT] [PATCH v4 4/7] PCI: endpoint: Add BME notifier support
+Message-ID: <20230527022132.GA2814@thinkpad>
+References: <20230519144215.25167-1-manivannan.sadhasivam@linaro.org>
+ <20230519144215.25167-5-manivannan.sadhasivam@linaro.org>
+ <AM6PR04MB483845CDCBDF5962C3F9D8F2887C9@AM6PR04MB4838.eurprd04.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+In-Reply-To: <AM6PR04MB483845CDCBDF5962C3F9D8F2887C9@AM6PR04MB4838.eurprd04.prod.outlook.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -57,19 +80,42 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 26 May 2023 21:08:54 +0200, Robert Marko wrote:
-> Update the UBI32 alpha PLL config to the latest values from the downstream
-> QCA 5.4 kernel.
+On Fri, May 19, 2023 at 06:19:44PM +0000, Frank Li wrote:
 > 
+> > @@ -72,11 +72,13 @@ struct pci_epf_ops {
+> >   * @core_init: Callback for the EPC initialization complete event
+> >   * @link_up: Callback for the EPC link up event
+> >   * @link_down: Callback for the EPC link down event
+> > + * @bme: Callback for the EPC BME (Bus Master Enable) event
+> >   */
+> >  struct pci_epc_event_ops {
+> >         int (*core_init)(struct pci_epf *epf);
+> >         int (*link_up)(struct pci_epf *epf);
+> >         int (*link_down)(struct pci_epf *epf);
+> > +       int (*bme)(struct pci_epf *epf);
+> 
+> I posted a doorbell from host to EP at
+> https://lore.kernel.org/imx/20230426203436.1277307-2-Frank.Li@nxp.com/T/#u
+> 
+> Can we consider consolidate these notification to one function and distinguished by
+> EVENT_ID in future?
 > 
 
-Applied, thanks!
+My preference is to keep a separate callback for each event as it makes the code
+look better instead of clubbing everything in a single callback separated by a
+switch case.
 
-[1/2] clk: qcom: gcc-ipq6018: update UBI32 PLL
-      commit: f4f0c8acee0e41c5fbae7a7ad06087668ddce0d6
-[2/2] clk: qcom: ipq6018: fix networking resets
-      commit: 349b5bed539b491b7894a5186a895751fd8ba6c7
+- Mani
 
-Best regards,
+> Best regards
+> Frank Li
+> 
+> >  };
+> > 
+> >  /**
+> > --
+> > 2.25.1
+> 
+
 -- 
-Bjorn Andersson <andersson@kernel.org>
+மணிவண்ணன் சதாசிவம்
