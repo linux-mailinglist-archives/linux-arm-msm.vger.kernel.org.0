@@ -2,62 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CA48713251
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 05:57:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2086D713253
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 05:57:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231559AbjE0D5F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 23:57:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33232 "EHLO
+        id S231419AbjE0D5H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 23:57:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33244 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231313AbjE0D47 (ORCPT
+        with ESMTP id S231379AbjE0D47 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 26 May 2023 23:56:59 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC173A3;
-        Fri, 26 May 2023 20:56:56 -0700 (PDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D31EE13A;
+        Fri, 26 May 2023 20:56:57 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 8120F64FF3;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 67B4F64FFC;
+        Sat, 27 May 2023 03:56:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D07C433A1;
         Sat, 27 May 2023 03:56:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D7EC433D2;
-        Sat, 27 May 2023 03:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685159815;
-        bh=gYYuQfw+qiqjwRtGrHsitvZtkzNXkhUWtUh+q9gcwxg=;
+        s=k20201202; t=1685159816;
+        bh=4zcimyS/54SHaXCgjVayQysRRjyw89yeexS2g/HYPQ8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=f2DBWNKSxIxZy9UI2Acbi4FkUe5d2UWgCfNAG/gs1FYF/9109I/FYCwG9PS2kE1Ez
-         Y589NqoGj9y6oPBacA5S2UMRxWfiCZrzUA6GC51cfrdj4TNK+f+6B4QZmJW4tneypF
-         1gd+DZBLjbvzyy3GAwiCKym9TEI626lkn0k8PSPsWZYVevjuwIk0IK041PViSSMm3P
-         jWaTGy+6ALHNjNqsfC9sjs4rKS+w3+bCKMcR8yi6c9g/+pfp83sx1sHSeQ3MCZx+Cx
-         iH/JZFcLm8tciAcB/zFuENmflZm11gkVNgM4Hv4t54HXwS4Kb0L4XaptZGxeJAMAYu
-         X/8WG0Ghp8bxw==
+        b=sZdymY8jtinU9Ye3KJ1Ni2MSmdjQ+0DS+gUlrGxzHOgvYrN87z+QBhVRNZu2wwNAZ
+         5rTyB6+z4hzdwigVJ8sQ7f+PqKTj/v7j0L8PKkKmnFknozWh8rBUKPtoj6cqvQByae
+         Oz31NQ2ZCVTRCbCEOU/siO36j/HXmK3RqexpwIXMI2hYrL1tulOR26UK9jq4aHZFJd
+         iOnH6B/3I3gvJ37A1rZmVWDn4JA2LIZHB/ZgCfNEchPCSWaCPSH9hu3sRstgteaLSD
+         ZQyCT53c1gKjC0gbL5Z4ijqY8eJ+rdZvRt7ZW4a2M8B+LamwIjOMFCj8bBx0DYP4pP
+         eRIODLwRB2Wmg==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-clk@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Imran Shaik <quic_imrashai@quicinc.com>
-Subject: Re: (subset) [PATCH V2 0/3] Add graphics clock controller support for SM8550
-Date:   Fri, 26 May 2023 21:00:37 -0700
-Message-Id: <168516003598.405989.523653148468388499.b4-ty@kernel.org>
+To:     conor+dt@kernel.org, robh+dt@kernel.org,
+        Shazad Hussain <quic_shazhuss@quicinc.com>, agross@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, konrad.dybcio@linaro.org
+Subject: Re: [PATCH v1 0/5] dts: qcom: sa8775p: add missing qup id's, i2c,
+Date:   Fri, 26 May 2023 21:00:38 -0700
+Message-Id: <168516003597.405989.11870529361948309917.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230524181800.28717-1-quic_jkona@quicinc.com>
-References: <20230524181800.28717-1-quic_jkona@quicinc.com>
+In-Reply-To: <20230526133122.16443-1-quic_shazhuss@quicinc.com>
+References: <20230526133122.16443-1-quic_shazhuss@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -66,24 +57,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 24 May 2023 23:47:57 +0530, Jagadeesh Kona wrote:
-> Add bindings, driver and devicetree node for graphics clock controller on SM8550.
+On Fri, 26 May 2023 19:01:16 +0530, Shazad Hussain wrote:
+> This patch series adds the qupv3_id_0, qupv3_id_3, i2c, spi and uart
+> nodes that are missing on the sa8775p platform.
 > 
-> Depends on [1] and [2] for PLL_TEST_CTL_U2 programming and SM8450 GPUCC YAML file
-> [1] https://patchwork.kernel.org/project/linux-clk/list/?series=750700
-> [2] https://patchwork.kernel.org/project/linux-clk/list/?series=748562
+> i2c11 is enabled for A2B controller and audio port expander.
 > 
-> Jagadeesh Kona (3):
->   dt-bindings: clock: qcom: Add SM8550 graphics clock controller
->   clk: qcom: gpucc-sm8550: Add support for graphics clock controller
->   arm64: dts: qcom: sm8550: Add graphics clock controller
+> Shazad Hussain (5):
+>   arm64: dts: qcom: sa8775p: add the QUPv3 #0 and #3 node
+>   arm64: dts: qcom: sa8775p: add missing i2c nodes
+>   arm64: dts: qcom: sa8775p: add missing spi nodes
+>   arm64: dts: qcom: sa8775p: add uart5 and uart9 nodes
+>   arm64: dts: qcom: sa8775p-ride: enable i2c11
 > 
 > [...]
 
 Applied, thanks!
 
-[3/3] arm64: dts: qcom: sm8550: Add graphics clock controller
-      commit: 9f7579423d2d619064dc84cfa8068e3c83b09e3f
+[1/5] arm64: dts: qcom: sa8775p: add the QUPv3 #0 and #3 node
+      commit: 07e3e17205794c8df6b55c65117ca6a6502a37d7
+[2/5] arm64: dts: qcom: sa8775p: add missing i2c nodes
+      commit: ee2f5f906d69d96350c2b59fddef75a76d23e877
+[3/5] arm64: dts: qcom: sa8775p: add missing spi nodes
+      commit: 1b2d7ad5ac14df4657e629a0b681fd966d43a74e
+[4/5] arm64: dts: qcom: sa8775p: add uart5 and uart9 nodes
+      commit: 445a523d462432dd9001c899e2c3ced60d23994b
+[5/5] arm64: dts: qcom: sa8775p-ride: enable i2c11
+      commit: a1f6bef21355da77101eca1a35c30408ad74ef67
 
 Best regards,
 -- 
