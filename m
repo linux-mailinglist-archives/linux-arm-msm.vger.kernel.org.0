@@ -2,142 +2,284 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 91EF17132C2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 08:05:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B9917132DA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 09:04:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229977AbjE0GFd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 May 2023 02:05:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49124 "EHLO
+        id S229783AbjE0HEF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 May 2023 03:04:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229499AbjE0GFc (ORCPT
+        with ESMTP id S229472AbjE0HEE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 May 2023 02:05:32 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C795F7;
-        Fri, 26 May 2023 23:05:31 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id 4fb4d7f45d1cf-5147e40bbbbso1764559a12.3;
-        Fri, 26 May 2023 23:05:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685167530; x=1687759530;
-        h=mime-version:references:in-reply-to:message-id:cc:to:subject:from
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=weCO8x8l3Juw6l9mP/1dLNluMB62SRUfdduhPwPRwKs=;
-        b=SdQmwYWzkmMO8AWb1haTnxZndg0YJcUN+JsS6L5Et4rBcxZTYTTmE1si7S4ZjsqlBU
-         JBleZ9gZ3TzzhZUvcgzCQRvWrRmFPyLEWobb1DFPoSPEhZxKQ7X5jFpdKKvTzOBntcgP
-         g85zpyd/56hc4UGJ8o1JPmMHzAqyPNmQ2eOwqEoysDSP6tszcGKRLG35xvyK4XV3h6Vp
-         qVfX1pdd7DVl/bmrjBC6gaa6Yil5lrG42ESJPMUayZe4lyQZ2RxAsL0FjZALJdLiUlAB
-         xCURYMMqEqU8EEyQ9ylzllLJ+0hPL9qntJu1SBQqwXTTtmNDz8g3DDC8bMp/Tw4CKbfP
-         V6pQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685167530; x=1687759530;
-        h=mime-version:references:in-reply-to:message-id:cc:to:subject:from
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=weCO8x8l3Juw6l9mP/1dLNluMB62SRUfdduhPwPRwKs=;
-        b=hy+IHeNXUEwdLm5uAsM53q7TuYGVE7o0DQf6WtGK0iMY222JDFd9OtmXLLnWZjoCa5
-         LQDRQcY8O4oBy5pQVJ9ecoKoM3Tbt9MTAU8SC8k/5oIeHslBYKwJcsNnvph9doJJWmqA
-         lPdjY34H90XIQPYJN+lW2yiqtgIlsLbSkv2Y/OAkAmRV2yhLZ7jv8DppVw4UkffqFtnC
-         KH4Yj1aruXVFGSv9edXohBupVbLSubkqmEugIdTtAcRy6/bdLfr7KtNFtTitz9kprQuS
-         XSl4sb1moVu9N8TFpvBR0Q614rRqVDsZ9SopNQvBFZ7Awov+84II7cuUH4fsR5pd8ijv
-         TwWg==
-X-Gm-Message-State: AC+VfDx61vAtILfLk+YTwespGP1VCdcx4S7oyGypMxxMh2LSd6Fw5sMq
-        9eCaPA5fb/eKn5IC+/6LInE=
-X-Google-Smtp-Source: ACHHUZ7it/5Dzo6q+LTuAj4VcpeoTRV3nU7vfiGOmmq8/KbZZDZFVtTL/4vpN5p4NGF3N5RoEXfn/Q==
-X-Received: by 2002:a17:906:fd8d:b0:96f:4927:7a96 with SMTP id xa13-20020a170906fd8d00b0096f49277a96mr3475603ejb.70.1685167529890;
-        Fri, 26 May 2023 23:05:29 -0700 (PDT)
-Received: from [192.168.94.52] ([95.183.227.33])
-        by smtp.gmail.com with ESMTPSA id e16-20020a170906c01000b00973ca837a68sm1648361ejz.217.2023.05.26.23.05.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 May 2023 23:05:29 -0700 (PDT)
-Date:   Sat, 27 May 2023 09:05:19 +0300
-From:   Yassine Oudjana <yassine.oudjana@gmail.com>
-Subject: Re: [PATCH v2 1/3] dt-bindings: media: camss: qcom,msm8996-camss: Add
- CAMSS power domain
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Conor Dooley <conor@kernel.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Todor Tomov <todor.too@gmail.com>,
+        Sat, 27 May 2023 03:04:04 -0400
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7932DEB;
+        Sat, 27 May 2023 00:04:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1685171042; x=1716707042;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=gsJZQdwezOqJJK2UGZDUq6W9bIA3nBwAe2eUoDo79kQ=;
+  b=Z/zsrce4HemhJVkUDTR2LMe8AE8J70a3t6DonKbO89No2iJXvdXp590a
+   Nhdxujz0n7hi+SUaFtLqWUNmoeMHetH1gkVtdifsmB2tWEHP2iEWN5EzF
+   HKmB0/DXPVnZPgxtn399A8+v00aRnIr3p3UY+zVb5B8y1oBQYNPVe4FsD
+   dpq1vyUptkMhhjRc6DMYyrFLMCuZGTR9FYwOChcf4CUihi51zJMeHma9L
+   /MmZD/U8FCqeZiMU0B4wDJBhqMEDdop4qQ2u4v4nNJ0bS2wOxywldYvmT
+   ljfxudVVk7GNc0ErIgigLEew+tNwGXv0iJIZQnvQvvW+NEM9uDKKNkSh5
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10722"; a="343870815"
+X-IronPort-AV: E=Sophos;i="6.00,196,1681196400"; 
+   d="scan'208";a="343870815"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 May 2023 00:04:01 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10722"; a="682953135"
+X-IronPort-AV: E=Sophos;i="6.00,196,1681196400"; 
+   d="scan'208";a="682953135"
+Received: from lkp-server01.sh.intel.com (HELO dea6d5a4f140) ([10.239.97.150])
+  by orsmga006.jf.intel.com with ESMTP; 27 May 2023 00:03:56 -0700
+Received: from kbuild by dea6d5a4f140 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1q2nxy-000JpG-2x;
+        Sat, 27 May 2023 07:03:54 +0000
+Date:   Sat, 27 May 2023 15:03:17 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Mao Jinlong <quic_jinlmao@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Hans Verkuil <hansverk@cisco.com>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Message-Id: <VKZAVR.M3FJVE7XKKY71@gmail.com>
-In-Reply-To: <631e5eec-853b-dce2-c474-62e76e83d7e6@linaro.org>
-References: <20230526180712.8481-1-y.oudjana@protonmail.com>
-        <20230526180712.8481-2-y.oudjana@protonmail.com>
-        <20230526-obstruct-venus-5833511a58af@spud>
-        <838b134d-46cb-6237-49b0-0c287141ebb3@linaro.org>
-        <20230526-street-pox-2ff5ee106c43@spud>
-        <8d89c14f-b2c2-7db2-f637-aa6d90273f4d@linaro.org>
-        <631e5eec-853b-dce2-c474-62e76e83d7e6@linaro.org>
-X-Mailer: geary/43.0
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>
+Cc:     oe-kbuild-all@lists.linux.dev,
+        Mao Jinlong <quic_jinlmao@quicinc.com>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>
+Subject: Re: [PATCH v1 2/3] coresight-tmc: byte-cntr: Add support for
+ streaming interface for ETR
+Message-ID: <202305271400.NNv7F7x7-lkp@intel.com>
+References: <20230526153508.6208-3-quic_jinlmao@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230526153508.6208-3-quic_jinlmao@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Mao,
 
-On Fri, May 26 2023 at 10:36:32 PM +02:00:00, Konrad Dybcio 
-<konrad.dybcio@linaro.org> wrote:
-> 
-> 
-> On 26.05.2023 22:21, Bryan O'Donoghue wrote:
->>  On 26/05/2023 21:19, Conor Dooley wrote:
->>>  On Fri, May 26, 2023 at 09:05:47PM +0100, Bryan O'Donoghue wrote:
->>>>  On 26/05/2023 20:46, Conor Dooley wrote:
->>>>>>  +  - power-domain-names
->>>>>  Why is this now required?
->>>>> 
->>>>>  Thanks,
->>>>>  Conor.
->>>>> 
->>>> 
->>>>  Its an accurate description of the power/clock tree to have the 
->>>> top power
->>>>  domain be switched on prior to the clocks that depend on it.
->>> 
->>>  But what does that have to do with the *names* now being required?
->> 
->>  oh the names
->> 
->>  no toss that
-> this should be
-> 
-> if:properties:compatible:blahblahmsm8996:then:required:power-domain-names
+kernel test robot noticed the following build errors:
 
-The only compatible in this binding is qcom,msm8996-camss, so what 
-would this achieve?
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on linus/master v6.4-rc3 next-20230525]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-> 
-> Konrad
->> 
->>> 
->>>>  I think Yassine, you could probably include the majority of your
->>>>  cover-letter text in this commit to explain this change a bit 
->>>> better.
->>> 
->>>  I think it would be good to have that regardless.
->>> 
->>>  Cheers,
->>>  Conor.
->>> 
->>>>  bod
->>>     ^^^ I've been trying not to think about rugby since the weekend 
->>> :(
->> 
->>  Pockets O'Gara should have his paddy papers rescinded
+url:    https://github.com/intel-lab-lkp/linux/commits/Mao-Jinlong/Coresight-Add-driver-to-support-for-CSR/20230526-233705
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20230526153508.6208-3-quic_jinlmao%40quicinc.com
+patch subject: [PATCH v1 2/3] coresight-tmc: byte-cntr: Add support for streaming interface for ETR
+config: arm-randconfig-r013-20230526 (https://download.01.org/0day-ci/archive/20230527/202305271400.NNv7F7x7-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        mkdir -p ~/bin
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/3c44cc3f9a93e12d206b9428b5ed959c46cf08b5
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Mao-Jinlong/Coresight-Add-driver-to-support-for-CSR/20230526-233705
+        git checkout 3c44cc3f9a93e12d206b9428b5ed959c46cf08b5
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 ~/bin/make.cross W=1 O=build_dir ARCH=arm olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 ~/bin/make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/hwtracing/coresight/
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202305271400.NNv7F7x7-lkp@intel.com/
+
+All error/warnings (new ones prefixed by >>):
+
+   drivers/hwtracing/coresight/coresight-tmc-core.c: In function 'tmc_probe':
+>> drivers/hwtracing/coresight/coresight-tmc-core.c:527:23: error: implicit declaration of function 'of_get_coresight_csr_name' [-Werror=implicit-function-declaration]
+     527 |                 ret = of_get_coresight_csr_name(adev->dev.of_node, &drvdata->csr_name);
+         |                       ^~~~~~~~~~~~~~~~~~~~~~~~~
+   cc1: some warnings being treated as errors
+--
+   drivers/hwtracing/coresight/coresight-byte-cntr.c: In function 'tmc_etr_byte_cntr_stop':
+>> drivers/hwtracing/coresight/coresight-byte-cntr.c:139:9: error: too few arguments to function 'coresight_csr_set_byte_cntr'
+     139 |         coresight_csr_set_byte_cntr(tmcdrvdata->csr, 0);
+         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+   In file included from drivers/hwtracing/coresight/coresight-byte-cntr.c:15:
+   drivers/hwtracing/coresight/coresight-csr.h:53:20: note: declared here
+      53 | static inline void coresight_csr_set_byte_cntr(struct coresight_csr *csr, int irqctrl_offset,
+         |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/hwtracing/coresight/coresight-byte-cntr.c: In function 'tmc_etr_byte_cntr_release':
+   drivers/hwtracing/coresight/coresight-byte-cntr.c:154:17: error: too few arguments to function 'coresight_csr_set_byte_cntr'
+     154 |                 coresight_csr_set_byte_cntr(tmcdrvdata->csr, 0);
+         |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/hwtracing/coresight/coresight-csr.h:53:20: note: declared here
+      53 | static inline void coresight_csr_set_byte_cntr(struct coresight_csr *csr, int irqctrl_offset,
+         |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/hwtracing/coresight/coresight-byte-cntr.c: In function 'tmc_etr_byte_cntr_open':
+   drivers/hwtracing/coresight/coresight-byte-cntr.c:187:9: error: too few arguments to function 'coresight_csr_set_byte_cntr'
+     187 |         coresight_csr_set_byte_cntr(tmcdrvdata->csr, (byte_cntr_data->block_size) / 8);
+         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/hwtracing/coresight/coresight-csr.h:53:20: note: declared here
+      53 | static inline void coresight_csr_set_byte_cntr(struct coresight_csr *csr, int irqctrl_offset,
+         |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+   drivers/hwtracing/coresight/coresight-byte-cntr.c: At top level:
+>> drivers/hwtracing/coresight/coresight-byte-cntr.c:297:6: warning: no previous prototype for 'byte_cntr_remove' [-Wmissing-prototypes]
+     297 | void byte_cntr_remove(struct byte_cntr *byte_cntr_data)
+         |      ^~~~~~~~~~~~~~~~
 
 
+vim +/of_get_coresight_csr_name +527 drivers/hwtracing/coresight/coresight-tmc-core.c
+
+   481	
+   482	static int tmc_probe(struct amba_device *adev, const struct amba_id *id)
+   483	{
+   484		int ret = 0;
+   485		u32 devid;
+   486		void __iomem *base;
+   487		struct device *dev = &adev->dev;
+   488		struct coresight_platform_data *pdata = NULL;
+   489		struct tmc_drvdata *drvdata;
+   490		struct resource *res = &adev->res;
+   491		struct coresight_desc desc = { 0 };
+   492		struct coresight_dev_list *dev_list = NULL;
+   493	
+   494		ret = -ENOMEM;
+   495		drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+   496		if (!drvdata)
+   497			goto out;
+   498	
+   499		dev_set_drvdata(dev, drvdata);
+   500	
+   501		/* Validity for the resource is already checked by the AMBA core */
+   502		base = devm_ioremap_resource(dev, res);
+   503		if (IS_ERR(base)) {
+   504			ret = PTR_ERR(base);
+   505			goto out;
+   506		}
+   507	
+   508		drvdata->base = base;
+   509		desc.access = CSDEV_ACCESS_IOMEM(base);
+   510	
+   511		spin_lock_init(&drvdata->spinlock);
+   512	
+   513		devid = readl_relaxed(drvdata->base + CORESIGHT_DEVID);
+   514		drvdata->config_type = BMVAL(devid, 6, 7);
+   515		drvdata->memwidth = tmc_get_memwidth(devid);
+   516		/* This device is not associated with a session */
+   517		drvdata->pid = -1;
+   518	
+   519		if (drvdata->config_type == TMC_CONFIG_TYPE_ETR) {
+   520			drvdata->size = tmc_etr_get_default_buffer_size(dev);
+   521			drvdata->max_burst_size = tmc_etr_get_max_burst_size(dev);
+   522		} else {
+   523			drvdata->size = readl_relaxed(drvdata->base + TMC_RSZ) * 4;
+   524		}
+   525	
+   526		if (drvdata->config_type == TMC_CONFIG_TYPE_ETR) {
+ > 527			ret = of_get_coresight_csr_name(adev->dev.of_node, &drvdata->csr_name);
+   528			if (ret)
+   529				dev_dbg(dev, "No csr data\n");
+   530			else {
+   531				drvdata->csr = coresight_csr_get(drvdata->csr_name);
+   532				if (IS_ERR(drvdata->csr)) {
+   533					dev_dbg(dev, "failed to get csr, defer probe\n");
+   534					return -EPROBE_DEFER;
+   535				}
+   536	
+   537			}
+   538	
+   539		}
+   540	
+   541		desc.dev = dev;
+   542		desc.groups = coresight_tmc_groups;
+   543	
+   544		switch (drvdata->config_type) {
+   545		case TMC_CONFIG_TYPE_ETB:
+   546			desc.type = CORESIGHT_DEV_TYPE_SINK;
+   547			desc.subtype.sink_subtype = CORESIGHT_DEV_SUBTYPE_SINK_BUFFER;
+   548			desc.ops = &tmc_etb_cs_ops;
+   549			dev_list = &etb_devs;
+   550			break;
+   551		case TMC_CONFIG_TYPE_ETR:
+   552			desc.type = CORESIGHT_DEV_TYPE_SINK;
+   553			desc.subtype.sink_subtype = CORESIGHT_DEV_SUBTYPE_SINK_SYSMEM;
+   554			desc.ops = &tmc_etr_cs_ops;
+   555			ret = tmc_etr_setup_caps(dev, devid,
+   556						 coresight_get_uci_data(id));
+   557			if (ret)
+   558				goto out;
+   559			idr_init(&drvdata->idr);
+   560			drvdata->byte_cntr = byte_cntr_init(adev, drvdata);
+   561			mutex_init(&drvdata->idr_mutex);
+   562			dev_list = &etr_devs;
+   563			break;
+   564		case TMC_CONFIG_TYPE_ETF:
+   565			desc.type = CORESIGHT_DEV_TYPE_LINKSINK;
+   566			desc.subtype.sink_subtype = CORESIGHT_DEV_SUBTYPE_SINK_BUFFER;
+   567			desc.subtype.link_subtype = CORESIGHT_DEV_SUBTYPE_LINK_FIFO;
+   568			desc.ops = &tmc_etf_cs_ops;
+   569			dev_list = &etf_devs;
+   570			break;
+   571		default:
+   572			pr_err("%s: Unsupported TMC config\n", desc.name);
+   573			ret = -EINVAL;
+   574			goto out;
+   575		}
+   576	
+   577		desc.name = coresight_alloc_device_name(dev_list, dev);
+   578		if (!desc.name) {
+   579			ret = -ENOMEM;
+   580			goto out;
+   581		}
+   582	
+   583		pdata = coresight_get_platform_data(dev);
+   584		if (IS_ERR(pdata)) {
+   585			ret = PTR_ERR(pdata);
+   586			goto out;
+   587		}
+   588		adev->dev.platform_data = pdata;
+   589		desc.pdata = pdata;
+   590	
+   591		drvdata->csdev = coresight_register(&desc);
+   592		if (IS_ERR(drvdata->csdev)) {
+   593			ret = PTR_ERR(drvdata->csdev);
+   594			goto out;
+   595		}
+   596	
+   597		drvdata->miscdev.name = desc.name;
+   598		drvdata->miscdev.minor = MISC_DYNAMIC_MINOR;
+   599		drvdata->miscdev.fops = &tmc_fops;
+   600		ret = misc_register(&drvdata->miscdev);
+   601		if (ret)
+   602			coresight_unregister(drvdata->csdev);
+   603		else
+   604			pm_runtime_put(&adev->dev);
+   605	out:
+   606		return ret;
+   607	}
+   608	
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
