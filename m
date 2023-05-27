@@ -2,183 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B0F7271361C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 20:36:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA99D713672
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 22:46:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229481AbjE0Sgc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 May 2023 14:36:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41048 "EHLO
+        id S229471AbjE0Uqs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 May 2023 16:46:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56282 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbjE0Sgb (ORCPT
+        with ESMTP id S229761AbjE0Uqm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 May 2023 14:36:31 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 047EDD9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 May 2023 11:36:23 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-3093d10442aso1099024f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 May 2023 11:36:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685212581; x=1687804581;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=VxJBOiQXZR/v+58dTTK7NPVoqFSIxQSj92bydjr8LvI=;
-        b=rjrgviG2Qw3eVzR2ufZmZmcYalh7HGv6WyQCLoIzQtgYzBoE3a52/aURpcJlrHqDuA
-         QZQJfKHrhtx2U5YV/UJbGoJA7zOLc6zok78V0K9IRrTwXpEecSMNV19KzwfLMMVyurkm
-         ogbFrGW/+ktm/bXbRJGQJ9wRgWWfkLA2KXp8BVUrvXEY7Ep/z/jxB3C91VAbT6JZ0fUo
-         a/D+yP+LcDmwl+I80b3vtbX97JOvSMHjAc58PgUJw6fsZ3OfcmWZ1svrp8OCq5KDJWRQ
-         Ynbe3Xs+IAQ7nzbeWs/0nluCShBn8BoC8V1VOV8P85FcD9JxrADzBX4xNJP/4b2/p5PR
-         WlmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685212581; x=1687804581;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VxJBOiQXZR/v+58dTTK7NPVoqFSIxQSj92bydjr8LvI=;
-        b=V9K1ubZ0Duc6z6UgnXaVweScu0BSDrYHJIVgZ7DUhdXrolCQYHdbOt5YOWLkCH6AiW
-         +uGbibUF+svTchnJX4P+VbQNps4yL4BGUuyAbQPzYnOsaJMZOkZi2ZIvdSN8tc/W1LaN
-         AelDzssGdP49X07dSX664bj2snIxkvyb9S8lg7GkoTNaTckiUfWTHYVRmToISP/nD7W7
-         yoF9CI7MFMYwqND8lSKcfFGjWsFmbTjLjw8+0I4C66mJlvcbdL2usvgz7MM1HGcpdPN1
-         o7La+ZUDQ725Rk+kuBlt8ELSHUk03oklmNaFvHCpF1IXFVYIB0pRV5QaC+U9nlPgeozt
-         PCEw==
-X-Gm-Message-State: AC+VfDzZlFbxciTNVrCN01addULKZ7GEI7G3YoCRHmYd6rsA/1I2GJzX
-        d3H6qFSKu2b/D6ad3KHZK4BJrQ==
-X-Google-Smtp-Source: ACHHUZ7ZNR/c6+zfo6YzQpGmBL3nCowsxxOjPTeECwY80O9V+OD3/ThmGoCGbC4Z2SH2r47kNENkiA==
-X-Received: by 2002:adf:e990:0:b0:306:32fa:6737 with SMTP id h16-20020adfe990000000b0030632fa6737mr4970346wrm.8.1685212581080;
-        Sat, 27 May 2023 11:36:21 -0700 (PDT)
-Received: from [192.168.0.79] (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
-        by smtp.gmail.com with ESMTPSA id q11-20020a5d574b000000b0030ae5a0516csm1259410wrw.17.2023.05.27.11.36.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 27 May 2023 11:36:20 -0700 (PDT)
-Message-ID: <cf6ecd76-aaaf-4d4a-f448-b33edc8ac93e@linaro.org>
-Date:   Sat, 27 May 2023 19:36:19 +0100
+        Sat, 27 May 2023 16:46:42 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 39135AC;
+        Sat, 27 May 2023 13:46:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1685220387; i=spasswolf@web.de;
+        bh=XWibsJx1YJWrvyn917MRnpNsKgmfIeD/gR4idkU5SBI=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:Date;
+        b=QswUvaKcvlfm8HGmtJPrBVzDQmp2v0iYjBfPW/Y9kBWkq/vFhpa9/upIPLSJDLUvA
+         5N7rwU7ESo56vKdRZ67VcQxpFe067B3SbhfdpZtev+m3YtCNLu210QU+XRdEu9vQ78
+         gukPOihNK7e/SOvfQJoVJoQKwuZNU63YTv9+v3Tzy7VbRoJz/a2P/0OIjeLGQWbDhz
+         5+S5B4Uv0bFwMym7EojaCIU1B5HAma52yHiZ0sfkDI6Eu9JdlTc7WSAD8Wz0PV+vWC
+         3Pq7YE7YJe0NMOI6w7CDR7ASSJANUEJirLM4xjIc/ONTFOTnp+fTNntcVkHCNyr4bM
+         TPTpzUaXcKUPw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.0.101] ([176.198.191.160]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MPaMQ-1pgPkf35M2-00MvdR; Sat, 27
+ May 2023 22:46:27 +0200
+Message-ID: <7ae8af63b1254ab51d45c870e7942f0e3dc15b1e.camel@web.de>
+Subject: [PATCH net] net: ipa: Use the correct value for IPA_STATUS_SIZE
+From:   Bert Karwatzki <spasswolf@web.de>
+To:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>
+Cc:     elder@linaro.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Sat, 27 May 2023 22:46:25 +0200
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] rpmsg: qcom: glink: support waking up on channel rx
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Chris Lew <quic_clew@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org
-References: <20230117142414.983946-1-caleb.connolly@linaro.org>
- <20230118180133.vdfjkoxjb3hhdkjk@builder.lan>
-Content-Language: en-US
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <20230118180133.vdfjkoxjb3hhdkjk@builder.lan>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Provags-ID: V03:K1:WzzljHKLMxZlZFbFaFNZREr/ziuHQOR5eZa5NtwND9WrUbHkFOF
+ IBabxYZQ8cTHy+MmtFd3yULB2u+oIUAbrTEi6ERKrjR7SXmcM+HjB5wOymWtK56YWb3IujF
+ i0yUaPs2BF6KhGHmTRIjfXJTgUxo2O1VS2MXUNX8hsY7vhedGhh8uc+i2ZvzCz1ODPBviTU
+ 8sFsb4rfHv+rzpvLex4GA==
+UI-OutboundReport: notjunk:1;M01:P0:/isRWyVWTdQ=;wxuixlXgl9SeBwxuBGzOqJQZdwJ
+ xjOKQTucDMeRZo5aiTobbISTPq/SC7IwUl3fuOY+DjLSJAcgIWFwzuh5zKoUm3y0pXPK7fjOG
+ RHqJJiwX1oed5EqEVurKHA7HBsi6r2RgGyqU+njkIKyg0QQADjjkuXPrKw4ByDhRrxRr01AgX
+ +x/Gck+LgHK7t8PN6kAtjZepTFOWU+0+i4udSBmTEekx/3kLtJg8nuuXvPEwL606Kv+TN8Y4s
+ T/jKINECUwo8VJGbgAutlUmKnZ2WehnXe5h4dYu6dtMB9YHrinHSOYXlGFgY8+IUWTJ5Gq1wm
+ zltaBKsxy4T9OYWQ/DdhYH1Ui9OvxijXBaFbKrhew/jKtCHaHSfGIEOkMHPxYGiS0QvOyNMfP
+ 1NOeBXjdUIsHivPRAAoYfqTmZS/cUhuc4DYrQFYOt7Ixb/iR/Sq645mmgdSzAqx4J32++uliK
+ 6YG9YdHqFIW0bd5uxfOhr5Auie1Oy49aHJsbXjuBI9KrkpCBLg5rT0xR/p7Nm+3/Einl9cLGE
+ Cc/rW/J0qCDEMfcBIDVsdjdsXV73/RAD1WgTnPjR2elVPEFHQZ9OvTaAEEcfr8xHkuy3M0GR3
+ lxJVMidslNH07h9u3czi9ZMbZHl/n2lyxhDqqOBIz5tNjPxv51C+ahqwIRtucJxLQTsrpE3E9
+ s86InQJ67Vg8NwS3aitT+oJEv9IAl3L0smmE6FXyP2u/5Ocq9nzjmGDAoYo1FCd7A970ERdOv
+ x4bXD4wljKACDyrSSzTlni1cfKrjWG0BwJl2ORHRrlJ/zIynPCKLyd+0smZpo2qSyfiDgs+k9
+ 5uN/0JsZzF/iR9T32x6XJmoY7u2dMH6zVaCE0s0GFdQ8Wbbp5bewyi9Pj7pk82sYY+1enFCPB
+ bPtHyP5Mf5W55ESKsf5Emee6aS37pQEU8IYmWcxTzkEcaAv4Gv9XILAifcu0KN2XMAxolcMzw
+ ABzhwREg+roGOp5fOnJTBTtlLp8=
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+commit b8dc7d0eea5a7709bb534f1b3ca70d2d7de0b42c introduced
+IPA_STATUS_SIZE as a replacement for the size of the removed struct
+ipa_status. sizeof(struct ipa_status) was sizeof(__le32[8]), use this
+as IPA_STATUS_SIZE.
 
+From 0623148733819bb5d3648b1ed404d57c8b6b31d8 Mon Sep 17 00:00:00 2001
+From: Bert Karwatzki <spasswolf@web.de>
+Date: Sat, 27 May 2023 22:16:52 +0200
+Subject: [PATCH] Use the correct value for IPA_STATUS_SIZE.
+IPA_STATUS_SIZE
+ was introduced in commit b8dc7d0eea5a7709bb534f1b3ca70d2d7de0b42c as a
+ replacment for the size of the removed struct ipa_status which had
+size =3D
+ sizeof(__le32[8]).
 
-On 18/01/2023 18:01, Bjorn Andersson wrote:
-> On Tue, Jan 17, 2023 at 02:24:13PM +0000, Caleb Connolly wrote:
->> Configure all channels as wakeup capable and report a wakeup event
->> when data is received.
->>
->> This allows userspace to "subscribe" to a particular channel where
->> it is useful to wake up to process new data. The expected usecase
->> is to allow for handling incoming SMS or phone calls where the only
->> notification mechanism is via QRTR on the IPCRTR glink channel.
->>
->> As this behaviour is likely undesirable for most users, this patch
->> doesn't enable a wakeup_source for any channels by default.
->>
-> 
-> This looks reasonable to me.
-> 
-> One suggestion that came up as we discussed this problem (elsewhere) a
-> while ago was the idea of using EPOLLWAKEUP to control the wakeup source
-> on a per-socket basis.
-> 
-> Would that suite your userspace?
+Signed-off-by: Bert Karwatzki <spasswolf@web.de>
+---
+ drivers/net/ipa/ipa_endpoint.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I haven't been able to get any feedback from ModemManager, however
-personally I'm more inclined to go with a global switch for the sake of
-simplicity. At least until we have some idea of how to tie this together
-in userpsace. This is the approach taken by IPA right now too.
+diff --git a/drivers/net/ipa/ipa_endpoint.c
+b/drivers/net/ipa/ipa_endpoint.c
+index 2ee80ed140b7..afa1d56d9095 100644
+--- a/drivers/net/ipa/ipa_endpoint.c
++++ b/drivers/net/ipa/ipa_endpoint.c
+@@ -119,7 +119,7 @@ enum ipa_status_field_id {
+ };
+=20
+ /* Size in bytes of an IPA packet status structure */
+-#define IPA_STATUS_SIZE			sizeof(__le32[4])
++#define IPA_STATUS_SIZE			sizeof(__le32[8])
+=20
+ /* IPA status structure decoder; looks up field values for a structure
+*/
+ static u32 ipa_status_extract(struct ipa *ipa, const void *data,
+--=20
+2.40.1
 
-If I understand correctly, this wakeup is always enabled on downstream,
-and the RIL stack is expected to configure the modem to not send
-spurious messages while the AP is in suspend.
+Bert Karwatzki
 
-Given that on phones the only time we don't want to wake up for
-calls/sms is when on aeroplane mode (or some other explicit user
-decision) I'm not sure that tying it to the socket is the best option,
-at least initially.
-
-I expect there to be some teething problems on the userspace side, and
-some folks are going to want to disable this feature until those are
-resolved. Making it a sysfs control means that we aren't reliant on
-ModemManager to implement support for it.
-
-Lastly (apologies this is getting a little long...), the sensor DSP also
-utilises this mechanism to be able to wake the device on significant
-motion. Similarly decoupling the wakeup control from whatever daemon is
-responsible for handling this feels simpler to me, just poke sysfs and
-the device will stop waking up when you move it.
-
-=== Related bug ===
-
-We've been shipping this patch in postmarketOS for a few months now, and
-I've come across a very rare null pointer splat where channel->ept.rpdev
-is null inside qcom_glink_rx_data(). I'm unsure if this is a bug in my
-patch or in glink and I wondered if you have any idea.
-> 
-> Regards,
-> Bjorn
-> 
->> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
->> ---
->>  drivers/rpmsg/qcom_glink_native.c | 14 ++++++++++++++
->>  1 file changed, 14 insertions(+)
->>
->> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
->> index 115c0a1eddb1..1a96a7ae23bb 100644
->> --- a/drivers/rpmsg/qcom_glink_native.c
->> +++ b/drivers/rpmsg/qcom_glink_native.c
->> @@ -914,6 +914,9 @@ static int qcom_glink_rx_data(struct qcom_glink *glink, size_t avail)
->>  		channel->buf = NULL;
->>  
->>  		qcom_glink_rx_done(glink, channel, intent);
->> +
->> +		pm_wakeup_ws_event(channel->ept.rpdev->dev.power.wakeup, 0,
->> +				   true);
->>  	}
->>  
->>  advance_rx:
->> @@ -1510,6 +1513,17 @@ static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
->>  		if (ret)
->>  			goto rcid_remove;
->>  
->> +		/*
->> +		 * Declare all channels as wakeup capable, but don't enable
->> +		 * waking up by default.
->> +		 *
->> +		 * Userspace may wish to be woken up for incoming messages on a
->> +		 * specific channel, for example to handle incoming calls or SMS
->> +		 * messages on the IPCRTR channel. This can be done be enabling
->> +		 * the wakeup source via sysfs.
->> +		 */
->> +		device_set_wakeup_capable(&rpdev->dev, true);
->> +
->>  		channel->rpdev = rpdev;
->>  	}
->>  
->> -- 
->> 2.39.0
->>
-
--- 
-// Caleb (they/them)
