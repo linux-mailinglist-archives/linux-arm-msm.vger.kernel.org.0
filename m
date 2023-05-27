@@ -2,40 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 23ADF713673
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 22:46:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D77C071367F
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 23:05:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229649AbjE0Uqt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 May 2023 16:46:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56296 "EHLO
+        id S229452AbjE0VF3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 May 2023 17:05:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229930AbjE0Uqs (ORCPT
+        with ESMTP id S229477AbjE0VFE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 May 2023 16:46:48 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C40CB1;
-        Sat, 27 May 2023 13:46:46 -0700 (PDT)
+        Sat, 27 May 2023 17:05:04 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F9F5BC;
+        Sat, 27 May 2023 14:05:03 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 38B22615BC;
-        Sat, 27 May 2023 20:46:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6919C4339C;
-        Sat, 27 May 2023 20:46:44 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 35798603F6;
+        Sat, 27 May 2023 21:05:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF29C433EF;
+        Sat, 27 May 2023 21:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685220405;
-        bh=D2oC4HfjT26KTZWAe8gA/JRbJNuOnSYmnk26i/r7Fdw=;
+        s=k20201202; t=1685221502;
+        bh=pO4NwEQHJ6F7ZIjFw4Ym65Z1i7QKkvs9nTut+QbJV0A=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=aTHU86AiAZEdXrNyZKQm5Wky7BSpOHYGKfV1K7/pAJxTmad48pKjiG/NXeAokNVm5
-         1mNuF5FC2Toue8P8MBkVYXQK08awDsVwtN7uYwhFO3w4BOwuG7xBgD/Qkvkh0wlJDO
-         F2jNlnFoFw4r9ue8K6x0RyuQFBQL/NTyykPhFeXoPkAJGuRNC3jEwrzkMDnM39WJer
-         oZzyfnnbTyVZCBGrR/AiSxtPoQ/1aGd1VbZEbsaME10o3F8pplnsDWzdGVbmK2axEe
-         pZYlIZJ4YPN4ZQRYnpY6f+BPuGpizpZiIEgfJHYuwAuHM7ikYfRk/Lr0gMRr7vberJ
-         6I1S1ecjLE1Uw==
-Date:   Sat, 27 May 2023 13:50:31 -0700
+        b=RFB/48QllP9PKC6JBeIHhB8cfchqrGR7c4nAJ6tMi0BawiJRsjMHi/4JFYT3u/OOB
+         Mi45hGvJ7ztIYXYyVLXSXwxA9cMWrsdKnVRbsji+dSstDwYn/e112a3dy+M5bbEERO
+         bd+yD2fIc0vdw3iEEgBW66ACsLb7UahjLpt7i8zQIoqI5zeys2ZT7J0gXB5xbkmWh8
+         Z9vzq+qjt98cplsrW99OdpMAfVbShRlwVcs9JT+ieLqiMq8eUc1eJOOV7xTd5bL1bv
+         tCXrlHQPJISzUjJZVDWr6hDv4G9YcbykXjv7SkJ5yJtC+w7S08ePnqjmk/T9bnVkT/
+         P4fmSDWvQNjTA==
+Date:   Sat, 27 May 2023 14:08:49 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
 To:     Komal Bajaj <quic_kbajaj@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
@@ -43,16 +45,20 @@ Cc:     Andy Gross <agross@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 01/10] nvmem: qfprom: Add support for secure reading
-Message-ID: <20230527205031.iwsujvlbxazukwfy@ripper>
+Subject: Re: [PATCH v3 04/10] nvmem: qfprom: Add support for secure reading
+ on QDU1000/QRU1000
+Message-ID: <20230527210849.sd3ycp2pqyorpbpr@ripper>
 References: <20230512122134.24339-1-quic_kbajaj@quicinc.com>
- <20230512122134.24339-2-quic_kbajaj@quicinc.com>
+ <20230512122134.24339-5-quic_kbajaj@quicinc.com>
+ <68f9bee2-5a5b-2962-6c3d-e73ade371545@linaro.org>
+ <CAA8EJppObh3h8sxB_f9SQy7EQ1Gfhe9EbzV=wsUbVNj9PtX=GA@mail.gmail.com>
+ <257e11b5-29b5-78c6-882b-ec3bb64ee28b@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230512122134.24339-2-quic_kbajaj@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+In-Reply-To: <257e11b5-29b5-78c6-882b-ec3bb64ee28b@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -61,185 +67,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 12, 2023 at 05:51:25PM +0530, Komal Bajaj wrote:
-> For some of the Qualcomm SoC's, it is possible that
-> some of the fuse regions or entire qfprom region is
-> protected from non-secure access. In such situations,
-> linux will have to use secure calls to read the region.
-> With that motivation, add the support of reading secure
-> regions in qfprom driver. Ensuring the address to read
-> is word aligned since our secure I/O only supports word
-> size I/O.
+On Mon, May 15, 2023 at 02:02:11PM +0530, Komal Bajaj wrote:
 > 
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-> ---
->  drivers/nvmem/Kconfig  |  1 +
->  drivers/nvmem/qfprom.c | 69 +++++++++++++++++++++++++++++++++---------
->  2 files changed, 55 insertions(+), 15 deletions(-)
 > 
-> diff --git a/drivers/nvmem/Kconfig b/drivers/nvmem/Kconfig
-> index b291b27048c7..3d896ba29b89 100644
-> --- a/drivers/nvmem/Kconfig
-> +++ b/drivers/nvmem/Kconfig
-> @@ -209,6 +209,7 @@ config NVMEM_QCOM_QFPROM
->  	tristate "QCOM QFPROM Support"
->  	depends on ARCH_QCOM || COMPILE_TEST
->  	depends on HAS_IOMEM
-> +	select QCOM_SCM
->  	help
->  	  Say y here to enable QFPROM support. The QFPROM provides access
->  	  functions for QFPROM data to rest of the drivers via nvmem interface.
-> diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
-> index c1e893c8a247..20662e2d3732 100644
-> --- a/drivers/nvmem/qfprom.c
-> +++ b/drivers/nvmem/qfprom.c
-> @@ -16,6 +16,7 @@
->  #include <linux/pm_runtime.h>
->  #include <linux/property.h>
->  #include <linux/regulator/consumer.h>
-> +#include <linux/firmware/qcom/qcom_scm.h>
-> 
->  /* Blow timer clock frequency in Mhz */
->  #define QFPROM_BLOW_TIMER_OFFSET 0x03c
-> @@ -59,21 +60,22 @@ struct qfprom_soc_data {
->  /**
->   * struct qfprom_priv - structure holding qfprom attributes
->   *
-> - * @qfpraw:       iomapped memory space for qfprom-efuse raw address space.
-> - * @qfpconf:      iomapped memory space for qfprom-efuse configuration address
-> - *                space.
-> + * @qfpraw: iomapped memory space for qfprom-efuse raw address space.
-> + * @qfpconf: iomapped memory space for qfprom-efuse configuration address space.
+> On 5/12/2023 11:01 PM, Dmitry Baryshkov wrote:
+> > On Fri, 12 May 2023 at 20:01, Krzysztof Kozlowski
+> > <krzysztof.kozlowski@linaro.org> wrote:
+> > > On 12/05/2023 14:21, Komal Bajaj wrote:
+> > > > Add qfprom driver support for QDU1000/QRU1000 SOCs.
+> > > > 
+> > > > Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
+> > > > ---
+> > > >   drivers/nvmem/qfprom.c | 5 +++++
+> > > >   1 file changed, 5 insertions(+)
+> > > > 
+> > > > diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
+> > > > index 20662e2d3732..12a7981a8a71 100644
+> > > > --- a/drivers/nvmem/qfprom.c
+> > > > +++ b/drivers/nvmem/qfprom.c
+> > > > @@ -109,6 +109,10 @@ struct qfprom_soc_compatible_data {
+> > > >        bool secure;
+> > > >   };
+> > > > 
+> > > > +static const struct qfprom_soc_compatible_data qdu1000_qfprom = {
+> > > > +     .secure = true
+> > > > +};
+> > > > +
+> > > >   static const struct nvmem_keepout sc7180_qfprom_keepout[] = {
+> > > >        {.start = 0x128, .end = 0x148},
+> > > >        {.start = 0x220, .end = 0x228}
+> > > > @@ -490,6 +494,7 @@ static int qfprom_probe(struct platform_device *pdev)
+> > > > 
+> > > >   static const struct of_device_id qfprom_of_match[] = {
+> > > >        { .compatible = "qcom,qfprom",},
+> > > > +     { .compatible = "qcom,qdu1000-qfprom", .data = &qdu1000_qfprom},
+> > > >        { .compatible = "qcom,sc7180-qfprom", .data = &sc7180_qfprom},
+> > > I have doubts that this is still compatible with qcom,qfprom. It uses
+> > > entirely different read method. That's why generic fallbacks are bad,
+> > > one more case to my growing list of awesome examples. :)
+> Okay, will do that.
+> > Yes, it looks like it should be 'qcom,qdu1000-qfprom",
+> > "qcom,scm-qfprom". And possibly a separate driver for scm-qfprom.
+> The only difference here is in read method, which can be controlled by a
+> single property,
+> do we really need to write a separate driver for just reading secure feature
+> register.
 
-Adjusting the indentation makes it unnecessarily hard to see what you
-actually changed.
+I presume that if reads are hidden behind scm, then the most of the
+driver - which deals with writing to qfprom - isn't going to be at all
+applicable.
 
->   * @qfpcorrected: iomapped memory space for qfprom corrected address space.
-> - * @qfpsecurity:  iomapped memory space for qfprom security control space.
-> - * @dev:          qfprom device structure.
-> - * @secclk:       Clock supply.
-> - * @vcc:          Regulator supply.
-> - * @soc_data:     Data that for things that varies from SoC to SoC.
-> + * @qfpsecurity: iomapped memory space for qfprom security control space.
-> + * @qfpseccorrected: starting physical address for qfprom secure corrected address space.
-> + * @dev: qfprom device structure.
-> + * @secclk: Clock supply.
-> + * @vcc: Regulator supply.
-> + * @soc_data: Data that for things that varies from SoC to SoC.
->   */
->  struct qfprom_priv {
->  	void __iomem *qfpraw;
->  	void __iomem *qfpconf;
->  	void __iomem *qfpcorrected;
->  	void __iomem *qfpsecurity;
-> +	phys_addr_t qfpseccorrected;
->  	struct device *dev;
->  	struct clk *secclk;
->  	struct regulator *vcc;
-> @@ -99,10 +101,12 @@ struct qfprom_touched_values {
->   *
->   * @keepout: Array of keepout regions for this SoC.
->   * @nkeepout: Number of elements in the keepout array.
-> + * @secure: Is qfprom region for this SoC protected from non-secure access.
->   */
->  struct qfprom_soc_compatible_data {
->  	const struct nvmem_keepout *keepout;
->  	unsigned int nkeepout;
-> +	bool secure;
->  };
-> 
->  static const struct nvmem_keepout sc7180_qfprom_keepout[] = {
-> @@ -334,6 +338,34 @@ static int qfprom_reg_read(void *context,
->  	return 0;
->  }
-> 
-> +static int qfprom_sec_reg_read(void *context, unsigned int reg, void *_val, size_t bytes)
-> +{
-> +	struct qfprom_priv *priv = context;
-> +	u8 *val = _val;
-> +	int buf_start, buf_end, index, i = 0;
-> +	char *buffer;
-> +	u32 read_val;
-> +
-> +	buf_start = ALIGN_DOWN(reg, 4);
-> +	buf_end = ALIGN(reg + bytes, 4);
-> +	buffer = kzalloc(buf_end - buf_start, GFP_KERNEL);
-> +	if (!buffer)
-> +		return -ENOMEM;
-
-I don't you need all these variables, the full temp buffer or the two
-memcpy... I think something like this should do the trick:
-
-	unsigned int i;
-	u8 *val = _val;
-	u8 tmp[4];
-
-	for (i = 0; i < bytes; i++, reg++)
-		if (i == 0 || reg % 4 == 0)
-			qcom_scm_io_readl(qfpseccorrected + (reg & ~3), tmp);
-
-		val[i] = tmp[reg & 3];
-	}
-
-> +
-> +	for (index = buf_start; index < buf_end; index += 4, i += 4) {
-> +		if (qcom_scm_io_readl(priv->qfpseccorrected + index, &read_val)) {
-> +			dev_err(priv->dev, "Couldn't access feature register\n");
-
-What's a "feature register"?
+So, I actually think it would make sense to put that in a separate
+qfprom-scm driver, which handles the generic fallback of
+"qcom,qfprom-scm".
 
 Regards,
 Bjorn
 
-> +			kfree_sensitive(buffer);
-> +			return -EINVAL;
-> +		}
-> +		memcpy(buffer + i, &read_val, 4);
-> +	}
-> +
-> +	memcpy(val, buffer + reg % 4, bytes);
-> +	kfree_sensitive(buffer);
-> +	return 0;
-> +}
-> +
->  static void qfprom_runtime_disable(void *data)
->  {
->  	pm_runtime_disable(data);
-> @@ -373,13 +405,6 @@ static int qfprom_probe(struct platform_device *pdev)
->  	if (!priv)
->  		return -ENOMEM;
 > 
-> -	/* The corrected section is always provided */
-> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -	priv->qfpcorrected = devm_ioremap_resource(dev, res);
-> -	if (IS_ERR(priv->qfpcorrected))
-> -		return PTR_ERR(priv->qfpcorrected);
-> -
-> -	econfig.size = resource_size(res);
->  	econfig.dev = dev;
->  	econfig.priv = priv;
-> 
-> @@ -390,6 +415,20 @@ static int qfprom_probe(struct platform_device *pdev)
->  		econfig.nkeepout = soc_data->nkeepout;
->  	}
-> 
-> +	/* The corrected section is always provided */
-> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> +
-> +	if (soc_data && soc_data->secure) {
-> +		priv->qfpseccorrected = res->start;
-> +		econfig.reg_read = qfprom_sec_reg_read;
-> +	} else {
-> +		priv->qfpcorrected = devm_ioremap_resource(dev, res);
-> +		if (IS_ERR(priv->qfpcorrected))
-> +			return PTR_ERR(priv->qfpcorrected);
-> +	}
-> +
-> +	econfig.size = resource_size(res);
-> +
->  	/*
->  	 * If more than one region is provided then the OS has the ability
->  	 * to write.
-> --
-> 2.17.1
+> Thanks,
+> Komal
+> > 
+> > 
 > 
