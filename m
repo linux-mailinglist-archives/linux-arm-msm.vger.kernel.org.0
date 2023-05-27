@@ -2,74 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B0F427133CF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 11:40:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0C997133E1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 11:53:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232026AbjE0Jk0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 May 2023 05:40:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36898 "EHLO
+        id S231940AbjE0Jwl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 May 2023 05:52:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232086AbjE0JkZ (ORCPT
+        with ESMTP id S231620AbjE0Jwl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 May 2023 05:40:25 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EC0418D;
-        Sat, 27 May 2023 02:40:23 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id a640c23a62f3a-96f850b32caso305550666b.3;
-        Sat, 27 May 2023 02:40:23 -0700 (PDT)
+        Sat, 27 May 2023 05:52:41 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6535E3;
+        Sat, 27 May 2023 02:52:34 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-96f5d651170so520486666b.1;
+        Sat, 27 May 2023 02:52:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685180421; x=1687772421;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RnO2+f52DGNhkJXeV3dwSMun1/oWC09Jx7AM2r6DtMM=;
-        b=bhBfYdtLAdF6L9i7h/QEU4O1n2pyT0ratFM/0CCSnFZ+1ag/9kGSXIVWY+JPRlZuU6
-         8sIuzlmUqGslfpnquwD2dzgiThRbA8Ig20vFlcatq6xaS4ZX4kE329bJ55BLmNLCC4MQ
-         RW8UrzI16v/4RPahN1+UKDFtJgWDhX1a+cF3JXPGtacKP3CZBFoe1z9ndNv0JUzSfQfQ
-         yK/Cxt78lIf+81MyyQ92LhOZXhgcY8vn5c9ujmdvLgH2BFj9A2RCxwCIxC7oYAiDUlBc
-         OjyjtSTKQW76iDlejBV6SO0ER9PbS3dP8Gnn1DMGCeNeQTmn9CqJQTgYKA0N52wYRONI
-         Hxpw==
+        d=gmail.com; s=20221208; t=1685181153; x=1687773153;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Na6Txrt2hFh+fWwveerBgJHyXpffGPNv4qohRE1MaYg=;
+        b=V+s71H6TjO/HhMt4HfHThkprHxIaiCIwYBezKbGdNwVjoG6TWOilANBd7iOeb7I/di
+         cLfoOhLT4T4U7sp0hqat1o6D/LVCtW+ycJAELRF1Po3rXbdlT9Y5/jDI9V2lJBTIDBQT
+         TunOnUuxnX2kqiolWh52N178srlVEYj7O3LPuXPuHEz4WezrVh6KSqeri3KCRLqY2SGX
+         4tQ5KCbF91Wi2QDdfekWueRH5WUeibkrsfR3ocKH+f2JJYhVywvbENjodj8FJIrnIHBf
+         5mm91uUPTwLaMCQRuvSoERhyf13dxva5R+ct0akm1W61MxAEjLkPSTNqWzDGchnRc36Y
+         QX+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685180421; x=1687772421;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RnO2+f52DGNhkJXeV3dwSMun1/oWC09Jx7AM2r6DtMM=;
-        b=bMFVsNxC3txMIfjv1Dyto5ByyPWGf8HdZ1TrhXP2+SgA4p9LhxjXcTDIocWGtON5KE
-         ZM/OskFDMXCFDI6ED8WzHbTUr77BAoyP5g8cjYncDy97jvFDuv4O6a5NscuEUDeH6NEm
-         sQpiV0Aq8tYx53jJ5o8beo3dJgEpqVj/DJ0KRS5oCd9m6aJQJqseWS3uvNL1jI2l2hgB
-         5AF06I2YltN2D1qjweKImYbJ9OZZdGjurz2FpTIn+4dLlYubFs8+rxT/oNAKA146ptYP
-         U7a0CPBkrI46d39PtW7zLiZhxC5lSAxOpVyTQLhuSMfxCJGysrHW2LDTDkdrQFvO9nTb
-         rP8g==
-X-Gm-Message-State: AC+VfDz45CRyRy3O1oup4RddHKehOcWF+puJrT7CVKzjpWoMZP5eLBvd
-        Y4tAGZ3GIyDbMOeIoEHbptE=
-X-Google-Smtp-Source: ACHHUZ75m2h7jCFKbjxh54OtTIyPOiFEaOUI6ExlmRmORTaiabRV2QhaoiuLmbLCXbW9uA5/5Vfziw==
-X-Received: by 2002:a17:907:9289:b0:966:63ac:3706 with SMTP id bw9-20020a170907928900b0096663ac3706mr4018706ejc.26.1685180421286;
-        Sat, 27 May 2023 02:40:21 -0700 (PDT)
-Received: from localhost.localdomain ([95.183.227.33])
-        by smtp.gmail.com with ESMTPSA id kq12-20020a170906abcc00b009596e7e0dbasm3163623ejb.162.2023.05.27.02.40.19
+        d=1e100.net; s=20221208; t=1685181153; x=1687773153;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Na6Txrt2hFh+fWwveerBgJHyXpffGPNv4qohRE1MaYg=;
+        b=PGo63o3yIQOukosfk/7j7JlXJZlz0SmBIj4BJB8QbeO8BCLppsZAeSioMmfCpOyc+7
+         ElA5dwJ+z+kEPB22onP5RJildyvcCG2NswVGXG5+vZAZAxrkt2KOwhHH7+khubk2Q/HA
+         PgtVmuVEcxOoeaHKsPiyGz6p6MJ8UiXw+UIgTzMVDQH1AKM0SSpPj5e4hgmaJSC/EifD
+         iGcBqLoYM15XsgzTZ6wS1xicWNeqhwan+rfyICfnbslr1mpc2imV1NJVjtTDCXuX+g/U
+         BeL1eTxY2pBZx0BX7n7lWOasKZyUyR09OugX6eUKzEVxYSNGEfL57pfGcYqIiHRskoPh
+         /5fw==
+X-Gm-Message-State: AC+VfDwP7vXgT7oZkXeqXWHlyH9tdmc21oj+E3fExgPgkmelwwN7/kPd
+        WY06cZtDWrVefqQlZZNdEIMiHtwY5xyt8Q==
+X-Google-Smtp-Source: ACHHUZ5ZUCSqPzYpjsoHWRdlMUw62ces7+jeMttuscdSulYOdCoZgfBsxlriuni6BF0Qzvui1E1PNQ==
+X-Received: by 2002:a17:907:980c:b0:966:5fac:2e52 with SMTP id ji12-20020a170907980c00b009665fac2e52mr1378960ejc.9.1685181152973;
+        Sat, 27 May 2023 02:52:32 -0700 (PDT)
+Received: from fedora.. (dh207-98-6.xnet.hr. [88.207.98.6])
+        by smtp.googlemail.com with ESMTPSA id kq10-20020a170906abca00b00960005e09a3sm3218262ejb.61.2023.05.27.02.52.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 May 2023 02:40:20 -0700 (PDT)
-From:   Yassine Oudjana <yassine.oudjana@gmail.com>
-X-Google-Original-From: Yassine Oudjana <y.oudjana@protonmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        Yassine Oudjana <yassine.oudjana@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Sat, 27 May 2023 02:52:32 -0700 (PDT)
+From:   Robert Marko <robimarko@gmail.com>
+To:     ilia.lin@kernel.org, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 3/3] clk: qcom: cbf-msm8996: Add support for MSM8996 Pro
-Date:   Sat, 27 May 2023 12:39:34 +0300
-Message-Id: <20230527093934.101335-4-y.oudjana@protonmail.com>
+Cc:     ansuelsmth@gmail.com, Robert Marko <robimarko@gmail.com>
+Subject: [PATCH 1/2] dt-bindings: cpufreq: qcom-cpufreq-nvmem: document IPQ8074
+Date:   Sat, 27 May 2023 11:52:28 +0200
+Message-Id: <20230527095229.12019-1-robimarko@gmail.com>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230527093934.101335-1-y.oudjana@protonmail.com>
-References: <20230527093934.101335-1-y.oudjana@protonmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -82,58 +73,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Yassine Oudjana <y.oudjana@protonmail.com>
+Document IPQ8074 compatible for Qcom NVMEM CPUFreq driver.
 
-The CBF PLL on MSM8996 Pro has a /4 post divisor instead of /2. Handle the
-difference accordingly.
-
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+Signed-off-by: Robert Marko <robimarko@gmail.com>
 ---
- drivers/clk/qcom/clk-cbf-8996.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ .../devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml          | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/qcom/clk-cbf-8996.c b/drivers/clk/qcom/clk-cbf-8996.c
-index cfd567636f4e..ab988e6f1976 100644
---- a/drivers/clk/qcom/clk-cbf-8996.c
-+++ b/drivers/clk/qcom/clk-cbf-8996.c
-@@ -48,7 +48,7 @@ static const u8 cbf_pll_regs[PLL_OFF_MAX_REGS] = {
- 	[PLL_OFF_STATUS] = 0x28,
- };
- 
--static const struct alpha_pll_config cbfpll_config = {
-+static struct alpha_pll_config cbfpll_config = {
- 	.l = 72,
- 	.config_ctl_val = 0x200d4828,
- 	.config_ctl_hi_val = 0x006,
-@@ -137,7 +137,7 @@ static int clk_cbf_8996_mux_determine_rate(struct clk_hw *hw,
- {
- 	struct clk_hw *parent;
- 
--	if (req->rate < (DIV_THRESHOLD / 2))
-+	if (req->rate < (DIV_THRESHOLD / cbf_pll_postdiv.div))
- 		return -EINVAL;
- 
- 	if (req->rate < DIV_THRESHOLD)
-@@ -265,6 +265,11 @@ static int qcom_msm8996_cbf_probe(struct platform_device *pdev)
- 	/* Switch CBF to use the primary PLL */
- 	regmap_update_bits(regmap, CBF_MUX_OFFSET, CBF_MUX_PARENT_MASK, 0x1);
- 
-+	if (of_device_is_compatible(dev->of_node, "qcom,msm8996pro-cbf")) {
-+		cbfpll_config.post_div_val = 0x3 << 8;
-+		cbf_pll_postdiv.div = 4;
-+	}
-+
- 	for (i = 0; i < ARRAY_SIZE(cbf_msm8996_hw_clks); i++) {
- 		ret = devm_clk_hw_register(dev, cbf_msm8996_hw_clks[i]);
- 		if (ret)
-@@ -286,6 +291,7 @@ static int qcom_msm8996_cbf_probe(struct platform_device *pdev)
- 
- static const struct of_device_id qcom_msm8996_cbf_match_table[] = {
- 	{ .compatible = "qcom,msm8996-cbf" },
-+	{ .compatible = "qcom,msm8996pro-cbf" },
- 	{ /* sentinel */ },
- };
- MODULE_DEVICE_TABLE(of, qcom_msm8996_cbf_match_table);
+diff --git a/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml b/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
+index 6f5e7904181f..7e1bb992ce90 100644
+--- a/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
++++ b/Documentation/devicetree/bindings/cpufreq/qcom-cpufreq-nvmem.yaml
+@@ -28,6 +28,7 @@ select:
+           - qcom,apq8064
+           - qcom,apq8096
+           - qcom,ipq8064
++          - qcom,ipq8074
+           - qcom,msm8939
+           - qcom,msm8960
+           - qcom,msm8974
 -- 
 2.40.1
 
