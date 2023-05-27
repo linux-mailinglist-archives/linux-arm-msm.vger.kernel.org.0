@@ -2,145 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1A7371322A
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 05:34:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AA74713260
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 05:59:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229550AbjE0DeT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 23:34:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56994 "EHLO
+        id S231386AbjE0D72 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 23:59:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33552 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229522AbjE0DeS (ORCPT
+        with ESMTP id S231611AbjE0D7E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 23:34:18 -0400
-Received: from EUR04-HE1-obe.outbound.protection.outlook.com (mail-he1eur04on2052.outbound.protection.outlook.com [40.107.7.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C633E4;
-        Fri, 26 May 2023 20:34:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dcRbi0vmZ75sV/F0jFAcjmBs8Eaqw4CGWv3aw1SVavHWX7h+0Y8hzR1B4wGzMI4aooTaeAVYPc+IZ/5Ipdi8XvzuZyX99pDDvITw/g8+Mp+6YkdOpf/SGnpLoIFc2WpxVSt+BvR3yTQPx9/T27GWwUZkhk7zEJyTK2Th4Q8vRVqodwxn4CtJVePzsYI8uQkvvo3zoExM3TaMwI5JO36FG366FYTUhgO+wTKhz7+GZrDAAoF6ZtLxexWT73sE2PbxFhUSwdhXjfs6lv/DIWmM/kYzmsrdU7luolcfPd+H1FIzmfUqNdbVPBNjVv+pYA1FT6nRNZGqASTS7FKlN+eWww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=TxAPEbIyuE0VUOUw++LWAtQZWfVKjCZx+7QzYEhKMkI=;
- b=nTxjW2Yabk7ePOVfG2Nzx7v5NgmWuLam6qOB1yFyjmH06ACPtvXsn0UC774L69hzlx+yxHX91atrOhQeNm1wHjCYLklsVeMq9hNYGgjtZ2EnTn8sSeMqEv3SEY0SS5LCPo6VnpvNeyRG/iHyZJjJG6y6lgDbQ9xjK747WHoFJ5jB3BCUnAUdh8LyK5UfHb9MMoy/TilyXkbTEeFHt/QqBIs+QKNvTWMB81VLFvdh4sxPAUZm0Q/1ZohNmysWFEV0EHgxNWKMYP/lnfLJDzy4L7zSFX82BdpCGhAU2EBgc3k6eWOD+W5dWaDKMgpTWbMoMSkPwSoceEptA1A8sH0KWQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=TxAPEbIyuE0VUOUw++LWAtQZWfVKjCZx+7QzYEhKMkI=;
- b=M0XNs8iFQHL1BVt2bHziFB7+6/s5hz28JXEUHnNuhIk9eWxeblO2sfprfKlUHG7g/r+Djo1oU0YbEhpwM+zfIRgrntJ775/uLepwzOHAKWSU5Jcd6Fk73F3hooDH/N7ZE7ZWj7fXRRVqCe0arS7SQ9irh+4RLQkYzbx2necz7aA=
-Received: from AM6PR04MB4838.eurprd04.prod.outlook.com (2603:10a6:20b:4::16)
- by AM9PR04MB7604.eurprd04.prod.outlook.com (2603:10a6:20b:287::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6433.19; Sat, 27 May
- 2023 03:34:11 +0000
-Received: from AM6PR04MB4838.eurprd04.prod.outlook.com
- ([fe80::4a2a:262e:415f:e41c]) by AM6PR04MB4838.eurprd04.prod.outlook.com
- ([fe80::4a2a:262e:415f:e41c%6]) with mapi id 15.20.6433.018; Sat, 27 May 2023
- 03:34:11 +0000
-From:   Frank Li <frank.li@nxp.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC:     "lpieralisi@kernel.org" <lpieralisi@kernel.org>,
-        "kw@linux.com" <kw@linux.com>,
-        "kishon@kernel.org" <kishon@kernel.org>,
-        "bhelgaas@google.com" <bhelgaas@google.com>,
-        "linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-Subject: RE: [EXT] [PATCH v4 4/7] PCI: endpoint: Add BME notifier support
-Thread-Topic: [EXT] [PATCH v4 4/7] PCI: endpoint: Add BME notifier support
-Thread-Index: AQHZimA1/HTZGCCvNkeTHIvD7zgRf69h5tGggAuIVQCAABOnAA==
-Date:   Sat, 27 May 2023 03:34:11 +0000
-Message-ID: <AM6PR04MB4838F01DC8E0A94ACCBE08FE88449@AM6PR04MB4838.eurprd04.prod.outlook.com>
-References: <20230519144215.25167-1-manivannan.sadhasivam@linaro.org>
- <20230519144215.25167-5-manivannan.sadhasivam@linaro.org>
- <AM6PR04MB483845CDCBDF5962C3F9D8F2887C9@AM6PR04MB4838.eurprd04.prod.outlook.com>
- <20230527022132.GA2814@thinkpad>
-In-Reply-To: <20230527022132.GA2814@thinkpad>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM6PR04MB4838:EE_|AM9PR04MB7604:EE_
-x-ms-office365-filtering-correlation-id: 37c12415-b883-48a5-9659-08db5e633c7d
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: pOFbmWxadupbTyYBcH8OMsnDe/hwbutBKICqal6XdNk+f/cDpRvSqJaL9RqgzDsGGfSuSxScImEkbWA76f6HoIcdCwMxz1n99Rx+Ni+is0FhAp5Lt44W5iY05JRzBblj3F1ed2uxUa/XVWinqzX9WvN6CfN2BuWVxiaoI345nriZ2acgq9ikASesNJFxyJPy/rBR0UQO7HjHA+SLK6iQuJkRHa/F90C0JRV8fH9RF/nBNEgWeFu/77mHYuvlQQ3BahLmYUZfRnb8h4PVuvvyuTqk1OfQnc/9d71GvbXl3fueEih2mMWvrVZ4GteH/oS0VaDMaoz2CW0UyrQx4yt3FElmqqu/Hmtw4DptmZ2BohMsy3HQbk7iMww8LO3CS9GXZMBo5VEuUb89TgiSJHwXG428wS813efXLF4ryo9QqYXmkohGyc4vCJ1wgCiock8dDx8Q10ljp370B2qIhQbWHL3BFrphE6X7NsWWbE89nHsSM/BV7aENEZw+p0opfThVzR+8And9AV70VQHmCMKMM4MmGX781oVT44e1bWiao7/qM7MkN7CKP1tUes335lbFZbgBQ0ZQEbB+W+JowH0gqo8GYjvXu2D0IYOzkgya7Z8vd3Jj+fGy5KcMdrpfh1wJ
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM6PR04MB4838.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(136003)(366004)(376002)(346002)(39860400002)(396003)(451199021)(66899021)(66556008)(66476007)(66446008)(64756008)(6916009)(478600001)(76116006)(4326008)(66946007)(54906003)(33656002)(55016003)(186003)(55236004)(9686003)(6506007)(122000001)(38100700002)(83380400001)(8936002)(8676002)(71200400001)(7696005)(316002)(86362001)(38070700005)(4744005)(2906002)(5660300002)(52536014)(41300700001)(44832011)(26005);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Wnl5YWlRcitYTGcveHVFTXlGWWVFeUJVU1BET2lnNXJVejlDd3BRTUdUbjlk?=
- =?utf-8?B?YXFTQjJmQ1lVeDVvdHhWU3hPYnhKbWU2SytWU2pUU2FCZmxvTk8rRGFGWEVR?=
- =?utf-8?B?MEpVbFc0VUtyZG5VbFRKNml3R1FzZ2E4OGJROEVYaE5zR0hoU2lsZVpseldQ?=
- =?utf-8?B?Qjh3b2ZBYnl6NUJjQ1BpdEt4ZXVXdS8rQ21RcFN6T0lLVGRnT2RiTGFRWjFs?=
- =?utf-8?B?Zk0ySVMyaDluOFNCYmxXVVY3bjMvNmtrY1o2RE5YZ3dxYkFPbWd1Z2JUU3JH?=
- =?utf-8?B?SkkrV08reFVxSGxEQkpIYktzQjcrQWI5TzduMDU3OG1xZ2xSNTI1Q1Qwdnh3?=
- =?utf-8?B?aERucWJSWHlaSVI4dE53RERyS2tFVERSY2xLSVg5NjdmUEFock1DYmQ0SmVm?=
- =?utf-8?B?a1pjTEdTY3o1SlcyL3o4VGNzZmNzVXFiMlY1M3UxSDlwZDF2MmVKcUQ4eFN0?=
- =?utf-8?B?ZkNva3pwSDU2MDNMRlBSb0JZckxwSDE1dTBtSndDR2VoSEQ4UWtDQjRJVlgy?=
- =?utf-8?B?MEo0VXl6TWNNR0F1YWRYL1MyNHcvRjlRMjVIS3d2QXZMVE9ITmNQdlNabFFv?=
- =?utf-8?B?Vnk0cnVYY2s5bys1ZmR5cnpSZDVLbHpETzNkRkg4eVYxMi9QQkc0a1lSMmhT?=
- =?utf-8?B?bWdJaEY1MG1pbHUwUzhXRVpENTVpVlZ6WXgvdUxNYkU5SWJUVEkreHRRV1Rz?=
- =?utf-8?B?Zi9QSFU2VzJOS2U4TEttSkJJYnNNRjg1WW5yL3ZEdEJIVTVpUlptNE44NGti?=
- =?utf-8?B?NTAreFFGK0cyKytDMi8ycnFXemZ0TWkyd2o1ZnhrSU85dkU2NVh1bkpEZ3g5?=
- =?utf-8?B?dXMzb1BLcmhDT0pZZU5DcEVid3Jycy8vTjZFZ09KWC9PczRSWFVCREgyaTAv?=
- =?utf-8?B?R01zMDNRWjIxbnhod0I1RTBrYTdFY1NzbVBGcjV4UHRCVEc0NFNXUjYrZTIv?=
- =?utf-8?B?dVU4UWVrbjJMdXBHb2FOc1B6TDY1K2tlNTBrbXBHNEwrYTZ6YnR0T2I2OTV6?=
- =?utf-8?B?ZkVNUUpCMEc0UDErdzhvaDdNck9aNXJmc3lQcXRKb0NkbW0rc05KcDZxbTZQ?=
- =?utf-8?B?T0VxR0RvdTBTR3JEcC9qb0NDV3M2NzV0Z0VsK2o5TlRQdmozaDNUKy9rQ1cr?=
- =?utf-8?B?SFZQa2cvTll0MkpndEZESFZmb2ZpS3p4RldzNVRaazAwL1pBNFdtRU1iTUJM?=
- =?utf-8?B?UDJUaVk2bktzVDQ1ZXhRTWJKYWwrUHNMN2RDK01FSHJyR3VDZzRjVC9WMGhh?=
- =?utf-8?B?bFBkZ0Y1WjhxMVROUUNSY0t0T1ZxblF0S29pVm9ZQklTNlBYak51cXoxM2lQ?=
- =?utf-8?B?b0s2U1NKa2VVeGQraC8xaE96QzFqV1ZmdlExZGR4UENEeGVTZW1BZzUzbEhj?=
- =?utf-8?B?SFNQQjFoWjIxQTNsWXVJVElZN09yYmlCS2RFUUhnSmRkVjZDR3Nod0hUSUxJ?=
- =?utf-8?B?R3UxSGdFUENsTkpLYmlyMndkb3EzTktReGFVamRMcVZwazkrZTVZdmlSZ3VB?=
- =?utf-8?B?WFN0Q3NnaHpiRzdTRTVpTEZJdDUrc1MySlIrN2FDUVMzbTRETWV1M2g4K3hj?=
- =?utf-8?B?dCtkRXlZdmYzWHhTd01YQ0I3eGQxdzhYUE9ISFlmTWszRU8yZnBjVkMya0Nj?=
- =?utf-8?B?cjVXeHQxWUZyejdEOTBzOGZDWEYzaFYySmZzc2xTYUdvRk85aEtLN29ocjE2?=
- =?utf-8?B?UlBkM1JibTB2TkNoRnVKV1pDU09PbHY3NXIzYmE3RUs0TFlCS3V6bjVVblZl?=
- =?utf-8?B?L0hqd1NVTHlyMkx3c2tsUEE0bXFaVGFMZ052Y2ZEL045QUtVOEF1ZXhEemIv?=
- =?utf-8?B?VjNmc0VwQVZxT3hnMWRHbFh5YmtWME5VZ1BrWUVPUi8vcldDM1JDaG1OQ3hJ?=
- =?utf-8?B?ck1KelBJMS9wK3hqWnFiR2NEbmNIWTYvczFFdE4xUm9lT3VhSytmWW5mcGRh?=
- =?utf-8?B?NzEyRXNWc2VOdHM0RHJYSGVhNnJ5clg2cTFFVlJmT1ZpdUJEcUJjMVpyRzFO?=
- =?utf-8?B?enBHcjVJUVptYTdzc0dUYW94djMxdlhoY0MyQlhhckVUeC9mNmlUMW9MMGdx?=
- =?utf-8?B?cGRSNUlYV3UyMndWNXJrUlcyR3oyd29vMzFDbzVvWkxocVkyMlR4YmlRM2d3?=
- =?utf-8?Q?E2Y0=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+        Fri, 26 May 2023 23:59:04 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B972B125;
+        Fri, 26 May 2023 20:58:38 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34R3q8fY008468;
+        Sat, 27 May 2023 03:58:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=0QF93uSv/DLQZOFi/xWf93K/LVY+8cfaVZEUODalsG0=;
+ b=c925ZmCzzmiFsT4YbXYn7cZOrvf3a4Qf8GLMrw0HTfY2VJ/gFyTeDAKpkvZNsNKofdqG
+ cGdTxkO7CS/vvNyU7Q6YYfUK0oriR/cFQeIno/nyv4lo27N3qd9ijnUg8tfN9bHb4SBh
+ VugYhQSL2NM4ktNxz+7ensY7p8f8IzSyRT7YSAWCYEJ390pOaV1yxmoSbSCwVNCuQi4c
+ OZij5iSJO848oalsMKeEhkH941rdCIltY/VUl/aoK2+G2XV0TVjmhbs+44SJx0fzUyZr
+ r+ATZbFKSoGgWa51jEbX5Rxxi9Iq9IGgsYbbhjUBaBFXrM4RAvSuCW0weTXcEVGju/WQ 6Q== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qu7jn0614-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 27 May 2023 03:58:29 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34R3wSKW009270
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 27 May 2023 03:58:28 GMT
+Received: from [10.216.21.92] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 26 May
+ 2023 20:58:23 -0700
+Message-ID: <353f6b1e-4729-19a8-d792-5acc66cb2a1b@quicinc.com>
+Date:   Sat, 27 May 2023 09:28:18 +0530
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM6PR04MB4838.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 37c12415-b883-48a5-9659-08db5e633c7d
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 May 2023 03:34:11.2238
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: NSO0aFy8fbFw+OzmuN14yr4+7GvutN93HLnnTlhWw8ffHyk1LnqYf2cPqdogLXSuaJadwTEpzx//X4Zaw/1m5g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM9PR04MB7604
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH v5 3/5] soc: qcom: smem: introduce qcom_smem_get_soc_id()
+To:     Robert Marko <robimarko@gmail.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <ilia.lin@kernel.org>, <rafael@kernel.org>,
+        <viresh.kumar@linaro.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-pm@vger.kernel.org>
+CC:     <ansuelsmth@gmail.com>
+References: <20230526204802.3081168-1-robimarko@gmail.com>
+ <20230526204802.3081168-3-robimarko@gmail.com>
+Content-Language: en-US
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <20230526204802.3081168-3-robimarko@gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: lpbRshXcyH0KDu74ctXbWJjkzk3B52O0
+X-Proofpoint-GUID: lpbRshXcyH0KDu74ctXbWJjkzk3B52O0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-27_01,2023-05-25_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 mlxlogscore=999 spamscore=0 clxscore=1015 bulkscore=0
+ lowpriorityscore=0 mlxscore=0 phishscore=0 suspectscore=0 adultscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305270031
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-PiA+DQo+ID4gQ2FuIHdlIGNvbnNpZGVyIGNvbnNvbGlkYXRlIHRoZXNlIG5vdGlmaWNhdGlvbiB0
-byBvbmUgZnVuY3Rpb24gYW5kDQo+IGRpc3Rpbmd1aXNoZWQgYnkNCj4gPiBFVkVOVF9JRCBpbiBm
-dXR1cmU/DQo+ID4NCj4gDQo+IE15IHByZWZlcmVuY2UgaXMgdG8ga2VlcCBhIHNlcGFyYXRlIGNh
-bGxiYWNrIGZvciBlYWNoIGV2ZW50IGFzIGl0IG1ha2VzIHRoZQ0KPiBjb2RlDQo+IGxvb2sgYmV0
-dGVyIGluc3RlYWQgb2YgY2x1YmJpbmcgZXZlcnl0aGluZyBpbiBhIHNpbmdsZSBjYWxsYmFjayBz
-ZXBhcmF0ZWQgYnkgYQ0KPiBzd2l0Y2ggY2FzZS4NCj4gDQoNCk9rYXksIHRoYXQgaXMgbm90IGJp
-ZyBkZWFsLiBJIGhvcGUgdGhlc2UgY2FuIGJlIG1lcmdlZCBpbnRvIHBjaSB0cmVlIHNvb24uIA0K
-U28gSSBjYW4gYWRkIG1vcmUgbm90aWZpY2F0aW9uIGF0IGxheWVyc2NhcGUgcGxhdGZvcm0uDQoN
-Cj4gLSBNYW5pDQo+IA0KPiA+IEJlc3QgcmVnYXJkcw0KPiA+IEZyYW5rIExpDQo+ID4NCj4gPiA+
-ICB9Ow0KPiA+ID4NCj4gPiA+ICAvKioNCj4gPiA+IC0tDQo+ID4gPiAyLjI1LjENCj4gPg0KPiAN
-Cj4gLS0NCj4g4K6u4K6j4K6/4K614K6j4K+N4K6j4K6p4K+NIOCumuCupOCuvuCumuCuv+CuteCu
-ruCvjQ0K
+
+On 5/27/2023 2:18 AM, Robert Marko wrote:
+> Introduce a helper to return the SoC SMEM ID, which is used to identify the
+> exact SoC model as there may be differences in the same SoC family.
+>
+> Currently, cpufreq-nvmem does this completely in the driver and there has
+> been more interest expresed for other drivers to use this information so
+> lets expose a common helper to prevent redoing it in individual drivers
+> since this field is present on every SMEM table version.
+
+
+LGTM,
+
+Reviewed-by: Kathiravan T <quic_kathirav@quicinc.com>
+
+
+>
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+> Changes in v5:
+> * Convert the __le32 ID to CPU endinaness
+>
+> Changes in v4:
+> * Change helper name to qcom_smem_get_soc_id()
+> * Remove len and just pass NULL, that is sufficient here
+>
+> Changes in v3:
+> * Change export to EXPORT_SYMBOL_GPL
+> * Use an argument for returning SoC ID
+> * Update kerneldoc
+> ---
+>   drivers/soc/qcom/smem.c       | 23 +++++++++++++++++++++++
+>   include/linux/soc/qcom/smem.h |  2 ++
+>   2 files changed, 25 insertions(+)
+>
+> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+> index bc98520c4969..b0d59e815c3b 100644
+> --- a/drivers/soc/qcom/smem.c
+> +++ b/drivers/soc/qcom/smem.c
+> @@ -14,6 +14,7 @@
+>   #include <linux/sizes.h>
+>   #include <linux/slab.h>
+>   #include <linux/soc/qcom/smem.h>
+> +#include <linux/soc/qcom/socinfo.h>
+>   
+>   /*
+>    * The Qualcomm shared memory system is a allocate only heap structure that
+> @@ -772,6 +773,28 @@ phys_addr_t qcom_smem_virt_to_phys(void *p)
+>   }
+>   EXPORT_SYMBOL_GPL(qcom_smem_virt_to_phys);
+>   
+> +/**
+> + * qcom_smem_get_soc_id() - return the SoC ID
+> + * @id:	On success, we return the SoC ID here.
+> + *
+> + * Look up SoC ID from HW/SW build ID and return it.
+> + *
+> + * Return: 0 on success, negative errno on failure.
+> + */
+> +int qcom_smem_get_soc_id(u32 *id)
+> +{
+> +	struct socinfo *info;
+> +
+> +	info = qcom_smem_get(QCOM_SMEM_HOST_ANY, SMEM_HW_SW_BUILD_ID, NULL);
+> +	if (IS_ERR(info))
+> +		return PTR_ERR(info);
+> +
+> +	*id = __le32_to_cpu(info->id);
+> +
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_smem_get_soc_id);
+> +
+>   static int qcom_smem_get_sbl_version(struct qcom_smem *smem)
+>   {
+>   	struct smem_header *header;
+> diff --git a/include/linux/soc/qcom/smem.h b/include/linux/soc/qcom/smem.h
+> index 86e1b358688a..223db6a9c733 100644
+> --- a/include/linux/soc/qcom/smem.h
+> +++ b/include/linux/soc/qcom/smem.h
+> @@ -11,4 +11,6 @@ int qcom_smem_get_free_space(unsigned host);
+>   
+>   phys_addr_t qcom_smem_virt_to_phys(void *p);
+>   
+> +int qcom_smem_get_soc_id(u32 *id);
+> +
+>   #endif
