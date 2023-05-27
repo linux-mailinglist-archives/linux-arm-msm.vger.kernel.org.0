@@ -2,467 +2,272 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EBCE9713068
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 01:36:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4397B7130D1
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 02:13:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231313AbjEZXg1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 26 May 2023 19:36:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56836 "EHLO
+        id S230083AbjE0ANt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 26 May 2023 20:13:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229964AbjEZXg0 (ORCPT
+        with ESMTP id S229794AbjE0ANs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 26 May 2023 19:36:26 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8ECE0FB
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 16:36:22 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f4e71a09a7so1218702e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 16:36:22 -0700 (PDT)
+        Fri, 26 May 2023 20:13:48 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41B35F7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 17:13:45 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id d75a77b69052e-3f6a6e9d90dso70851cf.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 May 2023 17:13:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685144181; x=1687736181;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=H8aHH4bwAIGi4TXqYQZBpRXn2xRLYPqkRwFmzcf8RQ0=;
-        b=moFYde6zXumMKz5aEaI0uk1nbXQpQh0uuVU0N7nOcW9bIN+E14KL40GGacKKdKlzSS
-         C7azggyeQcADIXum3OOM2sFl5USu6mX72UQq3Cx4cK7Xzn2dq2O9UsTcygC39DhVioz4
-         HSHZ6gcXHtkZluYkbUSaXvoOivO/1AECJzDkXNX5Hv9FmlkH4lEueiRBbwCPifsndRD2
-         EKsK52Y1S6Z0loWj7eSF1We/2stHFCbU+hZRV5XOBdZj/KX/Frdhx6M7O7eqtEy8AldY
-         jVncaYlOSWI4ZtFqY/t+BFKKIogi4v4YgV3vh4RkBVUdo7uXJCM1sbCY6oed/p0PoHkg
-         F6GA==
+        d=google.com; s=20221208; t=1685146424; x=1687738424;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ZX+3O8FScht0vPmOFufzj92trtq9QMFzIYaCLdQKLns=;
+        b=AirNbMnhntbS9xYWNYaxm6nDZkFpIaC7TenLdOjRkbmyJ0AAI406n/1V2fzdlhVfUy
+         Ft3PHD1zQMgm5KI+M/iXlNeTQ+fid7BjDj2saYzeRB3fncuDEcJWa5KbDSmGD5xBIXkQ
+         n89iiNq0kCSC1swDCNBTirmEz7hNyVCpNB8bktLLVNH5VR8/Qml9U6JY5Biz82Y6BxMl
+         5ciRrJWUhK3ciGCfYZrNlG9zXLKWAkdAIF0+AzDxY19U/SpT4mOyl/1nktsOlpAXZmo0
+         8lLj+JX5vOUBt11pOQSXOVE50QpvSeSBM3ECh18olhmRz8nCZq8Hxc4U8LUstK4i4R+3
+         bLDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685144181; x=1687736181;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=H8aHH4bwAIGi4TXqYQZBpRXn2xRLYPqkRwFmzcf8RQ0=;
-        b=SjKT5MgGCSjgTjSKF0uTHbfGh3SocFK/onb1oB7+3K+NqFDaW4jVRR1IwBgmrBr8s9
-         eoQH1ghwbPCJ45BTnndbH1WMH3HqqRMrxA+WMzyJhDYsgHtOLtyFDJSgoirpxw8ZCAAj
-         f4gSat0Dnmo1DB6i8S/gtGJIWU4ckm8csFePxTrG+Zxg8kF3mq66fMQSaMQ6NKvwCZi1
-         bHrIA0UqEvEu0jz5NL8g5PYKUIxIqkm/PnOPQyd7A6QPyKtip+vC+TeqqfmR4VYfSzZY
-         ZMYewk/H6UN5IPYa+gKViEUu0NbQo0ZaF6Fp42sk0ltC8fCtT4nRgk4qO/EdkejKIwTY
-         iU5g==
-X-Gm-Message-State: AC+VfDxQ4Wc8WMkV9Se7cVr4hlofYaAYz28ep7uPd+RlWtVx8EolAcFi
-        k67HiCzWtcSJAHhwTpLJ1c9ifV0OYRL0Qigz/cA=
-X-Google-Smtp-Source: ACHHUZ7IKzShJJud6IE5qi1orR9D9JjPUqaQtzqM51it7GaT9GyszcYoRVGVxRPY7Z8yv4xqM4X4RA==
-X-Received: by 2002:a05:6512:398b:b0:4f4:cb90:d2a0 with SMTP id j11-20020a056512398b00b004f4cb90d2a0mr137829lfu.22.1685144180796;
-        Fri, 26 May 2023 16:36:20 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id q26-20020ac24a7a000000b004ec83bc3e2dsm827243lfp.42.2023.05.26.16.36.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 May 2023 16:36:20 -0700 (PDT)
-Message-ID: <947e3212-f6ef-f00d-19c2-4f629af0e791@linaro.org>
-Date:   Sat, 27 May 2023 01:36:18 +0200
+        d=1e100.net; s=20221208; t=1685146424; x=1687738424;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ZX+3O8FScht0vPmOFufzj92trtq9QMFzIYaCLdQKLns=;
+        b=DTKHknCwe8L81fnH2EUz+FJHT03Zz/t/h/+0VHLrF74YNDcM9sfLzHWeGnmHsBeD3l
+         rYbIfKieWPDOJDp25bo2g2dMF52Hz043rWLNqx0j8fNcwgxVYfWoC4sQuzhmt/NJxHbb
+         VxpamX253nV9rHHcRIeEWKfO7JNRCgAPoghbwuo9h9Sj1bnpI+TOHTHatmsJu8Qn5N7B
+         3wXfX5TWIsoW34XoVfrRq3gE52yHpjMQ/S8xWAJAa6JNE8nfhnsxbqQCOcGc5vNGZ3x0
+         WAelxEZfo/jjGxIk8Nf6CNvMpfuGjWW1zaqJRsJX/gfi0F4G2PJ5hhROOrQP3MADb0ns
+         BCzw==
+X-Gm-Message-State: AC+VfDx1lFNpTVQ/qkaYGaV0ULFaSxKA1w3lEJJ6JBe7ixzmjACugAeV
+        dGTd5wn86mBshJH/xwXy9PdiEoJP30n/iopE+3pVrA==
+X-Google-Smtp-Source: ACHHUZ5crN1yuzxj1zz/kaUYin08SHjyJFP1zU6XVWZomEISK24zQprd2KboOIp1DhtBF0poc9lAlCV6z50I+pfIpBw=
+X-Received: by 2002:ac8:5f86:0:b0:3f6:97b4:1a4a with SMTP id
+ j6-20020ac85f86000000b003f697b41a4amr84333qta.20.1685146424179; Fri, 26 May
+ 2023 17:13:44 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Content-Language: en-US
-To:     Rudraksha Gupta <guptarud@gmail.com>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        soc@kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     david@ixit.cz, linux-arm-kernel@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230524230459.120681-1-guptarud@gmail.com>
- <20230524230459.120681-5-guptarud@gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH 5/5] ARM: Add Samsung Galaxy Express support
-In-Reply-To: <20230524230459.120681-5-guptarud@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+References: <20221227204528.1899863-1-abel.vesa@linaro.org>
+ <ebc257025ebd641e624ef506ea09c800.sboyd@kernel.org> <Y/OV3CF0ootyooDJ@linaro.org>
+ <Y/OfjbxI1tHYJHNv@linaro.org> <CAGETcx_mD3pbAmT5FDZaVAsKb_2PAnrHL8B_6gSR=+a0O4kHfQ@mail.gmail.com>
+ <Y/PALlrQpwPlum9M@linaro.org> <CAGETcx_TZN3=GKrEf5fy_tA=JnOfw7m-N=+hD=qhe_yRRpngPw@mail.gmail.com>
+ <ZFzmaavGYy4isU7J@linaro.org> <CAGETcx8_maXSCmQcU_UE499pwJRLY4E7yydWsxbU91==vgCoFw@mail.gmail.com>
+ <ZF4VY2ngPtg9Xytc@linaro.org>
+In-Reply-To: <ZF4VY2ngPtg9Xytc@linaro.org>
+From:   Saravana Kannan <saravanak@google.com>
+Date:   Fri, 26 May 2023 17:13:08 -0700
+Message-ID: <CAGETcx_Kkc_OST8LObdprea=N8P7RrssnP230MQpoBW5ajpaUw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/2] clk: Add generic sync_state callback for disabling
+ unused clocks
+To:     Abel Vesa <abel.vesa@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mike Turquette <mturquette@baylibre.com>,
+        linux-clk@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, mka@chromium.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-17.6 required=5.0 tests=BAYES_00,DKIMWL_WL_MED,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,
+        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,USER_IN_DEF_DKIM_WL,USER_IN_DEF_SPF_WL
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, May 12, 2023 at 3:31=E2=80=AFAM Abel Vesa <abel.vesa@linaro.org> wr=
+ote:
+>
+> On 23-05-11 17:46:16, Saravana Kannan wrote:
+> > On Thu, May 11, 2023 at 5:58=E2=80=AFAM Abel Vesa <abel.vesa@linaro.org=
+> wrote:
+> > >
+> > > On 23-02-21 11:58:24, Saravana Kannan wrote:
+> > > > On Mon, Feb 20, 2023 at 10:47 AM Abel Vesa <abel.vesa@linaro.org> w=
+rote:
+> > > > >
+> > > > > On 23-02-20 09:51:55, Saravana Kannan wrote:
+> > > > > > On Mon, Feb 20, 2023 at 8:28 AM Abel Vesa <abel.vesa@linaro.org=
+> wrote:
+> > > > > > >
+> > > > > > > On 23-02-20 17:46:36, Abel Vesa wrote:
+> > > > > > > > On 23-02-17 21:38:22, Stephen Boyd wrote:
+> > > > > > > > > Quoting Abel Vesa (2022-12-27 12:45:27)
+> > > > > > > > > > There are unused clocks that need to remain untouched b=
+y clk_disable_unused,
+> > > > > > > > > > and most likely could be disabled later on sync_state. =
+So provide a generic
+> > > > > > > > > > sync_state callback for the clock providers that regist=
+er such clocks.
+> > > > > > > > > > Then, use the same mechanism as clk_disable_unused from=
+ that generic
+> > > > > > > > > > callback, but pass the device to make sure only the clo=
+cks belonging to
+> > > > > > > > > > the current clock provider get disabled, if unused. Als=
+o, during the
+> > > > > > > > > > default clk_disable_unused, if the driver that register=
+ed the clock has
+> > > > > > > > > > the generic clk_sync_state_disable_unused callback set =
+for sync_state,
+> > > > > > > > > > skip disabling its clocks.
+> > > > > >
+> > > > > > Hi Abel,
+> > > > > >
+> > > > > > We have the day off today, so I'll respond more later. Also, pl=
+ease cc
+> > > > > > me on all sync_state() related patches in the future.
+> > > > > >
+> > > > >
+> > > > > Sure thing.
+> > > > >
+> > > > > > I haven't taken a close look at your series yet, but at a glanc=
+e it
+> > > > > > seems incomplete.
+> > > > > >
+> > > > > > Any reason you didn't just try to revive my series[1] or nudge =
+me?
+> > > > > > [1]- https://lore.kernel.org/lkml/20210407034456.516204-3-sarav=
+anak@google.com/
+> > > > >
+> > > > > This patchset is heavily reworked and much more simpler as it rel=
+ies
+> > > > > strictly on the sync_state being registered by the clock provider=
+.
+> > > >
+> > > > It's simpler because it's not complete. It for sure doesn't handle
+> > > > orphan-reparenting. It also doesn't make a lot of sense for only so=
+me
+> > > > clock providers registering for sync_state(). If CC-A is feeding a
+> > > > clock signal that's used as a root for clocks in CC-B, then what
+> > > > happens if only CC-B implements sync_state() but CC-A doesn't. The
+> > > > clocks from CC-B are still going to turn off when CC-A turns off it=
+s
+> > > > PLL before CC-B registers.
+> > >
+> > > I gave your patchset a try and it breaks the uart for qcom platforms.
+> > > That is because your patchset enables the clock on __clk_core_init an=
+d
+> > > does not take into account the fact that 'boot enabled' clocks should=
+ be
+> > > left untouched.
+> >
+> > Those are probably just hacks when we didn't have sync_state(). But
+> > sure, we can make sure existing drivers aren't broken if the flag is
+> > set.
+>
+> I probably didn't make myself clear enough here. ANY clock that is
+> enabled (HW-wise) before the kernel boots should remain AS IS, that is, n=
+o writing
+> the enable bit, no reparenting, and so on. This rule applies to the clock=
+ itself
+> and for all of its parents. This is because, for some clocks, writing the
+> enable bit might lead to glitches. UART is just one example. So, please, =
+do not
+> try enabling such clocks until the consumer driver does so.
+>
+> >
+> > > This also means the orphan-reparenting enabling should
+> > > be dropped as well.
+> >
+> > No, maybe for boot enabled clocks, but not for all clocks in general.
+> > You need this for sync_state() to work correctly for clocks left on at
+> > boot but "boot enabled" isn't set.
+>
+> I think you lost me here. What do you mean by 'this'? If you mean the
+> enabling of orphan clocks, then the rule above still applies. It
+> doesn't matter if the clock is an orphan one or not. It can be orphan
+> from linux point of view, but the actual parent (even if it is not
+> registered with the linux clock tree) might still be enabled. This means
+> the clock itself will be also enabled. And by enabling them when
+> registering, we can have glitches. Therefore, please, do not do this
+> either.
+>
+> The registering of a boot enabled clock should not change/override/touch
+> the current state of it in any way!
+>
+> Stephen, can you confirm this as well?
+>
+> >
+> > > As for the second part, related to providers that might not have a
+> > > registered sync_state(), your patchset sets the clock core generic
+> > > one. This is also wrong because it doesn't take into account the fact
+> > > that there might be providers that need to do their own stuff on
+> > > sync_state() and should do that by registering their own implementati=
+on
+> > > of it.
+> >
+> > Right, in which case, they can set theirs or they get the default one.
+>
+> I'm still not sure that defaulting to the clk_sync_state callback is a
+> good choice here. I have to think some more about what the impact is for
+> providers that do not have any sync_state callback registered currently.
+>
+> >
+> > > Therefore, I'll respin your patchset and use only the skipping of
+> > > disabling the unused clocks, but I'll drop all the enable on init and=
+ orphan
+> > > reparenting changes.
+> >
+> > I think it'll result in a broken patch.
+>
+> Yep, tried that and it doesn't work. What happened was that, because you
+> were enabling the 'boot enabled' clocks when registering them (on __clk_c=
+ore_init),
+> the disabling from the sync state needs to be without dropping the enable=
+/prepare
+> counts. This is why I think my patchset here is the best alternative he h=
+ave
+> currently, as it does exactly what it is supposed to do, namingly, to lea=
+ve
+> untouched the boot enabled clocks until sync state and then disabling
+> them with via clk_disable_unused_subtree which calls the disable and
+> unprepare ops without decrementing the prepare and enable counts.
+>
+> >
+> > Sorry, I've been a bit busy with some other work and I haven't been
+> > able to get to the clk_sync_state(). I'll try to rebase it soon and
+> > send it out too.
+>
+> Well, I already did that and I described above why that won't help.
 
+The biggest disconnect is that you seem to think boot enabled clocks
+should be untouched until sync_state() is called on them. But that's
+not a valid assumption. Boot enabled clocks can have multiple
+consumers and one of them might want to change the frequency before
+the other one probes. That's perfectly valid. In some cases, we might
+need to make sure the clock frequency doesn't go higher than the clock
+frequency at boot (we can make that a flag). Actually, even if there's
+only one consumer, that consumer might change the clock frequency at
+probe -- since sync_state() only comes after the probe(), we need to
+make sure we allow reparenting and frequency changes to boot enabled
+clocks before sync_state() is called.
 
-On 25.05.2023 01:04, Rudraksha Gupta wrote:
-> This adds a very basic device tree file for the Samsung Galaxy Express
-> SGH-I437. Currently, the following things work: UART, eMMC, SD Card, and
-> USB.
-> 
-> Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
-> ---
->  arch/arm/boot/dts/Makefile                    |   1 +
->  .../dts/qcom-msm8960-samsung-expressatt.dts   | 334 ++++++++++++++++++
->  2 files changed, 335 insertions(+)
->  create mode 100644 arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts
-> 
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index 59829fc90315..12c90f263142 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1081,6 +1081,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
->  	qcom-msm8916-samsung-grandmax.dtb \
->  	qcom-msm8916-samsung-serranove.dtb \
->  	qcom-msm8960-cdp.dtb \
-> +	qcom-msm8960-samsung-expressatt.dtb \
->  	qcom-msm8974-lge-nexus5-hammerhead.dtb \
->  	qcom-msm8974-sony-xperia-rhine-amami.dtb \
->  	qcom-msm8974-sony-xperia-rhine-honami.dtb \
-> diff --git a/arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts b/arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts
-> new file mode 100644
-> index 000000000000..2d6f0def0589
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts
-> @@ -0,0 +1,334 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +#include <dt-bindings/input/input.h>
-> +
-> +#include "qcom-msm8960.dtsi"
-> +#include <dt-bindings/reset/qcom,gcc-msm8960.h>
-> +
-> +/ {
-> +	model = "Samsung Galaxy S3 SGH-I437";
-Googling the model name, it seems to be officially sold as
-"Samsung Galaxy Express", without any mention of the S3 bit.
-Is that on purpose?
+Also, consider this example.
 
-> +	compatible = "samsung,expressatt", "qcom,msm8960";
-> +	chassis-type = "handset";
-> +
-> +	aliases {
-> +		serial0 = &gsbi5_serial;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +};
-> +
-> +&gsbi5 {
-> +	status = "okay";
-> +	qcom,mode = <GSBI_PROT_I2C_UART>;
-Please ensure status is the last property within each node
+PLL1 -> mux1 -> clock_gate1 -> consumer1.
+PLL1 -> mux2 -> clock_gate2 -> consumer2.
 
-> +};
-> +
-> +&gsbi5_serial {
-> +	status = "okay";
-> +};
-> +
-> +/* eMMC */
-> +&sdcc1 {
-You may want to add aliases for mmc hosts (check e.g.
-arch/arm64/boot/dts/qcom/sm6125-sony-xperia-seine-pdx201.dts)
+If I don't do orphan handling/reparenting like I do so in my patch,
+PLL1 could get turned off after consumer 1 probes depending on which
+clock controller each of those blocks are on.
 
-> +	status = "okay";
-> +	vmmc-supply = <&pm8921_l5>;
-> +};
-> +
-> +/* External micro SD card */
-> +&sdcc3 {
-> +	status = "okay";
-> +	vmmc-supply = <&pm8921_l6>;
-> +	vqmmc-supply = <&pm8921_l7>;
-> +};
-> +
-> +&gsbi1 {
-> +	status = "okay";
-> +	qcom,mode = <GSBI_PROT_SPI>;
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&spi1_default>;
-Please do
+I'm pretty sure I actually identified this issue when I wrote my patch
+by testing it on QC hardware. So this is not some "other" hardware
+issue. This actually affects QC hardware too. Maybe you haven't
+upstreamed all of your hardware drivers, but this is not some
+imaginary scenario.
 
-pinctrl-n
-pinctrl-names
+Your main problem seems to be that your hardware can't handle writing
+1 to the enable bit of a clock that's already on. If that's the case,
+protect against that inside your driver. I'm even okay with figuring
+out a way to try and support that at a framework level. But to say you
+don't need to reparenting or the orphan handling is definitely wrong.
 
-> +};
-> +
-> +&gsbi1_spi{
-Add a space between 'i' and '{'
-
-Konrad
-> +	status = "okay";
-> +};
-> +
-> +&msmgpio {
-> +	spi1_default: spi1_default {
-> +		mux {
-> +			pins = "gpio6", "gpio7", "gpio9";
-> +			function = "gsbi1";
-> +		};
-> +
-> +		mosi {
-> +			pins = "gpio6";
-> +			drive-strength = <12>;
-> +			bias-disable;
-> +		};
-> +
-> +		miso {
-> +			pins = "gpio7";
-> +			drive-strength = <12>;
-> +			bias-disable;
-> +		};
-> +
-> +		cs {
-> +			pins = "gpio8";
-> +			drive-strength = <12>;
-> +			bias-disable;
-> +			output-low;
-> +		};
-> +
-> +		clk {
-> +			pins = "gpio9";
-> +			drive-strength = <12>;
-> +			bias-disable;
-> +		};
-> +	};
-> +};
-> +
-> +
-> +&rpm {
-> +	regulators {
-> +		compatible = "qcom,rpm-pm8921-regulators";
-> +		vin_lvs1_3_6-supply = <&pm8921_s4>;
-> +		vin_lvs2-supply = <&pm8921_s4>;
-> +		vin_lvs4_5_7-supply = <&pm8921_s4>;
-> +		vdd_ncp-supply = <&pm8921_l6>;
-> +		vdd_l1_l2_l12_l18-supply = <&pm8921_s4>;
-> +		vdd_l21_l23_l29-supply = <&pm8921_s8>;
-> +		vdd_l24-supply = <&pm8921_s1>;
-> +		vdd_l25-supply = <&pm8921_s1>;
-> +		vdd_l27-supply = <&pm8921_s7>;
-> +		vdd_l28-supply = <&pm8921_s7>;
-> +
-> +		/* Buck SMPS */
-> +		pm8921_s1: s1 {
-> +			regulator-always-on;
-> +			regulator-min-microvolt = <1225000>;
-> +			regulator-max-microvolt = <1225000>;
-> +			qcom,switch-mode-frequency = <3200000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_s2: s2 {
-> +			regulator-min-microvolt = <1300000>;
-> +			regulator-max-microvolt = <1300000>;
-> +			qcom,switch-mode-frequency = <1600000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_s3: s3 {
-> +			regulator-min-microvolt = <500000>;
-> +			regulator-max-microvolt = <1150000>;
-> +			qcom,switch-mode-frequency = <4800000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_s4: s4 {
-> +			regulator-always-on;
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			qcom,switch-mode-frequency = <1600000>;
-> +			bias-pull-down;
-> +			qcom,force-mode = <QCOM_RPM_FORCE_MODE_AUTO>;
-> +		};
-> +
-> +		pm8921_s7: s7 {
-> +			regulator-min-microvolt = <1150000>;
-> +			regulator-max-microvolt = <1150000>;
-> +			qcom,switch-mode-frequency = <3200000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_s8: s8 {
-> +			regulator-always-on;
-> +			regulator-min-microvolt = <2050000>;
-> +			regulator-max-microvolt = <2050000>;
-> +			qcom,switch-mode-frequency = <1600000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		/* PMOS LDO */
-> +		pm8921_l1: l1 {
-> +			regulator-always-on;
-> +			regulator-min-microvolt = <1050000>;
-> +			regulator-max-microvolt = <1050000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l2: l2 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l3: l3 {
-> +			regulator-min-microvolt = <3075000>;
-> +			regulator-max-microvolt = <3300000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l4: l4 {
-> +			regulator-always-on;
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l5: l5 {
-> +			regulator-min-microvolt = <2950000>;
-> +			regulator-max-microvolt = <2950000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l6: l6 {
-> +			regulator-min-microvolt = <2950000>;
-> +			regulator-max-microvolt = <2950000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l7: l7 {
-> +			regulator-always-on;
-> +			regulator-min-microvolt = <1850000>;
-> +			regulator-max-microvolt = <2950000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l8: l8 {
-> +			regulator-min-microvolt = <3000000>;
-> +			regulator-max-microvolt = <3100000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l9: l9 {
-> +			regulator-min-microvolt = <2850000>;
-> +			regulator-max-microvolt = <2850000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l10: l10 {
-> +			regulator-min-microvolt = <3000000>;
-> +			regulator-max-microvolt = <3000000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l11: l11 {
-> +			regulator-min-microvolt = <2800000>;
-> +			regulator-max-microvolt = <3300000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l12: l12 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l14: l14 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l15: l15 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <2950000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l16: l16 {
-> +			regulator-min-microvolt = <2800000>;
-> +			regulator-max-microvolt = <3000000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l17: l17 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <3300000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l18: l18 {
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1500000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l21: l21 {
-> +			regulator-min-microvolt = <1900000>;
-> +			regulator-max-microvolt = <1900000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l22: l22 {
-> +			regulator-min-microvolt = <2750000>;
-> +			regulator-max-microvolt = <2750000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l23: l23 {
-> +			regulator-always-on;
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l24: l24 {
-> +			regulator-min-microvolt = <750000>;
-> +			regulator-max-microvolt = <1150000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_l25: l25 {
-> +			regulator-always-on;
-> +			regulator-min-microvolt = <1225000>;
-> +			regulator-max-microvolt = <1225000>;
-> +			bias-pull-down;
-> +		};
-> +
-> +		/* Low Voltage Switch */
-> +		pm8921_lvs1: lvs1 {
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_lvs2: lvs2 {
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_lvs3: lvs3 {
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_lvs4: lvs4 {
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_lvs5: lvs5 {
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_lvs6: lvs6 {
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_lvs7: lvs7 {
-> +			bias-pull-down;
-> +		};
-> +
-> +		pm8921_ncp: ncp {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			qcom,switch-mode-frequency = <1600000>;
-> +		};
-> +	};
-> +};
-> +
-> +&usb_hs1_phy {
-> +	v3p3-supply = <&pm8921_l3>;
-> +	v1p8-supply = <&pm8921_l4>;
-> +};
-> +
-> +&usb1 {
-> +	status = "okay";
-> +	dr_mode = "otg";
-> +};
-> +
+-Saravana
