@@ -2,131 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D77C071367F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 May 2023 23:05:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 396E271373E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 May 2023 02:10:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229452AbjE0VF3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 27 May 2023 17:05:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58736 "EHLO
+        id S229483AbjE1AKj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 27 May 2023 20:10:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229477AbjE0VFE (ORCPT
+        with ESMTP id S229445AbjE1AKi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 27 May 2023 17:05:04 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F9F5BC;
-        Sat, 27 May 2023 14:05:03 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 35798603F6;
-        Sat, 27 May 2023 21:05:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF29C433EF;
-        Sat, 27 May 2023 21:05:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685221502;
-        bh=pO4NwEQHJ6F7ZIjFw4Ym65Z1i7QKkvs9nTut+QbJV0A=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=RFB/48QllP9PKC6JBeIHhB8cfchqrGR7c4nAJ6tMi0BawiJRsjMHi/4JFYT3u/OOB
-         Mi45hGvJ7ztIYXYyVLXSXwxA9cMWrsdKnVRbsji+dSstDwYn/e112a3dy+M5bbEERO
-         bd+yD2fIc0vdw3iEEgBW66ACsLb7UahjLpt7i8zQIoqI5zeys2ZT7J0gXB5xbkmWh8
-         Z9vzq+qjt98cplsrW99OdpMAfVbShRlwVcs9JT+ieLqiMq8eUc1eJOOV7xTd5bL1bv
-         tCXrlHQPJISzUjJZVDWr6hDv4G9YcbykXjv7SkJ5yJtC+w7S08ePnqjmk/T9bnVkT/
-         P4fmSDWvQNjTA==
-Date:   Sat, 27 May 2023 14:08:49 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Sat, 27 May 2023 20:10:38 -0400
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF58EA8;
+        Sat, 27 May 2023 17:10:37 -0700 (PDT)
+Received: by mail-qt1-x82c.google.com with SMTP id d75a77b69052e-3f7a546efb1so11032271cf.2;
+        Sat, 27 May 2023 17:10:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685232636; x=1687824636;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lMCsGvkoxWSUFyaRQ4KyoqEeH9gxDpYDK1XiImU4CBA=;
+        b=r18LUXZbEyf295PSaklp4P9NGUmzPbTYzCAwdHwZtRNoSN4MoWP2YuVp0GrIvexMeR
+         0dvZK3/dzViFqtqSyIVKcS75h47Z0HTRdZULgLqHn2pijGNSXfYcVcXPL0hrV6LrRbm7
+         IX8y8whrqzZgXL+eL5zMEHBOGAGQtjUhnaRSRsbI9xAtH6fwP4sRU+lNPC64EJu6xyVN
+         EDKroP22n1mKX+NLw59ouc86TefbafTsydeKStJtYZOP8nCuX96jJIMZJft6AfGIcFcd
+         iOlQpbN0xsl0XMoaCYaseu5Hk9mHZgNMJPIabNvxynvvt+MYt2fjdaILPYyFh4JA3DMm
+         1phw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685232636; x=1687824636;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lMCsGvkoxWSUFyaRQ4KyoqEeH9gxDpYDK1XiImU4CBA=;
+        b=Bo7WLOQoSYEXQAivFGdTCmP7MLBwHYqasexNkDfiSmPU42HoQf4dPHC3U/okqRxJtO
+         iD6mQPE+y+crev5OO9K/4nuozRgzl2FKAhnAlDGNnlXOX3HEcLYFivNQBKQqGajeKxTd
+         ULVd6X10SAIzJrZ3j18th2IBoFc4T+JWRlp2+jmulhtTUxBt5o16OnzL+iTJW8KvpSw2
+         KwhPKc3ZYgBI9mn4dZZJvD6lhP+zFuc2pTIqzX7nCxGnM0IuHP+LySZnvAkGt1AgX9G9
+         CJagF8xuf5Wg1lfNWzz56Ir4YVQBHC5YQDUdj1wxCqGSH268xWGjBKik3y3mr8DLb2IV
+         aD5w==
+X-Gm-Message-State: AC+VfDwP50dyHrYPL4RMKEz+hldSGO9LOmJkv3bCjUCUfv1hNit9GKjv
+        yq3+pnj6Wex653yIhIpwRq9t546T7sf6MQ==
+X-Google-Smtp-Source: ACHHUZ7MIP/VcIjwshjdNl1IQZV0vU+2dA96XzmQnwrcz12nJc3u2smpOSknIIHBeMqz6BwKzt6pug==
+X-Received: by 2002:a05:622a:3d1:b0:3f2:f35:8e6f with SMTP id k17-20020a05622a03d100b003f20f358e6fmr6671214qtx.25.1685232636346;
+        Sat, 27 May 2023 17:10:36 -0700 (PDT)
+Received: from Latitude-E6420.mynetworksettings.com ([2600:4040:2007:9800:28b2:2867:6311:b7d0])
+        by smtp.gmail.com with ESMTPSA id t18-20020ac865d2000000b003f6a7ab1450sm2518454qto.30.2023.05.27.17.10.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 27 May 2023 17:10:35 -0700 (PDT)
+From:   Rudraksha Gupta <guptarud@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 04/10] nvmem: qfprom: Add support for secure reading
- on QDU1000/QRU1000
-Message-ID: <20230527210849.sd3ycp2pqyorpbpr@ripper>
-References: <20230512122134.24339-1-quic_kbajaj@quicinc.com>
- <20230512122134.24339-5-quic_kbajaj@quicinc.com>
- <68f9bee2-5a5b-2962-6c3d-e73ade371545@linaro.org>
- <CAA8EJppObh3h8sxB_f9SQy7EQ1Gfhe9EbzV=wsUbVNj9PtX=GA@mail.gmail.com>
- <257e11b5-29b5-78c6-882b-ec3bb64ee28b@quicinc.com>
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        Rudraksha Gupta <guptarud@gmail.com>
+Subject: [PATCH v2 0/4] Samsung Galaxy Express SGH-I437 Support
+Date:   Sat, 27 May 2023 20:10:05 -0400
+Message-Id: <20230528001010.47868-1-guptarud@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20230527040905.stmnoshkdqgiaex6@ripper>
+References: <20230527040905.stmnoshkdqgiaex6@ripper>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <257e11b5-29b5-78c6-882b-ec3bb64ee28b@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 15, 2023 at 02:02:11PM +0530, Komal Bajaj wrote:
-> 
-> 
-> On 5/12/2023 11:01 PM, Dmitry Baryshkov wrote:
-> > On Fri, 12 May 2023 at 20:01, Krzysztof Kozlowski
-> > <krzysztof.kozlowski@linaro.org> wrote:
-> > > On 12/05/2023 14:21, Komal Bajaj wrote:
-> > > > Add qfprom driver support for QDU1000/QRU1000 SOCs.
-> > > > 
-> > > > Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-> > > > ---
-> > > >   drivers/nvmem/qfprom.c | 5 +++++
-> > > >   1 file changed, 5 insertions(+)
-> > > > 
-> > > > diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
-> > > > index 20662e2d3732..12a7981a8a71 100644
-> > > > --- a/drivers/nvmem/qfprom.c
-> > > > +++ b/drivers/nvmem/qfprom.c
-> > > > @@ -109,6 +109,10 @@ struct qfprom_soc_compatible_data {
-> > > >        bool secure;
-> > > >   };
-> > > > 
-> > > > +static const struct qfprom_soc_compatible_data qdu1000_qfprom = {
-> > > > +     .secure = true
-> > > > +};
-> > > > +
-> > > >   static const struct nvmem_keepout sc7180_qfprom_keepout[] = {
-> > > >        {.start = 0x128, .end = 0x148},
-> > > >        {.start = 0x220, .end = 0x228}
-> > > > @@ -490,6 +494,7 @@ static int qfprom_probe(struct platform_device *pdev)
-> > > > 
-> > > >   static const struct of_device_id qfprom_of_match[] = {
-> > > >        { .compatible = "qcom,qfprom",},
-> > > > +     { .compatible = "qcom,qdu1000-qfprom", .data = &qdu1000_qfprom},
-> > > >        { .compatible = "qcom,sc7180-qfprom", .data = &sc7180_qfprom},
-> > > I have doubts that this is still compatible with qcom,qfprom. It uses
-> > > entirely different read method. That's why generic fallbacks are bad,
-> > > one more case to my growing list of awesome examples. :)
-> Okay, will do that.
-> > Yes, it looks like it should be 'qcom,qdu1000-qfprom",
-> > "qcom,scm-qfprom". And possibly a separate driver for scm-qfprom.
-> The only difference here is in read method, which can be controlled by a
-> single property,
-> do we really need to write a separate driver for just reading secure feature
-> register.
+This patch series adds support for the Samsung Galaxy Express SGH-I437.
+Currently the following things work on this phone: UART, eMMC, SD Card, and USB.
 
-I presume that if reads are hidden behind scm, then the most of the
-driver - which deals with writing to qfprom - isn't going to be at all
-applicable.
+version 2:
+- Combined patch 1 into patch 4, as the sleep_clk label is specifically needed for the USB node.
+- Reformatted the commit messages to align with the style used in other commit messages that modify the same files.
+- Included a cover letter to provide an overview of the patch series.
+- Slight refactoring of the device tree source (DTS) file.
 
-So, I actually think it would make sense to put that in a separate
-qfprom-scm driver, which handles the generic fallback of
-"qcom,qfprom-scm".
+Rudraksha Gupta (4):
+  dt-bindings: arm: qcom: Add Samsung Galaxy Express
+  dt-bindings: Add qcom,usb-hs-phy-msm8960
+  ARM: dts: qcom: msm8960: Add USB node
+  ARM: dts: qcom: Add Samsung Galaxy Express support
 
-Regards,
-Bjorn
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ .../bindings/phy/qcom,usb-hs-phy.yaml         |   1 +
+ arch/arm/boot/dts/Makefile                    |   1 +
+ .../dts/qcom-msm8960-samsung-expressatt.dts   | 334 ++++++++++++++++++
+ arch/arm/boot/dts/qcom-msm8960.dtsi           |  35 +-
+ 5 files changed, 371 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts
 
-> 
-> Thanks,
-> Komal
-> > 
-> > 
-> 
+-- 
+2.34.1
+
