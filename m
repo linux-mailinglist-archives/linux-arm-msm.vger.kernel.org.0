@@ -2,99 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 396997139AD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 May 2023 15:36:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D35D47139F8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 May 2023 16:17:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229617AbjE1Ngn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 28 May 2023 09:36:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55210 "EHLO
+        id S229563AbjE1ORl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 28 May 2023 10:17:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229459AbjE1Ngm (ORCPT
+        with ESMTP id S229489AbjE1ORk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 28 May 2023 09:36:42 -0400
-Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03FF4B2;
-        Sun, 28 May 2023 06:36:41 -0700 (PDT)
-Received: by mail-qv1-xf29.google.com with SMTP id 6a1803df08f44-6260a2522d9so10543436d6.3;
-        Sun, 28 May 2023 06:36:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685281000; x=1687873000;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2n/WoDLxYIs5byxeZJLkV/uF8fU1oTZ8WCiBG786KWU=;
-        b=Ri6l7Zx7Zq5TyRhM1oOvRL6b6/CiRhjnyFwXpUFCKl9dN82foHPdn49IeTDonA+M4z
-         9IyzYufFo5m2DJv3Xj6qB55Ixp6cH6iceqSFDts2NNo/GgqJT4SYB2LC1rzr03lezx2s
-         C3U+sIIucSQKaxVIG8u2Y4K1xD3M1LJNfYeoW+pDSQ+koTLc+npw7WV7YY0AO+ck4r6s
-         zyLg12MI9QNCwrtGnChOV6mHEh7KYrNa1CSQhF2Bo2W3zhtw5M3hRFz9LdPq4FZdzyny
-         k/5RpJ8/gTqGr/S+c/nOolxJemNP6Vytr8OsUy6axFIBjSiOzMDM56HcwsoqwNTMIfX3
-         4vmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685281000; x=1687873000;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2n/WoDLxYIs5byxeZJLkV/uF8fU1oTZ8WCiBG786KWU=;
-        b=I06tL+XGztLmQ1B9SSMLe+WDP/mk1I1YLKvAjZJIRJNLuc1JAFypXpi+lSo2Gzu28U
-         J8Gpk0gTHzi3EhNF1tC8Pph6PiTT4LpMru4HFD6irkSirk3ep6nhSFwWUWQ371EJN0XT
-         LSJ5PA66/juXR/7egK6CFKWddgLP+7jIYdiqN9M4p6BmxTSGqUEzYKRbH1HTnO31TGO+
-         sd+pY109si5de+DRw2xxGcK3rjEjGzwqOYQsHEkpYye9a4g+dQxpdFEgqtzfw6EefPdk
-         diW0Y6yZckDSmd0J1I47qhnAamaXkdc8dK3QQPdPnC5e/5BXvwQ9yWOZCKt7gbI9ryr1
-         9QCg==
-X-Gm-Message-State: AC+VfDyVr7C9nNMMNiL9Ei+UaHD/HPP+5mUFQrUZlANnEvAkrC+A3ByZ
-        TSqNodgzG5MHqxVVLQqS/RC04kSaHxBhoA==
-X-Google-Smtp-Source: ACHHUZ6XUZe6ez6PJp2Vl27vedty0Ud/1hhdxDFc5ChSTJOKCw/jzUz5Qav5ZBXkf80FRvXpjxUbeA==
-X-Received: by 2002:a05:6214:500c:b0:626:1589:68e4 with SMTP id jo12-20020a056214500c00b00626158968e4mr4422550qvb.43.1685280999942;
-        Sun, 28 May 2023 06:36:39 -0700 (PDT)
-Received: from ?IPV6:2600:4040:2007:9800:ffda:b634:1d9d:77a8? ([2600:4040:2007:9800:ffda:b634:1d9d:77a8])
-        by smtp.gmail.com with ESMTPSA id k15-20020ad4450f000000b006260e7361ebsm1661935qvu.1.2023.05.28.06.36.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 28 May 2023 06:36:39 -0700 (PDT)
-Message-ID: <ad7a6ee3-cabb-6f92-a595-8791801cfe97@gmail.com>
-Date:   Sun, 28 May 2023 09:36:37 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2 1/4] dt-bindings: arm: qcom: Add Samsung Galaxy Express
-To:     Conor Dooley <conor@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        soc@kernel.org, linux-arm-msm@vger.kernel.org,
+        Sun, 28 May 2023 10:17:40 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 519CFBD;
+        Sun, 28 May 2023 07:17:39 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CF0A760C3A;
+        Sun, 28 May 2023 14:17:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BDEBC433EF;
+        Sun, 28 May 2023 14:17:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685283458;
+        bh=ZcxgB136p3hk0as9toDTgLvODHgCQ2FC/7oQEioZVEw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=iqWnwVb7ITUvf0o83xC7036ivo76GCzphkD73YDylcbLT4wfEvTHDEFgc9diJMlmq
+         AnbVXAJQ9cruHK/Nai9PSeubS2eJWGPu2NCt3c5QovAT/fwMru9G1NvzDsuAKt/kRu
+         qFrCV0FtTgeFQH3tQStXX2XbLHgDOyRNrJ++lzX0+uMI28wN5QlgsTTWluLS8rq1Ou
+         rPnJrK46hSwSbqoVTyNVp2CjKZrw5Thjb1U8a3jn/MjgzR2WKev/Op0rxOMRCyWrEk
+         VxDJ0kK/tEn6uP2KgowdHKg1upox5/6hntpQxO48zUi7FDWQxuLc183qcsEVQRMVkv
+         vNGR+sXL8JCIA==
+Date:   Sun, 28 May 2023 19:47:13 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Devi Priya <quic_devipriy@quicinc.com>
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        lpieralisi@kernel.org, kw@linux.com, robh@kernel.org,
+        bhelgaas@google.com, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-arm-kernel@lists.infradead.org
-References: <20230527040905.stmnoshkdqgiaex6@ripper>
- <20230528001010.47868-2-guptarud@gmail.com>
- <20230528-decode-creasing-f5b3996163e5@spud>
-Content-Language: en-US
-From:   Rudraksha Gupta <guptarud@gmail.com>
-In-Reply-To: <20230528-decode-creasing-f5b3996163e5@spud>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        linux-clk@vger.kernel.org, quic_srichara@quicinc.com,
+        quic_sjaganat@quicinc.com, quic_kathirav@quicinc.com,
+        quic_arajkuma@quicinc.com, quic_anusha@quicinc.com,
+        quic_ipkumar@quicinc.com
+Subject: Re: [PATCH V4 3/6] dt-bindings: PCI: qcom: Add IPQ9574
+Message-ID: <20230528141713.GB2814@thinkpad>
+References: <20230519090219.15925-1-quic_devipriy@quicinc.com>
+ <20230519090219.15925-4-quic_devipriy@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230519090219.15925-4-quic_devipriy@quicinc.com>
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
- > Where did the "att" come from in the compatible. Is this some carrier 
-specific model of the phone?
+On Fri, May 19, 2023 at 02:32:16PM +0530, Devi Priya wrote:
+> Add bindings for PCIe hosts on IPQ9574 platform and allow
+> msi-parent property.
+> 
 
-This is the code name for the device. Since there are usually multiple 
-variants of a device, using the code name differentiates between those 
-variants. For example, if I left this as "samsung,express", it would be 
-unclear if I am referring to the GT-I8730 (code name: expresslte) or the 
-SGH-I437 model. This is typically done in postmarketOS: 
-https://wiki.postmarketos.org/wiki/Devices and XDA developers. I believe 
-it is a carrier specific model of the Samsung Galaxy Express.
+Why can't you use existing "msi-map" property instead of "msi-parent"?
 
+- Mani
+
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> ---
+>  Changes in V4:
+> 	- Dropped msi-parent from anyOf: as msi-parent and msi-map
+> 	  cannot coexist and added it specific to ipq9574
+> 
+>  .../devicetree/bindings/pci/qcom,pcie.yaml    | 48 +++++++++++++++++++
+>  1 file changed, 48 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> index 81971be4e554..af5c7a390df1 100644
+> --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> @@ -26,6 +26,7 @@ properties:
+>            - qcom,pcie-ipq8064-v2
+>            - qcom,pcie-ipq8074
+>            - qcom,pcie-ipq8074-gen3
+> +          - qcom,pcie-ipq9574
+>            - qcom,pcie-msm8996
+>            - qcom,pcie-qcs404
+>            - qcom,pcie-sa8540p
+> @@ -113,6 +114,8 @@ properties:
+>    power-domains:
+>      maxItems: 1
+>  
+> +  msi-parent: true
+> +
+>    perst-gpios:
+>      description: GPIO controlled connection to PERST# signal
+>      maxItems: 1
+> @@ -171,6 +174,7 @@ allOf:
+>              enum:
+>                - qcom,pcie-ipq6018
+>                - qcom,pcie-ipq8074-gen3
+> +              - qcom,pcie-ipq9574
+>      then:
+>        properties:
+>          reg:
+> @@ -382,6 +386,39 @@ allOf:
+>              - const: ahb # AHB Reset
+>              - const: axi_m_sticky # AXI Master Sticky reset
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,pcie-ipq9574
+> +    then:
+> +      properties:
+> +        clocks:
+> +          minItems: 6
+> +          maxItems: 6
+> +        clock-names:
+> +          items:
+> +            - const: ahb  # AHB clock
+> +            - const: aux  # Auxiliary clock
+> +            - const: axi_m # AXI Master clock
+> +            - const: axi_s # AXI Slave clock
+> +            - const: axi_bridge # AXI bridge clock
+> +            - const: rchng
+> +        resets:
+> +          minItems: 8
+> +          maxItems: 8
+> +        reset-names:
+> +          items:
+> +            - const: pipe # PIPE reset
+> +            - const: sticky # Core Sticky reset
+> +            - const: axi_s_sticky # AXI Slave Sticky reset
+> +            - const: axi_s # AXI Slave reset
+> +            - const: axi_m_sticky # AXI Master Sticky reset
+> +            - const: axi_m # AXI Master reset
+> +            - const: aux # AUX Reset
+> +            - const: ahb # AHB Reset
+> +
+>    - if:
+>        properties:
+>          compatible:
+> @@ -767,6 +804,7 @@ allOf:
+>                  - qcom,pcie-ipq8064v2
+>                  - qcom,pcie-ipq8074
+>                  - qcom,pcie-ipq8074-gen3
+> +                - qcom,pcie-ipq9574
+>                  - qcom,pcie-qcs404
+>      then:
+>        required:
+> @@ -862,6 +900,16 @@ allOf:
+>            items:
+>              - const: msi
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,pcie-ipq9574
+> +    then:
+> +      required:
+> +        - msi-parent
+> +
+>  unevaluatedProperties: false
+>  
+>  examples:
+> -- 
+> 2.17.1
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
