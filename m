@@ -2,242 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C580271498D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 14:35:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C078714999
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 14:47:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231659AbjE2MfU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 08:35:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52538 "EHLO
+        id S231503AbjE2MrS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 08:47:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231479AbjE2MfT (ORCPT
+        with ESMTP id S229636AbjE2MrR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 08:35:19 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F442114;
-        Mon, 29 May 2023 05:35:02 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id ffacd0b85a97d-307d58b3efbso1974136f8f.0;
-        Mon, 29 May 2023 05:35:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685363701; x=1687955701;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=pVPOX1ZSOyV9Mwnc15tpUCMgaKJSRSoaxmZiy7ixDwk=;
-        b=eS5BKpvvfKUXAVueSxHPOSIxgHU0GOC5Oiu+17YNYlIYpz3BHb1YcHVZv6Sv/VKytI
-         uDn3S+fGXUBWAEXey+flfTKtZnorejS/HhZKSfAhPGbcwIMXtNHBYoABYzrBrtDDnkos
-         61909pmvMy+Tslia++AcUID/T50Gswh28I7IQw0/RdL5asc5ApagPx5gy9mY+DwKKmky
-         LqMAnpiZt6vjoUiG8/XWIRyH+iodgTOIy0BGBwxl5leoAbfnmysy9EHCOaYrCv5c1RmW
-         SyBgR8ciNRm9fpEo1es0YhE35R8QIEiSV3KY3BJT1HV9CwKmncQE8d5LRyqFQDSFQL8E
-         rdpQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685363701; x=1687955701;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pVPOX1ZSOyV9Mwnc15tpUCMgaKJSRSoaxmZiy7ixDwk=;
-        b=R/AQ4v8SHjcB1xzmBZk8b2pcBF1ta1es7P6fUaQVdyj2qpRk/Yjo1+Ttx6tVD1+qz5
-         yk7sdIJQ16Zy8k7apKYYScQiVewC6ylQMMBSOHTJhKawmEtrRoBVN+BW3jVcHeYU5mmx
-         lpQyltgLAOu/VtnvaEjz6FnqqdcEp7KLBHwUcidUUwQcwUi1Nc6j8kLvb3fC61keKore
-         bw2YEHCvlKEW6zeIrGC9BANrtNLI2H6kKWMHXe96n5yVC8CS8DdEUH8sdg/qvUIhkWwD
-         WQEAmwVkjJMl8e9igfaUyassVtLVIP7RQxk6J6jtgqdhKGlIo0Amt9KmUIm+9UKTht6i
-         UqbQ==
-X-Gm-Message-State: AC+VfDx/E2B6+n4Mdohsv2cfRFkfsAtSWselcdVOJymg4Z/M0rSSR7qg
-        4u25WhJna61fUu6aZpdiYIw=
-X-Google-Smtp-Source: ACHHUZ7d73t2t9td6jGLO4CsnsAHDpAB78W9VG3Ttn7TlZwIVdRD+SON2kTvpbvY7QCuFM69kDMEnw==
-X-Received: by 2002:adf:df0b:0:b0:30a:ab38:3104 with SMTP id y11-20020adfdf0b000000b0030aab383104mr10392208wrl.34.1685363700415;
-        Mon, 29 May 2023 05:35:00 -0700 (PDT)
-Received: from Ansuel-xps. (93-34-93-173.ip49.fastwebnet.it. [93.34.93.173])
-        by smtp.gmail.com with ESMTPSA id e12-20020a5d500c000000b0030ae87bd3e3sm4485906wrt.18.2023.05.29.05.34.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 May 2023 05:35:00 -0700 (PDT)
-Message-ID: <64749bf4.5d0a0220.325c0.64b5@mx.google.com>
-X-Google-Original-Message-ID: <ZHSb8Q5iyGnYJvKH@Ansuel-xps.>
-Date:   Mon, 29 May 2023 14:34:57 +0200
-From:   Christian Marangi <ansuelsmth@gmail.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 2/3] clk: qcom: clk-rcg2: add support for rcg2 freq
- multi ops
-References: <20230427150717.20860-1-ansuelsmth@gmail.com>
- <20230427150717.20860-3-ansuelsmth@gmail.com>
- <82072c2b-8483-6fb6-a9d1-c9882825c9cb@linaro.org>
- <6473e34c.df0a0220.33a79.6c95@mx.google.com>
- <4afbcdd0-a11c-4826-d669-2ffc9488a8b6@linaro.org>
+        Mon, 29 May 2023 08:47:17 -0400
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.218])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4AC1C2;
+        Mon, 29 May 2023 05:47:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1685364423; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=fqiCkOScz2HzcLNBtqbQ7lIAugqiBn6iDk5K5uUE/lXRHcbo9AcQUNKziaECp28Pnt
+    OITpk3uVpfOj1RVjQlZAllke1kM+JB6/k6Lai1A4te0+92VmBMwM2ig0Cfui4liOdDvV
+    T/VZ+pA1qVO+wgl5wPFdCDqcLQ7Jfft7Lk8BpE2+imiS+rEtQBhi/e6Bq8FyvtOOieVx
+    9KCc4KaIFM1Vu7RWWGu92nn2YO6v0F8XQw6BaQMdlPFIw+4AJ8b5hxB0b9M9FQ9QuHmH
+    khEWmgsm9YZQQ12Ar7NyZq89Ozxgiqa8xQ2DOYkdHrotsXOfcNmZJg6mmjv/8HO/VaLy
+    VFUQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1685364423;
+    s=strato-dkim-0002; d=strato.com;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=FvNg423XJX5/5KqCCrdhSZUVHULUPO4gJXgiusIpNu4=;
+    b=ZvHl+Yek93MqLQctTs7D7RAoAIeGmwqzYkriuaQ3SsrMAKNuKEg8sG7g0VUojWV+VG
+    r2oAHbrVudD1ly1b5nFKwV3Lo0lfVGaZfYaNOJSdidIyXB6XJ1mw5rvbP2qNzXf3Z2+C
+    7YlvmWToO98jThgiq1zQQ+LhaWao8J5n2HXNaPi0pRIgFbk1Z+Sy+DvNXUw02SNRq8TS
+    XXYwipCt/bsDtziXlJ0OI23Amo5ROne3KQPW7/I+N3IPM1ucvTefsWK8NTgMquR2ZgKV
+    RQQxZvsv6h22aLlBtTMrFS+QrIfTRROYodQldiMv5tEuJ7VEklVv29MeKK0Ihkx4zxlV
+    sWRA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1685364423;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=FvNg423XJX5/5KqCCrdhSZUVHULUPO4gJXgiusIpNu4=;
+    b=Gg/7yNx9aiE1kYdn8uTKT98rXQy6Z/Mdd/B434GMxTBHLxfD9I+z40Tiz0PdbF+PEh
+    aUcCFd1bA/wRONviBT38HjBDuSXauB2rk9HwdwS3+xGkOJaVObGaqgTfmbEux/pPedRI
+    5Zx2SaAtIRWudEfXPRwy2nTV77qr/1JEgAK8o/iD5UVUH9pvLkRQLZFjaS7n+Lu4gYZX
+    YJv2sm6LFkZ2K1FqNaLwHJt44X6IFdICAZPu2f+ooPx7/NSbCNL85p9pd1EuumgQyRYS
+    X3gNW+8ww3K/9AO682DPpeQyFuUwqnhi1Kdpj7RGjbM2eJWi/CrEmlc6gfCtUglNE8i8
+    IDMA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1685364423;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=FvNg423XJX5/5KqCCrdhSZUVHULUPO4gJXgiusIpNu4=;
+    b=Jw6IA+oohFmOtOU9dc75sbYlF7+C4cHVVZQx2Bype2BLNiOMMolzGEvMI61pFNg0UT
+    qwoO1DGHaJ4VQ6yjGHDQ==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn9VOH8mT0="
+Received: from [192.168.244.3]
+    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
+    with ESMTPSA id j6420az4TCl3f8T
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 29 May 2023 14:47:03 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH 0/6] arm64: dts: qcom: msm8916/39: Clean up labels
+Date:   Mon, 29 May 2023 14:46:57 +0200
+Message-Id: <20230525-msm8916-labels-v1-0-bec0f5fb46fb@gerhold.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4afbcdd0-a11c-4826-d669-2ffc9488a8b6@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAMKedGQC/x2N0QqDMAwAf0XyvEDt7Nz2K7KHtEYN1CoNGwPx3
+ xf2eAfHHaBchRWezQGVP6KyFYP20kBaqMyMMhqDd/7qgg+46np/tDfMFDkreopTGDvXd4nBokj
+ KGCuVtFhW3jmb3CtP8v1fhtd5/gBddMRGdQAAAA==
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Stephan Gerhold <stephan@gerhold.net>
+X-Mailer: b4 0.12.2
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 29, 2023 at 02:12:23PM +0200, Konrad Dybcio wrote:
-> 
-> 
-> On 28.05.2023 14:37, Christian Marangi wrote:
-> > On Sat, May 27, 2023 at 06:11:16PM +0200, Konrad Dybcio wrote:
-> >>
-> >>
-> >> On 27.04.2023 17:07, Christian Marangi wrote:
-> >>> Some RCG frequency can be reached by multiple configuration.
-> >>>
-> >>> Add clk_rcg2_fm_ops ops to support these special RCG configurations.
-> >>>
-> >>> These alternative ops will select the frequency using a CEIL policy.
-> >>>
-> >>> When the correct frequency is found, the correct config is selected by
-> >>> calculating the final rate (by checking the defined parent and values
-> >>> in the config that is being checked) and deciding based on the one that
-> >>> is less different than the requested one.
-> >>>
-> >>> These check are skipped if there is just on config for the requested
-> >>> freq.
-> >>>
-> >>> qcom_find_freq_multi is added to search the freq with the new struct
-> >>> freq_multi_tbl.
-> >>> __clk_rcg2_select_conf is used to select the correct conf by simulating
-> >>> the final clock.
-> >>>
-> >>> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> >>> ---
-> >>>  drivers/clk/qcom/clk-rcg.h  |   1 +
-> >>>  drivers/clk/qcom/clk-rcg2.c | 152 ++++++++++++++++++++++++++++++++++++
-> >>>  drivers/clk/qcom/common.c   |  18 +++++
-> >>>  drivers/clk/qcom/common.h   |   2 +
-> >>>  4 files changed, 173 insertions(+)
-> >>>
-> >>> diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-> >>> index dc85b46b0d79..f8ec989ed3d9 100644
-> >>> --- a/drivers/clk/qcom/clk-rcg.h
-> >>> +++ b/drivers/clk/qcom/clk-rcg.h
-> >>> @@ -188,6 +188,7 @@ struct clk_rcg2_gfx3d {
-> >>>  
-> >>>  extern const struct clk_ops clk_rcg2_ops;
-> >>>  extern const struct clk_ops clk_rcg2_floor_ops;
-> >>> +extern const struct clk_ops clk_rcg2_fm_ops;
-> >>>  extern const struct clk_ops clk_rcg2_mux_closest_ops;
-> >>>  extern const struct clk_ops clk_edp_pixel_ops;
-> >>>  extern const struct clk_ops clk_byte_ops;
-> >>> diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-> >>> index 76551534f10d..4f2fe012ef5f 100644
-> >>> --- a/drivers/clk/qcom/clk-rcg2.c
-> >>> +++ b/drivers/clk/qcom/clk-rcg2.c
-> >>> @@ -266,6 +266,104 @@ static int _freq_tbl_determine_rate(struct clk_hw *hw, const struct freq_tbl *f,
-> >>>  	return 0;
-> >>>  }
-> >>>  
-> >>> +static const struct freq_conf *
-> >>> +__clk_rcg2_select_conf(struct clk_hw *hw, const struct freq_multi_tbl *f,
-> >>> +		       unsigned long req_rate)
-> >>> +{
-> >>> +	unsigned long best_rate = 0, parent_rate, rate;
-> >>> +	const struct freq_conf *conf, *best_conf;
-> >>> +	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-> >>> +	struct clk_hw *p;
-> >>> +	int index, i;
-> >>> +
-> >>> +	/* Exit early if only one config is defined */
-> >>> +	if (f->num_confs == 1)
-> >>> +		return f->confs;
-> >>> +
-> >>> +	/* Search in each provided config the one that is near the wanted rate */
-> >>> +	for (i = 0, conf = f->confs; i < f->num_confs; i++, conf++) {
-> >>> +		index = qcom_find_src_index(hw, rcg->parent_map, conf->src);
-> >>> +		if (index < 0)
-> >>> +			continue;
-> >>> +
-> >>> +		p = clk_hw_get_parent_by_index(hw, index);
-> >>> +		if (!p)
-> >>> +			continue;
-> >>> +
-> >>> +		parent_rate =  clk_hw_get_rate(p);
-> >>> +		rate = calc_rate(parent_rate, conf->n, conf->m, conf->n, conf->pre_div);
-> >>> +
-> >>> +		if (rate == req_rate) {
-> >>> +			best_conf = conf;
-> >>> +			break;
-> >>> +		}
-> >>> +
-> >>> +		if (abs(req_rate - rate) < abs(best_rate - rate)) {
-> >> Shouldn't this be:
-> >>
-> >> if (abs(req_rate - rate) < abs(best_rate - req_rate)
-> >>
-> >> ?
-> >>
-> >> this way it'd say
-> >>
-> >> "if this iteration's rate is closer to the requested one than the
-> >> best one we've found yet, it's better"
-> >>
-> > 
-> > Hi, thanks for the review!
-> > 
-> > I wonder if even better would be something where we save the best rate
-> > diff and just compare that.
-> > 
-> > rate_diff = abs(req_rate - rate)
-> > if (rate_diff < best_rate_diff) {
-> > 	best_rate_diff = rate_diff;
-> > 	best_conf = conf;
-> > }
-> > 
-> > And best_rate_diff init to ULONG_MAX?
-> Yeah that would be more readable!
-> 
-> > 
-> >>> +			best_rate = rate;
-> >>> +			best_conf = conf;
-> >>> +		}
-> >>> +	}
-> >>> +
-> >>> +	/*
-> >>> +	 * Very unlikely.
-> >>> +	 * Force the first conf if we can't find a correct config.
-> >>> +	 */
-> >>> +	if (unlikely(i == f->num_confs))
-> >>> +		best_conf = f->confs;
-> >> Is that a supported scenario or would it be a device driver / clock
-> >> driver error?
-> >>
-> > 
-> > It's to handle case for the 2 continue in the loop and arriving in a
-> > situation where best_conf was never set?
-> > 
-> > Should we return a warning and an ERR_PTR? Idea was to provide a best
-> > effort selection.
-> Hm.. I'm not sure what's the expected behavior here.. Stephen?
-> 
+MSM8916 and MSM8939 are very similar and almost fully "pin-compatible", 
+so there are some devices that exist in very similar variants with both 
+MSM8916 and MSM8939. To allow sharing definitions for such devices the 
+SoCs should be set up as similar as possible, e.g. using the same 
+labels. At least for me this will also simplify maintenance and review 
+because board DTs do not behave and/or look subtly different.
 
-I have this implementation rady, if you want I can send this revision
-and discuss that in v5 directly. It's WARN and returning -EINVAL.
+This series is the first part to clean up some old inconsistencies for 
+those SoCs to bring MSM8916 and MSM8939 closer together and also closer 
+to newer SoCs. The changes here are very minor and just focused on 
+labels. I'll have some more interesting changes (including fixes) later 
+but the series would have become too large.
 
-> > 
-> >>> +
-> >>> +	return best_conf;
-> >>> +}
-> >>> +
-> >>> +static int _freq_tbl_fm_determine_rate(struct clk_hw *hw, const struct freq_multi_tbl *f,
-> >>> +				       struct clk_rate_request *req)
-> >>> +{
-> >>> +	unsigned long clk_flags, rate = req->rate;
-> >>> +	const struct freq_conf *conf;
-> >>> +	struct clk_hw *p;
-> >>> +	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
-> >> swap lines 2, 3, 4 to 4, 2, 3 and you'll get a revers-Christmas-tree!
-> >>
-> > 
-> > Thanks, didn't notice this. Will do in v5.
-> > 
+There is no functional changes in any patch of this series.
 
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+Stephan Gerhold (6):
+      arm64: dts: qcom: msm8916: Rename &msmgpio -> &tlmm
+      arm64: dts: qcom: msm8916/39: Rename &blsp1_uartN -> &blsp_uartN
+      arm64: dts: qcom: msm8916/39: Use consistent name for I2C/SPI pinctrl
+      arm64: dts: qcom: msm8916/39: Clean up MDSS labels
+      arm64: dts: qcom: pm8916: Rename &wcd_codec -> &pm8916_codec
+      arm64: dts: qcom: msm8916: Move aliases to boards
+
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dts           |  72 +--
+ arch/arm64/boot/dts/qcom/apq8039-t2.dts            |  30 +-
+ arch/arm64/boot/dts/qcom/msm8916-acer-a1-724.dts   |  20 +-
+ .../boot/dts/qcom/msm8916-alcatel-idol347.dts      |  30 +-
+ arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts     |  26 +-
+ arch/arm64/boot/dts/qcom/msm8916-gplus-fl8005a.dts |  26 +-
+ arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dts     |  60 +--
+ .../boot/dts/qcom/msm8916-longcheer-l8150.dts      |  26 +-
+ .../boot/dts/qcom/msm8916-longcheer-l8910.dts      |  22 +-
+ arch/arm64/boot/dts/qcom/msm8916-mtp.dts           |   4 +-
+ arch/arm64/boot/dts/qcom/msm8916-pins.dtsi         |  58 +--
+ arch/arm64/boot/dts/qcom/msm8916-pm8916.dtsi       |  16 +-
+ .../dts/qcom/msm8916-samsung-a2015-common.dtsi     |  56 +-
+ .../boot/dts/qcom/msm8916-samsung-a3u-eur.dts      |  18 +-
+ .../boot/dts/qcom/msm8916-samsung-a5u-eur.dts      |   6 +-
+ .../dts/qcom/msm8916-samsung-e2015-common.dtsi     |   6 +-
+ .../boot/dts/qcom/msm8916-samsung-grandmax.dts     |   6 +-
+ .../boot/dts/qcom/msm8916-samsung-gt5-common.dtsi  |  20 +-
+ arch/arm64/boot/dts/qcom/msm8916-samsung-gt510.dts |  12 +-
+ arch/arm64/boot/dts/qcom/msm8916-samsung-gt58.dts  |   8 +-
+ .../boot/dts/qcom/msm8916-samsung-j5-common.dtsi   |  22 +-
+ .../boot/dts/qcom/msm8916-samsung-serranove.dts    |  48 +-
+ arch/arm64/boot/dts/qcom/msm8916-thwc-uf896.dts    |   8 +-
+ arch/arm64/boot/dts/qcom/msm8916-thwc-ufi001c.dts  |  10 +-
+ arch/arm64/boot/dts/qcom/msm8916-ufi.dtsi          |   9 +-
+ .../boot/dts/qcom/msm8916-wingtech-wt88047.dts     |  22 +-
+ .../arm64/boot/dts/qcom/msm8916-yiming-uz801v3.dts |   8 +-
+ arch/arm64/boot/dts/qcom/msm8916.dtsi              |  95 ++--
+ arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi       |  10 +-
+ .../dts/qcom/msm8939-sony-xperia-kanuti-tulip.dts  |   2 +-
+ arch/arm64/boot/dts/qcom/msm8939.dtsi              | 570 ++++++++++-----------
+ arch/arm64/boot/dts/qcom/pm8916.dtsi               |   2 +-
+ 32 files changed, 675 insertions(+), 653 deletions(-)
+---
+base-commit: 048ca08c07e7be8b8df79af2d49a621fc69f7c3b
+change-id: 20230525-msm8916-labels-2abf5d4074ce
+
+Best regards,
 -- 
-	Ansuel
+Stephan Gerhold <stephan@gerhold.net>
+
