@@ -2,60 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF9767150D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 23:11:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A3FCB7150E0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 23:12:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229513AbjE2VLZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 17:11:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58480 "EHLO
+        id S229559AbjE2VMs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 17:12:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbjE2VLY (ORCPT
+        with ESMTP id S229567AbjE2VMr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 17:11:24 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F604C7;
-        Mon, 29 May 2023 14:11:23 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Mon, 29 May 2023 17:12:47 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF420CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 14:12:45 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 65D193EBA6;
-        Mon, 29 May 2023 23:11:21 +0200 (CEST)
-Date:   Mon, 29 May 2023 23:11:20 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Neil Armstrong <neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Caleb Connolly <caleb@connolly.tech>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7BBA56283B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 21:12:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588FCC433D2;
+        Mon, 29 May 2023 21:12:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685394764;
+        bh=V9Uy9QyvxrxjT3ieh9GMUe7WiVs9FXgRrlL/rmhLfAs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=eH1Sbrfni3PKJDhmLnkrHraoBW2TFL/7zHBHA8ws12SQ19coXQNY030DCb8vcaWL2
+         bJBNIzB3o4Atq8EsD75Sgc39ahow5/R6aDLkWjPHL0LgCOswpHAdC8TNEW3Wb7j4lQ
+         BFIIJeRvXDrERc4Z7KFQNQ/IeH5hEcBTXBeSWjdOMD2dQ4kHbpTAvVrmPe8p+Nsahn
+         obeZqVap9cZ59TVEIzwluAv6UjVcMBebeYrxZaDrlIZnaXh0EzwOMSVoCwWI9xW60+
+         UuS8PDXqdDuI3/OW7fawj1JF84RIbbMFrt0imzdgRTRMQG+lg2X/9ynHSYGJ/ZObtG
+         k3aAG3uH6fukQ==
+Date:   Mon, 29 May 2023 14:16:29 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Adrien Thierry <athierry@redhat.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-Subject: Re: [PATCH RFC 03/10] drm/panel: Add LGD panel driver for Sony
- Xperia XZ3
-Message-ID: <brmrqeajbq3oyp3jjwmc6tuhiftz764u6az444xw6g7pwf5fr3@5tlp375qwhed>
-References: <20230521-drm-panels-sony-v1-0-541c341d6bee@somainline.org>
- <20230521-drm-panels-sony-v1-3-541c341d6bee@somainline.org>
- <ccc97880-8e74-b85b-9679-9c12c44c4b99@linaro.org>
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH RFC 1/2] phy: qcom-snps-femto-v2: properly enable ref
+ clock
+Message-ID: <20230529211629.7sw542tyyygv4tcs@ripper>
+References: <20230529185638.32376-1-athierry@redhat.com>
+ <20230529185638.32376-2-athierry@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ccc97880-8e74-b85b-9679-9c12c44c4b99@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+In-Reply-To: <20230529185638.32376-2-athierry@redhat.com>
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -64,74 +59,105 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-22 04:16:20, Dmitry Baryshkov wrote:
-<snip>
-> > +	if (ctx->dsi->dsc) {
+On Mon, May 29, 2023 at 02:56:36PM -0400, Adrien Thierry wrote:
+> The driver is not enabling the ref clock, which thus gets disabled by
+> the clk_disable_unused initcall. This leads to the dwc3 controller
+> failing to initialize if probed after clk_disable_unused is called, for
+> instance when the driver is built as a module.
 > 
-> dsi->dsc is always set, thus this condition can be dropped.
 
-I want to leave room for possibly running the panel without DSC (at a
-lower resolution/refresh rate, or at higher power consumption if there
-is enough BW) by not assigning the pointer, if we get access to panel
-documentation: probably one of the magic commands sent in this driver
-controls it but we don't know which.
+Good catch!
 
-> > +		drm_dsc_pps_payload_pack(&pps, ctx->dsi->dsc);
-> > +
-> > +		ret = mipi_dsi_picture_parameter_set(ctx->dsi, &pps);
-> > +		if (ret < 0) {
-> > +			dev_err(panel->dev, "failed to transmit PPS: %d\n", ret);
-> > +			goto fail;
-> > +		}
-> > +		ret = mipi_dsi_compression_mode(ctx->dsi, true);
-> > +		if (ret < 0) {
-> > +			dev_err(dev, "failed to enable compression mode: %d\n", ret);
-> > +			goto fail;
-> > +		}
-> > +
-> > +		msleep(28);
-> > +	}
-> > +
-> > +	ctx->prepared = true;
-> > +	return 0;
-> > +
-> > +fail:
-> > +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-> > +	regulator_disable(ctx->vddio);
-> > +	return ret;
-> > +}
-<snip>
-> > +	/* This panel only supports DSC; unconditionally enable it */
+A side note though, clk_disable_unused() has no way to take kernel
+modules into consideration today, and it doesn't handle the case where
+clock drivers are built as modules appropriately.
+Work has started to address this, but as of todaybooting the system
+without clk_ignore_unused is not recommended...
 
-On that note I should perhaps reword this.
-
-> > +	dsi->dsc = dsc = devm_kzalloc(&dsi->dev, sizeof(*dsc), GFP_KERNEL);
+> To fix this, add calls to clk_prepare_enable/clk_disable_unprepare at
+> the proper places.
 > 
-> I think double assignments are frowned upon.
 
-Ack.
+If I parse the downstream kernel correctly the refclock should be
+turned off across runtime and system suspend as well.
 
+Regards,
+Bjorn
+
+> Signed-off-by: Adrien Thierry <athierry@redhat.com>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 20 +++++++++++++++++--
+>  1 file changed, 18 insertions(+), 2 deletions(-)
 > 
-> > +	if (!dsc)
-> > +		return -ENOMEM;
-> > +
-> > +	dsc->dsc_version_major = 1;
-> > +	dsc->dsc_version_minor = 1;
-> > +
-> > +	dsc->slice_height = 32;
-> > +	dsc->slice_count = 2;
-> > +	// TODO: Get hdisplay from the mode
+> diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> index 6c237f3cc66d..8abf482e81a8 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> @@ -166,6 +166,7 @@ static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
+>  	}
+>  
+>  	clk_disable_unprepare(hsphy->cfg_ahb_clk);
+> +	clk_disable_unprepare(hsphy->ref_clk);
+>  	return 0;
+>  }
+>  
+> @@ -181,6 +182,12 @@ static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
+>  		return ret;
+>  	}
+>  
+> +	ret = clk_prepare_enable(hsphy->ref_clk);
+> +	if (ret) {
+> +		dev_err(&hsphy->phy->dev, "failed to enable ref clock\n");
+> +		return ret;
+> +	}
+> +
+>  	return 0;
+>  }
+>  
+> @@ -380,10 +387,16 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+>  		goto poweroff_phy;
+>  	}
+>  
+> +	ret = clk_prepare_enable(hsphy->ref_clk);
+> +	if (ret) {
+> +		dev_err(&phy->dev, "failed to enable ref clock, %d\n", ret);
+> +		goto disable_ahb_clk;
+> +	}
+> +
+>  	ret = reset_control_assert(hsphy->phy_reset);
+>  	if (ret) {
+>  		dev_err(&phy->dev, "failed to assert phy_reset, %d\n", ret);
+> -		goto disable_ahb_clk;
+> +		goto disable_ref_clk;
+>  	}
+>  
+>  	usleep_range(100, 150);
+> @@ -391,7 +404,7 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+>  	ret = reset_control_deassert(hsphy->phy_reset);
+>  	if (ret) {
+>  		dev_err(&phy->dev, "failed to de-assert phy_reset, %d\n", ret);
+> -		goto disable_ahb_clk;
+> +		goto disable_ref_clk;
+>  	}
+>  
+>  	qcom_snps_hsphy_write_mask(hsphy->base, USB2_PHY_USB_PHY_CFG0,
+> @@ -448,6 +461,8 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+>  
+>  	return 0;
+>  
+> +disable_ref_clk:
+> +	clk_disable_unprepare(hsphy->ref_clk);
+>  disable_ahb_clk:
+>  	clk_disable_unprepare(hsphy->cfg_ahb_clk);
+>  poweroff_phy:
+> @@ -462,6 +477,7 @@ static int qcom_snps_hsphy_exit(struct phy *phy)
+>  
+>  	reset_control_assert(hsphy->phy_reset);
+>  	clk_disable_unprepare(hsphy->cfg_ahb_clk);
+> +	clk_disable_unprepare(hsphy->ref_clk);
+>  	regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
+>  	hsphy->phy_initialized = false;
+>  
+> -- 
+> 2.40.1
 > 
-> Would you like to fix the TODO?
-
-I can't unless either migrating to drm_bridge (is that doable?) or
-expand drm_panel.  That's a larger task, but I don't think this driver
-is the right place to track that desire.  Should I drop the comment
-entirely or reword it?
-
-> > +	WARN_ON(1440 % dsc->slice_count);
-> > +	dsc->slice_width = 1440 / dsc->slice_count;
-
-<snip>
-
-- Marijn
