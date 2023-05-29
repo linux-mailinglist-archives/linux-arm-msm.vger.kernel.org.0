@@ -2,143 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC218714BC6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 16:11:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6985E714C9E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 17:01:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229893AbjE2OLh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 10:11:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53110 "EHLO
+        id S229668AbjE2PBH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 11:01:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229807AbjE2OLg (ORCPT
+        with ESMTP id S229478AbjE2PBF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 10:11:36 -0400
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CCA4B1;
-        Mon, 29 May 2023 07:11:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1685369467; x=1716905467;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=9TesWThXpKxD87Td7aD1y10ImSaXLOK76jjih9rvQ4o=;
-  b=RiSf3vqt9n3RM7rQm982wWrO3ee5Lt8yqxijk+MRdWWGgx8HyV28mtG1
-   5HU37OyKpuJvNO3JjjmFynOTiTxL+cDzLfRKbsnwZWKzsYIheoi7knro+
-   qMLEpjfzr50ln7FU4cpRqm5+o/XOD9+oGj78khYsnYjiCBBgZD4jQw7US
-   DEj+u3GK3aM7bdpN4Q7Gu8cuRdm6jjUZskdUJY7OtlZaQzqOA+c7F/vU1
-   uN/eOMWnYc+iX2CAgd2ARrZtLl2IQAFI8NNniUSAMmW8lZnn76oHK0G/J
-   Imof9iTC1PR7Yu4rTfGDL4JIgFJCwOVj5AcVuQRQY/LK2p2HgU0bujB0s
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10725"; a="352216825"
-X-IronPort-AV: E=Sophos;i="6.00,201,1681196400"; 
-   d="scan'208";a="352216825"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 May 2023 07:10:53 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10725"; a="952774560"
-X-IronPort-AV: E=Sophos;i="6.00,201,1681196400"; 
-   d="scan'208";a="952774560"
-Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.251.208.110])
-  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 May 2023 07:10:50 -0700
-Message-ID: <7982aae5-ac38-03df-aa0a-165c3c3f7764@intel.com>
-Date:   Mon, 29 May 2023 17:10:45 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.11.0
-Subject: Re: [PATCH] mmc: sdhci-msm: Disable broken 64-bit DMA on MSM8916
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Ulf Hansson <ulf.hansson@linaro.org>
+        Mon, 29 May 2023 11:01:05 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52244CF;
+        Mon, 29 May 2023 08:01:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1685372461; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=TeSUgNsviWgTVrVSnU40bV5R/cHXanV8tma+FMDWJlFy/71IT2GJbWPRagVA4NQwNA
+    U2ar3rZ7ByCtIUJkxe2g8RJg+1NkKwDZb9zlDLzD/rtxWbDcjKl7wBv0GmgRSmTUVj0I
+    /jHTpsVYX8ONHGRP37yAzCHcdyl9ng99+91LOMHZjDiDG9/YfN4foHPPfMhIqF+ypujT
+    x3nbqf6l+Ki8oZ5Vvw7DVnvD5dmV/pB0Y6YvdH0lNOL1wBBSes9rPOgOUALT9/UiJz/5
+    hvAY0A+f11uYKGAL2NyCHm/I+sym7A9r40w1TBSJsdgUAghRMsVpzlTAlHoZAo1PyWei
+    OQcg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1685372461;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=+wzkjf8akFN6Ea02ez3eZdGqus6ezvmNm9bS8kdiMx8=;
+    b=XTcMGJnBfgpSQgRe+XfoonK10OwsghMyvsYOJehUEpTz1q+Gv1mSvJioo1Bed9TrPK
+    4fQL+mbQZ+NlfAF1vjU1YSq9BVqfbK8xps6fAeghVR0N9cfl5VeZ89qwI1sAR17c+EXX
+    QBVMBfuiQRw0meo2K0+erwamfhVvzcQtt60eVpUZASJzUM/PHER6BOg4btEFX1gaRE6b
+    mRodUGiXgkl7hZLU/WkolSji0cloSdx5b7DLJ0nZSQEssviIP8wnNumvW4nv96/qS9ao
+    TEf132f8ToXwGdht9NEoxGPfZDBVY0Ctq8eNbAm6jvW2MsEtccsxkYGpt7oktyTKtgzi
+    9UHg==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1685372461;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=+wzkjf8akFN6Ea02ez3eZdGqus6ezvmNm9bS8kdiMx8=;
+    b=gusDTWrkNZ8aDk1NpbmhIdjLnDMM4zvSOq02AZuzseqzID870u/wLJzaUBqT3ZHxYx
+    cmxOdbLEatwg1zCgdpzpKuaxWrQTvsTvGUpxEdD7W5euRhkVfTtaGeQWNmaGS8XMmTf2
+    A17eJGic66xwvwdirNxM8XiErxqah7DGpqyFVvGlAgpwBustTBUtRK6+LwCdpl8rGLNL
+    83VqVjLk32/jDinCtv3wE5kLAbdxA2n+a3WK1nvS2IVQtfJ+u9fNDZl7hWSTu3iR/MDL
+    dNov97kaMNqnUBrySFZQ0W3yuZ2A3A8nFnJI+JY9mAmFUtljs158UUjxoZS/i+uwnnah
+    y1hw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1685372461;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=+wzkjf8akFN6Ea02ez3eZdGqus6ezvmNm9bS8kdiMx8=;
+    b=MWRN6KEIuGY+fuwWaRj5s1FHHvee/GDJ55nXozFI/eWsP1n3neRqT0nk/vabIjbQs9
+    IaefzQIO4D/sNjM90oBA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8pqP1A=="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
+    with ESMTPSA id j6420az4TF10fFG
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 29 May 2023 17:01:00 +0200 (CEST)
+Date:   Mon, 29 May 2023 17:00:54 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230518-msm8916-64bit-v1-1-5694b0f35211@gerhold.net>
-From:   Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-In-Reply-To: <20230518-msm8916-64bit-v1-1-5694b0f35211@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 4/6] arm64: dts: qcom: msm8916/39: Clean up MDSS labels
+Message-ID: <ZHS-HSgaBxMXiKy9@gerhold.net>
+References: <20230525-msm8916-labels-v1-0-bec0f5fb46fb@gerhold.net>
+ <20230525-msm8916-labels-v1-4-bec0f5fb46fb@gerhold.net>
+ <6f1954e6-e98d-6911-8721-c50082bfb1d7@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6f1954e6-e98d-6911-8721-c50082bfb1d7@linaro.org>
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 18/05/23 12:39, Stephan Gerhold wrote:
-> While SDHCI claims to support 64-bit DMA on MSM8916 it does not seem to
-> be properly functional. It is not immediately obvious because SDHCI is
-> usually used with IOMMU bypassed on this SoC, and all physical memory
-> has 32-bit addresses. But when trying to enable the IOMMU it quickly
-> fails with an error such as the following:
+On Mon, May 29, 2023 at 02:33:43PM +0100, Bryan O'Donoghue wrote:
+> On 29/05/2023 13:47, Stephan Gerhold wrote:
+> > Right now MDSS related definitions cannot be properly grouped together
+> > in board DTs because the labels do not use consistent prefixes. The DSI
+> > PHY label is particularly weird because the DSI number is at the end
+> > (&dsi_phy0) while DSI itself is called &dsi0.
+> > 
+> > Follow the example of more recent SoCs and give all the MDSS related
+> > nodes a consistent label that allows proper grouping.
+> > 
+> > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> > ---
 > 
->   arm-smmu 1e00000.iommu: Unhandled context fault:
->     fsr=0x402, iova=0xfffff200, fsynr=0xe0000, cbfrsynra=0x140, cb=3
->   mmc1: ADMA error: 0x02000000
->   mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
->   mmc1: sdhci: Sys addr:  0x00000000 | Version:  0x00002e02
->   mmc1: sdhci: Blk size:  0x00000008 | Blk cnt:  0x00000000
->   mmc1: sdhci: Argument:  0x00000000 | Trn mode: 0x00000013
->   mmc1: sdhci: Present:   0x03f80206 | Host ctl: 0x00000019
->   mmc1: sdhci: Power:     0x0000000f | Blk gap:  0x00000000
->   mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
->   mmc1: sdhci: Timeout:   0x0000000a | Int stat: 0x00000001
->   mmc1: sdhci: Int enab:  0x03ff900b | Sig enab: 0x03ff100b
->   mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
->   mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x00008007
->   mmc1: sdhci: Cmd:       0x0000333a | Max curr: 0x00000000
->   mmc1: sdhci: Resp[0]:   0x00000920 | Resp[1]:  0x5b590000
->   mmc1: sdhci: Resp[2]:   0xe6487f80 | Resp[3]:  0x0a404094
->   mmc1: sdhci: Host ctl2: 0x00000008
->   mmc1: sdhci: ADMA Err:  0x00000001 | ADMA Ptr: 0x0000000ffffff224
->   mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
->   mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:  0x60006400 | DLL cfg2: 0x00000000
->   mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:  0x00000000 | DDR cfg: 0x00000000
->   mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88018a8 Vndr func3: 0x00000000
->   mmc1: sdhci: ============================================
->   mmc1: sdhci: fffffffff200: DMA 0x0000ffffffffe100, LEN 0x0008, Attr=0x21
->   mmc1: sdhci: fffffffff20c: DMA 0x0000000000000000, LEN 0x0000, Attr=0x03
+> You should probably churn the yaml that goes with this..
 > 
-> Looking closely it's obvious that only the 32-bit part of the address
-> (0xfffff200) arrives at the SMMU, the higher 16-bit (0xffff...) get
-> lost somewhere. This might not be a limitation of the SDHCI itself but
-> perhaps the bus/interconnect it is connected to, or even the connection
-> to the SMMU.
-> 
-> Work around this by setting SDHCI_QUIRK2_BROKEN_64_BIT_DMA to avoid
-> using 64-bit addresses.
-> 
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Do you mean update the examples in the yaml bindings or what exactly?
 
-> ---
->  drivers/mmc/host/sdhci-msm.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 8ac81d57a3df..1877d583fe8c 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -2479,6 +2479,9 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
->  		msm_host->ddr_config = DDR_CONFIG_POR_VAL;
->  
->  	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
-> +
-> +	if (of_device_is_compatible(node, "qcom,msm8916-sdhci"))
-> +		host->quirks2 |= SDHCI_QUIRK2_BROKEN_64_BIT_DMA;
->  }
->  
->  static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
-> 
-> ---
-> base-commit: d4ebc9419afbac330e9ec0d2936108742aa4d97a
-> change-id: 20230518-msm8916-64bit-f5bcf6af7679
-> 
-> Best regards,
+Will take a look at those in a separate change (DT bindings don't make
+any definitions about labels so it's not strictly related). From a quick
+look it even seems like the labels are even omitted mostly in the
+bindings.
 
+Thanks,
+Stephan
