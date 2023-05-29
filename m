@@ -2,77 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6610771459D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 09:39:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6056D7145A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 09:41:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229965AbjE2HjI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 03:39:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52984 "EHLO
+        id S231454AbjE2Hld (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 03:41:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54108 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231462AbjE2HjG (ORCPT
+        with ESMTP id S231490AbjE2HlZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 03:39:06 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B620B5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 00:39:03 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b03d3e41fcso46356581fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 00:39:03 -0700 (PDT)
+        Mon, 29 May 2023 03:41:25 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E5D1137
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 00:41:10 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f3b4ed6fdeso3082890e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 00:41:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685345941; x=1687937941;
+        d=linaro.org; s=google; t=1685346068; x=1687938068;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=SpH/Pgux5rwtcIdbQOV9XKyxpsWVxD0ZXxTFqL76jjk=;
-        b=LUnsud8VKpKUxaO4d1DVvsDRTAhqrm9es4GoH3FEdssH6zyza2TZC01yC0qQJ4MpMS
-         UBqJNVhnx2l75IodWZ2EAvXEhAyGlxkT09LZ24mdvo1Q/yEZneEavPnjf4rfZfKtSfa3
-         SPPJaCF+Gg+GcGkGpPuBZSrVcBhiW+6EzrGoedqQo2MhYF+xrUvRP0yLE52UOVPF+UJP
-         gv/z8QWFTTt5Px6gfRPixk2NDw/8CBz++vAUKV+VGJYqugKHu/Bt5+v1/7STtZKPn7f0
-         4qrua549QfwfW/NgGD7nHXK1TTaFgt6LEsdvWJejec0zChEk3jSUDagVLJ4pV9U1HPuQ
-         JThQ==
+        bh=zIyR1lHJkA+sNFp9J1o6uPmPADLzeJ2t6TMfApH2cO0=;
+        b=G4I84p/8BXGAdQhmvw9H0kqEpMVZkOZUBt1/JCz/TZyyBkJgH/IVNGlt15swfM6pMU
+         +Fz3vw2l93bpO61w3Y+E990mCaxZK0f3QXKYGJNdO1bjSIkEotzDCWZNwoa2rOVGuUNO
+         EHDv7+aXWMsQyIRxe0nJszhH+zeykKrEwcn7YFUZFi3YDUVX/u46i0vk4t/34hJAfAEb
+         Q6Jw/uXk9OfQkm9iNVpZfH/o+jKj+73h8eIwawuDVl9h/ElsGaqsxjDs1rrezm6RP+4j
+         7FcFeOdfk+CUI/2xH+tFurLaTKS9UsTdVahpKofk0V8vY8sSEDvdS9zcOzkZO9vLPANZ
+         cc0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685345941; x=1687937941;
+        d=1e100.net; s=20221208; t=1685346068; x=1687938068;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SpH/Pgux5rwtcIdbQOV9XKyxpsWVxD0ZXxTFqL76jjk=;
-        b=lRcZBHBoVdE9Hypc3lqzsIHLf2wTD2JeygoVGmPlFBC8cO2Psv6ucjg3T+U5fJHpHX
-         iI9oJ4fdLgYi/UCkBgywN7gMLeTITyKm+52Hv327CyvnS2PY3QUf4jTLMTfVJM/unyvi
-         LfbDdCvvUKookGgW/gH8oz2zrV7Plzmb3XJtls4S9CL+CtVqdNcNXHWSEas0lPuoq+FI
-         9OHLExJVMMn80VTExUd5P4SZqS7GOd2JQ8Wbiqq397ccYRcHDi9RcEA5C9Hv1Qac1AeJ
-         MUHs66aXAteoko15VGaOSZI/2HddMmnzxCEoj66qyOZ8SbyKKo4KK8eMI2Ry94nZjcrg
-         55gw==
-X-Gm-Message-State: AC+VfDyCzYQ3ppjflKq+unWehT9DB12QgEWKjcrTDjcWq6oZBv9zxSHR
-        jV/24ILL+DROnP9LCeCak03X0y6RtG1ljkLKcbc=
-X-Google-Smtp-Source: ACHHUZ46cH29SjbUqra/ND6Q/Btg39LRJxYYS/1l02hcTLRgfggXTaJToUXbSLUEybi0O71+Oi6jgQ==
-X-Received: by 2002:a05:6512:b08:b0:4f4:7a5:e800 with SMTP id w8-20020a0565120b0800b004f407a5e800mr2037419lfu.10.1685345941243;
-        Mon, 29 May 2023 00:39:01 -0700 (PDT)
+        bh=zIyR1lHJkA+sNFp9J1o6uPmPADLzeJ2t6TMfApH2cO0=;
+        b=LehZvqNMCNBXixnDmm/1JSK8RTD+qGFdZp4Bz5iA3S4lYe2fsnnjDkPf+U2wTEyek/
+         1410nNtEM3yYx3kBbG0QtbitlPjb7D5918UFAOeb16gpac4COUZS+dRPXGXLdCenR1GQ
+         0pelkN+ypxraYUmHmHqt5bdXztJtaVpUxYC7s6cGJc0TuYMjmqSVv2c6emzEGQvl8s2M
+         V0gV+qbUcIvvu1alIH92Ysd2QsUkO26bETRIWqtY/pgfPXVchEu90+9CJKqYBZogSLnU
+         NBL6RJqiQNwA23Lfi66BuoPc8pBTubfBlgigfnl/Z7Kdgw21uWtptJ9rU/j/PEBAfhBA
+         7H8w==
+X-Gm-Message-State: AC+VfDwb4DCqnoyEBdzBnErKjYSrugAH20W61QdGk6O/YaNIwDr7Qr0t
+        HUavRsxErfJjIqz9FX6D0J1C/g==
+X-Google-Smtp-Source: ACHHUZ7CGoVzdq3YVY4Qh7oruPyoZkhaD7bLodOYquMFSgOk89OF+fipcK/1Q84XygMuQ4wDmXzFjQ==
+X-Received: by 2002:ac2:4423:0:b0:4f3:b2a7:68ef with SMTP id w3-20020ac24423000000b004f3b2a768efmr2891357lfl.10.1685346068232;
+        Mon, 29 May 2023 00:41:08 -0700 (PDT)
 Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id q3-20020ac25283000000b004f377f317d4sm1876447lfm.285.2023.05.29.00.38.59
+        by smtp.gmail.com with ESMTPSA id w25-20020a05651204d900b004cc8196a308sm1876082lfq.98.2023.05.29.00.41.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 May 2023 00:39:00 -0700 (PDT)
-Message-ID: <a64ac105-90cf-eea0-5cb2-74be201386a9@linaro.org>
-Date:   Mon, 29 May 2023 09:38:59 +0200
+        Mon, 29 May 2023 00:41:07 -0700 (PDT)
+Message-ID: <a8d3d68d-d202-ddba-3289-65b347807538@linaro.org>
+Date:   Mon, 29 May 2023 09:41:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sc8280xp: Add GPU related nodes
+Subject: Re: [PATCH v2 1/4] dt-bindings: arm: qcom: Add Samsung Galaxy Express
 Content-Language: en-US
-To:     Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+To:     Rudraksha Gupta <guptarud@gmail.com>,
+        Conor Dooley <conor@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, johan@kernel.org
-References: <20230523011522.65351-1-quic_bjorande@quicinc.com>
- <20230523011522.65351-3-quic_bjorande@quicinc.com>
- <097944b0-fa7a-ad4d-1c3d-e74ab2b977de@linaro.org>
- <20230528170717.GG2814@thinkpad>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        soc@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, linux-arm-kernel@lists.infradead.org
+References: <20230527040905.stmnoshkdqgiaex6@ripper>
+ <20230528001010.47868-2-guptarud@gmail.com>
+ <20230528-decode-creasing-f5b3996163e5@spud>
+ <ad7a6ee3-cabb-6f92-a595-8791801cfe97@gmail.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230528170717.GG2814@thinkpad>
+In-Reply-To: <ad7a6ee3-cabb-6f92-a595-8791801cfe97@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -87,252 +90,20 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 28.05.2023 19:07, Manivannan Sadhasivam wrote:
-> On Tue, May 23, 2023 at 09:59:53AM +0200, Konrad Dybcio wrote:
->>
->>
->> On 23.05.2023 03:15, Bjorn Andersson wrote:
->>> From: Bjorn Andersson <bjorn.andersson@linaro.org>
->>>
->>> Add Adreno SMMU, GPU clock controller, GMU and GPU nodes for the
->>> SC8280XP.
->>>
->>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->>> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
->>> ---
->> It does not look like you tested the DTS against bindings. Please run
->> `make dtbs_check` (see
->> Documentation/devicetree/bindings/writing-schema.rst for instructions).
->>
->>>
->>> Changes since v1:
->>> - Dropped gmu_pdc_seq region from &gmu, as it shouldn't have been used.
->>> - Added missing compatible to &adreno_smmu.
->>> - Dropped aoss_qmp clock in &gmu and &adreno_smmu.
->>>  
->>>  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 169 +++++++++++++++++++++++++
->>>  1 file changed, 169 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>> index d2a2224d138a..329ec2119ecf 100644
->>> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
->>> @@ -6,6 +6,7 @@
->>>  
->>>  #include <dt-bindings/clock/qcom,dispcc-sc8280xp.h>
->>>  #include <dt-bindings/clock/qcom,gcc-sc8280xp.h>
->>> +#include <dt-bindings/clock/qcom,gpucc-sc8280xp.h>
->>>  #include <dt-bindings/clock/qcom,rpmh.h>
->>>  #include <dt-bindings/interconnect/qcom,osm-l3.h>
->>>  #include <dt-bindings/interconnect/qcom,sc8280xp.h>
->>> @@ -2331,6 +2332,174 @@ tcsr: syscon@1fc0000 {
->>>  			reg = <0x0 0x01fc0000 0x0 0x30000>;
->>>  		};
->>>  
->>> +		gpu: gpu@3d00000 {
->>> +			compatible = "qcom,adreno-690.0", "qcom,adreno";
->>> +
->>> +			reg = <0 0x03d00000 0 0x40000>,
->>> +			      <0 0x03d9e000 0 0x1000>,
->>> +			      <0 0x03d61000 0 0x800>;
->>> +			reg-names = "kgsl_3d0_reg_memory",
->>> +				    "cx_mem",
->>> +				    "cx_dbgc";
->>> +			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
->>> +			iommus = <&adreno_smmu 0 0xc00>, <&adreno_smmu 1 0xc00>;
->>> +			operating-points-v2 = <&gpu_opp_table>;
->>> +
->>> +			qcom,gmu = <&gmu>;
->>> +			interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
->>> +			interconnect-names = "gfx-mem";
->>> +			#cooling-cells = <2>;
->>> +
->>> +			status = "disabled";
->>> +
->>> +			gpu_opp_table: opp-table {
->>> +				compatible = "operating-points-v2";
->>> +
->>> +				opp-270000000 {
->>> +					opp-hz = /bits/ 64 <270000000>;
->>> +					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
->>> +					opp-peak-kBps = <451000>;
->>> +				};
->>> +
->>> +				opp-410000000 {
->>> +					opp-hz = /bits/ 64 <410000000>;
->>> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
->>> +					opp-peak-kBps = <1555000>;
->>> +				};
->>> +
->>> +				opp-500000000 {
->>> +					opp-hz = /bits/ 64 <500000000>;
->>> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
->>> +					opp-peak-kBps = <1555000>;
->>> +				};
->>> +
->>> +				opp-547000000 {
->>> +					opp-hz = /bits/ 64 <547000000>;
->>> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
->>> +					opp-peak-kBps = <1555000>;
->>> +				};
->>> +
->>> +				opp-606000000 {
->>> +					opp-hz = /bits/ 64 <606000000>;
->>> +					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
->>> +					opp-peak-kBps = <2736000>;
->>> +				};
->>> +
->>> +				opp-640000000 {
->>> +					opp-hz = /bits/ 64 <640000000>;
->>> +					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
->>> +					opp-peak-kBps = <2736000>;
->>> +				};
->>> +
->>> +				opp-690000000 {
->>> +					opp-hz = /bits/ 64 <690000000>;
->>> +					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
->>> +					opp-peak-kBps = <2736000>;
->>> +				};
->>> +			};
->>> +		};
->>> +
->>> +		gmu: gmu@3d6a000 {
->>> +			compatible = "qcom,adreno-gmu-690.0", "qcom,adreno-gmu";
->>> +			reg = <0 0x03d6a000 0 0x34000>,
->>> +			      <0 0x03de0000 0 0x10000>,
->>> +			      <0 0x0b290000 0 0x10000>;
->>> +			reg-names = "gmu", "rscc", "gmu_pdc";
->>> +			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
->>> +			interrupt-names = "hfi", "gmu";
->>> +			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
->>> +				 <&gpucc GPU_CC_CXO_CLK>,
->>> +				 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
->>> +				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
->>> +				 <&gpucc GPU_CC_AHB_CLK>,
->>> +				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
->>> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>;
->>> +			clock-names = "gmu",
->>> +				      "cxo",
->>> +				      "axi",
->>> +				      "memnoc",
->>> +				      "ahb",
->>> +				      "hub",
->>> +				      "smmu_vote";
->>> +			power-domains = <&gpucc GPU_CC_CX_GDSC>,
->>> +					<&gpucc GPU_CC_GX_GDSC>;
->>> +			power-domain-names = "cx",
->>> +					     "gx";
->>> +			iommus = <&adreno_smmu 5 0xc00>;
->>> +			operating-points-v2 = <&gmu_opp_table>;
->>> +
->>> +			status = "disabled";
->> I've recently discovered that - and I am not 100% sure - all GMUs are
->> cache-coherent. Could you please ask somebody at qc about this?
->>
+On 28.05.2023 15:36, Rudraksha Gupta wrote:
+>> Where did the "att" come from in the compatible. Is this some carrier specific model of the phone?
 > 
-> AFAIU, GMU's job is controlling the voltage and clock to the GPU.
-Not just that, it's only the limited functionality we've implemented
-upstream so far.
+> This is the code name for the device. Since there are usually multiple variants of a device, using the code name differentiates between those variants. For example, if I left this as "samsung,express", it would be unclear if I am referring to the GT-I8730 (code name: expresslte) or the SGH-I437 model. This is typically done in postmarketOS: https://wiki.postmarketos.org/wiki/Devices and XDA developers. I believe it is a carrier specific model of the Samsung Galaxy Express.
+> 
 
-It doesn't do
-> any data transactions on its own.
-Of course it does. AP communication is done through MMIO writes and
-the GMU talks to RPMh via the GPU RSC directly. Apart from that, some
-of the GPU registers (that nota bene don't have anything to do with
-the GMU M3 core itself) lay within the GMU address space.
+Please fix your email client:
+
+- wrap each line at about 80 characters
+- don't trim messages unless they're very long or
+  there's some other good reason
+- Don't send v(n+1) as a reply to v(n), send it in a
+  separate thread.
 
 
-Bjorn noticed that this coherent mask setting downstream may be
-a bluff, but I guess we could poke Qualcomm about whether it's
-cache-coherent (Akhil, could you say anything about that?).
 
 Konrad
-
-So cache-coherent doesn't make sense to me.
-> 
-> - Mani
-> 
->>> +
->>> +			gmu_opp_table: opp-table {
->>> +				compatible = "operating-points-v2";
->>> +
->>> +				opp-200000000 {
->>> +					opp-hz = /bits/ 64 <200000000>;
->>> +					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
->>> +				};
->> Missing 500MHz + RPMH_REGULATOR_LEVEL_SVS
->>
->> (that may be used in the future for hw scheduling)
->>> +			};
->>> +		};
->>> +
->>> +		gpucc: clock-controller@3d90000 {
->>> +			compatible = "qcom,sc8280xp-gpucc";
->>> +			reg = <0 0x03d90000 0 0x9000>;
->>> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
->>> +				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
->>> +				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
->>> +			clock-names = "bi_tcxo",
->>> +				      "gcc_gpu_gpll0_clk_src",
->>> +				      "gcc_gpu_gpll0_div_clk_src";
->> FWIW the driver doesn't use clock-names, but the binding defines it,
->> so I suppose it's fine
->>
->>> +
->>> +			power-domains = <&rpmhpd SC8280XP_GFX>;
->>> +			#clock-cells = <1>;
->>> +			#reset-cells = <1>;
->>> +			#power-domain-cells = <1>;
->>> +
->>> +			status = "disabled";
->>> +		};
->>> +
->>> +		adreno_smmu: iommu@3da0000 {
->>> +			compatible = "qcom,sc8280xp-smmu-500", "qcom,adreno-smmu",
->>> +				     "qcom,smmu-500", "arm,mmu-500";
->>> +			reg = <0 0x03da0000 0 0x20000>;
->>> +			#iommu-cells = <2>;
->>> +			#global-interrupts = <2>;
->>> +			interrupts = <GIC_SPI 672 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 688 IRQ_TYPE_LEVEL_HIGH>,
->>> +				     <GIC_SPI 689 IRQ_TYPE_LEVEL_HIGH>;
->>> +
->>> +			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
->>> +				 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
->>> +				 <&gpucc GPU_CC_AHB_CLK>,
->>> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
->>> +				 <&gpucc GPU_CC_CX_GMU_CLK>,
->>> +				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
->>> +				 <&gpucc GPU_CC_HUB_AON_CLK>;
->>> +			clock-names = "gcc_gpu_memnoc_gfx_clk",
->>> +				      "gcc_gpu_snoc_dvm_gfx_clk",
->>> +				      "gpu_cc_ahb_clk",
->>> +				      "gpu_cc_hlos1_vote_gpu_smmu_clk",
->>> +				      "gpu_cc_cx_gmu_clk",
->>> +				      "gpu_cc_hub_cx_int_clk",
->>> +				      "gpu_cc_hub_aon_clk";
->>> +
->>> +			power-domains = <&gpucc GPU_CC_CX_GDSC>;
->>> +
->>> +			status = "disabled";
->> This one should be dma-coherent (per downstream, plus 8350's mmu is for sure)
->>
->> Konrad
->>> +		};
->>> +
->>>  		usb_0_hsphy: phy@88e5000 {
->>>  			compatible = "qcom,sc8280xp-usb-hs-phy",
->>>  				     "qcom,usb-snps-hs-5nm-phy";
-> 
