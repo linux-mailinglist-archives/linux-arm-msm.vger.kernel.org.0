@@ -2,107 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3241C714FE4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 21:42:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2E46715013
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 21:55:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229614AbjE2Tmm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 15:42:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57558 "EHLO
+        id S229796AbjE2TzR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 15:55:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbjE2Tmm (ORCPT
+        with ESMTP id S229748AbjE2TzO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 15:42:42 -0400
-Received: from mailrelay4-1.pub.mailoutpod2-cph3.one.com (mailrelay4-1.pub.mailoutpod2-cph3.one.com [46.30.211.179])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A869ACD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 12:42:40 -0700 (PDT)
+        Mon, 29 May 2023 15:55:14 -0400
+Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3DCEF0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 12:55:08 -0700 (PDT)
+Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-3078a3f3b5fso3506713f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 12:55:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ravnborg.org; s=rsa1;
-        h=in-reply-to:content-transfer-encoding:content-type:mime-version:references:
-         message-id:subject:cc:to:from:date:from;
-        bh=wUfXvnVscNDHokiq7vn1jObWtrFuRJJpIbqINcxXDJE=;
-        b=knGLUans50LTZIo5f1iVlVgufTKBN3qIzs+NSf9br/jM5jHjHmYBi5g2/FBkei1b0wJjoFKhxSShV
-         QSoZGiUz86hzh4UgxBsuS6euL3xR/ZonuALCFFhA8XiecTqW5AIGdTQoHEMPsH9rkMV1dpB468TCAG
-         JoeCW69AvlKmWm0o9tIxIDbln+tJ5/ckfNmXDeJWMVVpyyxlihT0HnD0BJeIZX1SnasSm/RgHLuTIk
-         F2e3h8bQ7f830k9spRcCLPbS4DJ9UgZqRFFqnLuzg2A9XlMmULp7Xdre3rmfleaPQthSb5WgHOa1Fe
-         EvHZd+/jsf5bfp2smSgvH5E4TzLlwCg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed;
-        d=ravnborg.org; s=ed1;
-        h=in-reply-to:content-transfer-encoding:content-type:mime-version:references:
-         message-id:subject:cc:to:from:date:from;
-        bh=wUfXvnVscNDHokiq7vn1jObWtrFuRJJpIbqINcxXDJE=;
-        b=SPkPhAKKpLhNfEwhgL3ZL2sVscqxwpfUw6ze1N9enTq8D4Ch51D8bRwX0xHhLkO4hgMRMxnb09WWw
-         5HU9e0GDA==
-X-HalOne-ID: c141e50e-fe58-11ed-8a8a-592bb1efe9dc
-Received: from ravnborg.org (2-105-2-98-cable.dk.customer.tdc.net [2.105.2.98])
-        by mailrelay4 (Halon) with ESMTPSA
-        id c141e50e-fe58-11ed-8a8a-592bb1efe9dc;
-        Mon, 29 May 2023 19:41:08 +0000 (UTC)
-Date:   Mon, 29 May 2023 21:41:07 +0200
-From:   Sam Ravnborg <sam@ravnborg.org>
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     daniel@ffwll.ch, airlied@gmail.com,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        javierm@redhat.com, dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-        Jani Nikula <jani.nikula@linux.intel.com>,
-        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-        Rodrigo Vivi <rodrigo.vivi@intel.com>,
-        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-        Ville =?iso-8859-1?Q?Syrj=E4l=E4?= 
-        <ville.syrjala@linux.intel.com>
-Subject: Re: [PATCH v4 13/13] drm/i915: Implement dedicated fbdev I/O helpers
-Message-ID: <20230529194107.GG1370714@ravnborg.org>
-References: <20230524092150.11776-1-tzimmermann@suse.de>
- <20230524092150.11776-14-tzimmermann@suse.de>
+        d=linaro.org; s=google; t=1685390107; x=1687982107;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=UBSONiyq8ZSgo95IwQOW+zN2QkXEPgex9gl6YgjWGRU=;
+        b=nEr6mmv2rVEDCRQwGzIf5WvVB4UnG4rceoZaSoaDdH5mXhEwMU80fss55ueRL8/ici
+         UVBZfYJf3l1hTAuyvHzQ+zDUuSt/3BiA3iTrVoiD2gfaWQhkue1/fxujqtOKmlxhi9O8
+         Sf1z0Gv7/mteFlvHPByomUm+goX0P9NOUS7NM7BNiqU8yahk8F1aB8P/u3C6pZp1YG/q
+         rBRCzK7aAA8lT8k0szfv2xjgxqSXDSI4fUuyh4/BnsgYE64CDDtpBHUogDVSk5TFMYBD
+         MshAnCXd0FBW87puw1QKIJ0b6lDN14SlJ5xsNeBgaysuRzayV9ArL0V8wYaRRDoQO+Rs
+         lDTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685390107; x=1687982107;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=UBSONiyq8ZSgo95IwQOW+zN2QkXEPgex9gl6YgjWGRU=;
+        b=PzGDxfLpHmUcVbyjnnh7CqHcvqBCJON9aBkdm8ZzInmroLnk9yyCWruJ872Y3KLFcq
+         p8vO72LJfwcEiRdACXYGJA5YlwuxcFAZMzz4pEG18GR2IE77ICgaFvQcagOwlqVlClbU
+         Nvbrx402Tv7Bw4Cm1vMuJiyB1OPPiKeicRpZKD9xI0Ucs3wNm6GeScZRr6WgY8lT20pO
+         YZ/+yjEOZTGde+mm/bHXBZ9Wo91jf1lHJFOQ10cZ5OaTdzKW2yH3NYbbZCHVKu3o2fVJ
+         xIdZ+2CDeiZZRMwN/UZ4F2zDXzjxlYdfuv6/fF1Ka+iOXKJHICqPyskqEUuOt+oeIPTE
+         g9Cg==
+X-Gm-Message-State: AC+VfDy5/PWa8C5+BtnTR0X1J+EVVEeRAtZUHvaqruixmeic6R8YrQ8A
+        FEdJFH4+k2PDb2rbMKUcVQCKJw==
+X-Google-Smtp-Source: ACHHUZ5GfwpPYm/NfeFmfvtM5xuxflgHh9nfyUgpt+u1fKEzK1WlHnlXKSZKdnPUPz8OliWPbOFFfw==
+X-Received: by 2002:a5d:45cf:0:b0:2fb:1d3a:93ff with SMTP id b15-20020a5d45cf000000b002fb1d3a93ffmr9131254wrs.61.1685390107241;
+        Mon, 29 May 2023 12:55:07 -0700 (PDT)
+Received: from lion.localdomain (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id t7-20020a5d4607000000b0030647449730sm887364wrq.74.2023.05.29.12.55.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 May 2023 12:55:06 -0700 (PDT)
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+Subject: [PATCH 0/2] Fix pm8941-pwrkey debounce programming
+Date:   Mon, 29 May 2023 20:55:05 +0100
+Message-Id: <20230529-pm8941-pwrkey-debounce-v1-0-c043a6d5c814@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230524092150.11776-14-tzimmermann@suse.de>
-X-Spam-Status: No, score=-0.4 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLACK autolearn=no autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABkDdWQC/x2N2wrCMBAFf6XsswvdWC/xV8SHJD3aIE3Dxiul/
+ 27q4zAMM1OBRhQ6NTMpXrHEKVWQTUNhcOkGjn1lMq3ZtjtjOY9H2wnnt97x5R5+eqYAFpGDdb4
+ TYE819q6AvboUhjUfXXlAV5EV1/j5H8+XZfkBMpZ/5IEAAAA=
+To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        phone-devel@vger.kernel.org,
+        Caleb Connolly <caleb.connolly@linaro.org>
+X-Mailer: b4 0.13-dev-46309
+X-Developer-Signature: v=1; a=openpgp-sha256; l=753;
+ i=caleb.connolly@linaro.org; h=from:subject:message-id;
+ bh=69Sxru6xrRyg5y8CAaJKdsYttoRQnjQieSGPqXGUZsw=;
+ b=owEBbQKS/ZANAwAIAQWDMSsZX2S2AcsmYgBkdQMaUVI9IEWUIggm5Li94NSCWquclCVuQGzyb
+ c6cYkK1IPmJAjMEAAEIAB0WIQS2UaFGPGq+0GkMVc0FgzErGV9ktgUCZHUDGgAKCRAFgzErGV9k
+ tlpsEACIUlS3bOWKb235EZw5kDYqF2Oon9gzdj2bO7KFTIMhqbOupk087Q1z+trLTgplc8BJOih
+ w7XDzwY2iWQG8vardxKYnBd/s+OIQozhiRzbg61GHh/CC962KjXIln2wLobwy85zXL8Iq9GHhch
+ BCakL0VCMvQSpiZZbJaY7WY9/FAew4WS0vM4Iw5ywy8XRyQCez/3fWmhEXVKVpsd/rFm58YK7gY
+ 68jCDZhVeb8AZ7Gz/Kl5xBSc27e72W/eLisP1qFPi4XzvLm90MAiKVGr5n6Sn+LWVUvXN2zYhLB
+ lfIUjM0+qncxu0/dtfmz+gA2kyn65PQv67Pg0HC8LDsXTOT/OdlAwv+1Xt9Z/mE8FpxNeppN2TZ
+ SUTNf/qellsGtB19dWRYBoVFZHFHvH5tCSPbuSO+/3qwv7jSjpdnouaLXydpX4lq/r22YLjhKed
+ P3LHmYWe9C5hkoElp2aknca2H4eCfkHJVgOXERuWroZCFjgpcevBJkk38up6rmKjDBtXv+MG3Ji
+ dG08wYUTb+IDaM/IZzskZTXWpDCm+TyhaOQggBgYQedjkpUN1PFZWH/x9vpI8kJuTTWZRpDfghd
+ ONQYe/5QqOyofPBT2GpBEE4sCpkfSSTrebe7lBsmFJM9sSLsPU4m6xqNrZ2AAbsie4GS5rU5I1e
+ nUNDtO1Sdd2ZFJg==
+X-Developer-Key: i=caleb.connolly@linaro.org; a=openpgp;
+ fpr=83B24DA7FE145076BC38BB250CD904EB673A7C47
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Thomas,
+Since PM8998 the pon debounce register was adjusted to support much
+lower debounce times however the driver was never changed to reflect
+this.
 
-On Wed, May 24, 2023 at 11:21:50AM +0200, Thomas Zimmermann wrote:
-> Implement dedicated fbdev helpers for framebuffer I/O instead
-> of using DRM's helpers. Use an fbdev generator macro for
-> deferred I/O to create the fbdev callbacks. i915 was the only
-> caller of the DRM helpers, so remove them from the helper module.
-> 
-> i915's fbdev emulation is still incomplete as it doesn't implement
-> deferred I/O and damage handling for mmaped pages.
-> 
-> v4:
-> 	* generate deferred-I/O helpers
-> 	* use initializer macros for fb_ops
-> v2:
-> 	* use FB_IO_HELPERS options
-> 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> Cc: Jani Nikula <jani.nikula@linux.intel.com>
-> Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-> Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-> Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-> Cc: "Ville Syrjälä" <ville.syrjala@linux.intel.com>
-> ---
->  drivers/gpu/drm/Kconfig                    |   3 -
->  drivers/gpu/drm/drm_fb_helper.c            | 107 ---------------------
->  drivers/gpu/drm/i915/Kconfig               |   1 +
->  drivers/gpu/drm/i915/display/intel_fbdev.c |  14 +--
->  include/drm/drm_fb_helper.h                |  39 --------
->  5 files changed, 9 insertions(+), 155 deletions(-)
+This resulted in the debounce time being set to the minimum ~62us on
+PMICs from PM8998/PM660 up until PMk8350.
 
-Nice diffstat!
-Assuming there is a good explanation on the dirty check:
-Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Set the shift and mask correctly, and adjust MAINTAINERS to include the
+driver under Qualcomm support.
+
+---
+Caleb Connolly (2):
+      MAINTAINERS: Adjust Qualcomm driver globbing
+      Input: pm8941-powerkey - fix debounce on gen2+ PMICs
+
+ MAINTAINERS                        |  2 +-
+ drivers/input/misc/pm8941-pwrkey.c | 19 +++++++++++++++----
+ 2 files changed, 16 insertions(+), 5 deletions(-)
+---
+base-commit: 44c026a73be8038f03dbdeef028b642880cf1511
+
+// Caleb (they/them)
+
