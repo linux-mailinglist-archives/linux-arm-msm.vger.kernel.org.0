@@ -2,75 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F1F0B714712
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 11:30:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8515B714722
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 11:36:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231625AbjE2Jan (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 05:30:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37614 "EHLO
+        id S231140AbjE2JgM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 05:36:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40172 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231551AbjE2Jan (ORCPT
+        with ESMTP id S229650AbjE2JgL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 05:30:43 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A0A3B1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 02:30:41 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f4bdcde899so3250225e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 02:30:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685352640; x=1687944640;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=KyHfudo4b5TFn5O3tYqPvRN35MhP/kAWViGgyfDq0OE=;
-        b=bNsnE59Cikxxn44EMFqli6DSEmkPa4SZffVjxGCNJrMnOr70IeAaE8MQpKf3o6C9UH
-         WGuZgfeMhbFU3bdE9u5lwefZvNDsJ6bXMBFbJgMhp2733Md2PAmnneT4IdixVSWDcrzJ
-         FNfqQcu6rkfCd9LgYYTpNRLSZYgM2B5/dEinQCqyo5/d7chJdutW0P3T294Fo7jSN8Fr
-         qf6K/aPpfRHQARgpmtP6FsJzJCtf4u0ksflOusdv116pQaVyR2GXZerAUddA6ZYgafJ5
-         K+zMlFJanHVdFroTPrfLAwEA0VGqLCDHlWlhw+TdSah3OUf6uVqFahm3qqdPlnyZ3Kfw
-         1UTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685352640; x=1687944640;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KyHfudo4b5TFn5O3tYqPvRN35MhP/kAWViGgyfDq0OE=;
-        b=aVBDQOTw4fobSGsI4srwZwLtc1F35o7SH2+OloiDlcrodAHSNYZW24LEyP2jaIGSFo
-         KdI496EM8q+TbXqnB62bJrS7RHiIaImH5EX+l6AesRWhxgMYJ3IlSN9/3A3CMPG6ueNP
-         +5MZDgxRlC32ABHiJQwsk63A/7+Y5zScld7fLvIXt0/1E96FaRLdbVIEtGmNXr2xEWnA
-         SjPqAVtwlvqu/IUXyCKZmvUyOE4X0ZrMckXWGgBahbH1swO3Nal/SFbdse9r7/kKChN0
-         AjSUjc+uHkznOBjVXjTEp2Rs40M6lBllk/Zv484prA2oH9vEB0Kzv9UK7MlMdT/fISfd
-         JudA==
-X-Gm-Message-State: AC+VfDzYSpWjKuW1neVtS0Rlfatq+9KlcvFUQHP/pWysiNprs526lbGm
-        uSbnXmirz2qDgTgQmPCf/c4qdo8BUVqI7MijEpY=
-X-Google-Smtp-Source: ACHHUZ5k9o8butmOUqb926RoVGoX0+CW/fSe3h4lLMdHZKYr1xAJD8lHZYjb0pffs8nWmV0yvg9ndQ==
-X-Received: by 2002:a19:750e:0:b0:4f3:80a3:b40a with SMTP id y14-20020a19750e000000b004f380a3b40amr2937493lfe.69.1685352639705;
-        Mon, 29 May 2023 02:30:39 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id y9-20020ac24469000000b004eb274b3a43sm1892015lfl.134.2023.05.29.02.30.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 May 2023 02:30:39 -0700 (PDT)
-Message-ID: <dc9442f4-d1c5-37f1-a8be-d19162cd0dbe@linaro.org>
-Date:   Mon, 29 May 2023 11:30:38 +0200
+        Mon, 29 May 2023 05:36:11 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87475AF;
+        Mon, 29 May 2023 02:36:09 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2228262304;
+        Mon, 29 May 2023 09:36:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEAFC4339B;
+        Mon, 29 May 2023 09:36:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685352968;
+        bh=WjawDvm6oPVly4kc/gMcQLO6JNcFJPHYvkIDhnDoG+c=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=YgL4qrQ9f2ai2b1qgowWAF/VBckdP80pf0+i2CbiMsS30Gtkiq1k3Ou5en5BN7gZC
+         BXzDK0J+YfU4+ijn/WbolCojwJ4RVOKcnuiI/scxG7EwUMlO6ErH2fwNozldQQ1ZpQ
+         WJuQvvD5S3mdhR9CfmHkdle9Cx8FdNSCg8UG8Q/Lr2/C1kSzHhe+J+CIGbaOxv+qVL
+         rxlQAcieBghueIMsENaCoYdbbhh4Ts4xe/7oEk6Wxmp667+dBSf7fbTrVZkeTRXiY1
+         HYzoyZTZAEosTBrRnIcbB1iOtRktA+1XPUU4DNMLXnsjlGDcaI/xS3Ve5I9MZ6Del3
+         NKJKn+EPsS+bQ==
+Date:   Mon, 29 May 2023 11:36:03 +0200
+From:   Lorenzo Pieralisi <lpieralisi@kernel.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     kw@linux.com, kishon@kernel.org, bhelgaas@google.com,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 1/7] PCI: endpoint: Pass EPF device ID to the probe
+ function
+Message-ID: <ZHRyA1BzK3KaGUEH@lpieralisi>
+References: <20230519144215.25167-1-manivannan.sadhasivam@linaro.org>
+ <20230519144215.25167-2-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v2] soc: qcom: ocmem: Add OCMEM hardware version print
-Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Brian Masney <masneyb@onstation.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230509-ocmem-hwver-v2-1-8c8793a07dfc@z3ntu.xyz>
- <cac92fae-310f-79b1-7204-ac9deb2c3319@linaro.org>
- <2680722.mvXUDI8C0e@z3ntu.xyz>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <2680722.mvXUDI8C0e@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230519144215.25167-2-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,105 +57,135 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, May 19, 2023 at 08:12:09PM +0530, Manivannan Sadhasivam wrote:
+> Currently, the EPF probe function doesn't get the device ID argument needed
+> to correctly identify the device table ID of the EPF device.
+> 
+> When multiple entries are added to the "struct pci_epf_device_id" table,
+> the probe function needs to identify the correct one. And the only way to
+> do so is by storing the correct device ID in "struct pci_epf" during
+> "pci_epf_match_id()" and passing that to probe().
+> 
+> Reviewed-by: Kishon Vijay Abraham I <kishon@kernel.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>  drivers/pci/endpoint/functions/pci-epf-ntb.c  | 3 ++-
+>  drivers/pci/endpoint/functions/pci-epf-test.c | 2 +-
+>  drivers/pci/endpoint/functions/pci-epf-vntb.c | 2 +-
+>  drivers/pci/endpoint/pci-epf-core.c           | 8 +++++---
+>  include/linux/pci-epf.h                       | 4 +++-
+>  5 files changed, 12 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/pci/endpoint/functions/pci-epf-ntb.c b/drivers/pci/endpoint/functions/pci-epf-ntb.c
+> index 9a00448c7e61..980b4ecf19a2 100644
+> --- a/drivers/pci/endpoint/functions/pci-epf-ntb.c
+> +++ b/drivers/pci/endpoint/functions/pci-epf-ntb.c
+> @@ -2075,11 +2075,12 @@ static struct config_group *epf_ntb_add_cfs(struct pci_epf *epf,
+>  /**
+>   * epf_ntb_probe() - Probe NTB function driver
+>   * @epf: NTB endpoint function device
+> + * @id: NTB endpoint function device ID
+>   *
+>   * Probe NTB function driver when endpoint function bus detects a NTB
+>   * endpoint function.
+>   */
+> -static int epf_ntb_probe(struct pci_epf *epf)
+> +static int epf_ntb_probe(struct pci_epf *epf, const struct pci_epf_device_id *id)
+>  {
+>  	struct epf_ntb *ntb;
+>  	struct device *dev;
+> diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+> index 0f9d2ec822ac..d5fcc78a5b73 100644
+> --- a/drivers/pci/endpoint/functions/pci-epf-test.c
+> +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+> @@ -980,7 +980,7 @@ static const struct pci_epf_device_id pci_epf_test_ids[] = {
+>  	{},
+>  };
+>  
+> -static int pci_epf_test_probe(struct pci_epf *epf)
+> +static int pci_epf_test_probe(struct pci_epf *epf, const struct pci_epf_device_id *id)
+>  {
+>  	struct pci_epf_test *epf_test;
+>  	struct device *dev = &epf->dev;
+> diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> index b7c7a8af99f4..122eb7a12028 100644
+> --- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> +++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> @@ -1401,7 +1401,7 @@ static struct pci_epf_ops epf_ntb_ops = {
+>   *
+>   * Returns: Zero for success, or an error code in case of failure
+>   */
+> -static int epf_ntb_probe(struct pci_epf *epf)
+> +static int epf_ntb_probe(struct pci_epf *epf, const struct pci_epf_device_id *id)
+>  {
+>  	struct epf_ntb *ntb;
+>  	struct device *dev;
+> diff --git a/drivers/pci/endpoint/pci-epf-core.c b/drivers/pci/endpoint/pci-epf-core.c
+> index 2036e38be093..924564288c9a 100644
+> --- a/drivers/pci/endpoint/pci-epf-core.c
+> +++ b/drivers/pci/endpoint/pci-epf-core.c
+> @@ -494,11 +494,13 @@ static const struct device_type pci_epf_type = {
+>  };
+>  
+>  static int
+> -pci_epf_match_id(const struct pci_epf_device_id *id, const struct pci_epf *epf)
+> +pci_epf_match_id(const struct pci_epf_device_id *id, struct pci_epf *epf)
+>  {
+>  	while (id->name[0]) {
+> -		if (strcmp(epf->name, id->name) == 0)
+> +		if (strcmp(epf->name, id->name) == 0) {
+> +			epf->id = id;
+>  			return true;
+> +		}
+>  		id++;
+>  	}
 
+I disagree with this patch's intent. The match function should not
+change the parameters state. We should export this function to drivers
+so that upon probe they can retrieve the matching id themselves,
+as other bus interfaces do IMO.
 
-On 29.05.2023 10:38, Luca Weiss wrote:
-> On Freitag, 26. Mai 2023 21:39:44 CEST Konrad Dybcio wrote:
->> On 23.05.2023 22:32, Luca Weiss wrote:
->>> It might be useful to know what hardware version of the OCMEM block the
->>> SoC contains. Add a debug print for that.
->>>
->>> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
->>> ---
->>> This patch is depends on [0] but could also be applied in the other
->>> order, if conflicts are resolved.
->>>
->>> [0]
->>> https://lore.kernel.org/linux-arm-msm/20230506-msm8226-ocmem-v1-1-3e24e27
->>> 24f01@z3ntu.xyz/ ---
->>> Changes in v2:
->>> - Use FIELD_GET macros for getting correct bits from register (take
->>>
->>>   wording from mdp5: major, minor, step which hopefully is sort of
->>>   accurate)
->>
->> Qualcomm uses that (or that-ish) nomenclature for many hw blocks, so
->> it's likely spot on.
->>
->>> - Link to v1:
->>> https://lore.kernel.org/r/20230509-ocmem-hwver-v1-1-b83ece3f2168@z3ntu.xy
->>> z ---
->>>
->>>  drivers/soc/qcom/ocmem.c | 9 +++++++++
->>>  1 file changed, 9 insertions(+)
->>>
->>> diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
->>> index c3e78411c637..9f7c3348cbb9 100644
->>> --- a/drivers/soc/qcom/ocmem.c
->>> +++ b/drivers/soc/qcom/ocmem.c
->>> @@ -76,6 +76,10 @@ struct ocmem {
->>>
->>>  #define OCMEM_REG_GFX_MPU_START			0x00001004
->>>  #define OCMEM_REG_GFX_MPU_END			0x00001008
->>>
->>> +#define OCMEM_HW_VERSION_MAJOR(val)		FIELD_GET(GENMASK(31, 28), val)
->>> +#define OCMEM_HW_VERSION_MINOR(val)		FIELD_GET(GENMASK(27, 16), val)
->>> +#define OCMEM_HW_VERSION_STEP(val)		FIELD_GET(GENMASK(15, 0), val)
->>> +
->>>
->>>  #define OCMEM_HW_PROFILE_NUM_PORTS(val)		FIELD_GET(0x0000000f, (val))
->>>  #define OCMEM_HW_PROFILE_NUM_MACROS(val)	FIELD_GET(0x00003f00, (val))
->>>
->>> @@ -355,6 +359,11 @@ static int ocmem_dev_probe(struct platform_device
->>> *pdev)> 
->>>  		}
->>>  	
->>>  	}
->>>
->>> +	reg = ocmem_read(ocmem, OCMEM_REG_HW_VERSION);
->>> +	dev_dbg(dev, "OCMEM hardware version: %ld.%ld.%ld\n",
->>
->> reg is an unsigned long (u32), this should probably be %u
-> 
-> I can make it %lu, just %u gives me this warning
-Right, grumpy compilers care about types that have been meaningless for
-longer than I've been alive.. 
+Thanks,
+Lorenzo
 
-Konrad
-> 
-> drivers/soc/qcom/ocmem.c:363:22: warning: format '%u' expects argument of type 'unsigned int', but argument 6 has type 'long unsigned int' [-Wformat=]
->   363 |         dev_dbg(dev, "OCMEM hardware version: %u.%u.%u\n",
->       |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> 
-> 
-> Will send a v3 with that.
-> 
->>
->>> +		OCMEM_HW_VERSION_MAJOR(reg), OCMEM_HW_VERSION_MINOR(reg),
->>> +		OCMEM_HW_VERSION_STEP(reg));
->>
->> Nit: one per line would make this the tiniest bit easier to read
-> 
-> ack
-> 
-> Regards
-> Luca
-> 
->>
->> Konrad
->>
->>> +
->>>
->>>  	reg = ocmem_read(ocmem, OCMEM_REG_HW_PROFILE);
->>>  	ocmem->num_ports = OCMEM_HW_PROFILE_NUM_PORTS(reg);
->>>  	ocmem->num_macros = OCMEM_HW_PROFILE_NUM_MACROS(reg);
->>>
->>> ---
->>> base-commit: 8705151771af822ac794b44504cd72eebc423499
->>> change-id: 20230509-ocmem-hwver-99bcb33b028b
->>>
->>> Best regards,
-> 
-> 
-> 
+> @@ -526,7 +528,7 @@ static int pci_epf_device_probe(struct device *dev)
+>  
+>  	epf->driver = driver;
+>  
+> -	return driver->probe(epf);
+> +	return driver->probe(epf, epf->id);
+>  }
+>  
+>  static void pci_epf_device_remove(struct device *dev)
+> diff --git a/include/linux/pci-epf.h b/include/linux/pci-epf.h
+> index a215dc8ce693..bc613f0df7e3 100644
+> --- a/include/linux/pci-epf.h
+> +++ b/include/linux/pci-epf.h
+> @@ -89,7 +89,7 @@ struct pci_epc_event_ops {
+>   * @id_table: identifies EPF devices for probing
+>   */
+>  struct pci_epf_driver {
+> -	int	(*probe)(struct pci_epf *epf);
+> +	int	(*probe)(struct pci_epf *epf, const struct pci_epf_device_id *id);
+>  	void	(*remove)(struct pci_epf *epf);
+>  
+>  	struct device_driver	driver;
+> @@ -131,6 +131,7 @@ struct pci_epf_bar {
+>   * @epc: the EPC device to which this EPF device is bound
+>   * @epf_pf: the physical EPF device to which this virtual EPF device is bound
+>   * @driver: the EPF driver to which this EPF device is bound
+> + * @id: Pointer to the EPF device ID
+>   * @list: to add pci_epf as a list of PCI endpoint functions to pci_epc
+>   * @lock: mutex to protect pci_epf_ops
+>   * @sec_epc: the secondary EPC device to which this EPF device is bound
+> @@ -158,6 +159,7 @@ struct pci_epf {
+>  	struct pci_epc		*epc;
+>  	struct pci_epf		*epf_pf;
+>  	struct pci_epf_driver	*driver;
+> +	const struct pci_epf_device_id *id;
+>  	struct list_head	list;
+>  	/* mutex to protect against concurrent access of pci_epf_ops */
+>  	struct mutex		lock;
+> -- 
+> 2.25.1
 > 
