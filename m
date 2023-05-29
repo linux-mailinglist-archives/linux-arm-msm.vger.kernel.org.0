@@ -2,179 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7589271454C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 09:18:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBB56714576
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 09:28:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229623AbjE2HSI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 03:18:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44344 "EHLO
+        id S231496AbjE2H2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 03:28:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48882 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229570AbjE2HSH (ORCPT
+        with ESMTP id S229513AbjE2H2Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 03:18:07 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41607A4;
-        Mon, 29 May 2023 00:18:06 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34T6u7J6009420;
-        Mon, 29 May 2023 07:17:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=o32+Zs65tVZRqYisIvSrSLdqpdjM/OYIVeuEGXaxkUY=;
- b=NV6aIBJ8RQk4XcBSZG0GoKVH3FYOmKnwGnBB9H+LFmqAHXGIm7X9ESlcH5Bg+B55mt/3
- xqvUUm7Q0ooz6Y20uBR8+vaL+97qUDH47AuJFJwlmnZpdGogM0fMT96dv2sFZYptRS2E
- YGzLBV6i2RKAe12dU3Lek7Vi15RLHsAsBAVSgwQxcJs06gLQpsKqYWlcfZHInO6waXy3
- ZUQVdq1th9AmjuX7k4cBm93dps4TAch0L/YTj57Rg9li3HMq3Tk21UJCZBnJ5FrApFi3
- z225Ya2u8UBYmHSTShUKkjNzrlXWK1SR8yrWKjnv9MzkG8N/VH08l/hRZSEseeM5Cj9F Qw== 
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3quawgjthc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 29 May 2023 07:17:42 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34T7HekE011850
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 29 May 2023 07:17:40 GMT
-Received: from [10.253.79.81] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 29 May
- 2023 00:17:35 -0700
-Message-ID: <5c56a874-dc41-c68c-6f70-efcbc67c29b2@quicinc.com>
-Date:   Mon, 29 May 2023 15:17:32 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v5 0/3] Add support to configure Coresight Dummy subunit
-To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mon, 29 May 2023 03:28:25 -0400
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47D88E3;
+        Mon, 29 May 2023 00:28:22 -0700 (PDT)
+Received: by mail-pj1-x1032.google.com with SMTP id 98e67ed59e1d1-256481ce1b5so1117663a91.1;
+        Mon, 29 May 2023 00:28:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685345301; x=1687937301;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ygQ9/7FF2gwyrasLb/Tn66vCuscCVpQE5Y1FOjPAlvA=;
+        b=PaT5Em2sZUZbdhKuuTEBaHrOug2J4KLOC0eMu5votMfZhGJRPy0BYjAALMZ2Hk4I0X
+         nE6C7ICZ6qhr/Ap2FSeBxAmkBCzPSRO2AuT02E42yz8UwWe/wmLmpLUN6VizgVSzq9qV
+         izStqqsyFsXkLFz6khRPLSOrPHYlaoXwV2YI5jlUgboGx4klmKxllqwjg4djsWncvUq/
+         fzRQh+ZmvEr/blPham23epj3XRij9sMc9B1KnZ4DaZtYjXj7A01rfwykK/vC1igBozd0
+         vKTJtaiOEClTuO/5n+mPXxmeS9Ym74F/x44TeKyybgJ65YmFu4eC91emPxf2Qpz5oxIy
+         qKmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685345301; x=1687937301;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ygQ9/7FF2gwyrasLb/Tn66vCuscCVpQE5Y1FOjPAlvA=;
+        b=Fry8dXsdctxQgOe8Gv4luJQy2cy1PAz3b+2AjAoKXMNBirBol9RS83b5fWhWWYl6YF
+         /HFlloEuS93aa0QvRMYpICAdCHHPbP77TTsGSvkfVhBYnEtEViKCe+Sj+cW9REL+p2DW
+         cA/wBFWNCTffwMX6ZyIKiB9m4max7u29bzyamR5WolbByJnL4/cm0PPuD+Y+YCmIFfMn
+         06aiMJx2qMcWn+7GItbR1F0+6BW3VejD3iweE0TzwOTf+biYSGqPe1x4WBfYMjzjBr6O
+         QXyJAUFPUmlf5/styTboJTzNAIzprMOhptgaLw5MGTN4DJ+hLCv0moHLNpGMTT6/aEY4
+         a56g==
+X-Gm-Message-State: AC+VfDwlOnpS5Bc8FHm2PKsoMlDA81hhm9TyZlf41JzgkpfD18iYeKDx
+        T9Hd57eYbwq4uev3mSd27FY=
+X-Google-Smtp-Source: ACHHUZ7KTCdr1KdnRENQwXuixuIk9hb09wA9xzWbbZBbsOzhUWrYIaujlVa1hrTdLvD1uPqtDL7XkQ==
+X-Received: by 2002:a17:902:dac2:b0:1b0:4687:ba0c with SMTP id q2-20020a170902dac200b001b04687ba0cmr2131341plx.8.1685345300763;
+        Mon, 29 May 2023 00:28:20 -0700 (PDT)
+Received: from debian.me (subs02-180-214-232-25.three.co.id. [180.214.232.25])
+        by smtp.gmail.com with ESMTPSA id ik24-20020a170902ab1800b001b0142908f7sm5512582plb.291.2023.05.29.00.28.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 May 2023 00:28:20 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+        id CB080106A11; Mon, 29 May 2023 14:28:16 +0700 (WIB)
+Date:   Mon, 29 May 2023 14:28:16 +0700
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+To:     Hao Zhang <quic_hazha@quicinc.com>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
         Mike Leach <mike.leach@linaro.org>,
         Leo Yan <leo.yan@linaro.org>,
         James Clark <james.clark@arm.com>,
         Alexander Shishkin <alexander.shishkin@linux.intel.com>,
         Mathieu Poirier <mathieu.poirier@linaro.org>,
         Konrad Dybcio <konradybcio@gmail.com>,
-        "Rob Herring" <robh+dt@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        "Paul Walmsley" <paul.walmsley@sifive.com>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
         Palmer Dabbelt <palmer@dabbelt.com>,
         Albert Ou <aou@eecs.berkeley.edu>,
         Jonathan Corbet <corbet@lwn.net>
-CC:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
         Tingwei Zhang <quic_tingweiz@quicinc.com>,
         Jinlong Mao <quic_jinlmao@quicinc.com>,
-        "Yuanfang Zhang" <quic_yuanfang@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
         Tao Zhang <quic_taozha@quicinc.com>,
         Trilok Soni <quic_tsoni@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        "Bjorn Andersson" <andersson@kernel.org>,
-        <linux-doc@vger.kernel.org>
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-doc@vger.kernel.org
+Subject: Re: [PATCH v5 3/3] Documentation: trace: Add documentation for
+ Coresight Dummy Trace
+Message-ID: <ZHRUELoOoqw6rkbQ@debian.me>
 References: <20230526100753.34581-1-quic_hazha@quicinc.com>
-Content-Language: en-US
-From:   Hao Zhang <quic_hazha@quicinc.com>
-In-Reply-To: <20230526100753.34581-1-quic_hazha@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: sFRmv892x0D2A7hEFZSgzFwuaCajquvT
-X-Proofpoint-GUID: sFRmv892x0D2A7hEFZSgzFwuaCajquvT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-29_04,2023-05-25_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 clxscore=1015
- priorityscore=1501 mlxscore=0 phishscore=0 impostorscore=0 mlxlogscore=999
- bulkscore=0 malwarescore=0 lowpriorityscore=0 suspectscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
- definitions=main-2305290062
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+ <20230526100753.34581-4-quic_hazha@quicinc.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="nzlE/XuSNu6KUNn7"
+Content-Disposition: inline
+In-Reply-To: <20230526100753.34581-4-quic_hazha@quicinc.com>
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-Add the missing information for this patch series.
+--nzlE/XuSNu6KUNn7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
-Hao
+On Fri, May 26, 2023 at 06:07:53PM +0800, Hao Zhang wrote:
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D
+> +Coresight Dummy Trace Module
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D
+> +
+> +    :Author:   Hao Zhang <quic_hazha@quicinc.com>
+> +    :Date:     May 2023
+> +
+> +Introduction
+> +------------
+> +
+> +The Coresight dummy trace module is for the specific devices that kernel=
+ don't
+> +have permission to access or configure, e.g., CoreSight TPDMs on Qualcomm
+> +platforms. For these devices, a dummy driver is needed to register them =
+as
+> +Coresight devices. The module may also be used to define components that=
+ may
+> +not have any programming interfaces (e.g, static links), so that paths c=
+an be
+> +created in the driver. It provides Coresight API for operations on dummy
+> +devices, such as enabling and disabling them. It also provides the Cores=
+ight
+> +dummy sink/source paths for debugging.
+> +
+> +Config details
+> +--------------
+> +
+> +There are two types of nodes, dummy sink and dummy source. These nodes
+> +are available at ``/sys/bus/coresight/devices``.
+> +
+> +Example output::
+> +
+> +    $ ls -l /sys/bus/coresight/devices | grep dummy
+> +    dummy_sink0 -> ../../../devices/platform/soc@0/soc@0:sink/dummy_sink0
+> +    dummy_source0 -> ../../../devices/platform/soc@0/soc@0:source/dummy_=
+source0
 
-On 5/26/2023 6:07 PM, Hao Zhang wrote:
+The doc LGTM, thanks!
 
-Introduction of Coresight Dummy subunit
-The Coresight Dummy subunit is for Coresight Dummy component, there are
-some specific Coresight devices that HLOS don't have permission to access.
-Such as some TPDMs, they would be configured in NON-HLOS side, but it's
-necessary to build Coresight path for it to debug. So there need driver 
-to register dummy devices as Coresight devices.
+Reviewed-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
-Commit link:
-https://git.codelinaro.org/clo/linux-kernel/coresight/-/tree/coresight-dummy-v5
+--=20
+An old man doll... just what I always wanted! - Clara
 
-> Changes in V5:
-> 1. Follow the alphabetical order for the header files in
-> coresight-dummy.c. -- Suzuki K Poulose
-> 2. Update the maintainers.
-> 3. Split the Coresight Dummy YAML to 2 schema files.
-> -- Rob Herring & Krzysztof Kozlowski
-> 4. Update the coresight-dummy.rst file. -- Bagas Sanjaya
-> 
-> Changes in V4:
-> 1. Remove traceid allocation in dummy_probe function since it is
-> currently not in use, will upstream it as the part of ATID filtering
-> in the further.  -- Suzuki K Poulose
-> 2. Remove 'oneOf' as there is only one entry. -- Rob Herring
-> 
-> Changes in V3:
-> 1. Use API "dev_dbg" to replace "dev_info". -- Suzuki K Poulose
-> 2. Drop "qcom" property and take it as a dummy framework.
-> -- Suzuki K Poulose
-> 3. Add new sub-type "CORESIGHT_DEV_SUBTYPE_SINK_DUMMY" to support
-> coresight dummy module -- Mike Leach
-> 4. Use compatibles "arm,coresight-dummy-source" and
-> "arm,coresight-dummy-sink" to replace property "qcom,dummy-source" and
-> "qcom,dummy-sink". -- Mike Leach
-> 5. Define source_devs and sink_devs DEVLIST to replace dummy_devs, make
-> it clear at the first level. -- Mike Leach
-> 6. Modify subject of YAML patch, drop "YAML schema". -- Krzysztof Kozlowski
-> 7. Drop some redundant items and correct syntax errors in yaml file.
-> -- Krzysztof Kozlowski & Rob Herring
-> 8. Correct required property of yaml file, constrain out ports to
-> dummy-source and in ports to dummy-sink. -- Mike Leach
-> 9. Drop "Sysfs files and directories" contents of coresight-dummy.rst.
-> -- Suzuki K Poulose/Greg Kroah-Hartman
-> 10.Correct syntax errors of coresight-dummy.rst. -- Bagas Sanjaya
-> 
-> Changes in V2:
-> 1. Declare dummy_init and dummy_exit as static to fix missing-prototypes
-> warnings. -- kernel test robot
-> 2. Fix the errors of coresight-dummy yaml file. -- Rob Herring
-> 
-> Hao Zhang (3):
->    Coresight: Add coresight dummy driver
->    dt-bindings: arm: Add support for Coresight dummy trace
->    Documentation: trace: Add documentation for Coresight Dummy Trace
-> 
->   .../arm/arm,coresight-dummy-sink.yaml         |  73 ++++++++
->   .../arm/arm,coresight-dummy-source.yaml       |  71 ++++++++
->   .../trace/coresight/coresight-dummy.rst       |  32 ++++
->   drivers/hwtracing/coresight/Kconfig           |  11 ++
->   drivers/hwtracing/coresight/Makefile          |   1 +
->   drivers/hwtracing/coresight/coresight-dummy.c | 163 ++++++++++++++++++
->   include/linux/coresight.h                     |   1 +
->   7 files changed, 352 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/arm/arm,coresight-dummy-sink.yaml
->   create mode 100644 Documentation/devicetree/bindings/arm/arm,coresight-dummy-source.yaml
->   create mode 100644 Documentation/trace/coresight/coresight-dummy.rst
->   create mode 100644 drivers/hwtracing/coresight/coresight-dummy.c
-> 
+--nzlE/XuSNu6KUNn7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZHRUDAAKCRD2uYlJVVFO
+o5vLAQDo0n/f2fiGCqPXpyaiJvaaIUAHdmAnPJ+2AADYyHDB2wEAqaI6EkHEQUzk
+2cmQ1IYwhe/9minYIy2mrKSyny8A7Q8=
+=a0pw
+-----END PGP SIGNATURE-----
+
+--nzlE/XuSNu6KUNn7--
