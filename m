@@ -2,133 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 509027151A7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 00:16:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 430CD7151B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 00:17:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229872AbjE2WQB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 18:16:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43660 "EHLO
+        id S229509AbjE2WRy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 18:17:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229847AbjE2WQA (ORCPT
+        with ESMTP id S229455AbjE2WRw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 18:16:00 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E7F5120;
-        Mon, 29 May 2023 15:15:41 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f3b9e54338so4246137e87.0;
-        Mon, 29 May 2023 15:15:41 -0700 (PDT)
+        Mon, 29 May 2023 18:17:52 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7467ECD
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 15:17:21 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2af28a07be9so38566511fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 15:17:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685398540; x=1687990540;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AqYkfa5sDJgAMTWjlOv2KfLblT5wPAPNCKQ3KCIe074=;
-        b=SbjrkF9wlug1TUgUyIl+ptIUjtXZLUSEU+mKA9hy8iP/IYdaEuk4WIVHKJa+kPlVM9
-         AYqBuXrEeMS+NaF7Zw63BKXhbQhPEjn2RhsW7QmTi0kxnwP986IMW7YgAedFc4E6hSL4
-         RiwyJU5iQT6C+1GGh5mDkpQogDTcG8mhXxYgsmf145q9u1B/6fuvrH7HXX5MYEUI9qMm
-         Q4eGitAL0eQSk1K2ULVjEyZ/g0+lyJ66anMm7ByH6gnSeEJZ86m2pqgvw5NRdwHCPdef
-         hvMbSn76zLCzjHWPCoxJpnfK7BTWLG1G9F303Er0EgV/Vwi8nH+FGCWmfbKaunu+SGv+
-         crMw==
+        d=linaro.org; s=google; t=1685398635; x=1687990635;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZmFbsJmJz59jGjCT949YHD7+Zz7ERnx0QJrjFNPlUZA=;
+        b=i5EvsBHz5G8JEAqPFcvFEELd9XeB5Ls2Eq+Z1f4yQWRFHexRenrld94y3lO5ZHhhKv
+         cLV3M+JA9pnXjOl7w54K7CZaFifHmqrTz8U1ujltRcnfqsfQTMdZC0xBdNwXk3RDawzU
+         a+jNh54XH9EhSii1rhcTFcM2oCq0WpENnmj4fnKZAI8XErV1Hafi9rNiiywyAf9tJJEL
+         IRwxes/3cQgOKt5DdWZ86rOhWe3XtTwl1ez7YT1XCfygfSn8Wh4ev2iu4rpr10mOx4oh
+         7abjw5DGXoOgh5aOi9CbmKbIvzOUq4g7bphmvSBIu/PAQC+rYJiTwssHckKYzI+h6xve
+         kAZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685398540; x=1687990540;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AqYkfa5sDJgAMTWjlOv2KfLblT5wPAPNCKQ3KCIe074=;
-        b=ZD1TOWelI3QhOxYPSTg0WtpzSFg6Pau66PT76kfQdLlvXBXpt/VJy4lG8ILmGDmMou
-         MXE68sJeQs05b6EEcYO1+F+l3pUhRNR3wz4DlaLegrTrt3rPsjQIdNVhTlxN6XrEMRQ0
-         8E1zQoHQU069P2V2WjP6/sCjXRO2w2IARTm7yuqdFYkbkqhuaotovQxCR6TzBqsQrvT9
-         ix0ghHONohUBWKvu10fLdSTo5vj57S7AsQL+UGWBkdEzJLiGnlmhALJWmJt7GesmHDg1
-         3+5KMk4uTnsr0itwqxAfbR+gXcubcHrHeb/4yGGv08xO+R8l5oQ2hgg+P8kkeJm+j34L
-         aUFA==
-X-Gm-Message-State: AC+VfDxK4IiRZna94nIgG3sGmkM9btDTrry/WcHfrSaodL1RFF6mrAin
-        cWvL0+glQKrMDtiMMuT+LZ2veaBZXSL0ew==
-X-Google-Smtp-Source: ACHHUZ6Mfd9AZLyIGNfOj5sv2Lt7e9LVTCTXeVYrnqr6Vg4aoeoL3DR83Q6prMThRXl9YQMLj/a8SA==
-X-Received: by 2002:ac2:4d10:0:b0:4f2:5393:b7c with SMTP id r16-20020ac24d10000000b004f253930b7cmr12095lfi.67.1685398539899;
-        Mon, 29 May 2023 15:15:39 -0700 (PDT)
-Received: from i-vetokaappi.home.lan (dsl-hkibng42-56733b-36.dhcp.inet.fi. [86.115.59.36])
-        by smtp.gmail.com with ESMTPSA id c20-20020ac24154000000b004eb12850c40sm132993lfi.14.2023.05.29.15.15.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 May 2023 15:15:39 -0700 (PDT)
-From:   =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        =?UTF-8?q?Matti=20Lehtim=C3=A4ki?= <matti.lehtimaki@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        d=1e100.net; s=20221208; t=1685398635; x=1687990635;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZmFbsJmJz59jGjCT949YHD7+Zz7ERnx0QJrjFNPlUZA=;
+        b=mF6q7GZnTcgKhAvN8pEGwyO6FvPsq+oIbYDHA8pKCKaLPi8n3mAUDHGs9KklpkRId/
+         BYFNpn9d/3o30N5U4yebz67vGm0tdNsv2/ceJHB/3VlfTIlt8Mb4cX/qraCcXNIlhDJr
+         CxziBhaVBKYhYPVpXsX+AC+ZbHHbWMs2qWBFnJq91yhyK6GKV+/WdeEy2KqSru2eXAoJ
+         AgkFC6cSigVWMrZoGEsB5/gXazHdB/PMpjaFd99PmH4PdKfGIEvhB99IZ/+wtgw6QZx3
+         nCDWtFVTSnG4C9jAPaHvvZqJ/StE5KWdVhxlAtIa/SSN8g8WxvyW9++W66+ILirDCR37
+         2d+A==
+X-Gm-Message-State: AC+VfDwy6YjZaeOoetMQyDseCqQSfdM+ObxfVKAZuU5GJXyE8tyARmbe
+        4e2/2w+jxQXZtbSc3VL6nd406Q==
+X-Google-Smtp-Source: ACHHUZ5x5sMBTtbzq3t8Wi/plEwrJ12amn05zxLWrBamdM2rk6uis4SaCwIJ3NKPC/344ExPs1lMyg==
+X-Received: by 2002:a2e:8792:0:b0:2a8:bdd3:fcb5 with SMTP id n18-20020a2e8792000000b002a8bdd3fcb5mr4374054lji.39.1685398634976;
+        Mon, 29 May 2023 15:17:14 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id r2-20020a2e94c2000000b002adc6c2cb3bsm2608036ljh.5.2023.05.29.15.17.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 May 2023 15:17:14 -0700 (PDT)
+Message-ID: <255ecc1c-d97a-71ad-62b4-de71fd44292f@linaro.org>
+Date:   Tue, 30 May 2023 01:17:13 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH RFC 03/10] drm/panel: Add LGD panel driver for Sony Xperia
+ XZ3
+Content-Language: en-GB
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Neil Armstrong <neil.armstrong@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Caleb Connolly <caleb@connolly.tech>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 3/3] ARM: dts: qcom: pm8941: Add thermal zone config
-Date:   Tue, 30 May 2023 01:15:01 +0300
-Message-Id: <20230529221501.43455-4-matti.lehtimaki@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230529221501.43455-1-matti.lehtimaki@gmail.com>
-References: <20230529221501.43455-1-matti.lehtimaki@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+References: <20230521-drm-panels-sony-v1-0-541c341d6bee@somainline.org>
+ <20230521-drm-panels-sony-v1-3-541c341d6bee@somainline.org>
+ <ccc97880-8e74-b85b-9679-9c12c44c4b99@linaro.org>
+ <brmrqeajbq3oyp3jjwmc6tuhiftz764u6az444xw6g7pwf5fr3@5tlp375qwhed>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <brmrqeajbq3oyp3jjwmc6tuhiftz764u6az444xw6g7pwf5fr3@5tlp375qwhed>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add thermal zone for the PMIC thermal sensor.
+On 30/05/2023 00:11, Marijn Suijten wrote:
+> On 2023-05-22 04:16:20, Dmitry Baryshkov wrote:
+> <snip>
+>>> +	if (ctx->dsi->dsc) {
+>>
+>> dsi->dsc is always set, thus this condition can be dropped.
+> 
+> I want to leave room for possibly running the panel without DSC (at a
+> lower resolution/refresh rate, or at higher power consumption if there
+> is enough BW) by not assigning the pointer, if we get access to panel
+> documentation: probably one of the magic commands sent in this driver
+> controls it but we don't know which.
+> 
+>>> +		drm_dsc_pps_payload_pack(&pps, ctx->dsi->dsc);
+>>> +
+>>> +		ret = mipi_dsi_picture_parameter_set(ctx->dsi, &pps);
+>>> +		if (ret < 0) {
+>>> +			dev_err(panel->dev, "failed to transmit PPS: %d\n", ret);
+>>> +			goto fail;
+>>> +		}
+>>> +		ret = mipi_dsi_compression_mode(ctx->dsi, true);
+>>> +		if (ret < 0) {
+>>> +			dev_err(dev, "failed to enable compression mode: %d\n", ret);
+>>> +			goto fail;
+>>> +		}
+>>> +
+>>> +		msleep(28);
+>>> +	}
+>>> +
+>>> +	ctx->prepared = true;
+>>> +	return 0;
+>>> +
+>>> +fail:
+>>> +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
+>>> +	regulator_disable(ctx->vddio);
+>>> +	return ret;
+>>> +}
+> <snip>
+>>> +	/* This panel only supports DSC; unconditionally enable it */
+> 
+> On that note I should perhaps reword this.
+> 
+>>> +	dsi->dsc = dsc = devm_kzalloc(&dsi->dev, sizeof(*dsc), GFP_KERNEL);
+>>
+>> I think double assignments are frowned upon.
+> 
+> Ack.
+> 
+>>
+>>> +	if (!dsc)
+>>> +		return -ENOMEM;
+>>> +
+>>> +	dsc->dsc_version_major = 1;
+>>> +	dsc->dsc_version_minor = 1;
+>>> +
+>>> +	dsc->slice_height = 32;
+>>> +	dsc->slice_count = 2;
+>>> +	// TODO: Get hdisplay from the mode
+>>
+>> Would you like to fix the TODO?
+> 
+> I can't unless either migrating to drm_bridge (is that doable?) or
+> expand drm_panel.  That's a larger task, but I don't think this driver
+> is the right place to track that desire.  Should I drop the comment
+> entirely or reword it?
 
-Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
----
- arch/arm/boot/dts/qcom-pm8941.dtsi | 31 ++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+I'd say, reword it, so that it becomes more obvious why this TODO can 
+not be fixed at this moment.
 
-diff --git a/arch/arm/boot/dts/qcom-pm8941.dtsi b/arch/arm/boot/dts/qcom-pm8941.dtsi
-index a821f0368a28..b3e246bacd78 100644
---- a/arch/arm/boot/dts/qcom-pm8941.dtsi
-+++ b/arch/arm/boot/dts/qcom-pm8941.dtsi
-@@ -3,6 +3,37 @@
- #include <dt-bindings/interrupt-controller/irq.h>
- #include <dt-bindings/spmi/spmi.h>
- 
-+
-+/ {
-+	thermal-zones {
-+		pm8941-thermal {
-+			polling-delay-passive = <100>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&pm8941_temp>;
-+
-+			trips {
-+				trip0 {
-+					temperature = <105000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+
-+				trip1 {
-+					temperature = <125000>;
-+					hysteresis = <2000>;
-+					type = "hot";
-+				};
-+
-+				crit {
-+					temperature = <145000>;
-+					hysteresis = <2000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+	};
-+};
-+
- &spmi_bus {
- 
- 	pm8941_0: pm8941@0 {
+> 
+>>> +	WARN_ON(1440 % dsc->slice_count);
+>>> +	dsc->slice_width = 1440 / dsc->slice_count;
+> 
+> <snip>
+> 
+> - Marijn
+
 -- 
-2.34.1
+With best wishes
+Dmitry
 
