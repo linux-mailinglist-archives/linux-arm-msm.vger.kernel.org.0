@@ -2,83 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C3F57145B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 09:43:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 36495714626
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 10:12:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231522AbjE2HnE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 03:43:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54890 "EHLO
+        id S231599AbjE2IMD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 04:12:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231527AbjE2Hm4 (ORCPT
+        with ESMTP id S230168AbjE2IMC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 03:42:56 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 608D4D2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 00:42:50 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2af290cf9b7so29386601fa.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 00:42:50 -0700 (PDT)
+        Mon, 29 May 2023 04:12:02 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1681890;
+        Mon, 29 May 2023 01:11:59 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id 41be03b00d2f7-53202149ae2so1805177a12.3;
+        Mon, 29 May 2023 01:11:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685346168; x=1687938168;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QDMhUPXhYCylyY6xJMm9yCulz+xNDYcz18nWz3lpr+Q=;
-        b=shBzne0T2fRTAdOs6SctvRbYARi3RSwjNSSVQQRQ1RkSXJ3nbAqkJNsrJfhFqkavgz
-         9WJFRSTMWd4QgfijhfGlKl0L6b0lBvySnoGYp3UIhCTn9NdBUY7xpgkIKykkYmA9BUdO
-         /QRIE87ys6CftMVaIkpfB8IuJUY3oSiZ3z01/29hTo2nBYBuhHEUHwDv9GSBBFq+t4ts
-         1ivADZ3fVFazVlXyx+G6zsckb/EMqscSa8nMdeuIT/Ivj0YfOIu2l8q7CTH4ao8symrb
-         g5rW2cFMC6lfEzFZlJAmV4iNkDcRdnncmadPAQgSU2GFPzCGDqO1vLtAXD+aC5h9aoGE
-         6Lhw==
+        d=gmail.com; s=20221208; t=1685347918; x=1687939918;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ITRflIOmLkq0lkA6U0VtIoupb3ZXWfiBF04AqIIoi9o=;
+        b=EiieOEYW0qWqoR2XSztxvUhDXIvJwpk4VldiYlBD8rZ/atZqlf1ixEo+4Pq1ifvKsu
+         7OZTF3u8iFOZz9hW7pM3iBAr+SzAR2bLaEgUW0hGuaVeXFTyJgE8KSIkSF/3JB++/02g
+         XhphLaz0RqaiNbrxI6XoDsXUBagig+dCEUt3DCwwR5laM0cp22bGuaRlFAS0vmb8sGHS
+         Qu9/a4yK1/E6WijthNXi7bVUD7oN984AmuLhmmvrJkAMvaIBigDuuDGf4sjK+ik2pORh
+         0zs8q8twwlrEcp8/G3/Q5KhXCkXaoAKLESTKl4vEVaDZZNsY6tD5EaLoJuoPHsjCWEOn
+         QjJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685346168; x=1687938168;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QDMhUPXhYCylyY6xJMm9yCulz+xNDYcz18nWz3lpr+Q=;
-        b=Al235qS7dC9diiCOfSnFpHngggLvk+DbmUsHFoGFVYTeb/cbtild/EUfyygYhXPDgd
-         e7GE/R2mY3Wa3KrWFfLEvtREc4TlfGdF6yOEpbPXlQgDHz6tJpL+KyBc1XniiayG2SEe
-         rh+3KhMgCkfe9iX5Szvo6gXW9/czKd6Mam0eSayKbEz3MyM/qfTR73YJhe77cU/HMV3l
-         bJEdWD57RJ2oOvQwKHb5NijL6oMPq8sMvgtohnchTeKYKX7375SNMDq32JvqzL6vv+Nx
-         ELuk58hYuL1s4MdzCogUg7zzxbF6bssnH8paAnvng5DuZ604Rz/U8zQCFnpUkVHB5auE
-         44+Q==
-X-Gm-Message-State: AC+VfDz9sLXoTe4eKAg5MrzjW8JNtiZVvAoY7rrpPVR5zOaicNaiYgSj
-        NBY8QU/zaYY5YrVkCNWjWM9Lcg==
-X-Google-Smtp-Source: ACHHUZ5P7HjDdkJcWMpclQCMEGd7rt8hr2ymy6fbYhZQYqN/ZhjoDTx+fGlZIXhUCITG1kF+f3wh/Q==
-X-Received: by 2002:a2e:a317:0:b0:2ad:dd7e:6651 with SMTP id l23-20020a2ea317000000b002addd7e6651mr4240593lje.43.1685346168627;
-        Mon, 29 May 2023 00:42:48 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id e20-20020a2e8ed4000000b002a9ee18e9c7sm2230101ljl.69.2023.05.29.00.42.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 May 2023 00:42:48 -0700 (PDT)
-Message-ID: <74a817ff-5850-330d-8cac-f551be6fa35c@linaro.org>
-Date:   Mon, 29 May 2023 09:42:46 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH 0/5] MDSS reg bus interconnect
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        d=1e100.net; s=20221208; t=1685347918; x=1687939918;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ITRflIOmLkq0lkA6U0VtIoupb3ZXWfiBF04AqIIoi9o=;
+        b=hM8YUC7guNBMXJDQQM6uZMbCm8cGIPucbg7VpcU+RJVjWX7vKulw6BvD+7muD3fFsY
+         La3SACHMIm/OOkXNUhUjqoVFZ11w3FikSs+tS45FzZL4l6fxn4gDR9oNdqr8LVQ4SPap
+         aCf6V5VTNxKN1eeacoZaP6ClR/6bcs1yJd7xOO2JVd+ISG3N5RL5fyf9yiibe9qFDdsg
+         Uo+xEtcZfnBuztnmXG/XA3hbwnhTkJWGwhUe31DM8tahexvDavsXnQDN7ccfAeUxkNYD
+         rKCMC+iAtO7Nh7iB9wrGTWgqSE+MxcpvYxZwP3TOPS7Tw2yVxlDW3mwImQKaA+7UzbOd
+         C2gw==
+X-Gm-Message-State: AC+VfDx1ljNWxH+Xxn0hnTqIbPOYZ2RDzqRl3PZHWOLVT4Xt6UpuBmwR
+        u50i82yMFW+pKWmsLsFnyzw=
+X-Google-Smtp-Source: ACHHUZ7QZU0efRghNTC1uA2xMtvWd8GuQtAjRwoNf4tH35DbcLShCgaZ3fR5ZrBl4aw4/bJ1Hg8LkA==
+X-Received: by 2002:a17:90a:fd09:b0:24d:ebf8:b228 with SMTP id cv9-20020a17090afd0900b0024debf8b228mr9564707pjb.19.1685347918446;
+        Mon, 29 May 2023 01:11:58 -0700 (PDT)
+Received: from debian.me (subs02-180-214-232-78.three.co.id. [180.214.232.78])
+        by smtp.gmail.com with ESMTPSA id a2-20020a17090abe0200b002565a84c848sm2655118pjs.43.2023.05.29.01.11.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 May 2023 01:11:58 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+        id 691BC106A11; Mon, 29 May 2023 15:11:55 +0700 (WIB)
+Date:   Mon, 29 May 2023 15:11:55 +0700
+From:   Bagas Sanjaya <bagasdotme@gmail.com>
+To:     Hao Zhang <quic_hazha@quicinc.com>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        James Clark <james.clark@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230417-topic-dpu_regbus-v1-0-06fbdc1643c0@linaro.org>
- <CAA8EJpo8X7KrrXoButyW0d1Lz=a5Stw2inFGt2R7KJ+2NTX6wA@mail.gmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAA8EJpo8X7KrrXoButyW0d1Lz=a5Stw2inFGt2R7KJ+2NTX6wA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Andy Gross <agross@kernel.org>,
+        Paul Walmsley <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Jonathan Corbet <corbet@lwn.net>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-doc@vger.kernel.org
+Subject: Re: [PATCH v5 0/3] Add support to configure Coresight Dummy subunit
+Message-ID: <ZHReS1qkktqziCxM@debian.me>
+References: <20230526100753.34581-1-quic_hazha@quicinc.com>
+ <5c56a874-dc41-c68c-6f70-efcbc67c29b2@quicinc.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="6QXsBYr0FX1el6tf"
+Content-Disposition: inline
+In-Reply-To: <5c56a874-dc41-c68c-6f70-efcbc67c29b2@quicinc.com>
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -86,54 +99,46 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--6QXsBYr0FX1el6tf
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 29.05.2023 04:42, Dmitry Baryshkov wrote:
-> On Mon, 17 Apr 2023 at 18:30, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there's
->> another path that needs to be handled to ensure MDSS functions properly,
->> namely the "reg bus", a.k.a the CPU-MDSS interconnect.
->>
->> Gating that path may have a variety of effects.. from none to otherwise
->> inexplicable DSI timeouts..
->>
->> This series tries to address the lack of that.
->>
->> Example path:
->>
->> interconnects = <&bimc MASTER_AMPSS_M0 0 &config_noc SLAVE_DISPLAY_CFG 0>;
-> 
-> If we are going to touch the MDSS interconnects, could you please also
-> add the rotator interconnect to the bindings?
-> We do not need to touch it at this time, but let's not have to change
-> bindings later again.
-> 
-Ack
+On Mon, May 29, 2023 at 03:17:32PM +0800, Hao Zhang wrote:
+> Hi,
+>=20
+> Add the missing information for this patch series.
+>=20
+> Thanks,
+> Hao
+>=20
+> On 5/26/2023 6:07 PM, Hao Zhang wrote:
+>=20
+> Introduction of Coresight Dummy subunit
+> The Coresight Dummy subunit is for Coresight Dummy component, there are
+> some specific Coresight devices that HLOS don't have permission to access.
+> Such as some TPDMs, they would be configured in NON-HLOS side, but it's
+> necessary to build Coresight path for it to debug. So there need driver to
+> register dummy devices as Coresight devices.
+>=20
+> Commit link:
+> https://git.codelinaro.org/clo/linux-kernel/coresight/-/tree/coresight-du=
+mmy-v5
 
-Konrad
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->> Konrad Dybcio (5):
->>       dt-bindings: display/msm: Add reg bus interconnect
->>       drm/msm/dpu1: Rename path references to mdp_path
->>       drm/msm/mdss: Rename path references to mdp_path
->>       drm/msm/mdss: Handle the reg bus ICC path
->>       drm/msm/dpu1: Handle the reg bus ICC path
->>
->>  .../bindings/display/msm/mdss-common.yaml          |  1 +
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_core_perf.c      | 10 +++----
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            | 34 ++++++++++++++++-----
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h            |  5 ++--
->>  drivers/gpu/drm/msm/msm_mdss.c                     | 35 ++++++++++++++--------
->>  5 files changed, 57 insertions(+), 28 deletions(-)
->> ---
->> base-commit: d3f2cd24819158bb70701c3549e586f9df9cee67
->> change-id: 20230417-topic-dpu_regbus-abc94a770952
->>
->> Best regards,
->> --
->> Konrad Dybcio <konrad.dybcio@linaro.org>
->>
-> 
-> 
+OK, please reroll.
+
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--6QXsBYr0FX1el6tf
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZHReSwAKCRD2uYlJVVFO
+o8nGAQCXX1l4ccCpzdDZVWr0b1HG+nQadNo2EQnbSJPsqEGQDwEApvpm9ytnx3IE
+z1SjTimJHr/KkJAqU93pxteEYEpV9wQ=
+=d+Dp
+-----END PGP SIGNATURE-----
+
+--6QXsBYr0FX1el6tf--
