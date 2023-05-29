@@ -2,67 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F037714F57
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 20:22:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10353714F6A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 20:36:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229654AbjE2SWZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 14:22:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40768 "EHLO
+        id S229577AbjE2Sgd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 14:36:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43372 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbjE2SWY (ORCPT
+        with ESMTP id S229505AbjE2Sgc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 14:22:24 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B209C4;
-        Mon, 29 May 2023 11:22:23 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 0E19E61B00;
-        Mon, 29 May 2023 18:22:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8170DC433D2;
-        Mon, 29 May 2023 18:22:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685384542;
-        bh=oCMX/Geu63rceF98CJ4hQyNEh8roIyS9yo/tz8IHJuc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ilh+jWqCoBaVa6PXTgaflF1MN1eQX6Ro1ekApfU2/9nYgdf0ImtiEGMHPkee4JDcz
-         jsBHaLxgISpJFp010BZFPG+5zJjsjjf7phcPMrP79szhjgxiLoNTSMT3RQ4km6iCcz
-         mEYUEtKZatnlgOMOMlEasG2QxbNDAwuaW91x/Kl57ooXbG0RNobfEpoVq/jrAHWmDr
-         NcsxWz45vF0fpYXCL1EJ0Ah89NtOIqktL5mxXv3HF16Ezqx81yTu/Ywzx9fxCfdPQ2
-         DT5n0iT17ldfHlRBF1QrclTHBmetTLu1NQ89Kwu2mrzFkj03tT+K4kQjS0HBNoy4AU
-         f9o0ktwOhwmKw==
-Date:   Mon, 29 May 2023 19:22:15 +0100
-From:   Conor Dooley <conor@kernel.org>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Mon, 29 May 2023 14:36:32 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 370B4CF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 11:36:31 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f3b314b1d7so3743352e87.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 11:36:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685385389; x=1687977389;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=t3ozesbe+mSNz95y12LI1uVitfrg5g7D4Ki7IAE/tYk=;
+        b=kyKAFSjY987yHXaGsuiqDYW8Jkn6gLhGEDhvO4jpA/k2/Y30WwMN/32qddtqYgAKcb
+         A92EGA58yEHfh2UpxikHWTnIjzwO6mp+snFNq1ay6517+gaH7auhTxvvK626eowRhP8+
+         QVmyyfVo+cHFdKQXTFMuiQxwS0Gy0xQ2NjvMC1wf+FEHCCi6EOQXdD5q3T4w6EGfuryX
+         Rr55Bs+qS5JqISCn2x6XFok08rTnrU7NIIZdwN3Gl8IJ6EkzSXQ1km8yhMP6p6/Hwg+U
+         7mN+kUQXbRW5QwS9xJ1wiuqKlrvRQtjtFad6KiExsOpmkhigLIRIp8r7+ljEsJLpDg0B
+         o8uQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685385389; x=1687977389;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=t3ozesbe+mSNz95y12LI1uVitfrg5g7D4Ki7IAE/tYk=;
+        b=DPAC//uQkthSgJe/Db2FP+vaq1V4mvjPtqLrcpzeehTHbSR/NWS39m8d8DB5cv34Iz
+         mLednTu15Jp2rbfIE72HZdfrbPDthZTpKZGcYFg06XaY53juqeOVf3ML7822+rDAb8bC
+         t4XrfcqB1Hngp0TWlsUjRMLeG5FzqJpJzJfL5UoWpu5qyd2AcDUy6Zu2ZDPqHgvQI5Pv
+         uPorx3N3pTP9mCCJHVyTk8MC7HC6manzx3ppQTzT0CD32X4xCPhdj6Br+2qn2P9EyUJC
+         iqAePrmvQ6/F5HT3thTVgUzs4zwCahTzWSQSJ9ylD1pCs0C3DD98QUojCZlO3UhHX92O
+         oVAw==
+X-Gm-Message-State: AC+VfDwi2FfKBU9uf/+qlMqfCFJPntfqWt8wGBnTGuUC+/5tGs5EsnvQ
+        BI+NIuC2ZUwPD5IUdkOX4tR8Dg==
+X-Google-Smtp-Source: ACHHUZ6dn47QBusaXpkxE0E5EKJjRxwpIGLwNnUgxmrCRciC1SFZdzeIITChD9ljPFiOeMyeOiEqhw==
+X-Received: by 2002:ac2:514c:0:b0:4f3:a69e:1d80 with SMTP id q12-20020ac2514c000000b004f3a69e1d80mr3114138lfd.0.1685385389404;
+        Mon, 29 May 2023 11:36:29 -0700 (PDT)
+Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
+        by smtp.gmail.com with ESMTPSA id l19-20020a19c213000000b004f37a541f0csm74832lfc.270.2023.05.29.11.36.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 May 2023 11:36:28 -0700 (PDT)
+Message-ID: <ec745998-8b07-c5a5-5220-b2e21528eac1@linaro.org>
+Date:   Mon, 29 May 2023 20:36:27 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH] media: venus: firmware: Use of_reserved_mem_lookup()
+Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Cc:     Vikash Garodia <quic_vgarodia@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/7] dt-bindings: msm: dsi-phy-28nm: Document msm8226
- compatible
-Message-ID: <20230529-encircle-cherub-374102ca43d4@spud>
-References: <20230308-msm8226-mdp-v1-0-679f335d3d5b@z3ntu.xyz>
- <20230308-msm8226-mdp-v1-1-679f335d3d5b@z3ntu.xyz>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="UyjEm4CeDHfnthCw"
-Content-Disposition: inline
-In-Reply-To: <20230308-msm8226-mdp-v1-1-679f335d3d5b@z3ntu.xyz>
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+References: <20230529-venus-of-rmem-v1-1-dfcdc5047ffb@gerhold.net>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230529-venus-of-rmem-v1-1-dfcdc5047ffb@gerhold.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -72,69 +81,66 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---UyjEm4CeDHfnthCw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 29, 2023 at 11:43:58AM +0200, Luca Weiss wrote:
-> The MSM8226 SoC uses a slightly different 28nm dsi phy. Add a new
-> compatible for it.
->=20
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+On 29.05.2023 20:16, Stephan Gerhold wrote:
+> Reserved memory can be either looked up using the generic function
+> of_address_to_resource() or using the special of_reserved_mem_lookup().
+> The latter has the advantage that it ensures that the referenced memory
+> region was really reserved and is not e.g. status = "disabled".
+> 
+> of_reserved_mem also supports allocating reserved memory dynamically at
+> boot time. This works only when using of_reserved_mem_lookup() since
+> there won't be a fixed address in the device tree.
+> 
+> Switch the code to use of_reserved_mem_lookup(). There is no functional
+> difference for static reserved memory allocations.
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 > ---
->  Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml | 1 +
->  Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml    | 1 +
->  2 files changed, 2 insertions(+)
->=20
-> diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.y=
-aml b/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
-> index cf4a338c4661..bd70c3873ca9 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-28nm.yaml
-> @@ -18,6 +18,7 @@ properties:
->        - qcom,dsi-phy-28nm-hpm
->        - qcom,dsi-phy-28nm-hpm-fam-b
->        - qcom,dsi-phy-28nm-lp
-> +      - qcom,dsi-phy-28nm-8226
+> See e.g. [1] for an example of dynamically allocated reserved memory.
+> (This patch does *not* depend on [1] and is useful without as well...)
+> 
+> [1]: https://lore.kernel.org/linux-arm-msm/20230510-dt-resv-bottom-up-v1-5-3bf68873dbed@gerhold.net/
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-How come the order is different in both places?
+>  drivers/media/platform/qcom/venus/firmware.c | 24 +++++++++++++-----------
+>  1 file changed, 13 insertions(+), 11 deletions(-)
+> 
+[...]
 
-Acked-by: Conor Dooley <conor.dooley@microchip.com>
+> -	mem_va = memremap(r.start, *mem_size, MEMREMAP_WC);
+> +	mem_va = memremap(*mem_phys, *mem_size, MEMREMAP_WC);
+>  	if (!mem_va) {
+> -		dev_err(dev, "unable to map memory region: %pR\n", &r);
+> +		dev_err(dev, "unable to map memory region %pa size %#zx\n", mem_phys, *mem_size);
+Nit : I'm not sure which is more useful, but many mapping functions
+seem to prefer printing
 
-Thanks,
-Conor.
+start, start+size-1
 
->        - qcom,dsi-phy-28nm-8960
-> =20
->    reg:
-> diff --git a/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml=
- b/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
-> index b0100105e428..db9f07c6142d 100644
-> --- a/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/qcom,mdss.yaml
-> @@ -125,6 +125,7 @@ patternProperties:
->            - qcom,dsi-phy-14nm-660
->            - qcom,dsi-phy-14nm-8953
->            - qcom,dsi-phy-20nm
-> +          - qcom,dsi-phy-28nm-8226
->            - qcom,dsi-phy-28nm-hpm
->            - qcom,dsi-phy-28nm-lp
->            - qcom,hdmi-phy-8084
->=20
-> --=20
-> 2.40.1
->=20
+instead of 
 
---UyjEm4CeDHfnthCw
-Content-Type: application/pgp-signature; name="signature.asc"
+start, size
 
------BEGIN PGP SIGNATURE-----
+on failure.
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZHTtVwAKCRB4tDGHoIJi
-0nvKAQDbhG5jqoLQjbATFU8ogWNuoWFeY5pQPfj1a1MKxd++VAD/fQ/wznbK/2Ma
-4WV5Mn40WKJywRLn/w7MU15yVh9TGgk=
-=M/da
------END PGP SIGNATURE-----
-
---UyjEm4CeDHfnthCw--
+Konrad
+>  		ret = -ENOMEM;
+>  		goto err_release_fw;
+>  	}
+> @@ -138,8 +142,6 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
+>  	memunmap(mem_va);
+>  err_release_fw:
+>  	release_firmware(mdt);
+> -err_put_node:
+> -	of_node_put(node);
+>  	return ret;
+>  }
+>  
+> 
+> ---
+> base-commit: 9f9f8ca6f012d25428f8605cb36369a449db8508
+> change-id: 20230529-venus-of-rmem-f649885114fd
+> 
+> Best regards,
