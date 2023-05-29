@@ -2,154 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C60867151F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 00:39:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CFF271522A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 00:51:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229569AbjE2WjP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 18:39:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54736 "EHLO
+        id S229486AbjE2Wu7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 18:50:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbjE2WjO (ORCPT
+        with ESMTP id S229513AbjE2Wu2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 18:39:14 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 385819F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 15:39:13 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f4b80bf93aso4099475e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 15:39:13 -0700 (PDT)
+        Mon, 29 May 2023 18:50:28 -0400
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDFDD9F;
+        Mon, 29 May 2023 15:50:27 -0700 (PDT)
+Received: by mail-qv1-xf2e.google.com with SMTP id 6a1803df08f44-62614f2eee1so10845646d6.0;
+        Mon, 29 May 2023 15:50:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685399951; x=1687991951;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2Xub4E75y8Nyr5XajoijONWb7PnUiTj5szgyWiuoPJQ=;
-        b=MneeusNPF5NlydCsdbfh/dap+ohfCB4fgHdqa2BiNfYpPkKSUL6R7YM/Y4tXnpktFG
-         e9Dwm0RCk1+uJPcmzdXjzFsAa6CK4T2GYqX35VNV5Xs2qMkOyOIPQUoHY7Umj9oSIkda
-         LpcsZQEAcC0OQBp3IoT0ssriIOY9SiQu7X2dFxsNWFMpf68LONBDstH9WlY7rnGHWPiM
-         IQJ4vUgwdOqc+VPpm9CY4yol+rr4G1PmDpG6sXCCdvyCNG0O0U/qo3qIUsM7BsTqExdl
-         lCDBUDOFvlOZKHfkoupjfALiOTsHqOxHMU2m5g3jsKaPxmL50s7B8MRrFT7gJ57n3cKf
-         w2+g==
+        d=gmail.com; s=20221208; t=1685400627; x=1687992627;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RVBRt1RRCrWOt+dpsuJxOTx1nUGJsRbKUrCzrpzPHpg=;
+        b=SnClQBMxTp7WB5BKdPH6jLBMnPf5Rr57XQye4Tg/qNfGeWa1n6+0eqOQcuMaP2RptJ
+         7TKbm0BI28LC/0aa5r1aTz7ACKqd03WMuYRX6Gdh3fOUwo58EzWofQlfs1C/Nsymc6YB
+         c6FljdFLU6htyUlDU3cDgXZaLY05vZ2PZLXLCXkkWZpYX51iOFbdmkV93z4kUlZTd7sv
+         okUF6FFd5LQd75En8avR1si/y/Ot4/tgWQHudIRv2wpc7DH8fsrRQFyEqD60JD6Yila4
+         ccE8kSERvSJJMZ2sN3sE9j47sTHDrPii5Lf2dGarVCJ3pEedbfuznbV+u2p6ed46QE8e
+         /q2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685399951; x=1687991951;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2Xub4E75y8Nyr5XajoijONWb7PnUiTj5szgyWiuoPJQ=;
-        b=LvxSEhCuAIr+udjc1ltTNCfABWDyzmLatehat8/FcWGG1udNHc+EFDxEMKVWbONJON
-         jZojWK6zLsMblrnnajGc2bWCmceFHHDa8uDyCp0GyC4LLxfrQVQTrAWaUv+3py8qHsqp
-         KBO6SzdzXrumFtIsxHAMC2bfGefz9WnG0UKSZAGSb5M6rNDrCr7nEbaW6yxWi3tyX6iw
-         c/iThas1Db5aydvQxNMwZJcpUy6qtppzR11lGPlQWK+OopLt8xHtmxfF5Shq2KBYuAXp
-         t8FnMlb7pUutXNHno3o6noCqqGnKsqtC0+9yNOqUdPfSTvTFVkc1DZoTBW3B8AFNRIWN
-         TvHw==
-X-Gm-Message-State: AC+VfDz8kyT/XkKUMxVaf6P2uT7d0OX9W119DFhnwqGV8YlSFkoqLMqH
-        5Zhzo6OHnx7fV3fmwb9O331APA==
-X-Google-Smtp-Source: ACHHUZ4An8N93KNttIkDEg95kOa0os1fM8bISo57wWgd27lbpv8dT/gg0gviUKDQnepBfNN1PxN0cQ==
-X-Received: by 2002:a05:6512:247:b0:4e9:9e45:3470 with SMTP id b7-20020a056512024700b004e99e453470mr36318lfo.3.1685399951314;
-        Mon, 29 May 2023 15:39:11 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id j28-20020ac2551c000000b004f27cf63a03sm128312lfk.299.2023.05.29.15.39.10
+        d=1e100.net; s=20221208; t=1685400627; x=1687992627;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=RVBRt1RRCrWOt+dpsuJxOTx1nUGJsRbKUrCzrpzPHpg=;
+        b=KHF+vWs4Pr7zU9QoF3DHIrRfs6yq0DB6zg8cT/i+HoLgJNMIpp07ILwdwmRSNLR7ML
+         ikqKdVJR0z317Op6v2q6IBB8G8pMXCBKQeZ1LOCvcr7RCrinSFFLlDPBTDtZov6ld113
+         s7DKFeUdQIDvbC8E7mjw1CVPI8f4700jBcIvngYOIJxhDwx3BRYkeugyOI3omTBfLAvD
+         fvVMGlQ+WYu7D/N2usTWW04doZ1JHA22sazEKESVyB3u0qQXQWC2A5tEO2Aj9uryWlxN
+         cFeY/r/KGig5iaBzPmvCwaWKX3Nbj31PyflQoxWkp5zKFR2l4BPSDSeBdEwGxbWecZvJ
+         NbUQ==
+X-Gm-Message-State: AC+VfDykt+7crMwqgOvJEihi2BdzbovhgjKtt1Dg2BVt4plgjGQa3qCi
+        uSq1FzKgUIJDwK0Bxs1MOuQ=
+X-Google-Smtp-Source: ACHHUZ5RCCEHDMQYUZGVjcK+yOtF4rKDjrLpwjulFacPlB4NJo4QrqTLdOvIxYIYnMkqqrmoK4HEKg==
+X-Received: by 2002:a05:6214:c24:b0:625:aa1a:937f with SMTP id a4-20020a0562140c2400b00625aa1a937fmr186250qvd.59.1685400626774;
+        Mon, 29 May 2023 15:50:26 -0700 (PDT)
+Received: from localhost ([2600:4040:2007:9800:1794:1f51:786e:6197])
+        by smtp.gmail.com with ESMTPSA id p8-20020a0cfd88000000b0062439f05b87sm4121831qvr.45.2023.05.29.15.50.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 May 2023 15:39:10 -0700 (PDT)
-Message-ID: <d52b384f-9853-3921-d4f2-5aedb7ef4c61@linaro.org>
-Date:   Tue, 30 May 2023 01:39:10 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH RFC 03/10] drm/panel: Add LGD panel driver for Sony Xperia
- XZ3
-Content-Language: en-GB
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     neil.armstrong@linaro.org, Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Caleb Connolly <caleb@connolly.tech>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-References: <20230521-drm-panels-sony-v1-0-541c341d6bee@somainline.org>
- <20230521-drm-panels-sony-v1-3-541c341d6bee@somainline.org>
- <ccc97880-8e74-b85b-9679-9c12c44c4b99@linaro.org>
- <71675a02-0801-62dc-2673-4a0907636b21@linaro.org>
- <CAA8EJpq=HZqiBZ6bpUNH47VmASuH+Mi5OD5BHmg0TPwtsKHf8w@mail.gmail.com>
- <oxgtbj7qmsdvz5gl4bud64jedmhdmvphjfge7uy6uwulefqfsa@pleslv2zgwbp>
- <ebc3ff33-6e4f-b107-33c6-f35b03307058@linaro.org>
- <v3ac2ihqjce7vxcsjnm7ett2vc6wb4hb3bb6x4widd55eintw7@fgkyipbbl2ei>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <v3ac2ihqjce7vxcsjnm7ett2vc6wb4hb3bb6x4widd55eintw7@fgkyipbbl2ei>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Mon, 29 May 2023 15:50:26 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Mon, 29 May 2023 18:50:25 -0400
+Message-Id: <CSZ4NQFL3URD.I9QE8Q3018KI@Latitude-E6420>
+Cc:     "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Conor Dooley" <conor+dt@kernel.org>,
+        "Vinod Koul" <vkoul@kernel.org>,
+        "Kishon Vijay Abraham I" <kishon@kernel.org>,
+        "Arnd Bergmann" <arnd@arndb.de>, "Olof Johansson" <olof@lixom.net>,
+        <soc@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH v2 1/4] dt-bindings: arm: qcom: Add Samsung Galaxy
+ Express
+From:   "Rudraksha Gupta" <guptarud@gmail.com>
+To:     "Conor Dooley" <conor@kernel.org>
+X-Mailer: aerc 0.8.2
+References: <20230527040905.stmnoshkdqgiaex6@ripper>
+ <20230528001010.47868-2-guptarud@gmail.com>
+ <20230528-decode-creasing-f5b3996163e5@spud>
+ <ad7a6ee3-cabb-6f92-a595-8791801cfe97@gmail.com>
+ <a8d3d68d-d202-ddba-3289-65b347807538@linaro.org>
+ <CSZ46N3I9GM7.NON5KMJ66OK5@Latitude-E6420>
+ <20230529-bonsai-during-37a47a528ff3@spud>
+In-Reply-To: <20230529-bonsai-during-37a47a528ff3@spud>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/05/2023 01:37, Marijn Suijten wrote:
-> On 2023-05-30 01:18:40, Dmitry Baryshkov wrote:
-> <snip>
->>>>>>> +    ret = mipi_dsi_dcs_set_display_on(dsi);
->>>>>>> +    if (ret < 0) {
->>>>>>> +        dev_err(dev, "Failed to turn display on: %d\n", ret);
->>>>>>> +        return ret;
->>>>>>> +    }
->>>>>>
->>>>>> My usual question: should the mipi_dsi_dcs_exit_sleep_mode() / mipi_dsi_dcs_set_display_on() be moved from prepare() to enable() part?
->>>>>
->>>>>
->>>>> No, prepare is called before the video stream is started and when display is still in LPM mode and the mode hasn't been set.
->>>>>
->>>>
->>>> Yes, that's my point. Shouldn't we enable the panel _after_ starting the stream?
->>>
->>> I have never investigated what it takes to split these functions, but
->>> some of these panels do show some corruption at startup which may be
->>> circumvented by powering the panel on after starting the video stream?
->>>
->>> I'm just not sure where to make the split: downstream does describe a
->>> qcom,mdss-dsi-on-command and qcom,mdss-dsi-post-panel-on-command, where
->>> the latter only contains set_display_on() (not exit_sleep_mode()).
->>> It is documented like:
->>>
->>>       same as "qcom,mdss-dsi-on-command" except commands are sent after
->>>       displaying an image."
->>>
->>> So this seems like the right way to split them up, I'll test this out on
->>> all submitted panel drivers.
->>
->> Interesting enough, Neil suggested that sending all the commands during
->> pre_enable() is the correct sequence (especially for VIDEO mode panels),
->> since not all DSI hosts can send commands after switching to the VIDEO mode.
-> 
-> Note that all these panels and Driver-ICs are command-mode, and/or
-> programmed to run in command-mode, so there shouldn't be any notion of a
-> VIDEO stream (any command-mode frame is just an "arbitrary command" as
-> far as I understood).
+On Mon May 29, 2023 at 6:37 PM EDT, Conor Dooley wrote:
+> On Mon, May 29, 2023 at 06:28:05PM -0400, Rudraksha Gupta wrote:
+>
+> > Gotcha, I will do that next time. Should I still send v2 in a separate
+> > thread?
+>
+> That'd then be either [PATCH v3], or [RESEND PATCH v2]. Ideally v3 since
+> you will have added the tags you received on v2.
+> AFAIK Bjorn uses b4, which should be able to deal with the series as-is,
+> but sending a v3 with the Acks etc would not be a bad idea. You
+> should probably give it a couple days before doing that to see if it
+> gets picked up before doing that.
+>
+> > Not sure if I should as I don't want to spam anyone.
+>
+> Sending new revisions of patches as a new thread is not spamming, we
+> signed up to be maintainers, or get to email from the lists, after all.
+> Sending several revisions of the same patches in a day would be spamming
+> though, but that is not what we are talking about here ;)
+>
+> Cheers,
+> Conor.
 
-Yes, from the data stream point of view. I was talking about the DSI 
-host being able to send arbitrary commands or not after enabling the 
-video/cmd stream.
-
-> 
-> - Marijn
-
--- 
-With best wishes
-Dmitry
-
+Ah, I see. Thank you for being patient with me. I'm really excited to see m=
+y
+patch go in! :)
