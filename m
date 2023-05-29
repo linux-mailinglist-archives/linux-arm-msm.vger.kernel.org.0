@@ -2,155 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 508FE714B1D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 15:54:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC218714BC6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 16:11:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230133AbjE2Nye (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 09:54:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36064 "EHLO
+        id S229893AbjE2OLh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 10:11:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229774AbjE2Nxy (ORCPT
+        with ESMTP id S229807AbjE2OLg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 09:53:54 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 350AA10C0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 06:53:20 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f3a873476bso3528767e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 06:53:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685368371; x=1687960371;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=p58CUVqLSR0Tnh+edVFp6/c85yeAdv4ChlUd6Ivl4lE=;
-        b=a1UO99vkagOh/S32zwT51/eizQof70iXiTgLznMSd9CsXwBvvLDZB/WA+Zjzs2yZud
-         d0SYoJ1slw62ov5Xq/oh78Is5q/UPPENMXFIg5jr1lXVQ5NjoB67WwFF/N1fevNMiw0I
-         qqkJaOxV/EVstxkTAK3dr5Uzgr80sycyPWtrMwP2lPn8n1LzDfWD7hhPkeWxE0VOyobI
-         HSZmq1v9vwFoNpbJozETEAFSi9fk7FziFIPaTLE6tnvRB1HLVz4o8hUHo3QqbtCyTooL
-         GS/Gga6SI7S3Y3ZHBGMucZ2dtJhkObBcLi5S93dgl/mzvRScLgjc5UrA83nuNBXiq66P
-         ZHgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685368371; x=1687960371;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=p58CUVqLSR0Tnh+edVFp6/c85yeAdv4ChlUd6Ivl4lE=;
-        b=BAQAMelHxzTJYLzz4lOtEq8EkWI2irynZOKSPGrqvGC4FTm97ug6opuf+BQ2khZp7V
-         rYCT1ZhRk/H4ajUzAgCUG73vqCrY+5H19dV2c4hIo2fAwWYwRKMiXKN0sdTECMa7j38M
-         AL8CzCPyP44z4O0XWOxHDxZBlAN2Fl/N7DksKvRKgmb7aEWenYxFHmdzzgg1Y1cZs/RF
-         At6+r/REf2z3soYsZ4F61MJtgXuZdftADOZviYRTPLbduxVOQakU3vxXaWGbOGf7nJrK
-         dY4Wn2CwcPW/B/Ro69NnMUA+6f2RgfU5RsqEvCadmytXYRuUEdCtBdDRRqlrdvIbUQEf
-         rfUQ==
-X-Gm-Message-State: AC+VfDw6fI5EnKOm6yUS4nFACSuREWapWjak4OHWt0NfGT6cCMjLzElk
-        o4d0jBkunt9yzRmhx2tTN60rEQ==
-X-Google-Smtp-Source: ACHHUZ63Z3eJuDnAvuUI83xqUyXnOhx0Q6NIV16cLmP/m8VuJGE0yGBfdp7h6Ltsv0vqYIBRm2YgEw==
-X-Received: by 2002:ac2:5212:0:b0:4f3:aae3:aedc with SMTP id a18-20020ac25212000000b004f3aae3aedcmr3287507lfl.9.1685368371519;
-        Mon, 29 May 2023 06:52:51 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id c16-20020ac25310000000b004f2532cfbc1sm4700lfh.81.2023.05.29.06.52.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 May 2023 06:52:51 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 29 May 2023 15:52:37 +0200
-Subject: [PATCH v8 18/18] drm/msm/a6xx: Add A610 speedbin support
+        Mon, 29 May 2023 10:11:36 -0400
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CCA4B1;
+        Mon, 29 May 2023 07:11:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1685369467; x=1716905467;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=9TesWThXpKxD87Td7aD1y10ImSaXLOK76jjih9rvQ4o=;
+  b=RiSf3vqt9n3RM7rQm982wWrO3ee5Lt8yqxijk+MRdWWGgx8HyV28mtG1
+   5HU37OyKpuJvNO3JjjmFynOTiTxL+cDzLfRKbsnwZWKzsYIheoi7knro+
+   qMLEpjfzr50ln7FU4cpRqm5+o/XOD9+oGj78khYsnYjiCBBgZD4jQw7US
+   DEj+u3GK3aM7bdpN4Q7Gu8cuRdm6jjUZskdUJY7OtlZaQzqOA+c7F/vU1
+   uN/eOMWnYc+iX2CAgd2ARrZtLl2IQAFI8NNniUSAMmW8lZnn76oHK0G/J
+   Imof9iTC1PR7Yu4rTfGDL4JIgFJCwOVj5AcVuQRQY/LK2p2HgU0bujB0s
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10725"; a="352216825"
+X-IronPort-AV: E=Sophos;i="6.00,201,1681196400"; 
+   d="scan'208";a="352216825"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 May 2023 07:10:53 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10725"; a="952774560"
+X-IronPort-AV: E=Sophos;i="6.00,201,1681196400"; 
+   d="scan'208";a="952774560"
+Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.251.208.110])
+  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 May 2023 07:10:50 -0700
+Message-ID: <7982aae5-ac38-03df-aa0a-165c3c3f7764@intel.com>
+Date:   Mon, 29 May 2023 17:10:45 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.11.0
+Subject: Re: [PATCH] mmc: sdhci-msm: Disable broken 64-bit DMA on MSM8916
+Content-Language: en-US
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230518-msm8916-64bit-v1-1-5694b0f35211@gerhold.net>
+From:   Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+In-Reply-To: <20230518-msm8916-64bit-v1-1-5694b0f35211@gerhold.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230223-topic-gmuwrapper-v8-18-69c68206609e@linaro.org>
-References: <20230223-topic-gmuwrapper-v8-0-69c68206609e@linaro.org>
-In-Reply-To: <20230223-topic-gmuwrapper-v8-0-69c68206609e@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Rob Clark <robdclark@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1685368343; l=1852;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=XyERlWDTsfWZFtKFZysYLOHv2ihqt9U+AK25cPIEZ8I=;
- b=2n8OuzD0JlvWdAYJLyaK9eKey1cglmNCSfu2QjRZowbgEZbyhz4HvTwrDp0kby9LRkmISLbjr
- Kcr2krpAbHsBJvpoNGqk/mYX4QT+h2FMVRaFTxDXcCH1aHeS+I5R/H0
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A610 is implemented on at least three SoCs: SM6115 (bengal), SM6125
-(trinket) and SM6225 (khaje). Trinket does not support speed binning
-(only a single SKU exists) and we don't yet support khaje upstream.
-Hence, add a fuse mapping table for bengal to allow for per-chip
-frequency limiting.
+On 18/05/23 12:39, Stephan Gerhold wrote:
+> While SDHCI claims to support 64-bit DMA on MSM8916 it does not seem to
+> be properly functional. It is not immediately obvious because SDHCI is
+> usually used with IOMMU bypassed on this SoC, and all physical memory
+> has 32-bit addresses. But when trying to enable the IOMMU it quickly
+> fails with an error such as the following:
+> 
+>   arm-smmu 1e00000.iommu: Unhandled context fault:
+>     fsr=0x402, iova=0xfffff200, fsynr=0xe0000, cbfrsynra=0x140, cb=3
+>   mmc1: ADMA error: 0x02000000
+>   mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
+>   mmc1: sdhci: Sys addr:  0x00000000 | Version:  0x00002e02
+>   mmc1: sdhci: Blk size:  0x00000008 | Blk cnt:  0x00000000
+>   mmc1: sdhci: Argument:  0x00000000 | Trn mode: 0x00000013
+>   mmc1: sdhci: Present:   0x03f80206 | Host ctl: 0x00000019
+>   mmc1: sdhci: Power:     0x0000000f | Blk gap:  0x00000000
+>   mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
+>   mmc1: sdhci: Timeout:   0x0000000a | Int stat: 0x00000001
+>   mmc1: sdhci: Int enab:  0x03ff900b | Sig enab: 0x03ff100b
+>   mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+>   mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x00008007
+>   mmc1: sdhci: Cmd:       0x0000333a | Max curr: 0x00000000
+>   mmc1: sdhci: Resp[0]:   0x00000920 | Resp[1]:  0x5b590000
+>   mmc1: sdhci: Resp[2]:   0xe6487f80 | Resp[3]:  0x0a404094
+>   mmc1: sdhci: Host ctl2: 0x00000008
+>   mmc1: sdhci: ADMA Err:  0x00000001 | ADMA Ptr: 0x0000000ffffff224
+>   mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
+>   mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:  0x60006400 | DLL cfg2: 0x00000000
+>   mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:  0x00000000 | DDR cfg: 0x00000000
+>   mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88018a8 Vndr func3: 0x00000000
+>   mmc1: sdhci: ============================================
+>   mmc1: sdhci: fffffffff200: DMA 0x0000ffffffffe100, LEN 0x0008, Attr=0x21
+>   mmc1: sdhci: fffffffff20c: DMA 0x0000000000000000, LEN 0x0000, Attr=0x03
+> 
+> Looking closely it's obvious that only the 32-bit part of the address
+> (0xfffff200) arrives at the SMMU, the higher 16-bit (0xffff...) get
+> lost somewhere. This might not be a limitation of the SDHCI itself but
+> perhaps the bus/interconnect it is connected to, or even the connection
+> to the SMMU.
+> 
+> Work around this by setting SDHCI_QUIRK2_BROKEN_64_BIT_DMA to avoid
+> using 64-bit addresses.
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index d046af5f6de2..c304fa118cff 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -2098,6 +2098,30 @@ static bool a6xx_progress(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
- 	return progress;
- }
- 
-+static u32 a610_get_speed_bin(u32 fuse)
-+{
-+	/*
-+	 * There are (at least) three SoCs implementing A610: SM6125 (trinket),
-+	 * SM6115 (bengal) and SM6225 (khaje). Trinket does not have speedbinning,
-+	 * as only a single SKU exists and we don't support khaje upstream yet.
-+	 * Hence, this matching table is only valid for bengal and can be easily
-+	 * expanded if need be.
-+	 */
-+
-+	if (fuse == 0)
-+		return 0;
-+	else if (fuse == 206)
-+		return 1;
-+	else if (fuse == 200)
-+		return 2;
-+	else if (fuse == 157)
-+		return 3;
-+	else if (fuse == 127)
-+		return 4;
-+
-+	return UINT_MAX;
-+}
-+
- static u32 a618_get_speed_bin(u32 fuse)
- {
- 	if (fuse == 0)
-@@ -2195,6 +2219,9 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_gpu *adreno_gpu, u3
- {
- 	u32 val = UINT_MAX;
- 
-+	if (adreno_is_a610(adreno_gpu))
-+		val = a610_get_speed_bin(fuse);
-+
- 	if (adreno_is_a618(adreno_gpu))
- 		val = a618_get_speed_bin(fuse);
- 
-
--- 
-2.40.1
+> ---
+>  drivers/mmc/host/sdhci-msm.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+> index 8ac81d57a3df..1877d583fe8c 100644
+> --- a/drivers/mmc/host/sdhci-msm.c
+> +++ b/drivers/mmc/host/sdhci-msm.c
+> @@ -2479,6 +2479,9 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
+>  		msm_host->ddr_config = DDR_CONFIG_POR_VAL;
+>  
+>  	of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
+> +
+> +	if (of_device_is_compatible(node, "qcom,msm8916-sdhci"))
+> +		host->quirks2 |= SDHCI_QUIRK2_BROKEN_64_BIT_DMA;
+>  }
+>  
+>  static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
+> 
+> ---
+> base-commit: d4ebc9419afbac330e9ec0d2936108742aa4d97a
+> change-id: 20230518-msm8916-64bit-f5bcf6af7679
+> 
+> Best regards,
 
