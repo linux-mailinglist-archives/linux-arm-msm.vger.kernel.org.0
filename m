@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68FC3714A2D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 15:22:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E03D714A4E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 15:26:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229528AbjE2NWC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 09:22:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46832 "EHLO
+        id S229620AbjE2N0n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 09:26:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49930 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229577AbjE2NWB (ORCPT
+        with ESMTP id S229450AbjE2N0m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 09:22:01 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B7D0A8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 06:22:00 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3f68fc6b479so33821005e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 06:22:00 -0700 (PDT)
+        Mon, 29 May 2023 09:26:42 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9DDDEDB
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 06:26:39 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f603d4bc5bso33862545e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 06:26:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685366518; x=1687958518;
+        d=linaro.org; s=google; t=1685366798; x=1687958798;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=zQPnGID00Brxksr1LEFVX3pOkofF35RoN55bi7pgARE=;
-        b=gDWZdNkikMtW4jwWJdMwNzOTeQk4XvTMscX5BPzfte6VLW360lle6e8nAPlUk9g/o8
-         xd8wZgiMFPhfztetNazQ8wsnZQFaI88+oW4POxwsz+1GQuVs/DmN/acHJycNy6r+Ps7f
-         fF3/keTavialx5OmeiHTOF6Ui4Uf7eEq9tMAVBM8km/Sd8ZuwJ85Q97IBqXr6/x+sjbE
-         S3pGNhIqb4ct/ZeUSH6toXAJnGCgK5x4qhD7ueiq8QiYUL0B20fbb4yYJ7ERWOT2A0Pn
-         gYxOZK/+sK82Nno81ex8nMHW0dQtNdc+u/9T/T7/QTYrHhCVMclfHrp3J+MHeQdik3RB
-         Sokw==
+        bh=pqVmt/lKkssBEDVutMwAhZNC3UM1BDf38fuEvYw0wZo=;
+        b=B403hmt7S5VeGe9JK474af1Rjp2qrCUjbRyCXALxcG9CqIKa4cGSb/aYyafdCeUbwk
+         rN3KNbZ7EQnMP+864/GLNzVsrcIJZEUJpAAWZEsoUKR9IXw4wzBHfzz+E9Lfj2/LJSWJ
+         vMzwUIAN2SxfLQFRapLD3ksHEvEibga4R8WF3Fv5kqKAaE55Us+mUonjb4SBMDA2wg+3
+         dYps8Vr3092spVmnImzBKIqqba5iF2br7HSCTaw2I9k83NYN7gC1oL9GDYddrBtigM6X
+         hgva2e9xntIMo25f24dY151FTIjMtMOn9OswX/aYSkwnTdu2cbJFEn+ZkEfjFSOwnl+y
+         Ifqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685366518; x=1687958518;
+        d=1e100.net; s=20221208; t=1685366798; x=1687958798;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zQPnGID00Brxksr1LEFVX3pOkofF35RoN55bi7pgARE=;
-        b=Kns+92EzhhwV2gCKdgFQ0Kcb99ga21dcTKaTP1W+iyMfjYxP63GfNkrNEzF8LPvbQ4
-         NOS/EUwli3V2CfFs6A+BsRLb5jSs6O2NGZEUvoE8YzbWADoGDVRhSXCHCLVBYuNwNmLK
-         ooqB64P1nuQ6xPKc9e6defVAR10WkscQfUk8GpyDKfhQGTYZ0wuB4kHGSo+11AF+zJWw
-         Qd3ogG+Bco1GLqiiqOsmYIpzVmxlePopkhcAXwVGavI1SX0edmEl5sMjVxI0saJQqqzM
-         3kyY1ERr8v1EXmYS8LUPAho8z2Upt95kI1Q94ef+Ukrl9TSjdNiBQy7Tmuq+Lcz9K52I
-         W1Ig==
-X-Gm-Message-State: AC+VfDx0RWXYHSGRlcVsMj/3zQTFU5/jeLaIx43GHS8tXoZLFDHafIoA
-        n+tR5iGr8CCXQoDE6BnXDK52ng==
-X-Google-Smtp-Source: ACHHUZ7I186EtiGbOGB/RbLAQfHQJKOuhNb282Woas7dhrX98jASbnMChjEDiPUjYpdc2Fh5m03Dlw==
-X-Received: by 2002:a7b:c01a:0:b0:3f6:11e9:de8e with SMTP id c26-20020a7bc01a000000b003f611e9de8emr8649611wmb.4.1685366518607;
-        Mon, 29 May 2023 06:21:58 -0700 (PDT)
+        bh=pqVmt/lKkssBEDVutMwAhZNC3UM1BDf38fuEvYw0wZo=;
+        b=IF3hYKi2CewvyFXp3hRFXqmwqibprnyTTxMEziuhzZD+wnsTSr7dvgymapXSvJWq6u
+         UpY+Rv5BRHWRJ/xqaVq00YThBRfgDD6AsVSUEaL037I9A70TYQgjrI3BOVTwS7icYggU
+         rbnG/s/18ZInuqFyrf0QYldW6EPmVYEPR+aecmd7aGunfNiAmuMAlrz6c41AMbPnkfBy
+         Q3VZQsmpbI741s1IBEPR1fUSRdxYKvb4ma98eUtdwL6uhUoaimbVR72Ugqz/4734ZPjs
+         gmKmDdf9kt+QDQAP1BitbUB6z0tVgXw8WWXvqvIwyKOEiQyk6L+NbaO4b2fi9e/ENZDB
+         zZjg==
+X-Gm-Message-State: AC+VfDxRlvRwpqPDCvKxAeG3oMVwEnrXWLGjfxTOyC8odfDkyXKoOOjT
+        uk70erSQh2Ank3gbZ2gmsupkOA==
+X-Google-Smtp-Source: ACHHUZ4kz1NRAy8C8TjVRhrx1g1eWYEQtznb381az0vS/v+gb7vgriYX5eDBIssFd2/PkgY2Qn9r2A==
+X-Received: by 2002:a5d:6683:0:b0:30a:dda0:9 with SMTP id l3-20020a5d6683000000b0030adda00009mr8457691wru.49.1685366798116;
+        Mon, 29 May 2023 06:26:38 -0700 (PDT)
 Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id v7-20020a05600c214700b003f4f89bc48dsm17990815wml.15.2023.05.29.06.21.57
+        by smtp.gmail.com with ESMTPSA id q5-20020a5d61c5000000b0030789698eebsm13712754wrv.89.2023.05.29.06.26.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 May 2023 06:21:58 -0700 (PDT)
-Message-ID: <cf8f746f-93d2-8ddc-7e6d-6324322e46e4@linaro.org>
-Date:   Mon, 29 May 2023 14:21:57 +0100
+        Mon, 29 May 2023 06:26:37 -0700 (PDT)
+Message-ID: <c27fea22-e447-e8ac-1a79-fbc747878b30@linaro.org>
+Date:   Mon, 29 May 2023 14:26:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 2/6] arm64: dts: qcom: msm8916/39: Rename &blsp1_uartN ->
- &blsp_uartN
+Subject: Re: [PATCH 3/6] arm64: dts: qcom: msm8916/39: Use consistent name for
+ I2C/SPI pinctrl
 Content-Language: en-US
 To:     Stephan Gerhold <stephan@gerhold.net>,
         Bjorn Andersson <andersson@kernel.org>
@@ -64,14 +64,14 @@ Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20230525-msm8916-labels-v1-0-bec0f5fb46fb@gerhold.net>
- <20230525-msm8916-labels-v1-2-bec0f5fb46fb@gerhold.net>
+ <20230525-msm8916-labels-v1-3-bec0f5fb46fb@gerhold.net>
 From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230525-msm8916-labels-v1-2-bec0f5fb46fb@gerhold.net>
+In-Reply-To: <20230525-msm8916-labels-v1-3-bec0f5fb46fb@gerhold.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,20 +79,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/05/2023 13:46, Stephan Gerhold wrote:
-> For some reason the BLSP UART controllers have a label with a number
-> behind blsp (&blsp1_uartN) while I2C/SPI are named without (&blsp_i2cN).
-> This is confusing, especially for proper node ordering in board DTs.
+On 29/05/2023 13:47, Stephan Gerhold wrote:
+> Make the labels for the BLSP I2C/SPI pinctrl consistent with the one
+> used for UART by adding the missing blsp_ prefix. This allows having
+> them properly grouped together.
 > 
-> Right now all board DTs are ordered as if the number behind blsp does
-> not exist (&blsp_i2cN comes before &blsp1_uartN). Strictly speaking
-> correct ordering would be the other way around ('1' comes before '_').
-> 
-> End this confusion by giving the UART controllers consistent labels.
-> There is just one BLSP on MSM8916/39 so the number is redundant.
+> The nodes are only reordered in msm8939.dtsi for now since the pinctrl
+> definitions in msm8916-pins.dtsi are currently still unordered anyway.
+> (I will try fixing this in a future patch.)
 > 
 > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> ---
 
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
