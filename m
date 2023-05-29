@@ -2,150 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 585F9714632
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 10:19:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F337E714656
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 10:35:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230117AbjE2ITC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 04:19:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40134 "EHLO
+        id S229676AbjE2Ifa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 04:35:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231487AbjE2ITB (ORCPT
+        with ESMTP id S231437AbjE2If1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 04:19:01 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA2F6AC
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 01:18:56 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2af2e1725bdso37386401fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 01:18:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685348335; x=1687940335;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=z+6vJ9zaGIlrddWwekztTVVNTWoY7fyIbT1woEoNQSA=;
-        b=CevULIUtfh0nY4vuRH08Yxw24vpwpTFAzdgVFCNAtb1J0NE0GzFw9nsECTnJ+1s/g6
-         QPENun5ACL0cilue2pMR+SutPLJuorgv1lxiUMR/UnmPh0uuYM0w7lBi3a/It2Kwsn4d
-         sJrwiHFUZXG3UcXQK8gaCjT5NToBo/xCWtpqu+CydTt1fYu2nJHagyQApdHJFTmeZiX1
-         tXcBinKL5zbMhXHlNOOJwCUYP9aCJFcWA8/gxeoWnl7CRuwp+xSs0cR+PHZGaSCo+osj
-         qMD7GpAEWw1hOfOegwwxoVVbcesXAVl9nwYZGXNPOxr6m73FMsADtJpVN5IXugLtupDn
-         f+0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685348335; x=1687940335;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=z+6vJ9zaGIlrddWwekztTVVNTWoY7fyIbT1woEoNQSA=;
-        b=RqPmfpdjg65rhLwWFXSeZKmcI1HzNl/K87SHVsuxeZQMIZRtZP3OghbeT6n9aphHY+
-         y2Xq9xMGOzDPmrBQAMzHyY6I30dDBffQVM6NbJs9X8jsTg+iXufGMJAb4vWGk2Ytw/3j
-         4QBzGoJXR8HZSildGwIscsvn+nZ/l4hWxcr1Do27CI2xiH+ne6UziIaS2kL0Nko5CeSo
-         L1RVsvbb3spWaS62BpeTLKbYPmCTv27e1v7lpMntppSisOYmz6DNDKbzL4FvGmA3Az9q
-         yEHK9sCxS8vyaBRMTrARx3e1HTSxyHaHC/SbrGQTwA6VUC6rVrljKcHyhTbtmOVut72F
-         RkQA==
-X-Gm-Message-State: AC+VfDwapPFSa8O+XpkF+BkuXDGttAl62zFiZUO5TwDX5hoM8xXFLp5q
-        /wlSOP9p4/DJekuMbVAhZzRs8Q==
-X-Google-Smtp-Source: ACHHUZ4SfeeXfI9O7GCTsvx6bNolt5z6hJK7Y92EsXY8u2VrW16ZAXWEk39LHaYMdb+xl7nS1PnuKQ==
-X-Received: by 2002:a2e:9f09:0:b0:295:a8e6:6b15 with SMTP id u9-20020a2e9f09000000b00295a8e66b15mr2416620ljk.4.1685348334930;
-        Mon, 29 May 2023 01:18:54 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id s10-20020a2e98ca000000b002aa4713b925sm2341755ljj.21.2023.05.29.01.18.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 May 2023 01:18:54 -0700 (PDT)
-Message-ID: <2d044f14-65c0-be3f-595f-4ddb46df6fef@linaro.org>
-Date:   Mon, 29 May 2023 10:18:52 +0200
+        Mon, 29 May 2023 04:35:27 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE411A7;
+        Mon, 29 May 2023 01:35:25 -0700 (PDT)
+Received: from [192.168.122.1] (217-149-172-244.nat.highway.telekom.at [217.149.172.244])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 9EFA3C6A55;
+        Mon, 29 May 2023 08:35:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1685349324; bh=pRZ6AHRKQHHZmbPpd+nFn/VwicGcOul2r6Hztykw67M=;
+        h=From:Date:Subject:To:Cc;
+        b=qM0mA/JQ7ZP/BUB88GX6aRcgYqx7gnSPix/bnYQSKGCaJtstJ0ww0U1yrNam5jPjl
+         NOCFUZ0VjfEhKMXTQ9EUA2SSfjROJ2X4pvXpYnnlTP2pxH8lHsFCmnFciZqdTOn+7T
+         QoBj5l3jSCDxdMh/tUTZvAEnU5gcY7lDQGjoG1rc=
+From:   Luca Weiss <luca@z3ntu.xyz>
+Date:   Mon, 29 May 2023 10:34:40 +0200
+Subject: [PATCH v2] clk: qcom: mmcc-msm8974: Add OXILICX_GDSC for msm8226
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v2 3/3] clk: qcom: cbf-msm8996: Add support for MSM8996
- Pro
-Content-Language: en-US
-To:     Yassine Oudjana <yassine.oudjana@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230506-msm8226-oxilicx-v2-1-f7e4ebff3d61@z3ntu.xyz>
+X-B4-Tracking: v=1; b=H4sIAJ9jdGQC/3WNyw6CMBAAf4Xs2Zp2Cwie/A/DgcdWNoFiWiAFw
+ r9bvXucSSZzgCfH5OGeHOBoZc+TjYCXBNq+ti8S3EUGlKhlJnMx+rFAzMUUeOA2iJvRRpqC0lJ
+ 1EKum9iQaV9u2j51dhiHKtyPD4bd5VpF79vPktt91VV/7f7AqoUSGpNOmTI1BfOzazss1bDtU5
+ 3l+AJf3M+bDAAAA
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230527093934.101335-1-y.oudjana@protonmail.com>
- <20230527093934.101335-4-y.oudjana@protonmail.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230527093934.101335-4-y.oudjana@protonmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Bartosz Dudziak <bartosz.dudziak@snejp.pl>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1618; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=pRZ6AHRKQHHZmbPpd+nFn/VwicGcOul2r6Hztykw67M=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBkdGPG8aHQT1XHMemI7VxuRpi3tHbKQMOP++yoI
+ /sYjvNBsWaJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZHRjxgAKCRBy2EO4nU3X
+ VutjD/9VbZpFUfSOrWaLmRwRJ5W8sUG9Y+ZuEBundE4vJXfbdoLcqkNvFuewmL6E0Thxh5Sa4wm
+ NR5TQsQWeN+++LyLS5ByZcMvWm6DILCoH2Nwkwvt9hTO6LRR83mBOarhwEC9sOFw9ZxPoV5gnJg
+ J6z1IayW3dl9FljI5aHoEV73hUU1ezIsGDJlx3sQ/vY9uN3IbXfOmBZvPqlZLyanWyWznOUinB2
+ R20qv3UwUdQ0p9Wus3ljGt594LCd998k8HUZ7iuXYaUSXees5ljqSdyoZzHdNpiWhrNlmINX+Ca
+ mqIWcTVDJp5QG6Q6naqPMC78LrPlivqSIe1QM/l5YsWkKF/QXMzczfQLIdWvrQ5zy1rxufCEz3R
+ gzE8VgH79Dw2XB0Ca1OScM5WpDm8pzayyrljE28inUwdOAtlE3ocUNqME+ZTxdganPCWlaqSX71
+ CldQ9XqJE6FnwVe+tTmEBjXWDUa/2H2XPKCHgXfHTBC2fauXRCOeNmkqKAIEthPHXP1Smy4JQoz
+ DpoMvdGZBJkkNSeVBtWdidw0oMOTEMJFhYPPrEKDwWjuA9erQWg4IdzbYpnbBw7cOi1H5QdNcfr
+ VhBL405KNb1NvFUAC9np7iw1qz6rzGZ//VKQTBV9/QJvWjaSCrYaMsWHPGydAGkaGmfmjpqIty2
+ AImKWJu8/7nXhzA==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 27.05.2023 11:39, Yassine Oudjana wrote:
-> From: Yassine Oudjana <y.oudjana@protonmail.com>
-> 
-> The CBF PLL on MSM8996 Pro has a /4 post divisor instead of /2. Handle the
-> difference accordingly.
-> 
-> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-> ---
->  drivers/clk/qcom/clk-cbf-8996.c | 10 ++++++++--
->  1 file changed, 8 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/clk-cbf-8996.c b/drivers/clk/qcom/clk-cbf-8996.c
-> index cfd567636f4e..ab988e6f1976 100644
-> --- a/drivers/clk/qcom/clk-cbf-8996.c
-> +++ b/drivers/clk/qcom/clk-cbf-8996.c
-> @@ -48,7 +48,7 @@ static const u8 cbf_pll_regs[PLL_OFF_MAX_REGS] = {
->  	[PLL_OFF_STATUS] = 0x28,
->  };
->  
-> -static const struct alpha_pll_config cbfpll_config = {
-> +static struct alpha_pll_config cbfpll_config = {
->  	.l = 72,
->  	.config_ctl_val = 0x200d4828,
->  	.config_ctl_hi_val = 0x006,
-> @@ -137,7 +137,7 @@ static int clk_cbf_8996_mux_determine_rate(struct clk_hw *hw,
->  {
->  	struct clk_hw *parent;
->  
-> -	if (req->rate < (DIV_THRESHOLD / 2))
-> +	if (req->rate < (DIV_THRESHOLD / cbf_pll_postdiv.div))
->  		return -EINVAL;
->  
->  	if (req->rate < DIV_THRESHOLD)
-> @@ -265,6 +265,11 @@ static int qcom_msm8996_cbf_probe(struct platform_device *pdev)
->  	/* Switch CBF to use the primary PLL */
->  	regmap_update_bits(regmap, CBF_MUX_OFFSET, CBF_MUX_PARENT_MASK, 0x1);
->  
-> +	if (of_device_is_compatible(dev->of_node, "qcom,msm8996pro-cbf")) {
-If this was a driver for more than 1.5 SoCs, I'd propose using a
-different mechanism here (match data flags or something), but since
-there aren't (and hopefully won't ever be) more 8996s (automotive etc.
-inherit one of these configurations so that doesn't count), I'm willing
-to say
+On msm8226 we also have OXILICX_GDSC but we need a slighly different
+config, with a .cxcs defined for clock but with no parent.
 
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Changes in v2:
+- oxilicx -> oxili_cx in variable name and .name field
+- Pick up tags
+- Link to v1: https://lore.kernel.org/r/20230506-msm8226-oxilicx-v1-1-52e34b94ff22@z3ntu.xyz
+---
+ drivers/clk/qcom/mmcc-msm8974.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-Konrad
-> +		cbfpll_config.post_div_val = 0x3 << 8;
-> +		cbf_pll_postdiv.div = 4;
-> +	}
-> +
->  	for (i = 0; i < ARRAY_SIZE(cbf_msm8996_hw_clks); i++) {
->  		ret = devm_clk_hw_register(dev, cbf_msm8996_hw_clks[i]);
->  		if (ret)
-> @@ -286,6 +291,7 @@ static int qcom_msm8996_cbf_probe(struct platform_device *pdev)
->  
->  static const struct of_device_id qcom_msm8996_cbf_match_table[] = {
->  	{ .compatible = "qcom,msm8996-cbf" },
-> +	{ .compatible = "qcom,msm8996pro-cbf" },
->  	{ /* sentinel */ },
->  };
->  MODULE_DEVICE_TABLE(of, qcom_msm8996_cbf_match_table);
+diff --git a/drivers/clk/qcom/mmcc-msm8974.c b/drivers/clk/qcom/mmcc-msm8974.c
+index 4273fce9a4a4..61f1925d2817 100644
+--- a/drivers/clk/qcom/mmcc-msm8974.c
++++ b/drivers/clk/qcom/mmcc-msm8974.c
+@@ -2443,6 +2443,16 @@ static struct gdsc oxilicx_gdsc = {
+ 	.pwrsts = PWRSTS_OFF_ON,
+ };
+ 
++static struct gdsc oxili_cx_gdsc_msm8226 = {
++	.gdscr = 0x4034,
++	.cxcs = (unsigned int []){ 0x4028 },
++	.cxc_count = 1,
++	.pd = {
++		.name = "oxili_cx",
++	},
++	.pwrsts = PWRSTS_OFF_ON,
++};
++
+ static struct clk_regmap *mmcc_msm8226_clocks[] = {
+ 	[MMSS_AHB_CLK_SRC] = &mmss_ahb_clk_src.clkr,
+ 	[MMSS_AXI_CLK_SRC] = &mmss_axi_clk_src.clkr,
+@@ -2533,6 +2543,7 @@ static struct gdsc *mmcc_msm8226_gdscs[] = {
+ 	[MDSS_GDSC] = &mdss_gdsc,
+ 	[CAMSS_JPEG_GDSC] = &camss_jpeg_gdsc,
+ 	[CAMSS_VFE_GDSC] = &camss_vfe_gdsc,
++	[OXILICX_GDSC] = &oxili_cx_gdsc_msm8226,
+ };
+ 
+ static const struct regmap_config mmcc_msm8226_regmap_config = {
+
+---
+base-commit: dd9e11d6477a52ede9ebe575c83285e79e823889
+change-id: 20230506-msm8226-oxilicx-7f3f0f8e491d
+
+Best regards,
+-- 
+Luca Weiss <luca@z3ntu.xyz>
+
