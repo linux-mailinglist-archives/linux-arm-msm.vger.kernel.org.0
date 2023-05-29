@@ -2,83 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E61E271468B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 10:48:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 170337146AD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 10:55:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231462AbjE2IsE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 04:48:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49754 "EHLO
+        id S229678AbjE2Iza (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 04:55:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229678AbjE2IsD (ORCPT
+        with ESMTP id S229513AbjE2Iz2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 04:48:03 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 711E8DF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 01:47:35 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2af177f12d1so32212891fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 01:47:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685350038; x=1687942038;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=YzR1qktZzOvH81Zib2LaEXdkG13P7Z7RhzbaUscbWOw=;
-        b=jxn7BQOdZmvckaE12Hl2c9bavNMy7RrdjwUnwR6H/Xt/+VXWtp4rFvxrxZPVmghylB
-         ycBTAWo9YKSZZ8jmGXuRRat+0FfJVaghtW3S6BG1mszhfxNtu/yGIF6ACBWqSMJQbktT
-         xWU1fgUvF7ILRUuezpToY26mWXttrcGHCQdANf0mhIbTMj+QXmtbJYv+honJzyJ/5mn0
-         VingADEIYqRrNEUk27dIrFdRvOm0olSdaj4oKalk970Al+FoDbd+TIBPDCn25P6HneJ2
-         KZck+WCD857/l4Lf7olFAR3fkihylDAhZ8RIsewf5UHQisqhvX5INqi+wdQpdKqUE8VP
-         uFSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685350038; x=1687942038;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YzR1qktZzOvH81Zib2LaEXdkG13P7Z7RhzbaUscbWOw=;
-        b=esK60onsezmA+T8cUsqI98rfdTkbB1nZd3qRp3vBDA/Ivve1CiUe1bQMg549fx+lb5
-         nUN2957SKMF07lsp89mKJr1Dawo4MuoZ7Vo0IQWhLr3+5+D2TTiqQzEVPK/Rxl1p1AUD
-         8rhCPuATsXo3pKutznHK8cRz2LrPIC50Rp9KsZcIAeGnUs3WJ2NFtt2sOuGW7hPNe4Js
-         V4NpW8T3Fs7bsKOwdtTlvsK7WN2SsSXIP/+ZlHriLjzsYBS255xq5I9TZjffhqJE90km
-         cZakfxvJxZQbXF9yEFb8NyBkkg1rM80HKDTdrTlpulXu/xUucNfj8or6ZsHxaq7GxoAw
-         zF1g==
-X-Gm-Message-State: AC+VfDyw8Bd/+ZXK78VTLEDpFvb+ZccPkg5bxyJsz2q5r3r/RKFId5xN
-        8juc44zeaPjLkQBqLhmhIjU53L5DEwhXQOtTXBw=
-X-Google-Smtp-Source: ACHHUZ5O1rcmLdfc7ENpclDamyb8dvL++NBXNXBVpxw+CFTsLwnZcMYU/9MNKtWHxoVGtRtW87O6AA==
-X-Received: by 2002:a2e:850d:0:b0:2ad:bb53:8b9a with SMTP id j13-20020a2e850d000000b002adbb538b9amr3861865lji.20.1685350038248;
-        Mon, 29 May 2023 01:47:18 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id m25-20020a2e97d9000000b002a8b9570403sm2346883ljj.31.2023.05.29.01.47.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 May 2023 01:47:17 -0700 (PDT)
-Message-ID: <254cd131-4ad1-44c9-2653-862580503c15@linaro.org>
-Date:   Mon, 29 May 2023 11:47:17 +0300
+        Mon, 29 May 2023 04:55:28 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F6D799;
+        Mon, 29 May 2023 01:55:27 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 11C5C612FB;
+        Mon, 29 May 2023 08:55:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C24AC4339B;
+        Mon, 29 May 2023 08:55:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685350526;
+        bh=i9OWnfmGmJQVxNLboSBkfNDRCM4AooOMGIVwfZgR5iI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=q92vEVrXzUJr0mlI8GSb7Qd940qzEgMw9HA68RlTkPMu9aPFQQSG8QXHk2O6/60gb
+         TLj79uIJvG9CNkKPxtJyouG9FsORzuej0iS6qN85GE6RT0OEZBh/qSxTHLv9NmLMvw
+         wTxgdHoQ9d5Y3hZMf4s97tchiwaaZooPevQ73zo/AYNNYKJs0vg3t/B+yLNL8grrjx
+         LazyDJpX9zui//MZUOjEctHRVq3b7TxUtchfowuU/5HusSHjG3HXR4pNxBdipJGNeJ
+         LG6c6C0lkXxmpv34I1yYKYyZc55lsAlZW8r0goh3b+p6H5d+r97KXwnLD4bpqTb2tO
+         v/K3LifVnImCA==
+Date:   Mon, 29 May 2023 14:25:12 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        kw@linux.com, bhelgaas@google.com, robh@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, steev@kali.org,
+        quic_srichara@quicinc.com, dmitry.baryshkov@linaro.org,
+        Dmitry Baryshkov <dmitry.baryshkov@gmail.com>
+Subject: Re: [PATCH v2 2/8] PCI: qcom: Disable write access to read only
+ registers for IP v2.9.0
+Message-ID: <20230529085512.GB5633@thinkpad>
+References: <20230519143117.23875-1-manivannan.sadhasivam@linaro.org>
+ <20230519143117.23875-3-manivannan.sadhasivam@linaro.org>
+ <ZGsuM8CAv7AtluVx@lpieralisi>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 0/5] MDSS reg bus interconnect
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230417-topic-dpu_regbus-v1-0-06fbdc1643c0@linaro.org>
- <CAA8EJpo8X7KrrXoButyW0d1Lz=a5Stw2inFGt2R7KJ+2NTX6wA@mail.gmail.com>
- <74a817ff-5850-330d-8cac-f551be6fa35c@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <74a817ff-5850-330d-8cac-f551be6fa35c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZGsuM8CAv7AtluVx@lpieralisi>
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,42 +63,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/05/2023 10:42, Konrad Dybcio wrote:
+On Mon, May 22, 2023 at 10:56:19AM +0200, Lorenzo Pieralisi wrote:
+> On Fri, May 19, 2023 at 08:01:11PM +0530, Manivannan Sadhasivam wrote:
+> > In the post init sequence of v2.9.0, write access to read only registers
+> > are not disabled after updating the registers. Fix it by disabling the
+> > access after register update.
+> > 
+> > Fixes: 0cf7c2efe8ac ("PCI: qcom: Add IPQ60xx support")
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@gmail.com>
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  drivers/pci/controller/dwc/pcie-qcom.c | 3 +++
+> >  1 file changed, 3 insertions(+)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > index 01795ee7ce45..391a45d1e70a 100644
+> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > @@ -1136,6 +1136,7 @@ static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
+> >  	writel(0, pcie->parf + PARF_Q2A_FLUSH);
+> >  
+> >  	dw_pcie_dbi_ro_wr_en(pci);
+> > +
 > 
+> Nit: spurious change.
 > 
-> On 29.05.2023 04:42, Dmitry Baryshkov wrote:
->> On Mon, 17 Apr 2023 at 18:30, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>>
->>> Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there's
->>> another path that needs to be handled to ensure MDSS functions properly,
->>> namely the "reg bus", a.k.a the CPU-MDSS interconnect.
->>>
->>> Gating that path may have a variety of effects.. from none to otherwise
->>> inexplicable DSI timeouts..
->>>
->>> This series tries to address the lack of that.
->>>
->>> Example path:
->>>
->>> interconnects = <&bimc MASTER_AMPSS_M0 0 &config_noc SLAVE_DISPLAY_CFG 0>;
->>
->> If we are going to touch the MDSS interconnects, could you please also
->> add the rotator interconnect to the bindings?
->> We do not need to touch it at this time, but let's not have to change
->> bindings later again.
->>
-> Ack
 
-Also, several points noted from the mdss fbdev driver:
+Well that's intentional. It's good to have a newline between these guard
+functions to differentiate them from the DBI accesses. We do it in other places
+in the driver.
 
-- All possible clents vote for the low bw setting. This includes DSI, 
-HDMI, MDSS itself and INTF
-- SMMU also casts such vote, which I do not think should be necessary, 
-unless there is a separate MDSS SMMU?
-- PINGPONG cacsts high bw setting for the sake of speeding up the LUT 
-tables if required.
+But I thought this change doesn't warrant a mention in commit message or a
+separate patch.
+
+Let me know otherwise.
+
+- Mani
+
+> Lorenzo
+> 
+> >  	writel(PCIE_CAP_SLOT_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
+> >  
+> >  	val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
+> > @@ -1145,6 +1146,8 @@ static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
+> >  	writel(PCI_EXP_DEVCTL2_COMP_TMOUT_DIS, pci->dbi_base + offset +
+> >  			PCI_EXP_DEVCTL2);
+> >  
+> > +	dw_pcie_dbi_ro_wr_dis(pci);
+> > +
+> >  	for (i = 0; i < 256; i++)
+> >  		writel(0, pcie->parf + PARF_BDF_TO_SID_TABLE_N + (4 * i));
+> >  
+> > -- 
+> > 2.25.1
+> > 
 
 -- 
-With best wishes
-Dmitry
-
+மணிவண்ணன் சதாசிவம்
