@@ -2,55 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 73784714DCB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 18:05:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 548DA714EC6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 19:10:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229556AbjE2QFM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 12:05:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50578 "EHLO
+        id S229453AbjE2RKm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 13:10:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49554 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbjE2QFL (ORCPT
+        with ESMTP id S229457AbjE2RKl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 12:05:11 -0400
+        Mon, 29 May 2023 13:10:41 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDAA8A3;
-        Mon, 29 May 2023 09:05:05 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 295B4B5;
+        Mon, 29 May 2023 10:10:39 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6508561867;
-        Mon, 29 May 2023 16:05:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F32C433EF;
-        Mon, 29 May 2023 16:05:03 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B0A97627B8;
+        Mon, 29 May 2023 17:10:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F872C433D2;
+        Mon, 29 May 2023 17:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685376304;
-        bh=t40J5JZnLXPu4dLWyk7LytZopSHtsnIgIWiXLwRaxow=;
+        s=k20201202; t=1685380238;
+        bh=icOoIcHZHuyObZGLJmbuGYHHOvu2g465XhkK0FjSWjg=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ucf7oznGLgG9VgQBa5NukJpjCOBM4t2xbBCgLvJJ5cvxNC+Py9ykgdqjB8qsViCCn
-         wmN11xFJxglou82a5jEuQ5CpgTdgqgQ1QqxQKgIsod5Kfp7QSm9DQbp3VmbSfheiUk
-         CCi7KkFYjQO2tSynXytAWXSvUFgFQQGpDbibaMOqXrZ+O7ed5ZesTJFWYnb2QCGkyz
-         LWUSw+tfr1uYDJddG7UUuon08BYxYTfsjp77jgauroCNlgtBsHk6jTju4Cj2FGdOu3
-         DGbDLsiSOi1d5cI4EZpakQWIVwLi1e7f0QRG9Rl6OyWM240LseK9UqHa5/YQIuRFoI
-         W5Z+JrgWB1Lwg==
-Date:   Mon, 29 May 2023 09:08:48 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Maulik Shah <quic_mkshah@quicinc.com>, dianders@chromium.org,
-        swboyd@chromium.org, wingers@google.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, sudeep.holla@arm.com,
-        jwerner@chromium.org, quic_lsrao@quicinc.com,
-        quic_rjendra@quicinc.com
-Subject: Re: [PATCH v4 0/3] Use PSCI OS initiated mode for sc7280
-Message-ID: <20230529160848.ujthfuuj3zblkq4b@ripper>
-References: <20230424110933.3908-1-quic_mkshah@quicinc.com>
- <CAPDyKFqSY9HJgKwuOqJPU5aA=wcAtDp91s0hkQye+dm=Wk=YDQ@mail.gmail.com>
- <20230525024546.ug6nbrmkgx2alerc@ripper>
- <CAPDyKFrzHHz+c_y787TVKLGizA3vVfKvnu+uJ1JC+itgryfdSQ@mail.gmail.com>
+        b=eerBi9kzma/XE4N0Iw4e1qUrw0O4JmkMvxNKAdZCCqFzKWf28HH3XCEiTtCvWj/jY
+         zlAsJqicSse/criOMZkHpSzbxSSo0NGHwWRBEGDvnWeFC8EIIRMwQHlQJRcmCv3jUF
+         CF2HZkbVl0Z0VVwCM5ri0TjpDrUL//cg09689PNCvAC0hmHjFodVuQ9Z82hA1VRg5+
+         sL5EaPwRGUCLu/idxlwZhjchFVeaHeb7NVgsjorrqt2EFNVrA2nKMwTC0Mbrws+q6A
+         VaS3yodFTYPoFahIhFOxK6a/0F0aV/kMH4DHL/uE68EmvvkA2k+MNLGRtioiU4r9UN
+         b2+MijrfQZSag==
+Date:   Mon, 29 May 2023 22:40:24 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        kw@linux.com, kishon@kernel.org, bhelgaas@google.com,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 1/7] PCI: endpoint: Pass EPF device ID to the probe
+ function
+Message-ID: <20230529171024.GF5633@thinkpad>
+References: <20230519144215.25167-1-manivannan.sadhasivam@linaro.org>
+ <20230519144215.25167-2-manivannan.sadhasivam@linaro.org>
+ <ZHRyA1BzK3KaGUEH@lpieralisi>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPDyKFrzHHz+c_y787TVKLGizA3vVfKvnu+uJ1JC+itgryfdSQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZHRyA1BzK3KaGUEH@lpieralisi>
 X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -61,118 +60,151 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 29, 2023 at 10:58:23AM +0200, Ulf Hansson wrote:
-> On Thu, 25 May 2023 at 04:41, Bjorn Andersson <andersson@kernel.org> wrote:
-> >
-> > On Wed, May 24, 2023 at 11:56:28AM +0200, Ulf Hansson wrote:
-> > > On Mon, 24 Apr 2023 at 13:09, Maulik Shah <quic_mkshah@quicinc.com> wrote:
-> > > >
-> > > > Changes in v4:
-> > > > - Add missing s-o-b line and reviewed by in patch 1
-> > > > - Address ulf's comments for error handling in patch 2
-> > > >
-> > > > Changes in v3:
-> > > > - Add new change to provide helper function dt_idle_pd_remove_topology()
-> > > > - Address ulf's comments for error handling
-> > > > - Add reviewed by ulf for devicetree change
-> > > >
-> > > > Changes in v2:
-> > > > - Add new change to Move enabling OSI mode after power domains creation
-> > > > - Fix compatible string to domains-idle-states for cluster idle state.
-> > > > - Update cover letter with some more details on OSI and PC mode
-> > > >   comparision
-> > > >
-> > > > The dependency [2] is now merged in trustedfirmware project.
-> > > >
-> > > > Stats comparision between OSI and PC mode are captured at [3] with
-> > > > usecase
-> > > > details, where during multiple CPUs online the residency in cluster idle
-> > > > state is better with OSI and also inline with single CPU mode. In PC
-> > > > mode
-> > > > with multiple CPUs cluster idle state residency is dropping compare to
-> > > > single CPU mode.
-> > > >
-> > > > Recording of this meeting is also available at [4].
-> > > >
-> > > > This change adds power-domains for cpuidle states to use PSCI OS
-> > > > initiated mode for sc7280.
-> > > >
-> > > > This change depends on external project changes [1] & [2] which are
-> > > > under review/discussion to add PSCI os-initiated support in Arm Trusted
-> > > > Firmware.
-> > > >
-> > > > I can update here once the dependency are in and change is ready to
-> > > > merge.
-> > > >
-> > > > [1] https://review.trustedfirmware.org/q/topic:psci-osi
-> > > > [2] https://review.trustedfirmware.org/c/TF-A/trusted-firmware-a/+/19487
-> > > > [3] https://www.trustedfirmware.org/docs/PSCI-OS-initiated.pdf
-> > > > [4] https://www.trustedfirmware.org/meetings/tf-a-technical-forum
-> > > >
-> > > > Maulik Shah (3):
-> > > >   cpuidle: dt_idle_genpd: Add helper function to remove genpd topology
-> > > >   cpuidle: psci: Move enabling OSI mode after power domains creation
-> > > >   arm64: dts: qcom: sc7280: Add power-domains for cpuidle states
-> > > >
-> > > >  arch/arm64/boot/dts/qcom/sc7280.dtsi  | 98 ++++++++++++++++++++-------
-> > > >  drivers/cpuidle/cpuidle-psci-domain.c | 39 ++++-------
-> > > >  drivers/cpuidle/dt_idle_genpd.c       | 24 +++++++
-> > > >  drivers/cpuidle/dt_idle_genpd.h       |  7 ++
-> > > >  4 files changed, 117 insertions(+), 51 deletions(-)
-> > > >
-> > >
-> > > Looks like this series has not been queued up yet. Note that patch1
-> > > and patch2 are needed for stable kernels too. Moreover, patch3 (Qcom
-> > > DTS change) is dependent on patch 1 and patch2.
-> > >
-> > > Therefore I suggest Bjorn to pick this up via the Qcom SoC tree.
-> > > Bjorn, is that okay for you?
-> > >
-> >
-> > Sorry, this fell between the chairs after you pointed me to it...
-> >
-> > I can certainly pick the 3 patches through my tree, but are they fixing
-> > any current regressions, or is it just that we need the first two
-> > patches to land before the 3rd patch?
+On Mon, May 29, 2023 at 11:36:03AM +0200, Lorenzo Pieralisi wrote:
+> On Fri, May 19, 2023 at 08:12:09PM +0530, Manivannan Sadhasivam wrote:
+> > Currently, the EPF probe function doesn't get the device ID argument needed
+> > to correctly identify the device table ID of the EPF device.
+> > 
+> > When multiple entries are added to the "struct pci_epf_device_id" table,
+> > the probe function needs to identify the correct one. And the only way to
+> > do so is by storing the correct device ID in "struct pci_epf" during
+> > "pci_epf_match_id()" and passing that to probe().
+> > 
+> > Reviewed-by: Kishon Vijay Abraham I <kishon@kernel.org>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  drivers/pci/endpoint/functions/pci-epf-ntb.c  | 3 ++-
+> >  drivers/pci/endpoint/functions/pci-epf-test.c | 2 +-
+> >  drivers/pci/endpoint/functions/pci-epf-vntb.c | 2 +-
+> >  drivers/pci/endpoint/pci-epf-core.c           | 8 +++++---
+> >  include/linux/pci-epf.h                       | 4 +++-
+> >  5 files changed, 12 insertions(+), 7 deletions(-)
+> > 
+> > diff --git a/drivers/pci/endpoint/functions/pci-epf-ntb.c b/drivers/pci/endpoint/functions/pci-epf-ntb.c
+> > index 9a00448c7e61..980b4ecf19a2 100644
+> > --- a/drivers/pci/endpoint/functions/pci-epf-ntb.c
+> > +++ b/drivers/pci/endpoint/functions/pci-epf-ntb.c
+> > @@ -2075,11 +2075,12 @@ static struct config_group *epf_ntb_add_cfs(struct pci_epf *epf,
+> >  /**
+> >   * epf_ntb_probe() - Probe NTB function driver
+> >   * @epf: NTB endpoint function device
+> > + * @id: NTB endpoint function device ID
+> >   *
+> >   * Probe NTB function driver when endpoint function bus detects a NTB
+> >   * endpoint function.
+> >   */
+> > -static int epf_ntb_probe(struct pci_epf *epf)
+> > +static int epf_ntb_probe(struct pci_epf *epf, const struct pci_epf_device_id *id)
+> >  {
+> >  	struct epf_ntb *ntb;
+> >  	struct device *dev;
+> > diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+> > index 0f9d2ec822ac..d5fcc78a5b73 100644
+> > --- a/drivers/pci/endpoint/functions/pci-epf-test.c
+> > +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+> > @@ -980,7 +980,7 @@ static const struct pci_epf_device_id pci_epf_test_ids[] = {
+> >  	{},
+> >  };
+> >  
+> > -static int pci_epf_test_probe(struct pci_epf *epf)
+> > +static int pci_epf_test_probe(struct pci_epf *epf, const struct pci_epf_device_id *id)
+> >  {
+> >  	struct pci_epf_test *epf_test;
+> >  	struct device *dev = &epf->dev;
+> > diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> > index b7c7a8af99f4..122eb7a12028 100644
+> > --- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> > +++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> > @@ -1401,7 +1401,7 @@ static struct pci_epf_ops epf_ntb_ops = {
+> >   *
+> >   * Returns: Zero for success, or an error code in case of failure
+> >   */
+> > -static int epf_ntb_probe(struct pci_epf *epf)
+> > +static int epf_ntb_probe(struct pci_epf *epf, const struct pci_epf_device_id *id)
+> >  {
+> >  	struct epf_ntb *ntb;
+> >  	struct device *dev;
+> > diff --git a/drivers/pci/endpoint/pci-epf-core.c b/drivers/pci/endpoint/pci-epf-core.c
+> > index 2036e38be093..924564288c9a 100644
+> > --- a/drivers/pci/endpoint/pci-epf-core.c
+> > +++ b/drivers/pci/endpoint/pci-epf-core.c
+> > @@ -494,11 +494,13 @@ static const struct device_type pci_epf_type = {
+> >  };
+> >  
+> >  static int
+> > -pci_epf_match_id(const struct pci_epf_device_id *id, const struct pci_epf *epf)
+> > +pci_epf_match_id(const struct pci_epf_device_id *id, struct pci_epf *epf)
+> >  {
+> >  	while (id->name[0]) {
+> > -		if (strcmp(epf->name, id->name) == 0)
+> > +		if (strcmp(epf->name, id->name) == 0) {
+> > +			epf->id = id;
+> >  			return true;
+> > +		}
+> >  		id++;
+> >  	}
 > 
-> I am not aware of any current regressions.
-> 
-
-Okay, that confirms my understanding. So not -rc material.
-
-> >
-> > I also presume the 3rd patch is only needed when paired with the new
-> > ATF?
-> 
-> Patch3 is beneficial to use with a new TF-A, but works with an old
-> TF-A too. Anyway, forget what I said about patch3 earlier, as that was
-> just not the complete information.
-> 
-> The problem is that we can't be using a new TF-A (supporting both PSCI
-> OSI and PC mode) without patch1 and patch2, unless we are using
-> patch3.
-> 
-> Thus, I strongly suggest we tag patch1 and patch2 for stable kernels,
-> to avoid any potential conflicts of TF-A versions that may be used.
+> I disagree with this patch's intent. The match function should not
+> change the parameters state. We should export this function to drivers
+> so that upon probe they can retrieve the matching id themselves,
+> as other bus interfaces do IMO.
 > 
 
-So you're suggesting that I pick them for v6.5 and add a Cc: stable?
+Ok, if you do not want to change the parameters inside match function, then I
+could move the matching part to a separate function and make it to return the
+correct pci_epf_device_id pointer. Based on this, the match() function can
+return bool if the match is found or not and the pci_epf_device_probe() function
+can pass the returned id to the driver's probe function. This is what being done
+for PCI driver as well [1].
 
-An alternative would be that you take the cpuidle patches for v6.4-rc
-and I pick the dt for v6.5 - given that the cpuidle patches actually
-resolves a problem, while the dts just introduces "new functionality".
+- Mani
 
-> >
-> > Regards,
-> > Bjorn
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pci/pci-driver.c#n415
+
+> Thanks,
+> Lorenzo
 > 
-> Did that make more sense?
-> 
+> > @@ -526,7 +528,7 @@ static int pci_epf_device_probe(struct device *dev)
+> >  
+> >  	epf->driver = driver;
+> >  
+> > -	return driver->probe(epf);
+> > +	return driver->probe(epf, epf->id);
+> >  }
+> >  
+> >  static void pci_epf_device_remove(struct device *dev)
+> > diff --git a/include/linux/pci-epf.h b/include/linux/pci-epf.h
+> > index a215dc8ce693..bc613f0df7e3 100644
+> > --- a/include/linux/pci-epf.h
+> > +++ b/include/linux/pci-epf.h
+> > @@ -89,7 +89,7 @@ struct pci_epc_event_ops {
+> >   * @id_table: identifies EPF devices for probing
+> >   */
+> >  struct pci_epf_driver {
+> > -	int	(*probe)(struct pci_epf *epf);
+> > +	int	(*probe)(struct pci_epf *epf, const struct pci_epf_device_id *id);
+> >  	void	(*remove)(struct pci_epf *epf);
+> >  
+> >  	struct device_driver	driver;
+> > @@ -131,6 +131,7 @@ struct pci_epf_bar {
+> >   * @epc: the EPC device to which this EPF device is bound
+> >   * @epf_pf: the physical EPF device to which this virtual EPF device is bound
+> >   * @driver: the EPF driver to which this EPF device is bound
+> > + * @id: Pointer to the EPF device ID
+> >   * @list: to add pci_epf as a list of PCI endpoint functions to pci_epc
+> >   * @lock: mutex to protect pci_epf_ops
+> >   * @sec_epc: the secondary EPC device to which this EPF device is bound
+> > @@ -158,6 +159,7 @@ struct pci_epf {
+> >  	struct pci_epc		*epc;
+> >  	struct pci_epf		*epf_pf;
+> >  	struct pci_epf_driver	*driver;
+> > +	const struct pci_epf_device_id *id;
+> >  	struct list_head	list;
+> >  	/* mutex to protect against concurrent access of pci_epf_ops */
+> >  	struct mutex		lock;
+> > -- 
+> > 2.25.1
+> > 
 
-Yes, it's getting there :)
-
-Thanks,
-Bjorn
-
-> Br
-> Uffe
+-- 
+மணிவண்ணன் சதாசிவம்
