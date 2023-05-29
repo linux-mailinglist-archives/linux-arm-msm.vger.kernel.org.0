@@ -2,63 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E2E46715013
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 21:55:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A712715014
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 21:55:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229796AbjE2TzR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S229580AbjE2TzR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 29 May 2023 15:55:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36584 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229748AbjE2TzO (ORCPT
+        with ESMTP id S229807AbjE2TzP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 15:55:14 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3DCEF0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 12:55:08 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-3078a3f3b5fso3506713f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 12:55:08 -0700 (PDT)
+        Mon, 29 May 2023 15:55:15 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6333FF9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 12:55:09 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id ffacd0b85a97d-30ac4e7f37bso2177981f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 12:55:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685390107; x=1687982107;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=UBSONiyq8ZSgo95IwQOW+zN2QkXEPgex9gl6YgjWGRU=;
-        b=nEr6mmv2rVEDCRQwGzIf5WvVB4UnG4rceoZaSoaDdH5mXhEwMU80fss55ueRL8/ici
-         UVBZfYJf3l1hTAuyvHzQ+zDUuSt/3BiA3iTrVoiD2gfaWQhkue1/fxujqtOKmlxhi9O8
-         Sf1z0Gv7/mteFlvHPByomUm+goX0P9NOUS7NM7BNiqU8yahk8F1aB8P/u3C6pZp1YG/q
-         rBRCzK7aAA8lT8k0szfv2xjgxqSXDSI4fUuyh4/BnsgYE64CDDtpBHUogDVSk5TFMYBD
-         MshAnCXd0FBW87puw1QKIJ0b6lDN14SlJ5xsNeBgaysuRzayV9ArL0V8wYaRRDoQO+Rs
-         lDTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685390107; x=1687982107;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1685390108; x=1687982108;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=UBSONiyq8ZSgo95IwQOW+zN2QkXEPgex9gl6YgjWGRU=;
-        b=PzGDxfLpHmUcVbyjnnh7CqHcvqBCJON9aBkdm8ZzInmroLnk9yyCWruJ872Y3KLFcq
-         p8vO72LJfwcEiRdACXYGJA5YlwuxcFAZMzz4pEG18GR2IE77ICgaFvQcagOwlqVlClbU
-         Nvbrx402Tv7Bw4Cm1vMuJiyB1OPPiKeicRpZKD9xI0Ucs3wNm6GeScZRr6WgY8lT20pO
-         YZ/+yjEOZTGde+mm/bHXBZ9Wo91jf1lHJFOQ10cZ5OaTdzKW2yH3NYbbZCHVKu3o2fVJ
-         xIdZ+2CDeiZZRMwN/UZ4F2zDXzjxlYdfuv6/fF1Ka+iOXKJHICqPyskqEUuOt+oeIPTE
-         g9Cg==
-X-Gm-Message-State: AC+VfDy5/PWa8C5+BtnTR0X1J+EVVEeRAtZUHvaqruixmeic6R8YrQ8A
-        FEdJFH4+k2PDb2rbMKUcVQCKJw==
-X-Google-Smtp-Source: ACHHUZ5GfwpPYm/NfeFmfvtM5xuxflgHh9nfyUgpt+u1fKEzK1WlHnlXKSZKdnPUPz8OliWPbOFFfw==
-X-Received: by 2002:a5d:45cf:0:b0:2fb:1d3a:93ff with SMTP id b15-20020a5d45cf000000b002fb1d3a93ffmr9131254wrs.61.1685390107241;
-        Mon, 29 May 2023 12:55:07 -0700 (PDT)
+        bh=I+8Rw2y5WP9VcSj9EyYejwuXLfgRWkxo9rWVJHrYrOc=;
+        b=V8B3WOa/iSQo5P6q/qjDPQAQsi521hcgYSEYWPNfwnnuVvpGou8DBgO2EJ8qFaG5T+
+         SptqQ2PtwRtQIWtsLluexEnBa6NW7FAconkfa15P8cejLc4LhUex0ThZ16ZOzoidpyJa
+         fIn2Rt3Wppml4/BOQDhle7g4Of/CyicV7esgn5+AYq0ibSMWK4vTYAWkFwIdhJpmoW8F
+         MqqhKL3AQuEjDyCZ54XzUrbB8oX/R7phCKEBChoHMCK2hgr6soRe/vhCEcc40DxdP0Wp
+         GEBiVJeS+jJ9LY63hfxlXl4R9Nvx7EqrqFFgAM1jx64G49OjesQvyjo3hHL4Y9qKMjHr
+         MsYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685390108; x=1687982108;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=I+8Rw2y5WP9VcSj9EyYejwuXLfgRWkxo9rWVJHrYrOc=;
+        b=LE0lmTxaWYWgG59T+E36/S+ox8dvH+vSlRvn50x7Bz4FH8bVZewne/3ExzjyZ4kDTk
+         OPePQDbjgAcAPxMn63/AejxZg9PxT1GMOLVdcb2pawSDhvYWmoX6vg+s/hFNrX1K0eYo
+         Q79wz5Z337mHws1J9fQ9ESChqpm84E1n8NyYo28++m7qhK5SFwncfyG3mowVt66ig6fQ
+         B30PBsmSMExReMBx9wFosebRhl/z5Z6QuaTqFwdC4doRpl9CTvL+U6PtrnG2YkP88X0l
+         GTz4xJjU71JfFdMW/wunTcCUtZM2DF4uK2cuimVtohqdq+y1Ob6XGRHlL3F3tpkk3irE
+         ecfA==
+X-Gm-Message-State: AC+VfDxEQCyJjTse0+S6bhZrqxyzWXYy4dbEYqePtSmQyIEqfZ71mkAI
+        jy83H0Bl+ivV/Fcbh+vHlvDPoIpZ9/o9pgLZCYQTTA==
+X-Google-Smtp-Source: ACHHUZ5W/5A7pmfLqBfknw4qghuufoPJD05qAoJcXBL5noOhNjtrWP3sFx0vKj2wjDcNQ4hpWdve7w==
+X-Received: by 2002:a5d:680b:0:b0:30a:e643:251a with SMTP id w11-20020a5d680b000000b0030ae643251amr6045500wru.68.1685390108002;
+        Mon, 29 May 2023 12:55:08 -0700 (PDT)
 Received: from lion.localdomain (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
-        by smtp.gmail.com with ESMTPSA id t7-20020a5d4607000000b0030647449730sm887364wrq.74.2023.05.29.12.55.06
+        by smtp.gmail.com with ESMTPSA id t7-20020a5d4607000000b0030647449730sm887364wrq.74.2023.05.29.12.55.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 May 2023 12:55:06 -0700 (PDT)
+        Mon, 29 May 2023 12:55:07 -0700 (PDT)
 From:   Caleb Connolly <caleb.connolly@linaro.org>
-Subject: [PATCH 0/2] Fix pm8941-pwrkey debounce programming
-Date:   Mon, 29 May 2023 20:55:05 +0100
-Message-Id: <20230529-pm8941-pwrkey-debounce-v1-0-c043a6d5c814@linaro.org>
+Date:   Mon, 29 May 2023 20:55:06 +0100
+Subject: [PATCH 1/2] MAINTAINERS: Adjust Qualcomm driver globbing
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIABkDdWQC/x2N2wrCMBAFf6XsswvdWC/xV8SHJD3aIE3Dxiul/
- 27q4zAMM1OBRhQ6NTMpXrHEKVWQTUNhcOkGjn1lMq3ZtjtjOY9H2wnnt97x5R5+eqYAFpGDdb4
- TYE819q6AvboUhjUfXXlAV5EV1/j5H8+XZfkBMpZ/5IEAAAA=
+Message-Id: <20230529-pm8941-pwrkey-debounce-v1-1-c043a6d5c814@linaro.org>
+References: <20230529-pm8941-pwrkey-debounce-v1-0-c043a6d5c814@linaro.org>
+In-Reply-To: <20230529-pm8941-pwrkey-debounce-v1-0-c043a6d5c814@linaro.org>
 To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -67,21 +67,21 @@ Cc:     linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         phone-devel@vger.kernel.org,
         Caleb Connolly <caleb.connolly@linaro.org>
 X-Mailer: b4 0.13-dev-46309
-X-Developer-Signature: v=1; a=openpgp-sha256; l=753;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=682;
  i=caleb.connolly@linaro.org; h=from:subject:message-id;
- bh=69Sxru6xrRyg5y8CAaJKdsYttoRQnjQieSGPqXGUZsw=;
- b=owEBbQKS/ZANAwAIAQWDMSsZX2S2AcsmYgBkdQMaUVI9IEWUIggm5Li94NSCWquclCVuQGzyb
- c6cYkK1IPmJAjMEAAEIAB0WIQS2UaFGPGq+0GkMVc0FgzErGV9ktgUCZHUDGgAKCRAFgzErGV9k
- tlpsEACIUlS3bOWKb235EZw5kDYqF2Oon9gzdj2bO7KFTIMhqbOupk087Q1z+trLTgplc8BJOih
- w7XDzwY2iWQG8vardxKYnBd/s+OIQozhiRzbg61GHh/CC962KjXIln2wLobwy85zXL8Iq9GHhch
- BCakL0VCMvQSpiZZbJaY7WY9/FAew4WS0vM4Iw5ywy8XRyQCez/3fWmhEXVKVpsd/rFm58YK7gY
- 68jCDZhVeb8AZ7Gz/Kl5xBSc27e72W/eLisP1qFPi4XzvLm90MAiKVGr5n6Sn+LWVUvXN2zYhLB
- lfIUjM0+qncxu0/dtfmz+gA2kyn65PQv67Pg0HC8LDsXTOT/OdlAwv+1Xt9Z/mE8FpxNeppN2TZ
- SUTNf/qellsGtB19dWRYBoVFZHFHvH5tCSPbuSO+/3qwv7jSjpdnouaLXydpX4lq/r22YLjhKed
- P3LHmYWe9C5hkoElp2aknca2H4eCfkHJVgOXERuWroZCFjgpcevBJkk38up6rmKjDBtXv+MG3Ji
- dG08wYUTb+IDaM/IZzskZTXWpDCm+TyhaOQggBgYQedjkpUN1PFZWH/x9vpI8kJuTTWZRpDfghd
- ONQYe/5QqOyofPBT2GpBEE4sCpkfSSTrebe7lBsmFJM9sSLsPU4m6xqNrZ2AAbsie4GS5rU5I1e
- nUNDtO1Sdd2ZFJg==
+ bh=ESgc8ghwuzImeSlxOXFpkxKhh/wnGcBX0k7YH8BdKOc=;
+ b=owEBbQKS/ZANAwAIAQWDMSsZX2S2AcsmYgBkdQMaZAD8O2gObC25Fa7T4fyOnrJ+csMuxGRm7
+ hn+KV14XqOJAjMEAAEIAB0WIQS2UaFGPGq+0GkMVc0FgzErGV9ktgUCZHUDGgAKCRAFgzErGV9k
+ tsZjD/9IA9A2PzIeIhb4UQrnwMJbZcyZpmpl6Kh/gKvYnRUJ6K5bVbMaMrMIa05VQjX6gSODq1t
+ 9tNR2gM49toYJC8tbi4GWcWgVSHGpI4KvQoRD14D6ucuhTzpjJ6QFLHKmHktkhY0MQ/RWLNtZUt
+ uUHI1IZF8w2s/3XWqw8z8hmKGdbHtd3tIz58DiJnFFwt0utIWk/X9++PFxx+7fGoriQk1LSmw1o
+ X5crzHUU3cDCiEmcBbSFC72AtP661zN1i4OWXbNro7zm0QqPolsPw/cF9X1Jd0FD24rN4QY61Z8
+ 0Luf83LbIMSt8mZR9LsH4kkKfCzVy9lKTNFddXUxTpQ1KOYen8iaSARFwJ3Y7V2OzHNfcfuR2U5
+ T0PgqESO69S+l2elYCxRy5hdjdqO1EHa12hAbKMW+SsWaFeBHkWFRloFod62gHs8Uhs2nkM4+8M
+ 80X4h5ZEvUBGPMqCcWCKIagTwJouPU+2crhxE4J30CEywg4BF6e8hj9MZEmxEP2K4AvKTDzYmOK
+ Mss0BtY5lRLJuRj/UaXuXElRd8eK5cY/YioSSyi+ea/3TaADkxJmCR9OwMcvjaGmRrHaNxPBHcs
+ 1qM5Z11oviUtWfBkZtDZIiulCF2EOmVHKxzCVj1SgREgAyPDHnPem+GXTXFqJzoxEPIH1CBCVmc
+ 7GPF7afX1/MNDCQ==
 X-Developer-Key: i=caleb.connolly@linaro.org; a=openpgp;
  fpr=83B24DA7FE145076BC38BB250CD904EB673A7C47
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -94,26 +94,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Since PM8998 the pon debounce register was adjusted to support much
-lower debounce times however the driver was never changed to reflect
-this.
+The only drivers matching pm8???-* are two levels deep, adjust the glob
+to match them.
 
-This resulted in the debounce time being set to the minimum ~62us on
-PMICs from PM8998/PM660 up until PMk8350.
-
-Set the shift and mask correctly, and adjust MAINTAINERS to include the
-driver under Qualcomm support.
-
+Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
 ---
-Caleb Connolly (2):
-      MAINTAINERS: Adjust Qualcomm driver globbing
-      Input: pm8941-powerkey - fix debounce on gen2+ PMICs
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
- MAINTAINERS                        |  2 +-
- drivers/input/misc/pm8941-pwrkey.c | 19 +++++++++++++++----
- 2 files changed, 16 insertions(+), 5 deletions(-)
----
-base-commit: 44c026a73be8038f03dbdeef028b642880cf1511
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 27ef11624748..86b7842b44ab 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2577,9 +2577,9 @@ F:	arch/arm/boot/dts/qcom-*.dtsi
+ F:	arch/arm/configs/qcom_defconfig
+ F:	arch/arm/mach-qcom/
+ F:	arch/arm64/boot/dts/qcom/
++F:	drivers/*/*/pm8???-*
+ F:	drivers/*/*/qcom*
+ F:	drivers/*/*/qcom/
+-F:	drivers/*/pm8???-*
+ F:	drivers/*/qcom*
+ F:	drivers/*/qcom/
+ F:	drivers/bluetooth/btqcomsmd.c
 
-// Caleb (they/them)
+-- 
+2.40.1
 
