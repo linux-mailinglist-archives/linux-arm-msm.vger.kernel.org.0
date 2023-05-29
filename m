@@ -2,96 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 36495714626
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 10:12:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 585F9714632
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 10:19:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231599AbjE2IMD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 04:12:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38992 "EHLO
+        id S230117AbjE2ITC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 04:19:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230168AbjE2IMC (ORCPT
+        with ESMTP id S231487AbjE2ITB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 04:12:02 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1681890;
-        Mon, 29 May 2023 01:11:59 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id 41be03b00d2f7-53202149ae2so1805177a12.3;
-        Mon, 29 May 2023 01:11:59 -0700 (PDT)
+        Mon, 29 May 2023 04:19:01 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA2F6AC
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 01:18:56 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2af2e1725bdso37386401fa.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 01:18:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685347918; x=1687939918;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ITRflIOmLkq0lkA6U0VtIoupb3ZXWfiBF04AqIIoi9o=;
-        b=EiieOEYW0qWqoR2XSztxvUhDXIvJwpk4VldiYlBD8rZ/atZqlf1ixEo+4Pq1ifvKsu
-         7OZTF3u8iFOZz9hW7pM3iBAr+SzAR2bLaEgUW0hGuaVeXFTyJgE8KSIkSF/3JB++/02g
-         XhphLaz0RqaiNbrxI6XoDsXUBagig+dCEUt3DCwwR5laM0cp22bGuaRlFAS0vmb8sGHS
-         Qu9/a4yK1/E6WijthNXi7bVUD7oN984AmuLhmmvrJkAMvaIBigDuuDGf4sjK+ik2pORh
-         0zs8q8twwlrEcp8/G3/Q5KhXCkXaoAKLESTKl4vEVaDZZNsY6tD5EaLoJuoPHsjCWEOn
-         QjJg==
+        d=linaro.org; s=google; t=1685348335; x=1687940335;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=z+6vJ9zaGIlrddWwekztTVVNTWoY7fyIbT1woEoNQSA=;
+        b=CevULIUtfh0nY4vuRH08Yxw24vpwpTFAzdgVFCNAtb1J0NE0GzFw9nsECTnJ+1s/g6
+         QPENun5ACL0cilue2pMR+SutPLJuorgv1lxiUMR/UnmPh0uuYM0w7lBi3a/It2Kwsn4d
+         sJrwiHFUZXG3UcXQK8gaCjT5NToBo/xCWtpqu+CydTt1fYu2nJHagyQApdHJFTmeZiX1
+         tXcBinKL5zbMhXHlNOOJwCUYP9aCJFcWA8/gxeoWnl7CRuwp+xSs0cR+PHZGaSCo+osj
+         qMD7GpAEWw1hOfOegwwxoVVbcesXAVl9nwYZGXNPOxr6m73FMsADtJpVN5IXugLtupDn
+         f+0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685347918; x=1687939918;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ITRflIOmLkq0lkA6U0VtIoupb3ZXWfiBF04AqIIoi9o=;
-        b=hM8YUC7guNBMXJDQQM6uZMbCm8cGIPucbg7VpcU+RJVjWX7vKulw6BvD+7muD3fFsY
-         La3SACHMIm/OOkXNUhUjqoVFZ11w3FikSs+tS45FzZL4l6fxn4gDR9oNdqr8LVQ4SPap
-         aCf6V5VTNxKN1eeacoZaP6ClR/6bcs1yJd7xOO2JVd+ISG3N5RL5fyf9yiibe9qFDdsg
-         Uo+xEtcZfnBuztnmXG/XA3hbwnhTkJWGwhUe31DM8tahexvDavsXnQDN7ccfAeUxkNYD
-         rKCMC+iAtO7Nh7iB9wrGTWgqSE+MxcpvYxZwP3TOPS7Tw2yVxlDW3mwImQKaA+7UzbOd
-         C2gw==
-X-Gm-Message-State: AC+VfDx1ljNWxH+Xxn0hnTqIbPOYZ2RDzqRl3PZHWOLVT4Xt6UpuBmwR
-        u50i82yMFW+pKWmsLsFnyzw=
-X-Google-Smtp-Source: ACHHUZ7QZU0efRghNTC1uA2xMtvWd8GuQtAjRwoNf4tH35DbcLShCgaZ3fR5ZrBl4aw4/bJ1Hg8LkA==
-X-Received: by 2002:a17:90a:fd09:b0:24d:ebf8:b228 with SMTP id cv9-20020a17090afd0900b0024debf8b228mr9564707pjb.19.1685347918446;
-        Mon, 29 May 2023 01:11:58 -0700 (PDT)
-Received: from debian.me (subs02-180-214-232-78.three.co.id. [180.214.232.78])
-        by smtp.gmail.com with ESMTPSA id a2-20020a17090abe0200b002565a84c848sm2655118pjs.43.2023.05.29.01.11.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 29 May 2023 01:11:58 -0700 (PDT)
-Received: by debian.me (Postfix, from userid 1000)
-        id 691BC106A11; Mon, 29 May 2023 15:11:55 +0700 (WIB)
-Date:   Mon, 29 May 2023 15:11:55 +0700
-From:   Bagas Sanjaya <bagasdotme@gmail.com>
-To:     Hao Zhang <quic_hazha@quicinc.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        James Clark <james.clark@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Konrad Dybcio <konradybcio@gmail.com>,
+        d=1e100.net; s=20221208; t=1685348335; x=1687940335;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=z+6vJ9zaGIlrddWwekztTVVNTWoY7fyIbT1woEoNQSA=;
+        b=RqPmfpdjg65rhLwWFXSeZKmcI1HzNl/K87SHVsuxeZQMIZRtZP3OghbeT6n9aphHY+
+         y2Xq9xMGOzDPmrBQAMzHyY6I30dDBffQVM6NbJs9X8jsTg+iXufGMJAb4vWGk2Ytw/3j
+         4QBzGoJXR8HZSildGwIscsvn+nZ/l4hWxcr1Do27CI2xiH+ne6UziIaS2kL0Nko5CeSo
+         L1RVsvbb3spWaS62BpeTLKbYPmCTv27e1v7lpMntppSisOYmz6DNDKbzL4FvGmA3Az9q
+         yEHK9sCxS8vyaBRMTrARx3e1HTSxyHaHC/SbrGQTwA6VUC6rVrljKcHyhTbtmOVut72F
+         RkQA==
+X-Gm-Message-State: AC+VfDwapPFSa8O+XpkF+BkuXDGttAl62zFiZUO5TwDX5hoM8xXFLp5q
+        /wlSOP9p4/DJekuMbVAhZzRs8Q==
+X-Google-Smtp-Source: ACHHUZ4SfeeXfI9O7GCTsvx6bNolt5z6hJK7Y92EsXY8u2VrW16ZAXWEk39LHaYMdb+xl7nS1PnuKQ==
+X-Received: by 2002:a2e:9f09:0:b0:295:a8e6:6b15 with SMTP id u9-20020a2e9f09000000b00295a8e66b15mr2416620ljk.4.1685348334930;
+        Mon, 29 May 2023 01:18:54 -0700 (PDT)
+Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
+        by smtp.gmail.com with ESMTPSA id s10-20020a2e98ca000000b002aa4713b925sm2341755ljj.21.2023.05.29.01.18.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 29 May 2023 01:18:54 -0700 (PDT)
+Message-ID: <2d044f14-65c0-be3f-595f-4ddb46df6fef@linaro.org>
+Date:   Mon, 29 May 2023 10:18:52 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v2 3/3] clk: qcom: cbf-msm8996: Add support for MSM8996
+ Pro
+Content-Language: en-US
+To:     Yassine Oudjana <yassine.oudjana@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        Palmer Dabbelt <palmer@dabbelt.com>,
-        Albert Ou <aou@eecs.berkeley.edu>,
-        Jonathan Corbet <corbet@lwn.net>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Tao Zhang <quic_taozha@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-doc@vger.kernel.org
-Subject: Re: [PATCH v5 0/3] Add support to configure Coresight Dummy subunit
-Message-ID: <ZHReS1qkktqziCxM@debian.me>
-References: <20230526100753.34581-1-quic_hazha@quicinc.com>
- <5c56a874-dc41-c68c-6f70-efcbc67c29b2@quicinc.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="6QXsBYr0FX1el6tf"
-Content-Disposition: inline
-In-Reply-To: <5c56a874-dc41-c68c-6f70-efcbc67c29b2@quicinc.com>
-X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230527093934.101335-1-y.oudjana@protonmail.com>
+ <20230527093934.101335-4-y.oudjana@protonmail.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230527093934.101335-4-y.oudjana@protonmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -99,46 +86,66 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---6QXsBYr0FX1el6tf
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 29, 2023 at 03:17:32PM +0800, Hao Zhang wrote:
-> Hi,
->=20
-> Add the missing information for this patch series.
->=20
-> Thanks,
-> Hao
->=20
-> On 5/26/2023 6:07 PM, Hao Zhang wrote:
->=20
-> Introduction of Coresight Dummy subunit
-> The Coresight Dummy subunit is for Coresight Dummy component, there are
-> some specific Coresight devices that HLOS don't have permission to access.
-> Such as some TPDMs, they would be configured in NON-HLOS side, but it's
-> necessary to build Coresight path for it to debug. So there need driver to
-> register dummy devices as Coresight devices.
->=20
-> Commit link:
-> https://git.codelinaro.org/clo/linux-kernel/coresight/-/tree/coresight-du=
-mmy-v5
+On 27.05.2023 11:39, Yassine Oudjana wrote:
+> From: Yassine Oudjana <y.oudjana@protonmail.com>
+> 
+> The CBF PLL on MSM8996 Pro has a /4 post divisor instead of /2. Handle the
+> difference accordingly.
+> 
+> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+> ---
+>  drivers/clk/qcom/clk-cbf-8996.c | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/clk-cbf-8996.c b/drivers/clk/qcom/clk-cbf-8996.c
+> index cfd567636f4e..ab988e6f1976 100644
+> --- a/drivers/clk/qcom/clk-cbf-8996.c
+> +++ b/drivers/clk/qcom/clk-cbf-8996.c
+> @@ -48,7 +48,7 @@ static const u8 cbf_pll_regs[PLL_OFF_MAX_REGS] = {
+>  	[PLL_OFF_STATUS] = 0x28,
+>  };
+>  
+> -static const struct alpha_pll_config cbfpll_config = {
+> +static struct alpha_pll_config cbfpll_config = {
+>  	.l = 72,
+>  	.config_ctl_val = 0x200d4828,
+>  	.config_ctl_hi_val = 0x006,
+> @@ -137,7 +137,7 @@ static int clk_cbf_8996_mux_determine_rate(struct clk_hw *hw,
+>  {
+>  	struct clk_hw *parent;
+>  
+> -	if (req->rate < (DIV_THRESHOLD / 2))
+> +	if (req->rate < (DIV_THRESHOLD / cbf_pll_postdiv.div))
+>  		return -EINVAL;
+>  
+>  	if (req->rate < DIV_THRESHOLD)
+> @@ -265,6 +265,11 @@ static int qcom_msm8996_cbf_probe(struct platform_device *pdev)
+>  	/* Switch CBF to use the primary PLL */
+>  	regmap_update_bits(regmap, CBF_MUX_OFFSET, CBF_MUX_PARENT_MASK, 0x1);
+>  
+> +	if (of_device_is_compatible(dev->of_node, "qcom,msm8996pro-cbf")) {
+If this was a driver for more than 1.5 SoCs, I'd propose using a
+different mechanism here (match data flags or something), but since
+there aren't (and hopefully won't ever be) more 8996s (automotive etc.
+inherit one of these configurations so that doesn't count), I'm willing
+to say
 
-OK, please reroll.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
---=20
-An old man doll... just what I always wanted! - Clara
-
---6QXsBYr0FX1el6tf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCZHReSwAKCRD2uYlJVVFO
-o8nGAQCXX1l4ccCpzdDZVWr0b1HG+nQadNo2EQnbSJPsqEGQDwEApvpm9ytnx3IE
-z1SjTimJHr/KkJAqU93pxteEYEpV9wQ=
-=d+Dp
------END PGP SIGNATURE-----
-
---6QXsBYr0FX1el6tf--
+Konrad
+> +		cbfpll_config.post_div_val = 0x3 << 8;
+> +		cbf_pll_postdiv.div = 4;
+> +	}
+> +
+>  	for (i = 0; i < ARRAY_SIZE(cbf_msm8996_hw_clks); i++) {
+>  		ret = devm_clk_hw_register(dev, cbf_msm8996_hw_clks[i]);
+>  		if (ret)
+> @@ -286,6 +291,7 @@ static int qcom_msm8996_cbf_probe(struct platform_device *pdev)
+>  
+>  static const struct of_device_id qcom_msm8996_cbf_match_table[] = {
+>  	{ .compatible = "qcom,msm8996-cbf" },
+> +	{ .compatible = "qcom,msm8996pro-cbf" },
+>  	{ /* sentinel */ },
+>  };
+>  MODULE_DEVICE_TABLE(of, qcom_msm8996_cbf_match_table);
