@@ -2,79 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 55CC27146D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 11:09:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9D94F71470D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 11:29:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231435AbjE2JJP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 05:09:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59632 "EHLO
+        id S230165AbjE2J3D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 05:29:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231838AbjE2JIz (ORCPT
+        with ESMTP id S230342AbjE2J3C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 05:08:55 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F164B115
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 02:08:49 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f3edc05aa5so3270195e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 02:08:49 -0700 (PDT)
+        Mon, 29 May 2023 05:29:02 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F445B1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 02:29:00 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f3b9c88af8so3453031e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 May 2023 02:29:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685351328; x=1687943328;
+        d=linaro.org; s=google; t=1685352539; x=1687944539;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=tSa8aYLGe0eh6zJBgEC1ehDOBlDuDqV/nsz+yCLZGS8=;
-        b=JoqnkqFFs6uFRbpaAbkym4gYnhJQCsnnGsqSwDYL/jL5nlLBM1xz+gJ5X0dxp1zrXI
-         O/tJTtctTjTyqNVgs5ydIokhsCUjUZ6MLaZnabW5HL89gZDo+3NBUFwCT8kUFd3H6zWl
-         kPOun5HSiSYWhM/m/AlGwBhXK7FNMMcr+F0J8kQidRUP9Bh4lLQ07imKQsvlBPcgBpgO
-         NEUKGi5kqZ73V91LHAr4ihEjWO79uT96tJRe9v+PuXqYbTCt1PDg+AcQbyVXRTTFVC8J
-         FfU5KFOmNBObhRkJldNnsxwrZTdw/T3goyEYKuDbs3lrMOdHwfHGvFO9ulU3uj9g9o3K
-         jiLA==
+        bh=wc6mACSfG6egkgCurAB6rV3RkuRUKyRFtI0D6QkUn4o=;
+        b=YM7OxAsmPsA67H6ESrY6NVZtXkKKX3PKsu598Yr5y87nPyt0ReLNsPgX7AooSpKkGn
+         tkDzLJsVDLNxOGbiSZoqmN7/R5DO7gl/0dFRFtPabM+L4U42hSffBDjw9KpUGOD1qWvK
+         w3rEWbaSwivehrM9B3oK0OmDYqujM+oq7YKcPpUQuSf7XAhzPm/JorqeIlQqY6VR4EIv
+         y9TxQggQrFB0a2wi1GAR3vVwa+YiPSQNNSikXd3/JPgc9ZS63kOmqXfqz8wIXH7+Ee/g
+         89PqGLtjJNev/9njc2EntSo3Lt19ekzrUY/Oxgkjwky4iuw/oL+NBgaFfn00Vw7h/Dda
+         lSQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685351328; x=1687943328;
+        d=1e100.net; s=20221208; t=1685352539; x=1687944539;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tSa8aYLGe0eh6zJBgEC1ehDOBlDuDqV/nsz+yCLZGS8=;
-        b=AzEbjl4h/W6HH2BBZHHiSrFKLj8v4zvumQQLpY5pznZeCJH9SSamY5tRM7hBJenmyw
-         wXnW+L11Uaz+zSdYmXw+jTnmKHhQ2eKC6mfa+yMtXpi8zreVWC98DJnEwyKQN5ewum9K
-         aLBpPdeMV9fFMornh/bpgv8F0+3UuIQ5HJt+hAUMZArNt+I7xsG8xcoOHGsE0lsB5Fi9
-         P0t2G8DmwTe5EFNZ3mDiS6j/TMtx23TfyNB/3eKJ+iR6Jrav/XbCKc+MQgjy9dCl3CbX
-         CiaPlTwEdC/hI+wnJQJ0QtR9GqL5LQLe/T8Dtsz+Ja+RB4Fmg9u2alXFdUzTH6N2OWTC
-         8KWw==
-X-Gm-Message-State: AC+VfDwTklcOV3+K3AYGGathb3wcLdnEkdLUCOjtvbv0WoNM3w0I5zUG
-        sg+ftFuF/fgmrPaJo43o6GolHw==
-X-Google-Smtp-Source: ACHHUZ5qiEyUTO6pdyeSWqWw0+WfQT0iGbQqMBiKvhlXlAcXdRgSEX7FCWEmso42ecsPEc8eSvdmTw==
-X-Received: by 2002:ac2:59cf:0:b0:4ed:d2cf:857b with SMTP id x15-20020ac259cf000000b004edd2cf857bmr3019232lfn.5.1685351328124;
-        Mon, 29 May 2023 02:08:48 -0700 (PDT)
+        bh=wc6mACSfG6egkgCurAB6rV3RkuRUKyRFtI0D6QkUn4o=;
+        b=bOXWIgM6Z0o4goZinLhsZIiRfsf16N5IK4KSu3OiggAMzMAwbaXiAeWgLpNM1MsyqV
+         xMcFoDJftLEseLV1o4HwhwMR0h+avaBPfoq56+8RmvAWXzDk33ZGPzmzdi94eHtRIF9s
+         QYohpwbye7tmTDQcD3a80VZW69+7KtJHDmL2eMkm9i5Lvqjkbwzk0E8z8b8L935F6kJT
+         Av2fWNjvkW5yaPFuoUhD3uW14l2lWXEOXKOxeDHUOQHrXRz6s8zEK3Gv64VMUz0+qSMO
+         hEBxA+sG8f94WK4YzmWU3//kROIdzEY+vrV5o9JGSHwsB8T5xwtzawGo8zxfh1hZx+Iy
+         EthA==
+X-Gm-Message-State: AC+VfDyDFD0DkL8zEkLi38vXFm9kTu5QdvYRL3xL5ARr20IChQ7voxsY
+        K7lAHPu4D/ZURH4VpFJc+/Eizw==
+X-Google-Smtp-Source: ACHHUZ6QFpHE3DaA+u6O/gKlLJ5c6fKsBif5MFyqY4I3c0jfyeC3Tvc/5Vn3P3W7D3gJTASz1y4rMA==
+X-Received: by 2002:ac2:5d24:0:b0:4f3:a051:58e1 with SMTP id i4-20020ac25d24000000b004f3a05158e1mr2912329lfb.56.1685352538765;
+        Mon, 29 May 2023 02:28:58 -0700 (PDT)
 Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id d11-20020ac2544b000000b004f4e637db2fsm1484450lfn.167.2023.05.29.02.08.46
+        by smtp.gmail.com with ESMTPSA id p15-20020a05651238cf00b004db3900da02sm1919344lft.73.2023.05.29.02.28.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 May 2023 02:08:47 -0700 (PDT)
-Message-ID: <e99a9fe9-21e4-fc56-d400-4f6e9df2eaed@linaro.org>
-Date:   Mon, 29 May 2023 11:08:46 +0200
+        Mon, 29 May 2023 02:28:58 -0700 (PDT)
+Message-ID: <dd2f0360-bcc0-61a6-09ec-316d8fc51da2@linaro.org>
+Date:   Mon, 29 May 2023 11:28:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH 0/5] MDSS reg bus interconnect
+Subject: Re: [PATCH v3] soc: qcom: ocmem: Add OCMEM hardware version print
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230417-topic-dpu_regbus-v1-0-06fbdc1643c0@linaro.org>
- <CAA8EJpo8X7KrrXoButyW0d1Lz=a5Stw2inFGt2R7KJ+2NTX6wA@mail.gmail.com>
- <74a817ff-5850-330d-8cac-f551be6fa35c@linaro.org>
- <254cd131-4ad1-44c9-2653-862580503c15@linaro.org>
+To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Brian Masney <masneyb@onstation.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230509-ocmem-hwver-v3-1-e51f3488e0f4@z3ntu.xyz>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <254cd131-4ad1-44c9-2653-862580503c15@linaro.org>
+In-Reply-To: <20230509-ocmem-hwver-v3-1-e51f3488e0f4@z3ntu.xyz>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -89,46 +79,65 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 29.05.2023 10:47, Dmitry Baryshkov wrote:
-> On 29/05/2023 10:42, Konrad Dybcio wrote:
->>
->>
->> On 29.05.2023 04:42, Dmitry Baryshkov wrote:
->>> On Mon, 17 Apr 2023 at 18:30, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>>>
->>>> Apart from the already handled data bus (MAS_MDP_Pn<->DDR), there's
->>>> another path that needs to be handled to ensure MDSS functions properly,
->>>> namely the "reg bus", a.k.a the CPU-MDSS interconnect.
->>>>
->>>> Gating that path may have a variety of effects.. from none to otherwise
->>>> inexplicable DSI timeouts..
->>>>
->>>> This series tries to address the lack of that.
->>>>
->>>> Example path:
->>>>
->>>> interconnects = <&bimc MASTER_AMPSS_M0 0 &config_noc SLAVE_DISPLAY_CFG 0>;
->>>
->>> If we are going to touch the MDSS interconnects, could you please also
->>> add the rotator interconnect to the bindings?
->>> We do not need to touch it at this time, but let's not have to change
->>> bindings later again.
->>>
->> Ack
+On 29.05.2023 10:41, Luca Weiss wrote:
+> It might be useful to know what hardware version of the OCMEM block the
+> SoC contains. Add a debug print for that.
 > 
-> Also, several points noted from the mdss fbdev driver:
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+> This patch is depends on [0] but could also be applied in the other
+> order, if conflicts are resolved.
 > 
-> - All possible clents vote for the low bw setting. This includes DSI, HDMI, MDSS itself and INTF
-As in, "you need NUM_CLIENTS * MIN_VOTE" or as in "any client necessitates
-a vote"?
-
-> - SMMU also casts such vote, which I do not think should be necessary, unless there is a separate MDSS SMMU?
-There's one on 8996, pre-845 SoCs often have a MMSS MMU, 845 and
-later have a MMSS-specific TBU which (theoretically) requires a
-vote for access to 0x400-0x7ff SIDs
-
-> - PINGPONG cacsts high bw setting for the sake of speeding up the LUT tables if required.
-Hm, I think is would be a separate topic.
+> [0] https://lore.kernel.org/linux-arm-msm/20230506-msm8226-ocmem-v1-1-3e24e2724f01@z3ntu.xyz/
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
+> Changes in v3:
+> - Use %lu instead of %ld for print (Konrad)
+> - Re-wrap lines so reading is easier (Konrad)
+> - Link to v2: https://lore.kernel.org/r/20230509-ocmem-hwver-v2-1-8c8793a07dfc@z3ntu.xyz
 > 
+> Changes in v2:
+> - Use FIELD_GET macros for getting correct bits from register (take
+>   wording from mdp5: major, minor, step which hopefully is sort of
+>   accurate)
+> - Link to v1: https://lore.kernel.org/r/20230509-ocmem-hwver-v1-1-b83ece3f2168@z3ntu.xyz
+> ---
+>  drivers/soc/qcom/ocmem.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/drivers/soc/qcom/ocmem.c b/drivers/soc/qcom/ocmem.c
+> index c3e78411c637..ef7c1748242a 100644
+> --- a/drivers/soc/qcom/ocmem.c
+> +++ b/drivers/soc/qcom/ocmem.c
+> @@ -76,6 +76,10 @@ struct ocmem {
+>  #define OCMEM_REG_GFX_MPU_START			0x00001004
+>  #define OCMEM_REG_GFX_MPU_END			0x00001008
+>  
+> +#define OCMEM_HW_VERSION_MAJOR(val)		FIELD_GET(GENMASK(31, 28), val)
+> +#define OCMEM_HW_VERSION_MINOR(val)		FIELD_GET(GENMASK(27, 16), val)
+> +#define OCMEM_HW_VERSION_STEP(val)		FIELD_GET(GENMASK(15, 0), val)
+> +
+>  #define OCMEM_HW_PROFILE_NUM_PORTS(val)		FIELD_GET(0x0000000f, (val))
+>  #define OCMEM_HW_PROFILE_NUM_MACROS(val)	FIELD_GET(0x00003f00, (val))
+>  
+> @@ -355,6 +359,12 @@ static int ocmem_dev_probe(struct platform_device *pdev)
+>  		}
+>  	}
+>  
+> +	reg = ocmem_read(ocmem, OCMEM_REG_HW_VERSION);
+> +	dev_dbg(dev, "OCMEM hardware version: %lu.%lu.%lu\n",
+> +		OCMEM_HW_VERSION_MAJOR(reg),
+> +		OCMEM_HW_VERSION_MINOR(reg),
+> +		OCMEM_HW_VERSION_STEP(reg));
+> +
+>  	reg = ocmem_read(ocmem, OCMEM_REG_HW_PROFILE);
+>  	ocmem->num_ports = OCMEM_HW_PROFILE_NUM_PORTS(reg);
+>  	ocmem->num_macros = OCMEM_HW_PROFILE_NUM_MACROS(reg);
+> 
+> ---
+> base-commit: 8705151771af822ac794b44504cd72eebc423499
+> change-id: 20230509-ocmem-hwver-99bcb33b028b
+> 
+> Best regards,
