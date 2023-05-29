@@ -2,190 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8515B714722
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 11:36:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3FE1714758
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 May 2023 11:45:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231140AbjE2JgM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 05:36:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40172 "EHLO
+        id S231522AbjE2Jpy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 29 May 2023 05:45:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229650AbjE2JgL (ORCPT
+        with ESMTP id S231499AbjE2Jpw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 05:36:11 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87475AF;
-        Mon, 29 May 2023 02:36:09 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2228262304;
-        Mon, 29 May 2023 09:36:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEAFC4339B;
-        Mon, 29 May 2023 09:36:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685352968;
-        bh=WjawDvm6oPVly4kc/gMcQLO6JNcFJPHYvkIDhnDoG+c=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YgL4qrQ9f2ai2b1qgowWAF/VBckdP80pf0+i2CbiMsS30Gtkiq1k3Ou5en5BN7gZC
-         BXzDK0J+YfU4+ijn/WbolCojwJ4RVOKcnuiI/scxG7EwUMlO6ErH2fwNozldQQ1ZpQ
-         WJuQvvD5S3mdhR9CfmHkdle9Cx8FdNSCg8UG8Q/Lr2/C1kSzHhe+J+CIGbaOxv+qVL
-         rxlQAcieBghueIMsENaCoYdbbhh4Ts4xe/7oEk6Wxmp667+dBSf7fbTrVZkeTRXiY1
-         HYzoyZTZAEosTBrRnIcbB1iOtRktA+1XPUU4DNMLXnsjlGDcaI/xS3Ve5I9MZ6Del3
-         NKJKn+EPsS+bQ==
-Date:   Mon, 29 May 2023 11:36:03 +0200
-From:   Lorenzo Pieralisi <lpieralisi@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     kw@linux.com, kishon@kernel.org, bhelgaas@google.com,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 1/7] PCI: endpoint: Pass EPF device ID to the probe
- function
-Message-ID: <ZHRyA1BzK3KaGUEH@lpieralisi>
-References: <20230519144215.25167-1-manivannan.sadhasivam@linaro.org>
- <20230519144215.25167-2-manivannan.sadhasivam@linaro.org>
+        Mon, 29 May 2023 05:45:52 -0400
+Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E31C4A8;
+        Mon, 29 May 2023 02:45:29 -0700 (PDT)
+Received: from [192.168.122.1] (217-149-172-244.nat.highway.telekom.at [217.149.172.244])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id A710FCE0B8;
+        Mon, 29 May 2023 09:44:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1685353498; bh=xfFewTURLYXohNneh+r7JbkPyl7CvAO3LVrq35X+H5Y=;
+        h=From:Subject:Date:To:Cc;
+        b=RXv/muN6ZaeRXkoapvQZ0XRkTCoQR8oyG/WoR9LVQW1xDXPU3M/PL9iIWS/UbgqGM
+         c5ORjhWFoSUcEGHuc7x50cwydcByJn8rxMtla3oTXEoheuvt/ISVdaBvoC8om4qmLz
+         63QDZrcOukJsneGw9ijSNtCUW5By2YdrDRL8XDq4=
+From:   Luca Weiss <luca@z3ntu.xyz>
+Subject: [PATCH 0/7] Display support for MSM8226
+Date:   Mon, 29 May 2023 11:43:57 +0200
+Message-Id: <20230308-msm8226-mdp-v1-0-679f335d3d5b@z3ntu.xyz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230519144215.25167-2-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAN1zdGQC/z2NQQrCMBAAv1L27JZ0IzH4FfGQJqvdQ9KahaKU/
+ t3Ug8eBGWYD5SqscO02qLyKylwaDKcO4hTKk1FSYyBD1ljjMWv2RA5zWtCd7cA+uQsFA60YgzK
+ ONZQ4Hc0rzvnvu576zyEtlR/y/i1v933/AqQansKCAAAA
+To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1621; i=luca@z3ntu.xyz;
+ h=from:subject:message-id; bh=xfFewTURLYXohNneh+r7JbkPyl7CvAO3LVrq35X+H5Y=;
+ b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBkdHQQ99YD1eAaNUZbHifhL72ezovVQpKIhnABG
+ zm291t9wrWJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZHR0EAAKCRBy2EO4nU3X
+ VjknD/4gDTK+++IVnAznUGjqtJE0MvfHd8ClzzCOq9kc20IajNM4rTsRuz87nllUhXxvq+wH1ou
+ t82i65mRlSW+MbkyhLbWm881v+dQJFLI5ynQoIxM+3r8v65vDzp/UTVnsVsuiClm8XJbBbi84zD
+ 1pnb1W81aOtBj1l2qpxaWjOQ584Vl7Kckd99vNgFmf9yuMLsxKd18obhfV5LjCnYf6Iw2ZEvjer
+ L9ERepIebFVIcHJyRf7QRNDytpgHWLQ9sDydfxKUKS8oW4gu0w7pIqGO0ipkjwCAu2qIZpj1F8F
+ HWyKQljwA184mDQ8FbHulJPH7XkM1/lEjkxJdTTY+9Xcy50h9YA1Rx8M0sWmQo1JiB9gHmkcm6v
+ hW1JtTsIfU6OCX5YF6n6g3DbjD7gQPdL/prafZl78evmKXeytNMYHJU5zGXgFy8Lh1Ja/7z3BrB
+ 58v9nLLJucuvMKtetC/I0/CZWhnkt0FVw4pBWW+agE2hOprKgssl87LaIblwbRtEC8gVZz5K3qQ
+ WkehbzYJ9FIFA6mfMGqNpyBx3pIRkq6FG6EFVIwSfxesMe3Py1JFplJl5mdjjZW0wm25K2lFK5W
+ l+dfFcybb8QVHgkbIs6pAZaI50NyHFGhhY9zRmUeIGcHljG7dQ9DSnA67uaFrzsh4Zr33LqCyCh
+ mFE1iNIaUNpNa1w==
+X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
+ fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 19, 2023 at 08:12:09PM +0530, Manivannan Sadhasivam wrote:
-> Currently, the EPF probe function doesn't get the device ID argument needed
-> to correctly identify the device table ID of the EPF device.
-> 
-> When multiple entries are added to the "struct pci_epf_device_id" table,
-> the probe function needs to identify the correct one. And the only way to
-> do so is by storing the correct device ID in "struct pci_epf" during
-> "pci_epf_match_id()" and passing that to probe().
-> 
-> Reviewed-by: Kishon Vijay Abraham I <kishon@kernel.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->  drivers/pci/endpoint/functions/pci-epf-ntb.c  | 3 ++-
->  drivers/pci/endpoint/functions/pci-epf-test.c | 2 +-
->  drivers/pci/endpoint/functions/pci-epf-vntb.c | 2 +-
->  drivers/pci/endpoint/pci-epf-core.c           | 8 +++++---
->  include/linux/pci-epf.h                       | 4 +++-
->  5 files changed, 12 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/pci/endpoint/functions/pci-epf-ntb.c b/drivers/pci/endpoint/functions/pci-epf-ntb.c
-> index 9a00448c7e61..980b4ecf19a2 100644
-> --- a/drivers/pci/endpoint/functions/pci-epf-ntb.c
-> +++ b/drivers/pci/endpoint/functions/pci-epf-ntb.c
-> @@ -2075,11 +2075,12 @@ static struct config_group *epf_ntb_add_cfs(struct pci_epf *epf,
->  /**
->   * epf_ntb_probe() - Probe NTB function driver
->   * @epf: NTB endpoint function device
-> + * @id: NTB endpoint function device ID
->   *
->   * Probe NTB function driver when endpoint function bus detects a NTB
->   * endpoint function.
->   */
-> -static int epf_ntb_probe(struct pci_epf *epf)
-> +static int epf_ntb_probe(struct pci_epf *epf, const struct pci_epf_device_id *id)
->  {
->  	struct epf_ntb *ntb;
->  	struct device *dev;
-> diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-> index 0f9d2ec822ac..d5fcc78a5b73 100644
-> --- a/drivers/pci/endpoint/functions/pci-epf-test.c
-> +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-> @@ -980,7 +980,7 @@ static const struct pci_epf_device_id pci_epf_test_ids[] = {
->  	{},
->  };
->  
-> -static int pci_epf_test_probe(struct pci_epf *epf)
-> +static int pci_epf_test_probe(struct pci_epf *epf, const struct pci_epf_device_id *id)
->  {
->  	struct pci_epf_test *epf_test;
->  	struct device *dev = &epf->dev;
-> diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-> index b7c7a8af99f4..122eb7a12028 100644
-> --- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-> +++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-> @@ -1401,7 +1401,7 @@ static struct pci_epf_ops epf_ntb_ops = {
->   *
->   * Returns: Zero for success, or an error code in case of failure
->   */
-> -static int epf_ntb_probe(struct pci_epf *epf)
-> +static int epf_ntb_probe(struct pci_epf *epf, const struct pci_epf_device_id *id)
->  {
->  	struct epf_ntb *ntb;
->  	struct device *dev;
-> diff --git a/drivers/pci/endpoint/pci-epf-core.c b/drivers/pci/endpoint/pci-epf-core.c
-> index 2036e38be093..924564288c9a 100644
-> --- a/drivers/pci/endpoint/pci-epf-core.c
-> +++ b/drivers/pci/endpoint/pci-epf-core.c
-> @@ -494,11 +494,13 @@ static const struct device_type pci_epf_type = {
->  };
->  
->  static int
-> -pci_epf_match_id(const struct pci_epf_device_id *id, const struct pci_epf *epf)
-> +pci_epf_match_id(const struct pci_epf_device_id *id, struct pci_epf *epf)
->  {
->  	while (id->name[0]) {
-> -		if (strcmp(epf->name, id->name) == 0)
-> +		if (strcmp(epf->name, id->name) == 0) {
-> +			epf->id = id;
->  			return true;
-> +		}
->  		id++;
->  	}
+This series adds the required configs for MDP5 and DSI blocks that are
+needed for MDSS on MSM8226. Finally we can add the new nodes into the
+dts.
 
-I disagree with this patch's intent. The match function should not
-change the parameters state. We should export this function to drivers
-so that upon probe they can retrieve the matching id themselves,
-as other bus interfaces do IMO.
+Tested on apq8026-lg-lenok and msm8926-htc-memul.
 
-Thanks,
-Lorenzo
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+Luca Weiss (7):
+      dt-bindings: msm: dsi-phy-28nm: Document msm8226 compatible
+      dt-bindings: display/msm: dsi-controller-main: Add msm8226 compatible
+      dt-bindings: display/msm: qcom,mdp5: Add msm8226 compatible
+      drm/msm/mdp5: Add MDP5 configuration for MSM8226
+      drm/msm/dsi: Add configuration for MSM8226
+      drm/msm/dsi: Add phy configuration for MSM8226
+      ARM: dts: qcom: msm8226: Add mdss nodes
 
-> @@ -526,7 +528,7 @@ static int pci_epf_device_probe(struct device *dev)
->  
->  	epf->driver = driver;
->  
-> -	return driver->probe(epf);
-> +	return driver->probe(epf, epf->id);
->  }
->  
->  static void pci_epf_device_remove(struct device *dev)
-> diff --git a/include/linux/pci-epf.h b/include/linux/pci-epf.h
-> index a215dc8ce693..bc613f0df7e3 100644
-> --- a/include/linux/pci-epf.h
-> +++ b/include/linux/pci-epf.h
-> @@ -89,7 +89,7 @@ struct pci_epc_event_ops {
->   * @id_table: identifies EPF devices for probing
->   */
->  struct pci_epf_driver {
-> -	int	(*probe)(struct pci_epf *epf);
-> +	int	(*probe)(struct pci_epf *epf, const struct pci_epf_device_id *id);
->  	void	(*remove)(struct pci_epf *epf);
->  
->  	struct device_driver	driver;
-> @@ -131,6 +131,7 @@ struct pci_epf_bar {
->   * @epc: the EPC device to which this EPF device is bound
->   * @epf_pf: the physical EPF device to which this virtual EPF device is bound
->   * @driver: the EPF driver to which this EPF device is bound
-> + * @id: Pointer to the EPF device ID
->   * @list: to add pci_epf as a list of PCI endpoint functions to pci_epc
->   * @lock: mutex to protect pci_epf_ops
->   * @sec_epc: the secondary EPC device to which this EPF device is bound
-> @@ -158,6 +159,7 @@ struct pci_epf {
->  	struct pci_epc		*epc;
->  	struct pci_epf		*epf_pf;
->  	struct pci_epf_driver	*driver;
-> +	const struct pci_epf_device_id *id;
->  	struct list_head	list;
->  	/* mutex to protect against concurrent access of pci_epf_ops */
->  	struct mutex		lock;
-> -- 
-> 2.25.1
-> 
+ .../bindings/display/msm/dsi-controller-main.yaml  |   2 +
+ .../bindings/display/msm/dsi-phy-28nm.yaml         |   1 +
+ .../devicetree/bindings/display/msm/qcom,mdp5.yaml |   1 +
+ .../devicetree/bindings/display/msm/qcom,mdss.yaml |   1 +
+ arch/arm/boot/dts/qcom-msm8226.dtsi                | 118 +++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c           |  82 ++++++++++++++
+ drivers/gpu/drm/msm/dsi/dsi_cfg.c                  |   2 +
+ drivers/gpu/drm/msm/dsi/dsi_cfg.h                  |   1 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.c              |   2 +
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy.h              |   3 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c         |  97 +++++++++++++++++
+ 11 files changed, 309 insertions(+), 1 deletion(-)
+---
+base-commit: e5c87df1b3ab5220362ec48f907cc62ba8928b01
+change-id: 20230308-msm8226-mdp-6431e8d672a0
+
+Best regards,
+-- 
+Luca Weiss <luca@z3ntu.xyz>
+
