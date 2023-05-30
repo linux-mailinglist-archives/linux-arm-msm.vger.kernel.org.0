@@ -2,156 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7AAA6715CB7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 13:11:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8691D715D0E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 13:23:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230312AbjE3LL0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 07:11:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54916 "EHLO
+        id S231895AbjE3LXc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 07:23:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33914 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231473AbjE3LLV (ORCPT
+        with ESMTP id S231897AbjE3LXY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 07:11:21 -0400
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com [IPv6:2607:f8b0:4864:20::1131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34F4C116
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 04:11:19 -0700 (PDT)
-Received: by mail-yw1-x1131.google.com with SMTP id 00721157ae682-565a022ef06so60551157b3.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 04:11:19 -0700 (PDT)
+        Tue, 30 May 2023 07:23:24 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26DC2E5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 04:23:16 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-514953b3aa6so3801262a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 04:23:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685445078; x=1688037078;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=2Aw1Y+LNx+6x6rqkl3hDGtyQpbkH+fbTyufgVbhUx3g=;
-        b=j/znRIUxKJksQNwddxQU58ISTnn7vK+X/i5ctJxZ9kV6Zy74Y7/Ykn1i3yLD1unHfB
-         g1n31aO8w98GIWhpkbzZdHOXZnpLE2VSfzmvc/YNKfYQ+LBduA0dV7wxL+4vq+e3GzxM
-         sAdSD89FDbS9Y4yyVzNrAZCaHYJpp5Q4IIQoIbini+Vow6/Aj3cpWNe0+W6ligWOPT2u
-         ARA3eKBN3lrXEJPxQhCOpk/6dZoqf4VOoqMec7n/yDYe8vrRCOvF8UzCReBELiA6OU9O
-         T1cqBbP8F832jq3ASijrL+IzrUy3RQNNoH6YoT9idANpQ6ukYRvvIxPv5UNVQ9n5LYH9
-         Z0yA==
+        d=gmail.com; s=20221208; t=1685445794; x=1688037794;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AiBtQpcnGR4P7/eOZeHYTEHahcUyThTulbflkUfN96o=;
+        b=H6biMQ/5DnK2+eYc/F/eKyK1wUyjHGTWCYzPKTT40qCeMAWgjxcD7C2fmKrSH0bARa
+         YV28Ko6XRRZj33nhmPdgR1DXxv8L8kQZAxrUEwcXTIFNBRfnyHf3feg4NeQVm56JRygC
+         WftJpZDh3vckRwhLTxLvN16M6IDgK3GrxlP63cRHP2flaUc4I1vJuNyZ7cnxkhW+D56s
+         +p3Y+w+UHzINoUrWFDSaelwqi3xh6KflqKNOyfM5+QBFFvh/gI6+PbX1vAM9g9Ij+iOO
+         +OjsG0aIoeptXVwCJJGGTBOgAsnzzCgcD1oGPbCkfDj55QRXNae6PQ7mbETGe79yRCd7
+         keQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685445078; x=1688037078;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2Aw1Y+LNx+6x6rqkl3hDGtyQpbkH+fbTyufgVbhUx3g=;
-        b=OEVA3mkCnJ/A6m/V6MWRD4o6C+fjNTnMPp20RNhUQxyPaloe/1U7sRlAeXdN5/FX+E
-         yE3jLwWIh4DyzXgYPdhE/kMySOXBc2bM68Bab407gsP/7U17GTaAmxIlVGRVqI1RSu1Y
-         oE8aXnox6y5B9GoosV0m5iLZdWyIiu90/2rJyQt8sMkTnSTnbtkGN1hW2KqLfccufNUU
-         mw9RkK0TAW22czYpboSvYL9uJAlrkHBzKfkzpT3ZcRsYmYegQ8LhRHJ5uLXAvBSSOLf8
-         MAKCYAKlmuasag9blTsj0c+oww+SGaRneHXiS1i7Z/FEZCPL3fljBKW8TATttdaC4rYO
-         M5gA==
-X-Gm-Message-State: AC+VfDxbNl95UVQOc6frSt/tZUTtoQGaZkjjO/fotErejdTsv+Z4B75w
-        eLF2I/es7cob7qsDrRkVyIBlCiX79RfjPnEzMpg1Bw==
-X-Google-Smtp-Source: ACHHUZ5W8uyQC5KcaoA8JpMcpez1cJAmTKelhw60cKwxaP/qh9Nq55tKrVcBkj3EzUU6ZABnGEZGlGc1VHQoEZDvPAA=
-X-Received: by 2002:a0d:e212:0:b0:55d:a4fb:864a with SMTP id
- l18-20020a0de212000000b0055da4fb864amr1965071ywe.14.1685445078295; Tue, 30
- May 2023 04:11:18 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1685445794; x=1688037794;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AiBtQpcnGR4P7/eOZeHYTEHahcUyThTulbflkUfN96o=;
+        b=AXryHj0CsXttps1MNBlnLyxLUEYn2ONTANajYbx7ePezD8KPjgye45F6ha2hSjWS7r
+         G+GRrM8dfa+S+1MS43wujg5tbGw5n124qAH9zLCMbyjKLAGwjzZIIb9BrmWxThN+LQGm
+         bw7tG3JA8XhYL7D3ocT36CNcrDPsVuuG35E2NfGg1BVrDzE0/ZWSRtxC+fC5Kx9skyWh
+         bGVimP5gbqh3AarizvEXAfiMjS9FEhdTTGAhM8poBJzfzqeSU74HojWMetwOp1CcWw5i
+         +C0O94avHkJ1AWrJm2hlKXEw+rHe8ZH3H5+mt9NYhsnNHxGYD6rLmvl4e2LlWeb/F3S6
+         wYPg==
+X-Gm-Message-State: AC+VfDxy6LBuiv2jXkbaPoevAhK+h+gQ10ANTR9NTfpvtvSRvLxvC++g
+        2YuW2OPh0kdYHKj8jBgYgLGwQTJqrDxEJnvCYoq1wJWmup4=
+X-Google-Smtp-Source: ACHHUZ7RJ5ihneof3IXvDvhc5qmvEuAi/oEkOXjYfFnCGcgDLP9ZCqp3yA1GbNJithzKs1pAOPR1n4NRUg1/SMUbg8I=
+X-Received: by 2002:a17:907:6d1f:b0:974:1eeb:1ad6 with SMTP id
+ sa31-20020a1709076d1f00b009741eeb1ad6mr1921200ejc.30.1685445794319; Tue, 30
+ May 2023 04:23:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230521-drm-panels-sony-v1-0-541c341d6bee@somainline.org>
- <20230521-drm-panels-sony-v1-3-541c341d6bee@somainline.org>
- <ccc97880-8e74-b85b-9679-9c12c44c4b99@linaro.org> <71675a02-0801-62dc-2673-4a0907636b21@linaro.org>
- <CAA8EJpq=HZqiBZ6bpUNH47VmASuH+Mi5OD5BHmg0TPwtsKHf8w@mail.gmail.com>
- <oxgtbj7qmsdvz5gl4bud64jedmhdmvphjfge7uy6uwulefqfsa@pleslv2zgwbp>
- <ebc3ff33-6e4f-b107-33c6-f35b03307058@linaro.org> <v3ac2ihqjce7vxcsjnm7ett2vc6wb4hb3bb6x4widd55eintw7@fgkyipbbl2ei>
- <d52b384f-9853-3921-d4f2-5aedb7ef4c61@linaro.org> <ao2w7eiuc4olqbycmdviqrpqbdpoltusixlllied7jbo5fucap@xv6xvgi43yio>
-In-Reply-To: <ao2w7eiuc4olqbycmdviqrpqbdpoltusixlllied7jbo5fucap@xv6xvgi43yio>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 30 May 2023 14:11:06 +0300
-Message-ID: <CAA8EJpqt_VCE+Nz8w5mRMrg_oN87xByk2NKy8v+9LLPjP-nLYw@mail.gmail.com>
-Subject: Re: [PATCH RFC 03/10] drm/panel: Add LGD panel driver for Sony Xperia XZ3
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     neil.armstrong@linaro.org, Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Caleb Connolly <caleb@connolly.tech>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
+References: <20230530091340.3513141-1-dnlplm@gmail.com> <20230530103103.GB6379@thinkpad>
+In-Reply-To: <20230530103103.GB6379@thinkpad>
+From:   Daniele Palmas <dnlplm@gmail.com>
+Date:   Tue, 30 May 2023 13:12:59 +0200
+Message-ID: <CAGRyCJGR4YsUgWekf_DgYHJqoXNfmFpL-N_virvqE18aU=Ovkg@mail.gmail.com>
+Subject: Re: [PATCH 1/1] bus: mhi: host: allow SBL as initial EE
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Jeffrey Hugo <quic_jhugo@quicinc.com>, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HK_RANDOM_ENVFROM,
+        HK_RANDOM_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 30 May 2023 at 11:27, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
+Hi Mani,
+
+Il giorno mar 30 mag 2023 alle ore 12:31 Manivannan Sadhasivam
+<mani@kernel.org> ha scritto:
 >
-> On 2023-05-30 01:39:10, Dmitry Baryshkov wrote:
-> > On 30/05/2023 01:37, Marijn Suijten wrote:
-> > > On 2023-05-30 01:18:40, Dmitry Baryshkov wrote:
-> > > <snip>
-> > >>>>>>> +    ret = mipi_dsi_dcs_set_display_on(dsi);
-> > >>>>>>> +    if (ret < 0) {
-> > >>>>>>> +        dev_err(dev, "Failed to turn display on: %d\n", ret);
-> > >>>>>>> +        return ret;
-> > >>>>>>> +    }
-> > >>>>>>
-> > >>>>>> My usual question: should the mipi_dsi_dcs_exit_sleep_mode() / mipi_dsi_dcs_set_display_on() be moved from prepare() to enable() part?
-> > >>>>>
-> > >>>>>
-> > >>>>> No, prepare is called before the video stream is started and when display is still in LPM mode and the mode hasn't been set.
-> > >>>>>
-> > >>>>
-> > >>>> Yes, that's my point. Shouldn't we enable the panel _after_ starting the stream?
-> > >>>
-> > >>> I have never investigated what it takes to split these functions, but
-> > >>> some of these panels do show some corruption at startup which may be
-> > >>> circumvented by powering the panel on after starting the video stream?
-> > >>>
-> > >>> I'm just not sure where to make the split: downstream does describe a
-> > >>> qcom,mdss-dsi-on-command and qcom,mdss-dsi-post-panel-on-command, where
-> > >>> the latter only contains set_display_on() (not exit_sleep_mode()).
-> > >>> It is documented like:
-> > >>>
-> > >>>       same as "qcom,mdss-dsi-on-command" except commands are sent after
-> > >>>       displaying an image."
-> > >>>
-> > >>> So this seems like the right way to split them up, I'll test this out on
-> > >>> all submitted panel drivers.
-> > >>
-> > >> Interesting enough, Neil suggested that sending all the commands during
-> > >> pre_enable() is the correct sequence (especially for VIDEO mode panels),
-> > >> since not all DSI hosts can send commands after switching to the VIDEO mode.
-> > >
-> > > Note that all these panels and Driver-ICs are command-mode, and/or
-> > > programmed to run in command-mode, so there shouldn't be any notion of a
-> > > VIDEO stream (any command-mode frame is just an "arbitrary command" as
-> > > far as I understood).
+> On Tue, May 30, 2023 at 11:13:40AM +0200, Daniele Palmas wrote:
+> > There are situations in which SBL is a legitimate initial execution
+> > environment (e.g. modem stuck in SBL due to a firmware failure...), but
+> > mhi refuses to start:
 > >
-> > Yes, from the data stream point of view. I was talking about the DSI
-> > host being able to send arbitrary commands or not after enabling the
-> > video/cmd stream.
+> > mhi-pci-generic 0000:01:00.0: MHI PCI device found: foxconn-sdx55
+> > mhi-pci-generic 0000:01:00.0: BAR 0: assigned
+> > mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
+> > mhi mhi0: Requested to power ON
+> > mhi mhi0: SECONDARY BOOTLOADER is not a valid EE for power on
+> > mhi-pci-generic 0000:01:00.0: failed to power up MHI controller
+> > mhi-pci-generic: probe of 0000:01:00.0 failed with error -5
+> >
+> > Fix this by adding SBL as an allowed initial execution environment.
+> >
 >
-> Is this a known limitation of SM8250 then?  Or is the brightness_set
-> issue more likely a "problem" with the panel that the downstream kernel
-> is "somehow" working around or aware of, and I just haven't found
-> how/where it deals with that?
-> (Alternatively we could be "doing it wrong" for other panels but it
->  turns out to be working anyway)
+> What can you do with the modem when firmware failure happens? If there is=
+ a
+> usecase, please explain.
 
-Please excuse me for not being explicit enough. Qualcomm hardware
-doesn't have this problem. Thus I was completely unaware of it before
-talking to Neil.
-So, our hardware works in most of the cases.
+(removing Siddartha and Sujeev due to addresses not working)
 
--- 
-With best wishes
-Dmitry
+A possible scenario for a Telit modem not being able to go to mission
+mode is when a firmware update does not work properly: in this case it
+remains stuck in SBL, but the SAHARA device can be used for retrying
+the firmware update.
+
+Telit FN990 supports the SAHARA channels in pci_generic. It's true
+that there's still missing the exposed device for userspace, something
+that we are currently managing with out of tree patches, but I see
+that there's some ongoing effort for that
+https://lore.kernel.org/mhi/20230522190459.13790-1-quic_jhugo@quicinc.com/
+
+I'm not sure if non-Telit modems have other reasonable use-cases.
+
+Regards,
+Daniele
+
+>
+> - Mani
+>
+> > Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operatio=
+ns")
+> > Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+> > ---
+> >  drivers/bus/mhi/host/internal.h | 2 +-
+> >  drivers/bus/mhi/host/pm.c       | 3 ++-
+> >  2 files changed, 3 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/int=
+ernal.h
+> > index 2e139e76de4c..3bdcd2321aa5 100644
+> > --- a/drivers/bus/mhi/host/internal.h
+> > +++ b/drivers/bus/mhi/host/internal.h
+> > @@ -56,7 +56,7 @@ extern const char * const mhi_ee_str[MHI_EE_MAX];
+> >
+> >  #define MHI_IN_PBL(ee) (ee =3D=3D MHI_EE_PBL || ee =3D=3D MHI_EE_PTHRU=
+ || \
+> >                       ee =3D=3D MHI_EE_EDL)
+> > -#define MHI_POWER_UP_CAPABLE(ee) (MHI_IN_PBL(ee) || ee =3D=3D MHI_EE_A=
+MSS)
+> > +#define MHI_POWER_UP_CAPABLE(ee) (MHI_IN_PBL(ee) || ee =3D=3D MHI_EE_A=
+MSS || ee =3D=3D MHI_EE_SBL)
+> >  #define MHI_FW_LOAD_CAPABLE(ee) (ee =3D=3D MHI_EE_PBL || ee =3D=3D MHI=
+_EE_EDL)
+> >  #define MHI_IN_MISSION_MODE(ee) (ee =3D=3D MHI_EE_AMSS || ee =3D=3D MH=
+I_EE_WFW || \
+> >                                ee =3D=3D MHI_EE_FP)
+> > diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+> > index 083459028a4b..18872c5017be 100644
+> > --- a/drivers/bus/mhi/host/pm.c
+> > +++ b/drivers/bus/mhi/host/pm.c
+> > @@ -1203,10 +1203,11 @@ int mhi_sync_power_up(struct mhi_controller *mh=
+i_cntrl)
+> >
+> >       wait_event_timeout(mhi_cntrl->state_event,
+> >                          MHI_IN_MISSION_MODE(mhi_cntrl->ee) ||
+> > +                        mhi_cntrl->ee =3D=3D MHI_EE_SBL ||
+> >                          MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
+> >                          msecs_to_jiffies(mhi_cntrl->timeout_ms));
+> >
+> > -     ret =3D (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -ETIMEDOUT;
+> > +     ret =3D (MHI_IN_MISSION_MODE(mhi_cntrl->ee) || mhi_cntrl->ee =3D=
+=3D MHI_EE_SBL) ? 0 : -ETIMEDOUT;
+> >       if (ret)
+> >               mhi_power_down(mhi_cntrl, false);
+> >
+> > --
+> > 2.37.1
+> >
+>
+> --
+> =E0=AE=AE=E0=AE=A3=E0=AE=BF=E0=AE=B5=E0=AE=A3=E0=AF=8D=E0=AE=A3=E0=AE=A9=
+=E0=AF=8D =E0=AE=9A=E0=AE=A4=E0=AE=BE=E0=AE=9A=E0=AE=BF=E0=AE=B5=E0=AE=AE=
+=E0=AF=8D
