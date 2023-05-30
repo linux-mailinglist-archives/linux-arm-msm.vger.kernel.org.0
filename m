@@ -2,169 +2,272 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE6A9716E7C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 22:15:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0A98716FC1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 23:31:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231542AbjE3UPF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 16:15:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49462 "EHLO
+        id S231617AbjE3Vbq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 17:31:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51586 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229920AbjE3UPD (ORCPT
+        with ESMTP id S231585AbjE3Vbp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 16:15:03 -0400
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87BDD125
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 13:14:31 -0700 (PDT)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-565cfe4ece7so46613757b3.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 13:14:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685477670; x=1688069670;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=n9PhFw6EqXKj/DjQH85Ps097cPd6lOxV2adiWzAyXMY=;
-        b=RYm/9b5PO6rQQSGtGQZOBLzeWtNFbyYU77EJ7fUmDuVmOQ4XLHnBRwHZZK16Mby/So
-         YUfoRAamjnl8byEisFFSkGyyS8IhIQVBDgt7uNkbfzyOyTuKE6pxUTpCspj+k5/uaFMi
-         KIKjLyTalqP+S8LS7YQYbJqrxnD08AC9MpgZkUbEQ3OX0jb3m/6o3EUmrEeX0wVLoluP
-         4shKvphiVSoP6CScSqnB4EtBFKhqCyZC5fLxZgbRSV5XejWLoFY7FWC2cce5o1Vm517l
-         b+nYX75hfRm/pAi05Wz3ve7u6N1u+jgbwfmituJUm/+Os+LYjHeCbWIk7Eh0Bnp3vHqp
-         tvQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685477670; x=1688069670;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=n9PhFw6EqXKj/DjQH85Ps097cPd6lOxV2adiWzAyXMY=;
-        b=SqcXdThj7Z4JrPeJABlV0LlKzj/YigMI01k8k/45Ej+/6RFhdEKCr7+xbr17IbclxP
-         CdQpLzXwOvSAbDfu01x/YhOnOAJMDT5m+zmvE4BhA+WbABdzJvFkVNouZnGt6jM+3SQd
-         rak2TZU9L3AcIeVcZRmtOXjsSa5hlLleXXd2QeXQ9zROAzGYfQg4W1EmDKdQzAZ5Oq4s
-         DGQb3k4tlEYjh36nWRgVmvv1hFf3ZJYXtL6K248AGcwoZHSQcn/oO3SSM/OyvR65tb3s
-         BoRr2+tdgapMqpr6oPCtPwRUcffdoE9MA/HavApvdIKVwADxdEpoIOZrH6mnpiRZQm0n
-         /6oQ==
-X-Gm-Message-State: AC+VfDysLkdodq9H+cWtAWVVNtJwhurEjEezWSKLbIeFEgRsasf9zc9U
-        fBy9pSyL2cZ4+5+fSVS+nmwGgTgcUKRavGPuYeTbTg==
-X-Google-Smtp-Source: ACHHUZ59cFtiwvOV4dMWsQ/BceJCxYHiJSRU7xd4rWZLxQAVVu325eR1vgGEksuIHWnmsEl+0Yvy5dpYVHm9Y/ZjG3k=
-X-Received: by 2002:a81:c310:0:b0:561:7351:f56f with SMTP id
- r16-20020a81c310000000b005617351f56fmr3759086ywk.24.1685477670706; Tue, 30
- May 2023 13:14:30 -0700 (PDT)
+        Tue, 30 May 2023 17:31:45 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4263C7;
+        Tue, 30 May 2023 14:31:43 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34ULM2dL022120;
+        Tue, 30 May 2023 21:31:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=7NRpPg4lmFN/kBzznPAjKO91BJzU63zyR8+mdkzWhfI=;
+ b=kKcUGgxiB7a7915/O6Ma91PH1MIH15uI2Y1VnSEhgJHbo4yAMuCm/09hxZ39YZ9psCXt
+ LaloZBrmXXvangRfVQO4/VotFfPXcC1STIVMHfXvepsBbeOHOJRnUKUY8yxE+URKZLF6
+ Sus6b1FuBbvKdeu0q0l+gvckzIB7J48aUmZ0lGs+vlMaXuqWzKKFexgf3u+bIvij2bSU
+ jQwjttQ4takU76i0sqsAu8N6g71XJLsFYVClEc9oqo3r+eiKpHnft4zafUmZSzBFLOQ0
+ uYlPjGOZZ7DhBHQhA6UZJR7zHsQvlEzIjodzwdv7sqb21G4il4gxfVVXHpuz9STZRIXw Kg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qwryer0j6-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 30 May 2023 21:31:40 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34ULVdMA007635
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 30 May 2023 21:31:39 GMT
+Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 30 May 2023 14:31:39 -0700
+Date:   Tue, 30 May 2023 14:31:37 -0700
+From:   Bjorn Andersson <quic_bjorande@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/2] soc: qcom: rmtfs: Support dynamic placement of region
+Message-ID: <20230530213137.GA3645274@hu-bjorande-lv.qualcomm.com>
+References: <20230530193436.3833889-1-quic_bjorande@quicinc.com>
+ <20230530193436.3833889-3-quic_bjorande@quicinc.com>
+ <0e9903c0-4669-9298-e0ee-72fc775998c3@linaro.org>
 MIME-Version: 1.0
-References: <20230521172147.4163085-1-dmitry.baryshkov@linaro.org>
- <300fc53c-2a58-714c-855a-08a0dbef3ed9@quicinc.com> <bvjtgmuyz4zdjvt4jyjyt5hasiwnnaz4lyse6mf6b7grtig23f@yuji3z2mxue2>
- <c18c8687-0c4e-894e-a629-bc55e54031c5@quicinc.com> <6se25tikdg2tkiprz4h4umfta34tc5orddksvwi6woklf7c74k@rbserwp5kt3a>
- <9001aaaf-778e-5b3c-e87f-2b196d8b62ed@quicinc.com>
-In-Reply-To: <9001aaaf-778e-5b3c-e87f-2b196d8b62ed@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 30 May 2023 23:14:19 +0300
-Message-ID: <CAA8EJpp2mGcOHf5KJ8Zt_MQK+grAvbb=tVtaiT7MBLzCis20fg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] drm/msm/dpu: drop SSPP register dumpers
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Sean Paul <sean@poorly.run>,
-        Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <0e9903c0-4669-9298-e0ee-72fc775998c3@linaro.org>
+X-Originating-IP: [10.49.16.6]
+X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: rkcRdzAobJpBDzC1W823f2ayeOEdiF28
+X-Proofpoint-ORIG-GUID: rkcRdzAobJpBDzC1W823f2ayeOEdiF28
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-30_16,2023-05-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ lowpriorityscore=0 clxscore=1015 spamscore=0 bulkscore=0 mlxscore=0
+ impostorscore=0 priorityscore=1501 phishscore=0 malwarescore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305300174
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 30 May 2023 at 20:37, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->
->
->
-> On 5/29/2023 2:36 PM, Marijn Suijten wrote:
-> > On 2023-05-24 12:18:09, Abhinav Kumar wrote:
-> >>
-> >>
-> >> On 5/24/2023 2:48 AM, Marijn Suijten wrote:
-> >>> On 2023-05-23 13:01:13, Abhinav Kumar wrote:
-> >>>>
-> >>>>
-> >>>> On 5/21/2023 10:21 AM, Dmitry Baryshkov wrote:
-> >>>>> Drop SSPP-specifig debugfs register dumps in favour of using
-> >>>>> debugfs/dri/0/kms or devcoredump.
-> >>>>>
-> >>>>
-> >>>> I did see another series which removes src_blk from the catalog (I am
-> >>>> yet to review that one) . Lets assume that one is fine and this change
-> >>>> will be going on top of that one right?
-> >>>
-> >>> It replaces src_blk with directly accessing the blk (non-sub-block)
-> >>> directly, because they were overlapping anyway.
-> >>>
-> >>>> The concern I have with this change is that although I do agree that we
-> >>>> should be in favor of using debugfs/dri/0/kms ( i have used it a few
-> >>>> times and it works pretty well ), devcoredump does not have the support
-> >>>> to dump sub-blocks . Something which we should add with priority because
-> >>>> even with DSC blocks with the separation of enc/ctl blocks we need that
-> >>>> like I wrote in one of the responses.
-> >>>>
-> >>>> So the "len" of the blocks having sub-blocks will be ignored in favor of
-> >>>> the len of the sub-blocks.
-> >>>
-> >>> The sub-blocks are not always contiguous with their parent block, are
-> >>> they?  It's probably better to print the sub-blocks separately with
-> >>
-> >> Yes, not contiguous otherwise we could have just had them in one big range.
-> >>
-> >>> clear headers anyway rather than dumping the range parent_blk_base to
-> >>> max(parent_blk_base+len, parent_blk_base+sblk_base+sblk_len...).
-> >>>
-> >>> - Marijn
-> >>
-> >> When I meant sub-block support to devcoredump, this is how I visualize
-> >> them to be printed
-> >>
-> >> =========================SSPP xxx =======================
-> >> =========================SSPP_CSC =======================(for SSPP_xxx)
-> >> =========================SSPP_QSEED =====================(for SSPP_xxx)
-> >
-> > Yeah something along those lines, though I don't really like the `(for
-> > SSPP_xxx)` suffix which we should either drop entirely and make the
-> > "heading" less of a "heading"
-> >
->
-> I wrote that "for SSPP_xxx" to explain the idea, ofcourse it wont be
-> part of the print itself.
->
-> Without that, it matches what you have shared below.
->
->
-> > ========================= SSPP xxx =======================
-> > ...
-> > ------------------------- SSPP_CSC -----------------------
-> > ...
-> > ------------------------- SSPP_QSEED ---------------------
-> > ...
-> >
-> > And/or inline the numbers:
-> >
-> > ========================= SSPP xxx =======================
-> > ...
-> > ----------------------- SSPP_xxx_CSC ---------------------
-> > ...
-> > ---------------------- SSPP_xxx_QSEED --------------------
-> > ...
+On Tue, May 30, 2023 at 09:45:10PM +0200, Konrad Dybcio wrote:
+> 
+> 
+> On 30.05.2023 21:34, Bjorn Andersson wrote:
+> > In some configurations, the exact placement of the rmtfs shared memory
+> > region isn't so strict. In the current implementation the author of the
+> > DeviceTree source is forced to make up a memory region.
+> IIUC the test here would be... "works" / "doesn't", just as if one
+> misplaced the fixed region?
+> 
 
-I'd prefer this format. It eases grepping.
+The patch makes no effort to clarify this part.
 
-> >
->
-> sure this is also fine with me.
->
-> > Either works, or any other pattern in the title (e.g `SSPP xxx: CSC`)
-> > that clearly tells the blocks and sub-blocks apart.
-> >
-> > - Marijn
+> Does the downstream sharedmem-uio driver do any additional cryptic
+> magic or does it simply rely on the vendor's cma/dma pool settings?
+> Can we replicate its behavior to stop hardcoding rmtfs, period?
+> 
 
+Alignment on that is the intention with this patchset.
 
+> > 
+> > Extend the rmtfs memory driver to relieve the author of this
+> > responsibility by introducing support for using dynamic allocation in
+> > the driver.
+> > 
+> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sdm845-mtp.dts | 10 ++++
+> >  drivers/soc/qcom/rmtfs_mem.c            | 66 +++++++++++++++++++------
+> >  2 files changed, 61 insertions(+), 15 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
+> > index d1440b790fa6..e6191b8ba4c6 100644
+> > --- a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
+> > @@ -12,6 +12,8 @@
+> >  #include "pm8998.dtsi"
+> >  #include "pmi8998.dtsi"
+> >  
+> > +/delete-node/ &rmtfs_mem;
+> > +
+> >  / {
+> >  	model = "Qualcomm Technologies, Inc. SDM845 MTP";
+> >  	compatible = "qcom,sdm845-mtp", "qcom,sdm845";
+> > @@ -48,6 +50,14 @@ vreg_s4a_1p8: pm8998-smps4 {
+> >  		vin-supply = <&vph_pwr>;
+> >  	};
+> >  
+> > +	rmtfs {
+> > +		compatible = "qcom,rmtfs-mem";
+> > +
+> > +		qcom,alloc-size = <(2*1024*1024)>;
+> > +		qcom,client-id = <1>;
+> > +		qcom,vmid = <15>;
+> > +	};
+> This should have been a separate patch.
+> 
 
--- 
-With best wishes
-Dmitry
+Of course, I should have paid more attention when I did the last git
+add, to not include test code...
+
+> > +
+> >  	thermal-zones {
+> >  		xo_thermal: xo-thermal {
+> >  			polling-delay-passive = <0>;
+> > diff --git a/drivers/soc/qcom/rmtfs_mem.c b/drivers/soc/qcom/rmtfs_mem.c
+> > index f83811f51175..5f56ded9f905 100644
+> > --- a/drivers/soc/qcom/rmtfs_mem.c
+> > +++ b/drivers/soc/qcom/rmtfs_mem.c
+> > @@ -3,6 +3,8 @@
+> >   * Copyright (c) 2017 Linaro Ltd.
+> >   */
+> >  
+> > +#include "linux/gfp_types.h"
+> > +#include "linux/sizes.h"
+> <>?
+> 
+> >  #include <linux/kernel.h>
+> >  #include <linux/cdev.h>
+> >  #include <linux/err.h>
+> > @@ -168,23 +170,63 @@ static void qcom_rmtfs_mem_release_device(struct device *dev)
+> >  	kfree(rmtfs_mem);
+> >  }
+> >  
+> > +static int qcom_rmtfs_acquire_mem(struct device *dev, struct qcom_rmtfs_mem *rmtfs_mem)
+> > +{
+> > +	struct device_node *node = dev->of_node;
+> > +	struct reserved_mem *rmem;
+> > +	dma_addr_t dma_addr;
+> > +	void *mem;
+> > +	u32 size;
+> > +	int ret;
+> > +
+> > +	rmem = of_reserved_mem_lookup(node);
+> > +	if (rmem) {
+> > +		rmtfs_mem->addr = rmem->base;
+> > +		rmtfs_mem->size = rmem->size;
+> > +
+> > +		rmtfs_mem->base = devm_memremap(&rmtfs_mem->dev, rmtfs_mem->addr,
+> > +						rmtfs_mem->size, MEMREMAP_WC);
+> > +		if (IS_ERR(rmtfs_mem->base)) {
+> > +			dev_err(dev, "failed to remap rmtfs_mem region\n");
+> > +			return PTR_ERR(rmtfs_mem->base);
+> > +		}
+> > +
+> > +		return 0;
+> > +	}
+> > +
+> > +	ret = of_property_read_u32(node, "qcom,alloc-size", &size);
+> > +	if (ret < 0) {
+> > +		dev_err(dev, "rmtfs of unknown size\n");
+> > +		return -EINVAL;
+> > +	}
+> > +
+> > +	/*
+> > +	 * Ensure that the protected region isn't adjacent to other protected
+> > +	 * regions by allocating an empty page on either side.
+> > +	 */
+> > +	mem = dma_alloc_coherent(dev, size + 2 * SZ_4K, &dma_addr, GFP_KERNEL);
+> Should this be made pagesize-independent? Can we even run non-4K kernels on msm?
+> 
+
+Yes, I fixed the issue in UFS and I believe Alex corrected the bug in
+IPA. With that I've been able to boot the few platforms where I've tried
+it with 16KB PAGE_SIZE.
+
+That's however the Linux page size, the numbers here relates to things
+on the secure side.
+
+Regards,
+Bjorn
+
+> Konrad
+> > +	if (mem) {
+> > +		rmtfs_mem->base = mem + SZ_4K;
+> > +		rmtfs_mem->addr = dma_addr + SZ_4K;
+> > +		rmtfs_mem->size = size;
+> > +
+> > +		return 0;
+> > +	}
+> > +
+> > +	dev_err(dev, "unable to allocate memory for rmtfs mem\n");
+> > +	return -ENOMEM;
+> > +}
+> > +
+> >  static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
+> >  {
+> >  	struct device_node *node = pdev->dev.of_node;
+> >  	struct qcom_scm_vmperm perms[NUM_MAX_VMIDS + 1];
+> > -	struct reserved_mem *rmem;
+> >  	struct qcom_rmtfs_mem *rmtfs_mem;
+> >  	u32 client_id;
+> >  	u32 vmid[NUM_MAX_VMIDS];
+> >  	int num_vmids;
+> >  	int ret, i;
+> >  
+> > -	rmem = of_reserved_mem_lookup(node);
+> > -	if (!rmem) {
+> > -		dev_err(&pdev->dev, "failed to acquire memory region\n");
+> > -		return -EINVAL;
+> > -	}
+> > -
+> >  	ret = of_property_read_u32(node, "qcom,client-id", &client_id);
+> >  	if (ret) {
+> >  		dev_err(&pdev->dev, "failed to parse \"qcom,client-id\"\n");
+> > @@ -196,22 +238,16 @@ static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
+> >  	if (!rmtfs_mem)
+> >  		return -ENOMEM;
+> >  
+> > -	rmtfs_mem->addr = rmem->base;
+> >  	rmtfs_mem->client_id = client_id;
+> > -	rmtfs_mem->size = rmem->size;
+> >  
+> >  	device_initialize(&rmtfs_mem->dev);
+> >  	rmtfs_mem->dev.parent = &pdev->dev;
+> >  	rmtfs_mem->dev.groups = qcom_rmtfs_mem_groups;
+> >  	rmtfs_mem->dev.release = qcom_rmtfs_mem_release_device;
+> >  
+> > -	rmtfs_mem->base = devm_memremap(&rmtfs_mem->dev, rmtfs_mem->addr,
+> > -					rmtfs_mem->size, MEMREMAP_WC);
+> > -	if (IS_ERR(rmtfs_mem->base)) {
+> > -		dev_err(&pdev->dev, "failed to remap rmtfs_mem region\n");
+> > -		ret = PTR_ERR(rmtfs_mem->base);
+> > +	ret = qcom_rmtfs_acquire_mem(&pdev->dev, rmtfs_mem);
+> > +	if (ret < 0)
+> >  		goto put_device;
+> > -	}
+> >  
+> >  	cdev_init(&rmtfs_mem->cdev, &qcom_rmtfs_mem_fops);
+> >  	rmtfs_mem->cdev.owner = THIS_MODULE;
