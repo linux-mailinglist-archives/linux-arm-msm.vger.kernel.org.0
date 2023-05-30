@@ -2,73 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DAAD7160C4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 14:57:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25B2C7160CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 14:58:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232465AbjE3M5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 08:57:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55132 "EHLO
+        id S230047AbjE3M6g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 08:58:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232435AbjE3M50 (ORCPT
+        with ESMTP id S232172AbjE3M6a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 08:57:26 -0400
-Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72A62FF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 05:56:50 -0700 (PDT)
-Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-973bf581759so803579866b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 05:56:50 -0700 (PDT)
+        Tue, 30 May 2023 08:58:30 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D46511B
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 05:57:50 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-96fe88cd2fcso787701766b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 05:57:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685451409; x=1688043409;
+        d=linaro.org; s=google; t=1685451468; x=1688043468;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AhsY+hhRc4iSF6YgdclHWjJeSAbTG4rDYJhMMhzuUyQ=;
-        b=WBS0a8nQAh/I44LB/nupfxbOMVbFwBJ6OzEY/qATr6Bd41Xo5CsW1ld3/2zLPEhxd1
-         fCoViKdtSykZYB6hndDKWKMiPTQ7EU/DscqVOHXxfzTN329DQl1TuS+sh0u56G2VCvPj
-         cTDKAraus+XFa/kqGZLcoLg/81omH4qMDQjLJHqHMA+n1h1V+34HMaOPCY7H+zUK2FS7
-         sjEWB/WYyjxM6gLf+yVm0+KuLyXo2EFGUech4YORQF4vomi/9WL8840fcfcnm2ylhgox
-         sp1BFsm8ErK0Hus3+Ndc/SlywVUx5j2pT/On1Z+qzB0DjeDrMT70lChuFGKmUMlo7tm9
-         tgNA==
+        bh=y8nrvZCnLeNA9XqFVfQliG+UkeK7H3UuAJ/vrhzt5N8=;
+        b=tOpBR2qHhz8Y5+8fGdIJtDXKTjoub3qdMnSVZt2FlFEFqMzdw3FLNNLEyU6Y+aAS+6
+         OmP1ldAmCV1TAaS9kBNfhIpf9HQ0U8TNMKH224Uvnl9qIp9n1ovIIH4gAtjaoGllpVTQ
+         NNEtg57i05eYsAAHFyXsqlOn4Svajc5hOJFexlN8DfXKOiv9osAuo1K4PuumIM3MLXVs
+         T/M2gYN+Cq/qelGP+82YMQVcCPrEXnZxYHJElcA9KfwxfMjqPTdiyrML4Jq/ytCBRcUP
+         VAWggMynia9vDGG2SU9GvsJcxsVjadHciSLeeJLyhD1cQ0JKQmX6whGOf6znelmXeXC9
+         5uYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685451409; x=1688043409;
+        d=1e100.net; s=20221208; t=1685451468; x=1688043468;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AhsY+hhRc4iSF6YgdclHWjJeSAbTG4rDYJhMMhzuUyQ=;
-        b=h2WUpznF9U5M7N+httG1Vd2MwgubD1KXAAu9fU1zN7g7m13EoW3M0VaOcjlGGybP/+
-         lOqRo8qfjzy+A4p3N6dR8ZYEdJ/CjErfrFdD7fRjfUYuzV+Qnrj3lBdzCNbiFJLkCqvw
-         UTVvUUi33NiaufheIxWGcPYG8wqyY/rkPm7frvvQb4dRBtA+2W4CU5Vb4wcy8ON/K0aK
-         YRBOQcxlninLCyJPjvJGaGstPqPtmrd0EF6yqFy42x6/rGlv4a5OYKcWX2U193HjiPqA
-         r0QWY6ENYkJqA2Sn7i8XTDepMLg8j3CUKGAZhxdTD6DISN9mK4H2lTMQ9ZGHMFE3nFen
-         8e9g==
-X-Gm-Message-State: AC+VfDy9fcG7xWp9TQfd3P0okUmRPbEbT9becEFpdw16GHeKGmeWqWHo
-        Ipz+x6Xi16zppg+Id7ywRHQExA==
-X-Google-Smtp-Source: ACHHUZ52CRi1rZ1Td3mZ3VL6pr2PyrkknEvQNA1Esi8BwxVXoSn0obftCgpFKZydkULmsPFFhT9EVg==
-X-Received: by 2002:a17:906:fe4d:b0:970:1a68:bacc with SMTP id wz13-20020a170906fe4d00b009701a68baccmr2314391ejb.67.1685451408768;
-        Tue, 30 May 2023 05:56:48 -0700 (PDT)
+        bh=y8nrvZCnLeNA9XqFVfQliG+UkeK7H3UuAJ/vrhzt5N8=;
+        b=Hqj29lvxvye8y5vqjzeEdMjMsNewnMm5f9rkDXHmmFL/OUVkQBunUQ/+sW+6N+bOhL
+         Q0FvKAikjT2Seb6XoRs9WLfybYMAmUbFl/BTrt8bio/JSK86pB7XV0RPup8qkirVZ/mG
+         1+LvGNP7N12/Pn9mY3pb66pvBjjO9lLlxMjl82ZkzFkKRse+MWfo4lP9EzqauDIJWf6q
+         lzC3mmU3W3VOpzSJzpCQJuD3Yv/hvlqWHQTfoSISaxgXeiJv5MwWWLnUYBUNfCA3DY8O
+         c8HkkLCfLFS+XIW4PoQ68x20AM0wFm9/dmjID4gjAwkJo2BCXPiSe9NW85KmqO8rSJ/S
+         H7OA==
+X-Gm-Message-State: AC+VfDxUgZ+hTTfLXD7bMd/64vkir9by1qeHtqSN8Ka+GKDX0R89iyaw
+        NHOR4v970oTWh+TXUrmPDiiaMg==
+X-Google-Smtp-Source: ACHHUZ5j75si6JaQVxIJyh5Z6yqFoPGjctiJLF48SPBx/H0MmZO8dD3x07xHbqxD5hv4du4ojdh+MA==
+X-Received: by 2002:a17:907:d16:b0:960:ddba:e5c3 with SMTP id gn22-20020a1709070d1600b00960ddbae5c3mr2428277ejc.32.1685451467865;
+        Tue, 30 May 2023 05:57:47 -0700 (PDT)
 Received: from krzk-bin ([178.197.199.204])
-        by smtp.gmail.com with ESMTPSA id w19-20020a17090652d300b0094f23480619sm7437454ejn.172.2023.05.30.05.56.46
+        by smtp.gmail.com with ESMTPSA id m13-20020a170906160d00b0095342bfb701sm7488806ejd.16.2023.05.30.05.57.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 May 2023 05:56:48 -0700 (PDT)
-Date:   Tue, 30 May 2023 14:56:45 +0200
+        Tue, 30 May 2023 05:57:47 -0700 (PDT)
+Date:   Tue, 30 May 2023 14:57:44 +0200
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Devi Priya <quic_devipriy@quicinc.com>
-Cc:     kishon@kernel.org, linux-arm-msm@vger.kernel.org,
-        agross@kernel.org, quic_arajkuma@quicinc.com, conor+dt@kernel.org,
-        linux-kernel@vger.kernel.org, quic_ipkumar@quicinc.com,
-        konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, quic_srichara@quicinc.com,
-        quic_kathirav@quicinc.com, vkoul@kernel.org, andersson@kernel.org,
-        quic_anusha@quicinc.com, quic_sjaganat@quicinc.com
-Subject: Re: [PATCH V2 1/2] dt-bindings: phy: qcom,qmp-pcie: Add ipq9574
- bindings
-Message-ID: <20230530125645.ezd4qs5bmoyfhg33@krzk-bin>
-References: <20230519085723.15601-1-quic_devipriy@quicinc.com>
- <20230519085723.15601-2-quic_devipriy@quicinc.com>
+To:     Rudraksha Gupta <guptarud@gmail.com>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, soc@kernel.org,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-phy@lists.infradead.org, Olof Johansson <olof@lixom.net>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH v2 1/4] dt-bindings: arm: qcom: Add Samsung Galaxy Express
+Message-ID: <20230530125744.n2pxo6jhsgeq3xgn@krzk-bin>
+References: <20230527040905.stmnoshkdqgiaex6@ripper>
+ <20230528001010.47868-2-guptarud@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230519085723.15601-2-quic_devipriy@quicinc.com>
+In-Reply-To: <20230528001010.47868-2-guptarud@gmail.com>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -79,45 +82,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 19 May 2023 14:27:22 +0530, Devi Priya wrote:
-> Add bindings for the PCIe QMP PHYs found on IPQ9574.
+On Sat, 27 May 2023 20:10:06 -0400, Rudraksha Gupta wrote:
+> Add a compatible for Samsung Galaxy Express SGH-I437.
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
 > ---
->  Changes in V2:
-> 	- Picked up the R-b tag
-> 	- Did not convert the clock IDs to numerical values as the clock
-> 	  header (dependent patch) is merged in latest rc1.
-> 
->  .../phy/qcom,ipq9574-qmp-pcie-phy.yaml        | 90 +++++++++++++++++++
->  1 file changed, 90 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.yaml
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
 
-yamllint warnings/errors:
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
 
-dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.example.dts:29.26-27 syntax error
-FATAL ERROR: Unable to parse input tree
-make[1]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.example.dtb] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1512: dt_binding_check] Error 2
+Full log is available here: https://patchwork.ozlabs.org/patch/1786779
 
-doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/patch/1783652
+/: qcom,board-id: False schema does not allow [[8, 0]]
+	arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dtb
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
+/: qcom,msm-id: False schema does not allow [[194, 65536]]
+	arch/arm/boot/dts/qcom-msm8974pro-oneplus-bacon.dtb
