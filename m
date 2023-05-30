@@ -2,75 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D2517160DE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 15:00:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 374797160E8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 15:00:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232414AbjE3NAA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 09:00:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57846 "EHLO
+        id S232526AbjE3NAi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 09:00:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232533AbjE3M7x (ORCPT
+        with ESMTP id S232527AbjE3NAe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 08:59:53 -0400
-Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01960F3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 05:59:29 -0700 (PDT)
-Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-96fab30d1e1so918349366b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 05:59:29 -0700 (PDT)
+        Tue, 30 May 2023 09:00:34 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B49C7E46
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:00:12 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f61530506aso46805585e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685451563; x=1688043563;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bJKVtkQkQoC4E9Aq5P1zai4vqqsMy8w6t211JaxwDCU=;
-        b=uPvS0e+bvo41q7jGLG/b+0MlrujWleAmF9mFfC7fVgwGiP7ZBQR2s2KY2FG9ExCNJt
-         vigz14122wujJpvirZBWlTEjmjAAUsTko3xBapq0hBDmJkIOQaxGF0OfVPKYgCLLzAxe
-         Xw0MGmncqiaQUAW8iuacanDsqVd3H7HXoVc+gISnXdL+AdG6MIErqR0wJF5L5WCM8HbB
-         o3BS13J/oeGJcQq+IV+BxyGJ/etQogeyOmZT+MwcebPHSl5t0v0+EpFE1ktt5m1n5amO
-         jpU3+qROTViMp8JrXeEV+1q/xjSGiqtBhoClZDV77v8UwMKlibTH0AN6bOOAqokaEJz5
-         16KA==
+        d=linaro.org; s=google; t=1685451609; x=1688043609;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=AeVUrfWlkR/1514M7PbzEAhYnPL8N4FACbZvL96212Q=;
+        b=ZPS8GnO+6xZ4DxXSihlKlS/q/vuVxrf0A8Z/RuOMuBv7ixKyDycU/EbRdKw9ZgPWdD
+         lhKzWXVW5sF048df5b904G2p45TjgqyPuepCNu+rjG61NluxuithR5QowyByk8DYlrmN
+         9U3DA5JJ02ydON6UdlK8QaLpgChohxbzPP2Llw4y9lX/6fXuWSsRrYxIiKPuEn0Yg8wt
+         PrElzK7t+TMDLzpiYTQL2dLlP4UBeSsetSwc2lHGW2L9xfIUvlp1EpO/YxiDBvmV2kBG
+         kIxTpdvZvP0s85V9OdjlRYK+QdRnq9DCptDaT6JYH64ORQ/ihKP2VluA3X1bPuEqYwWG
+         MlaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685451563; x=1688043563;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bJKVtkQkQoC4E9Aq5P1zai4vqqsMy8w6t211JaxwDCU=;
-        b=gT/kURPmpZkqGCXGJPqCvMGK5krqynrPfgaJw2l0QY6VJw7LY1pIycGakS3e4WQLAo
-         TFk0tM0ySx3ZvAghVdxqXdtka3wrLleXX7GR3anJ701ZTqo20JhP+Mu9jNp04Ax4QOK3
-         7A+ZfUCZd/u6BYHlwOpfUEy8ObpmS5eU+xbFTYp1QxnLwOwGSn1XQKJnLYzaGC/arSxZ
-         YHLmN2yVWZ6eYFOba8CrnJzVN1G4pEVQ49h4Nm9jygt2ZnBJDU8TT4/oHfHgPOl7I4hG
-         CO8c5E340kofmhkyCWVwvisL2kmODPGLh6mVcTBPZ5OZa+0pt2AJ5PcR2scZgbS0NFaj
-         NVsw==
-X-Gm-Message-State: AC+VfDz55eEue9JZ+LLhR/akMhKo09rLDvtcgs1yqB2xWxnrs4/fh6kA
-        XQFX9EVqnn3YNdcG6YcZN2GaAg==
-X-Google-Smtp-Source: ACHHUZ7sG1jHvP1ouiV/MHYG37LTy7wih8YNLIQsIFYJ+2JNQM0VSKF1FQl4S03+1Ik1p8l5H1S7yg==
-X-Received: by 2002:a17:907:868c:b0:967:4bc7:38c0 with SMTP id qa12-20020a170907868c00b009674bc738c0mr2120189ejc.9.1685451561717;
-        Tue, 30 May 2023 05:59:21 -0700 (PDT)
-Received: from krzk-bin ([178.197.199.204])
-        by smtp.gmail.com with ESMTPSA id j1-20020a1709064b4100b009664cdb3fc5sm7275579ejv.138.2023.05.30.05.59.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 May 2023 05:59:21 -0700 (PDT)
-Date:   Tue, 30 May 2023 14:59:18 +0200
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Kathiravan T <quic_kathirav@quicinc.com>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH V2 1/4] dt-bindings: nvmem: qfprom: add compatible for
- few IPQ SoCs
-Message-ID: <20230530125918.4waqxc4xmnetb5wb@krzk-bin>
-References: <20230526125305.19626-1-quic_kathirav@quicinc.com>
- <20230526125305.19626-2-quic_kathirav@quicinc.com>
+        d=1e100.net; s=20221208; t=1685451609; x=1688043609;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=AeVUrfWlkR/1514M7PbzEAhYnPL8N4FACbZvL96212Q=;
+        b=E0uuWvOd60XftKkaaf/YzKamIi9nfz8VWhQPjNJWtQXPLzzKcYc5NTj2u7IkOFVFdw
+         6r4P7VXqA9mYZOjGYGU2rKVUbZ/VqOu21wxtWC9LvrGD6zvqDaGY3bBxlVY1BAvVZB4e
+         VJEMlsrHTnYShOngHiwpgOBuVUu5qVomyebSxcQ5YuhcUsJZZZB7dDhlhZ0DeAfPS7Rj
+         x+LIiaHxJV3Rsww76/4qx9Mw0N/aH7kSjZtTNm9QNyB9r2LonRaxVKTLiVBIBkufHAuK
+         HgVOcXQ5l5LlmDVrBZzbyARVQCHAZyemAPsOXSK4VaYzfOqC7Q5izS9APnb2QG60+7QM
+         QlRw==
+X-Gm-Message-State: AC+VfDzJSPQhhULZQyUlRx+V9P1AFZFEmZHNH7saBRhXR6GcIHsDU0vS
+        ytvnQTRGY5XU23abrPQ95s6F0A==
+X-Google-Smtp-Source: ACHHUZ4+g3KxbEjPI64Xl/LfZCqIoCK3vNyDti6ChgamkfoNnzd/+kwe4R7OXrcxGoslfaj0QRjI7g==
+X-Received: by 2002:a1c:cc17:0:b0:3f4:27ff:7d52 with SMTP id h23-20020a1ccc17000000b003f427ff7d52mr1648423wmb.2.1685451609134;
+        Tue, 30 May 2023 06:00:09 -0700 (PDT)
+Received: from [192.168.0.84] (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id n11-20020a05600c294b00b003f6129d2e30sm20962862wmd.1.2023.05.30.06.00.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 May 2023 06:00:08 -0700 (PDT)
+Message-ID: <f3582004-6732-8a3b-aedb-4a25f71c0cb6@linaro.org>
+Date:   Tue, 30 May 2023 14:00:08 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230526125305.19626-2-quic_kathirav@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 2/2] Input: pm8941-powerkey - fix debounce on gen2+ PMICs
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        phone-devel@vger.kernel.org
+References: <20230529-pm8941-pwrkey-debounce-v1-0-c043a6d5c814@linaro.org>
+ <20230529-pm8941-pwrkey-debounce-v1-2-c043a6d5c814@linaro.org>
+ <d3e6a788-ecab-dd12-f091-279157ea3ad5@linaro.org>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <d3e6a788-ecab-dd12-f091-279157ea3ad5@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,36 +80,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 26 May 2023 18:23:02 +0530, Kathiravan T wrote:
-> Add the QFPROM compatible for IPQ5332, IPQ6018 and IPQ9574
+
+
+On 30/05/2023 10:36, Konrad Dybcio wrote:
 > 
-> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
-> ---
-> Changes in V2:
-> 	- No changes
 > 
->  Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 3 +++
->  1 file changed, 3 insertions(+)
+> On 29.05.2023 21:55, Caleb Connolly wrote:
+>> Since PM8998/PM660, the power key debounce register was redefined to
+>> support shorter debounce times. On PM8941 the shortest debounce time
+>> (represented by register value 0) was 15625us, on PM8998 the shortest
+>> debounce time is 62us, with the default being 2ms.
+>>
+>> Adjust the bit shift to correctly program debounce on PM8998 and newer.
+>>
+>> Fixes: 68c581d5e7d8 ("Input: add Qualcomm PM8941 power key driver")
+>> Signed-off-by: Caleb Connolly <caleb.connolly@linaro.org>
+>> ---
+>> This patch shouldn't be backported earlier then 5.4, as that is the
+>> first kernel with support for PM8998.
+>> ---
+>>  drivers/input/misc/pm8941-pwrkey.c | 19 +++++++++++++++----
+>>  1 file changed, 15 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
+>> index b6a27ebae977..74d77d8aaeff 100644
+>> --- a/drivers/input/misc/pm8941-pwrkey.c
+>> +++ b/drivers/input/misc/pm8941-pwrkey.c
+>> @@ -50,7 +50,10 @@
+>>  #define  PON_RESIN_PULL_UP		BIT(0)
+>>  
+>>  #define PON_DBC_CTL			0x71
+>> -#define  PON_DBC_DELAY_MASK		0x7
+>> +#define  PON_DBC_DELAY_MASK_GEN1	0x7
+>> +#define  PON_DBC_DELAY_MASK_GEN2	0xf
+>> +#define  PON_DBC_SHIFT_GEN1		6
+>> +#define  PON_DBC_SHIFT_GEN2		14
+> mask+shift -> field_prep/get?
+
+I figured it was better to keep it consistent and try to minimise the
+diff so that backporting is easier.
+
+Migrating over to bitfield helpers probably makes sense to do as a
+separate change - maybe if a new platform comes along and requires even
+more additional complexity?
 > 
+> Nice find!
+> 
+> Konrad
+>>  
+>>  struct pm8941_data {
+>>  	unsigned int	pull_up_bit;
+>> @@ -247,7 +250,7 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
+>>  	struct device *parent;
+>>  	struct device_node *regmap_node;
+>>  	const __be32 *addr;
+>> -	u32 req_delay;
+>> +	u32 req_delay, mask, delay_shift;
+>>  	int error;
+>>  
+>>  	if (of_property_read_u32(pdev->dev.of_node, "debounce", &req_delay))
+>> @@ -336,12 +339,20 @@ static int pm8941_pwrkey_probe(struct platform_device *pdev)
+>>  	pwrkey->input->phys = pwrkey->data->phys;
+>>  
+>>  	if (pwrkey->data->supports_debounce_config) {
+>> -		req_delay = (req_delay << 6) / USEC_PER_SEC;
+>> +		if (pwrkey->subtype >= PON_SUBTYPE_GEN2_PRIMARY) {
+>> +			mask = PON_DBC_DELAY_MASK_GEN2;
+>> +			delay_shift = PON_DBC_SHIFT_GEN2;
+>> +		} else {
+>> +			mask = PON_DBC_DELAY_MASK_GEN1;
+>> +			delay_shift = PON_DBC_SHIFT_GEN1;
+>> +		}
+>> +
+>> +		req_delay = (req_delay << delay_shift) / USEC_PER_SEC;
+>>  		req_delay = ilog2(req_delay);
+>>  
+>>  		error = regmap_update_bits(pwrkey->regmap,
+>>  					   pwrkey->baseaddr + PON_DBC_CTL,
+>> -					   PON_DBC_DELAY_MASK,
+>> +					   mask,
+>>  					   req_delay);
+>>  		if (error) {
+>>  			dev_err(&pdev->dev, "failed to set debounce: %d\n",
+>>
 
-Running 'make dtbs_check' with the schema in this patch gives the
-following warnings. Consider if they are expected or the schema is
-incorrect. These may not be new warnings.
-
-Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-This will change in the future.
-
-Full log is available here: https://patchwork.ozlabs.org/patch/1786533
-
-
-qfprom@1b44000: compatible:0: 'qcom,qcm2290-qfprom' is not one of ['qcom,apq8064-qfprom', 'qcom,apq8084-qfprom', 'qcom,ipq5332-qfprom', 'qcom,ipq6018-qfprom', 'qcom,ipq8064-qfprom', 'qcom,ipq8074-qfprom', 'qcom,ipq9574-qfprom', 'qcom,msm8916-qfprom', 'qcom,msm8974-qfprom', 'qcom,msm8976-qfprom', 'qcom,msm8996-qfprom', 'qcom,msm8998-qfprom', 'qcom,qcs404-qfprom', 'qcom,sc7180-qfprom', 'qcom,sc7280-qfprom', 'qcom,sdm630-qfprom', 'qcom,sdm670-qfprom', 'qcom,sdm845-qfprom', 'qcom,sm6115-qfprom', 'qcom,sm6350-qfprom', 'qcom,sm6375-qfprom', 'qcom,sm8150-qfprom', 'qcom,sm8250-qfprom']
-	arch/arm64/boot/dts/qcom/qrb2210-rb1.dtb
-
-qfprom@1b44000: Unevaluated properties are not allowed ('compatible' was unexpected)
-	arch/arm64/boot/dts/qcom/qrb2210-rb1.dtb
-
-qfprom@700000: Unevaluated properties are not allowed ('ranges' was unexpected)
-	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dtb
-	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dtb
-	arch/arm/boot/dts/qcom-apq8064-ifc6410.dtb
-	arch/arm/boot/dts/qcom-apq8064-sony-xperia-lagan-yuga.dtb
+-- 
+// Caleb (they/them)
