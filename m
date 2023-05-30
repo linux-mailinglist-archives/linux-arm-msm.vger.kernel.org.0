@@ -2,167 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AD5027162BD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 15:56:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E773F716332
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 16:08:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232063AbjE3N4h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 09:56:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43502 "EHLO
+        id S232960AbjE3OIy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 10:08:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230297AbjE3N4h (ORCPT
+        with ESMTP id S232937AbjE3OIm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 09:56:37 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D09F78E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:56:35 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 654D36245A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 13:56:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6AFC433EF;
-        Tue, 30 May 2023 13:56:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685454994;
-        bh=LrjXuV2Q5x/9WNlBWKzREb7TsJ7j0wzkyJ0mj9EiQbs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=f7QbqjGiuZjdF2QpUQNplhRV62biQ6lm5VMpFlTQGwj4K5Ds1Xhj0IQhc/ck9IsHj
-         lss0Ed7nYwkPipRPCldHxR5tAZ9DM2x8KDyWTH73m8pw8pQxn1bZFQoTyhuoMcn+pN
-         h6X5nxU6p8VBpg+bvaXksZ9njq/3KwTWQAXv+S1Os+md5/ccz6NdN/lkmsDjYGDEiL
-         PJcg9LpSvMkmiARTiQhMM18XXPbkg9t2F0Qm0e4z0bqMWmEOdF1OdckLLxN+x84nJF
-         TEH46sMV9CBDXAVvMvfwG0OXODtpj/ZtBNpFoeHZOautJl7yiZdmy2HijdiSAYG7nY
-         Trx2uX4aa1vCw==
-Date:   Tue, 30 May 2023 19:26:20 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Daniele Palmas <dnlplm@gmail.com>
-Cc:     Jeffrey Hugo <quic_jhugo@quicinc.com>, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/1] bus: mhi: host: allow SBL as initial EE
-Message-ID: <20230530135620.GA2313@thinkpad>
-References: <20230530091340.3513141-1-dnlplm@gmail.com>
- <20230530103103.GB6379@thinkpad>
- <CAGRyCJGR4YsUgWekf_DgYHJqoXNfmFpL-N_virvqE18aU=Ovkg@mail.gmail.com>
+        Tue, 30 May 2023 10:08:42 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42E83109
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 07:08:38 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1q400v-0004ps-Ru; Tue, 30 May 2023 16:07:53 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1q400o-003tfR-8p; Tue, 30 May 2023 16:07:46 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1q400n-009WHq-B9; Tue, 30 May 2023 16:07:45 +0200
+Date:   Tue, 30 May 2023 16:07:42 +0200
+From:   Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To:     Bjorn Helgaas <bhelgaas@google.com>
+Cc:     Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Joyce Ooi <joyce.ooi@intel.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Jim Quinlan <jim2101024@gmail.com>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Tom Joseph <tjoseph@cadence.com>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Rahul Tanwar <rtanwar@maxlinear.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Vidya Sagar <vidyas@nvidia.com>,
+        Jisheng Zhang <jszhang@kernel.org>,
+        Miaoqian Lin <linmq006@gmail.com>, Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Ryder Lee <ryder.lee@mediatek.com>,
+        Jianjun Wang <jianjun.wang@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+        Shawn Lin <shawn.lin@rock-chips.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Toan Le <toan@os.amperecomputing.com>,
+        Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        linux-rpi-kernel@lists.infradead.org, kernel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Subject: Re: [PATCH 00/15] PCI: Convert to platform remove callback returning
+ void
+Message-ID: <20230530140742.ebbrxmpieuphbmz3@pengutronix.de>
+References: <20230321193208.366561-1-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="qk26xz6flafy3g2q"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAGRyCJGR4YsUgWekf_DgYHJqoXNfmFpL-N_virvqE18aU=Ovkg@mail.gmail.com>
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230321193208.366561-1-u.kleine-koenig@pengutronix.de>
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
+X-Spam-Status: No, score=-4.2 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 30, 2023 at 01:12:59PM +0200, Daniele Palmas wrote:
-> Hi Mani,
-> 
-> Il giorno mar 30 mag 2023 alle ore 12:31 Manivannan Sadhasivam
-> <mani@kernel.org> ha scritto:
-> >
-> > On Tue, May 30, 2023 at 11:13:40AM +0200, Daniele Palmas wrote:
-> > > There are situations in which SBL is a legitimate initial execution
-> > > environment (e.g. modem stuck in SBL due to a firmware failure...), but
-> > > mhi refuses to start:
-> > >
-> > > mhi-pci-generic 0000:01:00.0: MHI PCI device found: foxconn-sdx55
-> > > mhi-pci-generic 0000:01:00.0: BAR 0: assigned
-> > > mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
-> > > mhi mhi0: Requested to power ON
-> > > mhi mhi0: SECONDARY BOOTLOADER is not a valid EE for power on
-> > > mhi-pci-generic 0000:01:00.0: failed to power up MHI controller
-> > > mhi-pci-generic: probe of 0000:01:00.0 failed with error -5
-> > >
-> > > Fix this by adding SBL as an allowed initial execution environment.
-> > >
-> >
-> > What can you do with the modem when firmware failure happens? If there is a
-> > usecase, please explain.
-> 
-> (removing Siddartha and Sujeev due to addresses not working)
-> 
 
-Both left Qualcomm a while ago...
+--qk26xz6flafy3g2q
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> A possible scenario for a Telit modem not being able to go to mission
-> mode is when a firmware update does not work properly: in this case it
-> remains stuck in SBL, but the SAHARA device can be used for retrying
-> the firmware update.
-> 
+Hello Bjorn,
 
-So IIUC, while updating SBL over SAHARA channel, the firmware update could be
-corrupted and the device would get stuck in SBL EE. In that case, the SAHARA
-channel exposed by PBL will still be open and that could be used to retry the
-firmware update. Am I right?
+On Tue, Mar 21, 2023 at 08:31:53PM +0100, Uwe Kleine-K=F6nig wrote:
+> this series adapts the platform drivers below drivers/pci to use the
+> .remove_new() callback. Compared to the traditional .remove() callback
+> .remove_new() returns no value. This is a good thing because the driver c=
+ore
+> doesn't (and cannot) cope for errors during remove. The only effect of a
+> non-zero return value in .remove() is that the driver core emits a warnin=
+g. The
+> device is removed anyhow and an early return from .remove() usually yield=
+s a
+> resource leak.
+>=20
+> By changing the remove callback to return void driver authors cannot
+> reasonably assume any more that there is some kind of cleanup later.
+>=20
+> All drivers were easy to convert as they all returned zero in their
+> remove callback. Only for iproc the conversion wasn't trivial, the other
+> were converted using coccinelle.
+>=20
+> There are no interdependencies between these patches. So even if there
+> are some concerns for individual patches, I ask you to apply the
+> remaining set. Then I only have to care for the review feedback of the
+> refused patches. (Having said that I don't expect any serious objection,
+> just things like squashing or separating patches, or maybe I picked a
+> wrong subject prefix.)
 
-Looks like PBL is doing a fail safe upgrade!
+These patches wait for application for quite some time now. They apply
+just fine to v6.4-rc1 and next/master. Would be great to get them in
+during the next merge window and ideally give them some time in next
+before.
 
-> Telit FN990 supports the SAHARA channels in pci_generic. It's true
-> that there's still missing the exposed device for userspace, something
-> that we are currently managing with out of tree patches, but I see
-> that there's some ongoing effort for that
-> https://lore.kernel.org/mhi/20230522190459.13790-1-quic_jhugo@quicinc.com/
-> 
-> I'm not sure if non-Telit modems have other reasonable use-cases.
-> 
+Best regards
+Uwe
 
-If my above understanding is correct, then this patch will benefit other
-platforms too.
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
+Industrial Linux Solutions                 | https://www.pengutronix.de/ |
 
-- Mani
+--qk26xz6flafy3g2q
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> Regards,
-> Daniele
-> 
-> >
-> > - Mani
-> >
-> > > Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
-> > > Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
-> > > ---
-> > >  drivers/bus/mhi/host/internal.h | 2 +-
-> > >  drivers/bus/mhi/host/pm.c       | 3 ++-
-> > >  2 files changed, 3 insertions(+), 2 deletions(-)
-> > >
-> > > diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-> > > index 2e139e76de4c..3bdcd2321aa5 100644
-> > > --- a/drivers/bus/mhi/host/internal.h
-> > > +++ b/drivers/bus/mhi/host/internal.h
-> > > @@ -56,7 +56,7 @@ extern const char * const mhi_ee_str[MHI_EE_MAX];
-> > >
-> > >  #define MHI_IN_PBL(ee) (ee == MHI_EE_PBL || ee == MHI_EE_PTHRU || \
-> > >                       ee == MHI_EE_EDL)
-> > > -#define MHI_POWER_UP_CAPABLE(ee) (MHI_IN_PBL(ee) || ee == MHI_EE_AMSS)
-> > > +#define MHI_POWER_UP_CAPABLE(ee) (MHI_IN_PBL(ee) || ee == MHI_EE_AMSS || ee == MHI_EE_SBL)
-> > >  #define MHI_FW_LOAD_CAPABLE(ee) (ee == MHI_EE_PBL || ee == MHI_EE_EDL)
-> > >  #define MHI_IN_MISSION_MODE(ee) (ee == MHI_EE_AMSS || ee == MHI_EE_WFW || \
-> > >                                ee == MHI_EE_FP)
-> > > diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-> > > index 083459028a4b..18872c5017be 100644
-> > > --- a/drivers/bus/mhi/host/pm.c
-> > > +++ b/drivers/bus/mhi/host/pm.c
-> > > @@ -1203,10 +1203,11 @@ int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
-> > >
-> > >       wait_event_timeout(mhi_cntrl->state_event,
-> > >                          MHI_IN_MISSION_MODE(mhi_cntrl->ee) ||
-> > > +                        mhi_cntrl->ee == MHI_EE_SBL ||
-> > >                          MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
-> > >                          msecs_to_jiffies(mhi_cntrl->timeout_ms));
-> > >
-> > > -     ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -ETIMEDOUT;
-> > > +     ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee) || mhi_cntrl->ee == MHI_EE_SBL) ? 0 : -ETIMEDOUT;
-> > >       if (ret)
-> > >               mhi_power_down(mhi_cntrl, false);
-> > >
-> > > --
-> > > 2.37.1
-> > >
-> >
-> > --
-> > மணிவண்ணன் சதாசிவம்
+-----BEGIN PGP SIGNATURE-----
 
--- 
-மணிவண்ணன் சதாசிவம்
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmR2Ay0ACgkQj4D7WH0S
+/k5qnwgAnpUxpx4rn6WEsDH7Xm3DdX2vIesYJvk7oOO95SBT/vP6MAkPvzaDUJfe
+WVi/Oz1Ka8FPwOop8vkbb8M3nQIjNjB9OfI+6fW+55MvN9guFPI/Utl1TIscmgQz
+YnH2pnHF7uIzKApPtniNZJ6CDy1deepI9SK9Vyx/eMbuppFuUfVz5NR+vdR8e1FA
+o+DEn8E+tjfjwSb0FdxgTv+Subwm4oPwuYrhyv3bJZ17YenL7OoGc8coPdQr13BS
+Mq7t/nM05p/vZtkey55UWA3E+SEsbGz64ikmcv1hfwGVq2aRi8qO+aCUnhe3LX9m
+GZAiwIh4ypdjtDXIIMwGjMatqA4QQA==
+=tfIE
+-----END PGP SIGNATURE-----
+
+--qk26xz6flafy3g2q--
