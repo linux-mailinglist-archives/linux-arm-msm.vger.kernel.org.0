@@ -2,149 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1346F715EC4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 14:16:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7AE2B715F3C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 14:27:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229626AbjE3MQi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 08:16:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46400 "EHLO
+        id S230181AbjE3M1b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 08:27:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229799AbjE3MQf (ORCPT
+        with ESMTP id S230124AbjE3M1a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 08:16:35 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4503DEC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 05:16:30 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f3a99b9177so4996145e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 05:16:30 -0700 (PDT)
+        Tue, 30 May 2023 08:27:30 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5AE01BB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 05:27:03 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-5149c76f4dbso4134162a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 05:27:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685448988; x=1688040988;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5uD3+suOcpbgdqFW0GkZogqfSEcYKxt6e0zHCfxECmw=;
-        b=ohYB0D566NjRxX69H7xtKhz+iJYxu/BY3KPkHmrLerOmX1LD9eNiMaP25GIX5MtoYL
-         c5nYyGwieNiS0xryV4M77yzPPLXUD5Z36v1q0cbmW1mXhi7I10m0ymgZLa65vrb3M2yV
-         BWBTmpavyt9XFbiIjGz/N/pL501nqIdt85denSxKP/KVyYSydL+kLxqZ7EtcM644bhDN
-         B1EDVjCjAjnr6h2J5rNlppthY7iCGzQ21xfGkO9CWwCaZNmMLLDE7hY2bupycclQl5NP
-         U+aU/D+lX643viWDe6RM5E9FIRyHk7i7XAoumRShkST+neoZFPh5gjJkjHu2+uQfLPh+
-         TCpQ==
+        d=linaro.org; s=google; t=1685449616; x=1688041616;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=stytcPLfmtfo2fgiuSzdRWfNyIk7zVG1HeYjVvCDz9w=;
+        b=gfCtr7jZXqESNbxzXiO43l3qqczxibfd/8w9kd1Ym8YdWhXyG+fyLdmQMpEwRJKnLX
+         9CDjSBYhIeVFltkeDw6O7TZhpN4ll73Ic+iWAWQazQlPM/ceWi/cDavmggYTsBKvUASV
+         M6XloXq9jSWBv2+6ermKsbpEfF9PDrvNQ5TfLnbNOBsaXF4WOoln+deS7pYJ+eRfKA2W
+         FsjnppkAX32eN6OEzpNHzIxIwiHZBKMlK7lyRfmgHUD5DcyxstEfzXndYdKrIJNjIKsA
+         Ll+gsI3BBLsHgdonbzLUfx83IhNiMrctNLGvHNsMHAicOLaLYPIyyfHbosoQGidJXN57
+         hMnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685448988; x=1688040988;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5uD3+suOcpbgdqFW0GkZogqfSEcYKxt6e0zHCfxECmw=;
-        b=MMD7Ct4ay381HkM+kw1azc0tpc867AQTlsSipDEYbd5IsBSwSGa1iVmWD/fTaMrQco
-         ErFvgJUotN9a46aJQV7er/zN4aZ1uwWEdZDb7qnom6wRK5Fq+N686cpjV1AAsbRza35z
-         7phI57gqub9OLADlazCpwYcayd1e3qIClIgZGpBaes+WRUwanRIxMFeBkgAbZ8MzTO+D
-         NGk7R0boSXlqBaThnuiSH9yeDXFqDG+GXWIQ4bPbj5/80K8s4NlJUbIFHQLyd+85t4g9
-         mA8hEYyqkh2JeryfO466ruFdcnrdwXL1e54MKh9zMtQSGQ6TPhH9TxoylQXngknDmGln
-         Pm5g==
-X-Gm-Message-State: AC+VfDxE8iqwPTAbmKhZjawuWRVU1HebpqPlWiZgZ0ZH1Wnj/L+JEdSQ
-        t1rQrsvoVc+V12bwZx4byuK03w==
-X-Google-Smtp-Source: ACHHUZ6Ww0h+GaMyC1dkoIaj9nYT0oX8YdJ01HzwsJyaD9FCIelgw3F49GrnRv0+ct/oXUCi81jKUA==
-X-Received: by 2002:ac2:4473:0:b0:4f4:c32f:2a86 with SMTP id y19-20020ac24473000000b004f4c32f2a86mr671461lfl.33.1685448988344;
-        Tue, 30 May 2023 05:16:28 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id u11-20020ac243cb000000b004efedad4604sm328571lfl.18.2023.05.30.05.16.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 05:16:27 -0700 (PDT)
-Message-ID: <e1a38af8-2b48-1e47-e400-3cd9d17efa3b@linaro.org>
-Date:   Tue, 30 May 2023 14:16:26 +0200
+        d=1e100.net; s=20221208; t=1685449616; x=1688041616;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=stytcPLfmtfo2fgiuSzdRWfNyIk7zVG1HeYjVvCDz9w=;
+        b=KqWCFyDfO+rLLu871mmkzg/IYKMjOP646dsmJQhiVEwsLy0UxvMHxZV/gVSH3xXfjQ
+         Y5MTbnfqE3Di3uGOuJMeiE/cD+crJfuPn3XjuQuBqI+/niE4l3eJTmbTg6v64j5Gp9Fz
+         dBOr3CQA+j5sD++i045AwHMPNxKMEaYb3s7vvy1HLFvP0mnN8cOAAsl74Bk+VNizvHj0
+         uyIfJsCq9dXOk/Xgz0Fg8OXAXiIHUY+ZUz0sFlhS3rTxpxUcipFaIegySOM09ZsS2ttz
+         ZxyQ7SJ5wQYHONPU6jfj0ojfdBGLsmB6T2MYQKHK6Z8ICTz/pXcee8T/j94yHZUP8nfz
+         tjXQ==
+X-Gm-Message-State: AC+VfDwKBt1fyg0iGCmHHui8VqApP2gkzKYyyyGIUTNy9It6Q+MXOIxU
+        Ls5SjNlRr+n1NuMH+mW62zshKA==
+X-Google-Smtp-Source: ACHHUZ66izEDUSaQQp76hTrSWMdC6fb+uAdYBYs6F5ndxLqGKRKd2/soK1F7uCXH6BQ11yXPM73REg==
+X-Received: by 2002:a05:6402:693:b0:506:83fc:2dab with SMTP id f19-20020a056402069300b0050683fc2dabmr1537814edy.22.1685449616416;
+        Tue, 30 May 2023 05:26:56 -0700 (PDT)
+Received: from krzk-bin ([178.197.199.204])
+        by smtp.gmail.com with ESMTPSA id z4-20020aa7d404000000b0050bc9ffed66sm4302283edq.53.2023.05.30.05.26.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 May 2023 05:26:55 -0700 (PDT)
+Date:   Tue, 30 May 2023 14:26:52 +0200
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     freedreno@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, David Airlie <airlied@gmail.com>,
+        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Clark <robdclark@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v8 01/18] dt-bindings: display/msm: gpu: Document GMU
+ wrapper-equipped A6xx
+Message-ID: <20230530122652.lct6tk6zseny6gxl@krzk-bin>
+References: <20230223-topic-gmuwrapper-v8-0-69c68206609e@linaro.org>
+ <20230223-topic-gmuwrapper-v8-1-69c68206609e@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH 20/20] interconnect: qcom: Divide clk rate by src node bus
- width
-Content-Language: en-US
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Leo Yan <leo.yan@linaro.org>, Evan Green <evgreen@chromium.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20230526-topic-smd_icc-v1-0-1bf8e6663c4e@linaro.org>
- <20230526-topic-smd_icc-v1-20-1bf8e6663c4e@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230526-topic-smd_icc-v1-20-1bf8e6663c4e@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20230223-topic-gmuwrapper-v8-1-69c68206609e@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Note: the commit title is wrong (src -> dst obviously).
-Thanks Stephan for spotting this.
-
-Konrad
-
-On 30.05.2023 12:20, Konrad Dybcio wrote:
-> Ever since the introduction of SMD RPM ICC, we've been dividing the
-> clock rate by the wrong bus width. This has resulted in:
+On Mon, 29 May 2023 15:52:20 +0200, Konrad Dybcio wrote:
+> The "GMU Wrapper" is Qualcomm's name for "let's treat the GPU blocks
+> we'd normally assign to the GMU as if they were a part of the GMU, even
+> though they are not". It's a (good) software representation of the GMU_CX
+> and GMU_GX register spaces within the GPUSS that helps us programatically
+> treat these de-facto GMU-less parts in a way that's very similar to their
+> GMU-equipped cousins, massively saving up on code duplication.
 > 
-> - setting wrong (mostly too low) rates, affecting performance
->   - most often /2 or /4
->   - things like DDR never hit their full potential
->   - the rates were only correct if src bus width == dst bus width
->     for all src, dst pairs on a given bus
+> The "wrapper" register space was specifically designed to mimic the layout
+> of a real GMU, though it rather obviously does not have the M3 core et al.
 > 
-> - Qualcomm using the same wrong logic in their BSP driver in msm-5.x
->   that ships in production devices today
+> GMU wrapper-equipped A6xx GPUs require clocks and clock-names to be
+> specified under the GPU node, just like their older cousins. Account
+> for that.
 > 
-> - me losing my sanity trying to find this
-> 
-> Resolve it by using dst_qn, if it exists.
-> 
-> Fixes: 5e4e6c4d3ae0 ("interconnect: qcom: Add QCS404 interconnect provider driver")
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
->  drivers/interconnect/qcom/icc-rpm.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+>  .../devicetree/bindings/display/msm/gpu.yaml       | 61 ++++++++++++++++++----
+>  1 file changed, 52 insertions(+), 9 deletions(-)
 > 
-> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-> index 59be704364bb..58e2a8b1b7c3 100644
-> --- a/drivers/interconnect/qcom/icc-rpm.c
-> +++ b/drivers/interconnect/qcom/icc-rpm.c
-> @@ -340,7 +340,7 @@ static void qcom_icc_bus_aggregate(struct icc_provider *provider,
->  static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
->  {
->  	struct qcom_icc_provider *qp;
-> -	struct qcom_icc_node *src_qn = NULL, *dst_qn = NULL;
-> +	struct qcom_icc_node *src_qn = NULL, *dst_qn = NULL, *qn = NULL;
->  	struct icc_provider *provider;
->  	u64 active_rate, sleep_rate;
->  	u64 agg_avg[QCOM_SMD_RPM_STATE_NUM], agg_peak[QCOM_SMD_RPM_STATE_NUM];
-> @@ -353,6 +353,8 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
->  	provider = src->provider;
->  	qp = to_qcom_provider(provider);
->  
-> +	qn = dst_qn ? dst_qn : src_qn;
-> +
->  	qcom_icc_bus_aggregate(provider, agg_avg, agg_peak, &max_agg_avg);
->  
->  	ret = qcom_icc_rpm_set(src_qn, agg_avg);
-> @@ -372,11 +374,11 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
->  	/* Intentionally keep the rates in kHz as that's what RPM accepts */
->  	active_rate = max(agg_avg[QCOM_SMD_RPM_ACTIVE_STATE],
->  			  agg_peak[QCOM_SMD_RPM_ACTIVE_STATE]);
-> -	do_div(active_rate, src_qn->buswidth);
-> +	do_div(active_rate, qn->buswidth);
->  
->  	sleep_rate = max(agg_avg[QCOM_SMD_RPM_SLEEP_STATE],
->  			 agg_peak[QCOM_SMD_RPM_SLEEP_STATE]);
-> -	do_div(sleep_rate, src_qn->buswidth);
-> +	do_div(sleep_rate, qn->buswidth);
->  
->  	/*
->  	 * Downstream checks whether the requested rate is zero, but it makes little sense
-> 
+
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
+
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
+
+Full log is available here: https://patchwork.ozlabs.org/patch/1787121
+
+
+gpu@2c00000: compatible: 'oneOf' conditional failed, one must be fixed:
+	arch/arm64/boot/dts/qcom/sm8150-hdk.dtb
+	arch/arm64/boot/dts/qcom/sm8150-mtp.dtb
