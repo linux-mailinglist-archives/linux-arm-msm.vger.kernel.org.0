@@ -2,131 +2,201 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAE407171E6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 01:44:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB497717207
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 01:52:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233622AbjE3Xn7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 19:43:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34502 "EHLO
+        id S231837AbjE3XwI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 19:52:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231915AbjE3Xn6 (ORCPT
+        with ESMTP id S230151AbjE3XwH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 19:43:58 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72E61B2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:43:56 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id ca18e2360f4ac-77703f20aa9so117943339f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:43:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685490235; x=1688082235;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=D3ypystYzBp0z6BGyUyrOubrVmHDSkpBeVSSYpzrgNU=;
-        b=y9u0NB4kWnHYwt549HNPXWJTG3IRqe8/i0EgPjGKGvZyD3aP2NoPLebMVxLbcZdGoI
-         B+1piYrPAfQVtfFMiqq4dy3hooHR5gQ2g1kves8qith5oI92YNMOzgnj/Q9RS/f7M9YH
-         typUsW4DaeYZdS011PpV+S5goYadVJHRJ4mmOdUmWKHHgxFr2ch2RTCVA5C/6OpAHbbP
-         zZSV8SaEUhvODRyfGj50W5/Pbe+d81pHxDxWupxNAcEFlKHLZ4IArqaV1NhbJ8aYjuB0
-         ICsS+U4VmwCuLpSyNSeNDLk4yaRC62eZ1VzHy0kFHfpSYmt2RsnWTRukVJ11lVyEKiqo
-         4dZw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685490235; x=1688082235;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=D3ypystYzBp0z6BGyUyrOubrVmHDSkpBeVSSYpzrgNU=;
-        b=AO+OwKRA3bvj2Z/AKVwIuHRbqleunXzasdVYGMbYboUZmPYhUhLqDIFPhxA20EBLjF
-         JsvYmudVAcrjSRbYLabqy8UepYARLNsZhnU3IZkEffc3LOr17N7ELQtk2HTNAIEn8dTR
-         i0z7YZOWpcEfZZvoqIFr+95hm2u4A2roB8TwLMmFLqt/r0QwQ6kxL1nhm4GcXWjhPV6H
-         B+VQ66kIFhbevmYpQtCPdNxn/Cwq1xrFa3GZY4PjZ076vP14Pm1wN2XRE5xK7g8ikedP
-         MiAjmqtmRJDOSqPCrNqvq/2JGZOtjauOJkikE6sKs+1OANWKjrSq00YmKsgSsqwazfSo
-         UmsQ==
-X-Gm-Message-State: AC+VfDzHA0UuRgtxCwUSOSRdNiFEBjw0nFgMEOCZpSJy4eqqsPtab2DH
-        M7nJDIUCF7Zs9uUVPm0fp00HUA==
-X-Google-Smtp-Source: ACHHUZ5eAUPfBfmQO0GDa5baK1HyIohLoaAUddvYA3t+pGk/ntaEhQaO5j0ioafC/00n6ndwS115vA==
-X-Received: by 2002:a5d:87c2:0:b0:76c:65df:a118 with SMTP id q2-20020a5d87c2000000b0076c65dfa118mr2397211ios.6.1685490235653;
-        Tue, 30 May 2023 16:43:55 -0700 (PDT)
-Received: from [10.211.55.3] ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id l5-20020a5e8805000000b0076c5c927acesm3522902ioj.13.2023.05.30.16.43.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 16:43:55 -0700 (PDT)
-Message-ID: <694f1e23-23bb-e184-6262-bfe3641a4f43@linaro.org>
-Date:   Tue, 30 May 2023 18:43:54 -0500
+        Tue, 30 May 2023 19:52:07 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C54FAA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:52:05 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34UN5tYp003532;
+        Tue, 30 May 2023 23:51:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=zL9X9ZEYdYD3dGMRWM21vapdd4lMB6Whvz4k/8XL9LU=;
+ b=WUSW5ejCBgiGS2E77Hcw/yE4SUJGAxUSVA2I+r4kPh7Kadrn3rSM2ggUYlSln8/3Xq7M
+ S/eC5HucBT2CqDlamO1jt5SscZOxythvoOJX6yGbmmq6CbSfLk20kYTjvUWa5tBbmhay
+ 21OXlSs75CrnzaqcSELhLCYpa/hlLRuQ16thMxBcUSzM1BdZPDaNC2fzFlNUjUGcdt9g
+ Sk0zH3L0h/uF3bI9Tq4+bFhm0tmhBuTz+1vkDrIhGKtWrFyx2IqyL6W3PfxDlgNnMXrN
+ wLuAddpQAiQX1CRaT7p+Js/yULs0JKfbsYtzwDxQpEtb0Ild6qu0ZyKZk4g18bt/KYXO Xg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qvwm4u9kx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 30 May 2023 23:51:56 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34UNpjGx012592
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 30 May 2023 23:51:45 GMT
+Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 30 May
+ 2023 16:51:44 -0700
+Message-ID: <210642df-ebae-ca53-d7ea-e8b9b30f21c9@quicinc.com>
+Date:   Tue, 30 May 2023 16:51:43 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH net v2] net: ipa: Use the correct value for
- IPA_STATUS_SIZE
+Subject: Re: [Freedreno] [PATCH v2 0/7] drm/msm/dpu: simplify DPU encoder init
 Content-Language: en-US
-To:     Bert Karwatzki <spasswolf@web.de>, Alex Elder <elder@linaro.org>,
-        Simon Horman <simon.horman@corigine.com>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <7ae8af63b1254ab51d45c870e7942f0e3dc15b1e.camel@web.de>
- <ZHWhEiWtEC9VKOS1@corigine.com>
- <2b91165f667d3896a0aded39830905f62f725815.camel@web.de>
- <3c4d235d-8e49-61a2-a445-5d363962d3e7@linaro.org>
- <8d0e0272c80a594e7425ffcdd7714df7117edde5.camel@web.de>
- <f9ccdc27-7b5f-5894-46ab-84c1e1650d9f@linaro.org>
- <dcfb1ccd722af0e9c215c518ec2cd7a8602d2127.camel@web.de>
-From:   Alex Elder <alex.elder@linaro.org>
-In-Reply-To: <dcfb1ccd722af0e9c215c518ec2cd7a8602d2127.camel@web.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     <neil.armstrong@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        <freedreno@lists.freedesktop.org>, Sean Paul <sean@poorly.run>
+References: <20230519023855.3840907-1-dmitry.baryshkov@linaro.org>
+ <557a8aee-37b9-5654-c82c-97206576ab44@quicinc.com>
+ <CAA8EJpp+ODZZu13ehAN-9Ehz87HCdXsXvO3DQ-oxAhKcb2rqtA@mail.gmail.com>
+ <af7ab667-1be4-7391-d0a9-6f9e7439eb6d@linaro.org>
+ <b0be5965-0dc9-c33c-9cba-21bfa82c4faf@linaro.org>
+ <249baf98-5264-b2cb-4213-5bcd00a670c9@quicinc.com>
+ <CAA8EJpp4m85ubkfs7erLVxydHi_S7Xp7neNjh22z=tMnvrWsQA@mail.gmail.com>
+ <a4bda0d3-767e-9ed4-ae59-db9cc843cd48@quicinc.com>
+In-Reply-To: <a4bda0d3-767e-9ed4-ae59-db9cc843cd48@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: wBoxWRcIuvtqJ-vJ0jVOFurwXSPYscZl
+X-Proofpoint-GUID: wBoxWRcIuvtqJ-vJ0jVOFurwXSPYscZl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-30_17,2023-05-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ lowpriorityscore=0 spamscore=0 clxscore=1015 priorityscore=1501
+ adultscore=0 bulkscore=0 mlxscore=0 malwarescore=0 mlxlogscore=999
+ phishscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2305300195
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/30/23 6:25 PM, Bert Karwatzki wrote:
->  From 2e5e4c07606a100fd4af0f08e4cd158f88071a3a Mon Sep 17 00:00:00 2001
-> From: Bert Karwatzki <spasswolf@web.de>
-> To: davem@davemloft.net
-> To: edumazet@google.com
-> To: kuba@kernel.org
-> To: pabeni@redhat.com
-> Cc: elder@kernel.org
-> Cc: netdev@vger.kernel.org
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: linux-kernel@vger.kernel.org
-> Date: Wed, 31 May 2023 00:16:33 +0200
-> Subject: [PATCH net v2] net: ipa: Use correct value for IPA_STATUS_SIZE
+
+
+On 5/23/2023 12:30 PM, Abhinav Kumar wrote:
 > 
-> IPA_STATUS_SIZE was introduced in commit b8dc7d0eea5a as a replacement
-> for the size of the removed struct ipa_status which had size
-> sizeof(__le32[8]). Use this value as IPA_STATUS_SIZE.
-
-If the network maintainers can deal with your patch, I'm
-OK with it.  David et al if you want something else, please
-say so.
-
-Reviewed-by: Alex Elder <elder@linaro.org>
-
-> Fixes: b8dc7d0eea5a ("net: ipa: stop using sizeof(status)")
-> Signed-off-by: Bert Karwatzki <spasswolf@web.de>
-> ---
->   drivers/net/ipa/ipa_endpoint.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.c
-> index 2ee80ed140b7..afa1d56d9095 100644
-> --- a/drivers/net/ipa/ipa_endpoint.c
-> +++ b/drivers/net/ipa/ipa_endpoint.c
-> @@ -119,7 +119,7 @@ enum ipa_status_field_id {
->   };
->   
->   /* Size in bytes of an IPA packet status structure */
-> -#define IPA_STATUS_SIZE			sizeof(__le32[4])
-> +#define IPA_STATUS_SIZE			sizeof(__le32[8])
->   
->   /* IPA status structure decoder; looks up field values for a structure */
->   static u32 ipa_status_extract(struct ipa *ipa, const void *data,
+> On 5/23/2023 12:23 PM, Dmitry Baryshkov wrote:
+>> On Tue, 23 May 2023 at 22:14, Abhinav Kumar 
+>> <quic_abhinavk@quicinc.com> wrote:
+>>>
+>>>
+>>>
+>>> On 5/23/2023 7:36 AM, Dmitry Baryshkov wrote:
+>>>> On 23/05/2023 10:31, Neil Armstrong wrote:
+>>>>> On 23/05/2023 09:20, Dmitry Baryshkov wrote:
+>>>>>> On Tue, 23 May 2023 at 04:58, Abhinav Kumar
+>>>>>> <quic_abhinavk@quicinc.com> wrote:
+>>>>>>>
+>>>>>>>
+>>>>>>>
+>>>>>>> On 5/18/2023 7:38 PM, Dmitry Baryshkov wrote:
+>>>>>>>> Rework dpu_encoder initialization code, simplifying calling 
+>>>>>>>> sequences
+>>>>>>>> and separating common init parts.
+>>>>>>>>
+>>>>>>>> Changes since v1:
+>>>>>>>> - Withdrawn two pathes for a later consideration
+>>>>>>>> - Changed dpu_encoder_phys_init() to return void (Abhinav)
+>>>>>>>> - Added small simplifications of dpu_encoder_phys_cmd_init() and
+>>>>>>>>      dpu_encoder_phys_wb_init()
+>>>>>>>>
+>>>>>>>
+>>>>>>> I had previously given these comments on the cover letter of v1, so
+>>>>>>> giving it again.
+>>>>>>>
+>>>>>>> Please mention that your series was made on top of
+>>>>>>> https://patchwork.freedesktop.org/series/116530/.
+>>>>>>>
+>>>>>>> Figured it out when I tried to apply it to my branch to test.
+>>>>>>>
+>>>>>>> I had tested v1, and between v1 and v2 i only see very trivial 
+>>>>>>> change,
+>>>>>>> so i think its okay to retain:
+>>>>>>>
+>>>>>>> Tested-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # sc7280
+>>>>>>
+>>>>>> Unfortunately patchwork ignores tags sent in the cover letter thread.
+>>>>>
+>>>>> But b4 does with -t option to b4 shazam or b4 am
+>>>>
+>>>> Yes. But b4 doesn't append Patchwork headers.
+>>>>
+>>>
+>>> If thats the case, either the author can add them to the patches
+>>> manually like we do sometimes for R-b tags OR I will go ahead and add it
+>>> one by one for every patch now.
+>>
+>> I'd prefer either to have a single T-B on the latest patch on the
+>> series, or a pile of replies with T-B tags. Thank you (for the testing
+>> and for providing the feedback).
+>> If we ever switch from git-pw to b4, this requirement will be lifted.
+>>
+> 
+> Latest patch means, the last one in the series?
+> 
+> In this case, that would look a bit odd as that one just removes a temp 
+> variable.
+> 
+> I will provide it on all the patches by tomorrow.
+> 
 
+This patch doesnt apply cleanly on msm-next-lumag now. Do you have to 
+rebase this? Otherwise please list the dependency on top of msm-next-lumag.
+
+>>>
+>>> Let me know what you prefer.
+>>>
+>>>>>
+>>>>> Neil
+>>>>>
+>>>>>>
+>>>>>>>
+>>>>>>>> Dmitry Baryshkov (7):
+>>>>>>>>      drm/msm/dpu: merge dpu_encoder_init() and dpu_encoder_setup()
+>>>>>>>>      drm/msm/dpu: separate common function to init physical encoder
+>>>>>>>>      drm/msm/dpu: drop duplicated intf/wb indices from encoder 
+>>>>>>>> structs
+>>>>>>>>      drm/msm/dpu: inline dpu_encoder_get_wb()
+>>>>>>>>      drm/msm/dpu: call dpu_rm_get_intf() from 
+>>>>>>>> dpu_encoder_get_intf()
+>>>>>>>>      drm/msm/dpu: drop temp variable from 
+>>>>>>>> dpu_encoder_phys_cmd_init()
+>>>>>>>>      drm/msm/dpu: simplify dpu_encoder_phys_wb_init()
+>>>>>>>>
+>>>>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 178
+>>>>>>>> ++++++++----------
+>>>>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h   |  14 +-
+>>>>>>>>     .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  15 +-
+>>>>>>>>     .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  |  35 ++--
+>>>>>>>>     .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  |  19 +-
+>>>>>>>>     .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   |  35 +---
+>>>>>>>>     drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       |  87 ++++-----
+>>>>>>>>     7 files changed, 140 insertions(+), 243 deletions(-)
+>>>>>>>>
+>>>>>>
+>>>>>>
+>>>>>>
+>>>>>
+>>>>
+>>
+>>
+>>
