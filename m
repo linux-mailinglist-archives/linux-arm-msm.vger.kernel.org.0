@@ -2,113 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EC608716AA9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 19:19:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AEB66716B3F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 19:38:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233077AbjE3RTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 13:19:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48608 "EHLO
+        id S232752AbjE3RiG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 13:38:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233001AbjE3RTI (ORCPT
+        with ESMTP id S232541AbjE3RiF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 13:19:08 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6391BD9;
-        Tue, 30 May 2023 10:19:07 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id EE7B7630C8;
-        Tue, 30 May 2023 17:19:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA22EC433D2;
-        Tue, 30 May 2023 17:19:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685467146;
-        bh=PIBi+WICffiBvaB2Kw9KN3H9bNAFCDH01ZgbVaQGbpg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=E2Xa4JrAvvdRGyRf3zxeWBvkc5cuOtjqlw0qF7dZxyI06ngCrCEr+2VfwVIRMVVdd
-         V5zTylUXQRCf1KW4HPXzMIdv+9vrMt1yP+n7FUDa+t2FjNJ4LF5+BlKFZwjSqNBqRe
-         ZHB1IFdqYD9OcZl9/+Ecs/JcoSOvUOC9V09t4ZzWib5Tw6UHYj9RtfWvo7heP6Av47
-         dD3CVQoa6UM26DNqLEt2ojddXXiZcVQpH+lX3kslYjvfSLtg1sWzEWznuptvI921Y/
-         KH17pTxqsO/dGyBabW1mpfH4P2fEriexl3TKpaNOhSUcu+Vgyc5AIWsf3E+ZScPJZ6
-         l+0N0Pn0M1pBQ==
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Bart Van Assche <bvanassche@acm.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        linux-pci@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        devicetree@vger.kernel.org,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Wesley Cheng <quic_wcheng@quicinc.com>,
-        linux-scsi@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        Georgi Djakov <djakov@kernel.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>
-Subject: Re: (subset) [PATCH v3 00/15] Introduce the SC8180x devices
-Date:   Tue, 30 May 2023 10:22:49 -0700
-Message-Id: <168546732606.2227271.7267063763992454803.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230530162454.51708-1-vkoul@kernel.org>
-References: <20230530162454.51708-1-vkoul@kernel.org>
+        Tue, 30 May 2023 13:38:05 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCBC5A3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 10:38:03 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34U8aqeb007650;
+        Tue, 30 May 2023 17:37:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=z9UryKPY++sLkaBIxrTXU+ep6jQ1z+TFu7RofzWPkcA=;
+ b=gEHApG58ZTY+64/99u63+HsYzinHk0w4qcLGoKgy/xAuC12ha2+baeF32qmZw4ZBsDpq
+ HBKhxfJav3sxXvUtsP39BfdKJ4tHffpEzN/UoGOm7AqJMQkDFc5mxaMhRVWL6icj9Dcw
+ SHcUW9Ksu11P0fsnEVXx9GLzLIhQepCqI4yEUrAMNj1BzGE4o8wRC/e3SjtWCQCdaAHH
+ Fj4p2J4hqKgoR+Rr8Vj0mOWXtgwbvMavzEgkaHL0edfKycasIGmwcgQL9xZbaKgrBRay
+ gg3SJXlolgUcIIOwK/J8fS+w2UqpXiwxxmglaAui7ka6FMvgtTVhULQ1wql3v7q/NKXU 5A== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qw8v4srd9-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 30 May 2023 17:37:55 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34UHbtiP017023
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 30 May 2023 17:37:55 GMT
+Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 30 May
+ 2023 10:37:54 -0700
+Message-ID: <9001aaaf-778e-5b3c-e87f-2b196d8b62ed@quicinc.com>
+Date:   Tue, 30 May 2023 10:37:53 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/2] drm/msm/dpu: drop SSPP register dumpers
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+CC:     Sean Paul <sean@poorly.run>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230521172147.4163085-1-dmitry.baryshkov@linaro.org>
+ <300fc53c-2a58-714c-855a-08a0dbef3ed9@quicinc.com>
+ <bvjtgmuyz4zdjvt4jyjyt5hasiwnnaz4lyse6mf6b7grtig23f@yuji3z2mxue2>
+ <c18c8687-0c4e-894e-a629-bc55e54031c5@quicinc.com>
+ <6se25tikdg2tkiprz4h4umfta34tc5orddksvwi6woklf7c74k@rbserwp5kt3a>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <6se25tikdg2tkiprz4h4umfta34tc5orddksvwi6woklf7c74k@rbserwp5kt3a>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: hDsi95Jad4DhLjwACCwN7FQjlS_fIf3J
+X-Proofpoint-GUID: hDsi95Jad4DhLjwACCwN7FQjlS_fIf3J
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-30_13,2023-05-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ impostorscore=0 spamscore=0 phishscore=0 malwarescore=0 bulkscore=0
+ adultscore=0 mlxscore=0 mlxlogscore=462 priorityscore=1501 clxscore=1015
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305300140
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 30 May 2023 21:54:39 +0530, Vinod Koul wrote:
-> This introduces Qualcomm SC8180x SoC which features in Lenovo Flex 5G
-> laptop. This also adds support for Primus platform as well as Lenovo Flex 5G
-> laptop.
+
+
+On 5/29/2023 2:36 PM, Marijn Suijten wrote:
+> On 2023-05-24 12:18:09, Abhinav Kumar wrote:
+>>
+>>
+>> On 5/24/2023 2:48 AM, Marijn Suijten wrote:
+>>> On 2023-05-23 13:01:13, Abhinav Kumar wrote:
+>>>>
+>>>>
+>>>> On 5/21/2023 10:21 AM, Dmitry Baryshkov wrote:
+>>>>> Drop SSPP-specifig debugfs register dumps in favour of using
+>>>>> debugfs/dri/0/kms or devcoredump.
+>>>>>
+>>>>
+>>>> I did see another series which removes src_blk from the catalog (I am
+>>>> yet to review that one) . Lets assume that one is fine and this change
+>>>> will be going on top of that one right?
+>>>
+>>> It replaces src_blk with directly accessing the blk (non-sub-block)
+>>> directly, because they were overlapping anyway.
+>>>
+>>>> The concern I have with this change is that although I do agree that we
+>>>> should be in favor of using debugfs/dri/0/kms ( i have used it a few
+>>>> times and it works pretty well ), devcoredump does not have the support
+>>>> to dump sub-blocks . Something which we should add with priority because
+>>>> even with DSC blocks with the separation of enc/ctl blocks we need that
+>>>> like I wrote in one of the responses.
+>>>>
+>>>> So the "len" of the blocks having sub-blocks will be ignored in favor of
+>>>> the len of the sub-blocks.
+>>>
+>>> The sub-blocks are not always contiguous with their parent block, are
+>>> they?  It's probably better to print the sub-blocks separately with
+>>
+>> Yes, not contiguous otherwise we could have just had them in one big range.
+>>
+>>> clear headers anyway rather than dumping the range parent_blk_base to
+>>> max(parent_blk_base+len, parent_blk_base+sblk_base+sblk_len...).
+>>>
+>>> - Marijn
+>>
+>> When I meant sub-block support to devcoredump, this is how I visualize
+>> them to be printed
+>>
+>> =========================SSPP xxx =======================
+>> =========================SSPP_CSC =======================(for SSPP_xxx)
+>> =========================SSPP_QSEED =====================(for SSPP_xxx)
 > 
-> Changes in v3:
->  - Split DTS patch into smaller check
->  - checkpatch and dtbs check error fixes
->  - fix comments from Konrad/Krzysztof
+> Yeah something along those lines, though I don't really like the `(for
+> SSPP_xxx)` suffix which we should either drop entirely and make the
+> "heading" less of a "heading"
 > 
-> [...]
 
-Quite a few DT validation warnings left, but let's get it merged so that we can
-work on those together.
+I wrote that "for SSPP_xxx" to explain the idea, ofcourse it wont be 
+part of the print itself.
 
-Applied, thanks!
+Without that, it matches what you have shared below.
 
-[06/15] arm64: dts: qcom: Introduce the SC8180x platform
-        commit: 8575f197b077001591ef3ff709cdee48785daf0d
-[07/15] arm64: dts: qcom: sc8180x: Add interconnects and lmh
-        commit: f3be8a111d7eaf4e291b6c2d51dd0adb39934b32
-[08/15] arm64: dts: qcom: sc8180x: Add thermal zones
-        commit: d1d3ca03554e51be44546638f83169bb05b20ef8
-[09/15] arm64: dts: qcom: sc8180x: Add QUPs
-        commit: 0018761d1564f64d567e119fd9156c473b4592d7
-[10/15] arm64: dts: qcom: sc8180x: Add PCIe instances
-        commit: d20b6c84f56ae3a9823cc0fa5cfad330536ba0d1
-[11/15] arm64: dts: qcom: sc8180x: Add remoteprocs, wifi and usb nodes
-        commit: b080f53a8f44eeaa9db9628d8d339ab5a2afb5bd
-[12/15] arm64: dts: qcom: sc8180x: Add display and gpu nodes
-        commit: 494dec9b6f541451b2e82905b0eebd9a4ac9848b
-[13/15] arm64: dts: qcom: sc8180x: Add pmics
-        commit: d3302290f59e8533a56a8fa2455357f843d8dcf6
-[14/15] arm64: dts: qcom: sc8180x: Introduce Primus
-        commit: 2ce38cc1e8fea4e251e4563e436104369bf3b322
-[15/15] arm64: dts: qcom: sc8180x: Introduce Lenovo Flex 5G
-        commit: 20dea72a393c6d5572088b8ad01dbb9e9aca64ce
 
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+> ========================= SSPP xxx =======================
+> ...
+> ------------------------- SSPP_CSC -----------------------
+> ...
+> ------------------------- SSPP_QSEED ---------------------
+> ...
+> 
+> And/or inline the numbers:
+> 
+> ========================= SSPP xxx =======================
+> ...
+> ----------------------- SSPP_xxx_CSC ---------------------
+> ...
+> ---------------------- SSPP_xxx_QSEED --------------------
+> ...
+> 
+
+sure this is also fine with me.
+
+> Either works, or any other pattern in the title (e.g `SSPP xxx: CSC`)
+> that clearly tells the blocks and sub-blocks apart.
+> 
+> - Marijn
