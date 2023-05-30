@@ -2,71 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6ECE717075
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 00:12:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21FE7717149
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 01:07:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233653AbjE3WMH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 18:12:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40852 "EHLO
+        id S233702AbjE3XGr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 19:06:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38008 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233631AbjE3WMG (ORCPT
+        with ESMTP id S233741AbjE3XGm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 18:12:06 -0400
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB31B115
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 15:12:03 -0700 (PDT)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-55db055b412so4845587b3.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 15:12:03 -0700 (PDT)
+        Tue, 30 May 2023 19:06:42 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71FDA18D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:06:28 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f4c264f6c6so6005394e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685484723; x=1688076723;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZoikQ24IRuw8V1bI3fB4AXs6Vt9clGgETJMS8PTWY9M=;
-        b=JBzFXe43yEA4MwmyXbJnIuAFPI8KpiMlBqNMHsO2FeR3Ft/gGq5DHeLD42vmi46CAJ
-         NYA371x5lbnH8TageYKekHMJ4vBUs7x5f3obZBjAcII13fdnYV0x95rbqC3imJXNooFe
-         M5oSATtvlNl/LPUEliC12Pv7NOHRg3N8Ktnlmls9oO+DxJTz9UqRoZKn7A/Idv8nKChW
-         0+mo6XuvAy9YIMD7nmuUEuuF1mQ3gKa/WbguOrsPmKbwsALuvEEKUocdrIxrY0WkphFa
-         PBSTmnYCJRxAlW9ZjMQAJ8dtojYQRnLQPUl3ORTRC8GTK6Ia+4t9CSxbw+Lqw21S8+/4
-         /rfw==
+        d=linaro.org; s=google; t=1685487986; x=1688079986;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xoE1Va3lrsP1lB13pDuMNR1cXTdryjflT/7nlUUK6Rc=;
+        b=b8/2G2fdB+56Tbp9PnkNRhs5zFlFXYvGJknohLMPNOc8uFbDoU7RrOpy1kpJmg62J2
+         rpiEGcZb5E3uM0apJGYSHoKc79LHtMJK4iKqj8feuEdQKGe6HYTGghnT6fWUO4BojeIj
+         kqsExpqKuk7NPJlRZ6MverGw+84MZ3hI722UbTviJx+de3ks7uwqsijSdfNZUqsOnXJ9
+         QEVeHO66RRKg1fkOq31yvRLLsaWR30CmZmyQO1zHM9TEH4Mg/C3xw1+QO0lLpHVXgkeJ
+         g3A9V6bXQztxaXY7JWnu27nqbRkUhRs4pB/YEF1qtin0twCYiJdNQMbuBmV41x0Q1CeS
+         DW/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685484723; x=1688076723;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ZoikQ24IRuw8V1bI3fB4AXs6Vt9clGgETJMS8PTWY9M=;
-        b=YEMSZ04ke6hUluUMpt4i4LAZUvsNbIoDpzbZhwculWbkIaVQnXEEOYnFEHU9+XuN7c
-         dI+DoJfvgaB7E4WONX1FnsriSIYVF1aG4oxn2kyAXA2jhYqu53LYnjavZx9+M/1UZBS+
-         ushg3UHB874cj9H1HLJiITf/75cRu/AlVXTevdelfr57A2Kgb+mkEQlt1fv4tguYZryw
-         jqHGYav09aVeh3+Gq/L0hZ5zrmvRqfc/bXUWd5E0dKAp1N6PddIUtb19TT0LwIpx/y8k
-         esdYwd9fmoYFNF8KsQGSEqFdN+WTAXsW5dQB8aKtlALIL2nxUTgS4xSasoSiuOvhRTM8
-         QhPg==
-X-Gm-Message-State: AC+VfDxyminrUGaRBdJH6ik45JTLDIgrJHl5M4BQxWmEiG+CKIK3eg/t
-        ddGENym+eaw2siGz1/GR84QeGdwJdcz5iTYXtLwKIg==
-X-Google-Smtp-Source: ACHHUZ51M7z6vLdDuU6YnJV8hHa71g3G6VR7IR1jzPsgmFsx8wxq7CUQyYcHGRFbiY1FORhFgrlnHoQ+C4gsvM2GB1A=
-X-Received: by 2002:a05:690c:80d:b0:565:85b0:c128 with SMTP id
- bx13-20020a05690c080d00b0056585b0c128mr14929653ywb.6.1685484723087; Tue, 30
- May 2023 15:12:03 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1685487986; x=1688079986;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xoE1Va3lrsP1lB13pDuMNR1cXTdryjflT/7nlUUK6Rc=;
+        b=TV4DOS11E2SDn3dlyezdr3liCkGAB2tIGxVINPcmJmpmFFN8x5HwxkuveUPJCefeIA
+         dcQv+TRCyWrqNLORiN4DwURF3SmFbhM71FAa/U7QH4vCG9GPC7JPTIxXrNzXUftFS/6M
+         RC/IocJyOlBZRGhbA7KCY8Qm/i5X6UDJNMFgQuR/hggtRVrhzFCq0poF4IJWpTO0sQ6y
+         JEScwNDSF1nlfdGZaPZEuh+xWBvWeeyzjISpKk7/3uqR2V9vaX6wcRhrJl0ULfCxfc7o
+         ewNMmVk7l9jtHAGd7JZAlU+rMOAX7w0NvOd8cy7HFmkcE7VGVH37TpZnxn31qoz3gbvs
+         om4Q==
+X-Gm-Message-State: AC+VfDwrnAakErGxbcP8191If6/snzBmcJM67k+vQMMZmPgGHrx0eTTo
+        vuQzfav+Py/+uIUyaiLA/A0/Ug==
+X-Google-Smtp-Source: ACHHUZ5vqEiOKQt+AwXDfF7NvKz9AQrvbyjiDTMb/5ktfTARtcQduzonA0aupU0Gc6Bo6oCvvzki8w==
+X-Received: by 2002:ac2:5a0d:0:b0:4f3:aaea:6d48 with SMTP id q13-20020ac25a0d000000b004f3aaea6d48mr1515508lfn.63.1685487986417;
+        Tue, 30 May 2023 16:06:26 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id f12-20020a19ae0c000000b004f378fbb358sm483832lfc.112.2023.05.30.16.06.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 May 2023 16:06:25 -0700 (PDT)
+Message-ID: <dfa12c8b-ccec-261c-9c83-54536e17c02d@linaro.org>
+Date:   Wed, 31 May 2023 02:06:24 +0300
 MIME-Version: 1.0
-References: <20230424110933.3908-1-quic_mkshah@quicinc.com>
- <CAPDyKFqSY9HJgKwuOqJPU5aA=wcAtDp91s0hkQye+dm=Wk=YDQ@mail.gmail.com>
- <20230525024546.ug6nbrmkgx2alerc@ripper> <CAPDyKFrzHHz+c_y787TVKLGizA3vVfKvnu+uJ1JC+itgryfdSQ@mail.gmail.com>
- <20230529160848.ujthfuuj3zblkq4b@ripper>
-In-Reply-To: <20230529160848.ujthfuuj3zblkq4b@ripper>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 31 May 2023 00:11:26 +0200
-Message-ID: <CAPDyKFo1rsm5gk_eKESa_WMFn6bSicH1UV1vJ7CU_64jZ5Uj-Q@mail.gmail.com>
-Subject: Re: [PATCH v4 0/3] Use PSCI OS initiated mode for sc7280
-To:     Bjorn Andersson <andersson@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Maulik Shah <quic_mkshah@quicinc.com>, dianders@chromium.org,
-        swboyd@chromium.org, wingers@google.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, sudeep.holla@arm.com,
-        jwerner@chromium.org, quic_lsrao@quicinc.com,
-        quic_rjendra@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v1 2/3] drm/msm/dpu: retrieve DSI DSC struct at
+ atomic_check()
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org
+Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
+        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1685464318-25031-1-git-send-email-quic_khsieh@quicinc.com>
+ <1685464318-25031-3-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1685464318-25031-3-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -75,117 +83,114 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ Rafael
+On 30/05/2023 19:31, Kuogee Hsieh wrote:
+> At current implementation, DSI DSC struct is populated at display setup
+> during system bootup. This mechanism works fine with embedded display.
+> But will run into problem with plugin/unplug oriented external display,
+> such as DP, due to DSC struct will become stale once external display
+> unplugged. New DSC struct has to be re populated to reflect newer external
+> display which just plugged in. Move retrieving of DSI DSC struct to
+> atomic_check() so that same mechanism will work for both embedded display
+> and external plugin/unplug oriented display.
+> 
+> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 15 ++++++++++++++-
+>   drivers/gpu/drm/msm/msm_drv.h               |  6 ++++++
+>   2 files changed, 20 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 3b416e1..2927d20 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -16,6 +16,8 @@
+>   #include <drm/drm_crtc.h>
+>   #include <drm/drm_file.h>
+>   #include <drm/drm_probe_helper.h>
+> +#include <drm/drm_bridge.h>
+> +#include <drm/drm_fixed.h>
+>   
+>   #include "msm_drv.h"
+>   #include "dpu_kms.h"
+> @@ -639,6 +641,15 @@ static int dpu_encoder_virt_atomic_check(
+>   		}
+>   	}
+>   
+> +	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
 
-On Mon, 29 May 2023 at 18:05, Bjorn Andersson <andersson@kernel.org> wrote:
->
-> On Mon, May 29, 2023 at 10:58:23AM +0200, Ulf Hansson wrote:
-> > On Thu, 25 May 2023 at 04:41, Bjorn Andersson <andersson@kernel.org> wrote:
-> > >
-> > > On Wed, May 24, 2023 at 11:56:28AM +0200, Ulf Hansson wrote:
-> > > > On Mon, 24 Apr 2023 at 13:09, Maulik Shah <quic_mkshah@quicinc.com> wrote:
-> > > > >
-> > > > > Changes in v4:
-> > > > > - Add missing s-o-b line and reviewed by in patch 1
-> > > > > - Address ulf's comments for error handling in patch 2
-> > > > >
-> > > > > Changes in v3:
-> > > > > - Add new change to provide helper function dt_idle_pd_remove_topology()
-> > > > > - Address ulf's comments for error handling
-> > > > > - Add reviewed by ulf for devicetree change
-> > > > >
-> > > > > Changes in v2:
-> > > > > - Add new change to Move enabling OSI mode after power domains creation
-> > > > > - Fix compatible string to domains-idle-states for cluster idle state.
-> > > > > - Update cover letter with some more details on OSI and PC mode
-> > > > >   comparision
-> > > > >
-> > > > > The dependency [2] is now merged in trustedfirmware project.
-> > > > >
-> > > > > Stats comparision between OSI and PC mode are captured at [3] with
-> > > > > usecase
-> > > > > details, where during multiple CPUs online the residency in cluster idle
-> > > > > state is better with OSI and also inline with single CPU mode. In PC
-> > > > > mode
-> > > > > with multiple CPUs cluster idle state residency is dropping compare to
-> > > > > single CPU mode.
-> > > > >
-> > > > > Recording of this meeting is also available at [4].
-> > > > >
-> > > > > This change adds power-domains for cpuidle states to use PSCI OS
-> > > > > initiated mode for sc7280.
-> > > > >
-> > > > > This change depends on external project changes [1] & [2] which are
-> > > > > under review/discussion to add PSCI os-initiated support in Arm Trusted
-> > > > > Firmware.
-> > > > >
-> > > > > I can update here once the dependency are in and change is ready to
-> > > > > merge.
-> > > > >
-> > > > > [1] https://review.trustedfirmware.org/q/topic:psci-osi
-> > > > > [2] https://review.trustedfirmware.org/c/TF-A/trusted-firmware-a/+/19487
-> > > > > [3] https://www.trustedfirmware.org/docs/PSCI-OS-initiated.pdf
-> > > > > [4] https://www.trustedfirmware.org/meetings/tf-a-technical-forum
-> > > > >
-> > > > > Maulik Shah (3):
-> > > > >   cpuidle: dt_idle_genpd: Add helper function to remove genpd topology
-> > > > >   cpuidle: psci: Move enabling OSI mode after power domains creation
-> > > > >   arm64: dts: qcom: sc7280: Add power-domains for cpuidle states
-> > > > >
-> > > > >  arch/arm64/boot/dts/qcom/sc7280.dtsi  | 98 ++++++++++++++++++++-------
-> > > > >  drivers/cpuidle/cpuidle-psci-domain.c | 39 ++++-------
-> > > > >  drivers/cpuidle/dt_idle_genpd.c       | 24 +++++++
-> > > > >  drivers/cpuidle/dt_idle_genpd.h       |  7 ++
-> > > > >  4 files changed, 117 insertions(+), 51 deletions(-)
-> > > > >
-> > > >
-> > > > Looks like this series has not been queued up yet. Note that patch1
-> > > > and patch2 are needed for stable kernels too. Moreover, patch3 (Qcom
-> > > > DTS change) is dependent on patch 1 and patch2.
-> > > >
-> > > > Therefore I suggest Bjorn to pick this up via the Qcom SoC tree.
-> > > > Bjorn, is that okay for you?
-> > > >
-> > >
-> > > Sorry, this fell between the chairs after you pointed me to it...
-> > >
-> > > I can certainly pick the 3 patches through my tree, but are they fixing
-> > > any current regressions, or is it just that we need the first two
-> > > patches to land before the 3rd patch?
-> >
-> > I am not aware of any current regressions.
-> >
->
-> Okay, that confirms my understanding. So not -rc material.
->
-> > >
-> > > I also presume the 3rd patch is only needed when paired with the new
-> > > ATF?
-> >
-> > Patch3 is beneficial to use with a new TF-A, but works with an old
-> > TF-A too. Anyway, forget what I said about patch3 earlier, as that was
-> > just not the complete information.
-> >
-> > The problem is that we can't be using a new TF-A (supporting both PSCI
-> > OSI and PC mode) without patch1 and patch2, unless we are using
-> > patch3.
-> >
-> > Thus, I strongly suggest we tag patch1 and patch2 for stable kernels,
-> > to avoid any potential conflicts of TF-A versions that may be used.
-> >
->
-> So you're suggesting that I pick them for v6.5 and add a Cc: stable?
->
-> An alternative would be that you take the cpuidle patches for v6.4-rc
-> and I pick the dt for v6.5 - given that the cpuidle patches actually
-> resolves a problem, while the dts just introduces "new functionality".
+INTF_DSI
 
-Right, that's probably the best option. Although I don't have a tree
-to take these patches through, let's ask Rafael if he can help with
-this.
+> +		struct drm_bridge *bridge;
+> +
+> +		if (!dpu_enc->dsc) {
 
-Rafael, can you pick patch 1 and patch 2 from $subject series for
-v6.4-rc and tag them for stable? Then Bjorn can pick patch3 for v6.5.
+This condition is not correct. We should be updating the DSC even if 
+there is one.
 
-Kind regards
-Uffe
+> +			bridge = drm_bridge_chain_get_first_bridge(drm_enc);
+> +			dpu_enc->dsc = msm_dsi_bridge_get_dsc_config(bridge);
+
+This approach will not work for the hot-pluggable outputs. The dpu_enc 
+is not a part of the state. It should not be touched before 
+atomic_commit actually commits changes.
+
+Also, I don't think I like the API. It makes it impossible for the 
+driver to check that the bridge is the actually our DSI bridge or not.
+Once you add DP here, the code will explode.
+
+I think instead we should extend the drm_bridge API to be able to get 
+the DSC configuration from it directly. Additional care should be put to 
+design an assymetrical API. Theoretically a drm_bridge can be both DSC 
+source and DSC sink. Imagine a DSI-to-DP or DSI-to-HDMI bridge, 
+supporting DSC on the DSI side too.
+
+> +		}
+> +	}
+> +
+>   	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state);
+>   
+>   	/*
+> @@ -2121,8 +2132,10 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
+>   					phys_enc->hw_pp->merge_3d->idx);
+>   	}
+>   
+> -	if (dpu_enc->dsc)
+> +	if (dpu_enc->dsc) {
+>   		dpu_encoder_unprep_dsc(dpu_enc);
+> +		dpu_enc->dsc = NULL;
+> +	}
+>   
+>   	intf_cfg.stream_sel = 0; /* Don't care value for video mode */
+>   	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+> index e13a8cb..5a7c1f4 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -341,6 +341,7 @@ bool msm_dsi_is_cmd_mode(struct msm_dsi *msm_dsi);
+>   bool msm_dsi_is_bonded_dsi(struct msm_dsi *msm_dsi);
+>   bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi);
+>   struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi);
+> +struct drm_dsc_config *msm_dsi_bridge_get_dsc_config(struct drm_bridge *bridge);
+>   #else
+>   static inline void __init msm_dsi_register(void)
+>   {
+> @@ -374,6 +375,11 @@ static inline struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_
+>   {
+>   	return NULL;
+>   }
+> +
+> +struct drm_dsc_config *msm_dsi_bridge_get_dsc_config(struct drm_bridge *bridge)
+> +{
+> +	return NULL;
+> +}
+
+These two chunks belong to the previous patch.
+
+>   #endif
+>   
+>   #ifdef CONFIG_DRM_MSM_DP
+
+-- 
+With best wishes
+Dmitry
+
