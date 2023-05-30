@@ -2,83 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D96FE71615C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 15:17:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D891716171
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 15:19:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232242AbjE3NRu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 09:17:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44162 "EHLO
+        id S231952AbjE3NTm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 09:19:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45942 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232335AbjE3NRt (ORCPT
+        with ESMTP id S232625AbjE3NTi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 09:17:49 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 854B5C5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:17:47 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-96fdc081cb3so651298766b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:17:47 -0700 (PDT)
+        Tue, 30 May 2023 09:19:38 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22BD2A1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:19:36 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-514859f3ffbso5891312a12.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:19:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685452666; x=1688044666;
+        d=linaro.org; s=google; t=1685452774; x=1688044774;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=SlNRAu+sEqLR68lQ/UatfZNoRCWXT5cJKm3Hf7V3cqY=;
-        b=f33JruTlMMoPyVZkVavi0A8dxukxKGnRaj+eiilvbN8KQ1BhNxAH2fgnQlW6hT7los
-         cyTU52WlvsApotwNQHpjaVYOs7XRCMVsPDDQFEWvUV6AVu2UD8kuqLaT7iFeX8AZQ8TN
-         p2XdXV/0788Q80hkom3MinHMcMOLxp1fYBVEY7rIUpxxuVQPghvLxcm90taS72++Ll4Z
-         WRVTVi4hGV6XcpxcB5/7n+HK9rnO/Mgmb5OrirRnRX/4YgLYIdrANYVJ/23WpSqD1lKe
-         5YfUX2jS+5oME1Z0yMWjvUj8aZ8zKoYgwTgkUOiKRM8XoTE677gZMmbPrN1D5DH4LYMj
-         kSPw==
+        bh=dakJQqvXwovc4cRZ0OniHS45vADzGKSPIPf7PzecMTs=;
+        b=W0nJotOSH+1jhS48FYxALZLysmmBF/e1g87sOFeqyOfryBaZSphmfWUsUN+qB3h6kr
+         UiZMZ+ABwb85wqSkRY4Hz3eVaTIOza/V4KEexguKc7ppUoWZ1zYlz0v6vfnMPjOT1PKB
+         dnDb5d5dZ8OHo1iGG6nWf/tTlIUxii3aqfuiAWyxoEhStIq3q6IzTZoO5g/aCLGDi18O
+         pDsGeARco374dB5JEjY1rdNUFCMp1AAa8dyAmS9hX5ckNHskR0CiG9ABAdtaXp71bLK3
+         qOitNukaBNNDOsBiJB6NR1yIm7rHf4bWUF2+8DntT3bHKgq/eSSQ9pW0KQnu+8o0qHSh
+         tN+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685452666; x=1688044666;
+        d=1e100.net; s=20221208; t=1685452774; x=1688044774;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SlNRAu+sEqLR68lQ/UatfZNoRCWXT5cJKm3Hf7V3cqY=;
-        b=lBLbT2fdMmlG8ciP34jZg/2L/FIxuVUYXeRYU5V9s/IEgSFpk4XtUmhuLjB3xTQOpF
-         Y+AK0N2G2G6C6+AfsN4O/q70RtwqJvM6lhjVnQuWk0zZVMPuVY6eDF9D/7CxWekLgXMq
-         XiaQfmSRa1g9hJxMeSSJOGK5YUAC///lYn7z/mpDWBJonjT0/F8rdMAR+y/CShkfk9Gg
-         VhIAlzOa2sers6t0UHIm8R7ELDg0TiQf42ia2vHPOrdbYqYTTm5cPcLk8svFmF1WfqAE
-         qMer5WhjQMCVMCwlkca2Yvq/WFfA38RFUGYz3gffxZ34xrWdl9xui4Ad+KxYbGFP9N4k
-         h8Eg==
-X-Gm-Message-State: AC+VfDxO7Ga5bB/abHVwUWO5Qe1UAePM9vID8I3GKIC8V4PjN7DDbyLB
-        FdD/yOg6eBxHAVIhnHS+EBgngw==
-X-Google-Smtp-Source: ACHHUZ50wxHHnMyT/M88twI82FLThHbRKUAp3t34rKhe2wbJmxLklwc1X5L/E5GjzkfV5y5besrNcw==
-X-Received: by 2002:a17:907:7206:b0:974:1ef3:e6d1 with SMTP id dr6-20020a170907720600b009741ef3e6d1mr1727125ejc.9.1685452666001;
-        Tue, 30 May 2023 06:17:46 -0700 (PDT)
+        bh=dakJQqvXwovc4cRZ0OniHS45vADzGKSPIPf7PzecMTs=;
+        b=fNQ1S1NitSeBBZXObgWaVWd+Iaex0n+TQwdG81isYSNd7mD6ALKhGU4dXOgsXFwhXe
+         zrZmUKGmNvCN6nL/eaIzrOomO8piWouvIBKjom/HP2OPYhTDarhC9ANbQg8uvQJKzLCt
+         86DzdskLs1gcetk51xgFaGUcqJCH3KLG6mCTEEFnqauI5MjzNq5zjdPi5HCM+ZG1Ac5+
+         /8DEtZKamiJ0TdZPlw6SIj0ojiXSRy7YfUmxBC1qxdIRi3tGDeWEL6u/fOOJbW6izPpE
+         dbwlqiIgZjP5RkpeWuw4g8tfI8kOKS234JgjvS3Dqb/Ql9NfAjdBFIN2cKDmBMvuMDRw
+         k2iA==
+X-Gm-Message-State: AC+VfDwI/dfDSJmhfO8Ou/+0TkY8ZS0o9NQoY8CzcX08+pJNB51SDCQh
+        N8gLCLiXRJJv/dts2MfMKQ5NvKOfx4LsYmMUM+sL7w==
+X-Google-Smtp-Source: ACHHUZ6PwL740lBYyywAT37VtwWDCbyXudvCjQYX+7D2ia9Vvrgwv222iORYh7NyLYiL3Dz94ZK/wA==
+X-Received: by 2002:aa7:c144:0:b0:514:9e81:9070 with SMTP id r4-20020aa7c144000000b005149e819070mr1795435edp.15.1685452774654;
+        Tue, 30 May 2023 06:19:34 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.199.204])
-        by smtp.gmail.com with ESMTPSA id m22-20020a1709066d1600b0096f777fc1ccsm7235383ejr.200.2023.05.30.06.17.44
+        by smtp.gmail.com with ESMTPSA id n18-20020aa7c692000000b0050470aa444fsm4371324edq.51.2023.05.30.06.19.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 06:17:45 -0700 (PDT)
-Message-ID: <83fb5973-5514-6c66-fc15-84fb439f1398@linaro.org>
-Date:   Tue, 30 May 2023 15:17:43 +0200
+        Tue, 30 May 2023 06:19:34 -0700 (PDT)
+Message-ID: <ea82c596-5284-2361-245d-228748ecb722@linaro.org>
+Date:   Tue, 30 May 2023 15:19:32 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v4 4/5] dt-bindings: iommu: arm,smmu: enable clocks for
- sa8775p Adreno SMMU
+Subject: Re: [PATCH 2/5] ARM: Add samsung,expressatt to qcom.yaml
 Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>
-Cc:     Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+To:     Rudraksha Gupta <guptarud@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230417125844.400782-1-brgl@bgdev.pl>
- <20230417125844.400782-5-brgl@bgdev.pl>
- <9f2c0b2d-b11e-512f-1566-5097547c60d1@linaro.org>
- <CAMRc=Mey2mjNppokxcNBTyaZPTjBkiuQX-DHTvMXJkiLKq7UoA@mail.gmail.com>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     david@ixit.cz, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230524230459.120681-1-guptarud@gmail.com>
+ <20230524230459.120681-2-guptarud@gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAMRc=Mey2mjNppokxcNBTyaZPTjBkiuQX-DHTvMXJkiLKq7UoA@mail.gmail.com>
+In-Reply-To: <20230524230459.120681-2-guptarud@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -89,30 +82,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/05/2023 11:47, Bartosz Golaszewski wrote:
-> On Tue, May 16, 2023 at 1:42 PM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 17/04/2023 14:58, Bartosz Golaszewski wrote:
->>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>>
->>> The GPU SMMU will require the clocks property to be set so put the
->>> relevant compatible into the adreno if-then block.
->>>
->>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
->>> ---
->>
->>
->> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>
->> Best regards,
->> Krzysztof
->>
-> 
-> Hey IOMMU maintainers, could you please pick this one up for the next
-> merge window?
+On 25/05/2023 01:04, Rudraksha Gupta wrote:
+> Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
 
-I think you missed to Cc them (except Will).
+Missing commit msg explaining what's this.
+
+Please use subject prefixes matching the subsystem. You can get them for
+example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
+your patch is touching.
+
 
 Best regards,
 Krzysztof
