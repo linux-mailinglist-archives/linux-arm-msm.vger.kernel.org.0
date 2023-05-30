@@ -2,96 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E1AA7166E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 17:25:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40AEC716728
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 17:35:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230006AbjE3PZO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 11:25:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53432 "EHLO
+        id S231496AbjE3PfF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 11:35:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229697AbjE3PZO (ORCPT
+        with ESMTP id S231896AbjE3Pez (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 11:25:14 -0400
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F7F4B0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 08:25:13 -0700 (PDT)
-Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-64d41d8bc63so3622018b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 08:25:13 -0700 (PDT)
+        Tue, 30 May 2023 11:34:55 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70766E5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 08:34:52 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f4b0a0b557so5093207e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 08:34:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1685460312; x=1688052312;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=65YOy14KMjF5ua6wfSM9SgJP7pUpC09nseL8YabAbGE=;
-        b=bUIqXb3Z6M2ZIfHony+JhWR0leab4kufYLvG4tsfYd6A/MdB1pXPaiBeeP8o9bUTvb
-         pUQkYgK0CFqSNK1paP9VTpFgxvG46E7a7qfNRJ7fIx/hAPUQhchaUCGqEgEJmtJWMB/D
-         BXuW97S23yiqbslmLlg4mtC4C9k1KtZu4iHmY=
+        d=linaro.org; s=google; t=1685460891; x=1688052891;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=i2URTcYLzfS3uayG6hfWA3AHqGO0fmjAhKx1B1Sb2rM=;
+        b=mWVVzeJOqvdZKotjn24LlOTsbVHuks3mjQrNCBTgVMi6WHDE+eBCxalJiaLICMS3WO
+         sZ7dw3d0s6b7D8JxZnJLTSC7RsSFo149WVQXN6zHPAmWxqnyHFX1WVy0p9httXIJyHrb
+         vtj+4z5S4m3vES9aWTzOcrUQdTmRK4Nn2MovEafL9mJ9gtou5LjtN4XeDWyA1O+P86xR
+         5ug8pdlnpq5mggZ2ME2n3og6rrJFuXI1iZqry0NUMkn99l4IBterbAINmOmjVlAevt9B
+         HpS5VJ7z86yvYxTW6s1lchneiwb6q2cjFQTzvPTJrdr2jKd05lSQ8YKP/0QyMpWWjrm1
+         1yRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685460312; x=1688052312;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=65YOy14KMjF5ua6wfSM9SgJP7pUpC09nseL8YabAbGE=;
-        b=JCwsM9G/6QzaQrA+HjDi6zocLTSdZPqRvO8R6dRvkBJseFnUBntRvpPosYpnOk2Pi0
-         BjvS+bb8pIn6n7ddZKJdi59BxMaw7PgKwGWOD7KYA+TVwXn0wU8NHwCyYoP+imEoqsa7
-         496S84E0AXmo6OQs2Q8Q0x044FP5Tk4KYOBpkuGWAoKovKNGiLjDGx+/0nCJk3++FBdX
-         LbBTgDOSYih1oXU3W3Y522pPZWclr1XFHfW/b9BkQZ/1jKATei9Rr+WFFJyD6VYRfnJW
-         tBxCJsNP4ay2GbYASozxUIlB4w+e5gFDssshtM2yonHo8sIJafsCXOpyiiygG4RKzmB6
-         r9Tw==
-X-Gm-Message-State: AC+VfDx36gtfXUyGq6oFXk9fWVwCPT+eWwX1dzZds+dGdV6SAFI3rFGh
-        ZSnfj6FeKsGdav8yBBZfK78XdQ==
-X-Google-Smtp-Source: ACHHUZ7H4UAKXt+/KKSohvZbKFyJ73bR2I/IFmH9FxmHt9seSR1k0sRz31SKI5rIqFcM31JnCVqY3Q==
-X-Received: by 2002:a05:6a20:9c8f:b0:110:9210:f6af with SMTP id mj15-20020a056a209c8f00b001109210f6afmr2699102pzb.27.1685460312650;
-        Tue, 30 May 2023 08:25:12 -0700 (PDT)
-Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id a3-20020a634d03000000b0053f3797fc4asm8308349pgb.0.2023.05.30.08.25.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 May 2023 08:25:11 -0700 (PDT)
-Date:   Tue, 30 May 2023 08:25:10 -0700
-From:   Kees Cook <keescook@chromium.org>
-To:     Maximilian Luz <luzmaximilian@gmail.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Johan Hovold <johan@kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/4] lib/ucs2_string: Add UCS-2 strlcpy function
-Message-ID: <202305300820.9B2154B@keescook>
-References: <20230528230351.168210-1-luzmaximilian@gmail.com>
- <20230528230351.168210-2-luzmaximilian@gmail.com>
+        d=1e100.net; s=20221208; t=1685460891; x=1688052891;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=i2URTcYLzfS3uayG6hfWA3AHqGO0fmjAhKx1B1Sb2rM=;
+        b=TsoybniPAFSGQclsO2IaFeqSy0oNyXKgtrw/OHcD7fC4cKxbOSK2X6aoq2cM42GGj3
+         9xV84ILejk+8fJ9Xrug/g4utSG8oZZFvGMZZ4I8WEA9F9Y2t+GRNldFio2A12ZidH1ta
+         jOxBygMJ4k2jbcyU3g7GUso4y5qhod//cFgv/nZIWalxoqNdcMDmXPB6Nl67nWjKepVS
+         a/u8RyX39ydfqGrT/PAWcsbTkvc9QIvvqPCUVr0pLTQC/9Hdg+c6Ro+7BJLNQEAGqAMJ
+         IuWPuz3tZ3jgGdpOtZNrjc6JdxES+3KGWueti3fyaQRaYyAQEOn39nLLAAob1GFQMhqU
+         7DRw==
+X-Gm-Message-State: AC+VfDxIAjZoW4x/uQrPjYIpilOIpLPHOoRyQplYmOtZysZY1dmZi4aJ
+        1XRMilCSHA6oSCmmzcruIocHZQ==
+X-Google-Smtp-Source: ACHHUZ4FyrPbuO3w8Yz55IQ8tPNl8p1FQbjxB/VnRrEwPytlMXkKP4diVJeC1A4YfCKLd8PG92PMzQ==
+X-Received: by 2002:a05:6512:150:b0:4ed:b842:3a99 with SMTP id m16-20020a056512015000b004edb8423a99mr1137818lfo.59.1685460890667;
+        Tue, 30 May 2023 08:34:50 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.199.204])
+        by smtp.gmail.com with ESMTPSA id s2-20020aa7cb02000000b005105f002fd1sm4554734edt.66.2023.05.30.08.34.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 May 2023 08:34:50 -0700 (PDT)
+Message-ID: <10457cab-f9b0-c38b-9f11-36853b71c7e8@linaro.org>
+Date:   Tue, 30 May 2023 17:34:47 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230528230351.168210-2-luzmaximilian@gmail.com>
-X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/9] dt-bindings: HID: i2c-hid: Add "panel" property to
+ i2c-hid backed panels
+Content-Language: en-US
+To:     Douglas Anderson <dianders@chromium.org>,
+        Jiri Kosina <jikos@kernel.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     dri-devel@lists.freedesktop.org, linux-input@vger.kernel.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>, hsinyi@google.com,
+        devicetree@vger.kernel.org,
+        yangcong5@huaqin.corp-partner.google.com,
+        linux-kernel@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org
+References: <20230523193017.4109557-1-dianders@chromium.org>
+ <20230523122802.1.Id68e30343bb1e11470582a9078b086176cfec46b@changeid>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230523122802.1.Id68e30343bb1e11470582a9078b086176cfec46b@changeid>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 29, 2023 at 01:03:48AM +0200, Maximilian Luz wrote:
-> Add a ucs2_strlcpy() function for UCS-2 strings. The behavior is
-> equivalent to the standard strlcpy() function, just for 16-bit character
-> UCS-2 strings.
+On 23/05/2023 21:27, Douglas Anderson wrote:
+> As talked about in the patch ("drm/panel: Add a way for other devices
+> to follow panel state"), touchscreens that are connected to panels are
+> generally expected to be power sequenced together with the panel
+> they're attached to. Today, nothing provides information allowing you
+> to find out that a touchscreen is connected to a panel. Let's add a
+> phandle for this.
+> 
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> 
+>  Documentation/devicetree/bindings/input/elan,ekth6915.yaml  | 6 ++++++
+>  Documentation/devicetree/bindings/input/goodix,gt7375p.yaml | 6 ++++++
+>  Documentation/devicetree/bindings/input/hid-over-i2c.yaml   | 6 ++++++
+>  3 files changed, 18 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/input/elan,ekth6915.yaml b/Documentation/devicetree/bindings/input/elan,ekth6915.yaml
+> index 05e6f2df604c..d55b03bd3ec4 100644
+> --- a/Documentation/devicetree/bindings/input/elan,ekth6915.yaml
+> +++ b/Documentation/devicetree/bindings/input/elan,ekth6915.yaml
+> @@ -24,6 +24,12 @@ properties:
+>    interrupts:
+>      maxItems: 1
+>  
+> +  panel:
+> +    description: If this is a touchscreen, the panel it's connected to. This
 
-Eek, no. strlcpy() is dangerous in multiple ways[1]. Please implement
-strscpy() (i.e. use strnlen(), negative error on truncation, etc).
-Additionally, it'd be nice of the ucs2 helpers here also implemented the
-rest of the CONFIG_FORTIFY_SOURCE mitigations (i.e. checking for source
-and destination buffer size overflows at compile-time and run-time with
-__builtin_object_size() and __builtin_dynamoc_object_size() respectively).
+Hm, can there be different setup? Touchscreen without panel? What would
+it be then?
 
--Kees
+Why only these touchscreens? This looks generic, so maybe in
+touchscreen.yaml?
 
-[1] https://docs.kernel.org/process/deprecated.html#strlcpy
+Best regards,
+Krzysztof
 
--- 
-Kees Cook
