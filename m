@@ -2,127 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C6CA715A04
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 11:26:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17D64715A33
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 11:31:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230025AbjE3J0B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 05:26:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43408 "EHLO
+        id S229972AbjE3JbX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 05:31:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230232AbjE3JZf (ORCPT
+        with ESMTP id S230262AbjE3JbA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 05:25:35 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5DC4E6D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 02:24:29 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-51456392cbbso8176299a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 02:24:29 -0700 (PDT)
+        Tue, 30 May 2023 05:31:00 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 554A9F1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 02:29:55 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2af2b74d258so44678331fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 02:29:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685438668; x=1688030668;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=VUko92SfOCift4O+uXncbqKXfQI4O0oKnV/Zcja6u8g=;
-        b=ccJQOpqP3kIc7ZLl4ycvtD1ZyBQ8B0iHVKDV4IenI9EU/kDtfFdg5qWxaYCWA0SGG8
-         IWWypnhLlTz2JLedXw+jw0ZC4LOxhlf+VQ/l2XdvuwGGu6rkd6lOFwsdp1bGBXC7eje4
-         IcreFOpcFGmIKgqt16oDVQc0olyH2QpVp8rWH/dYYnOKWyA27/OsqpmrnGp23mYRXxeF
-         WJhfbptWZG9R5a6S43qFmJlzdvcoPNCABXLI9gw8DKr0T2OTqMibO43Qt8Tt2hDh1cul
-         /LO70nl5ho6vtnhjAwGvf22XVwGX8vZF9dXi3dnN4h9zUeqkCJgSsWmh1WTNOSq49RKr
-         B+6A==
+        d=linaro.org; s=google; t=1685438993; x=1688030993;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+FDuYrgA2PtZhvkKUmkAEjPi6ir414k8/3mt89BWyiw=;
+        b=x06FtjeWv+gNlvPJF9/0GVmIyBvjBmyC/YQtxyXBxngdzlXpbHWMTGDxkkC8PQaRxz
+         1x+clY8tlQ0rMz3KHsSRBR239hakwjeVv7hzKxYBA5xkasPLhencN7Rb4bQjC6QNtYSx
+         aVcq7WXp8e7s4jl13HZrd/JoVmYpgt/dG5xrCAdCHLZB0Fu533+RLvYxFUzniC7ATXBM
+         Xwn4kXnU6lKPV8mfoUjJSwz981VpxUVw6vUlo9VQrODKHkAacmGJlv1AzUqGnPHmZv1A
+         b+cB3hZ8mkub2LWflET7w6zGPUGS8zeMEb99gY1Qj7iesrCyzabXiB5m1iSnOlRcSpMk
+         H7Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685438668; x=1688030668;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VUko92SfOCift4O+uXncbqKXfQI4O0oKnV/Zcja6u8g=;
-        b=UAHuj53mCOEAn87tzFuLsY+oZDxZNwE2dfoXV2NpC/tXkwwAHEKrxTHO/11pkcn/Qo
-         BqNdwlu+SrFG3rtw+vK3yjF9HvN1a0AvsJ19x6CN2E/L/KZ2HI2NyWGHs3eVmUFJir/a
-         0QC3VhTRhwNi5WbGLI13oGThDOuUFhxEAxHtpuaSr0n+jnH38R2Lt7fakJzPuYTdhpDI
-         X+PYjKn94PZ1Z9zLmsT87tD6ZQKSyxU0zj4YVoyLzaC/8kRLHZR9YPRwwbTP8jh1xsLa
-         Ja9ddOIKCdILXxDhR6CwEWMVN3SsGWGG9s7MkkbNCPp9iYUPqWWqsUMiE37RU2x5KhOp
-         Y6iw==
-X-Gm-Message-State: AC+VfDw8dUSfavOHUUnQEF7YKgaQWSqRfx3b4jEU0fSu6acUoT2j/re6
-        Hg1E0iN1hwlUkvQZOMxVCcRvrU8CRNgXtg==
-X-Google-Smtp-Source: ACHHUZ7zJ34+0T7f0uplmADLE8435Uf3r4Bi9w9dHDncwC/7UT+l2kMaH9bbxGc+V4jyivbCcZXD5w==
-X-Received: by 2002:a17:907:e86:b0:96a:2210:7dd8 with SMTP id ho6-20020a1709070e8600b0096a22107dd8mr1690156ejc.38.1685438667640;
-        Tue, 30 May 2023 02:24:27 -0700 (PDT)
-Received: from ThinkStation-P340.tmt.telital.com ([2a01:7d0:4800:7:da16:70bf:8f7b:efa5])
-        by smtp.gmail.com with ESMTPSA id bx16-20020a170906a1d000b0096607baaf19sm7070971ejb.101.2023.05.30.02.24.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 May 2023 02:24:27 -0700 (PDT)
-From:   Daniele Palmas <dnlplm@gmail.com>
-To:     Manivannan Sadhasivam <mani@kernel.org>,
-        Siddartha Mohanadoss <smohanad@codeaurora.org>,
-        Sujeev Dias <sdias@codeaurora.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        Daniele Palmas <dnlplm@gmail.com>
-Subject: [PATCH 1/1] bus: mhi: host: allow SBL as initial EE
-Date:   Tue, 30 May 2023 11:13:40 +0200
-Message-Id: <20230530091340.3513141-1-dnlplm@gmail.com>
-X-Mailer: git-send-email 2.37.1
+        d=1e100.net; s=20221208; t=1685438993; x=1688030993;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+FDuYrgA2PtZhvkKUmkAEjPi6ir414k8/3mt89BWyiw=;
+        b=YuPP/0iSCAXeaKdhCwqzrXvq4Hh17aCDus7505/CxYR7owfGVI3IXK+x0zsIoEOpsF
+         eCntlfGBenbDSHMb/MRbujfGqZnZKpDz4SkPSqndU9hWQ668ZW3MHO88d8sFOOqqiD/E
+         74MUDguvtUoSHI5r6EsMTYrTceOeySJ3d041eADayn+uOxa8BC6P0SbcBBbf9hHMjIp8
+         UcC/E9nRPv+1nE/TCYK4rtt5cJHTk/uCXLdLUn9qTl8eePa5JT1KnGmbBZBrZSZW3UHY
+         SOL1fi0Pd/JMhCsUNY87AjeCX3ubGQ18L7yB90d/cGsklJOFFh27sD/rTKFdp/2Xb/+V
+         tJZQ==
+X-Gm-Message-State: AC+VfDz4G0b/PrLpt92xg7dbvx2juoDpy68JeT/StM0y7UQ6qioMUzkG
+        yJKav1FiRxwF/jL/PnSC3k5g7w==
+X-Google-Smtp-Source: ACHHUZ7Sl60OmxrIrASOSmvDJ8xnwip2lAGckE0thy0BWsF8hbdqJvsbE55ayVqgf0SrvMUbKi8X2Q==
+X-Received: by 2002:a2e:9c83:0:b0:2a8:eae2:d55c with SMTP id x3-20020a2e9c83000000b002a8eae2d55cmr496806lji.15.1685438993387;
+        Tue, 30 May 2023 02:29:53 -0700 (PDT)
+Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
+        by smtp.gmail.com with ESMTPSA id q10-20020a2e968a000000b002ab2184a9basm2731045lji.109.2023.05.30.02.29.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 May 2023 02:29:53 -0700 (PDT)
+Message-ID: <29888a4c-b745-3975-f330-d3a4033cd2a4@linaro.org>
+Date:   Tue, 30 May 2023 11:29:51 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HK_RANDOM_ENVFROM,
-        HK_RANDOM_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH RFC 03/10] drm/panel: Add LGD panel driver for Sony Xperia
+ XZ3
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Caleb Connolly <caleb@connolly.tech>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>
+References: <20230521-drm-panels-sony-v1-0-541c341d6bee@somainline.org>
+ <20230521-drm-panels-sony-v1-3-541c341d6bee@somainline.org>
+ <ccc97880-8e74-b85b-9679-9c12c44c4b99@linaro.org>
+ <brmrqeajbq3oyp3jjwmc6tuhiftz764u6az444xw6g7pwf5fr3@5tlp375qwhed>
+ <617c8f8a-1fc7-c6a0-eaa5-ce75ff2adc1b@linaro.org>
+ <63qt5jmdi5qg7tvhbb7vk75kz53wmygc7iubwprfhcc3hvgwuv@ildrzq32ese3>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <63qt5jmdi5qg7tvhbb7vk75kz53wmygc7iubwprfhcc3hvgwuv@ildrzq32ese3>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There are situations in which SBL is a legitimate initial execution
-environment (e.g. modem stuck in SBL due to a firmware failure...), but
-mhi refuses to start:
 
-mhi-pci-generic 0000:01:00.0: MHI PCI device found: foxconn-sdx55
-mhi-pci-generic 0000:01:00.0: BAR 0: assigned
-mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
-mhi mhi0: Requested to power ON
-mhi mhi0: SECONDARY BOOTLOADER is not a valid EE for power on
-mhi-pci-generic 0000:01:00.0: failed to power up MHI controller
-mhi-pci-generic: probe of 0000:01:00.0 failed with error -5
 
-Fix this by adding SBL as an allowed initial execution environment.
+On 30.05.2023 10:41, Marijn Suijten wrote:
+> On 2023-05-30 09:24:24, Neil Armstrong wrote:
+>> Hi Marijn, Dmitry, Caleb, Jessica,
+>>
+>> On 29/05/2023 23:11, Marijn Suijten wrote:
+>>> On 2023-05-22 04:16:20, Dmitry Baryshkov wrote:
+>>> <snip>
+>>>>> +	if (ctx->dsi->dsc) {
+>>>>
+>>>> dsi->dsc is always set, thus this condition can be dropped.
+>>>
+>>> I want to leave room for possibly running the panel without DSC (at a
+>>> lower resolution/refresh rate, or at higher power consumption if there
+>>> is enough BW) by not assigning the pointer, if we get access to panel
+>>> documentation: probably one of the magic commands sent in this driver
+>>> controls it but we don't know which.
+>>
+>> I'd like to investigate if DSC should perhaps only be enabled if we
+>> run non certain platforms/socs ?
+>>
+>> I mean, we don't know if the controller supports DSC and those particular
+>> DSC parameters so we should probably start adding something like :
+>>
+>> static drm_dsc_config dsc_params_qcom = {}
+>>
+>> static const struct of_device_id panel_of_dsc_params[] = {
+>> 	{ .compatible = "qcom,sm8150", , .data = &dsc_params_qcom },
+>> 	{ .compatible = "qcom,sm8250", , .data = &dsc_params_qcom },
+>> 	{ .compatible = "qcom,sm8350", , .data = &dsc_params_qcom },
+>> 	{ .compatible = "qcom,sm8450", , .data = &dsc_params_qcom },
+>> };
+> 
+> I'd absolutely hate hardcoding a list of compatible SoC names in a panel
+> driver.  For one these lists will fall out of date really soon even if
+> we store this list in a generic place: even the current DPU catalog and
+> new entries floating on the lists weren't faithfully representing DSC
+> capabilities (but that's all being / been fixed now).
+Yes, a driver should behave predictably, regardless of the platform.
 
-Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
----
- drivers/bus/mhi/host/internal.h | 2 +-
- drivers/bus/mhi/host/pm.c       | 3 ++-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+> 
+> What's more, most of these panel drivers are "hardcoded" for a specific
+> (smartphone) device (and SoC...) since we don't (usually) have the
+> DrIC/panel name nor documentation to make the commands generic enough.
+> I don't think we should be specific on that end, while being generic on
+> the DSC side.
+> 
+> That does mean I'll remove the if (dsc) here, as Dmitry noted most of
+> this driver expects/requires it is enabled.
+I'd say we could assume it's mandatory as of today.
 
-diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-index 2e139e76de4c..3bdcd2321aa5 100644
---- a/drivers/bus/mhi/host/internal.h
-+++ b/drivers/bus/mhi/host/internal.h
-@@ -56,7 +56,7 @@ extern const char * const mhi_ee_str[MHI_EE_MAX];
- 
- #define MHI_IN_PBL(ee) (ee == MHI_EE_PBL || ee == MHI_EE_PTHRU || \
- 			ee == MHI_EE_EDL)
--#define MHI_POWER_UP_CAPABLE(ee) (MHI_IN_PBL(ee) || ee == MHI_EE_AMSS)
-+#define MHI_POWER_UP_CAPABLE(ee) (MHI_IN_PBL(ee) || ee == MHI_EE_AMSS || ee == MHI_EE_SBL)
- #define MHI_FW_LOAD_CAPABLE(ee) (ee == MHI_EE_PBL || ee == MHI_EE_EDL)
- #define MHI_IN_MISSION_MODE(ee) (ee == MHI_EE_AMSS || ee == MHI_EE_WFW || \
- 				 ee == MHI_EE_FP)
-diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-index 083459028a4b..18872c5017be 100644
---- a/drivers/bus/mhi/host/pm.c
-+++ b/drivers/bus/mhi/host/pm.c
-@@ -1203,10 +1203,11 @@ int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
- 
- 	wait_event_timeout(mhi_cntrl->state_event,
- 			   MHI_IN_MISSION_MODE(mhi_cntrl->ee) ||
-+			   mhi_cntrl->ee == MHI_EE_SBL ||
- 			   MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
- 			   msecs_to_jiffies(mhi_cntrl->timeout_ms));
- 
--	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -ETIMEDOUT;
-+	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee) || mhi_cntrl->ee == MHI_EE_SBL) ? 0 : -ETIMEDOUT;
- 	if (ret)
- 		mhi_power_down(mhi_cntrl, false);
- 
--- 
-2.37.1
-
+Konrad
+> 
+>> ...
+>> static int sony_akatsuki_lgd_probe(struct mipi_dsi_device *dsi)
+>> ...
+>> 	const struct of_device_id *match;
+>>
+>> ...
+>> 	match = of_match_node(panel_of_dsc_params, of_root);
+>> 	if (match && match->data) {
+>> 		dsi->dsc = devm_kzalloc(&dsi->dev, sizeof(*dsc), GFP_KERNEL);
+>> 		memcpy(dsi->dsc, match->data, sizeof(*dsc));
+>> 	} else {
+>> 		dev_warn(&dsi->dev, "DSI controller is not marked as supporting DSC\n");
+>> 	}
+>> ...
+>> }
+>>
+>> and probably bail out if it's a DSC only panel.
+>>
+>> We could alternatively match on the DSI controller's dsi->host->dev instead of the SoC root compatible.
+> 
+> I'd much rather have the DSI host/controller state whether it is capable
+> of DSC (likely allowing us to expose different modes for panels that
+> support toggling DSC), but for starters also validate (in DPU?) that the
+> pointer is NULL when the hardware does not support it (but maybe that
+> already happens implicitly somewhere in e.g.
+> dpu_encoder_virt_atomic_mode_set when finding the DSC blocks).
+> 
+> - Marijn
