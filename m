@@ -2,160 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FB75716DFB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 21:48:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE6A9716E7C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 22:15:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230339AbjE3Ts5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 15:48:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37134 "EHLO
+        id S231542AbjE3UPF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 16:15:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49462 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230311AbjE3Ts5 (ORCPT
+        with ESMTP id S229920AbjE3UPD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 15:48:57 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BDF2E8;
-        Tue, 30 May 2023 12:48:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1685476133; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=pop3NnhrhZEAeUjnOXlrOnJgzu7/QXn4WnQ4LxAepL1V6oGMgQLF84+ww4Ph5KGYhh
-    7bG9BBsVzRaSrKBaWYFvAMhVpFtzs8hsne1cgyvdDT1sxhA6u7YnmUrwZ4J1OeRrifzG
-    iqucgzfD4hkkSkvs3TyVKarnCjvCvS8lSkXpKmbcK+MyhADYp8IF+mq3j6ycTIGtrneY
-    qsb7tQmzOf3LW18D1tpnHK73FsRG+FiY++ukus0bPKCzZbVzR29/upQSOt5EYIy3v+Ok
-    NzyEolHSM6TfxJF83o1/wNIOYDcRf3X8UNv/bAkqJoMafRa2wB1TssHkS5Z4UYHkGXbm
-    ItoA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1685476133;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=T5CdztljMKq8HhGIpu+2afxFrsW10AdGa/gk1f9uPvg=;
-    b=Lb6nl9GUblisWuGhbK4Jqx0kW2/qRjGvGDH3lidI33DdkL8yj5zEF9Zl/U/aIP+Z7y
-    qSo+aGFwFKBERvMvMjPAtUIHHgMPNysL5yVQ10CtseQ7s6dXJ4LfF9MJzHCkaG/zCXal
-    PAU7RpIxAJ1YgkNMj19hf1P6batbHmRQsWVJt2xolb/4rzfwM4OaD7PBDcgqPypdfQz/
-    wfGrm1eSXTShRTYR62yn76EO6JwHnY1InGXIgNodtu3Hj9u5PDNfCLGJfvvb4oUrTNC1
-    k53HDDbdVo8zQBjLCkcF2fONoQ8opVJ3JZ0aUOXjcA1bTzNIJYqIg5HJPhZbm1VIH6K5
-    bTNQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1685476133;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=T5CdztljMKq8HhGIpu+2afxFrsW10AdGa/gk1f9uPvg=;
-    b=MLjwIMvj0RorFujTsCZyyV+uniL7w5BmJJV4u9BEYV4bnSs60GYnKBLvYXgeIHzCgD
-    SBhHbYapZefK9NcrBnIBD1Q1les+G77wn5K3iE40YVjvWpaX6H0Ji3qTYb6Kxx+X8oa8
-    EVenO9YXQ5eE98I4uSV3SBC06Ip/m+ovLi5wKpuyD6bKck5R0citaqpVoVMBjRp7oIju
-    FEN1Lr6GNy7kVTfGJg6Er+hBgeC+EcxHu4mmjFjE/pxE17MgWCA7TzUTwsjdjQh5s6Is
-    MPWNgD/3MdTwC3h6sRYzLxsUOKBpEGsP6Cw4I33zwmOq3ppU+WU5IJ4Fce3oo4e3ODWR
-    VIsw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1685476133;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=T5CdztljMKq8HhGIpu+2afxFrsW10AdGa/gk1f9uPvg=;
-    b=DpfzWWAIopgKluKnlAsAh/Br4D8F+EJjOJoejLEl/vRHlCvDoHsUycfw5ZaLb41ypl
-    sxnEduT67bHbcQfdvHCg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA95nh"
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
-    with ESMTPSA id j6420az4UJmqjqV
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Tue, 30 May 2023 21:48:52 +0200 (CEST)
-Date:   Tue, 30 May 2023 21:48:46 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/2] soc: qcom: rmtfs: Support dynamic placement of region
-Message-ID: <ZHZTHlfDsngUrTRX@gerhold.net>
-References: <20230530193436.3833889-1-quic_bjorande@quicinc.com>
- <20230530193436.3833889-3-quic_bjorande@quicinc.com>
+        Tue, 30 May 2023 16:15:03 -0400
+Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87BDD125
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 13:14:31 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-565cfe4ece7so46613757b3.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 13:14:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685477670; x=1688069670;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=n9PhFw6EqXKj/DjQH85Ps097cPd6lOxV2adiWzAyXMY=;
+        b=RYm/9b5PO6rQQSGtGQZOBLzeWtNFbyYU77EJ7fUmDuVmOQ4XLHnBRwHZZK16Mby/So
+         YUfoRAamjnl8byEisFFSkGyyS8IhIQVBDgt7uNkbfzyOyTuKE6pxUTpCspj+k5/uaFMi
+         KIKjLyTalqP+S8LS7YQYbJqrxnD08AC9MpgZkUbEQ3OX0jb3m/6o3EUmrEeX0wVLoluP
+         4shKvphiVSoP6CScSqnB4EtBFKhqCyZC5fLxZgbRSV5XejWLoFY7FWC2cce5o1Vm517l
+         b+nYX75hfRm/pAi05Wz3ve7u6N1u+jgbwfmituJUm/+Os+LYjHeCbWIk7Eh0Bnp3vHqp
+         tvQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685477670; x=1688069670;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=n9PhFw6EqXKj/DjQH85Ps097cPd6lOxV2adiWzAyXMY=;
+        b=SqcXdThj7Z4JrPeJABlV0LlKzj/YigMI01k8k/45Ej+/6RFhdEKCr7+xbr17IbclxP
+         CdQpLzXwOvSAbDfu01x/YhOnOAJMDT5m+zmvE4BhA+WbABdzJvFkVNouZnGt6jM+3SQd
+         rak2TZU9L3AcIeVcZRmtOXjsSa5hlLleXXd2QeXQ9zROAzGYfQg4W1EmDKdQzAZ5Oq4s
+         DGQb3k4tlEYjh36nWRgVmvv1hFf3ZJYXtL6K248AGcwoZHSQcn/oO3SSM/OyvR65tb3s
+         BoRr2+tdgapMqpr6oPCtPwRUcffdoE9MA/HavApvdIKVwADxdEpoIOZrH6mnpiRZQm0n
+         /6oQ==
+X-Gm-Message-State: AC+VfDysLkdodq9H+cWtAWVVNtJwhurEjEezWSKLbIeFEgRsasf9zc9U
+        fBy9pSyL2cZ4+5+fSVS+nmwGgTgcUKRavGPuYeTbTg==
+X-Google-Smtp-Source: ACHHUZ59cFtiwvOV4dMWsQ/BceJCxYHiJSRU7xd4rWZLxQAVVu325eR1vgGEksuIHWnmsEl+0Yvy5dpYVHm9Y/ZjG3k=
+X-Received: by 2002:a81:c310:0:b0:561:7351:f56f with SMTP id
+ r16-20020a81c310000000b005617351f56fmr3759086ywk.24.1685477670706; Tue, 30
+ May 2023 13:14:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230530193436.3833889-3-quic_bjorande@quicinc.com>
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+References: <20230521172147.4163085-1-dmitry.baryshkov@linaro.org>
+ <300fc53c-2a58-714c-855a-08a0dbef3ed9@quicinc.com> <bvjtgmuyz4zdjvt4jyjyt5hasiwnnaz4lyse6mf6b7grtig23f@yuji3z2mxue2>
+ <c18c8687-0c4e-894e-a629-bc55e54031c5@quicinc.com> <6se25tikdg2tkiprz4h4umfta34tc5orddksvwi6woklf7c74k@rbserwp5kt3a>
+ <9001aaaf-778e-5b3c-e87f-2b196d8b62ed@quicinc.com>
+In-Reply-To: <9001aaaf-778e-5b3c-e87f-2b196d8b62ed@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 30 May 2023 23:14:19 +0300
+Message-ID: <CAA8EJpp2mGcOHf5KJ8Zt_MQK+grAvbb=tVtaiT7MBLzCis20fg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] drm/msm/dpu: drop SSPP register dumpers
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Sean Paul <sean@poorly.run>,
+        Bjorn Andersson <andersson@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 30, 2023 at 12:34:36PM -0700, Bjorn Andersson wrote:
-> In some configurations, the exact placement of the rmtfs shared memory
-> region isn't so strict. In the current implementation the author of the
-> DeviceTree source is forced to make up a memory region.
-> 
-> Extend the rmtfs memory driver to relieve the author of this
-> responsibility by introducing support for using dynamic allocation in
-> the driver.
-> 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845-mtp.dts | 10 ++++
->  drivers/soc/qcom/rmtfs_mem.c            | 66 +++++++++++++++++++------
->  2 files changed, 61 insertions(+), 15 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-> index d1440b790fa6..e6191b8ba4c6 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-> @@ -12,6 +12,8 @@
->  #include "pm8998.dtsi"
->  #include "pmi8998.dtsi"
->  
-> +/delete-node/ &rmtfs_mem;
-> +
->  / {
->  	model = "Qualcomm Technologies, Inc. SDM845 MTP";
->  	compatible = "qcom,sdm845-mtp", "qcom,sdm845";
-> @@ -48,6 +50,14 @@ vreg_s4a_1p8: pm8998-smps4 {
->  		vin-supply = <&vph_pwr>;
->  	};
->  
-> +	rmtfs {
-> +		compatible = "qcom,rmtfs-mem";
-> +
-> +		qcom,alloc-size = <(2*1024*1024)>;
-> +		qcom,client-id = <1>;
-> +		qcom,vmid = <15>;
-> +	};
-> +
+On Tue, 30 May 2023 at 20:37, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+>
+>
+> On 5/29/2023 2:36 PM, Marijn Suijten wrote:
+> > On 2023-05-24 12:18:09, Abhinav Kumar wrote:
+> >>
+> >>
+> >> On 5/24/2023 2:48 AM, Marijn Suijten wrote:
+> >>> On 2023-05-23 13:01:13, Abhinav Kumar wrote:
+> >>>>
+> >>>>
+> >>>> On 5/21/2023 10:21 AM, Dmitry Baryshkov wrote:
+> >>>>> Drop SSPP-specifig debugfs register dumps in favour of using
+> >>>>> debugfs/dri/0/kms or devcoredump.
+> >>>>>
+> >>>>
+> >>>> I did see another series which removes src_blk from the catalog (I am
+> >>>> yet to review that one) . Lets assume that one is fine and this change
+> >>>> will be going on top of that one right?
+> >>>
+> >>> It replaces src_blk with directly accessing the blk (non-sub-block)
+> >>> directly, because they were overlapping anyway.
+> >>>
+> >>>> The concern I have with this change is that although I do agree that we
+> >>>> should be in favor of using debugfs/dri/0/kms ( i have used it a few
+> >>>> times and it works pretty well ), devcoredump does not have the support
+> >>>> to dump sub-blocks . Something which we should add with priority because
+> >>>> even with DSC blocks with the separation of enc/ctl blocks we need that
+> >>>> like I wrote in one of the responses.
+> >>>>
+> >>>> So the "len" of the blocks having sub-blocks will be ignored in favor of
+> >>>> the len of the sub-blocks.
+> >>>
+> >>> The sub-blocks are not always contiguous with their parent block, are
+> >>> they?  It's probably better to print the sub-blocks separately with
+> >>
+> >> Yes, not contiguous otherwise we could have just had them in one big range.
+> >>
+> >>> clear headers anyway rather than dumping the range parent_blk_base to
+> >>> max(parent_blk_base+len, parent_blk_base+sblk_base+sblk_len...).
+> >>>
+> >>> - Marijn
+> >>
+> >> When I meant sub-block support to devcoredump, this is how I visualize
+> >> them to be printed
+> >>
+> >> =========================SSPP xxx =======================
+> >> =========================SSPP_CSC =======================(for SSPP_xxx)
+> >> =========================SSPP_QSEED =====================(for SSPP_xxx)
+> >
+> > Yeah something along those lines, though I don't really like the `(for
+> > SSPP_xxx)` suffix which we should either drop entirely and make the
+> > "heading" less of a "heading"
+> >
+>
+> I wrote that "for SSPP_xxx" to explain the idea, ofcourse it wont be
+> part of the print itself.
+>
+> Without that, it matches what you have shared below.
+>
+>
+> > ========================= SSPP xxx =======================
+> > ...
+> > ------------------------- SSPP_CSC -----------------------
+> > ...
+> > ------------------------- SSPP_QSEED ---------------------
+> > ...
+> >
+> > And/or inline the numbers:
+> >
+> > ========================= SSPP xxx =======================
+> > ...
+> > ----------------------- SSPP_xxx_CSC ---------------------
+> > ...
+> > ---------------------- SSPP_xxx_QSEED --------------------
+> > ...
 
-Couldn't you just use the existing dynamic allocation of
-reserved-memory, without any driver changes?
+I'd prefer this format. It eases grepping.
 
-/ {
-	reserved-memory {
-		rmtfs {
-			compatible = "qcom,rmtfs-mem";
-			size = <0x0 (2*1024*1024)>;
-			alignment = <0x0 ...>; // if you want a special one
-			no-map; // don't we want to map this actually?
+> >
+>
+> sure this is also fine with me.
+>
+> > Either works, or any other pattern in the title (e.g `SSPP xxx: CSC`)
+> > that clearly tells the blocks and sub-blocks apart.
+> >
+> > - Marijn
 
-			qcom,client-id = <1>;
-			qcom,vmid = <15>;
-		};
-	};
-};
 
-You won't get the 4K empty pages but I guess you just have them because
-you allocate the memory without proper alignment?
 
-Related patch series where I propose using it for most firmware memory
-regions:
-https://lore.kernel.org/linux-arm-msm/20230510-dt-resv-bottom-up-v1-5-3bf68873dbed@gerhold.net/
-
-Thanks,
-Stephan
+-- 
+With best wishes
+Dmitry
