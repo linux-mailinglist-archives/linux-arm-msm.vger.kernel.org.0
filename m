@@ -2,104 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B7B5471677F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 17:48:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 301837168FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 18:15:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230062AbjE3PsG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 11:48:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37988 "EHLO
+        id S233393AbjE3QPu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 12:15:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33344 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232569AbjE3Pry (ORCPT
+        with ESMTP id S233399AbjE3QPr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 11:47:54 -0400
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com [IPv6:2a00:1450:4864:20::429])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DBAB10C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 08:47:39 -0700 (PDT)
-Received: by mail-wr1-x429.google.com with SMTP id ffacd0b85a97d-3078a3f3b5fso4560900f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 08:47:39 -0700 (PDT)
+        Tue, 30 May 2023 12:15:47 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6EBCE51;
+        Tue, 30 May 2023 09:15:11 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f6da07ff00so49269395e9.3;
+        Tue, 30 May 2023 09:15:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685461658; x=1688053658;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=gmail.com; s=20221208; t=1685463308; x=1688055308;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=LzcHJ5N47jbcQgg3gy8V4hezxG1EIwZMZwvr2QGN8DU=;
-        b=CuqkGjN4WOnSTTNgcn2tWVuOskO6K/bFIbN+OJmXMKWcyoKXqPVgOlWPiiaK5RTokw
-         0ra5zf17v8KgRkZhpatpeTILa/IIQcaGz5V1e4Fwbz0xskamzNq/VsiRvtvG52qV68o5
-         sXSqGJMpAp2SgTJ5E9iRckLvkVO7A2AuvfFQmw2ssxTdkcFFNoQs22a9smnMfFB8glyD
-         Cg+68n7t0TdUTKkuCXfCEbLJGtR3YEOu/RcKFeQ7KruK2mHGprGbl8yhsF5xUsRMEACt
-         1aWQtZ4RXVLnA5OTDV8TE6IoH7ENQl8/aA2LjPkLAVMa3fmRdR4eNJ7+iREVJVyHlLaz
-         7ONw==
+        bh=ffdFQm0jEJ4or3XpCNPB9yNMvJlJc4OS1xrmBXhf0Fw=;
+        b=ZQexd8UwflGNwIinD31NZqZnhMKvmMc5XUKploBD51I7p02EGwJOJnHNI8iAi3Gr3l
+         bdU+ckpddFsI/qDtMbJ195iiNmSf0mx9GiB+fh26/rBjSFN7AtwPG5D70tuATzLSv3dc
+         XWtwgxlGNzayNN+yyZgvijWl8u/5+4VtvkgVE97TEr9zxB95LXqzfD12i9V3CUmcGZBg
+         peWBM4bEpqfvC7DHeQoX646wB+OU0Uvxjke2pJLoiSwpewfcUFwxAJvHy9SgCaMZSMzI
+         r9fwnlCz/j72bVHBgp8w5ijHOH0JiCmMnuoGW8cOzpZOooaZcTE3FvpRteEyryY76NBA
+         JEWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685461658; x=1688053658;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1685463308; x=1688055308;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=LzcHJ5N47jbcQgg3gy8V4hezxG1EIwZMZwvr2QGN8DU=;
-        b=Cx8VMVhGTewAWzzF+HpbWARBzYjD0XriY3bbN1w7+FQFj5ziSjCKPvrCjeXB88hxrP
-         2ilPcMVhkxkT+HGu+hZAdE5KishkzTgj9QPKHj+IGiPmc8mdWrnBf7O1kKEqIsuGxZUz
-         00bauCpb/z9W/FbtBY1Z7vYI8rszW7pee2BuHKVE41CQrHjipH9fOihEa62qLxNK2LJA
-         31Wn/4xUUa/VUfe8ZqB53ESEE0WeE+vN/ESm10VGMZK+SPyVk3/oxI2SROdgBP+EKM+x
-         s2bzroHgqSHDAtsKFwzqxqucoxB9omhcE4wT5B/h8Hrvp+d/7rRov4SYgKOHu3QbjTFK
-         gITA==
-X-Gm-Message-State: AC+VfDybZFd1ZGln1AWK4SNYRkiW0WC9CeKmzgEDSCcYFLfOL5imTbKM
-        zy9btAz0i9oZvRPh67RdZZtHpg==
-X-Google-Smtp-Source: ACHHUZ5XXan9zWhxjB7dwcSvxARIUlNNZb50kCE6Bse1z98A8kiiRGbsieUOavGAIglFzOkCjBIU1g==
-X-Received: by 2002:a5d:534f:0:b0:309:4ad6:b3ec with SMTP id t15-20020a5d534f000000b003094ad6b3ecmr1718299wrv.0.1685461657956;
-        Tue, 30 May 2023 08:47:37 -0700 (PDT)
-Received: from ?IPV6:2a05:6e02:1041:c10:dd1c:e75b:56ba:6bf? ([2a05:6e02:1041:c10:dd1c:e75b:56ba:6bf])
-        by smtp.googlemail.com with ESMTPSA id k5-20020adff5c5000000b0030af1d87342sm3777230wrp.6.2023.05.30.08.47.37
+        bh=ffdFQm0jEJ4or3XpCNPB9yNMvJlJc4OS1xrmBXhf0Fw=;
+        b=DPy0EddW9609mWaaxElX3wYsy15PdtbXFLWcH+kcn1tzLSm6jOM0BkpQbDt39Qrt1e
+         5zbDs3gjQh30BMIQPB18zlBCPDzmcdxZcsEqrBZbtL1cRRtK5vlUIfACxCtoeRgYoRvK
+         z+9ROD57WaF5Sy8pwrI3B66YO4hvVG1noqPztiz/XMnZ4e/n5cv+bUOERVSXEqbhfx8y
+         8E5wVuGXDt0MuOXKfJbFcI2l4YAfNNSsRKhb/cZntgwx0JEkQi/TrbljeZ/HOG1V1x5J
+         Nn/YHWWH6MtgV3h2XxkXOX6oBABpiSNNiFt3zppD6DyM34DEKCudE5tfLoBT99YR9vU5
+         LLTQ==
+X-Gm-Message-State: AC+VfDyHAVXekPVBYoDlBGc0ER2XEHr2eGGD6X9k76nnQDn/Ksw85EjN
+        3QXfGhi2Oh5OPqc1cGqMotUOR4DEMwI=
+X-Google-Smtp-Source: ACHHUZ4z+qYheNjCy0sKUpud1fv7rW9aP2mby2DtvuFBDHFLHjqYcAMAUvp/whhz8QhlVeQ96tpRqw==
+X-Received: by 2002:a05:600c:2284:b0:3f6:1bb:1dce with SMTP id 4-20020a05600c228400b003f601bb1dcemr2090599wmf.13.1685463308199;
+        Tue, 30 May 2023 09:15:08 -0700 (PDT)
+Received: from [192.168.2.202] (pd9e5aa90.dip0.t-ipconnect.de. [217.229.170.144])
+        by smtp.gmail.com with ESMTPSA id p19-20020a1c7413000000b003f60e143d38sm17877299wmc.11.2023.05.30.09.15.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 08:47:37 -0700 (PDT)
-Message-ID: <d29f6e23-9659-5897-fe78-368a937124a1@linaro.org>
-Date:   Tue, 30 May 2023 17:47:36 +0200
+        Tue, 30 May 2023 09:15:07 -0700 (PDT)
+Message-ID: <3255010d-82d5-e8e8-2e11-7de25d538d72@gmail.com>
+Date:   Tue, 30 May 2023 18:15:06 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH RESEND 0/2] Lost tsens compatibles
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v4 1/4] lib/ucs2_string: Add UCS-2 strlcpy function
+To:     Kees Cook <keescook@chromium.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-References: <20230516-topic-lost_tsens_bindings-v1-0-99715746ddb1@linaro.org>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20230516-topic-lost_tsens_bindings-v1-0-99715746ddb1@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Johan Hovold <johan@kernel.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230528230351.168210-1-luzmaximilian@gmail.com>
+ <20230528230351.168210-2-luzmaximilian@gmail.com>
+ <202305300820.9B2154B@keescook>
+Content-Language: en-US
+From:   Maximilian Luz <luzmaximilian@gmail.com>
+In-Reply-To: <202305300820.9B2154B@keescook>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 16/05/2023 13:53, Konrad Dybcio wrote:
-> Resending what's been lost in the following series:
+On 5/30/23 17:25, Kees Cook wrote:
+> On Mon, May 29, 2023 at 01:03:48AM +0200, Maximilian Luz wrote:
+>> Add a ucs2_strlcpy() function for UCS-2 strings. The behavior is
+>> equivalent to the standard strlcpy() function, just for 16-bit character
+>> UCS-2 strings.
 > 
-> https://lore.kernel.org/linux-arm-msm/f7f38099-f183-d7b6-f542-1bdac6652a77@linaro.org/
-> https://lore.kernel.org/linux-arm-msm/20230314-topic-2290_compats-v1-0-47e26c3c0365@linaro.org/
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Eek, no. strlcpy() is dangerous in multiple ways[1]. Please implement
+> strscpy() (i.e. use strnlen(), negative error on truncation, etc).
 
-Applied, thanks
+Right, make sense, thanks. Somehow I missed that the kernel has a better
+function than the C stdlib for that...
 
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+> Additionally, it'd be nice of the ucs2 helpers here also implemented the
+> rest of the CONFIG_FORTIFY_SOURCE mitigations (i.e. checking for source
+> and destination buffer size overflows at compile-time and run-time with
+> __builtin_object_size() and __builtin_dynamoc_object_size() respectively).
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
+I can certainly try that, but I think this might be better suited for a
+follow-up series, given that we then should also add those to the other
+helpers.
 
+Regards,
+Max
