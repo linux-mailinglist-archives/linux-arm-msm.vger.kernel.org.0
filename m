@@ -2,75 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E4D5B7161F3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 15:31:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BD3F1716206
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 15:33:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232671AbjE3Nbz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 09:31:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54680 "EHLO
+        id S232302AbjE3Ndd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 09:33:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55686 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232133AbjE3Nby (ORCPT
+        with ESMTP id S231164AbjE3Ndb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 09:31:54 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E00EC5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:31:52 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f6e1393f13so30843625e9.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:31:52 -0700 (PDT)
+        Tue, 30 May 2023 09:33:31 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2A98F3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:33:28 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f50a8f6dd7so1377361e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:33:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685453511; x=1688045511;
+        d=linaro.org; s=google; t=1685453607; x=1688045607;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=O4TkSxjrXFcrtwILbeS9FwTTUMwJjznUHF2WZNJpwBU=;
-        b=KZxGd9Leab3vyVTua670SESofGfH/vNC8uJ9Ks4PZVINHELyk+1/3H7CokcsEJWai/
-         9Pk6jGg+MoBlyGzKk2cYHyzHY2usokRuZtaVj27zNrSF6d+LqEVqXFiksGqE7FQWj2Yk
-         7EImtBRAy/Gxp7F5BhhqJ4VgGrp5aiuIpJYqlm5R6eEhL8YEeAkR1WkloBdQMofcx4fB
-         euoMJhMNT+8KnCjB8gTzLxnm1JhlydhO7KOXi5Ij5vftg+PTRlTy/psHV2lr7TAq2Nd2
-         aLz8LxSVU/u4SNwRoCRnbz8R07xeDGKtW7dhVXQMo7Cqjn4bAks58xI5vZjWF456vqsk
-         7S3Q==
+        bh=RzHBG95TGnuOctJprmcZxKQVLqW0mXFHGcxSqa8Y6tE=;
+        b=eElyzr0l1zie8bfz9hm+yrXW8zE/H3wW7e6xO9mgy+1plveq5ixht8aHFSSATCMtgf
+         VuR6OCNei7yov0sC3+x5wt/x1EQ2VSIRtEPqXzpIbMQkAM80sifoYwwBCYf3dvexVQUU
+         i7JPsXq6AJA1WwIYZEHC2IAlbWf1KMr0nsY0/JdbmNEJjftu561KZEQ4EggKy486ARn3
+         nffhI3+YoT/yFeZqQogLlCCExqfVrh2uMFIb6mHDdY4ta/+PLAqxihcStSXrIombkwN7
+         uLp0yvrrm/YLJKKblnJvxdUv4TSsgGa9mreLhwjYQgbccftVYWcTbm5jFHe+PUiMT2lT
+         C4DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685453511; x=1688045511;
+        d=1e100.net; s=20221208; t=1685453607; x=1688045607;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=O4TkSxjrXFcrtwILbeS9FwTTUMwJjznUHF2WZNJpwBU=;
-        b=WIlfv2hTn/wpOVTT4UCInsMzke6G1EUII9pF+UEe9eHXnNG+FiNfbINRUvM20sDlV1
-         l92QiddhjFAXawtrvsGDI/qgYOPiHx7Uu/ADOJOFMrGuldYMr/ctG6AaZ3YMFfClN9wl
-         nkGbAgeJ0xYd1dI4KpMqa7cxWtVYXLAyReee8SsJlw8U6GzArDd2UokM3C7p6Orfz7tz
-         TLSmE7Jk8gVksx3va4iDRkwzkMCLzTJeTm+myBc48d6et4P2sRHPPUkETj/FzgmqRrta
-         3LK3x66/kw7JdA4EBabgXkS3zkGm8qxLNPafEBEpmmqDoY9l76f7eieBkYFluCycc7qT
-         aN6Q==
-X-Gm-Message-State: AC+VfDwLQT0RLt6tndLZyTvH05kjA9Fog0NNGp1n+hSvtTU3IcBjM/RQ
-        2TrIsajTN8uFZPYQJMDyEjNvEw==
-X-Google-Smtp-Source: ACHHUZ4S7Q0TZkKc2h+WlslbMqi6X7Va2BSFmmk0dtePu/I7yooYlXUSA/kGWkN7npTrb2BeQm95Lw==
-X-Received: by 2002:a1c:7206:0:b0:3f6:50e:315f with SMTP id n6-20020a1c7206000000b003f6050e315fmr1442827wmc.41.1685453510780;
-        Tue, 30 May 2023 06:31:50 -0700 (PDT)
-Received: from [192.168.0.84] (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
-        by smtp.gmail.com with ESMTPSA id c21-20020a7bc855000000b003f1958eeadcsm20906694wml.17.2023.05.30.06.31.49
+        bh=RzHBG95TGnuOctJprmcZxKQVLqW0mXFHGcxSqa8Y6tE=;
+        b=ey810zHO59haJxxqiw0NZQX7QmLtIjGBRqom9tEj/h2x3wAXDyWgWYTVap1/GqcX5D
+         b1qHvTDfsYV35Qf85L8PRErzPUW+ImMn4PXoGFY3+dzT4rj0SH0BZQAArvS/aWyE6mi4
+         nGmGXHc2drbxstyzymlyihDfI02TZO+eWadv8ad3YpcnNkB/GE0N/9dMJiwQtzpJ8pFK
+         rLmsuA+uzpqPLgQksarxEWk7A22QzdJAy9ZCUxeU2eJEaH86qbErTboinGQ+hxzrHbYX
+         WdtdCbAc4d0MQ7c8Y7aNew550wi7Uumdn4YOC+ToZ8gzChudxOt9v+0w+hTjfxoc8TYB
+         DNcA==
+X-Gm-Message-State: AC+VfDzxuo5a9+IrJP9LtR2CuKa88Cm/KWnKRJjTRFq/trKTFenrT97w
+        GozwpwbrU6Hd2nE0+27BvZ22wQ==
+X-Google-Smtp-Source: ACHHUZ585Y2ZZQzJuaFTA3UBjbNnA81bq10HwueOd9+FSOjZNkSokVZM3OTAtLXHkt7YzIUfa74YsQ==
+X-Received: by 2002:ac2:4d16:0:b0:4f3:a9fd:8f12 with SMTP id r22-20020ac24d16000000b004f3a9fd8f12mr624640lfi.32.1685453606739;
+        Tue, 30 May 2023 06:33:26 -0700 (PDT)
+Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
+        by smtp.gmail.com with ESMTPSA id d30-20020ac25ede000000b004f13eff5375sm345956lfq.45.2023.05.30.06.33.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 06:31:50 -0700 (PDT)
-Message-ID: <44ec7cce-cd7d-27a3-149b-49fda6308777@linaro.org>
-Date:   Tue, 30 May 2023 14:31:49 +0100
+        Tue, 30 May 2023 06:33:26 -0700 (PDT)
+Message-ID: <c46044a5-cd52-232d-9459-13494b880bb9@linaro.org>
+Date:   Tue, 30 May 2023 15:33:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v4 1/2] misc: fastrpc: support complete DMA pool access to
- the DSP
+ Thunderbird/102.11.2
+Subject: Re: [PATCH 17/20] interconnect: qcom: icc-rpm: Control bus rpmcc from
+ icc
 Content-Language: en-US
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Dylan Van Assche <me@dylanvanassche.be>,
-        amahesh@qti.qualcomm.com, arnd@arndb.de, gregkh@linuxfoundation.org
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        dan.carpenter@linaro.org, Ekansh Gupta <quic_ekangupt@quicinc.com>
-References: <20230511141146.30465-1-me@dylanvanassche.be>
- <20230511141146.30465-2-me@dylanvanassche.be>
- <e0365591-0f03-ab3d-61b4-c016541f2157@linaro.org>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-In-Reply-To: <e0365591-0f03-ab3d-61b4-c016541f2157@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Leo Yan <leo.yan@linaro.org>, Evan Green <evgreen@chromium.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20230526-topic-smd_icc-v1-0-1bf8e6663c4e@linaro.org>
+ <20230526-topic-smd_icc-v1-17-1bf8e6663c4e@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230526-topic-smd_icc-v1-17-1bf8e6663c4e@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -83,107 +85,232 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 30/05/2023 11:52, Srinivas Kandagatla wrote:
-> On 11/05/2023 15:11, Dylan Van Assche wrote:
->> To support FastRPC Context Banks which aren't mapped via the SMMU,
->> make the whole reserved memory region available to the DSP to allow
->> access to coherent buffers.
+On 30.05.2023 12:20, Konrad Dybcio wrote:
+> The sole purpose of bus clocks that were previously registered with
+> rpmcc was to convey the aggregated bandwidth to RPM. There's no good
+> reason to keep them outside the interconnect framework, as it only
+> adds to the plentiful complexity.
 > 
-> Mapping the whole region sounds very inefficient, and also possibly
-> making the cma region not usable by others.
+> Add the required code to handle these clocks from within SMD RPM ICC.
+> 
+> RPM-owned bus clocks are no longer considered a thing, but sadly we
+> have to allow for the existence of HLOS-owned bus clocks, as some
+> (mostly older) SoCs (ab)use these for bus scaling (e.g. MSM8998 and
+> &mmcc AHB_CLK_SRC).
+> 
+> This in turn is trivially solved with a single *clk, which is filled
+> and used iff qp.bus_clk_desc is absent and we have a "bus" clock-names
+> entry in the DT node.
+> 
+> This change should(tm) be fully compatible with all sorts of old
+> Device Trees as far as the interconnect functionality goes (modulo
+> abusing bus clock handles, but that's a mistake in and of itself).
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+[...]
 
-Probably I'm missing something obvious here... The downstream driver
-maps the whole region, what are the advantages to doing it on a
-per-allocation basis?
+> +	/* Some providers don't have a bus clock to scale */
+> +	if (!qp->bus_clk_desc)
+if (!qp->bus_clk_desc && !qp->bus_clk)
 
-What are the other users?
+Konrad
+> +		return 0;
+> +
+> +	/* Intentionally keep the rates in kHz as that's what RPM accepts */
+> +	active_rate = max(agg_avg[QCOM_SMD_RPM_ACTIVE_STATE],
+> +			  agg_peak[QCOM_SMD_RPM_ACTIVE_STATE]);
+> +	do_div(active_rate, src_qn->buswidth);
+> +
+> +	sleep_rate = max(agg_avg[QCOM_SMD_RPM_SLEEP_STATE],
+> +			 agg_peak[QCOM_SMD_RPM_SLEEP_STATE]);
+> +	do_div(sleep_rate, src_qn->buswidth);
+> +
+> +	/*
+> +	 * Downstream checks whether the requested rate is zero, but it makes little sense
+> +	 * to vote for a value that's below the lower threshold, so let's not do so.
+> +	 */
+> +	if (qp->keep_alive)
+> +		active_rate = max(ICC_BUS_CLK_MIN_RATE, active_rate);
+> +
+> +	/* Some providers have a non-RPM-owned bus clock - convert kHz->Hz for the CCF */
+> +	if (qp->bus_clk)
+> +		return clk_set_rate(qp->bus_clk, 1000ULL * max(active_rate, sleep_rate));
+> +
+> +	/* RPM only accepts <=INT_MAX rates */
+> +	active_rate = min_t(u32, active_rate, INT_MAX);
+> +	sleep_rate = min_t(u32, sleep_rate, INT_MAX);
+> +
+> +	if ((active_rate != qp->bus_clk_rate[QCOM_SMD_RPM_ACTIVE_STATE]) ||
+> +	    (sleep_rate != qp->bus_clk_rate[QCOM_SMD_RPM_SLEEP_STATE])) {
+> +		ret = qcom_icc_rpm_set_bus_rate(qp->bus_clk_desc,
+> +						active_rate,
+> +						sleep_rate);
+> +		if (ret)
+>  			return ret;
+> -		}
+> -		qp->bus_clk_rate[i] = rate;
+>  	}
+>  
+> +	/* Cache the rate after we've successfully commited it to RPM */
+> +	qp->bus_clk_rate[QCOM_SMD_RPM_ACTIVE_STATE] = active_rate;
+> +	qp->bus_clk_rate[QCOM_SMD_RPM_SLEEP_STATE] = sleep_rate;
+> +
+>  	return 0;
+>  }
+>  
+> -static const char * const bus_clocks[] = {
+> -	"bus", "bus_a",
+> -};
+> -
+>  int qnoc_probe(struct platform_device *pdev)
+>  {
+>  	struct device *dev = &pdev->dev;
+> @@ -448,6 +448,18 @@ int qnoc_probe(struct platform_device *pdev)
+>  	if (!qp->intf_clks)
+>  		return -ENOMEM;
+>  
+> +	if (desc->bus_clk_desc) {
+> +		qp->bus_clk_desc = devm_kzalloc(dev, sizeof(*qp->bus_clk_desc),
+> +						GFP_KERNEL);
+> +		if (!qp->bus_clk_desc)
+> +			return -ENOMEM;
+> +
+> +		qp->bus_clk_desc = desc->bus_clk_desc;
+> +	} else if (!IS_ERR(devm_clk_get(dev, "bus"))) {
+> +		/* Some older SoCs may have a single non-RPM-owned bus clock. */
+> +		qp->bus_clk = devm_clk_get(dev, "bus");
+> +	}
+> +
+>  	data = devm_kzalloc(dev, struct_size(data, nodes, num_nodes),
+>  			    GFP_KERNEL);
+>  	if (!data)
+> @@ -457,10 +469,6 @@ int qnoc_probe(struct platform_device *pdev)
+>  	for (i = 0; i < cd_num; i++)
+>  		qp->intf_clks[i].id = cds[i];
+>  
+> -	qp->num_bus_clks = desc->no_clk_scaling ? 0 : NUM_BUS_CLKS;
+> -	for (i = 0; i < qp->num_bus_clks; i++)
+> -		qp->bus_clks[i].id = bus_clocks[i];
+> -
+>  	qp->keep_alive = desc->keep_alive;
+>  	qp->type = desc->type;
+>  	qp->qos_offset = desc->qos_offset;
+> @@ -490,13 +498,11 @@ int qnoc_probe(struct platform_device *pdev)
+>  	}
+>  
+>  regmap_done:
+> -	ret = devm_clk_bulk_get(dev, qp->num_bus_clks, qp->bus_clks);
+> -	if (ret)
+> -		return ret;
+> -
+> -	ret = clk_bulk_prepare_enable(qp->num_bus_clks, qp->bus_clks);
+> -	if (ret)
+> -		return ret;
+> +	if (qp->bus_clk) {
+> +		ret = clk_prepare_enable(qp->bus_clk);
+> +		if (ret)
+> +			return ret;
+> +	}
+>  
+>  	ret = devm_clk_bulk_get(dev, qp->num_intf_clks, qp->intf_clks);
+>  	if (ret)
+> @@ -566,7 +572,8 @@ int qnoc_probe(struct platform_device *pdev)
+>  	icc_provider_deregister(provider);
+>  err_remove_nodes:
+>  	icc_nodes_remove(provider);
+> -	clk_bulk_disable_unprepare(qp->num_bus_clks, qp->bus_clks);
+> +	if (qp->bus_clk)
+> +		clk_disable_unprepare(qp->bus_clk);
+>  
+>  	return ret;
+>  }
+> @@ -578,7 +585,8 @@ int qnoc_remove(struct platform_device *pdev)
+>  
+>  	icc_provider_deregister(&qp->provider);
+>  	icc_nodes_remove(&qp->provider);
+> -	clk_bulk_disable_unprepare(qp->num_bus_clks, qp->bus_clks);
+> +	if (qp->bus_clk)
+> +		clk_disable_unprepare(qp->bus_clk);
+>  
+>  	return 0;
+>  }
+> diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
+> index e3df066fd94e..2c8c0399378b 100644
+> --- a/drivers/interconnect/qcom/icc-rpm.h
+> +++ b/drivers/interconnect/qcom/icc-rpm.h
+> @@ -36,32 +36,29 @@ struct rpm_clk_resource {
+>  	bool branch;
+>  };
+>  
+> -#define NUM_BUS_CLKS	2
+> -
+>  /**
+>   * struct qcom_icc_provider - Qualcomm specific interconnect provider
+>   * @provider: generic interconnect provider
+> - * @num_bus_clks: the total number of bus_clks clk_bulk_data entries (0 or 2)
+>   * @num_intf_clks: the total number of intf_clks clk_bulk_data entries
+>   * @type: the ICC provider type
+>   * @regmap: regmap for QoS registers read/write access
+>   * @bus_clk_rate: bus clock rate in Hz
+> - * @bus_clks: the clk_bulk_data table of bus clocks
+> + * @bus_clk_desc: a pointer to a rpm_clk_resource description of bus clocks
+>   * @intf_clks: a clk_bulk_data array of interface clocks
+> + * @bus_clk: a pointer to a HLOS-owned bus clock
+>   * @qos_offset: offset to QoS registers
+>   * @keep_alive: whether to always keep a minimum vote on the bus clocks
+>   * @is_on: whether the bus is powered on
+>   */
+>  struct qcom_icc_provider {
+>  	struct icc_provider provider;
+> -	int num_bus_clks;
+>  	int num_intf_clks;
+>  	enum qcom_icc_type type;
+>  	struct regmap *regmap;
+>  	int qos_offset;
+> -	u64 bus_clk_rate[NUM_BUS_CLKS];
+> -	struct clk_bulk_data bus_clks[NUM_BUS_CLKS];
+> +	u32 bus_clk_rate[QCOM_SMD_RPM_STATE_NUM];
+>  	const struct rpm_clk_resource *bus_clk_desc;
+> +	struct clk *bus_clk;
+>  	struct clk_bulk_data *intf_clks;
+>  	bool keep_alive;
+>  	bool is_on;
+> @@ -118,12 +115,10 @@ struct qcom_icc_node {
+>  struct qcom_icc_desc {
+>  	struct qcom_icc_node * const *nodes;
+>  	size_t num_nodes;
+> -	const char * const *bus_clocks;
+>  	const struct rpm_clk_resource *bus_clk_desc;
+>  	const char * const *intf_clocks;
+>  	size_t num_intf_clocks;
+>  	bool keep_alive;
+> -	bool no_clk_scaling;
+>  	enum qcom_icc_type type;
+>  	const struct regmap_config *regmap_cfg;
+>  	int qos_offset;
+> diff --git a/drivers/interconnect/qcom/msm8996.c b/drivers/interconnect/qcom/msm8996.c
+> index a596f4035d2e..8081b3cb1025 100644
+> --- a/drivers/interconnect/qcom/msm8996.c
+> +++ b/drivers/interconnect/qcom/msm8996.c
+> @@ -1818,7 +1818,6 @@ static const struct qcom_icc_desc msm8996_a0noc = {
+>  	.num_nodes = ARRAY_SIZE(a0noc_nodes),
+>  	.intf_clocks = a0noc_intf_clocks,
+>  	.num_intf_clocks = ARRAY_SIZE(a0noc_intf_clocks),
+> -	.no_clk_scaling = true,
+>  	.regmap_cfg = &msm8996_a0noc_regmap_config
+>  };
+>  
+> diff --git a/drivers/interconnect/qcom/sdm660.c b/drivers/interconnect/qcom/sdm660.c
+> index 5743ed680e8e..211fa1fa569c 100644
+> --- a/drivers/interconnect/qcom/sdm660.c
+> +++ b/drivers/interconnect/qcom/sdm660.c
+> @@ -1618,7 +1618,6 @@ static const struct qcom_icc_desc sdm660_gnoc = {
+>  	.nodes = sdm660_gnoc_nodes,
+>  	.num_nodes = ARRAY_SIZE(sdm660_gnoc_nodes),
+>  	.regmap_cfg = &sdm660_gnoc_regmap_config,
+> -	.no_clk_scaling = true,
+>  };
+>  
+>  static struct qcom_icc_node * const sdm660_mnoc_nodes[] = {
 > 
->>
-> 
-> AFAIU SDM845 does not have any context banks for SDSP. All new SoCs
-> after 865 have moved to having a context bank.
-> 
-> For such cases (w/o cb) we can make fastrpc_session_alloc use channel
-> context device instead of session ctx device. As this is going to be an
-> issue when we try to allocate buffers dynamically for that cb.
-
-Right.. This is what patch 2 does, but presumably the ALLOC_DMA_BUF,
-MMAP, etc ioctls won't work with the current iteration?
-
-> 
-> In the newer platforms (from 865) there is support for iommu and context
-> banks on SDSP, so the existing code flow is identical for both ADSP and
-> SDSP.
-> 
-> 
-> We should be careful not to break newer platfroms while adding support
-> to this.
-> 
-> Both myself and Ekansh thought about this and see that the better way to
-> add support to this is by
-> 
-> 1. extend fastrpc_session_alloc() to support zero context banks.
-> 
-> 2. add flags to mark this and allocate meta data using secure allocation
-> when its required based on this flag.
-> 
-> 3.  buffer allocation can either go with 2 or with a new flag coming
-> from userspace.
-
-This sounds pretty good to me!
-> 
-> 
-> 
->> This is performed by assigning the memory to the DSP via a hypervisor
->> call to set the correct permissions for the Virtual Machines on the DSP.
->> This is only necessary when a memory region is provided for SLPI DSPs
->> so guard this with a domain ID check.
->>
->> Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
->> Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
->> ---
->>   drivers/misc/fastrpc.c | 15 +++++++++++++++
->>   1 file changed, 15 insertions(+)
->>
->> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> index f48466960f1b..1ced553ae959 100644
->> --- a/drivers/misc/fastrpc.c
->> +++ b/drivers/misc/fastrpc.c
->> @@ -2231,6 +2231,8 @@ static int fastrpc_rpmsg_probe(struct
->> rpmsg_device *rpdev)
->>       int i, err, domain_id = -1, vmcount;
->>       const char *domain;
->>       bool secure_dsp;
->> +    struct device_node *rmem_node;
->> +    struct reserved_mem *rmem;
->>       unsigned int vmids[FASTRPC_MAX_VMIDS];
->>         err = of_property_read_string(rdev->of_node, "label", &domain);
->> @@ -2274,6 +2276,19 @@ static int fastrpc_rpmsg_probe(struct
->> rpmsg_device *rpdev)
->>           }
->>       }
->>   +    rmem_node = of_parse_phandle(rdev->of_node, "memory-region", 0);
->> +    if (domain_id == SDSP_DOMAIN_ID && rmem_node) {
->> +        rmem = of_reserved_mem_lookup(rmem_node);
->> +        if (!rmem) {
->> +            err = -EINVAL;
->> +            goto fdev_error;
->> +        }
->> +
->> +        qcom_scm_assign_mem(rmem->base, rmem->size, &data->perms,
->> +                    data->vmperms, data->vmcount);
-> 
-> vmperms need to be a bit field.
-> 
->> +
->> +    }
->> +
->>       secure_dsp = !(of_property_read_bool(rdev->of_node,
->> "qcom,non-secure-domain"));
->>       data->secure = secure_dsp;
->>   
-> 
-> --srini
-
--- 
-// Caleb (they/them)
