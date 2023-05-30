@@ -2,227 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C76F716C3B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 20:24:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 245BD716C9C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 20:36:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233343AbjE3SYh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 14:24:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53712 "EHLO
+        id S231896AbjE3Sgi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 14:36:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33532 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231690AbjE3SYf (ORCPT
+        with ESMTP id S231769AbjE3Sgh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 14:24:35 -0400
-Received: from mail.z3ntu.xyz (mail.z3ntu.xyz [128.199.32.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0A5BCA7;
-        Tue, 30 May 2023 11:24:34 -0700 (PDT)
-Received: from [192.168.122.1] (84-115-214-73.cable.dynamic.surfer.at [84.115.214.73])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id A394ACFC44;
-        Tue, 30 May 2023 18:24:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1685471072; bh=z/aQiTQcE2QuOfic75RRo/hFCpeXMEDvL82sQ0eB9MU=;
-        h=From:Date:Subject:References:In-Reply-To:To:Cc;
-        b=PNuNaQPfPXQXcBI3A0XralCb8FDrEGVTHYmJ3aCA10HzXvrQq0T06xM4qdA7AP/Kf
-         Rs/LIrqV8Q/oGBuvhsJub9kXZDnNjm8OJIEXQ8s6F4sgXt/3jvZRsS495NrY5qT7gm
-         p2PrPr2h/JIWbw214A1oylzKbjYO50YaA8oxpzJo=
-From:   Luca Weiss <luca@z3ntu.xyz>
-Date:   Tue, 30 May 2023 20:24:17 +0200
-Subject: [PATCH v2 7/7] ARM: dts: qcom: msm8226: Add mdss nodes
+        Tue, 30 May 2023 14:36:37 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA3DEA7;
+        Tue, 30 May 2023 11:36:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1685471780; i=spasswolf@web.de;
+        bh=2v7T90+EZYWcRweNwX+3tMDTLQwY1YpThpclSmEMtDg=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:Date:In-Reply-To:References;
+        b=MB1a2xDJY2XJgsPR+GIX+370ThGorfknQItcFu1lKv1wc//Nsljm68ClGBJMo6EKY
+         PYcaxk4vUvBDYXOjc8iRFw4IiiXuRc7UEqEyZVXo2L5rzi3LA3NVJeZziGSHSwAfNi
+         zT3EB0dlu8pXg3Puq5dTnBAOXn5MYu2Xyax2Uo1gIKfFGvCMdj7d7YUIsXFYs4GsSV
+         jLt+8RDGg7NQ672nfMhdOHaV52AYFPDcXnsQKHd4+QriLygOOiH2FezP1RXcf7Yr9d
+         CGKOS4q1sh3DCuX1KkPr3laUaW8khZn/mAVtnxmitQ/FMlY/SqaGWVrMF9l0VXsuNr
+         C8QuqQIreYEPw==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.0.101] ([176.198.191.160]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MFayw-1prTob3wA2-00HLCg; Tue, 30
+ May 2023 20:36:20 +0200
+Message-ID: <8d0e0272c80a594e7425ffcdd7714df7117edde5.camel@web.de>
+Subject: Re: [PATCH net] net: ipa: Use the correct value for IPA_STATUS_SIZE
+From:   Bert Karwatzki <spasswolf@web.de>
+To:     Alex Elder <elder@linaro.org>,
+        Simon Horman <simon.horman@corigine.com>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Tue, 30 May 2023 20:36:18 +0200
+In-Reply-To: <3c4d235d-8e49-61a2-a445-5d363962d3e7@linaro.org>
+References: <7ae8af63b1254ab51d45c870e7942f0e3dc15b1e.camel@web.de>
+         <ZHWhEiWtEC9VKOS1@corigine.com>
+         <2b91165f667d3896a0aded39830905f62f725815.camel@web.de>
+         <3c4d235d-8e49-61a2-a445-5d363962d3e7@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.2-1 
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230308-msm8226-mdp-v2-7-e005b769ee28@z3ntu.xyz>
-References: <20230308-msm8226-mdp-v2-0-e005b769ee28@z3ntu.xyz>
-In-Reply-To: <20230308-msm8226-mdp-v2-0-e005b769ee28@z3ntu.xyz>
-To:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3445; i=luca@z3ntu.xyz;
- h=from:subject:message-id; bh=z/aQiTQcE2QuOfic75RRo/hFCpeXMEDvL82sQ0eB9MU=;
- b=owEBbQKS/ZANAwAIAXLYQ7idTddWAcsmYgBkdj9XQ26mD638qkdilZENNBfMnjNRu6b0TrM9i
- x5nSITiamCJAjMEAAEIAB0WIQQ5utIvCCzakboVj/py2EO4nU3XVgUCZHY/VwAKCRBy2EO4nU3X
- VnLUEACNBeNSCjbsj9aGEIRQvH3o2vtqRbOvDk1zU6BBbiSmbXGGieqeWgf9FXKZhiGQnUqICnG
- D387FPjOyiicfJ6MYqFNbcGgWiFQIbfTdcdBGXSkOxH1Kk3Issd3qQ1rhIhBKrjRMR+geDo/DAt
- XlxcxB+3/DVPPuvjLM0y5ZIKCqriFjP5zla9Y0qpGsvWrK3E4SqyyajciObw7ZiGWFkbM7rn4fY
- WyAqFoFStaRYCRl+etjNwL/hiiq/EO91rK+jUwTugLrJVJHoxtun+yeu24BI3cJz6/POGnpGKU2
- y5aUG8C1AznkHXBOHTKBleqMRwr5SgjUstlCCiYiZtdO+7Vn4I7lIE31LMFx7C7/lgzFHvveRph
- TasTKWPQFROsT408+XGDL2gMaFf5884CEmACaEn+UWzI5KCSG/OpwUFI9AUimawI67VV21z0gS0
- XNLPEw2N+7Qz/IubFzbMzlvnL4UDwZiW+vy4o+QqphcvK4wms6ke2co5aED9B/JFxrqYeMzFBcl
- vuDuFXJCFGtvM7UZlS6suSn0NZOOaEyW2SOrCFqbfuvNGWjuBa8SJ/CONwBlsxfEbLIET85jWti
- rGguMvuupfUzUS+YXnGFbcxOpGMgvWvHAfyCV6jj/WhxH22uouhYvUk1MqOVoq+Hvb8DOHyYIiG
- EewI8xHb5XplNzg==
-X-Developer-Key: i=luca@z3ntu.xyz; a=openpgp;
- fpr=BD04DA24C971B8D587B2B8D7FAF69CF6CD2D02CD
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Provags-ID: V03:K1:nvDrN31wa6BU9wTREw0mivrP59WXptU/X0viLPNSxPxk4CLeyr1
+ HRVMzwdttRXcgJcTa67MSVOkkXZTcieQ2f1hHsE61La/ZM2FDYAtZCvAkimm/1A4m5NpWzx
+ dvHE5rlF1iPeh4/mfJWEhoE/EPYDQrzi8Sa++gFQyL1V8+AmUErVXat/HgVdKUDnPjDKZl6
+ srUs9/ICtEkrBJmEXtP2A==
+UI-OutboundReport: notjunk:1;M01:P0:u5nL76XZm54=;f37AL66HylzsArkAIjKAdXyQ2/P
+ vCzRaQnIGOPuwYLmoJtQpJzaUpo9dDwp3xfv+4Fa9kXkpHvL+BM36MmayKvDTsRa+SpTfD/Rr
+ YsNuyLFVo3HN8KCHjRTGJX5q9xn9zErEEOKxICpfXIHhmA1Q7ypeYw0QeqLF2cbbmGbycnhoq
+ pztWSPrHI+iNP1+9qH1Jk/sxkdy5ZGms1cuu6d7lKgOjtK3S0tKBh6q0bZ/U0bBfdVJMqkG3O
+ CQr3PBlG1AuZTRuTWg6qfb41nTKe55npgxb1q0hKRfYT6aMuabxrNSXDaBG7LH2BPjFQLBqH/
+ zqR1SPL7RaExNtZY6fIKQo5wDvAUO9/rxHejcIXcGKVOFelrHxJ7Moga6dgKPeIqQRmMNb/QH
+ 0MgabqwtJQByRGfaED6Br+zA9PqRS35GL/CIThHCyZr8+rKq0J7zLO2sTNwVnkwqu0TMxsD7m
+ JxqLpnsexZ6TWE71Zk06SM+FVzwohPZxAwQrFnoQhiLdo+HmB3h769qii4PD4Af8avsnwR94/
+ TUEsNTa/T1ZWF8L3lEBcA+pZqiCo8gpcPtwAV6SMRsNM4MVuNlF0t5NviD1ktHKECsBukdafa
+ iOG8r3IYbDNCB3+8K9WsuWiHHcs6DUTCX8Xzwx5ydRoMn9tFUJ7aQnqdLfAMhuJmsM3/VyJeG
+ KbV1tCHP6LFWB+OokHO23F75FY/Ys3d0jjLuONLLz91kIE51XRMJ941ZZj5b6ruUjabBWVtII
+ jB2OeFRkGJ7VMs8bqqby4HhoOvcM20VfSDQ0ZVxCmLZfasibip9yrFR+5+lb7f5LAqWCF7N8P
+ migieMlUX3fLat76mhqglogypSOAPtXLIR8L8TsKbegsn2W8hc7P589sUV8ohRWDhgiLSp49w
+ x/G8ysbdJu4Cpezclv3enAhRCB5L0/iMiaD+JoyTnp5VUuaD0CIWbEkJlLB3eUEChSzXbKASq
+ vI/NcQKUvj3kAp8vJV9D7QwrLlI=
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the nodes that describe the mdss so that display can work on
-MSM8226.
+Am Dienstag, dem 30.05.2023 um 07:29 -0500 schrieb Alex Elder:
+> On 5/30/23 4:10 AM, Bert Karwatzki wrote:
+> > Am Dienstag, dem 30.05.2023 um 09:09 +0200 schrieb Simon Horman:
+> > > On Sat, May 27, 2023 at 10:46:25PM +0200, Bert Karwatzki wrote:
+> > > > commit b8dc7d0eea5a7709bb534f1b3ca70d2d7de0b42c introduced
+> > > > IPA_STATUS_SIZE as a replacement for the size of the removed struct
+> > > > ipa_status. sizeof(struct ipa_status) was sizeof(__le32[8]), use th=
+is
+> > > > as IPA_STATUS_SIZE.
+>=20
+> This is better, however it really isn't done in a way that's
+> appropriate for a Linux kernel patch.=C2=A0 I will gladly help you
+> get it right if you have the patience for that.=C2=A0 But I'm not
+> going to say anything yet--until you say you want me to help
+> you do this.=C2=A0 If you prefer, I can submit the patch for you.
+>=20
+> The reason this is important is your commit is permanent, and
+> just like code, commit messages are best if kept consistent
+> and readable.=C2=A0 I also am offering to help you understand so
+> you avoid any trouble next time you want to send a kernel patch.
+>=20
+> Let me know what you prefer.
+>=20
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0-Alex
+>=20
+> > >=20
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+So here's v3 of the patch, done (I hope) in a way that is more standard
+conforming.
+
+From e0dc802b5f6f41c0a388c7281aabe077a4e3c5a2 Mon Sep 17 00:00:00 2001
+From: Bert Karwatzki <spasswolf@web.de>
+Date: Tue, 30 May 2023 20:23:29 +0200
+Subject: [PATCH] net/ipa: Use correct value for IPA_STATUS_SIZE
+
+IPA_STATUS_SIZE was introduced in commit b8dc7d0eea5a as a replacement
+for the size of the removed struct ipa_status which had size
+sizeof(__le32[8]). Use this value as IPA_STATUS_SIZE.
+
+Signed-off-by: Bert Karwatzki <spasswolf@web.de>
 ---
- arch/arm/boot/dts/qcom-msm8226.dtsi | 127 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 127 insertions(+)
+ drivers/net/ipa/ipa_endpoint.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom-msm8226.dtsi
-index 42acb9ddb8cc..c794f5ece1d1 100644
---- a/arch/arm/boot/dts/qcom-msm8226.dtsi
-+++ b/arch/arm/boot/dts/qcom-msm8226.dtsi
-@@ -636,6 +636,133 @@ smd-edge {
- 				label = "lpass";
- 			};
- 		};
-+
-+		mdss: display-subsystem@fd900000 {
-+			compatible = "qcom,mdss";
-+			reg = <0xfd900000 0x100>, <0xfd924000 0x1000>;
-+			reg-names = "mdss_phys", "vbif_phys";
-+
-+			power-domains = <&mmcc MDSS_GDSC>;
-+
-+			clocks = <&mmcc MDSS_AHB_CLK>,
-+				 <&mmcc MDSS_AXI_CLK>,
-+				 <&mmcc MDSS_VSYNC_CLK>;
-+			clock-names = "iface",
-+				      "bus",
-+				      "vsync";
-+
-+			interrupts = <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			interrupt-controller;
-+			#interrupt-cells = <1>;
-+
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+			ranges;
-+
-+			status = "disabled";
-+
-+			mdp: display-controller@fd900000 {
-+				compatible = "qcom,msm8226-mdp5", "qcom,mdp5";
-+				reg = <0xfd900100 0x22000>;
-+				reg-names = "mdp_phys";
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <0>;
-+
-+				clocks = <&mmcc MDSS_AHB_CLK>,
-+					 <&mmcc MDSS_AXI_CLK>,
-+					 <&mmcc MDSS_MDP_CLK>,
-+					 <&mmcc MDSS_VSYNC_CLK>;
-+				clock-names = "iface",
-+					      "bus",
-+					      "core",
-+					      "vsync";
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						mdp5_intf1_out: endpoint {
-+							remote-endpoint = <&dsi0_in>;
-+						};
-+					};
-+				};
-+			};
-+
-+			dsi0: dsi@fd922800 {
-+				compatible = "qcom,msm8226-dsi-ctrl",
-+					     "qcom,mdss-dsi-ctrl";
-+				reg = <0xfd922800 0x1f8>;
-+				reg-names = "dsi_ctrl";
-+
-+				interrupt-parent = <&mdss>;
-+				interrupts = <4>;
-+
-+				assigned-clocks = <&mmcc BYTE0_CLK_SRC>,
-+						  <&mmcc PCLK0_CLK_SRC>;
-+				assigned-clock-parents = <&dsi_phy0 0>,
-+							 <&dsi_phy0 1>;
-+
-+				clocks = <&mmcc MDSS_MDP_CLK>,
-+					 <&mmcc MDSS_AHB_CLK>,
-+					 <&mmcc MDSS_AXI_CLK>,
-+					 <&mmcc MDSS_BYTE0_CLK>,
-+					 <&mmcc MDSS_PCLK0_CLK>,
-+					 <&mmcc MDSS_ESC0_CLK>,
-+					 <&mmcc MMSS_MISC_AHB_CLK>;
-+				clock-names = "mdp_core",
-+					      "iface",
-+					      "bus",
-+					      "byte",
-+					      "pixel",
-+					      "core",
-+					      "core_mmss";
-+
-+				phys = <&dsi_phy0>;
-+
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						dsi0_in: endpoint {
-+							remote-endpoint = <&mdp5_intf1_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						dsi0_out: endpoint {
-+						};
-+					};
-+				};
-+			};
-+
-+			dsi_phy0: phy@fd922a00 {
-+				compatible = "qcom,dsi-phy-28nm-8226";
-+				reg = <0xfd922a00 0xd4>,
-+				      <0xfd922b00 0x280>,
-+				      <0xfd922d80 0x30>;
-+				reg-names = "dsi_pll",
-+					    "dsi_phy",
-+					    "dsi_phy_regulator";
-+
-+				#clock-cells = <1>;
-+				#phy-cells = <0>;
-+
-+				clocks = <&mmcc MDSS_AHB_CLK>,
-+					 <&rpmcc RPM_SMD_XO_CLK_SRC>;
-+				clock-names = "iface",
-+					      "ref";
-+			};
-+		};
- 	};
- 
- 	timer {
-
--- 
+diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.=
+c
+index 2ee80ed140b7..afa1d56d9095 100644
+--- a/drivers/net/ipa/ipa_endpoint.c
++++ b/drivers/net/ipa/ipa_endpoint.c
+@@ -119,7 +119,7 @@ enum ipa_status_field_id {
+ };
+=20
+ /* Size in bytes of an IPA packet status structure */
+-#define IPA_STATUS_SIZE			sizeof(__le32[4])
++#define IPA_STATUS_SIZE			sizeof(__le32[8])
+=20
+ /* IPA status structure decoder; looks up field values for a structure */
+ static u32 ipa_status_extract(struct ipa *ipa, const void *data,
+--=20
 2.40.1
 
+
+Bert Karwatzki
