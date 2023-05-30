@@ -2,76 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B6C6C717156
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 01:09:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D61C8717179
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 01:17:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233669AbjE3XIO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 19:08:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39614 "EHLO
+        id S233815AbjE3XRF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 19:17:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233593AbjE3XIN (ORCPT
+        with ESMTP id S233513AbjE3XQ7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 19:08:13 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C68D19D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:07:42 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2af20198f20so53446111fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:07:41 -0700 (PDT)
+        Tue, 30 May 2023 19:16:59 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 105CF113
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:16:54 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f4b0a0b557so5702114e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:16:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685488060; x=1688080060;
+        d=linaro.org; s=google; t=1685488612; x=1688080612;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=aZBYZqm2QX9cYcGeEqnnE5rqTJSxRk4/JBiXuTiUxM0=;
-        b=ulU+69wC13TRns9H2O4cl+nn9Tz8PwxPmBGH5PNA5IJHmcDcqr4OY3NcBQ5ialQbdJ
-         bL9wumq+ipUUiEBgXf+dQO64M5/jlSPXdd9TOXfLDyi34sLTtdCae1lPq+Lov8MZTt11
-         GPFB53UzyMHTv0GbSXrrQkVs2s7tRGqyyw5UiBm19a2fjdjsnwN/JZJn5WIM6tDvB0zy
-         BSIGjGnT0AHRIdP/VKdLLE/EH5z8y36+GJWsh5R/nl/nbS5r36LdNEj0OrWN1WTVnEL3
-         UzNufZw6i23RzNQIsWiLs+A1gUGcYNTSMFwQjelbwHM+OnEp/FOgYgpEzYp5JBD0blNU
-         zUOg==
+        bh=eHug+pro+MudY8ybS89ytrVKoFyLIO/xxLOjL/J5B4s=;
+        b=fgn3hn4lkIINQIXKMizqRgo170331xYzH2+DVvgmQGdwBas6TztlaAQuDCEhuF+D8f
+         5Z98EekG+maUBzB65LKaK43z/9oEORo5Iksu5Fwypow/Ss/wsUnZZC+xjM187ojn5mWp
+         89t4Etr2oXJ+Vx5+KZhJ49iya5SkYq2aPs60kl730tFjt+cLafG5gcLaJ6b6aHszXev7
+         cdVUPHMdY3swZiff0Mt/neMyVcwbHVO0RVkNYYNHKJGm4cy2fxrHsDHKpXWM6ey3aBz8
+         pTV8qe/bBNE1MC4kdXSsMi7JBIfDbmHiC4gyJ7epIb/AoMTolIrOEHd7d7gV34CJQeT+
+         aGlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685488060; x=1688080060;
+        d=1e100.net; s=20221208; t=1685488612; x=1688080612;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aZBYZqm2QX9cYcGeEqnnE5rqTJSxRk4/JBiXuTiUxM0=;
-        b=A59h9gwoQyxDrt35Fs1zK3+FAzq+xvh6zaJs1lTDAe4LPxjPwGk46Mz+ULKUoqUN/w
-         QJ0yVl7sVF8rNTDwO4ByUKj1MtRtsy4Xg1eP56pYwxUZNr2G3wIS0BmPfFDC7I/8ghx/
-         Mc1QqvOCsCGL2ehMba0ejuo8BL6uUuDb/RYJ4ck4u8ql0EMXX2//TSFwENhxOwpdxb+9
-         0QCH9NLtcNkuYGCpWoUz4eWbde5KqQt2oPrxvfbnJbBlTgSabQNKXmf5gA2pLLJRkm5Z
-         PToCoD6aAb9ynlVcPiTvPVH7dDPFAwq2pGmtbJ8uFu3UNjb6gQqJLrV+cR4eOYiAsqUl
-         Dprw==
-X-Gm-Message-State: AC+VfDygjMvONGJmAaLi7NOFs0w1n9JpfxGNKSuTXwlw/yi95t4eaC0c
-        tQRNZ+tAeSPqN3q2Y7gb9a0D/A==
-X-Google-Smtp-Source: ACHHUZ5Ej9llgNKtAHQ57gkDu3OnNpoWD2Lx9icO+8TRpW35FdeXVdc2sZL1MNWqROBGbmmQgDUuwQ==
-X-Received: by 2002:a05:651c:10b:b0:2af:d2ef:49d4 with SMTP id a11-20020a05651c010b00b002afd2ef49d4mr1515001ljb.1.1685488060177;
-        Tue, 30 May 2023 16:07:40 -0700 (PDT)
+        bh=eHug+pro+MudY8ybS89ytrVKoFyLIO/xxLOjL/J5B4s=;
+        b=PGFotvwnjdBsDa1yw7KOZu7zTwWdonkIky2LspsxNE0DBBaJ+T1XZ4RP6l0pFWGlzn
+         RNEl7VXQzD4rNHaooUwv0JwlMMIPRJ+a6ARoYk8MleCNw1Mx/5O/pCWMKRPJh5eHce87
+         oF8nz5mpqnKDPJHXOY0ue/ClXjxNE65OLLtdZ9A39Z5/ZOe7coEZxzD6JTZFUAbIwdYb
+         aYlYctXfXR+tomffTVswZPJ7UmhtcsAq7Lx3e0+8ekgnLmePVw4A9YBxOsjxIfnL+AAq
+         cdyl1mbl350Chd4U2BJe6WQ7ib2c9n2KEAtScoJdLjWzCANsINWRflokyIpbW+x+ilGH
+         K0ug==
+X-Gm-Message-State: AC+VfDwJJswUopchWCsZNupCOuE9tR8b/FZZsxtZA8OBYd8c23bJ3Hzh
+        GJnF08kzi6/S75Li9saUus4RUg==
+X-Google-Smtp-Source: ACHHUZ5xyrcXeeDP9jMscfXBEp/Zc/l5dNv5cR6pkFdXzTeUTTZdd0KKzKASP8m6HURxobv2ZQyP4Q==
+X-Received: by 2002:ac2:4c8c:0:b0:4f2:5338:d0a8 with SMTP id d12-20020ac24c8c000000b004f25338d0a8mr1786464lfl.56.1685488612235;
+        Tue, 30 May 2023 16:16:52 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id u3-20020a2e9b03000000b002aeee2a093csm3044298lji.59.2023.05.30.16.07.39
+        by smtp.gmail.com with ESMTPSA id w13-20020ac254ad000000b004eeec1261ecsm482940lfk.31.2023.05.30.16.16.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 16:07:39 -0700 (PDT)
-Message-ID: <64fbc753-d8aa-6845-c530-f76999e8c7b9@linaro.org>
-Date:   Wed, 31 May 2023 02:07:38 +0300
+        Tue, 30 May 2023 16:16:51 -0700 (PDT)
+Message-ID: <1160ec55-2ce3-cc0e-3b59-5fec1f1e5809@linaro.org>
+Date:   Wed, 31 May 2023 02:16:50 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v1 3/3] drm/msm/dpu: remove msm_dsi_get_dsc_config()
+Subject: Re: [PATCH RFC 03/10] drm/panel: Add LGD panel driver for Sony Xperia
+ XZ3
 Content-Language: en-GB
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        dri-devel@lists.freedesktop.org, robdclark@gmail.com,
-        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
-        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
-        agross@kernel.org, andersson@kernel.org
-Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
-        quic_sbillaka@quicinc.com, marijn.suijten@somainline.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <1685464318-25031-1-git-send-email-quic_khsieh@quicinc.com>
- <1685464318-25031-4-git-send-email-quic_khsieh@quicinc.com>
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     neil.armstrong@linaro.org, Sam Ravnborg <sam@ravnborg.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Caleb Connolly <caleb@connolly.tech>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+References: <20230521-drm-panels-sony-v1-0-541c341d6bee@somainline.org>
+ <20230521-drm-panels-sony-v1-3-541c341d6bee@somainline.org>
+ <ccc97880-8e74-b85b-9679-9c12c44c4b99@linaro.org>
+ <71675a02-0801-62dc-2673-4a0907636b21@linaro.org>
+ <CAA8EJpq=HZqiBZ6bpUNH47VmASuH+Mi5OD5BHmg0TPwtsKHf8w@mail.gmail.com>
+ <oxgtbj7qmsdvz5gl4bud64jedmhdmvphjfge7uy6uwulefqfsa@pleslv2zgwbp>
+ <ebc3ff33-6e4f-b107-33c6-f35b03307058@linaro.org>
+ <00d30c09-d622-11c1-2e07-44a798659982@quicinc.com>
+ <2zwamlkhtcuu3c7lithcipb3h46gjg7zsefnhdinmsjwkjxrcc@jbj7ak2mdgeu>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1685464318-25031-4-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <2zwamlkhtcuu3c7lithcipb3h46gjg7zsefnhdinmsjwkjxrcc@jbj7ak2mdgeu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -82,21 +102,240 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/05/2023 19:31, Kuogee Hsieh wrote:
-> Since msm_dsi_bridge_get_dsc_config() was added to retrieve DSI DSC
-> info through DRM bridge, msm_dsi_get_dsc_config() become redundant
-> and should be removed.
+On 30/05/2023 21:13, Marijn Suijten wrote:
+> On 2023-05-30 10:54:17, Abhinav Kumar wrote:
+>>> On 30/05/2023 00:07, Marijn Suijten wrote:
+>>>> On 2023-05-22 15:58:56, Dmitry Baryshkov wrote:
+>>>>> On Mon, 22 May 2023 at 12:04, Neil Armstrong
+>>>>> <neil.armstrong@linaro.org> wrote:
+>>>>>>
+>>>>>> On 22/05/2023 03:16, Dmitry Baryshkov wrote:
+>>>>>>> On 22/05/2023 00:23, Marijn Suijten wrote:
+>>>>>>>> Sony provides an unlabeled LGD + Atmel maXTouch assembly in its
+>>>>>>>> Xperia
+>>>>>>>> XZ3 (tama akatsuki) phone, with custom DCS commands to match.
+>>>>>>>>
+>>>>>>>> This panel features Display Stream Compression 1.1.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>>>>>>> ---
+>>>>>>>>     drivers/gpu/drm/panel/Kconfig                   |  11 +
+>>>>>>>>     drivers/gpu/drm/panel/Makefile                  |   1 +
+>>>>>>>>     drivers/gpu/drm/panel/panel-sony-akatsuki-lgd.c | 362
+>>>>>>>> ++++++++++++++++++++++++
+>>>>>>>>     3 files changed, 374 insertions(+)
+>>>>>>>>
+>>>>>>>> diff --git a/drivers/gpu/drm/panel/Kconfig
+>>>>>>>> b/drivers/gpu/drm/panel/Kconfig
+>>>>>>>> index 67ef898d133f2..18bd116e78a71 100644
+>>>>>>>> --- a/drivers/gpu/drm/panel/Kconfig
+>>>>>>>> +++ b/drivers/gpu/drm/panel/Kconfig
+>>>>>>>> @@ -706,6 +706,17 @@ config DRM_PANEL_SONY_ACX565AKM
+>>>>>>>>           Say Y here if you want to enable support for the Sony
+>>>>>>>> ACX565AKM
+>>>>>>>>           800x600 3.5" panel (found on the Nokia N900).
+>>>>>>>> +config DRM_PANEL_SONY_AKATSUKI_LGD
+>>>>>>>> +    tristate "Sony Xperia XZ3 LGD panel"
+>>>>>>>> +    depends on GPIOLIB && OF
+>>>>>>>> +    depends on DRM_MIPI_DSI
+>>>>>>>> +    depends on BACKLIGHT_CLASS_DEVICE
+>>>>>>>> +    help
+>>>>>>>> +      Say Y here if you want to enable support for the Sony
+>>>>>>>> Xperia XZ3
+>>>>>>>> +      1440x2880@60 6.0" OLED DSI cmd mode panel produced by LG
+>>>>>>>> Display.
+>>>>>>>> +
+>>>>>>>> +      This panel uses Display Stream Compression 1.1.
+>>>>>>>> +
+>>>>>>>>     config DRM_PANEL_SONY_TD4353_JDI
+>>>>>>>>         tristate "Sony TD4353 JDI panel"
+>>>>>>>>         depends on GPIOLIB && OF
+>>>>>>>> diff --git a/drivers/gpu/drm/panel/Makefile
+>>>>>>>> b/drivers/gpu/drm/panel/Makefile
+>>>>>>>> index ff169781e82d7..85133f73558f3 100644
+>>>>>>>> --- a/drivers/gpu/drm/panel/Makefile
+>>>>>>>> +++ b/drivers/gpu/drm/panel/Makefile
+>>>>>>>> @@ -71,6 +71,7 @@ obj-$(CONFIG_DRM_PANEL_SITRONIX_ST7701) +=
+>>>>>>>> panel-sitronix-st7701.o
+>>>>>>>>     obj-$(CONFIG_DRM_PANEL_SITRONIX_ST7703) += panel-sitronix-st7703.o
+>>>>>>>>     obj-$(CONFIG_DRM_PANEL_SITRONIX_ST7789V) +=
+>>>>>>>> panel-sitronix-st7789v.o
+>>>>>>>>     obj-$(CONFIG_DRM_PANEL_SONY_ACX565AKM) += panel-sony-acx565akm.o
+>>>>>>>> +obj-$(CONFIG_DRM_PANEL_SONY_AKATSUKI_LGD) +=
+>>>>>>>> panel-sony-akatsuki-lgd.o
+>>>>>>>>     obj-$(CONFIG_DRM_PANEL_SONY_TD4353_JDI) += panel-sony-td4353-jdi.o
+>>>>>>>>     obj-$(CONFIG_DRM_PANEL_SONY_TULIP_TRULY_NT35521) +=
+>>>>>>>> panel-sony-tulip-truly-nt35521.o
+>>>>>>>>     obj-$(CONFIG_DRM_PANEL_TDO_TL070WSH30) += panel-tdo-tl070wsh30.o
+>>>>>>>> diff --git a/drivers/gpu/drm/panel/panel-sony-akatsuki-lgd.c
+>>>>>>>> b/drivers/gpu/drm/panel/panel-sony-akatsuki-lgd.c
+>>>>>>>> new file mode 100644
+>>>>>>>> index 0000000000000..f55788f963dab
+>>>>>>>> --- /dev/null
+>>>>>>>> +++ b/drivers/gpu/drm/panel/panel-sony-akatsuki-lgd.c
+>>>>>>>> @@ -0,0 +1,362 @@
+>>>>>>>> +// SPDX-License-Identifier: GPL-2.0-only
+>>>>>>>> +/*
+>>>>>>>> + * Copyright (c) 2023 Marijn Suijten <marijn.suijten@somainline.org>
+>>>>>>>> + *
+>>>>>>>> + * Based on Sony Downstream's "Atmel LGD ID5" Akatsuki panel dtsi.
+>>>>>>>> + */
+>>>>>>>> +
+>>>>>>>> +#include <linux/backlight.h>
+>>>>>>>> +#include <linux/delay.h>
+>>>>>>>> +#include <linux/gpio/consumer.h>
+>>>>>>>> +#include <linux/module.h>
+>>>>>>>> +#include <linux/of.h>
+>>>>>>>> +#include <linux/of_device.h>
+>>>>>>>> +#include <linux/regulator/consumer.h>
+>>>>>>>> +
+>>>>>>>> +#include <video/mipi_display.h>
+>>>>>>>> +
+>>>>>>>> +#include <drm/drm_mipi_dsi.h>
+>>>>>>>> +#include <drm/drm_modes.h>
+>>>>>>>> +#include <drm/drm_panel.h>
+>>>>>>>> +#include <drm/drm_probe_helper.h>
+>>>>>>>> +#include <drm/display/drm_dsc.h>
+>>>>>>>> +#include <drm/display/drm_dsc_helper.h>
+>>>>>>>> +
+>>>>>>>> +struct sony_akatsuki_lgd {
+>>>>>>>> +    struct drm_panel panel;
+>>>>>>>> +    struct mipi_dsi_device *dsi;
+>>>>>>>> +    struct regulator *vddio;
+>>>>>>>> +    struct gpio_desc *reset_gpio;
+>>>>>>>> +    bool prepared;
+>>>>>>>> +};
+>>>>>>>> +
+>>>>>>>> +static inline struct sony_akatsuki_lgd
+>>>>>>>> *to_sony_akatsuki_lgd(struct drm_panel *panel)
+>>>>>>>> +{
+>>>>>>>> +    return container_of(panel, struct sony_akatsuki_lgd, panel);
+>>>>>>>> +}
+>>>>>>>> +
+>>>>>>>> +static int sony_akatsuki_lgd_on(struct sony_akatsuki_lgd *ctx)
+>>>>>>>> +{
+>>>>>>>> +    struct mipi_dsi_device *dsi = ctx->dsi;
+>>>>>>>> +    struct device *dev = &dsi->dev;
+>>>>>>>> +    int ret;
+>>>>>>>> +
+>>>>>>>> +    dsi->mode_flags |= MIPI_DSI_MODE_LPM;
+>>>>>>>> +
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, 0x7f, 0x5a, 0x5a);
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, 0xf0, 0x5a, 0x5a);
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, 0xf1, 0x5a, 0x5a);
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, 0xf2, 0x5a, 0x5a);
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, 0x02, 0x01);
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, 0x59, 0x01);
+>>>>>>>> +    /* Enable backlight control */
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, MIPI_DCS_WRITE_CONTROL_DISPLAY,
+>>>>>>>> BIT(5));
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, 0x57, 0x20, 0x80, 0xde, 0x60, 0x00);
+>>>>>>>> +
+>>>>>>>> +    ret = mipi_dsi_dcs_set_column_address(dsi, 0, 1440 - 1);
+>>>>>>>> +    if (ret < 0) {
+>>>>>>>> +        dev_err(dev, "Failed to set column address: %d\n", ret);
+>>>>>>>> +        return ret;
+>>>>>>>> +    }
+>>>>>>>> +
+>>>>>>>> +    ret = mipi_dsi_dcs_set_page_address(dsi, 0, 2880 - 1);
+>>>>>>>> +    if (ret < 0) {
+>>>>>>>> +        dev_err(dev, "Failed to set page address: %d\n", ret);
+>>>>>>>> +        return ret;
+>>>>>>>> +    }
+>>>>>>>> +
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, MIPI_DCS_WRITE_POWER_SAVE, 0x00);
+>>>>>>>> +
+>>>>>>>> +    ret = mipi_dsi_dcs_set_tear_on(dsi,
+>>>>>>>> MIPI_DSI_DCS_TEAR_MODE_VBLANK);
+>>>>>>>> +    if (ret < 0) {
+>>>>>>>> +        dev_err(dev, "Failed to set tear on: %d\n", ret);
+>>>>>>>> +        return ret;
+>>>>>>>> +    }
+>>>>>>>> +
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, 0x7f, 0x5a, 0x5a);
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, 0xf0, 0x5a, 0x5a);
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, 0xf1, 0x5a, 0x5a);
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, 0xf2, 0x5a, 0x5a);
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, 0xb0, 0x03);
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, 0xf6, 0x04);
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, 0xb0, 0x05);
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, 0xf6, 0x01, 0x7f, 0x00);
+>>>>>>>> +
+>>>>>>>> +    ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
+>>>>>>>> +    if (ret < 0) {
+>>>>>>>> +        dev_err(dev, "Failed to exit sleep mode: %d\n", ret);
+>>>>>>>> +        return ret;
+>>>>>>>> +    }
+>>>>>>>> +    msleep(120);
+>>>>>>>> +
+>>>>>>>> +    mipi_dsi_dcs_write_seq(dsi, 0xe3, 0xac, 0x19, 0x34, 0x14, 0x7d);
+>>>>>>>> +
+>>>>>>>> +    ret = mipi_dsi_dcs_set_display_on(dsi);
+>>>>>>>> +    if (ret < 0) {
+>>>>>>>> +        dev_err(dev, "Failed to turn display on: %d\n", ret);
+>>>>>>>> +        return ret;
+>>>>>>>> +    }
+>>>>>>>
+>>>>>>> My usual question: should the mipi_dsi_dcs_exit_sleep_mode() /
+>>>>>>> mipi_dsi_dcs_set_display_on() be moved from prepare() to enable()
+>>>>>>> part?
+>>>>>>
+>>>>>>
+>>>>>> No, prepare is called before the video stream is started and when
+>>>>>> display is still in LPM mode and the mode hasn't been set.
+>>>>>>
+>>>>>
+>>>>> Yes, that's my point. Shouldn't we enable the panel _after_ starting
+>>>>> the stream?
+>>>>
+>>>> I have never investigated what it takes to split these functions, but
+>>>> some of these panels do show some corruption at startup which may be
+>>>> circumvented by powering the panel on after starting the video stream?
+>>>>
+>>>> I'm just not sure where to make the split: downstream does describe a
+>>>> qcom,mdss-dsi-on-command and qcom,mdss-dsi-post-panel-on-command, where
+>>>> the latter only contains set_display_on() (not exit_sleep_mode()).
+>>>> It is documented like:
+>>>>
+>>>>       same as "qcom,mdss-dsi-on-command" except commands are sent after
+>>>>       displaying an image."
+>>>>
+>>>> So this seems like the right way to split them up, I'll test this out on
+>>>> all submitted panel drivers.
+>>>
+>>> Interesting enough, Neil suggested that sending all the commands during
+>>> pre_enable() is the correct sequence (especially for VIDEO mode panels),
+>>> since not all DSI hosts can send commands after switching to the VIDEO
+>>> mode.
+>>>
+>>
+>> I agree with Neil here.
+>>
+>> Yes, it does seem natural to think that sending the video stream before
+>> sending the on commands would avoid any potential corruption / garbage
+>> screen issues.
+>>
+>> But even from panel side should allow that. I have seen panel ON
+>> sequences where some explicitly ask for ON commands before the video stream.
+>>
+>> So, we cannot really generalize it and needs to be treated on a
+>> host-to-host and panel-to-panel basis.
 > 
-> Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 --
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 2 --
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 2 --
->   drivers/gpu/drm/msm/dsi/dsi.c               | 5 -----
->   drivers/gpu/drm/msm/msm_drv.h               | 6 ------
->   5 files changed, 17 deletions(-)
+> All four panel drivers in this series have a `post-panel-on` separation
+> (containing _just_ the panel_on DCS) and should be implemented with a
+> separate .enable callback.
+> 
+> More importantly: is the API to enable/disable, and separately
+> prepare/unprepare the panel exposed to userspace?  And is there an app
+> (maybe as part of mesa/drm where modetest lives) that is able to trigger
+> these calls to test adequate behaviour?  In the past I've seen panels
+> working, until my userspace suspends and turn the panel off, where it
+> never comes back up properly after.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+No. The prepare/enable (and disable/unrepare) translate to the bridge's 
+pre_enable/enable and disable/post_disable callbacks, which are a part 
+of modesetting. One can not call them separately.
+
 
 -- 
 With best wishes
