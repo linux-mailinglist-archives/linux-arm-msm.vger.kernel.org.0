@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4A9E715C8F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 13:05:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FC7F715C9A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 13:06:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231789AbjE3LFa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 07:05:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50582 "EHLO
+        id S231799AbjE3LGo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 07:06:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51584 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231786AbjE3LF3 (ORCPT
+        with ESMTP id S230353AbjE3LGn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 07:05:29 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A926CD9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 04:05:27 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-974265a1a40so79182366b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 04:05:27 -0700 (PDT)
+        Tue, 30 May 2023 07:06:43 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66ECB10A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 04:06:39 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-51494659d49so4769709a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 04:06:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685444726; x=1688036726;
+        d=linaro.org; s=google; t=1685444798; x=1688036798;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=N4sX1vyijFMNeWfKmoR/4KsT2UJSP9PmehGEs93c7KM=;
-        b=UmJTCm9VA8s4tQsJJDK3s/LUv2htX2KSFyiTVwouUSphypqcz0od+3ZeiA+3INBDUB
-         ak3LKxd6CHI+NtjOxJoIqdAzs5lIGedpMb9Ta4rjv47wNx/e78A4AaY3GMTFLzk2AMuv
-         kf8yS+2L8ojaxZHN5tdrVQah1sTD4M1UWybTxfvuYSiKprRvmswSo2vHKCZcL/FugKzq
-         6VnfRfPvBQF+BiiAUXtqrtnFurljH89zWgwJhxzgdW5PfaSNMLE1N2al+ps/59aZ8yl5
-         XhLTGxnPJYHY0HrZudkIuy4oSIpwDy+sO0BLdN45il2Pf261FPC7/NdWBTeK4yaemuwh
-         vqKQ==
+        bh=JYFJ+H1VAY9LSysZ7K+45YdOSI8zV/BM4XST8evs3Lk=;
+        b=GRaHLdJjqrz/j8TuJaGorsmpvVlJ/aJ8ZTKWe7B6d0ygiVJvNWPO97kbjZSe9OPY2z
+         7fY5/TH8WkL5SRTPlFJg8Mxc5e/vIHfsTGYcXcANZILRSiAuzE1ua1lF8v65u+Vh9DZG
+         I2obghP9lHIWQ08HFR6XlFh2vneQ+yMzfHbT5UXIe5aNUYAHN2jVxFFKjthrR+ovnCf6
+         GF8A9g981k9sBfJnVAdDMH4YKMczM5mUjrbc0tiJjyqZ093jnizaiMWWEK4eVvClQT6u
+         XyPrPim9jb/LT8aUqk0rpy51VsGYStIIuppcgYGnUAbjIXhKlUEtYYu+pj9CqayKU5fY
+         xo2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685444726; x=1688036726;
+        d=1e100.net; s=20221208; t=1685444798; x=1688036798;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=N4sX1vyijFMNeWfKmoR/4KsT2UJSP9PmehGEs93c7KM=;
-        b=RRFYYrYw3/TCa62OuttkovK8qrk3CbTXdqS+TRt5AZNp//vQJNxi8JYDQ8p5GPBF14
-         DUFhK10skU6weHU9LIiwE0Mdhig6r4zb8i0600O4An/PI0KKiMs7Gg11pxMSDWKbuEWB
-         AOPgsc7MwVDtsGNecvOarTSM4MUvBhe2npfg98jMtIUXy8zGOScSX/TrwFNFa8lq4WtO
-         0DC8tsJMc0g4UiHT5x+HfLYkbYWH2HSks5c2btsHhjWZvqtsDUErlR78o13FM/ooRVjB
-         DH9ZCuXbvg30UIZ1453sr+E4W6vwuWZSYQMjb1z0zuZK7+wov1zv6AkyTvBkN2yZnEq0
-         m//A==
-X-Gm-Message-State: AC+VfDw7MLf07GSeGyVdvzn8pu8kDh03opvX0fNtu8T6APeGWgndFufZ
-        aPIFq4AkxqjUSDQwGKw1XJXHKg==
-X-Google-Smtp-Source: ACHHUZ41+3NcGslPWxTb5DUQ/IiCYNZi1sEkGm/E0WtTYKzNWbM6kyIZcza0RplwLacI0H3UHPl+xg==
-X-Received: by 2002:a17:907:9727:b0:971:55e2:82c3 with SMTP id jg39-20020a170907972700b0097155e282c3mr1772192ejc.20.1685444725655;
-        Tue, 30 May 2023 04:05:25 -0700 (PDT)
+        bh=JYFJ+H1VAY9LSysZ7K+45YdOSI8zV/BM4XST8evs3Lk=;
+        b=LgTApqRJDAUlqSeqOKcRXmuTTkRFdiEMdvWjCHDOdaB2emYQTFqnzqu0TqFv5Y32R+
+         hcB3wf7cNZyauGWZ26ZJ/+r7eSyy0KH3+tOcrNELqnmYZBTy0FGL27NZ7LgC+XGp6bwq
+         B1FRZc0WBVuvh61js+hej32fhuxuY9F/YxQLU4ppyVByTg9jR1Sg461rRe8NRR3tM+sv
+         aGI6ibCc4G85GOeJwDreY5CaRqUxEQaKH5i1Atsj66un4WX3T74K+LE+p3aZXEvZyKUp
+         mfCWM1tTls4EqPX2FYqVUJVK4h86dHT4xJ8AN8PZK9bFFoWvzZzk5EPlPwBj+dmHdjtH
+         uvpA==
+X-Gm-Message-State: AC+VfDwxO3Pq0p3CYF7oln1kZylHRuNRvdEm/r3S+aOBtHcKV2InkYth
+        ttdsqQZPW5kTHF5u1792dEgOMw==
+X-Google-Smtp-Source: ACHHUZ64Q/ay65U65CSNrCAMOYDxWnNJb1JH1XN/eF5xsCwlNK2bd3s7+QCeYD7ZV7qF30UTRIgleA==
+X-Received: by 2002:a17:907:9716:b0:94f:6218:191d with SMTP id jg22-20020a170907971600b0094f6218191dmr1989845ejc.32.1685444797753;
+        Tue, 30 May 2023 04:06:37 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.199.204])
-        by smtp.gmail.com with ESMTPSA id t24-20020a170906179800b00968db60e070sm7183903eje.67.2023.05.30.04.05.21
+        by smtp.gmail.com with ESMTPSA id j21-20020a17090686d500b00965a0f30fbfsm7143145ejy.186.2023.05.30.04.06.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 04:05:25 -0700 (PDT)
-Message-ID: <a33363d2-a0a8-f8c1-fbc0-f7a5422d07a9@linaro.org>
-Date:   Tue, 30 May 2023 13:05:19 +0200
+        Tue, 30 May 2023 04:06:37 -0700 (PDT)
+Message-ID: <ea6d31cc-68b2-3b73-ae12-dad122a85857@linaro.org>
+Date:   Tue, 30 May 2023 13:06:33 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH V2 11/13] arm64: dtsi: qcom: ipq5018: enable nodes
- required for multipd
+Subject: Re: [PATCH V2 12/13] arm64: dts: qcom: ipq5018: Add RDP432-c1 board
+ support
 Content-Language: en-US
 To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
         agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
@@ -73,15 +73,15 @@ Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
         quic_poovendh@quicinc.com, quic_varada@quicinc.com,
         quic_devipriy@quicinc.com
 References: <20230521222852.5740-1-quic_mmanikan@quicinc.com>
- <20230521222852.5740-12-quic_mmanikan@quicinc.com>
+ <20230521222852.5740-13-quic_mmanikan@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230521222852.5740-12-quic_mmanikan@quicinc.com>
+In-Reply-To: <20230521222852.5740-13-quic_mmanikan@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -89,123 +89,76 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 22/05/2023 00:28, Manikanta Mylavarapu wrote:
-> Enable nodes required for multipd remoteproc bring up
-
-Please use subject prefixes matching the subsystem. You can get them for
-example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
-your patch is touching.
-
-It is "dts". Not "dtsi".
-
+> Add initial device tree support for the RDP432-C1 board.
 > 
 > Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
 > ---
 > Changes in V2:
-> 	- Corrected syntax like alignmnet and kept nodes in sorted order.
-> 	- Covered entire TCSR region.
-> 	- Added 'firmware-name' property.
+> 	- Renamed mp03.5-c1 to RDP432-c1
+> 	- Removed boot-args
+> 	- Resolved dt-binding error's
 > 
->  arch/arm64/boot/dts/qcom/ipq5018.dtsi | 140 ++++++++++++++++++++++++++
->  1 file changed, 140 insertions(+)
+>  arch/arm64/boot/dts/qcom/Makefile             |  1 +
+>  .../arm64/boot/dts/qcom/ipq5018-rdp432-c1.dts | 49 +++++++++++++++++++
+>  2 files changed, 50 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/ipq5018-rdp432-c1.dts
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> index 9f13d2dcdfd5..3772d54d89e4 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-> @@ -85,6 +85,18 @@
->  			reg = <0x0 0x4ac00000 0x0 0x200000>;
->  			no-map;
->  		};
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 259bd57c6064..bb9164de75b0 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -3,6 +3,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= ipq5018-rdp432-c1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq5018-rdp432-c2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-mi01.2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp468.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c1.dts b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c1.dts
+> new file mode 100644
+> index 000000000000..7fe28d9859b0
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c1.dts
+> @@ -0,0 +1,49 @@
+> +// SPDX-License-Identifier: GPL-2.0+ OR BSD-3-Clause
+> +/*
+> + * IPQ5018 RDP432-C1 board device tree source
+> + *
+> + * Copyright (c) 2023, The Linux Foundation. All rights reserved.
+> + */
 > +
-> +		q6_region: wcnss@4b000000 {
-> +			reg = <0x0 0x4b000000 0x0 0x1700000>;
-> +			no-map;
-> +		};
+> +/dts-v1/;
 > +
-> +		smem@4ab00000 {
-> +			compatible = "qcom,smem";
-> +			reg = <0x0 0x4ab00000 0x0 0x100000>;
-> +			hwlocks = <&tcsr_mutex 0>;
-> +			no-map;
-> +		};
->  	};
-> 
->  	soc: soc@0 {
-> @@ -128,6 +140,12 @@
->  			#power-domain-cells = <1>;
->  		};
-> 
-> +		tcsr_mutex: hwlock@1905000 {
-> +			compatible = "qcom,tcsr-mutex";
-> +			reg = <0x01905000 0x20000>;
-> +			#hwlock-cells = <1>;
-> +		};
+> +#include "ipq5018.dtsi"
 > +
->  		sdhc_1: mmc@7804000 {
->  			compatible = "qcom,ipq5018-sdhci", "qcom,sdhci-msm-v5";
->  			reg = <0x7804000 0x1000>;
-> @@ -181,6 +199,14 @@
->  			};
->  		};
-> 
-> +		apcs_glb: mailbox@b111000 {
-> +			compatible = "qcom,ipq5018-apcs-apps-global",
-> +				     "qcom,ipq6018-apcs-apps-global";
-> +			reg = <0x0b111000 0x1000>;
-> +			#clock-cells = <1>;
-> +			#mbox-cells = <1>;
-> +		};
+> +/ {
+> +	model = "Qualcomm Technologies, Inc. IPQ5018/AP-RDP432.1-C1";
+> +	compatible = "qcom,ipq5018-rdp432-c1", "qcom,ipq5018";
 > +
->  		timer@b120000 {
->  			compatible = "arm,armv7-timer-mem";
->  			reg = <0x0b120000 0x1000>;
-> @@ -238,6 +264,96 @@
->  				status = "disabled";
->  			};
->  		};
+> +	aliases {
+> +		serial0 = &blsp1_uart1;
+> +	};
 > +
-> +		q6v5_wcss: remoteproc@cd00000 {
-> +			compatible = "qcom,ipq5018-q6-mpd";
-> +			reg = <0x0cd00000 0x4040>;
-> +			firmware-name = "IPQ5018/q6_fw.mdt",
-> +					"IPQ5018/m3_fw.mdt",
-> +					"qcn6122/m3_fw.mdt";
-> +			interrupts-extended = <&intc GIC_SPI 291 IRQ_TYPE_EDGE_RISING>,
-> +					      <&wcss_smp2p_in 0 0>,
-> +					      <&wcss_smp2p_in 1 0>,
-> +					      <&wcss_smp2p_in 2 0>,
-> +					      <&wcss_smp2p_in 3 0>;
-> +			interrupt-names = "wdog",
-> +					  "fatal",
-> +					  "ready",
-> +					  "handover",
-> +					  "stop-ack";
+> +	chosen {
+> +		stdout-path = "serial0:115200n8";
+> +	};
+> +};
 > +
-> +			qcom,smem-states = <&wcss_smp2p_out 0>,
-> +					   <&wcss_smp2p_out 1>;
-> +			qcom,smem-state-names = "shutdown",
-> +						"stop";
-> +			memory-region = <&q6_region>;
+> +&blsp1_uart1 {
+> +	pinctrl-0 = <&uart1_pins>;
+> +	pinctrl-names = "default";
+> +	status = "okay";
+> +};
 > +
-> +			glink-edge {
-> +				interrupts = <GIC_SPI 179 IRQ_TYPE_EDGE_RISING>;
-> +				label = "rtr";
-> +				qcom,remote-pid = <1>;
-> +				mboxes = <&apcs_glb 8>;
-> +			};
-> +
-> +			pd-1 {
-> +				compatible = "qcom,ipq5018-wcss-ahb-mpd";
-> +				firmware-name = "IPQ5018/q6_fw.mdt";
-> +				interrupts-extended = <&wcss_smp2p_in 8 0>,
-> +						      <&wcss_smp2p_in 9 0>,
-> +						      <&wcss_smp2p_in 12 0>,
-> +						      <&wcss_smp2p_in 11 0>;
+> +&q6v5_wcss {
+> +	pd-2 {
+> +		firmware-name = "IPQ5018/q6_fw.mdt";
 
-What "0" stands for?
+Does not look like correct paths. Please open firmware and look there.
+Or open other DTS files and check example. Missing qcom, lowercase,
+that's minimum of fixes needed.
 
-> +				interrupt-names = "fatal",
-> +						  "ready",
 Best regards,
 Krzysztof
 
