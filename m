@@ -2,72 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BE6D715991
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 11:10:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C6CA715A04
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 11:26:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229739AbjE3JKk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 05:10:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34498 "EHLO
+        id S230025AbjE3J0B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 05:26:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229701AbjE3JKj (ORCPT
+        with ESMTP id S230232AbjE3JZf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 05:10:39 -0400
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE47EE5;
-        Tue, 30 May 2023 02:10:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
- s=s29768273; t=1685437821; x=1686042621; i=spasswolf@web.de;
- bh=RowAy7vfc/W3m5IXjtWxalCBrofshNZILX1ZCuc28iM=;
- h=X-UI-Sender-Class:Subject:From:To:Cc:Date:In-Reply-To:References;
- b=WTLIKpKLSF6HBEcWMPD/howHFNhRFg2N9g0FVHpkAP60F3c4LKKKVGZfPXOJBz7QHND68Xr
- OuilMeMOiQ3yFk5ewlEzMnNbV0O0Jhe6Z8mC1K+DeObK+tanlL0s5LDtabeV3ZhwXwk+xkT51
- 87xmX89e4g6oORLAqqCrGtCtHT129kFobEdvx55poaaZaroP9ONow6fEXk21n8jlWtMjq4H9Q
- Kj0dnX+DAvypcVvdR8XwfVDn2d9cH84rP7bZIajm6g8fHOC8iaPY2yc1b1usatFZvVEV312tg
- YDfp8N+phtJGW/44ubZZ7vWxjvy+N/l9zE4t21DApmSyBnv7A/GA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.0.101] ([176.198.191.160]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MwjK2-1qJmUR0vve-00yU3R; Tue, 30
- May 2023 11:10:21 +0200
-Message-ID: <2b91165f667d3896a0aded39830905f62f725815.camel@web.de>
-Subject: Re: [PATCH net] net: ipa: Use the correct value for IPA_STATUS_SIZE
-From:   Bert Karwatzki <spasswolf@web.de>
-To:     Simon Horman <simon.horman@corigine.com>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, elder@linaro.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Date:   Tue, 30 May 2023 11:10:19 +0200
-In-Reply-To: <ZHWhEiWtEC9VKOS1@corigine.com>
-References: <7ae8af63b1254ab51d45c870e7942f0e3dc15b1e.camel@web.de>
-         <ZHWhEiWtEC9VKOS1@corigine.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+        Tue, 30 May 2023 05:25:35 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5DC4E6D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 02:24:29 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-51456392cbbso8176299a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 02:24:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685438668; x=1688030668;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VUko92SfOCift4O+uXncbqKXfQI4O0oKnV/Zcja6u8g=;
+        b=ccJQOpqP3kIc7ZLl4ycvtD1ZyBQ8B0iHVKDV4IenI9EU/kDtfFdg5qWxaYCWA0SGG8
+         IWWypnhLlTz2JLedXw+jw0ZC4LOxhlf+VQ/l2XdvuwGGu6rkd6lOFwsdp1bGBXC7eje4
+         IcreFOpcFGmIKgqt16oDVQc0olyH2QpVp8rWH/dYYnOKWyA27/OsqpmrnGp23mYRXxeF
+         WJhfbptWZG9R5a6S43qFmJlzdvcoPNCABXLI9gw8DKr0T2OTqMibO43Qt8Tt2hDh1cul
+         /LO70nl5ho6vtnhjAwGvf22XVwGX8vZF9dXi3dnN4h9zUeqkCJgSsWmh1WTNOSq49RKr
+         B+6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685438668; x=1688030668;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VUko92SfOCift4O+uXncbqKXfQI4O0oKnV/Zcja6u8g=;
+        b=UAHuj53mCOEAn87tzFuLsY+oZDxZNwE2dfoXV2NpC/tXkwwAHEKrxTHO/11pkcn/Qo
+         BqNdwlu+SrFG3rtw+vK3yjF9HvN1a0AvsJ19x6CN2E/L/KZ2HI2NyWGHs3eVmUFJir/a
+         0QC3VhTRhwNi5WbGLI13oGThDOuUFhxEAxHtpuaSr0n+jnH38R2Lt7fakJzPuYTdhpDI
+         X+PYjKn94PZ1Z9zLmsT87tD6ZQKSyxU0zj4YVoyLzaC/8kRLHZR9YPRwwbTP8jh1xsLa
+         Ja9ddOIKCdILXxDhR6CwEWMVN3SsGWGG9s7MkkbNCPp9iYUPqWWqsUMiE37RU2x5KhOp
+         Y6iw==
+X-Gm-Message-State: AC+VfDw8dUSfavOHUUnQEF7YKgaQWSqRfx3b4jEU0fSu6acUoT2j/re6
+        Hg1E0iN1hwlUkvQZOMxVCcRvrU8CRNgXtg==
+X-Google-Smtp-Source: ACHHUZ7zJ34+0T7f0uplmADLE8435Uf3r4Bi9w9dHDncwC/7UT+l2kMaH9bbxGc+V4jyivbCcZXD5w==
+X-Received: by 2002:a17:907:e86:b0:96a:2210:7dd8 with SMTP id ho6-20020a1709070e8600b0096a22107dd8mr1690156ejc.38.1685438667640;
+        Tue, 30 May 2023 02:24:27 -0700 (PDT)
+Received: from ThinkStation-P340.tmt.telital.com ([2a01:7d0:4800:7:da16:70bf:8f7b:efa5])
+        by smtp.gmail.com with ESMTPSA id bx16-20020a170906a1d000b0096607baaf19sm7070971ejb.101.2023.05.30.02.24.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 May 2023 02:24:27 -0700 (PDT)
+From:   Daniele Palmas <dnlplm@gmail.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        Siddartha Mohanadoss <smohanad@codeaurora.org>,
+        Sujeev Dias <sdias@codeaurora.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        Daniele Palmas <dnlplm@gmail.com>
+Subject: [PATCH 1/1] bus: mhi: host: allow SBL as initial EE
+Date:   Tue, 30 May 2023 11:13:40 +0200
+Message-Id: <20230530091340.3513141-1-dnlplm@gmail.com>
+X-Mailer: git-send-email 2.37.1
 MIME-Version: 1.0
-X-Provags-ID: V03:K1:vAmbHNn5RUg4uxRCEOhxAucgIJLGHr907DRoQKnjt00SX6NhbDS
- FRe2n3RtxZuM4uu65KLNjp7aOJDGwZx8VscLdai7cEgeGF7RxAqS8+EuDbllIbp2y0Xr3dp
- VW4DY7wtQed1RjPGohtOBehkZhtei252JCAiykewLQHFQwTV8nA8f4WgL43fWGZC/25uwGa
- i6CpgJAHPb5i14vbRNvwQ==
-UI-OutboundReport: notjunk:1;M01:P0:e7JqOYH10qA=;e+rlnv20da8hcJGA50ZinfEIkEG
- fYh73inPDTzIxJ+Paxu/duAkSdrj/cuLfLY5nIiGmcML1a02GXDX6w9cnR4FJAed3uKtR/XxU
- TVmY2vICGVgFDu25zYyTqCH6Bwm9nLP53hqzpeh5rro8qgB2Z+jDFl3PmtwMogFKzC40am8th
- pvbF3T0NePAzSKM+vv+A++OR6y13fj+X6eUTA+DgIw6KB/Tj5Rcxnswxk5qQOW2jbCwR2vx1E
- a6WAhy1hbRVdauV6aVW5Urg4pMvKvHbn4zsIwdZI/129Q5RLOeC/y8Jz+10s7nNt0oZhQ22yv
- m6xVA4euwz1Aih6A7kv7GydYAcVQ5yGCFC2IZg1Q5x21zbXoW/DzatuD7awp5cKW5IunXeq5G
- fZ7Z3g9KWZYuoe37T3sWzfvwjStVWzXq0L/k2wFHQ94t2l2h4ukvngUHDMhXUAoGKs2OO33sc
- pKI5OQhUo+zRZJeh9l4dOvu+vgnXWVnQUFJ9QSYi8MreeRlPSZmV5WYyIgUpN3um7GcPzAJxG
- +CXLTC6DkGwdNwp0I2BAA6wECfMrJ8aWXBKqOWhN69KMMMZvJmbllUMk7PAWKyJPTzO3/mZ6h
- cVkZR48q/M38LFp4dMsALlvniyzL6qmDgih2ocpWsyaEOog9CEqNpBoceCW66AaHNJQbPuUwD
- oF7McNxktkmU5EyHkoNTNC8cv/JPNShbYEBk4SjUvT0KMJ4yd9xx4NrQeJ7fCcDgYTHyykRQN
- vC7Zkdyt+z0c4pA88Qtu4xcuwKaB1Z88/QtAqYEbmzD/mLNs7cthIN1HdiaUBAZhwCrqSJX05
- 39xhYrSR3tHmKmxQ5ST2pPUO5T1aFZ1hOXHR3YQKDkSpXHc06Ze3bRrbcA219zbK3RiV11Li3
- 6Gy20Eb4F467VJNKT9KQKyCwM8VvLKUco7oIvbjqPlu17YTHvyYYBeW4CoDqeC59bwhoJU2jW
- X1RwCrFq0w53lEizlhNJ/CqOYbw=
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,HK_RANDOM_ENVFROM,
+        HK_RANDOM_FROM,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
         T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,98 +72,57 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am Dienstag, dem 30.05.2023 um 09:09 +0200 schrieb Simon Horman:
-> On Sat, May 27, 2023 at 10:46:25PM +0200, Bert Karwatzki wrote:
-> > commit b8dc7d0eea5a7709bb534f1b3ca70d2d7de0b42c introduced
-> > IPA_STATUS_SIZE as a replacement for the size of the removed struct
-> > ipa_status. sizeof(struct ipa_status) was sizeof(__le32[8]), use this
-> > as IPA_STATUS_SIZE.
-> >=20
-> > > From 0623148733819bb5d3648b1ed404d57c8b6b31d8 Mon Sep 17 00:00:00 200=
-1
-> > From: Bert Karwatzki <spasswolf@web.de>
-> > Date: Sat, 27 May 2023 22:16:52 +0200
-> > Subject: [PATCH] Use the correct value for IPA_STATUS_SIZE.
-> > IPA_STATUS_SIZE
-> > =C2=A0was introduced in commit b8dc7d0eea5a7709bb534f1b3ca70d2d7de0b42c=
- as a
-> > =C2=A0replacment for the size of the removed struct ipa_status which ha=
-d
-> > size =3D
-> > =C2=A0sizeof(__le32[8]).
-> >=20
-> > Signed-off-by: Bert Karwatzki <spasswolf@web.de>
->=20
-> Hi Bert,
->=20
-> As well as the feedback provided by Jakub elsewhere in this
-> thread I think it would be useful to CC the author of the above mentioned
-> commit, Alex Elder <elder@linaro.org>. I have CCed him on this email.
-> Please consider doing likewise when you post v2.
->=20
-> FWIIW, I did take a look.
-> And I do agree with your maths: struct ipa_status was 32 (=3D 8 x 4) byte=
-s long.
->=20
-> > ---
-> > =C2=A0drivers/net/ipa/ipa_endpoint.c | 2 +-
-> > =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
-> >=20
-> > diff --git a/drivers/net/ipa/ipa_endpoint.c
-> > b/drivers/net/ipa/ipa_endpoint.c
-> > index 2ee80ed140b7..afa1d56d9095 100644
-> > --- a/drivers/net/ipa/ipa_endpoint.c
-> > +++ b/drivers/net/ipa/ipa_endpoint.c
-> > @@ -119,7 +119,7 @@ enum ipa_status_field_id {
-> > =C2=A0};
-> > =C2=A0
-> > =C2=A0/* Size in bytes of an IPA packet status structure */
-> > -#define IPA_STATUS_SIZE=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0sizeof(__le32[4])
-> > +#define IPA_STATUS_SIZE=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0sizeof(__le32[8])
-> > =C2=A0
-> > =C2=A0/* IPA status structure decoder; looks up field values for a stru=
-cture
-> > */
-> > =C2=A0static u32 ipa_status_extract(struct ipa *ipa, const void *data,
-> > --=20
-> > 2.40.1
-> >=20
-> > Bert Karwatzki
+There are situations in which SBL is a legitimate initial execution
+environment (e.g. modem stuck in SBL due to a firmware failure...), but
+mhi refuses to start:
 
-Here is v2 of the patch, the first one was garbled by the linebreak setting=
- of
-evolution.
+mhi-pci-generic 0000:01:00.0: MHI PCI device found: foxconn-sdx55
+mhi-pci-generic 0000:01:00.0: BAR 0: assigned
+mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
+mhi mhi0: Requested to power ON
+mhi mhi0: SECONDARY BOOTLOADER is not a valid EE for power on
+mhi-pci-generic 0000:01:00.0: failed to power up MHI controller
+mhi-pci-generic: probe of 0000:01:00.0 failed with error -5
 
-From: Bert Karwatzki <spasswolf@web.de>
-Date: Tue, 30 May 2023 10:55:55 +0200
-Subject: [PATCH] IPA_STATUS_SIZE was introduced in commit b8dc7d0eea5a as a
- replacement for the size of the removed struct ipa_status of size
- sizeof(__le32[8]). Use this value as IPA_STATUS_SIZE.
+Fix this by adding SBL as an allowed initial execution environment.
 
-Signed-off-by: Bert Karwatzki <spasswolf@web.de>
+Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
 ---
- drivers/net/ipa/ipa_endpoint.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bus/mhi/host/internal.h | 2 +-
+ drivers/bus/mhi/host/pm.c       | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.=
-c
-index 2ee80ed140b7..afa1d56d9095 100644
---- a/drivers/net/ipa/ipa_endpoint.c
-+++ b/drivers/net/ipa/ipa_endpoint.c
-@@ -119,7 +119,7 @@ enum ipa_status_field_id {
- };
-=20
- /* Size in bytes of an IPA packet status structure */
--#define IPA_STATUS_SIZE			sizeof(__le32[4])
-+#define IPA_STATUS_SIZE			sizeof(__le32[8])
-=20
- /* IPA status structure decoder; looks up field values for a structure */
- static u32 ipa_status_extract(struct ipa *ipa, const void *data,
---=20
-2.40.1
-
+diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+index 2e139e76de4c..3bdcd2321aa5 100644
+--- a/drivers/bus/mhi/host/internal.h
++++ b/drivers/bus/mhi/host/internal.h
+@@ -56,7 +56,7 @@ extern const char * const mhi_ee_str[MHI_EE_MAX];
+ 
+ #define MHI_IN_PBL(ee) (ee == MHI_EE_PBL || ee == MHI_EE_PTHRU || \
+ 			ee == MHI_EE_EDL)
+-#define MHI_POWER_UP_CAPABLE(ee) (MHI_IN_PBL(ee) || ee == MHI_EE_AMSS)
++#define MHI_POWER_UP_CAPABLE(ee) (MHI_IN_PBL(ee) || ee == MHI_EE_AMSS || ee == MHI_EE_SBL)
+ #define MHI_FW_LOAD_CAPABLE(ee) (ee == MHI_EE_PBL || ee == MHI_EE_EDL)
+ #define MHI_IN_MISSION_MODE(ee) (ee == MHI_EE_AMSS || ee == MHI_EE_WFW || \
+ 				 ee == MHI_EE_FP)
+diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+index 083459028a4b..18872c5017be 100644
+--- a/drivers/bus/mhi/host/pm.c
++++ b/drivers/bus/mhi/host/pm.c
+@@ -1203,10 +1203,11 @@ int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
+ 
+ 	wait_event_timeout(mhi_cntrl->state_event,
+ 			   MHI_IN_MISSION_MODE(mhi_cntrl->ee) ||
++			   mhi_cntrl->ee == MHI_EE_SBL ||
+ 			   MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
+ 			   msecs_to_jiffies(mhi_cntrl->timeout_ms));
+ 
+-	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -ETIMEDOUT;
++	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee) || mhi_cntrl->ee == MHI_EE_SBL) ? 0 : -ETIMEDOUT;
+ 	if (ret)
+ 		mhi_power_down(mhi_cntrl, false);
+ 
+-- 
+2.37.1
 
