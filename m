@@ -2,115 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 14BE9715CD2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 13:16:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 378DB715CDF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 13:19:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231295AbjE3LQX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 07:16:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56894 "EHLO
+        id S230478AbjE3LTM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 07:19:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58302 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231298AbjE3LQT (ORCPT
+        with ESMTP id S229660AbjE3LTL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 07:16:19 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0281E5;
-        Tue, 30 May 2023 04:16:18 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34UAxIDq006267;
-        Tue, 30 May 2023 11:16:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id; s=qcppdkim1;
- bh=itfenvgDHTyxp1L5qxO18pecrhAyNG1011llMvDnQMU=;
- b=YhqObDpAwMPRrc76syfjTfcX/goGEoo00rty5aUl6IiaYQCy/AZ58KF7kRHgXuD+4BWs
- KD6BGE2uXv8C4uKYbKGDSI+jvmgvjvZ2t5XgHm+OwtPlV1bJSmj2yvzsCNqHzUSkeAog
- Plqs9Q7+jb7fFVLE6jsBvDZ3PrIoqC7+npYAhCQap1aGt6O0/s1E4JijddYacgVy3OQn
- 1uYu0HOsW5REg3iJNcBMP02Tgf7cKoAm7ZQG28ZI/xwUbZKUOxYIOslulGVIJMmZ9XVq
- XtB1rpqu16MhuQZmpv4BqrPzE2pMf5IhSZdHLArF9tr7ObfOadrLx1y812VKBGZGYqKt mw== 
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qwa34grdy-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 30 May 2023 11:16:14 +0000
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 34UBG9BG007539;
-        Tue, 30 May 2023 11:16:09 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3quaxka9pc-1;
-        Tue, 30 May 2023 11:16:09 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 34UBG93m007534;
-        Tue, 30 May 2023 11:16:09 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-mraninga-hyd.qualcomm.com [10.213.107.117])
-        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 34UBG9bC007533;
-        Tue, 30 May 2023 11:16:09 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 4325269)
-        id 690C65000AF; Tue, 30 May 2023 16:46:08 +0530 (+0530)
-From:   Mehul Raninga <quic_mraninga@quicinc.com>
-To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        gregkh@linuxfoundation.org, jirislaby@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-serial@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     quic_vdadhani@quicinc.com, quic_vtanuku@quicinc.com,
-        quic_vnivarth@quicinc.com,
-        Mehul Raninga <quic_mraninga@quicinc.com>
-Subject: [PATCH] serial: qcom_geni_serial: Setup serial port after Deep sleep
-Date:   Tue, 30 May 2023 16:45:57 +0530
-Message-Id: <20230530111557.10944-1-quic_mraninga@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 5LvPNkpv05sofZel4uMjGzIOq26WjmVY
-X-Proofpoint-GUID: 5LvPNkpv05sofZel4uMjGzIOq26WjmVY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-30_08,2023-05-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
- lowpriorityscore=0 phishscore=0 adultscore=0 bulkscore=0 spamscore=0
- suspectscore=0 impostorscore=0 malwarescore=0 priorityscore=1501
- mlxlogscore=999 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305300093
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+        Tue, 30 May 2023 07:19:11 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A41EB0;
+        Tue, 30 May 2023 04:19:10 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E9C6162A36;
+        Tue, 30 May 2023 11:19:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A42D0C433EF;
+        Tue, 30 May 2023 11:19:05 +0000 (UTC)
+Date:   Tue, 30 May 2023 16:48:53 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Damien Le Moal <dlemoal@kernel.org>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>, kw@linux.com,
+        kishon@kernel.org, bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 7/7] PCI: endpoint: Add PCI Endpoint function driver
+ for MHI bus
+Message-ID: <20230530111853.GH6379@thinkpad>
+References: <20230519144215.25167-1-manivannan.sadhasivam@linaro.org>
+ <20230519144215.25167-8-manivannan.sadhasivam@linaro.org>
+ <ZHSkdakXJegKRD+q@lpieralisi>
+ <20230529173815.GG5633@thinkpad>
+ <dd4b1867-204d-8ee0-fcfc-29c52abddb48@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <dd4b1867-204d-8ee0-fcfc-29c52abddb48@kernel.org>
+X-Spam-Status: No, score=-4.0 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-While exiting deep sleep, serial port loses its configuration
-hence it prints garbage characters on console.
+On Tue, May 30, 2023 at 08:37:07AM +0900, Damien Le Moal wrote:
+> On 5/30/23 02:38, Manivannan Sadhasivam wrote:
+> [...]
+> >>> +static void pci_epf_mhi_unmap_free(struct mhi_ep_cntrl *mhi_cntrl, u64 pci_addr,
+> >>> +				   phys_addr_t phys_addr, void __iomem *virt_addr, size_t size)
+> >>> +{
+> >>> +	struct pci_epf_mhi *epf_mhi = container_of(mhi_cntrl, struct pci_epf_mhi, mhi_cntrl);
+> >>> +	struct pci_epf *epf = epf_mhi->epf;
+> >>> +	struct pci_epc *epc = epf->epc;
+> >>> +	size_t offset = pci_addr & (epc->mem->window.page_size - 1);
+> >>> +
+> >>> +	pci_epc_unmap_addr(epc, epf->func_no, epf->vfunc_no, phys_addr - offset);
+> >>> +	pci_epc_mem_free_addr(epc, phys_addr - offset, virt_addr - offset, size + offset);
+> >>> +}
+> >>> +
+> >>> +static void pci_epf_mhi_raise_irq(struct mhi_ep_cntrl *mhi_cntrl, u32 vector)
+> >>> +{
+> >>> +	struct pci_epf_mhi *epf_mhi = container_of(mhi_cntrl, struct pci_epf_mhi, mhi_cntrl);
+> >>> +	struct pci_epf *epf = epf_mhi->epf;
+> >>> +	struct pci_epc *epc = epf->epc;
+> >>> +
+> >>> +	/*
+> >>> +	 * Vector is incremented by 1 here as the DWC core will decrement it before
+> >>> +	 * writing to iATU.
+> >>
+> >> This isn't OK. It is an API, you can't write code explicitly relying on
+> >> the underlying implementation. I assume the API is not well specified,
+> >> that's why we need these tricks ?
+> >>
+> > 
+> > Well, this is not an API issue but rather an implementation detail of the DWC EP
+> > core driver. The DWC driver expects the interrupt vectors to be 1 based, so it
+> > decrements it before writing to the MSI address:
+> > [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/pci/controller/dwc/pcie-designware-ep.c#n537
+> 
+> Then the driver should be fixed so that this peculiarity is not visible at the
+> user API level, resulting in a uniform usage of the API for all functions
+> regardless of the controller being used.
+> 
 
-Set serial port configuration while resume from deep sleep.
+Just checked with Kishon offline and confirmed that this is an API behavior.
+I also checked other drivers and they all doing the same.
 
-Signed-off-by: Mehul Raninga <quic_mraninga@quicinc.com>
----
- drivers/tty/serial/qcom_geni_serial.c | 3 +++
- 1 file changed, 3 insertions(+)
+But unfortunately, this behavior is not documented in the API. Will add a patch
+for that.
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 8582479f0211..c04b8fec30ba 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -20,6 +20,7 @@
- #include <linux/serial.h>
- #include <linux/serial_core.h>
- #include <linux/slab.h>
-+#include <linux/suspend.h>
- #include <linux/tty.h>
- #include <linux/tty_flip.h>
- #include <dt-bindings/interconnect/qcom,icc.h>
-@@ -1737,6 +1738,8 @@ static int qcom_geni_serial_sys_resume(struct device *dev)
- 	if (uart_console(uport)) {
- 		geni_icc_set_tag(&port->se, QCOM_ICC_TAG_ALWAYS);
- 		geni_icc_set_bw(&port->se);
-+		if (pm_suspend_via_firmware())
-+			qcom_geni_serial_port_setup(uport);
- 	}
- 	return ret;
- }
+- Mani
+
+> -- 
+> Damien Le Moal
+> Western Digital Research
+> 
+
 -- 
-2.17.1
-
+மணிவண்ணன் சதாசிவம்
