@@ -2,105 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 75ADA715FFF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 14:37:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3DAAD7160C4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 14:57:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232214AbjE3Mhg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 08:37:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34844 "EHLO
+        id S232465AbjE3M5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 08:57:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232215AbjE3MhH (ORCPT
+        with ESMTP id S232435AbjE3M50 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 08:37:07 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E87DE73
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 05:36:19 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f3b9c88af8so5035083e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 05:36:19 -0700 (PDT)
+        Tue, 30 May 2023 08:57:26 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72A62FF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 05:56:50 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-973bf581759so803579866b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 05:56:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685450166; x=1688042166;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HI7dbhgmaIMwW4q8f+hPLe/hTimoyZ6ymqMZWiieGkI=;
-        b=UqrGq9WKdhCo/HIcRxyzdAw4ZOl4ja0Co5fqE+9gwfkW+zSE5dUNEZ3u18p9XfDCgj
-         ZuTfNo+G5obqi3sITJEE58eRMPq0ARSWAKI3BgELGzoiPhBEPsrvCY7JA/YYQod9E6f3
-         ja7T9Pp9JwPPLOara6vZBYQO2A3MSSEF46wKcIEa03p59Muajc+IyOsZHYaK6dUfyAm7
-         Ffy2FgJFECnRKHSTI/TuvskxdSc8S9bO3BvRIo8oa+3fuxMWz4rgrjVy8Qv6Ii41gm4a
-         dcy8lRyolO3rGNxlLJ6QdZU+zCVR5B2PofquG9KWfQkP0805rR3/PbNkRH3U+yRQMfs+
-         zQgA==
+        d=linaro.org; s=google; t=1685451409; x=1688043409;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=AhsY+hhRc4iSF6YgdclHWjJeSAbTG4rDYJhMMhzuUyQ=;
+        b=WBS0a8nQAh/I44LB/nupfxbOMVbFwBJ6OzEY/qATr6Bd41Xo5CsW1ld3/2zLPEhxd1
+         fCoViKdtSykZYB6hndDKWKMiPTQ7EU/DscqVOHXxfzTN329DQl1TuS+sh0u56G2VCvPj
+         cTDKAraus+XFa/kqGZLcoLg/81omH4qMDQjLJHqHMA+n1h1V+34HMaOPCY7H+zUK2FS7
+         sjEWB/WYyjxM6gLf+yVm0+KuLyXo2EFGUech4YORQF4vomi/9WL8840fcfcnm2ylhgox
+         sp1BFsm8ErK0Hus3+Ndc/SlywVUx5j2pT/On1Z+qzB0DjeDrMT70lChuFGKmUMlo7tm9
+         tgNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685450166; x=1688042166;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HI7dbhgmaIMwW4q8f+hPLe/hTimoyZ6ymqMZWiieGkI=;
-        b=J/y2DRXddq7ZwQOWWNmyxbvnvvKJCpel9Y9VwOtLvBOwlcIgnjkqyTEqURhIVJaFj3
-         V/b87EkcwynHxEncDsgkB90DMFt0iLit8KA9wdwrAXhPcTaYdwqjgSmds2Ct5e3+KwHX
-         ++9T3JAC8nGB/oCPo3iY6uk4nA3FUkkScWACb383ehSvmz03YzntL4YDxxbvFORMzLYt
-         rrWA56QVtZ8f996MgUag2O2TI7DfK/ySLUcvc1wEd9Koi1O4IabL4GDrBcz9alk13B1M
-         nhy17SmrAX7xlr4YZZpwcOeLi5RdKL9Zs1sPPgraaWpIGHX23Vbte0BnQcSkorMO9q/i
-         esEw==
-X-Gm-Message-State: AC+VfDyM06LKTyrzvJrkZldJgArhoWB0rOeTv/RQtPoS4JYPA2hKTews
-        MMyLvFXZx1cgBhNRN+SOGh4PL50CAm2h/7b9ahY=
-X-Google-Smtp-Source: ACHHUZ6wyWffrbLJXvu1TzBoYTsLShwlS92A6RywQVWSBg/DxQvTW7DGXSWynROQFTS4NcPM3NQLuA==
-X-Received: by 2002:ac2:4c27:0:b0:4f2:53f6:d4bf with SMTP id u7-20020ac24c27000000b004f253f6d4bfmr655196lfq.48.1685450165873;
-        Tue, 30 May 2023 05:36:05 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id l9-20020ac24309000000b004f3b520e0adsm329680lfh.107.2023.05.30.05.36.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 05:36:05 -0700 (PDT)
-Message-ID: <e927cfcd-bf34-5daf-0e24-4dd828106968@linaro.org>
-Date:   Tue, 30 May 2023 15:36:04 +0300
+        d=1e100.net; s=20221208; t=1685451409; x=1688043409;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AhsY+hhRc4iSF6YgdclHWjJeSAbTG4rDYJhMMhzuUyQ=;
+        b=h2WUpznF9U5M7N+httG1Vd2MwgubD1KXAAu9fU1zN7g7m13EoW3M0VaOcjlGGybP/+
+         lOqRo8qfjzy+A4p3N6dR8ZYEdJ/CjErfrFdD7fRjfUYuzV+Qnrj3lBdzCNbiFJLkCqvw
+         UTVvUUi33NiaufheIxWGcPYG8wqyY/rkPm7frvvQb4dRBtA+2W4CU5Vb4wcy8ON/K0aK
+         YRBOQcxlninLCyJPjvJGaGstPqPtmrd0EF6yqFy42x6/rGlv4a5OYKcWX2U193HjiPqA
+         r0QWY6ENYkJqA2Sn7i8XTDepMLg8j3CUKGAZhxdTD6DISN9mK4H2lTMQ9ZGHMFE3nFen
+         8e9g==
+X-Gm-Message-State: AC+VfDy9fcG7xWp9TQfd3P0okUmRPbEbT9becEFpdw16GHeKGmeWqWHo
+        Ipz+x6Xi16zppg+Id7ywRHQExA==
+X-Google-Smtp-Source: ACHHUZ52CRi1rZ1Td3mZ3VL6pr2PyrkknEvQNA1Esi8BwxVXoSn0obftCgpFKZydkULmsPFFhT9EVg==
+X-Received: by 2002:a17:906:fe4d:b0:970:1a68:bacc with SMTP id wz13-20020a170906fe4d00b009701a68baccmr2314391ejb.67.1685451408768;
+        Tue, 30 May 2023 05:56:48 -0700 (PDT)
+Received: from krzk-bin ([178.197.199.204])
+        by smtp.gmail.com with ESMTPSA id w19-20020a17090652d300b0094f23480619sm7437454ejn.172.2023.05.30.05.56.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 May 2023 05:56:48 -0700 (PDT)
+Date:   Tue, 30 May 2023 14:56:45 +0200
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Devi Priya <quic_devipriy@quicinc.com>
+Cc:     kishon@kernel.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, quic_arajkuma@quicinc.com, conor+dt@kernel.org,
+        linux-kernel@vger.kernel.org, quic_ipkumar@quicinc.com,
+        konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, quic_srichara@quicinc.com,
+        quic_kathirav@quicinc.com, vkoul@kernel.org, andersson@kernel.org,
+        quic_anusha@quicinc.com, quic_sjaganat@quicinc.com
+Subject: Re: [PATCH V2 1/2] dt-bindings: phy: qcom,qmp-pcie: Add ipq9574
+ bindings
+Message-ID: <20230530125645.ezd4qs5bmoyfhg33@krzk-bin>
+References: <20230519085723.15601-1-quic_devipriy@quicinc.com>
+ <20230519085723.15601-2-quic_devipriy@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: RFC: DSI host capabilities (was: [PATCH RFC 03/10] drm/panel: Add
- LGD panel driver for Sony Xperia XZ3)
-Content-Language: en-GB
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Caleb Connolly <caleb@connolly.tech>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        freedreno <freedreno@lists.freedesktop.org>
-References: <20230521-drm-panels-sony-v1-0-541c341d6bee@somainline.org>
- <20230521-drm-panels-sony-v1-3-541c341d6bee@somainline.org>
- <ccc97880-8e74-b85b-9679-9c12c44c4b99@linaro.org>
- <brmrqeajbq3oyp3jjwmc6tuhiftz764u6az444xw6g7pwf5fr3@5tlp375qwhed>
- <617c8f8a-1fc7-c6a0-eaa5-ce75ff2adc1b@linaro.org>
- <CAA8EJppG=MAVpK1J_8bNnkJ23y9NtgY7a2GVResXJvhEKyNsrw@mail.gmail.com>
- <739a8bd9-9ff0-5072-fdae-b64efdf86842@collabora.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <739a8bd9-9ff0-5072-fdae-b64efdf86842@collabora.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20230519085723.15601-2-quic_devipriy@quicinc.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -109,131 +79,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/05/2023 15:15, AngeloGioacchino Del Regno wrote:
-> Il 30/05/23 13:44, Dmitry Baryshkov ha scritto:
->> On Tue, 30 May 2023 at 10:24, Neil Armstrong 
->> <neil.armstrong@linaro.org> wrote:
->>>
->>> Hi Marijn, Dmitry, Caleb, Jessica,
->>>
->>> On 29/05/2023 23:11, Marijn Suijten wrote:
->>>> On 2023-05-22 04:16:20, Dmitry Baryshkov wrote:
->>>> <snip>
->>>>>> +   if (ctx->dsi->dsc) {
->>>>>
->>>>> dsi->dsc is always set, thus this condition can be dropped.
->>>>
->>>> I want to leave room for possibly running the panel without DSC (at a
->>>> lower resolution/refresh rate, or at higher power consumption if there
->>>> is enough BW) by not assigning the pointer, if we get access to panel
->>>> documentation: probably one of the magic commands sent in this driver
->>>> controls it but we don't know which.
->>>
->>> I'd like to investigate if DSC should perhaps only be enabled if we
->>> run non certain platforms/socs ?
->>>
->>> I mean, we don't know if the controller supports DSC and those 
->>> particular
->>> DSC parameters so we should probably start adding something like :
->>>
->>> static drm_dsc_config dsc_params_qcom = {}
->>>
->>> static const struct of_device_id panel_of_dsc_params[] = {
->>>          { .compatible = "qcom,sm8150", , .data = &dsc_params_qcom },
->>>          { .compatible = "qcom,sm8250", , .data = &dsc_params_qcom },
->>>          { .compatible = "qcom,sm8350", , .data = &dsc_params_qcom },
->>>          { .compatible = "qcom,sm8450", , .data = &dsc_params_qcom },
->>> };
->>
->> I think this would damage the reusability of the drivers. The panel
->> driver does not actually care if the SoC is SM8350, sunxi-something or
->> RCar.
->> Instead it cares about host capabilities.
->>
->> I think instead we should extend mipi_dsi_host:
->>
->> #define MIPI_DSI_HOST_MODE_VIDEO BIT(0)
->> #define MIPI_DSI_HOST_MODE_CMD  BIT(1)
->> #define MIPI_DSI_HOST_VIDEO_SUPPORTS_COMMANDS BIT(2)
->> // FIXME: do we need to provide additional caps here ?
->>
->> #define MIPI_DSI_DSC_1_1 BIT(0)
->> #define MIPI_DSI_DSC_1_2 BIT(1)
->> #define MIPI_DSI_DSC_NATIVE_422 BIT(2)
->> #define MIPI_DSI_DSC_NATIVE_420 BIT(3)
->> #define MIPI_DSI_DSC_FRAC_BPP BIT(4)
->> // etc.
->>
->> struct mipi_dsi_host {
->>   // new fields only
->>    unsigned long mode_flags;
->>    unsigned long dsc_flags;
->> };
->>
->> Then the panel driver can adapt itself to the host capabilities and
->> (possibly) select one of the internally supported DSC profiles.
->>
+On Fri, 19 May 2023 14:27:22 +0530, Devi Priya wrote:
+> Add bindings for the PCIe QMP PHYs found on IPQ9574.
 > 
-> I completely agree about extending mipi_dsi_host, other SoCs could reuse 
-> that and
-> support for DSC panels would become a lot cleaner.
-
-Sounds good. I will wait for one or two more days (to get the possible 
-feedback on fields/flags/etc) and post an RFC patch to dri-devel.
-
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+> ---
+>  Changes in V2:
+> 	- Picked up the R-b tag
+> 	- Did not convert the clock IDs to numerical values as the clock
+> 	  header (dependent patch) is merged in latest rc1.
 > 
-> For example, on MediaTek DRM there's some support for DSC, more or less 
-> the same
-> for SPRD DRM and some DSI bridge drivers... having a clean 
-> infrastructure would
-> definitely help.
-> 
-> I'm sad I cannot offer testing in that case because despite being sure 
-> that there
-> are MTK smartphones around with DSI panels using DSC, I have none... and 
-> all of the
-> Chromebooks are not using DSC anyway (but using DisplayPort compression, 
-> which is
-> obviously an entirely different beast).
-> 
->>>
->>> ...
->>> static int sony_akatsuki_lgd_probe(struct mipi_dsi_device *dsi)
->>> ...
->>>          const struct of_device_id *match;
->>>
->>> ...
->>>          match = of_match_node(panel_of_dsc_params, of_root);
->>>          if (match && match->data) {
->>>                  dsi->dsc = devm_kzalloc(&dsi->dev, sizeof(*dsc), 
->>> GFP_KERNEL);
->>>                  memcpy(dsi->dsc, match->data, sizeof(*dsc));
->>>          } else {
->>>                  dev_warn(&dsi->dev, "DSI controller is not marked as 
->>> supporting DSC\n");
->>>          }
->>> ...
->>> }
->>>
->>> and probably bail out if it's a DSC only panel.
->>>
-> 
-> Usually DDICs support both DSC and non-DSC modes, depending on the initial
-> programming (read: init commands)... but the usual issue is that many DDICs
-> are not publicly documented for reasons, so yes, bailing out if DSC is not
-> supported would be the only option, and would be fine at this point.
-> 
-> Cheers,
-> Angelo
-> 
->>> We could alternatively match on the DSI controller's dsi->host->dev 
->>> instead of the SoC root compatible.
->>>
->>> Neil
->>
+>  .../phy/qcom,ipq9574-qmp-pcie-phy.yaml        | 90 +++++++++++++++++++
+>  1 file changed, 90 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.yaml
 > 
 
--- 
-With best wishes
-Dmitry
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Error: Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.example.dts:29.26-27 syntax error
+FATAL ERROR: Unable to parse input tree
+make[1]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/phy/qcom,ipq9574-qmp-pcie-phy.example.dtb] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1512: dt_binding_check] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/1783652
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
