@@ -2,113 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 390CB7171C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 01:37:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAE407171E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 01:44:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233727AbjE3XhC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 19:37:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57964 "EHLO
+        id S233622AbjE3Xn7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 19:43:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233029AbjE3XhA (ORCPT
+        with ESMTP id S231915AbjE3Xn6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 19:37:00 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42652107;
-        Tue, 30 May 2023 16:36:59 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34UNGt45003635;
-        Tue, 30 May 2023 23:36:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=qPSZiIgCFceFazehkUzE7aZRdYowN6+xUI+qlLpyzz8=;
- b=QFdikKn19y1Bv0kcIVdpWgiMHW8Ew/gVMOvFOwma0qLXYg5na9LTgY0h67youKn0/fFT
- P7iZxZ3fytdsH3Kg4avX2bc0iwQJ/khyNyG9Ou0XB+k5l61hLA7K2Cmxoz7S+cnCNvgV
- BNn4CIk+Q/WosVgvH3KgkBJfZvMdP/FPjhNhdslUM5hMJ8qqxw6rqTQnUmEz4HiKY6Ue
- 093CRFhkZjBNIX8KzYJn/FnCWXs54fQLuu9ParhBdiV+H14FFLFvHVdFHY5tIBOm514s
- WJX7ieqyBqmayUasmLelU5IZg7TDSL100ERi8Vtb//YuP2AotDQRwhR6he0xBOPnpIzc qA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qw8v4tbfq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 30 May 2023 23:36:50 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34UNaooJ014641
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 30 May 2023 23:36:50 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 30 May 2023 16:36:49 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH v2 3/3] soc: qcom: rtmfs: Handle reserved-memory allocation issues
-Date:   Tue, 30 May 2023 16:36:43 -0700
-Message-ID: <20230530233643.4044823-4-quic_bjorande@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230530233643.4044823-1-quic_bjorande@quicinc.com>
-References: <20230530233643.4044823-1-quic_bjorande@quicinc.com>
+        Tue, 30 May 2023 19:43:58 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72E61B2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:43:56 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id ca18e2360f4ac-77703f20aa9so117943339f.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:43:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685490235; x=1688082235;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=D3ypystYzBp0z6BGyUyrOubrVmHDSkpBeVSSYpzrgNU=;
+        b=y9u0NB4kWnHYwt549HNPXWJTG3IRqe8/i0EgPjGKGvZyD3aP2NoPLebMVxLbcZdGoI
+         B+1piYrPAfQVtfFMiqq4dy3hooHR5gQ2g1kves8qith5oI92YNMOzgnj/Q9RS/f7M9YH
+         typUsW4DaeYZdS011PpV+S5goYadVJHRJ4mmOdUmWKHHgxFr2ch2RTCVA5C/6OpAHbbP
+         zZSV8SaEUhvODRyfGj50W5/Pbe+d81pHxDxWupxNAcEFlKHLZ4IArqaV1NhbJ8aYjuB0
+         ICsS+U4VmwCuLpSyNSeNDLk4yaRC62eZ1VzHy0kFHfpSYmt2RsnWTRukVJ11lVyEKiqo
+         4dZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685490235; x=1688082235;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=D3ypystYzBp0z6BGyUyrOubrVmHDSkpBeVSSYpzrgNU=;
+        b=AO+OwKRA3bvj2Z/AKVwIuHRbqleunXzasdVYGMbYboUZmPYhUhLqDIFPhxA20EBLjF
+         JsvYmudVAcrjSRbYLabqy8UepYARLNsZhnU3IZkEffc3LOr17N7ELQtk2HTNAIEn8dTR
+         i0z7YZOWpcEfZZvoqIFr+95hm2u4A2roB8TwLMmFLqt/r0QwQ6kxL1nhm4GcXWjhPV6H
+         B+VQ66kIFhbevmYpQtCPdNxn/Cwq1xrFa3GZY4PjZ076vP14Pm1wN2XRE5xK7g8ikedP
+         MiAjmqtmRJDOSqPCrNqvq/2JGZOtjauOJkikE6sKs+1OANWKjrSq00YmKsgSsqwazfSo
+         UmsQ==
+X-Gm-Message-State: AC+VfDzHA0UuRgtxCwUSOSRdNiFEBjw0nFgMEOCZpSJy4eqqsPtab2DH
+        M7nJDIUCF7Zs9uUVPm0fp00HUA==
+X-Google-Smtp-Source: ACHHUZ5eAUPfBfmQO0GDa5baK1HyIohLoaAUddvYA3t+pGk/ntaEhQaO5j0ioafC/00n6ndwS115vA==
+X-Received: by 2002:a5d:87c2:0:b0:76c:65df:a118 with SMTP id q2-20020a5d87c2000000b0076c65dfa118mr2397211ios.6.1685490235653;
+        Tue, 30 May 2023 16:43:55 -0700 (PDT)
+Received: from [10.211.55.3] ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id l5-20020a5e8805000000b0076c5c927acesm3522902ioj.13.2023.05.30.16.43.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 May 2023 16:43:55 -0700 (PDT)
+Message-ID: <694f1e23-23bb-e184-6262-bfe3641a4f43@linaro.org>
+Date:   Tue, 30 May 2023 18:43:54 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8sC1niehEyTMmkS9m9iHlIm1tTyOaNI9
-X-Proofpoint-GUID: 8sC1niehEyTMmkS9m9iHlIm1tTyOaNI9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-30_17,2023-05-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 spamscore=0 phishscore=0 malwarescore=0 bulkscore=0
- adultscore=0 mlxscore=0 mlxlogscore=823 priorityscore=1501 clxscore=1015
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305300193
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH net v2] net: ipa: Use the correct value for
+ IPA_STATUS_SIZE
+Content-Language: en-US
+To:     Bert Karwatzki <spasswolf@web.de>, Alex Elder <elder@linaro.org>,
+        Simon Horman <simon.horman@corigine.com>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <7ae8af63b1254ab51d45c870e7942f0e3dc15b1e.camel@web.de>
+ <ZHWhEiWtEC9VKOS1@corigine.com>
+ <2b91165f667d3896a0aded39830905f62f725815.camel@web.de>
+ <3c4d235d-8e49-61a2-a445-5d363962d3e7@linaro.org>
+ <8d0e0272c80a594e7425ffcdd7714df7117edde5.camel@web.de>
+ <f9ccdc27-7b5f-5894-46ab-84c1e1650d9f@linaro.org>
+ <dcfb1ccd722af0e9c215c518ec2cd7a8602d2127.camel@web.de>
+From:   Alex Elder <alex.elder@linaro.org>
+In-Reply-To: <dcfb1ccd722af0e9c215c518ec2cd7a8602d2127.camel@web.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In the even that Linux failed to allocate the reserved memory range
-specified in the DeviceTree, the size of the reserved_mem will be 0,
-which results in a oops when memory remapping is attempted.
+On 5/30/23 6:25 PM, Bert Karwatzki wrote:
+>  From 2e5e4c07606a100fd4af0f08e4cd158f88071a3a Mon Sep 17 00:00:00 2001
+> From: Bert Karwatzki <spasswolf@web.de>
+> To: davem@davemloft.net
+> To: edumazet@google.com
+> To: kuba@kernel.org
+> To: pabeni@redhat.com
+> Cc: elder@kernel.org
+> Cc: netdev@vger.kernel.org
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: linux-kernel@vger.kernel.org
+> Date: Wed, 31 May 2023 00:16:33 +0200
+> Subject: [PATCH net v2] net: ipa: Use correct value for IPA_STATUS_SIZE
+> 
+> IPA_STATUS_SIZE was introduced in commit b8dc7d0eea5a as a replacement
+> for the size of the removed struct ipa_status which had size
+> sizeof(__le32[8]). Use this value as IPA_STATUS_SIZE.
 
-Detect this and report that the memory region was not found instead.
+If the network maintainers can deal with your patch, I'm
+OK with it.  David et al if you want something else, please
+say so.
 
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
+Reviewed-by: Alex Elder <elder@linaro.org>
 
-Changes since v1:
-- New patch
-
- drivers/soc/qcom/rmtfs_mem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/soc/qcom/rmtfs_mem.c b/drivers/soc/qcom/rmtfs_mem.c
-index 28238974d913..e3a55fa041f9 100644
---- a/drivers/soc/qcom/rmtfs_mem.c
-+++ b/drivers/soc/qcom/rmtfs_mem.c
-@@ -180,7 +180,7 @@ static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
- 	int ret, i;
- 
- 	rmem = of_reserved_mem_lookup(node);
--	if (!rmem) {
-+	if (!rmem || !rmem->size) {
- 		dev_err(&pdev->dev, "failed to acquire memory region\n");
- 		return -EINVAL;
- 	}
--- 
-2.25.1
+> Fixes: b8dc7d0eea5a ("net: ipa: stop using sizeof(status)")
+> Signed-off-by: Bert Karwatzki <spasswolf@web.de>
+> ---
+>   drivers/net/ipa/ipa_endpoint.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.c
+> index 2ee80ed140b7..afa1d56d9095 100644
+> --- a/drivers/net/ipa/ipa_endpoint.c
+> +++ b/drivers/net/ipa/ipa_endpoint.c
+> @@ -119,7 +119,7 @@ enum ipa_status_field_id {
+>   };
+>   
+>   /* Size in bytes of an IPA packet status structure */
+> -#define IPA_STATUS_SIZE			sizeof(__le32[4])
+> +#define IPA_STATUS_SIZE			sizeof(__le32[8])
+>   
+>   /* IPA status structure decoder; looks up field values for a structure */
+>   static u32 ipa_status_extract(struct ipa *ipa, const void *data,
 
