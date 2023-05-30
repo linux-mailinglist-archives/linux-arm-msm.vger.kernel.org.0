@@ -2,95 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 62B14716D36
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 21:09:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9544A716D13
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 21:04:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231618AbjE3TI7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 15:08:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48992 "EHLO
+        id S230222AbjE3TEi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 15:04:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47386 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230104AbjE3TI6 (ORCPT
+        with ESMTP id S232733AbjE3TEh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 15:08:58 -0400
-X-Greylist: delayed 177 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Tue, 30 May 2023 12:08:56 PDT
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ECE108E;
-        Tue, 30 May 2023 12:08:55 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1685473370; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=plssoWGxVp5BPYTx2+4C7urE+H41aEECJ2LdQps1jhkPqW1ez4mUuZjbOqBj1S07Lx
-    hOH2dJFKlyCyN+JjEvnPFrf856NMl2MaLGYLFhzyYWLJ8ZKytEd5q2+tPRh+wsH7JS+f
-    R97bfQpmv9vwvexplrNW1SWt3YvCZFeH6yt8Y0Z+2jXvyryUzzgvQzyz0ZfNg2xfwZ4U
-    ehQ5iKvAWWrVq/YHntXz0T86+/0KyDHJ0TeMmdGOzCnOf9l6OPXgS2gSIp9xKvueugmj
-    5sRyOtTempln229C+36uR1TNh0TYMZZJW4G4X34h7M+aaCWVRvJ5DAKLiRo/pQEtH+Zi
-    mapQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1685473370;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=PBQJbM/1VwwL+Dwm7PX4+lP0VLh7Yt21pAuc2HfyKCA=;
-    b=XHEMXZa9Yw6d5Uzm2a4kXHZLb8kA4PRaDrvuPNsku3vzl32xiu2e8sdcR9BUiq/jZL
-    N5EjyLO4qceT/IDKiZz41qnsN5vKe/Z9gkL1YR3YXHAiReurPGzfOkNwOz/g/kZxy+Yf
-    H74dJIJmGZFSHeyOdpEyCLIKDwyMvDt7LLVHeVLYGx+pQAMLdaUXc+Xv2ADIEGdKrccF
-    zt5k1BR8AkKG25MJguVpQc5vKxCybYqfiwmR9MpSSV9Xsa/cAhr+5Q0DyCXts9WjkMG3
-    pQFrRfV+tG/8gHByFjC4o9fVy3BjOzM2JMJpeWbgkc2I0NNhf67cGEOneDQFglF3NAj3
-    d9YQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1685473370;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=PBQJbM/1VwwL+Dwm7PX4+lP0VLh7Yt21pAuc2HfyKCA=;
-    b=mUAfmPdGeTzBcVJckcuNUNHXly4Lg804KbJvST6kh1unODICF18xjD57kZpBBaS+yz
-    uYZIqc8MQAknQfXxupFJtPFDKiNgfYxLBsaG0oTdTrXZTcZwOxx6r3uS6DFVoul80EpG
-    WWS98bcXpoGPCQ1enl2neVlVWorrMEVTEUmwNXHzPna0M/SzlbQOp9NBhJ+3V18MeBkj
-    t7jg13TVmODkCwSdjTLsdsIJzHIBZLVtiNUeGg4mDC3/q6gFGbldx2hRhC6Zgt86TXMS
-    2X0xzbg4zs1EO4ZjqI7C38GxNAzZb2TpzzV81Mag1OsMuVl0P4c/tFXVFRUHsIYq7dnn
-    MwrQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1685473370;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=PBQJbM/1VwwL+Dwm7PX4+lP0VLh7Yt21pAuc2HfyKCA=;
-    b=JAckuUGdbq4m5mJBc6CkK66c7uDrC5JXOFHgMaPEIVYxDf3SgRdl5c7afSdgJS7wcI
-    eMzo5+kFfsXBi4hdw5Dg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA95nh"
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
-    with ESMTPSA id j6420az4UJ2njmA
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Tue, 30 May 2023 21:02:49 +0200 (CEST)
-Date:   Tue, 30 May 2023 21:02:44 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH 20/20] interconnect: qcom: Divide clk rate by src node
- bus width
-Message-ID: <ZHZIVJFd-HU_AO2F@gerhold.net>
-References: <20230526-topic-smd_icc-v1-0-1bf8e6663c4e@linaro.org>
- <20230526-topic-smd_icc-v1-20-1bf8e6663c4e@linaro.org>
- <5a26e456-fe45-6def-27f9-26ec00c333e6@linaro.org>
+        Tue, 30 May 2023 15:04:37 -0400
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7F60106
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 12:04:35 -0700 (PDT)
+Received: by mail-io1-xd2d.google.com with SMTP id ca18e2360f4ac-7770b7c2fa5so279209339f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 12:04:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685473475; x=1688065475;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wfQuZmnPQJmPq4FD0skpyrp1OyYgS6QeSjx3Y7QLJpo=;
+        b=HmRpw8pGvyPSbo1Qzvek5/4weOk51Rnlxpp6EOvPssKH3D5hQ5EDzw0EoSd7xiUZus
+         mms608q4JqR/J3lQg/7HKynivqzzxZS7UppVP37EvxglMzvkpSsKDvOV28aW6L42SERH
+         SJ/y7tIVas1/E/bcbtlnn5M3X+cIKQiUNEYlvmyWmANy80Sa1xHxwRdCLY7FJvWUvbPQ
+         Z15dxzNpvzEGaRcjiV+7ndsDr30d3hH3TkjzvG0MCU3Tf4JLuSpQoc45cw4HNc+d2AIl
+         S61L/WYbLv72GF90UiZgLuA4usY//Xlm2bnxQbOV9jCeI8ZHIDqjgpJGcMTjbW96unsN
+         vt5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685473475; x=1688065475;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wfQuZmnPQJmPq4FD0skpyrp1OyYgS6QeSjx3Y7QLJpo=;
+        b=OdQlUdpAiV+eVrFPlfN9uJmA/Vz96TSNDjRpIGrzswUDUqkNcCXGFMBJx0p8hVgI5U
+         lwOwoBd184w7CS87JnTbIkUdCEuYdezCh7xFBw9RIFAB5dhkABMWhinRKqNJr5le6vo/
+         NR914oGzkf/oW54I+hbv95RwDftRGkh3RZ925YvFp+MQOp/bzapjg8aRfl+iBdPP01fR
+         zhzLZoCAlOjwn0rR1dVpI9PylS9YjEQYTir7iGASHbjWn8setcTweJs0bAAZxpr0nuZI
+         Nx9jUgSspXf3MeVBUgaIFfi/cidRDvacaFZE+V4R1BaGHlYs2llm/oDKZpJWO/6HBUbN
+         pEzg==
+X-Gm-Message-State: AC+VfDwAD1IX+7/fDd6nbiCxkj6XffgOYfn/VJFgda51qYvQHt8lBvw5
+        8PTehRwrm5V9zdVLyF6YDvfFjw==
+X-Google-Smtp-Source: ACHHUZ6eBRiUgFq4mXt5B6sXnYlZU3E7fxaNdGF17ikXkootwxAujomGFgxAC2KRPKLqROgo4vGERw==
+X-Received: by 2002:a92:d581:0:b0:33b:151a:e29f with SMTP id a1-20020a92d581000000b0033b151ae29fmr363228iln.11.1685473474944;
+        Tue, 30 May 2023 12:04:34 -0700 (PDT)
+Received: from [172.22.22.28] ([98.61.227.136])
+        by smtp.gmail.com with ESMTPSA id z96-20020a0293e9000000b004178754b24bsm920068jah.166.2023.05.30.12.04.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 May 2023 12:04:34 -0700 (PDT)
+Message-ID: <f9ccdc27-7b5f-5894-46ab-84c1e1650d9f@linaro.org>
+Date:   Tue, 30 May 2023 14:04:32 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5a26e456-fe45-6def-27f9-26ec00c333e6@linaro.org>
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH net] net: ipa: Use the correct value for IPA_STATUS_SIZE
+Content-Language: en-US
+To:     Bert Karwatzki <spasswolf@web.de>,
+        Simon Horman <simon.horman@corigine.com>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <7ae8af63b1254ab51d45c870e7942f0e3dc15b1e.camel@web.de>
+ <ZHWhEiWtEC9VKOS1@corigine.com>
+ <2b91165f667d3896a0aded39830905f62f725815.camel@web.de>
+ <3c4d235d-8e49-61a2-a445-5d363962d3e7@linaro.org>
+ <8d0e0272c80a594e7425ffcdd7714df7117edde5.camel@web.de>
+From:   Alex Elder <elder@linaro.org>
+In-Reply-To: <8d0e0272c80a594e7425ffcdd7714df7117edde5.camel@web.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -98,84 +83,96 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 30, 2023 at 06:32:04PM +0200, Konrad Dybcio wrote:
-> On 30.05.2023 12:20, Konrad Dybcio wrote:
-> > Ever since the introduction of SMD RPM ICC, we've been dividing the
-> > clock rate by the wrong bus width. This has resulted in:
-> > 
-> > - setting wrong (mostly too low) rates, affecting performance
-> >   - most often /2 or /4
-> >   - things like DDR never hit their full potential
-> >   - the rates were only correct if src bus width == dst bus width
-> >     for all src, dst pairs on a given bus
-> > 
-> > - Qualcomm using the same wrong logic in their BSP driver in msm-5.x
-> >   that ships in production devices today
-> > 
-> > - me losing my sanity trying to find this
-> > 
-> > Resolve it by using dst_qn, if it exists.
-> > 
-> > Fixes: 5e4e6c4d3ae0 ("interconnect: qcom: Add QCS404 interconnect provider driver")
-> > Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> > ---
-> The problem is deeper.
+On 5/30/23 1:36 PM, Bert Karwatzki wrote:
+> Am Dienstag, dem 30.05.2023 um 07:29 -0500 schrieb Alex Elder:
+>> On 5/30/23 4:10 AM, Bert Karwatzki wrote:
+>>> Am Dienstag, dem 30.05.2023 um 09:09 +0200 schrieb Simon Horman:
+>>>> On Sat, May 27, 2023 at 10:46:25PM +0200, Bert Karwatzki wrote:
+>>>>> commit b8dc7d0eea5a7709bb534f1b3ca70d2d7de0b42c introduced
+>>>>> IPA_STATUS_SIZE as a replacement for the size of the removed struct
+>>>>> ipa_status. sizeof(struct ipa_status) was sizeof(__le32[8]), use this
+>>>>> as IPA_STATUS_SIZE.
+>>
+>> This is better, however it really isn't done in a way that's
+>> appropriate for a Linux kernel patch.  I will gladly help you
+>> get it right if you have the patience for that.  But I'm not
+>> going to say anything yet--until you say you want me to help
+>> you do this.  If you prefer, I can submit the patch for you.
+>>
+>> The reason this is important is your commit is permanent, and
+>> just like code, commit messages are best if kept consistent
+>> and readable.  I also am offering to help you understand so
+>> you avoid any trouble next time you want to send a kernel patch.
+>>
+>> Let me know what you prefer.
+>>
+>>                                          -Alex
+>>
+>>>>
 > 
-> Chatting with Stephan (+CC), we tackled a few issues (that I will send
-> fixes for in v2):
+> So here's v3 of the patch, done (I hope) in a way that is more standard
+> conforming.
 > 
-> 1. qcom_icc_rpm_set() should take per-node (src_qn->sum_avg, dst_qn->sum_avg)
->    and NOT aggregated bw (unless you want ALL of your nodes on a given provider
->    to "go very fast")
+>  From e0dc802b5f6f41c0a388c7281aabe077a4e3c5a2 Mon Sep 17 00:00:00 2001
+> From: Bert Karwatzki <spasswolf@web.de>
+> Date: Tue, 30 May 2023 20:23:29 +0200
+> Subject: [PATCH] net/ipa: Use correct value for IPA_STATUS_SIZE
 > 
-> 2. the aggregate bw/clk rate calculation should use the node-specific bus widths
->    and not only the bus width of the src/dst node, otherwise the average bw
->    values will be utterly meaningless
+> IPA_STATUS_SIZE was introduced in commit b8dc7d0eea5a as a replacement
+> for the size of the removed struct ipa_status which had size
+> sizeof(__le32[8]). Use this value as IPA_STATUS_SIZE.
 > 
+> Signed-off-by: Bert Karwatzki <spasswolf@web.de>
 
-The peak bandwidth / clock rate is wrong as well if you have two paths
-with different buswidths on the same bus/NoC. (If someone is interested
-in details I can post my specific example I had in the chat, it shows
-this more clearly.)
+This is better, but there are a few more things to do differently.
+- When re-submitting a patch, please indicate a (new) version in
+   the subject line.  Since you haven't been doing that, it should
+   be sufficient to just use "version 2", something like this:
+     [PATCH net v2] net: ipa: Use the correct value for IPA_STATUS_SIZE
+- Add a "Fixes" tag above your "Signed-off-by:" line:
+     Fixes: b8dc7d0eea5a ("net: ipa: stop using sizeof(status)")
+- Do not send information above the patch in the e-mail.  An easy
+   way to get it right is to use "git send-email".  For example:
+     - git format-patch -1
+     - Edit 0001-*.patch, adding lines like this below the "From:" line:
+	To: davem@davemloft.net
+	To: edumazet@google.com
+	To: kuba@kernel.org
+	To: pabeni@redhat.com
+	Cc: elder@kernel.org
+	Cc: netdev@vger.kernel.org
+	Cc: linux-arm-msm@vger.kernel.org
+	Cc: linux-kernel@vger.kernel.org
+     - Run this:
+         git send-email --dry-run 0001-*.patch
+       to try to catch any errors
+     - Finally, run this:
+         git send-email 0001-*.patch
+       to actually send the patch.  This will require a password.
 
-> 3. thanks to (1) and (2) qcom_icc_bus_aggregate() can be remodeled to instead
->    calculate the clock rates for the two rpm contexts, which we can then max()
->    and pass on to the ratesetting call
-> 
+Even if you don't use "git send-email", just let the e-mail
+itself indicate the "From:" and "Subject:" lines.  And have
+the content of the e-mail be the patch itself.
 
-Sounds good.
+I hope this helps.
 
-> 
-> ----8<---- Cutting off Stephan's seal of approval, this is my thinking ----
-> 
-> 4. I *think* Qualcomm really made a mistake in their msm-5.4 driver where they
->    took most of the logic from the current -next state and should have been
->    setting the rate based on the *DST* provider, or at least that's my
->    understanding trying to read the "known good" msm-4.19 driver
->    (which remembers msm-3.0 lol).. Or maybe we should keep src but ensure there's
->    also a final (dst, dst) vote cast:
-> 
-> provider->inter_set = false // current state upstream
-> 
-> setting apps_proc<->slv_bimc_snoc
-> setting mas_bimc_snoc<->slv_snoc_cnoc
-> setting mas_snoc_cnoc<->qhs_sdc2
-> 
-> 
-> provider->inter_set = true // I don't think there's effectively a difference?
-> 
-> setting apps_proc<->slv_bimc_snoc
-> setting slv_bimc_snoc<->mas_bimc_snoc
-> setting mas_bimc_snoc<->slv_snoc_cnoc
-> setting slv_snoc_cnoc<->mas_snoc_cnoc
-> setting mas_snoc_cnoc<->qhs_sdc2
-> 
+					-Alex
 
-I think with our proposed changes above it does no longer matter if a
-node is passed as "src" or "dst". This means in your example above you
-just waste additional time setting the bandwidth twice for
-slv_bimc_snoc, mas_bimc_snoc, slv_snoc_cnoc and mas_snoc_cnoc.
-The final outcome is the same with or without "inter_set".
+> ---
+>   drivers/net/ipa/ipa_endpoint.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.c
+> index 2ee80ed140b7..afa1d56d9095 100644
+> --- a/drivers/net/ipa/ipa_endpoint.c
+> +++ b/drivers/net/ipa/ipa_endpoint.c
+> @@ -119,7 +119,7 @@ enum ipa_status_field_id {
+>   };
+>   
+>   /* Size in bytes of an IPA packet status structure */
+> -#define IPA_STATUS_SIZE			sizeof(__le32[4])
+> +#define IPA_STATUS_SIZE			sizeof(__le32[8])
+>   
+>   /* IPA status structure decoder; looks up field values for a structure */
+>   static u32 ipa_status_extract(struct ipa *ipa, const void *data,
 
-Thanks,
-Stephan
