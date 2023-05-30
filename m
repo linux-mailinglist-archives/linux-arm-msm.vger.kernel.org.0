@@ -2,114 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3426D717187
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 01:19:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A23F7171A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 01:26:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233843AbjE3XS6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 19:18:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48004 "EHLO
+        id S233897AbjE3XZp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 19:25:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233847AbjE3XS4 (ORCPT
+        with ESMTP id S233365AbjE3XZo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 19:18:56 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A2A5E40
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:18:27 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-52867360efcso3252628a12.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:18:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1685488704; x=1688080704;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/Ch+QGZuDvVPqFvut3Fm3+Q/Pf0opluuawwoMyLnyLA=;
-        b=CTfNkSMXbEuK4v0Su6woV8ktAXJIQa0eTx8ShMV1zqZYDaGUCjkWgXoC+I5KwLCiK4
-         z4XtcGo2+1Dr6TPHsdz70M/hGLkKC/EEBRHBrsnzVukFWrelsdajx1aHIosqntKkhD8f
-         dBXmMMZP2oDxGKA0lIrgm8sZVo9Y7M5yRS9o8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685488704; x=1688080704;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/Ch+QGZuDvVPqFvut3Fm3+Q/Pf0opluuawwoMyLnyLA=;
-        b=RffIxiJBnmR1EmM29pYMwtUFHz8LgIaLxdf5CrwOuV8Q+v29yWpcS5x85FxCv6bHG6
-         Upk4xQiUTGcGt0e8vd6L89+XGCIuOyk7CELR84kr1eY7ypR3N7u7S0R87bqDKHtyNWEr
-         dSurXsspL4SsYy/Ag+8oAIIcn/wxvrKgGHX67iIYS06jO5zFK+bNjkIoNrqqy7kcDELr
-         T6c4Gi2lhTN+SyvyA9pkPBPay3jMTpHYLNwkMyJSUnFPCF1k1f2BgN8vzHoffNbSZO0W
-         imiYK051/3YxDk6V/YQfbIwRnTgKDXRhZTXNVSzTk0fJa6o9RQI9QZtKZb1pgyfoLBK5
-         mIRA==
-X-Gm-Message-State: AC+VfDw/aBsBGGElUEi9TYh2SYVsx4KTGNgm6CVVoYpz/pk2PS224MZ1
-        KBcj6VQ5/ZPXue/jozJdLD+5kxvgpbrNGPqgY64=
-X-Google-Smtp-Source: ACHHUZ4sNV8/Cu4fg7LbHNMOQJaXy+dGJJoOgpGk7rq+5bd5EcGtaOkMVMSxm44jUL2Odl7n17M/iA==
-X-Received: by 2002:a17:902:ce81:b0:1aa:86a4:37ed with SMTP id f1-20020a170902ce8100b001aa86a437edmr4226230plg.55.1685488704705;
-        Tue, 30 May 2023 16:18:24 -0700 (PDT)
-Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id 17-20020a170902e9d100b00199203a4fa3sm10866444plk.203.2023.05.30.16.18.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 May 2023 16:18:24 -0700 (PDT)
-Date:   Tue, 30 May 2023 16:18:23 -0700
-From:   Kees Cook <keescook@chromium.org>
-To:     Ard Biesheuvel <ardb@kernel.org>
-Cc:     Maximilian Luz <luzmaximilian@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilias Apalodimas <ilias.apalodimas@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Johan Hovold <johan@kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
+        Tue, 30 May 2023 19:25:44 -0400
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA385E5;
+        Tue, 30 May 2023 16:25:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1685489121; i=spasswolf@web.de;
+        bh=bVokRTnSfY57dTFz84DYa/2uuA3gMO3FTvF8GJZpPz4=;
+        h=X-UI-Sender-Class:Subject:From:To:Cc:Date:In-Reply-To:References;
+        b=TPk9dso0nZHFZ4A9HGLPv5q19jICRkmhyy49NlwO5ZebFT0IP0aMZ/76th+/jdPNR
+         7Ujw+g3hlNdHEKWDXyCK1QOYl0m3jQZHrocZPSSyLqx8wDeuaxqyaVMEer0k6+cG4D
+         dAjQC2D8zA8eRB2UrKGs6MWeFcqiVh/TNpEYY+a45h7FSyUTWVJRIqRxtqei0/fid5
+         HjVlmDCvYg8vn2RbZwmCfBgpgylXHk3AYFneGRb0qRC4eE4HzbIeCxjP13uRx3YomC
+         eBuLhhFVpVkca1V7LOIVZ4dOSaVDLRk5R4AGURKuIT2bmGo2J2UihUm+Fs+tpBSLLF
+         xc+HsI7AfCd5Q==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.0.101] ([176.198.191.160]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MLAVc-1pm3rn1vpC-00I9Pv; Wed, 31
+ May 2023 01:25:21 +0200
+Message-ID: <dcfb1ccd722af0e9c215c518ec2cd7a8602d2127.camel@web.de>
+Subject: Re: [PATCH net v2] net: ipa: Use the correct value for
+ IPA_STATUS_SIZE
+From:   Bert Karwatzki <spasswolf@web.de>
+To:     Alex Elder <elder@linaro.org>,
+        Simon Horman <simon.horman@corigine.com>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, netdev@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 1/4] lib/ucs2_string: Add UCS-2 strlcpy function
-Message-ID: <202305301617.4858B5672@keescook>
-References: <20230528230351.168210-1-luzmaximilian@gmail.com>
- <20230528230351.168210-2-luzmaximilian@gmail.com>
- <202305300820.9B2154B@keescook>
- <3255010d-82d5-e8e8-2e11-7de25d538d72@gmail.com>
- <CAMj1kXGy1hfEyHBNmPkBFeGF9W5zx=+8z5deH3E7usdsHHB2=A@mail.gmail.com>
+Date:   Wed, 31 May 2023 01:25:20 +0200
+In-Reply-To: <f9ccdc27-7b5f-5894-46ab-84c1e1650d9f@linaro.org>
+References: <7ae8af63b1254ab51d45c870e7942f0e3dc15b1e.camel@web.de>
+         <ZHWhEiWtEC9VKOS1@corigine.com>
+         <2b91165f667d3896a0aded39830905f62f725815.camel@web.de>
+         <3c4d235d-8e49-61a2-a445-5d363962d3e7@linaro.org>
+         <8d0e0272c80a594e7425ffcdd7714df7117edde5.camel@web.de>
+         <f9ccdc27-7b5f-5894-46ab-84c1e1650d9f@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.2-1 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAMj1kXGy1hfEyHBNmPkBFeGF9W5zx=+8z5deH3E7usdsHHB2=A@mail.gmail.com>
-X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Provags-ID: V03:K1:ZMkfT2i9P4INUikDQKz7U3w4wYUXQxItqM4vtkNYOcVZXqlmqyA
+ kHreVsbcUkyLoZ821vHruw/f97/55ieQ8/iN3lm0vLSlDDbrslwGOddHIYrrwEv/DUxlMCS
+ 5NUTfzfHztrz0KJeIX6XiQVj5esLXnC9gKSO96nCktEaN7jMVy1RFqj96ZtQ6dMMFAwQHI4
+ BY6fjxGDpfzUXLJ3IOzYw==
+UI-OutboundReport: notjunk:1;M01:P0:04ZzZfq6434=;Nt/AyWZ4sphIOxnLsgX3rexKZ9Q
+ cr4OwuklmBkR/0hAXm+UTo3+iTcjiAspYvPYl+uImuco9R3fXrdb6ZpsfHb5wmXMykncph/SH
+ +LGKb3Q1dLlxgePOzhChbcj3cVzsqyBQvMup9/kDQZ/L4bm5Gl4OFUGSwUp2AUBtlZfsMlA+h
+ m3YIp+YXQKR4usmNt2O1k+mpCVZbJE6+Ndi6ugchJ6JsXttgHrxbLG1h81znR3eTmeA07zEgP
+ 5ppnWtGR80DoIQKGCOtwly9L0DtgURBJd/d9M+79m2BFDnsy7oGRFptAcs2AM2hFOTJWNiOAS
+ xkJpqhbGM0ophTV9hQcth7PDc4wfv1O6vE2MAHr40wTjl5eib12KQQfwLuzDdyGUnUent/X3W
+ xUblI/Jk+g6KSG51vZJd/AkUX2swuGZNTFANyFVkwxLrboj27QRFil55vp175xU244Pv7/7ak
+ 0Gdz1AppD8rd/YOt8+NiXa5hSoCl+TPKPNlON/Cmea/xikk2/b9YI7Y9pSX665G2yc3s4R4fU
+ LtFjAgDQE+USYBhMvrqxpt077FgamsPwtjbEhoqCQZALNHVZLamOcaBLqPSccIPIi2WPUjUj6
+ /+TJ1JUtzdZ8GRBVglavAMvshUz6krqq/Hkipyse2DhXZX0ieLzxwiHJ/w7b7w7Upth3qg6hb
+ BuFeq5JYKtW8jxy4NiOQ10UJWDnVSeBpqeLWoZ26TqoIckC6mNwhWRBCBumRreMV6Iq+uB+XI
+ ZGsAi/DKyvNPFFfXupLBuzR9mZPkDHl+up6RP1+gFxuVD2zbXKCaaQQGI5kpIBGLuVOtWaqBt
+ e0uqWymNdmSgzCMm7KC0c2vsyTCc76F1bTrSwuLVTcMPrMyEy06PrwOK/qEvU3rEN4dXh/evz
+ IEKRDhtRXuehsr/yZlG+JjMGGgo9p+cwiTNi73BXBGOiaAsJtfQDFlBCv/IrqMk8znl+fGRsu
+ nQ3YQ12DMtMnUZVr3bPlglc2uzo=
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 30, 2023 at 06:17:35PM +0200, Ard Biesheuvel wrote:
-> On Tue, 30 May 2023 at 18:15, Maximilian Luz <luzmaximilian@gmail.com> wrote:
-> >
-> > On 5/30/23 17:25, Kees Cook wrote:
-> > > On Mon, May 29, 2023 at 01:03:48AM +0200, Maximilian Luz wrote:
-> > >> Add a ucs2_strlcpy() function for UCS-2 strings. The behavior is
-> > >> equivalent to the standard strlcpy() function, just for 16-bit character
-> > >> UCS-2 strings.
-> > >
-> > > Eek, no. strlcpy() is dangerous in multiple ways[1]. Please implement
-> > > strscpy() (i.e. use strnlen(), negative error on truncation, etc).
-> >
-> > Right, make sense, thanks. Somehow I missed that the kernel has a better
-> > function than the C stdlib for that...
-> >
-> > > Additionally, it'd be nice of the ucs2 helpers here also implemented the
-> > > rest of the CONFIG_FORTIFY_SOURCE mitigations (i.e. checking for source
-> > > and destination buffer size overflows at compile-time and run-time with
-> > > __builtin_object_size() and __builtin_dynamoc_object_size() respectively).
-> >
-> > I can certainly try that, but I think this might be better suited for a
-> > follow-up series, given that we then should also add those to the other
-> > helpers.
-> >
-> 
-> Agreed. Let's log the followup work as a kspp work item, no need to
-> make that part of this series.
+From 2e5e4c07606a100fd4af0f08e4cd158f88071a3a Mon Sep 17 00:00:00 2001
+From: Bert Karwatzki <spasswolf@web.de>
+To: davem@davemloft.net
+To: edumazet@google.com
+To: kuba@kernel.org
+To: pabeni@redhat.com
+Cc: elder@kernel.org
+Cc: netdev@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org
+Date: Wed, 31 May 2023 00:16:33 +0200
+Subject: [PATCH net v2] net: ipa: Use correct value for IPA_STATUS_SIZE
 
-Yeah, that's fine. Can you please open a KSSP issue for it so we don't
-forget?  :)
+IPA_STATUS_SIZE was introduced in commit b8dc7d0eea5a as a replacement
+for the size of the removed struct ipa_status which had size
+sizeof(__le32[8]). Use this value as IPA_STATUS_SIZE.
 
--- 
-Kees Cook
+Fixes: b8dc7d0eea5a ("net: ipa: stop using sizeof(status)")
+Signed-off-by: Bert Karwatzki <spasswolf@web.de>
+---
+ drivers/net/ipa/ipa_endpoint.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.=
+c
+index 2ee80ed140b7..afa1d56d9095 100644
+--- a/drivers/net/ipa/ipa_endpoint.c
++++ b/drivers/net/ipa/ipa_endpoint.c
+@@ -119,7 +119,7 @@ enum ipa_status_field_id {
+ };
+=20
+ /* Size in bytes of an IPA packet status structure */
+-#define IPA_STATUS_SIZE			sizeof(__le32[4])
++#define IPA_STATUS_SIZE			sizeof(__le32[8])
+=20
+ /* IPA status structure decoder; looks up field values for a structure */
+ static u32 ipa_status_extract(struct ipa *ipa, const void *data,
+--=20
+2.40.1
+
+As I'm sure that git send-email didn't work (probably due to sendmail/exim
+configuration issues), I'm sending this from evolution again.
+
+Bert Karwatzki
+=20
