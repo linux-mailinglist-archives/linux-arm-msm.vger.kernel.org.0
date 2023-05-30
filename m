@@ -2,122 +2,408 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3051271544F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 05:59:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF50F71545C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 06:02:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229915AbjE3D7p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 29 May 2023 23:59:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53008 "EHLO
+        id S229936AbjE3ECN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 00:02:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbjE3D7n (ORCPT
+        with ESMTP id S229507AbjE3ECM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 29 May 2023 23:59:43 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9144494;
-        Mon, 29 May 2023 20:59:42 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34U2X6uw000824;
-        Tue, 30 May 2023 03:59:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : from : subject : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=fQim3q8iOjpLNRj2uSbSbhxVGXrNRMfRVaKA9f/ozBk=;
- b=FuWxvZHkT2h7mQXM5XSOUBzo4yuO6KwEzuusyXZ613e7xiNE6pBf5XP1XBQ4c91WV1ja
- jM4cUeSIqqCiPmGMg4RboVVTFIofOJUQbuqXKIwgy94W0wZnGleHFwzCK5RL1jh6V21I
- yg6vGfBChLlEPGm9s+yM1JWKUfOo/5z6wb3vQZMlV5bRnGB9b4f5dKO5PHLYHdmBNdKY
- 6Nex70F6rMht5QwFycq0wtjs9/8xh8s9AuyX/2O84k6FDJSjj3uAZKN91tD3k8bKRdV5
- 2DCcM61Q5wzc9Q8ZGmHkH50O4lfLl2WV0bLIT+42I1l8MrrCcmUtUS/YKMN34vEg/NMy ZA== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qw7rtr5qp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 30 May 2023 03:59:10 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34U3x9NQ003442
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 30 May 2023 03:59:09 GMT
-Received: from [10.216.48.5] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 29 May
- 2023 20:59:01 -0700
-Message-ID: <c19122ca-58b7-a407-0ce3-41dab4218c81@quicinc.com>
-Date:   Tue, 30 May 2023 09:28:52 +0530
+        Tue, 30 May 2023 00:02:12 -0400
+Received: from 189.cn (ptr.189.cn [183.61.185.101])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 3A57194;
+        Mon, 29 May 2023 21:02:09 -0700 (PDT)
+HMM_SOURCE_IP: 10.64.8.41:35688.709279162
+HMM_ATTACHE_NUM: 0000
+HMM_SOURCE_TYPE: SMTP
+Received: from clientip-114.242.206.180 (unknown [10.64.8.41])
+        by 189.cn (HERMES) with SMTP id 9E7651002F1;
+        Tue, 30 May 2023 12:02:02 +0800 (CST)
+Received: from  ([114.242.206.180])
+        by gateway-151646-dep-75648544bd-xwndj with ESMTP id a8c92154d25549479df24175237368df for sam@ravnborg.org;
+        Tue, 30 May 2023 12:02:07 CST
+X-Transaction-ID: a8c92154d25549479df24175237368df
+X-Real-From: 15330273260@189.cn
+X-Receive-IP: 114.242.206.180
+X-MEDUSA-Status: 0
+Sender: 15330273260@189.cn
+Message-ID: <f2390274-8c51-f7f9-98b3-8ad3c3f7c2bc@189.cn>
+Date:   Tue, 30 May 2023 12:02:01 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-From:   Devi Priya <quic_devipriy@quicinc.com>
-Subject: Re: (subset) [PATCH V3 0/5] Add APSS clock controller support for
- IPQ9574
-To:     Bjorn Andersson <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <linux-kernel@vger.kernel.org>, <will@kernel.org>, <arnd@arndb.de>,
-        <catalin.marinas@arm.com>, <krzysztof.kozlowski+dt@linaro.org>,
-        <agross@kernel.org>, <jassisinghbrar@gmail.com>,
-        <nfraprado@collabora.com>, <geert+renesas@glider.be>,
-        <sboyd@kernel.org>, <mturquette@baylibre.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-clk@vger.kernel.org>, <rafal@milecki.pl>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <robh+dt@kernel.org>, <dmitry.baryshkov@linaro.org>,
-        <broonie@kernel.org>
-CC:     <quic_arajkuma@quicinc.com>, <quic_kathirav@quicinc.com>,
-        <quic_anusha@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_srichara@quicinc.com>, <quic_ipkumar@quicinc.com>
-References: <20230406061314.10916-1-quic_devipriy@quicinc.com>
- <168512991479.248818.11621497605486086318.b4-ty@kernel.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v4 13/13] drm/i915: Implement dedicated fbdev I/O helpers
+To:     Sam Ravnborg <sam@ravnborg.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     daniel@ffwll.ch, airlied@gmail.com,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        javierm@redhat.com, dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
+        Jani Nikula <jani.nikula@linux.intel.com>,
+        Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+        Rodrigo Vivi <rodrigo.vivi@intel.com>,
+        Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+        =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
+References: <20230524092150.11776-1-tzimmermann@suse.de>
+ <20230524092150.11776-14-tzimmermann@suse.de>
+ <20230529193621.GD1370714@ravnborg.org>
 Content-Language: en-US
-In-Reply-To: <168512991479.248818.11621497605486086318.b4-ty@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 8g5kwYEPPjTnIhW8SIU3jAlS04W-2qzV
-X-Proofpoint-ORIG-GUID: 8g5kwYEPPjTnIhW8SIU3jAlS04W-2qzV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-30_01,2023-05-29_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 spamscore=0
- phishscore=0 mlxscore=0 mlxlogscore=999 bulkscore=0 impostorscore=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305300031
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+From:   Sui Jingfeng <15330273260@189.cn>
+In-Reply-To: <20230529193621.GD1370714@ravnborg.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FROM,FROM_LOCAL_DIGITS,
+        FROM_LOCAL_HEX,NICE_REPLY_A,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
-
-On 5/27/2023 1:08 AM, Bjorn Andersson wrote:
-> On Thu, 6 Apr 2023 11:43:09 +0530, Devi Priya wrote:
->> APSS PLL found in IPQ9574 platform is of type Huayra.
->> This series adds support for the APSS clock to bump the CPU frequency
->> above 800MHz.
+On 2023/5/30 03:36, Sam Ravnborg wrote:
+> Hi Thomas,
+>
+> On Wed, May 24, 2023 at 11:21:50AM +0200, Thomas Zimmermann wrote:
+>> Implement dedicated fbdev helpers for framebuffer I/O instead
+>> of using DRM's helpers. Use an fbdev generator macro for
+>> deferred I/O to create the fbdev callbacks. i915 was the only
+>> caller of the DRM helpers, so remove them from the helper module.
 >>
->> DTS patch is based on the below series
->> https://lore.kernel.org/linux-arm-msm/20230404164828.8031-1-quic_devipriy@quicinc.com/
+>> i915's fbdev emulation is still incomplete as it doesn't implement
+>> deferred I/O and damage handling for mmaped pages.
 >>
->> [...]
-> 
-Thanks! To update on the dependency, This series does not hold any 
-dependencies as the DTS patch cleanly applies on [1] which has already 
-been picked up for linux-next.
+>> v4:
+>> 	* generate deferred-I/O helpers
+>> 	* use initializer macros for fb_ops
+>> v2:
+>> 	* use FB_IO_HELPERS options
+>>
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> Cc: Jani Nikula <jani.nikula@linux.intel.com>
+>> Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+>> Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+>> Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+>> Cc: "Ville Syrjälä" <ville.syrjala@linux.intel.com>
+>> ---
+>>   drivers/gpu/drm/Kconfig                    |   3 -
+>>   drivers/gpu/drm/drm_fb_helper.c            | 107 ---------------------
+>>   drivers/gpu/drm/i915/Kconfig               |   1 +
+>>   drivers/gpu/drm/i915/display/intel_fbdev.c |  14 +--
+>>   include/drm/drm_fb_helper.h                |  39 --------
+>>   5 files changed, 9 insertions(+), 155 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
+>> index 92a782827b7b..bb2e48cc6cd6 100644
+>> --- a/drivers/gpu/drm/Kconfig
+>> +++ b/drivers/gpu/drm/Kconfig
+>> @@ -133,9 +133,6 @@ config DRM_FBDEV_EMULATION
+>>   	bool "Enable legacy fbdev support for your modesetting driver"
+>>   	depends on DRM_KMS_HELPER
+>>   	depends on FB=y || FB=DRM_KMS_HELPER
+>> -	select FB_CFB_FILLRECT
+>> -	select FB_CFB_COPYAREA
+>> -	select FB_CFB_IMAGEBLIT
+>>   	select FRAMEBUFFER_CONSOLE if !EXPERT
+>>   	select FRAMEBUFFER_CONSOLE_DETECT_PRIMARY if FRAMEBUFFER_CONSOLE
+>>   	default y
+>> diff --git a/drivers/gpu/drm/drm_fb_helper.c b/drivers/gpu/drm/drm_fb_helper.c
+>> index bab6b252f02a..9978147bbc8a 100644
+>> --- a/drivers/gpu/drm/drm_fb_helper.c
+>> +++ b/drivers/gpu/drm/drm_fb_helper.c
+>> @@ -736,113 +736,6 @@ void drm_fb_helper_deferred_io(struct fb_info *info, struct list_head *pagerefli
+>>   }
+>>   EXPORT_SYMBOL(drm_fb_helper_deferred_io);
+>>   
+>> -/**
+>> - * drm_fb_helper_cfb_read - Implements struct &fb_ops.fb_read for I/O memory
+>> - * @info: fb_info struct pointer
+>> - * @buf: userspace buffer to read from framebuffer memory
+>> - * @count: number of bytes to read from framebuffer memory
+>> - * @ppos: read offset within framebuffer memory
+>> - *
+>> - * Returns:
+>> - * The number of bytes read on success, or an error code otherwise.
+>> - */
+>> -ssize_t drm_fb_helper_cfb_read(struct fb_info *info, char __user *buf,
+>> -			       size_t count, loff_t *ppos)
+>> -{
+>> -	return fb_io_read(info, buf, count, ppos);
+>> -}
+>> -EXPORT_SYMBOL(drm_fb_helper_cfb_read);
+>> -
+>> -/**
+>> - * drm_fb_helper_cfb_write - Implements struct &fb_ops.fb_write for I/O memory
+>> - * @info: fb_info struct pointer
+>> - * @buf: userspace buffer to write to framebuffer memory
+>> - * @count: number of bytes to write to framebuffer memory
+>> - * @ppos: write offset within framebuffer memory
+>> - *
+>> - * Returns:
+>> - * The number of bytes written on success, or an error code otherwise.
+>> - */
+>> -ssize_t drm_fb_helper_cfb_write(struct fb_info *info, const char __user *buf,
+>> -				size_t count, loff_t *ppos)
+>> -{
+>> -	struct drm_fb_helper *helper = info->par;
+>> -	loff_t pos = *ppos;
+>> -	ssize_t ret;
+>> -	struct drm_rect damage_area;
+>> -
+>> -	ret = fb_io_write(info, buf, count, ppos);
+>> -	if (ret <= 0)
+>> -		return ret;
+>> -
+>> -	if (helper->funcs->fb_dirty) {
+>> -		drm_fb_helper_memory_range_to_clip(info, pos, ret, &damage_area);
+>> -		drm_fb_helper_damage(helper, damage_area.x1, damage_area.y1,
+>> -				     drm_rect_width(&damage_area),
+>> -				     drm_rect_height(&damage_area));
+>> -	}
+> The generated helpers do not have the if (helper->funcs->fb_dirty)
+> check.
 
-[PATCH V3 4/5] arm64: dts: qcom: ipq9574: Add support for APSS clock 
-controller
+Nice catch!
 
-[1] - 
-https://lore.kernel.org/linux-arm-msm/20230517072806.13170-1-quic_kathirav@quicinc.com/
+If I understand this correctly, fb_io_write() will write directly to the 
+ultimate
 
-> Applied, thanks!
-> 
-> [5/5] arm64: defconfig: Enable ipq6018 apss clock and PLL controller
->        commit: 3098f34977480c9aa75cf328501f1b47ec49fec7
-> 
-> Best regards,
+destination. There no need to check if (helper->funcs->fb_dirty) anymore.
+
+code inside the curly brace of  `if (helper->funcs->fb_dirty) { }`  can 
+be delete safely .
+
+
+This could turn out to be an optimization. This is a benefit of 
+untangled implement.
+
+previously this is a generic (tangled) implement, which intended to be 
+used by both
+
+the UMA device driver and non-UMA device(with dedicate VRAM) driver.
+
+
+drm_fbdev_generic always has a shadow screen buffer allocated in system RAM,
+
+  it always has the fb_dirty hooked, so this could be an optimization 
+for fbdev_generic
+
+by eliminate if (helper->funcs->fb_dirty) check.
+
+
+while dma helper based driver could switch to drm_fbdev_dma, they writing
+
+to gem buffer directly, no shadow buffer is needed.
+
+
+With those patch, device driver with dedicated video memory can also 
+choose FB_CFB_*
+
+to update (iomem)framebuffer directly, despite slower.
+
+
+> Is this implemented somewhere else that I missed?
+>
+> 	Sam
+>
+drm_fb_helper_fb_dirty() function has a check:
+
+```
+
+     if (drm_WARN_ON_ONCE(dev, !helper->funcs->fb_dirty))
+         return;
+```
+
+Not sure if this is a little bit too late......
+
+>> -
+>> -	return ret;
+>> -}
+>> -EXPORT_SYMBOL(drm_fb_helper_cfb_write);
+>> -
+>> -/**
+>> - * drm_fb_helper_cfb_fillrect - wrapper around cfb_fillrect
+>> - * @info: fbdev registered by the helper
+>> - * @rect: info about rectangle to fill
+>> - *
+>> - * A wrapper around cfb_fillrect implemented by fbdev core
+>> - */
+>> -void drm_fb_helper_cfb_fillrect(struct fb_info *info,
+>> -				const struct fb_fillrect *rect)
+>> -{
+>> -	struct drm_fb_helper *helper = info->par;
+>> -
+>> -	cfb_fillrect(info, rect);
+>> -
+>> -	if (helper->funcs->fb_dirty)
+>> -		drm_fb_helper_damage(helper, rect->dx, rect->dy, rect->width, rect->height);
+>> -}
+>> -EXPORT_SYMBOL(drm_fb_helper_cfb_fillrect);
+>> -
+>> -/**
+>> - * drm_fb_helper_cfb_copyarea - wrapper around cfb_copyarea
+>> - * @info: fbdev registered by the helper
+>> - * @area: info about area to copy
+>> - *
+>> - * A wrapper around cfb_copyarea implemented by fbdev core
+>> - */
+>> -void drm_fb_helper_cfb_copyarea(struct fb_info *info,
+>> -				const struct fb_copyarea *area)
+>> -{
+>> -	struct drm_fb_helper *helper = info->par;
+>> -
+>> -	cfb_copyarea(info, area);
+>> -
+>> -	if (helper->funcs->fb_dirty)
+>> -		drm_fb_helper_damage(helper, area->dx, area->dy, area->width, area->height);
+>> -}
+>> -EXPORT_SYMBOL(drm_fb_helper_cfb_copyarea);
+>> -
+>> -/**
+>> - * drm_fb_helper_cfb_imageblit - wrapper around cfb_imageblit
+>> - * @info: fbdev registered by the helper
+>> - * @image: info about image to blit
+>> - *
+>> - * A wrapper around cfb_imageblit implemented by fbdev core
+>> - */
+>> -void drm_fb_helper_cfb_imageblit(struct fb_info *info,
+>> -				 const struct fb_image *image)
+>> -{
+>> -	struct drm_fb_helper *helper = info->par;
+>> -
+>> -	cfb_imageblit(info, image);
+>> -
+>> -	if (helper->funcs->fb_dirty)
+>> -		drm_fb_helper_damage(helper, image->dx, image->dy, image->width, image->height);
+>> -}
+>> -EXPORT_SYMBOL(drm_fb_helper_cfb_imageblit);
+>> -
+>>   /**
+>>    * drm_fb_helper_set_suspend - wrapper around fb_set_suspend
+>>    * @fb_helper: driver-allocated fbdev helper, can be NULL
+>> diff --git a/drivers/gpu/drm/i915/Kconfig b/drivers/gpu/drm/i915/Kconfig
+>> index e4f4d2e3fdfe..01b5a8272a27 100644
+>> --- a/drivers/gpu/drm/i915/Kconfig
+>> +++ b/drivers/gpu/drm/i915/Kconfig
+>> @@ -17,6 +17,7 @@ config DRM_I915
+>>   	select DRM_KMS_HELPER
+>>   	select DRM_PANEL
+>>   	select DRM_MIPI_DSI
+>> +	select FB_IO_HELPERS if DRM_FBDEV_EMULATION
+>>   	select RELAY
+>>   	select I2C
+>>   	select I2C_ALGOBIT
+>> diff --git a/drivers/gpu/drm/i915/display/intel_fbdev.c b/drivers/gpu/drm/i915/display/intel_fbdev.c
+>> index aab1ae74a8f7..eccaceaf8b9d 100644
+>> --- a/drivers/gpu/drm/i915/display/intel_fbdev.c
+>> +++ b/drivers/gpu/drm/i915/display/intel_fbdev.c
+>> @@ -28,6 +28,7 @@
+>>   #include <linux/console.h>
+>>   #include <linux/delay.h>
+>>   #include <linux/errno.h>
+>> +#include <linux/fb.h>
+>>   #include <linux/init.h>
+>>   #include <linux/kernel.h>
+>>   #include <linux/mm.h>
+>> @@ -84,6 +85,10 @@ static void intel_fbdev_invalidate(struct intel_fbdev *ifbdev)
+>>   	intel_frontbuffer_invalidate(to_frontbuffer(ifbdev), ORIGIN_CPU);
+>>   }
+>>   
+>> +FB_GEN_DEFAULT_DEFERRED_IO_OPS(intel_fbdev,
+>> +			       drm_fb_helper_damage_range,
+>> +			       drm_fb_helper_damage_area)
+>> +
+>>   static int intel_fbdev_set_par(struct fb_info *info)
+>>   {
+>>   	struct intel_fbdev *ifbdev = to_intel_fbdev(info->par);
+>> @@ -132,15 +137,12 @@ static int intel_fbdev_mmap(struct fb_info *info, struct vm_area_struct *vma)
+>>   
+>>   static const struct fb_ops intelfb_ops = {
+>>   	.owner = THIS_MODULE,
+>> +	__FB_DEFAULT_DEFERRED_OPS_RDWR(intel_fbdev),
+>>   	DRM_FB_HELPER_DEFAULT_OPS,
+>>   	.fb_set_par = intel_fbdev_set_par,
+>> -	.fb_read = drm_fb_helper_cfb_read,
+>> -	.fb_write = drm_fb_helper_cfb_write,
+>> -	.fb_fillrect = drm_fb_helper_cfb_fillrect,
+>> -	.fb_copyarea = drm_fb_helper_cfb_copyarea,
+>> -	.fb_imageblit = drm_fb_helper_cfb_imageblit,
+>> -	.fb_pan_display = intel_fbdev_pan_display,
+>>   	.fb_blank = intel_fbdev_blank,
+>> +	.fb_pan_display = intel_fbdev_pan_display,
+>> +	__FB_DEFAULT_DEFERRED_OPS_DRAW(intel_fbdev),
+>>   	.fb_mmap = intel_fbdev_mmap,
+>>   };
+>>   
+>> diff --git a/include/drm/drm_fb_helper.h b/include/drm/drm_fb_helper.h
+>> index b50fd0c0b713..4863b0f8299e 100644
+>> --- a/include/drm/drm_fb_helper.h
+>> +++ b/include/drm/drm_fb_helper.h
+>> @@ -258,18 +258,6 @@ void drm_fb_helper_damage_area(struct fb_info *info, u32 x, u32 y, u32 width, u3
+>>   
+>>   void drm_fb_helper_deferred_io(struct fb_info *info, struct list_head *pagereflist);
+>>   
+>> -ssize_t drm_fb_helper_cfb_read(struct fb_info *info, char __user *buf,
+>> -			       size_t count, loff_t *ppos);
+>> -ssize_t drm_fb_helper_cfb_write(struct fb_info *info, const char __user *buf,
+>> -				size_t count, loff_t *ppos);
+>> -
+>> -void drm_fb_helper_cfb_fillrect(struct fb_info *info,
+>> -				const struct fb_fillrect *rect);
+>> -void drm_fb_helper_cfb_copyarea(struct fb_info *info,
+>> -				const struct fb_copyarea *area);
+>> -void drm_fb_helper_cfb_imageblit(struct fb_info *info,
+>> -				 const struct fb_image *image);
+>> -
+>>   void drm_fb_helper_set_suspend(struct drm_fb_helper *fb_helper, bool suspend);
+>>   void drm_fb_helper_set_suspend_unlocked(struct drm_fb_helper *fb_helper,
+>>   					bool suspend);
+>> @@ -385,33 +373,6 @@ static inline int drm_fb_helper_defio_init(struct drm_fb_helper *fb_helper)
+>>   	return -ENODEV;
+>>   }
+>>   
+>> -static inline ssize_t drm_fb_helper_cfb_read(struct fb_info *info, char __user *buf,
+>> -					     size_t count, loff_t *ppos)
+>> -{
+>> -	return -ENODEV;
+>> -}
+>> -
+>> -static inline ssize_t drm_fb_helper_cfb_write(struct fb_info *info, const char __user *buf,
+>> -					      size_t count, loff_t *ppos)
+>> -{
+>> -	return -ENODEV;
+>> -}
+>> -
+>> -static inline void drm_fb_helper_cfb_fillrect(struct fb_info *info,
+>> -					      const struct fb_fillrect *rect)
+>> -{
+>> -}
+>> -
+>> -static inline void drm_fb_helper_cfb_copyarea(struct fb_info *info,
+>> -					      const struct fb_copyarea *area)
+>> -{
+>> -}
+>> -
+>> -static inline void drm_fb_helper_cfb_imageblit(struct fb_info *info,
+>> -					       const struct fb_image *image)
+>> -{
+>> -}
+>> -
+>>   static inline void drm_fb_helper_set_suspend(struct drm_fb_helper *fb_helper,
+>>   					     bool suspend)
+>>   {
+>> -- 
+>> 2.40.1
+> _______________________________________________
+> linux-arm-kernel mailing list
+> linux-arm-kernel@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
