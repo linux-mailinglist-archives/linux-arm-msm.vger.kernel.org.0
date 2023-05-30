@@ -2,183 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CB8F371592D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 10:57:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BE6D715991
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 11:10:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230256AbjE3I5G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 04:57:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57102 "EHLO
+        id S229739AbjE3JKk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 05:10:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229728AbjE3I5F (ORCPT
+        with ESMTP id S229701AbjE3JKj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 04:57:05 -0400
-Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA43CAB
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 01:57:03 -0700 (PDT)
-Received: from SoMainline.org (82-72-63-87.cable.dynamic.v4.ziggo.nl [82.72.63.87])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id AE829203BD;
-        Tue, 30 May 2023 10:57:01 +0200 (CEST)
-Date:   Tue, 30 May 2023 10:57:00 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH] drm/msm/dpu: use PINGPONG_NONE to unbind INTF from PP
-Message-ID: <hgfttvf6wz33yuntks6qjy3wd7dccoep42a6awid7kaufswfjz@rxp23xsbq3wa>
-References: <20230526090945.439639-1-dmitry.baryshkov@linaro.org>
- <h33hhvvlwq67uooelhm5wot7hx5utzegxtq3wu25rfrcrjx45n@dznkc26cxz23>
- <CAA8EJpq6cse-cxDSv+a1A0Pn4p0o-a1NO9+3vCDROnkc6gJT2A@mail.gmail.com>
+        Tue, 30 May 2023 05:10:39 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE47EE5;
+        Tue, 30 May 2023 02:10:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de;
+ s=s29768273; t=1685437821; x=1686042621; i=spasswolf@web.de;
+ bh=RowAy7vfc/W3m5IXjtWxalCBrofshNZILX1ZCuc28iM=;
+ h=X-UI-Sender-Class:Subject:From:To:Cc:Date:In-Reply-To:References;
+ b=WTLIKpKLSF6HBEcWMPD/howHFNhRFg2N9g0FVHpkAP60F3c4LKKKVGZfPXOJBz7QHND68Xr
+ OuilMeMOiQ3yFk5ewlEzMnNbV0O0Jhe6Z8mC1K+DeObK+tanlL0s5LDtabeV3ZhwXwk+xkT51
+ 87xmX89e4g6oORLAqqCrGtCtHT129kFobEdvx55poaaZaroP9ONow6fEXk21n8jlWtMjq4H9Q
+ Kj0dnX+DAvypcVvdR8XwfVDn2d9cH84rP7bZIajm6g8fHOC8iaPY2yc1b1usatFZvVEV312tg
+ YDfp8N+phtJGW/44ubZZ7vWxjvy+N/l9zE4t21DApmSyBnv7A/GA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.0.101] ([176.198.191.160]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MwjK2-1qJmUR0vve-00yU3R; Tue, 30
+ May 2023 11:10:21 +0200
+Message-ID: <2b91165f667d3896a0aded39830905f62f725815.camel@web.de>
+Subject: Re: [PATCH net] net: ipa: Use the correct value for IPA_STATUS_SIZE
+From:   Bert Karwatzki <spasswolf@web.de>
+To:     Simon Horman <simon.horman@corigine.com>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>, elder@linaro.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Date:   Tue, 30 May 2023 11:10:19 +0200
+In-Reply-To: <ZHWhEiWtEC9VKOS1@corigine.com>
+References: <7ae8af63b1254ab51d45c870e7942f0e3dc15b1e.camel@web.de>
+         <ZHWhEiWtEC9VKOS1@corigine.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpq6cse-cxDSv+a1A0Pn4p0o-a1NO9+3vCDROnkc6gJT2A@mail.gmail.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Provags-ID: V03:K1:vAmbHNn5RUg4uxRCEOhxAucgIJLGHr907DRoQKnjt00SX6NhbDS
+ FRe2n3RtxZuM4uu65KLNjp7aOJDGwZx8VscLdai7cEgeGF7RxAqS8+EuDbllIbp2y0Xr3dp
+ VW4DY7wtQed1RjPGohtOBehkZhtei252JCAiykewLQHFQwTV8nA8f4WgL43fWGZC/25uwGa
+ i6CpgJAHPb5i14vbRNvwQ==
+UI-OutboundReport: notjunk:1;M01:P0:e7JqOYH10qA=;e+rlnv20da8hcJGA50ZinfEIkEG
+ fYh73inPDTzIxJ+Paxu/duAkSdrj/cuLfLY5nIiGmcML1a02GXDX6w9cnR4FJAed3uKtR/XxU
+ TVmY2vICGVgFDu25zYyTqCH6Bwm9nLP53hqzpeh5rro8qgB2Z+jDFl3PmtwMogFKzC40am8th
+ pvbF3T0NePAzSKM+vv+A++OR6y13fj+X6eUTA+DgIw6KB/Tj5Rcxnswxk5qQOW2jbCwR2vx1E
+ a6WAhy1hbRVdauV6aVW5Urg4pMvKvHbn4zsIwdZI/129Q5RLOeC/y8Jz+10s7nNt0oZhQ22yv
+ m6xVA4euwz1Aih6A7kv7GydYAcVQ5yGCFC2IZg1Q5x21zbXoW/DzatuD7awp5cKW5IunXeq5G
+ fZ7Z3g9KWZYuoe37T3sWzfvwjStVWzXq0L/k2wFHQ94t2l2h4ukvngUHDMhXUAoGKs2OO33sc
+ pKI5OQhUo+zRZJeh9l4dOvu+vgnXWVnQUFJ9QSYi8MreeRlPSZmV5WYyIgUpN3um7GcPzAJxG
+ +CXLTC6DkGwdNwp0I2BAA6wECfMrJ8aWXBKqOWhN69KMMMZvJmbllUMk7PAWKyJPTzO3/mZ6h
+ cVkZR48q/M38LFp4dMsALlvniyzL6qmDgih2ocpWsyaEOog9CEqNpBoceCW66AaHNJQbPuUwD
+ oF7McNxktkmU5EyHkoNTNC8cv/JPNShbYEBk4SjUvT0KMJ4yd9xx4NrQeJ7fCcDgYTHyykRQN
+ vC7Zkdyt+z0c4pA88Qtu4xcuwKaB1Z88/QtAqYEbmzD/mLNs7cthIN1HdiaUBAZhwCrqSJX05
+ 39xhYrSR3tHmKmxQ5ST2pPUO5T1aFZ1hOXHR3YQKDkSpXHc06Ze3bRrbcA219zbK3RiV11Li3
+ 6Gy20Eb4F467VJNKT9KQKyCwM8VvLKUco7oIvbjqPlu17YTHvyYYBeW4CoDqeC59bwhoJU2jW
+ X1RwCrFq0w53lEizlhNJ/CqOYbw=
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-30 01:13:12, Dmitry Baryshkov wrote:
-> On Tue, 30 May 2023 at 00:46, Marijn Suijten
-> <marijn.suijten@somainline.org> wrote:
-> >
-> > On 2023-05-26 12:09:45, Dmitry Baryshkov wrote:
-> > > Currently the driver passes the PINGPONG index to
-> > > dpu_hw_intf_ops::bind_pingpong_blk() callback and uses separate boolean
-> > > flag to tell whether INTF should be bound or unbound. Simplify this by
-> > > passing PINGPONG_NONE in case of unbinding and drop the flag completely.
-> >
-> > Perhaps worth mentioning that this flag was only recently introduced
-> > (and link to it as a dependency under the cut),
-> 
-> The patch is already a part of linux-next. This is the usual boundary
-> of skipping the dependencies.
+Am Dienstag, dem 30.05.2023 um 09:09 +0200 schrieb Simon Horman:
+> On Sat, May 27, 2023 at 10:46:25PM +0200, Bert Karwatzki wrote:
+> > commit b8dc7d0eea5a7709bb534f1b3ca70d2d7de0b42c introduced
+> > IPA_STATUS_SIZE as a replacement for the size of the removed struct
+> > ipa_status. sizeof(struct ipa_status) was sizeof(__le32[8]), use this
+> > as IPA_STATUS_SIZE.
+> >=20
+> > > From 0623148733819bb5d3648b1ed404d57c8b6b31d8 Mon Sep 17 00:00:00 200=
+1
+> > From: Bert Karwatzki <spasswolf@web.de>
+> > Date: Sat, 27 May 2023 22:16:52 +0200
+> > Subject: [PATCH] Use the correct value for IPA_STATUS_SIZE.
+> > IPA_STATUS_SIZE
+> > =C2=A0was introduced in commit b8dc7d0eea5a7709bb534f1b3ca70d2d7de0b42c=
+ as a
+> > =C2=A0replacment for the size of the removed struct ipa_status which ha=
+d
+> > size =3D
+> > =C2=A0sizeof(__le32[8]).
+> >=20
+> > Signed-off-by: Bert Karwatzki <spasswolf@web.de>
+>=20
+> Hi Bert,
+>=20
+> As well as the feedback provided by Jakub elsewhere in this
+> thread I think it would be useful to CC the author of the above mentioned
+> commit, Alex Elder <elder@linaro.org>. I have CCed him on this email.
+> Please consider doing likewise when you post v2.
+>=20
+> FWIIW, I did take a look.
+> And I do agree with your maths: struct ipa_status was 32 (=3D 8 x 4) byte=
+s long.
+>=20
+> > ---
+> > =C2=A0drivers/net/ipa/ipa_endpoint.c | 2 +-
+> > =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
+> >=20
+> > diff --git a/drivers/net/ipa/ipa_endpoint.c
+> > b/drivers/net/ipa/ipa_endpoint.c
+> > index 2ee80ed140b7..afa1d56d9095 100644
+> > --- a/drivers/net/ipa/ipa_endpoint.c
+> > +++ b/drivers/net/ipa/ipa_endpoint.c
+> > @@ -119,7 +119,7 @@ enum ipa_status_field_id {
+> > =C2=A0};
+> > =C2=A0
+> > =C2=A0/* Size in bytes of an IPA packet status structure */
+> > -#define IPA_STATUS_SIZE=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0sizeof(__le32[4])
+> > +#define IPA_STATUS_SIZE=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0sizeof(__le32[8])
+> > =C2=A0
+> > =C2=A0/* IPA status structure decoder; looks up field values for a stru=
+cture
+> > */
+> > =C2=A0static u32 ipa_status_extract(struct ipa *ipa, const void *data,
+> > --=20
+> > 2.40.1
+> >=20
+> > Bert Karwatzki
 
-Excuse me, I forgot about the confusion even after reviewing your patch
-[1] which introduces PINGPONG_NONE, while DSC v14 (sent 3 days after
-your patch was applied) also still introduces the same [2].  This patch
-should likely be rebased and retitled.
+Here is v2 of the patch, the first one was garbled by the linebreak setting=
+ of
+evolution.
 
-[1]: https://lore.kernel.org/dri-devel/20230519234025.2864377-4-dmitry.baryshkov@linaro.org/
-[2]: https://lore.kernel.org/linux-arm-msm/1685036458-22683-6-git-send-email-quic_khsieh@quicinc.com/
+From: Bert Karwatzki <spasswolf@web.de>
+Date: Tue, 30 May 2023 10:55:55 +0200
+Subject: [PATCH] IPA_STATUS_SIZE was introduced in commit b8dc7d0eea5a as a
+ replacement for the size of the removed struct ipa_status of size
+ sizeof(__le32[8]). Use this value as IPA_STATUS_SIZE.
 
-> >  as well as explain that
-> > the passed `enum dpu_pingpong` value is bogus when enable=false because
-> > it is not part of the value written to the register for the
-> > "unbind/disable" case?
-> 
-> Good suggestion.
-> 
-> >  See for example the wording I suggested on the
-> > patch that introduces and uses PINGPONG_NONE.
-> >
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > ---
-> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c          | 4 ++--
-> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 4 +---
-> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 1 -
-> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 3 +--
-> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          | 1 -
-> >
-> > How about appending/sending another patch that drops this from
-> > dpu_hw_wb.c as well?
-> 
-> Ack, nice catch.
-> 
-> >
-> > >  5 files changed, 4 insertions(+), 9 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > > index ebe34eda6e50..7fd3a13ac226 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > > @@ -2102,8 +2102,8 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
-> > >               for (i = 0; i < dpu_enc->num_phys_encs; i++) {
-> > >                       if (dpu_enc->phys_encs[i] && phys_enc->hw_intf->ops.bind_pingpong_blk)
-> > >                               phys_enc->hw_intf->ops.bind_pingpong_blk(
-> > > -                                             dpu_enc->phys_encs[i]->hw_intf, false,
-> > > -                                             dpu_enc->phys_encs[i]->hw_pp->idx);
-> > > +                                             dpu_enc->phys_encs[i]->hw_intf,
-> > > +                                             PINGPONG_NONE);
-> > >
-> > >                       /* mark INTF flush as pending */
-> > >                       if (phys_enc->hw_ctl->ops.update_pending_flush_intf)
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> > > index 1a4c20f02312..3130c86a32cc 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-> > > @@ -66,7 +66,6 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
-> > >       if (test_bit(DPU_CTL_ACTIVE_CFG, &ctl->caps->features) && phys_enc->hw_intf->ops.bind_pingpong_blk)
-> > >               phys_enc->hw_intf->ops.bind_pingpong_blk(
-> > >                               phys_enc->hw_intf,
-> > > -                             true,
-> > >                               phys_enc->hw_pp->idx);
-> > >
-> > >       if (phys_enc->hw_intf->ops.enable_compression)
-> > > @@ -556,8 +555,7 @@ static void dpu_encoder_phys_cmd_disable(struct dpu_encoder_phys *phys_enc)
-> > >       if (phys_enc->hw_intf->ops.bind_pingpong_blk) {
-> > >               phys_enc->hw_intf->ops.bind_pingpong_blk(
-> > >                               phys_enc->hw_intf,
-> > > -                             false,
-> > > -                             phys_enc->hw_pp->idx);
-> > > +                             PINGPONG_NONE);
-> >
-> > Is there also a cleanup state where hw_pp is assigned back to NULL?
-> 
-> No. None of the encoder resources are reassigned to NULL. I will tend
-> this topic during vN of resource allocation rework.
-> 
-> >
-> > >               ctl = phys_enc->hw_ctl;
-> > >               ctl->ops.update_pending_flush_intf(ctl, phys_enc->intf_idx);
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> > > index 3a374292f311..220020273304 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
-> > > @@ -287,7 +287,6 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
-> > >       if (phys_enc->hw_intf->ops.bind_pingpong_blk)
-> > >               phys_enc->hw_intf->ops.bind_pingpong_blk(
-> > >                               phys_enc->hw_intf,
-> > > -                             true,
-> > >                               phys_enc->hw_pp->idx);
-> > >
-> > >       if (phys_enc->hw_pp->merge_3d)
-> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> > > index a2486f99d3c2..918d154848b9 100644
-> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> > > @@ -268,7 +268,6 @@ static void dpu_hw_intf_setup_prg_fetch(
-> > >
-> > >  static void dpu_hw_intf_bind_pingpong_blk(
-> > >               struct dpu_hw_intf *intf,
-> > > -             bool enable,
-> > >               const enum dpu_pingpong pp)
-> > >  {
-> > >       struct dpu_hw_blk_reg_map *c = &intf->hw;
-> > > @@ -277,7 +276,7 @@ static void dpu_hw_intf_bind_pingpong_blk(
-> > >       mux_cfg = DPU_REG_READ(c, INTF_MUX);
-> > >       mux_cfg &= ~0xf;
-> > >
-> > > -     if (enable)
-> > > +     if (pp != PINGPONG_NONE)
-> >
-> > Kuogee just used `if (pp)`, I think we should stay consistent.
-> 
-> Sure. The rest of the driver usually compares to foo_NONE.
+Signed-off-by: Bert Karwatzki <spasswolf@web.de>
+---
+ drivers/net/ipa/ipa_endpoint.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-If that is the common way to do it, that DSC patch [2] should also use a
-an explicit comparison instead of assuming PINGPONG_NONE = 0?
+diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint.=
+c
+index 2ee80ed140b7..afa1d56d9095 100644
+--- a/drivers/net/ipa/ipa_endpoint.c
++++ b/drivers/net/ipa/ipa_endpoint.c
+@@ -119,7 +119,7 @@ enum ipa_status_field_id {
+ };
+=20
+ /* Size in bytes of an IPA packet status structure */
+-#define IPA_STATUS_SIZE			sizeof(__le32[4])
++#define IPA_STATUS_SIZE			sizeof(__le32[8])
+=20
+ /* IPA status structure decoder; looks up field values for a structure */
+ static u32 ipa_status_extract(struct ipa *ipa, const void *data,
+--=20
+2.40.1
 
-- Marijn
+
