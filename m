@@ -2,141 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3296E7158E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 10:41:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB8F371592D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 10:57:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229475AbjE3Ilk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 04:41:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50526 "EHLO
+        id S230256AbjE3I5G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 04:57:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230481AbjE3IlW (ORCPT
+        with ESMTP id S229728AbjE3I5F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 04:41:22 -0400
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA310193
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 01:41:20 -0700 (PDT)
+        Tue, 30 May 2023 04:57:05 -0400
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA43CAB
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 01:57:03 -0700 (PDT)
 Received: from SoMainline.org (82-72-63-87.cable.dynamic.v4.ziggo.nl [82.72.63.87])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 8B8B820311;
-        Tue, 30 May 2023 10:41:18 +0200 (CEST)
-Date:   Tue, 30 May 2023 10:41:17 +0200
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id AE829203BD;
+        Tue, 30 May 2023 10:57:01 +0200 (CEST)
+Date:   Tue, 30 May 2023 10:57:00 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Caleb Connolly <caleb@connolly.tech>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
         David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>
-Subject: Re: [PATCH RFC 03/10] drm/panel: Add LGD panel driver for Sony
- Xperia XZ3
-Message-ID: <63qt5jmdi5qg7tvhbb7vk75kz53wmygc7iubwprfhcc3hvgwuv@ildrzq32ese3>
-References: <20230521-drm-panels-sony-v1-0-541c341d6bee@somainline.org>
- <20230521-drm-panels-sony-v1-3-541c341d6bee@somainline.org>
- <ccc97880-8e74-b85b-9679-9c12c44c4b99@linaro.org>
- <brmrqeajbq3oyp3jjwmc6tuhiftz764u6az444xw6g7pwf5fr3@5tlp375qwhed>
- <617c8f8a-1fc7-c6a0-eaa5-ce75ff2adc1b@linaro.org>
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH] drm/msm/dpu: use PINGPONG_NONE to unbind INTF from PP
+Message-ID: <hgfttvf6wz33yuntks6qjy3wd7dccoep42a6awid7kaufswfjz@rxp23xsbq3wa>
+References: <20230526090945.439639-1-dmitry.baryshkov@linaro.org>
+ <h33hhvvlwq67uooelhm5wot7hx5utzegxtq3wu25rfrcrjx45n@dznkc26cxz23>
+ <CAA8EJpq6cse-cxDSv+a1A0Pn4p0o-a1NO9+3vCDROnkc6gJT2A@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <617c8f8a-1fc7-c6a0-eaa5-ce75ff2adc1b@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+In-Reply-To: <CAA8EJpq6cse-cxDSv+a1A0Pn4p0o-a1NO9+3vCDROnkc6gJT2A@mail.gmail.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-30 09:24:24, Neil Armstrong wrote:
-> Hi Marijn, Dmitry, Caleb, Jessica,
+On 2023-05-30 01:13:12, Dmitry Baryshkov wrote:
+> On Tue, 30 May 2023 at 00:46, Marijn Suijten
+> <marijn.suijten@somainline.org> wrote:
+> >
+> > On 2023-05-26 12:09:45, Dmitry Baryshkov wrote:
+> > > Currently the driver passes the PINGPONG index to
+> > > dpu_hw_intf_ops::bind_pingpong_blk() callback and uses separate boolean
+> > > flag to tell whether INTF should be bound or unbound. Simplify this by
+> > > passing PINGPONG_NONE in case of unbinding and drop the flag completely.
+> >
+> > Perhaps worth mentioning that this flag was only recently introduced
+> > (and link to it as a dependency under the cut),
 > 
-> On 29/05/2023 23:11, Marijn Suijten wrote:
-> > On 2023-05-22 04:16:20, Dmitry Baryshkov wrote:
-> > <snip>
-> >>> +	if (ctx->dsi->dsc) {
-> >>
-> >> dsi->dsc is always set, thus this condition can be dropped.
-> > 
-> > I want to leave room for possibly running the panel without DSC (at a
-> > lower resolution/refresh rate, or at higher power consumption if there
-> > is enough BW) by not assigning the pointer, if we get access to panel
-> > documentation: probably one of the magic commands sent in this driver
-> > controls it but we don't know which.
-> 
-> I'd like to investigate if DSC should perhaps only be enabled if we
-> run non certain platforms/socs ?
-> 
-> I mean, we don't know if the controller supports DSC and those particular
-> DSC parameters so we should probably start adding something like :
-> 
-> static drm_dsc_config dsc_params_qcom = {}
-> 
-> static const struct of_device_id panel_of_dsc_params[] = {
-> 	{ .compatible = "qcom,sm8150", , .data = &dsc_params_qcom },
-> 	{ .compatible = "qcom,sm8250", , .data = &dsc_params_qcom },
-> 	{ .compatible = "qcom,sm8350", , .data = &dsc_params_qcom },
-> 	{ .compatible = "qcom,sm8450", , .data = &dsc_params_qcom },
-> };
+> The patch is already a part of linux-next. This is the usual boundary
+> of skipping the dependencies.
 
-I'd absolutely hate hardcoding a list of compatible SoC names in a panel
-driver.  For one these lists will fall out of date really soon even if
-we store this list in a generic place: even the current DPU catalog and
-new entries floating on the lists weren't faithfully representing DSC
-capabilities (but that's all being / been fixed now).
+Excuse me, I forgot about the confusion even after reviewing your patch
+[1] which introduces PINGPONG_NONE, while DSC v14 (sent 3 days after
+your patch was applied) also still introduces the same [2].  This patch
+should likely be rebased and retitled.
 
-What's more, most of these panel drivers are "hardcoded" for a specific
-(smartphone) device (and SoC...) since we don't (usually) have the
-DrIC/panel name nor documentation to make the commands generic enough.
-I don't think we should be specific on that end, while being generic on
-the DSC side.
+[1]: https://lore.kernel.org/dri-devel/20230519234025.2864377-4-dmitry.baryshkov@linaro.org/
+[2]: https://lore.kernel.org/linux-arm-msm/1685036458-22683-6-git-send-email-quic_khsieh@quicinc.com/
 
-That does mean I'll remove the if (dsc) here, as Dmitry noted most of
-this driver expects/requires it is enabled.
-
-> ...
-> static int sony_akatsuki_lgd_probe(struct mipi_dsi_device *dsi)
-> ...
-> 	const struct of_device_id *match;
+> >  as well as explain that
+> > the passed `enum dpu_pingpong` value is bogus when enable=false because
+> > it is not part of the value written to the register for the
+> > "unbind/disable" case?
 > 
-> ...
-> 	match = of_match_node(panel_of_dsc_params, of_root);
-> 	if (match && match->data) {
-> 		dsi->dsc = devm_kzalloc(&dsi->dev, sizeof(*dsc), GFP_KERNEL);
-> 		memcpy(dsi->dsc, match->data, sizeof(*dsc));
-> 	} else {
-> 		dev_warn(&dsi->dev, "DSI controller is not marked as supporting DSC\n");
-> 	}
-> ...
-> }
+> Good suggestion.
 > 
-> and probably bail out if it's a DSC only panel.
+> >  See for example the wording I suggested on the
+> > patch that introduces and uses PINGPONG_NONE.
+> >
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > ---
+> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c          | 4 ++--
+> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 4 +---
+> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c | 1 -
+> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 3 +--
+> > >  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          | 1 -
+> >
+> > How about appending/sending another patch that drops this from
+> > dpu_hw_wb.c as well?
 > 
-> We could alternatively match on the DSI controller's dsi->host->dev instead of the SoC root compatible.
+> Ack, nice catch.
+> 
+> >
+> > >  5 files changed, 4 insertions(+), 9 deletions(-)
+> > >
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > index ebe34eda6e50..7fd3a13ac226 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > > @@ -2102,8 +2102,8 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
+> > >               for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+> > >                       if (dpu_enc->phys_encs[i] && phys_enc->hw_intf->ops.bind_pingpong_blk)
+> > >                               phys_enc->hw_intf->ops.bind_pingpong_blk(
+> > > -                                             dpu_enc->phys_encs[i]->hw_intf, false,
+> > > -                                             dpu_enc->phys_encs[i]->hw_pp->idx);
+> > > +                                             dpu_enc->phys_encs[i]->hw_intf,
+> > > +                                             PINGPONG_NONE);
+> > >
+> > >                       /* mark INTF flush as pending */
+> > >                       if (phys_enc->hw_ctl->ops.update_pending_flush_intf)
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> > > index 1a4c20f02312..3130c86a32cc 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> > > @@ -66,7 +66,6 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
+> > >       if (test_bit(DPU_CTL_ACTIVE_CFG, &ctl->caps->features) && phys_enc->hw_intf->ops.bind_pingpong_blk)
+> > >               phys_enc->hw_intf->ops.bind_pingpong_blk(
+> > >                               phys_enc->hw_intf,
+> > > -                             true,
+> > >                               phys_enc->hw_pp->idx);
+> > >
+> > >       if (phys_enc->hw_intf->ops.enable_compression)
+> > > @@ -556,8 +555,7 @@ static void dpu_encoder_phys_cmd_disable(struct dpu_encoder_phys *phys_enc)
+> > >       if (phys_enc->hw_intf->ops.bind_pingpong_blk) {
+> > >               phys_enc->hw_intf->ops.bind_pingpong_blk(
+> > >                               phys_enc->hw_intf,
+> > > -                             false,
+> > > -                             phys_enc->hw_pp->idx);
+> > > +                             PINGPONG_NONE);
+> >
+> > Is there also a cleanup state where hw_pp is assigned back to NULL?
+> 
+> No. None of the encoder resources are reassigned to NULL. I will tend
+> this topic during vN of resource allocation rework.
+> 
+> >
+> > >               ctl = phys_enc->hw_ctl;
+> > >               ctl->ops.update_pending_flush_intf(ctl, phys_enc->intf_idx);
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> > > index 3a374292f311..220020273304 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+> > > @@ -287,7 +287,6 @@ static void dpu_encoder_phys_vid_setup_timing_engine(
+> > >       if (phys_enc->hw_intf->ops.bind_pingpong_blk)
+> > >               phys_enc->hw_intf->ops.bind_pingpong_blk(
+> > >                               phys_enc->hw_intf,
+> > > -                             true,
+> > >                               phys_enc->hw_pp->idx);
+> > >
+> > >       if (phys_enc->hw_pp->merge_3d)
+> > > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> > > index a2486f99d3c2..918d154848b9 100644
+> > > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> > > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> > > @@ -268,7 +268,6 @@ static void dpu_hw_intf_setup_prg_fetch(
+> > >
+> > >  static void dpu_hw_intf_bind_pingpong_blk(
+> > >               struct dpu_hw_intf *intf,
+> > > -             bool enable,
+> > >               const enum dpu_pingpong pp)
+> > >  {
+> > >       struct dpu_hw_blk_reg_map *c = &intf->hw;
+> > > @@ -277,7 +276,7 @@ static void dpu_hw_intf_bind_pingpong_blk(
+> > >       mux_cfg = DPU_REG_READ(c, INTF_MUX);
+> > >       mux_cfg &= ~0xf;
+> > >
+> > > -     if (enable)
+> > > +     if (pp != PINGPONG_NONE)
+> >
+> > Kuogee just used `if (pp)`, I think we should stay consistent.
+> 
+> Sure. The rest of the driver usually compares to foo_NONE.
 
-I'd much rather have the DSI host/controller state whether it is capable
-of DSC (likely allowing us to expose different modes for panels that
-support toggling DSC), but for starters also validate (in DPU?) that the
-pointer is NULL when the hardware does not support it (but maybe that
-already happens implicitly somewhere in e.g.
-dpu_encoder_virt_atomic_mode_set when finding the DSC blocks).
+If that is the common way to do it, that DSC patch [2] should also use a
+an explicit comparison instead of assuming PINGPONG_NONE = 0?
 
 - Marijn
