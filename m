@@ -2,151 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C1AE715BA5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 12:22:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BC55715BCE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 12:31:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231517AbjE3KWQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 06:22:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52536 "EHLO
+        id S229919AbjE3Kbh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 06:31:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231588AbjE3KVa (ORCPT
+        with ESMTP id S231321AbjE3Kbd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 06:21:30 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B318E6E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 03:20:31 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f3a611b3ddso6629359e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 03:20:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685442030; x=1688034030;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=icKa1TRoM7DxejwPmdVHGrJaHkiX0Km/DDITg5zb2s4=;
-        b=YZi+UfbQYz7t48Wol2/Wyu6Qfj80RS0lW7omeRsHrtjNm5tFmQFrPhwLE1ikHHw4xd
-         mFelSppQgYgOdjHtJLYtYvMZpeBEcmBCauPZP54E/QsD1IjGmCf+h5kxtVYpJBSq4alM
-         ux2TteNF6Mgrzu63KZllpBB8Z0meZkZiLXHkvphipdg+a9Q/B+x1UWiGWO/vD6Tf2fej
-         phiYblDBmiP09bUkIkRtZfxTSre51NHPL4BSMsiF5ECKHraNyeriGg77yPDbPl91Mak1
-         md5y65S6MDMHxwPt+Iw3804HyoApSmQhrkiPtkVunZ/JyXYNYZcZmnzkzzWPGHpkSMYg
-         cdcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685442030; x=1688034030;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=icKa1TRoM7DxejwPmdVHGrJaHkiX0Km/DDITg5zb2s4=;
-        b=WFKJXcLzNw0ax17USiD9MC3KcX1QPpsnsrWdnparS6jXPAqAoqIsSzbqRLmjLDQHvp
-         fUZcH8uOOj+H6Iy76rfYqJs5waCcHQJ3by8d58hbiwu33JdFexbL58AREFwFW+VdWrWe
-         hJWuzPtqoVVB0DjxrzEByfSC3l8RQd4pamoZyZH9Viy2HX5DKzPTPO/gsWsKGW9p4gnk
-         4duZ+cSAidoGgqb089fXyWKgxI5s0HnVU3Jhzn3huG2GgXbKIt3z5sbYwFILPq8mbVcc
-         h/fDe96uGBZgdkpGTjWWdR65o8tvPoUeAmaBbHRpws9C31B5j+Dp0IGBiUr9B0kXeVXt
-         pt2w==
-X-Gm-Message-State: AC+VfDz/3Xe3I9Y9ZJoaZwGOeZ29B+R/ltO/ks3WNsfdXkIh6Xws86hB
-        wjINloCJ2W/QciZbtLalnALGlg==
-X-Google-Smtp-Source: ACHHUZ7jPScxjpLTKucDXjf+vYaR3gcwVgpOngsLOvc74dQRNDzywoqe0oXy9JGGDR+TUKM77Wj1ww==
-X-Received: by 2002:ac2:41c5:0:b0:4f3:b9c8:5da with SMTP id d5-20020ac241c5000000b004f3b9c805damr607469lfi.33.1685442029999;
-        Tue, 30 May 2023 03:20:29 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id c25-20020ac24159000000b004cc8196a308sm290902lfi.98.2023.05.30.03.20.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 May 2023 03:20:29 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 30 May 2023 12:20:19 +0200
-Subject: [PATCH 20/20] interconnect: qcom: Divide clk rate by src node bus
- width
+        Tue, 30 May 2023 06:31:33 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F5D118D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 03:31:16 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D59D8623CF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 10:31:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC48C4339B;
+        Tue, 30 May 2023 10:31:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685442675;
+        bh=isNg8G9UAkzkCfwz0fquUKYOKQOroneXLwlqoTJcDjk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Qi5Wf+FJR7bJyG9rMnZeEQi/LREtl2OPSa/0q9FSGvFNh17vUwEpv3exaWi5SRwoM
+         qkx4kW13vxi/gG8Nmn/3IhAvHke6LH9bU2YG61Ky0CEcp7NQ83MAddkS3ygq895nnE
+         Rz+D4nVpaRJZL3rLwple4z8imHZ8FC2pWZUht03lXnjvE3xhOXNreZj+fUo6Loduby
+         xPk/sKK7SKE/9A4BPD/cgCeL8hBjYasCpOYXD+/8F8S2zFcPoHPfwdgl1+TRE8jsyb
+         TZk56TbBK0MFc20jWVZN1TOk3BKNdyVWyJQsUg7iKTiHvxBpzwvgcNghuTOsC9Ucxe
+         Bl4lLw4cXap4g==
+Date:   Tue, 30 May 2023 16:01:03 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Daniele Palmas <dnlplm@gmail.com>
+Cc:     Siddartha Mohanadoss <smohanad@codeaurora.org>,
+        Sujeev Dias <sdias@codeaurora.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/1] bus: mhi: host: allow SBL as initial EE
+Message-ID: <20230530103103.GB6379@thinkpad>
+References: <20230530091340.3513141-1-dnlplm@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230526-topic-smd_icc-v1-20-1bf8e6663c4e@linaro.org>
-References: <20230526-topic-smd_icc-v1-0-1bf8e6663c4e@linaro.org>
-In-Reply-To: <20230526-topic-smd_icc-v1-0-1bf8e6663c4e@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Leo Yan <leo.yan@linaro.org>, Evan Green <evgreen@chromium.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1685442001; l=2453;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=A2xuhtZVawiVfe99Wd1nS5W5Zg3I4zNjmwvGs3s+zi0=;
- b=hkQXVBfrqCLUDeLOKO2rhZ5dD/3o6xqfIHgI3EXCatqQweKw8yTc3FhFffUDySUhf/LCxUByx
- +Yb4EPlILCzAbDncb5Lgpb65iONQ74ZFI9cP48gahIkZsk8/cTTuqBk
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230530091340.3513141-1-dnlplm@gmail.com>
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Ever since the introduction of SMD RPM ICC, we've been dividing the
-clock rate by the wrong bus width. This has resulted in:
+On Tue, May 30, 2023 at 11:13:40AM +0200, Daniele Palmas wrote:
+> There are situations in which SBL is a legitimate initial execution
+> environment (e.g. modem stuck in SBL due to a firmware failure...), but
+> mhi refuses to start:
+> 
+> mhi-pci-generic 0000:01:00.0: MHI PCI device found: foxconn-sdx55
+> mhi-pci-generic 0000:01:00.0: BAR 0: assigned
+> mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
+> mhi mhi0: Requested to power ON
+> mhi mhi0: SECONDARY BOOTLOADER is not a valid EE for power on
+> mhi-pci-generic 0000:01:00.0: failed to power up MHI controller
+> mhi-pci-generic: probe of 0000:01:00.0 failed with error -5
+> 
+> Fix this by adding SBL as an allowed initial execution environment.
+> 
 
-- setting wrong (mostly too low) rates, affecting performance
-  - most often /2 or /4
-  - things like DDR never hit their full potential
-  - the rates were only correct if src bus width == dst bus width
-    for all src, dst pairs on a given bus
+What can you do with the modem when firmware failure happens? If there is a
+usecase, please explain.
 
-- Qualcomm using the same wrong logic in their BSP driver in msm-5.x
-  that ships in production devices today
+- Mani
 
-- me losing my sanity trying to find this
-
-Resolve it by using dst_qn, if it exists.
-
-Fixes: 5e4e6c4d3ae0 ("interconnect: qcom: Add QCS404 interconnect provider driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/interconnect/qcom/icc-rpm.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-index 59be704364bb..58e2a8b1b7c3 100644
---- a/drivers/interconnect/qcom/icc-rpm.c
-+++ b/drivers/interconnect/qcom/icc-rpm.c
-@@ -340,7 +340,7 @@ static void qcom_icc_bus_aggregate(struct icc_provider *provider,
- static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- {
- 	struct qcom_icc_provider *qp;
--	struct qcom_icc_node *src_qn = NULL, *dst_qn = NULL;
-+	struct qcom_icc_node *src_qn = NULL, *dst_qn = NULL, *qn = NULL;
- 	struct icc_provider *provider;
- 	u64 active_rate, sleep_rate;
- 	u64 agg_avg[QCOM_SMD_RPM_STATE_NUM], agg_peak[QCOM_SMD_RPM_STATE_NUM];
-@@ -353,6 +353,8 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- 	provider = src->provider;
- 	qp = to_qcom_provider(provider);
- 
-+	qn = dst_qn ? dst_qn : src_qn;
-+
- 	qcom_icc_bus_aggregate(provider, agg_avg, agg_peak, &max_agg_avg);
- 
- 	ret = qcom_icc_rpm_set(src_qn, agg_avg);
-@@ -372,11 +374,11 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- 	/* Intentionally keep the rates in kHz as that's what RPM accepts */
- 	active_rate = max(agg_avg[QCOM_SMD_RPM_ACTIVE_STATE],
- 			  agg_peak[QCOM_SMD_RPM_ACTIVE_STATE]);
--	do_div(active_rate, src_qn->buswidth);
-+	do_div(active_rate, qn->buswidth);
- 
- 	sleep_rate = max(agg_avg[QCOM_SMD_RPM_SLEEP_STATE],
- 			 agg_peak[QCOM_SMD_RPM_SLEEP_STATE]);
--	do_div(sleep_rate, src_qn->buswidth);
-+	do_div(sleep_rate, qn->buswidth);
- 
- 	/*
- 	 * Downstream checks whether the requested rate is zero, but it makes little sense
+> Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
+> Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+> ---
+>  drivers/bus/mhi/host/internal.h | 2 +-
+>  drivers/bus/mhi/host/pm.c       | 3 ++-
+>  2 files changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+> index 2e139e76de4c..3bdcd2321aa5 100644
+> --- a/drivers/bus/mhi/host/internal.h
+> +++ b/drivers/bus/mhi/host/internal.h
+> @@ -56,7 +56,7 @@ extern const char * const mhi_ee_str[MHI_EE_MAX];
+>  
+>  #define MHI_IN_PBL(ee) (ee == MHI_EE_PBL || ee == MHI_EE_PTHRU || \
+>  			ee == MHI_EE_EDL)
+> -#define MHI_POWER_UP_CAPABLE(ee) (MHI_IN_PBL(ee) || ee == MHI_EE_AMSS)
+> +#define MHI_POWER_UP_CAPABLE(ee) (MHI_IN_PBL(ee) || ee == MHI_EE_AMSS || ee == MHI_EE_SBL)
+>  #define MHI_FW_LOAD_CAPABLE(ee) (ee == MHI_EE_PBL || ee == MHI_EE_EDL)
+>  #define MHI_IN_MISSION_MODE(ee) (ee == MHI_EE_AMSS || ee == MHI_EE_WFW || \
+>  				 ee == MHI_EE_FP)
+> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+> index 083459028a4b..18872c5017be 100644
+> --- a/drivers/bus/mhi/host/pm.c
+> +++ b/drivers/bus/mhi/host/pm.c
+> @@ -1203,10 +1203,11 @@ int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
+>  
+>  	wait_event_timeout(mhi_cntrl->state_event,
+>  			   MHI_IN_MISSION_MODE(mhi_cntrl->ee) ||
+> +			   mhi_cntrl->ee == MHI_EE_SBL ||
+>  			   MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
+>  			   msecs_to_jiffies(mhi_cntrl->timeout_ms));
+>  
+> -	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -ETIMEDOUT;
+> +	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee) || mhi_cntrl->ee == MHI_EE_SBL) ? 0 : -ETIMEDOUT;
+>  	if (ret)
+>  		mhi_power_down(mhi_cntrl, false);
+>  
+> -- 
+> 2.37.1
+> 
 
 -- 
-2.40.1
-
+மணிவண்ணன் சதாசிவம்
