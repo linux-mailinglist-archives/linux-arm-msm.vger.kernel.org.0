@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 21FE7717149
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 01:07:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B6C6C717156
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 01:09:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233702AbjE3XGr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 19:06:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38008 "EHLO
+        id S233669AbjE3XIO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 19:08:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233741AbjE3XGm (ORCPT
+        with ESMTP id S233593AbjE3XIN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 19:06:42 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71FDA18D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:06:28 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f4c264f6c6so6005394e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:06:28 -0700 (PDT)
+        Tue, 30 May 2023 19:08:13 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C68D19D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:07:42 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2af20198f20so53446111fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 16:07:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685487986; x=1688079986;
+        d=linaro.org; s=google; t=1685488060; x=1688080060;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xoE1Va3lrsP1lB13pDuMNR1cXTdryjflT/7nlUUK6Rc=;
-        b=b8/2G2fdB+56Tbp9PnkNRhs5zFlFXYvGJknohLMPNOc8uFbDoU7RrOpy1kpJmg62J2
-         rpiEGcZb5E3uM0apJGYSHoKc79LHtMJK4iKqj8feuEdQKGe6HYTGghnT6fWUO4BojeIj
-         kqsExpqKuk7NPJlRZ6MverGw+84MZ3hI722UbTviJx+de3ks7uwqsijSdfNZUqsOnXJ9
-         QEVeHO66RRKg1fkOq31yvRLLsaWR30CmZmyQO1zHM9TEH4Mg/C3xw1+QO0lLpHVXgkeJ
-         g3A9V6bXQztxaXY7JWnu27nqbRkUhRs4pB/YEF1qtin0twCYiJdNQMbuBmV41x0Q1CeS
-         DW/Q==
+        bh=aZBYZqm2QX9cYcGeEqnnE5rqTJSxRk4/JBiXuTiUxM0=;
+        b=ulU+69wC13TRns9H2O4cl+nn9Tz8PwxPmBGH5PNA5IJHmcDcqr4OY3NcBQ5ialQbdJ
+         bL9wumq+ipUUiEBgXf+dQO64M5/jlSPXdd9TOXfLDyi34sLTtdCae1lPq+Lov8MZTt11
+         GPFB53UzyMHTv0GbSXrrQkVs2s7tRGqyyw5UiBm19a2fjdjsnwN/JZJn5WIM6tDvB0zy
+         BSIGjGnT0AHRIdP/VKdLLE/EH5z8y36+GJWsh5R/nl/nbS5r36LdNEj0OrWN1WTVnEL3
+         UzNufZw6i23RzNQIsWiLs+A1gUGcYNTSMFwQjelbwHM+OnEp/FOgYgpEzYp5JBD0blNU
+         zUOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685487986; x=1688079986;
+        d=1e100.net; s=20221208; t=1685488060; x=1688080060;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xoE1Va3lrsP1lB13pDuMNR1cXTdryjflT/7nlUUK6Rc=;
-        b=TV4DOS11E2SDn3dlyezdr3liCkGAB2tIGxVINPcmJmpmFFN8x5HwxkuveUPJCefeIA
-         dcQv+TRCyWrqNLORiN4DwURF3SmFbhM71FAa/U7QH4vCG9GPC7JPTIxXrNzXUftFS/6M
-         RC/IocJyOlBZRGhbA7KCY8Qm/i5X6UDJNMFgQuR/hggtRVrhzFCq0poF4IJWpTO0sQ6y
-         JEScwNDSF1nlfdGZaPZEuh+xWBvWeeyzjISpKk7/3uqR2V9vaX6wcRhrJl0ULfCxfc7o
-         ewNMmVk7l9jtHAGd7JZAlU+rMOAX7w0NvOd8cy7HFmkcE7VGVH37TpZnxn31qoz3gbvs
-         om4Q==
-X-Gm-Message-State: AC+VfDwrnAakErGxbcP8191If6/snzBmcJM67k+vQMMZmPgGHrx0eTTo
-        vuQzfav+Py/+uIUyaiLA/A0/Ug==
-X-Google-Smtp-Source: ACHHUZ5vqEiOKQt+AwXDfF7NvKz9AQrvbyjiDTMb/5ktfTARtcQduzonA0aupU0Gc6Bo6oCvvzki8w==
-X-Received: by 2002:ac2:5a0d:0:b0:4f3:aaea:6d48 with SMTP id q13-20020ac25a0d000000b004f3aaea6d48mr1515508lfn.63.1685487986417;
-        Tue, 30 May 2023 16:06:26 -0700 (PDT)
+        bh=aZBYZqm2QX9cYcGeEqnnE5rqTJSxRk4/JBiXuTiUxM0=;
+        b=A59h9gwoQyxDrt35Fs1zK3+FAzq+xvh6zaJs1lTDAe4LPxjPwGk46Mz+ULKUoqUN/w
+         QJ0yVl7sVF8rNTDwO4ByUKj1MtRtsy4Xg1eP56pYwxUZNr2G3wIS0BmPfFDC7I/8ghx/
+         Mc1QqvOCsCGL2ehMba0ejuo8BL6uUuDb/RYJ4ck4u8ql0EMXX2//TSFwENhxOwpdxb+9
+         0QCH9NLtcNkuYGCpWoUz4eWbde5KqQt2oPrxvfbnJbBlTgSabQNKXmf5gA2pLLJRkm5Z
+         PToCoD6aAb9ynlVcPiTvPVH7dDPFAwq2pGmtbJ8uFu3UNjb6gQqJLrV+cR4eOYiAsqUl
+         Dprw==
+X-Gm-Message-State: AC+VfDygjMvONGJmAaLi7NOFs0w1n9JpfxGNKSuTXwlw/yi95t4eaC0c
+        tQRNZ+tAeSPqN3q2Y7gb9a0D/A==
+X-Google-Smtp-Source: ACHHUZ5Ej9llgNKtAHQ57gkDu3OnNpoWD2Lx9icO+8TRpW35FdeXVdc2sZL1MNWqROBGbmmQgDUuwQ==
+X-Received: by 2002:a05:651c:10b:b0:2af:d2ef:49d4 with SMTP id a11-20020a05651c010b00b002afd2ef49d4mr1515001ljb.1.1685488060177;
+        Tue, 30 May 2023 16:07:40 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id f12-20020a19ae0c000000b004f378fbb358sm483832lfc.112.2023.05.30.16.06.25
+        by smtp.gmail.com with ESMTPSA id u3-20020a2e9b03000000b002aeee2a093csm3044298lji.59.2023.05.30.16.07.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 16:06:25 -0700 (PDT)
-Message-ID: <dfa12c8b-ccec-261c-9c83-54536e17c02d@linaro.org>
-Date:   Wed, 31 May 2023 02:06:24 +0300
+        Tue, 30 May 2023 16:07:39 -0700 (PDT)
+Message-ID: <64fbc753-d8aa-6845-c530-f76999e8c7b9@linaro.org>
+Date:   Wed, 31 May 2023 02:07:38 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v1 2/3] drm/msm/dpu: retrieve DSI DSC struct at
- atomic_check()
+Subject: Re: [PATCH v1 3/3] drm/msm/dpu: remove msm_dsi_get_dsc_config()
 Content-Language: en-GB
 To:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
         dri-devel@lists.freedesktop.org, robdclark@gmail.com,
@@ -68,15 +67,15 @@ Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
         freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <1685464318-25031-1-git-send-email-quic_khsieh@quicinc.com>
- <1685464318-25031-3-git-send-email-quic_khsieh@quicinc.com>
+ <1685464318-25031-4-git-send-email-quic_khsieh@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1685464318-25031-3-git-send-email-quic_khsieh@quicinc.com>
+In-Reply-To: <1685464318-25031-4-git-send-email-quic_khsieh@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -84,111 +83,20 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 30/05/2023 19:31, Kuogee Hsieh wrote:
-> At current implementation, DSI DSC struct is populated at display setup
-> during system bootup. This mechanism works fine with embedded display.
-> But will run into problem with plugin/unplug oriented external display,
-> such as DP, due to DSC struct will become stale once external display
-> unplugged. New DSC struct has to be re populated to reflect newer external
-> display which just plugged in. Move retrieving of DSI DSC struct to
-> atomic_check() so that same mechanism will work for both embedded display
-> and external plugin/unplug oriented display.
+> Since msm_dsi_bridge_get_dsc_config() was added to retrieve DSI DSC
+> info through DRM bridge, msm_dsi_get_dsc_config() become redundant
+> and should be removed.
 > 
 > Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 15 ++++++++++++++-
->   drivers/gpu/drm/msm/msm_drv.h               |  6 ++++++
->   2 files changed, 20 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 3b416e1..2927d20 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -16,6 +16,8 @@
->   #include <drm/drm_crtc.h>
->   #include <drm/drm_file.h>
->   #include <drm/drm_probe_helper.h>
-> +#include <drm/drm_bridge.h>
-> +#include <drm/drm_fixed.h>
->   
->   #include "msm_drv.h"
->   #include "dpu_kms.h"
-> @@ -639,6 +641,15 @@ static int dpu_encoder_virt_atomic_check(
->   		}
->   	}
->   
-> +	if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 2 --
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 2 --
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 2 --
+>   drivers/gpu/drm/msm/dsi/dsi.c               | 5 -----
+>   drivers/gpu/drm/msm/msm_drv.h               | 6 ------
+>   5 files changed, 17 deletions(-)
 
-INTF_DSI
-
-> +		struct drm_bridge *bridge;
-> +
-> +		if (!dpu_enc->dsc) {
-
-This condition is not correct. We should be updating the DSC even if 
-there is one.
-
-> +			bridge = drm_bridge_chain_get_first_bridge(drm_enc);
-> +			dpu_enc->dsc = msm_dsi_bridge_get_dsc_config(bridge);
-
-This approach will not work for the hot-pluggable outputs. The dpu_enc 
-is not a part of the state. It should not be touched before 
-atomic_commit actually commits changes.
-
-Also, I don't think I like the API. It makes it impossible for the 
-driver to check that the bridge is the actually our DSI bridge or not.
-Once you add DP here, the code will explode.
-
-I think instead we should extend the drm_bridge API to be able to get 
-the DSC configuration from it directly. Additional care should be put to 
-design an assymetrical API. Theoretically a drm_bridge can be both DSC 
-source and DSC sink. Imagine a DSI-to-DP or DSI-to-HDMI bridge, 
-supporting DSC on the DSI side too.
-
-> +		}
-> +	}
-> +
->   	topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state);
->   
->   	/*
-> @@ -2121,8 +2132,10 @@ void dpu_encoder_helper_phys_cleanup(struct dpu_encoder_phys *phys_enc)
->   					phys_enc->hw_pp->merge_3d->idx);
->   	}
->   
-> -	if (dpu_enc->dsc)
-> +	if (dpu_enc->dsc) {
->   		dpu_encoder_unprep_dsc(dpu_enc);
-> +		dpu_enc->dsc = NULL;
-> +	}
->   
->   	intf_cfg.stream_sel = 0; /* Don't care value for video mode */
->   	intf_cfg.mode_3d = dpu_encoder_helper_get_3d_blend_mode(phys_enc);
-> diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
-> index e13a8cb..5a7c1f4 100644
-> --- a/drivers/gpu/drm/msm/msm_drv.h
-> +++ b/drivers/gpu/drm/msm/msm_drv.h
-> @@ -341,6 +341,7 @@ bool msm_dsi_is_cmd_mode(struct msm_dsi *msm_dsi);
->   bool msm_dsi_is_bonded_dsi(struct msm_dsi *msm_dsi);
->   bool msm_dsi_is_master_dsi(struct msm_dsi *msm_dsi);
->   struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_dsi);
-> +struct drm_dsc_config *msm_dsi_bridge_get_dsc_config(struct drm_bridge *bridge);
->   #else
->   static inline void __init msm_dsi_register(void)
->   {
-> @@ -374,6 +375,11 @@ static inline struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi *msm_
->   {
->   	return NULL;
->   }
-> +
-> +struct drm_dsc_config *msm_dsi_bridge_get_dsc_config(struct drm_bridge *bridge)
-> +{
-> +	return NULL;
-> +}
-
-These two chunks belong to the previous patch.
-
->   #endif
->   
->   #ifdef CONFIG_DRM_MSM_DP
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 -- 
 With best wishes
