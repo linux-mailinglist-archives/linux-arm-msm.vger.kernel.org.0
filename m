@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BC55715BCE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 12:31:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0067D715BF9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 12:40:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229919AbjE3Kbh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 06:31:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59494 "EHLO
+        id S231363AbjE3Kki (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 06:40:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36500 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231321AbjE3Kbd (ORCPT
+        with ESMTP id S229550AbjE3Kkh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 06:31:33 -0400
+        Tue, 30 May 2023 06:40:37 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F5D118D
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 03:31:16 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10CEE8F;
+        Tue, 30 May 2023 03:40:36 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id D59D8623CF
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 10:31:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC48C4339B;
-        Tue, 30 May 2023 10:31:12 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 99A996215D;
+        Tue, 30 May 2023 10:40:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F258FC433D2;
+        Tue, 30 May 2023 10:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685442675;
-        bh=isNg8G9UAkzkCfwz0fquUKYOKQOroneXLwlqoTJcDjk=;
+        s=k20201202; t=1685443235;
+        bh=xloVzKThcmCFtR4jJFtCgd3MlQqbexb7mtuyBj6XgCI=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Qi5Wf+FJR7bJyG9rMnZeEQi/LREtl2OPSa/0q9FSGvFNh17vUwEpv3exaWi5SRwoM
-         qkx4kW13vxi/gG8Nmn/3IhAvHke6LH9bU2YG61Ky0CEcp7NQ83MAddkS3ygq895nnE
-         Rz+D4nVpaRJZL3rLwple4z8imHZ8FC2pWZUht03lXnjvE3xhOXNreZj+fUo6Loduby
-         xPk/sKK7SKE/9A4BPD/cgCeL8hBjYasCpOYXD+/8F8S2zFcPoHPfwdgl1+TRE8jsyb
-         TZk56TbBK0MFc20jWVZN1TOk3BKNdyVWyJQsUg7iKTiHvxBpzwvgcNghuTOsC9Ucxe
-         Bl4lLw4cXap4g==
-Date:   Tue, 30 May 2023 16:01:03 +0530
+        b=FZDcAA3jfk9TRHlvDZYBrTM9tRyZ8C53g6jFuzq+X6omsPNRB2qU819S8lcs/OQhG
+         kw4KI84xgR54Z4jOywVTlFIsnWUX5SVq5z1lFbI+OAGm60cG4EckoT4EPGaa/K5c8a
+         1n2uAw0tlVaNfT1nNJxACA6wHQSTQPVWStl0Tr4zd8hxTgxUyj8sovlCZkYyegmM8t
+         Bo7b0xiRlKl6/gN6Vgacj3M8Zzk9Q3K6tUo00p51eu3IF+XWjBDqy+E1uj6E4gVosk
+         1wCZYDr4LEEbK2iE9gFWZzUlIeSDsmO5ChiCnQjc/2uRgPgPoe/jKgNXHAuXIKPear
+         6m5tkA3XztITg==
+Date:   Tue, 30 May 2023 16:10:20 +0530
 From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Daniele Palmas <dnlplm@gmail.com>
-Cc:     Siddartha Mohanadoss <smohanad@codeaurora.org>,
-        Sujeev Dias <sdias@codeaurora.org>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/1] bus: mhi: host: allow SBL as initial EE
-Message-ID: <20230530103103.GB6379@thinkpad>
-References: <20230530091340.3513141-1-dnlplm@gmail.com>
+To:     Qiang Yu <quic_qianyu@quicinc.com>
+Cc:     quic_jhugo@quicinc.com, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_cang@quicinc.com, quic_mrana@quicinc.com,
+        stable@vger.kernel.org
+Subject: Re: [PATCH v4] bus: mhi: host: Skip MHI reset if device is in RDDM
+Message-ID: <20230530104020.GF6379@thinkpad>
+References: <1684390959-17836-1-git-send-email-quic_qianyu@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230530091340.3513141-1-dnlplm@gmail.com>
+In-Reply-To: <1684390959-17836-1-git-send-email-quic_qianyu@quicinc.com>
 X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -57,66 +57,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 30, 2023 at 11:13:40AM +0200, Daniele Palmas wrote:
-> There are situations in which SBL is a legitimate initial execution
-> environment (e.g. modem stuck in SBL due to a firmware failure...), but
-> mhi refuses to start:
+On Thu, May 18, 2023 at 02:22:39PM +0800, Qiang Yu wrote:
+> In RDDM EE, device can not process MHI reset issued by host. In case of MHI
+> power off, host is issuing MHI reset and polls for it to get cleared until
+> it times out. Since this timeout can not be avoided in case of RDDM, skip
+> the MHI reset in this scenarios.
 > 
-> mhi-pci-generic 0000:01:00.0: MHI PCI device found: foxconn-sdx55
-> mhi-pci-generic 0000:01:00.0: BAR 0: assigned
-> mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
-> mhi mhi0: Requested to power ON
-> mhi mhi0: SECONDARY BOOTLOADER is not a valid EE for power on
-> mhi-pci-generic 0000:01:00.0: failed to power up MHI controller
-> mhi-pci-generic: probe of 0000:01:00.0 failed with error -5
-> 
-> Fix this by adding SBL as an allowed initial execution environment.
-> 
+> Cc: <stable@vger.kernel.org>
+> Fixes: a6e2e3522f29 ("bus: mhi: core: Add support for PM state transitions")
+> Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+> Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
 
-What can you do with the modem when firmware failure happens? If there is a
-usecase, please explain.
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 
 - Mani
 
-> Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
-> Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
 > ---
->  drivers/bus/mhi/host/internal.h | 2 +-
->  drivers/bus/mhi/host/pm.c       | 3 ++-
->  2 files changed, 3 insertions(+), 2 deletions(-)
+> v1->v2: use ~75 columns in commit text, add Fixes tag
+> v2->v3: update Fixes tag
+> v3->v4: add review tag and CC stable
 > 
-> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-> index 2e139e76de4c..3bdcd2321aa5 100644
-> --- a/drivers/bus/mhi/host/internal.h
-> +++ b/drivers/bus/mhi/host/internal.h
-> @@ -56,7 +56,7 @@ extern const char * const mhi_ee_str[MHI_EE_MAX];
->  
->  #define MHI_IN_PBL(ee) (ee == MHI_EE_PBL || ee == MHI_EE_PTHRU || \
->  			ee == MHI_EE_EDL)
-> -#define MHI_POWER_UP_CAPABLE(ee) (MHI_IN_PBL(ee) || ee == MHI_EE_AMSS)
-> +#define MHI_POWER_UP_CAPABLE(ee) (MHI_IN_PBL(ee) || ee == MHI_EE_AMSS || ee == MHI_EE_SBL)
->  #define MHI_FW_LOAD_CAPABLE(ee) (ee == MHI_EE_PBL || ee == MHI_EE_EDL)
->  #define MHI_IN_MISSION_MODE(ee) (ee == MHI_EE_AMSS || ee == MHI_EE_WFW || \
->  				 ee == MHI_EE_FP)
+>  drivers/bus/mhi/host/pm.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
 > diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-> index 083459028a4b..18872c5017be 100644
+> index 0834590..8a4362d 100644
 > --- a/drivers/bus/mhi/host/pm.c
 > +++ b/drivers/bus/mhi/host/pm.c
-> @@ -1203,10 +1203,11 @@ int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
+> @@ -470,6 +470,10 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
 >  
->  	wait_event_timeout(mhi_cntrl->state_event,
->  			   MHI_IN_MISSION_MODE(mhi_cntrl->ee) ||
-> +			   mhi_cntrl->ee == MHI_EE_SBL ||
->  			   MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
->  			   msecs_to_jiffies(mhi_cntrl->timeout_ms));
+>  	/* Trigger MHI RESET so that the device will not access host memory */
+>  	if (!MHI_PM_IN_FATAL_STATE(mhi_cntrl->pm_state)) {
+> +		/* Skip MHI RESET if in RDDM state */
+> +		if (mhi_cntrl->rddm_image && mhi_get_exec_env(mhi_cntrl) == MHI_EE_RDDM)
+> +			goto skip_mhi_reset;
+> +
+>  		dev_dbg(dev, "Triggering MHI Reset in device\n");
+>  		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
 >  
-> -	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -ETIMEDOUT;
-> +	ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee) || mhi_cntrl->ee == MHI_EE_SBL) ? 0 : -ETIMEDOUT;
->  	if (ret)
->  		mhi_power_down(mhi_cntrl, false);
+> @@ -495,6 +499,7 @@ static void mhi_pm_disable_transition(struct mhi_controller *mhi_cntrl)
+>  		}
+>  	}
 >  
+> +skip_mhi_reset:
+>  	dev_dbg(dev,
+>  		 "Waiting for all pending event ring processing to complete\n");
+>  	mhi_event = mhi_cntrl->mhi_event;
 > -- 
-> 2.37.1
+> 2.7.4
 > 
 
 -- 
