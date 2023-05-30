@@ -2,81 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 643A17161A8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 15:24:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4D5B7161F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 15:31:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229852AbjE3NY2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 09:24:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50074 "EHLO
+        id S232671AbjE3Nbz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 09:31:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231654AbjE3NY1 (ORCPT
+        with ESMTP id S232133AbjE3Nby (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 09:24:27 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84BF1C7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:24:19 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-974265a1a40so107867566b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:24:19 -0700 (PDT)
+        Tue, 30 May 2023 09:31:54 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E00EC5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:31:52 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f6e1393f13so30843625e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:31:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685453058; x=1688045058;
+        d=linaro.org; s=google; t=1685453511; x=1688045511;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=f13+//j5TUSK7f17I23pgVcVd7PAgs1drwm4AW53RHM=;
-        b=zC14MYkKGvdGUnL0dteMGGW+ZVB+LtSJnuFAGxZ/yRtnxaHKhM2+owjsNOlMVqR2zz
-         QCOcAeSXtqxWdqUcu7BgM3t1mkvqUHoCIETz/izhIQ2clL/1yrr6/eyi5eujcIjQSDg5
-         4tFrkX5xraNaG4SScrEQ1WIAO7Kh8kjw+ZqfOouXU7sSFWciqn2J2Bby10nGMuy5/bp+
-         pA9XuUc7Ohz7HKYlwJcwl27Y4yA5dz3pstZ1iQB760AJnYos3PDZi+X57zapbUEl5vcX
-         baySGpbCaL4zCDgIGimm8Zl1I0XQPTCng8O/2rpHAfejd3kOnP6x1vI95UeaYIm0F50x
-         eeDQ==
+        bh=O4TkSxjrXFcrtwILbeS9FwTTUMwJjznUHF2WZNJpwBU=;
+        b=KZxGd9Leab3vyVTua670SESofGfH/vNC8uJ9Ks4PZVINHELyk+1/3H7CokcsEJWai/
+         9Pk6jGg+MoBlyGzKk2cYHyzHY2usokRuZtaVj27zNrSF6d+LqEVqXFiksGqE7FQWj2Yk
+         7EImtBRAy/Gxp7F5BhhqJ4VgGrp5aiuIpJYqlm5R6eEhL8YEeAkR1WkloBdQMofcx4fB
+         euoMJhMNT+8KnCjB8gTzLxnm1JhlydhO7KOXi5Ij5vftg+PTRlTy/psHV2lr7TAq2Nd2
+         aLz8LxSVU/u4SNwRoCRnbz8R07xeDGKtW7dhVXQMo7Cqjn4bAks58xI5vZjWF456vqsk
+         7S3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685453058; x=1688045058;
+        d=1e100.net; s=20221208; t=1685453511; x=1688045511;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=f13+//j5TUSK7f17I23pgVcVd7PAgs1drwm4AW53RHM=;
-        b=ApLxouVlsP5uKNDXQvTd/slmQBPZ3gJjNG09wmHZ3YKYfiFosc328VEBpRMuj12zlR
-         XlpTbsPPRzcKhs8CbjVovvm5htYJTdv86z2AWBOf/QFxtBQWdbEUtSKEyW6xWC2q4/4h
-         V69EqWWhdglqaAZwehqMbZTQ1ckgIN2P32HtKK5bl3i97UKMLc71Hv1USBgDzmzZo/RE
-         cGAOPD1ASAzEuDIlCaqz+bWkGQjKzyNpo96VMtDnwcmCbevsEdz72DwmZBwjal9vMkHc
-         th6K1Mphqc89ag4UzwyWO69iaVxXwJQvysbg+qpTVWb0DaQ4TXzA5bo7lqjskxO1dT8q
-         xoxg==
-X-Gm-Message-State: AC+VfDzTkH/V8BLCtRrEmkvZMi+Wfv9a+v69rjHFeJgp+VcVPIUhLJCu
-        M2L+U6YcQ5wwMf4kyEsNHSCcrg==
-X-Google-Smtp-Source: ACHHUZ45MHzQv6JgtBdSZV3zezwsX8mKYWid5QGh2Tm9MTh1hRIo/ZlaX97ft0SeEvZoCw6qfiVN2A==
-X-Received: by 2002:a17:906:9753:b0:965:d7c7:24db with SMTP id o19-20020a170906975300b00965d7c724dbmr2131710ejy.32.1685453058029;
-        Tue, 30 May 2023 06:24:18 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.199.204])
-        by smtp.gmail.com with ESMTPSA id me21-20020a170906aed500b0096a16e49b0fsm7305207ejb.51.2023.05.30.06.24.16
+        bh=O4TkSxjrXFcrtwILbeS9FwTTUMwJjznUHF2WZNJpwBU=;
+        b=WIlfv2hTn/wpOVTT4UCInsMzke6G1EUII9pF+UEe9eHXnNG+FiNfbINRUvM20sDlV1
+         l92QiddhjFAXawtrvsGDI/qgYOPiHx7Uu/ADOJOFMrGuldYMr/ctG6AaZ3YMFfClN9wl
+         nkGbAgeJ0xYd1dI4KpMqa7cxWtVYXLAyReee8SsJlw8U6GzArDd2UokM3C7p6Orfz7tz
+         TLSmE7Jk8gVksx3va4iDRkwzkMCLzTJeTm+myBc48d6et4P2sRHPPUkETj/FzgmqRrta
+         3LK3x66/kw7JdA4EBabgXkS3zkGm8qxLNPafEBEpmmqDoY9l76f7eieBkYFluCycc7qT
+         aN6Q==
+X-Gm-Message-State: AC+VfDwLQT0RLt6tndLZyTvH05kjA9Fog0NNGp1n+hSvtTU3IcBjM/RQ
+        2TrIsajTN8uFZPYQJMDyEjNvEw==
+X-Google-Smtp-Source: ACHHUZ4S7Q0TZkKc2h+WlslbMqi6X7Va2BSFmmk0dtePu/I7yooYlXUSA/kGWkN7npTrb2BeQm95Lw==
+X-Received: by 2002:a1c:7206:0:b0:3f6:50e:315f with SMTP id n6-20020a1c7206000000b003f6050e315fmr1442827wmc.41.1685453510780;
+        Tue, 30 May 2023 06:31:50 -0700 (PDT)
+Received: from [192.168.0.84] (cpc76484-cwma10-2-0-cust274.7-3.cable.virginm.net. [82.31.201.19])
+        by smtp.gmail.com with ESMTPSA id c21-20020a7bc855000000b003f1958eeadcsm20906694wml.17.2023.05.30.06.31.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 06:24:17 -0700 (PDT)
-Message-ID: <3f2eefcc-fb0b-d374-995d-3c0b7e4b4507@linaro.org>
-Date:   Tue, 30 May 2023 15:24:15 +0200
+        Tue, 30 May 2023 06:31:50 -0700 (PDT)
+Message-ID: <44ec7cce-cd7d-27a3-149b-49fda6308777@linaro.org>
+Date:   Tue, 30 May 2023 14:31:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v2 4/4] ARM: dts: qcom: Add Samsung Galaxy Express support
+Subject: Re: [PATCH v4 1/2] misc: fastrpc: support complete DMA pool access to
+ the DSP
 Content-Language: en-US
-To:     Rudraksha Gupta <guptarud@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        soc@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230527040905.stmnoshkdqgiaex6@ripper>
- <20230528001010.47868-5-guptarud@gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230528001010.47868-5-guptarud@gmail.com>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Dylan Van Assche <me@dylanvanassche.be>,
+        amahesh@qti.qualcomm.com, arnd@arndb.de, gregkh@linuxfoundation.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        dan.carpenter@linaro.org, Ekansh Gupta <quic_ekangupt@quicinc.com>
+References: <20230511141146.30465-1-me@dylanvanassche.be>
+ <20230511141146.30465-2-me@dylanvanassche.be>
+ <e0365591-0f03-ab3d-61b4-c016541f2157@linaro.org>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+In-Reply-To: <e0365591-0f03-ab3d-61b4-c016541f2157@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -87,164 +81,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thank you for your patch. There is something to discuss/improve.
 
 
-
-On 28/05/2023 02:10, Rudraksha Gupta wrote:
-> This adds a very basic device tree file for the Samsung Galaxy Express
-
-Please do not use "This commit/patch", but imperative mood. See longer
-explanation here:
-https://elixir.bootlin.com/linux/v5.17.1/source/Documentation/process/submitting-patches.rst#L95
-
-
-> SGH-I437. Currently, the following things work: UART, eMMC, SD Card, and
-> USB.
+On 30/05/2023 11:52, Srinivas Kandagatla wrote:
+> On 11/05/2023 15:11, Dylan Van Assche wrote:
+>> To support FastRPC Context Banks which aren't mapped via the SMMU,
+>> make the whole reserved memory region available to the DSP to allow
+>> access to coherent buffers.
 > 
-> Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
-> ---
->  arch/arm/boot/dts/Makefile                    |   1 +
->  .../dts/qcom-msm8960-samsung-expressatt.dts   | 334 ++++++++++++++++++
->  2 files changed, 335 insertions(+)
->  create mode 100644 arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts
+> Mapping the whole region sounds very inefficient, and also possibly
+> making the cma region not usable by others.
+
+Probably I'm missing something obvious here... The downstream driver
+maps the whole region, what are the advantages to doing it on a
+per-allocation basis?
+
+What are the other users?
 > 
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index 59829fc90315..12c90f263142 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1081,6 +1081,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
->  	qcom-msm8916-samsung-grandmax.dtb \
->  	qcom-msm8916-samsung-serranove.dtb \
->  	qcom-msm8960-cdp.dtb \
-> +	qcom-msm8960-samsung-expressatt.dtb \
->  	qcom-msm8974-lge-nexus5-hammerhead.dtb \
->  	qcom-msm8974-sony-xperia-rhine-amami.dtb \
->  	qcom-msm8974-sony-xperia-rhine-honami.dtb \
-> diff --git a/arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts b/arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts
-> new file mode 100644
-> index 000000000000..a1ee9c272558
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts
-> @@ -0,0 +1,334 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +#include <dt-bindings/input/input.h>
-> +
-> +#include "qcom-msm8960.dtsi"
-> +#include <dt-bindings/reset/qcom,gcc-msm8960.h>
-> +
-> +/ {
-> +	model = "Samsung Galaxy Express SGH-I437";
-> +	compatible = "samsung,expressatt", "qcom,msm8960";
-> +	chassis-type = "handset";
-> +
-> +	aliases {
-> +		serial0 = &gsbi5_serial;
-> +		mmc0 = &sdcc1; /* SDCC1 eMMC slot */
-> +		mmc1 = &sdcc3; /* SDCC3 SD card slot */
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0:115200n8";
-> +	};
-> +};
-> +
-> +&gsbi5 {
-> +	qcom,mode = <GSBI_PROT_I2C_UART>;
-> +	status = "okay";
-> +};
-> +
-> +&gsbi5_serial {
-> +	status = "okay";
-> +};
-> +
-> +&sdcc1 {
-> +	vmmc-supply = <&pm8921_l5>;
-> +	status = "okay";
-> +};
-> +
-> +&sdcc3 {
-> +	vmmc-supply = <&pm8921_l6>;
-> +	vqmmc-supply = <&pm8921_l7>;
-> +	status = "okay";
-> +};
-> +
-> +&gsbi1 {
-> +	qcom,mode = <GSBI_PROT_SPI>;
-> +	pinctrl-0 = <&spi1_default>;
-> +	pinctrl-names = "default";
-> +	status = "okay";
-> +};
-> +
-> +&gsbi1_spi {
-> +	status = "okay";
-> +};
-> +
-> +&msmgpio {
-> +	spi1_default: spi1_default {
+>>
+> 
+> AFAIU SDM845 does not have any context banks for SDSP. All new SoCs
+> after 865 have moved to having a context bank.
+> 
+> For such cases (w/o cb) we can make fastrpc_session_alloc use channel
+> context device instead of session ctx device. As this is going to be an
+> issue when we try to allocate buffers dynamically for that cb.
 
-No underscores in node names, missing proper suffix.
+Right.. This is what patch 2 does, but presumably the ALLOC_DMA_BUF,
+MMAP, etc ioctls won't work with the current iteration?
 
-It does not look like you tested the DTS against bindings. Please run
-`make dtbs_check` (see
-Documentation/devicetree/bindings/writing-schema.rst for instructions).
+> 
+> In the newer platforms (from 865) there is support for iommu and context
+> banks on SDSP, so the existing code flow is identical for both ADSP and
+> SDSP.
+> 
+> 
+> We should be careful not to break newer platfroms while adding support
+> to this.
+> 
+> Both myself and Ekansh thought about this and see that the better way to
+> add support to this is by
+> 
+> 1. extend fastrpc_session_alloc() to support zero context banks.
+> 
+> 2. add flags to mark this and allocate meta data using secure allocation
+> when its required based on this flag.
+> 
+> 3.  buffer allocation can either go with 2 or with a new flag coming
+> from userspace.
 
-> +		mux {
+This sounds pretty good to me!
+> 
+> 
+> 
+>> This is performed by assigning the memory to the DSP via a hypervisor
+>> call to set the correct permissions for the Virtual Machines on the DSP.
+>> This is only necessary when a memory region is provided for SLPI DSPs
+>> so guard this with a domain ID check.
+>>
+>> Signed-off-by: Dylan Van Assche <me@dylanvanassche.be>
+>> Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+>> ---
+>>   drivers/misc/fastrpc.c | 15 +++++++++++++++
+>>   1 file changed, 15 insertions(+)
+>>
+>> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+>> index f48466960f1b..1ced553ae959 100644
+>> --- a/drivers/misc/fastrpc.c
+>> +++ b/drivers/misc/fastrpc.c
+>> @@ -2231,6 +2231,8 @@ static int fastrpc_rpmsg_probe(struct
+>> rpmsg_device *rpdev)
+>>       int i, err, domain_id = -1, vmcount;
+>>       const char *domain;
+>>       bool secure_dsp;
+>> +    struct device_node *rmem_node;
+>> +    struct reserved_mem *rmem;
+>>       unsigned int vmids[FASTRPC_MAX_VMIDS];
+>>         err = of_property_read_string(rdev->of_node, "label", &domain);
+>> @@ -2274,6 +2276,19 @@ static int fastrpc_rpmsg_probe(struct
+>> rpmsg_device *rpdev)
+>>           }
+>>       }
+>>   +    rmem_node = of_parse_phandle(rdev->of_node, "memory-region", 0);
+>> +    if (domain_id == SDSP_DOMAIN_ID && rmem_node) {
+>> +        rmem = of_reserved_mem_lookup(rmem_node);
+>> +        if (!rmem) {
+>> +            err = -EINVAL;
+>> +            goto fdev_error;
+>> +        }
+>> +
+>> +        qcom_scm_assign_mem(rmem->base, rmem->size, &data->perms,
+>> +                    data->vmperms, data->vmcount);
+> 
+> vmperms need to be a bit field.
+> 
+>> +
+>> +    }
+>> +
+>>       secure_dsp = !(of_property_read_bool(rdev->of_node,
+>> "qcom,non-secure-domain"));
+>>       data->secure = secure_dsp;
+>>   
+> 
+> --srini
 
-It does not look like you tested the DTS against bindings. Please run
-`make dtbs_check` (see
-Documentation/devicetree/bindings/writing-schema.rst for instructions).
-
-> +			pins = "gpio6", "gpio7", "gpio9";
-> +			function = "gsbi1";
-> +		};
-> +
-> +		mosi {
-
-It does not look like you tested the DTS against bindings. Please run
-`make dtbs_check` (see
-Documentation/devicetree/bindings/writing-schema.rst for instructions).
-
-> +			pins = "gpio6";
-> +			drive-strength = <12>;
-> +			bias-disable;
-> +		};
-> +
-> +		miso {
-> +			pins = "gpio7";
-> +			drive-strength = <12>;
-> +			bias-disable;
-> +		};
-> +
-> +		cs {
-> +			pins = "gpio8";
-> +			drive-strength = <12>;
-> +			bias-disable;
-> +			output-low;
-> +		};
-> +
-> +		clk {
-> +			pins = "gpio9";
-> +			drive-strength = <12>;
-> +			bias-disable;
-> +		};
-> +	};
-> +};
-> +
-> +
-
-One blank line, not two.
-
-...
-
-> +&usb1 {
-> +	dr_mode = "otg";
-> +	status = "okay";
-> +};
-> +
-
-No improvements here.
-
-Best regards,
-Krzysztof
-
+-- 
+// Caleb (they/them)
