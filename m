@@ -2,167 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4F313716FDC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 23:39:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6ECE717075
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 00:12:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231883AbjE3Vj5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 17:39:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55374 "EHLO
+        id S233653AbjE3WMH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 18:12:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231281AbjE3Vjq (ORCPT
+        with ESMTP id S233631AbjE3WMG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 17:39:46 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E9B610D;
-        Tue, 30 May 2023 14:39:39 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34UJw0p6024498;
-        Tue, 30 May 2023 21:39:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=KecizHeDfxL0x86L1tnH168BxhZtJILtJs255kwRHUw=;
- b=ji73h/OUTmBjUG74w/Xk0MO54yqEpqj+clPbPuM8ukQcBlNJuF/fvci1SgbLhTp4L+80
- egM3Y24GtHVl8QTM0zOZ5BvHIicEceBajJaQY8PohQNET/uqvb+MBpDn3C6N9wpueEFe
- p9ezPgBC3F7KkE94pGAgwT79rIHfwcCmQKCjbeAEjJYeT5LtwUbI73Gn+tn/lrVo9Jeb
- TeBgp74/gXaQ1kkZK6WYSIIb4J2upcVZTUU0P5PN/2QanAr7bpaKHKPEVrYsOETaFxwk
- AEtKJf87gqxN38waxOuMh2WTq94oF2Q+90WgvDpJp06DD+Mr+K4CIeuz2JwOVX3bzRwd gQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qw7rtt8nq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 30 May 2023 21:39:34 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34ULdXIU001455
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 30 May 2023 21:39:33 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 30 May 2023 14:39:32 -0700
-Date:   Tue, 30 May 2023 14:39:31 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Stephan Gerhold <stephan@gerhold.net>
-CC:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/2] soc: qcom: rmtfs: Support dynamic placement of region
-Message-ID: <20230530213931.GB3645274@hu-bjorande-lv.qualcomm.com>
-References: <20230530193436.3833889-1-quic_bjorande@quicinc.com>
- <20230530193436.3833889-3-quic_bjorande@quicinc.com>
- <ZHZTHlfDsngUrTRX@gerhold.net>
+        Tue, 30 May 2023 18:12:06 -0400
+Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB31B115
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 15:12:03 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-55db055b412so4845587b3.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 15:12:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685484723; x=1688076723;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZoikQ24IRuw8V1bI3fB4AXs6Vt9clGgETJMS8PTWY9M=;
+        b=JBzFXe43yEA4MwmyXbJnIuAFPI8KpiMlBqNMHsO2FeR3Ft/gGq5DHeLD42vmi46CAJ
+         NYA371x5lbnH8TageYKekHMJ4vBUs7x5f3obZBjAcII13fdnYV0x95rbqC3imJXNooFe
+         M5oSATtvlNl/LPUEliC12Pv7NOHRg3N8Ktnlmls9oO+DxJTz9UqRoZKn7A/Idv8nKChW
+         0+mo6XuvAy9YIMD7nmuUEuuF1mQ3gKa/WbguOrsPmKbwsALuvEEKUocdrIxrY0WkphFa
+         PBSTmnYCJRxAlW9ZjMQAJ8dtojYQRnLQPUl3ORTRC8GTK6Ia+4t9CSxbw+Lqw21S8+/4
+         /rfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685484723; x=1688076723;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZoikQ24IRuw8V1bI3fB4AXs6Vt9clGgETJMS8PTWY9M=;
+        b=YEMSZ04ke6hUluUMpt4i4LAZUvsNbIoDpzbZhwculWbkIaVQnXEEOYnFEHU9+XuN7c
+         dI+DoJfvgaB7E4WONX1FnsriSIYVF1aG4oxn2kyAXA2jhYqu53LYnjavZx9+M/1UZBS+
+         ushg3UHB874cj9H1HLJiITf/75cRu/AlVXTevdelfr57A2Kgb+mkEQlt1fv4tguYZryw
+         jqHGYav09aVeh3+Gq/L0hZ5zrmvRqfc/bXUWd5E0dKAp1N6PddIUtb19TT0LwIpx/y8k
+         esdYwd9fmoYFNF8KsQGSEqFdN+WTAXsW5dQB8aKtlALIL2nxUTgS4xSasoSiuOvhRTM8
+         QhPg==
+X-Gm-Message-State: AC+VfDxyminrUGaRBdJH6ik45JTLDIgrJHl5M4BQxWmEiG+CKIK3eg/t
+        ddGENym+eaw2siGz1/GR84QeGdwJdcz5iTYXtLwKIg==
+X-Google-Smtp-Source: ACHHUZ51M7z6vLdDuU6YnJV8hHa71g3G6VR7IR1jzPsgmFsx8wxq7CUQyYcHGRFbiY1FORhFgrlnHoQ+C4gsvM2GB1A=
+X-Received: by 2002:a05:690c:80d:b0:565:85b0:c128 with SMTP id
+ bx13-20020a05690c080d00b0056585b0c128mr14929653ywb.6.1685484723087; Tue, 30
+ May 2023 15:12:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <ZHZTHlfDsngUrTRX@gerhold.net>
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01a.na.qualcomm.com (10.47.209.196) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: n94yZGMHZTjwLrirnP5nUVJ1RbdhHpdt
-X-Proofpoint-ORIG-GUID: n94yZGMHZTjwLrirnP5nUVJ1RbdhHpdt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-30_16,2023-05-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 spamscore=0
- phishscore=0 mlxscore=0 mlxlogscore=821 bulkscore=0 impostorscore=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 suspectscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305300175
+References: <20230424110933.3908-1-quic_mkshah@quicinc.com>
+ <CAPDyKFqSY9HJgKwuOqJPU5aA=wcAtDp91s0hkQye+dm=Wk=YDQ@mail.gmail.com>
+ <20230525024546.ug6nbrmkgx2alerc@ripper> <CAPDyKFrzHHz+c_y787TVKLGizA3vVfKvnu+uJ1JC+itgryfdSQ@mail.gmail.com>
+ <20230529160848.ujthfuuj3zblkq4b@ripper>
+In-Reply-To: <20230529160848.ujthfuuj3zblkq4b@ripper>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Wed, 31 May 2023 00:11:26 +0200
+Message-ID: <CAPDyKFo1rsm5gk_eKESa_WMFn6bSicH1UV1vJ7CU_64jZ5Uj-Q@mail.gmail.com>
+Subject: Re: [PATCH v4 0/3] Use PSCI OS initiated mode for sc7280
+To:     Bjorn Andersson <andersson@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     Maulik Shah <quic_mkshah@quicinc.com>, dianders@chromium.org,
+        swboyd@chromium.org, wingers@google.com,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, sudeep.holla@arm.com,
+        jwerner@chromium.org, quic_lsrao@quicinc.com,
+        quic_rjendra@quicinc.com
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 30, 2023 at 09:48:46PM +0200, Stephan Gerhold wrote:
-> On Tue, May 30, 2023 at 12:34:36PM -0700, Bjorn Andersson wrote:
-> > In some configurations, the exact placement of the rmtfs shared memory
-> > region isn't so strict. In the current implementation the author of the
-> > DeviceTree source is forced to make up a memory region.
-> > 
-> > Extend the rmtfs memory driver to relieve the author of this
-> > responsibility by introducing support for using dynamic allocation in
-> > the driver.
-> > 
-> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sdm845-mtp.dts | 10 ++++
-> >  drivers/soc/qcom/rmtfs_mem.c            | 66 +++++++++++++++++++------
-> >  2 files changed, 61 insertions(+), 15 deletions(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-> > index d1440b790fa6..e6191b8ba4c6 100644
-> > --- a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-> > @@ -12,6 +12,8 @@
-> >  #include "pm8998.dtsi"
-> >  #include "pmi8998.dtsi"
-> >  
-> > +/delete-node/ &rmtfs_mem;
-> > +
-> >  / {
-> >  	model = "Qualcomm Technologies, Inc. SDM845 MTP";
-> >  	compatible = "qcom,sdm845-mtp", "qcom,sdm845";
-> > @@ -48,6 +50,14 @@ vreg_s4a_1p8: pm8998-smps4 {
-> >  		vin-supply = <&vph_pwr>;
-> >  	};
-> >  
-> > +	rmtfs {
-> > +		compatible = "qcom,rmtfs-mem";
-> > +
-> > +		qcom,alloc-size = <(2*1024*1024)>;
-> > +		qcom,client-id = <1>;
-> > +		qcom,vmid = <15>;
-> > +	};
-> > +
-> 
-> Couldn't you just use the existing dynamic allocation of
-> reserved-memory, without any driver changes?
-> 
++ Rafael
 
-That should give us a similar end result, but we have alloc-ranges as
-well, if the placement needs to be further refined...
+On Mon, 29 May 2023 at 18:05, Bjorn Andersson <andersson@kernel.org> wrote:
+>
+> On Mon, May 29, 2023 at 10:58:23AM +0200, Ulf Hansson wrote:
+> > On Thu, 25 May 2023 at 04:41, Bjorn Andersson <andersson@kernel.org> wrote:
+> > >
+> > > On Wed, May 24, 2023 at 11:56:28AM +0200, Ulf Hansson wrote:
+> > > > On Mon, 24 Apr 2023 at 13:09, Maulik Shah <quic_mkshah@quicinc.com> wrote:
+> > > > >
+> > > > > Changes in v4:
+> > > > > - Add missing s-o-b line and reviewed by in patch 1
+> > > > > - Address ulf's comments for error handling in patch 2
+> > > > >
+> > > > > Changes in v3:
+> > > > > - Add new change to provide helper function dt_idle_pd_remove_topology()
+> > > > > - Address ulf's comments for error handling
+> > > > > - Add reviewed by ulf for devicetree change
+> > > > >
+> > > > > Changes in v2:
+> > > > > - Add new change to Move enabling OSI mode after power domains creation
+> > > > > - Fix compatible string to domains-idle-states for cluster idle state.
+> > > > > - Update cover letter with some more details on OSI and PC mode
+> > > > >   comparision
+> > > > >
+> > > > > The dependency [2] is now merged in trustedfirmware project.
+> > > > >
+> > > > > Stats comparision between OSI and PC mode are captured at [3] with
+> > > > > usecase
+> > > > > details, where during multiple CPUs online the residency in cluster idle
+> > > > > state is better with OSI and also inline with single CPU mode. In PC
+> > > > > mode
+> > > > > with multiple CPUs cluster idle state residency is dropping compare to
+> > > > > single CPU mode.
+> > > > >
+> > > > > Recording of this meeting is also available at [4].
+> > > > >
+> > > > > This change adds power-domains for cpuidle states to use PSCI OS
+> > > > > initiated mode for sc7280.
+> > > > >
+> > > > > This change depends on external project changes [1] & [2] which are
+> > > > > under review/discussion to add PSCI os-initiated support in Arm Trusted
+> > > > > Firmware.
+> > > > >
+> > > > > I can update here once the dependency are in and change is ready to
+> > > > > merge.
+> > > > >
+> > > > > [1] https://review.trustedfirmware.org/q/topic:psci-osi
+> > > > > [2] https://review.trustedfirmware.org/c/TF-A/trusted-firmware-a/+/19487
+> > > > > [3] https://www.trustedfirmware.org/docs/PSCI-OS-initiated.pdf
+> > > > > [4] https://www.trustedfirmware.org/meetings/tf-a-technical-forum
+> > > > >
+> > > > > Maulik Shah (3):
+> > > > >   cpuidle: dt_idle_genpd: Add helper function to remove genpd topology
+> > > > >   cpuidle: psci: Move enabling OSI mode after power domains creation
+> > > > >   arm64: dts: qcom: sc7280: Add power-domains for cpuidle states
+> > > > >
+> > > > >  arch/arm64/boot/dts/qcom/sc7280.dtsi  | 98 ++++++++++++++++++++-------
+> > > > >  drivers/cpuidle/cpuidle-psci-domain.c | 39 ++++-------
+> > > > >  drivers/cpuidle/dt_idle_genpd.c       | 24 +++++++
+> > > > >  drivers/cpuidle/dt_idle_genpd.h       |  7 ++
+> > > > >  4 files changed, 117 insertions(+), 51 deletions(-)
+> > > > >
+> > > >
+> > > > Looks like this series has not been queued up yet. Note that patch1
+> > > > and patch2 are needed for stable kernels too. Moreover, patch3 (Qcom
+> > > > DTS change) is dependent on patch 1 and patch2.
+> > > >
+> > > > Therefore I suggest Bjorn to pick this up via the Qcom SoC tree.
+> > > > Bjorn, is that okay for you?
+> > > >
+> > >
+> > > Sorry, this fell between the chairs after you pointed me to it...
+> > >
+> > > I can certainly pick the 3 patches through my tree, but are they fixing
+> > > any current regressions, or is it just that we need the first two
+> > > patches to land before the 3rd patch?
+> >
+> > I am not aware of any current regressions.
+> >
+>
+> Okay, that confirms my understanding. So not -rc material.
+>
+> > >
+> > > I also presume the 3rd patch is only needed when paired with the new
+> > > ATF?
+> >
+> > Patch3 is beneficial to use with a new TF-A, but works with an old
+> > TF-A too. Anyway, forget what I said about patch3 earlier, as that was
+> > just not the complete information.
+> >
+> > The problem is that we can't be using a new TF-A (supporting both PSCI
+> > OSI and PC mode) without patch1 and patch2, unless we are using
+> > patch3.
+> >
+> > Thus, I strongly suggest we tag patch1 and patch2 for stable kernels,
+> > to avoid any potential conflicts of TF-A versions that may be used.
+> >
+>
+> So you're suggesting that I pick them for v6.5 and add a Cc: stable?
+>
+> An alternative would be that you take the cpuidle patches for v6.4-rc
+> and I pick the dt for v6.5 - given that the cpuidle patches actually
+> resolves a problem, while the dts just introduces "new functionality".
 
-> / {
-> 	reserved-memory {
-> 		rmtfs {
-> 			compatible = "qcom,rmtfs-mem";
-> 			size = <0x0 (2*1024*1024)>;
-> 			alignment = <0x0 ...>; // if you want a special one
-> 			no-map; // don't we want to map this actually?
-> 
-> 			qcom,client-id = <1>;
-> 			qcom,vmid = <15>;
-> 		};
-> 	};
-> };
-> 
-> You won't get the 4K empty pages but I guess you just have them because
-> you allocate the memory without proper alignment?
-> 
+Right, that's probably the best option. Although I don't have a tree
+to take these patches through, let's ask Rafael if he can help with
+this.
 
-With dynamic placement there's no guarantee that the region isn't
-physically adjacent to another protected region, so this needs to be
-handled somehow.
+Rafael, can you pick patch 1 and patch 2 from $subject series for
+v6.4-rc and tag them for stable? Then Bjorn can pick patch3 for v6.5.
 
-Perhaps the intention to include guard pages can be derived from the
-size...
-
-> Related patch series where I propose using it for most firmware memory
-> regions:
-> https://lore.kernel.org/linux-arm-msm/20230510-dt-resv-bottom-up-v1-5-3bf68873dbed@gerhold.net/
-> 
-
-Thanks for the suggestion,
-Bjorn
-
-> Thanks,
-> Stephan
+Kind regards
+Uffe
