@@ -2,132 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CEECD716214
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 15:35:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD5027162BD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 15:56:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232710AbjE3NfQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 09:35:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56824 "EHLO
+        id S232063AbjE3N4h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 09:56:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232313AbjE3NfP (ORCPT
+        with ESMTP id S230297AbjE3N4h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 09:35:15 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF08DC5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:35:13 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2af20198f20so45918081fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:35:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685453712; x=1688045712;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=esrS2JrirWe4B7WnBE6lWhH7ic1H72jPQtf9dYjET/o=;
-        b=eXw8hAtNcFEzRdbA87IlfYD/UEWIUiKRDrEOaqIW+Oh1wy/SbwTe74xg4Cw9oOZD44
-         jxtu5hq28hAgiuJXHHlOCxSEZBOzKgamjrgtaq5RZExNE99V+2bL3CFDf0PNIuk+juZy
-         Xy9eNTiEsloqmBsu9xvJSq2XsCjtNgJrKo8riJ6Yhxy5/gxUOl5iV+dnhvKjks7bE1+P
-         QWKv6xbRj8HEL0Zh/CIVh9+XboOWcY/AOQrVQP0lQOonHr9X+1R7ibeEKHPZhckB0ubE
-         P8P8EjOKhNlfQHmPCVWBQjsPz65DidJlM0WjyIc1jGg8yYq/tEWKPjb9DsxRyywwECyp
-         JqSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685453712; x=1688045712;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=esrS2JrirWe4B7WnBE6lWhH7ic1H72jPQtf9dYjET/o=;
-        b=EEt2GO0EdgxLbVtgSRnO/2KgoHGmya5BcDnnIAmBuz4NuD9TCAxIEo9/xnwmb/jUgt
-         HxZNJRb0hT/jBW7kazNTn4jG87UoPHejiZvLi3cPKOJcOZa9bl+vxaozbuBBJpKdGzEG
-         BoCqJk/1UvM+yrvsttrurgsik7/i0o4cr3rbGoQu4hMihC+ZxgWMDdeX+9dKS4HVqrTS
-         ABPMQFqgWQBjKlFzqUEYe6TtaXtvsY+0Q/vZdP3T3Frix6su91oTBh+kIWTYZWbODv2R
-         +f3Ed0RMotOuK4slfCoJ/1mFLqlLq16/eFT5O1dfXvj3p+AT5o+MTYrbHD7nZSNquW7T
-         jrBA==
-X-Gm-Message-State: AC+VfDzJ72MYvu458baI6OOZ2S/NFALCM7k7Pq2+nnxO+JNmtvepuv63
-        wS/8rQTq9MmD0NxBHyJdtoWZrg==
-X-Google-Smtp-Source: ACHHUZ6xGZT7dZoyXIAnGa1T69qsx8GwAAc7QhVXrx+prNUPgYI6GaaLc4rWjbqmvjFDHNZ3LgrWog==
-X-Received: by 2002:a2e:7301:0:b0:2ad:8f4a:1e52 with SMTP id o1-20020a2e7301000000b002ad8f4a1e52mr809175ljc.30.1685453712183;
-        Tue, 30 May 2023 06:35:12 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id m25-20020a2e97d9000000b002a8b9570403sm2866179ljj.31.2023.05.30.06.35.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 06:35:11 -0700 (PDT)
-Message-ID: <1ceeb56e-3efd-6858-358a-bd1976c625b1@linaro.org>
-Date:   Tue, 30 May 2023 15:35:09 +0200
+        Tue, 30 May 2023 09:56:37 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D09F78E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 06:56:35 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 654D36245A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 13:56:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E6AFC433EF;
+        Tue, 30 May 2023 13:56:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685454994;
+        bh=LrjXuV2Q5x/9WNlBWKzREb7TsJ7j0wzkyJ0mj9EiQbs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=f7QbqjGiuZjdF2QpUQNplhRV62biQ6lm5VMpFlTQGwj4K5Ds1Xhj0IQhc/ck9IsHj
+         lss0Ed7nYwkPipRPCldHxR5tAZ9DM2x8KDyWTH73m8pw8pQxn1bZFQoTyhuoMcn+pN
+         h6X5nxU6p8VBpg+bvaXksZ9njq/3KwTWQAXv+S1Os+md5/ccz6NdN/lkmsDjYGDEiL
+         PJcg9LpSvMkmiARTiQhMM18XXPbkg9t2F0Qm0e4z0bqMWmEOdF1OdckLLxN+x84nJF
+         TEH46sMV9CBDXAVvMvfwG0OXODtpj/ZtBNpFoeHZOautJl7yiZdmy2HijdiSAYG7nY
+         Trx2uX4aa1vCw==
+Date:   Tue, 30 May 2023 19:26:20 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Daniele Palmas <dnlplm@gmail.com>
+Cc:     Jeffrey Hugo <quic_jhugo@quicinc.com>, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/1] bus: mhi: host: allow SBL as initial EE
+Message-ID: <20230530135620.GA2313@thinkpad>
+References: <20230530091340.3513141-1-dnlplm@gmail.com>
+ <20230530103103.GB6379@thinkpad>
+ <CAGRyCJGR4YsUgWekf_DgYHJqoXNfmFpL-N_virvqE18aU=Ovkg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v8 01/18] dt-bindings: display/msm: gpu: Document GMU
- wrapper-equipped A6xx
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     freedreno@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
-        devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, David Airlie <airlied@gmail.com>,
-        dri-devel@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Clark <robdclark@chromium.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20230223-topic-gmuwrapper-v8-0-69c68206609e@linaro.org>
- <20230223-topic-gmuwrapper-v8-1-69c68206609e@linaro.org>
- <20230530122652.lct6tk6zseny6gxl@krzk-bin>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230530122652.lct6tk6zseny6gxl@krzk-bin>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAGRyCJGR4YsUgWekf_DgYHJqoXNfmFpL-N_virvqE18aU=Ovkg@mail.gmail.com>
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Tue, May 30, 2023 at 01:12:59PM +0200, Daniele Palmas wrote:
+> Hi Mani,
+> 
+> Il giorno mar 30 mag 2023 alle ore 12:31 Manivannan Sadhasivam
+> <mani@kernel.org> ha scritto:
+> >
+> > On Tue, May 30, 2023 at 11:13:40AM +0200, Daniele Palmas wrote:
+> > > There are situations in which SBL is a legitimate initial execution
+> > > environment (e.g. modem stuck in SBL due to a firmware failure...), but
+> > > mhi refuses to start:
+> > >
+> > > mhi-pci-generic 0000:01:00.0: MHI PCI device found: foxconn-sdx55
+> > > mhi-pci-generic 0000:01:00.0: BAR 0: assigned
+> > > mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
+> > > mhi mhi0: Requested to power ON
+> > > mhi mhi0: SECONDARY BOOTLOADER is not a valid EE for power on
+> > > mhi-pci-generic 0000:01:00.0: failed to power up MHI controller
+> > > mhi-pci-generic: probe of 0000:01:00.0 failed with error -5
+> > >
+> > > Fix this by adding SBL as an allowed initial execution environment.
+> > >
+> >
+> > What can you do with the modem when firmware failure happens? If there is a
+> > usecase, please explain.
+> 
+> (removing Siddartha and Sujeev due to addresses not working)
+> 
 
+Both left Qualcomm a while ago...
 
-On 30.05.2023 14:26, Krzysztof Kozlowski wrote:
-> On Mon, 29 May 2023 15:52:20 +0200, Konrad Dybcio wrote:
->> The "GMU Wrapper" is Qualcomm's name for "let's treat the GPU blocks
->> we'd normally assign to the GMU as if they were a part of the GMU, even
->> though they are not". It's a (good) software representation of the GMU_CX
->> and GMU_GX register spaces within the GPUSS that helps us programatically
->> treat these de-facto GMU-less parts in a way that's very similar to their
->> GMU-equipped cousins, massively saving up on code duplication.
->>
->> The "wrapper" register space was specifically designed to mimic the layout
->> of a real GMU, though it rather obviously does not have the M3 core et al.
->>
->> GMU wrapper-equipped A6xx GPUs require clocks and clock-names to be
->> specified under the GPU node, just like their older cousins. Account
->> for that.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  .../devicetree/bindings/display/msm/gpu.yaml       | 61 ++++++++++++++++++----
->>  1 file changed, 52 insertions(+), 9 deletions(-)
->>
+> A possible scenario for a Telit modem not being able to go to mission
+> mode is when a firmware update does not work properly: in this case it
+> remains stuck in SBL, but the SAHARA device can be used for retrying
+> the firmware update.
 > 
-> Running 'make dtbs_check' with the schema in this patch gives the
-> following warnings. Consider if they are expected or the schema is
-> incorrect. These may not be new warnings.
-I think it'd be beneficial if the bot diffed the output of checks pre-
-and post- patch.
 
-Konrad
+So IIUC, while updating SBL over SAHARA channel, the firmware update could be
+corrupted and the device would get stuck in SBL EE. In that case, the SAHARA
+channel exposed by PBL will still be open and that could be used to retry the
+firmware update. Am I right?
+
+Looks like PBL is doing a fail safe upgrade!
+
+> Telit FN990 supports the SAHARA channels in pci_generic. It's true
+> that there's still missing the exposed device for userspace, something
+> that we are currently managing with out of tree patches, but I see
+> that there's some ongoing effort for that
+> https://lore.kernel.org/mhi/20230522190459.13790-1-quic_jhugo@quicinc.com/
 > 
-> Note that it is not yet a requirement to have 0 warnings for dtbs_check.
-> This will change in the future.
+> I'm not sure if non-Telit modems have other reasonable use-cases.
 > 
-> Full log is available here: https://patchwork.ozlabs.org/patch/1787121
+
+If my above understanding is correct, then this patch will benefit other
+platforms too.
+
+- Mani
+
+> Regards,
+> Daniele
 > 
-> 
-> gpu@2c00000: compatible: 'oneOf' conditional failed, one must be fixed:
-> 	arch/arm64/boot/dts/qcom/sm8150-hdk.dtb
-> 	arch/arm64/boot/dts/qcom/sm8150-mtp.dtb
+> >
+> > - Mani
+> >
+> > > Fixes: 3000f85b8f47 ("bus: mhi: core: Add support for basic PM operations")
+> > > Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+> > > ---
+> > >  drivers/bus/mhi/host/internal.h | 2 +-
+> > >  drivers/bus/mhi/host/pm.c       | 3 ++-
+> > >  2 files changed, 3 insertions(+), 2 deletions(-)
+> > >
+> > > diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
+> > > index 2e139e76de4c..3bdcd2321aa5 100644
+> > > --- a/drivers/bus/mhi/host/internal.h
+> > > +++ b/drivers/bus/mhi/host/internal.h
+> > > @@ -56,7 +56,7 @@ extern const char * const mhi_ee_str[MHI_EE_MAX];
+> > >
+> > >  #define MHI_IN_PBL(ee) (ee == MHI_EE_PBL || ee == MHI_EE_PTHRU || \
+> > >                       ee == MHI_EE_EDL)
+> > > -#define MHI_POWER_UP_CAPABLE(ee) (MHI_IN_PBL(ee) || ee == MHI_EE_AMSS)
+> > > +#define MHI_POWER_UP_CAPABLE(ee) (MHI_IN_PBL(ee) || ee == MHI_EE_AMSS || ee == MHI_EE_SBL)
+> > >  #define MHI_FW_LOAD_CAPABLE(ee) (ee == MHI_EE_PBL || ee == MHI_EE_EDL)
+> > >  #define MHI_IN_MISSION_MODE(ee) (ee == MHI_EE_AMSS || ee == MHI_EE_WFW || \
+> > >                                ee == MHI_EE_FP)
+> > > diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+> > > index 083459028a4b..18872c5017be 100644
+> > > --- a/drivers/bus/mhi/host/pm.c
+> > > +++ b/drivers/bus/mhi/host/pm.c
+> > > @@ -1203,10 +1203,11 @@ int mhi_sync_power_up(struct mhi_controller *mhi_cntrl)
+> > >
+> > >       wait_event_timeout(mhi_cntrl->state_event,
+> > >                          MHI_IN_MISSION_MODE(mhi_cntrl->ee) ||
+> > > +                        mhi_cntrl->ee == MHI_EE_SBL ||
+> > >                          MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state),
+> > >                          msecs_to_jiffies(mhi_cntrl->timeout_ms));
+> > >
+> > > -     ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee)) ? 0 : -ETIMEDOUT;
+> > > +     ret = (MHI_IN_MISSION_MODE(mhi_cntrl->ee) || mhi_cntrl->ee == MHI_EE_SBL) ? 0 : -ETIMEDOUT;
+> > >       if (ret)
+> > >               mhi_power_down(mhi_cntrl, false);
+> > >
+> > > --
+> > > 2.37.1
+> > >
+> >
+> > --
+> > மணிவண்ணன் சதாசிவம்
+
+-- 
+மணிவண்ணன் சதாசிவம்
