@@ -2,97 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6C04716DDF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 21:45:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2FB75716DFB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 21:48:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233269AbjE3TpR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 15:45:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35220 "EHLO
+        id S230339AbjE3Ts5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 15:48:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232053AbjE3TpR (ORCPT
+        with ESMTP id S230311AbjE3Ts5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 15:45:17 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4F69EE8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 12:45:14 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f505aace48so2628571e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 12:45:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685475912; x=1688067912;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KPBl7CVyGi7z3EnEqP8i0l1/Rp7cAONGFh5tesIqeUQ=;
-        b=wtwhG4hRQYmLsKNHr6yPT4PxwE86DRjpaU6CInTtWe3dQ2ORJ8RSSIXgYsctPq6pHo
-         bsA42IlNLmBkPQ/aQjb3MZy6gU3CFsIMPdeyzO5j4eGvo6PIt1UYhJ6JtG0JRkrjaWE/
-         YEPRJBYadY2QY5eqwR5qbTGk/gIuL7tzHKSoHirm3c9fjHaqMXhIqFETJLAJiR0SsQZt
-         UteV3tsJK9l88yPqJbBHlLCTQ/TTfIPTf9CupsZwVq80qHHlujm3eCXZ5+6O7iHp23Qa
-         xsyrUjkluvR9qYqvCyl6wKxZcjBrwKPcJRWYpUkob8CYw6mvzJUXwLLExLRFHhshXXLi
-         ENfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685475912; x=1688067912;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KPBl7CVyGi7z3EnEqP8i0l1/Rp7cAONGFh5tesIqeUQ=;
-        b=FgaakzMoqaW/VNypKgKXUHyyKL7V4NYk3kQGNhJLUaJiR2vjVr/O/l5llSbfX/PhJn
-         qrFwfOMYPgRpXEnO+RNw8PGN+SbmvK4aMrHYWPtZDEZ43VBiOpkm9Ta4GXZz9OtKuWCH
-         3gOdBCSFbKXwkJHfViV9evpujHkmxwm2TcCi5C2Tjre/OYy7UnNmHRBqXNEgX7Y+ie7p
-         nWgo5ch6IRTv9mBGpX8Tkp6Lor6O9Nbe1rDaW9Qh1aSjyEa5WHQQwNGstSrXYV7uPbqf
-         i1c51HNpcYBooHZiSwr+3+SCCDVhnPrVosMF5kQ/Q64EKHHEcOqwINwd3mwAawFjyY/7
-         Osmw==
-X-Gm-Message-State: AC+VfDxh2ImlyJkEd9Lq9VUX/jtXayPiE0kGUQ1g2yFgRn42RXs2egX1
-        pW0TXrIOfjvHNWDrdALJ5+dO0Q==
-X-Google-Smtp-Source: ACHHUZ48qmvzgPiAm4eIF9ZN57Y01/3tKsrZOTUz5daAvG3cHRT2GRkwsPORqWGpzNxu5zinnU4l0w==
-X-Received: by 2002:a2e:3101:0:b0:2a8:e642:8cdb with SMTP id x1-20020a2e3101000000b002a8e6428cdbmr1345004ljx.49.1685475912524;
-        Tue, 30 May 2023 12:45:12 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id a24-20020a2e8618000000b002a76c16ad65sm3017684lji.87.2023.05.30.12.45.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 12:45:12 -0700 (PDT)
-Message-ID: <0e9903c0-4669-9298-e0ee-72fc775998c3@linaro.org>
-Date:   Tue, 30 May 2023 21:45:10 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
+        Tue, 30 May 2023 15:48:57 -0400
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BDF2E8;
+        Tue, 30 May 2023 12:48:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1685476133; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=pop3NnhrhZEAeUjnOXlrOnJgzu7/QXn4WnQ4LxAepL1V6oGMgQLF84+ww4Ph5KGYhh
+    7bG9BBsVzRaSrKBaWYFvAMhVpFtzs8hsne1cgyvdDT1sxhA6u7YnmUrwZ4J1OeRrifzG
+    iqucgzfD4hkkSkvs3TyVKarnCjvCvS8lSkXpKmbcK+MyhADYp8IF+mq3j6ycTIGtrneY
+    qsb7tQmzOf3LW18D1tpnHK73FsRG+FiY++ukus0bPKCzZbVzR29/upQSOt5EYIy3v+Ok
+    NzyEolHSM6TfxJF83o1/wNIOYDcRf3X8UNv/bAkqJoMafRa2wB1TssHkS5Z4UYHkGXbm
+    ItoA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1685476133;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=T5CdztljMKq8HhGIpu+2afxFrsW10AdGa/gk1f9uPvg=;
+    b=Lb6nl9GUblisWuGhbK4Jqx0kW2/qRjGvGDH3lidI33DdkL8yj5zEF9Zl/U/aIP+Z7y
+    qSo+aGFwFKBERvMvMjPAtUIHHgMPNysL5yVQ10CtseQ7s6dXJ4LfF9MJzHCkaG/zCXal
+    PAU7RpIxAJ1YgkNMj19hf1P6batbHmRQsWVJt2xolb/4rzfwM4OaD7PBDcgqPypdfQz/
+    wfGrm1eSXTShRTYR62yn76EO6JwHnY1InGXIgNodtu3Hj9u5PDNfCLGJfvvb4oUrTNC1
+    k53HDDbdVo8zQBjLCkcF2fONoQ8opVJ3JZ0aUOXjcA1bTzNIJYqIg5HJPhZbm1VIH6K5
+    bTNQ==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo02
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1685476133;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=T5CdztljMKq8HhGIpu+2afxFrsW10AdGa/gk1f9uPvg=;
+    b=MLjwIMvj0RorFujTsCZyyV+uniL7w5BmJJV4u9BEYV4bnSs60GYnKBLvYXgeIHzCgD
+    SBhHbYapZefK9NcrBnIBD1Q1les+G77wn5K3iE40YVjvWpaX6H0Ji3qTYb6Kxx+X8oa8
+    EVenO9YXQ5eE98I4uSV3SBC06Ip/m+ovLi5wKpuyD6bKck5R0citaqpVoVMBjRp7oIju
+    FEN1Lr6GNy7kVTfGJg6Er+hBgeC+EcxHu4mmjFjE/pxE17MgWCA7TzUTwsjdjQh5s6Is
+    MPWNgD/3MdTwC3h6sRYzLxsUOKBpEGsP6Cw4I33zwmOq3ppU+WU5IJ4Fce3oo4e3ODWR
+    VIsw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1685476133;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=T5CdztljMKq8HhGIpu+2afxFrsW10AdGa/gk1f9uPvg=;
+    b=DpfzWWAIopgKluKnlAsAh/Br4D8F+EJjOJoejLEl/vRHlCvDoHsUycfw5ZaLb41ypl
+    sxnEduT67bHbcQfdvHCg==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA95nh"
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
+    with ESMTPSA id j6420az4UJmqjqV
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Tue, 30 May 2023 21:48:52 +0200 (CEST)
+Date:   Tue, 30 May 2023 21:48:46 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] soc: qcom: rmtfs: Support dynamic placement of region
+Message-ID: <ZHZTHlfDsngUrTRX@gerhold.net>
 References: <20230530193436.3833889-1-quic_bjorande@quicinc.com>
  <20230530193436.3833889-3-quic_bjorande@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH 2/2] soc: qcom: rmtfs: Support dynamic placement of region
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20230530193436.3833889-3-quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_PASS,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 30.05.2023 21:34, Bjorn Andersson wrote:
+On Tue, May 30, 2023 at 12:34:36PM -0700, Bjorn Andersson wrote:
 > In some configurations, the exact placement of the rmtfs shared memory
 > region isn't so strict. In the current implementation the author of the
 > DeviceTree source is forced to make up a memory region.
-IIUC the test here would be... "works" / "doesn't", just as if one
-misplaced the fixed region?
-
-Does the downstream sharedmem-uio driver do any additional cryptic
-magic or does it simply rely on the vendor's cma/dma pool settings?
-Can we replicate its behavior to stop hardcoding rmtfs, period?
-
 > 
 > Extend the rmtfs memory driver to relieve the author of this
 > responsibility by introducing support for using dynamic allocation in
@@ -128,123 +131,31 @@ Can we replicate its behavior to stop hardcoding rmtfs, period?
 > +		qcom,client-id = <1>;
 > +		qcom,vmid = <15>;
 > +	};
-This should have been a separate patch.
+> +
 
-> +
->  	thermal-zones {
->  		xo_thermal: xo-thermal {
->  			polling-delay-passive = <0>;
-> diff --git a/drivers/soc/qcom/rmtfs_mem.c b/drivers/soc/qcom/rmtfs_mem.c
-> index f83811f51175..5f56ded9f905 100644
-> --- a/drivers/soc/qcom/rmtfs_mem.c
-> +++ b/drivers/soc/qcom/rmtfs_mem.c
-> @@ -3,6 +3,8 @@
->   * Copyright (c) 2017 Linaro Ltd.
->   */
->  
-> +#include "linux/gfp_types.h"
-> +#include "linux/sizes.h"
-<>?
+Couldn't you just use the existing dynamic allocation of
+reserved-memory, without any driver changes?
 
->  #include <linux/kernel.h>
->  #include <linux/cdev.h>
->  #include <linux/err.h>
-> @@ -168,23 +170,63 @@ static void qcom_rmtfs_mem_release_device(struct device *dev)
->  	kfree(rmtfs_mem);
->  }
->  
-> +static int qcom_rmtfs_acquire_mem(struct device *dev, struct qcom_rmtfs_mem *rmtfs_mem)
-> +{
-> +	struct device_node *node = dev->of_node;
-> +	struct reserved_mem *rmem;
-> +	dma_addr_t dma_addr;
-> +	void *mem;
-> +	u32 size;
-> +	int ret;
-> +
-> +	rmem = of_reserved_mem_lookup(node);
-> +	if (rmem) {
-> +		rmtfs_mem->addr = rmem->base;
-> +		rmtfs_mem->size = rmem->size;
-> +
-> +		rmtfs_mem->base = devm_memremap(&rmtfs_mem->dev, rmtfs_mem->addr,
-> +						rmtfs_mem->size, MEMREMAP_WC);
-> +		if (IS_ERR(rmtfs_mem->base)) {
-> +			dev_err(dev, "failed to remap rmtfs_mem region\n");
-> +			return PTR_ERR(rmtfs_mem->base);
-> +		}
-> +
-> +		return 0;
-> +	}
-> +
-> +	ret = of_property_read_u32(node, "qcom,alloc-size", &size);
-> +	if (ret < 0) {
-> +		dev_err(dev, "rmtfs of unknown size\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	/*
-> +	 * Ensure that the protected region isn't adjacent to other protected
-> +	 * regions by allocating an empty page on either side.
-> +	 */
-> +	mem = dma_alloc_coherent(dev, size + 2 * SZ_4K, &dma_addr, GFP_KERNEL);
-Should this be made pagesize-independent? Can we even run non-4K kernels on msm?
+/ {
+	reserved-memory {
+		rmtfs {
+			compatible = "qcom,rmtfs-mem";
+			size = <0x0 (2*1024*1024)>;
+			alignment = <0x0 ...>; // if you want a special one
+			no-map; // don't we want to map this actually?
 
-Konrad
-> +	if (mem) {
-> +		rmtfs_mem->base = mem + SZ_4K;
-> +		rmtfs_mem->addr = dma_addr + SZ_4K;
-> +		rmtfs_mem->size = size;
-> +
-> +		return 0;
-> +	}
-> +
-> +	dev_err(dev, "unable to allocate memory for rmtfs mem\n");
-> +	return -ENOMEM;
-> +}
-> +
->  static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
->  {
->  	struct device_node *node = pdev->dev.of_node;
->  	struct qcom_scm_vmperm perms[NUM_MAX_VMIDS + 1];
-> -	struct reserved_mem *rmem;
->  	struct qcom_rmtfs_mem *rmtfs_mem;
->  	u32 client_id;
->  	u32 vmid[NUM_MAX_VMIDS];
->  	int num_vmids;
->  	int ret, i;
->  
-> -	rmem = of_reserved_mem_lookup(node);
-> -	if (!rmem) {
-> -		dev_err(&pdev->dev, "failed to acquire memory region\n");
-> -		return -EINVAL;
-> -	}
-> -
->  	ret = of_property_read_u32(node, "qcom,client-id", &client_id);
->  	if (ret) {
->  		dev_err(&pdev->dev, "failed to parse \"qcom,client-id\"\n");
-> @@ -196,22 +238,16 @@ static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
->  	if (!rmtfs_mem)
->  		return -ENOMEM;
->  
-> -	rmtfs_mem->addr = rmem->base;
->  	rmtfs_mem->client_id = client_id;
-> -	rmtfs_mem->size = rmem->size;
->  
->  	device_initialize(&rmtfs_mem->dev);
->  	rmtfs_mem->dev.parent = &pdev->dev;
->  	rmtfs_mem->dev.groups = qcom_rmtfs_mem_groups;
->  	rmtfs_mem->dev.release = qcom_rmtfs_mem_release_device;
->  
-> -	rmtfs_mem->base = devm_memremap(&rmtfs_mem->dev, rmtfs_mem->addr,
-> -					rmtfs_mem->size, MEMREMAP_WC);
-> -	if (IS_ERR(rmtfs_mem->base)) {
-> -		dev_err(&pdev->dev, "failed to remap rmtfs_mem region\n");
-> -		ret = PTR_ERR(rmtfs_mem->base);
-> +	ret = qcom_rmtfs_acquire_mem(&pdev->dev, rmtfs_mem);
-> +	if (ret < 0)
->  		goto put_device;
-> -	}
->  
->  	cdev_init(&rmtfs_mem->cdev, &qcom_rmtfs_mem_fops);
->  	rmtfs_mem->cdev.owner = THIS_MODULE;
+			qcom,client-id = <1>;
+			qcom,vmid = <15>;
+		};
+	};
+};
+
+You won't get the 4K empty pages but I guess you just have them because
+you allocate the memory without proper alignment?
+
+Related patch series where I propose using it for most firmware memory
+regions:
+https://lore.kernel.org/linux-arm-msm/20230510-dt-resv-bottom-up-v1-5-3bf68873dbed@gerhold.net/
+
+Thanks,
+Stephan
