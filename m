@@ -2,219 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6196D716A30
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 18:58:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC608716AA9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 May 2023 19:19:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232951AbjE3Q6Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 12:58:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35374 "EHLO
+        id S233077AbjE3RTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 13:19:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232754AbjE3Q6P (ORCPT
+        with ESMTP id S233001AbjE3RTI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 12:58:15 -0400
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FF02A7;
-        Tue, 30 May 2023 09:58:13 -0700 (PDT)
-Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-96f50e26b8bso869181266b.2;
-        Tue, 30 May 2023 09:58:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685465891; x=1688057891;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oD/k7lu42WU94j/4jyYC1ZkyaWqarmNUB0MS9bMyYOM=;
-        b=A9Q494rVLfO+wK0NCAjogfWBJPD2HCpQTz9IQT5E/00M5SKYjDb0KgJtrd6wa/UP0i
-         IeCXUinnUnpgEwA9Nkmw2q+sdFP1REJM9VNyKDcjUGwyyT/FItGFrZyiPPEjrbXKfr4/
-         BWz6VnCJaGuLBovVGttzaZl7ZUxotMbTBBdq+QZB2DQ4xTKtr67537HS7Z9fl5nn2SbX
-         63mMXdZ7wKzpK4sKYFQ/+IDNb0/hs8xIkgScmu28v6wEfg5kTv55a6GOz6eHGyeeMuwH
-         mIVO+HOmurywuHINs+bATr+PR1qesFQEivh0VPK7rD2kwmOuB+N7l156e/mRp015TB2q
-         Xb+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685465891; x=1688057891;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oD/k7lu42WU94j/4jyYC1ZkyaWqarmNUB0MS9bMyYOM=;
-        b=e8htbfbsGJIe0ZeHQKan23SAo2YEGQuDaamdrb6BBOgRWhBL/bE0C1W5koL4rm0YkZ
-         IhXOG4mxfBqhyfE+MtbPg5u3Uhum1GdROJ/zlxGnO68WYpxm/Ui3AXelB0IsNRnhLH1u
-         dFYdzTw29ZDgCBHs0fq5gdfghJyph0KMH9DjM89TrLC6uZkbPXM6E3Z0BNKgXTR0K1F3
-         EdOobUt6X+G8SEfx5dIPV7HxkeuvoDsvKAJk9uejXR64FLmOKfOwHxnZ1QF+8RvvhswG
-         whAZGxT5PKu3CT5g/6LsNEMwdAeNai0f8A4/bCfhPRhs705KDp+1pBOONnbjXXJy9Ev+
-         YlPg==
-X-Gm-Message-State: AC+VfDxnhID/T1JCQciUCcrZ41ygOQwU7otjQQa95G1KuKeOhM0n5AFd
-        5jzFjhgpXForw/S06qJa+HY=
-X-Google-Smtp-Source: ACHHUZ7/itg05PvkGgCzjBScvKApBuN2uggxHSzYIKrJhbSd35rf+tgzgpJIjshjhgQ72uNy5Z484A==
-X-Received: by 2002:a17:907:c12:b0:973:9522:c678 with SMTP id ga18-20020a1709070c1200b009739522c678mr3095986ejc.44.1685465891084;
-        Tue, 30 May 2023 09:58:11 -0700 (PDT)
-Received: from fedora.. (dh207-97-232.xnet.hr. [88.207.97.232])
-        by smtp.googlemail.com with ESMTPSA id c7-20020a17090603c700b0096a68648329sm7546061eja.214.2023.05.30.09.58.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 May 2023 09:58:10 -0700 (PDT)
-From:   Robert Marko <robimarko@gmail.com>
-To:     rafael@kernel.org, viresh.kumar@linaro.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        ilia.lin@kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     ansuelsmth@gmail.com, Robert Marko <robimarko@gmail.com>
-Subject: [RESEND PATCH v2 2/2] cpufreq: qcom-nvmem: add support for IPQ8064
-Date:   Tue, 30 May 2023 18:58:07 +0200
-Message-Id: <20230530165807.642084-2-robimarko@gmail.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230530165807.642084-1-robimarko@gmail.com>
-References: <20230530165807.642084-1-robimarko@gmail.com>
+        Tue, 30 May 2023 13:19:08 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6391BD9;
+        Tue, 30 May 2023 10:19:07 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id EE7B7630C8;
+        Tue, 30 May 2023 17:19:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA22EC433D2;
+        Tue, 30 May 2023 17:19:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685467146;
+        bh=PIBi+WICffiBvaB2Kw9KN3H9bNAFCDH01ZgbVaQGbpg=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=E2Xa4JrAvvdRGyRf3zxeWBvkc5cuOtjqlw0qF7dZxyI06ngCrCEr+2VfwVIRMVVdd
+         V5zTylUXQRCf1KW4HPXzMIdv+9vrMt1yP+n7FUDa+t2FjNJ4LF5+BlKFZwjSqNBqRe
+         ZHB1IFdqYD9OcZl9/+Ecs/JcoSOvUOC9V09t4ZzWib5Tw6UHYj9RtfWvo7heP6Av47
+         dD3CVQoa6UM26DNqLEt2ojddXXiZcVQpH+lX3kslYjvfSLtg1sWzEWznuptvI921Y/
+         KH17pTxqsO/dGyBabW1mpfH4P2fEriexl3TKpaNOhSUcu+Vgyc5AIWsf3E+ZScPJZ6
+         l+0N0Pn0M1pBQ==
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Bart Van Assche <bvanassche@acm.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        linux-pci@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        devicetree@vger.kernel.org,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        linux-scsi@vger.kernel.org, Marc Zyngier <maz@kernel.org>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Avri Altman <avri.altman@wdc.com>,
+        Georgi Djakov <djakov@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>
+Subject: Re: (subset) [PATCH v3 00/15] Introduce the SC8180x devices
+Date:   Tue, 30 May 2023 10:22:49 -0700
+Message-Id: <168546732606.2227271.7267063763992454803.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230530162454.51708-1-vkoul@kernel.org>
+References: <20230530162454.51708-1-vkoul@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+On Tue, 30 May 2023 21:54:39 +0530, Vinod Koul wrote:
+> This introduces Qualcomm SC8180x SoC which features in Lenovo Flex 5G
+> laptop. This also adds support for Primus platform as well as Lenovo Flex 5G
+> laptop.
+> 
+> Changes in v3:
+>  - Split DTS patch into smaller check
+>  - checkpatch and dtbs check error fixes
+>  - fix comments from Konrad/Krzysztof
+> 
+> [...]
 
-IPQ8064 comes in 3 families:
-* IPQ8062 up to 1.0GHz
-* IPQ8064/IPQ8066/IPQ8068 up to 1.4GHz
-* IPQ8065/IPQ8069 up to 1.7Ghz
+Quite a few DT validation warnings left, but let's get it merged so that we can
+work on those together.
 
-So, in order to be able to share one OPP table, add support for
-IPQ8064 family based of SMEM SoC ID-s as speedbin fuse is always 0 on
-IPQ8064.
+Applied, thanks!
 
-Bit are set with the following logic:
-* IPQ8062 BIT 0
-* IPQ8064/IPQ8066/IPQ8068 BIT 1
-* IPQ8065/IPQ8069 BIT 2
+[06/15] arm64: dts: qcom: Introduce the SC8180x platform
+        commit: 8575f197b077001591ef3ff709cdee48785daf0d
+[07/15] arm64: dts: qcom: sc8180x: Add interconnects and lmh
+        commit: f3be8a111d7eaf4e291b6c2d51dd0adb39934b32
+[08/15] arm64: dts: qcom: sc8180x: Add thermal zones
+        commit: d1d3ca03554e51be44546638f83169bb05b20ef8
+[09/15] arm64: dts: qcom: sc8180x: Add QUPs
+        commit: 0018761d1564f64d567e119fd9156c473b4592d7
+[10/15] arm64: dts: qcom: sc8180x: Add PCIe instances
+        commit: d20b6c84f56ae3a9823cc0fa5cfad330536ba0d1
+[11/15] arm64: dts: qcom: sc8180x: Add remoteprocs, wifi and usb nodes
+        commit: b080f53a8f44eeaa9db9628d8d339ab5a2afb5bd
+[12/15] arm64: dts: qcom: sc8180x: Add display and gpu nodes
+        commit: 494dec9b6f541451b2e82905b0eebd9a4ac9848b
+[13/15] arm64: dts: qcom: sc8180x: Add pmics
+        commit: d3302290f59e8533a56a8fa2455357f843d8dcf6
+[14/15] arm64: dts: qcom: sc8180x: Introduce Primus
+        commit: 2ce38cc1e8fea4e251e4563e436104369bf3b322
+[15/15] arm64: dts: qcom: sc8180x: Introduce Lenovo Flex 5G
+        commit: 20dea72a393c6d5572088b8ad01dbb9e9aca64ce
 
-speed is never fused, only psv values are fused.
-Set speed to the versions to permit a unified opp table following
-this named opp:
-
-opp-microvolt-speed<SPEED_VALUE>-pvs<PSV_VALUE>-v0
-
-Example:
-- for ipq8062 psv2
-  opp-microvolt-speed0-pvs2-v0 = < 925000 878750 971250>
-- for ipq8064 psv2
-  opp-microvolt-speed2-pvs2-v0 = <925000 878750 971250>;
-- for ipq8065 psv2
-  opp-microvolt-speed4-pvs2-v0 = <950000 902500 997500>;
-
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Signed-off-by: Robert Marko <robimarko@gmail.com>
----
- drivers/cpufreq/qcom-cpufreq-nvmem.c | 73 +++++++++++++++++++++++++++-
- 1 file changed, 72 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-index ce444b5962f2..c644138680ba 100644
---- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-+++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-@@ -34,6 +34,10 @@
- #define IPQ8074_HAWKEYE_VERSION		BIT(0)
- #define IPQ8074_ACORN_VERSION		BIT(1)
- 
-+#define IPQ8062_VERSION		BIT(0)
-+#define IPQ8064_VERSION		BIT(1)
-+#define IPQ8065_VERSION		BIT(2)
-+
- struct qcom_cpufreq_drv;
- 
- struct qcom_cpufreq_match_data {
-@@ -207,6 +211,69 @@ static int qcom_cpufreq_krait_name_version(struct device *cpu_dev,
- 	return ret;
- }
- 
-+static int qcom_cpufreq_ipq8064_name_version(struct device *cpu_dev,
-+					     struct nvmem_cell *speedbin_nvmem,
-+					     char **pvs_name,
-+					     struct qcom_cpufreq_drv *drv)
-+{
-+	int speed = 0, pvs = 0, pvs_ver = 0;
-+	int msm_id, ret = 0;
-+	u8 *speedbin;
-+	size_t len;
-+
-+	speedbin = nvmem_cell_read(speedbin_nvmem, &len);
-+
-+	if (IS_ERR(speedbin))
-+		return PTR_ERR(speedbin);
-+
-+	switch (len) {
-+	case 4:
-+		get_krait_bin_format_a(cpu_dev, &speed, &pvs, &pvs_ver,
-+				       speedbin);
-+		break;
-+	default:
-+		dev_err(cpu_dev, "Unable to read nvmem data. Defaulting to 0!\n");
-+		ret = -ENODEV;
-+		goto len_error;
-+	}
-+
-+	ret = qcom_smem_get_soc_id(&msm_id);
-+	if (ret)
-+		return ret;
-+
-+	switch (msm_id) {
-+	case QCOM_ID_IPQ8062:
-+		drv->versions = IPQ8062_VERSION;
-+		break;
-+	case QCOM_ID_IPQ8064:
-+	case QCOM_ID_IPQ8066:
-+	case QCOM_ID_IPQ8068:
-+		drv->versions = IPQ8064_VERSION;
-+		break;
-+	case QCOM_ID_IPQ8065:
-+	case QCOM_ID_IPQ8069:
-+		drv->versions = IPQ8065_VERSION;
-+		break;
-+	default:
-+		dev_err(cpu_dev,
-+			"SoC ID %u is not part of IPQ8064 family, limiting to 1.0GHz!\n",
-+			msm_id);
-+		drv->versions = IPQ8062_VERSION;
-+		break;
-+	}
-+
-+	/*
-+	 * IPQ8064 speed is never fused. Only psv values are fused.
-+	 * Set speed to the versions to permit a unified opp table.
-+	 */
-+	snprintf(*pvs_name, sizeof("speedXX-pvsXX-vXX"), "speed%d-pvs%d-v%d",
-+		 drv->versions, pvs, pvs_ver);
-+
-+len_error:
-+	kfree(speedbin);
-+	return ret;
-+}
-+
- static int qcom_cpufreq_ipq8074_name_version(struct device *cpu_dev,
- 					     struct nvmem_cell *speedbin_nvmem,
- 					     char **pvs_name,
-@@ -256,6 +323,10 @@ static const struct qcom_cpufreq_match_data match_data_qcs404 = {
- 	.genpd_names = qcs404_genpd_names,
- };
- 
-+static const struct qcom_cpufreq_match_data match_data_ipq8064 = {
-+	.get_version = qcom_cpufreq_ipq8064_name_version,
-+};
-+
- static const struct qcom_cpufreq_match_data match_data_ipq8074 = {
- 	.get_version = qcom_cpufreq_ipq8074_name_version,
- };
-@@ -404,7 +475,7 @@ static const struct of_device_id qcom_cpufreq_match_list[] __initconst = {
- 	{ .compatible = "qcom,apq8096", .data = &match_data_kryo },
- 	{ .compatible = "qcom,msm8996", .data = &match_data_kryo },
- 	{ .compatible = "qcom,qcs404", .data = &match_data_qcs404 },
--	{ .compatible = "qcom,ipq8064", .data = &match_data_krait },
-+	{ .compatible = "qcom,ipq8064", .data = &match_data_ipq8064 },
- 	{ .compatible = "qcom,ipq8074", .data = &match_data_ipq8074 },
- 	{ .compatible = "qcom,apq8064", .data = &match_data_krait },
- 	{ .compatible = "qcom,msm8974", .data = &match_data_krait },
+Best regards,
 -- 
-2.40.1
-
+Bjorn Andersson <andersson@kernel.org>
