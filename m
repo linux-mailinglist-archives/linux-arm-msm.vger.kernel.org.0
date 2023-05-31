@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 184CC7172F8
+	by mail.lfdr.de (Postfix) with ESMTP id D9AA47172FA
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 03:16:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233482AbjEaBQl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S233996AbjEaBQl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 30 May 2023 21:16:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36900 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233782AbjEaBQj (ORCPT
+        with ESMTP id S233969AbjEaBQj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 30 May 2023 21:16:39 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0581810E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 18:16:35 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f4f3ac389eso4529956e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 18:16:35 -0700 (PDT)
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C406911D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 18:16:36 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f5021faa16so3330405e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 18:16:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685495794; x=1688087794;
+        d=linaro.org; s=google; t=1685495795; x=1688087795;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IbsAZyU27eGiIY7Cnbju8/Nvcxc0+XDnAh4+N+PWw0M=;
-        b=K9JxzYjJZSJJZp4yjd5Hg1RUlq3On79QkWwi/qCUM2S3Ko1vJAzwqSaBIvnbN6LNhJ
-         QJ4pCxuKRKquYjmcUfe9kj2aN72KvZqSzfFVrMeoRXqcEcDkvuoqVBd3zm0RkmJEQtYL
-         29SOadlHIz2/SnL9kG71USDOLOBfARehD4hD2g8tQbWFw6bv7gg71VuuzeMsddaYPg+L
-         6RXsCW49oc7JTeXtn+y21aaguErvRWY9j8XnEGkWwLgIwOPUpZe7zd+IycMzoK9xKsD8
-         bgr+pyi5c6jOwbtuCP8cdtayonOwv+935B4vnVjzqXL5FllpaIotVpuS+IQHRXueNIhX
-         wSeQ==
+        bh=8qcBH6bGVmZGIJBDLEVfU6rhkGcQMhUDNw/1p6tNesM=;
+        b=n89DjNlA/pI0RjVSF8J1AW8jCKFkWcNM2CZYtpi493nQ/Uo59XLz3qXT+/e2oaxKcq
+         DOeykrSTMCtUUkbcQFc7nosUNzk5YhaVs42Ol1hU4+pO3J1Yeni6yulwic+I0Ykc7k1g
+         1EFUcg62IVe9qdi81l9ylusqlTCkHU54saMiEv5eeo/Ltc8FOyi6Ns8cfGhH5EBiif1C
+         eyir5bV8iKDR6Kae3451W8TaltiQDuWbwUMcps1NVrpIippgv5We9eVkc8HbP8HvRyoz
+         bArDhNFq6UiiBLgiZ0jM1NQ83Q7b9LakaDGKhbIiYPd18hVrN0oCXMbjixbzNy094EfJ
+         asog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685495794; x=1688087794;
+        d=1e100.net; s=20221208; t=1685495795; x=1688087795;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IbsAZyU27eGiIY7Cnbju8/Nvcxc0+XDnAh4+N+PWw0M=;
-        b=LznDdtmkj29kJzlGvZY3tMfDX3ZndbNhmGrNU5cL7b6xWvPEY7UJHRJXh4D4240arH
-         OBVwmf6W9M/4NNCL0Kr02yW9KXZUYnTb7jvDevYtZtXkQfRTJh6lFPwSq8geUO/69Tou
-         59bs5pC6D9PWaulX2308IIFZSWAAWI0IIGCBFruAy7VHiDzcFQqOk99zyRJMaoJgRfnI
-         tR5Xyj5TmIK0FYswQSRRKXR98mR7iiNs8P6fYvf4D3qaobFcthiLHAsBX/3+nOTDpHzl
-         Ap2WDsMBPaPPKb9OS7+E1qztsN7iFG79WXoweuXpOLFUMoGKRmynSCD/sNHTD3o26IuS
-         rSqA==
-X-Gm-Message-State: AC+VfDzevt0N7JO29qcqvEdap1dNwo5znHSVgBF6BMc9LDPNXbJ3J5Tb
-        NTr12YmzUwoBARDDhQFUfEUHEA==
-X-Google-Smtp-Source: ACHHUZ5Fve4SUhmHbYaeEqHeCRjRgTAJV6fUaFLNP2YIqFeXJrYzr8g/lyMzy8FvWcFrfUZVC0N2Ig==
-X-Received: by 2002:ac2:55bc:0:b0:4f4:bc9d:ca00 with SMTP id y28-20020ac255bc000000b004f4bc9dca00mr1470755lfg.39.1685495794077;
-        Tue, 30 May 2023 18:16:34 -0700 (PDT)
+        bh=8qcBH6bGVmZGIJBDLEVfU6rhkGcQMhUDNw/1p6tNesM=;
+        b=A6Pk1ka2DypKLWigT0RcDpBpVggfl2/mlRgUimBrgo7w0SgFWea20GAiwkvLHSZVqf
+         nMIWQiP9wVR2chl67lZf93gDkT0k/TSpzQFfm7zav/u2W6/iTZT2Vv7bMw9TmEPc7+hA
+         DuRIA2SVs1v2E164VCcctXAZEi3RGuCjYB5fiKp0EPFs0qy+7RVt1cD6iWpvBSbDrq3W
+         68jwOgvmgXLz8WN7u8B1eOVccD+bNtFegWtnsrs/tv52+jJBl8rrQkYJumF2Asgsy9s6
+         Fx1LzcMsi3CLD3lFtoEXX/0f+VTLsbKK88tQGPXlv6d21xBJo2a/5wq73oYSDyX0fbA0
+         Pvjw==
+X-Gm-Message-State: AC+VfDxynd/9NgU9wcgLWQmJ/FGsmojUn9HFjOiJqyiQsFM6jMEofeDa
+        f2z2mfAHB9vmVJbp0tAnr2LX4g==
+X-Google-Smtp-Source: ACHHUZ6HWgROSLBtmgVz6gcXBarSRzfUW6NbdmEtaRtb+My6G6ct6lH80/9Hdn5bCUOZwnIdCP9vYA==
+X-Received: by 2002:ac2:5237:0:b0:4f3:982a:8be1 with SMTP id i23-20020ac25237000000b004f3982a8be1mr1576327lfl.69.1685495795077;
+        Tue, 30 May 2023 18:16:35 -0700 (PDT)
 Received: from lothlorien.lan (dzdqv0yyyyyyyyyyybm5y-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::ab2])
-        by smtp.gmail.com with ESMTPSA id v24-20020ac25618000000b004f3787d8006sm505640lfd.128.2023.05.30.18.16.33
+        by smtp.gmail.com with ESMTPSA id v24-20020ac25618000000b004f3787d8006sm505640lfd.128.2023.05.30.18.16.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 May 2023 18:16:33 -0700 (PDT)
+        Tue, 30 May 2023 18:16:34 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -58,9 +58,9 @@ To:     Andy Gross <agross@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: [PATCH 07/14] arm64: dts: qcom: sc7180: rename labels for DSI nodes
-Date:   Wed, 31 May 2023 04:16:16 +0300
-Message-Id: <20230531011623.3808538-8-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 08/14] arm64: dts: qcom: sc7280: rename labels for DSI nodes
+Date:   Wed, 31 May 2023 04:16:17 +0300
+Message-Id: <20230531011623.3808538-9-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230531011623.3808538-1-dmitry.baryshkov@linaro.org>
 References: <20230531011623.3808538-1-dmitry.baryshkov@linaro.org>
@@ -85,413 +85,14 @@ node labels from dsi_* to mdss_dsi_*.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../boot/dts/qcom/sc7180-acer-aspire1.dts     | 32 ++++++------
- arch/arm64/boot/dts/qcom/sc7180-idp.dts       | 14 ++---
- .../qcom/sc7180-trogdor-parade-ps8640.dtsi    | 10 ++--
- .../qcom/sc7180-trogdor-quackingstick-r0.dts  |  2 +-
- .../qcom/sc7180-trogdor-quackingstick.dtsi    | 52 +++++++++----------
- .../dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi | 10 ++--
- .../sc7180-trogdor-wormdingler-rev1-boe.dts   |  2 +-
- .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  | 46 ++++++++--------
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 28 +++++-----
- arch/arm64/boot/dts/qcom/sc7180.dtsi          | 22 ++++----
- 10 files changed, 109 insertions(+), 109 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
-index 2a80f4090085..b637b4270f88 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-acer-aspire1.dts
-@@ -143,21 +143,6 @@ reg_tp_3p3: touchpad-regulator {
- 	};
- };
- 
--&dsi0 {
--	vdda-supply = <&vreg_l3c_1p2>;
--	status = "okay";
--};
--
--&dsi0_out {
--	remote-endpoint = <&sn65dsi86_in>;
--	data-lanes = <0 1 2 3>;
--};
--
--&dsi_phy {
--	vdds-supply = <&vreg_l4a_0p8>;
--	status = "okay";
--};
--
- &i2c2 {
- 	clock-frequency = <400000>;
- 	status = "okay";
-@@ -269,7 +254,7 @@ port@0 {
- 				reg = <0>;
- 
- 				sn65dsi86_in: endpoint {
--					remote-endpoint = <&dsi0_out>;
-+					remote-endpoint = <&mdss_dsi0_out>;
- 				};
- 			};
- 
-@@ -313,6 +298,21 @@ &mdss {
- 	status = "okay";
- };
- 
-+&mdss_dsi0 {
-+	vdda-supply = <&vreg_l3c_1p2>;
-+	status = "okay";
-+};
-+
-+&mdss_dsi0_out {
-+	remote-endpoint = <&sn65dsi86_in>;
-+	data-lanes = <0 1 2 3>;
-+};
-+
-+&mdss_dsi0_phy {
-+	vdds-supply = <&vreg_l4a_0p8>;
-+	status = "okay";
-+};
-+
- &pm6150_adc {
- 	thermistor@4e {
- 		reg = <ADC5_AMUX_THM2_100K_PU>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-index bd9ed03159cf..546db0d90630 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
-@@ -295,7 +295,11 @@ vreg_bob: bob {
- 	};
- };
- 
--&dsi0 {
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dsi0 {
- 	status = "okay";
- 
- 	vdda-supply = <&vreg_l3c_1p2>;
-@@ -314,7 +318,7 @@ panel@0 {
- 
- 		port {
- 			panel0_in: endpoint {
--				remote-endpoint = <&dsi0_out>;
-+				remote-endpoint = <&mdss_dsi0_out>;
- 			};
- 		};
- 	};
-@@ -329,15 +333,11 @@ endpoint {
- 	};
- };
- 
--&dsi_phy {
-+&mdss_dsi0_phy {
- 	status = "okay";
- 	vdds-supply = <&vreg_l4a_0p8>;
- };
- 
--&mdss {
--	status = "okay";
--};
--
- &qfprom {
- 	vcc-supply = <&vreg_l11a_1p8>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-parade-ps8640.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-parade-ps8640.dtsi
-index 5aa7949b5328..bede23369fed 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-parade-ps8640.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-parade-ps8640.dtsi
-@@ -46,10 +46,6 @@ &pp3300_dx_edp {
- 
- /* ADDITIONS TO NODES DEFINED IN PARENT DEVICE TREE FILES */
- 
--&dsi0_out {
--	remote-endpoint = <&ps8640_in>;
--};
--
- edp_brij_i2c: &i2c2 {
- 	status = "okay";
- 	clock-frequency = <400000>;
-@@ -74,7 +70,7 @@ ports {
- 			port@0 {
- 				reg = <0>;
- 				ps8640_in: endpoint {
--					remote-endpoint = <&dsi0_out>;
-+					remote-endpoint = <&mdss_dsi0_out>;
- 				};
- 			};
- 
-@@ -102,6 +98,10 @@ panel_in_edp: endpoint {
- 	};
- };
- 
-+&mdss_dsi0_out {
-+	remote-endpoint = <&ps8640_in>;
-+};
-+
- &tlmm {
- 	edp_brij_ps8640_rst: edp-brij-ps8640-rst-state {
- 		pins = "gpio11";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick-r0.dts
-index 5c81e44ed4a5..0a7f2286b541 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick-r0.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick-r0.dts
-@@ -15,7 +15,7 @@ / {
- 	compatible = "google,quackingstick-sku1537", "qcom,sc7180";
- };
- 
--&dsi_phy {
-+&mdss_dsi0_phy {
- 	qcom,phy-rescode-offset-top = /bits/ 8 <(-13) (-13) (-13) (-13) (-13)>;
- 	qcom,phy-rescode-offset-bot = /bits/ 8 <(-13) (-13) (-13) (-13) (-13)>;
- 	qcom,phy-drive-ldo-level = <375>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
-index 8e7b42f843d4..62ab6427dd65 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-quackingstick.dtsi
-@@ -52,7 +52,31 @@ keyboard-controller {
- 	};
- };
- 
--&dsi0 {
-+&gpio_keys {
-+	status = "okay";
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	ap_ts: touchscreen@10 {
-+		compatible = "hid-over-i2c";
-+		reg = <0x10>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&ts_int_l>, <&ts_reset_l>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
-+
-+		post-power-on-delay-ms = <20>;
-+		hid-descr-addr = <0x0001>;
-+
-+		vdd-supply = <&pp3300_ts>;
-+	};
-+};
-+
-+&mdss_dsi0 {
- 	panel: panel@0 {
- 		/* Compatible will be filled in per-board */
- 		reg = <0>;
-@@ -67,7 +91,7 @@ panel: panel@0 {
- 
- 		port {
- 			panel_in: endpoint {
--				remote-endpoint = <&dsi0_out>;
-+				remote-endpoint = <&mdss_dsi0_out>;
- 			};
- 		};
- 	};
-@@ -82,30 +106,6 @@ endpoint {
- 	};
- };
- 
--&gpio_keys {
--	status = "okay";
--};
--
--&i2c4 {
--	status = "okay";
--	clock-frequency = <400000>;
--
--	ap_ts: touchscreen@10 {
--		compatible = "hid-over-i2c";
--		reg = <0x10>;
--		pinctrl-names = "default";
--		pinctrl-0 = <&ts_int_l>, <&ts_reset_l>;
--
--		interrupt-parent = <&tlmm>;
--		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
--
--		post-power-on-delay-ms = <20>;
--		hid-descr-addr = <0x0001>;
--
--		vdd-supply = <&pp3300_ts>;
--	};
--};
--
- &sdhc_2 {
- 	status = "okay";
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi
-index e52b8776755d..b0c3be4c3bb4 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi
-@@ -27,10 +27,6 @@ &pp3300_dx_edp {
- 
- /* ADDITIONS TO NODES DEFINED IN PARENT DEVICE TREE FILES */
- 
--&dsi0_out {
--	remote-endpoint = <&sn65dsi86_in>;
--};
--
- edp_brij_i2c: &i2c2 {
- 	status = "okay";
- 	clock-frequency = <400000>;
-@@ -65,7 +61,7 @@ ports {
- 			port@0 {
- 				reg = <0>;
- 				sn65dsi86_in: endpoint {
--					remote-endpoint = <&dsi0_out>;
-+					remote-endpoint = <&mdss_dsi0_out>;
- 				};
- 			};
- 
-@@ -95,6 +91,10 @@ panel_in_edp: endpoint {
- 	};
- };
- 
-+&mdss_dsi0_out {
-+	remote-endpoint = <&sn65dsi86_in>;
-+};
-+
- &tlmm {
- 	edp_brij_irq: edp-brij-irq-state {
- 		pins = "gpio11";
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe.dts
-index c5b0658bd632..6eeead70d3eb 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler-rev1-boe.dts
-@@ -17,7 +17,7 @@ / {
- 	compatible = "google,wormdingler-sku1024", "qcom,sc7180";
- };
- 
--&dsi_phy {
-+&mdss_dsi0_phy {
- 	qcom,phy-rescode-offset-top = /bits/ 8 <31 31 31 31 (-32)>;
- 	qcom,phy-rescode-offset-bot = /bits/ 8 <31 31 31 31 (-32)>;
- 	qcom,phy-drive-ldo-level = <450>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
-index 262d6691abd9..2efa8a4bcda6 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-wormdingler.dtsi
-@@ -110,7 +110,28 @@ keyboard-controller {
- 	};
- };
- 
--&dsi0 {
-+&i2c4 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	ap_ts: touchscreen@1 {
-+		compatible = "hid-over-i2c";
-+		reg = <0x01>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&ts_int_l>;
-+
-+		interrupt-parent = <&tlmm>;
-+		interrupts = <9 IRQ_TYPE_EDGE_FALLING>;
-+
-+		post-power-on-delay-ms = <70>;
-+		hid-descr-addr = <0x0001>;
-+
-+		vdd-supply = <&pp3300_ts>;
-+		vddl-supply = <&pp1800_ts>;
-+	};
-+};
-+
-+&mdss_dsi0 {
- 
- 	panel: panel@0 {
- 		reg = <0>;
-@@ -126,7 +147,7 @@ panel: panel@0 {
- 
- 		port {
- 			panel_in: endpoint {
--				remote-endpoint = <&dsi0_out>;
-+				remote-endpoint = <&mdss_dsi0_out>;
- 			};
- 		};
- 	};
-@@ -141,27 +162,6 @@ endpoint {
- 	};
- };
- 
--&i2c4 {
--	status = "okay";
--	clock-frequency = <400000>;
--
--	ap_ts: touchscreen@1 {
--		compatible = "hid-over-i2c";
--		reg = <0x01>;
--		pinctrl-names = "default";
--		pinctrl-0 = <&ts_int_l>;
--
--		interrupt-parent = <&tlmm>;
--		interrupts = <9 IRQ_TYPE_EDGE_FALLING>;
--
--		post-power-on-delay-ms = <70>;
--		hid-descr-addr = <0x0001>;
--
--		vdd-supply = <&pp3300_ts>;
--		vddl-supply = <&pp1800_ts>;
--	};
--};
--
- &pm6150_adc {
- 	skin-temp-thermistor@4d {
- 		reg = <ADC5_AMUX_THM1_100K_PU>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 51d6c3502f3f..805fe1275e97 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -705,20 +705,6 @@ &camcc {
- 	status = "disabled";
- };
- 
--&dsi0 {
--	status = "okay";
--	vdda-supply = <&vdda_mipi_dsi0_1p2>;
--};
--
--&dsi0_out {
--	data-lanes = <0 1 2 3>;
--};
--
--&dsi_phy {
--	status = "okay";
--	vdds-supply = <&vdda_mipi_dsi0_pll>;
--};
--
- ap_sar_sensor_i2c: &i2c5 {
- 	clock-frequency = <400000>;
- 
-@@ -836,6 +822,20 @@ &mdss_dp_out {
- 	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000>;
- };
- 
-+&mdss_dsi0 {
-+	status = "okay";
-+	vdda-supply = <&vdda_mipi_dsi0_1p2>;
-+};
-+
-+&mdss_dsi0_out {
-+	data-lanes = <0 1 2 3>;
-+};
-+
-+&mdss_dsi0_phy {
-+	status = "okay";
-+	vdds-supply = <&vdda_mipi_dsi0_pll>;
-+};
-+
- &pm6150_adc {
- 	charger-thermistor@4f {
- 		reg = <ADC5_AMUX_THM3_100K_PU>;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 2c05b5a5d92b..34eff97f8630 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -3005,7 +3005,7 @@ ports {
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 1aa3c6bf81f0..2f5e73da8b6d 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -3888,7 +3888,7 @@ ports {
  					port@0 {
  						reg = <0>;
  						dpu_intf1_out: endpoint {
@@ -500,31 +101,7 @@ index 2c05b5a5d92b..34eff97f8630 100644
  						};
  					};
  
-@@ -3042,7 +3042,7 @@ opp-460000000 {
- 				};
- 			};
- 
--			dsi0: dsi@ae94000 {
-+			mdss_dsi0: dsi@ae94000 {
- 				compatible = "qcom,sc7180-dsi-ctrl",
- 					     "qcom,mdss-dsi-ctrl";
- 				reg = <0 0x0ae94000 0 0x400>;
-@@ -3065,12 +3065,12 @@ dsi0: dsi@ae94000 {
- 					      "bus";
- 
- 				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>, <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
--				assigned-clock-parents = <&dsi_phy 0>, <&dsi_phy 1>;
-+				assigned-clock-parents = <&mdss_dsi0_phy 0>, <&mdss_dsi0_phy 1>;
- 
- 				operating-points-v2 = <&dsi_opp_table>;
- 				power-domains = <&rpmhpd SC7180_CX>;
- 
--				phys = <&dsi_phy>;
-+				phys = <&mdss_dsi0_phy>;
- 
- 				#address-cells = <1>;
- 				#size-cells = <0>;
-@@ -3083,14 +3083,14 @@ ports {
+@@ -3973,14 +3973,14 @@ ports {
  
  					port@0 {
  						reg = <0>;
@@ -541,34 +118,6 @@ index 2c05b5a5d92b..34eff97f8630 100644
  						};
  					};
  				};
-@@ -3115,13 +3115,13 @@ opp-358000000 {
- 				};
- 			};
- 
--			dsi_phy: phy@ae94400 {
-+			mdss_dsi0_phy: phy@ae94400 {
- 				compatible = "qcom,dsi-phy-10nm";
- 				reg = <0 0x0ae94400 0 0x200>,
- 				      <0 0x0ae94600 0 0x280>,
- 				      <0 0x0ae94a00 0 0x1e0>;
--				reg-names = "dsi_phy",
--					    "dsi_phy_lane",
-+				reg-names = "dsi0_phy",
-+					    "dsi0_phy_lane",
- 					    "dsi_pll";
- 
- 				#clock-cells = <1>;
-@@ -3212,8 +3212,8 @@ dispcc: clock-controller@af00000 {
- 			reg = <0 0x0af00000 0 0x200000>;
- 			clocks = <&rpmhcc RPMH_CXO_CLK>,
- 				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
--				 <&dsi_phy 0>,
--				 <&dsi_phy 1>,
-+				 <&mdss_dsi0_phy 0>,
-+				 <&mdss_dsi0_phy 1>,
- 				 <&dp_phy 0>,
- 				 <&dp_phy 1>;
- 			clock-names = "bi_tcxo",
 -- 
 2.39.2
 
