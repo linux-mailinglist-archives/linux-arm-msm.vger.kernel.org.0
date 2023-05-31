@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A5C6717C54
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 11:46:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 849CC717C57
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 11:46:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235646AbjEaJqR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 05:46:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46252 "EHLO
+        id S232539AbjEaJq5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 05:46:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46766 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235640AbjEaJqG (ORCPT
+        with ESMTP id S231981AbjEaJq4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 05:46:06 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3CC21A7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 02:46:00 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f4f3ac389eso4997247e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 02:46:00 -0700 (PDT)
+        Wed, 31 May 2023 05:46:56 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E594E8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 02:46:54 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f3baf04f0cso6322473e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 02:46:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685526359; x=1688118359;
+        d=linaro.org; s=google; t=1685526413; x=1688118413;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=KeKMgXql7ql60sDKHTqvKSs3ebCHMhojzfVGAX2K8GE=;
-        b=FoVmTOAgp6T5gkATPaRJyRNOSadAhe/MdIXvljzX4RtAMH33yLiaP54nrXkiu0y+AY
-         MGG2G1pKNcfkz5NZxCk1+1AAsf4Idxa9SkY1Hlu7MaJeYvbSmNWkZ8QR5llB7t0hQW3s
-         fReyuwVt3bFjVGJA5g6RqFLh4WRixObyOLyXbbMi5iAOkFffzTDkiMoEESPAgiU0JnCu
-         7ziDiEEUfK2b77ij+KYjrb/AQcvQNgrbRW1jQ1WQ4DJCinS/d1t/VlVNC8MCpEQrJZmI
-         YW12Q3HZJgt1A4bn0iz2uXAQ1qW2AkQdOB+H5OPypQBaBRMuXoDyBPieRDFDseDVjMkX
-         OrDA==
+        bh=iTEV1/JYGgrvuGZhmjMKnGLK6FtjMyR0jXXOjESNrZQ=;
+        b=Dgu9yIwkQSujqK3cSEfA0ahs75nmxrD3xtu6wGT5H6XaHY5Bt5zH/qls/WA2Xe9N/I
+         OgeA4WO0a1riCvQQxEdNVK2v5aMz0tPMYdYOBMapY78J5IpFsAy2VVslNd8jM2lVSvkd
+         AnkSEWYBzzs3ran37mt4QLmWQLszVvcPfYXXvUOXCSY/hut0b6k5Lsqxz/85TYTxXJ78
+         fVKVWLgydgaV2Oo3Wy33YkIFps4kl2DSaGYl0jDf9btFvPlyyP6xoJdpRxIFuHRir37i
+         cYR4JjHQ3LZyDVozT8J/CzZjy+EoIoAT8RV18/hXdlwz3Yyb8jUvLAKEnqFZUBX/Reg/
+         zqow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685526359; x=1688118359;
+        d=1e100.net; s=20221208; t=1685526413; x=1688118413;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=KeKMgXql7ql60sDKHTqvKSs3ebCHMhojzfVGAX2K8GE=;
-        b=YbPU9mUywyU0Vj93+sJL92S0WlMarseh4bi9mbhsQjtY0vV6Z5PSleIcOSQyLtUMGN
-         LMkymYy0nMM14oE9givM/ZbYeWfCiSiHU4nUxcD99S9vk04OrvXJT26NtorQYqtJpnXb
-         ptpQc/FEf8syeSHjtPCVgH0+8/jxKJwmsIhEn6Fc2glnnj08RL1yRu13ekEKOLwiUUQV
-         rsCcR6yqSmswMyW21P2OSMscdZ5t0M8QoDo6OULc10lZst5hTNCHGQyjnl030T4RNr3u
-         QTs8xxeG7HUOp3vZpFoVH3e08BAut7x26xeAwmLXwSqyVOXQnSoucLnhFnUwXilc/t73
-         wKqg==
-X-Gm-Message-State: AC+VfDw5+xxg62f5REjWVTsBBf/wlVz9fmJs4v19mBwZfLAfngZj3fxn
-        KUneatZabKKz8SR0LK0DsX8omkb81tWsAO35F48=
-X-Google-Smtp-Source: ACHHUZ7FOfl4NC7L1HNGisfimYqbvdbFlM6jtR+fZN/VcPWJOo6mPNK+YTuAeiuH+iBPaMFSsxQnIQ==
-X-Received: by 2002:a19:f608:0:b0:4dd:9f86:859d with SMTP id x8-20020a19f608000000b004dd9f86859dmr2412784lfe.13.1685526358975;
-        Wed, 31 May 2023 02:45:58 -0700 (PDT)
+        bh=iTEV1/JYGgrvuGZhmjMKnGLK6FtjMyR0jXXOjESNrZQ=;
+        b=TqQdGVAF5lWgiDGigHkhtpUv/oyW/p/p1n6Cot4ofz8VMlOeKXRMIYpicMoc8fTD5z
+         VCZ4ZSJTREUt91XtraxIuFeUIF/cV6ekmb6JhYnLP7RnbRe5oQ1Ka159dD7WPcnELYF/
+         9PGFFtnQuMf2tOUr83N9ITuN1pbvvnKlf6UPbep/zzGJv84fvbE0E86em0uoyq8ESJ67
+         wxMmjnoMynS/uWriRuXZHh/QJetLHvFEYp4R34ebvBIEdRoDFcFBus2Buf8/Fmsjs5Ce
+         b2JUOgbHWutrIPrw0/FmKxzgZFBvWj2rJ0KW97EmZMLXNkicbGXi+1ndAetXahFdP5cj
+         O4BA==
+X-Gm-Message-State: AC+VfDxBachOTahtfDpSs46wgN89xdiJlTUEpG0+uVy3Mj0FfECZBCIs
+        S7VYVODJgjQw/UGLgf8AU8EmbA==
+X-Google-Smtp-Source: ACHHUZ5Hk6eMKLlLd8nDgdT1MeeWeDEoMiW8vkzeHnRBare346zvCLG0gH9OdV8dTvPNnvPQl4zdcA==
+X-Received: by 2002:a19:c216:0:b0:4f1:4f26:738f with SMTP id l22-20020a19c216000000b004f14f26738fmr2249189lfc.19.1685526412851;
+        Wed, 31 May 2023 02:46:52 -0700 (PDT)
 Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id r10-20020a19ac4a000000b004f00c854d34sm648849lfc.204.2023.05.31.02.45.58
+        by smtp.gmail.com with ESMTPSA id v17-20020a056512049100b004f382ae9892sm647764lfq.247.2023.05.31.02.46.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 May 2023 02:45:58 -0700 (PDT)
-Message-ID: <cec5923a-d18d-0b07-604e-4468b23d8c13@linaro.org>
-Date:   Wed, 31 May 2023 11:45:57 +0200
+        Wed, 31 May 2023 02:46:52 -0700 (PDT)
+Message-ID: <26df196e-4960-353d-7449-57432d31dad2@linaro.org>
+Date:   Wed, 31 May 2023 11:46:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH 13/14] arm64: dts: qcom: msm8996: rename labels for HDMI
+Subject: Re: [PATCH 14/14] ARM: dts: qcom: msm8974: rename labels for DSI
  nodes
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -66,9 +66,9 @@ To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
 References: <20230531011623.3808538-1-dmitry.baryshkov@linaro.org>
- <20230531011623.3808538-14-dmitry.baryshkov@linaro.org>
+ <20230531011623.3808538-15-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230531011623.3808538-14-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230531011623.3808538-15-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,226 +88,313 @@ On 31.05.2023 03:16, Dmitry Baryshkov wrote:
 > for HDMI nodes do not have the mdss_ prefix. It was found that grouping
 > all display-related notes is more useful.
 > 
-> To keep all display-related nodes close in the board files, change HDMI
-> node labels from hdmi_* to mdss_hdmi_*.
+> To keep all display-related nodes close in the board files, change DSI
+> node aliases from dsi_* to mdss_dsi_*.
 > 
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  arch/arm64/boot/dts/qcom/apq8096-db820c.dts  | 50 ++++++++++----------
->  arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts |  6 +--
->  arch/arm64/boot/dts/qcom/msm8996-mtp.dts     |  4 +-
->  arch/arm64/boot/dts/qcom/msm8996.dtsi        | 16 +++----
->  4 files changed, 38 insertions(+), 38 deletions(-)
+>  .../arm/boot/dts/qcom-apq8074-dragonboard.dts | 24 ++++++-------
+>  .../qcom-msm8974-lge-nexus5-hammerhead.dts    | 16 ++++-----
+>  arch/arm/boot/dts/qcom-msm8974.dtsi           | 36 +++++++++----------
+>  .../boot/dts/qcom-msm8974pro-samsung-klte.dts | 24 ++++++-------
+>  4 files changed, 50 insertions(+), 50 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-> index b599909c4463..537547b97459 100644
-> --- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-> +++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dts
-> @@ -208,25 +208,6 @@ &gpu {
->  	status = "okay";
+> diff --git a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
+> index 72f7e09a5bbf..72f6611bbe49 100644
+> --- a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
+> +++ b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
+> @@ -48,7 +48,15 @@ eeprom: eeprom@52 {
+>  	};
 >  };
 >  
-> -&hdmi {
-> -	status = "okay";
-> -
-> -	pinctrl-names = "default", "sleep";
-> -	pinctrl-0 = <&hdmi_hpd_active &hdmi_ddc_active>;
-> -	pinctrl-1 = <&hdmi_hpd_suspend &hdmi_ddc_suspend>;
-> -
-> -	core-vdda-supply = <&vreg_l12a_1p8>;
-> -	core-vcc-supply = <&vreg_s4a_1p8>;
-> -};
-> -
-> -&hdmi_phy {
-> -	status = "okay";
-> -
-> -	vddio-supply = <&vreg_l12a_1p8>;
-> -	vcca-supply = <&vreg_l28a_0p925>;
-> -	#phy-cells = <0>;
-> -};
-> -
->  &hsusb_phy1 {
->  	status = "okay";
->  
-> @@ -251,6 +232,25 @@ &mdss {
->  	status = "okay";
->  };
->  
-> +&mdss_hdmi {
+> -&dsi0 {
+> +&gpu {
 > +	status = "okay";
-> +
-> +	pinctrl-names = "default", "sleep";
-> +	pinctrl-0 = <&mdss_hdmi_hpd_active &mdss_hdmi_ddc_active>;
-> +	pinctrl-1 = <&mdss_hdmi_hpd_suspend &mdss_hdmi_ddc_suspend>;
-> +
-> +	core-vdda-supply = <&vreg_l12a_1p8>;
-> +	core-vcc-supply = <&vreg_s4a_1p8>;
 > +};
 > +
-> +&mdss_hdmi_phy {
-> +	status = "okay";
-> +
-> +	vddio-supply = <&vreg_l12a_1p8>;
-> +	vcca-supply = <&vreg_l28a_0p925>;
-> +	#phy-cells = <0>;
-> +};
-> +
->  &mmcc {
->  	vdd-gfx-supply = <&vdd_gfx>;
->  };
-> @@ -433,28 +433,28 @@ sdc2_cd_off: sdc2-cd-off-state {
->  		drive-strength = <2>;
->  	};
->  
-> -	hdmi_hpd_active: hdmi-hpd-active-state {
-> +	mdss_hdmi_hpd_active: mdss_hdmi-hpd-active-state {
->  		pins = "gpio34";
->  		function = "hdmi_hot";
->  		bias-pull-down;
->  		drive-strength = <16>;
->  	};
->  
-> -	hdmi_hpd_suspend: hdmi-hpd-suspend-state {
-> +	mdss_hdmi_hpd_suspend: mdss_hdmi-hpd-suspend-state {
->  		pins = "gpio34";
->  		function = "hdmi_hot";
->  		bias-pull-down;
->  		drive-strength = <2>;
->  	};
->  
-> -	hdmi_ddc_active: hdmi-ddc-active-state {
-> +	mdss_hdmi_ddc_active: mdss_hdmi-ddc-active-state {
->  		pins = "gpio32", "gpio33";
->  		function = "hdmi_ddc";
->  		drive-strength = <2>;
->  		bias-pull-up;
->  	};
->  
-> -	hdmi_ddc_suspend: hdmi-ddc-suspend-state {
-> +	mdss_hdmi_ddc_suspend: mdss_hdmi-ddc-suspend-state {
->  		pins = "gpio32", "gpio33";
->  		function = "hdmi_ddc";
->  		drive-strength = <2>;
-> @@ -1043,7 +1043,7 @@ cpu {
->  		};
->  	};
->  
-> -	hdmi-dai-link {
-> +	mdss_hdmi-dai-link {
->  		link-name = "HDMI";
->  		cpu {
->  			sound-dai = <&q6afedai HDMI_RX>;
-> @@ -1054,7 +1054,7 @@ platform {
->  		};
->  
->  		codec {
-> -			sound-dai = <&hdmi 0>;
-> +			sound-dai = <&mdss_hdmi 0>;
->  		};
->  	};
->  
-> diff --git a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-> index ed2e2f6c6775..ac6471d1db1f 100644
-> --- a/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-> +++ b/arch/arm64/boot/dts/qcom/apq8096-ifc6640.dts
-> @@ -92,15 +92,15 @@ &gpu {
->  	status = "okay";
->  };
->  
-> -&hdmi {
 > +&mdss {
->  	status = "okay";
+> +	status = "okay";
+> +};
+> +
+> +&mdss_dsi0 {
+>  	vdda-supply = <&pm8941_l2>;
+>  	vdd-supply = <&pm8941_l22>;
+>  	vddio-supply = <&pm8941_l12>;
+> @@ -65,31 +73,23 @@ panel: panel@0 {
+>  
+>  		port {
+>  			panel_in: endpoint {
+> -				remote-endpoint = <&dsi0_out>;
+> +				remote-endpoint = <&mdss_dsi0_out>;
+>  			};
+>  		};
+>  	};
 >  };
 >  
-> -&hdmi_phy {
-> +&mdss_hdmi {
+> -&dsi0_out {
+> +&mdss_dsi0_out {
+>  	remote-endpoint = <&panel_in>;
+>  	data-lanes = <0 1 2 3>;
+>  };
+>  
+> -&dsi0_phy {
+> +&mdss_dsi0_phy {
 >  	status = "okay";
+>  
+>  	vddio-supply = <&pm8941_l12>;
+>  };
+>  
+> -&gpu {
+> -	status = "okay";
+> -};
+> -
+> -&mdss {
+> -	status = "okay";
+> -};
+> -
+>  &pm8941_wled {
+>  	qcom,cs-out;
+>  	qcom,switching-freq = <3200>;
+> diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
+> index 205907c8670a..60bdfddeae69 100644
+> --- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
+> +++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
+> @@ -230,7 +230,11 @@ bluetooth {
+>  	};
+>  };
+>  
+> -&dsi0 {
+> +&mdss {
+> +	status = "okay";
+> +};
+> +
+> +&mdss_dsi0 {
+>  	status = "okay";
+>  
+>  	vdda-supply = <&pm8941_l2>;
+> @@ -246,27 +250,23 @@ panel: panel@0 {
+>  
+>  		port {
+>  			panel_in: endpoint {
+> -				remote-endpoint = <&dsi0_out>;
+> +				remote-endpoint = <&mdss_dsi0_out>;
+>  			};
+>  		};
+>  	};
+>  };
+>  
+> -&dsi0_out {
+> +&mdss_dsi0_out {
+>  	remote-endpoint = <&panel_in>;
+>  	data-lanes = <0 1 2 3>;
+>  };
+>  
+> -&dsi0_phy {
+> +&mdss_dsi0_phy {
+>  	status = "okay";
+>  
+>  	vddio-supply = <&pm8941_l12>;
 >  };
 >  
 > -&mdss {
-> +&mdss_hdmi_phy {
->  	status = "okay";
->  };
->  
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996-mtp.dts b/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
-> index 596ad4c896f5..495d45a16e63 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8996-mtp.dts
-> @@ -24,10 +24,10 @@ &blsp2_uart2 {
->  	status = "okay";
->  };
->  
-> -&hdmi {
-> +&mdss_hdmi {
->  	status = "okay";
->  };
->  
-> -&hdmi_phy {
-> +&mdss_hdmi_phy {
->  	status = "okay";
->  };
-> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> index 3855366ca89f..0cb2d4f08c3a 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-> @@ -895,7 +895,7 @@ mmcc: clock-controller@8c0000 {
->  				 <&mdss_dsi0_phy 0>,
->  				 <&mdss_dsi1_phy 1>,
->  				 <&mdss_dsi1_phy 0>,
-> -				 <&hdmi_phy>;
-> +				 <&mdss_hdmi_phy>;
->  			clock-names = "xo",
->  				      "gpll0",
->  				      "gcc_mmss_noc_cfg_ahb_clk",
-> @@ -980,7 +980,7 @@ ports {
+> -	status = "okay";
+> -};
+> -
+>  &pm8941_gpios {
+>  	gpio_keys_pin_a: gpio-keys-active-state {
+>  		pins = "gpio2", "gpio3";
+> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+> index 58e144957c5d..aeca504918a0 100644
+> --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
+> +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+> @@ -1837,10 +1837,10 @@ mmcc: clock-controller@fd8c0000 {
+>  				 <&gcc GPLL0_VOTE>,
+>  				 <&gcc GPLL1_VOTE>,
+>  				 <&rpmcc RPM_SMD_GFX3D_CLK_SRC>,
+> -				 <&dsi0_phy 1>,
+> -				 <&dsi0_phy 0>,
+> -				 <&dsi1_phy 1>,
+> -				 <&dsi1_phy 0>,
+> +				 <&mdss_dsi0_phy 1>,
+> +				 <&mdss_dsi0_phy 0>,
+> +				 <&mdss_dsi1_phy 1>,
+> +				 <&mdss_dsi1_phy 0>,
+>  				 <0>,
+>  				 <0>,
+>  				 <0>;
+> @@ -1905,20 +1905,20 @@ ports {
 >  					port@0 {
 >  						reg = <0>;
->  						mdp5_intf3_out: endpoint {
-> -							remote-endpoint = <&hdmi_in>;
-> +							remote-endpoint = <&mdss_hdmi_in>;
+>  						mdp5_intf1_out: endpoint {
+> -							remote-endpoint = <&dsi0_in>;
+> +							remote-endpoint = <&mdss_dsi0_in>;
 >  						};
 >  					};
 >  
-> @@ -1136,8 +1136,8 @@ mdss_dsi1_phy: phy@996400 {
->  				status = "disabled";
->  			};
->  
-> -			hdmi: hdmi-tx@9a0000 {
-> -				compatible = "qcom,hdmi-tx-8996";
-> +			mdss_hdmi: mdss_hdmi-tx@9a0000 {
-> +				compatible = "qcom,mdss_hdmi-tx-8996";
->  				reg =	<0x009a0000 0x50c>,
->  					<0x00070000 0x6158>,
->  					<0x009e0000 0xfff>;
-> @@ -1160,7 +1160,7 @@ hdmi: hdmi-tx@9a0000 {
->  					"alt_iface",
->  					"extp";
->  
-> -				phys = <&hdmi_phy>;
-> +				phys = <&mdss_hdmi_phy>;
->  				#sound-dai-cells = <1>;
->  
->  				status = "disabled";
-> @@ -1171,16 +1171,16 @@ ports {
->  
->  					port@0 {
->  						reg = <0>;
-> -						hdmi_in: endpoint {
-> +						mdss_hdmi_in: endpoint {
->  							remote-endpoint = <&mdp5_intf3_out>;
+>  					port@1 {
+>  						reg = <1>;
+>  						mdp5_intf2_out: endpoint {
+> -							remote-endpoint = <&dsi1_in>;
+> +							remote-endpoint = <&mdss_dsi1_in>;
 >  						};
 >  					};
 >  				};
 >  			};
 >  
-> -			hdmi_phy: phy@9a0600 {
-> +			mdss_hdmi_phy: phy@9a0600 {
->  				#phy-cells = <0>;
-> -				compatible = "qcom,hdmi-phy-8996";
-> +				compatible = "qcom,mdss_hdmi-phy-8996";
->  				reg = <0x009a0600 0x1c4>,
->  				      <0x009a0a00 0x124>,
->  				      <0x009a0c00 0x124>,
+> -			dsi0: dsi@fd922800 {
+> +			mdss_dsi0: dsi@fd922800 {
+>  				compatible = "qcom,msm8974-dsi-ctrl",
+>  					     "qcom,mdss-dsi-ctrl";
+>  				reg = <0xfd922800 0x1f8>;
+> @@ -1928,7 +1928,7 @@ dsi0: dsi@fd922800 {
+>  				interrupts = <4>;
+>  
+>  				assigned-clocks = <&mmcc BYTE0_CLK_SRC>, <&mmcc PCLK0_CLK_SRC>;
+> -				assigned-clock-parents = <&dsi0_phy 0>, <&dsi0_phy 1>;
+> +				assigned-clock-parents = <&mdss_dsi0_phy 0>, <&mdss_dsi0_phy 1>;
+>  
+>  				clocks = <&mmcc MDSS_MDP_CLK>,
+>  					 <&mmcc MDSS_AHB_CLK>,
+> @@ -1945,7 +1945,7 @@ dsi0: dsi@fd922800 {
+>  					      "core",
+>  					      "core_mmss";
+>  
+> -				phys = <&dsi0_phy>;
+> +				phys = <&mdss_dsi0_phy>;
+>  
+>  				status = "disabled";
+>  
+> @@ -1958,20 +1958,20 @@ ports {
+>  
+>  					port@0 {
+>  						reg = <0>;
+> -						dsi0_in: endpoint {
+> +						mdss_dsi0_in: endpoint {
+>  							remote-endpoint = <&mdp5_intf1_out>;
+>  						};
+>  					};
+>  
+>  					port@1 {
+>  						reg = <1>;
+> -						dsi0_out: endpoint {
+> +						mdss_dsi0_out: endpoint {
+>  						};
+>  					};
+>  				};
+>  			};
+>  
+> -			dsi0_phy: phy@fd922a00 {
+> +			mdss_dsi0_phy: phy@fd922a00 {
+>  				compatible = "qcom,dsi-phy-28nm-hpm";
+>  				reg = <0xfd922a00 0xd4>,
+>  				      <0xfd922b00 0x280>,
+> @@ -1989,7 +1989,7 @@ dsi0_phy: phy@fd922a00 {
+>  				status = "disabled";
+>  			};
+>  
+> -			dsi1: dsi@fd922e00 {
+> +			mdss_dsi1: dsi@fd922e00 {
+>  				compatible = "qcom,msm8974-dsi-ctrl",
+>  					     "qcom,mdss-dsi-ctrl";
+>  				reg = <0xfd922e00 0x1f8>;
+> @@ -1999,7 +1999,7 @@ dsi1: dsi@fd922e00 {
+>  				interrupts = <4>;
+>  
+>  				assigned-clocks = <&mmcc BYTE1_CLK_SRC>, <&mmcc PCLK1_CLK_SRC>;
+> -				assigned-clock-parents = <&dsi1_phy 0>, <&dsi1_phy 1>;
+> +				assigned-clock-parents = <&mdss_dsi1_phy 0>, <&mdss_dsi1_phy 1>;
+>  
+>  				clocks = <&mmcc MDSS_MDP_CLK>,
+>  					 <&mmcc MDSS_AHB_CLK>,
+> @@ -2016,7 +2016,7 @@ dsi1: dsi@fd922e00 {
+>  					      "core",
+>  					      "core_mmss";
+>  
+> -				phys = <&dsi1_phy>;
+> +				phys = <&mdss_dsi1_phy>;
+>  
+>  				status = "disabled";
+>  
+> @@ -2029,20 +2029,20 @@ ports {
+>  
+>  					port@0 {
+>  						reg = <0>;
+> -						dsi1_in: endpoint {
+> +						mdss_dsi1_in: endpoint {
+>  							remote-endpoint = <&mdp5_intf2_out>;
+>  						};
+>  					};
+>  
+>  					port@1 {
+>  						reg = <1>;
+> -						dsi1_out: endpoint {
+> +						mdss_dsi1_out: endpoint {
+>  						};
+>  					};
+>  				};
+>  			};
+>  
+> -			dsi1_phy: phy@fd923000 {
+> +			mdss_dsi1_phy: phy@fd923000 {
+>  				compatible = "qcom,dsi-phy-28nm-hpm";
+>  				reg = <0xfd923000 0xd4>,
+>  				      <0xfd923100 0x280>,
+> diff --git a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
+> index eb505d6d7f31..3e2c86591ee2 100644
+> --- a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
+> +++ b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
+> @@ -329,7 +329,15 @@ bluetooth {
+>  	};
+>  };
+>  
+> -&dsi0 {
+> +&gpu {
+> +	status = "okay";
+> +};
+> +
+> +&mdss {
+> +	status = "okay";
+> +};
+> +
+> +&mdss_dsi0 {
+>  	status = "okay";
+>  
+>  	vdda-supply = <&pma8084_l2>;
+> @@ -351,31 +359,23 @@ panel: panel@0 {
+>  
+>  		port {
+>  			panel_in: endpoint {
+> -				remote-endpoint = <&dsi0_out>;
+> +				remote-endpoint = <&mdss_dsi0_out>;
+>  			};
+>  		};
+>  	};
+>  };
+>  
+> -&dsi0_out {
+> +&mdss_dsi0_out {
+>  	remote-endpoint = <&panel_in>;
+>  	data-lanes = <0 1 2 3>;
+>  };
+>  
+> -&dsi0_phy {
+> +&mdss_dsi0_phy {
+>  	status = "okay";
+>  
+>  	vddio-supply = <&pma8084_l12>;
+>  };
+>  
+> -&gpu {
+> -	status = "okay";
+> -};
+> -
+> -&mdss {
+> -	status = "okay";
+> -};
+> -
+>  &pma8084_gpios {
+>  	gpio_keys_pin_a: gpio-keys-active-state {
+>  		pins = "gpio2", "gpio3", "gpio5";
