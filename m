@@ -2,198 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DAD277176A1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 08:07:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F2DE7176CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 08:26:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234239AbjEaGHY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 02:07:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60210 "EHLO
+        id S230201AbjEaGZ6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 02:25:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36512 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234360AbjEaGHT (ORCPT
+        with ESMTP id S229868AbjEaGZ6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 02:07:19 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22CF1129;
-        Tue, 30 May 2023 23:07:09 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34V5P01p023033;
-        Wed, 31 May 2023 06:06:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=FTiZdaopfJdGzY07inwqLy1ZZKpb6Zy7sXOJXUmOmHs=;
- b=l9ntD0s6nbLi7rq0rvQ5xnf3nlw3EPreiMI6VLWg181Kml40k/cEleVpfRQckKuobWUQ
- kilav6+1dYcDccoB0FF3iKeGIDWno7bfy2FEQm60loE2RjVFtJ0JOm1fwFMEVGy1NQxy
- mTEwnoMiI4tS8UV7XoK2Pl5ACbX3K0WcPtNbKsTsjqL5GxzScZO1G+MjgH0+lAqF0djI
- 7WS8GB3U1Ot6y0+3gD5a4+gzudVLy+7MsdL4KSJZCzO5z/r3p/fDeq18pSkqBSmVzeNN
- DffEJteoWzKf2bpNSW7qji+rg/pgsWX67+tFFPRUML+7y9a1UAs/cDgH1ghuFrH4h6Bc 2A== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qw8v4txv4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 31 May 2023 06:06:58 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34V66wBJ022203
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 31 May 2023 06:06:58 GMT
-Received: from [10.252.212.215] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 30 May
- 2023 23:06:55 -0700
-Message-ID: <38a627a2-040d-23e2-5637-32f199d0fc31@quicinc.com>
-Date:   Wed, 31 May 2023 11:36:52 +0530
+        Wed, 31 May 2023 02:25:58 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DAAF88E
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 23:25:56 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id 5614622812f47-39a505b901dso224044b6e.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 23:25:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685514356; x=1688106356;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=6QEemah19M6O9zXMW59Hl4eoCOU3nOcUSmXPFvc40qY=;
+        b=yfU72+a+V2j1RGJPAmrckG8hM7WDnXqiHNyDYmGNLaKUCMEP4XxwviwX+agCGFrcLP
+         Yo8vfNa08n1FVaMu0X1PY/t9b1Ubsjk9QaMuY0vEHxiWyShKpqdddJ+KaVP3vc0epElt
+         YfyhQnGsE3WgjqORPELcNGKiQF65PqC+1I3LqsMMk/YxvkCcp8UuGfrg4sDBCA+cYpeJ
+         3+BMapGTMNFXdVhYOmuwDq/Aj85/RlK5TF+VnOqL1tDxpxpZbyPsTiw8dlC6Bam3Wye7
+         xTR11c4SfSSwIbAZMFAPU3SjiNn3/3LC8RuWdPt9dxLt73JV1ewK8lUEFVVh6JqOhsiY
+         thfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685514356; x=1688106356;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6QEemah19M6O9zXMW59Hl4eoCOU3nOcUSmXPFvc40qY=;
+        b=Ob6QZZ+M0CMTBgBGWU6UbaY3yijEejCBi562ekOQWa/PH8Epzxz2c+gPzegUNQZUqV
+         lWaPCndAhKVCBj/3vXj94ZR4oNnqH2ZeibqAumEFcYNy27I75cDAim3dnviMML1CisZg
+         aYx9mbf+L33KAJoYPW1SK9aNJudsgetwEFN959W4foF6lT5TlZvkiLDBifawPeTx2gub
+         zT1e98w7MEWHK4KGgO2MLgC7b+/3MYYT3eOpLzTv3L5LErWfL52sgRw/Lmz0Je0uEI8d
+         zZflRmvJJOiUua6thS6A1myKcuy/FpqJNymSfiRV4fpoZ2FoZRhnCvdR6X6XNH5oLeJK
+         OEvg==
+X-Gm-Message-State: AC+VfDzAc2CrWv5adG9HqcHZxczjwHPQivstYTx4LzUNqmbz6u701NUw
+        sNH5TK7F3JxezFFAmp6Vr+sx
+X-Google-Smtp-Source: ACHHUZ7UhgIzbO0+5ARVJsxpkjyAwkwawoZkIijG0DTJ0OpOoUf3tpw7dMYdvCkbhrqK0+T6PV9O+Q==
+X-Received: by 2002:a05:6808:8c2:b0:398:36a0:d42 with SMTP id k2-20020a05680808c200b0039836a00d42mr2894012oij.39.1685514356188;
+        Tue, 30 May 2023 23:25:56 -0700 (PDT)
+Received: from thinkpad ([117.217.186.173])
+        by smtp.gmail.com with ESMTPSA id w12-20020a170902e88c00b001aaf370b1c7sm404309plg.278.2023.05.30.23.25.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 May 2023 23:25:55 -0700 (PDT)
+Date:   Wed, 31 May 2023 11:55:50 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_krichai@quicinc.com
+Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add support for IP_SW0
+ channels
+Message-ID: <20230531062550.GA7968@thinkpad>
+References: <20230519135803.13850-1-manivannan.sadhasivam@linaro.org>
+ <CAMZdPi_QRi_n7=Do_P6E3Xwk=zQ3nS3jpiFBNApCvWd4v=LSCw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] media: venus: firmware: Use of_reserved_mem_lookup()
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230529-venus-of-rmem-v1-1-dfcdc5047ffb@gerhold.net>
-From:   Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <20230529-venus-of-rmem-v1-1-dfcdc5047ffb@gerhold.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: zQnBR6ZOqs64iW8B-HLx_LuVdaI35n8H
-X-Proofpoint-GUID: zQnBR6ZOqs64iW8B-HLx_LuVdaI35n8H
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-31_02,2023-05-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
- impostorscore=0 spamscore=0 phishscore=0 malwarescore=0 bulkscore=0
- adultscore=0 mlxscore=0 mlxlogscore=999 priorityscore=1501 clxscore=1011
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305310053
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMZdPi_QRi_n7=Do_P6E3Xwk=zQ3nS3jpiFBNApCvWd4v=LSCw@mail.gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephan,
+On Sun, May 21, 2023 at 08:27:45PM +0200, Loic Poulain wrote:
+> On Fri, 19 May 2023 at 15:58, Manivannan Sadhasivam
+> <manivannan.sadhasivam@linaro.org> wrote:
+> >
+> > IP_SW0 channels are used to transfer data over the networking interface
+> > between MHI endpoint and the host. Define the channels in the MHI v1
+> > channel config along with dedicated event rings.
+> >
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> Assuming we can extend the number of event rings (and dedicated irqs)
+> without hitting any hardware limitation on the device side?
+> 
 
-On 5/29/2023 11:46 PM, Stephan Gerhold wrote:
-> Reserved memory can be either looked up using the generic function
-> of_address_to_resource() or using the special of_reserved_mem_lookup().
-> The latter has the advantage that it ensures that the referenced memory
-> region was really reserved and is not e.g. status = "disabled".
-> 
-> of_reserved_mem also supports allocating reserved memory dynamically at
-> boot time. This works only when using of_reserved_mem_lookup() since
-> there won't be a fixed address in the device tree.
-IIUC, this would avoid precomputing the hard range for different firmware
-regions and also make it more flexible to adjust the sizes, if anyone wants a
-bigger size later.
-Incase a specific firmware needs a dedicate start address, do we have an option
-to specify the same ?
+Not all endpoints support IP_SW0 channels. Only a few devices that intend to
+transfer non-IP data payload supports it and those should take care of the
+requirements.
 
-Thanks,
-Vikash
-> Switch the code to use of_reserved_mem_lookup(). There is no functional
-> difference for static reserved memory allocations.
+- Mani
+
+> Reviewed-by: Loic Poulain <loic.poulain@linaro.org>
 > 
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> ---
-> See e.g. [1] for an example of dynamically allocated reserved memory.
-> (This patch does *not* depend on [1] and is useful without as well...)
 > 
-> [1]: https://lore.kernel.org/linux-arm-msm/20230510-dt-resv-bottom-up-v1-5-3bf68873dbed@gerhold.net/
-> ---
->  drivers/media/platform/qcom/venus/firmware.c | 24 +++++++++++++-----------
->  1 file changed, 13 insertions(+), 11 deletions(-)
 > 
-> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
-> index cfb11c551167..2e7ffdaff7b2 100644
-> --- a/drivers/media/platform/qcom/venus/firmware.c
-> +++ b/drivers/media/platform/qcom/venus/firmware.c
-> @@ -10,6 +10,7 @@
->  #include <linux/io.h>
->  #include <linux/of.h>
->  #include <linux/of_address.h>
-> +#include <linux/of_reserved_mem.h>
->  #include <linux/platform_device.h>
->  #include <linux/of_device.h>
->  #include <linux/firmware/qcom/qcom_scm.h>
-> @@ -82,9 +83,9 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
->  			 phys_addr_t *mem_phys, size_t *mem_size)
->  {
->  	const struct firmware *mdt;
-> +	struct reserved_mem *rmem;
->  	struct device_node *node;
->  	struct device *dev;
-> -	struct resource r;
->  	ssize_t fw_size;
->  	void *mem_va;
->  	int ret;
-> @@ -99,13 +100,16 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
->  		return -EINVAL;
->  	}
->  
-> -	ret = of_address_to_resource(node, 0, &r);
-> -	if (ret)
-> -		goto err_put_node;
-> +	rmem = of_reserved_mem_lookup(node);
-> +	of_node_put(node);
-> +	if (!rmem) {
-> +		dev_err(dev, "failed to lookup reserved memory-region\n");
-> +		return -EINVAL;
-> +	}
->  
->  	ret = request_firmware(&mdt, fwname, dev);
->  	if (ret < 0)
-> -		goto err_put_node;
-> +		return ret;
->  
->  	fw_size = qcom_mdt_get_size(mdt);
->  	if (fw_size < 0) {
-> @@ -113,17 +117,17 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
->  		goto err_release_fw;
->  	}
->  
-> -	*mem_phys = r.start;
-> -	*mem_size = resource_size(&r);
-> +	*mem_phys = rmem->base;
-> +	*mem_size = rmem->size;
->  
->  	if (*mem_size < fw_size || fw_size > VENUS_FW_MEM_SIZE) {
->  		ret = -EINVAL;
->  		goto err_release_fw;
->  	}
->  
-> -	mem_va = memremap(r.start, *mem_size, MEMREMAP_WC);
-> +	mem_va = memremap(*mem_phys, *mem_size, MEMREMAP_WC);
->  	if (!mem_va) {
-> -		dev_err(dev, "unable to map memory region: %pR\n", &r);
-> +		dev_err(dev, "unable to map memory region %pa size %#zx\n", mem_phys, *mem_size);
->  		ret = -ENOMEM;
->  		goto err_release_fw;
->  	}
-> @@ -138,8 +142,6 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
->  	memunmap(mem_va);
->  err_release_fw:
->  	release_firmware(mdt);
-> -err_put_node:
-> -	of_node_put(node);
->  	return ret;
->  }
->  
-> 
-> ---
-> base-commit: 9f9f8ca6f012d25428f8605cb36369a449db8508
-> change-id: 20230529-venus-of-rmem-f649885114fd
-> 
-> Best regards,
+> > ---
+> >  drivers/bus/mhi/host/pci_generic.c | 26 ++++++++++++++++++++++----
+> >  1 file changed, 22 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+> > index db0a0b062d8e..70e37c490150 100644
+> > --- a/drivers/bus/mhi/host/pci_generic.c
+> > +++ b/drivers/bus/mhi/host/pci_generic.c
+> > @@ -212,6 +212,19 @@ struct mhi_pci_dev_info {
+> >                 .offload_channel = false,       \
+> >         }
+> >
+> > +#define MHI_EVENT_CONFIG_SW_DATA(ev_ring, el_count) \
+> > +       {                                       \
+> > +               .num_elements = el_count,       \
+> > +               .irq_moderation_ms = 0,         \
+> > +               .irq = (ev_ring) + 1,           \
+> > +               .priority = 1,                  \
+> > +               .mode = MHI_DB_BRST_DISABLE,    \
+> > +               .data_type = MHI_ER_DATA,       \
+> > +               .hardware_event = false,        \
+> > +               .client_managed = false,        \
+> > +               .offload_channel = false,       \
+> > +       }
+> > +
+> >  #define MHI_EVENT_CONFIG_HW_DATA(ev_ring, el_count, ch_num) \
+> >         {                                       \
+> >                 .num_elements = el_count,       \
+> > @@ -237,8 +250,10 @@ static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
+> >         MHI_CHANNEL_CONFIG_DL_AUTOQUEUE(21, "IPCR", 8, 0),
+> >         MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
+> >         MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
+> > -       MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 2),
+> > -       MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 3),
+> > +       MHI_CHANNEL_CONFIG_UL(46, "IP_SW0", 64, 2),
+> > +       MHI_CHANNEL_CONFIG_DL(47, "IP_SW0", 64, 3),
+> > +       MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 4),
+> > +       MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 5),
+> >  };
+> >
+> >  static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
+> > @@ -246,9 +261,12 @@ static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
+> >         MHI_EVENT_CONFIG_CTRL(0, 64),
+> >         /* DIAG dedicated event ring */
+> >         MHI_EVENT_CONFIG_DATA(1, 128),
+> > +       /* Software channels dedicated event ring */
+> > +       MHI_EVENT_CONFIG_SW_DATA(2, 64),
+> > +       MHI_EVENT_CONFIG_SW_DATA(3, 64),
+> >         /* Hardware channels request dedicated hardware event rings */
+> > -       MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
+> > -       MHI_EVENT_CONFIG_HW_DATA(3, 2048, 101)
+> > +       MHI_EVENT_CONFIG_HW_DATA(4, 1024, 100),
+> > +       MHI_EVENT_CONFIG_HW_DATA(5, 2048, 101)
+> >  };
+> >
+> >  static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
+> > --
+> > 2.25.1
+> >
+
+-- 
+மணிவண்ணன் சதாசிவம்
