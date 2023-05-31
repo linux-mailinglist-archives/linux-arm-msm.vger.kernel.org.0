@@ -2,187 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C819C717974
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 10:03:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00AC5717992
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 10:06:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234984AbjEaIDm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 04:03:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36624 "EHLO
+        id S235115AbjEaIF6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 04:05:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235007AbjEaIDj (ORCPT
+        with ESMTP id S235085AbjEaIF4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 04:03:39 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5103B113;
-        Wed, 31 May 2023 01:03:35 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (om126205251136.34.openmobile.ne.jp [126.205.251.136])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id D65BC7FC;
-        Wed, 31 May 2023 10:03:10 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1685520191;
-        bh=wt0uiRzdch80CnCJ9txOoIRjRmXX6qZoPWCiyabu1Sg=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mn1x0f1s/9rwZsiTDMjdaKF/ODQaR4TeIB2OzM9B/hKAXy4HY4Cf10xROgcoWmJCF
-         3chtShGizyZ5Qh5bMXXa59Zo5C4yhOljSKBkIEWANe/vviW4BWGDL5RIiU8PBMXmGy
-         a8pmkIVdRWePdvRt/3ueJ0RvZX48GbIRz/nbN3EE=
-Date:   Wed, 31 May 2023 11:03:31 +0300
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Cc:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        tfiga@chromium.org, m.szyprowski@samsung.com, mchehab@kernel.org,
-        ming.qian@nxp.com, shijie.qin@nxp.com, eagle.zhou@nxp.com,
-        bin.liu@mediatek.com, matthias.bgg@gmail.com,
-        angelogioacchino.delregno@collabora.com, tiffany.lin@mediatek.com,
-        andrew-ct.chen@mediatek.com, yunfei.dong@mediatek.com,
-        stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
-        daniel.almeida@collabora.com, linux-media@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, kernel@collabora.com
-Subject: Re: [PATCH v2 3/8] media: videobuf2: Add a module param to limit vb2
- queue buffer storage
-Message-ID: <20230531080331.GB6496@pendragon.ideasonboard.com>
-References: <20230321102855.346732-1-benjamin.gaignard@collabora.com>
- <20230321102855.346732-4-benjamin.gaignard@collabora.com>
- <6c4658fd-3a64-b3f8-67cd-17ed2d7d3567@xs4all.nl>
+        Wed, 31 May 2023 04:05:56 -0400
+Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFE5C11C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 01:05:54 -0700 (PDT)
+Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-96f8d485ef3so842819266b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 01:05:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685520353; x=1688112353;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7x6mIdtIUoFuvwTCRWIR9ijOzB6reHeMvwNhfcyLwj8=;
+        b=ojh1U8lXdHwssrj9Y7W9djafLn06W34rivQK/WgW4vjfN/I9REuJK5yGklNQZRF5lg
+         fIhg1v3BuhKTlR0PRijVx1GlogH06mYk3EDryyboMunXuDJeg4ePCdopwEXHJwrNiRqy
+         6b1zYsq14f/SFYtKFFqm4U8aDwD5Epw6sDFFptfXMkhNw0AN8U/l+Co9GuSU7UIEdAHN
+         uBITQAKPPnL9nhYWh1NvEfySCHD6FFnE8NhJo6shy34C+7IO8R7EnV5G9aFiIHcPVMfJ
+         ZettLt8AK3wYEKoodCfPUmbPD8X4KA0ayQVeZoGwgb2nxRlYEnyH5j3l8KWWZ1j7OKUc
+         PAZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685520353; x=1688112353;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7x6mIdtIUoFuvwTCRWIR9ijOzB6reHeMvwNhfcyLwj8=;
+        b=CnVJDG0CzXGTJlQLJILX79SclwN+FDc/CoHhcLdb8i9wN/Ma3BMBdKdOR1evxtDJJS
+         6AZRrvz9/aDKEe8hZVrvAfsBdydJkZ5RjKi0vzdkP/Vbqivf1Gub4iQekPtEIwEnVzXt
+         G7MZLQk8w8i693V0NvLVMNoIly98qYpMvnu9b6xev6LD4cWkDqx3J+l2YtsKYeMCmy9K
+         dSLZRz91kC+CpVXpLKNZJIDFwJ7p4yamPyAx4LAVkHxN4p5M/DQ89HgIOnHF+Z5LkHeA
+         3yvx0DTe18kAx35ZjUtCkQPn+58dJiMsGC9bHGg26TS2XXe8bW7ua1vEVBVaE2kX/00R
+         tH3A==
+X-Gm-Message-State: AC+VfDwjmDDR6O+kQVzI2liDEtn8rfJChNyy7UEzV/LgZLl04WNvsRb8
+        7h49BpvQCT9Zkgye0Kw1TLQGaw==
+X-Google-Smtp-Source: ACHHUZ7GExO9md3piU1CsvJBNCRNv6jAIVB1q3IXHVAw5pXEaSnR4GjikU4nSr36WyFGpBn/BeU8uw==
+X-Received: by 2002:a17:907:7246:b0:92b:6b6d:2daf with SMTP id ds6-20020a170907724600b0092b6b6d2dafmr4367150ejc.77.1685520353318;
+        Wed, 31 May 2023 01:05:53 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.199.204])
+        by smtp.gmail.com with ESMTPSA id qo14-20020a170907212e00b0096f937b0d3esm8521072ejb.3.2023.05.31.01.05.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 31 May 2023 01:05:52 -0700 (PDT)
+Message-ID: <4337f333-0c78-8749-658d-3f7f69538571@linaro.org>
+Date:   Wed, 31 May 2023 10:05:50 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <6c4658fd-3a64-b3f8-67cd-17ed2d7d3567@xs4all.nl>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 1/2] dt-bindings: reserved-memory: rmtfs: Allow dynamic
+ allocation
+Content-Language: en-US
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230530193436.3833889-1-quic_bjorande@quicinc.com>
+ <20230530193436.3833889-2-quic_bjorande@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230530193436.3833889-2-quic_bjorande@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 31, 2023 at 08:36:59AM +0200, Hans Verkuil wrote:
-> On 21/03/2023 11:28, Benjamin Gaignard wrote:
-> > Add module parameter "max_vb_buffer_per_queue" to be able to limit
-> > the number of vb2 buffers store in queue.
-> > 
-> > Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> > ---
-> >  drivers/media/common/videobuf2/videobuf2-core.c | 15 +++------------
-> >  include/media/videobuf2-core.h                  | 11 +++++++++--
-> >  2 files changed, 12 insertions(+), 14 deletions(-)
-> > 
-> > diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-> > index ae9d72f4d181..f4da917ccf3f 100644
-> > --- a/drivers/media/common/videobuf2/videobuf2-core.c
-> > +++ b/drivers/media/common/videobuf2/videobuf2-core.c
-> > @@ -34,6 +34,8 @@
-> >  static int debug;
-> >  module_param(debug, int, 0644);
-> >  
-> > +module_param(max_vb_buffer_per_queue, ulong, 0644);
+On 30/05/2023 21:34, Bjorn Andersson wrote:
+> Allow instances of the qcom,rmtfs-mem either be defined as a
+> reserved-memory regoin, or just standalone given just a size.
+
+typo: region
+
+I am pretty sure I saw some patches from Qualcomm also making one of
+reserved-memory users a bit more dynamic (some boot-thingy?). Would be
+nice to unify...
+
 > 
-> There is no MODULE_PARM_DESC here? Please add. I see it is not there for
-> the debug param either, it should be added for that as well.
+> This relieve the DeviceTree source author the need to come up with a
+> static memory region for the region.
 
-Would this be the right time to consider resource accounting in V4L2 for
-buffers ? Having a module parameter doesn't sound very useful, an
-application could easily allocate more buffers by using buffer orphaning
-(allocating buffers, exporting them as dmabuf objects, and freeing them,
-which leaves the memory allocated). Repeating allocation cycles up to
-max_vb_buffer_per_queue will allow allocating an unbounded number of
-buffers, using all the available system memory. I'd rather not add a
-module argument that only gives the impression of some kind of safety
-without actually providing any value.
+If you region does not have to be static, why bothering with the size in
+DT? I assume this can be really dynamic and nothing is needed in DT. Not
+even size.
 
-> > +
-> >  #define dprintk(q, level, fmt, arg...)					\
-> >  	do {								\
-> >  		if (debug >= level)					\
-> > @@ -412,10 +414,6 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
-> >  	struct vb2_buffer *vb;
-> >  	int ret;
-> >  
-> > -	/* Ensure that q->num_buffers+num_buffers is below VB2_MAX_FRAME */
-> > -	num_buffers = min_t(unsigned int, num_buffers,
-> > -			    VB2_MAX_FRAME - q->num_buffers);
-> > -
-> >  	for (buffer = 0; buffer < num_buffers; ++buffer) {
-> >  		/* Allocate vb2 buffer structures */
-> >  		vb = kzalloc(q->buf_struct_size, GFP_KERNEL);
-> > @@ -801,9 +799,7 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
-> >  	/*
-> >  	 * Make sure the requested values and current defaults are sane.
-> >  	 */
-> > -	WARN_ON(q->min_buffers_needed > VB2_MAX_FRAME);
-> >  	num_buffers = max_t(unsigned int, *count, q->min_buffers_needed);
-> > -	num_buffers = min_t(unsigned int, num_buffers, VB2_MAX_FRAME);
-> >  	memset(q->alloc_devs, 0, sizeof(q->alloc_devs));
-> >  	/*
-> >  	 * Set this now to ensure that drivers see the correct q->memory value
-> > @@ -919,11 +915,6 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
-> >  	bool no_previous_buffers = !q->num_buffers;
-> >  	int ret;
-> >  
-> > -	if (q->num_buffers == VB2_MAX_FRAME) {
-> > -		dprintk(q, 1, "maximum number of buffers already allocated\n");
-> > -		return -ENOBUFS;
-> > -	}
-> > -
-> >  	if (no_previous_buffers) {
-> >  		if (q->waiting_in_dqbuf && *count) {
-> >  			dprintk(q, 1, "another dup()ped fd is waiting for a buffer\n");
-> > @@ -948,7 +939,7 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
-> >  			return -EINVAL;
-> >  	}
-> >  
-> > -	num_buffers = min(*count, VB2_MAX_FRAME - q->num_buffers);
-> > +	num_buffers = *count;
-> >  
-> >  	if (requested_planes && requested_sizes) {
-> >  		num_planes = requested_planes;
-> > diff --git a/include/media/videobuf2-core.h b/include/media/videobuf2-core.h
-> > index 397dbf6e61e1..b8b34a993e04 100644
-> > --- a/include/media/videobuf2-core.h
-> > +++ b/include/media/videobuf2-core.h
-> > @@ -12,6 +12,7 @@
-> >  #ifndef _MEDIA_VIDEOBUF2_CORE_H
-> >  #define _MEDIA_VIDEOBUF2_CORE_H
-> >  
-> > +#include <linux/minmax.h>
-> >  #include <linux/mm_types.h>
-> >  #include <linux/mutex.h>
-> >  #include <linux/poll.h>
-> > @@ -48,6 +49,8 @@ struct vb2_fileio_data;
-> >  struct vb2_threadio_data;
-> >  struct vb2_buffer;
-> >  
-> > +static size_t max_vb_buffer_per_queue = 1024;
-> > +
-> >  /**
-> >   * struct vb2_mem_ops - memory handling/memory allocator operations.
-> >   * @alloc:	allocate video memory and, optionally, allocator private data,
-> > @@ -1268,12 +1271,16 @@ static inline bool vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *
-> >  
-> >  	if (vb->index >= q->max_num_bufs) {
-> >  		struct vb2_buffer **tmp;
-> > +		int cnt = min(max_vb_buffer_per_queue, q->max_num_bufs * 2);
-> > +
-> > +		if (cnt >= q->max_num_bufs)
-> > +			goto realloc_failed;
-> >  
-> > -		tmp = krealloc_array(q->bufs, q->max_num_bufs * 2, sizeof(*q->bufs), GFP_KERNEL);
-> > +		tmp = krealloc_array(q->bufs, cnt, sizeof(*q->bufs), GFP_KERNEL);
-> >  		if (!tmp)
-> >  			goto realloc_failed;
-> >  
-> > -		q->max_num_bufs *= 2;
-> > +		q->max_num_bufs = cnt;
-> >  		q->bufs = tmp;
-> >  	}
-> >  
+Best regards,
+Krzysztof
 
--- 
-Regards,
-
-Laurent Pinchart
