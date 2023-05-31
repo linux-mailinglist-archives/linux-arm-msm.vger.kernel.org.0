@@ -2,58 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A0C57173B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 04:31:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A95597173E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 04:49:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231219AbjEaCbC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 22:31:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56792 "EHLO
+        id S233979AbjEaCtN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 22:49:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230465AbjEaCbB (ORCPT
+        with ESMTP id S231417AbjEaCtM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 22:31:01 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC7E510E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 19:30:59 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 50D1A63620
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 02:30:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3723DC433D2;
-        Wed, 31 May 2023 02:30:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685500258;
-        bh=XdaUEjzKO8prK+WbBFh4Zp/7ndj2MQZpFykTiurO7oc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=qEh+GQkWdGREfp39ftgvEZM2PCinaaBUU6f7lPTXhV0kDu14YmdeSXsufLhR5tInh
-         5UO6x/czZPKwWiZPG92QAoipvPqdh9SZoqItjHUbfGw4PaxbLHnpHwdWLal9XNfxey
-         SyXgGN4m68QdTYWvqHtJp+2dKg7zg38Se8WAhkaZ7oR+6qLnBn5kJERbUlBHUiuAvq
-         RwRYUBnGehUy5nJte0+C/rgBlTpXMIC4lTj9niA7VgVBrisLCjIHOPz6XA9goTBLCE
-         pLMWVJoihVuEvMBy0IJgtkEIMj+Kzp7Syp1Qu9ThQDVrXsgdtfJyymXJy2VrN62ZQk
-         epYdqHtUHs7NQ==
-Date:   Tue, 30 May 2023 19:34:41 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Adrien Thierry <athierry@redhat.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: Re: [PATCH RFC 1/2] phy: qcom-snps-femto-v2: properly enable ref
- clock
-Message-ID: <20230531023441.4dpbsdklerbu2zqx@ripper>
-References: <20230529185638.32376-1-athierry@redhat.com>
- <20230529185638.32376-2-athierry@redhat.com>
- <20230529211629.7sw542tyyygv4tcs@ripper>
- <ZHZEbW+aSJ5xLOlO@fedora>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZHZEbW+aSJ5xLOlO@fedora>
-X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        Tue, 30 May 2023 22:49:12 -0400
+Received: from mail-qv1-xf30.google.com (mail-qv1-xf30.google.com [IPv6:2607:f8b0:4864:20::f30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E73008E;
+        Tue, 30 May 2023 19:49:09 -0700 (PDT)
+Received: by mail-qv1-xf30.google.com with SMTP id 6a1803df08f44-6260b578097so24649216d6.3;
+        Tue, 30 May 2023 19:49:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685501349; x=1688093349;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6e2j8yrS747eKvqEmOM0dcXUIRaD3dt4RVORVnxHAYs=;
+        b=qqoBPw/WY+2FSw0nXRa+1jy91yIpTrEAKJn/AOAlD4lvNgY41wlUGC1SkH33Dr2KYk
+         KB7VP94bPoNbN5qG3iVHTh5itAUJ1sVKSajgrsV3iHinQbx20UGDrK4siNz69pSbHY8O
+         UmpV9E68jVUyZS2NErYZeeyyN5gz2SYBb5yNReN2Rzt7u6eOp7P7saURYQxdRMN1mFjl
+         oadzzPD2eJlK9BS+Wb/VMSQmx3NpgrMhNsYfPRPPny3ZUbmYT2n/5qy0YdcWP/i7B0My
+         5LzvvzD2GEfVfpahepLUzKG1+OCrZZR5NzqlrXAxQqSGAEwSNDdzHdLmX+9oVMrGroYQ
+         gBIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685501349; x=1688093349;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=6e2j8yrS747eKvqEmOM0dcXUIRaD3dt4RVORVnxHAYs=;
+        b=P2sklf2J8quSsHiyojSPqB1XE9OyvR9Wywj7P6LfsMPmEkkBfWP1wZ3eHdU6GbiZiO
+         1BkjGfgk+7PhxNxsNrJ/DOwmlBQTxLI6L+rRNe+DrQ+cboOpQSkqoltTwQXU//bWFuRC
+         GouVmc6UAoNg/Dnm4dLFpE3izbZ5xJSdkEzwsgOq98aZk9Ym8L48xfBCymonqrK5G5BX
+         YCaNLOfVQyBqAuhZC/jbYneTeCafI4AgArgHO9lA+OLvhXvSCfggvmAnenlpgC5PVZOp
+         XUShfLYKjSgwsvoip2lojG34UjNOdjUQXM2GVYqv86VJO31B8tMV0nqVfBEVw6OpS7pT
+         LhoA==
+X-Gm-Message-State: AC+VfDxyTunxj3AFdZin+v+nN+DHr/aZwjHRmUKRyWjanzf7dxdxBmb8
+        ZIdEpovLYYOcvP9tNd3f+Ck4sJ4hszinQA==
+X-Google-Smtp-Source: ACHHUZ52Yw/1OjG4IhoiE6fZ7eKnLRhYKO0DIKGAauUkEl9PmXjiQG87Tlv0PJ/4VoneEdbKSvFcUA==
+X-Received: by 2002:a05:6214:412:b0:625:9562:f04 with SMTP id z18-20020a056214041200b0062595620f04mr4884729qvx.51.1685501348941;
+        Tue, 30 May 2023 19:49:08 -0700 (PDT)
+Received: from localhost ([2600:4040:2007:9800:dcb4:7fef:9d6a:e79f])
+        by smtp.gmail.com with ESMTPSA id er5-20020a056214190500b006262956aa0dsm1952230qvb.99.2023.05.30.19.49.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 May 2023 19:49:08 -0700 (PDT)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date:   Tue, 30 May 2023 22:49:07 -0400
+Message-Id: <CT04D1K5GOBT.29Y5DO5HHS57V@Latitude-E6420>
+To:     "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>,
+        "Andy Gross" <agross@kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        "Conor Dooley" <conor+dt@kernel.org>,
+        "Vinod Koul" <vkoul@kernel.org>,
+        "Kishon Vijay Abraham I" <kishon@kernel.org>,
+        "Arnd Bergmann" <arnd@arndb.de>, "Olof Johansson" <olof@lixom.net>,
+        <soc@kernel.org>
+Cc:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-phy@lists.infradead.org>,
+        <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [PATCH v2 2/4] dt-bindings: Add qcom,usb-hs-phy-msm8960
+From:   "Rudraksha Gupta" <guptarud@gmail.com>
+X-Mailer: aerc 0.8.2
+References: <20230527040905.stmnoshkdqgiaex6@ripper>
+ <20230528001010.47868-3-guptarud@gmail.com>
+ <fb65244e-ab3b-c473-57b9-2da80e67be4a@linaro.org>
+In-Reply-To: <fb65244e-ab3b-c473-57b9-2da80e67be4a@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,149 +86,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 30, 2023 at 02:46:05PM -0400, Adrien Thierry wrote:
-> Hi Bjorn, thanks for your reply!
-> 
-> On Mon, May 29, 2023 at 02:16:29PM -0700, Bjorn Andersson wrote:
-> > On Mon, May 29, 2023 at 02:56:36PM -0400, Adrien Thierry wrote:
-> > > The driver is not enabling the ref clock, which thus gets disabled by
-> > > the clk_disable_unused initcall. This leads to the dwc3 controller
-> > > failing to initialize if probed after clk_disable_unused is called, for
-> > > instance when the driver is built as a module.
-> > > 
-> > 
-> > Good catch!
-> > 
-> > A side note though, clk_disable_unused() has no way to take kernel
-> > modules into consideration today, and it doesn't handle the case where
-> > clock drivers are built as modules appropriately.
-> > Work has started to address this, but as of todaybooting the system
-> > without clk_ignore_unused is not recommended...
-> >
-> 
-> For my understanding, do you have an example of a situation that would
-> fail with modules when not using clk_ignore_unused?
-> 
+On Tue May 30, 2023 at 9:22 AM EDT, Krzysztof Kozlowski wrote:
+> On 28/05/2023 02:10, Rudraksha Gupta wrote:
+> > Adds qcom,usb-hs-phy-msm8960 compatible
+> >=20
+>
+> Please use subject prefixes matching the subsystem. You can get them for
+> example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
+> your patch is touching.
+>
+> Best regards,
+> Krzysztof
 
-The prime example relates to the display clocks, where the bootloader
-typically leave clocks on and at lateinit we haven't yet loaded enough
-modules to bring up the display. And to make matters worse, the code
-ends up disabling the PLL feeding the clock tree without first disabling
-some of the muxes - which has side effects...
-
-Another case, although much less concerning in the short run, is when
-you have any of the clock drivers built as modules. clk_disable_unused()
-will be invoked before they are loaded, so your expectation that unused
-clocks are turned off is just not fulfilled.
-
-> > > To fix this, add calls to clk_prepare_enable/clk_disable_unprepare at
-> > > the proper places.
-> > > 
-> > 
-> > If I parse the downstream kernel correctly the refclock should be
-> > turned off across runtime and system suspend as well.
-> > 
-> 
-> Which downstream kernel are you using? I'm not seing a system suspend
-> callback in mine [1]. refclock should be turned off on runtime suspend in
-> my patch, in qcom_snps_hsphy_suspend, which is called by
-> qcom_snps_hsphy_runtime_suspend.
-> 
-
-Forgive me, but isn't [1] the driver you're modifying?
-
-I'm looking at [2], with set_suspend() being invoked from the runtime
-and system suspend/resume handlers.
-
-> [1] https://git.codelinaro.org/clo/la/kernel/ark-5.14/-/blob/kernel.lnx.5.14.r2-rel/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-
-[2] https://git.codelinaro.org/clo/la/kernel/msm-5.4/-/blob/LV.AU.1.2.1.r2-05300-gen3meta.0/drivers/usb/phy/phy-msm-snps-hs.c#L908
-
-Regards,
-Bjorn
-
-> 
-> > Regards,
-> > Bjorn
-> > 
-> > > Signed-off-by: Adrien Thierry <athierry@redhat.com>
-> > > ---
-> > >  drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 20 +++++++++++++++++--
-> > >  1 file changed, 18 insertions(+), 2 deletions(-)
-> > > 
-> > > diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> > > index 6c237f3cc66d..8abf482e81a8 100644
-> > > --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> > > +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-> > > @@ -166,6 +166,7 @@ static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
-> > >  	}
-> > >  
-> > >  	clk_disable_unprepare(hsphy->cfg_ahb_clk);
-> > > +	clk_disable_unprepare(hsphy->ref_clk);
-> > >  	return 0;
-> > >  }
-> > >  
-> > > @@ -181,6 +182,12 @@ static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
-> > >  		return ret;
-> > >  	}
-> > >  
-> > > +	ret = clk_prepare_enable(hsphy->ref_clk);
-> > > +	if (ret) {
-> > > +		dev_err(&hsphy->phy->dev, "failed to enable ref clock\n");
-> > > +		return ret;
-> > > +	}
-> > > +
-> > >  	return 0;
-> > >  }
-> > >  
-> > > @@ -380,10 +387,16 @@ static int qcom_snps_hsphy_init(struct phy *phy)
-> > >  		goto poweroff_phy;
-> > >  	}
-> > >  
-> > > +	ret = clk_prepare_enable(hsphy->ref_clk);
-> > > +	if (ret) {
-> > > +		dev_err(&phy->dev, "failed to enable ref clock, %d\n", ret);
-> > > +		goto disable_ahb_clk;
-> > > +	}
-> > > +
-> > >  	ret = reset_control_assert(hsphy->phy_reset);
-> > >  	if (ret) {
-> > >  		dev_err(&phy->dev, "failed to assert phy_reset, %d\n", ret);
-> > > -		goto disable_ahb_clk;
-> > > +		goto disable_ref_clk;
-> > >  	}
-> > >  
-> > >  	usleep_range(100, 150);
-> > > @@ -391,7 +404,7 @@ static int qcom_snps_hsphy_init(struct phy *phy)
-> > >  	ret = reset_control_deassert(hsphy->phy_reset);
-> > >  	if (ret) {
-> > >  		dev_err(&phy->dev, "failed to de-assert phy_reset, %d\n", ret);
-> > > -		goto disable_ahb_clk;
-> > > +		goto disable_ref_clk;
-> > >  	}
-> > >  
-> > >  	qcom_snps_hsphy_write_mask(hsphy->base, USB2_PHY_USB_PHY_CFG0,
-> > > @@ -448,6 +461,8 @@ static int qcom_snps_hsphy_init(struct phy *phy)
-> > >  
-> > >  	return 0;
-> > >  
-> > > +disable_ref_clk:
-> > > +	clk_disable_unprepare(hsphy->ref_clk);
-> > >  disable_ahb_clk:
-> > >  	clk_disable_unprepare(hsphy->cfg_ahb_clk);
-> > >  poweroff_phy:
-> > > @@ -462,6 +477,7 @@ static int qcom_snps_hsphy_exit(struct phy *phy)
-> > >  
-> > >  	reset_control_assert(hsphy->phy_reset);
-> > >  	clk_disable_unprepare(hsphy->cfg_ahb_clk);
-> > > +	clk_disable_unprepare(hsphy->ref_clk);
-> > >  	regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
-> > >  	hsphy->phy_initialized = false;
-> > >  
-> > > -- 
-> > > 2.40.1
-> > >
-> 
-> Best,
-> Adrien
-> 
+It seems like "dt-bindings:" is the subject prefix for this file. Would
+you like me to use another prefix instead?
