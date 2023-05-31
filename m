@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B1167173C2
+	by mail.lfdr.de (Postfix) with ESMTP id DBF237173C4
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 04:34:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232202AbjEaCeW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 22:34:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57642 "EHLO
+        id S233821AbjEaCeX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 22:34:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57660 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233887AbjEaCeU (ORCPT
+        with ESMTP id S234017AbjEaCeV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 22:34:20 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6293C118
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 19:34:19 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f004cc54f4so6049781e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 19:34:19 -0700 (PDT)
+        Tue, 30 May 2023 22:34:21 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DABC113
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 19:34:20 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f50470d77cso3204842e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 19:34:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685500457; x=1688092457;
+        d=linaro.org; s=google; t=1685500458; x=1688092458;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3c6yMNCBo2Th5nKj9JcDZUyMz8f9ppKaXvygn50ATHs=;
-        b=NyiS4StnKsQuB+sUdX/bQ1GdTGAS1YaHpbvTfV85nacavoRtGRwlyy/dAkHtQf3cie
-         nNblZ3ma8WHEFUdxbeB9bhrJ1mJm7GxtYHyF0vkwvX79yRIKDdgfTial3t+azlinEOrh
-         Rpay3Dkcb0z1Pv/cQ8I5JNd4s+l79JUgRZPfKdsmQN2M/SUGq+Yp3bG9GCcN5g/Y3f5o
-         WqV0UWQPFKkuauNGErGTmLhgtg218Yv5zp8Fgga62LeAf67hayTg/908SXeWTP+gbF5z
-         nj8c0fGYrUHFJO0vCQc6dU/THyLz7vEFB7l739GPfgW9KPSBLz/ibNf5h6eyKGlB/5+E
-         NOfQ==
+        bh=aL6CSlS9Q6UUnnjwqpxYTCJ6oS+R2HPG/MBYegldI0Q=;
+        b=lbxf+T2rufTGaQVU/uQVQvl2gauIenxWC3PbfLdpuhdVOpx6HYJrwivp1DEas1CCXM
+         LpIHFCYylWc8aRMaee3aF9k8yiirUPbymTyTQzcMAlXAqsDnL5Zyw4MGlTlgiCAV21z3
+         h/c5OHSH2SyZt665P9abttYvXMp2Bhay/auVlu5BI53Nq4lX2hHXIq2Bi7Ypt5ptf1SB
+         ABvHlfxAg0rJjsWcKFMQfiiyzfGczvgCYMrwlv6myWSKN298yBuHIHZazGUbnpgItq6I
+         iAOX+bFA9kA/fZ1RldR30pc3EOR/L6VWa2JKK6TxcX7AnMnZx1Td6kPiLiLUinzmYpDy
+         dJsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685500457; x=1688092457;
+        d=1e100.net; s=20221208; t=1685500458; x=1688092458;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3c6yMNCBo2Th5nKj9JcDZUyMz8f9ppKaXvygn50ATHs=;
-        b=iXOFqnrMyXmQkL7iaNkjScvQqxS3jk8ttTwXIsdwu0X8QecEX6zGYzvIvrbIUCnMaJ
-         +XB4UW2nolp+brHhnvnAvomqwC9XO1VJhINGFrYM55CpVH3vZMCD1ic7azd5ALyOvzAH
-         oqkcJHSRd2wceoNahzJwjrzttanGNBhUUzx+ItqniiIihMtDmQMxdgZHlcvketMJuQNZ
-         Og8FDvpZmkjk8jwvTn0RH/viDc1yHa/If+fiazPSZ2bZIrMAORRttLEWjvEDY3MFS7Ez
-         VEMMU1BVvFBp7/CU3TE+pocAVwRiULRxmjtc1Pi4D6EsSz2MyrCXcs4LuwVTiFlVKFO5
-         zhBg==
-X-Gm-Message-State: AC+VfDybW6o2WLTp2o+Mc+EjPkkBsjUiId+LaAPmAZND9Eo9wPRZ511N
-        +YcZ6S43mfNkV9Hv1wrABUJ/QehiLcBzHHarBro=
-X-Google-Smtp-Source: ACHHUZ7oWC3y8Digzkl8eFkWeOswzNn/lZnKUVLFya7/BcYYrFW6hzBQjKuBq5JlJ11O4ziS2OVRFw==
-X-Received: by 2002:ac2:515e:0:b0:4f3:bb14:6bac with SMTP id q30-20020ac2515e000000b004f3bb146bacmr1743330lfd.56.1685500457769;
-        Tue, 30 May 2023 19:34:17 -0700 (PDT)
+        bh=aL6CSlS9Q6UUnnjwqpxYTCJ6oS+R2HPG/MBYegldI0Q=;
+        b=dEtcLHJzvDntGq+dIAgdNHZ8jUj/rom2XSkvPTCA/K/4jP3mdFfk+O6vsT4i0/2Lh6
+         DGaBcL5h0TTo1l6b3yYzLgLKFUKC/zbwFqyX7n3v2h024xcddimmZBiXfwMA7sU32JFV
+         nsTIO86llLpUX3jYIppXORGGGBtTQItMOUO1BVQ5PV2qY57UmN9v1/WLF6hL0UdPn61i
+         oI31sn94+8AJEN0PbWGWFsKVNgq+RTnSZSdvezYv5mByojXxw9nKdvzzGgcW2i6ICji9
+         g2kRTTVtDNkM1TU9i7C5/n8IN1qtwXouxQ5bqxo93tK9bgHueVT+ENKdQAnJoxpVG4BM
+         db2g==
+X-Gm-Message-State: AC+VfDznpJtfGljBu7m7mKTJimyy4Toulh9OU5L5hxD0Nb1N4+lwvKvT
+        ZOh4Ejo8m5+66RKPQWwEPhjWCA==
+X-Google-Smtp-Source: ACHHUZ5xi+pqHPsc3FrmYQFS72O+CEsnrHZmPZlu0z0/I1avdVZA35aVxYFJWQPQA95KU/Je8VBSyg==
+X-Received: by 2002:ac2:4919:0:b0:4f1:430d:ca5c with SMTP id n25-20020ac24919000000b004f1430dca5cmr1750561lfi.56.1685500458686;
+        Tue, 30 May 2023 19:34:18 -0700 (PDT)
 Received: from umbar.unikie.fi ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id v24-20020ac25618000000b004f3787d8006sm524096lfd.128.2023.05.30.19.34.16
+        by smtp.gmail.com with ESMTPSA id v24-20020ac25618000000b004f3787d8006sm524096lfd.128.2023.05.30.19.34.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 May 2023 19:34:17 -0700 (PDT)
+        Tue, 30 May 2023 19:34:18 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -61,10 +61,10 @@ To:     Andy Gross <agross@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>
 Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, Rob Herring <robh@kernel.org>
-Subject: [PATCH v3 1/5] dt-bindings: phy: qcom,sc7180-qmp-usb3-dp-phy: add sm8150 USB+DP PHY
-Date:   Wed, 31 May 2023 05:34:11 +0300
-Message-Id: <20230531023415.1209301-2-dmitry.baryshkov@linaro.org>
+        devicetree@vger.kernel.org
+Subject: [PATCH v3 2/5] phy: qcom-qmp-combo: add support for the USB+DP PHY on SM8150 platform
+Date:   Wed, 31 May 2023 05:34:12 +0300
+Message-Id: <20230531023415.1209301-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230531023415.1209301-1-dmitry.baryshkov@linaro.org>
 References: <20230531023415.1209301-1-dmitry.baryshkov@linaro.org>
@@ -73,42 +73,36 @@ Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add bindings for sm8150 USB+DP PHY. These bindings follow the older
-style as this is a quick conversion to simplify further driver cleanup.
+SM8150 and SC8180X are close relatives. Reuse sc8180x data to support
+USB+DP combo PHY on SM8150 platform.
 
-Acked-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- .../devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml    | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
-index 0ef2c9b9d466..a2ddf718ba76 100644
---- a/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,sc7180-qmp-usb3-dp-phy.yaml
-@@ -24,6 +24,7 @@ properties:
-           - qcom,sc7180-qmp-usb3-dp-phy
-           - qcom,sc8180x-qmp-usb3-dp-phy
-           - qcom,sdm845-qmp-usb3-dp-phy
-+          - qcom,sm8150-qmp-usb3-dp-phy
-           - qcom,sm8250-qmp-usb3-dp-phy
-       - items:
-           - enum:
-@@ -192,6 +193,7 @@ allOf:
-         compatible:
-           enum:
-             - qcom,sc8180x-qmp-usb3-dp-phy
-+            - qcom,sm8150-qmp-usb3-dp-phy
-     then:
-       properties:
-         clocks:
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index 33cc99d9c77d..2bff1bbb8610 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -3614,6 +3614,10 @@ static const struct of_device_id qmp_combo_of_match_table[] = {
+ 		.compatible = "qcom,sm6350-qmp-usb3-dp-phy",
+ 		.data = &sm6350_usb3dpphy_cfg,
+ 	},
++	{
++		.compatible = "qcom,sm8150-qmp-usb3-dp-phy",
++		.data = &sc8180x_usb3dpphy_cfg,
++	},
+ 	{
+ 		.compatible = "qcom,sm8250-qmp-usb3-dp-phy",
+ 		.data = &sm8250_usb3dpphy_cfg,
 -- 
 2.39.2
 
