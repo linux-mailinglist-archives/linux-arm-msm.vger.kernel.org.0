@@ -2,240 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F4238717CD4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 12:07:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 124FB717D42
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 12:38:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235813AbjEaKHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 06:07:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60574 "EHLO
+        id S232213AbjEaKiz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 06:38:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235812AbjEaKHr (ORCPT
+        with ESMTP id S231829AbjEaKiy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 06:07:47 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9FF1E5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 03:07:45 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f5021faa16so3811828e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 03:07:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685527664; x=1688119664;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QKOqcdYffaPuAvsZ4cF6Kv8mBC9qOo1M+VBYAc7j870=;
-        b=J0kB0QX5UrjOVkn2cqMVcboC2TQmS8mF9Y2hgaWFKaWCqM7fNLTyukyelYvZe+7Kq7
-         nCTd6ar7bVwHZ5xHNdBrO9+vpp0FPt5NiNl7h8TPtLDNanVsxG32ZATJxIBcP1Z37lSJ
-         IZIzHxBft4QjY0SBONwVJiw7yOx3fP163he7u6lbZUWT42MJXAvDy/DPMyMO6qi7aU//
-         uXDUWaDX+XMH+8Z54SuQSijpM/ORXl7OhcKdNKU/xjL869/J4uooT45AkUr/Cn3suDsW
-         UFbIN7fv6Y67vCv12Ybf/FlRidDUnlvbA6fIPqU6NuGgQ70RJ4vtO/IUFXQgOCo/0qK4
-         ffVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685527664; x=1688119664;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QKOqcdYffaPuAvsZ4cF6Kv8mBC9qOo1M+VBYAc7j870=;
-        b=VO/Fc1O0nw/sSeMflc5HULUqlbU6mtlPe3jGIC8H6bYDh5W3RfXiDl9tamE64urEnL
-         cmK7FuTvE5Zywbmh5DTDQ9l086wWQuwmSBVTZb8j5F4fhRDdwnFm05sNE4RjAdUHsmxT
-         jRoDnnnyIjhm4L6+AdRq0pjtO8olqOmam/vm3V1xDfD18C3t6ya0GkMvwBGuMEPoe+zW
-         qH0OFwH9ys6/zL22tKnsxrAtj7XePVBqKGZFCT17GV5RKzPIRGnLHyLUCRNqATYb6mUc
-         TYz3pzeF2xSacPTi0uyhtq/C3QGVXCUrXxhhObfqbq7IPQqVg1JJ1oTUxzOBwr9dfEF1
-         8yHw==
-X-Gm-Message-State: AC+VfDw4P5+V/AUXqLToZBPBVlosFxbOX/YPcgumRRhBPjcy8F0F3cHC
-        Yh7uwNOX1qlojV9coe5K2V9b5Q==
-X-Google-Smtp-Source: ACHHUZ6g4CDeffFfXzftaZbZSf3SKkuRD2pIillen7CiBtHzJExUDY1BKN3JLXLga47sPT7rodnd+w==
-X-Received: by 2002:a2e:9457:0:b0:2ac:7d78:3465 with SMTP id o23-20020a2e9457000000b002ac7d783465mr2205896ljh.15.1685527663994;
-        Wed, 31 May 2023 03:07:43 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id s24-20020a2e9c18000000b002a8ae16ac8csm3236479lji.18.2023.05.31.03.07.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 May 2023 03:07:43 -0700 (PDT)
-Message-ID: <98e4bda7-19e9-09b6-f008-383adada97cb@linaro.org>
-Date:   Wed, 31 May 2023 13:07:42 +0300
+        Wed, 31 May 2023 06:38:54 -0400
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85F61BE;
+        Wed, 31 May 2023 03:38:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=web.de; s=s29768273;
+        t=1685529518; i=spasswolf@web.de;
+        bh=EdzXAuAMFY3t1LSaGo+AZHE/CDQud/bV5pOhIIq/oMk=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=JKxk6kUiW552tsCiXcNfxoGhPd15Ah4lWu2lTkaZH/Y7qeKC1hk8QgGnFGLbjS8PX
+         PfgQd07nettDbdcgfzfmJStK616i5R0adCa3YYAL13InHqmxTpMmsFT+t4R0x+RERI
+         yar6kFXelc9OuYAPkoiXJdgFTpMxIhgd1D+NyeZ2gglc0Ds+PZp7lWtaFJO1Eqn3Ch
+         uLMQlRqNXXcq6xmgJ7NBJQ+v1tQPKgajMhpkmwOSil7jxrNp8rooeQP3oRnNT4bd5v
+         ZiqD0ISzAN/zHFNEwiMaQyN3CQ1tV4IYODu3GWJReyGRnQDTtBMi2B2d49SOLcUAOd
+         PTAp+BCwsThDg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost.localdomain ([176.198.191.160]) by smtp.web.de
+ (mrweb006 [213.165.67.108]) with ESMTPSA (Nemesis) id
+ 1MBS71-1pvlAI3KSl-00CeGc; Wed, 31 May 2023 12:38:37 +0200
+From:   Bert Karwatzki <spasswolf@web.de>
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     Bert Karwatzki <spasswolf@web.de>, elder@kernel.org,
+        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH net v3] net: ipa: Use correct value for IPA_STATUS_SIZE
+Date:   Wed, 31 May 2023 12:36:19 +0200
+Message-Id: <20230531103618.102608-1-spasswolf@web.de>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <e144386d-e62a-a470-fcf9-0dab6f7ab837@linaro.org>
+References: <e144386d-e62a-a470-fcf9-0dab6f7ab837@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [Freedreno] [PATCH] drm/msm/dpu: re-introduce dpu core revision
- to the catalog
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        quic_khsieh@quicinc.com, Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, quic_jesszhan@quicinc.com,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Sean Paul <sean@poorly.run>
-References: <20230531005358.18090-1-quic_abhinavk@quicinc.com>
- <CAA8EJpryw0h8TgpJ+SFJ7s0=LCjkQ6oqAjCKsm60dk_Q5e+wWA@mail.gmail.com>
- <0af4df3d-8048-98cd-6c91-7cd553f4f65f@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <0af4df3d-8048-98cd-6c91-7cd553f4f65f@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:3Dsv7+l5ZvDr30QdVwjfAb5zt4bew3VSOwXjuw4FzsNrtBvP/cH
+ Awf4EvPoD3GkxAAvrQmk+sKBUar5b/Kmz25ljlMVEUkOyPdaAoP22GXn2aNaLSXRBJjcoF5
+ nidWWUsxnj/dPsKXU/jYj5/sXh9odUu3grZ18GEwE/PWOaiTkv8Afb4hbyNW0/xbT+qxKOj
+ 0kUCZ9mek74yTLYPADtbQ==
+UI-OutboundReport: notjunk:1;M01:P0:4sAftPvt+MU=;wtLMJQB0iheI2e4mLDv8fzTKN7o
+ V6rjerJU0Iu+5gTVgemotw0rkOWE+XhEYHWOIDQkbdBkN4krojhoRszloednHJyvjPUBkzi3A
+ T8hamwta3xUc+3tnhmjfY837+/ANw6Gs7h6CZoa+xtq08MaD1kJMcVlvOLdK0bnzUyFfx5Vmr
+ LAHOTBd9ozujI7ziuV6TkZBUows3LsgapKsJknViRi/tgDP/Rx3B+PWBXxyIc1yR35WOtHgjP
+ QrElrbULRrpmP0wtboOiDW1K5OWHWTsheYtO+sGd5YRxnmVrLzMvvitz/LgAYvrB+17T2IZIN
+ l2y0Sk07u7LA7RYP6CELoV0JYgeVxwN0fHpawwgjNYQVf3SGhi3VCjiwRJuv+ws3nk5tEMS1L
+ ATq48ZUGN4CP24vcgBENd84qDZY0PYMkcg/uygsx3VScbUIuPrwcntuYbWSvu0IpRsb2TwBfL
+ EWc/UOPWJEL6AHY8XejFs+9Qm3q2cqZRNCDsen1PW2a6LUaxXBn7xT8+/JihV125usd2i5n6L
+ PRf5TfECFyIk+/Fgy//qdmZTiTYfOLJ59XjBNL4jBT+VBkkXBZUBhIsYm/Ja6+SWPPHBNdfgc
+ 8fSUSAWrOQmjNerKPrkE40d3GtJSHbd+di17FVyYGg1ykQ4GdqUBJaNivGkjyY08rZNPRyLJl
+ jQIWc+WymGV99rdrdd0Q74F0jBkS/+RflAIinjoW1cE9ugI10I92wYWDH/OiiUkJrKltL0BTx
+ BFENJ14b80k6prKBrEPWQKZOhNlFVOMlhs716TZYI+lvoQSE8knani3R89QsFJk69t1AY9SyY
+ uGYmqUwHr1kCcTSUL3A9+DC3vk+FRrxJf1lmx/cLY1E6FgPPTk+DFfPVxksbkB1npda752LFW
+ LfrIWYMq+mjovZPKnsSwSP1lQD3CAILTNwOiTYB7SfOKwxidgVL35hMSlLHsyj8SC9xfVzOeS
+ 7f4B/M/aPZvk5XiNND3xIp/XW7Y=
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/05/2023 06:05, Abhinav Kumar wrote:
-> 
-> 
-> On 5/30/2023 7:53 PM, Dmitry Baryshkov wrote:
->> On Wed, 31 May 2023 at 03:54, Abhinav Kumar 
->> <quic_abhinavk@quicinc.com> wrote:
->>>
->>> With [1] dpu core revision was dropped in favor of using the
->>> compatible string from the device tree to select the dpu catalog
->>> being used in the device.
->>>
->>> This approach works well however also necessitates adding catalog
->>> entries for small register level details as dpu capabilities and/or
->>> features bloating the catalog unnecessarily. Examples include but
->>> are not limited to data_compress, interrupt register set, widebus etc.
->>>
->>> Introduce the dpu core revision back as an entry to the catalog so that
->>> we can just use dpu revision checks and enable those bits which
->>> should be enabled unconditionally and not controlled by a catalog
->>> and also simplify the changes to do something like:
->>>
->>> if (dpu_core_revision > xxxxx && dpu_core_revision < xxxxx)
->>>          enable the bit;
->>>
->>> Also, add some of the useful macros back to be able to use dpu core
->>> revision effectively.
->>>
->>> [1]: https://patchwork.freedesktop.org/patch/530891/?series=113910&rev=4
->>>
->>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
->>> ---
->>>   .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  1 +
->>>   .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  1 +
->>>   .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  1 +
->>>   .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  1 +
->>>   .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  1 +
->>>   .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  1 +
->>>   .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |  1 +
->>>   .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |  1 +
->>>   .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  1 +
->>>   .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  1 +
->>>   .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  1 +
->>>   .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  1 +
->>>   .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  1 +
->>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    | 31 ++++++++++++++++++-
->>>   14 files changed, 43 insertions(+), 1 deletion(-)
->>>
->>
->> [skipped catalog changes]
->>
->>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h 
->>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->>> index 677048cc3b7d..cc4aa75a1219 100644
->>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
->>> @@ -19,6 +19,33 @@
->>>    */
->>>   #define MAX_BLOCKS    12
->>>
->>> +#define DPU_HW_VER(MAJOR, MINOR, STEP)\
->>> +                 ((((unsigned int)MAJOR & 0xF) << 28) |\
->>> +                 ((MINOR & 0xFFF) << 16) |\
->>> +                 (STEP & 0xFFFF))
->>> +
->>> +#define DPU_HW_MAJOR(rev)((rev) >> 28)
->>> +#define DPU_HW_MINOR(rev)(((rev) >> 16) & 0xFFF)
->>> +#define DPU_HW_STEP(rev)((rev) & 0xFFFF)
->>> +#define DPU_HW_MAJOR_MINOR(rev)((rev) >> 16)
->>> +
->>> +#define IS_DPU_MAJOR_MINOR_SAME(rev1, rev2)   \
->>> +(DPU_HW_MAJOR_MINOR((rev1)) == DPU_HW_MAJOR_MINOR((rev2)))
->>> +
->>> +#define DPU_HW_VER_300 DPU_HW_VER(3, 0, 0) /* 8998 v1.0 */
->>> +#define DPU_HW_VER_400 DPU_HW_VER(4, 0, 0) /* sdm845 v1.0 */
->>> +#define DPU_HW_VER_500 DPU_HW_VER(5, 0, 0) /* sm8150 v1.0 */
->>> +#define DPU_HW_VER_510 DPU_HW_VER(5, 1, 1) /* sc8180 */
->>> +#define DPU_HW_VER_600 DPU_HW_VER(6, 0, 0) /* sm8250 */
->>> +#define DPU_HW_VER_620 DPU_HW_VER(6, 2, 0) /* sc7180 v1.0 */
->>> +#define DPU_HW_VER_630 DPU_HW_VER(6, 3, 0) /* sm6115|sm4250 */
->>> +#define DPU_HW_VER_650 DPU_HW_VER(6, 5, 0) /* qcm2290|sm4125 */
->>> +#define DPU_HW_VER_700 DPU_HW_VER(7, 0, 0) /* sm8350 */
->>> +#define DPU_HW_VER_720 DPU_HW_VER(7, 2, 0) /* sc7280 */
->>> +#define DPU_HW_VER_800 DPU_HW_VER(8, 0, 0) /* sc8280xp */
->>> +#define DPU_HW_VER_810 DPU_HW_VER(8, 1, 0) /* sm8450 */
->>> +#define DPU_HW_VER_900 DPU_HW_VER(9, 0, 0) /* sm8550 */
->>
->> Instead of having defines for all SoCs (which can quickly become
->> unmanageable) and can cause merge conflicts, I'd suggest inlining all
->> the defines into respective catalog files.
->>
-> 
-> Sure, that can be done.
-> 
->> Also, I'm not sure that the "step" should be a part of the catalog. I
->> know that this follows the hardware revision. However, please correct
->> me if I'm wrong, different step levels are used for revisions of the
->> same SoC. The original code that was reading the hw revision from the
->> hardware register, listed both 5.0.0 and 5.0.1 for sm8150.
->>
-> 
-> This is one of the things i noticed while making this change.
-> 
-> Before the catalog rework, we used to handle even steps as we used to 
-> read that from the register and match it with the mdss_cfg handler. But 
-> after the rework, we dont handle steps anymore. Yes, you are right that 
-> different step levels are used for the revisions of the same SOC and so 
-> with that, i dont expect or atleast am not aware of DPU differences 
-> between steps but I am not able to rule it out.
-> 
-> So are you suggesting we drop step altogether and DPU_HW_VER() macro 
-> shall only handle major and minor versions? With the current chipsets I 
-> see, it should not make a difference . Its just that I am not sure if 
-> that will never happen.
+IPA_STATUS_SIZE was introduced in commit b8dc7d0eea5a as a replacement
+for the size of the removed struct ipa_status which had size
+sizeof(__le32[8]). Use this value as IPA_STATUS_SIZE.
 
-Yes. The goal of this rework would be to drop generic features and to 
-replace those checks with DPU-revision lookups. Correct?
-I think that from this perspective having to handle toe step revision is 
-a sign of an overkill. Having to handle the step revision is a sign of 
-paltform feature (or mis-feature) rather than a generic DPU bit.
+Fixes: b8dc7d0eea5a ("net: ipa: stop using sizeof(status)")
+Signed-off-by: Bert Karwatzki <spasswolf@web.de>
+=2D--
+ drivers/net/ipa/ipa_endpoint.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-In fact I suppose that even handling a minor revision would be an 
-overkill. Why don't we start with .dpu_major instead of .core_rev? We 
-can add .dpu_minor if/when required.
+diff --git a/drivers/net/ipa/ipa_endpoint.c b/drivers/net/ipa/ipa_endpoint=
+.c
+index 2ee80ed140b7..afa1d56d9095 100644
+=2D-- a/drivers/net/ipa/ipa_endpoint.c
++++ b/drivers/net/ipa/ipa_endpoint.c
+@@ -119,7 +119,7 @@ enum ipa_status_field_id {
+ };
 
-> 
->>> +
->>>   #define DPU_HW_BLK_NAME_LEN    16
->>>
->>>   #define MAX_IMG_WIDTH 0x3fff
->>> @@ -769,7 +796,7 @@ struct dpu_perf_cfg {
->>>   /**
->>>    * struct dpu_mdss_cfg - information of MDSS HW
->>>    * This is the main catalog data structure representing
->>> - * this HW version. Contains number of instances,
->>> + * this HW version. Contains dpu core revision, number of instances,
->>>    * register offsets, capabilities of the all MDSS HW sub-blocks.
->>>    *
->>>    * @dma_formats        Supported formats for dma pipe
->>> @@ -778,6 +805,8 @@ struct dpu_perf_cfg {
->>>    * @mdss_irqs:         Bitmap with the irqs supported by the target
->>>    */
->>>   struct dpu_mdss_cfg {
->>> +       u32 core_rev;
->>> +
->>>          const struct dpu_caps *caps;
->>>
->>>          const struct dpu_ubwc_cfg *ubwc;
->>> -- 
->>> 2.40.1
->>>
->>
->>
+ /* Size in bytes of an IPA packet status structure */
+-#define IPA_STATUS_SIZE			sizeof(__le32[4])
++#define IPA_STATUS_SIZE			sizeof(__le32[8])
 
--- 
-With best wishes
-Dmitry
+ /* IPA status structure decoder; looks up field values for a structure */
+ static u32 ipa_status_extract(struct ipa *ipa, const void *data,
+=2D-
+2.40.1
+
+As none of you seem to be in Europe, I'll do another attempt, this time
+with git send-email.
+Bert Karwatzki
 
