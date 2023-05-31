@@ -2,82 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A5F07179F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 10:24:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3E9F7179FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 10:25:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234612AbjEaIY2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 04:24:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48236 "EHLO
+        id S234816AbjEaIZT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 04:25:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48754 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232250AbjEaIY1 (ORCPT
+        with ESMTP id S235251AbjEaIZD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 04:24:27 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 371E393
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 01:24:26 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-51491b87565so7170319a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 01:24:26 -0700 (PDT)
+        Wed, 31 May 2023 04:25:03 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0827C135
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 01:24:57 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-96f8d485ef3so845675866b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 01:24:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685521464; x=1688113464;
+        d=linaro.org; s=google; t=1685521496; x=1688113496;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Z7/tPM97+ixfB8TGDp/bQzzt7wmHeXbjLj3vGjIL85M=;
-        b=HEFIw5btRQu1bchZauFcEAzopwCzK90tcqrlscyQ7VWmzwdXLp3QxgH3h4BGpTJcbv
-         bL8CYMBqgB8VYU8xL3HoKldk2CP43VguDhP38bOoLGwIAj8oWPxIBbRe19JhHIZ/iLEU
-         dGwQcyj/+peSM8qdbO0sz9WPQAS15NtuRI3WDb4nD7ndsawDl23Mamo+DmfK35bIXP+X
-         6KCiMilZQFqjied0ZUcVJmTm+c7BM0s1xmjqOgWSgKAv2HQj7+ygV+9NfoYy/11dT7Do
-         R8OdAEhmz48pxkUVD4vJ7AN6FlptF6j9t85lYHoEHT8QljomEhqxLTLDqiCNRLtRmkMt
-         kiLw==
+        bh=v2k5vPCSYnWtSGTIXwcTXsVrzq1qAVk456v6qUvHjn4=;
+        b=evFEiVsObtTsguxnNCAgyFMiGaOcl5N3jPA/b1dfzzxdmr7Jy0JqbFOtG2iwISFbS5
+         UEScpDBWrQehDu+E77miJNaj7IJiJ/gHMPqivRaB/AVpYU/XdIE0zaZ+KdVno278w/EL
+         UoaqPfOwM0/W7ZT4h7OoNrQrUS5y9W2NvFTCOdAaewnMQr0FbXPNCZMxsJX6E+nPUciG
+         AA06h/GhdDjbP8r6eSLS3IQQ8aq3NIcnBuiKQDXl42pQzt04pKyROvbY+jGZ8wmYMQmw
+         eGVosKJhlHHYCwvon/4xQJdyJ4zQ0qz2tytSHxRpt/Wndqpeu/NIyr+MbP28zYqFzPsj
+         vSfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685521464; x=1688113464;
+        d=1e100.net; s=20221208; t=1685521496; x=1688113496;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z7/tPM97+ixfB8TGDp/bQzzt7wmHeXbjLj3vGjIL85M=;
-        b=KoqLZHr8OKnMp8rlzG8ZAXMXDn7IwlZ3np1Z47tYkqegsWNngctJEpGV3ry6wlYZs8
-         ytOG/l5zzuDfPCw4tRcYYgulSGFd5AOK8qlAPyAIP1znUg3biMsbmN7DLHQgb2emzmax
-         hjGNTyGXfPxFnjxbP+jRzJQWMVOfjN8iruv89FbIJwvX3JlCq4apQHJtHKM4g9rV/uej
-         hnCzZM2KKQo8Lm/N3q2PjDmWExcdATRcFDK9GDRUDniUfVlnAgSEgvtcCUcPfFkY4YfZ
-         T+LXmT3ZXe4gaXZeFauXFdvFOmSpqtBcwBOGNiZAp+SORjEibd8CRiIjjgKlnDNuQle8
-         fWgg==
-X-Gm-Message-State: AC+VfDwfZ/nknmYjTvk4BVgeN/FoNIQJNbxjbbhrg5rQqvPBxYMdqqz1
-        rkB6/8D4p8ziuUbOHXwOkyeMiA==
-X-Google-Smtp-Source: ACHHUZ4wiQr0aDOh1HHknnfz6rabMIF5zmnzY6T/SaEwLpozbf0hBSiy/0VRb0dgYN+ZvDTr2qGhyg==
-X-Received: by 2002:a17:907:6e0d:b0:94e:afa6:299f with SMTP id sd13-20020a1709076e0d00b0094eafa6299fmr4623253ejc.22.1685521464725;
-        Wed, 31 May 2023 01:24:24 -0700 (PDT)
+        bh=v2k5vPCSYnWtSGTIXwcTXsVrzq1qAVk456v6qUvHjn4=;
+        b=At9a2rZIHJL+dFQ4P+fQ01v0yuliTcGCTXS1sqX6jVAcx149ZQK9XwskgrA4aWu3VH
+         OiYHVZN4ySK07GgmkDqMMTBUo9AHNfvxkOHvBbQCaRJ7SlO0U94WXOaUZuRzg3ELxiQB
+         GqHOgO63Bpo3safZBLUhN7xCjUccO1ceS15PJ/+u4yON9baxvxqwKsqG77GVBwWawyQM
+         nPrPvZRept18AMTWh8Vu74pPvfieILBYgqgILU7k0zhXnM242s4Cl1HBjXwHuH3SyEV6
+         dOZdM2LBEIha0sC6lECBrZYsOL5AbCAd6//mBbAsj/Sakim4aCZwSrPAaHh+66kGutkR
+         1Ftg==
+X-Gm-Message-State: AC+VfDy8qkwBPu44wSy7eil12C9Y3xd2cyguNdBprlF5joJ3lbpoVN56
+        uN7oB2HVtgMo3HlIDvQXSUMkSw==
+X-Google-Smtp-Source: ACHHUZ4jvJs4A1incMCwVveO7FKis59XsoCRL227C6H8yFSlGVdTx0axv0RDEFwrhmF1WeUbCpAmtg==
+X-Received: by 2002:a17:907:2d08:b0:96f:f807:6af5 with SMTP id gs8-20020a1709072d0800b0096ff8076af5mr4841959ejc.39.1685521496172;
+        Wed, 31 May 2023 01:24:56 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.199.204])
-        by smtp.gmail.com with ESMTPSA id n2-20020a170906088200b0096f7ae359a5sm8605987eje.30.2023.05.31.01.24.22
+        by smtp.gmail.com with ESMTPSA id si16-20020a170906ced000b0094f1b8901e1sm8531239ejb.68.2023.05.31.01.24.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 May 2023 01:24:24 -0700 (PDT)
-Message-ID: <38a93add-9c78-de13-4301-8929bb712525@linaro.org>
-Date:   Wed, 31 May 2023 10:24:21 +0200
+        Wed, 31 May 2023 01:24:55 -0700 (PDT)
+Message-ID: <8f915d90-c67a-430a-7539-4887cde37345@linaro.org>
+Date:   Wed, 31 May 2023 10:24:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v3 04/15] scsi: ufs: dt-bindings: Add SC8180x binding
+Subject: Re: [PATCH v3 05/15] dt-bindings: qcom,pdc: Add SC8180x compatible
 Content-Language: en-US
 To:     Vinod Koul <vkoul@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Avri Altman <avri.altman@wdc.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Bart Van Assche <bvanassche@acm.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-scsi@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 References: <20230530162454.51708-1-vkoul@kernel.org>
- <20230530162454.51708-5-vkoul@kernel.org>
+ <20230530162454.51708-6-vkoul@kernel.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230530162454.51708-5-vkoul@kernel.org>
+In-Reply-To: <20230530162454.51708-6-vkoul@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -85,11 +84,11 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 30/05/2023 18:24, Vinod Koul wrote:
-> Document the UFS HC for SC8180x SoC
+> Document the compatible for pdc in SC8180X SoC
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-Nothing improved. :(
+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
