@@ -2,193 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A503E717AC7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 10:55:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B7ED717AF4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 11:01:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235064AbjEaIz3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 04:55:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40236 "EHLO
+        id S235251AbjEaJBf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 05:01:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44562 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232213AbjEaIz2 (ORCPT
+        with ESMTP id S234557AbjEaJBc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 04:55:28 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B512710B;
-        Wed, 31 May 2023 01:55:25 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34V7dxRP019130;
-        Wed, 31 May 2023 08:55:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=CCRbxVCvWZHmdUO+bC1ghL3WEZsRnhWDr4vZXSg3/sM=;
- b=HwCK1VVISeKBYBa/02Dbi6/WYvDRjm+VTrH5ydR66WdH8CDVoKJs4uxYsGfjoNktej9S
- 9rsnhoYmExXwDDznDTrXvTEQ+jPVS5Xnr1hCbGDHep/HIWDMccyNuDhep54AeXmdfIet
- dyjBVx/1aHwMIQd7R5UNCPDRbjrbV8/VJNqKRLDj8PbQxo/el/2JBUsBLQKq+Ghklj/1
- Iv+gOLOkn5WK7teB9P6+F7+iuhmgTzyD2psSGiLCs0q14oatD1ciC1JOB/YH/C7OjNbe
- I+B8BYHGr8lbpLYga3lxoTki698EnIAIDgqa35/ncoW1xNKCCuDarhWoFVrTlJ7y3oUg Cg== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qwmvphnyx-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 31 May 2023 08:55:19 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34V8tI8x032058
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 31 May 2023 08:55:18 GMT
-Received: from [10.252.212.215] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 31 May
- 2023 01:55:15 -0700
-Message-ID: <384226b0-c952-95ac-fa77-8461b231dbbd@quicinc.com>
-Date:   Wed, 31 May 2023 14:25:12 +0530
+        Wed, 31 May 2023 05:01:32 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E923F10B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 02:01:29 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f4f3ac389eso4938101e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 02:01:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685523688; x=1688115688;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=fuKl8R0SVaBERImB5qO7yJ/wWAuRKKhQv+u4wxwoJUU=;
+        b=WQaaaPoAY+5xaX6AhZ26wJMpfoene/Rnf8nw30qp3KQuoSJ4IHSHtT1W2Y7ALtUo72
+         XLgSSsW+MM9roC71ysqr4DzEd1JsmT2v8mNvLrqQoh4/ZH8xNuX9fETelOWwU35AGAhW
+         EaWbRLUEM5/+JFdDFKb4wZaRdJrj3AEFTj/arEAepP914gKOTB/92uAkWyh+HEySNKMo
+         TOvqS2iKgp7Z5QMwxZ4aIqDAeoq10zXBCaxLQ0hfAGsCC8LNGdQ9JzGWcrz8vYiEKIIa
+         vi0vP6J54Q5qLVpvITOXSC4CiMInddwWxD8IqCwnrnkiV5w62AlLjfoVAzZN08hlHM7f
+         h1SQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685523688; x=1688115688;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fuKl8R0SVaBERImB5qO7yJ/wWAuRKKhQv+u4wxwoJUU=;
+        b=OGgB89ochLdTGe4IKfLUoStQdprpgMpXz1VZEKUQ+e2bRCU5si+H/+4MA98isRjowO
+         Y2NqFCoBqOzSppYHEQw0rGJP4i5S4w2cfXC7SGgO7FQcMh5Mn5bfPkh64KopRaQT0ekU
+         xjszak9EB3SdYsVqqgP+331li6OQ/BiiaAS+Q9Icp86swm85M13yr82s32wUROiDo/ME
+         8fe+FeTjFCdh69xaMd9oI0aPdqvMuXMFcLixpWMmTlKZ1rxQaCe90Zqermq3DZ7WLirU
+         ncGsXoHdeHDD4X1kqpS91axirj18bxmGAkjxMdXJFwjzXnFGthkxrLJA2/rokKp8lxXA
+         ztiQ==
+X-Gm-Message-State: AC+VfDzMf6bQV+H1yGx8YsikJHmKH4I/nPd3biRsvLFXtLIqH1UaPvcF
+        oxmMJGeDVSIVSNnhDZr46ZdgYA==
+X-Google-Smtp-Source: ACHHUZ6kOWU5LAZJfE6qDV5Re7ast+TK1RDPbZTIfxwpSoKb2KmFiCQLQcn1bSEZMyIXjLUmsCMJ7A==
+X-Received: by 2002:a2e:360e:0:b0:2ae:ce63:a380 with SMTP id d14-20020a2e360e000000b002aece63a380mr2165383lja.17.1685523688006;
+        Wed, 31 May 2023 02:01:28 -0700 (PDT)
+Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
+        by smtp.gmail.com with ESMTPSA id f4-20020a2e9184000000b002adbe01cd69sm3217446ljg.9.2023.05.31.02.01.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 May 2023 02:01:27 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/4] MMCC MSM8998 fixes
+Date:   Wed, 31 May 2023 11:01:19 +0200
+Message-Id: <20230531-topic-8998_mmssclk-v1-0-2b5a8fc90991@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] media: venus: firmware: Use of_reserved_mem_lookup()
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-CC:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230529-venus-of-rmem-v1-1-dfcdc5047ffb@gerhold.net>
-From:   Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <20230529-venus-of-rmem-v1-1-dfcdc5047ffb@gerhold.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: YUvYiVTzjiyS2VMvlmYcNjgicBgBW5sl
-X-Proofpoint-ORIG-GUID: YUvYiVTzjiyS2VMvlmYcNjgicBgBW5sl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-31_04,2023-05-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- priorityscore=1501 mlxscore=0 phishscore=0 mlxlogscore=999 suspectscore=0
- spamscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0 clxscore=1015
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
- definitions=main-2305310077
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-B4-Tracking: v=1; b=H4sIAN8Md2QC/x2N0QrCMAwAf2Xk2cDaKXb+ioi0XeqCXTcaHYOxf
+ zf4eAfH7SBUmQRuzQ6VVhaei4I5NRBHX16EPCiDbW3XXjqDn3nhiK7v3XOaRGJ+YxrOwaZwTS4
+ a0DB4IQzVlzhqWr45q1wqJd7+p/vjOH6LfKqQeQAAAA==
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Imran Khan <kimran@codeaurora.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Joonwoo Park <joonwoop@codeaurora.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1685523686; l=1107;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=uWXJDM1O+vnkxqo9vnGAbSBIC66g11fjF+/qeDi1FPs=;
+ b=lWRBkIEhd8Fer7WmwpCgmQjf297db9v60VEAtfw1fMCzhY8C/o5Lx9myY+V/caOsGiCxph89Q
+ gb0qmEJ0LyaDmj79ij7RbxaG3NTPG4Yk9JDsG6BxfeW01Nc/QybDP3p
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+8998 has a couple of issues related to its clock controllers. This series
+attemps to fix some of them.
 
-On 5/29/2023 11:46 PM, Stephan Gerhold wrote:
-> Reserved memory can be either looked up using the generic function
-> of_address_to_resource() or using the special of_reserved_mem_lookup().
-> The latter has the advantage that it ensures that the referenced memory
-> region was really reserved and is not e.g. status = "disabled".
-> 
-> of_reserved_mem also supports allocating reserved memory dynamically at
-> boot time. This works only when using of_reserved_mem_lookup() since
-> there won't be a fixed address in the device tree.
-> 
-> Switch the code to use of_reserved_mem_lookup(). There is no functional
-> difference for static reserved memory allocations.
-> 
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+The DT patch should go in first for bisectability, otherwise
+clk/pd_ignore_unused will need to be used, as the SMMU GDSC is no longer
+considered always-on.
 
-Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+This series results in less "clk stuck at 'on/off'" messages and should
+marginally reduce power consumption.
 
-> ---
-> See e.g. [1] for an example of dynamically allocated reserved memory.
-> (This patch does *not* depend on [1] and is useful without as well...)
-> 
-> [1]: https://lore.kernel.org/linux-arm-msm/20230510-dt-resv-bottom-up-v1-5-3bf68873dbed@gerhold.net/
-> ---
->  drivers/media/platform/qcom/venus/firmware.c | 24 +++++++++++++-----------
->  1 file changed, 13 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
-> index cfb11c551167..2e7ffdaff7b2 100644
-> --- a/drivers/media/platform/qcom/venus/firmware.c
-> +++ b/drivers/media/platform/qcom/venus/firmware.c
-> @@ -10,6 +10,7 @@
->  #include <linux/io.h>
->  #include <linux/of.h>
->  #include <linux/of_address.h>
-> +#include <linux/of_reserved_mem.h>
->  #include <linux/platform_device.h>
->  #include <linux/of_device.h>
->  #include <linux/firmware/qcom/qcom_scm.h>
-> @@ -82,9 +83,9 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
->  			 phys_addr_t *mem_phys, size_t *mem_size)
->  {
->  	const struct firmware *mdt;
-> +	struct reserved_mem *rmem;
->  	struct device_node *node;
->  	struct device *dev;
-> -	struct resource r;
->  	ssize_t fw_size;
->  	void *mem_va;
->  	int ret;
-> @@ -99,13 +100,16 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
->  		return -EINVAL;
->  	}
->  
-> -	ret = of_address_to_resource(node, 0, &r);
-> -	if (ret)
-> -		goto err_put_node;
-> +	rmem = of_reserved_mem_lookup(node);
-> +	of_node_put(node);
-> +	if (!rmem) {
-> +		dev_err(dev, "failed to lookup reserved memory-region\n");
-> +		return -EINVAL;
-> +	}
->  
->  	ret = request_firmware(&mdt, fwname, dev);
->  	if (ret < 0)
-> -		goto err_put_node;
-> +		return ret;
->  
->  	fw_size = qcom_mdt_get_size(mdt);
->  	if (fw_size < 0) {
-> @@ -113,17 +117,17 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
->  		goto err_release_fw;
->  	}
->  
-> -	*mem_phys = r.start;
-> -	*mem_size = resource_size(&r);
-> +	*mem_phys = rmem->base;
-> +	*mem_size = rmem->size;
->  
->  	if (*mem_size < fw_size || fw_size > VENUS_FW_MEM_SIZE) {
->  		ret = -EINVAL;
->  		goto err_release_fw;
->  	}
->  
-> -	mem_va = memremap(r.start, *mem_size, MEMREMAP_WC);
-> +	mem_va = memremap(*mem_phys, *mem_size, MEMREMAP_WC);
->  	if (!mem_va) {
-> -		dev_err(dev, "unable to map memory region: %pR\n", &r);
-> +		dev_err(dev, "unable to map memory region %pa size %#zx\n", mem_phys, *mem_size);
->  		ret = -ENOMEM;
->  		goto err_release_fw;
->  	}
-> @@ -138,8 +142,6 @@ static int venus_load_fw(struct venus_core *core, const char *fwname,
->  	memunmap(mem_va);
->  err_release_fw:
->  	release_firmware(mdt);
-> -err_put_node:
-> -	of_node_put(node);
->  	return ret;
->  }
->  
-> 
-> ---
-> base-commit: 9f9f8ca6f012d25428f8605cb36369a449db8508
-> change-id: 20230529-venus-of-rmem-f649885114fd
-> 
-> Best regards,
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (4):
+      arm64: dts: qcom: msm8998: Properly describe MMSS SMMU
+      clk: qcom: gcc-msm8998: Don't check halt bit on some branch clks
+      clk: qcom: mmcc-msm8998: Don't check halt bit on some branch clks
+      clk: qcom: mmcc-msm8998: Fix the SMMU GDSC
+
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 8 +++++---
+ drivers/clk/qcom/gcc-msm8998.c        | 6 +++---
+ drivers/clk/qcom/mmcc-msm8998.c       | 7 ++++++-
+ 3 files changed, 14 insertions(+), 7 deletions(-)
+---
+base-commit: d4cee89031c80066ec461bb77b5e13a4f37d5fd2
+change-id: 20230531-topic-8998_mmssclk-fd4b2fb7f8c1
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
