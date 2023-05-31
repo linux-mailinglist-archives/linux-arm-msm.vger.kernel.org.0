@@ -2,148 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D13D7176D3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 08:30:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9E107176F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 08:37:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230452AbjEaGaL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 02:30:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37474 "EHLO
+        id S234238AbjEaGhM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 02:37:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40558 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229769AbjEaGaK (ORCPT
+        with ESMTP id S234223AbjEaGhK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 02:30:10 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD83299
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 23:30:09 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id 5614622812f47-39a55e5cfc0so53892b6e.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 23:30:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685514609; x=1688106609;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=E1OpRRIldUM8jbeDsCgHJ5B0G7dPQN5jSdROds/1gnM=;
-        b=x2SnnjMvophJanpT7imV8o8Qkovf+HPUwQN/5KQl3niG086cx6LZVDeKYaSR5fgD13
-         /ZiQquEy1cgWuQypSNCkWwXnVL1QNU9W1drTXXpIjYqJDMEON0L6wlig4C3hf0jun5Di
-         amYhYZPRdugSujRNi2uW2t/GPSCUl17Y7+in//0MvbL/GTriHlZnnx4xxcgVDmR7/jIl
-         paZpWPW/MoA5gtUGup7fSXEGt1wJsp5cibf1KYgIMIA00ptDyK10xoypGHeofdGs9WK/
-         m7L7+qvSBlF36lzbp3CteEwwiY1VOymZ9Yxl4Gx+JkMSuB3+8e9vzV62sx34zi/2JMyj
-         mrxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685514609; x=1688106609;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=E1OpRRIldUM8jbeDsCgHJ5B0G7dPQN5jSdROds/1gnM=;
-        b=jAY+ngak50Q/HNzemZUW/wA2IeK7uvQJjT9U5wnTGP+XMU9G3c5wwRND7piPNt8qwG
-         MjVmN/wdmSpKCyy4jfoRmT4yoUaUweD8/K+bo4TSuzvjFRalcHZk0TN11zioXnT20MpD
-         iBwmPWZ9PHKl73xjB/CDl7PdQYYSaf2vT7lJrgzwyJPUoE9gythN31yLfVSx3BJRVLye
-         lb46p20Hj3XnSCsckBidk27KI1d3MSGrcrTk2K0cOAI/pG7s8gI2brPpNhml9iNPKx2C
-         UnOf8/edoVKjykFf/FI/ux/MGZlGyi9C5/ED4JgydU8waWWGgwwJApmwhHUOBJeiL/eI
-         rn4Q==
-X-Gm-Message-State: AC+VfDxx+keUbG0faGYKOVz70LiAb+4fkroG+uMz8f8KOd631GKXNQ0v
-        i1Ed5HHfkCdzgKtNH+xKzwl1
-X-Google-Smtp-Source: ACHHUZ7FP+5ZnqUjMGXcbaLzxyktF5wU1Q4LTtszDkktWIiXviMTJH/V9NoQTPAK1XO/eYUiHygGmA==
-X-Received: by 2002:aca:f055:0:b0:397:ed3b:f1d5 with SMTP id o82-20020acaf055000000b00397ed3bf1d5mr2542780oih.11.1685514608972;
-        Tue, 30 May 2023 23:30:08 -0700 (PDT)
-Received: from thinkpad ([117.217.186.173])
-        by smtp.gmail.com with ESMTPSA id jb7-20020a170903258700b001ae0b373382sm431234plb.198.2023.05.30.23.30.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 May 2023 23:30:08 -0700 (PDT)
-Date:   Wed, 31 May 2023 12:00:03 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     loic.poulain@linaro.org, quic_krichai@quicinc.com
-Subject: Re: [PATCH] bus: mhi: host: pci_generic: Add support for IP_SW0
- channels
-Message-ID: <20230531063003.GB7968@thinkpad>
-References: <20230519135803.13850-1-manivannan.sadhasivam@linaro.org>
+        Wed, 31 May 2023 02:37:10 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48721132;
+        Tue, 30 May 2023 23:37:07 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D8AE961B24;
+        Wed, 31 May 2023 06:37:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B40C4339B;
+        Wed, 31 May 2023 06:37:00 +0000 (UTC)
+Message-ID: <6c4658fd-3a64-b3f8-67cd-17ed2d7d3567@xs4all.nl>
+Date:   Wed, 31 May 2023 08:36:59 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230519135803.13850-1-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2 3/8] media: videobuf2: Add a module param to limit vb2
+ queue buffer storage
+Content-Language: en-US
+To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
+        tfiga@chromium.org, m.szyprowski@samsung.com, mchehab@kernel.org,
+        ming.qian@nxp.com, shijie.qin@nxp.com, eagle.zhou@nxp.com,
+        bin.liu@mediatek.com, matthias.bgg@gmail.com,
+        angelogioacchino.delregno@collabora.com, tiffany.lin@mediatek.com,
+        andrew-ct.chen@mediatek.com, yunfei.dong@mediatek.com,
+        stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
+        daniel.almeida@collabora.com, laurent.pinchart@ideasonboard.com
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, kernel@collabora.com
+References: <20230321102855.346732-1-benjamin.gaignard@collabora.com>
+ <20230321102855.346732-4-benjamin.gaignard@collabora.com>
+From:   Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <20230321102855.346732-4-benjamin.gaignard@collabora.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.8 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,NICE_REPLY_A,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 19, 2023 at 07:28:03PM +0530, Manivannan Sadhasivam wrote:
-> IP_SW0 channels are used to transfer data over the networking interface
-> between MHI endpoint and the host. Define the channels in the MHI v1
-> channel config along with dedicated event rings.
+On 21/03/2023 11:28, Benjamin Gaignard wrote:
+> Add module parameter "max_vb_buffer_per_queue" to be able to limit
+> the number of vb2 buffers store in queue.
 > 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Applied to mhi-next!
-
-- Mani
-
+> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
 > ---
->  drivers/bus/mhi/host/pci_generic.c | 26 ++++++++++++++++++++++----
->  1 file changed, 22 insertions(+), 4 deletions(-)
+>  drivers/media/common/videobuf2/videobuf2-core.c | 15 +++------------
+>  include/media/videobuf2-core.h                  | 11 +++++++++--
+>  2 files changed, 12 insertions(+), 14 deletions(-)
 > 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index db0a0b062d8e..70e37c490150 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -212,6 +212,19 @@ struct mhi_pci_dev_info {
->  		.offload_channel = false,	\
+> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+> index ae9d72f4d181..f4da917ccf3f 100644
+> --- a/drivers/media/common/videobuf2/videobuf2-core.c
+> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
+> @@ -34,6 +34,8 @@
+>  static int debug;
+>  module_param(debug, int, 0644);
+>  
+> +module_param(max_vb_buffer_per_queue, ulong, 0644);
+
+There is no MODULE_PARM_DESC here? Please add. I see it is not there for
+the debug param either, it should be added for that as well.
+
+Regards,
+
+	Hans
+
+> +
+>  #define dprintk(q, level, fmt, arg...)					\
+>  	do {								\
+>  		if (debug >= level)					\
+> @@ -412,10 +414,6 @@ static int __vb2_queue_alloc(struct vb2_queue *q, enum vb2_memory memory,
+>  	struct vb2_buffer *vb;
+>  	int ret;
+>  
+> -	/* Ensure that q->num_buffers+num_buffers is below VB2_MAX_FRAME */
+> -	num_buffers = min_t(unsigned int, num_buffers,
+> -			    VB2_MAX_FRAME - q->num_buffers);
+> -
+>  	for (buffer = 0; buffer < num_buffers; ++buffer) {
+>  		/* Allocate vb2 buffer structures */
+>  		vb = kzalloc(q->buf_struct_size, GFP_KERNEL);
+> @@ -801,9 +799,7 @@ int vb2_core_reqbufs(struct vb2_queue *q, enum vb2_memory memory,
+>  	/*
+>  	 * Make sure the requested values and current defaults are sane.
+>  	 */
+> -	WARN_ON(q->min_buffers_needed > VB2_MAX_FRAME);
+>  	num_buffers = max_t(unsigned int, *count, q->min_buffers_needed);
+> -	num_buffers = min_t(unsigned int, num_buffers, VB2_MAX_FRAME);
+>  	memset(q->alloc_devs, 0, sizeof(q->alloc_devs));
+>  	/*
+>  	 * Set this now to ensure that drivers see the correct q->memory value
+> @@ -919,11 +915,6 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
+>  	bool no_previous_buffers = !q->num_buffers;
+>  	int ret;
+>  
+> -	if (q->num_buffers == VB2_MAX_FRAME) {
+> -		dprintk(q, 1, "maximum number of buffers already allocated\n");
+> -		return -ENOBUFS;
+> -	}
+> -
+>  	if (no_previous_buffers) {
+>  		if (q->waiting_in_dqbuf && *count) {
+>  			dprintk(q, 1, "another dup()ped fd is waiting for a buffer\n");
+> @@ -948,7 +939,7 @@ int vb2_core_create_bufs(struct vb2_queue *q, enum vb2_memory memory,
+>  			return -EINVAL;
 >  	}
 >  
-> +#define MHI_EVENT_CONFIG_SW_DATA(ev_ring, el_count) \
-> +	{					\
-> +		.num_elements = el_count,	\
-> +		.irq_moderation_ms = 0,		\
-> +		.irq = (ev_ring) + 1,		\
-> +		.priority = 1,			\
-> +		.mode = MHI_DB_BRST_DISABLE,	\
-> +		.data_type = MHI_ER_DATA,	\
-> +		.hardware_event = false,	\
-> +		.client_managed = false,	\
-> +		.offload_channel = false,	\
-> +	}
+> -	num_buffers = min(*count, VB2_MAX_FRAME - q->num_buffers);
+> +	num_buffers = *count;
+>  
+>  	if (requested_planes && requested_sizes) {
+>  		num_planes = requested_planes;
+> diff --git a/include/media/videobuf2-core.h b/include/media/videobuf2-core.h
+> index 397dbf6e61e1..b8b34a993e04 100644
+> --- a/include/media/videobuf2-core.h
+> +++ b/include/media/videobuf2-core.h
+> @@ -12,6 +12,7 @@
+>  #ifndef _MEDIA_VIDEOBUF2_CORE_H
+>  #define _MEDIA_VIDEOBUF2_CORE_H
+>  
+> +#include <linux/minmax.h>
+>  #include <linux/mm_types.h>
+>  #include <linux/mutex.h>
+>  #include <linux/poll.h>
+> @@ -48,6 +49,8 @@ struct vb2_fileio_data;
+>  struct vb2_threadio_data;
+>  struct vb2_buffer;
+>  
+> +static size_t max_vb_buffer_per_queue = 1024;
 > +
->  #define MHI_EVENT_CONFIG_HW_DATA(ev_ring, el_count, ch_num) \
->  	{					\
->  		.num_elements = el_count,	\
-> @@ -237,8 +250,10 @@ static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
->  	MHI_CHANNEL_CONFIG_DL_AUTOQUEUE(21, "IPCR", 8, 0),
->  	MHI_CHANNEL_CONFIG_UL_FP(34, "FIREHOSE", 32, 0),
->  	MHI_CHANNEL_CONFIG_DL_FP(35, "FIREHOSE", 32, 0),
-> -	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 2),
-> -	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 3),
-> +	MHI_CHANNEL_CONFIG_UL(46, "IP_SW0", 64, 2),
-> +	MHI_CHANNEL_CONFIG_DL(47, "IP_SW0", 64, 3),
-> +	MHI_CHANNEL_CONFIG_HW_UL(100, "IP_HW0", 128, 4),
-> +	MHI_CHANNEL_CONFIG_HW_DL(101, "IP_HW0", 128, 5),
->  };
+>  /**
+>   * struct vb2_mem_ops - memory handling/memory allocator operations.
+>   * @alloc:	allocate video memory and, optionally, allocator private data,
+> @@ -1268,12 +1271,16 @@ static inline bool vb2_queue_add_buffer(struct vb2_queue *q, struct vb2_buffer *
 >  
->  static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
-> @@ -246,9 +261,12 @@ static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
->  	MHI_EVENT_CONFIG_CTRL(0, 64),
->  	/* DIAG dedicated event ring */
->  	MHI_EVENT_CONFIG_DATA(1, 128),
-> +	/* Software channels dedicated event ring */
-> +	MHI_EVENT_CONFIG_SW_DATA(2, 64),
-> +	MHI_EVENT_CONFIG_SW_DATA(3, 64),
->  	/* Hardware channels request dedicated hardware event rings */
-> -	MHI_EVENT_CONFIG_HW_DATA(2, 1024, 100),
-> -	MHI_EVENT_CONFIG_HW_DATA(3, 2048, 101)
-> +	MHI_EVENT_CONFIG_HW_DATA(4, 1024, 100),
-> +	MHI_EVENT_CONFIG_HW_DATA(5, 2048, 101)
->  };
+>  	if (vb->index >= q->max_num_bufs) {
+>  		struct vb2_buffer **tmp;
+> +		int cnt = min(max_vb_buffer_per_queue, q->max_num_bufs * 2);
+> +
+> +		if (cnt >= q->max_num_bufs)
+> +			goto realloc_failed;
 >  
->  static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
-> -- 
-> 2.25.1
-> 
+> -		tmp = krealloc_array(q->bufs, q->max_num_bufs * 2, sizeof(*q->bufs), GFP_KERNEL);
+> +		tmp = krealloc_array(q->bufs, cnt, sizeof(*q->bufs), GFP_KERNEL);
+>  		if (!tmp)
+>  			goto realloc_failed;
+>  
+> -		q->max_num_bufs *= 2;
+> +		q->max_num_bufs = cnt;
+>  		q->bufs = tmp;
+>  	}
+>  
 
--- 
-மணிவண்ணன் சதாசிவம்
