@@ -2,131 +2,186 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 06DC07179E3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 10:20:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A2737179EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 10:22:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234855AbjEaIUd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 04:20:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45958 "EHLO
+        id S234692AbjEaIWr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 04:22:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234310AbjEaIUc (ORCPT
+        with ESMTP id S234487AbjEaIWq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 04:20:32 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8204793;
-        Wed, 31 May 2023 01:20:30 -0700 (PDT)
-Received: from [192.168.88.20] (91-154-35-171.elisa-laajakaista.fi [91.154.35.171])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id AB62D7FC;
-        Wed, 31 May 2023 10:20:06 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1685521207;
-        bh=EL3RWdaIqfPKhp0EXpVPxPCT9ntFr8tTKWXlYphupWI=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=MvSXDrHk7T4BnPJqHjbFiTX+4V0oyXpM4JlCJJT+bzOMxSOycyjTIr/UAfnt1xezv
-         qzMGM+1MWvguHV2odb3hKaYoA6dxUihmMViSPeeHPMA04EyWI4cWEcnv/H7riWMXBY
-         LXCYZwLPo9seo/aN3CtoiK5GheRzH+ZTTqCtxMHI=
-Message-ID: <c4146861-3e8c-7410-4fec-27e7bce7e2de@ideasonboard.com>
-Date:   Wed, 31 May 2023 11:20:24 +0300
+        Wed, 31 May 2023 04:22:46 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD6A793
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 01:22:43 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-96f6a9131fdso821280966b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 01:22:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685521362; x=1688113362;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pOPIHFPeoZm1SHuLb6csoeVTgdHyefcQkMoNigozzN8=;
+        b=JAihcfs2MO9yplHrNsezyN7/h08pjwHwVJtCock7qeleu9jKO+ZKUeZOxRt0vzdKho
+         4SvHmcW7tAbINr6vtbDFK7AEaoeV87JQwkMNqQDcB7Cc6ZEpj9U8S2irG1wiFvChg7Dn
+         ZXSGP56/NVauqW5kd391TwetSg6XN5AwA7RM1yiGGXUAim5wv/IjrwL3BK78WBI2xZ4L
+         7eqhU4OAEoKFkpzuAMa61tF3aODSYU77hvQL6TUDuJ7O/iIj4D5bPBsQGoKrYPx1L7PR
+         OTG2fFHFt4KmdnuVJexaAY736pleKDO5wzwZBa62eqH4oMPLmJ4A8L6fHtjsukbBAWVh
+         yfhQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685521362; x=1688113362;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pOPIHFPeoZm1SHuLb6csoeVTgdHyefcQkMoNigozzN8=;
+        b=PR6hBpxaobg3D/beWBxnXarpGLRN2ZZt8ooTUGWW3Rru6jsFWj1BBcO0lFgj+npfNA
+         gkL5iiiq7zq+dHV6qOmNjiVuLcSqK5HMtNgQR96nmf8iHAP8dVS8fr9eob6r/QiKKL4/
+         IvFMUfPN9GHTsK8B1hb55aelaT40Uki3ZJrpEJiU8H8jV904KMbMrPs08aL2uUrN2Grv
+         joKpPhfmjCMoy6eSg/Y9+ealiuBxld+kj0CTm9ey6FkhScft64HRo9hjGP8n0ng2kRyw
+         eB1RbfxwZnMB5w36bDHx77Bm4pMVnLUnHua2kJvUn4tdhM3Ol1sXziJJV1DE+JNLVzYO
+         EgUg==
+X-Gm-Message-State: AC+VfDyi8csPl5LN3/fYQc8blIqSmmku2t8zBvcEeDLkLindYs2vv8+b
+        4W/KoFAOLLmOlak0nlAOKDB3Jw==
+X-Google-Smtp-Source: ACHHUZ5Wk3l5CAgQaZYEzeLVhzAc4NvsiwKflcjb6jHYnk4P12fD8YntptsueSI367nTvfoDbv1d9A==
+X-Received: by 2002:a17:907:7f0d:b0:973:d71f:4029 with SMTP id qf13-20020a1709077f0d00b00973d71f4029mr5522344ejc.2.1685521362364;
+        Wed, 31 May 2023 01:22:42 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.199.204])
+        by smtp.gmail.com with ESMTPSA id lf4-20020a170907174400b0096f7500502csm8609718ejc.199.2023.05.31.01.22.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 31 May 2023 01:22:41 -0700 (PDT)
+Message-ID: <25e3ed2f-d691-1a80-e2ba-6c7413b7261a@linaro.org>
+Date:   Wed, 31 May 2023 10:22:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v5 08/13] drm/omapdrm: Use regular fbdev I/O helpers
+Subject: Re: [PATCH v3 03/15] dt-bindings: interconnect: split SC8180x to own
+ schema
 Content-Language: en-US
-To:     Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
-        airlied@gmail.com, maarten.lankhorst@linux.intel.com,
-        mripard@kernel.org, javierm@redhat.com, sam@ravnborg.org,
-        suijingfeng@loongson.cn
-Cc:     dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org
-References: <20230530150253.22758-1-tzimmermann@suse.de>
- <20230530150253.22758-9-tzimmermann@suse.de>
-From:   Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-In-Reply-To: <20230530150253.22758-9-tzimmermann@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230530162454.51708-1-vkoul@kernel.org>
+ <20230530162454.51708-4-vkoul@kernel.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230530162454.51708-4-vkoul@kernel.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_PASS,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/05/2023 18:02, Thomas Zimmermann wrote:
-> Use the regular fbdev helpers for framebuffer I/O instead of DRM's
-> helpers. Omapdrm does not use damage handling, so DRM's fbdev helpers
-> are mere wrappers around the fbdev code.
+On 30/05/2023 18:24, Vinod Koul wrote:
+> SC8180x comes with interconnects with missing IO address space and
+> variable number of clocks, so split it from common file for easier
+> maintenance and to fix warnings like:
 > 
-> By using fbdev helpers directly within each DRM fbdev emulation,
-> we can eventually remove DRM's wrapper functions entirely.
+> sc8180x-lenovo-flex-5g.dtb: interconnect-0: 'reg' is a required property
 > 
-> v4:
-> 	* use initializer macros for struct fb_ops
-> v2:
-> 	* use FB_SYS_HELPERS option
-> 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> Acked-by: Sam Ravnborg <sam@ravnborg.org>
-> Cc: Tomi Valkeinen <tomba@kernel.org>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->   drivers/gpu/drm/omapdrm/Kconfig      |  1 +
->   drivers/gpu/drm/omapdrm/omap_fbdev.c | 11 +++--------
->   2 files changed, 4 insertions(+), 8 deletions(-)
+>  .../bindings/interconnect/qcom,rpmh.yaml      | 11 -----
+>  .../interconnect/qcom,sc8180x-rpmh.yaml       | 49 +++++++++++++++++++
+>  2 files changed, 49 insertions(+), 11 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/interconnect/qcom,sc8180x-rpmh.yaml
 > 
-> diff --git a/drivers/gpu/drm/omapdrm/Kconfig b/drivers/gpu/drm/omapdrm/Kconfig
-> index 76ded1568bd0..b4ac76c9f31b 100644
-> --- a/drivers/gpu/drm/omapdrm/Kconfig
-> +++ b/drivers/gpu/drm/omapdrm/Kconfig
-> @@ -4,6 +4,7 @@ config DRM_OMAP
->   	depends on DRM && OF
->   	depends on ARCH_OMAP2PLUS
->   	select DRM_KMS_HELPER
-> +	select FB_SYS_HELPERS if DRM_FBDEV_EMULATION
->   	select VIDEOMODE_HELPERS
->   	select HDMI
->   	default n
-> diff --git a/drivers/gpu/drm/omapdrm/omap_fbdev.c b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-> index b950e93b3846..b7ccce0704a3 100644
-> --- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
-> +++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-> @@ -4,6 +4,8 @@
->    * Author: Rob Clark <rob@ti.com>
->    */
->   
-> +#include <linux/fb.h>
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
+> index 4d93ad415e0b..5cbc3be49e99 100644
+> --- a/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,rpmh.yaml
+> @@ -39,17 +39,6 @@ properties:
+>        - qcom,sc7180-npu-noc
+>        - qcom,sc7180-qup-virt
+>        - qcom,sc7180-system-noc
+> -      - qcom,sc8180x-aggre1-noc
+> -      - qcom,sc8180x-aggre2-noc
+> -      - qcom,sc8180x-camnoc-virt
+> -      - qcom,sc8180x-compute-noc
+> -      - qcom,sc8180x-config-noc
+> -      - qcom,sc8180x-dc-noc
+> -      - qcom,sc8180x-gem-noc
+> -      - qcom,sc8180x-mc-virt
+> -      - qcom,sc8180x-mmss-noc
+> -      - qcom,sc8180x-qup-virt
+> -      - qcom,sc8180x-system-noc
+>        - qcom,sdm670-aggre1-noc
+>        - qcom,sdm670-aggre2-noc
+>        - qcom,sdm670-config-noc
+> diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sc8180x-rpmh.yaml b/Documentation/devicetree/bindings/interconnect/qcom,sc8180x-rpmh.yaml
+> new file mode 100644
+> index 000000000000..b182c2c5addc
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/interconnect/qcom,sc8180x-rpmh.yaml
+> @@ -0,0 +1,49 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/interconnect/qcom,sc8180x-rpmh.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
->   #include <drm/drm_drv.h>
->   #include <drm/drm_crtc_helper.h>
->   #include <drm/drm_fb_helper.h>
-> @@ -95,20 +97,13 @@ static void omap_fbdev_fb_destroy(struct fb_info *info)
->   
->   static const struct fb_ops omap_fb_ops = {
->   	.owner = THIS_MODULE,
-> -
-> +	FB_DEFAULT_SYS_OPS,
->   	.fb_check_var	= drm_fb_helper_check_var,
->   	.fb_set_par	= drm_fb_helper_set_par,
->   	.fb_setcmap	= drm_fb_helper_setcmap,
->   	.fb_blank	= drm_fb_helper_blank,
->   	.fb_pan_display = omap_fbdev_pan_display,
->   	.fb_ioctl	= drm_fb_helper_ioctl,
-> -
-> -	.fb_read = drm_fb_helper_sys_read,
-> -	.fb_write = drm_fb_helper_sys_write,
-> -	.fb_fillrect = drm_fb_helper_sys_fillrect,
-> -	.fb_copyarea = drm_fb_helper_sys_copyarea,
-> -	.fb_imageblit = drm_fb_helper_sys_imageblit,
-> -
->   	.fb_destroy = omap_fbdev_fb_destroy,
->   };
->   
+> +title: Qualcomm RPMh Network-On-Chip Interconnect on SC8180X
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +  - Konrad Dybcio <konrad.dybcio@linaro.org>
+> +
+> +description: |
+> +  RPMh interconnect providers support system bandwidth requirements through
+> +  RPMh hardware accelerators known as Bus Clock Manager (BCM).
+> +
+> +  See also:: include/dt-bindings/interconnect/qcom,sc8180x.h
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sc8180x-aggre1-noc
+> +      - qcom,sc8180x-aggre2-noc
+> +      - qcom,sc8180x-camnoc-virt
+> +      - qcom,sc8180x-compute-noc
+> +      - qcom,sc8180x-config-noc
+> +      - qcom,sc8180x-dc-noc
+> +      - qcom,sc8180x-gem-noc
+> +      - qcom,sc8180x-ipa-virt
+> +      - qcom,sc8180x-mc-virt
+> +      - qcom,sc8180x-mmss-noc
+> +      - qcom,sc8180x-qup-virt
+> +      - qcom,sc8180x-system-noc
+> +
+> +required:
+> +  - compatible
+> +
+> +allOf:
+> +  - $ref: qcom,rpmh-common.yaml#
 
-Reviewed-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
+This should be based on sc7280. You need reg for some of the entries.
 
-  Tomi
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    interconnect-0 {
+
+Just "interconnect"
+
+
+> +        compatible = "qcom,sc8180x-camnoc-virt";
+> +        #interconnect-cells = <2>;
+> +        qcom,bcm-voters = <&apps_bcm_voter>;
+> +    };
+
+Best regards,
+Krzysztof
 
