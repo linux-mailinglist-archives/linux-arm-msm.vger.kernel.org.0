@@ -2,208 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 39EFE718B2F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 22:30:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0DC0718B81
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 22:56:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230213AbjEaUaQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 16:30:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53292 "EHLO
+        id S229663AbjEaU4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 16:56:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58338 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229633AbjEaUaP (ORCPT
+        with ESMTP id S229603AbjEaU4c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 16:30:15 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54C63101
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 13:30:14 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f4bd608cf4so7433085e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 13:30:14 -0700 (PDT)
+        Wed, 31 May 2023 16:56:32 -0400
+Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57B8C129
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 13:56:31 -0700 (PDT)
+Received: by mail-qt1-x829.google.com with SMTP id d75a77b69052e-3f7fd59bb13so57047131cf.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 13:56:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685565012; x=1688157012;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wQgUcowRTpgM21EsPox6YeLFNMwnI6ZyngiZGliqXT8=;
-        b=Kj8jEKibX5Z/6EA3vEu2XTtwzpSJ8zwWFOoQkcg4qlMNuilugqWbgkXaBFF2VPJXnk
-         CbMP/hYNsfDqOBLkbVpZXHYgfxmID5Ang1P4uu2LXXyTbd6wtho+qlUki8L/lkR0F4FX
-         Z0Bk1MqVVHUJ96of+zVvOJMQxG+AGfyKFUcpXn1oOyiNMJUAq6z3JBFCmLxlQYBtcNgd
-         DWTVujtAEmdfytPOEi+tLEzEccnCzwOieCQDt6JQrB1aDjkphF2CRlbVReiFnyinBfiS
-         +M1duTu8wuznzD59qBaTtaLJdeD2uEoTr8dkFsOiouB1fCpcrmYn/iWWm8ouRqbJMLHs
-         hkEw==
+        d=chromium.org; s=google; t=1685566590; x=1688158590;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AYHmPPdm4Dau+d947lCnpQiMGTh8x8NsQoxsSBGTC/s=;
+        b=X1NbQ/MSBszVuLd5RdbvzcWYbpZWRuzTYKxxHtlA+3P1lHFARVvs6ve+bJc6sDz9q6
+         XW3Nbpz9FVMyUSdx5q6gFqlgks2NpqkiwRajg5R2a24YJQGijfZ9rAob+agFbo4PR//P
+         YB1GHs6CtQC0b7tsV8DGqjFA/j+FRKGoYiix8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685565012; x=1688157012;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wQgUcowRTpgM21EsPox6YeLFNMwnI6ZyngiZGliqXT8=;
-        b=BA0XevZqOlny1oqrAYJdU1NzFqnFq5DE/4wB5NitIWZQNJwc+kpeDiuWZJmnl0YhF9
-         an5xvxlnqrk3RIeaRpuaIt8rjzHHdkek40J0dXRO6mP+T3eBuiEJ/ri2d5tEWTwh24Ri
-         qv5jpgEOFyJlHdgX5zfJVdBsGur32+K7RZJWeDUyx0yeS6uPjsO7aHFMJoiFGUP5DtA5
-         o8rhtiBpI0NhqEvmcg8X0J7JaxacMvSKefs0oCXdGzHuAwg4PQ/pTDcFIrGz2D6OFyIB
-         2HXmqQK9pqki8GZ+rpTYQMDb6VflLybxuIr18fHdcBC+u2ZmtDcSEcHX7+0NzuAodIyE
-         sWXQ==
-X-Gm-Message-State: AC+VfDwpJCtegDR8zlSKAlcI+RTiP8oRj64CAXdx0PM35GF7oKoBPAka
-        UIbT6Ab3yHu1eUePraVFyUvGqg==
-X-Google-Smtp-Source: ACHHUZ4Q5v3xgwvV8resVsZl4z1giMzO+8GCrXfRosgXBlBGukhaQdcxLC8DRiLNi7PhO3R+kVl0rA==
-X-Received: by 2002:ac2:411a:0:b0:4f4:2b7d:592a with SMTP id b26-20020ac2411a000000b004f42b7d592amr68565lfi.38.1685565012564;
-        Wed, 31 May 2023 13:30:12 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id q6-20020ac25146000000b004eff6dd9072sm840680lfd.111.2023.05.31.13.30.10
+        d=1e100.net; s=20221208; t=1685566590; x=1688158590;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AYHmPPdm4Dau+d947lCnpQiMGTh8x8NsQoxsSBGTC/s=;
+        b=THkpHA+ELA1mvntIzP8m2/0bk1oSL2NwsCntKSUdAtCLVGEhB93v/iPwCvrHd9KJKz
+         gEf9Tzyv12ZCnZiOftfFzHEB/ZQw8ObV5YC7yuUNQ/kTjWxeoPm4NqRZtLLFDjMMTV7F
+         3UZkzQoVyEp3KGGpF49N/ugz2gP9UXkPrxZ7QJcAllGU7yZjxW82u13bKYm4pPfvO2DG
+         qTr8VmXE9od7HF7/dDrf+csQGJiJis8mlRordi0MA9/Jmj6TBAdoTufyjhk7AdcL3t3+
+         XDfxsbpp36Ibp4UV7FsMvo06zaJMJWVTVUukeBhtpqCzOj+kN7d57mrw4rnEh6ZZoqzO
+         XfRQ==
+X-Gm-Message-State: AC+VfDz1QkMfgbD1Ti1UKYj0F1c/+n4rNtU5S7EpsMgU1J/0+ZgulrGy
+        jF8W5CF3jqz3rn4zPejcaK5IX/81Hc8+b8j/h/o=
+X-Google-Smtp-Source: ACHHUZ6IA9W7k2zdMP26ghRjg6v7Yvvsrf3OV6Gk7P+MMGH5iENYPiuWlBpz0aRCz+HPRJVXcEu+Ww==
+X-Received: by 2002:ac8:7f95:0:b0:3f3:93cd:ff39 with SMTP id z21-20020ac87f95000000b003f393cdff39mr7058512qtj.31.1685566590059;
+        Wed, 31 May 2023 13:56:30 -0700 (PDT)
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com. [209.85.160.181])
+        by smtp.gmail.com with ESMTPSA id r6-20020ac85e86000000b003f018e18c35sm6441923qtx.27.2023.05.31.13.56.29
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 May 2023 13:30:11 -0700 (PDT)
-Message-ID: <57ffc7d9-c767-df36-d91f-8949993b1cdf@linaro.org>
-Date:   Wed, 31 May 2023 22:30:09 +0200
+        Wed, 31 May 2023 13:56:29 -0700 (PDT)
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-3f81ffc9065so16461cf.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 13:56:29 -0700 (PDT)
+X-Received: by 2002:a05:6e02:b42:b0:33a:e716:a76d with SMTP id
+ f2-20020a056e020b4200b0033ae716a76dmr37485ilu.27.1685566153516; Wed, 31 May
+ 2023 13:49:13 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
+References: <20230531-topic-rsc-v1-0-b4a985f57b8b@linaro.org> <20230531-topic-rsc-v1-6-b4a985f57b8b@linaro.org>
+In-Reply-To: <20230531-topic-rsc-v1-6-b4a985f57b8b@linaro.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 31 May 2023 13:49:01 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Vx9txUs4=b_enDMTBXuNsTGXO2v3KyauuD8k_J++vbfA@mail.gmail.com>
+Message-ID: <CAD=FV=Vx9txUs4=b_enDMTBXuNsTGXO2v3KyauuD8k_J++vbfA@mail.gmail.com>
+Subject: Re: [PATCH 6/8] arm64: dts: qcom: sdm845: Flush RSC sleep & wake votes
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Richard Acayan <mailingradian@gmail.com>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Sai Prakash Ranjan <quic_saipraka@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+        Luca Weiss <luca.weiss@fairphone.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, johan@kernel.org, mani@kernel.org,
-        Steev Klimaszewski <steev@kali.org>
-References: <20230531030945.4109453-1-quic_bjorande@quicinc.com>
- <20230531030945.4109453-2-quic_bjorande@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH v3 1/3] drm/msm/adreno: Add Adreno A690 support
-In-Reply-To: <20230531030945.4109453-2-quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        linux-kernel@vger.kernel.org, Andy Gross <andy.gross@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Clark <robdclark@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
-
-On 31.05.2023 05:09, Bjorn Andersson wrote:
-> From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> 
-> Introduce support for the Adreno A690, found in Qualcomm SC8280XP.
-> 
-> Tested-by: Steev Klimaszewski <steev@kali.org>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+On Wed, May 31, 2023 at 6:22=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
+>
+> The rpmh driver will cache sleep and wake votes until the cluster
+> power-domain is about to enter idle, to avoid unnecessary writes. So
+> associate the apps_rsc with the cluster pd, so that it can be notified
+> about this event.
+>
+> Without this, only AMC votes are being commited.
+>
+> Fixes: c83545d95376 ("arm64: dts: sdm845: Add rpmh-rsc node")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-Couple of additional nits that you may or may not incorporate:
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/q=
+com/sdm845.dtsi
+> index 950305aad44d..707550ef4990 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -5138,6 +5138,7 @@ apps_rsc: rsc@179c0000 {
+>                                           <SLEEP_TCS   3>,
+>                                           <WAKE_TCS    3>,
+>                                           <CONTROL_TCS 1>;
+> +                       power-domains =3D <&CLUSTER_PD>;
 
-[...]
+It would be good to confirm that this doesn't throw sdm845-cheza for a
+loop. No sdm845 Chromebooks ever officially shipped, but some people
+like Rob Clark still use the old boards in their CI farms. Adding him
+here in case he wants to check. Worst case we could just delete the
+property from the cheza device tree.
 
-> +	{REG_A6XX_RBBM_CLOCK_HYST_SP0, 0x0000F3CF},
-It would be cool if we could stop adding uppercase hex outside preprocessor
-defines..
-
-
-[...]
-> +	A6XX_PROTECT_RDONLY(0x0fc00, 0x01fff),
-> +	A6XX_PROTECT_NORDWR(0x11c00, 0x00000), /*note: infiite range */
-typo
-
-
-
--- Questions to Rob that don't really concern this patch --
-
-> +static void a690_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
-Rob, I'll be looking into reworking these into dynamic tables.. would you
-be okay with two more additions (A730, A740) on top of this before I do that?
-The number of these funcs has risen quite a bit and we're abusing the fact
-that so far there's a 1-1 mapping of SoC-Adreno (at the current state of
-mainline, not in general)..
-
-> +{
-> +	/*
-> +	 * Send a single "off" entry just to get things running
-> +	 * TODO: bus scaling
-> +	 */
-Also something I'll be looking into in the near future..
-
-> @@ -531,6 +562,8 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
->  		adreno_7c3_build_bw_table(&msg);
->  	else if (adreno_is_a660(adreno_gpu))
->  		a660_build_bw_table(&msg);
-> +	else if (adreno_is_a690(adreno_gpu))
-> +		a690_build_bw_table(&msg);
->  	else
->  		a6xx_build_bw_table(&msg);
-I think changing the is_adreno_... to switch statements with a gpu_model
-var would make it easier to read.. Should I also rework that?
-
-Konrad
-
->  
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> index 8cff86e9d35c..e5a865024e94 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> @@ -355,6 +355,20 @@ static const struct adreno_info gpulist[] = {
->  		.init = a6xx_gpu_init,
->  		.zapfw = "a640_zap.mdt",
->  		.hwcg = a640_hwcg,
-> +	}, {
-> +		.rev = ADRENO_REV(6, 9, 0, ANY_ID),
-> +		.revn = 690,
-> +		.name = "A690",
-> +		.fw = {
-> +			[ADRENO_FW_SQE] = "a660_sqe.fw",
-> +			[ADRENO_FW_GMU] = "a690_gmu.bin",
-> +		},
-> +		.gmem = SZ_4M,
-> +		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
-> +		.init = a6xx_gpu_init,
-> +		.zapfw = "a690_zap.mdt",
-> +		.hwcg = a690_hwcg,
-> +		.address_space_size = SZ_16G,
->  	},
->  };
->  
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> index f62612a5c70f..ac9c429ca07b 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-> @@ -55,7 +55,7 @@ struct adreno_reglist {
->  	u32 value;
->  };
->  
-> -extern const struct adreno_reglist a615_hwcg[], a630_hwcg[], a640_hwcg[], a650_hwcg[], a660_hwcg[];
-> +extern const struct adreno_reglist a615_hwcg[], a630_hwcg[], a640_hwcg[], a650_hwcg[], a660_hwcg[], a690_hwcg[];
->  
->  struct adreno_info {
->  	struct adreno_rev rev;
-> @@ -272,6 +272,11 @@ static inline int adreno_is_a660(struct adreno_gpu *gpu)
->  	return gpu->revn == 660;
->  }
->  
-> +static inline int adreno_is_a690(struct adreno_gpu *gpu)
-> +{
-> +	return gpu->revn == 690;
-> +};
-> +
->  /* check for a615, a616, a618, a619 or any derivatives */
->  static inline int adreno_is_a615_family(struct adreno_gpu *gpu)
->  {
-> @@ -280,13 +285,13 @@ static inline int adreno_is_a615_family(struct adreno_gpu *gpu)
->  
->  static inline int adreno_is_a660_family(struct adreno_gpu *gpu)
->  {
-> -	return adreno_is_a660(gpu) || adreno_is_7c3(gpu);
-> +	return adreno_is_a660(gpu) || adreno_is_a690(gpu) || adreno_is_7c3(gpu);
->  }
->  
->  /* check for a650, a660, or any derivatives */
->  static inline int adreno_is_a650_family(struct adreno_gpu *gpu)
->  {
-> -	return gpu->revn == 650 || gpu->revn == 620 || adreno_is_a660_family(gpu);
-> +	return gpu->revn == 650 || gpu->revn == 620  || adreno_is_a660_family(gpu);
->  }
->  
->  u64 adreno_private_address_space_size(struct msm_gpu *gpu);
+-Doug
