@@ -2,75 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A331E718B09
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 22:22:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39EFE718B2F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 22:30:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229795AbjEaUWc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 16:22:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50264 "EHLO
+        id S230213AbjEaUaQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 16:30:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229706AbjEaUWb (ORCPT
+        with ESMTP id S229633AbjEaUaP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 16:22:31 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7932A121
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 13:22:28 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f3b5881734so7433347e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 13:22:28 -0700 (PDT)
+        Wed, 31 May 2023 16:30:15 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54C63101
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 13:30:14 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f4bd608cf4so7433085e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 13:30:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685564547; x=1688156547;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rEvGZ02uQmi1NDtQLEnYY/SSajwD3OKCwjA8p7aWJcg=;
-        b=DfzrF7PP8SkwhpYi9MLpu5aPKMGkMmsGiYtGUxbNAs5gDXa0GgwkLgBe8i3m7B4vci
-         X1pLcT4w25Mmkbm84jU+Dk9ijSPiBs540ToLLr0KKqANs8vDLdxovrTjK1kbd1BFQU30
-         zGpLZ5mN1uHZ/L+/B+13ND/6taY2/1jTeCM2XlF2Srnha9mDZyK3uNWVG4fF8CWFz/f2
-         clqOZ0YLSh2UPdOoHNY/Kh1eC3sCUc9mkC6LUkfwhG+VrhBvsPTt7YK5BQWgSD9Yht76
-         H/NEjOiaYIcQ0/p+emwrSEUkKcqMSbnDWeiLtggSFt2p6x0ParZFRd9HIBYl3F5zh5SU
-         46zQ==
+        d=linaro.org; s=google; t=1685565012; x=1688157012;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wQgUcowRTpgM21EsPox6YeLFNMwnI6ZyngiZGliqXT8=;
+        b=Kj8jEKibX5Z/6EA3vEu2XTtwzpSJ8zwWFOoQkcg4qlMNuilugqWbgkXaBFF2VPJXnk
+         CbMP/hYNsfDqOBLkbVpZXHYgfxmID5Ang1P4uu2LXXyTbd6wtho+qlUki8L/lkR0F4FX
+         Z0Bk1MqVVHUJ96of+zVvOJMQxG+AGfyKFUcpXn1oOyiNMJUAq6z3JBFCmLxlQYBtcNgd
+         DWTVujtAEmdfytPOEi+tLEzEccnCzwOieCQDt6JQrB1aDjkphF2CRlbVReiFnyinBfiS
+         +M1duTu8wuznzD59qBaTtaLJdeD2uEoTr8dkFsOiouB1fCpcrmYn/iWWm8ouRqbJMLHs
+         hkEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685564547; x=1688156547;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1685565012; x=1688157012;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rEvGZ02uQmi1NDtQLEnYY/SSajwD3OKCwjA8p7aWJcg=;
-        b=AUOCrHGl4pgylU5Q/4Nm8eSmirmP+vHF5cXU93TdqLqdZ6Uq6nj4F772CgJdIHAKii
-         XDmzPSIe7kQk5ShegTfdqAXenAeOUBflOm0JoJnB68jSMe2l9kiqM1cBSSg36q+WgyA3
-         7FeU2FdBfzND9IyJzoarwRLoVOrmbl3PURxN5MBF9cmIR7QGV1QmVwOgcE8lLIQ7iUY5
-         kpjSpa7KM1+5UekS+FVNBB5JRBLusRhp0RGIEfiJjjBhk6aEqWxEfqFjaEOMr/Ak9IF3
-         tmUtXcwefgiZfsqgGTiYk3JWQ2Qlq/xHOa/CkXSOvzh3MQz9ZmNAh322XzpapA7ew0nu
-         GNDA==
-X-Gm-Message-State: AC+VfDyasi4FxilaJGXDxFVqGvUTKyloQzpW0zq5GDHPBJnf90UPcU0r
-        JWIieykUVA9MIVBYk/ueeZ4+gg==
-X-Google-Smtp-Source: ACHHUZ5vDBeAPw53d3vRJ8mdM2Ysakvc8ZoxFF4Mmhg06H9osToXojEBrJs1eZN4T/hVNXz7+nEcQQ==
-X-Received: by 2002:a19:7616:0:b0:4eb:c85:bdc2 with SMTP id c22-20020a197616000000b004eb0c85bdc2mr114419lff.2.1685564546718;
-        Wed, 31 May 2023 13:22:26 -0700 (PDT)
+        bh=wQgUcowRTpgM21EsPox6YeLFNMwnI6ZyngiZGliqXT8=;
+        b=BA0XevZqOlny1oqrAYJdU1NzFqnFq5DE/4wB5NitIWZQNJwc+kpeDiuWZJmnl0YhF9
+         an5xvxlnqrk3RIeaRpuaIt8rjzHHdkek40J0dXRO6mP+T3eBuiEJ/ri2d5tEWTwh24Ri
+         qv5jpgEOFyJlHdgX5zfJVdBsGur32+K7RZJWeDUyx0yeS6uPjsO7aHFMJoiFGUP5DtA5
+         o8rhtiBpI0NhqEvmcg8X0J7JaxacMvSKefs0oCXdGzHuAwg4PQ/pTDcFIrGz2D6OFyIB
+         2HXmqQK9pqki8GZ+rpTYQMDb6VflLybxuIr18fHdcBC+u2ZmtDcSEcHX7+0NzuAodIyE
+         sWXQ==
+X-Gm-Message-State: AC+VfDwpJCtegDR8zlSKAlcI+RTiP8oRj64CAXdx0PM35GF7oKoBPAka
+        UIbT6Ab3yHu1eUePraVFyUvGqg==
+X-Google-Smtp-Source: ACHHUZ4Q5v3xgwvV8resVsZl4z1giMzO+8GCrXfRosgXBlBGukhaQdcxLC8DRiLNi7PhO3R+kVl0rA==
+X-Received: by 2002:ac2:411a:0:b0:4f4:2b7d:592a with SMTP id b26-20020ac2411a000000b004f42b7d592amr68565lfi.38.1685565012564;
+        Wed, 31 May 2023 13:30:12 -0700 (PDT)
 Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id p3-20020a19f003000000b004f4589808ddsm827451lfc.305.2023.05.31.13.22.24
+        by smtp.gmail.com with ESMTPSA id q6-20020ac25146000000b004eff6dd9072sm840680lfd.111.2023.05.31.13.30.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 May 2023 13:22:26 -0700 (PDT)
-Message-ID: <3eba155b-8b98-d7a3-ed07-fa20974c8499@linaro.org>
-Date:   Wed, 31 May 2023 22:22:24 +0200
+        Wed, 31 May 2023 13:30:11 -0700 (PDT)
+Message-ID: <57ffc7d9-c767-df36-d91f-8949993b1cdf@linaro.org>
+Date:   Wed, 31 May 2023 22:30:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sc8280xp: Add GPU related nodes
 Content-Language: en-US
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sean Paul <sean@poorly.run>,
-        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, johan@kernel.org, mani@kernel.org,
         Steev Klimaszewski <steev@kali.org>
 References: <20230531030945.4109453-1-quic_bjorande@quicinc.com>
- <20230531030945.4109453-3-quic_bjorande@quicinc.com>
+ <20230531030945.4109453-2-quic_bjorande@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230531030945.4109453-3-quic_bjorande@quicinc.com>
+Subject: Re: [PATCH v3 1/3] drm/msm/adreno: Add Adreno A690 support
+In-Reply-To: <20230531030945.4109453-2-quic_bjorande@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,230 +88,122 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 31.05.2023 05:09, Bjorn Andersson wrote:
 > From: Bjorn Andersson <bjorn.andersson@linaro.org>
 > 
-> Add Adreno SMMU, GPU clock controller, GMU and GPU nodes for the
-> SC8280XP.
+> Introduce support for the Adreno A690, found in Qualcomm SC8280XP.
 > 
 > Tested-by: Steev Klimaszewski <steev@kali.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Couple of additional nits that you may or may not incorporate:
+
+[...]
+
+> +	{REG_A6XX_RBBM_CLOCK_HYST_SP0, 0x0000F3CF},
+It would be cool if we could stop adding uppercase hex outside preprocessor
+defines..
+
+
+[...]
+> +	A6XX_PROTECT_RDONLY(0x0fc00, 0x01fff),
+> +	A6XX_PROTECT_NORDWR(0x11c00, 0x00000), /*note: infiite range */
+typo
+
+
+
+-- Questions to Rob that don't really concern this patch --
+
+> +static void a690_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+Rob, I'll be looking into reworking these into dynamic tables.. would you
+be okay with two more additions (A730, A740) on top of this before I do that?
+The number of these funcs has risen quite a bit and we're abusing the fact
+that so far there's a 1-1 mapping of SoC-Adreno (at the current state of
+mainline, not in general)..
+
+> +{
+> +	/*
+> +	 * Send a single "off" entry just to get things running
+> +	 * TODO: bus scaling
+> +	 */
+Also something I'll be looking into in the near future..
+
+> @@ -531,6 +562,8 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
+>  		adreno_7c3_build_bw_table(&msg);
+>  	else if (adreno_is_a660(adreno_gpu))
+>  		a660_build_bw_table(&msg);
+> +	else if (adreno_is_a690(adreno_gpu))
+> +		a690_build_bw_table(&msg);
+>  	else
+>  		a6xx_build_bw_table(&msg);
+I think changing the is_adreno_... to switch statements with a gpu_model
+var would make it easier to read.. Should I also rework that?
 
 Konrad
-> 
-> Changes since v2:
-> - Added missing opp level (both gpu and gmu)
-> - Corrected opp-level for highest gpu opp
-> - Added dma-coherent to gpu smmu
-> 
-> Note that in order for the GPU driver to probe, the last change
-> requires:
-> https://lore.kernel.org/linux-arm-msm/20230410185226.3240336-1-dmitry.baryshkov@linaro.org/
-> 
-> Changes since v1:
-> - Dropped gmu_pdc_seq region from &gmu, as it shouldn't have been used.
-> - Added missing compatible to &adreno_smmu.
-> - Dropped aoss_qmp clock in &gmu and &adreno_smmu.
+
 >  
->  arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 181 +++++++++++++++++++++++++
->  1 file changed, 181 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> index 6730349e34f4..00f4df7fdcad 100644
-> --- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> @@ -6,6 +6,7 @@
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> index 8cff86e9d35c..e5a865024e94 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -355,6 +355,20 @@ static const struct adreno_info gpulist[] = {
+>  		.init = a6xx_gpu_init,
+>  		.zapfw = "a640_zap.mdt",
+>  		.hwcg = a640_hwcg,
+> +	}, {
+> +		.rev = ADRENO_REV(6, 9, 0, ANY_ID),
+> +		.revn = 690,
+> +		.name = "A690",
+> +		.fw = {
+> +			[ADRENO_FW_SQE] = "a660_sqe.fw",
+> +			[ADRENO_FW_GMU] = "a690_gmu.bin",
+> +		},
+> +		.gmem = SZ_4M,
+> +		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> +		.init = a6xx_gpu_init,
+> +		.zapfw = "a690_zap.mdt",
+> +		.hwcg = a690_hwcg,
+> +		.address_space_size = SZ_16G,
+>  	},
+>  };
 >  
->  #include <dt-bindings/clock/qcom,dispcc-sc8280xp.h>
->  #include <dt-bindings/clock/qcom,gcc-sc8280xp.h>
-> +#include <dt-bindings/clock/qcom,gpucc-sc8280xp.h>
->  #include <dt-bindings/clock/qcom,rpmh.h>
->  #include <dt-bindings/interconnect/qcom,osm-l3.h>
->  #include <dt-bindings/interconnect/qcom,sc8280xp.h>
-> @@ -2340,6 +2341,186 @@ tcsr: syscon@1fc0000 {
->  			reg = <0x0 0x01fc0000 0x0 0x30000>;
->  		};
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index f62612a5c70f..ac9c429ca07b 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -55,7 +55,7 @@ struct adreno_reglist {
+>  	u32 value;
+>  };
 >  
-> +		gpu: gpu@3d00000 {
-> +			compatible = "qcom,adreno-690.0", "qcom,adreno";
+> -extern const struct adreno_reglist a615_hwcg[], a630_hwcg[], a640_hwcg[], a650_hwcg[], a660_hwcg[];
+> +extern const struct adreno_reglist a615_hwcg[], a630_hwcg[], a640_hwcg[], a650_hwcg[], a660_hwcg[], a690_hwcg[];
+>  
+>  struct adreno_info {
+>  	struct adreno_rev rev;
+> @@ -272,6 +272,11 @@ static inline int adreno_is_a660(struct adreno_gpu *gpu)
+>  	return gpu->revn == 660;
+>  }
+>  
+> +static inline int adreno_is_a690(struct adreno_gpu *gpu)
+> +{
+> +	return gpu->revn == 690;
+> +};
 > +
-> +			reg = <0 0x03d00000 0 0x40000>,
-> +			      <0 0x03d9e000 0 0x1000>,
-> +			      <0 0x03d61000 0 0x800>;
-> +			reg-names = "kgsl_3d0_reg_memory",
-> +				    "cx_mem",
-> +				    "cx_dbgc";
-> +			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
-> +			iommus = <&adreno_smmu 0 0xc00>, <&adreno_smmu 1 0xc00>;
-> +			operating-points-v2 = <&gpu_opp_table>;
-> +
-> +			qcom,gmu = <&gmu>;
-> +			interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
-> +			interconnect-names = "gfx-mem";
-> +			#cooling-cells = <2>;
-> +
-> +			status = "disabled";
-> +
-> +			gpu_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-270000000 {
-> +					opp-hz = /bits/ 64 <270000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-> +					opp-peak-kBps = <451000>;
-> +				};
-> +
-> +				opp-410000000 {
-> +					opp-hz = /bits/ 64 <410000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-> +					opp-peak-kBps = <1555000>;
-> +				};
-> +
-> +				opp-500000000 {
-> +					opp-hz = /bits/ 64 <500000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-> +					opp-peak-kBps = <1555000>;
-> +				};
-> +
-> +				opp-547000000 {
-> +					opp-hz = /bits/ 64 <547000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L2>;
-> +					opp-peak-kBps = <1555000>;
-> +				};
-> +
-> +				opp-606000000 {
-> +					opp-hz = /bits/ 64 <606000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
-> +					opp-peak-kBps = <2736000>;
-> +				};
-> +
-> +				opp-640000000 {
-> +					opp-hz = /bits/ 64 <640000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
-> +					opp-peak-kBps = <2736000>;
-> +				};
-> +
-> +				opp-655000000 {
-> +					opp-hz = /bits/ 64 <655000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
-> +					opp-peak-kBps = <2736000>;
-> +				};
-> +
-> +				opp-690000000 {
-> +					opp-hz = /bits/ 64 <690000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
-> +					opp-peak-kBps = <2736000>;
-> +				};
-> +			};
-> +		};
-> +
-> +		gmu: gmu@3d6a000 {
-> +			compatible = "qcom,adreno-gmu-690.0", "qcom,adreno-gmu";
-> +			reg = <0 0x03d6a000 0 0x34000>,
-> +			      <0 0x03de0000 0 0x10000>,
-> +			      <0 0x0b290000 0 0x10000>;
-> +			reg-names = "gmu", "rscc", "gmu_pdc";
-> +			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "hfi", "gmu";
-> +			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
-> +				 <&gpucc GPU_CC_CXO_CLK>,
-> +				 <&gcc GCC_DDRSS_GPU_AXI_CLK>,
-> +				 <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-> +				 <&gpucc GPU_CC_AHB_CLK>,
-> +				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
-> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>;
-> +			clock-names = "gmu",
-> +				      "cxo",
-> +				      "axi",
-> +				      "memnoc",
-> +				      "ahb",
-> +				      "hub",
-> +				      "smmu_vote";
-> +			power-domains = <&gpucc GPU_CC_CX_GDSC>,
-> +					<&gpucc GPU_CC_GX_GDSC>;
-> +			power-domain-names = "cx",
-> +					     "gx";
-> +			iommus = <&adreno_smmu 5 0xc00>;
-> +			operating-points-v2 = <&gmu_opp_table>;
-> +
-> +			status = "disabled";
-> +
-> +			gmu_opp_table: opp-table {
-> +				compatible = "operating-points-v2";
-> +
-> +				opp-200000000 {
-> +					opp-hz = /bits/ 64 <200000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-> +				};
-> +
-> +				opp-500000000 {
-> +					opp-hz = /bits/ 64 <500000000>;
-> +					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-> +				};
-> +			};
-> +		};
-> +
-> +		gpucc: clock-controller@3d90000 {
-> +			compatible = "qcom,sc8280xp-gpucc";
-> +			reg = <0 0x03d90000 0 0x9000>;
-> +			clocks = <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&gcc GCC_GPU_GPLL0_CLK_SRC>,
-> +				 <&gcc GCC_GPU_GPLL0_DIV_CLK_SRC>;
-> +			clock-names = "bi_tcxo",
-> +				      "gcc_gpu_gpll0_clk_src",
-> +				      "gcc_gpu_gpll0_div_clk_src";
-> +
-> +			power-domains = <&rpmhpd SC8280XP_GFX>;
-> +			#clock-cells = <1>;
-> +			#reset-cells = <1>;
-> +			#power-domain-cells = <1>;
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		adreno_smmu: iommu@3da0000 {
-> +			compatible = "qcom,sc8280xp-smmu-500", "qcom,adreno-smmu",
-> +				     "qcom,smmu-500", "arm,mmu-500";
-> +			reg = <0 0x03da0000 0 0x20000>;
-> +			#iommu-cells = <2>;
-> +			#global-interrupts = <2>;
-> +			interrupts = <GIC_SPI 672 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 688 IRQ_TYPE_LEVEL_HIGH>,
-> +				     <GIC_SPI 689 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-> +				 <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
-> +				 <&gpucc GPU_CC_AHB_CLK>,
-> +				 <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
-> +				 <&gpucc GPU_CC_CX_GMU_CLK>,
-> +				 <&gpucc GPU_CC_HUB_CX_INT_CLK>,
-> +				 <&gpucc GPU_CC_HUB_AON_CLK>;
-> +			clock-names = "gcc_gpu_memnoc_gfx_clk",
-> +				      "gcc_gpu_snoc_dvm_gfx_clk",
-> +				      "gpu_cc_ahb_clk",
-> +				      "gpu_cc_hlos1_vote_gpu_smmu_clk",
-> +				      "gpu_cc_cx_gmu_clk",
-> +				      "gpu_cc_hub_cx_int_clk",
-> +				      "gpu_cc_hub_aon_clk";
-> +
-> +			power-domains = <&gpucc GPU_CC_CX_GDSC>;
-> +			dma-coherent;
-> +
-> +			status = "disabled";
-> +		};
-> +
->  		usb_0_hsphy: phy@88e5000 {
->  			compatible = "qcom,sc8280xp-usb-hs-phy",
->  				     "qcom,usb-snps-hs-5nm-phy";
+>  /* check for a615, a616, a618, a619 or any derivatives */
+>  static inline int adreno_is_a615_family(struct adreno_gpu *gpu)
+>  {
+> @@ -280,13 +285,13 @@ static inline int adreno_is_a615_family(struct adreno_gpu *gpu)
+>  
+>  static inline int adreno_is_a660_family(struct adreno_gpu *gpu)
+>  {
+> -	return adreno_is_a660(gpu) || adreno_is_7c3(gpu);
+> +	return adreno_is_a660(gpu) || adreno_is_a690(gpu) || adreno_is_7c3(gpu);
+>  }
+>  
+>  /* check for a650, a660, or any derivatives */
+>  static inline int adreno_is_a650_family(struct adreno_gpu *gpu)
+>  {
+> -	return gpu->revn == 650 || gpu->revn == 620 || adreno_is_a660_family(gpu);
+> +	return gpu->revn == 650 || gpu->revn == 620  || adreno_is_a660_family(gpu);
+>  }
+>  
+>  u64 adreno_private_address_space_size(struct msm_gpu *gpu);
