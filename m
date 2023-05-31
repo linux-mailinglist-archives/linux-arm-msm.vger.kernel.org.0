@@ -2,79 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45D1071876E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 18:33:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D26257187FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 19:04:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229753AbjEaQdV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 12:33:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56676 "EHLO
+        id S229998AbjEaRE0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 13:04:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229731AbjEaQdU (ORCPT
+        with ESMTP id S230013AbjEaREX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 12:33:20 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6BE39133
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 09:33:17 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2af2b74d258so66818381fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 09:33:17 -0700 (PDT)
+        Wed, 31 May 2023 13:04:23 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 949F018C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 10:03:51 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-96fab30d1e1so261165066b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 10:03:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685550795; x=1688142795;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0YJ6W2xZKjXLWjXyPLceQOWsxYMwSmn1mJP9tRNNRo4=;
-        b=r09k19xteS1JYAOAOP5G1/xuItGfw1dTM8qf2qkF47cuooC/O73aDMUlMJoDztzKio
-         fTWfNwFFOsjzu5mKyPCfdgjBB4kwE9Qnbp/BP5HgIitEbUO1AjYaJrP2RN2hPQ+Jtldg
-         WDW/NdSLTGnfofCGF1PiI5imaUCu4DMsi8OGqVlUdG8Z4ZJPZO/97SqjW9A3hwgqIGtg
-         mTJsCTaE3fh6Dpuqm8HJYK84hWjxe5g9AdcrulK95DHHxN6WvLh6hfUo0jAcsJPGKB+9
-         Yj9IEP5kUisg5viyG/97tFtd9JFk2BBbMW7ZAQRGmAD1QvspUNHayOaB2Z70U4xpYA+R
-         VaXQ==
+        d=linaro.org; s=google; t=1685552629; x=1688144629;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YxmvDpJYUdffmb0V6uJ0fpJ/hgXHjpSHqBRoztQ0WkQ=;
+        b=JklNbWZazijUV2L6RdTj/7zJadOK4lrHnorxbkMSWOpJ/jWr7DtE/6kPj/npo7mHsc
+         3Z4OvWNmO2jtLr0HsLGPfdtEy6faAUdyqlMMwhvf6l/y/s63iJkFAVybKHc7iTm0QB7d
+         daMgu1BJIWo6L0m8VLRGXw34RdAMXSvetpgE/6qkd27U4YsxXoVD0q/jN2IUrdbsHgLw
+         1mhQLR82gKVpF7LFhboSriCgYfaLTgA+UI/Z6m4olA6XztAREvCJZZIvERzmC78XA3DL
+         6Bs6mxm1NA8NYfWB4U6zy1SwDEBYlwerxqpq8e/ZRS5/tjh9SmPPKZBsKfJ+iamBLfNv
+         zs6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685550795; x=1688142795;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0YJ6W2xZKjXLWjXyPLceQOWsxYMwSmn1mJP9tRNNRo4=;
-        b=jyvDiYyDXy5bn3Zh3pJkVU993VvoPUQ9qe0wd9OOL1xwAKz2oiBes6Nt6r78bVLWUM
-         pPy4cxOxiyvNHQdiADTP0glHS/azYwA41Zdo6P00vIHGj6XLRAo5zICWmwgQv2SR07M7
-         s0WYTkD4cjbffeCpLQFAL3p6LJqt7Q19EULNls22W6X7eniKN1KBc8ythHUAx1LUTRuv
-         atUbFYfwjdH+YDK8TbnxukTHiBqhouTiW3OzSrM8TUGs5klWyLUex7I8o18A27mRIQiE
-         ox64HWAMPgQSfdiOXsN2kNdPwwXzN2OGRWB2by9rRKi9mUulYxwM2j2125ovYFaguUvX
-         ss3Q==
-X-Gm-Message-State: AC+VfDxbiUw758uhTafid3+7x955rEsCBUs/ZUEU7rQgrstntvGSQu/W
-        FwI9ZQUHeOYqKL8DU9xVITsjQoxdDM6u18Y87N8=
-X-Google-Smtp-Source: ACHHUZ5VkEjBPw7jRUcJI+603ZHy5ss79uZmBxDYyS1FPQ0lexW2W3fJ0FR1LPt30delgRZM7e5RNA==
-X-Received: by 2002:a2e:8782:0:b0:2ac:8efb:fc02 with SMTP id n2-20020a2e8782000000b002ac8efbfc02mr3033105lji.4.1685550795435;
-        Wed, 31 May 2023 09:33:15 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id p15-20020a2e740f000000b002af0e9abaf6sm3354956ljc.131.2023.05.31.09.33.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 May 2023 09:33:15 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 31 May 2023 18:33:03 +0200
-Subject: [PATCH] soc: qcom: icc-bwmon: Fix MSM8998 count unit
+        d=1e100.net; s=20221208; t=1685552629; x=1688144629;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YxmvDpJYUdffmb0V6uJ0fpJ/hgXHjpSHqBRoztQ0WkQ=;
+        b=gbHy9kwCziEuh5Q7R4pTsLH6hsTDfHQOaH7/+y8JpbBddSxMtlJdpkxM6hqPU/L7aS
+         0jnip1Rb/lpD/bgKS1aUejTiXlAa1GGh8/Ut/Q9qki/PNrFPQ2qa75SxO1TewsKZADbB
+         +gGu/pvF1kqK6t1TFDm2N+AVoKzc0RGNWFNSjX3cXI3A/O+5p6ZCq2H9j/edvATd7b3F
+         3LZr7qpS1bdpBRcfJZIB9GkjNn3VaDClC7pOn/oko8NMW0YLR4PHTevw1b/IhbULAB7c
+         lihxrWxfou4kgJo0kAGJlqqd0euODEOdejorSVHaed9t4vp3zfzshuWAAYGUzkmM2zhS
+         LqVQ==
+X-Gm-Message-State: AC+VfDyDWLzHb+HoapSD6n5U/QLAsv/qK7pWu6sXQrXUfBbPp5tgrSrj
+        ZgjJZ20u0bsenmP7AwctH7zmeg==
+X-Google-Smtp-Source: ACHHUZ49Q5wyYj15P1zTnwIqi/rsMY9O0HM3ANiPSR/k08b0Ml3MfHXIqro31/IYBCXEv3UrYOk7gg==
+X-Received: by 2002:a17:907:720c:b0:965:ae3a:52c8 with SMTP id dr12-20020a170907720c00b00965ae3a52c8mr13688894ejc.32.1685552629017;
+        Wed, 31 May 2023 10:03:49 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.199.204])
+        by smtp.gmail.com with ESMTPSA id sa24-20020a170906edb800b0096595cc0810sm9256921ejb.72.2023.05.31.10.03.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 31 May 2023 10:03:48 -0700 (PDT)
+Message-ID: <693a36cf-e9d5-a6f1-3953-3a7c7567a754@linaro.org>
+Date:   Wed, 31 May 2023 19:03:46 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230531-topic-msm8998-bwmon-v1-1-454f9d550ee5@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAL52d2QC/x2NywrCMBAAf6Xs2YU0VZr6K+IhiatdaDYl6wtK/
- 93F4wwMs4FSY1I4dxs0erNyFYP+0EGeozwI+WYM3vnBnYYen3XljEVLmKaA6VOqYIreBT/ScXQ
- EVqaohKlFybO18loWk2ujO3//q8t133/79iAxegAAAA==
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] soc: qcom: icc-bwmon: Fix MSM8998 count unit
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>
 Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1685550794; l=906;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=go8UW9ur+8RYar9jjvCnTAVEWNOpysVFLv9iAzF7uLE=;
- b=25S9ajGSv/UmiA7723m/2lJXOi18uwLF9riSdlYY4by/DdqmZpyoWm0E9XDe6+sW5hfWz13gR
- Vnyi2LUSANmCMS4dXsaztnWw5Pk8YlUb48uqPBk8sqrf3WiGuA+P2ko
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230531-topic-msm8998-bwmon-v1-1-454f9d550ee5@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230531-topic-msm8998-bwmon-v1-1-454f9d550ee5@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,32 +77,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MSM8998's BWMON counts in megabytes. Fix it.
+On 31/05/2023 18:33, Konrad Dybcio wrote:
+> MSM8998's BWMON counts in megabytes. Fix it.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  drivers/soc/qcom/icc-bwmon.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/soc/qcom/icc-bwmon.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+If this is
+https://lore.kernel.org/all/33c61f23-6442-6d9b-492f-dd6e9c64a8c1@quicinc.com/
+(and QLT 1872) then add reported-by tag.
 
-diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
-index f65bfeca7ed6..40068a285913 100644
---- a/drivers/soc/qcom/icc-bwmon.c
-+++ b/drivers/soc/qcom/icc-bwmon.c
-@@ -806,7 +806,7 @@ static int bwmon_remove(struct platform_device *pdev)
- 
- static const struct icc_bwmon_data msm8998_bwmon_data = {
- 	.sample_ms = 4,
--	.count_unit_kb = 64,
-+	.count_unit_kb = 1024,
- 	.default_highbw_kbps = 4800 * 1024, /* 4.8 GBps */
- 	.default_medbw_kbps = 512 * 1024, /* 512 MBps */
- 	.default_lowbw_kbps = 0,
+Change seems logical, although not really documented (a bit
+contradictory information for sdm845), so assuming this was really tested:
 
----
-base-commit: d4cee89031c80066ec461bb77b5e13a4f37d5fd2
-change-id: 20230531-topic-msm8998-bwmon-ba20827e470e
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+Krzysztof
 
