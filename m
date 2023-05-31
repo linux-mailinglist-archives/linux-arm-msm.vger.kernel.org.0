@@ -2,134 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 02F71717AFF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 11:01:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4B8B717B1B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 11:05:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235062AbjEaJBo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 05:01:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44592 "EHLO
+        id S232213AbjEaJFF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 05:05:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45510 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231876AbjEaJBi (ORCPT
+        with ESMTP id S235332AbjEaJEe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 05:01:38 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8EC69132
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 02:01:36 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2af2451b3f1so60018611fa.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 02:01:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685523695; x=1688115695;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TRDkbjMTdDqIX5txCgAI4qwPmqTuC0wBW6Dd+QET4Vg=;
-        b=aJfxubRXb5x1zHRFjCAXEHB4LdoqpZF7IAqlg4LUNeG2wdmcLSFNxGHJ2ggXXozOEG
-         iSunyTSAz+yAYvBKwU3fb+qUTV5jdOuD6S7dUSyMZScotapFVvlXvDWaUHoQIJgO/irm
-         xIuqb/EPQYgGgY/naa9xVq7hU+L7UbzgjEYwz6Sr4kwrz2WznMC3Otzay9/d7IQ74XKL
-         JuozV8swJzhGH2gwnNs1c3NwxvxvCjBllT7FpEQ7MzXRGoI9lSl21oUkwiFT5oRP6LxD
-         qbyVAR70MBV53ZZtSyDUwZN15WS9bZslb7Tg2EILJ9AyG20FHoXdLbdNCu5HBjKjJtL8
-         NKGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685523695; x=1688115695;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TRDkbjMTdDqIX5txCgAI4qwPmqTuC0wBW6Dd+QET4Vg=;
-        b=DQQFtRW2dek6dCXcxzvXFs4YtIvJnzVB0XVMk8HfePauHVsJtyXPhTHRAg4F0ozDRt
-         dVy6bthzrnK6Ri1j5rw//Imr5C/6IIw+/geTKysY36Be0xaBksF/pilxaA2faXeg2GEl
-         zDFJq8IVuS9dtwQMhjY1gkUDCSFxglAQsse2tTuEscEOceQlhLLsy8lwD6CBxBDmTVN8
-         jMvTI/coxaDv9Gj+EmKrZADTt2jDTKXa8V58GLvO9ypQYmuya8vONXyAjNDlxtnlP/UW
-         xJs4kb/SUFkdsvvP+k7EqFacjDEFt+J0jK6D19FUj1SN2q1fjvZblYEZRK5p9x2vcK+A
-         AuQw==
-X-Gm-Message-State: AC+VfDzUfCG+TnNb5L0GZkelkA+teMqNFAv8Vc49kd4GpO5MUMG56U2s
-        1FE7Rkk9X0RtRl6kyahAFvId2w==
-X-Google-Smtp-Source: ACHHUZ6+/Qk5gAJYAjLG8FzKNVMug7bY6Nbrgy6YrjoDolg3NgEkWoyRilUbuWh7St3iWPxUWnbsjQ==
-X-Received: by 2002:a2e:924b:0:b0:2b0:497a:2029 with SMTP id v11-20020a2e924b000000b002b0497a2029mr2279050ljg.23.1685523694853;
-        Wed, 31 May 2023 02:01:34 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id f4-20020a2e9184000000b002adbe01cd69sm3217446ljg.9.2023.05.31.02.01.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 May 2023 02:01:34 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 31 May 2023 11:01:23 +0200
-Subject: [PATCH 4/4] clk: qcom: mmcc-msm8998: Fix the SMMU GDSC
+        Wed, 31 May 2023 05:04:34 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE701E65;
+        Wed, 31 May 2023 02:03:59 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4B11A636DF;
+        Wed, 31 May 2023 09:03:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A371C433D2;
+        Wed, 31 May 2023 09:03:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685523838;
+        bh=Fj4Up68ocllFYDr8AEcwK10DzhsFeDDh/2SD0hHn63I=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=SuMJ068wtQnL/QcjqiW3ztlo0rLRZCoQIR2WRjqHSTRbzqtBz5YopiI9Au0h4xzVi
+         WZhfH1GlRTFk0UIwJ5FiRNS0jvmABuIff27p5jwXqvt8J/eu6Xc6L0Xmw5/g7hyy9B
+         LuiBVkul4k//epH7qS4JloR41rehji9ajwCtoeYKPiOgVp4g1nDGbXcSTce/TVB9kp
+         KaAeDXdkBXPpt3nO9vbFFrM4VcZcaZe2D7KToDCxe0CnBv8LcExy8REFGHb4FHjgKg
+         C/q4fSaaa8OAQMpStKhRD68yM02RdZCzuAZEoQBevhdUoRHXU3vdrTzo9CnIiK3PRH
+         r1FDKV4cYn2dQ==
+Message-ID: <78819e4d-6eb1-8a71-2da0-0d4711103648@kernel.org>
+Date:   Wed, 31 May 2023 11:03:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230531-topic-8998_mmssclk-v1-4-2b5a8fc90991@linaro.org>
-References: <20230531-topic-8998_mmssclk-v1-0-2b5a8fc90991@linaro.org>
-In-Reply-To: <20230531-topic-8998_mmssclk-v1-0-2b5a8fc90991@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH] soc: qcom: pmic: Fix resource leaks in
+ device_for_each_child_node() loops
+Content-Language: en-US
+To:     Lu Hongfei <luhongfei@vivo.com>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Imran Khan <kimran@codeaurora.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Joonwoo Park <joonwoop@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1685523686; l=1105;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=U11cPNBCetgr5hd+fDIKoJDD5fDRdvw6Gnlma9DUXKU=;
- b=N3+OLnogrIsl+g8OU9USSSHaW3r6dF+xQp++9Sdi5dDUtVtkR4Fsz0TOp+XZXk2eA25+y0lcX
- zb4+VCa6xi+BhsZqQAlHww+t/C/O0XsXx8tNBBbragw5+aSpME8EHtT
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Cc:     opensource.kernel@vivo.com
+References: <20230531085422.4963-1-luhongfei@vivo.com>
+From:   Konrad Dybcio <konradybcio@kernel.org>
+In-Reply-To: <20230531085422.4963-1-luhongfei@vivo.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SMMU GDSC doesn't have to be ALWAYS-ON and shouldn't feature the
-HW_CTRL flag (it's separate from hw_ctrl_addr).  In addition to that,
-it should feature a cxc entry for bimc_smmu_axi_clk and be marked as
-votable.
 
-Fix all of these issues.
 
-Fixes: d14b15b5931c ("clk: qcom: Add MSM8998 Multimedia Clock Controller (MMCC) driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/clk/qcom/mmcc-msm8998.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+On 31.05.2023 10:54, Lu Hongfei wrote:
+> The device_for_each_child_node loop in pmic_glink_altmode_probe should have
+> fwnode_handle_put() before return which could avoid resource leaks.
+> This patch could fix this bug.
+> 
+> Fixes: 080b4e24852b ("soc: qcom: pmic_glink: Introduce altmode support")
+> 
+> Signed-off-by: Lu Hongfei <luhongfei@vivo.com>
+> ---
+This is the third revision of this patch, please version them accordingly.
 
-diff --git a/drivers/clk/qcom/mmcc-msm8998.c b/drivers/clk/qcom/mmcc-msm8998.c
-index 9b98e0fb8b91..7b1d105afbd8 100644
---- a/drivers/clk/qcom/mmcc-msm8998.c
-+++ b/drivers/clk/qcom/mmcc-msm8998.c
-@@ -2628,11 +2628,13 @@ static struct gdsc camss_cpp_gdsc = {
- static struct gdsc bimc_smmu_gdsc = {
- 	.gdscr = 0xe020,
- 	.gds_hw_ctrl = 0xe024,
-+	.cxcs = (unsigned int []){ 0xe008 },
-+	.cxc_count = 1,
- 	.pd = {
- 		.name = "bimc_smmu",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = HW_CTRL | ALWAYS_ON,
-+	.flags = VOTABLE,
- };
- 
- static struct clk_regmap *mmcc_msm8998_clocks[] = {
+You can pass `-vN` to git format-patch and it'll do the job for you.
 
--- 
-2.40.1
+Please also describe the changes since last revision below the --- line.
 
+Konrad
+
+>  drivers/soc/qcom/pmic_glink_altmode.c | 27 ++++++++++++++++++---------
+>  1 file changed, 18 insertions(+), 9 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
+> index df48fbea4b68..a7fc6570fa1e
+> --- a/drivers/soc/qcom/pmic_glink_altmode.c
+> +++ b/drivers/soc/qcom/pmic_glink_altmode.c
+> @@ -395,7 +395,7 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
+>  		ret = fwnode_property_read_u32(fwnode, "reg", &port);
+>  		if (ret < 0) {
+>  			dev_err(dev, "missing reg property of %pOFn\n", fwnode);
+> -			return ret;
+> +			goto err_node_put;
+>  		}
+>  
+>  		if (port >= ARRAY_SIZE(altmode->ports)) {
+> @@ -405,7 +405,8 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
+>  
+>  		if (altmode->ports[port].altmode) {
+>  			dev_err(dev, "multiple connector definition for port %u\n", port);
+> -			return -EINVAL;
+> +			ret = -EINVAL;
+> +			goto err_node_put;
+>  		}
+>  
+>  		alt_port = &altmode->ports[port];
+> @@ -420,33 +421,37 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
+>  
+>  		ret = devm_drm_bridge_add(dev, &alt_port->bridge);
+>  		if (ret)
+> -			return ret;
+> +			goto err_node_put;
+>  
+>  		alt_port->dp_alt.svid = USB_TYPEC_DP_SID;
+>  		alt_port->dp_alt.mode = USB_TYPEC_DP_MODE;
+>  		alt_port->dp_alt.active = 1;
+>  
+>  		alt_port->typec_mux = fwnode_typec_mux_get(fwnode);
+> -		if (IS_ERR(alt_port->typec_mux))
+> -			return dev_err_probe(dev, PTR_ERR(alt_port->typec_mux),
+> +		if (IS_ERR(alt_port->typec_mux)) {
+> +			ret = dev_err_probe(dev, PTR_ERR(alt_port->typec_mux),
+>  					     "failed to acquire mode-switch for port: %d\n",
+>  					     port);
+> +			goto err_node_put;
+> +		}
+>  
+>  		ret = devm_add_action_or_reset(dev, pmic_glink_altmode_put_mux,
+>  					       alt_port->typec_mux);
+>  		if (ret)
+> -			return ret;
+> +			goto err_node_put;
+>  
+>  		alt_port->typec_switch = fwnode_typec_switch_get(fwnode);
+> -		if (IS_ERR(alt_port->typec_switch))
+> -			return dev_err_probe(dev, PTR_ERR(alt_port->typec_switch),
+> +		if (IS_ERR(alt_port->typec_switch)) {
+> +			ret = dev_err_probe(dev, PTR_ERR(alt_port->typec_switch),
+>  					     "failed to acquire orientation-switch for port: %d\n",
+>  					     port);
+> +			goto err_node_put;
+> +		}
+>  
+>  		ret = devm_add_action_or_reset(dev, pmic_glink_altmode_put_switch,
+>  					       alt_port->typec_switch);
+>  		if (ret)
+> -			return ret;
+> +			goto err_node_put;
+>  	}
+>  
+>  	altmode->client = devm_pmic_glink_register_client(dev,
+> @@ -455,6 +460,10 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
+>  							  pmic_glink_altmode_pdr_notify,
+>  							  altmode);
+>  	return PTR_ERR_OR_ZERO(altmode->client);
+> +
+> +err_node_put:
+> +	fwnode_handle_put(fwnode);
+> +	return ret;
+>  }
+>  
+>  static const struct auxiliary_device_id pmic_glink_altmode_id_table[] = {
