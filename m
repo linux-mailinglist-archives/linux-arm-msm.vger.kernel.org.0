@@ -2,399 +2,209 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 849CC717C57
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 11:46:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15529717C67
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 11:50:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232539AbjEaJq5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 05:46:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46766 "EHLO
+        id S234599AbjEaJuJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 05:50:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231981AbjEaJq4 (ORCPT
+        with ESMTP id S235659AbjEaJuB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 05:46:56 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E594E8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 02:46:54 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f3baf04f0cso6322473e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 02:46:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685526413; x=1688118413;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iTEV1/JYGgrvuGZhmjMKnGLK6FtjMyR0jXXOjESNrZQ=;
-        b=Dgu9yIwkQSujqK3cSEfA0ahs75nmxrD3xtu6wGT5H6XaHY5Bt5zH/qls/WA2Xe9N/I
-         OgeA4WO0a1riCvQQxEdNVK2v5aMz0tPMYdYOBMapY78J5IpFsAy2VVslNd8jM2lVSvkd
-         AnkSEWYBzzs3ran37mt4QLmWQLszVvcPfYXXvUOXCSY/hut0b6k5Lsqxz/85TYTxXJ78
-         fVKVWLgydgaV2Oo3Wy33YkIFps4kl2DSaGYl0jDf9btFvPlyyP6xoJdpRxIFuHRir37i
-         cYR4JjHQ3LZyDVozT8J/CzZjy+EoIoAT8RV18/hXdlwz3Yyb8jUvLAKEnqFZUBX/Reg/
-         zqow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685526413; x=1688118413;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iTEV1/JYGgrvuGZhmjMKnGLK6FtjMyR0jXXOjESNrZQ=;
-        b=TqQdGVAF5lWgiDGigHkhtpUv/oyW/p/p1n6Cot4ofz8VMlOeKXRMIYpicMoc8fTD5z
-         VCZ4ZSJTREUt91XtraxIuFeUIF/cV6ekmb6JhYnLP7RnbRe5oQ1Ka159dD7WPcnELYF/
-         9PGFFtnQuMf2tOUr83N9ITuN1pbvvnKlf6UPbep/zzGJv84fvbE0E86em0uoyq8ESJ67
-         wxMmjnoMynS/uWriRuXZHh/QJetLHvFEYp4R34ebvBIEdRoDFcFBus2Buf8/Fmsjs5Ce
-         b2JUOgbHWutrIPrw0/FmKxzgZFBvWj2rJ0KW97EmZMLXNkicbGXi+1ndAetXahFdP5cj
-         O4BA==
-X-Gm-Message-State: AC+VfDxBachOTahtfDpSs46wgN89xdiJlTUEpG0+uVy3Mj0FfECZBCIs
-        S7VYVODJgjQw/UGLgf8AU8EmbA==
-X-Google-Smtp-Source: ACHHUZ5Hk6eMKLlLd8nDgdT1MeeWeDEoMiW8vkzeHnRBare346zvCLG0gH9OdV8dTvPNnvPQl4zdcA==
-X-Received: by 2002:a19:c216:0:b0:4f1:4f26:738f with SMTP id l22-20020a19c216000000b004f14f26738fmr2249189lfc.19.1685526412851;
-        Wed, 31 May 2023 02:46:52 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id v17-20020a056512049100b004f382ae9892sm647764lfq.247.2023.05.31.02.46.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 May 2023 02:46:52 -0700 (PDT)
-Message-ID: <26df196e-4960-353d-7449-57432d31dad2@linaro.org>
-Date:   Wed, 31 May 2023 11:46:51 +0200
+        Wed, 31 May 2023 05:50:01 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B05D6E2;
+        Wed, 31 May 2023 02:50:00 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4469B62837;
+        Wed, 31 May 2023 09:50:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E13FC433EF;
+        Wed, 31 May 2023 09:49:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685526599;
+        bh=5vuxklbladyrpsMX6XXo7g2/x5WLHBaVnR3bJgCUi0M=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=WvqVlwFrvRz1LIXmnzMu/5/X9qYyUvqiWZtbBi5lBmQs4qu+1F1zNnJRutRRsoJup
+         l3i26105JGu4Ng4xC1AySVnz76KEdds4+Vo5Dr9P0O5ZX4OhmCIAXb6Vwjb6ZMpTdm
+         7/S07jRlyxf8PhEtanRjGF3+m2s114O6P1EQuGmwB8or7FDokZ/IA/mcPdUSQMzK/K
+         O3roHLdgaS1qvGOL6n7BDnZP7KuMLd4XtJvULFunG06GgcNKadn1kqeYtRkNrruWte
+         fkQzyPlfKqFjbVz5jtACNioPblnFYx3+R1P+yXECTobDo66dKNzEYXhLL1ZtHUbHzq
+         50qMWo38nNmVQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1q4ISx-0001Ie-GQ; Wed, 31 May 2023 11:50:03 +0200
+Date:   Wed, 31 May 2023 11:50:03 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Tim Jiang <quic_tjiang@quicinc.com>
+Cc:     marcel@holtmann.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_bgodavar@quicinc.com, quic_hemantg@quicinc.com
+Subject: Re: [PATCH v7] Bluetooth: hci_qca: Add support for Qualcomm
+ Bluetooth SoC QCA2066
+Message-ID: <ZHcYS1PXhhTmrpYa@hovoldconsulting.com>
+References: <20230531034338.23121-1-quic_tjiang@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH 14/14] ARM: dts: qcom: msm8974: rename labels for DSI
- nodes
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20230531011623.3808538-1-dmitry.baryshkov@linaro.org>
- <20230531011623.3808538-15-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230531011623.3808538-15-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230531034338.23121-1-quic_tjiang@quicinc.com>
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 31.05.2023 03:16, Dmitry Baryshkov wrote:
-> Currently in board files MDSS and HDMI nodes stay apart, because labels
-> for HDMI nodes do not have the mdss_ prefix. It was found that grouping
-> all display-related notes is more useful.
+On Wed, May 31, 2023 at 11:43:38AM +0800, Tim Jiang wrote:
+> This patch adds support for QCA2066 firmware patch and nvm downloading.
+> as the RF performance of qca2066 soc chip from different foundries will
+> be difference, so we use different nvm to configure them by according
+> to board id.
 > 
-> To keep all display-related nodes close in the board files, change DSI
-> node aliases from dsi_* to mdss_dsi_*.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->  .../arm/boot/dts/qcom-apq8074-dragonboard.dts | 24 ++++++-------
->  .../qcom-msm8974-lge-nexus5-hammerhead.dts    | 16 ++++-----
->  arch/arm/boot/dts/qcom-msm8974.dtsi           | 36 +++++++++----------
->  .../boot/dts/qcom-msm8974pro-samsung-klte.dts | 24 ++++++-------
->  4 files changed, 50 insertions(+), 50 deletions(-)
+>  drivers/bluetooth/btqca.c   | 76 ++++++++++++++++++++++++++++++++++++-
+>  drivers/bluetooth/btqca.h   |  4 ++
+>  drivers/bluetooth/hci_qca.c |  8 +++-
+>  3 files changed, 86 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-> index 72f7e09a5bbf..72f6611bbe49 100644
-> --- a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-> +++ b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-> @@ -48,7 +48,15 @@ eeprom: eeprom@52 {
->  	};
->  };
+> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+> index e7e58a956d15..960a409e16d6 100644
+> --- a/drivers/bluetooth/btqca.c
+> +++ b/drivers/bluetooth/btqca.c
+> @@ -205,6 +205,48 @@ static int qca_send_reset(struct hci_dev *hdev)
+>  	return 0;
+>  }
 >  
-> -&dsi0 {
-> +&gpu {
-> +	status = "okay";
-> +};
+> +static int qca_read_fw_board_id(struct hci_dev *hdev, u16 *bid)
+> +{
+> +	u8 cmd;
+> +	struct sk_buff *skb;
+> +	struct edl_event_hdr *edl;
+> +	int err = 0;
+> +	int bid_len;
 > +
-> +&mdss {
-> +	status = "okay";
-> +};
+> +	bt_dev_dbg(hdev, "QCA read board ID");
+
+Drop this.
+
 > +
-> +&mdss_dsi0 {
->  	vdda-supply = <&pm8941_l2>;
->  	vdd-supply = <&pm8941_l22>;
->  	vddio-supply = <&pm8941_l12>;
-> @@ -65,31 +73,23 @@ panel: panel@0 {
->  
->  		port {
->  			panel_in: endpoint {
-> -				remote-endpoint = <&dsi0_out>;
-> +				remote-endpoint = <&mdss_dsi0_out>;
->  			};
->  		};
->  	};
->  };
->  
-> -&dsi0_out {
-> +&mdss_dsi0_out {
->  	remote-endpoint = <&panel_in>;
->  	data-lanes = <0 1 2 3>;
->  };
->  
-> -&dsi0_phy {
-> +&mdss_dsi0_phy {
->  	status = "okay";
->  
->  	vddio-supply = <&pm8941_l12>;
->  };
->  
-> -&gpu {
-> -	status = "okay";
-> -};
-> -
-> -&mdss {
-> -	status = "okay";
-> -};
-> -
->  &pm8941_wled {
->  	qcom,cs-out;
->  	qcom,switching-freq = <3200>;
-> diff --git a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-> index 205907c8670a..60bdfddeae69 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dts
-> @@ -230,7 +230,11 @@ bluetooth {
->  	};
->  };
->  
-> -&dsi0 {
-> +&mdss {
-> +	status = "okay";
-> +};
+> +	cmd = EDL_GET_BID_REQ_CMD;
+> +	skb = __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CMD_LEN,
+> +				&cmd, 0, HCI_INIT_TIMEOUT);
+> +	if (IS_ERR(skb)) {
+> +		err = PTR_ERR(skb);
+> +		bt_dev_err(hdev, "Reading QCA board ID failed (%d)", err);
+> +		return err;
+> +	}
 > +
-> +&mdss_dsi0 {
->  	status = "okay";
->  
->  	vdda-supply = <&pm8941_l2>;
-> @@ -246,27 +250,23 @@ panel: panel@0 {
->  
->  		port {
->  			panel_in: endpoint {
-> -				remote-endpoint = <&dsi0_out>;
-> +				remote-endpoint = <&mdss_dsi0_out>;
->  			};
->  		};
->  	};
->  };
->  
-> -&dsi0_out {
-> +&mdss_dsi0_out {
->  	remote-endpoint = <&panel_in>;
->  	data-lanes = <0 1 2 3>;
->  };
->  
-> -&dsi0_phy {
-> +&mdss_dsi0_phy {
->  	status = "okay";
->  
->  	vddio-supply = <&pm8941_l12>;
->  };
->  
-> -&mdss {
-> -	status = "okay";
-> -};
-> -
->  &pm8941_gpios {
->  	gpio_keys_pin_a: gpio-keys-active-state {
->  		pins = "gpio2", "gpio3";
-> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> index 58e144957c5d..aeca504918a0 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
-> +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
-> @@ -1837,10 +1837,10 @@ mmcc: clock-controller@fd8c0000 {
->  				 <&gcc GPLL0_VOTE>,
->  				 <&gcc GPLL1_VOTE>,
->  				 <&rpmcc RPM_SMD_GFX3D_CLK_SRC>,
-> -				 <&dsi0_phy 1>,
-> -				 <&dsi0_phy 0>,
-> -				 <&dsi1_phy 1>,
-> -				 <&dsi1_phy 0>,
-> +				 <&mdss_dsi0_phy 1>,
-> +				 <&mdss_dsi0_phy 0>,
-> +				 <&mdss_dsi1_phy 1>,
-> +				 <&mdss_dsi1_phy 0>,
->  				 <0>,
->  				 <0>,
->  				 <0>;
-> @@ -1905,20 +1905,20 @@ ports {
->  					port@0 {
->  						reg = <0>;
->  						mdp5_intf1_out: endpoint {
-> -							remote-endpoint = <&dsi0_in>;
-> +							remote-endpoint = <&mdss_dsi0_in>;
->  						};
->  					};
->  
->  					port@1 {
->  						reg = <1>;
->  						mdp5_intf2_out: endpoint {
-> -							remote-endpoint = <&dsi1_in>;
-> +							remote-endpoint = <&mdss_dsi1_in>;
->  						};
->  					};
->  				};
->  			};
->  
-> -			dsi0: dsi@fd922800 {
-> +			mdss_dsi0: dsi@fd922800 {
->  				compatible = "qcom,msm8974-dsi-ctrl",
->  					     "qcom,mdss-dsi-ctrl";
->  				reg = <0xfd922800 0x1f8>;
-> @@ -1928,7 +1928,7 @@ dsi0: dsi@fd922800 {
->  				interrupts = <4>;
->  
->  				assigned-clocks = <&mmcc BYTE0_CLK_SRC>, <&mmcc PCLK0_CLK_SRC>;
-> -				assigned-clock-parents = <&dsi0_phy 0>, <&dsi0_phy 1>;
-> +				assigned-clock-parents = <&mdss_dsi0_phy 0>, <&mdss_dsi0_phy 1>;
->  
->  				clocks = <&mmcc MDSS_MDP_CLK>,
->  					 <&mmcc MDSS_AHB_CLK>,
-> @@ -1945,7 +1945,7 @@ dsi0: dsi@fd922800 {
->  					      "core",
->  					      "core_mmss";
->  
-> -				phys = <&dsi0_phy>;
-> +				phys = <&mdss_dsi0_phy>;
->  
->  				status = "disabled";
->  
-> @@ -1958,20 +1958,20 @@ ports {
->  
->  					port@0 {
->  						reg = <0>;
-> -						dsi0_in: endpoint {
-> +						mdss_dsi0_in: endpoint {
->  							remote-endpoint = <&mdp5_intf1_out>;
->  						};
->  					};
->  
->  					port@1 {
->  						reg = <1>;
-> -						dsi0_out: endpoint {
-> +						mdss_dsi0_out: endpoint {
->  						};
->  					};
->  				};
->  			};
->  
-> -			dsi0_phy: phy@fd922a00 {
-> +			mdss_dsi0_phy: phy@fd922a00 {
->  				compatible = "qcom,dsi-phy-28nm-hpm";
->  				reg = <0xfd922a00 0xd4>,
->  				      <0xfd922b00 0x280>,
-> @@ -1989,7 +1989,7 @@ dsi0_phy: phy@fd922a00 {
->  				status = "disabled";
->  			};
->  
-> -			dsi1: dsi@fd922e00 {
-> +			mdss_dsi1: dsi@fd922e00 {
->  				compatible = "qcom,msm8974-dsi-ctrl",
->  					     "qcom,mdss-dsi-ctrl";
->  				reg = <0xfd922e00 0x1f8>;
-> @@ -1999,7 +1999,7 @@ dsi1: dsi@fd922e00 {
->  				interrupts = <4>;
->  
->  				assigned-clocks = <&mmcc BYTE1_CLK_SRC>, <&mmcc PCLK1_CLK_SRC>;
-> -				assigned-clock-parents = <&dsi1_phy 0>, <&dsi1_phy 1>;
-> +				assigned-clock-parents = <&mdss_dsi1_phy 0>, <&mdss_dsi1_phy 1>;
->  
->  				clocks = <&mmcc MDSS_MDP_CLK>,
->  					 <&mmcc MDSS_AHB_CLK>,
-> @@ -2016,7 +2016,7 @@ dsi1: dsi@fd922e00 {
->  					      "core",
->  					      "core_mmss";
->  
-> -				phys = <&dsi1_phy>;
-> +				phys = <&mdss_dsi1_phy>;
->  
->  				status = "disabled";
->  
-> @@ -2029,20 +2029,20 @@ ports {
->  
->  					port@0 {
->  						reg = <0>;
-> -						dsi1_in: endpoint {
-> +						mdss_dsi1_in: endpoint {
->  							remote-endpoint = <&mdp5_intf2_out>;
->  						};
->  					};
->  
->  					port@1 {
->  						reg = <1>;
-> -						dsi1_out: endpoint {
-> +						mdss_dsi1_out: endpoint {
->  						};
->  					};
->  				};
->  			};
->  
-> -			dsi1_phy: phy@fd923000 {
-> +			mdss_dsi1_phy: phy@fd923000 {
->  				compatible = "qcom,dsi-phy-28nm-hpm";
->  				reg = <0xfd923000 0xd4>,
->  				      <0xfd923100 0x280>,
-> diff --git a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-> index eb505d6d7f31..3e2c86591ee2 100644
-> --- a/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-> +++ b/arch/arm/boot/dts/qcom-msm8974pro-samsung-klte.dts
-> @@ -329,7 +329,15 @@ bluetooth {
->  	};
->  };
->  
-> -&dsi0 {
-> +&gpu {
-> +	status = "okay";
-> +};
+> +	edl = skb_pull_data(skb, sizeof(*edl));
+> +	if (!edl) {
+> +		bt_dev_err(hdev, "QCA read board ID with no header");
+> +		err = -EILSEQ;
+> +		goto out;
+> +	}
 > +
-> +&mdss {
-> +	status = "okay";
-> +};
+> +	if (edl->cresp != EDL_CMD_REQ_RES_EVT ||
+> +	    edl->rtype != EDL_GET_BID_REQ_CMD) {
+> +		bt_dev_err(hdev, "QCA Wrong packet: %d %d", edl->cresp, edl->rtype);
+> +		err = -EIO;
+> +		goto out;
+> +	}
 > +
-> +&mdss_dsi0 {
->  	status = "okay";
+> +	bid_len = edl->data[0];
+> +	*bid = (edl->data[1] << 8) + edl->data[2];
+> +	bt_dev_info(hdev, "%s: bid len = %x, bid = %x", __func__, bid_len, *bid);
+
+This type of information should not be printed by default.
+
+At most this should be dev_dbg() level, but it should probably just be
+dropped.
+
+> +
+> +out:
+> +	kfree_skb(skb);
+> +	return err;
+> +}
+> +
+>  int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)
+>  {
+>  	struct sk_buff *skb;
+> @@ -574,6 +616,29 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev, const bdaddr_t *bdaddr)
+>  }
+>  EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
 >  
->  	vdda-supply = <&pma8084_l2>;
-> @@ -351,31 +359,23 @@ panel: panel@0 {
+> +static void qca_generate_nvm_name(struct hci_dev *hdev, char *fwname,
+> +		   size_t max_size, struct qca_btsoc_version ver, u16 bid)
+> +{
+> +	u8 rom_ver = 0;
+
+Drop the redundant initialisation.
+
+> +	u32 soc_ver;
+> +	const char *variant;
+> +
+> +	soc_ver = get_soc_ver(ver.soc_id, ver.rom_ver);
+> +	rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
+> +
+> +	if ((le32_to_cpu(ver.soc_id) & 0x0000ff00) == QCA_HSP_GF_SOC_ID)  /* hsp gf chip */
+> +		variant = "g";
+> +	else
+> +		variant = "";
+> +
+> +	if (bid == 0x0)
+> +		snprintf(fwname, max_size, "qca/hpnv%02x%s.bin", rom_ver, variant);
+> +	else
+> +		snprintf(fwname, max_size, "qca/hpnv%02x%s.%x", rom_ver, variant, bid);
+> +
+> +	bt_dev_info(hdev, "%s: nvm name is %s", __func__, fwname);
+
+dev_dbg(), if at all needed.
+
+> +}
+> +
+>  int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>  		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
+>  		   const char *firmware_name)
+
+> @@ -644,7 +716,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+>  			snprintf(config.fwname, sizeof(config.fwname),
+>  				 "qca/crnv%02x.bin", rom_ver);
+>  		}
+> -	}
+> +	} else if (soc_type == QCA_QCA2066)
+> +		qca_generate_nvm_name(hdev, config.fwname, sizeof(config.fwname),
+> +				ver, boardid);
+
+Missing brackets (if one branch has them, all of them should even the
+current code may not be following this).
+
+>  	else if (soc_type == QCA_QCA6390)
+>  		snprintf(config.fwname, sizeof(config.fwname),
+>  			 "qca/htnv%02x.bin", rom_ver);
+
+> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+> index 1b064504b388..bf7683040ebd 100644
+> --- a/drivers/bluetooth/hci_qca.c
+> +++ b/drivers/bluetooth/hci_qca.c
+> @@ -1729,7 +1729,7 @@ static int qca_setup(struct hci_uart *hu)
+>  	bt_dev_info(hdev, "setting up %s",
+>  		qca_is_wcn399x(soc_type) ? "wcn399x" :
+>  		(soc_type == QCA_WCN6750) ? "wcn6750" :
+> -		(soc_type == QCA_WCN6855) ? "wcn6855" : "ROME/QCA6390");
+> +		(soc_type == QCA_WCN6855) ? "wcn6855" : "ROME/QCA6390/QCA2066");
+
+This just looks very lazy.
+
+How about cleaning up the current implementation if you don't want to
+make this expression worse than it already is?
+
 >  
->  		port {
->  			panel_in: endpoint {
-> -				remote-endpoint = <&dsi0_out>;
-> +				remote-endpoint = <&mdss_dsi0_out>;
->  			};
->  		};
->  	};
->  };
+>  	qca->memdump_state = QCA_MEMDUMP_IDLE;
 >  
-> -&dsi0_out {
-> +&mdss_dsi0_out {
->  	remote-endpoint = <&panel_in>;
->  	data-lanes = <0 1 2 3>;
->  };
->  
-> -&dsi0_phy {
-> +&mdss_dsi0_phy {
->  	status = "okay";
->  
->  	vddio-supply = <&pma8084_l12>;
->  };
->  
-> -&gpu {
-> -	status = "okay";
-> -};
-> -
-> -&mdss {
-> -	status = "okay";
-> -};
-> -
->  &pma8084_gpios {
->  	gpio_keys_pin_a: gpio-keys-active-state {
->  		pins = "gpio2", "gpio3", "gpio5";
+
+Johan
