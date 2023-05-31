@@ -2,139 +2,305 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 37B3E718013
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 14:39:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE199718139
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 15:16:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235832AbjEaMjz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 08:39:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40180 "EHLO
+        id S236346AbjEaNQM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 09:16:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235848AbjEaMju (ORCPT
+        with ESMTP id S236341AbjEaNQK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 08:39:50 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [213.167.242.64])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E71BC11F;
-        Wed, 31 May 2023 05:39:48 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (om126205251136.34.openmobile.ne.jp [126.205.251.136])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 37C5D844;
-        Wed, 31 May 2023 14:39:24 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1685536765;
-        bh=9FI5ddx12U5j33AEsAb/4FtfCwfmcg+v2kVwvbdIAMA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=OH88JsHsX3ruTeSP27IWfbNRq3s+8jd3QTExCPeR9EZhe1G19meyJPQIKRJwcVCVX
-         B+5WzKe+RKEGgvTN9+mLeVOdgdD2P+OZMs/+BD8RQp5GDE1WYsFWkE3yba40wuwA9P
-         8WgxU+gPHnF4/aun5cVexTAhlz4MRxMXoIsn0DXg=
-Date:   Wed, 31 May 2023 15:39:45 +0300
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Cc:     Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        tfiga@chromium.org, m.szyprowski@samsung.com, mchehab@kernel.org,
-        ming.qian@nxp.com, shijie.qin@nxp.com, eagle.zhou@nxp.com,
-        bin.liu@mediatek.com, matthias.bgg@gmail.com,
-        angelogioacchino.delregno@collabora.com, tiffany.lin@mediatek.com,
-        andrew-ct.chen@mediatek.com, yunfei.dong@mediatek.com,
-        stanimir.k.varbanov@gmail.com, quic_vgarodia@quicinc.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        ezequiel@vanguardiasur.com.ar, p.zabel@pengutronix.de,
-        daniel.almeida@collabora.com, linux-media@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, kernel@collabora.com
-Subject: Re: [PATCH v2 3/8] media: videobuf2: Add a module param to limit vb2
- queue buffer storage
-Message-ID: <20230531123945.GF27043@pendragon.ideasonboard.com>
-References: <20230321102855.346732-1-benjamin.gaignard@collabora.com>
- <20230321102855.346732-4-benjamin.gaignard@collabora.com>
- <6c4658fd-3a64-b3f8-67cd-17ed2d7d3567@xs4all.nl>
- <20230531080331.GB6496@pendragon.ideasonboard.com>
- <608ae7d6-3f3b-137d-08d2-d41a240be2c4@xs4all.nl>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <608ae7d6-3f3b-137d-08d2-d41a240be2c4@xs4all.nl>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        Wed, 31 May 2023 09:16:10 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74773B2;
+        Wed, 31 May 2023 06:16:08 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34V6sI2F005249;
+        Wed, 31 May 2023 12:50:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=mDNAvRXyyVsyHzROMwIT72j+peOPpcPUotIbFGJAOPg=;
+ b=VgG+rlbFhYR6rRKXFiObb5Zw/neISidSw4m/1b4TXBYpZOzcaYWe4yI/Oc7p9mE7evHc
+ ApfsiBzQhPN4d1VqRE5vw/VaD6a5V4fD/W6aXIMUx7cNGvCfu/T4edsM0AmBjjYXKS5g
+ 8IcjuCz0RzfftcOuWWr4ZCVsbh1ct+HD6l0BWPY49iuhaybgLiKzb+BqGjNMpaFOeRy4
+ Lb/KnrzpzY6SzuR+loPkf8NAIBo60QQiSE0GfyYQeQaKUdEcR8X1olJuXjc4PNgjHOQc
+ x87chv1/mPepLsP3/7lgqyaR63IlgyGmUZAeapCG/sIoL9dpT2KWFvufKQ/ybupEkqLh 7w== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qwwbth80f-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 31 May 2023 12:50:02 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 34VCnw1j021025;
+        Wed, 31 May 2023 12:49:58 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3quaxkdvyu-1;
+        Wed, 31 May 2023 12:49:58 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 34VCnweE021019;
+        Wed, 31 May 2023 12:49:58 GMT
+Received: from mdalam-linux.qualcomm.com (mdalam-linux.qualcomm.com [10.201.2.71])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 34VCnvIg021018;
+        Wed, 31 May 2023 12:49:57 +0000
+Received: by mdalam-linux.qualcomm.com (Postfix, from userid 466583)
+        id BA6BB12010C1; Wed, 31 May 2023 18:19:56 +0530 (IST)
+From:   Md Sadre Alam <quic_mdalam@quicinc.com>
+To:     mani@kernel.org, miquel.raynal@bootlin.com, richard@nod.at,
+        vigneshr@ti.com, linux-mtd@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_mdalam@quicinc.com
+Subject: [PATCH v3 1/5] mtd: rawnand: qcom: Implement exec_op()
+Date:   Wed, 31 May 2023 18:19:49 +0530
+Message-Id: <20230531124953.21007-1-quic_mdalam@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: b-N6cMDx__Mz5iYGZBEBiIu6h-TJJ9bn
+X-Proofpoint-ORIG-GUID: b-N6cMDx__Mz5iYGZBEBiIu6h-TJJ9bn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-31_07,2023-05-31_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 clxscore=1015
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 mlxscore=0
+ malwarescore=0 mlxlogscore=999 adultscore=0 spamscore=0 suspectscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305310109
+X-Spam-Status: No, score=-1.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,SPF_HELO_NONE,
+        SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 31, 2023 at 10:30:36AM +0200, Hans Verkuil wrote:
-> On 5/31/23 10:03, Laurent Pinchart wrote:
-> > On Wed, May 31, 2023 at 08:36:59AM +0200, Hans Verkuil wrote:
-> >> On 21/03/2023 11:28, Benjamin Gaignard wrote:
-> >>> Add module parameter "max_vb_buffer_per_queue" to be able to limit
-> >>> the number of vb2 buffers store in queue.
-> >>>
-> >>> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> >>> ---
-> >>>  drivers/media/common/videobuf2/videobuf2-core.c | 15 +++------------
-> >>>  include/media/videobuf2-core.h                  | 11 +++++++++--
-> >>>  2 files changed, 12 insertions(+), 14 deletions(-)
-> >>>
-> >>> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-> >>> index ae9d72f4d181..f4da917ccf3f 100644
-> >>> --- a/drivers/media/common/videobuf2/videobuf2-core.c
-> >>> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
-> >>> @@ -34,6 +34,8 @@
-> >>>  static int debug;
-> >>>  module_param(debug, int, 0644);
-> >>>  
-> >>> +module_param(max_vb_buffer_per_queue, ulong, 0644);
-> >>
-> >> There is no MODULE_PARM_DESC here? Please add. I see it is not there for
-> >> the debug param either, it should be added for that as well.
-> > 
-> > Would this be the right time to consider resource accounting in V4L2 for
-> > buffers ? Having a module parameter doesn't sound very useful, an
-> > application could easily allocate more buffers by using buffer orphaning
-> > (allocating buffers, exporting them as dmabuf objects, and freeing them,
-> > which leaves the memory allocated). Repeating allocation cycles up to
-> > max_vb_buffer_per_queue will allow allocating an unbounded number of
-> > buffers, using all the available system memory. I'd rather not add a
-> > module argument that only gives the impression of some kind of safety
-> > without actually providing any value.
-> 
-> Does dmabuf itself provide some accounting mechanism? Just wondering.
-> 
-> More specific to V4L2: I'm not so sure about this module parameter either.
-> It makes sense to have a check somewhere against ridiculous values (i.e.
-> allocating MAXINT buffers), but that can be a define as well. But otherwise
-> I am fine with allowing applications to allocate buffers until the memory
-> is full.
-> 
-> The question is really: what is this parameter supposed to do? The only
-> thing it does is to sanitize unlikely inputs (e.g. allocating MAXINT buffers).
-> 
-> I prefer that as a define, to be honest.
-> 
-> I think it is perfectly fine for users to try to request more buffers than
-> memory allows. It will just fail in that case, not a problem.
-> 
-> And if an application is doing silly things like buffer orphaning, then so
-> what? Is that any different than allocating memory and not freeing it?
-> Eventually it will run out of memory and crash, which is normal.
+Implement exec_op() so we can later get rid of the legacy interface
+implementation.
 
-Linux provides APIs to account for and limit usage of resources,
-including memory. A system administrator can prevent rogue processes
-from starving system resources. The memory consumed by vb2 buffer isn't
-taken into account, making V4L2 essentially unsafe for untrusted
-processes.
+Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+---
+Change in [v3]
 
-Now, to be fair, there are many reasons why allowing access to v4L2
-devices to untrusted applications is a bad idea, and memory consumption
-is likely not even the worst one. Still, is this something we want to
-fix, or do we want to consider V4L2 to be priviledged API only ? Right
-now we can't do so, but with many Linux systems moving towards pipewire,
-we could possibly have a system daemon isolating untrusted applications
-from the rest of the system. We may thus not need to fix this in the
-V4L2 API.
+* Removed NAND_CMD_STATUS check in pre_command and move
+  it to status exec_op.
 
+* Removed min() , since this check not needed
+
+* Removed all the dummy APIs of exec_ops, and added it
+  into same patch where its getting added.
+
+* Added qcom_check_op() API to check for unsupported feature
+  by controller in check_only path.
+
+Change in [v2]
+
+* Missed to post Cover-letter, so posting v2 patch with cover-letter
+
+Change in [v1]
+
+* Added initial support for exec_ops.
+   
+ drivers/mtd/nand/raw/qcom_nandc.c | 159 ++++++++++++++++++++++++++++++
+ 1 file changed, 159 insertions(+)
+
+diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qcom_nandc.c
+index 72d6168d8a1b..d9c4c9fe2fe8 100644
+--- a/drivers/mtd/nand/raw/qcom_nandc.c
++++ b/drivers/mtd/nand/raw/qcom_nandc.c
+@@ -157,6 +157,7 @@
+ #define	OP_PAGE_PROGRAM_WITH_ECC	0x7
+ #define	OP_PROGRAM_PAGE_SPARE		0x9
+ #define	OP_BLOCK_ERASE			0xa
++#define	OP_CHECK_STATUS			0xc
+ #define	OP_FETCH_ID			0xb
+ #define	OP_RESET_DEVICE			0xd
+ 
+@@ -235,6 +236,8 @@ nandc_set_reg(chip, reg,			\
+  */
+ #define NAND_ERASED_CW_SET		BIT(4)
+ 
++#define MAX_ADDRESS_CYCLE		5
++#define MAX_CHUNK_SIZE			SZ_8K
+ /*
+  * This data type corresponds to the BAM transaction which will be used for all
+  * NAND transfers.
+@@ -447,6 +450,29 @@ struct qcom_nand_boot_partition {
+ 	u32 page_size;
+ };
+ 
++/*
++ * Qcom op for each exec_op transfer
++ *
++ * @data_instr:			data instruction pointer
++ * @data_instr_idx:		data instruction index
++ * @rdy_timeout_ms:		wait ready timeout in ms
++ * @rdy_delay_ns:		Additional delay in ns
++ * @addr1_reg:			Address1 register value
++ * @addr2_reg:			Address2 register value
++ * @cmd_reg:			CMD register value
++ * @flag:			flag for misc instruction
++ */
++struct qcom_op {
++	const struct nand_op_instr *data_instr;
++	unsigned int data_instr_idx;
++	unsigned int rdy_timeout_ms;
++	unsigned int rdy_delay_ns;
++	u32 addr1_reg;
++	u32 addr2_reg;
++	u32 cmd_reg;
++	u8 flag;
++};
++
+ /*
+  * NAND chip structure
+  *
+@@ -2867,8 +2893,141 @@ static int qcom_nand_attach_chip(struct nand_chip *chip)
+ 	return 0;
+ }
+ 
++static int qcom_op_cmd_mapping(struct qcom_nand_controller *nandc, u8 cmd,
++			       struct qcom_op *q_op)
++{
++	int ret;
++
++	switch (cmd) {
++	case NAND_CMD_RESET:
++		ret = OP_RESET_DEVICE;
++		break;
++	case NAND_CMD_READID:
++		ret = OP_FETCH_ID;
++		break;
++	case NAND_CMD_PARAM:
++		if (nandc->props->qpic_v2)
++			ret = OP_PAGE_READ_ONFI_READ;
++		else
++			ret = OP_PAGE_READ;
++		break;
++	case NAND_CMD_ERASE1:
++	case NAND_CMD_ERASE2:
++		ret = OP_BLOCK_ERASE;
++		break;
++	case NAND_CMD_STATUS:
++		ret = OP_CHECK_STATUS;
++		break;
++	case NAND_CMD_PAGEPROG:
++		ret = OP_PROGRAM_PAGE;
++		break;
++	default:
++		break;
++	}
++
++	return ret;
++}
++
++/* NAND framework ->exec_op() hooks and related helpers */
++static void qcom_parse_instructions(struct nand_chip *chip,
++				    const struct nand_subop *subop,
++					struct qcom_op *q_op)
++{
++	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
++	const struct nand_op_instr *instr = NULL;
++	unsigned int op_id;
++	int i;
++
++	memset(q_op, 0, sizeof(*q_op));
++
++	for (op_id = 0; op_id < subop->ninstrs; op_id++) {
++		unsigned int offset, naddrs;
++		const u8 *addrs;
++
++		instr = &subop->instrs[op_id];
++
++		switch (instr->type) {
++		case NAND_OP_CMD_INSTR:
++			q_op->cmd_reg = qcom_op_cmd_mapping(nandc, instr->ctx.cmd.opcode, q_op);
++			q_op->rdy_delay_ns = instr->delay_ns;
++			break;
++
++		case NAND_OP_ADDR_INSTR:
++			offset = nand_subop_get_addr_start_off(subop, op_id);
++			naddrs = nand_subop_get_num_addr_cyc(subop, op_id);
++			addrs = &instr->ctx.addr.addrs[offset];
++			for (i = 0; i < MAX_ADDRESS_CYCLE; i++) {
++				if (i < 4)
++					q_op->addr1_reg |= (u32)addrs[i] << i * 8;
++				else
++					q_op->addr2_reg |= addrs[i];
++			}
++			q_op->rdy_delay_ns = instr->delay_ns;
++			break;
++
++		case NAND_OP_DATA_IN_INSTR:
++			q_op->data_instr = instr;
++			q_op->data_instr_idx = op_id;
++			q_op->rdy_delay_ns = instr->delay_ns;
++			fallthrough;
++		case NAND_OP_DATA_OUT_INSTR:
++			q_op->rdy_delay_ns = instr->delay_ns;
++			break;
++
++		case NAND_OP_WAITRDY_INSTR:
++			q_op->rdy_timeout_ms = instr->ctx.waitrdy.timeout_ms;
++			q_op->rdy_delay_ns = instr->delay_ns;
++			break;
++		}
++	}
++}
++
++static int qcom_check_op(struct nand_chip *chip,
++			 const struct nand_operation *op)
++{
++	const struct nand_op_instr *instr;
++	int op_id;
++
++	for (op_id = 0; op_id < op->ninstrs; op_id++) {
++		instr = &op->instrs[op_id];
++
++		switch (instr->type) {
++		case NAND_OP_CMD_INSTR:
++			if (instr->ctx.cmd.opcode == NAND_CMD_READCACHESEQ ||
++			    instr->ctx.cmd.opcode == NAND_CMD_READCACHEEND)
++				return -ENOTSUPP;
++			break;
++		case NAND_OP_ADDR_INSTR:
++			if (instr->ctx.addr.naddrs > MAX_ADDRESS_CYCLE)
++				return -ENOTSUPP;
++
++			break;
++		case NAND_OP_DATA_IN_INSTR:
++		case NAND_OP_DATA_OUT_INSTR:
++			if (instr->ctx.data.len > MAX_CHUNK_SIZE)
++				return -ENOTSUPP;
++			break;
++		default:
++			break;
++		}
++	}
++
++	return 0;
++}
++
++static int qcom_nand_exec_op(struct nand_chip *chip,
++			     const struct nand_operation *op,
++			bool check_only)
++{
++	if (check_only)
++		return qcom_check_op(chip, op);
++
++	return 0;
++}
++
+ static const struct nand_controller_ops qcom_nandc_ops = {
+ 	.attach_chip = qcom_nand_attach_chip,
++	.exec_op = qcom_nand_exec_op,
+ };
+ 
+ static void qcom_nandc_unalloc(struct qcom_nand_controller *nandc)
 -- 
-Regards,
+2.17.1
 
-Laurent Pinchart
