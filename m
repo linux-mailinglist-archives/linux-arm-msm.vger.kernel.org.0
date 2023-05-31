@@ -2,127 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B68F718171
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 15:23:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95FAC718533
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 16:43:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236415AbjEaNXR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 09:23:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43758 "EHLO
+        id S236530AbjEaOnJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 10:43:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52506 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236399AbjEaNXK (ORCPT
+        with ESMTP id S237261AbjEaOnG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 09:23:10 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDACB98
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 06:22:58 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f4db9987f8so1181604e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 06:22:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685539377; x=1688131377;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xFK+Ou6t+IM+Z0lJFsVgxMPKX7db6qU21GRYqBnVGs8=;
-        b=xheckUJTFHHmw4+nyIEBDwWhPOuL3vNKlQo5u212RJIkGqB0ZD30MnU7ZHr5rC/T4u
-         MrR4IesMXrVF2zTudxQF/tx/VlT3exAyrfdtPMtHmFleB2shWS5Z1IHFzUDcy+Okd8fm
-         ud/KpK48LlzoZWJY3QwpGOa7VhapJvoik6tUP1WAmT5bbv8gLgsIDzgekdghaBBg9TcR
-         l901P//oMpyKUdJ1dwtjVYMRJVFMfBhhP0P335oOalSNIQcaolStpPTFoTM+Q+lanTWp
-         qLeuRVO10oKbCP/2izLOCoMb/Os8AHwyB2V6duXywxrqzTsl+W4iDd0uDDhqYcmlZFEV
-         qVvQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685539377; x=1688131377;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xFK+Ou6t+IM+Z0lJFsVgxMPKX7db6qU21GRYqBnVGs8=;
-        b=bC8AEX6ufYGrW9Wl392cIF/mkDZBk6AoXNdPQ/LskmrkLfFl2GybBv28txl27BTJPd
-         o4jLUcsDOlu47kUNJSxcMtLv/5oMR1X/Q/9qwajLC6ZH77t3vFc5GLwyemPkd/GHFZDx
-         cYK+zEXwyvIO50V5jeOFDw1IxnXbzkBPkxtM4GqssKETZdbcrYyD5quZMAoO6nEDmkAZ
-         aAESdm2BfvFPAU/c5z/6Y+c3IqFt7CqiUf45+CuT6DfuPiVnFLi7ru3ZxjFBYdvHngwU
-         nEOQGWtv9xLUJT+tus+T1qfsBL3oYvl/5UPtMsU3J3oFR60JF0wlVuOmLE7Ldl998NgC
-         kKEQ==
-X-Gm-Message-State: AC+VfDyClw0w5r3v1RGpapofqhRIh6Zjce6VUhQwEF4jcUQnpQ55F4y0
-        ZU7ypbMTMTfzprvzdhRUw+afmw==
-X-Google-Smtp-Source: ACHHUZ4AkcgCPt1BOGb6Lkh6GQHDiODuTCyRIATpixy8K5JY7ZGBzaZZQmjg1UxN8xHAOlOH9yiwVw==
-X-Received: by 2002:ac2:5df6:0:b0:4f3:b242:aa98 with SMTP id z22-20020ac25df6000000b004f3b242aa98mr1822980lfq.30.1685539377267;
-        Wed, 31 May 2023 06:22:57 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id w8-20020ac24428000000b004eb0c51780bsm720138lfl.29.2023.05.31.06.22.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 May 2023 06:22:56 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 31 May 2023 15:22:42 +0200
-Subject: [PATCH 8/8] arm64: dts: qcom: sm8550: Flush RSC sleep & wake votes
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230531-topic-rsc-v1-8-b4a985f57b8b@linaro.org>
-References: <20230531-topic-rsc-v1-0-b4a985f57b8b@linaro.org>
-In-Reply-To: <20230531-topic-rsc-v1-0-b4a985f57b8b@linaro.org>
+        Wed, 31 May 2023 10:43:06 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FDC512B;
+        Wed, 31 May 2023 07:43:02 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34VDJ7vi009623;
+        Wed, 31 May 2023 13:51:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=WfM3iho0VKIpMsbrE1pewuCoFGipoJC1WCGZmRmUc/U=;
+ b=JncmoOmM9aWOv7L6Fyqerg3CW4CVeDp7D6hAK81Afskv/gcEn4liOAtbkSsDDojCUDqf
+ 2/7Hlb4o6mk1t/HncmsUyUYeiv7F8sQQUFmDKBCUK/R6phRkfWMjqlwyn2CtqOKC4TyC
+ ZjakJFdXJHshfoYTo1Q54xuI29Iqytv+L8gExeqUT+osBcIrzpuDqrImQ3HKjGC5UWgY
+ cYKFp6qc8gapXt5Pg2ANall7WC8hV7d7l25B4VogC8opPa+Q+co2l7cmpUI1FW3n11Ni
+ gQLbEOkkqAc6eugTS93nhEJMCV/n3//wEtsTvr78hrGqfLeC5c/VDarjMY4eH3jLa8gY yQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qwnhf293y-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 31 May 2023 13:51:10 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34VDp9ch023804
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 31 May 2023 13:51:09 GMT
+Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Wed, 31 May 2023 06:51:06 -0700
+From:   Kathiravan T <quic_kathirav@quicinc.com>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Melody Olvera <quic_molvera@quicinc.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Richard Acayan <mailingradian@gmail.com>,
-        Lina Iyer <ilina@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Luca Weiss <luca.weiss@fairphone.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Andy Gross <andy.gross@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1685539362; l=1011;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=3LQbT1pkRcM60cyga6zU0z4GuxAMPjHrb5uo6UzkAYI=;
- b=Qt8SrZzczur1fTmSMEih1/4sXuG2wBrLyUhegwmgObDm6zu6aVcZgfgo883vtVdYv7Eq/MOZp
- vxQB0wJ3fvZA06kosIaS1r3hX01+7SKs0Mhnoc7nvCKPAnImrnb99XD
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Kathiravan T <quic_kathirav@quicinc.com>
+Subject: [PATCH 0/4] Add initial support for RDP442 of IPQ5332 family
+Date:   Wed, 31 May 2023 19:20:44 +0530
+Message-ID: <20230531135048.19164-1-quic_kathirav@quicinc.com>
+X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 7AagGILLHkN_Mh6TehZeWmZ8aAvzihAy
+X-Proofpoint-GUID: 7AagGILLHkN_Mh6TehZeWmZ8aAvzihAy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-31_08,2023-05-31_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ suspectscore=0 malwarescore=0 mlxlogscore=911 mlxscore=0
+ priorityscore=1501 bulkscore=0 adultscore=0 spamscore=0 clxscore=1015
+ phishscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2305310119
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The rpmh driver will cache sleep and wake votes until the cluster
-power-domain is about to enter idle, to avoid unnecessary writes. So
-associate the apps_rsc with the cluster pd, so that it can be notified
-about this event.
+Add the initial device tree support for the Reference Design
+Platform(RDP) 474 based on IPQ5332 family of SoC. This patch carries
+the support for Console UART, eMMC, I2C and GPIO based buttons.
 
-Without this, only AMC votes are being commited.
+Most of the features of RDP474 is similar to RDP441, except that the
+QDSP will not be used in RDP474, whereas it will be used in the RDP441.
 
-Fixes: ffc50b2d3828 ("arm64: dts: qcom: Add base SM8550 dtsi")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+RDP474 comes with the SoC IPQ5300, so add the SoC info support for the
+same.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 75cd374943eb..6a06373a3779 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -3621,6 +3621,7 @@ apps_rsc: rsc@17a00000 {
- 			qcom,drv-id = <2>;
- 			qcom,tcs-config = <ACTIVE_TCS    3>, <SLEEP_TCS     2>,
- 					  <WAKE_TCS      2>, <CONTROL_TCS   0>;
-+			power-domains = <&CLUSTER_PD>;
- 
- 			apps_bcm_voter: bcm-voter {
- 				compatible = "qcom,bcm-voter";
+Kathiravan T (4):
+  dt-bindings: arm: qcom,ids: add SoC ID for IPQ5300
+  soc: qcom: socinfo: Add Soc ID for IPQ5300
+  dt-bindings: arm: qcom: document MI01.9 board based on IPQ5332 family
+  arm64: dts: qcom: ipq5332: add support for the RDP474 variant
+
+ .../devicetree/bindings/arm/qcom.yaml         |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts   | 112 ++++++++++++++++++
+ drivers/soc/qcom/socinfo.c                    |   1 +
+ include/dt-bindings/arm/qcom,ids.h            |   1 +
+ 5 files changed, 117 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts
 
 -- 
-2.40.1
+2.17.1
 
