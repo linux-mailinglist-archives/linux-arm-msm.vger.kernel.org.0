@@ -2,265 +2,240 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 85173717CA8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 12:02:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F4238717CD4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 12:07:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233199AbjEaKCM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 06:02:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57516 "EHLO
+        id S235813AbjEaKHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 06:07:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230300AbjEaKCK (ORCPT
+        with ESMTP id S235812AbjEaKHr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 06:02:10 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0DA1E2;
-        Wed, 31 May 2023 03:02:08 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34V8xxN0012216;
-        Wed, 31 May 2023 10:02:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=qcppdkim1;
- bh=lD+2X1zSALQHvTNQsdQg25A3lUc6+zGS5zMnH7ltgxE=;
- b=a7tee/byZ4wOdlA2/DeawESXZtoplRbBxNVRkKkjR6X1rtMfvR1+9CKHD8bGnah9D0+b
- Al6B+Cb/HkhTFcz1H35W/e0iW08o7QoHYeiIf86pkIzYJXBnJeJfiW+GfPSugWpbTFw9
- KntUlJnqSYpIzSBNfV6EdHvdHN/D6gQmUzWPvkEGkbrZ029rx1ShH0OJCRRSvz0OQIly
- qIYNJVBORPaV87KRG3UCf4w/J22S25jme7srk/IoM2fbnCZ8uNlahcsffToROD87j8E5
- 6R71mrrPEucF6LL3ZHinODg3GpGPe3Na42IwfIwTGZp2JAnyd9X7RsrO9FXLtUhiJkUO oA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qx30f85pr-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 31 May 2023 10:02:00 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34VA1wxi031961
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 31 May 2023 10:01:58 GMT
-Received: from nalasex01b.na.qualcomm.com (10.47.209.197) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Wed, 31 May 2023 03:01:53 -0700
-Received: from nalasex01b.na.qualcomm.com ([fe80::a057:7d2:b40d:81d6]) by
- nalasex01b.na.qualcomm.com ([fe80::a057:7d2:b40d:81d6%12]) with mapi id
- 15.02.0986.042; Wed, 31 May 2023 03:01:53 -0700
-From:   "Tim Jiang (QUIC)" <quic_tjiang@quicinc.com>
-To:     Johan Hovold <johan@kernel.org>
-CC:     "marcel@holtmann.org" <marcel@holtmann.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "linux-bluetooth@vger.kernel.org" <linux-bluetooth@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "Balakrishna Godavarthi (QUIC)" <quic_bgodavar@quicinc.com>,
-        "Hemant Gupta (QUIC)" <quic_hemantg@quicinc.com>
-Subject: RE: [PATCH v7] Bluetooth: hci_qca: Add support for Qualcomm Bluetooth
- SoC QCA2066
-Thread-Topic: [PATCH v7] Bluetooth: hci_qca: Add support for Qualcomm
- Bluetooth SoC QCA2066
-Thread-Index: AQHZk3IcnXyik61A4UCumHqGaYmUyK90mP+A//+MldA=
-Date:   Wed, 31 May 2023 10:01:52 +0000
-Message-ID: <9ff2d2bd20a34ff6915d605d7591d430@quicinc.com>
-References: <20230531034338.23121-1-quic_tjiang@quicinc.com>
- <ZHcYS1PXhhTmrpYa@hovoldconsulting.com>
-In-Reply-To: <ZHcYS1PXhhTmrpYa@hovoldconsulting.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.253.74.59]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+        Wed, 31 May 2023 06:07:47 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9FF1E5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 03:07:45 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f5021faa16so3811828e87.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 03:07:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685527664; x=1688119664;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=QKOqcdYffaPuAvsZ4cF6Kv8mBC9qOo1M+VBYAc7j870=;
+        b=J0kB0QX5UrjOVkn2cqMVcboC2TQmS8mF9Y2hgaWFKaWCqM7fNLTyukyelYvZe+7Kq7
+         nCTd6ar7bVwHZ5xHNdBrO9+vpp0FPt5NiNl7h8TPtLDNanVsxG32ZATJxIBcP1Z37lSJ
+         IZIzHxBft4QjY0SBONwVJiw7yOx3fP163he7u6lbZUWT42MJXAvDy/DPMyMO6qi7aU//
+         uXDUWaDX+XMH+8Z54SuQSijpM/ORXl7OhcKdNKU/xjL869/J4uooT45AkUr/Cn3suDsW
+         UFbIN7fv6Y67vCv12Ybf/FlRidDUnlvbA6fIPqU6NuGgQ70RJ4vtO/IUFXQgOCo/0qK4
+         ffVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685527664; x=1688119664;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QKOqcdYffaPuAvsZ4cF6Kv8mBC9qOo1M+VBYAc7j870=;
+        b=VO/Fc1O0nw/sSeMflc5HULUqlbU6mtlPe3jGIC8H6bYDh5W3RfXiDl9tamE64urEnL
+         cmK7FuTvE5Zywbmh5DTDQ9l086wWQuwmSBVTZb8j5F4fhRDdwnFm05sNE4RjAdUHsmxT
+         jRoDnnnyIjhm4L6+AdRq0pjtO8olqOmam/vm3V1xDfD18C3t6ya0GkMvwBGuMEPoe+zW
+         qH0OFwH9ys6/zL22tKnsxrAtj7XePVBqKGZFCT17GV5RKzPIRGnLHyLUCRNqATYb6mUc
+         TYz3pzeF2xSacPTi0uyhtq/C3QGVXCUrXxhhObfqbq7IPQqVg1JJ1oTUxzOBwr9dfEF1
+         8yHw==
+X-Gm-Message-State: AC+VfDw4P5+V/AUXqLToZBPBVlosFxbOX/YPcgumRRhBPjcy8F0F3cHC
+        Yh7uwNOX1qlojV9coe5K2V9b5Q==
+X-Google-Smtp-Source: ACHHUZ6g4CDeffFfXzftaZbZSf3SKkuRD2pIillen7CiBtHzJExUDY1BKN3JLXLga47sPT7rodnd+w==
+X-Received: by 2002:a2e:9457:0:b0:2ac:7d78:3465 with SMTP id o23-20020a2e9457000000b002ac7d783465mr2205896ljh.15.1685527663994;
+        Wed, 31 May 2023 03:07:43 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id s24-20020a2e9c18000000b002a8ae16ac8csm3236479lji.18.2023.05.31.03.07.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 31 May 2023 03:07:43 -0700 (PDT)
+Message-ID: <98e4bda7-19e9-09b6-f008-383adada97cb@linaro.org>
+Date:   Wed, 31 May 2023 13:07:42 +0300
 MIME-Version: 1.0
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: MwpcjYs_-mi8CKFKkTbCcxyHcAtkATQe
-X-Proofpoint-ORIG-GUID: MwpcjYs_-mi8CKFKkTbCcxyHcAtkATQe
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-31_06,2023-05-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- lowpriorityscore=0 mlxscore=0 priorityscore=1501 malwarescore=0
- bulkscore=0 clxscore=1011 adultscore=0 mlxlogscore=999 phishscore=0
- suspectscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2304280000 definitions=main-2305310087
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [Freedreno] [PATCH] drm/msm/dpu: re-introduce dpu core revision
+ to the catalog
+Content-Language: en-GB
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        quic_khsieh@quicinc.com, Rob Clark <robdclark@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>, quic_jesszhan@quicinc.com,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Sean Paul <sean@poorly.run>
+References: <20230531005358.18090-1-quic_abhinavk@quicinc.com>
+ <CAA8EJpryw0h8TgpJ+SFJ7s0=LCjkQ6oqAjCKsm60dk_Q5e+wWA@mail.gmail.com>
+ <0af4df3d-8048-98cd-6c91-7cd553f4f65f@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <0af4df3d-8048-98cd-6c91-7cd553f4f65f@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Johan:
-  Thanks for the review, inline comments.
+On 31/05/2023 06:05, Abhinav Kumar wrote:
+> 
+> 
+> On 5/30/2023 7:53 PM, Dmitry Baryshkov wrote:
+>> On Wed, 31 May 2023 at 03:54, Abhinav Kumar 
+>> <quic_abhinavk@quicinc.com> wrote:
+>>>
+>>> With [1] dpu core revision was dropped in favor of using the
+>>> compatible string from the device tree to select the dpu catalog
+>>> being used in the device.
+>>>
+>>> This approach works well however also necessitates adding catalog
+>>> entries for small register level details as dpu capabilities and/or
+>>> features bloating the catalog unnecessarily. Examples include but
+>>> are not limited to data_compress, interrupt register set, widebus etc.
+>>>
+>>> Introduce the dpu core revision back as an entry to the catalog so that
+>>> we can just use dpu revision checks and enable those bits which
+>>> should be enabled unconditionally and not controlled by a catalog
+>>> and also simplify the changes to do something like:
+>>>
+>>> if (dpu_core_revision > xxxxx && dpu_core_revision < xxxxx)
+>>>          enable the bit;
+>>>
+>>> Also, add some of the useful macros back to be able to use dpu core
+>>> revision effectively.
+>>>
+>>> [1]: https://patchwork.freedesktop.org/patch/530891/?series=113910&rev=4
+>>>
+>>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>> ---
+>>>   .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  1 +
+>>>   .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  1 +
+>>>   .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  1 +
+>>>   .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  1 +
+>>>   .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  1 +
+>>>   .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  1 +
+>>>   .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |  1 +
+>>>   .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |  1 +
+>>>   .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  1 +
+>>>   .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  1 +
+>>>   .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  1 +
+>>>   .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  1 +
+>>>   .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  1 +
+>>>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    | 31 ++++++++++++++++++-
+>>>   14 files changed, 43 insertions(+), 1 deletion(-)
+>>>
+>>
+>> [skipped catalog changes]
+>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>>> index 677048cc3b7d..cc4aa75a1219 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>>> @@ -19,6 +19,33 @@
+>>>    */
+>>>   #define MAX_BLOCKS    12
+>>>
+>>> +#define DPU_HW_VER(MAJOR, MINOR, STEP)\
+>>> +                 ((((unsigned int)MAJOR & 0xF) << 28) |\
+>>> +                 ((MINOR & 0xFFF) << 16) |\
+>>> +                 (STEP & 0xFFFF))
+>>> +
+>>> +#define DPU_HW_MAJOR(rev)((rev) >> 28)
+>>> +#define DPU_HW_MINOR(rev)(((rev) >> 16) & 0xFFF)
+>>> +#define DPU_HW_STEP(rev)((rev) & 0xFFFF)
+>>> +#define DPU_HW_MAJOR_MINOR(rev)((rev) >> 16)
+>>> +
+>>> +#define IS_DPU_MAJOR_MINOR_SAME(rev1, rev2)   \
+>>> +(DPU_HW_MAJOR_MINOR((rev1)) == DPU_HW_MAJOR_MINOR((rev2)))
+>>> +
+>>> +#define DPU_HW_VER_300 DPU_HW_VER(3, 0, 0) /* 8998 v1.0 */
+>>> +#define DPU_HW_VER_400 DPU_HW_VER(4, 0, 0) /* sdm845 v1.0 */
+>>> +#define DPU_HW_VER_500 DPU_HW_VER(5, 0, 0) /* sm8150 v1.0 */
+>>> +#define DPU_HW_VER_510 DPU_HW_VER(5, 1, 1) /* sc8180 */
+>>> +#define DPU_HW_VER_600 DPU_HW_VER(6, 0, 0) /* sm8250 */
+>>> +#define DPU_HW_VER_620 DPU_HW_VER(6, 2, 0) /* sc7180 v1.0 */
+>>> +#define DPU_HW_VER_630 DPU_HW_VER(6, 3, 0) /* sm6115|sm4250 */
+>>> +#define DPU_HW_VER_650 DPU_HW_VER(6, 5, 0) /* qcm2290|sm4125 */
+>>> +#define DPU_HW_VER_700 DPU_HW_VER(7, 0, 0) /* sm8350 */
+>>> +#define DPU_HW_VER_720 DPU_HW_VER(7, 2, 0) /* sc7280 */
+>>> +#define DPU_HW_VER_800 DPU_HW_VER(8, 0, 0) /* sc8280xp */
+>>> +#define DPU_HW_VER_810 DPU_HW_VER(8, 1, 0) /* sm8450 */
+>>> +#define DPU_HW_VER_900 DPU_HW_VER(9, 0, 0) /* sm8550 */
+>>
+>> Instead of having defines for all SoCs (which can quickly become
+>> unmanageable) and can cause merge conflicts, I'd suggest inlining all
+>> the defines into respective catalog files.
+>>
+> 
+> Sure, that can be done.
+> 
+>> Also, I'm not sure that the "step" should be a part of the catalog. I
+>> know that this follows the hardware revision. However, please correct
+>> me if I'm wrong, different step levels are used for revisions of the
+>> same SoC. The original code that was reading the hw revision from the
+>> hardware register, listed both 5.0.0 and 5.0.1 for sm8150.
+>>
+> 
+> This is one of the things i noticed while making this change.
+> 
+> Before the catalog rework, we used to handle even steps as we used to 
+> read that from the register and match it with the mdss_cfg handler. But 
+> after the rework, we dont handle steps anymore. Yes, you are right that 
+> different step levels are used for the revisions of the same SOC and so 
+> with that, i dont expect or atleast am not aware of DPU differences 
+> between steps but I am not able to rule it out.
+> 
+> So are you suggesting we drop step altogether and DPU_HW_VER() macro 
+> shall only handle major and minor versions? With the current chipsets I 
+> see, it should not make a difference . Its just that I am not sure if 
+> that will never happen.
 
-Regards.
-Tim
+Yes. The goal of this rework would be to drop generic features and to 
+replace those checks with DPU-revision lookups. Correct?
+I think that from this perspective having to handle toe step revision is 
+a sign of an overkill. Having to handle the step revision is a sign of 
+paltform feature (or mis-feature) rather than a generic DPU bit.
 
+In fact I suppose that even handling a minor revision would be an 
+overkill. Why don't we start with .dpu_major instead of .core_rev? We 
+can add .dpu_minor if/when required.
 
------Original Message-----
-From: Johan Hovold <johan@kernel.org>=20
-Sent: Wednesday, May 31, 2023 5:50 PM
-To: Tim Jiang (QUIC) <quic_tjiang@quicinc.com>
-Cc: marcel@holtmann.org; linux-kernel@vger.kernel.org; linux-bluetooth@vger=
-.kernel.org; linux-arm-msm@vger.kernel.org; Balakrishna Godavarthi (QUIC) <=
-quic_bgodavar@quicinc.com>; Hemant Gupta (QUIC) <quic_hemantg@quicinc.com>
-Subject: Re: [PATCH v7] Bluetooth: hci_qca: Add support for Qualcomm Blueto=
-oth SoC QCA2066
+> 
+>>> +
+>>>   #define DPU_HW_BLK_NAME_LEN    16
+>>>
+>>>   #define MAX_IMG_WIDTH 0x3fff
+>>> @@ -769,7 +796,7 @@ struct dpu_perf_cfg {
+>>>   /**
+>>>    * struct dpu_mdss_cfg - information of MDSS HW
+>>>    * This is the main catalog data structure representing
+>>> - * this HW version. Contains number of instances,
+>>> + * this HW version. Contains dpu core revision, number of instances,
+>>>    * register offsets, capabilities of the all MDSS HW sub-blocks.
+>>>    *
+>>>    * @dma_formats        Supported formats for dma pipe
+>>> @@ -778,6 +805,8 @@ struct dpu_perf_cfg {
+>>>    * @mdss_irqs:         Bitmap with the irqs supported by the target
+>>>    */
+>>>   struct dpu_mdss_cfg {
+>>> +       u32 core_rev;
+>>> +
+>>>          const struct dpu_caps *caps;
+>>>
+>>>          const struct dpu_ubwc_cfg *ubwc;
+>>> -- 
+>>> 2.40.1
+>>>
+>>
+>>
 
-On Wed, May 31, 2023 at 11:43:38AM +0800, Tim Jiang wrote:
-> This patch adds support for QCA2066 firmware patch and nvm downloading.
-> as the RF performance of qca2066 soc chip from different foundries=20
-> will be difference, so we use different nvm to configure them by=20
-> according to board id.
->=20
-> Signed-off-by: Tim Jiang <quic_tjiang@quicinc.com>
-> ---
->  drivers/bluetooth/btqca.c   | 76 ++++++++++++++++++++++++++++++++++++-
->  drivers/bluetooth/btqca.h   |  4 ++
->  drivers/bluetooth/hci_qca.c |  8 +++-
->  3 files changed, 86 insertions(+), 2 deletions(-)
->=20
-> diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c=20
-> index e7e58a956d15..960a409e16d6 100644
-> --- a/drivers/bluetooth/btqca.c
-> +++ b/drivers/bluetooth/btqca.c
-> @@ -205,6 +205,48 @@ static int qca_send_reset(struct hci_dev *hdev)
->  	return 0;
->  }
-> =20
-> +static int qca_read_fw_board_id(struct hci_dev *hdev, u16 *bid) {
-> +	u8 cmd;
-> +	struct sk_buff *skb;
-> +	struct edl_event_hdr *edl;
-> +	int err =3D 0;
-> +	int bid_len;
-> +
-> +	bt_dev_dbg(hdev, "QCA read board ID");
+-- 
+With best wishes
+Dmitry
 
-Drop this.
-[Tim] will address it in v8 version.
-
-> +
-> +	cmd =3D EDL_GET_BID_REQ_CMD;
-> +	skb =3D __hci_cmd_sync_ev(hdev, EDL_PATCH_CMD_OPCODE, EDL_PATCH_CMD_LEN=
-,
-> +				&cmd, 0, HCI_INIT_TIMEOUT);
-> +	if (IS_ERR(skb)) {
-> +		err =3D PTR_ERR(skb);
-> +		bt_dev_err(hdev, "Reading QCA board ID failed (%d)", err);
-> +		return err;
-> +	}
-> +
-> +	edl =3D skb_pull_data(skb, sizeof(*edl));
-> +	if (!edl) {
-> +		bt_dev_err(hdev, "QCA read board ID with no header");
-> +		err =3D -EILSEQ;
-> +		goto out;
-> +	}
-> +
-> +	if (edl->cresp !=3D EDL_CMD_REQ_RES_EVT ||
-> +	    edl->rtype !=3D EDL_GET_BID_REQ_CMD) {
-> +		bt_dev_err(hdev, "QCA Wrong packet: %d %d", edl->cresp, edl->rtype);
-> +		err =3D -EIO;
-> +		goto out;
-> +	}
-> +
-> +	bid_len =3D edl->data[0];
-> +	*bid =3D (edl->data[1] << 8) + edl->data[2];
-> +	bt_dev_info(hdev, "%s: bid len =3D %x, bid =3D %x", __func__, bid_len,=
-=20
-> +*bid);
-
-This type of information should not be printed by default.
-
-At most this should be dev_dbg() level, but it should probably just be drop=
-ped.
-[Tim] will address it in v8 version
-
-> +
-> +out:
-> +	kfree_skb(skb);
-> +	return err;
-> +}
-> +
->  int qca_send_pre_shutdown_cmd(struct hci_dev *hdev)  {
->  	struct sk_buff *skb;
-> @@ -574,6 +616,29 @@ int qca_set_bdaddr_rome(struct hci_dev *hdev,=20
-> const bdaddr_t *bdaddr)  }  EXPORT_SYMBOL_GPL(qca_set_bdaddr_rome);
-> =20
-> +static void qca_generate_nvm_name(struct hci_dev *hdev, char *fwname,
-> +		   size_t max_size, struct qca_btsoc_version ver, u16 bid) {
-> +	u8 rom_ver =3D 0;
-
-Drop the redundant initialisation.
-[Tim] will address it in v8 version.
-
-> +	u32 soc_ver;
-> +	const char *variant;
-> +
-> +	soc_ver =3D get_soc_ver(ver.soc_id, ver.rom_ver);
-> +	rom_ver =3D ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
-> +
-> +	if ((le32_to_cpu(ver.soc_id) & 0x0000ff00) =3D=3D QCA_HSP_GF_SOC_ID)  /=
-* hsp gf chip */
-> +		variant =3D "g";
-> +	else
-> +		variant =3D "";
-> +
-> +	if (bid =3D=3D 0x0)
-> +		snprintf(fwname, max_size, "qca/hpnv%02x%s.bin", rom_ver, variant);
-> +	else
-> +		snprintf(fwname, max_size, "qca/hpnv%02x%s.%x", rom_ver, variant,=20
-> +bid);
-> +
-> +	bt_dev_info(hdev, "%s: nvm name is %s", __func__, fwname);
-
-dev_dbg(), if at all needed.
-[Tim] will address it in v8 version.
-
-> +}
-> +
->  int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
->  		   enum qca_btsoc_type soc_type, struct qca_btsoc_version ver,
->  		   const char *firmware_name)
-
-> @@ -644,7 +716,9 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baud=
-rate,
->  			snprintf(config.fwname, sizeof(config.fwname),
->  				 "qca/crnv%02x.bin", rom_ver);
->  		}
-> -	}
-> +	} else if (soc_type =3D=3D QCA_QCA2066)
-> +		qca_generate_nvm_name(hdev, config.fwname, sizeof(config.fwname),
-> +				ver, boardid);
-
-Missing brackets (if one branch has them, all of them should even the curre=
-nt code may not be following this).
-[Tim] will address it in v8 version.
-
->  	else if (soc_type =3D=3D QCA_QCA6390)
->  		snprintf(config.fwname, sizeof(config.fwname),
->  			 "qca/htnv%02x.bin", rom_ver);
-
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c=20
-> index 1b064504b388..bf7683040ebd 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -1729,7 +1729,7 @@ static int qca_setup(struct hci_uart *hu)
->  	bt_dev_info(hdev, "setting up %s",
->  		qca_is_wcn399x(soc_type) ? "wcn399x" :
->  		(soc_type =3D=3D QCA_WCN6750) ? "wcn6750" :
-> -		(soc_type =3D=3D QCA_WCN6855) ? "wcn6855" : "ROME/QCA6390");
-> +		(soc_type =3D=3D QCA_WCN6855) ? "wcn6855" : "ROME/QCA6390/QCA2066");
-
-This just looks very lazy.
-
-How about cleaning up the current implementation if you don't want to make =
-this expression worse than it already is?
-[Tim] ok, I will introduce "switch case " to make it more clearly
-
-> =20
->  	qca->memdump_state =3D QCA_MEMDUMP_IDLE;
-> =20
-
-Johan
