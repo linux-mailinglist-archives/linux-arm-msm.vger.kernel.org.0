@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EA427718170
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 15:23:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B68F718171
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 15:23:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236457AbjEaNXQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 09:23:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44048 "EHLO
+        id S236415AbjEaNXR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 09:23:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43758 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236415AbjEaNXJ (ORCPT
+        with ESMTP id S236399AbjEaNXK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 09:23:09 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 881EE19D
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 06:22:57 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f3a873476bso6519860e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 06:22:57 -0700 (PDT)
+        Wed, 31 May 2023 09:23:10 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDACB98
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 06:22:58 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f4db9987f8so1181604e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 06:22:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685539376; x=1688131376;
+        d=linaro.org; s=google; t=1685539377; x=1688131377;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Hb3cJs8S+b9i+3pqmaiIthRfWx6iQntlvpEpXJn9bLA=;
-        b=tWm4kuPdRIaPGwf7Vpgi5R+PsmQ5J49nOnsODqNeP9jWy3KRzIHWSeFkMDXthmi9fu
-         UORpSqQedoaUGcM8iFyvOFwzqprX1pj1CVJP/fOJCPar2wn6bbg/rYtSFUerKJ45Cn+t
-         liOeMYHHHlXnZUbBCTpbm+CmPTWr+yjAh8/nM909r2nwQLOiXGPJwQ66EczSbR9Pys1E
-         /0ByOmRWSWqLhmtYaYBJe2CwMQ/Zs9YQ7kiDePuEuOpwibCHf4wGDgD14Mn40GdFw0XB
-         zyHdJLre4s2U2FzGOfm+6k7OjOolzxtBSOaFV3OEVmWTl7txNKn2IEhuIby0F2OhW1+q
-         VUtQ==
+        bh=xFK+Ou6t+IM+Z0lJFsVgxMPKX7db6qU21GRYqBnVGs8=;
+        b=xheckUJTFHHmw4+nyIEBDwWhPOuL3vNKlQo5u212RJIkGqB0ZD30MnU7ZHr5rC/T4u
+         MrR4IesMXrVF2zTudxQF/tx/VlT3exAyrfdtPMtHmFleB2shWS5Z1IHFzUDcy+Okd8fm
+         ud/KpK48LlzoZWJY3QwpGOa7VhapJvoik6tUP1WAmT5bbv8gLgsIDzgekdghaBBg9TcR
+         l901P//oMpyKUdJ1dwtjVYMRJVFMfBhhP0P335oOalSNIQcaolStpPTFoTM+Q+lanTWp
+         qLeuRVO10oKbCP/2izLOCoMb/Os8AHwyB2V6duXywxrqzTsl+W4iDd0uDDhqYcmlZFEV
+         qVvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685539376; x=1688131376;
+        d=1e100.net; s=20221208; t=1685539377; x=1688131377;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Hb3cJs8S+b9i+3pqmaiIthRfWx6iQntlvpEpXJn9bLA=;
-        b=JZF1ojnTNoRXFDToahqyXXQ/z7jjTgFxI7pDR+lYvuLbusIPnNpgWKhQiBdTGJcp9V
-         5RsVoHbfFeJWY50rvY28DH9euEnHwunkUgc9V6QMkGj9YQV+3JYKz1fB4WZRv8wIcRwX
-         cKrrR7ulD47J9nz01PvKFxkavXY+j60ro08eAdMOVyyEdrsF9CdMZoXX/i1hdiBfN4nV
-         uAkrfGdDT7uvVkDY/HeuYZeb5pvFh/PiEsJ1D5VvVQZ6vcyc4FsntdbABO7GWzVzJDGH
-         FM/IYxZwtlgedxsTppgmN1i2huNcb6sBmi5OaBem6Vd/NFIamb4mNP57vNn/tygk5k1H
-         7sjA==
-X-Gm-Message-State: AC+VfDzwUCbLB1qLTYD+w1DvwcOOdRumYm44p7O6YNvs6uJo9O7Yq8BK
-        u6uHGv3vQnd2duMvIDLfeAAWXQ==
-X-Google-Smtp-Source: ACHHUZ7VQDSKkTLphTD91X960e9ZnUQdqciyF3gpI8iNi33oullRyjLbxxYpnR1xEXJovT5YSIjf1A==
-X-Received: by 2002:a19:740f:0:b0:4f1:444e:6c5a with SMTP id v15-20020a19740f000000b004f1444e6c5amr2793402lfe.8.1685539375755;
-        Wed, 31 May 2023 06:22:55 -0700 (PDT)
+        bh=xFK+Ou6t+IM+Z0lJFsVgxMPKX7db6qU21GRYqBnVGs8=;
+        b=bC8AEX6ufYGrW9Wl392cIF/mkDZBk6AoXNdPQ/LskmrkLfFl2GybBv28txl27BTJPd
+         o4jLUcsDOlu47kUNJSxcMtLv/5oMR1X/Q/9qwajLC6ZH77t3vFc5GLwyemPkd/GHFZDx
+         cYK+zEXwyvIO50V5jeOFDw1IxnXbzkBPkxtM4GqssKETZdbcrYyD5quZMAoO6nEDmkAZ
+         aAESdm2BfvFPAU/c5z/6Y+c3IqFt7CqiUf45+CuT6DfuPiVnFLi7ru3ZxjFBYdvHngwU
+         nEOQGWtv9xLUJT+tus+T1qfsBL3oYvl/5UPtMsU3J3oFR60JF0wlVuOmLE7Ldl998NgC
+         kKEQ==
+X-Gm-Message-State: AC+VfDyClw0w5r3v1RGpapofqhRIh6Zjce6VUhQwEF4jcUQnpQ55F4y0
+        ZU7ypbMTMTfzprvzdhRUw+afmw==
+X-Google-Smtp-Source: ACHHUZ4AkcgCPt1BOGb6Lkh6GQHDiODuTCyRIATpixy8K5JY7ZGBzaZZQmjg1UxN8xHAOlOH9yiwVw==
+X-Received: by 2002:ac2:5df6:0:b0:4f3:b242:aa98 with SMTP id z22-20020ac25df6000000b004f3b242aa98mr1822980lfq.30.1685539377267;
+        Wed, 31 May 2023 06:22:57 -0700 (PDT)
 Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id w8-20020ac24428000000b004eb0c51780bsm720138lfl.29.2023.05.31.06.22.53
+        by smtp.gmail.com with ESMTPSA id w8-20020ac24428000000b004eb0c51780bsm720138lfl.29.2023.05.31.06.22.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 May 2023 06:22:55 -0700 (PDT)
+        Wed, 31 May 2023 06:22:56 -0700 (PDT)
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 31 May 2023 15:22:41 +0200
-Subject: [PATCH 7/8] arm64: dts: qcom: sm6350: Flush RSC sleep & wake votes
+Date:   Wed, 31 May 2023 15:22:42 +0200
+Subject: [PATCH 8/8] arm64: dts: qcom: sm8550: Flush RSC sleep & wake votes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230531-topic-rsc-v1-7-b4a985f57b8b@linaro.org>
+Message-Id: <20230531-topic-rsc-v1-8-b4a985f57b8b@linaro.org>
 References: <20230531-topic-rsc-v1-0-b4a985f57b8b@linaro.org>
 In-Reply-To: <20230531-topic-rsc-v1-0-b4a985f57b8b@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
@@ -80,17 +80,17 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1685539362; l=1004;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1685539362; l=1011;
  i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=469DtGv+StozkNQONl/RzrsYYq164VDguNLK8FCEzCQ=;
- b=4iaFll04ZJ6w8qa55AtksLRnhQ5nFnAq/HVuH0NMmlmCdHLKuch85b+tL3htVyOH8YalkXcpG
- K1DL5/wG9/+B1w/++Hjo918M+f6yHc2ZhnFIEKLpNiZCulmArWN35Ff
+ bh=3LQbT1pkRcM60cyga6zU0z4GuxAMPjHrb5uo6UzkAYI=;
+ b=Qt8SrZzczur1fTmSMEih1/4sXuG2wBrLyUhegwmgObDm6zu6aVcZgfgo883vtVdYv7Eq/MOZp
+ vxQB0wJ3fvZA06kosIaS1r3hX01+7SKs0Mhnoc7nvCKPAnImrnb99XD
 X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
  pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -104,24 +104,24 @@ about this event.
 
 Without this, only AMC votes are being commited.
 
-Fixes: 5f82b9cda61e ("arm64: dts: qcom: Add SM6350 device tree")
+Fixes: ffc50b2d3828 ("arm64: dts: qcom: Add base SM8550 dtsi")
 Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 1 +
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index 9311bb6bddab..1cdad69e3c07 100644
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -2055,6 +2055,7 @@ apps_rsc: rsc@18200000 {
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 75cd374943eb..6a06373a3779 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -3621,6 +3621,7 @@ apps_rsc: rsc@17a00000 {
  			qcom,drv-id = <2>;
- 			qcom,tcs-config = <ACTIVE_TCS 2>, <SLEEP_TCS 3>,
- 					  <WAKE_TCS 3>, <CONTROL_TCS 1>;
+ 			qcom,tcs-config = <ACTIVE_TCS    3>, <SLEEP_TCS     2>,
+ 					  <WAKE_TCS      2>, <CONTROL_TCS   0>;
 +			power-domains = <&CLUSTER_PD>;
  
- 			rpmhcc: clock-controller {
- 				compatible = "qcom,sm6350-rpmh-clk";
+ 			apps_bcm_voter: bcm-voter {
+ 				compatible = "qcom,bcm-voter";
 
 -- 
 2.40.1
