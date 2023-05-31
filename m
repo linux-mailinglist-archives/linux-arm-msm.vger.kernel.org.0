@@ -2,166 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 65C5D7173E4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 04:49:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA38E7173ED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 04:53:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232081AbjEaCt5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 22:49:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32850 "EHLO
+        id S233479AbjEaCxz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 22:53:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231417AbjEaCt4 (ORCPT
+        with ESMTP id S231417AbjEaCxy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 22:49:56 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D9498E;
-        Tue, 30 May 2023 19:49:55 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34V2PcGS013603;
-        Wed, 31 May 2023 02:49:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=qcppdkim1;
- bh=DrIz8g9inIqB+//ujGYX739blh73k61Xr2sN/fXVZVY=;
- b=GE8dzKX60xY0A9OBhibUScixE1D8EV47mF25Tptw0rfh0syvTCOhjSqPTLmXSKxaXTXh
- qSXIp+juCiSdpQrtz/71C3438QS5mvQI6ebwI+DxbzBBvMcqOSrGwZXAU4mVKWGNMk4X
- i1b3oS2M39Cru0SCjN5gkRPiuibO1lco4+Jh9lr2wucnHUAP92GXVgW5Bv/b32leCPbD
- FraF7vNXq3EYChvCaj9aCV5dIjGzo3lLOtB7/iKeq8BjrjRe6npT4iFkx9XWGkQeLnDu
- NsVYaERjq/jSM/sWnSowm36zAT8B2S3b08ko/UKYyPj4LRVyssflMG/4eWiYU7fm7iXT lQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qwnhf0wc8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 31 May 2023 02:49:51 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 34V2no6p032194
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 31 May 2023 02:49:50 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 30 May 2023 19:49:49 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH] arm64: dts: qcom: Drop undocumented "svid" property
-Date:   Tue, 30 May 2023 19:49:44 -0700
-Message-ID: <20230531024944.4105769-1-quic_bjorande@quicinc.com>
-X-Mailer: git-send-email 2.25.1
+        Tue, 30 May 2023 22:53:54 -0400
+Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43229C9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 19:53:53 -0700 (PDT)
+Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-565a77af71fso43858587b3.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 19:53:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685501632; x=1688093632;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ViIfA1VTYU+Yivg6ZJf5R1ts4ZLw0POYEP4bI9c+UkE=;
+        b=zTd/4K06RJiKkwb/mq+FXTJA3prplNzKfgdknPOO1NEXBZuEsdTvUvDtzbf4+LdOZ3
+         F6tMVkCXMxKv+x2Q0u3a+7OQIsWuTiDxty86U5wKLr5tC0I+AN9IhVEXIarJ1p6tktTq
+         zK9KDbWBHNU4Q7t3dN9TTasVVMnPLLtIz/LjsTbn3lyGCKQV7tTZF1BjoeS0fhi/Yq2G
+         qKZyPLQgaGUpUJ1BqecnebEOHK8GGEUJUptJmE+jQJYcydHaweGX6CxB4ApCBrAEoYuj
+         hTKicrmB2q7jzH/mXiMR+meq86B0+XZm66UW25tthhTZZVIXqeihDnJYQQmE9GD0lZOT
+         xj+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685501632; x=1688093632;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ViIfA1VTYU+Yivg6ZJf5R1ts4ZLw0POYEP4bI9c+UkE=;
+        b=P+lzdkfSONFPdZWvxI6l8+OQHocB/Q4KKOt32QNnbRVjlXs2RmcizBACmT09FDiIjr
+         wn+w4FGbnJGDvZymyJbmgprel73Rc8JalqilvlDZGWJuQxWAUNqpmfC9thhqDeFKHoIz
+         F7WQQ+ZnY3x7yWj+ZpfanVNN7YAQoyFnbbu2f8NjxxlN84oTEBcD95fXM7SsyVjlczxH
+         ukfcvgKXCQuC0p8xL/WAlrd1ktY+rM8vBXPzkysn5lxfgehvICBfcytdlYZ0InPXvvJ8
+         lDwY6c4mCUyN4APWgIKa1c/4q+FM3TVR1MlHvVIygcYgXGQbQTp7wBNEphpBKLEExcfm
+         NE1g==
+X-Gm-Message-State: AC+VfDxXL6aek0ij5vZREf9/zvBWeBoVXuydMDQhsj9ATUQSpXrxP/gO
+        GoasjNVtaziHHbW501ooKFDWOCVPpmFEx/1Fn5rz733SuYsIL33eLiw=
+X-Google-Smtp-Source: ACHHUZ728biKo2DvqcBWyirrVo1tJbcLxBxYyxJIDbjfmZY1pX1eelSsAlNo2jih4g90gVRlugntll0kCVm1hUBDDec=
+X-Received: by 2002:a81:c310:0:b0:568:4918:a9b7 with SMTP id
+ r16-20020a81c310000000b005684918a9b7mr4698875ywk.23.1685501631004; Tue, 30
+ May 2023 19:53:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01b.na.qualcomm.com (10.47.209.197) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 8Y4ayMeJuLNo7Aj92VP70A9badBj2Uky
-X-Proofpoint-GUID: 8Y4ayMeJuLNo7Aj92VP70A9badBj2Uky
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-30_18,2023-05-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- suspectscore=0 malwarescore=0 mlxlogscore=650 mlxscore=0
- priorityscore=1501 bulkscore=0 adultscore=0 spamscore=0 clxscore=1015
- phishscore=0 lowpriorityscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2304280000 definitions=main-2305310021
+References: <20230531005358.18090-1-quic_abhinavk@quicinc.com>
+In-Reply-To: <20230531005358.18090-1-quic_abhinavk@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 31 May 2023 05:53:40 +0300
+Message-ID: <CAA8EJpryw0h8TgpJ+SFJ7s0=LCjkQ6oqAjCKsm60dk_Q5e+wWA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dpu: re-introduce dpu core revision to the catalog
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel@lists.freedesktop.org, quic_jesszhan@quicinc.com,
+        quic_khsieh@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Linux typec_mux implementation required that a property named "svid"
-was present in the remote node of the of_graph for a match to be found.
+On Wed, 31 May 2023 at 03:54, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>
+> With [1] dpu core revision was dropped in favor of using the
+> compatible string from the device tree to select the dpu catalog
+> being used in the device.
+>
+> This approach works well however also necessitates adding catalog
+> entries for small register level details as dpu capabilities and/or
+> features bloating the catalog unnecessarily. Examples include but
+> are not limited to data_compress, interrupt register set, widebus etc.
+>
+> Introduce the dpu core revision back as an entry to the catalog so that
+> we can just use dpu revision checks and enable those bits which
+> should be enabled unconditionally and not controlled by a catalog
+> and also simplify the changes to do something like:
+>
+> if (dpu_core_revision > xxxxx && dpu_core_revision < xxxxx)
+>         enable the bit;
+>
+> Also, add some of the useful macros back to be able to use dpu core
+> revision effectively.
+>
+> [1]: https://patchwork.freedesktop.org/patch/530891/?series=113910&rev=4
+>
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> ---
+>  .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  1 +
+>  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    | 31 ++++++++++++++++++-
+>  14 files changed, 43 insertions(+), 1 deletion(-)
+>
 
-With the introduction of commit '4aebc4f89f00 ("usb: typec: mux: Clean up
-mux_fwnode_match()")', the implementation is aligned with the binding
-and this property can be dropped - and the associated DeviceTree
-validation warning resolved.
+[skipped catalog changes]
 
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index 677048cc3b7d..cc4aa75a1219 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -19,6 +19,33 @@
+>   */
+>  #define MAX_BLOCKS    12
+>
+> +#define DPU_HW_VER(MAJOR, MINOR, STEP)\
+> +                 ((((unsigned int)MAJOR & 0xF) << 28) |\
+> +                 ((MINOR & 0xFFF) << 16) |\
+> +                 (STEP & 0xFFFF))
+> +
+> +#define DPU_HW_MAJOR(rev)((rev) >> 28)
+> +#define DPU_HW_MINOR(rev)(((rev) >> 16) & 0xFFF)
+> +#define DPU_HW_STEP(rev)((rev) & 0xFFFF)
+> +#define DPU_HW_MAJOR_MINOR(rev)((rev) >> 16)
+> +
+> +#define IS_DPU_MAJOR_MINOR_SAME(rev1, rev2)   \
+> +(DPU_HW_MAJOR_MINOR((rev1)) == DPU_HW_MAJOR_MINOR((rev2)))
+> +
+> +#define DPU_HW_VER_300 DPU_HW_VER(3, 0, 0) /* 8998 v1.0 */
+> +#define DPU_HW_VER_400 DPU_HW_VER(4, 0, 0) /* sdm845 v1.0 */
+> +#define DPU_HW_VER_500 DPU_HW_VER(5, 0, 0) /* sm8150 v1.0 */
+> +#define DPU_HW_VER_510 DPU_HW_VER(5, 1, 1) /* sc8180 */
+> +#define DPU_HW_VER_600 DPU_HW_VER(6, 0, 0) /* sm8250 */
+> +#define DPU_HW_VER_620 DPU_HW_VER(6, 2, 0) /* sc7180 v1.0 */
+> +#define DPU_HW_VER_630 DPU_HW_VER(6, 3, 0) /* sm6115|sm4250 */
+> +#define DPU_HW_VER_650 DPU_HW_VER(6, 5, 0) /* qcm2290|sm4125 */
+> +#define DPU_HW_VER_700 DPU_HW_VER(7, 0, 0) /* sm8350 */
+> +#define DPU_HW_VER_720 DPU_HW_VER(7, 2, 0) /* sc7280 */
+> +#define DPU_HW_VER_800 DPU_HW_VER(8, 0, 0) /* sc8280xp */
+> +#define DPU_HW_VER_810 DPU_HW_VER(8, 1, 0) /* sm8450 */
+> +#define DPU_HW_VER_900 DPU_HW_VER(9, 0, 0) /* sm8550 */
 
-The referred to patch is present in usb-next.
+Instead of having defines for all SoCs (which can quickly become
+unmanageable) and can cause merge conflicts, I'd suggest inlining all
+the defines into respective catalog files.
 
- arch/arm64/boot/dts/qcom/sc8280xp-crd.dts                  | 2 --
- arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 2 --
- arch/arm64/boot/dts/qcom/sm8350-hdk.dts                    | 1 -
- arch/arm64/boot/dts/qcom/sm8450-hdk.dts                    | 1 -
- 4 files changed, 6 deletions(-)
+Also, I'm not sure that the "step" should be a part of the catalog. I
+know that this follows the hardware revision. However, please correct
+me if I'm wrong, different step levels are used for revisions of the
+same SoC. The original code that was reading the hw revision from the
+hardware register, listed both 5.0.0 and 5.0.1 for sm8150.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-index cd7e0097d8bc..4594ef4c1f38 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
-@@ -229,7 +229,6 @@ usb0-sbu-mux {
- 
- 		mode-switch;
- 		orientation-switch;
--		svid = /bits/ 16 <0xff01>;
- 
- 		port {
- 			usb0_sbu_mux: endpoint {
-@@ -249,7 +248,6 @@ usb1-sbu-mux {
- 
- 		mode-switch;
- 		orientation-switch;
--		svid = /bits/ 16 <0xff01>;
- 
- 		port {
- 			usb1_sbu_mux: endpoint {
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 5ae057ad6438..a93170e57229 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -329,7 +329,6 @@ usb0-sbu-mux {
- 
- 		mode-switch;
- 		orientation-switch;
--		svid = /bits/ 16 <0xff01>;
- 
- 		port {
- 			usb0_sbu_mux: endpoint {
-@@ -349,7 +348,6 @@ usb1-sbu-mux {
- 
- 		mode-switch;
- 		orientation-switch;
--		svid = /bits/ 16 <0xff01>;
- 
- 		port {
- 			usb1_sbu_mux: endpoint {
-diff --git a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-index d3788bd72ac3..0c4829e876f3 100644
---- a/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8350-hdk.dts
-@@ -348,7 +348,6 @@ typec-mux@42 {
- 		vcc-supply = <&vreg_bob>;
- 		mode-switch;
- 		orientation-switch;
--		svid = /bits/ 16 <0xff01>;
- 
- 		ports {
- 			#address-cells = <1>;
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-index d5aeb7319776..c9676e7f2c69 100644
---- a/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8450-hdk.dts
-@@ -517,7 +517,6 @@ typec-mux@42 {
- 		vcc-supply = <&vreg_bob>;
- 		mode-switch;
- 		orientation-switch;
--		svid = /bits/ 16 <0xff01>;
- 
- 		ports {
- 			#address-cells = <1>;
+> +
+>  #define DPU_HW_BLK_NAME_LEN    16
+>
+>  #define MAX_IMG_WIDTH 0x3fff
+> @@ -769,7 +796,7 @@ struct dpu_perf_cfg {
+>  /**
+>   * struct dpu_mdss_cfg - information of MDSS HW
+>   * This is the main catalog data structure representing
+> - * this HW version. Contains number of instances,
+> + * this HW version. Contains dpu core revision, number of instances,
+>   * register offsets, capabilities of the all MDSS HW sub-blocks.
+>   *
+>   * @dma_formats        Supported formats for dma pipe
+> @@ -778,6 +805,8 @@ struct dpu_perf_cfg {
+>   * @mdss_irqs:         Bitmap with the irqs supported by the target
+>   */
+>  struct dpu_mdss_cfg {
+> +       u32 core_rev;
+> +
+>         const struct dpu_caps *caps;
+>
+>         const struct dpu_ubwc_cfg *ubwc;
+> --
+> 2.40.1
+>
+
+
 -- 
-2.25.1
-
+With best wishes
+Dmitry
