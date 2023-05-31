@@ -2,80 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F159F717BD2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 11:25:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 94F11717C18
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 11:38:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234145AbjEaJZT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 05:25:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34354 "EHLO
+        id S235403AbjEaJiQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 05:38:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41864 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235559AbjEaJZC (ORCPT
+        with ESMTP id S234834AbjEaJiP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 05:25:02 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B746E6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 02:25:01 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3f6e1394060so41246035e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 02:25:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685525100; x=1688117100;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Va+eWZi2uLo9F99GJo8IumrvbwwllLELRegYwCB2G7g=;
-        b=KrlIc+T4nwlhRheAQ20Rg63SC1LrUwcKrgsZv1zunGJIEUlK4Z61iaSFqUnBOMx/Qi
-         zSadPvooyvqtH2Z/r+8gnsRXJ8hRLIOYqeOVf6c8AmVOEtfCPccxoYhr26OXFIEvr9+r
-         glikUxlwr42/RSYppiz2kVp262udNlqGLfUKbg7th9gb4CwgbSEfhcMm9qmDn30UAakM
-         s18bRcjB46GZ5uYjyaQgZCb7K4d67h0eVC1wkSsF1wJeuJ4iOTWXDJnxKGpZxv0NRorI
-         RP/oPSjJOJGi97gpr0PMkenhWmnoMfU919VZyLB54qp5Dh7EAMd3iy0MaluBYTjHfrSy
-         /0ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685525100; x=1688117100;
-        h=content-transfer-encoding:in-reply-to:organization:from:references
-         :cc:to:content-language:subject:reply-to:user-agent:mime-version
-         :date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Va+eWZi2uLo9F99GJo8IumrvbwwllLELRegYwCB2G7g=;
-        b=JGjjEoR7T0Z1haP8M0Xcdi5KBMMQxCXWJWjL1SpmIYNWPnP82PK1EZPKBrgZ2sigA7
-         quLNOncGWEH5u8P7m21Ib63inbC8APgNbte72tZaAM1fNvgRJX0icVv/wuBsAzekuRjF
-         Z5CFQhj5ZXgHAObNVNe+vklxaN8lzj/OSx/UY9ZprDddwtsn5qV0t15OY12Li2bvf4y+
-         27RRLDoYEPaiGG9gXYlXsbj+c8fTBv7V2Lult8SdCYNJM233KcBNMbql1AbinPhmKijQ
-         MpQGgWcK4AIe3I4C3wGOKXiJgRgq0uleqA20FCAuJo0iUqlT3XRyEtsOW3NxzqM4fT9T
-         vTAQ==
-X-Gm-Message-State: AC+VfDz38lZwpYAG9AZaaZ9I2VSTEkflMSTZnRBcBm7BVDvckSXQ+lrR
-        QII0OtwBZKC7eho513LqQOXmKQ==
-X-Google-Smtp-Source: ACHHUZ4ofPLi7HPrByG9DJoBSCZNlWjijRrg8aTJMcUMR9JTA5Iy6UPz3xnS/1uS1TtgIaZXcvJgFg==
-X-Received: by 2002:a05:600c:2219:b0:3f6:8ca:ed52 with SMTP id z25-20020a05600c221900b003f608caed52mr3910358wml.34.1685525099874;
-        Wed, 31 May 2023 02:24:59 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:5c28:3ad5:fcda:7779? ([2a01:e0a:982:cbb0:5c28:3ad5:fcda:7779])
-        by smtp.gmail.com with ESMTPSA id 13-20020a05600c24cd00b003f4dde07956sm23645163wmu.42.2023.05.31.02.24.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 May 2023 02:24:59 -0700 (PDT)
-Message-ID: <57af6b8f-63b9-8748-035b-ce26add07e99@linaro.org>
-Date:   Wed, 31 May 2023 11:24:58 +0200
+        Wed, 31 May 2023 05:38:15 -0400
+X-Greylist: delayed 176 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 31 May 2023 02:38:13 PDT
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.51])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DDC3A0;
+        Wed, 31 May 2023 02:38:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1685525704; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=LfFJAHA9jn/4VujsURIdyriv2IXX8zYIfMYI4WCCktq3UgZxD0eMRoixIAajgW+Wge
+    C85EwVSJO4x79ckM9aRETeXJyzPrAFektxK1Q15zZ4eDdQUfWlGqZM8DviTFS3TbOgvR
+    T8p0MxnI4LlrC4I9mz+SKYKhDZhgcaQB9wQ3Uv7tfgUwYYZ8Gk8l6B+gR+U07IMqExOe
+    0VniY8smoSHOq8IU7U4TejqNMgueYDodV03kM+jR9GpGv+r1fqtXLFRfDatOBS7r99GG
+    U4YyHEEmGwMn7JRxl4haqFsW3nmjZskiN3w+FKpBzkDolYiC8oHZ7qIk9fZbDml4PoaS
+    H+0w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1685525704;
+    s=strato-dkim-0002; d=strato.com;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=vNvnCnYJbsNHMwaqcK7ojGETmhD0ewutX/72aDr+oxw=;
+    b=avcv0obcpwAycFez00nFJZdlXdQKLqsZdayRvwtQAW9k3z11M0xlzLyJ4Kro2YAufA
+    dMMJoxiUqmOJesbLf8oLJpwXS7l5Dj/fve1NQgsIOgNaHvrim5HtOHWFBVLrGMndMvzv
+    6HiUA2sk71EEs9HetWE5r/UWs7a3Ym7TZ1StIfWSqxmfViTViOKG4+67cBiu/a0faz4B
+    WuWZLWC3IRe/2ADyifAg3z8VGJ2hOy1gbdWqY+IZQaLNUWYf5NuQk3Y5OtWE/Ld0J3Wp
+    TsnLr2UytWSV9H5eMrwItynNXIJ3MZEh5nSkEpAFhYm2svqmlzxZGwUClMk7Wx9O6mA7
+    dFyA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1685525704;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=vNvnCnYJbsNHMwaqcK7ojGETmhD0ewutX/72aDr+oxw=;
+    b=HnVoT8HzCQTiAXLb/fpjtzOVLp1QJA0daKxscngYdsus9a4SVN4LogWihqUAsimGXl
+    LQY1WkqUe1LLSPTIgS9lbjmgHfbggSEycdEu16HX2ZuiJmQsA6/rUmLxa/G8IQA7X5w3
+    lDFkJ3wGRuAIAsVXeEFEZdan/poK08MibIuWv2YqzDmhEmJ5z3rY8b9iz3c0HRM2oIRH
+    S0+nH/rtZwt4HGEx6vBtRbDpCLNM3XvvlQV8BXAR2slgQHSZgivrF4SQX1yDHCEfeLXg
+    gDQfMXviTUQPYJwVfYr3FYDI2lE0UBnaSDnRDrRvQILFPZ88nVx5XmSWJe6jw7fjdVQu
+    R98g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1685525704;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
+    bh=vNvnCnYJbsNHMwaqcK7ojGETmhD0ewutX/72aDr+oxw=;
+    b=Z2Z0JBC24Gh3Ibe5B8Roo//q5LGX6KRRHBPz+W0bgjaboYT0EeE1wt35XSJu1ATj16
+    KrGvK98tPinJ5iexZCBg==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn8u493mw=="
+Received: from [192.168.244.3]
+    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
+    with ESMTPSA id j6420az4V9Z4lnF
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Wed, 31 May 2023 11:35:04 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+Date:   Wed, 31 May 2023 11:34:54 +0200
+Subject: [PATCH] remoteproc: qcom: Use of_reserved_mem_lookup()
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH] arm64: dts: qcom: Drop undocumented "svid" property
-Content-Language: en-US
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230531024944.4105769-1-quic_bjorande@quicinc.com>
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <20230531024944.4105769-1-quic_bjorande@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+Message-Id: <20230529-rproc-of-rmem-v1-1-5b1e38880aba@gerhold.net>
+X-B4-Tracking: v=1; b=H4sIAL0Ud2QC/x2NQQqEMAxFryJZG9DqKHoVcVFrqgFtJcVhoHh3w
+ 8DfvA+PlyGRMCUYiwxCX04cg0JdFuB2GzZCXpXBVKapPmZAuSQ6jB7lpBP7dWhq3+laAnUWmwg
+ XscHtaoX7OPS8hDz//pFpfp4XNCgZ8HQAAAA=
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Stephan Gerhold <stephan@gerhold.net>
+X-Mailer: b4 0.12.2
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,19 +88,341 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/05/2023 04:49, Bjorn Andersson wrote:
-> The Linux typec_mux implementation required that a property named "svid"
-> was present in the remote node of the of_graph for a match to be found.
-> 
-> With the introduction of commit '4aebc4f89f00 ("usb: typec: mux: Clean up
-> mux_fwnode_match()")', the implementation is aligned with the binding
-> and this property can be dropped - and the associated DeviceTree
-> validation warning resolved.
-> 
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
-> 
-> The referred to patch is present in usb-next.
-> 
+Reserved memory can be either looked up using the generic function
+of_address_to_resource() or using the special of_reserved_mem_lookup().
+The latter has the advantage that it ensures that the referenced memory
+region was really reserved and is not e.g. status = "disabled".
 
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+of_reserved_mem also supports allocating reserved memory dynamically at
+boot time. This works only when using of_reserved_mem_lookup() since
+there won't be a fixed address in the device tree.
+
+Switch the code to use of_reserved_mem_lookup(), similar to
+qcom_q6v5_wcss.c which is using it already. There is no functional
+difference for static reserved memory allocations.
+
+While at it this also adds two missing of_node_put() calls in
+qcom_q6v5_pas.c.
+
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+See e.g. [1] for an example of dynamically allocated reserved memory.
+(This patch does *not* depend on [1] and is useful without as well...)
+
+NOTE: Changes in qcom_q6v5_adsp.c and qcom_q6v5_pas.c are untested,
+I only checked qcom_q6v5_mss.c and qcom_wcnss.c on MSM8916/DB410c.
+The code changes are pretty similar for all of those though.
+
+[1]: https://lore.kernel.org/linux-arm-msm/20230510-dt-resv-bottom-up-v1-5-3bf68873dbed@gerhold.net/
+---
+ drivers/remoteproc/qcom_q6v5_adsp.c | 22 ++++++++--------
+ drivers/remoteproc/qcom_q6v5_mss.c  | 35 +++++++++++++++----------
+ drivers/remoteproc/qcom_q6v5_pas.c  | 51 ++++++++++++++++++++-----------------
+ drivers/remoteproc/qcom_wcnss.c     | 24 ++++++++---------
+ 4 files changed, 69 insertions(+), 63 deletions(-)
+
+diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+index 6777a3bd6226..948b3d00a564 100644
+--- a/drivers/remoteproc/qcom_q6v5_adsp.c
++++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+@@ -14,8 +14,8 @@
+ #include <linux/kernel.h>
+ #include <linux/mfd/syscon.h>
+ #include <linux/module.h>
+-#include <linux/of_address.h>
+ #include <linux/of_device.h>
++#include <linux/of_reserved_mem.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_domain.h>
+ #include <linux/pm_runtime.h>
+@@ -637,28 +637,26 @@ static int adsp_init_mmio(struct qcom_adsp *adsp,
+ 
+ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
+ {
++	struct reserved_mem *rmem = NULL;
+ 	struct device_node *node;
+-	struct resource r;
+-	int ret;
+ 
+ 	node = of_parse_phandle(adsp->dev->of_node, "memory-region", 0);
++	if (node)
++		rmem = of_reserved_mem_lookup(node);
++	of_node_put(node);
++
+ 	if (!node) {
+-		dev_err(adsp->dev, "no memory-region specified\n");
++		dev_err(adsp->dev, "unable to resolve memory-region\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	ret = of_address_to_resource(node, 0, &r);
+-	of_node_put(node);
+-	if (ret)
+-		return ret;
+-
+-	adsp->mem_phys = adsp->mem_reloc = r.start;
+-	adsp->mem_size = resource_size(&r);
++	adsp->mem_phys = adsp->mem_reloc = rmem->base;
++	adsp->mem_size = rmem->size;
+ 	adsp->mem_region = devm_ioremap_wc(adsp->dev,
+ 				adsp->mem_phys, adsp->mem_size);
+ 	if (!adsp->mem_region) {
+ 		dev_err(adsp->dev, "unable to map memory region: %pa+%zx\n",
+-			&r.start, adsp->mem_size);
++			&rmem->base, adsp->mem_size);
+ 		return -EBUSY;
+ 	}
+ 
+diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+index 70bffc9f33f6..af815f3cb2d1 100644
+--- a/drivers/remoteproc/qcom_q6v5_mss.c
++++ b/drivers/remoteproc/qcom_q6v5_mss.c
+@@ -15,7 +15,6 @@
+ #include <linux/kernel.h>
+ #include <linux/mfd/syscon.h>
+ #include <linux/module.h>
+-#include <linux/of_address.h>
+ #include <linux/of_device.h>
+ #include <linux/of_reserved_mem.h>
+ #include <linux/platform_device.h>
+@@ -1872,11 +1871,9 @@ static int q6v5_init_reset(struct q6v5 *qproc)
+ 
+ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
+ {
+-	struct device_node *child;
+ 	struct reserved_mem *rmem;
++	struct device_node *child;
+ 	struct device_node *node;
+-	struct resource r;
+-	int ret;
+ 
+ 	/*
+ 	 * In the absence of mba/mpss sub-child, extract the mba and mpss
+@@ -1891,15 +1888,20 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
+ 		of_node_put(child);
+ 	}
+ 
+-	ret = of_address_to_resource(node, 0, &r);
++	if (!node) {
++		dev_err(qproc->dev, "no mba memory-region specified\n");
++		return -EINVAL;
++	}
++
++	rmem = of_reserved_mem_lookup(node);
+ 	of_node_put(node);
+-	if (ret) {
++	if (!rmem) {
+ 		dev_err(qproc->dev, "unable to resolve mba region\n");
+-		return ret;
++		return -EINVAL;
+ 	}
+ 
+-	qproc->mba_phys = r.start;
+-	qproc->mba_size = resource_size(&r);
++	qproc->mba_phys = rmem->base;
++	qproc->mba_size = rmem->size;
+ 
+ 	if (!child) {
+ 		node = of_parse_phandle(qproc->dev->of_node,
+@@ -1910,15 +1912,20 @@ static int q6v5_alloc_memory_region(struct q6v5 *qproc)
+ 		of_node_put(child);
+ 	}
+ 
+-	ret = of_address_to_resource(node, 0, &r);
++	if (!node) {
++		dev_err(qproc->dev, "no mpss memory-region specified\n");
++		return -EINVAL;
++	}
++
++	rmem = of_reserved_mem_lookup(node);
+ 	of_node_put(node);
+-	if (ret) {
++	if (!rmem) {
+ 		dev_err(qproc->dev, "unable to resolve mpss region\n");
+-		return ret;
++		return -EINVAL;
+ 	}
+ 
+-	qproc->mpss_phys = qproc->mpss_reloc = r.start;
+-	qproc->mpss_size = resource_size(&r);
++	qproc->mpss_phys = qproc->mpss_reloc = rmem->base;
++	qproc->mpss_size = rmem->size;
+ 
+ 	if (!child) {
+ 		node = of_parse_phandle(qproc->dev->of_node, "memory-region", 2);
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index ca0155f41dac..82f498fa9237 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -13,8 +13,8 @@
+ #include <linux/interrupt.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+-#include <linux/of_address.h>
+ #include <linux/of_device.h>
++#include <linux/of_reserved_mem.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_domain.h>
+ #include <linux/pm_runtime.h>
+@@ -533,9 +533,8 @@ static void adsp_pds_detach(struct qcom_adsp *adsp, struct device **pds,
+ 
+ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
+ {
++	struct reserved_mem *rmem;
+ 	struct device_node *node;
+-	struct resource r;
+-	int ret;
+ 
+ 	node = of_parse_phandle(adsp->dev->of_node, "memory-region", 0);
+ 	if (!node) {
+@@ -543,17 +542,19 @@ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
+ 		return -EINVAL;
+ 	}
+ 
+-	ret = of_address_to_resource(node, 0, &r);
++	rmem = of_reserved_mem_lookup(node);
+ 	of_node_put(node);
+-	if (ret)
+-		return ret;
++	if (!rmem) {
++		dev_err(adsp->dev, "unable to resolve memory-region\n");
++		return -EINVAL;
++	}
+ 
+-	adsp->mem_phys = adsp->mem_reloc = r.start;
+-	adsp->mem_size = resource_size(&r);
++	adsp->mem_phys = adsp->mem_reloc = rmem->base;
++	adsp->mem_size = rmem->size;
+ 	adsp->mem_region = devm_ioremap_wc(adsp->dev, adsp->mem_phys, adsp->mem_size);
+ 	if (!adsp->mem_region) {
+ 		dev_err(adsp->dev, "unable to map memory region: %pa+%zx\n",
+-			&r.start, adsp->mem_size);
++			&rmem->base, adsp->mem_size);
+ 		return -EBUSY;
+ 	}
+ 
+@@ -566,16 +567,19 @@ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
+ 		return -EINVAL;
+ 	}
+ 
+-	ret = of_address_to_resource(node, 0, &r);
+-	if (ret)
+-		return ret;
++	rmem = of_reserved_mem_lookup(node);
++	of_node_put(node);
++	if (!rmem) {
++		dev_err(adsp->dev, "unable to resolve dtb memory-region\n");
++		return -EINVAL;
++	}
+ 
+-	adsp->dtb_mem_phys = adsp->dtb_mem_reloc = r.start;
+-	adsp->dtb_mem_size = resource_size(&r);
++	adsp->dtb_mem_phys = adsp->dtb_mem_reloc = rmem->base;
++	adsp->dtb_mem_size = rmem->size;
+ 	adsp->dtb_mem_region = devm_ioremap_wc(adsp->dev, adsp->dtb_mem_phys, adsp->dtb_mem_size);
+ 	if (!adsp->dtb_mem_region) {
+ 		dev_err(adsp->dev, "unable to map dtb memory region: %pa+%zx\n",
+-			&r.start, adsp->dtb_mem_size);
++			&rmem->base, adsp->dtb_mem_size);
+ 		return -EBUSY;
+ 	}
+ 
+@@ -584,29 +588,28 @@ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
+ 
+ static int adsp_assign_memory_region(struct qcom_adsp *adsp)
+ {
++	struct reserved_mem *rmem = NULL;
+ 	struct qcom_scm_vmperm perm;
+ 	struct device_node *node;
+-	struct resource r;
+ 	int ret;
+ 
+ 	if (!adsp->region_assign_idx)
+ 		return 0;
+ 
+ 	node = of_parse_phandle(adsp->dev->of_node, "memory-region", adsp->region_assign_idx);
+-	if (!node) {
+-		dev_err(adsp->dev, "missing shareable memory-region\n");
++	if (node)
++		rmem = of_reserved_mem_lookup(node);
++	of_node_put(node);
++	if (!rmem) {
++		dev_err(adsp->dev, "unable to resolve shareable memory-region\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	ret = of_address_to_resource(node, 0, &r);
+-	if (ret)
+-		return ret;
+-
+ 	perm.vmid = QCOM_SCM_VMID_MSS_MSA;
+ 	perm.perm = QCOM_SCM_PERM_RW;
+ 
+-	adsp->region_assign_phys = r.start;
+-	adsp->region_assign_size = resource_size(&r);
++	adsp->region_assign_phys = rmem->base;
++	adsp->region_assign_size = rmem->size;
+ 	adsp->region_assign_perms = BIT(QCOM_SCM_VMID_HLOS);
+ 
+ 	ret = qcom_scm_assign_mem(adsp->region_assign_phys,
+diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+index 1ed0647bc962..334a9c75dad6 100644
+--- a/drivers/remoteproc/qcom_wcnss.c
++++ b/drivers/remoteproc/qcom_wcnss.c
+@@ -14,8 +14,8 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/io.h>
+-#include <linux/of_address.h>
+ #include <linux/of_device.h>
++#include <linux/of_reserved_mem.h>
+ #include <linux/platform_device.h>
+ #include <linux/pm_domain.h>
+ #include <linux/pm_runtime.h>
+@@ -506,27 +506,25 @@ static int wcnss_request_irq(struct qcom_wcnss *wcnss,
+ 
+ static int wcnss_alloc_memory_region(struct qcom_wcnss *wcnss)
+ {
++	struct reserved_mem *rmem = NULL;
+ 	struct device_node *node;
+-	struct resource r;
+-	int ret;
+ 
+ 	node = of_parse_phandle(wcnss->dev->of_node, "memory-region", 0);
+-	if (!node) {
+-		dev_err(wcnss->dev, "no memory-region specified\n");
++	if (node)
++		rmem = of_reserved_mem_lookup(node);
++	of_node_put(node);
++
++	if (!rmem) {
++		dev_err(wcnss->dev, "unable to resolve memory-region\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	ret = of_address_to_resource(node, 0, &r);
+-	of_node_put(node);
+-	if (ret)
+-		return ret;
+-
+-	wcnss->mem_phys = wcnss->mem_reloc = r.start;
+-	wcnss->mem_size = resource_size(&r);
++	wcnss->mem_phys = wcnss->mem_reloc = rmem->base;
++	wcnss->mem_size = rmem->size;
+ 	wcnss->mem_region = devm_ioremap_wc(wcnss->dev, wcnss->mem_phys, wcnss->mem_size);
+ 	if (!wcnss->mem_region) {
+ 		dev_err(wcnss->dev, "unable to map memory region: %pa+%zx\n",
+-			&r.start, wcnss->mem_size);
++			&rmem->base, wcnss->mem_size);
+ 		return -EBUSY;
+ 	}
+ 
+
+---
+base-commit: 1ca04f21b204e99dd704146231adfb79ea2fb366
+change-id: 20230529-rproc-of-rmem-7d931f61f64e
+
+Best regards,
+-- 
+Stephan Gerhold <stephan@gerhold.net>
+
