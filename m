@@ -2,144 +2,236 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 480DB717368
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 03:57:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2470717375
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 04:03:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233674AbjEaB5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 21:57:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47738 "EHLO
+        id S231219AbjEaCDH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 22:03:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49728 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232130AbjEaB5U (ORCPT
+        with ESMTP id S233935AbjEaCDG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 21:57:20 -0400
-Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7DFE113
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 18:57:19 -0700 (PDT)
-Received: by mail-io1-xd36.google.com with SMTP id ca18e2360f4ac-77496b0b345so128516239f.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 18:57:19 -0700 (PDT)
+        Tue, 30 May 2023 22:03:06 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23657113
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 19:03:04 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4effb818c37so5808354e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 19:03:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685498239; x=1688090239;
+        d=linaro.org; s=google; t=1685498582; x=1688090582;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=YGBe+JwfrEM1Bt4Dz4KNFsVqieTeS2ww100iu61WbqY=;
-        b=PArDOZmrvL1rwO8A1H33sgpcO8KwthjTR/baWua09z1DG30HL4+GuRXI7ynRJSgkJ0
-         /tx5K5jOsu4XU3+N8YiVSh6zhFumlRGAlZoQpVDJtHta+LXAecwmchM4tio7Y69B25Gq
-         P/Y/4UmtKzpJ7j7GyF/0raZPRhLDPfii5nECpV8scDHc4PRGqUBrLtgyE2ME6QF3oON9
-         ond5Mpvd2khWIc2EYmB9yeXN0DV1ILrM7EULOtFC5OMzIVrWlPPuYNS9Q2yxdMDgmHdA
-         yWm1upsCZl9iM9s3y/W01Zkk/hae/a9j4ZSHBIyppam/NXfw3B3R6Ce/J4pN52CmLtLa
-         FyPg==
+        bh=dNFWAlhd+NPgLVbtBH/HPjTzNQ2DvCN6HU78Q//Xfuc=;
+        b=iMjZCyK8pxB8aRpKTGIQnEl4IVrJGwKEKh0Y6hfVFfeONYqiuDbdIGs+hX4U8ajNBN
+         Gu96a2+iPT1dYhDIS8rKKhYVeisiRSYs2Te4kAvuv5xrTdLnxH5QhoNXHLb/HBalfdvh
+         GUCil86sOzdqnNbFccuFVYdTjnd8el+Tt1JMSuZlWcCcWlHFfLJouYhWr6gNmWFOFmKt
+         j48OWWQLnUPWxQR096x1dsPLy41PeLhxNumEMr3JudWVR5tZ/uwSoLc5/XBEmjc6a5R7
+         jAXvFbIYplNPKxIphD5bRW1iA/UXcwTTehUjSyqtZSBHg+WbtW5r1xT46OL1ujXCTBRA
+         BzNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685498239; x=1688090239;
+        d=1e100.net; s=20221208; t=1685498582; x=1688090582;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YGBe+JwfrEM1Bt4Dz4KNFsVqieTeS2ww100iu61WbqY=;
-        b=KxoluqmlnSmwFJaM5BpXfSPAyfArFeuG/zUI6856DiJXpfqBxLr5AXmUsUvlKs0cOt
-         qAV6uVg9NNfvn/PimSA14xn+zOsq3oLtV5B9sPl51pIyclWb1yUd2dn5Z5Nwpnd0QE6H
-         TVkkk9qfz/cSS8WCYZwpoAMSKmJfKyHOl4Dnqr3JCNQt0hwt7WxJZvarP1OdHqKBqqxT
-         NjnJR2ZV2pecUQxPw4X9/Cc2OBR8E1/fNMMbWksezciUdDTsJcWCbYlapfKFcBOD5Va3
-         X8/rmKU6SfqBVByl3FtXb2CqZIS0ReDOj1DLcEZb3AM3DG+bIXNParfR+bVLCCWQamxW
-         TPrg==
-X-Gm-Message-State: AC+VfDwv0a/wJrOuXuJaawRKwEDFdl8KK2ExsYU0agpWIbyiCgtV3v3r
-        pzG7vdPw487opMbZNVWKKTCoJQ==
-X-Google-Smtp-Source: ACHHUZ56ZTu3zznsi6iJymiKNF371TpCtjQJRolcjerH79lKBzRrD2/xT87oscVG7rXXde/jssc6Gg==
-X-Received: by 2002:a05:6602:19:b0:769:a626:6e13 with SMTP id b25-20020a056602001900b00769a6266e13mr2884020ioa.19.1685498239040;
-        Tue, 30 May 2023 18:57:19 -0700 (PDT)
-Received: from [172.22.22.28] ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id u22-20020a056638135600b0039deb26853csm1161716jad.10.2023.05.30.18.57.18
+        bh=dNFWAlhd+NPgLVbtBH/HPjTzNQ2DvCN6HU78Q//Xfuc=;
+        b=WCKHZs09Sb/45L/DzImG/sgLrUJjUhpYrFubVmD3X1z397Z3dE66bhJmXrWKK4cELS
+         trRPOEfPgWa4DTBlxoHDideFdkUh+MHGn5X0r1vgylu2zWYAlVCzk3uw5PoYbtw3mZ9S
+         WawMJ3aoxWUuCkWdMv9Ufidf/LKmfGG4i4jxD+ipK5FGFMnBEYkN+wDU6z/3xJq8bt4t
+         kYoaxIdA0lYtHWBt/+yU+d+5EvUfSUx4loNFI4FmlJXtGe7nI4+mPPZRrCEzUg9v772i
+         wNofvYsrdfTlIZUApcuCIrn4Wz0dUHNAq0Pp5ZXhpH9au5i1Iezo5EYWa8kfBasDEYHA
+         lzYQ==
+X-Gm-Message-State: AC+VfDxKS/VnukzLSjsa6cwFvJR4Fpb760oAOj/HgZueYeWbiJ4kOOAr
+        uGtQaief/AQEuvTGj+2Kla2/4Q==
+X-Google-Smtp-Source: ACHHUZ6i32RyZDSQre4wrWco3VcfvxCHFg/pYLcuBYdHrwmmrXpe7Q6j7CxupAWYrV4dT3T94cP2GQ==
+X-Received: by 2002:a05:6512:49c:b0:4f4:b38c:1f8a with SMTP id v28-20020a056512049c00b004f4b38c1f8amr1538794lfq.53.1685498582414;
+        Tue, 30 May 2023 19:03:02 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id s6-20020a19ad46000000b004efff420b11sm512516lfd.181.2023.05.30.19.03.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 18:57:18 -0700 (PDT)
-Message-ID: <e144386d-e62a-a470-fcf9-0dab6f7ab837@linaro.org>
-Date:   Tue, 30 May 2023 20:57:17 -0500
+        Tue, 30 May 2023 19:03:01 -0700 (PDT)
+Message-ID: <3f1bfaf9-35ff-59ae-6756-84fc8900ed92@linaro.org>
+Date:   Wed, 31 May 2023 05:03:01 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH net v2] net: ipa: Use the correct value for
- IPA_STATUS_SIZE
-Content-Language: en-US
-To:     Alex Elder <alex.elder@linaro.org>,
-        Bert Karwatzki <spasswolf@web.de>,
-        Simon Horman <simon.horman@corigine.com>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <7ae8af63b1254ab51d45c870e7942f0e3dc15b1e.camel@web.de>
- <ZHWhEiWtEC9VKOS1@corigine.com>
- <2b91165f667d3896a0aded39830905f62f725815.camel@web.de>
- <3c4d235d-8e49-61a2-a445-5d363962d3e7@linaro.org>
- <8d0e0272c80a594e7425ffcdd7714df7117edde5.camel@web.de>
- <f9ccdc27-7b5f-5894-46ab-84c1e1650d9f@linaro.org>
- <dcfb1ccd722af0e9c215c518ec2cd7a8602d2127.camel@web.de>
- <694f1e23-23bb-e184-6262-bfe3641a4f43@linaro.org>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <694f1e23-23bb-e184-6262-bfe3641a4f43@linaro.org>
+Subject: Re: [RESEND PATCH v2 2/2] cpufreq: qcom-nvmem: add support for
+ IPQ8064
+Content-Language: en-GB
+To:     Robert Marko <robimarko@gmail.com>, rafael@kernel.org,
+        viresh.kumar@linaro.org, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, ilia.lin@kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     ansuelsmth@gmail.com
+References: <20230530165807.642084-1-robimarko@gmail.com>
+ <20230530165807.642084-2-robimarko@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230530165807.642084-2-robimarko@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 5/30/23 6:43 PM, Alex Elder wrote:
-> On 5/30/23 6:25 PM, Bert Karwatzki wrote:
->>  From 2e5e4c07606a100fd4af0f08e4cd158f88071a3a Mon Sep 17 00:00:00 2001
->> From: Bert Karwatzki <spasswolf@web.de>
->> To: davem@davemloft.net
->> To: edumazet@google.com
->> To: kuba@kernel.org
->> To: pabeni@redhat.com
->> Cc: elder@kernel.org
->> Cc: netdev@vger.kernel.org
->> Cc: linux-arm-msm@vger.kernel.org
->> Cc: linux-kernel@vger.kernel.org
->> Date: Wed, 31 May 2023 00:16:33 +0200
->> Subject: [PATCH net v2] net: ipa: Use correct value for IPA_STATUS_SIZE
->>
->> IPA_STATUS_SIZE was introduced in commit b8dc7d0eea5a as a replacement
->> for the size of the removed struct ipa_status which had size
->> sizeof(__le32[8]). Use this value as IPA_STATUS_SIZE.
+On 30/05/2023 19:58, Robert Marko wrote:
+> From: Christian Marangi <ansuelsmth@gmail.com>
 > 
-> If the network maintainers can deal with your patch, I'm
-> OK with it.  David et al if you want something else, please
-> say so.
-
-OK, Jakub has spoken...
-
-Bert, I tried before to explain what you needed to do, but it's
-still not quite right.  Please contact me privately and we'll
-work out how to get this submitted in the proper format.
-
-					-Alex
-
-
-> Reviewed-by: Alex Elder <elder@linaro.org>
+> IPQ8064 comes in 3 families:
+> * IPQ8062 up to 1.0GHz
+> * IPQ8064/IPQ8066/IPQ8068 up to 1.4GHz
+> * IPQ8065/IPQ8069 up to 1.7Ghz
 > 
->> Fixes: b8dc7d0eea5a ("net: ipa: stop using sizeof(status)")
->> Signed-off-by: Bert Karwatzki <spasswolf@web.de>
->> ---
->>   drivers/net/ipa/ipa_endpoint.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/net/ipa/ipa_endpoint.c 
->> b/drivers/net/ipa/ipa_endpoint.c
->> index 2ee80ed140b7..afa1d56d9095 100644
->> --- a/drivers/net/ipa/ipa_endpoint.c
->> +++ b/drivers/net/ipa/ipa_endpoint.c
->> @@ -119,7 +119,7 @@ enum ipa_status_field_id {
->>   };
->>   /* Size in bytes of an IPA packet status structure */
->> -#define IPA_STATUS_SIZE            sizeof(__le32[4])
->> +#define IPA_STATUS_SIZE            sizeof(__le32[8])
->>   /* IPA status structure decoder; looks up field values for a 
->> structure */
->>   static u32 ipa_status_extract(struct ipa *ipa, const void *data,
+> So, in order to be able to share one OPP table, add support for
+> IPQ8064 family based of SMEM SoC ID-s as speedbin fuse is always 0 on
+> IPQ8064.
 > 
+> Bit are set with the following logic:
+> * IPQ8062 BIT 0
+> * IPQ8064/IPQ8066/IPQ8068 BIT 1
+> * IPQ8065/IPQ8069 BIT 2
+> 
+> speed is never fused, only psv values are fused.
+> Set speed to the versions to permit a unified opp table following
+> this named opp:
+> 
+> opp-microvolt-speed<SPEED_VALUE>-pvs<PSV_VALUE>-v0
+> 
+> Example:
+> - for ipq8062 psv2
+>    opp-microvolt-speed0-pvs2-v0 = < 925000 878750 971250>
+> - for ipq8064 psv2
+>    opp-microvolt-speed2-pvs2-v0 = <925000 878750 971250>;
+> - for ipq8065 psv2
+>    opp-microvolt-speed4-pvs2-v0 = <950000 902500 997500>;
+> 
+> Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> ---
+>   drivers/cpufreq/qcom-cpufreq-nvmem.c | 73 +++++++++++++++++++++++++++-
+>   1 file changed, 72 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> index ce444b5962f2..c644138680ba 100644
+> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+> @@ -34,6 +34,10 @@
+>   #define IPQ8074_HAWKEYE_VERSION		BIT(0)
+>   #define IPQ8074_ACORN_VERSION		BIT(1)
+>   
+> +#define IPQ8062_VERSION		BIT(0)
+> +#define IPQ8064_VERSION		BIT(1)
+> +#define IPQ8065_VERSION		BIT(2)
+
+I think it would be more logical to change these defines to consecutive 
+enum instead of BIT(n) values. Another (and better in my opinion) option 
+is to drop versions completely (and remove speedN from the opp names) 
+and to have per-SoC tables in per-SoC dtsi files. There are already 
+separate ipq8064.dtsi, ipq8062.dtsi and ipq8065.dtsi files. It makes 
+little sense to overcomplicate the OPP tables.
+
+> +
+>   struct qcom_cpufreq_drv;
+>   
+>   struct qcom_cpufreq_match_data {
+> @@ -207,6 +211,69 @@ static int qcom_cpufreq_krait_name_version(struct device *cpu_dev,
+>   	return ret;
+>   }
+>   
+> +static int qcom_cpufreq_ipq8064_name_version(struct device *cpu_dev,
+> +					     struct nvmem_cell *speedbin_nvmem,
+> +					     char **pvs_name,
+> +					     struct qcom_cpufreq_drv *drv)
+> +{
+> +	int speed = 0, pvs = 0, pvs_ver = 0;
+> +	int msm_id, ret = 0;
+> +	u8 *speedbin;
+> +	size_t len;
+> +
+> +	speedbin = nvmem_cell_read(speedbin_nvmem, &len);
+> +
+> +	if (IS_ERR(speedbin))
+> +		return PTR_ERR(speedbin);
+> +
+> +	switch (len) {
+> +	case 4:
+> +		get_krait_bin_format_a(cpu_dev, &speed, &pvs, &pvs_ver,
+> +				       speedbin);
+> +		break;
+> +	default:
+> +		dev_err(cpu_dev, "Unable to read nvmem data. Defaulting to 0!\n");
+> +		ret = -ENODEV;
+> +		goto len_error;
+> +	}
+> +
+> +	ret = qcom_smem_get_soc_id(&msm_id);
+> +	if (ret)
+> +		return ret;
+> +
+> +	switch (msm_id) {
+> +	case QCOM_ID_IPQ8062:
+> +		drv->versions = IPQ8062_VERSION;
+> +		break;
+> +	case QCOM_ID_IPQ8064:
+> +	case QCOM_ID_IPQ8066:
+> +	case QCOM_ID_IPQ8068:
+> +		drv->versions = IPQ8064_VERSION;
+> +		break;
+> +	case QCOM_ID_IPQ8065:
+> +	case QCOM_ID_IPQ8069:
+> +		drv->versions = IPQ8065_VERSION;
+> +		break;
+> +	default:
+> +		dev_err(cpu_dev,
+> +			"SoC ID %u is not part of IPQ8064 family, limiting to 1.0GHz!\n",
+> +			msm_id);
+> +		drv->versions = IPQ8062_VERSION;
+> +		break;
+> +	}
+> +
+> +	/*
+> +	 * IPQ8064 speed is never fused. Only psv values are fused.
+> +	 * Set speed to the versions to permit a unified opp table.
+> +	 */
+> +	snprintf(*pvs_name, sizeof("speedXX-pvsXX-vXX"), "speed%d-pvs%d-v%d",
+> +		 drv->versions, pvs, pvs_ver);
+> +
+> +len_error:
+> +	kfree(speedbin);
+> +	return ret;
+> +}
+> +
+>   static int qcom_cpufreq_ipq8074_name_version(struct device *cpu_dev,
+>   					     struct nvmem_cell *speedbin_nvmem,
+>   					     char **pvs_name,
+> @@ -256,6 +323,10 @@ static const struct qcom_cpufreq_match_data match_data_qcs404 = {
+>   	.genpd_names = qcs404_genpd_names,
+>   };
+>   
+> +static const struct qcom_cpufreq_match_data match_data_ipq8064 = {
+> +	.get_version = qcom_cpufreq_ipq8064_name_version,
+> +};
+> +
+>   static const struct qcom_cpufreq_match_data match_data_ipq8074 = {
+>   	.get_version = qcom_cpufreq_ipq8074_name_version,
+>   };
+> @@ -404,7 +475,7 @@ static const struct of_device_id qcom_cpufreq_match_list[] __initconst = {
+>   	{ .compatible = "qcom,apq8096", .data = &match_data_kryo },
+>   	{ .compatible = "qcom,msm8996", .data = &match_data_kryo },
+>   	{ .compatible = "qcom,qcs404", .data = &match_data_qcs404 },
+> -	{ .compatible = "qcom,ipq8064", .data = &match_data_krait },
+> +	{ .compatible = "qcom,ipq8064", .data = &match_data_ipq8064 },
+>   	{ .compatible = "qcom,ipq8074", .data = &match_data_ipq8074 },
+>   	{ .compatible = "qcom,apq8064", .data = &match_data_krait },
+>   	{ .compatible = "qcom,msm8974", .data = &match_data_krait },
+
+-- 
+With best wishes
+Dmitry
 
