@@ -2,56 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AFFE7184DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 16:26:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B9C597184DF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 16:26:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235891AbjEaO0E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 10:26:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40254 "EHLO
+        id S236357AbjEaO0M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 10:26:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40612 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232598AbjEaOZ6 (ORCPT
+        with ESMTP id S236086AbjEaO0I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 10:25:58 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7AD0D184
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 07:25:53 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f3b9755961so6717927e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 07:25:53 -0700 (PDT)
+        Wed, 31 May 2023 10:26:08 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 959E3134
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 07:25:59 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f4f3ac389eso5469041e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 07:25:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685543151; x=1688135151;
+        d=linaro.org; s=google; t=1685543158; x=1688135158;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=+Eb0OXLJcEfhgIFwTQmDQjV6ffwQwHbOIk4I821xSAg=;
-        b=nBCwUiRZj+UDmpg5sKSTyvh84doNB1kMWEgzprxmXJfURZ3iToEWz81O8ZCKgSMHoS
-         vXj5YQIhsXWE2WSH+trwcgST72DFJFHTyKfbEMlVYxm/lKRQbpn9jtkOkJfoMDHCHgMJ
-         hgMRQrN16y1+0C9pJbUUBtUnZUB1jaWmzXRe7nC3gnGCU7kujbhCqAdDQ+n5dtbUxEeU
-         cSwiSL1Z72IMl5820A1n0RFA44RsYRusBSTqFaShWZY4I6u8HRVcRjtgqGjNKV93ktFw
-         KuSCfIoQHJ3iYb0vVgcj/vy2b2Yks+DqbuIdIz+C6CaiQ+pxhHRoOv7KtkFFlQCf+6SW
-         DKbg==
+        bh=f3eWnseMLfg8ECq2Frh5aGqeQN/ETi8NIrJOE/0E91I=;
+        b=TfuHohM5fAfuXzZq2l0zLCXfZ5KzHV3nWr33YfTBr6hsB5vAnkEIeemZCSHtID23Fe
+         c5Kexabr1lifq69sOaxsJlvLOdNSds9Y7obKAOEJ1rh9jRKsKKGc4hiZR0IV2EjXNCbg
+         g8O/L9xY/XvWNn8yqOwomT5kgPpIBTr9BsuUa3dTTZLZOuk02Cty+o8g16QS4XteKJiH
+         csTEbqx/Qut8WVQd7HTJ8931n5/e8ot4V1e2EaJYSQhT6AqqpPRwe5DPWwf8ZhSYKtr7
+         WvH59cO48gB5g9kMo3lpPpbYarNrsbpNMI1a75DkB/hhVJEddkbm9UuJI97wQzSwhwyi
+         W2cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685543151; x=1688135151;
+        d=1e100.net; s=20221208; t=1685543158; x=1688135158;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+Eb0OXLJcEfhgIFwTQmDQjV6ffwQwHbOIk4I821xSAg=;
-        b=JJWC9EubQsw8ac3n9tYvoKhq1Rs+ciHynELBWnnJS8ATqYPomRqTEXZlZ3O7G1mb/5
-         e2fboQkH08rB8DN9sXcdCWV2lPKcnpJI2+152+VG7Vv68putSlKWbvYEthVLg0l6H8u3
-         cCqWlDDPwKpLgS2JLZs8EOuZRABvOMx+xDCIEs9GwBPB3IN+Uf+qPXIvNQIE4bLZD1/6
-         USUH4L6kTS4N0jaB8WL2SMXqwbtVOxLohhF/A176BAkYL2iz0Srk0v3GpuGn790k88Mn
-         3UwSoFkhI5RiWrdyg0cX6D4T4NL5fVkVwH9q/mk2Bi4ID3lLx+gOg1gbUFeUJT1E3TMF
-         9xsg==
-X-Gm-Message-State: AC+VfDyQRmY4Cg294ZzFx2PEfsyqkYNAOZSLA4Ss/47vaWQiLx0i1jP3
-        GeXziabhHrrVfDBENw1gwxbWCQ==
-X-Google-Smtp-Source: ACHHUZ4s+6gL6MluIupp7PlORfJ5WRqj6KBjxlG3wSOvCJYuLhh+0DhjJOXOeF+pai8Ryshvz6vPcw==
-X-Received: by 2002:ac2:5598:0:b0:4eb:1361:895c with SMTP id v24-20020ac25598000000b004eb1361895cmr3010335lfg.55.1685543151556;
-        Wed, 31 May 2023 07:25:51 -0700 (PDT)
+        bh=f3eWnseMLfg8ECq2Frh5aGqeQN/ETi8NIrJOE/0E91I=;
+        b=RK+S+d0jv3EhOO8rbxntZWtvFgzgrRvy2smQTaKntLU3ah2u5qFbWnOEHIJQPDikHW
+         jeC7DKkt3p5tK3ci1VboB+OgVrBMxHAybBXlmD4PgqsndHTvEskZPI/1/77hZ87knOSp
+         tzFDMhaddlQ3+UT0u7iIDLEJo3xJe2KJsLUuqHh9sG/0coWwCsB9O8KtTHoKDVQqhvhl
+         KVF4va0LE5sqHfaASt+0ftGfViI9+BvCF55EiwCKCWUgGA1IXyFqu+x8A1P9RREPS1Tm
+         GFpBUpaNtyZ+fRdJ2fx5rwn6Yk3MdPsbQE8+uxRFjSL4d+TqAQycJd2dRq47vywCOEfO
+         0NzQ==
+X-Gm-Message-State: AC+VfDxuNj3v5RyXgf7Rtqc1pAvKqisv5uwpi15P0fPYeC1hGgG8t/Ta
+        HhqCR4UwipufFloC0NPTwCx4Kw==
+X-Google-Smtp-Source: ACHHUZ6u4LuS1NxV0tGTA3FIn3ey/cR3jQHvozhHbjspDpHdHYHTOiVqg8BfBvzqXRCnP0IMKytwWw==
+X-Received: by 2002:a19:7001:0:b0:4ee:d8f3:1390 with SMTP id h1-20020a197001000000b004eed8f31390mr2549884lfc.53.1685543157855;
+        Wed, 31 May 2023 07:25:57 -0700 (PDT)
 Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id c21-20020ac244b5000000b004f51418f78fsm560626lfm.38.2023.05.31.07.25.49
+        by smtp.gmail.com with ESMTPSA id 14-20020ac2484e000000b004f25129628fsm734993lfy.151.2023.05.31.07.25.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 May 2023 07:25:50 -0700 (PDT)
-Message-ID: <fec8f422-e00b-4ca2-ae8b-28034e16eb36@linaro.org>
-Date:   Wed, 31 May 2023 16:25:49 +0200
+        Wed, 31 May 2023 07:25:57 -0700 (PDT)
+Message-ID: <f5875c10-21c1-43b6-4ce6-25b968588412@linaro.org>
+Date:   Wed, 31 May 2023 16:25:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
@@ -113,6 +113,9 @@ On 31.05.2023 15:22, Konrad Dybcio wrote:
 > to add and test that.
 I noticed that 7280 is WIP:
 
+https://lore.kernel.org/lkml/20230424110933.3908-4-quic_mkshah@quicinc.com/
+
+Konrad
 > 
 > [1] https://lore.kernel.org/linux-arm-msm/20230512150425.3171122-1-quic_bjorande@quicinc.com/
 > 
