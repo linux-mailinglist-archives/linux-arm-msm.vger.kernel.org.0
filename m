@@ -2,75 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D5805717381
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 04:08:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 428B0717393
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 04:13:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233925AbjEaCIV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 30 May 2023 22:08:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50784 "EHLO
+        id S233991AbjEaCMh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 30 May 2023 22:12:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232120AbjEaCIU (ORCPT
+        with ESMTP id S231451AbjEaCMg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 30 May 2023 22:08:20 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C234EC
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 19:08:18 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f4db9987f8so538050e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 May 2023 19:08:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685498897; x=1688090897;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5iTXqtzGDHFLNxZV32WsXRFXjr4KXN2U3ND/5EGM83Y=;
-        b=ypyCJC7GH8jeiNf4pyOhwKDsCMEo2q4WeURt84BgHrRahFsXwBJQNCEs4rWvGFQSv0
-         3lqEb4LSMiftwHKT8sBbpXi4H+ThILu6CLd2eI0EzGOrX8UbVaA3T58RmIifJoF3B1lU
-         RCBmz4+w8Y8nZxNiDnlQn2c1Msuq1KmO6JeBTLEXRsQ0wIITjD37Rj9mgRhI9cznsNXY
-         jJJSuYWhLyCaZfBGKFimBQ84ObU/8p7dEN4X47d7or56NAhHd+3xlapJznuVsj2j99YK
-         BJ/55j3u/ZMWvl4p2Lr/S6PhRQ7zQXIw+RASgAIswtcaG06/CaWEKqUJtI1SAxlvAgB0
-         19Nw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685498897; x=1688090897;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5iTXqtzGDHFLNxZV32WsXRFXjr4KXN2U3ND/5EGM83Y=;
-        b=DkVRkBUGVg2dFYpknOQztP0HPNwE3fOCuqc9foYMtHG3CMnrqxQwiW7dOSukOocIBw
-         1q5KQ4cG+9CBc7gYzCtJdWEPtuje14ci/YztbCQ/IRoO/bAIonV17kD29UraUWopC+3N
-         /EXFjBR326CMiSeJaY9HVhP1S/tLZHhueWV3TQYJ4Xs/YAClEk/aiow0CL14y6TMKbrz
-         FndCdS6CSGcAUBllv90SyXzLKLygiwEcOpLjFmku+rozzzxPU33kpDzC1iUzc8SHLa29
-         Qsj/3kk98uKyaqahG1V/OYssNFEsR8HH9mw0m1NjU/W25wfGKSQTQcQBBWtjtrOhhcyt
-         Nb+Q==
-X-Gm-Message-State: AC+VfDw2piSNPURPkkiuBzGxp5xHfFGUIKVus2p4XKCV34VU4foythgL
-        yUW76jPX8kiA5qNQbBEDk1VpVQ==
-X-Google-Smtp-Source: ACHHUZ7sSzuf0HhfEAr84cuSEr/jxLNJn7QGG4Q3HMrJbRvWhZwjkWFpG5x/xrM6bnd2xCXA0IsWig==
-X-Received: by 2002:a05:6512:12c3:b0:4eb:4258:bf62 with SMTP id p3-20020a05651212c300b004eb4258bf62mr4666945lfg.8.1685498896738;
-        Tue, 30 May 2023 19:08:16 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id q10-20020ac25a0a000000b004f0199e8770sm522667lfn.65.2023.05.30.19.08.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 May 2023 19:08:16 -0700 (PDT)
-Message-ID: <e162134f-1c5d-d815-08af-b8633f709db9@linaro.org>
-Date:   Wed, 31 May 2023 05:08:15 +0300
+        Tue, 30 May 2023 22:12:36 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 548A5118;
+        Tue, 30 May 2023 19:12:31 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C5CF163602;
+        Wed, 31 May 2023 02:12:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42FF6C433D2;
+        Wed, 31 May 2023 02:12:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685499150;
+        bh=kd/06+0CjvoMWo/2lN0XlYNlwwhM3ndJyhydSMIhD+s=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=UZBcDFfzP91smnhcoBJVOwuXqOeHHHXikfLyty1JDnzN/G+XSZW2wBOxdtn+2c0gU
+         /j1A2ZPQlanSpC8gfs6CwoLEuDn9dYqLb8iKs9KlYWtFh6QP5lUDMNAjO2BwlDpliC
+         8qD4OATVEAooel5WizkqHBc6+suyEUMBSE5QA3ZzbRZ1Fh0/Kue46wJeidj0PSvAgD
+         FKpMlr0yw5xbW2JBhX/UzgX7BnrXZ5tSTc3cyqikuLRnYgaYcU/rsePhiuHZheRkP8
+         34Daln/8Y8jqftDyOHk4GzFoQSUHBlfmM2aZ7Fe7IdrqyaW1KHaf1bDlnDcm/ZsH3K
+         Q+5eVqz1beILw==
+Date:   Tue, 30 May 2023 19:16:12 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc:     freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel@lists.freedesktop.org, quic_jesszhan@quicinc.com,
+        quic_khsieh@quicinc.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dpu: re-introduce dpu core revision to the
+ catalog
+Message-ID: <20230531021612.7juugywxkvakewif@ripper>
+References: <20230531005358.18090-1-quic_abhinavk@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [RESEND PATCH v2 1/2] cpufreq: qcom-nvmem: add support for
- IPQ8074
-Content-Language: en-GB
-To:     Robert Marko <robimarko@gmail.com>, rafael@kernel.org,
-        viresh.kumar@linaro.org, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, ilia.lin@kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     ansuelsmth@gmail.com
-References: <20230530165807.642084-1-robimarko@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230530165807.642084-1-robimarko@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230531005358.18090-1-quic_abhinavk@quicinc.com>
+X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,123 +62,267 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/05/2023 19:58, Robert Marko wrote:
-> IPQ8074 comes in 2 families:
-> * IPQ8070A/IPQ8071A (Acorn) up to 1.4GHz
-> * IPQ8072A/IPQ8074A/IPQ8076A/IPQ8078A (Hawkeye) up to 2.2GHz
+On Tue, May 30, 2023 at 05:53:55PM -0700, Abhinav Kumar wrote:
+> With [1] dpu core revision was dropped in favor of using the
+> compatible string from the device tree to select the dpu catalog
+> being used in the device.
 > 
-> So, in order to be able to share one OPP table lets add support for IPQ8074
-> family based of SMEM SoC ID-s as speedbin fuse is always 0 on IPQ8074.
+> This approach works well however also necessitates adding catalog
+> entries for small register level details as dpu capabilities and/or
+> features bloating the catalog unnecessarily. Examples include but
+> are not limited to data_compress, interrupt register set, widebus etc.
 > 
-> IPQ8074 compatible is blacklisted from DT platdev as the cpufreq device
-> will get created by NVMEM CPUFreq driver.
+> Introduce the dpu core revision back as an entry to the catalog so that
+> we can just use dpu revision checks and enable those bits which
+> should be enabled unconditionally and not controlled by a catalog
+> and also simplify the changes to do something like:
 > 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+> if (dpu_core_revision > xxxxx && dpu_core_revision < xxxxx)
+> 	enable the bit;
+> 
+> Also, add some of the useful macros back to be able to use dpu core
+> revision effectively.
+> 
+> [1]: https://patchwork.freedesktop.org/patch/530891/?series=113910&rev=4
+> 
+
+No concerns with the patch, it looks good and the argumentation sounds
+reasonable. But it would be preferable to introduce it together with an
+actual user (or am I just missing it?).
+
+Regards,
+Bjorn
+
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > ---
-> Changes in v2:
-> * Print an error if SMEM ID is not part of the IPQ8074 family
-> and restrict the speed to Acorn variant (1.4GHz)
-
-My comments to the patch2 apply here too. Would it be possible to add 
-separate dtsi files targeting each of these families?
-
-If not, please change IPQ8074_foo_VERSIONS macros to the enum instead of 
-BIT(n).
-
-> ---
->   drivers/cpufreq/cpufreq-dt-platdev.c |  1 +
->   drivers/cpufreq/qcom-cpufreq-nvmem.c | 43 ++++++++++++++++++++++++++++
->   2 files changed, 44 insertions(+)
+>  .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  1 +
+>  .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  1 +
+>  .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    | 31 ++++++++++++++++++-
+>  14 files changed, 43 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
-> index ea86c9f3ed7a..78f6ff933f93 100644
-> --- a/drivers/cpufreq/cpufreq-dt-platdev.c
-> +++ b/drivers/cpufreq/cpufreq-dt-platdev.c
-> @@ -170,6 +170,7 @@ static const struct of_device_id blocklist[] __initconst = {
->   	{ .compatible = "ti,am62a7", },
->   
->   	{ .compatible = "qcom,ipq8064", },
-> +	{ .compatible = "qcom,ipq8074", },
->   	{ .compatible = "qcom,apq8064", },
->   	{ .compatible = "qcom,msm8974", },
->   	{ .compatible = "qcom,msm8960", },
-> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> index a88b6fe5db50..ce444b5962f2 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> @@ -31,6 +31,9 @@
->   
->   #include <dt-bindings/arm/qcom,ids.h>
->   
-> +#define IPQ8074_HAWKEYE_VERSION		BIT(0)
-> +#define IPQ8074_ACORN_VERSION		BIT(1)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+> index 3c732a0360c7..16c2861e0359 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+> @@ -185,6 +185,7 @@ static const struct dpu_perf_cfg msm8998_perf_data = {
+>  };
+>  
+>  const struct dpu_mdss_cfg dpu_msm8998_cfg = {
+> +	.core_rev = DPU_HW_VER_300,
+>  	.caps = &msm8998_dpu_caps,
+>  	.ubwc = &msm8998_ubwc_cfg,
+>  	.mdp_count = ARRAY_SIZE(msm8998_mdp),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+> index 36ea1af10894..1c003935c948 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+> @@ -183,6 +183,7 @@ static const struct dpu_perf_cfg sdm845_perf_data = {
+>  };
+>  
+>  const struct dpu_mdss_cfg dpu_sdm845_cfg = {
+> +	.core_rev = DPU_HW_VER_400,
+>  	.caps = &sdm845_dpu_caps,
+>  	.ubwc = &sdm845_ubwc_cfg,
+>  	.mdp_count = ARRAY_SIZE(sdm845_mdp),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+> index b5f751354267..8c914be62a88 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_0_sm8150.h
+> @@ -208,6 +208,7 @@ static const struct dpu_perf_cfg sm8150_perf_data = {
+>  };
+>  
+>  const struct dpu_mdss_cfg dpu_sm8150_cfg = {
+> +	.core_rev = DPU_HW_VER_500,
+>  	.caps = &sm8150_dpu_caps,
+>  	.ubwc = &sm8150_ubwc_cfg,
+>  	.mdp_count = ARRAY_SIZE(sm8150_mdp),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> index 8ed2b263c5ea..9465bde128eb 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> @@ -214,6 +214,7 @@ static const struct dpu_perf_cfg sc8180x_perf_data = {
+>  };
+>  
+>  const struct dpu_mdss_cfg dpu_sc8180x_cfg = {
+> +	.core_rev = DPU_HW_VER_510,
+>  	.caps = &sc8180x_dpu_caps,
+>  	.ubwc = &sc8180x_ubwc_cfg,
+>  	.mdp_count = ARRAY_SIZE(sc8180x_mdp),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+> index daebd2170041..1b04ecfb7cde 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_0_sm8250.h
+> @@ -214,6 +214,7 @@ static const struct dpu_perf_cfg sm8250_perf_data = {
+>  };
+>  
+>  const struct dpu_mdss_cfg dpu_sm8250_cfg = {
+> +	.core_rev = DPU_HW_VER_600,
+>  	.caps = &sm8250_dpu_caps,
+>  	.ubwc = &sm8250_ubwc_cfg,
+>  	.mdp_count = ARRAY_SIZE(sm8250_mdp),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+> index 0b05da2592c0..16e905e35025 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_2_sc7180.h
+> @@ -128,6 +128,7 @@ static const struct dpu_perf_cfg sc7180_perf_data = {
+>  };
+>  
+>  const struct dpu_mdss_cfg dpu_sc7180_cfg = {
+> +	.core_rev = DPU_HW_VER_620,
+>  	.caps = &sc7180_dpu_caps,
+>  	.ubwc = &sc7180_ubwc_cfg,
+>  	.mdp_count = ARRAY_SIZE(sc7180_mdp),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+> index ba9de008519b..87ad7a765e4c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_3_sm6115.h
+> @@ -103,6 +103,7 @@ static const struct dpu_perf_cfg sm6115_perf_data = {
+>  };
+>  
+>  const struct dpu_mdss_cfg dpu_sm6115_cfg = {
+> +	.core_rev = DPU_HW_VER_630,
+>  	.caps = &sm6115_dpu_caps,
+>  	.ubwc = &sm6115_ubwc_cfg,
+>  	.mdp_count = ARRAY_SIZE(sm6115_mdp),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
+> index 92ac348eea6b..a61140ab96ed 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h
+> @@ -93,6 +93,7 @@ static const struct dpu_perf_cfg qcm2290_perf_data = {
+>  };
+>  
+>  const struct dpu_mdss_cfg dpu_qcm2290_cfg = {
+> +	.core_rev = DPU_HW_VER_650,
+>  	.caps = &qcm2290_dpu_caps,
+>  	.ubwc = &qcm2290_ubwc_cfg,
+>  	.mdp_count = ARRAY_SIZE(qcm2290_mdp),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> index 3c1b2c13398d..01abce7a311c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_0_sm8350.h
+> @@ -201,6 +201,7 @@ static const struct dpu_perf_cfg sm8350_perf_data = {
+>  };
+>  
+>  const struct dpu_mdss_cfg dpu_sm8350_cfg = {
+> +	.core_rev = DPU_HW_VER_700,
+>  	.caps = &sm8350_dpu_caps,
+>  	.ubwc = &sm8350_ubwc_cfg,
+>  	.mdp_count = ARRAY_SIZE(sm8350_mdp),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> index 5d894cbb0a62..4294f1d35d25 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_7_2_sc7280.h
+> @@ -141,6 +141,7 @@ static const struct dpu_perf_cfg sc7280_perf_data = {
+>  };
+>  
+>  const struct dpu_mdss_cfg dpu_sc7280_cfg = {
+> +	.core_rev = DPU_HW_VER_720,
+>  	.caps = &sc7280_dpu_caps,
+>  	.ubwc = &sc7280_ubwc_cfg,
+>  	.mdp_count = ARRAY_SIZE(sc7280_mdp),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> index c3f1ae000a21..2108e531f13b 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h
+> @@ -203,6 +203,7 @@ static const struct dpu_perf_cfg sc8280xp_perf_data = {
+>  };
+>  
+>  const struct dpu_mdss_cfg dpu_sc8280xp_cfg = {
+> +	.core_rev = DPU_HW_VER_800,
+>  	.caps = &sc8280xp_dpu_caps,
+>  	.ubwc = &sc8280xp_ubwc_cfg,
+>  	.mdp_count = ARRAY_SIZE(sc8280xp_mdp),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> index 86c2e68ebd2c..b8d5d0ee8c82 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
+> @@ -209,6 +209,7 @@ static const struct dpu_perf_cfg sm8450_perf_data = {
+>  };
+>  
+>  const struct dpu_mdss_cfg dpu_sm8450_cfg = {
+> +	.core_rev = DPU_HW_VER_810,
+>  	.caps = &sm8450_dpu_caps,
+>  	.ubwc = &sm8450_ubwc_cfg,
+>  	.mdp_count = ARRAY_SIZE(sm8450_mdp),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> index 85dc34458b88..87a7c06e3024 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
+> @@ -213,6 +213,7 @@ static const struct dpu_perf_cfg sm8550_perf_data = {
+>  };
+>  
+>  const struct dpu_mdss_cfg dpu_sm8550_cfg = {
+> +	.core_rev = DPU_HW_VER_900,
+>  	.caps = &sm8550_dpu_caps,
+>  	.ubwc = &sm8550_ubwc_cfg,
+>  	.mdp_count = ARRAY_SIZE(sm8550_mdp),
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index 677048cc3b7d..cc4aa75a1219 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -19,6 +19,33 @@
+>   */
+>  #define MAX_BLOCKS    12
+>  
+> +#define DPU_HW_VER(MAJOR, MINOR, STEP)\
+> +		  ((((unsigned int)MAJOR & 0xF) << 28) |\
+> +		  ((MINOR & 0xFFF) << 16) |\
+> +		  (STEP & 0xFFFF))
 > +
->   struct qcom_cpufreq_drv;
->   
->   struct qcom_cpufreq_match_data {
-> @@ -204,6 +207,41 @@ static int qcom_cpufreq_krait_name_version(struct device *cpu_dev,
->   	return ret;
->   }
->   
-> +static int qcom_cpufreq_ipq8074_name_version(struct device *cpu_dev,
-> +					     struct nvmem_cell *speedbin_nvmem,
-> +					     char **pvs_name,
-> +					     struct qcom_cpufreq_drv *drv)
-> +{
-> +	u32 msm_id;
-> +	int ret;
-> +	*pvs_name = NULL;
+> +#define DPU_HW_MAJOR(rev)((rev) >> 28)
+> +#define DPU_HW_MINOR(rev)(((rev) >> 16) & 0xFFF)
+> +#define DPU_HW_STEP(rev)((rev) & 0xFFFF)
+> +#define DPU_HW_MAJOR_MINOR(rev)((rev) >> 16)
 > +
-> +	ret = qcom_smem_get_soc_id(&msm_id);
-> +	if (ret)
-> +		return ret;
+> +#define IS_DPU_MAJOR_MINOR_SAME(rev1, rev2)   \
+> +(DPU_HW_MAJOR_MINOR((rev1)) == DPU_HW_MAJOR_MINOR((rev2)))
 > +
-> +	switch (msm_id) {
-> +	case QCOM_ID_IPQ8070A:
-> +	case QCOM_ID_IPQ8071A:
-> +		drv->versions = IPQ8074_ACORN_VERSION;
-> +		break;
-> +	case QCOM_ID_IPQ8072A:
-> +	case QCOM_ID_IPQ8074A:
-> +	case QCOM_ID_IPQ8076A:
-> +	case QCOM_ID_IPQ8078A:
-> +		drv->versions = IPQ8074_HAWKEYE_VERSION;
-> +		break;
-> +	default:
-> +		dev_err(cpu_dev,
-> +			"SoC ID %u is not part of IPQ8074 family, limiting to 1.4GHz!\n",
-> +			msm_id);
-> +		drv->versions = IPQ8074_ACORN_VERSION;
-> +		break;
-> +	}
+> +#define DPU_HW_VER_300 DPU_HW_VER(3, 0, 0) /* 8998 v1.0 */
+> +#define DPU_HW_VER_400 DPU_HW_VER(4, 0, 0) /* sdm845 v1.0 */
+> +#define DPU_HW_VER_500 DPU_HW_VER(5, 0, 0) /* sm8150 v1.0 */
+> +#define DPU_HW_VER_510 DPU_HW_VER(5, 1, 1) /* sc8180 */
+> +#define DPU_HW_VER_600 DPU_HW_VER(6, 0, 0) /* sm8250 */
+> +#define DPU_HW_VER_620 DPU_HW_VER(6, 2, 0) /* sc7180 v1.0 */
+> +#define DPU_HW_VER_630 DPU_HW_VER(6, 3, 0) /* sm6115|sm4250 */
+> +#define DPU_HW_VER_650 DPU_HW_VER(6, 5, 0) /* qcm2290|sm4125 */
+> +#define DPU_HW_VER_700 DPU_HW_VER(7, 0, 0) /* sm8350 */
+> +#define DPU_HW_VER_720 DPU_HW_VER(7, 2, 0) /* sc7280 */
+> +#define DPU_HW_VER_800 DPU_HW_VER(8, 0, 0) /* sc8280xp */
+> +#define DPU_HW_VER_810 DPU_HW_VER(8, 1, 0) /* sm8450 */
+> +#define DPU_HW_VER_900 DPU_HW_VER(9, 0, 0) /* sm8550 */
 > +
-> +	return 0;
-> +}
+>  #define DPU_HW_BLK_NAME_LEN	16
+>  
+>  #define MAX_IMG_WIDTH 0x3fff
+> @@ -769,7 +796,7 @@ struct dpu_perf_cfg {
+>  /**
+>   * struct dpu_mdss_cfg - information of MDSS HW
+>   * This is the main catalog data structure representing
+> - * this HW version. Contains number of instances,
+> + * this HW version. Contains dpu core revision, number of instances,
+>   * register offsets, capabilities of the all MDSS HW sub-blocks.
+>   *
+>   * @dma_formats        Supported formats for dma pipe
+> @@ -778,6 +805,8 @@ struct dpu_perf_cfg {
+>   * @mdss_irqs:         Bitmap with the irqs supported by the target
+>   */
+>  struct dpu_mdss_cfg {
+> +	u32 core_rev;
 > +
->   static const struct qcom_cpufreq_match_data match_data_kryo = {
->   	.get_version = qcom_cpufreq_kryo_name_version,
->   };
-> @@ -218,6 +256,10 @@ static const struct qcom_cpufreq_match_data match_data_qcs404 = {
->   	.genpd_names = qcs404_genpd_names,
->   };
->   
-> +static const struct qcom_cpufreq_match_data match_data_ipq8074 = {
-> +	.get_version = qcom_cpufreq_ipq8074_name_version,
-> +};
-> +
->   static int qcom_cpufreq_probe(struct platform_device *pdev)
->   {
->   	struct qcom_cpufreq_drv *drv;
-> @@ -363,6 +405,7 @@ static const struct of_device_id qcom_cpufreq_match_list[] __initconst = {
->   	{ .compatible = "qcom,msm8996", .data = &match_data_kryo },
->   	{ .compatible = "qcom,qcs404", .data = &match_data_qcs404 },
->   	{ .compatible = "qcom,ipq8064", .data = &match_data_krait },
-> +	{ .compatible = "qcom,ipq8074", .data = &match_data_ipq8074 },
->   	{ .compatible = "qcom,apq8064", .data = &match_data_krait },
->   	{ .compatible = "qcom,msm8974", .data = &match_data_krait },
->   	{ .compatible = "qcom,msm8960", .data = &match_data_krait },
-
--- 
-With best wishes
-Dmitry
-
+>  	const struct dpu_caps *caps;
+>  
+>  	const struct dpu_ubwc_cfg *ubwc;
+> -- 
+> 2.40.1
+> 
