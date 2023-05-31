@@ -2,65 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0DC0718B81
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 22:56:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF030718D6B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 23:45:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229663AbjEaU4d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 16:56:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58338 "EHLO
+        id S229527AbjEaVpZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 17:45:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47606 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229603AbjEaU4c (ORCPT
+        with ESMTP id S229521AbjEaVpY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 16:56:32 -0400
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57B8C129
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 13:56:31 -0700 (PDT)
-Received: by mail-qt1-x829.google.com with SMTP id d75a77b69052e-3f7fd59bb13so57047131cf.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 13:56:31 -0700 (PDT)
+        Wed, 31 May 2023 17:45:24 -0400
+Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9A37A3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 14:45:23 -0700 (PDT)
+Received: by mail-io1-xd2d.google.com with SMTP id ca18e2360f4ac-76c64da0e46so13496539f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 14:45:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1685566590; x=1688158590;
+        d=chromium.org; s=google; t=1685569521; x=1688161521;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=AYHmPPdm4Dau+d947lCnpQiMGTh8x8NsQoxsSBGTC/s=;
-        b=X1NbQ/MSBszVuLd5RdbvzcWYbpZWRuzTYKxxHtlA+3P1lHFARVvs6ve+bJc6sDz9q6
-         XW3Nbpz9FVMyUSdx5q6gFqlgks2NpqkiwRajg5R2a24YJQGijfZ9rAob+agFbo4PR//P
-         YB1GHs6CtQC0b7tsV8DGqjFA/j+FRKGoYiix8=
+        bh=T92knqTOJA3pNeL2xlDEkRB2bYKP1xzPES6uIiXRZts=;
+        b=E6V1657fUicwOTJI2QsoalRJ8srX8et1D/oBi6sCWl87C0+ay8dH8I5h5TgS8vsUJF
+         nE8GKW8wQY6eAXaDGjpC8/koGCXlN+Qgg0+Z55A4l1Damaikc+8OK+m4TAybtViIcGFM
+         dSh8jn/3sz2kiRMXP0lR5xbBJ2dHDE9IbQiD4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685566590; x=1688158590;
+        d=1e100.net; s=20221208; t=1685569521; x=1688161521;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=AYHmPPdm4Dau+d947lCnpQiMGTh8x8NsQoxsSBGTC/s=;
-        b=THkpHA+ELA1mvntIzP8m2/0bk1oSL2NwsCntKSUdAtCLVGEhB93v/iPwCvrHd9KJKz
-         gEf9Tzyv12ZCnZiOftfFzHEB/ZQw8ObV5YC7yuUNQ/kTjWxeoPm4NqRZtLLFDjMMTV7F
-         3UZkzQoVyEp3KGGpF49N/ugz2gP9UXkPrxZ7QJcAllGU7yZjxW82u13bKYm4pPfvO2DG
-         qTr8VmXE9od7HF7/dDrf+csQGJiJis8mlRordi0MA9/Jmj6TBAdoTufyjhk7AdcL3t3+
-         XDfxsbpp36Ibp4UV7FsMvo06zaJMJWVTVUukeBhtpqCzOj+kN7d57mrw4rnEh6ZZoqzO
-         XfRQ==
-X-Gm-Message-State: AC+VfDz1QkMfgbD1Ti1UKYj0F1c/+n4rNtU5S7EpsMgU1J/0+ZgulrGy
-        jF8W5CF3jqz3rn4zPejcaK5IX/81Hc8+b8j/h/o=
-X-Google-Smtp-Source: ACHHUZ6IA9W7k2zdMP26ghRjg6v7Yvvsrf3OV6Gk7P+MMGH5iENYPiuWlBpz0aRCz+HPRJVXcEu+Ww==
-X-Received: by 2002:ac8:7f95:0:b0:3f3:93cd:ff39 with SMTP id z21-20020ac87f95000000b003f393cdff39mr7058512qtj.31.1685566590059;
-        Wed, 31 May 2023 13:56:30 -0700 (PDT)
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com. [209.85.160.181])
-        by smtp.gmail.com with ESMTPSA id r6-20020ac85e86000000b003f018e18c35sm6441923qtx.27.2023.05.31.13.56.29
+        bh=T92knqTOJA3pNeL2xlDEkRB2bYKP1xzPES6uIiXRZts=;
+        b=KXqwg4zyn4BfvqQ99/FVUqZJrFzP2V8Xda4yvsgcpqlC0/RHh+3Wcwl6T8h6H6WECW
+         tzpXHsUgWNrP3J/kCuKwafRJeaZFCpE1x+imJgMdVSL3pnT5oQO9u2NIWR6+AGACCQe5
+         fKHv/pegEBUOeou/cLWCfj5VhW82OzVc/rOFJPADqL5s+JuWLssVgfQ6r5GH2DKJAo0b
+         IhfFpxW0oDe/JfstZQ2Cfx2dXvBDI1ek2hgfTVXd5YhP2ogOMTXFW+2YQUIlYn7Woi0C
+         O2O7WttuHuXVB+lda5eeGLMZWZ7Rf7ZVowbQdD7pS8LLVe0AvvlE7kPLmabV6JClCFJw
+         nIoQ==
+X-Gm-Message-State: AC+VfDzpAn6Pv3hErZwFdaePa/0/IrvPanfixuKQ+wAjP3uwRKHNpFEm
+        d6EB9q57n6N9EqPADoDIUuT9CEmnN5tBsVoHURU=
+X-Google-Smtp-Source: ACHHUZ7cZ1GhPe+zIs3q81Ck0SM3bFM5Ai0n8lT0FM6noBih2n8jFzo3XqPbj22ifR7O20ZNMu63SQ==
+X-Received: by 2002:a5d:87c2:0:b0:774:7a6d:8753 with SMTP id q2-20020a5d87c2000000b007747a6d8753mr5684892ios.9.1685569521603;
+        Wed, 31 May 2023 14:45:21 -0700 (PDT)
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com. [209.85.166.169])
+        by smtp.gmail.com with ESMTPSA id i2-20020a5e8502000000b007702f55116fsm4076815ioj.38.2023.05.31.14.45.20
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 May 2023 13:56:29 -0700 (PDT)
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-3f81ffc9065so16461cf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 13:56:29 -0700 (PDT)
-X-Received: by 2002:a05:6e02:b42:b0:33a:e716:a76d with SMTP id
- f2-20020a056e020b4200b0033ae716a76dmr37485ilu.27.1685566153516; Wed, 31 May
- 2023 13:49:13 -0700 (PDT)
+        Wed, 31 May 2023 14:45:20 -0700 (PDT)
+Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-33b7f217dd0so48265ab.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 14:45:20 -0700 (PDT)
+X-Received: by 2002:a05:6e02:188f:b0:33b:cea:ce70 with SMTP id
+ o15-20020a056e02188f00b0033b0ceace70mr8358ilu.25.1685569520353; Wed, 31 May
+ 2023 14:45:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230531-topic-rsc-v1-0-b4a985f57b8b@linaro.org> <20230531-topic-rsc-v1-6-b4a985f57b8b@linaro.org>
-In-Reply-To: <20230531-topic-rsc-v1-6-b4a985f57b8b@linaro.org>
+References: <20230531-topic-rsc-v1-0-b4a985f57b8b@linaro.org> <f5875c10-21c1-43b6-4ce6-25b968588412@linaro.org>
+In-Reply-To: <f5875c10-21c1-43b6-4ce6-25b968588412@linaro.org>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 31 May 2023 13:49:01 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Vx9txUs4=b_enDMTBXuNsTGXO2v3KyauuD8k_J++vbfA@mail.gmail.com>
-Message-ID: <CAD=FV=Vx9txUs4=b_enDMTBXuNsTGXO2v3KyauuD8k_J++vbfA@mail.gmail.com>
-Subject: Re: [PATCH 6/8] arm64: dts: qcom: sdm845: Flush RSC sleep & wake votes
+Date:   Wed, 31 May 2023 14:45:08 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=Um8U2MQsrv+ngQg_h-aQMi5_yy6Lrj3ovr7eV1PC+Wnw@mail.gmail.com>
+Message-ID: <CAD=FV=Um8U2MQsrv+ngQg_h-aQMi5_yy6Lrj3ovr7eV1PC+Wnw@mail.gmail.com>
+Subject: Re: [PATCH 0/8] Flush RSC votes properly on more RPMh platforms
 To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
@@ -80,13 +80,14 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, Andy Gross <andy.gross@linaro.org>,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Rob Clark <robdclark@chromium.org>
+        Maulik Shah <quic_mkshah@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -95,37 +96,52 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Wed, May 31, 2023 at 6:22=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro=
+On Wed, May 31, 2023 at 7:26=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro=
 .org> wrote:
 >
-> The rpmh driver will cache sleep and wake votes until the cluster
-> power-domain is about to enter idle, to avoid unnecessary writes. So
-> associate the apps_rsc with the cluster pd, so that it can be notified
-> about this event.
+> On 31.05.2023 15:22, Konrad Dybcio wrote:
+> > As pointed out in [1], the Linux implementation of RSC basically requir=
+es
+> > (even if not explicitly) that we point it to a power domain which
+> > represents the power state of the CPUs. In an effort to fulfill that
+> > requirement, make it required in bindings and hook it up on all platfor=
+ms
+> > where I was able to do. This means all RPMh platforms, except
+> >
+> > - SC7180
+> > - SC7280
+> > - SA8775
+> >
+> > As there wasn't an idle-states setup (which may be on purpose for CrOS
+> > devices, certainly not for Windows SC7[12]80s) that I could validate.
+> > (Doug, Bartosz, could you guys look into your respective platforms of
+> > interest here?)
+> >
+> > This series also adds support for idle states on SM6350, as I was able
+> > to add and test that.
+> I noticed that 7280 is WIP:
 >
-> Without this, only AMC votes are being commited.
->
-> Fixes: c83545d95376 ("arm64: dts: sdm845: Add rpmh-rsc node")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845.dtsi | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/q=
-com/sdm845.dtsi
-> index 950305aad44d..707550ef4990 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> @@ -5138,6 +5138,7 @@ apps_rsc: rsc@179c0000 {
->                                           <SLEEP_TCS   3>,
->                                           <WAKE_TCS    3>,
->                                           <CONTROL_TCS 1>;
-> +                       power-domains =3D <&CLUSTER_PD>;
+> https://lore.kernel.org/lkml/20230424110933.3908-4-quic_mkshah@quicinc.co=
+m/
 
-It would be good to confirm that this doesn't throw sdm845-cheza for a
-loop. No sdm845 Chromebooks ever officially shipped, but some people
-like Rob Clark still use the old boards in their CI farms. Adding him
-here in case he wants to check. Worst case we could just delete the
-property from the cheza device tree.
+Right. For sc7180 Chromebooks we don't use OSI (OS Initiated) mode but
+instead use PC (Platform Coordinated) mode. As I understand it, that
+means we take a different path through all this stuff.
+
+That being said, in the sc7280 thread you pointed at, Bjorn and Ulf
+said that we could use the new device tree snippets for sc7280 even
+before the ATF update. If I'm reading the thread correctly and the
+same applies to sc7180:
+
+1. New DT plus firmware that doesn't support OSI - OK
+2. New DT plus firmware that supports OSI - OK after code changes
+3. Old DT plus firmware that doesn't support OSI - OK
+4. Old DT plus firmware that supports OSI - Not OK
+
+For sc7180 Chromebooks we'll never have firmware that supports OSI.
+That means that, assuming I'm understanding correctly, we actually
+could move the DT to represent things the new way. Presumably this
+would be important for sc7180 devices that originally shipped with
+Windows (I think support for one of these is underway).
 
 -Doug
