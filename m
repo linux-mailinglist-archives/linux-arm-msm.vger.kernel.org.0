@@ -2,58 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D4B8B717B1B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 11:05:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72470717BC9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 11:23:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232213AbjEaJFF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 05:05:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45510 "EHLO
+        id S235438AbjEaJXu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 05:23:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235332AbjEaJEe (ORCPT
+        with ESMTP id S235444AbjEaJXd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 05:04:34 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE701E65;
-        Wed, 31 May 2023 02:03:59 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4B11A636DF;
-        Wed, 31 May 2023 09:03:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A371C433D2;
-        Wed, 31 May 2023 09:03:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685523838;
-        bh=Fj4Up68ocllFYDr8AEcwK10DzhsFeDDh/2SD0hHn63I=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=SuMJ068wtQnL/QcjqiW3ztlo0rLRZCoQIR2WRjqHSTRbzqtBz5YopiI9Au0h4xzVi
-         WZhfH1GlRTFk0UIwJ5FiRNS0jvmABuIff27p5jwXqvt8J/eu6Xc6L0Xmw5/g7hyy9B
-         LuiBVkul4k//epH7qS4JloR41rehji9ajwCtoeYKPiOgVp4g1nDGbXcSTce/TVB9kp
-         KaAeDXdkBXPpt3nO9vbFFrM4VcZcaZe2D7KToDCxe0CnBv8LcExy8REFGHb4FHjgKg
-         C/q4fSaaa8OAQMpStKhRD68yM02RdZCzuAZEoQBevhdUoRHXU3vdrTzo9CnIiK3PRH
-         r1FDKV4cYn2dQ==
-Message-ID: <78819e4d-6eb1-8a71-2da0-0d4711103648@kernel.org>
-Date:   Wed, 31 May 2023 11:03:54 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH] soc: qcom: pmic: Fix resource leaks in
- device_for_each_child_node() loops
-Content-Language: en-US
-To:     Lu Hongfei <luhongfei@vivo.com>, Andy Gross <agross@kernel.org>,
+        Wed, 31 May 2023 05:23:33 -0400
+X-Greylist: delayed 140643 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Wed, 31 May 2023 02:23:30 PDT
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2386C0;
+        Wed, 31 May 2023 02:23:30 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1685525008; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=nm9Hi9A5UctHoqFjtC93BVffbJPaM7L6WOpkvur311D6dVMN8NrpiA+w0lz3DiRRLs
+    j+LmgWQb/qQk/oaSvqMWq2PzmKdNaqJFHOcI+ZYZI24uH8uFdMFrGlY7Kld3oSdEW4Vg
+    3NcBeCWjr+TfGLU+xPekaYL1x1r0C8UsAXNGXojRLZNUnuzAsxPFZwSxZSKSqWifoPJN
+    GZVuQq6NkLruy4up1WkHVSkJTfhWG2KKaIETEVWyOh7AqLaraLbpENxdicuzTrPQwsHS
+    bkPBRJG6d1n7ayTZrV+2e7W5pZLhfbY00CAtYP7P7uPpDNIfmZX9S/X9JC71yA31lqyg
+    eauA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1685525008;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=O7FyB279Rp+Phddz55VXfH7fCqQWfLJZzJTaIeWqqyg=;
+    b=XoiYCRwRiXywrNMs6YyDbbl4CH+BZwJOlgCGcjKzYL9/UFPDdXRWzbPfMn9vlToWe0
+    HiRcdRvteODMCYC0Vo/zVKJxFdIxe9Wcj3TITMwqSLoj9SxHnJGfmzMT9wErczxg9IWr
+    w25tXoqZAmOYH9I4I5Nlxe+y8fmqnYyDiK1vn1cLkFu4u2HTqZiQk4U2XlImn89WtzRu
+    4T36jaZYHVbnNtG4MMQ2e8BAECMdv64mnx2qMBnlUiFafn2jb/mRZdWCDvu/LDZOK0eZ
+    uZV6cBvGMwg3iJBlK3y+pWbLT6KQJfDohaEbe6VyAARZmkVtN1uTovcLOPV3WLgsSYq0
+    Talw==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1685525008;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=O7FyB279Rp+Phddz55VXfH7fCqQWfLJZzJTaIeWqqyg=;
+    b=ZWLhCS/vhJ/FOqRZUZ4QoD7sQQjQRSkzhslLpBH1G1Or/KsfeKUPFCrr4p2ObkgIq+
+    nd0q2w+T7V+NEUwLMF7Ced0klinmD4DDCNEq6866Byq4+Nug+HIa1BvXz5y6fZ2S0CyO
+    JoDphi/6LRxrrmCd43n0WZsraeYNzb5bqmhaXgoI3ZHnkIsW3w+O5kluTfxRSxQsCH/j
+    fKQFCFdERJXwBceaWRTRrvPCchTL5obgwurU80vYsKsrEwFrnnPMmtH1BmLhU7LOWypz
+    AMRbI2WuRdxKIz3gF7GH5k1n2dG5W0grmI6ObqoLgcEc+vOoVY5x5jtvCLB09Oqso/1i
+    r86w==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1685525008;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=O7FyB279Rp+Phddz55VXfH7fCqQWfLJZzJTaIeWqqyg=;
+    b=aRfVrx+liZHuqZnJZvTLZESHcRH+5lTL36vKU4EzeWqDFwhmnXSkHpfvhKfJlqv9kP
+    /Y4NXJlOj8mBZYo43JAQ==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA9J/h"
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
+    with ESMTPSA id j6420az4V9NRlix
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Wed, 31 May 2023 11:23:27 +0200 (CEST)
+Date:   Wed, 31 May 2023 11:23:22 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Mukesh Ojha <quic_mojha@quicinc.com>
+Cc:     Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Cc:     opensource.kernel@vivo.com
-References: <20230531085422.4963-1-luhongfei@vivo.com>
-From:   Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <20230531085422.4963-1-luhongfei@vivo.com>
-Content-Type: text/plain; charset=UTF-8
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] media: venus: firmware: Use of_reserved_mem_lookup()
+Message-ID: <ZHcSAbu1yYuhnKSc@gerhold.net>
+References: <20230529-venus-of-rmem-v1-1-dfcdc5047ffb@gerhold.net>
+ <38a627a2-040d-23e2-5637-32f199d0fc31@quicinc.com>
+ <ZHbvkDkkS_pZltMG@gerhold.net>
+ <31b850f0-7ee4-67e0-8cdb-39b9651a9d57@quicinc.com>
+ <eefd371e-9c9c-2e29-8d6e-d657ee0db237@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <eefd371e-9c9c-2e29-8d6e-d657ee0db237@quicinc.com>
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -61,104 +97,69 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 31.05.2023 10:54, Lu Hongfei wrote:
-> The device_for_each_child_node loop in pmic_glink_altmode_probe should have
-> fwnode_handle_put() before return which could avoid resource leaks.
-> This patch could fix this bug.
+On Wed, May 31, 2023 at 01:15:26PM +0530, Mukesh Ojha wrote:
 > 
-> Fixes: 080b4e24852b ("soc: qcom: pmic_glink: Introduce altmode support")
 > 
-> Signed-off-by: Lu Hongfei <luhongfei@vivo.com>
-> ---
-This is the third revision of this patch, please version them accordingly.
-
-You can pass `-vN` to git format-patch and it'll do the job for you.
-
-Please also describe the changes since last revision below the --- line.
-
-Konrad
-
->  drivers/soc/qcom/pmic_glink_altmode.c | 27 ++++++++++++++++++---------
->  1 file changed, 18 insertions(+), 9 deletions(-)
+> On 5/31/2023 1:04 PM, Vikash Garodia wrote:
+> > 
+> > On 5/31/2023 12:26 PM, Stephan Gerhold wrote:
+> > > On Wed, May 31, 2023 at 11:36:52AM +0530, Vikash Garodia wrote:
+> > > > On 5/29/2023 11:46 PM, Stephan Gerhold wrote:
+> > > > > Reserved memory can be either looked up using the generic function
+> > > > > of_address_to_resource() or using the special of_reserved_mem_lookup().
+> > > > > The latter has the advantage that it ensures that the referenced memory
+> > > > > region was really reserved and is not e.g. status = "disabled".
+> > > > > 
+> > > > > of_reserved_mem also supports allocating reserved memory dynamically at
+> > > > > boot time. This works only when using of_reserved_mem_lookup() since
+> > > > > there won't be a fixed address in the device tree.
+> > > > IIUC, this would avoid precomputing the hard range for different firmware
+> > > > regions and also make it more flexible to adjust the sizes, if anyone wants a
+> > > > bigger size later.
+> > > > Incase a specific firmware needs a dedicate start address, do we have an option
+> > > > to specify the same ?
+> > > > 
+> > > 
+> > > If you want a specific start address (or in other words: a fixed base
+> > > address) then you should continue using static reservation for that
+> > > component. You can mix static and dynamic reservations. The static ones
+> > > (with fixed addresses) will be reserved first, then the dynamic ones
+> > > will be allocated from the free space.
+> > > 
+> > > I have this example for one device in my proposal at [1]:
+> > > 
+> > > 	/* Firmware must be loaded at address 0x8b600000 */
+> > > 	wcnss_mem: wcnss@8b600000 {
+> > > 		reg = <0x8b600000 0x600000>;
+> > > 		no-map;
+> > > 	};
+> > > 	/* Firmware can be loaded anywhere with 1 MiB alignment */
+> > > 	venus_mem: venus {
+> > > 		size = <0x500000>;
+> > > 		alignment = <0x100000>;
+> > > 		no-map;
+> > > 	};
+> > > 
+> > > The wcnss_mem will be always at 0x8b600000, but the venus_mem can be
+> > > loaded somewhere around that. If only certain regions need a fixed
+> > > address this still provides the flexibility to change sizes more easily.
+> > > 
+> > > Does that answer your question? I wasn't sure what exactly you mean with
+> > > a "dedicated start address". :)
+> > Yes, it clarified the need if any subsystem wants a specific start address.
+> > 
+> > One more thing, lets say, we keep it dynamic allocation and at the same time we
+> > need to pass the start address to TZ call in [1]. How do we get that allocated
+> > address so as to pass in [1] ?
 > 
-> diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
-> index df48fbea4b68..a7fc6570fa1e
-> --- a/drivers/soc/qcom/pmic_glink_altmode.c
-> +++ b/drivers/soc/qcom/pmic_glink_altmode.c
-> @@ -395,7 +395,7 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
->  		ret = fwnode_property_read_u32(fwnode, "reg", &port);
->  		if (ret < 0) {
->  			dev_err(dev, "missing reg property of %pOFn\n", fwnode);
-> -			return ret;
-> +			goto err_node_put;
->  		}
->  
->  		if (port >= ARRAY_SIZE(altmode->ports)) {
-> @@ -405,7 +405,8 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
->  
->  		if (altmode->ports[port].altmode) {
->  			dev_err(dev, "multiple connector definition for port %u\n", port);
-> -			return -EINVAL;
-> +			ret = -EINVAL;
-> +			goto err_node_put;
->  		}
->  
->  		alt_port = &altmode->ports[port];
-> @@ -420,33 +421,37 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
->  
->  		ret = devm_drm_bridge_add(dev, &alt_port->bridge);
->  		if (ret)
-> -			return ret;
-> +			goto err_node_put;
->  
->  		alt_port->dp_alt.svid = USB_TYPEC_DP_SID;
->  		alt_port->dp_alt.mode = USB_TYPEC_DP_MODE;
->  		alt_port->dp_alt.active = 1;
->  
->  		alt_port->typec_mux = fwnode_typec_mux_get(fwnode);
-> -		if (IS_ERR(alt_port->typec_mux))
-> -			return dev_err_probe(dev, PTR_ERR(alt_port->typec_mux),
-> +		if (IS_ERR(alt_port->typec_mux)) {
-> +			ret = dev_err_probe(dev, PTR_ERR(alt_port->typec_mux),
->  					     "failed to acquire mode-switch for port: %d\n",
->  					     port);
-> +			goto err_node_put;
-> +		}
->  
->  		ret = devm_add_action_or_reset(dev, pmic_glink_altmode_put_mux,
->  					       alt_port->typec_mux);
->  		if (ret)
-> -			return ret;
-> +			goto err_node_put;
->  
->  		alt_port->typec_switch = fwnode_typec_switch_get(fwnode);
-> -		if (IS_ERR(alt_port->typec_switch))
-> -			return dev_err_probe(dev, PTR_ERR(alt_port->typec_switch),
-> +		if (IS_ERR(alt_port->typec_switch)) {
-> +			ret = dev_err_probe(dev, PTR_ERR(alt_port->typec_switch),
->  					     "failed to acquire orientation-switch for port: %d\n",
->  					     port);
-> +			goto err_node_put;
-> +		}
->  
->  		ret = devm_add_action_or_reset(dev, pmic_glink_altmode_put_switch,
->  					       alt_port->typec_switch);
->  		if (ret)
-> -			return ret;
-> +			goto err_node_put;
->  	}
->  
->  	altmode->client = devm_pmic_glink_register_client(dev,
-> @@ -455,6 +460,10 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
->  							  pmic_glink_altmode_pdr_notify,
->  							  altmode);
->  	return PTR_ERR_OR_ZERO(altmode->client);
-> +
-> +err_node_put:
-> +	fwnode_handle_put(fwnode);
-> +	return ret;
->  }
->  
->  static const struct auxiliary_device_id pmic_glink_altmode_id_table[] = {
+> +	*mem_phys = rmem->base;
+> 
+> It will provide the start, is not it ?
+> 
+
+Yes, when using of_reserved_mem_lookup() the allocated address is
+available in rmem->base. If you have this patch applied then it should
+be given to the TZ call as expected.
+
+Thanks,
+Stephan
