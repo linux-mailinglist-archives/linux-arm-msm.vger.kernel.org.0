@@ -2,187 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD1C9717FBD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 14:19:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B72C717FC8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 14:22:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232018AbjEaMTs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 08:19:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60504 "EHLO
+        id S235385AbjEaMWg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 08:22:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229765AbjEaMTr (ORCPT
+        with ESMTP id S235082AbjEaMWf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 08:19:47 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4EDC10F;
-        Wed, 31 May 2023 05:19:45 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 69CD763889;
-        Wed, 31 May 2023 12:19:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9880C433D2;
-        Wed, 31 May 2023 12:19:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685535584;
-        bh=MOaDbL+NiO4OhRTPz+e/kwwin5a8AKAbdpTTLVge0Yo=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=AHeTiweYFXX2P52j7l6i6MADs9RfXctsbgXrUNXzzXe/FKKVpRY7rB1lIx5Vt/S26
-         ikZYC6v6fSKWlTpS/8cIdBqORXNwLP3Mqd2TDF7SOjX93x3qtDNvwCe8h/B8EZuAOO
-         lBI7Ycu/DIcutr2uBZirHiStlzt1x+6LY/0qYt2IjdWQLPXh+dC8WIA8qVvpdjfJAs
-         4pzzBiYqRUcauM9SNwCykBOSC2YwtoxqPr6gTBens6KnVmEYoie6kcvlvIT/9y7ddd
-         +QQgNTEfWR86l/OAvcdq+PRpf2n3OU/qvSfjv35Y8//vA/km+M2tTUMjFyAyRVfxAh
-         5U0QsHi7EqegA==
-Message-ID: <90e94292-4300-e7f0-1a37-72a5c3bd77dc@kernel.org>
-Date:   Wed, 31 May 2023 14:19:40 +0200
+        Wed, 31 May 2023 08:22:35 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05B4E125
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 05:22:33 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f6d38a140bso7308645e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 05:22:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685535751; x=1688127751;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+hlItBZSa8qJMMaCDwSxrKtteXj1iXy2B/zXCOUIhkI=;
+        b=O5XTdtzfbB9EPm/UAT4dvJk29SfhxgWZq6XzK5iQvxKuIkEwW5hmJ4WrAuKTB+8rTC
+         R0A0WeKY1H+cAmnKq+My2RZ3+pCHGC1Oas0GmkDCLgtIpkHT6MhtkggumKVOa9+MCU6I
+         BOtFcWHXDbfu8jBbjnrif4rb0cKiLDkzkBa+2X8iJsm8t79PCirZnjOVB2/T48U0qkqd
+         zuC3IGJCrs6juZMubqFeocp9msU5OyoZz1Oc3D0LN70JLfOeu33RnCXQsgR7wkHx7+ve
+         9rAnw3xOAamSI6ttmuj2j3Utz2GkA2FjZ1k3sD0wP/mAMsfe1CG7yi3wFH/GCkRKvs+H
+         Pp8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685535751; x=1688127751;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+hlItBZSa8qJMMaCDwSxrKtteXj1iXy2B/zXCOUIhkI=;
+        b=DPvh1dS/zxZKVdKCsvW1sHy+qGfIKKWgXnvwmWVUkbtxxP2x0aKQJeUBHTKPHAWHos
+         xij5PlMmak941lM94TiGUdOhm8yCYsKnJn/xoimUf1mP9renzuwsz1rdmO09PXj+wGKq
+         l/CO7f4AsoiKkJZ9+jQRGVojochJQ43XgUXpyhEJjhr7oOVtQ24hRGTXYpFuCpD1oF9e
+         7eZ0DR7S2+BVpCmIqCrZ9SpzsfUCklmRcibiVN44xd2ndRNzwGLIaRFfR7bLzNFqOQ6i
+         M+8KJlFe0x1HkUJ8CKCPSdmJTGmbnW+yH1+OSp0NFZ9QArWixyF5FC/xNHy+WJyp1aAb
+         IhYA==
+X-Gm-Message-State: AC+VfDyGeYqITDFt8wqA7kt8EL9ubVEgW6gULVjpOikIiEM6Fse5qNBD
+        ucSSdEkzti/G/9he+YvUNPTIFA==
+X-Google-Smtp-Source: ACHHUZ4GFuR2ifUDLAIF6/6enGSlV92VU2gn1fcrxoIfGAyVHBNiQyrpozCa9Br08r7n0uwPm8HiYQ==
+X-Received: by 2002:a1c:6a0a:0:b0:3f6:3486:1391 with SMTP id f10-20020a1c6a0a000000b003f634861391mr4291324wmc.13.1685535751243;
+        Wed, 31 May 2023 05:22:31 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id n7-20020adfe347000000b00309382eb047sm6637954wrj.112.2023.05.31.05.22.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 May 2023 05:22:30 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v2 0/4] arm64: qcom: sm8550: enable PMIC devices
+Date:   Wed, 31 May 2023 14:22:23 +0200
+Message-Id: <20230525-topic-sm8550-upstream-pm8550-lpg-dt-v2-0-a3b890604c49@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH] soc: qcom: pmic: Fix resource leaks in
- device_for_each_child_node() loops
-Content-Language: en-US
-To:     =?UTF-8?B?6Lev57qi6aOe?= <luhongfei@vivo.com>,
-        "konradybcio@kernel.org" <konradybcio@kernel.org>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "andersson@kernel.org" <andersson@kernel.org>,
-        "neil.armstrong@linaro.org" <neil.armstrong@linaro.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Cc:     "opensource.kernel" <opensource.kernel@vivo.com>
-References: <TYZPR06MB66976D6A4FC1674574531D45CE489@TYZPR06MB6697.apcprd06.prod.outlook.com>
-From:   Konrad Dybcio <konradybcio@kernel.org>
-In-Reply-To: <TYZPR06MB66976D6A4FC1674574531D45CE489@TYZPR06MB6697.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.7 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAP87d2QC/5WPQQ6DIBREr9Kw7m8Q/Wq76j0aFwioJAgE1LQx3
+ r1oN926fLN4M7OSqIJWkTwuKwlq0VE7m4BdL0QM3PYKtExMGGU5RYYwOa8FxLFGpDD7OAXFR/A
+ /Nr4HOYHIswJRMtaxkiRTy6OCNnArhuSyszEp9EF1+n1Uv5rEg46TC59jyZLt6bnSJQMKLdZFL
+ ivkJcufRlse3M2Ffh9xXlZIlFVJ04s7/Zc127Z9AYIIaDA5AQAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1627;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=KL6QyPg63cMU5N+qVVw/DznqwEpOJlcW5JwBk19/9zA=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkdzwE4zS2k1BuY/kN4sQV0jN0DpjHlwbjK3D/EyQC
+ LTv5D+yJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZHc8BAAKCRB33NvayMhJ0ccED/
+ 4u2kcI+Dd1zixfhzz7gpeTAuv8R53saMTtZ7PWU6DfCIRTraW6cNY2gNdGGT28WciBv59pm5NUE3d2
+ ARJnUVdU8e90WxEP//OikBa48kMKPQNcxw9slVH0IIDIJAEmAZ38Vs6HMAXGmo05NLgt1eaCZBFHiw
+ apH8TBXKS1Xho41mecxLhV00KcYvF1LRfvwFXRWVDfP9KIg4o3/9S1UBjW5S3nK9Vripg8wbhtcGf0
+ iEfWFqX2v+MzP+gcrsHwlubBgrg6x2u3j/Fcy/SPCvXqL4Xj7SSzMgk9dnFh9Y3qJURca8Da5LiS9H
+ CmuacqnN5A4dRuqrWwsuJZlUUfWKfaRhEKhhGC1+2YqhI6q6JxYcaqJ2qj2lrptgCinzYNO1Yq+srf
+ g4uKdmTYKFTb/cBAZ/OM0YpBH8rMwbC73kDp30kBvVkLJKvVr4PkRuO74NtzcJhuybBgxX8tHFesMF
+ zflybsozPxqP296OcncVL8OTYEV8+XTvi6mzSYuNoO81B5n2iY05jfaMMqTd4oh+KOrCsGlMRIuKrQ
+ o2LTMQsSV6nDC6XQo+y1E8Fom8FkQBlhaRF6cI0B42zv/sE97mvGdPRGYeZss69s+24O9iYl04kD2G
+ XXL3qLm3CMRZ6gpHzaDMjxmxSymLHQkNfW6umUai1doo2caf6vGWptQMSJPw==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This enables the following PMIC devices:
+- PWM RGB LED
+- RTC
+- Volume and Power buttons
 
+on the SM8550 boards.
 
-On 31.05.2023 12:40, 路红飞 wrote:
-> 
-> On 2023/5/31 17:03, Konrad Dybcio wrote:>
->> On 31.05.2023 10:54, Lu Hongfei wrote:
->>> The device_for_each_child_node loop in pmic_glink_altmode_probe should have
->>> fwnode_handle_put() before return which could avoid resource leaks.
->>> This patch could fix this bug.
->>>
->>> Fixes: 080b4e24852b ("soc: qcom: pmic_glink: Introduce altmode support")
->>>
->>> Signed-off-by: Lu Hongfei <luhongfei@vivo.com>
->>> ---
->> This is the third revision of this patch, please version them accordingly.
->>
->> You can pass `-vN` to git format-patch and it'll do the job for you.
->>
->> Please also describe the changes since last revision below the --- line.
->>
->> Konrad
-> The latter two versions have added Fixes: tag, without any changes to the
-> 
-> specific content of this patch.
-The commit message is an integral part of the patch, it's not only the 
-diff that matters. Any change deserves a new revision number, unless you
-made a mistake when sending the emails (e.g. you didn't fill out the To:
-and Cc: fields properly), in which case you should use the [RESEND PATCH] tag.
+Depends on:
+- [1] PWM bindings, merged by Lee
+- [2] functional fix
+- [3] & [4] QRD flash DT changes merged by Bjorn
 
-> 
-> Just use the third version of this patch.
-Which I have to dig up by hand from the tens of patches I've received
-since, because you did not specify which one is the third version
-in the title. This also messes with patch workflow tools like b4.
+[1] https://lore.kernel.org/all/20230522-topic-sm8550-upstream-pm8550-lpg-v2-1-c5117f1d41f9@linaro.org/
+[2] https://lore.kernel.org/r/20230515162604.649203-1-quic_bjorande@quicinc.com
+[3] https://lore.kernel.org/r/20230516150202.188655-3-krzysztof.kozlowski@linaro.org
+[4] https://lore.kernel.org/r/20230516150202.188655-2-krzysztof.kozlowski@linaro.org
 
-Konrad
-> 
-> Thanks.
-> 
-> Lu Hongfei
-> 
->>>   drivers/soc/qcom/pmic_glink_altmode.c | 27 ++++++++++++++++++---------
->>>   1 file changed, 18 insertions(+), 9 deletions(-)
->>>
->>> diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
->>> index df48fbea4b68..a7fc6570fa1e
->>> --- a/drivers/soc/qcom/pmic_glink_altmode.c
->>> +++ b/drivers/soc/qcom/pmic_glink_altmode.c
->>> @@ -395,7 +395,7 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
->>>   		ret = fwnode_property_read_u32(fwnode, "reg", &port);
->>>   		if (ret < 0) {
->>>   			dev_err(dev, "missing reg property of %pOFn\n", fwnode);
->>> -			return ret;
->>> +			goto err_node_put;
->>>   		}
->>>   
->>>   		if (port >= ARRAY_SIZE(altmode->ports)) {
->>> @@ -405,7 +405,8 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
->>>   
->>>   		if (altmode->ports[port].altmode) {
->>>   			dev_err(dev, "multiple connector definition for port %u\n", port);
->>> -			return -EINVAL;
->>> +			ret = -EINVAL;
->>> +			goto err_node_put;
->>>   		}
->>>   
->>>   		alt_port = &altmode->ports[port];
->>> @@ -420,33 +421,37 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
->>>   
->>>   		ret = devm_drm_bridge_add(dev, &alt_port->bridge);
->>>   		if (ret)
->>> -			return ret;
->>> +			goto err_node_put;
->>>   
->>>   		alt_port->dp_alt.svid = USB_TYPEC_DP_SID;
->>>   		alt_port->dp_alt.mode = USB_TYPEC_DP_MODE;
->>>   		alt_port->dp_alt.active = 1;
->>>   
->>>   		alt_port->typec_mux = fwnode_typec_mux_get(fwnode);
->>> -		if (IS_ERR(alt_port->typec_mux))
->>> -			return dev_err_probe(dev, PTR_ERR(alt_port->typec_mux),
->>> +		if (IS_ERR(alt_port->typec_mux)) {
->>> +			ret = dev_err_probe(dev, PTR_ERR(alt_port->typec_mux),
->>>   					     "failed to acquire mode-switch for port: %d\n",
->>>   					     port);
->>> +			goto err_node_put;
->>> +		}
->>>   
->>>   		ret = devm_add_action_or_reset(dev, pmic_glink_altmode_put_mux,
->>>   					       alt_port->typec_mux);
->>>   		if (ret)
->>> -			return ret;
->>> +			goto err_node_put;
->>>   
->>>   		alt_port->typec_switch = fwnode_typec_switch_get(fwnode);
->>> -		if (IS_ERR(alt_port->typec_switch))
->>> -			return dev_err_probe(dev, PTR_ERR(alt_port->typec_switch),
->>> +		if (IS_ERR(alt_port->typec_switch)) {
->>> +			ret = dev_err_probe(dev, PTR_ERR(alt_port->typec_switch),
->>>   					     "failed to acquire orientation-switch for port: %d\n",
->>>   					     port);
->>> +			goto err_node_put;
->>> +		}
->>>   
->>>   		ret = devm_add_action_or_reset(dev, pmic_glink_altmode_put_switch,
->>>   					       alt_port->typec_switch);
->>>   		if (ret)
->>> -			return ret;
->>> +			goto err_node_put;
->>>   	}
->>>   
->>>   	altmode->client = devm_pmic_glink_register_client(dev,
->>> @@ -455,6 +460,10 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
->>>   							  pmic_glink_altmode_pdr_notify,
->>>   							  altmode);
->>>   	return PTR_ERR_OR_ZERO(altmode->client);
->>> +
->>> +err_node_put:
->>> +	fwnode_handle_put(fwnode);
->>> +	return ret;
->>>   }
->>>   
->>>   static const struct auxiliary_device_id pmic_glink_altmode_id_table[] = {
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v2:
+- Always enable RTC in a new patch
+- Drop patch enabling RTC on boards
+- Move PON names to meet alphabetical order
+- Link to v1: https://lore.kernel.org/r/20230525-topic-sm8550-upstream-pm8550-lpg-dt-v1-0-4d5d7602f290@linaro.org
+
+---
+Neil Armstrong (4):
+      arm64: dts: qcom: pm8550: add PWM controller
+      arm64: dts: qcom: sm8550-qrd: add notification RGB LED
+      arm64: dts: qcom: pmk8550: always enable RTC PMIC device
+      arm64: dts: qcom: sm8550-qrd: enable PMIC Volume and Power buttons
+
+ arch/arm64/boot/dts/qcom/pm8550.dtsi    | 10 ++++++
+ arch/arm64/boot/dts/qcom/pmk8550.dtsi   |  1 -
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 63 +++++++++++++++++++++++++++++++++
+ 3 files changed, 73 insertions(+), 1 deletion(-)
+---
+base-commit: 388a38fadd00565867bda40c3b87c3a983bfb83d
+change-id: 20230525-topic-sm8550-upstream-pm8550-lpg-dt-c31455d22f26
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
