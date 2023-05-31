@@ -2,82 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 31A797189D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 21:08:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1E50718A0E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 31 May 2023 21:21:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229611AbjEaTI1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 15:08:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45136 "EHLO
+        id S229790AbjEaTVH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 15:21:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52528 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229814AbjEaTIZ (ORCPT
+        with ESMTP id S229799AbjEaTVG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 15:08:25 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C86B125
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 12:08:18 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f3bb61f860so7557247e87.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 12:08:18 -0700 (PDT)
+        Wed, 31 May 2023 15:21:06 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A45C129
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 12:21:04 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-96ff9c0a103so883521166b.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 12:21:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685560097; x=1688152097;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KPuFw0npUksRN+4mHiT4+56P5P3V/hniye1VhYDyU0w=;
-        b=Sis4OrHydMo42fDcC44TNHJSZKzjTozD2PehkgwML9aetns/dUYYzGIf1Qa8o1JVPj
-         RYoMxcF5ZeRmGtlGvdXuj7+p5UhvySuI5FJKpxyaw/GQVC2Zi9RqLV5bmSWUr6X4Otic
-         AuQAzmpmPEhSyWrw6fj+D+tVIqH+se18LmgLC9iyGzRjWdrM9RnxjbUQMHijqMsFJF6I
-         czVSLXcKnzR8Z5OK5M6gN91vprEid4mvTafmKxm68QRScuITBageropUGdMkgtQv0qdS
-         xAOkzlVBZkuDsxahwY7EIogMOXrh3tYAeVM9s80BfXuDTsYmuS86iWJtcZjgqageq+mO
-         efdQ==
+        d=linaro.org; s=google; t=1685560863; x=1688152863;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Lz1nG2B3q0llv6deAIMIjSEMvsrQuQ3uKlNlDgfU5wU=;
+        b=DvSDgeuRNVRc8TL9mrIG3iWEzc8MrZLyaNSP/JQxFELc38pYKUWja2yVsCJ/cLylkK
+         vEC47lS9oNgkqcKMZs/FZgHJowNhBLhNvkHJ40isYf3g0WyhF+DUNnCLXo3+6gjHTa0w
+         oLm8Xa69uEAyeRhU395izpWOeLSeQhhkgxOVsh0S9N4+kvu5SAyf2AnTBKzcm6uqw+D4
+         7hHVZ8ysTESRDxZPDIX3Z25qomuOQBysCWfrJnNPkCwW5+sEI4ZGgiGoIeRfbiem7gZX
+         qIaCtoUxYF/Gxd4zaa5YZV0QRImRI9Ki4dp12nSYjIIYDW2AtyYsZa+J+buibw/NRRXc
+         mbjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685560097; x=1688152097;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=KPuFw0npUksRN+4mHiT4+56P5P3V/hniye1VhYDyU0w=;
-        b=IxtxWRaR8MYsCm84WEl7JW3JZMxynlWEshQHYCRcfVrCkTzyMMJ+sZX/BBxGWGxDPV
-         Sb/nYrV+/ezebACqRbDG/df2yrg44JatERzENJPB/1LTYCW8GTrfn/i5Mmaufv4WEppL
-         PiBIKChPoW8FDhZu1p9vFGwffta6xRmlxUrveIet9wtOlsD9daqRW4yOLnLYQSElTlHh
-         UYFcNQ4owh+/Cl0KGs7mmIbjejKo4tcKLW9y+fqDzoHnXcTUOAUTh8OFC4KTbaEgfT7n
-         FY/hl+Ta5egNIiKnylDEXpfJ9+tfMHZOj6A0W7X12GNMyuppeaxCr5I3FRz+wlNik7Iu
-         zZUQ==
-X-Gm-Message-State: AC+VfDwghE0AEUhOYbbbNdhfxRS/oWQo6Jofd/RZab04b0lhYwHkfMSQ
-        eGSJKmgbXSsrflepg9bxoCy6ow==
-X-Google-Smtp-Source: ACHHUZ6RcarRYJQYAJ+ZB8ZpJbC+zZY8v6u8a9s9Q5JOBscTZYIYJt1oSIbiESaLT3mFfYsPuK70RQ==
-X-Received: by 2002:ac2:5ecf:0:b0:4f4:deee:efaf with SMTP id d15-20020ac25ecf000000b004f4deeeefafmr36163lfq.4.1685560097279;
-        Wed, 31 May 2023 12:08:17 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id i7-20020ac25227000000b004f3b4d17114sm820935lfl.144.2023.05.31.12.08.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 31 May 2023 12:08:16 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Wed, 31 May 2023 21:08:11 +0200
-Subject: [PATCH 2/2] clk: qcom: gcc-sm6125: Set up flags on GPU mem_iface
- clk
+        d=1e100.net; s=20221208; t=1685560863; x=1688152863;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Lz1nG2B3q0llv6deAIMIjSEMvsrQuQ3uKlNlDgfU5wU=;
+        b=Ykv8sLhLdhCb9TLkoVgPeJamj+Ww4mLr/8B1jUKe9ajzC2cBWHzsyd2S1gmAbQEteT
+         0BfVfJjWO9KPEyYkmdN91KWqnOGGqLIUQ3yYGAydX8vGTr7nCuoJlRVO0DSHphKPfOu7
+         IguYivgMt3cHP4HQqYqbk4VPk2UrEWoKkL4x3zjXrm99XWKTMrMb1h6mRq07nEecOJPg
+         vubj/paB9lxkF1itNHIkiPXiKWgx6jGr5z2tlEk9FnL4INzXyeRB3Y5k9YbIQaHTrBgW
+         vkMrKOqzfebxo9Cki4f79Mnsvpkx2mQhE1ws7w3nmC//JnwOKfO7/up8HeJXAK62rClr
+         l+ww==
+X-Gm-Message-State: AC+VfDxdLKF5tcXTeXSCjenZ/1u0M27aIWILjVTvkI32eymIaXzoG3mS
+        Z9GDKplTbHKfwSgJZJ9LMeN4YA==
+X-Google-Smtp-Source: ACHHUZ4d3/SnLt9Jvl5J0vVomD8iecQJLFMVGA7ToDhrEvJzS2tN8jTV37tKer0T748WigaTQU6f6A==
+X-Received: by 2002:a17:907:26ca:b0:969:f433:9b54 with SMTP id bp10-20020a17090726ca00b00969f4339b54mr6317786ejc.39.1685560862913;
+        Wed, 31 May 2023 12:21:02 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.199.204])
+        by smtp.gmail.com with ESMTPSA id s7-20020a170906c30700b0094f410225c7sm9397440ejz.169.2023.05.31.12.21.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 31 May 2023 12:21:02 -0700 (PDT)
+Message-ID: <0cb1d679-9e5b-8030-368e-69c3fc54511f@linaro.org>
+Date:   Wed, 31 May 2023 21:20:59 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230531-topic-sm61125_gpucc_flag-v1-2-f59dd1350781@linaro.org>
-References: <20230531-topic-sm61125_gpucc_flag-v1-0-f59dd1350781@linaro.org>
-In-Reply-To: <20230531-topic-sm61125_gpucc_flag-v1-0-f59dd1350781@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH V2 1/6] dt-bindings: clock: qcom: Add SM8550 camera clock
+ controller
+Content-Language: en-US
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1685560093; l=841;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=IEG6edkTJ6CWQJbTd+SqBb7jA9qXN5DYOo46+SWTNaQ=;
- b=C19QIJ+cMrTd9aUbcEfcX7gO4fZN0tbV+8Qndittoq8YWiKVMg+cUu7mjFqSCAP07aPGlVuRq
- WrMx8gJV6FPBW5R6bEnOoHnXJRcllaqXvIZajXBNn+G4y97mY8y0ZK5
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>
+References: <20230525172142.9039-1-quic_jkona@quicinc.com>
+ <20230525172142.9039-2-quic_jkona@quicinc.com>
+ <546876ba-970d-5cd5-648e-723698ca74fd@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <546876ba-970d-5cd5-648e-723698ca74fd@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,30 +92,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Following the BSP, disable the RETAIN_MEM and RETAIN_PERIPH bits on
-gcc_gpu_memnoc_gfx_clk.
+On 26/05/2023 14:29, Bryan O'Donoghue wrote:
+> On 25/05/2023 18:21, Jagadeesh Kona wrote:
+>> Add device tree bindings for the camera clock controller on
+>> Qualcomm SM8550 platform.
+>>
+>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+>> ---
+>> Changes since V1:
+>>   - Removed new YAML file and reused SM8450 CAMCC YAML file for SM8550
+>>
+>>   .../bindings/clock/qcom,sm8450-camcc.yaml     |   8 +-
+>>   include/dt-bindings/clock/qcom,sm8550-camcc.h | 187 ++++++++++++++++++
+>>   2 files changed, 193 insertions(+), 2 deletions(-)
+>>   create mode 100644 include/dt-bindings/clock/qcom,sm8550-camcc.h
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+>> index 87ae74166807..8dbc9004202f 100644
+>> --- a/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,sm8450-camcc.yaml
+>> @@ -13,11 +13,15 @@ description: |
+>>     Qualcomm camera clock control module provides the clocks, resets and power
+>>     domains on SM8450.
+>>   
+>> -  See also:: include/dt-bindings/clock/qcom,sm8450-camcc.h
+>> +  See also::
+>> +    include/dt-bindings/clock/qcom,sm8450-camcc.h
+>> +    include/dt-bindings/clock/qcom,sm8550-camcc.h
+>>   
+>>   properties:
+>>     compatible:
+>> -    const: qcom,sm8450-camcc
+>> +    enum:
+>> +      - qcom,sm8450-camcc
+>> +      - qcom,sm8550-camcc
+> 
+> Hmm,
+> 
+> So looking at Documentation/devicetree/bindings/clock/*camcc*.yaml we 
+> seem to be repeating yaml over and over again with no substantial 
+> difference between one description and another.
+> 
+> You've picked at the thread here by adding sm8550 into sm8450.
+> 
+> I think sm8250, sm8450, sm8550, sc7280 and ... probably sm6350 should 
+> live in the one yaml description 
+> Documentation/devicetree/bindings/clock/qcom,camcc.yaml
+> 
+> sm6350 looks a bit sparse/incomplete to me so perhaps leave that out. 
+> The others sc7280, sm8250, sm8450 and sm8550 can/should all be moved 
+> into the same yaml file with a list of compatibles.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/clk/qcom/gcc-sm6125.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Clocks are different. The ones with same clocks should be together, but
+in other cases better to have separate schemas. It gets trickier to read
+with multiple if:then:
 
-diff --git a/drivers/clk/qcom/gcc-sm6125.c b/drivers/clk/qcom/gcc-sm6125.c
-index 40ad062d1bf7..ea1d567c7994 100644
---- a/drivers/clk/qcom/gcc-sm6125.c
-+++ b/drivers/clk/qcom/gcc-sm6125.c
-@@ -4162,6 +4162,10 @@ static int gcc_sm6125_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
-+	/* Set up no PERIPH/MEM retain on the GPU mem_iface clock */
-+	qcom_branch_set_force_mem_core(regmap, gcc_gpu_memnoc_gfx_clk, false);
-+	qcom_branch_set_force_periph_on(regmap, gcc_gpu_memnoc_gfx_clk, false);
-+
- 	return qcom_cc_really_probe(pdev, &gcc_sm6125_desc, regmap);
- }
- 
-
--- 
-2.40.1
+Best regards,
+Krzysztof
 
