@@ -2,160 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 54ED271918B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 06:04:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AFFF67191B7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 06:21:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229598AbjFAED5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 00:03:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58302 "EHLO
+        id S229851AbjFAEVZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 00:21:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33254 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229462AbjFAED4 (ORCPT
+        with ESMTP id S230481AbjFAEVX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 00:03:56 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEC7DB2;
-        Wed, 31 May 2023 21:03:54 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 82F2E61646;
-        Thu,  1 Jun 2023 04:03:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 069F9C433D2;
-        Thu,  1 Jun 2023 04:03:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685592233;
-        bh=FpUMA+UmpnfCAjI0s1Cjb5HWSEuHsI8wU/Ubh3Bc0Rk=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=FxKoEm2DV+jtUJJSL8K6aCnFQSKSls4+YREVf9zr9+TC+8tkxYBY5p4jaafJtotuf
-         jWei1nLx3iPbN0UwZMp8seD365yMPBvHmm9t9afAv+HgFcGSNLWStCO+vpisfzLWRg
-         3fE8QvHpkKmHNRh65u0rR7xlupD/7aK76DsS17U1o8xjYCUKKofDr21SOnXg8CHijC
-         xq6AwOXsqyiqVGr7z1qWhDv7LeHezxWnD0QcqmE88FVR4y2AyVxRvHCe3eeNWVnUa9
-         8RXE+Qc+2W5TpQjo+A1yn50EnCmb4dLkFJs10btgRGjF93rUmtdwtorI8Y45a1dkNX
-         cQ8nvI0v/1r/w==
-Date:   Wed, 31 May 2023 21:07:34 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     "Mehul Raninga (Temp) (QUIC)" <quic_mraninga@quicinc.com>
-Cc:     "agross@kernel.org" <agross@kernel.org>,
-        "konrad.dybcio@linaro.org" <konrad.dybcio@linaro.org>,
-        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
-        "jirislaby@kernel.org" <jirislaby@kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "linux-serial@vger.kernel.org" <linux-serial@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "Viken Dadhaniya (QUIC)" <quic_vdadhani@quicinc.com>,
-        "Visweswara Tanuku (QUIC)" <quic_vtanuku@quicinc.com>,
-        "Vijaya Krishna Nivarthi (Temp) (QUIC)" <quic_vnivarth@quicinc.com>
-Subject: Re: [PATCH] serial: qcom_geni_serial: Setup serial port after Deep
- sleep
-Message-ID: <20230601040734.qiy3ibrpznrqptui@ripper>
-References: <20230530111557.10944-1-quic_mraninga@quicinc.com>
- <20230530150631.7eg6nkre6sva5dcz@ripper>
- <SJ0PR02MB7742A7386189692ACACC0A3FE3489@SJ0PR02MB7742.namprd02.prod.outlook.com>
+        Thu, 1 Jun 2023 00:21:23 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E26718F;
+        Wed, 31 May 2023 21:21:16 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3512THVG014264;
+        Thu, 1 Jun 2023 04:21:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=QHM/WHCJDISRydD6S6QXRiWn068wj1AI1qf3+4/twIU=;
+ b=FVYjl86VI5wFCMvYP7ifcoSgEA+f8kwLWKNwKseLniPsMVbawZ8FPHV57vJLbSSf/yJu
+ 4lMi08SAlBvVxW6PuRLFt3Y4r6OCiMmbBpAwQYb/530Ogiep7QFSNchnXM82kgbr1zmp
+ H9QggxZ70wU++iPf1b1vTH7Z8ZA6YKQ9wuK+wQl0aN6IekTMToDf+TKUIONw30v8u11Q
+ DBs0RbzzTdzrqYloQ+9/qEWqdtmRhSYvdxEbsHFMg8hOBK2P8t9TE6RgEjH40okRg+u2
+ cpYInDtLt3mEj29rjJHVCydrss4de0NVw5PlmU+uXE/1gBzRVyxRYgyNvo6Am27fBj9c xQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qx5pxhxs0-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 01 Jun 2023 04:21:12 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3514LBH0013322
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 1 Jun 2023 04:21:11 GMT
+Received: from kathirav-linux.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Wed, 31 May 2023 21:21:08 -0700
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Kathiravan T <quic_kathirav@quicinc.com>
+Subject: [PATCH RESEND 0/4] Add initial support for RDP474 of IPQ5332 family
+Date:   Thu, 1 Jun 2023 09:50:50 +0530
+Message-ID: <20230601042054.29075-1-quic_kathirav@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <SJ0PR02MB7742A7386189692ACACC0A3FE3489@SJ0PR02MB7742.namprd02.prod.outlook.com>
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 76rKpWMqCggwYXE9aD6MlbP7JDmYoxZK
+X-Proofpoint-ORIG-GUID: 76rKpWMqCggwYXE9aD6MlbP7JDmYoxZK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-01_02,2023-05-31_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ priorityscore=1501 mlxscore=0 bulkscore=0 adultscore=0 mlxlogscore=938
+ lowpriorityscore=0 impostorscore=0 clxscore=1015 spamscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2306010036
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 31, 2023 at 01:06:22PM +0000, Mehul Raninga (Temp) (QUIC) wrote:
-> Hello Andersson,
-> Thanks for the review. Kindly find my reply inline below
-> 
-> > -----Original Message-----
-> > From: Bjorn Andersson <andersson@kernel.org>
-> > Sent: Tuesday, May 30, 2023 8:37 PM
-> > To: Mehul Raninga (Temp) (QUIC) <quic_mraninga@quicinc.com>
-> > Cc: agross@kernel.org; konrad.dybcio@linaro.org; gregkh@linuxfoundation.org;
-> > jirislaby@kernel.org; linux-arm-msm@vger.kernel.org; linux-
-> > serial@vger.kernel.org; linux-kernel@vger.kernel.org; Viken Dadhaniya (QUIC)
-> > <quic_vdadhani@quicinc.com>; Visweswara Tanuku (QUIC)
-> > <quic_vtanuku@quicinc.com>; Vijaya Krishna Nivarthi (Temp) (QUIC)
-> > <quic_vnivarth@quicinc.com>
-> > Subject: Re: [PATCH] serial: qcom_geni_serial: Setup serial port after Deep sleep
-> > 
-> > WARNING: This email originated from outside of Qualcomm. Please be wary of
-> > any links or attachments, and do not enable macros.
-> > 
-> > On Tue, May 30, 2023 at 04:45:57PM +0530, Mehul Raninga wrote:
-> > > While exiting deep sleep, serial port loses its configuration hence it
-> > > prints garbage characters on console.
-> > 
-> > Presumably it lost its configuration sometime after suspend, rather than while
-> > resuming the system?
-> 
-> I will reword commit message in V2 as below:
-> Serial port lost its configuration sometime after suspend hence it
-> prints garbage characters on console after resuming.
+Add the initial device tree support for the Reference Design
+Platform(RDP) 474 based on IPQ5332 family of SoC. This patch carries
+the support for Console UART, eMMC, I2C and GPIO based buttons.
 
-Please wrap your replies to 72 chars wide
+Most of the features of RDP474 is similar to RDP441, except that the
+QDSP will not be used in RDP474, whereas it will be used in the RDP441.
 
-You can probably be more specific than "sometime after suspend" :)
+RDP474 comes with the SoC IPQ5300, so add the SoC info support for the
+same.
 
-> > 
-> > >
-> > > Set serial port configuration while resume from deep sleep.
-> > >
-> > 
-> > What happens if you do this unconditionally?
-> 
-> pm_suspend_via_firmware returns true indicating system is resuming
-> from deepsleep. In case we are not resuming from deepsleep, this
-> serial port setup is not required.
-> > 
-> > > Signed-off-by: Mehul Raninga <quic_mraninga@quicinc.com>
-> > > ---
-> > >  drivers/tty/serial/qcom_geni_serial.c | 3 +++
-> > >  1 file changed, 3 insertions(+)
-> > >
-> > > diff --git a/drivers/tty/serial/qcom_geni_serial.c
-> > > b/drivers/tty/serial/qcom_geni_serial.c
-> > > index 8582479f0211..c04b8fec30ba 100644
-> > > --- a/drivers/tty/serial/qcom_geni_serial.c
-> > > +++ b/drivers/tty/serial/qcom_geni_serial.c
-> > > @@ -20,6 +20,7 @@
-> > >  #include <linux/serial.h>
-> > >  #include <linux/serial_core.h>
-> > >  #include <linux/slab.h>
-> > > +#include <linux/suspend.h>
-> > >  #include <linux/tty.h>
-> > >  #include <linux/tty_flip.h>
-> > >  #include <dt-bindings/interconnect/qcom,icc.h>
-> > > @@ -1737,6 +1738,8 @@ static int qcom_geni_serial_sys_resume(struct
-> > device *dev)
-> > >       if (uart_console(uport)) {
-> > >               geni_icc_set_tag(&port->se, QCOM_ICC_TAG_ALWAYS);
-> > >               geni_icc_set_bw(&port->se);
-> > > +             if (pm_suspend_via_firmware())
-> > 
-> > I'm not familiar with this api, but aren't all our systems implementing firmware-
-> > assisted suspend?
-> 
-> Not all the platform supports deep sleep hence to differentiate if
-> resume is from deep sleep suspend or normal suspend, this api is
-> required.
+Corrected the RDP number in the subject, so resending it.
 
-Can you point me to where this difference in flags is coming from in the
-upstream kernel?
+Kathiravan T (4):
+  dt-bindings: arm: qcom,ids: add SoC ID for IPQ5300
+  soc: qcom: socinfo: Add Soc ID for IPQ5300
+  dt-bindings: arm: qcom: document MI01.9 board based on IPQ5332 family
+  arm64: dts: qcom: ipq5332: add support for the RDP474 variant
 
-Thanks,
-Bjorn
+ .../devicetree/bindings/arm/qcom.yaml         |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts   | 112 ++++++++++++++++++
+ drivers/soc/qcom/socinfo.c                    |   1 +
+ include/dt-bindings/arm/qcom,ids.h            |   1 +
+ 5 files changed, 117 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts
 
-> > 
-> > Regards,
-> > Bjorn
-> > 
-> > > +                     qcom_geni_serial_port_setup(uport);
-> > >       }
-> > >       return ret;
-> > >  }
-> > > --
-> > > 2.17.1
-> > >
+-- 
+2.17.1
+
