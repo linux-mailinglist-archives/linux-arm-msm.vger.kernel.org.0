@@ -2,121 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AF1A2719976
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 12:21:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F142F7199A9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 12:27:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233523AbjFAKVJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 06:21:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54528 "EHLO
+        id S233583AbjFAK1C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 06:27:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58778 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234181AbjFAKU1 (ORCPT
+        with ESMTP id S233593AbjFAK0p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 06:20:27 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8951418F;
-        Thu,  1 Jun 2023 03:17:13 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35156J62028720;
-        Thu, 1 Jun 2023 10:16:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=temKi8XGkzgmRMY/EjYdRTdfEq7Xmc+ElR2SEG+VyPk=;
- b=Osm6Lhp1qR7wj7bU//WKy9AnKnuYM/po3iYVR4GEdi2c4N6Zlpzj6nmlmss2rbgYxATR
- fpuQIc6VdMs8LqGrp7rfh4SnLzG8novDDuoCB03Z8l8m+DVf08L031cRT9vaBtR0C0By
- 9lUvV2JV4Fyd2ykMkXMcW2nRpB+XK+SOkAxmbdlTI+psywm4jqlKA4ybVokGsyy8NDIc
- 7yWd6fxzBQLhRViLqSwLJZqoyQuYhGpsog2+zYY8pn0w4ILDGZwJ7IZgZUQhQS++nxha
- rebOWEP1qYDJn6uXNGMIwZYt4+RJLpoBx7CUH6U2a4ffC1BW/DqdKniPJEtvHoYA/hiD zQ== 
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qxbt8hpbt-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 01 Jun 2023 10:16:25 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 351AGOQM020535
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 1 Jun 2023 10:16:24 GMT
-Received: from [10.216.48.115] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 1 Jun 2023
- 03:16:20 -0700
-Message-ID: <034bdb7b-7576-6353-6fe9-3433bd674e76@quicinc.com>
-Date:   Thu, 1 Jun 2023 15:46:17 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCHv3] media: venus: provide video device lock
-Content-Language: en-US
-To:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Sergey Senozhatsky <senozhatsky@chromium.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Andy Gross <agross@kernel.org>,
+        Thu, 1 Jun 2023 06:26:45 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 396EE171A
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 03:25:30 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-96f850b32caso91517766b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 03:25:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685615128; x=1688207128;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Biydlf7PIGQ7H2/3MOSbK0GWIW8cjwIGbXqmPIt7ZJ8=;
+        b=gmeGoT8OHlZgbn+14JgZQxDwt4oFmVtRUNaFe9JQFXp11mJL0oa7mHcHcMHdcLoWWU
+         6GeY4xGQ7rX8jKxEGb8XOlqxV3drixKvl4jyK9ziTlW8RwLo7EIYRMjLhb4QLzLWKids
+         MhSkPlaF50xsVbywzC1461158Ea86YsxyPuxlXGmvsM4ZJpXRXRhOwcWrOkPwEkoVU09
+         z13bpTcElB3Tv5tW4qDW5e+8S/699KeSHrRT5JVrAc8FDAZ+toX3Yvbp+4DZreCAIMnN
+         vo3DeqtKpXZL8sMhUKtPN+3iDcr3E0JR9kaTj0oDGou+ntk1dBJMb7PexIOH4vQoYrnh
+         SqxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685615128; x=1688207128;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Biydlf7PIGQ7H2/3MOSbK0GWIW8cjwIGbXqmPIt7ZJ8=;
+        b=CefxA1Q74AeJAyRSsHkHch6BisIY2ZUKQ+KK5fyyB3e83ETblmL2R7zUNQyX3Ks99u
+         QmNci8hIsrHiLp/+GHBcLS9od6/f06M4lN3ZCFAKpn5LO/jYtrODr3PvjQ+mS2PJ5zqe
+         ENQogTVQzQ42L47pnPDVaqykwYfbVN52Qn1XYGMdq8dnuvGwC7oE4XQFUiRyjshwDILQ
+         okWc2fdNNb/dOahjcNMNtYbBV8gz7EdkDiq/wbsgk7Zby16+ruDq39/Gq7SFpTp7qJLP
+         4cTxYLYxckbl9YMn01WuVq0dc314YlD03KVg/uT45xbHHbcippgr+2PX5hNpsqMv6I6r
+         4tpw==
+X-Gm-Message-State: AC+VfDy3WwBW38+/p3lUjW6ZtH/xgUl/qlW4h63BaHDPZKmggmKJ/l27
+        LwRf0AOZoGBmhibDL0Z0+CRUEA==
+X-Google-Smtp-Source: ACHHUZ5m3bbTuSL6NcGE8tNmlnw3gV+4MJQV0FHwNUM7U8AKi7QylF5r3rjXHxygr3xpmsbU/xYORw==
+X-Received: by 2002:a17:906:fd8b:b0:96a:3e39:f567 with SMTP id xa11-20020a170906fd8b00b0096a3e39f567mr7427867ejb.47.1685615128682;
+        Thu, 01 Jun 2023 03:25:28 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.199.204])
+        by smtp.gmail.com with ESMTPSA id dk5-20020a170906f0c500b00965b2d3968csm10247758ejb.84.2023.06.01.03.25.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Jun 2023 03:25:28 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     Tomasz Figa <tfiga@chromium.org>, <linux-media@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-References: <20230524135737.2557837-1-senozhatsky@chromium.org>
- <20230524141312.2558810-1-senozhatsky@chromium.org>
- <2c732d80-1a18-7a34-03a8-16afb0de5ea2@linaro.org>
- <f9219cb0-2cac-bace-20f7-27005cd0e6f1@xs4all.nl>
-From:   Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <f9219cb0-2cac-bace-20f7-27005cd0e6f1@xs4all.nl>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: w-B2HCg5Q2cp1auUd0l5Et5Fsug5GEUP
-X-Proofpoint-ORIG-GUID: w-B2HCg5Q2cp1auUd0l5Et5Fsug5GEUP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-01_06,2023-05-31_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 suspectscore=0 mlxscore=0 mlxlogscore=877
- priorityscore=1501 bulkscore=0 adultscore=0 clxscore=1015 spamscore=0
- malwarescore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2304280000 definitions=main-2306010092
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        stable@vger.kernel.org, kernel test robot <lkp@intel.com>,
+        Dan Carpenter <error27@gmail.com>
+Subject: [PATCH] soundwire: qcom: fix storing port config out-of-bounds
+Date:   Thu,  1 Jun 2023 12:25:25 +0200
+Message-Id: <20230601102525.609627-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Hans,
+The 'qcom_swrm_ctrl->pconfig' has size of QCOM_SDW_MAX_PORTS (14),
+however we index it starting from 1, not 0, to match real port numbers.
+This can lead to writing port config past 'pconfig' bounds and
+overwriting next member of 'qcom_swrm_ctrl' struct.  Reported also by
+smatch:
 
-On 5/24/2023 8:14 PM, Hans Verkuil wrote:
-> On 24/05/2023 16:29, Bryan O'Donoghue wrote:
->> On 24/05/2023 15:12, Sergey Senozhatsky wrote:
->>> Video device has to provide ->lock so that __video_do_ioctl()
->>> can serialize IOCTL calls. Provided dedicated enc/dec mutex-s
->>> for that purpose.
->>>
->>> Signed-off-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-> 
-> Since these are m2m devices, I think this should set vfh->m2m_ctx->q_lock
-> instead.
-> 
-> The vb2_queue is per filehandle for such devices, so by just setting
-> vdev->lock you will have all vb2_queues use the same mutex.
-> 
-> Instead the struct v4l2_m2m_ctx q_lock pointer, if set, will use that
-> mutex for all vb2 operations.
+  drivers/soundwire/qcom.c:1269 qcom_swrm_get_port_config() error: buffer overflow 'ctrl->pconfig' 14 <= 14
 
-Recently we came across a race between queryctrl and s_fmt. Above lock would
-synchronize the operations for IOCTL with flag INFO_FL_QUEUE. Any suggestion on
-how other IOCTLs can be serialized as well, for ex s_fmt and queryctrl which are
-of type INFO_FL_PRIO and INFO_FL_CTRL.
+Fixes: 9916c02ccd74 ("soundwire: qcom: cleanup internal port config indexing")
+Cc: <stable@vger.kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/202305201301.sCJ8UDKV-lkp@intel.com/
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ drivers/soundwire/qcom.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Thanks,
-Vikash
-> I think you can set it to the 'lock' mutex in struct venus_inst.
-> 
-> Regards,
-> 
-> 	Hans 
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index 7cb1b7eba814..88a772075907 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -202,7 +202,8 @@ struct qcom_swrm_ctrl {
+ 	u32 intr_mask;
+ 	u8 rcmd_id;
+ 	u8 wcmd_id;
+-	struct qcom_swrm_port_config pconfig[QCOM_SDW_MAX_PORTS];
++	/* Port numbers are 1 - 14 */
++	struct qcom_swrm_port_config pconfig[QCOM_SDW_MAX_PORTS + 1];
+ 	struct sdw_stream_runtime *sruntime[SWRM_MAX_DAIS];
+ 	enum sdw_slave_status status[SDW_MAX_DEVICES + 1];
+ 	int (*reg_read)(struct qcom_swrm_ctrl *ctrl, int reg, u32 *val);
+-- 
+2.34.1
+
