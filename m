@@ -2,106 +2,239 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 29CD271964A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 11:02:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24FE6719659
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 11:06:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232588AbjFAJCx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 05:02:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57760 "EHLO
+        id S232587AbjFAJGF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 05:06:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60916 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232597AbjFAJCn (ORCPT
+        with ESMTP id S232476AbjFAJGC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 05:02:43 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 065E9E40;
-        Thu,  1 Jun 2023 02:02:08 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A124864221;
-        Thu,  1 Jun 2023 09:01:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F326EC433D2;
-        Thu,  1 Jun 2023 09:01:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685610115;
-        bh=4qQydQYRMrUOcNRnymjEdMYj9KOx6NIt5j1b1rQ06po=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=SHPCH/armNDPorE+cc3Xb3TXoWoApNaKS29MS+NEXf6sQ/2Mz8KZnELAt6eo0JkFI
-         vHBkYpsSVnV5qsc0rMP3PF5pfX7oUL4Sfp9fguKwNwff4N5gBx4XOB+fpR37F7VWEI
-         h/3NZIwevah72IbNwlMfIC4R/Uwma5mW+3xUZYQ67/9WKX78D/AJ/NZYs/6PXnohCa
-         dLsDaKPh6+A3FgQUiZh3lngNpdPts4aiXMMvaM5cUb5Xb028NhIneDbyKjdQXmPq3k
-         2JNyFfB1YzWXNVxBn4xbmVN+b0BifFzs70E0o30zjeC6VMTHBZO8doYnpQXnrLw+u1
-         QFoHrgiDb3iAg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1q4eC0-0007BU-Sj; Thu, 01 Jun 2023 11:02:00 +0200
-Date:   Thu, 1 Jun 2023 11:02:00 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Doug Anderson <dianders@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     'Johan Hovold <johan+linaro@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        stable@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/a6xx: fix uninitialised lock in init error path
-Message-ID: <ZHheiJfdp7-597XT@hovoldconsulting.com>
-References: <20230531075854.703-1-johan+linaro@kernel.org>
- <CAD=FV=UtyMSekPYfamMkswC=mSRnBpQUygMxZ+Wgf6Y2dB2Qhw@mail.gmail.com>
+        Thu, 1 Jun 2023 05:06:02 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id BE7E21B8;
+        Thu,  1 Jun 2023 02:05:42 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 9323C169C;
+        Thu,  1 Jun 2023 02:06:02 -0700 (PDT)
+Received: from [10.57.22.124] (unknown [10.57.22.124])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 901053F663;
+        Thu,  1 Jun 2023 02:05:14 -0700 (PDT)
+Message-ID: <ccdc58ff-f86b-6ca8-cdf6-299cc454873c@arm.com>
+Date:   Thu, 1 Jun 2023 10:05:13 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAD=FV=UtyMSekPYfamMkswC=mSRnBpQUygMxZ+Wgf6Y2dB2Qhw@mail.gmail.com>
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.11.1
+Subject: Re: [PATCH v4 05/11] coresight-tpdm: Add nodes to set trigger
+ timestamp and type
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org
+References: <1682586037-25973-1-git-send-email-quic_taozha@quicinc.com>
+ <1682586037-25973-6-git-send-email-quic_taozha@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1682586037-25973-6-git-send-email-quic_taozha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 31, 2023 at 07:22:49AM -0700, Doug Anderson wrote:
-> Hi,
+On 27/04/2023 10:00, Tao Zhang wrote:
+> The nodes are needed to set or show the trigger timestamp and
+> trigger type. This change is to add these nodes to achieve these
+> function.
 > 
-> On Wed, May 31, 2023 at 1:00 AM Johan Hovold <johan+linaro@kernel.org> wrote:
-> >
-> > A recent commit started taking the GMU lock in the GPU destroy path,
-> > which on GPU initialisation failure is called before the GMU and its
-> > lock have been initialised.
-> >
-> > Make sure that the GMU has been initialised before taking the lock in
-> > a6xx_destroy() and drop the now redundant check from a6xx_gmu_remove().
-> >
-> > Fixes: 4cd15a3e8b36 ("drm/msm/a6xx: Make GPU destroy a bit safer")
-> > Cc: stable@vger.kernel.org      # 6.3
-> > Cc: Douglas Anderson <dianders@chromium.org>
-> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> > ---
-> >  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 3 ---
-> >  drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 9 ++++++---
-> >  2 files changed, 6 insertions(+), 6 deletions(-)
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> ---
+>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 24 ++++++
+>   drivers/hwtracing/coresight/coresight-tpdm.c       | 95 ++++++++++++++++++++++
+>   2 files changed, 119 insertions(+)
 > 
-> I think Dmitry already posted a patch 1.5 months ago to fix this.
-> 
-> https://lore.kernel.org/r/20230410165908.3094626-1-dmitry.baryshkov@linaro.org
+> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> index 686bdde..77e67f2 100644
+> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> @@ -21,3 +21,27 @@ Description:
+>   
+>   		Accepts only one value -  1.
+>   		1 : Reset the dataset of the tpdm
+> +
+> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_trig_type
+> +Date:		March 2023
+> +KernelVersion	6.3
 
-Bah, I checked if Bjorn had hit this with his recent A690 v3 series and
-posted a fix, but did not look further than that.
+This would need updating. We are not sure if this can make it to 6.5, 
+with dependency on James' series. Fix this with 6.5 here and we can take
+a shot.
 
-> Can you confirm that works for you?
+> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
+> +Description:
+> +		(Write) Set the trigger type of DSB tpdm. Read the trigger
+> +		type of DSB tpdm.
+> +
+> +		Accepts only one of the 2 values -  0 or 1.
+> +		0 : Set the DSB trigger type to false
+> +		1 : Set the DSB trigger type to true
+> +
+> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_trig_ts
+> +Date:		March 2023
+> +KernelVersion	6.3
 
-That looks like it would work too, but I think I prefer my version which
-keeps the initialisation of the GMU struct in a6xx_gmu_init().
+Same here
+> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
+> +Description:
+> +		(Write) Set the trigger timestamp of DSB tpdm. Read the
+> +		trigger timestamp of DSB tpdm.
+> +
+> +		Accepts only one of the 2 values -  0 or 1.
+> +		0 : Set the DSB trigger type to false
+> +		1 : Set the DSB trigger type to true
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+> index 2e64cfd..14f4352 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+> @@ -20,6 +20,19 @@
+>   
+>   DEFINE_CORESIGHT_DEVLIST(tpdm_devs, "tpdm");
+>   
+> +static umode_t tpdm_dsb_is_visible(struct kobject *kobj,
+> +								   struct attribute *attr, int n)
 
-Dmitry or Rob, could you see to that either version gets merged soon so
-that we don't end up with even more people having to debug and fix the
-same issue?
+minor nit: alignment ?
 
-Johan
+> +{
+> +	struct device *dev = kobj_to_dev(kobj);
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +
+> +	if (drvdata)
+> +		if (drvdata && (drvdata->datasets & TPDM_PIDR0_DS_DSB))
+> +			return attr->mode;
+
+Duplicate check for drvdata ?
+
+	if (drvdata && (drvdata->datasets & TPDM_PIDR0_DS_DSB))
+		return attr->mode;
+> +
+> +	return 0;
+> +}
+> +
+>   static void tpdm_reset_datasets(struct tpdm_drvdata *drvdata)
+>   {
+>   	if (drvdata->datasets & TPDM_PIDR0_DS_DSB) {
+> @@ -239,8 +252,90 @@ static struct attribute_group tpdm_attr_grp = {
+>   	.attrs = tpdm_attrs,
+>   };
+>   
+> +static ssize_t dsb_trig_type_show(struct device *dev,
+> +				     struct device_attribute *attr, char *buf)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +
+> +	return sysfs_emit(buf, "%u\n",
+> +			 (unsigned int)drvdata->dsb->trig_type);
+> +}
+> +
+> +/*
+> + * Trigger type (boolean):
+> + * false - Disable trigger type.
+> + * true  - Enable trigger type.
+> + */
+> +static ssize_t dsb_trig_type_store(struct device *dev,
+> +				      struct device_attribute *attr,
+> +				      const char *buf,
+> +				      size_t size)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	unsigned long val;
+> +
+> +	if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
+> +		return -EINVAL;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	if (val)
+> +		drvdata->dsb->trig_type = true;
+> +	else
+> +		drvdata->dsb->trig_type = false;
+> +	spin_unlock(&drvdata->spinlock);
+> +	return size;
+> +}
+> +static DEVICE_ATTR_RW(dsb_trig_type);
+> +
+> +static ssize_t dsb_trig_ts_show(struct device *dev,
+> +				     struct device_attribute *attr, char *buf)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +
+> +	return sysfs_emit(buf, "%u\n",
+> +			 (unsigned int)drvdata->dsb->trig_ts);
+> +}
+> +
+> +/*
+> + * Trigger timestamp (boolean):
+> + * false - Disable trigger timestamp.
+> + * true  - Enable trigger timestamp.
+> + */
+> +static ssize_t dsb_trig_ts_store(struct device *dev,
+> +				      struct device_attribute *attr,
+> +				      const char *buf,
+> +				      size_t size)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	unsigned long val;
+> +
+> +	if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
+> +		return -EINVAL;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	if (val)
+> +		drvdata->dsb->trig_ts = true;
+> +	else
+> +		drvdata->dsb->trig_ts = false;
+> +	spin_unlock(&drvdata->spinlock);
+> +	return size;
+> +}
+> +static DEVICE_ATTR_RW(dsb_trig_ts);
+> +
+> +static struct attribute *tpdm_dsb_attrs[] = {
+> +	&dev_attr_dsb_trig_ts.attr,
+> +	&dev_attr_dsb_trig_type.attr,
+> +	NULL,
+> +};
+> +
+> +static struct attribute_group tpdm_dsb_attr_grp = {
+> +	.attrs = tpdm_dsb_attrs,
+> +	.is_visible = tpdm_dsb_is_visible,
+> +};
+> +
+>   static const struct attribute_group *tpdm_attr_grps[] = {
+>   	&tpdm_attr_grp,
+> +	&tpdm_dsb_attr_grp,
+>   	NULL,
+>   };
+>   
+
+Rest looks fine to me
+
+Suzuki
+
