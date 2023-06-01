@@ -2,87 +2,299 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1AD65719E32
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 15:30:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06A78719EE3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 15:55:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234029AbjFANaG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 09:30:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37258 "EHLO
+        id S233485AbjFANzW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 09:55:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234048AbjFAN3i (ORCPT
+        with ESMTP id S233018AbjFANzU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 09:29:38 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2000A197
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 06:29:16 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f004cc54f4so1008627e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 06:29:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685626149; x=1688218149;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bi4W45hTLVZELv8za/V/2Zxr2Ta54wvM2WdGCMd0O68=;
-        b=usImXdnWeIdqEvzWwlkFEyzWjMmuHQv5QUbYFpAKRMLB8He1y/ZwMjOrjfF1jlFZPJ
-         PCf5j44mSgnLPhk/j3P3qzv1eP8CT5YysheWpWPC++9ltw/wFL/7dqkLq5gEcBRYdQ29
-         6i5o5oRWrH1HYCLZZnO4SjVOVX4pVjtWDBVMraNHklYD5gxb4gVFg3OtOSB+woHK38Mi
-         pj7HWN15JxJAJoggGokB3aBDvvPP39g9cThhZmfktvefJYGhNtyxSGjCQ9dqD+TRatb0
-         a4MU+Gl4BfE8Xgmh5lf2nwsznu/7KS6SNnX4UMj88t2IdUBlTf4xaOlj3k0tRY6iODj8
-         ypfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685626149; x=1688218149;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bi4W45hTLVZELv8za/V/2Zxr2Ta54wvM2WdGCMd0O68=;
-        b=eFbXmdbMF+yXZoReRedKhyDeSS0BOgMTinMYj5e+asmG/7LwYVAf3U7xi9k81qDzYq
-         VZYguVCiojMzl6cIje+nrAfpo9gmTb9rIvopoxyg8WvXeqMRdOJyOryFDjVdXQt5e9wC
-         XaXe0dM34lysRqfn4n+rNn7/hhAZ+2LB8fDFrvR6K6c10CuvKWVVvlDqvGONmzVX/Ljd
-         5Yc9P98sBmx3jmbjJb0Grvy3ToFKP0aV//ge3eOLslnW6T94JQW/USn4s0u8KNIDUFGM
-         oNFcb5FON00pa6A+g6nNceBIQ1+S/i072072KsghKsc3OuyLeVKImwnz4qJBYEFdSR2U
-         HnJA==
-X-Gm-Message-State: AC+VfDzmtYFOtRx1POwLLqK4I3orH0R5SzOp6cmFze0r5TL4z0t/xYZq
-        R4v0UjHQ54NHGo9IfSWF9Ewcsg==
-X-Google-Smtp-Source: ACHHUZ7xdhJFrnEy0COc6Xnf+tMXkERGlnWTaEpzDFcQgu4QYbHbjeFepEL1SVezrW0HikHmrmE7xQ==
-X-Received: by 2002:ac2:4312:0:b0:4f3:afcc:e1bb with SMTP id l18-20020ac24312000000b004f3afcce1bbmr1756419lfh.1.1685626149679;
-        Thu, 01 Jun 2023 06:29:09 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id c25-20020ac24159000000b004f20d0ebe50sm1084096lfi.94.2023.06.01.06.29.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Jun 2023 06:29:09 -0700 (PDT)
-Message-ID: <98c8fb8f-1fe6-1c05-2093-67efc7ec582a@linaro.org>
-Date:   Thu, 1 Jun 2023 15:29:07 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH 20/20] interconnect: qcom: Divide clk rate by src node bus
- width
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
+        Thu, 1 Jun 2023 09:55:20 -0400
+Received: from mail.zeus03.de (www.zeus03.de [194.117.254.33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64D41184
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 06:55:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=sang-engineering.com; h=
+        date:from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=k1; bh=xqhRMpVRwKGnSR4yTg3S/+wq82xe
+        UEL1Dnls53yl8Mw=; b=zVwx/d3ot8d8N9TH4vhGyszu0niC+gq3K8uG69HepK4Y
+        t1CR6rvFAw11dWupGg+KHJZM9VXnrwmpTZ00C0OaIHORagTv0B9jH9XPBTNbwemP
+        vFoXYAeQFLs6rY1Vz3Ww188uwFKNR5sYWZndJ8YSYXkXS19jf7QjsglAtmCGf5U=
+Received: (qmail 1670469 invoked from network); 1 Jun 2023 15:54:54 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 1 Jun 2023 15:54:54 +0200
+X-UD-Smtp-Session: l3s3148p1@qP6/xxH9ruwujnsI
+Date:   Thu, 1 Jun 2023 15:54:50 +0200
+From:   Wolfram Sang <wsa+renesas@sang-engineering.com>
+To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+Cc:     Thor Thayer <thor.thayer@linux.intel.com>,
+        Elie Morisse <syniurge@gmail.com>,
+        Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
+        Brendan Higgins <brendan.higgins@linux.dev>,
+        Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        ye xingchen <ye.xingchen@zte.com.cn>,
+        Krzysztof Adamski <krzysztof.adamski@nokia.com>,
+        Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Allison Randal <allison@lohutok.net>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Kamal Dasu <kdasu.kdev@gmail.com>,
+        Michal Simek <michal.simek@amd.com>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Jochen Friedrich <jochen@scram.de>,
+        Benson Leung <bleung@chromium.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+        Baruch Siach <baruch@tkos.co.il>,
+        Jean-Marie Verdun <verdun@hpe.com>,
+        Nick Hawkins <nick.hawkins@hpe.com>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Oleksij Rempel <linux@rempel-privat.de>,
+        Jean Delvare <jdelvare@suse.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Chris Pringle <chris.pringle@phabrix.com>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Julia Lawall <Julia.Lawall@inria.fr>,
+        Conor Dooley <conor.dooley@microchip.com>,
+        Daire McNamara <daire.mcnamara@microchip.com>,
+        Khalil Blaiech <kblaiech@nvidia.com>,
+        Asmaa Mnebhi <asmaa@nvidia.com>,
+        Vadim Pasternak <vadimp@nvidia.com>,
+        Michael Shych <michaelsh@nvidia.com>,
+        Chris Packham <chris.packham@alliedtelesis.co.nz>,
+        Qii Wang <qii.wang@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Stefan Roese <sr@denx.de>,
+        Gregory CLEMENT <gregory.clement@bootlin.com>,
+        Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+        Stefan Wahren <stefan.wahren@i2se.com>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Peter Korsgaard <peter@korsgaard.com>,
+        Andrew Lunn <andrew@lunn.ch>, Robert Richter <rric@kernel.org>,
+        Tony Lindgren <tony@atomide.com>,
+        Aaro Koskinen <aaro.koskinen@iki.fi>,
+        Janusz Krzysztofik <jmkrzyszt@gmail.com>,
+        Vignesh R <vigneshr@ti.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Hector Martin <marcan@marcan.st>,
+        Sven Peter <sven@svenpeter.dev>, Rob Herring <robh@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <rfoss@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20230526-topic-smd_icc-v1-0-1bf8e6663c4e@linaro.org>
- <20230526-topic-smd_icc-v1-20-1bf8e6663c4e@linaro.org>
- <5a26e456-fe45-6def-27f9-26ec00c333e6@linaro.org>
- <ZHZIVJFd-HU_AO2F@gerhold.net>
- <4943572a-3456-ae33-387f-db476ff382e4@linaro.org>
- <ZHib62imkvHds-9a@gerhold.net>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZHib62imkvHds-9a@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Chris Brandt <chris.brandt@renesas.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Jim Cromie <jim.cromie@gmail.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>,
+        Alain Volmat <alain.volmat@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Andi Shyti <andi.shyti@kernel.org>,
+        Wei Chen <harperchen1110@gmail.com>,
+        George Cherian <gcherian@marvell.com>,
+        Peter Rosin <peda@axentia.se>,
+        Peter Korsgaard <peter.korsgaard@barco.com>,
+        linux-aspeed@lists.ozlabs.org,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Jan Dabros <jsd@semihalf.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Guenter Roeck <groeck@chromium.org>,
+        linux-riscv@lists.infradead.org,
+        Fabio Estevam <festevam@gmail.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        chrome-platform@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
+        Benjamin Fair <benjaminfair@google.com>,
+        linux-rockchip@lists.infradead.org, openbmc@lists.ozlabs.org,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Nancy Yuen <yuenn@google.com>,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-sunxi@lists.linux.dev, Joel Stanley <joel@jms.id.au>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        linux-arm-msm@vger.kernel.org, Nicholas Piggin <npiggin@gmail.com>,
+        linux-mediatek@lists.infradead.org,
+        linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        linux-arm-kernel@lists.infradead.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Patrick Venture <venture@google.com>,
+        linux-mips@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        Dmitry Osipenko <digetx@gmail.com>, asahi@lists.linux.dev,
+        kernel@pengutronix.de, linuxppc-dev@lists.ozlabs.org,
+        linux-i2c@vger.kernel.org
+Subject: Re: [PATCH 00/89] i2c: Convert to platform remove callback returning
+ void
+Message-ID: <ZHijKtBbH2sCSuT4@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+        Thor Thayer <thor.thayer@linux.intel.com>,
+        Elie Morisse <syniurge@gmail.com>,
+        Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
+        Brendan Higgins <brendan.higgins@linux.dev>,
+        Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        ye xingchen <ye.xingchen@zte.com.cn>,
+        Krzysztof Adamski <krzysztof.adamski@nokia.com>,
+        Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Allison Randal <allison@lohutok.net>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Kamal Dasu <kdasu.kdev@gmail.com>,
+        Michal Simek <michal.simek@amd.com>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Jochen Friedrich <jochen@scram.de>,
+        Benson Leung <bleung@chromium.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bartosz Golaszewski <brgl@bgdev.pl>,
+        Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+        Baruch Siach <baruch@tkos.co.il>,
+        Jean-Marie Verdun <verdun@hpe.com>,
+        Nick Hawkins <nick.hawkins@hpe.com>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Oleksij Rempel <linux@rempel-privat.de>,
+        Jean Delvare <jdelvare@suse.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Chris Pringle <chris.pringle@phabrix.com>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Julia Lawall <Julia.Lawall@inria.fr>,
+        Conor Dooley <conor.dooley@microchip.com>,
+        Daire McNamara <daire.mcnamara@microchip.com>,
+        Khalil Blaiech <kblaiech@nvidia.com>,
+        Asmaa Mnebhi <asmaa@nvidia.com>,
+        Vadim Pasternak <vadimp@nvidia.com>,
+        Michael Shych <michaelsh@nvidia.com>,
+        Chris Packham <chris.packham@alliedtelesis.co.nz>,
+        Qii Wang <qii.wang@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Stefan Roese <sr@denx.de>,
+        Gregory CLEMENT <gregory.clement@bootlin.com>,
+        Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
+        Stefan Wahren <stefan.wahren@i2se.com>,
+        Avi Fishman <avifishman70@gmail.com>,
+        Tomer Maimon <tmaimon77@gmail.com>,
+        Tali Perry <tali.perry1@gmail.com>,
+        Peter Korsgaard <peter@korsgaard.com>, Andrew Lunn <andrew@lunn.ch>,
+        Robert Richter <rric@kernel.org>, Tony Lindgren <tony@atomide.com>,
+        Aaro Koskinen <aaro.koskinen@iki.fi>,
+        Janusz Krzysztofik <jmkrzyszt@gmail.com>,
+        Vignesh R <vigneshr@ti.com>, Michael Ellerman <mpe@ellerman.id.au>,
+        Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
+        Rob Herring <robh@kernel.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Miquel Raynal <miquel.raynal@bootlin.com>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Robert Foss <rfoss@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Chris Brandt <chris.brandt@renesas.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Jim Cromie <jim.cromie@gmail.com>,
+        Patrice Chotard <patrice.chotard@foss.st.com>,
+        Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>,
+        Alain Volmat <alain.volmat@foss.st.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Ard Biesheuvel <ardb@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Laxman Dewangan <ldewangan@nvidia.com>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Masami Hiramatsu <mhiramat@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Andi Shyti <andi.shyti@kernel.org>,
+        Wei Chen <harperchen1110@gmail.com>,
+        George Cherian <gcherian@marvell.com>,
+        Peter Rosin <peda@axentia.se>,
+        Peter Korsgaard <peter.korsgaard@barco.com>,
+        linux-aspeed@lists.ozlabs.org,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Jan Dabros <jsd@semihalf.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Guenter Roeck <groeck@chromium.org>,
+        linux-riscv@lists.infradead.org, Fabio Estevam <festevam@gmail.com>,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        chrome-platform@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
+        Benjamin Fair <benjaminfair@google.com>,
+        linux-rockchip@lists.infradead.org, openbmc@lists.ozlabs.org,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Nancy Yuen <yuenn@google.com>,
+        Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-sunxi@lists.linux.dev, Joel Stanley <joel@jms.id.au>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        linux-arm-msm@vger.kernel.org, Nicholas Piggin <npiggin@gmail.com>,
+        linux-mediatek@lists.infradead.org,
+        linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        linux-arm-kernel@lists.infradead.org,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Patrick Venture <venture@google.com>, linux-mips@vger.kernel.org,
+        linux-renesas-soc@vger.kernel.org,
+        Dmitry Osipenko <digetx@gmail.com>, asahi@lists.linux.dev,
+        kernel@pengutronix.de, linuxppc-dev@lists.ozlabs.org,
+        linux-i2c@vger.kernel.org
+References: <20230508205306.1474415-1-u.kleine-koenig@pengutronix.de>
+ <20230601073322.ww25ajaurktqsryr@pengutronix.de>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="gpYQGInw32d3wriv"
+Content-Disposition: inline
+In-Reply-To: <20230601073322.ww25ajaurktqsryr@pengutronix.de>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -90,105 +302,36 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--gpYQGInw32d3wriv
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 1.06.2023 15:23, Stephan Gerhold wrote:
-> On Thu, Jun 01, 2023 at 02:43:50PM +0200, Konrad Dybcio wrote:
->> On 30.05.2023 21:02, Stephan Gerhold wrote:
->>> On Tue, May 30, 2023 at 06:32:04PM +0200, Konrad Dybcio wrote:
->>>> On 30.05.2023 12:20, Konrad Dybcio wrote:
->>>>> Ever since the introduction of SMD RPM ICC, we've been dividing the
->>>>> clock rate by the wrong bus width. This has resulted in:
->>>>>
->>>>> - setting wrong (mostly too low) rates, affecting performance
->>>>>   - most often /2 or /4
->>>>>   - things like DDR never hit their full potential
->>>>>   - the rates were only correct if src bus width == dst bus width
->>>>>     for all src, dst pairs on a given bus
->>>>>
->>>>> - Qualcomm using the same wrong logic in their BSP driver in msm-5.x
->>>>>   that ships in production devices today
->>>>>
->>>>> - me losing my sanity trying to find this
->>>>>
->>>>> Resolve it by using dst_qn, if it exists.
->>>>>
->>>>> Fixes: 5e4e6c4d3ae0 ("interconnect: qcom: Add QCS404 interconnect provider driver")
->>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>>>> ---
->>>> The problem is deeper.
->>>>
->>>> Chatting with Stephan (+CC), we tackled a few issues (that I will send
->>>> fixes for in v2):
->>>>
->>>> 1. qcom_icc_rpm_set() should take per-node (src_qn->sum_avg, dst_qn->sum_avg)
->>>>    and NOT aggregated bw (unless you want ALL of your nodes on a given provider
->>>>    to "go very fast")
->>>>
->>>> 2. the aggregate bw/clk rate calculation should use the node-specific bus widths
->>>>    and not only the bus width of the src/dst node, otherwise the average bw
->>>>    values will be utterly meaningless
->>>>
->>>
->>> The peak bandwidth / clock rate is wrong as well if you have two paths
->>> with different buswidths on the same bus/NoC. (If someone is interested
->>> in details I can post my specific example I had in the chat, it shows
->>> this more clearly.)
->> agg_peak takes care of that, I believe..
->>
-> 
-> I was just nitpicking on your description here, I think the solution
-> you/we had in mind was already correct. :)
-> 
->>
->>>
->>>> 3. thanks to (1) and (2) qcom_icc_bus_aggregate() can be remodeled to instead
->>>>    calculate the clock rates for the two rpm contexts, which we can then max()
->>>>    and pass on to the ratesetting call
->>>>
->>>
->>> Sounds good.
->>>
->>>>
->>>> ----8<---- Cutting off Stephan's seal of approval, this is my thinking ----
->>>>
->>>> 4. I *think* Qualcomm really made a mistake in their msm-5.4 driver where they
->>>>    took most of the logic from the current -next state and should have been
->>>>    setting the rate based on the *DST* provider, or at least that's my
->>>>    understanding trying to read the "known good" msm-4.19 driver
->>>>    (which remembers msm-3.0 lol).. Or maybe we should keep src but ensure there's
->>>>    also a final (dst, dst) vote cast:
->>>>
->>>> provider->inter_set = false // current state upstream
->>>>
->>>> setting apps_proc<->slv_bimc_snoc
->>>> setting mas_bimc_snoc<->slv_snoc_cnoc
->>>> setting mas_snoc_cnoc<->qhs_sdc2
->>>>
->>>>
->>>> provider->inter_set = true // I don't think there's effectively a difference?
->>>>
->>>> setting apps_proc<->slv_bimc_snoc
->>>> setting slv_bimc_snoc<->mas_bimc_snoc
->>>> setting mas_bimc_snoc<->slv_snoc_cnoc
->>>> setting slv_snoc_cnoc<->mas_snoc_cnoc
->>>> setting mas_snoc_cnoc<->qhs_sdc2
->>>>
->>>
->>> I think with our proposed changes above it does no longer matter if a
->>> node is passed as "src" or "dst". This means in your example above you
->>> just waste additional time setting the bandwidth twice for
->>> slv_bimc_snoc, mas_bimc_snoc, slv_snoc_cnoc and mas_snoc_cnoc.
->>> The final outcome is the same with or without "inter_set".
->> Yeah I guess due to the fact that two "real" nodes are always
->> connected by a set of "gateway" nodes, the rate will be applied..
->>
->> I am however not sure if we're supposed to set the bandwidth
->> (via qcom_icc_rpm_set()) on all of them..
->>
-> 
-> I think so? The nodes RPM doesn't care about shouldn't have
-> a slv/mas_rpm_id.
-Hm I guess the inter_set doesn't make a difference anyway, as you
-pointed out.. Thankfully one thing less to fix :D
 
-Konrad
+> I wonder how this series will go in. My expectation was that Wolfram
+> picks up the whole series via his tree?!
+
+Will do. I am currently super-busy, though.
+
+
+
+--gpYQGInw32d3wriv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmR4oyYACgkQFA3kzBSg
+KbYkxRAAgf5VeQe2YA/rv9xTTFOLsiZ2yYaKqe5cSG8ORritsNgMayx5mytBy0Eb
+vLblB6pyYYUuu3M8/UNmMh+ud1b9uX4klUjd/spaehbsehFeEKn6qXIp8cwcSIYf
+Urcj54jsziLug9CQlidx+Zv9cK5qBCkmgMqzf+Nsc/qUEnZFhpblZkoqV1cEMbkQ
+ZrFXWEauQuCK9R9A4x6GrmfmdMn3c792FdLYJIL6bVJ3YJbN27vqzC8e+5NJqhs4
+KxCJ0LH0/M3rfhuDi//PfKk116qlUNYOkukv86eih76CBDm8sef221IfgFmLQx0h
+Hhvgc9g5MZNb9gSZP3UBsdXIiQgOEMztVEnWROaMIPLhab4G/rJhF0YMEAq132/Q
+4F6E5uIBY055Hdc4rrfounk8Ia3VRfuqG9B7bmaujkDmOBkLTB33+93c+b9xsJMh
+njdGaRmhDm3FnKzUqe//7kjRC2Eh004VP4Yr4JZ4byJWDkHtLLx2foYlV/Vry+Ka
+vajzcCTXVcDghWSXcd60VkXpI8cePJeHF6pnJfq6gTGFSrE3nH27ERG0zM8T7ADq
+E3PRusML2KJhpLcPuqnF2ntYSo8cwt2MW5gtEtaFlizmjuIZ/sLCTrDZKRUN9XAX
+k3ic9QCDUVLlKLXBftokeMi0I1NEhto6+ck+Fc8SNGnNnWxYJZ8=
+=ijai
+-----END PGP SIGNATURE-----
+
+--gpYQGInw32d3wriv--
