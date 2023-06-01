@@ -2,60 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 578B3719D81
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 15:24:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD7D6719DF8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 15:28:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232571AbjFANXu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 09:23:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60468 "EHLO
+        id S233784AbjFAN2D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 09:28:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233657AbjFANXk (ORCPT
+        with ESMTP id S233840AbjFAN1u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 09:23:40 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C883E196;
-        Thu,  1 Jun 2023 06:23:38 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 5D1296446A;
-        Thu,  1 Jun 2023 13:23:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19ACAC433EF;
-        Thu,  1 Jun 2023 13:23:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685625817;
-        bh=2Nu2ylXt9pKJIwKd04EwnfYt1AUPOoKUZUCSAoCM0V0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=UPS3vEaxeyZvUegv+jMspVrWrIp/uYyoer+SfWAu4tKc2dW6JIWwVXBfAIcqGToag
-         gskqVPR5CkyxvLlVm2KHxNEbwb0hQskXdu1xYNzTTmAEsUXdYmIprU3nMIPunp4wPk
-         IZ0KAErfLBp5zOyrB7CSBqxI87Fc5M2BkSCFhxbX1REJEHXEYjss1jBPg/kpcqQm4r
-         v4Y9jvZXvw9hamv6WzeejPWrpktK9cK7E+n0m3FSNKZfbqrNwHExF8dCzZ6m31LizY
-         kcbq8HanmrO1jbVGbtP/TZndDlRC9b8Seq5vpFMMCTJWTI6H3MuYcIRmXk/kUZ74Qq
-         KFNpT0G5O0WNQ==
-Date:   Thu, 1 Jun 2023 06:27:17 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 07/15] arm64: dts: qcom: sc8180x: Add interconnects
- and lmh
-Message-ID: <20230601132717.yslaigqg4lprkniv@ripper>
-References: <20230530162454.51708-1-vkoul@kernel.org>
- <20230530162454.51708-8-vkoul@kernel.org>
- <7d4089df-e572-4d3b-6fb7-061d69479dce@linaro.org>
- <ZHhF7zbPYyqdfURV@matsya>
+        Thu, 1 Jun 2023 09:27:50 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA6471A6
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 06:27:29 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-51492ae66a4so1310161a12.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 06:27:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685626045; x=1688218045;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=0Bh0NwcmQVDulBJjQlFxoXeFk9v1DzA4S7ePzbUk4+w=;
+        b=q1iotZxbLy8szFOTeC5e/G0VQdDeibKUxN1V13zopsKDoRyLSyc6Z3+4NCEAYIHRcr
+         0Y+SOKRkc0h/8PrlcU2NIUN1lDLPBiHpGdDNpR2mlagpo/gvLvFSQS3CValEhaAtjE+2
+         RE+eVynh/sqxFzs+LL8qvlWKtlmi6qvz/TKHDm0/IH+D5aOrdEusPcJwXPMYNre/ulBW
+         FI9QWATMBhOQi00g1fzNaUT9uFmVOiAy+PvM5ML4OmjN50l9Q4JqXau5CjGGmBr819kT
+         fq1kDhA1u4fUCbzvrfZF+RjuYK9zU0Wo40z60SZLVIhSRl3FKihyEIC7AAk5scS9W995
+         Kp9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685626045; x=1688218045;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=0Bh0NwcmQVDulBJjQlFxoXeFk9v1DzA4S7ePzbUk4+w=;
+        b=k6Xr+pNTkX1QH6sNmh7RWQIrVb8fPG+uW8HgDGiVAXCN0ldF+wdvOYV/fPse8UA/dP
+         PzFtslkfc0oQhOtFfzcJmwHjVo/6kOlh5s752Ol+ViJd3QEFYAEXAwgdqR5WjFWLBvNM
+         1fMJRrx9GhyiF8fJvsRTWFS3umDbd5arU+pFIdArz91RSm+hBxs23hsVe58uEOl5YeDq
+         xyhluS0DRbOg9t3aq4nLbG2SwwM91SZQXdEfA1vc0qFJmYhbEmRdZAFo1ZwayKTL+7Zo
+         Zxniu3UBIKFM2G3vSC284hSI1XoyApxi8KNUhJR/GZ0tsAzUePLBCls1CEnsDVteo4gp
+         30ZA==
+X-Gm-Message-State: AC+VfDyig0WpO+VV/R+aZE4dPGIub0dtr7h1GA79dMPvkeoUhK9EHmi5
+        YqYpUNrZGAcf6hB89+xvRtK7lQ==
+X-Google-Smtp-Source: ACHHUZ56vTDQLpgZcsfUFAD+UPccMtNn7lITWkhbfSA78O9BcUWWDHiZ5WDLxtlvxFtNO3fcz/01mw==
+X-Received: by 2002:a05:6402:12ce:b0:514:938a:67cd with SMTP id k14-20020a05640212ce00b00514938a67cdmr5009231edx.38.1685626045251;
+        Thu, 01 Jun 2023 06:27:25 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.199.204])
+        by smtp.gmail.com with ESMTPSA id y1-20020aa7c241000000b0050bfeb15049sm7070997edo.60.2023.06.01.06.27.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Jun 2023 06:27:24 -0700 (PDT)
+Message-ID: <33979417-2c0c-5474-23e0-7e72add99873@linaro.org>
+Date:   Thu, 1 Jun 2023 15:27:22 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZHhF7zbPYyqdfURV@matsya>
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH V7 4/8] pinctrl: qcom: Add IPQ5018 pinctrl driver
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
+        andy.shevchenko@gmail.com
+Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        mturquette@baylibre.com, sboyd@kernel.org, ulf.hansson@linaro.org,
+        linus.walleij@linaro.org, catalin.marinas@arm.com, will@kernel.org,
+        p.zabel@pengutronix.de, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, robimarko@gmail.com
+References: <20230519125409.497439-1-quic_srichara@quicinc.com>
+ <20230519125409.497439-5-quic_srichara@quicinc.com>
+ <CAHp75VfVx+oGYKcija3h9-eWc6jggMx8p5SAQTEHTBEbjTaJKw@mail.gmail.com>
+ <1823419a-6bb4-03f7-d5ae-e32204c5e598@quicinc.com>
+ <ZHTK7uEzO7kcx_cV@surfacebook>
+ <aefd0df1-8dfb-1b69-589b-974dea312845@quicinc.com>
+ <664940c3-9ec1-b4bd-9db5-fa3529e3d1ff@linaro.org>
+ <8146f367-c539-bea5-12b6-424213018488@quicinc.com>
+ <eb109116-94eb-5b6d-0049-7bb31feada36@linaro.org>
+Content-Language: en-US
+In-Reply-To: <eb109116-94eb-5b6d-0049-7bb31feada36@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -63,38 +90,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 01, 2023 at 12:47:03PM +0530, Vinod Koul wrote:
-> On 31-05-23, 10:26, Krzysztof Kozlowski wrote:
-> > On 30/05/2023 18:24, Vinod Koul wrote:
-> > > This add interconnect nodes and add LMH to sc8180x SoC dtsi
-> > > 
-> > > Co-developed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> > > ---
-> > 
-> > I don't understand why this was split. We talked on IRC many times on
-> > this - artificial splits are not "release early, release often". Your
-> > previous patchset was correct in that approach, but why this is separate
-> > patch?
+On 01/06/2023 13:53, Krzysztof Kozlowski wrote:
+> On 01/06/2023 13:41, Sricharan Ramabadhran wrote:
+>>
+>>
+>> On 6/1/2023 3:21 PM, Krzysztof Kozlowski wrote:
+>>> On 01/06/2023 11:50, Sricharan Ramabadhran wrote:
+>>>>
+>>>>
+>>>> On 5/29/2023 9:25 PM, andy.shevchenko@gmail.com wrote:
+>>>>> Mon, May 29, 2023 at 03:58:09PM +0530, Sricharan Ramabadhran kirjoitti:
+>>>>>> On 5/20/2023 12:17 AM, Andy Shevchenko wrote:
+>>>>>>> On Fri, May 19, 2023 at 3:55 PM Sricharan Ramabadhran
+>>>>>>> <quic_srichara@quicinc.com> wrote:
+>>>>>
+>>>>> ...
+>>>>>
+>>>>>>>      depends on OF || COMPILE_TEST
+>>>>>>
+>>>>>>    Yeah sure. COMPILE_TEST could be standalone. Will fix it and repost.
+>>>>>
+>>>>> Standalone COMPILE_TEST will give you definitely NOT what you want.
+>>>>> And actually it's strange to have it standalone.
+>>>>>
+>>>>
+>>>>    Ho ok, i meant like this, "depends on ARM64 || COMPILE_TEST"
+>>>
+>>> Don't do it differently than all other drivers. Open the Kconfig and
+>>> look at existing entries.
+>>>
+>>    The latest added has this below, will use this
+>>
+>> 	depends on OF || COMPILE_TEST
 > 
-> Coz the patch was big to review. This is usual Linux approach to break a
-> change into smaller chunks for review!
+> I would even drop this... Lemme check, it looks odd. We depend on
+> ARCH_QCOM which uses OF. We have few drivers which depend on ACPI, but
+> that also seems wrong. These are platform drivers so they should expect
+> platform select proper firmware interface. I think none of other
+> platform drivers do like this (neither Samsung pinctrl nor other
+> Qualcomm drivers)).
 > 
+> I will fix this. For your patch I would just skip OF entirely.
 
-We break patches into small, logical units so that it's easy to follow
-the thought through each step in the process of introducing a change.
+Correction: you need OF :(
 
-This is not the same thing as splitting one logical change into multiple
-smaller patches to keep the line count of each patch down. This just
-forces the reviewer to jump between emails to get the full picture of
-the logical change.
+Best regards,
+Krzysztof
 
-And it's not until patch 14 that any of this content is introduced to
-the build system, so it's not split to ensure bisectability etc.
-
-
-I'd be perfectly happy to have received the dts changes as 3-4 patches.
-
-Regards,
-Bjorn
