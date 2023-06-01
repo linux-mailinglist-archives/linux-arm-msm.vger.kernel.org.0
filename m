@@ -2,86 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 837E5718F71
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 02:16:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24FB0718F80
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 02:29:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229611AbjFAAQ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 31 May 2023 20:16:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51746 "EHLO
+        id S229610AbjFAA3F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 31 May 2023 20:29:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbjFAAQ4 (ORCPT
+        with ESMTP id S229491AbjFAA3E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 31 May 2023 20:16:56 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09BCF107
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 17:16:55 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f3baf04f0cso136178e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 17:16:54 -0700 (PDT)
+        Wed, 31 May 2023 20:29:04 -0400
+Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBF5E125
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 17:29:02 -0700 (PDT)
+Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-ba86ea269e0so221973276.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 31 May 2023 17:29:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685578613; x=1688170613;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sxTX4X4YKUtqwPm+hbV1ZZouN5cpgVgg+LAtjb8cK/I=;
-        b=i9rKVnU4m6dI91mhR4zJ7ZW0TQwWjSH3HQMaugd8Y1bpUQYDRiw8b1AKA1sRS0A2FR
-         6ZlvU5hW6bsSlbITaHTAI4Ekc9LVT3bVmo6OG4/+itIrrEmHfi9hDdtcfJ6z5aza7qqo
-         y42Dn/E/BTVRqI35zv1N2oRcF/9JKrRh+TzhMp79w/spWSvGmmGQw8QuqikBPv8ZWAa+
-         iaByBCuzR95pTcAmIWvopqsuDc9/GyQg82VQQeOlm1ciEFrimZht9pExjh9PccrerdFr
-         VkpsNgXLe8doQ1rNuozfbkhclKq/tTkgrJA+mq5pjmMGQ/hA2cz/b1dEBGMcqRt4htI6
-         eFtQ==
+        d=linaro.org; s=google; t=1685579342; x=1688171342;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=NEEjlzeLxFQftTZQSpKJW7Jq+wnau68354KXBq6LZXM=;
+        b=DASrcWJUigO5nWpOPk4tjfh5Q25y9tW2ZNCwtl31oosKOjljcct+SiTn3TZeN3yQc4
+         EJ2Mhq07DbjHMZEWvgSauYe9bI6j68f9z6jvw2dcYl6YlsatEX8ggHKKBCAVd18yaTlT
+         cLZGlLL/cK3XJBvKKrvFNd3DFJ8Jk8l7QWSfgiyYDI1qut/k81copaH0XHDiTLzrhdKl
+         nymb+vvf0h3AIC1PvmRMVqAE9voOMuVqyhXlwZmleEQ+s4/zdkBF5gXUhIiAEP/cb4oQ
+         e/XD4AigUJSTvNw/N2l3H68F92eQDNZ1sSsEDzIlzbMcz0NgTGdyS2m27pqioJmTNjc/
+         g+qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685578613; x=1688170613;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sxTX4X4YKUtqwPm+hbV1ZZouN5cpgVgg+LAtjb8cK/I=;
-        b=eI5bLtmkuAlJg2HMhC5X9ztr4t+3pJcYElmhPPL8fLpW0tvgyDQIFyR0Rsi5KFQYaV
-         R+j8lv/Jfdq5Gvyfs+I8gw2Ps2w5SqjuLJbREkIwQvkEIBxZLWa7w5H9YJBXlhMYdU5Y
-         LoWcmhycC8r+RzSYWAhjODqW92EciuMRT7LfalzsvwL/lUFBKKW1UPUPvQlQgtALYCXe
-         144iq3nUK/aIm15UX9id7SPcNI4Cz826oJUUhcLmKzvMXhRgziAs/TTjbpZI/S9LXNwi
-         ZGvG6wcgF/dzwU6wSCeXISYdVex6kL0fjDOrcB8UEch8IG7Mgfqw2eqtHxa6KV/MY76Y
-         yz4g==
-X-Gm-Message-State: AC+VfDy4J2TTIlM537jd4wxXvu4CKL2aqyypoP6qnhiwUZVudZCyM/eE
-        gKhrF/ia6lgRqIWM4DcSiVIsR7XbsBnRI8rleOo=
-X-Google-Smtp-Source: ACHHUZ5Q3u+SzRMFGtrtDBvEpZJ6S83Uw7/xbtquC1ZjKTF0POh8B99t3GmLNjPbhZJsD3vRnrpdEw==
-X-Received: by 2002:ac2:4466:0:b0:4f1:43de:7c3 with SMTP id y6-20020ac24466000000b004f143de07c3mr267149lfl.51.1685578613308;
-        Wed, 31 May 2023 17:16:53 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id c10-20020ac2530a000000b004f139712835sm889366lfh.293.2023.05.31.17.16.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 May 2023 17:16:52 -0700 (PDT)
-Message-ID: <0fbe5ddb-c3de-0724-fb69-a99e4980b26c@linaro.org>
-Date:   Thu, 1 Jun 2023 03:16:52 +0300
+        d=1e100.net; s=20221208; t=1685579342; x=1688171342;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NEEjlzeLxFQftTZQSpKJW7Jq+wnau68354KXBq6LZXM=;
+        b=gAuU0/bIlkgFQFkxB4fZfUT84CRKkkdwOYtFkjvQHG6BPhoseO7mBPoOUgJyiWHQN4
+         69G26HO52U/kfHfl/r+lkaeBDXdO+8K9/epCzKpzdJAi73/sUEi6ZHeLHiLFROKXgc2C
+         FOKrFkkjUumQAt/SGz52kEjvPrSifTbeXBodcyqVHocMQkczRy0V0AF1q7Z/b6z5il2J
+         +uz+ca7iQI+k9LdKwPq+78k5XFRYxmxqDny/DgvXAXRRZFceIb+3PCYfaEMGhHkn6dNG
+         2MxSaUYxEbl3USedzzKLrzfxLIKZLsTND/w+mirtO+VTXvIPXN33/6PJeRNIBAJb+3Pj
+         yaow==
+X-Gm-Message-State: AC+VfDyCkZ4YTZw+viIzVa8on6nRKLU2A6Gm84LpberyIIPX8zG7cYHp
+        yTg/lWCr04fmPsArMe5/VwJF3tScndUn2NQkcNi9dw==
+X-Google-Smtp-Source: ACHHUZ5iUMfJV/FOMlr08ahtzPGqh8EXAdjkfAkBYn2H1tsCyIX1DSM2KkkhEy6vsvNjLD1u9b8Hs3L79AxVpBIaYpk=
+X-Received: by 2002:a25:b08f:0:b0:b9a:6a68:b8da with SMTP id
+ f15-20020a25b08f000000b00b9a6a68b8damr8271454ybj.25.1685579342118; Wed, 31
+ May 2023 17:29:02 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v5 00/12] SM63(50|75) DPU support
-Content-Language: en-GB
-To:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux.dev, Rob Herring <robh@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+References: <20230531014248.3824043-1-dmitry.baryshkov@linaro.org>
+ <20230531014248.3824043-2-dmitry.baryshkov@linaro.org> <3a0deecb-8235-8cf5-262e-8cb8d2349a4c@linaro.org>
+In-Reply-To: <3a0deecb-8235-8cf5-262e-8cb8d2349a4c@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 1 Jun 2023 03:28:51 +0300
+Message-ID: <CAA8EJprhZCzL_0Htpjm0=Uur7AdkZLe_1Tw+uaBPwUXSOeTRyQ@mail.gmail.com>
+Subject: Re: [PATCH v3 1/4] dt-bindings: power: reset: qcom-pon: define pm8941-pon
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Sebastian Reichel <sre@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>
-References: <20230411-topic-straitlagoon_mdss-v5-0-998b4d2f7dd1@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230411-topic-straitlagoon_mdss-v5-0-998b4d2f7dd1@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -89,49 +75,53 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 23/05/2023 10:46, Konrad Dybcio wrote:
+On Wed, 31 May 2023 at 21:59, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 31/05/2023 03:42, Dmitry Baryshkov wrote:
+> > On PM8941 pon doesn't store the reset reason. However we still need the
+> > wrapping node for pwrkey and resin nodes. Add bindings for pm8941-pon
+> > device.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  .../devicetree/bindings/power/reset/qcom,pon.yaml    | 12 +++++++++++-
+> >  1 file changed, 11 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+> > index d96170eecbd2..eb3c88e501ef 100644
+> > --- a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+> > +++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+> > @@ -19,6 +19,7 @@ properties:
+> >    compatible:
+> >      enum:
+> >        - qcom,pm8916-pon
+> > +      - qcom,pm8941-pon
+> >        - qcom,pms405-pon
+> >        - qcom,pm8998-pon
+> >        - qcom,pmk8350-pon
+> > @@ -56,13 +57,22 @@ required:
+> >  unevaluatedProperties: false
+> >
+> >  allOf:
+> > -  - $ref: reboot-mode.yaml#
+> > +  - if:
+> > +      not:
+> > +        properties:
+> > +          compatible:
+> > +            contains:
+> > +              const: qcom,pm8941-pon
+> > +    then:
+> > +      $ref: reboot-mode.yaml#
+>
+> Are you sure that this works, so pm8941 does not allow mode-*
+> properties? I am afraid they would still be considered evaluated, thus
+> your if-not is not effective.
 
-[skipped the changelog]
+Yes, I checked that they trigger the schema validation error. If you'd
+prefer I can extend this 'if' with explicit 'mode-*: false'.
 
-> ---
-> Konrad Dybcio (12):
->        dt-bindings: display/msm: dsi-controller-main: Add SM6350
->        dt-bindings: display/msm: dsi-controller-main: Add SM6375
->        dt-bindings: display/msm: sc7180-dpu: Describe SM6350 and SM6375
->        dt-bindings: display/msm: Add SM6350 MDSS
->        dt-bindings: display/msm: Add SM6375 MDSS
->        drm/msm/dpu: Add SM6350 support
->        drm/msm: mdss: Add SM6350 support
->        drm/msm/dpu: Add SM6375 support
->        drm/msm: mdss: Add SM6375 support
->        iommu/arm-smmu-qcom: Sort the compatible list alphabetically
->        iommu/arm-smmu-qcom: Add SM6375 DPU compatible
->        iommu/arm-smmu-qcom: Add SM6350 DPU compatible
-
-As we are now nearly ready to merge this series, Will, Robin, what 
-should be the merge strategy for these three patches? Would you take 
-them through the arm-smmu/iommu tree?
-
-> 
->   .../bindings/display/msm/dsi-controller-main.yaml  |   4 +
->   .../bindings/display/msm/qcom,sc7180-dpu.yaml      |  23 ++-
->   .../bindings/display/msm/qcom,sm6350-mdss.yaml     | 214 ++++++++++++++++++++
->   .../bindings/display/msm/qcom,sm6375-mdss.yaml     | 216 +++++++++++++++++++++
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h | 173 +++++++++++++++++
->   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h | 139 +++++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   6 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   2 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   2 +
->   drivers/gpu/drm/msm/msm_mdss.c                     |  10 +
->   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c         |   6 +-
->   11 files changed, 792 insertions(+), 3 deletions(-)
-> ---
-> base-commit: 9f925874281f7e8855855d6210d6e29d844e4307
-> change-id: 20230411-topic-straitlagoon_mdss-8f34cacd5e26
-> 
-> Best regards,
 
 -- 
 With best wishes
 Dmitry
-
