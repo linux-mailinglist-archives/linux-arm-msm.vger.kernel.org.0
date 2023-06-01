@@ -2,83 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3997A719C60
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 14:44:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 820F7719C99
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 14:52:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229589AbjFAMn6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 08:43:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41828 "EHLO
+        id S233222AbjFAMwQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 08:52:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232685AbjFAMn6 (ORCPT
+        with ESMTP id S232987AbjFAMwP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 08:43:58 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA397139
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 05:43:55 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f122ff663eso915003e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 05:43:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685623434; x=1688215434;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hZj6+TO9cetRqFmZScJnzrH91ahC5Pe0XUE1xU0CNO0=;
-        b=rSQYgK6Tpo+MABXaIL1N2j7Fn0MuV25MUc6OWn4uinv1045fU2ZTGiwD/vsQMZ38xC
-         Mm6RDZNcLCHjgJMZ+EXnUaxoe0gVFEkdrc/A0K5VYFY3e/lsEaQjDKsTOOHG8GIQC+pj
-         XN4vyxARephQWmvC4c/zQBnyv9R4VXRkHmtAExxRhbrlBrC9TabmFXqA16IiPTVXMWcn
-         bnTAso+N1SM/nC1xCAe3UcCP1wozeaBIckVVh5j4f+elbDxBCsCKM9+/I1h0Xk1qJaqA
-         3S86f3ztabuvewtdjYEmggS0P7t+Ab7vIxdoWwZkWSTraqsrjw1f1edG25lp/2CJ3FtB
-         kwtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685623434; x=1688215434;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hZj6+TO9cetRqFmZScJnzrH91ahC5Pe0XUE1xU0CNO0=;
-        b=dbbpOvVggx40xr6sJWCqAhAb4COdxIwZ9EM2k9khPJ2PZS5z6jnbz86DntSab9aHhj
-         EWYUOLls9bem9C+oGyFhq9wCtU2UNfOFogq32BCIg1mLsnde3B05KsH4w3m0ZZyKVggX
-         1AdGhlDieL/DfXPgNfgLVMtHzYADo+nCMmlHQ7KHp5YmDdnOG5mRaFeSyE8QQFBgSIhg
-         D4DwfEQqv6e52VsXqg9ZP9qrvdn643ZCL8CwvjFgC1a+tDSHCaqFT0kWMjozNUKSnMkm
-         bjjfvfW+L32mPJayXSEggfni3OIlqNue9QNAB3jQ7/csOkDxXSsgkGGnb+sAyE9GnYfC
-         ndJg==
-X-Gm-Message-State: AC+VfDw3EMOFS+2sEJB3+eahL+RyZh1EpofrxlW+A6Cgj+D9aNrjdnnI
-        YxS6TUdoWvT6Fi/yl4VdVOni3A==
-X-Google-Smtp-Source: ACHHUZ6FJWrak/ultHHEb2CoK21JhwC0uCB93REGoqO+GGWVnkSpZNI4KWn+YR8yS6VhHa25ulvB5g==
-X-Received: by 2002:ac2:44d8:0:b0:4f3:859c:a01d with SMTP id d24-20020ac244d8000000b004f3859ca01dmr1465371lfm.69.1685623433986;
-        Thu, 01 Jun 2023 05:43:53 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id h6-20020a197006000000b004f608eb50d7sm140878lfc.232.2023.06.01.05.43.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Jun 2023 05:43:52 -0700 (PDT)
-Message-ID: <4943572a-3456-ae33-387f-db476ff382e4@linaro.org>
-Date:   Thu, 1 Jun 2023 14:43:50 +0200
+        Thu, 1 Jun 2023 08:52:15 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3F07D123;
+        Thu,  1 Jun 2023 05:52:14 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35157lhU005135;
+        Thu, 1 Jun 2023 12:52:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=a2vHoLo4nXwBfvsNLu+0pjcRYz50PyEOUYJXc0Ctxz4=;
+ b=WNJqhzeGPOvvJSWuHcTFLSA/fnFSSROg2XYXuu4JXB8tK+roD/WU/BS2Psn0mGslAr+x
+ JSOjM+oX6jq6/jLgt9AgCXweIKqErRpGpBLIMBUyGHEg1CE/XROzeSbdja5z0C2Lba0l
+ +FdllnNypUaH+j2CItfuIbKnqeDnimXH9viIT0lFaSjSIg0+q7dxYpV3iAvtR8ZcEKGN
+ LG5LGTgwtnUae13Gwk56OTOvE3+chKrx85Q+eoPGnqyb4rPJGZZvFnRmliNBAYmWe+Uj
+ Rmx8knzUhcwLQ1o8P2kYaotG4nmFy6kq6dVKVi9cJ4QnaLgW/pK76ElGRCTaowiQS2c5 Ig== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qxjk2sd38-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 01 Jun 2023 12:52:09 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 351Cq8lh021539
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 1 Jun 2023 12:52:08 GMT
+Received: from [10.50.0.39] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 1 Jun 2023
+ 05:52:03 -0700
+Message-ID: <d726e36d-8a43-7605-9afa-fde3845e1b19@quicinc.com>
+Date:   Thu, 1 Jun 2023 18:21:51 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH] arm64: dts: qcom: ipq6018: correct the qrng node name
 Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20230526-topic-smd_icc-v1-0-1bf8e6663c4e@linaro.org>
- <20230526-topic-smd_icc-v1-20-1bf8e6663c4e@linaro.org>
- <5a26e456-fe45-6def-27f9-26ec00c333e6@linaro.org>
- <ZHZIVJFd-HU_AO2F@gerhold.net>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH 20/20] interconnect: qcom: Divide clk rate by src node bus
- width
-In-Reply-To: <ZHZIVJFd-HU_AO2F@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230526161138.25497-1-quic_kathirav@quicinc.com>
+ <fdfc568e-703e-6e74-953e-742c00f0b5fe@linaro.org>
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <fdfc568e-703e-6e74-953e-742c00f0b5fe@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: jq_ZvkrXmh4i72NUDpPwMSPGdLIEn7rI
+X-Proofpoint-ORIG-GUID: jq_ZvkrXmh4i72NUDpPwMSPGdLIEn7rI
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-01_08,2023-05-31_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 adultscore=0
+ spamscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0
+ priorityscore=1501 impostorscore=0 mlxlogscore=630 phishscore=0
+ suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2306010114
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -88,96 +87,39 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 30.05.2023 21:02, Stephan Gerhold wrote:
-> On Tue, May 30, 2023 at 06:32:04PM +0200, Konrad Dybcio wrote:
->> On 30.05.2023 12:20, Konrad Dybcio wrote:
->>> Ever since the introduction of SMD RPM ICC, we've been dividing the
->>> clock rate by the wrong bus width. This has resulted in:
->>>
->>> - setting wrong (mostly too low) rates, affecting performance
->>>   - most often /2 or /4
->>>   - things like DDR never hit their full potential
->>>   - the rates were only correct if src bus width == dst bus width
->>>     for all src, dst pairs on a given bus
->>>
->>> - Qualcomm using the same wrong logic in their BSP driver in msm-5.x
->>>   that ships in production devices today
->>>
->>> - me losing my sanity trying to find this
->>>
->>> Resolve it by using dst_qn, if it exists.
->>>
->>> Fixes: 5e4e6c4d3ae0 ("interconnect: qcom: Add QCS404 interconnect provider driver")
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
->> The problem is deeper.
+On 5/30/2023 8:14 PM, Krzysztof Kozlowski wrote:
+> On 26/05/2023 18:11, Kathiravan T wrote:
+>> qrng node address is mentioned incorrectly. Lets fix it.
 >>
->> Chatting with Stephan (+CC), we tackled a few issues (that I will send
->> fixes for in v2):
+>> Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+>> ---
+>> Note: Only compilation and dtbs_check is checked. Also dependent on the
+>> below series, no functional dependencies
+>> https://lore.kernel.org/linux-arm-msm/20230526125305.19626-1-quic_kathirav@quicinc.com/T/#t
 >>
->> 1. qcom_icc_rpm_set() should take per-node (src_qn->sum_avg, dst_qn->sum_avg)
->>    and NOT aggregated bw (unless you want ALL of your nodes on a given provider
->>    to "go very fast")
+>>   arch/arm64/boot/dts/qcom/ipq6018.dtsi | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
 >>
->> 2. the aggregate bw/clk rate calculation should use the node-specific bus widths
->>    and not only the bus width of the src/dst node, otherwise the average bw
->>    values will be utterly meaningless
->>
-> 
-> The peak bandwidth / clock rate is wrong as well if you have two paths
-> with different buswidths on the same bus/NoC. (If someone is interested
-> in details I can post my specific example I had in the chat, it shows
-> this more clearly.)
-agg_peak takes care of that, I believe..
+>> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+>> index 0f6d6c6daed2..5d2cc0caf5a1 100644
+>> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+>> @@ -309,7 +309,7 @@
+>>   			#size-cells = <1>;
+>>   		};
+>>   
+>> -		prng: qrng@e1000 {
+>> +		prng: qrng@e3000 {
+> This was fixed some time ago:
+>
+> https://lore.kernel.org/all/20230419211856.79332-1-krzysztof.kozlowski@linaro.org/
 
 
-> 
->> 3. thanks to (1) and (2) qcom_icc_bus_aggregate() can be remodeled to instead
->>    calculate the clock rates for the two rpm contexts, which we can then max()
->>    and pass on to the ratesetting call
->>
-> 
-> Sounds good.
-> 
->>
->> ----8<---- Cutting off Stephan's seal of approval, this is my thinking ----
->>
->> 4. I *think* Qualcomm really made a mistake in their msm-5.4 driver where they
->>    took most of the logic from the current -next state and should have been
->>    setting the rate based on the *DST* provider, or at least that's my
->>    understanding trying to read the "known good" msm-4.19 driver
->>    (which remembers msm-3.0 lol).. Or maybe we should keep src but ensure there's
->>    also a final (dst, dst) vote cast:
->>
->> provider->inter_set = false // current state upstream
->>
->> setting apps_proc<->slv_bimc_snoc
->> setting mas_bimc_snoc<->slv_snoc_cnoc
->> setting mas_snoc_cnoc<->qhs_sdc2
->>
->>
->> provider->inter_set = true // I don't think there's effectively a difference?
->>
->> setting apps_proc<->slv_bimc_snoc
->> setting slv_bimc_snoc<->mas_bimc_snoc
->> setting mas_bimc_snoc<->slv_snoc_cnoc
->> setting slv_snoc_cnoc<->mas_snoc_cnoc
->> setting mas_snoc_cnoc<->qhs_sdc2
->>
-> 
-> I think with our proposed changes above it does no longer matter if a
-> node is passed as "src" or "dst". This means in your example above you
-> just waste additional time setting the bandwidth twice for
-> slv_bimc_snoc, mas_bimc_snoc, slv_snoc_cnoc and mas_snoc_cnoc.
-> The final outcome is the same with or without "inter_set".
-Yeah I guess due to the fact that two "real" nodes are always
-connected by a set of "gateway" nodes, the rate will be applied..
+Thanks, I didn't notice your patch.
 
-I am however not sure if we're supposed to set the bandwidth
-(via qcom_icc_rpm_set()) on all of them..
 
-Konrad
-> 
-> Thanks,
-> Stephan
+>
+> Best regards,
+> Krzysztof
+>
