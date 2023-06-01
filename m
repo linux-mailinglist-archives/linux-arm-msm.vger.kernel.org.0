@@ -2,103 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC44A719591
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 10:28:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09F907195B8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 10:36:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231910AbjFAI2s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 04:28:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40166 "EHLO
+        id S232143AbjFAIgm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 04:36:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232052AbjFAI2Z (ORCPT
+        with ESMTP id S232083AbjFAIgA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 04:28:25 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B622C1B6
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 01:28:20 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f4f757d575so831415e87.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 01:28:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685608099; x=1688200099;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3JaUYYseOOR1R5d/w1KWzjRPShmvJQ99IwvOrfCTtD8=;
-        b=kyjaFKGlVHtkgiS7AeIPYAxVpfoDRZtNX7g/jpyd2QRt+Z3F+N8HWMgKXY0hPQspIw
-         cflIasbBv0qnkUEYdUxba+5O2RGZstZ5b7QJMxdKWLsjypkSEFzwM/xgaO6zIwm25W9B
-         JHfmtqUQzS8MX/wwvFkaWnNNiJYUgo0tGPJE0QX9YMeX1NLVrEurQhwZeX0IEfAYuFlw
-         Y3ASRyk+iVdbl5a7a74vkaeQW8p4KeKHpHuwoZ2gAGn3B98DsdI3tq/KsMWNO6SuW2Kl
-         zGRXAn5AK6Jl8lduDGwoDTQSbyu8PtxiLKFZTJxRBUHuJ3E0BQT0Np0WA7ucPQt7/xlJ
-         ljGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685608099; x=1688200099;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3JaUYYseOOR1R5d/w1KWzjRPShmvJQ99IwvOrfCTtD8=;
-        b=Jxqp6Vruj9Z2IdOW3gBv0LkYDIdxmkmgWMFCZYAb90V1nuNCIui7nDrqAJ+IH9q5gZ
-         XktRr2IYfoaJHmuQNK+qK2xLD7/xoC+TO/BABar8oSskIlhVhPHFHqQxXvGfEKha9hIv
-         tFQl+zromaBJS0kRBTbtaSShOCMtE6WZDSCoBc9z8nkVvHRzrzpzjFmBGUvYImfD/MSj
-         l8yzf28ZOokX3cmIWbW1Qr80B+iZ+do5PJTN1NxbR+LcDuHIXL9lccaaGDWljHEH7BDi
-         HvAqT56Z9OBmysxyjjDPcbUJwMxqAeTzSfQ0a9gbdY3vljZyGiq4+oZERQF4Gvuh+nZY
-         /CAg==
-X-Gm-Message-State: AC+VfDxgzWmXsOLPbVbZmCqSgDXE46QYsStURc1KaF8tkKaltYMryI/6
-        1NWsP/x+nnKoAPYhfkq3tPyuQw==
-X-Google-Smtp-Source: ACHHUZ4y/eNZdAB2djIfl0TSzTeH+aF3XX5y9faw3mmCYSyHd5sMa7YaASS9oCqpOP15lIkUZ2ruyg==
-X-Received: by 2002:ac2:59db:0:b0:4f5:bc4e:80f7 with SMTP id x27-20020ac259db000000b004f5bc4e80f7mr352194lfn.14.1685608098640;
-        Thu, 01 Jun 2023 01:28:18 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id q20-20020a19a414000000b004edb0882ce7sm1002385lfc.133.2023.06.01.01.28.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Jun 2023 01:28:18 -0700 (PDT)
-Message-ID: <9e67709a-246e-95be-dc85-21e652306ea6@linaro.org>
-Date:   Thu, 1 Jun 2023 10:28:16 +0200
+        Thu, 1 Jun 2023 04:36:00 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 675011BF;
+        Thu,  1 Jun 2023 01:34:44 -0700 (PDT)
+Received: from pendragon.ideasonboard.com (om126205251136.34.openmobile.ne.jp [126.205.251.136])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 14E272B6;
+        Thu,  1 Jun 2023 10:34:19 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1685608460;
+        bh=gjjeif7oGjHL6hoGkZVclWwy0gG6mXm12g9c6do6TMY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=JUUnACbDpEB6bOR3h2O5ln8qOzpTqf9VBhkZ21myMqir6gqWJBUH2lhbgPljo3AUr
+         ZLmbW7sTAYzT5ej8JCl0YnN2x2g7F+RvAmu0lgbeX4QT61LRIobNk04EA1PyP66ClH
+         YW/Xq3c4rgNzXp9p+1Ol32sfvdB3/t8nHUJEqQMg=
+Date:   Thu, 1 Jun 2023 11:34:38 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Benjamin Gaignard <benjamin.gaignard@collabora.com>
+Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>, tfiga@chromium.org,
+        m.szyprowski@samsung.com, mchehab@kernel.org, ming.qian@nxp.com,
+        shijie.qin@nxp.com, eagle.zhou@nxp.com, bin.liu@mediatek.com,
+        matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
+        tiffany.lin@mediatek.com, andrew-ct.chen@mediatek.com,
+        yunfei.dong@mediatek.com, stanimir.k.varbanov@gmail.com,
+        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
+        konrad.dybcio@linaro.org, ezequiel@vanguardiasur.com.ar,
+        p.zabel@pengutronix.de, daniel.almeida@collabora.com,
+        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, kernel@collabora.com
+Subject: Re: [PATCH v2 3/8] media: videobuf2: Add a module param to limit vb2
+ queue buffer storage
+Message-ID: <20230601083438.GE22609@pendragon.ideasonboard.com>
+References: <20230321102855.346732-1-benjamin.gaignard@collabora.com>
+ <20230321102855.346732-4-benjamin.gaignard@collabora.com>
+ <6c4658fd-3a64-b3f8-67cd-17ed2d7d3567@xs4all.nl>
+ <20230531080331.GB6496@pendragon.ideasonboard.com>
+ <608ae7d6-3f3b-137d-08d2-d41a240be2c4@xs4all.nl>
+ <20230531123945.GF27043@pendragon.ideasonboard.com>
+ <6f53b5f6-6649-f194-1808-5f5757b449f4@collabora.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v4 3/4] arm64: dts: qcom: qdu1000: Add SDHCI pin
- configuration to DTSI
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Komal Bajaj <quic_kbajaj@quicinc.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20230601065805.18079-1-quic_kbajaj@quicinc.com>
- <20230601065805.18079-4-quic_kbajaj@quicinc.com>
- <96f40b17-ad7a-ede2-dcbc-a35b6b7df1d2@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <96f40b17-ad7a-ede2-dcbc-a35b6b7df1d2@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6f53b5f6-6649-f194-1808-5f5757b449f4@collabora.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Benjamin,
 
+On Thu, Jun 01, 2023 at 10:03:39AM +0200, Benjamin Gaignard wrote:
+> Le 31/05/2023 à 14:39, Laurent Pinchart a écrit :
+> > On Wed, May 31, 2023 at 10:30:36AM +0200, Hans Verkuil wrote:
+> >> On 5/31/23 10:03, Laurent Pinchart wrote:
+> >>> On Wed, May 31, 2023 at 08:36:59AM +0200, Hans Verkuil wrote:
+> >>>> On 21/03/2023 11:28, Benjamin Gaignard wrote:
+> >>>>> Add module parameter "max_vb_buffer_per_queue" to be able to limit
+> >>>>> the number of vb2 buffers store in queue.
+> >>>>>
+> >>>>> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
+> >>>>> ---
+> >>>>>   drivers/media/common/videobuf2/videobuf2-core.c | 15 +++------------
+> >>>>>   include/media/videobuf2-core.h                  | 11 +++++++++--
+> >>>>>   2 files changed, 12 insertions(+), 14 deletions(-)
+> >>>>>
+> >>>>> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
+> >>>>> index ae9d72f4d181..f4da917ccf3f 100644
+> >>>>> --- a/drivers/media/common/videobuf2/videobuf2-core.c
+> >>>>> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
+> >>>>> @@ -34,6 +34,8 @@
+> >>>>>   static int debug;
+> >>>>>   module_param(debug, int, 0644);
+> >>>>>   
+> >>>>> +module_param(max_vb_buffer_per_queue, ulong, 0644);
+> >>>> There is no MODULE_PARM_DESC here? Please add. I see it is not there for
+> >>>> the debug param either, it should be added for that as well.
+> >>> Would this be the right time to consider resource accounting in V4L2 for
+> >>> buffers ? Having a module parameter doesn't sound very useful, an
+> >>> application could easily allocate more buffers by using buffer orphaning
+> >>> (allocating buffers, exporting them as dmabuf objects, and freeing them,
+> >>> which leaves the memory allocated). Repeating allocation cycles up to
+> >>> max_vb_buffer_per_queue will allow allocating an unbounded number of
+> >>> buffers, using all the available system memory. I'd rather not add a
+> >>> module argument that only gives the impression of some kind of safety
+> >>> without actually providing any value.
+> >> Does dmabuf itself provide some accounting mechanism? Just wondering.
+> >>
+> >> More specific to V4L2: I'm not so sure about this module parameter either.
+> >> It makes sense to have a check somewhere against ridiculous values (i.e.
+> >> allocating MAXINT buffers), but that can be a define as well. But otherwise
+> >> I am fine with allowing applications to allocate buffers until the memory
+> >> is full.
+> >>
+> >> The question is really: what is this parameter supposed to do? The only
+> >> thing it does is to sanitize unlikely inputs (e.g. allocating MAXINT buffers).
+> >>
+> >> I prefer that as a define, to be honest.
+> >>
+> >> I think it is perfectly fine for users to try to request more buffers than
+> >> memory allows. It will just fail in that case, not a problem.
+> >>
+> >> And if an application is doing silly things like buffer orphaning, then so
+> >> what? Is that any different than allocating memory and not freeing it?
+> >> Eventually it will run out of memory and crash, which is normal.
+> >
+> > Linux provides APIs to account for and limit usage of resources,
+> > including memory. A system administrator can prevent rogue processes
+> > from starving system resources. The memory consumed by vb2 buffer isn't
+> > taken into account, making V4L2 essentially unsafe for untrusted
+> > processes.
+> >
+> > Now, to be fair, there are many reasons why allowing access to v4L2
+> > devices to untrusted applications is a bad idea, and memory consumption
+> > is likely not even the worst one. Still, is this something we want to
+> > fix, or do we want to consider V4L2 to be priviledged API only ? Right
+> > now we can't do so, but with many Linux systems moving towards pipewire,
+> > we could possibly have a system daemon isolating untrusted applications
+> > from the rest of the system. We may thus not need to fix this in the
+> > V4L2 API.
+> 
+> I'm working in v3 where I'm using Xarray API.
+> 
+> Just to be sure to understand you well:
+> I can just remove VB2_MAX_FRAME limit without adding a new one ?
 
-On 1.06.2023 09:00, Krzysztof Kozlowski wrote:
-> On 01/06/2023 08:58, Komal Bajaj wrote:
->> Add required pins for SDHCI, so that the interface can work reliably.
->>
-> 
-> This is not a separate commit. The pin configuration by itself does not
-> make sense and we don't need it. It's part of adding SDHCI, so squash it.
-keep my rb for the squashed patch
+As long as the code is protected against overflows (e.g. if it uses
+num_buffers + 1 in some calculations and allows num_buffers to be
+UINT_MAX, you'll have an issue), it should be fine for the vb2 and V4L2
+core. Limiting the number of buffers doesn't really protect against
+much.
 
-Konrad
-> 
-> Best regards,
-> Krzysztof
-> 
+-- 
+Regards,
+
+Laurent Pinchart
