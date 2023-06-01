@@ -2,62 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA9C97198DE
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 12:16:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B76B17198E6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 12:16:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232582AbjFAKQO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 06:16:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51126 "EHLO
+        id S233365AbjFAKQW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 06:16:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232957AbjFAKPh (ORCPT
+        with ESMTP id S233356AbjFAKP6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 06:15:37 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A55D5173C
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 03:13:12 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f004cc54f4so697764e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 03:13:12 -0700 (PDT)
+        Thu, 1 Jun 2023 06:15:58 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52B16212C
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 03:13:22 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f5f728c4aaso505344e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 03:13:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685614387; x=1688206387;
+        d=linaro.org; s=google; t=1685614396; x=1688206396;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=CXouGOXkpoQ3tdmDcT3qz0S4YzawGIkT1hXliFzcQPw=;
-        b=P11YRFapqhQ6yAR93ejqCZFsdjz15vcOsO2jcUkeGYUTHsMVapscWwLormxHbvTf4e
-         MAoPrF2UnO+F3Tm6/dCaSuU4VyEra4PAtPGa1uqXeT3xjCcBWN6o8/rP1a0zIkRw7cYt
-         fiENQ2KkHt2PlpSaDxNHX5nkf6FE56USHGJT8eZ1pTaFYFOmgZGhHt7okKE8LMa4x9EN
-         fscwWatmRgLjLnSxg9MiCHd4k5RqN2/GprFAVWo0fe8cCaMgvhnBf0TtDLQscq7aBs+S
-         T5BCiFiU1W9vsclUwUBuQl30Xezc2db3M/4iOppbX1qVzwcgqUM2d/sK3eMpLfm/B4+A
-         lHfQ==
+        bh=jNiz1qh0Dz04mEFis12wdHfY4TpJ/qR3Xr+9NO3Cn50=;
+        b=YEaX4/1bNNNVMcVj6YNYk7x7+f19Xh87Mh0CIEhj/frpcOfg8lYZ4WukEYRtiGQY6v
+         W20qtAwofYDFJNluC8vLxnn80NJ9pkxjWkZN7Q9XgHI+DoSV9X4zcDiNpt1sWAS/Hj1j
+         YKhke4AQG6yN1u/VOlNKAzlgmoQcLlEdLax6ZmPNYvIV7zG1uuNqH2ml17hrLGEAD20U
+         BgE07ald3NS6V9Hl7HkwUYApnzKAjqNvXdJUteC1BO+PPKjY94ZN56gufL9D+FfJ3ZL1
+         NR3axVud8Cyn78879u8DK2/VczR1L/bbBxUrI3fn536O33kYS14+E6sDXhxjoxtCYxtD
+         0rDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685614387; x=1688206387;
+        d=1e100.net; s=20221208; t=1685614396; x=1688206396;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=CXouGOXkpoQ3tdmDcT3qz0S4YzawGIkT1hXliFzcQPw=;
-        b=lQtksT3A7xL10hz/Mnf3Wu9PohzNdndsGH+3FdsY4DTVveHOkMF92AisMA4fCtgNJj
-         LyN+9fsyVYFShlSDRG/hdB9WiSznM8xwB9ymJB9DXwmM6S59sZbnHzVdZIUF9oStf6dE
-         I1QcpdET9ckXZbC6K6DJAZ1bHYsNzUrobQSdYGAz3i1a7JInfF1z/aXfUBPBFmd/MGzX
-         fyfyad9UxHLrY5zOdl1kwGrYIrppmTG1W1IT8vuPcPLVwlUGGR/uCeZvitDUOtq1nEgm
-         CdQRnPO9b4x5k7KXyByCfJKMEt+cMF8k29uA9d1MRwR1wxVg8MIx3bHCkv4hpwf43fiX
-         suqg==
-X-Gm-Message-State: AC+VfDzvJ/E8eMwl2Saco3d7JAL+heUrxA+gLn1UUvZZXAX+WChhK69V
-        1+bQqe7Q3vAoLnolA4pP54D6cg==
-X-Google-Smtp-Source: ACHHUZ4m9ck0bizOwU91YmOZb84i7iGLIr5Hf82qDYtxipuuCkGEX83LQV/Cng1E87Whj3s2lw53Vw==
-X-Received: by 2002:a05:6512:21a7:b0:4e8:4a21:9c92 with SMTP id c7-20020a05651221a700b004e84a219c92mr1102114lft.4.1685614386683;
-        Thu, 01 Jun 2023 03:13:06 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id y24-20020a197518000000b004f271790d6csm1033816lfe.136.2023.06.01.03.13.06
+        bh=jNiz1qh0Dz04mEFis12wdHfY4TpJ/qR3Xr+9NO3Cn50=;
+        b=RTXl7KIgzZwdlJDPBaEYLhXtJtk2xLWkKcTTiWhW2E2XqeQO0Wry6QXO0uWEL7O4S5
+         fkByrsFlXVAdov7cDNCVwQO5FoJ090hHcw8hWRNFeUCyOo3FkvUco1XqLOsmic0Cg/5i
+         vlmVNXuH78Zf3CEWlWGQI0VW4fHcCikCjjG0Z+trO5XhL25j1/UHM3J94xvMOhMz8IBj
+         RvLHlvnhcnjqVbFE+6Rs/hTfb/+jsempUA+CcL/d0Uk/zkK52aNMbNYQ4qHXjAB1I+bU
+         ldkwRJ1Z2EmVIQmB6juPCWwYsrHIsD5j0F75mlFzt7fj5MhVYDCJJol+8eRalR9TIQ9N
+         IVuw==
+X-Gm-Message-State: AC+VfDyN8stmnJ4Pr22frB8RX8fVxdpLJumouyyrFv9MPKiYlGmT9mHb
+        ujnGWiJ2h0wjW7Blo8PlA2AQ2g==
+X-Google-Smtp-Source: ACHHUZ4yXApq7ihqpZV3EVd32XzLX9NHCuZdFl/cH8PMru4YHFKTNYrojqdU1+JqbuOKQriMVZqyTQ==
+X-Received: by 2002:a05:6512:11c1:b0:4ed:d5ce:7dea with SMTP id h1-20020a05651211c100b004edd5ce7deamr355244lfr.27.1685614395863;
+        Thu, 01 Jun 2023 03:13:15 -0700 (PDT)
+Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
+        by smtp.gmail.com with ESMTPSA id j13-20020a19f50d000000b004f19bfdfef9sm1040399lfb.21.2023.06.01.03.13.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Jun 2023 03:13:06 -0700 (PDT)
-Message-ID: <f2403ae6-aa8c-b53a-2e24-4f158fcc85c7@linaro.org>
-Date:   Thu, 1 Jun 2023 13:13:05 +0300
+        Thu, 01 Jun 2023 03:13:15 -0700 (PDT)
+Message-ID: <cfe55011-b21d-18ae-88b7-f13d3359ec8f@linaro.org>
+Date:   Thu, 1 Jun 2023 12:13:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 18/20] interconnect: qcom: icc-rpm: Fix bucket number
-Content-Language: en-GB
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+ Thunderbird/102.11.2
+Subject: Re: [PATCH 12/20] interconnect: qcom: msm8996: Hook up RPM bus clk
+ definitions
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
@@ -68,11 +69,14 @@ Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-clk@vger.kernel.org, linux-pm@vger.kernel.org
 References: <20230526-topic-smd_icc-v1-0-1bf8e6663c4e@linaro.org>
- <20230526-topic-smd_icc-v1-18-1bf8e6663c4e@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230526-topic-smd_icc-v1-18-1bf8e6663c4e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ <20230526-topic-smd_icc-v1-12-1bf8e6663c4e@linaro.org>
+ <62eaf77a-94c4-0a48-e335-83664fe343db@linaro.org>
+ <8cb8b647-8efb-e140-5575-52785b4e93d3@linaro.org>
+ <1e846ba0-c8dc-5a93-538e-42457c557580@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1e846ba0-c8dc-5a93-538e-42457c557580@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -83,20 +87,92 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30/05/2023 13:20, Konrad Dybcio wrote:
-> SMD RPM only provides two buckets, one each for the active-only and
-> active-sleep RPM contexts. Use the correct constant to allocate and
-> operate on them.
+
+
+On 1.06.2023 12:11, Dmitry Baryshkov wrote:
+> On 01/06/2023 13:10, Konrad Dybcio wrote:
+>>
+>>
+>> On 1.06.2023 12:08, Dmitry Baryshkov wrote:
+>>> On 30/05/2023 13:20, Konrad Dybcio wrote:
+>>>> Assign the necessary definitions to migrate to the new bus clock
+>>>> handling mechanism.
+>>>>
+>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>> ---
+>>>>    drivers/interconnect/qcom/msm8996.c | 7 +++++++
+>>>>    1 file changed, 7 insertions(+)
+>>>>
+>>>> diff --git a/drivers/interconnect/qcom/msm8996.c b/drivers/interconnect/qcom/msm8996.c
+>>>> index 1f7e88a37acd..a596f4035d2e 100644
+>>>> --- a/drivers/interconnect/qcom/msm8996.c
+>>>> +++ b/drivers/interconnect/qcom/msm8996.c
+>>>> @@ -1840,6 +1840,7 @@ static const struct qcom_icc_desc msm8996_a1noc = {
+>>>>        .type = QCOM_ICC_NOC,
+>>>>        .nodes = a1noc_nodes,
+>>>>        .num_nodes = ARRAY_SIZE(a1noc_nodes),
+>>>> +    .bus_clk_desc = &aggre1_branch_clk,
+>>>>        .regmap_cfg = &msm8996_a1noc_regmap_config
+>>>>    };
+>>>>    @@ -1861,6 +1862,7 @@ static const struct qcom_icc_desc msm8996_a2noc = {
+>>>>        .type = QCOM_ICC_NOC,
+>>>>        .nodes = a2noc_nodes,
+>>>>        .num_nodes = ARRAY_SIZE(a2noc_nodes),
+>>>> +    .bus_clk_desc = &aggre2_branch_clk,
+>>>>        .intf_clocks = a2noc_intf_clocks,
+>>>>        .num_intf_clocks = ARRAY_SIZE(a2noc_intf_clocks),
+>>>>        .regmap_cfg = &msm8996_a2noc_regmap_config
+>>>> @@ -1889,6 +1891,7 @@ static const struct qcom_icc_desc msm8996_bimc = {
+>>>>        .type = QCOM_ICC_BIMC,
+>>>>        .nodes = bimc_nodes,
+>>>>        .num_nodes = ARRAY_SIZE(bimc_nodes),
+>>>> +    .bus_clk_desc = &bimc_clk,
+>>>>        .regmap_cfg = &msm8996_bimc_regmap_config
+>>>>    };
+>>>>    @@ -1947,6 +1950,7 @@ static const struct qcom_icc_desc msm8996_cnoc = {
+>>>>        .type = QCOM_ICC_NOC,
+>>>>        .nodes = cnoc_nodes,
+>>>>        .num_nodes = ARRAY_SIZE(cnoc_nodes),
+>>>> +    .bus_clk_desc = &bus_2_clk,
+>>>>        .regmap_cfg = &msm8996_cnoc_regmap_config
+>>>>    };
+>>>>    @@ -2000,6 +2004,7 @@ static const struct qcom_icc_desc msm8996_mnoc = {
+>>>>        .type = QCOM_ICC_NOC,
+>>>>        .nodes = mnoc_nodes,
+>>>>        .num_nodes = ARRAY_SIZE(mnoc_nodes),
+>>>> +    .bus_clk_desc = &mmaxi_0_clk,
+>>>
+>>> What about an ahb_clk_src here?
+>> This should be remodeled to MNoC (MMAXI clk) + MNoC_AHB (ahb_clk_src).
+>>
+>> I can fix this after this series.
 > 
-> Fixes: dcbce7b0a79c ("interconnect: qcom: icc-rpm: Support multiple buckets")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->   drivers/interconnect/qcom/icc-rpm.c | 14 +++++++-------
->   1 file changed, 7 insertions(+), 7 deletions(-)
+> As long as it doesn't result in a regression.
+"works on my machine".. We've not been setting the rate on it
+before and it's currently turned on by being an intf_clock, so
+I think it doesn't even change the behavior.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
--- 
-With best wishes
-Dmitry
-
+Konrad
+> 
+>> Konrad
+>>>
+>>>>        .intf_clocks = mm_intf_clocks,
+>>>>        .num_intf_clocks = ARRAY_SIZE(mm_intf_clocks),
+>>>>        .regmap_cfg = &msm8996_mnoc_regmap_config
+>>>> @@ -2038,6 +2043,7 @@ static const struct qcom_icc_desc msm8996_pnoc = {
+>>>>        .type = QCOM_ICC_NOC,
+>>>>        .nodes = pnoc_nodes,
+>>>>        .num_nodes = ARRAY_SIZE(pnoc_nodes),
+>>>> +    .bus_clk_desc = &bus_0_clk,
+>>>>        .regmap_cfg = &msm8996_pnoc_regmap_config
+>>>>    };
+>>>>    @@ -2082,6 +2088,7 @@ static const struct qcom_icc_desc msm8996_snoc = {
+>>>>        .type = QCOM_ICC_NOC,
+>>>>        .nodes = snoc_nodes,
+>>>>        .num_nodes = ARRAY_SIZE(snoc_nodes),
+>>>> +    .bus_clk_desc = &bus_1_clk,
+>>>>        .regmap_cfg = &msm8996_snoc_regmap_config
+>>>>    };
+>>>>   
+>>>
+> 
