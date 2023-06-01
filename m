@@ -2,71 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D2B5B7199F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 12:38:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E6B4719A03
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 12:42:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232708AbjFAKie (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 06:38:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42622 "EHLO
+        id S232466AbjFAKm3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 06:42:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232661AbjFAKid (ORCPT
+        with ESMTP id S231853AbjFAKm2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 06:38:33 -0400
+        Thu, 1 Jun 2023 06:42:28 -0400
 Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2686EFC
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 03:38:30 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f4b256a0c9so730545e87.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 03:38:30 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4D868F2
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 03:42:25 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f4b384c09fso782664e87.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 03:42:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685615908; x=1688207908;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MpSv9l53PjEtQRLkIxBG42do2AGdWpb+x9tdN2ngo3s=;
-        b=oN63DFjS5mHVv8CfmEvxgkpA7dlK6AO6hOTpdYY2WmCn222R87NCqrKxUHgyXn/7P7
-         6v6Wl6gVsyJobkQ23tskYdi4Zv9QFRkXf4Je8MbeZiKam+jOm/GiU+N2b3+RXz4eXSRa
-         ir53JsTo/vt4rc6dIG2Z5Ra7u8k99tGbbcjs2+yRC+wmTaT1IDYoncn8pdGobp8NWsNe
-         cZ7DjD/XU4ygOJQ/3uUANcuyiVORz90NwxuyucE+UyY7G31l9qQgoznWNim79esQTIfL
-         R5tI2oaw8nh/l/tEjZDLVSGFYs3fyvST0pHw7P9T6bQgAAQQRx6/EaK/L28jMpLRtylg
-         51xQ==
+        d=linaro.org; s=google; t=1685616143; x=1688208143;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=+470pxYI9g+zwhL70txOmxyrEQyx3w/ogxw7euLiFdc=;
+        b=JMf+yJQmL5e9LnfDJdj/ansYBW7Vsljq1dWJlGbXnbzdXH+qcuPXBTmnPnm8B3VchD
+         z1D8yShkk3juf2nPQ9WrKPDOkwmqEb8rxQa1CyPFc5wmDCTRdM5JCXNPbnblClkzO7Av
+         tBk8AOJKixTW2EQ+8zmZqvLyfE4p/bGeFnI0nRtThukcqL/N4cK0DbThrmpoG8V8W/Xy
+         yaZd6F9sS0cfQLpZ/7a33hFeojQwMKd+9SZOSRDMesfJYpSuvfD810hvSVDQ4283Vp01
+         vTHHZf06wNTqedykL8gUuNZr8/eFf2VW3g2eIsMq7dpY4xXhE7a6bRaOO3LZkDGik0Ol
+         vFZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685615908; x=1688207908;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=MpSv9l53PjEtQRLkIxBG42do2AGdWpb+x9tdN2ngo3s=;
-        b=IDQYb2X0WbwAx8CAed0akiykspIi9ND7rbsw2gBCh3thN9p6sKXBAdONu7RFPFwZez
-         2XzjX0KWd1q8sn01d1UzP07dy3dBry6xME1drsPWz6u+GMLU+JVsnC/6aFIvXnXdM9nH
-         nvAMEI0zTzWer7ebVOk7eB80qW5jTvmiNaaNlF3thtwS7+YAdE16bwNjRVWeYt3+wtw9
-         nQpk/cfVcBSFtGirm4pU6+Yc4QHC3Uny9XplykcKaKVHg3Vd+IYOOf8BmOxJSbonO7tO
-         scWoq058GJaCv3kgrW2XlghGDZil1td0qMZo43r0eDJ4EVFqHSihp4+IWyFktvTXWrTe
-         90pQ==
-X-Gm-Message-State: AC+VfDwUCYG2lYDJPC/v9IjhOQCm66orqf/Y989SMHwTK2rCrJbzl3UJ
-        NPjwIZP778qaTkUsLX3AleQzzg==
-X-Google-Smtp-Source: ACHHUZ7u9iDSVLdDPn8Xv1CJ8KQ7K+84gZV3FB2KPckKFiYe6WYkBW3C1F+CR4cVvUH3epTrrzuNrg==
-X-Received: by 2002:ac2:54a9:0:b0:4f4:b3a6:4135 with SMTP id w9-20020ac254a9000000b004f4b3a64135mr961086lfk.55.1685615908394;
-        Thu, 01 Jun 2023 03:38:28 -0700 (PDT)
-Received: from hackbox.lan ([86.121.163.20])
-        by smtp.gmail.com with ESMTPSA id h11-20020a1ccc0b000000b003f423dfc686sm1855975wmb.45.2023.06.01.03.38.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jun 2023 03:38:27 -0700 (PDT)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20221208; t=1685616143; x=1688208143;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+470pxYI9g+zwhL70txOmxyrEQyx3w/ogxw7euLiFdc=;
+        b=R46HzC7/29oRM7NLOPKcNVbnf0CnAKOewRViNhG+JpRgemsLw5Kijy8Kx1uVAzB4mG
+         0l8q0ZdobB1QPEjn2VW7WLkG3sxidZGjBcU2QsEb1XcT2hrolEXgnjR9zh99SxwuVuEr
+         FDVXXc4S1sirXJr3WwZX4FQ/hjlPrSt7lcqrnH1C0f8Z954Hk015ee0cpjH1eOGyFrxS
+         SVGP4L9xjjeAudTOTtdtRMCflvrV3cwtDjFFWpEBk2v9I5ClKZ/rKWTR+jEzKBxKVJ27
+         HEDfdfQB5I/hUXqlm0Z9pBK8BvAXVqeDrur7AnRc3pz0RceFJ6vOU6WDJ/CwL7ZqrMM0
+         uhDQ==
+X-Gm-Message-State: AC+VfDzezFupKtH5GkOARTpZSbOdnN7zPNMvTbbKwqJumcM/opJaT9C4
+        n8xLwn/QbypR+4Avq18nDDqPaw==
+X-Google-Smtp-Source: ACHHUZ5nd/52a771+5ohgCwEV7w8W/JLI/qUDNCdwWEzJz24b6zSgEoFMQ/xxHyJiNqKekMcDXY1YA==
+X-Received: by 2002:a05:6512:906:b0:4db:1e4a:74a1 with SMTP id e6-20020a056512090600b004db1e4a74a1mr978025lft.0.1685616143557;
+        Thu, 01 Jun 2023 03:42:23 -0700 (PDT)
+Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
+        by smtp.gmail.com with ESMTPSA id m20-20020a195214000000b004eed68a68efsm1048734lfb.280.2023.06.01.03.42.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Jun 2023 03:42:23 -0700 (PDT)
+Message-ID: <34cd6db8-9f05-23cc-cd41-7fd48ec1a286@linaro.org>
+Date:   Thu, 1 Jun 2023 12:42:22 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH] arm64: dts: qcom: sm8550: Add missing interconnect path
+ to USB HC
+Content-Language: en-US
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: [PATCH] arm64: dts: qcom: sm8550: Add missing interconnect path to USB HC
-Date:   Thu,  1 Jun 2023 13:38:17 +0300
-Message-Id: <20230601103817.4066446-1-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+References: <20230601103817.4066446-1-abel.vesa@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230601103817.4066446-1-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -74,29 +80,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The USB HC node is missing the interconnect paths, so add them.
 
-Fixes: 7f7e5c1b037f ("arm64: dts: qcom: sm8550: Add USB PHYs and controller nodes")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 75cd374943eb..4991b2e962d1 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -2793,6 +2793,10 @@ usb_1: usb@a6f8800 {
- 
- 			resets = <&gcc GCC_USB30_PRIM_BCR>;
- 
-+			interconnects = <&aggre1_noc MASTER_USB3_0 0 &mc_virt SLAVE_EBI1 0>,
-+					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_0 0>;
-+			interconnect-names = "usb-ddr", "apps-usb";
-+
- 			status = "disabled";
- 
- 			usb_1_dwc3: usb@a600000 {
--- 
-2.34.1
+On 1.06.2023 12:38, Abel Vesa wrote:
+> The USB HC node is missing the interconnect paths, so add them.
+> 
+> Fixes: 7f7e5c1b037f ("arm64: dts: qcom: sm8550: Add USB PHYs and controller nodes")
+For context, it's a fix in the context of "we should prooobably have
+this if we want to fix the icc driver to include sync state".
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
+
+
+sidenote:
+
+on recent SoCs there's also an USB-IPA path:
+
+aggre1_noc MASTER_USB3_0 <-> &config_noc SLAVE_IPA_CFG
+
+I don't think we really make use of that upstream today or whether it
+would make enabling IPA necessary (to enable the clocks and reach the
+IPA hardware), but it's something to think about.
+
+Konrad
+>  arch/arm64/boot/dts/qcom/sm8550.dtsi | 4 ++++
+>  1 file changed, 4 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index 75cd374943eb..4991b2e962d1 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -2793,6 +2793,10 @@ usb_1: usb@a6f8800 {
+>  
+>  			resets = <&gcc GCC_USB30_PRIM_BCR>;
+>  
+> +			interconnects = <&aggre1_noc MASTER_USB3_0 0 &mc_virt SLAVE_EBI1 0>,
+> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3_0 0>;
+> +			interconnect-names = "usb-ddr", "apps-usb";
+> +
+>  			status = "disabled";
+>  
+>  			usb_1_dwc3: usb@a600000 {
