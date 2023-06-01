@@ -2,140 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D10F571F266
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 20:51:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 765A371F273
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 20:56:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232319AbjFASvb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 14:51:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47104 "EHLO
+        id S231732AbjFASz7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 14:55:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230492AbjFASva (ORCPT
+        with ESMTP id S229490AbjFASz6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 14:51:30 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 181D9197;
-        Thu,  1 Jun 2023 11:51:29 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 351Fh8rQ010572;
-        Thu, 1 Jun 2023 18:51:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=/o27oaTZwom7lgPceWI/6gu5Br5ovRQKkXhKmeNeyuE=;
- b=A8H1zCd8XwBt8n3x2ln3ZgOeqFxA5IKhD8SL4LYfAmf55rTTffH8kKvg79UPc1XrShcl
- lZvrTiSXbonGw0l3huQbmv7Sgi0OQq57MCZPRhp45j0DVJNpUFseS5WzJuLqUmmI1rjX
- f1gKZnNjEAx5E3aSE4sS6bP+juOdti97heV9kK91boD9KUn24Vyr52/U2dWNWlhHHZSS
- yEBShlbKlAZuV0UTPFzZ5YpjrSbgGNzpWdIZvIw2Ke7Zu01MvGXa4Tw7UaHGoOLmyORD
- t1VRK+J30g/DlODr2ocvKPqdrYA+1ynqmiuR64dF5DgL9WFCTwJmlkzkweIvHAooZ5M3 NQ== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qxqyd9kax-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 01 Jun 2023 18:51:24 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 351IpNxB030625
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 1 Jun 2023 18:51:23 GMT
-Received: from akhilpo-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 1 Jun 2023 11:51:19 -0700
-Date:   Fri, 2 Jun 2023 00:21:17 +0530
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>
-CC:     Manivannan Sadhasivam <mani@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Sean Paul" <sean@poorly.run>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <johan@kernel.org>
-Subject: Re: [PATCH v2 2/3] arm64: dts: qcom: sc8280xp: Add GPU related nodes
-Message-ID: <wirvpuzwcqn4ywvhshyfxp3upk6elc5walifaokapftqoiipxp@62h5ev3neofu>
-References: <20230523011522.65351-1-quic_bjorande@quicinc.com>
- <20230523011522.65351-3-quic_bjorande@quicinc.com>
- <097944b0-fa7a-ad4d-1c3d-e74ab2b977de@linaro.org>
- <20230528170717.GG2814@thinkpad>
- <a64ac105-90cf-eea0-5cb2-74be201386a9@linaro.org>
- <20230529084614.GA5633@thinkpad>
- <20230530153514.GB3643653@hu-bjorande-lv.qualcomm.com>
+        Thu, 1 Jun 2023 14:55:58 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8993137;
+        Thu,  1 Jun 2023 11:55:56 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-514953b3aa6so1767951a12.1;
+        Thu, 01 Jun 2023 11:55:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685645755; x=1688237755;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=E3lDxoepCotRm5g8FmHuYHCp7Kw5DHj9NlnnBObc7C0=;
+        b=LspfDwwu0agFSlesNyPc16GF73NRIzLGQX0dggyRENMz5sxChLm+2fO9GJdhtloMu2
+         uzCqa511Tn9y8kg4OVqMFBaYucEaSUhGsGiOF8r7Qke5fN56Ci3JGb7AaSM8cYn9X2Y2
+         2u2f3g7voyelZ07YV8cLRcFui+u9NRL9Ussoa9OG7WSMsFKGCqyQ3quGp9UpcEd2yDn1
+         9UgQ5j8PxLqmzsfpzaMuvGY+T1pIWF9wdYhVpIPxmmjYBpAM9LfB8KdioJS+ATSSOU80
+         PmcOHOeVHSYb8Dl4VdkSU3ir+p3jJAz6vrJGBQJZu6FOWBoPK0spka7zBwj2kT9eq195
+         wtPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685645755; x=1688237755;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=E3lDxoepCotRm5g8FmHuYHCp7Kw5DHj9NlnnBObc7C0=;
+        b=hYm272baur9NULWH+TZuhqR4qYVXfImTzwLshJ2Pwze8GE/Bei6Ildi97pqEvqXzTj
+         OJcIFSV+HT4ccxEuFr2uOZ7WOGmGUJI8V4w6sFAyyM/SjU6YZypStWkccbI5WlZSXjFu
+         Yr4ZMYEL4hJ66ksBAdtGv+j5j/9LOzEpXg1kJl1mq6ocd/OIb4vQ4vOR1R/FPYnWVsOR
+         l1SlfASJxWT1459RbRhZ2HoGfhPKCxa7/+3QfdMoLlKg2zbF0oZLjrqDj6ljkNHoZGjb
+         hAyyuMem8vvVwS9FxYKsMqVj34e46ogXpUZejQUYB3vzpopY3XlqL7ANGB2cVjNVkaEv
+         LmiA==
+X-Gm-Message-State: AC+VfDxodby5Hbl9c7mhhedeFZaqNk+ll5pNzWTfPMDM8sEyZGLWLc4n
+        mIHV1/zBxMzSbGrwrqPe6ShQzLcRnBuS3A==
+X-Google-Smtp-Source: ACHHUZ5v17sxhOVW4SbCe8kdp+/1vwAyqZlUA/agwNrEA3Z8CZkWH1W1KIEfT1VywtH+5JP5hGZFjQ==
+X-Received: by 2002:aa7:d403:0:b0:50b:c397:bbac with SMTP id z3-20020aa7d403000000b0050bc397bbacmr573668edq.29.1685645755137;
+        Thu, 01 Jun 2023 11:55:55 -0700 (PDT)
+Received: from [192.168.3.32] (dh207-98-93.xnet.hr. [88.207.98.93])
+        by smtp.gmail.com with ESMTPSA id i12-20020aa7dd0c000000b005149c3fa632sm5876632edv.13.2023.06.01.11.55.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Jun 2023 11:55:54 -0700 (PDT)
+Message-ID: <d64b9718-0c85-6e5d-7c5b-6ea617e36a32@gmail.com>
+Date:   Thu, 1 Jun 2023 20:55:52 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20230530153514.GB3643653@hu-bjorande-lv.qualcomm.com>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: l4PvP01TFZIut_KzpnBA0p8yEAcT8jnW
-X-Proofpoint-GUID: l4PvP01TFZIut_KzpnBA0p8yEAcT8jnW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-01_08,2023-05-31_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- mlxlogscore=816 phishscore=0 mlxscore=0 bulkscore=0 spamscore=0
- adultscore=0 impostorscore=0 priorityscore=1501 lowpriorityscore=0
- suspectscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2304280000 definitions=main-2306010163
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.1
+Subject: Re: [PATCH V2 04/13] dt-bindings: clock: qcom: gcc-ipq5018: remove q6
+ clocks macros
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, jassisinghbrar@gmail.com,
+        mathieu.poirier@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, quic_eberman@quicinc.com, quic_mojha@quicinc.com,
+        kvalo@kernel.org, loic.poulain@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com, quic_varada@quicinc.com,
+        quic_devipriy@quicinc.com
+References: <20230521222852.5740-1-quic_mmanikan@quicinc.com>
+ <20230521222852.5740-5-quic_mmanikan@quicinc.com>
+ <514a9e26-aeb9-ce05-1055-337646098ec1@linaro.org>
+From:   Robert Marko <robimarko@gmail.com>
+In-Reply-To: <514a9e26-aeb9-ce05-1055-337646098ec1@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 30, 2023 at 08:35:14AM -0700, Bjorn Andersson wrote:
-> 
-> On Mon, May 29, 2023 at 02:16:14PM +0530, Manivannan Sadhasivam wrote:
-> > On Mon, May 29, 2023 at 09:38:59AM +0200, Konrad Dybcio wrote:
-> > > On 28.05.2023 19:07, Manivannan Sadhasivam wrote:
-> > > > On Tue, May 23, 2023 at 09:59:53AM +0200, Konrad Dybcio wrote:
-> > > >> On 23.05.2023 03:15, Bjorn Andersson wrote:
-> > > >>> From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> [..]
-> > > >>> diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-> [..]
-> > > >>> +		gmu: gmu@3d6a000 {
-> [..]
-> > > >>> +			status = "disabled";
-> > > >> I've recently discovered that - and I am not 100% sure - all GMUs are
-> > > >> cache-coherent. Could you please ask somebody at qc about this?
-> > > >>
-> > > > 
-> > > > AFAIU, GMU's job is controlling the voltage and clock to the GPU.
-> > > Not just that, it's only the limited functionality we've implemented
-> > > upstream so far.
-> > > 
-> > 
-> > Okay, good to know!
-> > 
-> > > It doesn't do
-> > > > any data transactions on its own.
-> > > Of course it does. AP communication is done through MMIO writes and
-> > > the GMU talks to RPMh via the GPU RSC directly. Apart from that, some
-> > > of the GPU registers (that nota bene don't have anything to do with
-> > > the GMU M3 core itself) lay within the GMU address space.
-> > > 
-> 
-> But those aren't shared memory accesses.
-> 
-> > 
-> > That doesn't justify the fact that cache coherency is needed, especially
-> > MMIO writes, unless GMU could snoop the MMIO writes to AP caches.
-> > 
-> 
-> In reviewing the downstream state again I noticed that the GPU smmu is
-> marked dma-coherent, so I will adjust that in v3.
-Bjorn,
+On 30. 05. 2023. 13:01, Krzysztof Kozlowski wrote:
 
-Would you mind sharing a perf delta (preferrably manhattan offscreen)
-you see with and without this dma-coherent property?
+> On 22/05/2023 00:28, Manikanta Mylavarapu wrote:
+>> Since Q6 firmware takes care of bring up clocks in multipd
+>> model, remove bring up clock macros.
+>>
+>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>> ---
+>>   include/dt-bindings/clock/qcom,gcc-ipq5018.h | 21 --------------------
+>>   1 file changed, 21 deletions(-)
+>>
+> I am fine with this if it still compiles... I have doubts about it,
+> unless of some depedencies (you mentioned three !)... but then it gets
+> complicated.
+>
+> Keep patches doing same logical change in same patchset. This dependency
+> dance in recent submissions is making things tricky and prolonging your
+> upstreaming process significantly.
 
--Akhil.
-> 
-> Regards,
-> Bjorn
+Considering that the basic IPQ5018 patchset that this series depends on
+has not yet been merged, why not just drop these there instead?
+
+Regards,
+Robert
+
+>
+> Best regards,
+> Krzysztof
+>
+>
+>
