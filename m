@@ -2,109 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B366B719F69
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 16:15:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C3B8A719FB8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 16:21:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234086AbjFAOPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 10:15:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36264 "EHLO
+        id S233888AbjFAOVR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 10:21:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234294AbjFAOOz (ORCPT
+        with ESMTP id S233745AbjFAOVM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 10:14:55 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 578CBFC;
-        Thu,  1 Jun 2023 07:14:54 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f50470d77cso1170216e87.0;
-        Thu, 01 Jun 2023 07:14:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685628892; x=1688220892;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DeEt3ZtY/qgPpIG3Juy6jxgig7CNozbybAWZDbKu/2U=;
-        b=EA6QMh0SF1z/MTpMCRKX9Wem4Jbt9wiCcnjreK854AVtiORKI2PsSN79zxKO/ZRuvH
-         he7xl4p/EgXNjbb0tGcGODweznwFnioHPqiX1EZuVwCn8HNL+2VENunXXh0TUIRIgtoO
-         SNWIsXG1pOToRqQL8NGZ5TVMAwYkgYUkjnecI1TL2VCAy99EVn5bWCW+fJILMGZfWEYP
-         SK2W9Irhygls/2htBENC8xH8KNvPZ4SV11mlGK86spve9XhKwz6YVDsvkPbc3Aaan//D
-         RilNeQcQojDJ1HsnPi2lZSFpdQoO6QjsfaZeSqevXWkx8yZAWqTKJM6VQPqC5BmSMLE6
-         khNg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685628892; x=1688220892;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DeEt3ZtY/qgPpIG3Juy6jxgig7CNozbybAWZDbKu/2U=;
-        b=gzDGDOM8sHpEbLTuDsQyvKVQGhfhYHosEKAyBnJXe6OLBhOTQ25NHgBtNlszSiQnGt
-         KyVdYJZ08RNw/ahBHeC/Yp8+RABSAcJZ/bcWW8Z7QRydCTohhx+9VEayzXoLtRm64Ct5
-         J/qrZSovYhhzV93zllwxDyiY3XOCuqNd81aTriaF+0LSV1fdmhMqh0DQ5Q/8ld3EF+kd
-         1CarRccA3nyVU0pk/c1GHBUbAIUou7EfvavZNCqcqfAn9PZ9W4/EPHyjpBVURHTet59i
-         DdONXBSgBLscBmFkZmM0WsNT2+M0MO5ew0ozrx10UrwFb4NGczDEkG/gIYJ1q+7spKnx
-         ytEg==
-X-Gm-Message-State: AC+VfDxEyoQuQPNKIJH+d9AsbrYsGjqD5HDWC5IU0dlHcU39Klg0Ijr2
-        XiaK+WMqHKyl5PgfEe3Y6jKOMROpuOmA+kCYAQQ=
-X-Google-Smtp-Source: ACHHUZ5aZbU8uqtUstqjsROwRBmYjoZddv/BBhfDrYD2/3YDUKKqXKbBGkdUqIRDFOIon0Wjh3OmpR/FjZOPjI6eNUU=
-X-Received: by 2002:ac2:4c2b:0:b0:4f4:b41c:a8c1 with SMTP id
- u11-20020ac24c2b000000b004f4b41ca8c1mr171lfq.69.1685628892019; Thu, 01 Jun
- 2023 07:14:52 -0700 (PDT)
+        Thu, 1 Jun 2023 10:21:12 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6617E5B;
+        Thu,  1 Jun 2023 07:21:03 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 351DhCWQ030316;
+        Thu, 1 Jun 2023 14:20:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=8jVwNXOhLX3ySZX+usj472rMyUf3rSUPDttHfO6hxa0=;
+ b=e3A9jd3eW6yf103QE894U4ibE8mMoFwmAYAmC412clsCqY4laiF3eKRK1QaBcaJMw8Zt
+ +bYHZUuXJYgMEZWpUxARC7AXPw/1aaPZyHgjBwQ+NAplmdpCMH0jalD3MYnQ/X0AbjZ0
+ HCTg68dqRecD04vfiiSyU+3Ogoix1ZhAyOXExt8ojTQiQcTm+rbYOdbkxiGQ1/i2MV2X
+ f/+oSqR2/5ZkY1QGpFtU5MyukRp2lyEVaVDpZrQsbZcWGsxeBfJUohhdzJM4k3/nHXI3
+ bY6pggWuBhPnyWisdGkMwJvo5MCF21QHFjpna7HVDB9e5kFc9ghhcmPyNiLJKsDGJpMH lg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qxugrr8aw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 01 Jun 2023 14:20:56 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 351EKusV012559
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 1 Jun 2023 14:20:56 GMT
+Received: from [10.217.216.21] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 1 Jun 2023
+ 07:20:50 -0700
+Message-ID: <42f94fbc-ca0a-7441-2e4f-9dbc276da04f@quicinc.com>
+Date:   Thu, 1 Jun 2023 19:50:47 +0530
 MIME-Version: 1.0
-References: <20230531-topic-8998_mmssclk-v1-0-2b5a8fc90991@linaro.org> <20230531-topic-8998_mmssclk-v1-4-2b5a8fc90991@linaro.org>
-In-Reply-To: <20230531-topic-8998_mmssclk-v1-4-2b5a8fc90991@linaro.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Thu, 1 Jun 2023 08:14:41 -0600
-Message-ID: <CAOCk7Nogy3+5rvyzPEgsyJe7xE_17MXVs-=mniJJj=ELsCqzNQ@mail.gmail.com>
-Subject: Re: [PATCH 4/4] clk: qcom: mmcc-msm8998: Fix the SMMU GDSC
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH V2 2/6] clk: qcom: Update l value configuration for lucid
+ ole and evo plls
+To:     Bryan O'Donoghue <pure.logic@nexus-software.ie>,
+        Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Imran Khan <kimran@codeaurora.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Joonwoo Park <joonwoop@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        "Stephen Boyd" <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>
+References: <20230525172142.9039-1-quic_jkona@quicinc.com>
+ <20230525172142.9039-3-quic_jkona@quicinc.com>
+ <76343325-b06c-9329-2d0a-e1d351bcafac@nexus-software.ie>
+From:   Jagadeesh Kona <quic_jkona@quicinc.com>
+In-Reply-To: <76343325-b06c-9329-2d0a-e1d351bcafac@nexus-software.ie>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: V58mWVqgjHFx6Yc36z6E8lzFE7BV2a3g
+X-Proofpoint-GUID: V58mWVqgjHFx6Yc36z6E8lzFE7BV2a3g
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-01_08,2023-05-31_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ mlxlogscore=786 lowpriorityscore=0 bulkscore=0 suspectscore=0 mlxscore=0
+ phishscore=0 spamscore=0 impostorscore=0 priorityscore=1501 clxscore=1011
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2306010126
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 31, 2023 at 3:01=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro=
-.org> wrote:
->
-> The SMMU GDSC doesn't have to be ALWAYS-ON and shouldn't feature the
-> HW_CTRL flag (it's separate from hw_ctrl_addr).  In addition to that,
-> it should feature a cxc entry for bimc_smmu_axi_clk and be marked as
-> votable.
->
-> Fix all of these issues.
->
-> Fixes: d14b15b5931c ("clk: qcom: Add MSM8998 Multimedia Clock Controller =
-(MMCC) driver")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Hi Bryan,
 
-Was this tested on a system where the bootloader has enabled the
-display and it is active during Linux boot?
+Thanks for your review!
 
-I seem to recall that in that scenario, Linux would boot up, see that
-the GDSC is on, not see any clients for it (still initializing), turn
-it off, and kill the display which then results in either a mess of
-errors or a bus lockup.
+On 5/26/2023 6:52 PM, Bryan O'Donoghue wrote:
+> On 25/05/2023 18:21, Jagadeesh Kona wrote:
+>> -    .config_ctl_hi1_val = 0x32AA299C,
+>> +    .config_ctl_hi1_val = 0x32aa299c,
+> 
+> You should separate out this change from this patch.
+> 
+> There's nothing wrong with having a preliminary patch to change all 
+> upper-case HEX to lowercase hex.
+> 
+> You should do that since the log here "update l value" != change UCASE 
+> to lcase hex.
+> 
+Sure, will remove this in the next series.
+> ---
+> 0xb0d
 
--Jeff
+Thanks & Regards,
+Jagadeesh
