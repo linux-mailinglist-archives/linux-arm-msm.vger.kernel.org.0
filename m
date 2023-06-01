@@ -2,140 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5D7871A05A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 16:37:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8715871A0B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 16:44:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233977AbjFAOgR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 10:36:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50952 "EHLO
+        id S234337AbjFAOoQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 10:44:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58432 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234281AbjFAOgF (ORCPT
+        with ESMTP id S234218AbjFAOoP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 10:36:05 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0D351A5;
-        Thu,  1 Jun 2023 07:35:41 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 351A6680008496;
-        Thu, 1 Jun 2023 14:35:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=Drpz+5QyvEnZRAOTJJrcRW1COazDs9scSg4GkVRpOeg=;
- b=JNo6nDwwtojFJ8T3FV9DkegegVY4NpQqQ0Xso8sU3bmqexoAxiKiFrlY1p/0Bxlm8WbM
- KM3rCVaf1bSEaN6WkTmFuyXR7E+ayKc+D74j4e4OTb9nBPt4LFhabvrl+LjZ6CltVZQg
- jkd/J7+dDqVrL7GSRpb9a3lDcz44UP1FLoXNqmytJxcwrrSC04+T9UpJrdKIXk4AbRz7
- ZjaIf2xFMzMuaayMjMvcA8THaJ2blWq+TwlZhWG+xePBBiDqDaYXQyU8A9irk4Q+FfAh
- Tf+HNGksXO/l90O90vmpCOcP2RqMiqnpTK/yOO3qXTfMN3f8Tj8TQAAP2qcvrwYOgwTY Iw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qxs9grr25-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 01 Jun 2023 14:35:37 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 351EZaRY016097
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 1 Jun 2023 14:35:36 GMT
-Received: from hu-jkona-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 1 Jun 2023 07:35:31 -0700
-From:   Jagadeesh Kona <quic_jkona@quicinc.com>
-To:     Andy Gross <agross@kernel.org>,
+        Thu, 1 Jun 2023 10:44:15 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7E261B4
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 07:43:39 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f60bc818d7so400683e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 07:43:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685630615; x=1688222615;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=F9vPerXquIQBsMeR29IRTLCwtaBHY9UEGu+yqjA2ANM=;
+        b=x/qqM/Bjrd4MksXHcIRMXeDh7A69sar4aQzUw7XXhcdu2uJXiRFBmSCANdfAK5CSg5
+         qc6w1x5RQhsrBrgTDPlnw9DsMlCnGfAyj2rkeU3iXfs7M2N+A7AlNTApXfDRDANhV6Cs
+         aiXwW5Zn6CZSHo2j9qQS4OGa1vpdCCResdu0CUndVEaRsPtT4WnaXnw2s2Exnd9p4k/I
+         TrrQzt+MKnTHRylx5GDp6cESTubIGKvpCmtA9Es+MnZTsxU75MqHenu1uHq7QY/ByI12
+         nje5hdQKSSl+Iy28B//eGcFMwiexToIRO6bnegU8YVZaeOQ0tIlDp2AMQo1BDlzfQq36
+         g4Cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685630615; x=1688222615;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=F9vPerXquIQBsMeR29IRTLCwtaBHY9UEGu+yqjA2ANM=;
+        b=G/aDUiRz180UeLQd8891oxXy18HaVfCzvU7OxE/f6qft22JQKjexNASptRypRPlcj/
+         Z+UXtICgUdd5ZbjAtgrXj1Bj3a5KosSSpts9Sfz7u+E8sCjwzP/7j6e3ZR5aHvNL/ABe
+         DlqTacjwOeSywQYjB/dpO0OyzRj7NYwjvqcRSe5ZRqJigUUNuQFjXDkICScuVtrIrbWo
+         NF18XsXN6rTLYGty9klt2ZjlT0a61mBFWp8a5e0ggGbFiOSQfUV61ByeekJcnUONW7aU
+         50MMae5whQGDPpfD2W3dkwjY4M3r0jLJseM7IqZk4GmVpdhdRTbkdNvdRHslp0boKfvP
+         Ckvw==
+X-Gm-Message-State: AC+VfDyDoqFwV7quYRweh2zp8oJXsoFITgbFUVYIK4YrFbbK1Mn8J90u
+        S3GAYAh7HtsAgMSb8eK+Vpvp7A==
+X-Google-Smtp-Source: ACHHUZ76ao2NbgDl2Kv9JBguW1m9Ny566OnnpttU/IAXt2WxRdrpKBZk6h9s+DkgkhW451313+K37Q==
+X-Received: by 2002:ac2:434e:0:b0:4f6:ab8:bc12 with SMTP id o14-20020ac2434e000000b004f60ab8bc12mr99020lfl.20.1685630614778;
+        Thu, 01 Jun 2023 07:43:34 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id c25-20020ac24159000000b004cc8196a308sm1108910lfi.98.2023.06.01.07.43.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Jun 2023 07:43:34 -0700 (PDT)
+Message-ID: <c60bb4d9-1b53-6c60-8b9d-13069bdff882@linaro.org>
+Date:   Thu, 1 Jun 2023 17:43:33 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH V2 3/6] clk: qcom: clk-alpha-pll: Remove explicit CAL_L
+ configuration for EVO PLL
+Content-Language: en-GB
+To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>
-CC:     Bjorn Andersson <andersson@kernel.org>,
+Cc:     Bjorn Andersson <andersson@kernel.org>,
         Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        "Satya Priya Kakitapalli" <quic_skakitap@quicinc.com>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
         Imran Shaik <quic_imrashai@quicinc.com>,
         Ajit Pandey <quic_ajipan@quicinc.com>
-Subject: [PATCH V3 5/5] arm64: dts: qcom: sm8550: Add camera clock controller
-Date:   Thu, 1 Jun 2023 20:04:30 +0530
-Message-ID: <20230601143430.5595-6-quic_jkona@quicinc.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230601143430.5595-1-quic_jkona@quicinc.com>
-References: <20230601143430.5595-1-quic_jkona@quicinc.com>
-MIME-Version: 1.0
+References: <20230525172142.9039-1-quic_jkona@quicinc.com>
+ <20230525172142.9039-4-quic_jkona@quicinc.com>
+ <6e1d098d-03b9-aa63-a0bf-6cf748a0db0d@linaro.org>
+ <7074f718-a3d5-8a03-3830-77a5a0b15500@linaro.org>
+ <df7ab6f7-6c5e-9a7d-8d9b-09ff32da34d6@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <df7ab6f7-6c5e-9a7d-8d9b-09ff32da34d6@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: IDCpRAOCD914szkX8WxQEhIF0180bB1E
-X-Proofpoint-GUID: IDCpRAOCD914szkX8WxQEhIF0180bB1E
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-01_08,2023-05-31_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- spamscore=0 priorityscore=1501 malwarescore=0 bulkscore=0 adultscore=0
- phishscore=0 lowpriorityscore=0 mlxlogscore=999 suspectscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2306010128
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device node for camera clock controller on Qualcomm
-SM8550 platform.
+On 01/06/2023 17:33, Jagadeesh Kona wrote:
+> Hi Dmitry, Konrad,
+> 
+> On 5/26/2023 9:23 PM, Dmitry Baryshkov wrote:
+>> On 26/05/2023 12:33, Konrad Dybcio wrote:
+>>>
+>>>
+>>> On 25.05.2023 19:21, Jagadeesh Kona wrote:
+>>>> In lucid evo pll, the CAL_L field is part of L value register 
+>>>> itself, and
+>>>> the l value configuration passed from clock controller driver includes
+>>>> CAL_L and L values as well. Hence remove explicit configuration of 
+>>>> CAL_L
+>>>> for evo pll.
+>>>>
+>>>> Fixes: 260e36606a03 ("clk: qcom: clk-alpha-pll: add Lucid EVO PLL 
+>>>> configuration interfaces")
+>>>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+>>>> ---
+>>> Oh that isn't obvious at first sight, nice find!
+>>>
+>>> I'd suggest a different solution though:
+>>>
+>>> #define LUCID_EVO_PLL_L_LVAL    GENMASK(..
+>>> #define LUCID_EVO_PLL_L_CAL_L    GENMASK(..
+>>>
+>>> lval = FIELD_PREP(LUCID_EVO_PLL_L_LVAL, config->l) |
+>>>         FIELD_PREP(LUCID_EVO_PLL_L_CAL_L, config->cal_l);
+>>>
+>>> This would make the separation between the two parts more explicit
+>>>
+>>> however
+>>>
+>>> config->l would then represent the L value and not the end value
+>>> written to the L register
+>>
+>> Yes. I think there should be separate config->l and config->cal_l 
+>> values (and probably ringosc_cal_l, basing on the comment in the source).
+>> Thanks for your suggestions. In all recent chipsets, L & CAL_L fields 
+> are encapsulated in the same register, so we feel it is better to 
+> directly pass the combined configuration value in config->l itself and 
+> program it directly into register without any additional handling 
+> required in pll driver code.
 
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
----
-Changes since V2:
- - No changes
-Changes since V1:
- - Padded non-zero address part to 8 hex digits
+My feeling is that it is better to split it, since these are the 
+different fields. The value .l = 0x4444003e doesn't mean anything per se.
 
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+Three values are much more meaningful:
+.l = 0x3e,
+.cal_l = 0x44,
+.ringosc_cal_l = 0x44,
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 75cd374943eb..4d2d610fc66a 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -5,6 +5,7 @@
- 
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/clock/qcom,sm8450-videocc.h>
-+#include <dt-bindings/clock/qcom,sm8550-camcc.h>
- #include <dt-bindings/clock/qcom,sm8550-gcc.h>
- #include <dt-bindings/clock/qcom,sm8550-gpucc.h>
- #include <dt-bindings/clock/qcom,sm8550-tcsr.h>
-@@ -2419,6 +2420,20 @@ videocc: clock-controller@aaf0000 {
- 			#power-domain-cells = <1>;
- 		};
- 
-+		camcc: clock-controller@ade0000 {
-+			compatible = "qcom,sm8550-camcc";
-+			reg = <0 0x0ade0000 0 0x20000>;
-+			clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-+				 <&bi_tcxo_div2>,
-+				 <&bi_tcxo_ao_div2>,
-+				 <&sleep_clk>;
-+			power-domains = <&rpmhpd SM8550_MMCX>;
-+			required-opps = <&rpmhpd_opp_low_svs>;
-+			#clock-cells = <1>;
-+			#reset-cells = <1>;
-+			#power-domain-cells = <1>;
-+		};
-+
- 		mdss: display-subsystem@ae00000 {
- 			compatible = "qcom,sm8550-mdss";
- 			reg = <0 0x0ae00000 0 0x1000>;
+Not to mention that this way you don't have to touch pll configuration 
+for the existing Lucid EVO PLL. Not to mention that for the Lucid ole 
+PLLs the cal_l and ringosc_cal_l values seem to be static (0x44), so 
+there is no need to put them to the variable data.
+
+> 
+> Also the evo pll code is currently reused for both lucid evo and ole 
+> pll's. Lucid ole PLL has an additional RINGOSC_CAL_L field along with L, 
+> CAL_L fields in the same L register. By passing combined configuration 
+> value in config->l itself, we feel we can avoid all the additional 
+> handling required in PLL code.
+> 
+>> Just a question: is camcc-sm8550 using the same PLL type or is it some 
+>> kind of subtype of lucid_evo PLL?
+>>
+> No, it is not the same lucid evo PLL. It uses lucid ole PLL.
+
+Then please don't reuse the clk_lucid_evo_pll_configure() call.
+You can add a new one, which will handle L/CAL_L/RINGOSC_CAL_L differences.
+
 -- 
-2.40.1
+With best wishes
+Dmitry
 
