@@ -2,191 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC09071F2CC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 21:18:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4351671F2D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 21:21:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232490AbjFATSM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 15:18:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57550 "EHLO
+        id S229562AbjFATVk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 15:21:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232537AbjFATSL (ORCPT
+        with ESMTP id S229514AbjFATVj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 15:18:11 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id DDB9013E;
-        Thu,  1 Jun 2023 12:18:09 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CA9851063;
-        Thu,  1 Jun 2023 12:18:54 -0700 (PDT)
-Received: from [10.57.84.85] (unknown [10.57.84.85])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0DDC93F7BD;
-        Thu,  1 Jun 2023 12:18:00 -0700 (PDT)
-Message-ID: <13fb6807-d8b9-9808-c528-6df6ae9ca78a@arm.com>
-Date:   Thu, 1 Jun 2023 20:17:56 +0100
+        Thu, 1 Jun 2023 15:21:39 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1510A98;
+        Thu,  1 Jun 2023 12:21:37 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 351IWT64021738;
+        Thu, 1 Jun 2023 19:21:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=EFa/NmBtii/RjNtJcSA+b7nC2BASDp2x0P9xuuJoJ8c=;
+ b=C44go066ITZPRfVic9csx3exufeUwC/i4mS/KtGotJH0JgrM8bscHqZBrw/a8uN2yvi8
+ 8rcbcXjKzOc7LC56KhXJYy08BRlTmBGMAYIO3FIXWbAIjQhVSwjyizb5c0JiXnWfK8wv
+ Y8+iPi0Bw8wbV3wQI6r1WAzOH+QB4WZyl18rctUx+kIOAUsmzOnaTQezX/gZTXGWlFOe
+ Grx0s6J6bkUl33oLgSW8ekpe1yROqZEcHM9SH1imQFzvv5+ihBbB/PZ0LzEnp5rx8Ntn
+ 2woewvQtlczuf07jGStJzT5kpLeeS3RQbfqd4AQIpycous8peXHHAFyUm7T9Q6axTUj+ BA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qxnwv1xuu-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 01 Jun 2023 19:21:03 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 351JL1UM007473
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 1 Jun 2023 19:21:01 GMT
+Received: from [10.110.26.45] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 1 Jun 2023
+ 12:20:58 -0700
+Message-ID: <932ee149-c524-25e7-ee49-5ea1a7e6708c@quicinc.com>
+Date:   Thu, 1 Jun 2023 12:20:56 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v2 23/25] iommu: Add ops->domain_alloc_paging()
-Content-Language: en-GB
-To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-        linuxppc-dev@lists.ozlabs.org,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>
-Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Steven Price <steven.price@arm.com>,
-        Thierry Reding <treding@nvidia.com>
-References: <23-v2-8d1dc464eac9+10f-iommu_all_defdom_jgg@nvidia.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-In-Reply-To: <23-v2-8d1dc464eac9+10f-iommu_all_defdom_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [Freedreno] [PATCH] Revert "drm/msm/dp: Remove INIT_SETUP delay"
+Content-Language: en-US
+To:     Leonard Lausen <leonard@lausen.nl>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+CC:     <freedreno@lists.freedesktop.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        Bjorn Andersson <quic_bjorande@quicinc.com>,
+        <regressions@lists.linux.dev>, David Airlie <airlied@gmail.com>,
+        "Nikita Travkin" <nikita@trvn.ru>, <linux-kernel@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
+        "Daniel Vetter" <daniel@ffwll.ch>, <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Sean Paul <sean@poorly.run>,
+        Johan Hovold <johan+linaro@kernel.org>
+References: <e547edf4-1b48-5d12-1600-45f78e7cab49@quicinc.com>
+ <1345a125-f745-4fe3-0f5e-bfe84225958d@quicinc.com>
+ <b0cc40d5-6de1-91cc-e2cd-f47cc53551e4@quicinc.com>
+ <ebbcd56ac883d3c3d3024d368fab63d26e02637a@lausen.nl>
+ <20230508021536.txtamifw2vkfncnx@ripper>
+ <3802269cd54ce105ef6dece03b1b9af575b4fa06@lausen.nl>
+ <ad351c02-1c29-3601-53e8-f8cdeca2ac63@linaro.org>
+ <49d175ec16e3f65a18265063e51092ee8d0d79c1@lausen.nl>
+ <f2d1bb37-ea83-4d5d-6ef5-ae84c26d6ac1@quicinc.com>
+ <b9c8243ed53c5c9d7c1b5711237f6130976ea99b@lausen.nl>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <b9c8243ed53c5c9d7c1b5711237f6130976ea99b@lausen.nl>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NEEKnNQnkoXQnQdsGsQfqb3d1ckaav82
+X-Proofpoint-ORIG-GUID: NEEKnNQnkoXQnQdsGsQfqb3d1ckaav82
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-01_08,2023-05-31_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 suspectscore=0
+ bulkscore=0 clxscore=1015 malwarescore=0 impostorscore=0 mlxscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2306010167
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-16 01:00, Jason Gunthorpe wrote:
-> This callback requests the driver to create only a __IOMMU_DOMAIN_PAGING
-> domain, so it saves a few lines in a lot of drivers needlessly checking
-> the type.
+Hi Leonard
+
+On 5/24/2023 5:58 AM, Leonard Lausen wrote:
+>>>>>>> [  275.025497] [drm:dpu_encoder_phys_vid_wait_for_commit_done:488]
+>>>>>>> [dpu error]vblank timeout
+>>>>>>> [  275.025514] [drm:dpu_kms_wait_for_commit_done:510] [dpu error]wait
+>>>>>>> for commit done returned -110
+>>>>>>> [  275.064141] [drm:dpu_encoder_frame_done_timeout:2382] [dpu
+>>>>>>> error]enc33 frame done timeout
+>>>>>
+>>>>> This is a different crash but the root-cause of both the issues is the
+>>>>> bridge hpd_enable/disable series.
+>>>>>
+>>>>> https://patchwork.freedesktop.org/patch/514414/
+>>>
+>>> Yes, the new patch to fix this issue is here
+>>>
+>>> https://patchwork.freedesktop.org/patch/538601/?series=118148&rev=3
+>>>
+>>> Apologies if you were not CCed on this, if a next version is CCed,
+>>> will ask kuogee to cc you.
+>>>
+>>> Meanwhile, will be great if you can verify if it works for you and
+>>> provide Tested-by tags.
+>>
+>> Hi Leonard,
+>>
+>> I had  cc you with v5 patches.
+>>
+>> Would you please verify it.
 > 
-> More critically, this allows us to sweep out all the
-> IOMMU_DOMAIN_UNMANAGED and IOMMU_DOMAIN_DMA checks from a lot of the
-> drivers, simplifying what is going on in the code and ultimately removing
-> the now-unused special cases in drivers where they did not support
-> IOMMU_DOMAIN_DMA.
+> Hi Kuogee,
 > 
-> domain_alloc_paging() should return a struct iommu_domain that is
-> functionally compatible with ARM_DMA_USE_IOMMU, dma-iommu.c and iommufd.
+> thank you. Verified the v6 patch fixes the regression when ported to
+> 6.3.3. One non-fatal issue remains: Suspending and resuming the system
+> while USB-C DP monitor is connected triggers an error, though the system
+> recovers within a second without the need to unplug the cable.
 > 
-> Be forwards looking and pass in a 'struct device *' argument. We can
-> provide this when allocating the default_domain. No drivers will look at
-> this.
-
-As mentioned before, we already know we're going to need additional 
-flags (and possibly data) to cover the existing set_pgtable_quirks 
-use-case plus new stuff like the proposed dirty-tracking enable, so I'd 
-be inclined to either add an extensible structure argument now to avoid 
-future churn, or just not bother adding the device argument either until 
-drivers can actually use it.
-
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->   drivers/iommu/iommu.c | 18 +++++++++++++++---
->   include/linux/iommu.h |  3 +++
->   2 files changed, 18 insertions(+), 3 deletions(-)
+> [drm:drm_mode_config_helper_resume] *ERROR* Failed to resume (-107)
 > 
-> diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-> index c4cac1dcf80610..15aa51c356bd74 100644
-> --- a/drivers/iommu/iommu.c
-> +++ b/drivers/iommu/iommu.c
-> @@ -1995,14 +1995,25 @@ void iommu_set_fault_handler(struct iommu_domain *domain,
->   EXPORT_SYMBOL_GPL(iommu_set_fault_handler);
->   
->   static struct iommu_domain *__iommu_domain_alloc(const struct iommu_ops *ops,
-> +						 struct device *dev,
->   						 unsigned int type)
->   {
->   	struct iommu_domain *domain;
->   
->   	if (type == IOMMU_DOMAIN_IDENTITY && ops->identity_domain)
->   		return ops->identity_domain;
-> +	else if ((type == IOMMU_DOMAIN_UNMANAGED || type == IOMMU_DOMAIN_DMA) &&
-> +		 ops->domain_alloc_paging) {
-> +		/*
-> +		 * For now exclude DMA_FQ since it is still a driver policy
-> +		 * decision through domain_alloc() if we can use FQ mode.
-> +		 */
 
-That's sorted now, so the type test can neatly collapse down to "type & 
-__IOMMU_DOMAIN_PAGING".
-
-Thanks,
-Robin.
-
-> +		domain = ops->domain_alloc_paging(dev);
-> +	} else if (ops->domain_alloc)
-> +		domain = ops->domain_alloc(type);
-> +	else
-> +		return NULL;
->   
-> -	domain = ops->domain_alloc(type);
->   	if (!domain)
->   		return NULL;
->   
-> @@ -2033,14 +2044,15 @@ __iommu_group_domain_alloc(struct iommu_group *group, unsigned int type)
->   
->   	lockdep_assert_held(&group->mutex);
->   
-> -	return __iommu_domain_alloc(dev_iommu_ops(dev), type);
-> +	return __iommu_domain_alloc(dev_iommu_ops(dev), dev, type);
->   }
->   
->   struct iommu_domain *iommu_domain_alloc(const struct bus_type *bus)
->   {
->   	if (bus == NULL || bus->iommu_ops == NULL)
->   		return NULL;
-> -	return __iommu_domain_alloc(bus->iommu_ops, IOMMU_DOMAIN_UNMANAGED);
-> +	return __iommu_domain_alloc(bus->iommu_ops, NULL,
-> +				    IOMMU_DOMAIN_UNMANAGED);
->   }
->   EXPORT_SYMBOL_GPL(iommu_domain_alloc);
->   
-> diff --git a/include/linux/iommu.h b/include/linux/iommu.h
-> index 387746f8273c99..18b0df42cc80d1 100644
-> --- a/include/linux/iommu.h
-> +++ b/include/linux/iommu.h
-> @@ -227,6 +227,8 @@ struct iommu_iotlb_gather {
->    * struct iommu_ops - iommu ops and capabilities
->    * @capable: check capability
->    * @domain_alloc: allocate iommu domain
-> + * @domain_alloc_paging: Allocate an iommu_domain that can be used for
-> + *                       UNMANAGED, DMA, and DMA_FQ domain types.
->    * @probe_device: Add device to iommu driver handling
->    * @release_device: Remove device from iommu driver handling
->    * @probe_finalize: Do final setup work after the device is added to an IOMMU
-> @@ -258,6 +260,7 @@ struct iommu_ops {
->   
->   	/* Domain allocation and freeing by the iommu driver */
->   	struct iommu_domain *(*domain_alloc)(unsigned iommu_domain_type);
-> +	struct iommu_domain *(*domain_alloc_paging)(struct device *dev);
->   
->   	struct iommu_device *(*probe_device)(struct device *dev);
->   	void (*release_device)(struct device *dev);
+We are not able to recreate this on sc7280 chromebooks , will need to 
+check on sc7180. This does not seem directly related to any of the 
+hotplug changes though so needs to be checked separately. So please feel 
+free to raise a gitlab bug for this and assign to me.
