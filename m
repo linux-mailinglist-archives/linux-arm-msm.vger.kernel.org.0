@@ -2,99 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D64671F30E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 21:37:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB1A471F314
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 21:38:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231246AbjFAThD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 15:37:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34952 "EHLO
+        id S231670AbjFATiA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 15:38:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35078 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231241AbjFAThD (ORCPT
+        with ESMTP id S231151AbjFATh7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 15:37:03 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AC76186
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 12:37:01 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 351Iwpxq019042;
-        Thu, 1 Jun 2023 19:36:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=RKz63RI97Z7zZv2ynQKAZ4y5LRF2bOl999yV3J3lXTM=;
- b=ZzVPjXSLcaTT1OEOW7CXaFgLY4o5S/Yyb7GHASXDAJ+tL6zKeuDsZD62+zT3YTj4CZfJ
- IH3yqu2bqtWkoWzndO+jDqDrWKzsRdFOOBy3LlDXt6OOpksBEZoBS2XSsxGjhCiRkq6o
- fYOJ6HN4xegiPo8bxfAXJ5jsGb3gM4ff3C3dlIZuV0DaC+1py9yj+slFl28pXflTna0/
- IvVRjUGSBKYJDg5jkMllta8jFFWAJLTLuzDm2lHECX+uOAQhBJAUGRLySNOc2+ngBHSb
- J2ykzuCyB6p3M8CBEJ7gScxolcZvfTP4BEcwu+fFo+R+z8AfSSR4LhDNcKqxqVgrolQJ OQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qxugrs0kp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 01 Jun 2023 19:36:52 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 351JapA2028231
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 1 Jun 2023 19:36:51 GMT
-Received: from [10.110.26.45] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 1 Jun 2023
- 12:36:48 -0700
-Message-ID: <1c779324-bc47-b877-035c-865fba72e028@quicinc.com>
-Date:   Thu, 1 Jun 2023 12:36:46 -0700
+        Thu, 1 Jun 2023 15:37:59 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id D343A184;
+        Thu,  1 Jun 2023 12:37:57 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id B8F4A1063;
+        Thu,  1 Jun 2023 12:38:42 -0700 (PDT)
+Received: from [10.57.84.85] (unknown [10.57.84.85])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 549F63F7BD;
+        Thu,  1 Jun 2023 12:37:50 -0700 (PDT)
+Message-ID: <84aa0f5e-f13d-40f5-abe6-e8ac231e2d95@arm.com>
+Date:   Thu, 1 Jun 2023 20:37:45 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 5/7] drm/msm/dpu: call dpu_rm_get_intf() from
- dpu_encoder_get_intf()
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v2 09/25] iommu/fsl_pamu: Implement an IDENTITY domain
+Content-Language: en-GB
+To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230601172236.564445-1-dmitry.baryshkov@linaro.org>
- <20230601172236.564445-6-dmitry.baryshkov@linaro.org>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230601172236.564445-6-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Kevin Tian <kevin.tian@intel.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+        linuxppc-dev@lists.ozlabs.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>
+Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Nicolin Chen <nicolinc@nvidia.com>,
+        Niklas Schnelle <schnelle@linux.ibm.com>,
+        Steven Price <steven.price@arm.com>,
+        Thierry Reding <treding@nvidia.com>
+References: <9-v2-8d1dc464eac9+10f-iommu_all_defdom_jgg@nvidia.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <9-v2-8d1dc464eac9+10f-iommu_all_defdom_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 6W7K92K9zEmKjPXXhK2NmGHZvdrCQSUa
-X-Proofpoint-GUID: 6W7K92K9zEmKjPXXhK2NmGHZvdrCQSUa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-01_08,2023-05-31_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- mlxlogscore=774 lowpriorityscore=0 bulkscore=0 suspectscore=0 mlxscore=0
- phishscore=0 spamscore=0 impostorscore=0 priorityscore=1501 clxscore=1015
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2306010170
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2023-05-16 01:00, Jason Gunthorpe wrote:
+> Robin was able to check the documentation and what fsl_pamu has
+> historically called detach_dev() is really putting the IOMMU into an
+> IDENTITY mode.
 
+Unfortunately it was the other way around - it's the call to 
+fsl_setup_liodns() from fsl_pamu_probe() which leaves everything in 
+bypass by default (the PAACE_ATM_NO_XLATE part, IIRC), whereas the 
+detach_device() call here ends up disabling the given device's LIODN 
+altogether. There doesn't appear to have ever been any code anywhere for 
+putting things *back* into bypass after using a VFIO domain, so as-is 
+these default domains would probably break all DMA :(
 
-On 6/1/2023 10:22 AM, Dmitry Baryshkov wrote:
-> There is little sense to get intf index just to call dpu_rm_get_intf()
-> on it. Move dpu_rm_get_intf() call to dpu_encoder_get_intf() function.
+Thanks,
+Robin.
+
+> Move to the new core support for ARM_DMA_USE_IOMMU by defining
+> ops->identity_domain. This is a ppc driver without any dma_ops, so ensure
+> the identity translation is the default domain.
 > 
-> Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 > ---
-
-Tested-by: Abhinav Kumar <quic_abhinavk@quicinc.com> # sc7280
+>   drivers/iommu/fsl_pamu_domain.c | 32 +++++++++++++++++++++++++++++---
+>   1 file changed, 29 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/iommu/fsl_pamu_domain.c b/drivers/iommu/fsl_pamu_domain.c
+> index bce37229709965..ca4f5ebf028783 100644
+> --- a/drivers/iommu/fsl_pamu_domain.c
+> +++ b/drivers/iommu/fsl_pamu_domain.c
+> @@ -283,15 +283,21 @@ static int fsl_pamu_attach_device(struct iommu_domain *domain,
+>   	return ret;
+>   }
+>   
+> -static void fsl_pamu_set_platform_dma(struct device *dev)
+> +static int fsl_pamu_identity_attach(struct iommu_domain *platform_domain,
+> +				    struct device *dev)
+>   {
+>   	struct iommu_domain *domain = iommu_get_domain_for_dev(dev);
+> -	struct fsl_dma_domain *dma_domain = to_fsl_dma_domain(domain);
+> +	struct fsl_dma_domain *dma_domain;
+>   	const u32 *prop;
+>   	int len;
+>   	struct pci_dev *pdev = NULL;
+>   	struct pci_controller *pci_ctl;
+>   
+> +	if (domain == platform_domain || !domain)
+> +		return 0;
+> +
+> +	dma_domain = to_fsl_dma_domain(domain);
+> +
+>   	/*
+>   	 * Use LIODN of the PCI controller while detaching a
+>   	 * PCI device.
+> @@ -312,8 +318,18 @@ static void fsl_pamu_set_platform_dma(struct device *dev)
+>   		detach_device(dev, dma_domain);
+>   	else
+>   		pr_debug("missing fsl,liodn property at %pOF\n", dev->of_node);
+> +	return 0;
+>   }
+>   
+> +static struct iommu_domain_ops fsl_pamu_identity_ops = {
+> +	.attach_dev = fsl_pamu_identity_attach,
+> +};
+> +
+> +static struct iommu_domain fsl_pamu_identity_domain = {
+> +	.type = IOMMU_DOMAIN_IDENTITY,
+> +	.ops = &fsl_pamu_identity_ops,
+> +};
+> +
+>   /* Set the domain stash attribute */
+>   int fsl_pamu_configure_l1_stash(struct iommu_domain *domain, u32 cpu)
+>   {
+> @@ -447,12 +463,22 @@ static struct iommu_device *fsl_pamu_probe_device(struct device *dev)
+>   	return &pamu_iommu;
+>   }
+>   
+> +static int fsl_pamu_def_domain_type(struct device *dev)
+> +{
+> +	/*
+> +	 * This platform does not use dma_ops at all so the normally the iommu
+> +	 * must be in identity mode
+> +	 */
+> +	return IOMMU_DOMAIN_IDENTITY;
+> +}
+> +
+>   static const struct iommu_ops fsl_pamu_ops = {
+> +	.identity_domain = &fsl_pamu_identity_domain,
+> +	.def_domain_type = &fsl_pamu_def_domain_type,
+>   	.capable	= fsl_pamu_capable,
+>   	.domain_alloc	= fsl_pamu_domain_alloc,
+>   	.probe_device	= fsl_pamu_probe_device,
+>   	.device_group   = fsl_pamu_device_group,
+> -	.set_platform_dma_ops = fsl_pamu_set_platform_dma,
+>   	.default_domain_ops = &(const struct iommu_domain_ops) {
+>   		.attach_dev	= fsl_pamu_attach_device,
+>   		.iova_to_phys	= fsl_pamu_iova_to_phys,
