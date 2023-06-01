@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FC2971F096
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 19:22:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5956871F097
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 19:22:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230166AbjFARWn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 13:22:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57158 "EHLO
+        id S232754AbjFARWo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 13:22:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231783AbjFARWn (ORCPT
+        with ESMTP id S232670AbjFARWn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 1 Jun 2023 13:22:43 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3DE7D1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 10:22:40 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f4b0a0b557so1485503e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 10:22:40 -0700 (PDT)
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9F67B3
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 10:22:41 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f3bb395e69so1541554e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 10:22:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685640159; x=1688232159;
+        d=linaro.org; s=google; t=1685640160; x=1688232160;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cmnoMGDMgMIsXZ7B+vxs0uT+taCJmwO7yjnPSnMVJ0E=;
-        b=HHgEiJSsPjBjlJV43HfOWibGsXfjM0LPkg+wZZcpJyMZAkCd2mokl7QLKjziYrqI8Q
-         yJ07S4u4Bn1y9caBw+JanuFCvY8/b2r8AevOLtT5yPAkSolGaC5hEWgJcpyyf6vO8ByK
-         FHQxoaKmQWlcfv8Mr7lbGE9Nrh3P0ssgXffprZuZNU16KaBLHIjSfs+NvtTVYcRDa4Qk
-         dA2eoycbCsMoLpL1H3l8AsWE8fzBfRGygfgblofRlfMSVZiSHlU+nyjLq5AAKSOVrAAi
-         KisbVKCDZcLcDtDcoeqK6+xHWRGT906hE/y1EBhlCWuBzVSc/jmjbEpt1vTQ/VZvh/xp
-         M7Gg==
+        bh=M9LHv6MLqj1UFslBgBU0GI2YzwaoUEtuSoDMMDqrvq0=;
+        b=qfU7rQt9jF8gHaPx9R+03RaIYf95MMsgg3CUrMJ9Q1cEHJIvmUQ9hh68BDTXivBjji
+         McLtVRxAwV+BQWDIRuF1fCaBFh3Pq0Hnu6xxjdRvgY6Gk3+33ZCr7RSSqx9IXrkKdKsg
+         PSFrG8/I1THgYglH4JvwgjK2H66dXc+7/YSSx8QbbNGhnD2gnAL30U2Hjgtnyg9B7wqw
+         u8QKg7ITsEG8brTuI+kT+Zg2TBaIy4dJu2IG1OhgRVZjoEWiWsE0bKXxHXbBgwyMuU7T
+         gCUMc0D5btSQIv7zvyHdKUBUpmpsYnL14Phb9rzrbt0qqmLeY18cCVPSzWwWlcjYl+bI
+         Atcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685640159; x=1688232159;
+        d=1e100.net; s=20221208; t=1685640160; x=1688232160;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cmnoMGDMgMIsXZ7B+vxs0uT+taCJmwO7yjnPSnMVJ0E=;
-        b=kKbn6mxZ+Xwv3zafmd9h0XTDxa9mdHhvRsg6MizL05lbjSgQtrYndwB1bhSPtVb8XZ
-         9VlsFoX3ytThbdyt0U6b/pBomhzReZNyJvd0wT5WMI1Z04WQV8CIksgwXK9yVxEqAngy
-         ow0me672Ry1HQKTqARRpaE/SPVP15uMyVjDrtqmijn3JgS9GDOd8ByFn0T9VEBnFXLUM
-         hg8HM6wM8EX4i5pBmWXMYH3Y2iaNLifNUlFFPv3ia/W3tL5qD4bDuPGHi6M396bAha5n
-         5rmZPw7lVKVjhTeIK61Cjy7WAl0tjwi8qioExpIEYgUnj5GYyCYJO/cj+wdKjoY8KEJI
-         mwyA==
-X-Gm-Message-State: AC+VfDwxHjh2pk2MXjWP6YRzj9RGEgI3AtgNEAjOSytKyPAmUX+rm4vK
-        v/XQDTq+LP9gTKXSoCcox0zYDQ==
-X-Google-Smtp-Source: ACHHUZ71WOJLZeTl1xr4h+UFupaxeENCUFd2eHCkbzpgv5QyxF0qnPsuyEO77Rk3pADLuOOTVXKGBg==
-X-Received: by 2002:a19:7609:0:b0:4f1:45f1:e934 with SMTP id c9-20020a197609000000b004f145f1e934mr356094lff.66.1685640158978;
-        Thu, 01 Jun 2023 10:22:38 -0700 (PDT)
+        bh=M9LHv6MLqj1UFslBgBU0GI2YzwaoUEtuSoDMMDqrvq0=;
+        b=hStzU/InWYEEFox48XqrI8pG70nfvI5io+q8sfjEd4bcK5bSs8eJ7PoD8HJco97xgn
+         FtKuCm+SoTKlj8xC9JHwWJGUYu9lqRnm17mF6UkBHvMohJe6WJUsDiCG8nlAIpEssw4C
+         tU2QZrleTsIxNrrsp8YmMZnbmwQJipUKo1wTotHzYptcxdkXm1JKioW1HHCY4y7l/sqx
+         pIVBtOHpx2Z9yKRBMTelaVhOF6Qg33SEtoRWnH7okZR995DfmYsFXXWr0h7crzIf4xuF
+         pGo2sE5KWr4AjeG99zXjhAMzjrg3JYTNeEPudD8m/mTI4EdEdpcG1+QJwGiDWg1Q3OJh
+         Rrgg==
+X-Gm-Message-State: AC+VfDwLr4RWHqpXM79eTzLxWTXPUTX4PG/1JzF9xanUziu2baHcv89O
+        bakjKUj5mxv6k2WId/6Tw3Tpdw==
+X-Google-Smtp-Source: ACHHUZ6+DdSQIzAoYqU/A1u6/YpK2zdXQR75xe+cWQwxTVGuh9MnuPxNT254xAbF/mpfW7npwa+yyA==
+X-Received: by 2002:ac2:5474:0:b0:4f6:7f9:112e with SMTP id e20-20020ac25474000000b004f607f9112emr399625lfn.11.1685640159784;
+        Thu, 01 Jun 2023 10:22:39 -0700 (PDT)
 Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id b25-20020ac25e99000000b004eb2f35045bsm1145739lfq.269.2023.06.01.10.22.38
+        by smtp.gmail.com with ESMTPSA id b25-20020ac25e99000000b004eb2f35045bsm1145739lfq.269.2023.06.01.10.22.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jun 2023 10:22:38 -0700 (PDT)
+        Thu, 01 Jun 2023 10:22:39 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH v3 1/7] drm/msm/dpu: merge dpu_encoder_init() and dpu_encoder_setup()
-Date:   Thu,  1 Jun 2023 20:22:30 +0300
-Message-Id: <20230601172236.564445-2-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 2/7] drm/msm/dpu: separate common function to init physical encoder
+Date:   Thu,  1 Jun 2023 20:22:31 +0300
+Message-Id: <20230601172236.564445-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230601172236.564445-1-dmitry.baryshkov@linaro.org>
 References: <20230601172236.564445-1-dmitry.baryshkov@linaro.org>
@@ -78,305 +78,201 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no reason to split the dpu_encoder interface into separate
-_init() and _setup() phases. Merge them into a single function.
+Move common DPU physical encoder initialization code to the new function
+dpu_encoder_phys_init().
 
 Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 55 +++++--------
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h | 14 +---
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     | 87 ++++++++-------------
- 3 files changed, 56 insertions(+), 100 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   | 29 +++++++++++++++++--
+ .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  3 ++
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c  | 17 ++---------
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_vid.c  | 17 ++---------
+ .../drm/msm/disp/dpu1/dpu_encoder_phys_wb.c   | 17 ++---------
+ 5 files changed, 37 insertions(+), 46 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index d7cd4734dc7d..d4b759e8f2ae 100644
+index d4b759e8f2ae..475b30bef72d 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -2388,7 +2388,8 @@ static const struct drm_encoder_funcs dpu_encoder_funcs = {
- 		.early_unregister = dpu_encoder_early_unregister,
- };
+@@ -2321,8 +2321,6 @@ static int dpu_encoder_setup_display(struct dpu_encoder_virt *dpu_enc,
  
--int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
-+struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
-+		int drm_enc_mode,
- 		struct msm_display_info *disp_info)
+ 	for (i = 0; i < dpu_enc->num_phys_encs; i++) {
+ 		struct dpu_encoder_phys *phys = dpu_enc->phys_encs[i];
+-		atomic_set(&phys->vsync_cnt, 0);
+-		atomic_set(&phys->underrun_cnt, 0);
+ 
+ 		if (phys->intf_idx >= INTF_0 && phys->intf_idx < INTF_MAX)
+ 			phys->hw_intf = dpu_rm_get_intf(&dpu_kms->rm, phys->intf_idx);
+@@ -2524,3 +2522,30 @@ unsigned int dpu_encoder_helper_get_dsc(struct dpu_encoder_phys *phys_enc)
+ 
+ 	return dpu_enc->dsc_mask;
+ }
++
++void dpu_encoder_phys_init(struct dpu_encoder_phys *phys_enc,
++			  struct dpu_enc_phys_init_params *p)
++{
++	int i;
++
++	phys_enc->hw_mdptop = p->dpu_kms->hw_mdp;
++	phys_enc->intf_idx = p->intf_idx;
++	phys_enc->wb_idx = p->wb_idx;
++	phys_enc->parent = p->parent;
++	phys_enc->dpu_kms = p->dpu_kms;
++	phys_enc->split_role = p->split_role;
++	phys_enc->enc_spinlock = p->enc_spinlock;
++	phys_enc->enable_state = DPU_ENC_DISABLED;
++
++	for (i = 0; i < ARRAY_SIZE(phys_enc->irq); i++)
++		phys_enc->irq[i] = -EINVAL;
++
++	atomic_set(&phys_enc->vblank_refcount, 0);
++	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
++	atomic_set(&phys_enc->pending_ctlstart_cnt, 0);
++
++	atomic_set(&phys_enc->vsync_cnt, 0);
++	atomic_set(&phys_enc->underrun_cnt, 0);
++
++	init_waitqueue_head(&phys_enc->pending_kickoff_wq);
++}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+index 90f177e43262..aa98bfb70a26 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
+@@ -407,4 +407,7 @@ void dpu_encoder_frame_done_callback(
+ 		struct drm_encoder *drm_enc,
+ 		struct dpu_encoder_phys *ready_phys, u32 event);
+ 
++void dpu_encoder_phys_init(struct dpu_encoder_phys *phys,
++			   struct dpu_enc_phys_init_params *p);
++
+ #endif /* __dpu_encoder_phys_H__ */
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+index d8ed85a238af..2bd806c51882 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+@@ -756,7 +756,7 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
  {
- 	struct msm_drm_private *priv = dev->dev_private;
-@@ -2397,7 +2398,23 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
- 	struct dpu_encoder_virt *dpu_enc = NULL;
+ 	struct dpu_encoder_phys *phys_enc = NULL;
+ 	struct dpu_encoder_phys_cmd *cmd_enc = NULL;
+-	int i, ret = 0;
++	int ret = 0;
+ 
+ 	DPU_DEBUG("intf %d\n", p->intf_idx - INTF_0);
+ 
+@@ -767,28 +767,17 @@ struct dpu_encoder_phys *dpu_encoder_phys_cmd_init(
+ 		return ERR_PTR(ret);
+ 	}
+ 	phys_enc = &cmd_enc->base;
+-	phys_enc->hw_mdptop = p->dpu_kms->hw_mdp;
+-	phys_enc->intf_idx = p->intf_idx;
++
++	dpu_encoder_phys_init(phys_enc, p);
+ 
+ 	dpu_encoder_phys_cmd_init_ops(&phys_enc->ops);
+-	phys_enc->parent = p->parent;
+-	phys_enc->dpu_kms = p->dpu_kms;
+-	phys_enc->split_role = p->split_role;
+ 	phys_enc->intf_mode = INTF_MODE_CMD;
+-	phys_enc->enc_spinlock = p->enc_spinlock;
+ 	cmd_enc->stream_sel = 0;
+-	phys_enc->enable_state = DPU_ENC_DISABLED;
+-	for (i = 0; i < ARRAY_SIZE(phys_enc->irq); i++)
+-		phys_enc->irq[i] = -EINVAL;
+ 
+ 	phys_enc->has_intf_te = test_bit(DPU_INTF_TE,
+ 			&phys_enc->dpu_kms->catalog->intf[p->intf_idx - INTF_0].features);
+ 
+-	atomic_set(&phys_enc->vblank_refcount, 0);
+-	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
+-	atomic_set(&phys_enc->pending_ctlstart_cnt, 0);
+ 	atomic_set(&cmd_enc->pending_vblank_cnt, 0);
+-	init_waitqueue_head(&phys_enc->pending_kickoff_wq);
+ 	init_waitqueue_head(&cmd_enc->pending_vblank_wq);
+ 
+ 	DPU_DEBUG_CMDENC(cmd_enc, "created\n");
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+index 3a374292f311..dc951fdf473b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_vid.c
+@@ -699,7 +699,6 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
+ 		struct dpu_enc_phys_init_params *p)
+ {
+ 	struct dpu_encoder_phys *phys_enc = NULL;
+-	int i;
+ 
+ 	if (!p) {
+ 		DPU_ERROR("failed to create encoder due to invalid parameter\n");
+@@ -712,24 +711,12 @@ struct dpu_encoder_phys *dpu_encoder_phys_vid_init(
+ 		return ERR_PTR(-ENOMEM);
+ 	}
+ 
+-	phys_enc->hw_mdptop = p->dpu_kms->hw_mdp;
+-	phys_enc->intf_idx = p->intf_idx;
+-
+ 	DPU_DEBUG_VIDENC(phys_enc, "\n");
+ 
++	dpu_encoder_phys_init(phys_enc, p);
++
+ 	dpu_encoder_phys_vid_init_ops(&phys_enc->ops);
+-	phys_enc->parent = p->parent;
+-	phys_enc->dpu_kms = p->dpu_kms;
+-	phys_enc->split_role = p->split_role;
+ 	phys_enc->intf_mode = INTF_MODE_VIDEO;
+-	phys_enc->enc_spinlock = p->enc_spinlock;
+-	for (i = 0; i < ARRAY_SIZE(phys_enc->irq); i++)
+-		phys_enc->irq[i] = -EINVAL;
+-
+-	atomic_set(&phys_enc->vblank_refcount, 0);
+-	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
+-	init_waitqueue_head(&phys_enc->pending_kickoff_wq);
+-	phys_enc->enable_state = DPU_ENC_DISABLED;
+ 
+ 	DPU_DEBUG_VIDENC(phys_enc, "created intf idx:%d\n", p->intf_idx);
+ 
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+index bac4aa807b4b..93440a0016ef 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+@@ -694,7 +694,6 @@ struct dpu_encoder_phys *dpu_encoder_phys_wb_init(
+ 	struct dpu_encoder_phys *phys_enc = NULL;
+ 	struct dpu_encoder_phys_wb *wb_enc = NULL;
  	int ret = 0;
+-	int i;
  
--	dpu_enc = to_dpu_encoder_virt(enc);
-+	dpu_enc = devm_kzalloc(dev->dev, sizeof(*dpu_enc), GFP_KERNEL);
-+	if (!dpu_enc)
-+		return ERR_PTR(-ENOMEM);
-+
-+	ret = drm_encoder_init(dev, &dpu_enc->base, &dpu_encoder_funcs,
-+			       drm_enc_mode, NULL);
-+	if (ret) {
-+		devm_kfree(dev->dev, dpu_enc);
-+		return ERR_PTR(ret);
-+	}
-+
-+	drm_encoder_helper_add(&dpu_enc->base, &dpu_encoder_helper_funcs);
-+
-+	spin_lock_init(&dpu_enc->enc_spinlock);
-+	dpu_enc->enabled = false;
-+	mutex_init(&dpu_enc->enc_lock);
-+	mutex_init(&dpu_enc->rc_lock);
+ 	DPU_DEBUG("\n");
  
- 	ret = dpu_encoder_setup_display(dpu_enc, dpu_kms, disp_info);
- 	if (ret)
-@@ -2426,44 +2443,14 @@ int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
- 
- 	DPU_DEBUG_ENC(dpu_enc, "created\n");
- 
--	return ret;
-+	return &dpu_enc->base;
- 
- fail:
- 	DPU_ERROR("failed to create encoder\n");
- 	if (drm_enc)
- 		dpu_encoder_destroy(drm_enc);
- 
--	return ret;
--
--
--}
--
--struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
--		int drm_enc_mode)
--{
--	struct dpu_encoder_virt *dpu_enc = NULL;
--	int rc = 0;
--
--	dpu_enc = devm_kzalloc(dev->dev, sizeof(*dpu_enc), GFP_KERNEL);
--	if (!dpu_enc)
--		return ERR_PTR(-ENOMEM);
--
--
--	rc = drm_encoder_init(dev, &dpu_enc->base, &dpu_encoder_funcs,
--							  drm_enc_mode, NULL);
--	if (rc) {
--		devm_kfree(dev->dev, dpu_enc);
--		return ERR_PTR(rc);
--	}
--
--	drm_encoder_helper_add(&dpu_enc->base, &dpu_encoder_helper_funcs);
--
--	spin_lock_init(&dpu_enc->enc_spinlock);
--	dpu_enc->enabled = false;
--	mutex_init(&dpu_enc->enc_lock);
--	mutex_init(&dpu_enc->rc_lock);
--
--	return &dpu_enc->base;
-+	return ERR_PTR(ret);
- }
- 
- int dpu_encoder_wait_for_event(struct drm_encoder *drm_enc,
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-index 6d14f84dd43f..90e1925d7770 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h
-@@ -130,20 +130,12 @@ void dpu_encoder_virt_runtime_resume(struct drm_encoder *encoder);
- /**
-  * dpu_encoder_init - initialize virtual encoder object
-  * @dev:        Pointer to drm device structure
-+ * @drm_enc_mode: corresponding DRM_MODE_ENCODER_* constant
-  * @disp_info:  Pointer to display information structure
-  * Returns:     Pointer to newly created drm encoder
-  */
--struct drm_encoder *dpu_encoder_init(
--		struct drm_device *dev,
--		int drm_enc_mode);
--
--/**
-- * dpu_encoder_setup - setup dpu_encoder for the display probed
-- * @dev:		Pointer to drm device structure
-- * @enc:		Pointer to the drm_encoder
-- * @disp_info:	Pointer to the display info
-- */
--int dpu_encoder_setup(struct drm_device *dev, struct drm_encoder *enc,
-+struct drm_encoder *dpu_encoder_init(struct drm_device *dev,
-+		int drm_enc_mode,
- 		struct msm_display_info *disp_info);
- 
- /**
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index 8ce057cc9374..70a17ef8281f 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -535,15 +535,23 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
- 		    !msm_dsi_is_master_dsi(priv->dsi[i]))
- 			continue;
- 
--		encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI);
-+		memset(&info, 0, sizeof(info));
-+		info.intf_type = INTF_DSI;
-+
-+		info.h_tile_instance[info.num_of_h_tiles++] = i;
-+		if (msm_dsi_is_bonded_dsi(priv->dsi[i]))
-+			info.h_tile_instance[info.num_of_h_tiles++] = other;
-+
-+		info.is_cmd_mode = msm_dsi_is_cmd_mode(priv->dsi[i]);
-+
-+		info.dsc = msm_dsi_get_dsc_config(priv->dsi[i]);
-+
-+		encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI, &info);
- 		if (IS_ERR(encoder)) {
- 			DPU_ERROR("encoder init failed for dsi display\n");
- 			return PTR_ERR(encoder);
- 		}
- 
--		memset(&info, 0, sizeof(info));
--		info.intf_type = INTF_DSI;
--
- 		rc = msm_dsi_modeset_init(priv->dsi[i], dev, encoder);
- 		if (rc) {
- 			DPU_ERROR("modeset_init failed for dsi[%d], rc = %d\n",
-@@ -551,11 +559,6 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
- 			break;
- 		}
- 
--		info.h_tile_instance[info.num_of_h_tiles++] = i;
--		info.is_cmd_mode = msm_dsi_is_cmd_mode(priv->dsi[i]);
--
--		info.dsc = msm_dsi_get_dsc_config(priv->dsi[i]);
--
- 		if (msm_dsi_is_bonded_dsi(priv->dsi[i]) && priv->dsi[other]) {
- 			rc = msm_dsi_modeset_init(priv->dsi[other], dev, encoder);
- 			if (rc) {
-@@ -563,14 +566,7 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
- 					other, rc);
- 				break;
- 			}
--
--			info.h_tile_instance[info.num_of_h_tiles++] = other;
- 		}
--
--		rc = dpu_encoder_setup(dev, encoder, &info);
--		if (rc)
--			DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
--				  encoder->base.id, rc);
+@@ -712,28 +711,16 @@ struct dpu_encoder_phys *dpu_encoder_phys_wb_init(
  	}
  
- 	return rc;
-@@ -589,29 +585,23 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
- 		if (!priv->dp[i])
- 			continue;
- 
--		encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_TMDS);
-+		memset(&info, 0, sizeof(info));
-+		info.num_of_h_tiles = 1;
-+		info.h_tile_instance[0] = i;
-+		info.intf_type = INTF_DP;
+ 	phys_enc = &wb_enc->base;
+-	phys_enc->hw_mdptop = p->dpu_kms->hw_mdp;
+-	phys_enc->wb_idx = p->wb_idx;
 +
-+		encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_TMDS, &info);
- 		if (IS_ERR(encoder)) {
- 			DPU_ERROR("encoder init failed for dsi display\n");
- 			return PTR_ERR(encoder);
- 		}
++	dpu_encoder_phys_init(phys_enc, p);
  
--		memset(&info, 0, sizeof(info));
- 		rc = msm_dp_modeset_init(priv->dp[i], dev, encoder);
- 		if (rc) {
- 			DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
- 			drm_encoder_cleanup(encoder);
- 			return rc;
- 		}
+ 	dpu_encoder_phys_wb_init_ops(&phys_enc->ops);
+-	phys_enc->parent = p->parent;
+-	phys_enc->dpu_kms = p->dpu_kms;
+-	phys_enc->split_role = p->split_role;
+ 	phys_enc->intf_mode = INTF_MODE_WB_LINE;
+-	phys_enc->wb_idx = p->wb_idx;
+-	phys_enc->enc_spinlock = p->enc_spinlock;
+ 
+ 	atomic_set(&wb_enc->wbirq_refcount, 0);
+ 
+-	for (i = 0; i < ARRAY_SIZE(phys_enc->irq); i++)
+-		phys_enc->irq[i] = -EINVAL;
 -
--		info.num_of_h_tiles = 1;
--		info.h_tile_instance[0] = i;
--		info.intf_type = INTF_DP;
--		rc = dpu_encoder_setup(dev, encoder, &info);
--		if (rc) {
--			DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
--				  encoder->base.id, rc);
--			return rc;
--		}
- 	}
+-	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
+-	atomic_set(&phys_enc->vblank_refcount, 0);
+ 	wb_enc->wb_done_timeout_cnt = 0;
  
- 	return 0;
-@@ -628,13 +618,17 @@ static int _dpu_kms_initialize_hdmi(struct drm_device *dev,
- 	if (!priv->hdmi)
- 		return 0;
+-	init_waitqueue_head(&phys_enc->pending_kickoff_wq);
+-	phys_enc->enable_state = DPU_ENC_DISABLED;
  
--	encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_TMDS);
-+	memset(&info, 0, sizeof(info));
-+	info.num_of_h_tiles = 1;
-+	info.h_tile_instance[0] = 0;
-+	info.intf_type = INTF_HDMI;
-+
-+	encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_TMDS, &info);
- 	if (IS_ERR(encoder)) {
- 		DPU_ERROR("encoder init failed for HDMI display\n");
- 		return PTR_ERR(encoder);
- 	}
- 
--	memset(&info, 0, sizeof(info));
- 	rc = msm_hdmi_modeset_init(priv->hdmi, dev, encoder);
- 	if (rc) {
- 		DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
-@@ -642,16 +636,6 @@ static int _dpu_kms_initialize_hdmi(struct drm_device *dev,
- 		return rc;
- 	}
- 
--	info.num_of_h_tiles = 1;
--	info.h_tile_instance[0] = 0;
--	info.intf_type = INTF_HDMI;
--	rc = dpu_encoder_setup(dev, encoder, &info);
--	if (rc) {
--		DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
--			  encoder->base.id, rc);
--		return rc;
--	}
--
- 	return 0;
- }
- 
-@@ -663,14 +647,19 @@ static int _dpu_kms_initialize_writeback(struct drm_device *dev,
- 	struct msm_display_info info;
- 	int rc;
- 
--	encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_VIRTUAL);
-+	memset(&info, 0, sizeof(info));
-+
-+	info.num_of_h_tiles = 1;
-+	/* use only WB idx 2 instance for DPU */
-+	info.h_tile_instance[0] = WB_2;
-+	info.intf_type = INTF_WB;
-+
-+	encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_VIRTUAL, &info);
- 	if (IS_ERR(encoder)) {
- 		DPU_ERROR("encoder init failed for dsi display\n");
- 		return PTR_ERR(encoder);
- 	}
- 
--	memset(&info, 0, sizeof(info));
--
- 	rc = dpu_writeback_init(dev, encoder, wb_formats,
- 			n_formats);
- 	if (rc) {
-@@ -679,18 +668,6 @@ static int _dpu_kms_initialize_writeback(struct drm_device *dev,
- 		return rc;
- 	}
- 
--	info.num_of_h_tiles = 1;
--	/* use only WB idx 2 instance for DPU */
--	info.h_tile_instance[0] = WB_2;
--	info.intf_type = INTF_WB;
--
--	rc = dpu_encoder_setup(dev, encoder, &info);
--	if (rc) {
--		DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
--				  encoder->base.id, rc);
--		return rc;
--	}
--
- 	return 0;
- }
- 
+ 	DPU_DEBUG("Created dpu_encoder_phys for wb %d\n",
+ 			phys_enc->wb_idx);
 -- 
 2.39.2
 
