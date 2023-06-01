@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E5D9471989B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 12:11:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7E3C719891
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 12:11:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232486AbjFAKLl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 06:11:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46922 "EHLO
+        id S233351AbjFAKLf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 06:11:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46526 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232542AbjFAKKm (ORCPT
+        with ESMTP id S232769AbjFAKKn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 06:10:42 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1F4710DE
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 03:10:04 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f6dbe3c230so6810985e9.3
+        Thu, 1 Jun 2023 06:10:43 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1462A10E3
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 03:10:05 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-4f3a9ad31dbso725646e87.0
         for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 03:10:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685614203; x=1688206203;
+        d=linaro.org; s=google; t=1685614204; x=1688206204;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=4hM3UpU4FHsZR3ujTD4pG4KYkhz/mexEq2D+ziSUPKA=;
-        b=wm0YX/FCvbKlhU8+yx/ex0SXt+VVm9oGs34CkMJgcsUos/ksIQds0jbU/2zfqJdNMt
-         B1q+sI1TqnYVnzmPYirTEpd4EYzOe+2ajmG0xIlETpmHWTkrGv7/1bL4/mIupyl0zYMD
-         7DZkQ9loj/ET7NJHVN7pd6l+TaDNDIDS6wfKdKO8v+MA2lM9c2XYyaEwAfKApDvTmm6r
-         MOEnvqmzG9Gbpj/CSNvftIdqq1AoqGSyUYNvaJewpt+0sprqYWtSwd67YkqhsL+wkvNt
-         XWgRnHXQh2c88A8ZAI39Pk03HhtDHcOOoHlwFwo8pazb+G0LCsXZDv6zpBCgxGls89Vq
-         SJcw==
+        bh=sY1We4qYQqoWhZd32M3qvVq9EFogwk8bUgcdgefUaYg=;
+        b=RIyPaMt0j2FCUZjMmBjUlH0p6Dct9E7GEV69C8HaRd0iRVA6dsE6J16zCkI/lKleo0
+         WkSqo4XyFGJDi1BqPX9NMYcPwqbE1BCodgv0QriY7ZF4sPmINygF20H8quVtffciZNRD
+         jzZYnmzkQ07G7xNxxaqruu2BEjagNjkf84sm2Kf3yVgKUsr5t3X9Kza0NqoxjLtENPjd
+         6Qw7Boqvhlkx1R2GF/WVCphCK9fYVr7+TyoXP3M6KR9YWtL/EJ/A+rensy7dx1/6CBVo
+         j9PXjj2N24QhqDMW6cMDh1vqE9cDfG286IkNEYNYrCysbOaj2cM13FhHKYfR/FpMRHPw
+         rFvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685614203; x=1688206203;
+        d=1e100.net; s=20221208; t=1685614204; x=1688206204;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4hM3UpU4FHsZR3ujTD4pG4KYkhz/mexEq2D+ziSUPKA=;
-        b=dsd6Rc2zWNnMqN/jiJ17fbJU/O89OQv6xEdV0Ic1uonxFB9ad7Ib3Y+pNJi4XFiRcJ
-         8+s1teOXXGZZ1AMRL7tDtfR0Er4Oe9pjmCyCHUoWifs4MXA0sVXnQFiA8l88Q+kYc3Id
-         kQswJL5CFZMBijcpCS451hqjoDyZ37uOszhC8/sZEOwgmgNpcaWN8U8R2pmgoG22oegh
-         H25FXqlgmhNsordBEu+PoDU2Gj9PgntKCBsy8WOUN7oWAAJRfVz0pmE6dlo/pXn25wZP
-         eOnsJnzqb3rbMeeyg/CVCZmWcWcMcJcP2apf+Re1xCD7F8hOUlS3RpZX94KgCsHlNU50
-         caYg==
-X-Gm-Message-State: AC+VfDwrCELd/D64/jYr4zHkmWfjhnNGNB5m2kybEudag21Dt2j8NnTB
-        8Xn+C0MY7scgupzLHZ/YSs2Xtg==
-X-Google-Smtp-Source: ACHHUZ69Bbf6Z3INj/J+PwXGLRxzxffkhFi1gLwovYKWHvCS3FLJST4uEj1nucW5+Z4m4vb6CSO5MA==
-X-Received: by 2002:a5d:60d1:0:b0:309:5029:b075 with SMTP id x17-20020a5d60d1000000b003095029b075mr1497452wrt.13.1685614203474;
-        Thu, 01 Jun 2023 03:10:03 -0700 (PDT)
+        bh=sY1We4qYQqoWhZd32M3qvVq9EFogwk8bUgcdgefUaYg=;
+        b=A09HakvbDWgFjobCObxaOWMNwIU8qDxq7dekeQgOSfwrL0n4lr93uQNMTnjlC08LN8
+         hMwv+2WxQSC9oFnDl8UXNeDvQx7iOZQY7ZMt/uE/SgO8AaM0Xe6Hzjc19jZkVss9Lq/V
+         PrqDVHngu299M12m4jNt5x8sBvuKNWEYoMQNJLxsCtWjcWxDzUpMlZeNQVpGgXdX+k+n
+         E7euXym51lurQXj0Cy9Bux5iG30Z1eqILvSDN5FgP80i5H518c978EStiiXkWXh1PgyL
+         uXjwCmPMxMNJvtKp+v/jzEZ8CLIyPSF5k+NDOpW2QICWR4dmw9shwY71lWix/gHQpIsu
+         iFvw==
+X-Gm-Message-State: AC+VfDyDUdY6iLuQ7CtwpdYppi4cz4lLJadwFqfvN2coaxB34JOoAYMy
+        IS/5U94giEzoqcA8OgBUTlaBbw==
+X-Google-Smtp-Source: ACHHUZ65TRjKIjH36XsJnqcWHxy3HM0YdUpsaedx5ubl2+mAXMVmYvzVt/Gt2BmsypY9M2Hz+tReuA==
+X-Received: by 2002:ac2:424f:0:b0:4f3:baf9:8f93 with SMTP id m15-20020ac2424f000000b004f3baf98f93mr1055227lfl.3.1685614204494;
+        Thu, 01 Jun 2023 03:10:04 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id u6-20020adfeb46000000b0030ae53550f5sm9683845wrn.51.2023.06.01.03.10.02
+        by smtp.gmail.com with ESMTPSA id u6-20020adfeb46000000b0030ae53550f5sm9683845wrn.51.2023.06.01.03.10.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jun 2023 03:10:03 -0700 (PDT)
+        Thu, 01 Jun 2023 03:10:04 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Thu, 01 Jun 2023 12:09:47 +0200
-Subject: [PATCH v2 1/3] dt-bindings: display: msm: dp-controller: document
- SM8550 compatible
+Date:   Thu, 01 Jun 2023 12:09:48 +0200
+Subject: [PATCH v2 2/3] arm64: dts: qcom: sm8550: fix low_svs RPMhPD labels
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230601-topic-sm8550-upstream-dp-v2-1-e8778109c757@linaro.org>
+Message-Id: <20230601-topic-sm8550-upstream-dp-v2-2-e8778109c757@linaro.org>
 References: <20230601-topic-sm8550-upstream-dp-v2-0-e8778109c757@linaro.org>
 In-Reply-To: <20230601-topic-sm8550-upstream-dp-v2-0-e8778109c757@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>,
@@ -77,23 +76,22 @@ To:     Rob Clark <robdclark@gmail.com>,
 Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+        Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=876;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1076;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=DRIkrQLx11ml/or6ze6+hR4V0lPSP/PMoO7uVnzdRFc=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkeG54qg4wI0MlQbpeCkfXkCVcdBiCMuVoAT0SMQ1N
- 59LRRxeJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZHhueAAKCRB33NvayMhJ0afpD/
- 9uWKQsA/VKfHHE76RHNW3PPQDOjVTLJ9jcBX1WePnao/vNYlw9XuVl/GTt2p8YhPZSHBIYU/T7ukFf
- lI2nbrdnYJFFikTpvDhyQvT68mZ00mTXDDakUxVB/nLwzjlAOGTUc9FbDNAifNACgVjIs+/woS4FWK
- 1GLiWtPat8FaGPKQyhtnuOXTyrs1Adzidf0B5HfxDIT/ydsvX35TAVcfnl36MHTVF4ElAByV122Dnj
- 7VTFiTw1ibXKN2Si6b482wou3s8hTuz64t4dKF1FmIF86b+OfJ2rr4ilpM6tCVId06IvjyYts7mZZc
- rd1DKtP+PTq2wM6hBWGrXe03vezEBp6/E+13CrqX0Rhu6CSNxyiLBm76ucWC/4oHwE6vz1zmt4LgEr
- HXeJg5KAPE1AFp7MmZGeJVdXe3CPDlSEXJkxvH0QQ8RXuHUdKfphFvi9b2oHX+tgEXIdVySCpSHo46
- 8ihW6AMow+htUomkVYCNm8Gv+ZRvAOlG8Wn0/1s0oFk0fFENrBYvJNBecKqu/FLhGYdGQ7qurHcpF3
- B8DeUX2KQW6yDCvfHJ4NCcF0PG4aXOEGr+Sn8OxGA36hL63GfVQkeZ0nRpNYds81DRKMgPkW2VRdLc
- 1lrLzNM2ztNi4RGed6RJ+gv/M5bd3VdkW0SY6Tph/gKTD4D9SuZ351pRlYQQ==
+ bh=BYB/JqR4EQKAABvrcd/B6Yg5ojwBRjwkuwpOgjg+m3k=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkeG54bhNVdQN6AtyD+AxffdNrLX6hlWEkxTXj8vsE
+ qBWbcHqJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZHhueAAKCRB33NvayMhJ0VxxEA
+ Ch5pApwPR/p754sUMBx/sMt4sn6pnr2AeyXiUzb2+MaN3Fwcpo9IjzSvoT67PglpF5yQps4Yia+AEH
+ JNS69njWUnGW+kJij07YFhspaofhY/9xX7aH7fmQ/npXitQ2h7mmglTQVZ6RiJ2Z/cuPm71RpU0cW/
+ 52r4m1nxpE9gcFKZD7MOFDtI53+xNsCQkTkvCkpl8E5uPC1uucg4+K2/P6VQt09UJ6c55ik/v9b1Jq
+ 85BsH8E9oXH6hJc4I+4RFUCeSopEeNCNAD3LFTQ8Azg1boLV9fNV2n1YAZoQDyktxT8K1mfqwtidTW
+ uPZkLSRoWMWzkrBASVujWhR6mqLjHGK4meVeMIopppxaQxSmmHg5qUdgwJliVfY3Na/YqyYQHtQ64H
+ NSQsrI+0J/Tzfe8Etd8adpkTXX6PCtAoQVIf3zeu4xyF9zt9ds2HdxYozqnq6mWdm+cg7+DX4XV2Ly
+ POMtvSv+QPf633NEJO9l1Rs0TkTQGx7WInmITN11liIbnpL7lEdV8KwAJVdMDZFEJP1A9qPM5NPNhY
+ 8FdZXleXL0CAKy7axagK/uQjH6mhdI3WciatBGgVbKCON9CCQJcutT8vN/uBe2YwsRHdExFAP+mEIY
+ S2eO4xSplMyEpps+kcqYPXw5qXKhT5R0OgeEcLsVltgnRDw98oOY+OJzwFAA==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -106,27 +104,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SM8550 & SM8350 SoC shares the same DP TX IP version, use the
-SM8350 compatible as fallback for SM8550.
+"low" was written "lov", fix this.
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 99d33ee61cb0 ("arm64: dts: qcom: sm8550: Add missing RPMhPD OPP levels")
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-index f0c2237d5f82..7a7cf3fb3e6d 100644
---- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-@@ -29,6 +29,7 @@ properties:
-       - items:
-           - enum:
-               - qcom,sm8450-dp
-+              - qcom,sm8550-dp
-           - const: qcom,sm8350-dp
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 75cd374943eb..972df1ef86ee 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -3649,15 +3649,15 @@ rpmhpd_opp_min_svs: opp-48 {
+ 						opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
+ 					};
  
-   reg:
+-					rpmhpd_opp_lov_svs_d2: opp-52 {
++					rpmhpd_opp_low_svs_d2: opp-52 {
+ 						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D2>;
+ 					};
+ 
+-					rpmhpd_opp_lov_svs_d1: opp-56 {
++					rpmhpd_opp_low_svs_d1: opp-56 {
+ 						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
+ 					};
+ 
+-					rpmhpd_opp_lov_svs_d0: opp-60 {
++					rpmhpd_opp_low_svs_d0: opp-60 {
+ 						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D0>;
+ 					};
+ 
 
 -- 
 2.34.1
