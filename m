@@ -2,308 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC0D271971C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 11:37:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4B2D719730
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 11:39:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231599AbjFAJhy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 05:37:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51974 "EHLO
+        id S232238AbjFAJjh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 05:39:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232258AbjFAJhx (ORCPT
+        with ESMTP id S232891AbjFAJja (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 05:37:53 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B966134;
-        Thu,  1 Jun 2023 02:37:50 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35158eBY001802;
-        Thu, 1 Jun 2023 09:37:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=W/k5FMFIiDVmSGnrut0ZiBHdp2E7/iWBsuAHGK4OneQ=;
- b=aaR8TJV7UT/UKozPBCcuyI1lja+jXwzkpPudkB7Ycv5s4DNAwOwaL4o1D5/sWDSxUhA7
- qHjXDZEa7IxXFFKTEl3maZfhaucbAq+hhUpS1z97FmewH9VQtbt57/KdRhjg2LrpD3CM
- wbubUrh6DgKdq7OxMfFCJKhlTYvP5ghcE49wjgPK/K4xh/akJcsLPku/H5A7FkfiX4En
- n7JTgQS6cCqJDscIPbc0fhgcwVsg6CBUIiToqtfQ9yGhVgd0ZfIjjYY4OI+wk4EvrKMJ
- OzynjYjIRbWMrQEDT0DvRNYXfb6mHeMLg1R7dB0NB4ryoa9MyvGJya3abwT6BCz6mFJZ 1A== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qxbt8hjf9-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 01 Jun 2023 09:37:18 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3519bHEC030133
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 1 Jun 2023 09:37:17 GMT
-Received: from [10.50.56.241] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 1 Jun 2023
- 02:37:12 -0700
-Message-ID: <a04910bf-f8f3-dc15-5ce8-7300ac6a060c@quicinc.com>
-Date:   Thu, 1 Jun 2023 15:07:08 +0530
+        Thu, 1 Jun 2023 05:39:30 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD52EE70
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 02:39:13 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f4f757d575so907666e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 02:39:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685612351; x=1688204351;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kRvNGrsibEvu6jhRJBq1cBQ4kF2HTrS/VOtbw4oxVa0=;
+        b=oJPY1B0tSvI82MXYYsTcHjaCd69oP8/C2oPLYL9IUuIiHqI97BuOG6qIrAR9hYgIXD
+         LHSp/oMeX5OSTSqjvwgU8UWvU91sUqzidwpeKEC/1A3cw+cCK0T/34coH7nQDgiGt7mW
+         Z2lnNzMFh+nNRBtjNDJvDRhrH2rRn59XpPzqzwzz+N1/TpmU8o6AGhS78klDJ8L+GIto
+         tiFPKi6K5gVwAYoNCV/6oEkTI7aEt77KujZLxh9nZCOJzl8XlDBTxUH5yiATR/M03T/9
+         Uz+Lgote1m/ev2mBXpLE++WvRRrvdbzEJjYHsX0c52q0TOmDD2vlcFZP85HuUlTKlIny
+         lX1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685612351; x=1688204351;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kRvNGrsibEvu6jhRJBq1cBQ4kF2HTrS/VOtbw4oxVa0=;
+        b=Q0Vu4qHJno4RKynxQ0xEAb2vwfIeKObM2wSYJrNWtQdP/sIWuNL6j7KWnaSwD2qLJr
+         3oldo5JE+8lKvBcsPiv9Zh2QpL8JuLPgX31CzuzPYnwQUCg9WS9jILsYCgHoKTDgtnu9
+         dPQwbgcF4W6Rr6N3nIhNKmF5eCLZllF3Yr8G2PvSOr3O/TLVdFLkDNARkyl8oAJHp+AK
+         4DAgCJgNlJdJBzZmNFH7toHkQ/BiURVUC503uYTum48S01JFvUi96gzdZV6Zon+ctLtu
+         B1MPDP77RyYwvEZtlcjYUhzWzdPdLGOe/GG+CeQXbwIy75XV9JB8zRF8HmZEZCtnFX+v
+         fO8g==
+X-Gm-Message-State: AC+VfDyhaueBrb0tn18jd4lI/puNEFbYNnu+XdUu0XdlD6wgyb7/WGw1
+        nrECmwDjsgsjzKbZymyNNjqdBg==
+X-Google-Smtp-Source: ACHHUZ4wl5eRmVoSl9UH26pnAgkcofTJ38V9G+G3IT8dqT7qVyiM/5Nvy+pDD+XL//satwDo0Gcydw==
+X-Received: by 2002:a05:6512:4018:b0:4f3:a763:ccb7 with SMTP id br24-20020a056512401800b004f3a763ccb7mr356822lfb.2.1685612351343;
+        Thu, 01 Jun 2023 02:39:11 -0700 (PDT)
+Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
+        by smtp.gmail.com with ESMTPSA id v3-20020a056512048300b004f3b258feefsm1031119lfq.179.2023.06.01.02.39.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Jun 2023 02:39:11 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 0/2] Update parts of PLL_TEST_CTL(_U) if required
+Date:   Thu, 01 Jun 2023 11:39:06 +0200
+Message-Id: <20230601-topic-alpha_ctl-v1-0-b6a932dfcf68@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH v4 15/17] media: venus: Introduce accessors for remapped
- hfi_buffer_reqs members
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "Mauro Carvalho Chehab" <mchehab@kernel.org>,
-        Dikshita Agarwal <dikshita@qti.qualcomm.com>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Hans Verkuil <hans.verkuil@cisco.com>
-CC:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        "Marijn Suijten" <marijn.suijten@somainline.org>
-References: <20230228-topic-venus-v4-0-feebb2f6e9b8@linaro.org>
- <20230228-topic-venus-v4-15-feebb2f6e9b8@linaro.org>
-From:   Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <20230228-topic-venus-v4-15-feebb2f6e9b8@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9N_jhD34ycGEc9-UQGieCFxrOfeFRvZD
-X-Proofpoint-ORIG-GUID: 9N_jhD34ycGEc9-UQGieCFxrOfeFRvZD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-01_06,2023-05-31_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 suspectscore=0 mlxscore=0 mlxlogscore=999
- priorityscore=1501 bulkscore=0 adultscore=0 clxscore=1015 spamscore=0
- malwarescore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2304280000 definitions=main-2306010085
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+X-B4-Tracking: v=1; b=H4sIADpneGQC/x2N0QrCMAwAf2Xk2UC26R78FRFJ02gDpSvtFGHs3
+ w0+3sFxO3Rtph2uww5NP9ZtLQ7jaQBJXF6KFp1hommmhUbc1mqCnGvih2wZOVAU4jgvlzN4Fbg
+ rhsZFknflnbPL2vRp3//mdj+OHyl+21d2AAAA
+To:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Iskren Chernev <me@iskren.info>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1685612350; l=944;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=IIHix1miPp0qtL4poKUvHfug4CBiAQj5S40QUBQ09Oc=;
+ b=5RhikQiQfI+zL877J08QzRcusiyGzh3STK6XsgsBunSmpZG/FRrazcjiVqijI8nlRuz9Zkql3
+ OzKofyptzZZCCYboY2jT4W2Tlc/vEDd2w48En2F4F3MvUXB/BdFZoI8
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Some recent-ish clock drivers touching on the "standard" Alpha PLLs
+have been specifying the values that should be written into the CTL
+registers as mask-value combos, but that wasn't always reflected
+properly (or at all). This series tries to fix that without affecitng
+the drivers that actually provide the full register values.
 
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+Konrad Dybcio (2):
+      clk: qcom: clk-alpha-pll: Add a way to update some bits of test_ctl(_hi)
+      clk: qcom: gcc-sm6115: Add missing PLL config properties
 
-On 5/30/2023 6:00 PM, Konrad Dybcio wrote:
-> Currently we have macros to access these, but they don't provide a
-> way to override the remapped fields. Replace the macros with actual
-> get/set pairs to fix that.
-> 
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+ drivers/clk/qcom/clk-alpha-pll.c | 19 +++++++++++++++----
+ drivers/clk/qcom/clk-alpha-pll.h |  2 ++
+ drivers/clk/qcom/gcc-sm6115.c    |  8 ++++++++
+ 3 files changed, 25 insertions(+), 4 deletions(-)
+---
+base-commit: 571d71e886a5edc89b4ea6d0fe6f445282938320
+change-id: 20230601-topic-alpha_ctl-ab0dc0ad3654
 
-Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
 
-> ---
->  drivers/media/platform/qcom/venus/helpers.c    |  2 +-
->  drivers/media/platform/qcom/venus/hfi_helper.h | 61 ++++++++++++++++++++++----
->  drivers/media/platform/qcom/venus/hfi_msgs.c   |  2 +-
->  drivers/media/platform/qcom/venus/vdec.c       |  8 ++--
->  drivers/media/platform/qcom/venus/vdec_ctrls.c |  2 +-
->  drivers/media/platform/qcom/venus/venc.c       |  4 +-
->  drivers/media/platform/qcom/venus/venc_ctrls.c |  2 +-
->  7 files changed, 63 insertions(+), 18 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-> index 1822e85ab6bf..b70bd3dac4df 100644
-> --- a/drivers/media/platform/qcom/venus/helpers.c
-> +++ b/drivers/media/platform/qcom/venus/helpers.c
-> @@ -189,7 +189,7 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *inst)
->  	if (ret)
->  		return ret;
->  
-> -	count = HFI_BUFREQ_COUNT_MIN(&bufreq, ver);
-> +	count = hfi_bufreq_get_count_min(&bufreq, ver);
->  
->  	for (i = 0; i < count; i++) {
->  		buf = kzalloc(sizeof(*buf), GFP_KERNEL);
-> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-> index 0abbc50c5864..e4c05d62cfc7 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
-> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-> @@ -1170,14 +1170,6 @@ struct hfi_buffer_display_hold_count_actual {
->  	u32 hold_count;
->  };
->  
-> -/* HFI 4XX reorder the fields, use these macros */
-> -#define HFI_BUFREQ_HOLD_COUNT(bufreq, ver)	\
-> -	((ver) == HFI_VERSION_4XX ? 0 : (bufreq)->hold_count)
-> -#define HFI_BUFREQ_COUNT_MIN(bufreq, ver)	\
-> -	((ver) == HFI_VERSION_4XX ? (bufreq)->hold_count : (bufreq)->count_min)
-> -#define HFI_BUFREQ_COUNT_MIN_HOST(bufreq, ver)	\
-> -	((ver) == HFI_VERSION_4XX ? (bufreq)->count_min : 0)
-> -
->  struct hfi_buffer_requirements {
->  	u32 type;
->  	u32 size;
-> @@ -1189,6 +1181,59 @@ struct hfi_buffer_requirements {
->  	u32 alignment;
->  };
->  
-> +/* On HFI 4XX, some of the struct members have been swapped. */
-> +static inline u32 hfi_bufreq_get_hold_count(struct hfi_buffer_requirements *req,
-> +					    u32 ver)
-> +{
-> +	if (ver == HFI_VERSION_4XX)
-> +		return 0;
-> +
-> +	return req->hold_count;
-> +};
-> +
-> +static inline u32 hfi_bufreq_get_count_min(struct hfi_buffer_requirements *req,
-> +					   u32 ver)
-> +{
-> +	if (ver == HFI_VERSION_4XX)
-> +		return req->hold_count;
-> +
-> +	return req->count_min;
-> +};
-> +
-> +static inline u32 hfi_bufreq_get_count_min_host(struct hfi_buffer_requirements *req,
-> +						u32 ver)
-> +{
-> +	if (ver == HFI_VERSION_4XX)
-> +		return req->count_min;
-> +
-> +	return 0;
-> +};
-> +
-> +static inline void hfi_bufreq_set_hold_count(struct hfi_buffer_requirements *req,
-> +					     u32 ver, u32 val)
-> +{
-> +	if (ver == HFI_VERSION_4XX)
-> +		return;
-> +
-> +	req->hold_count = val;
-> +};
-> +
-> +static inline void hfi_bufreq_set_count_min(struct hfi_buffer_requirements *req,
-> +					    u32 ver, u32 val)
-> +{
-> +	if (ver == HFI_VERSION_4XX)
-> +		req->hold_count = val;
-> +
-> +	req->count_min = val;
-> +};
-> +
-> +static inline void hfi_bufreq_set_count_min_host(struct hfi_buffer_requirements *req,
-> +						 u32 ver, u32 val)
-> +{
-> +	if (ver == HFI_VERSION_4XX)
-> +		req->count_min = val;
-> +};
-> +
->  struct hfi_data_payload {
->  	u32 size;
->  	u8 data[1];
-> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> index 3d5dadfa1900..7cab685a2ec8 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> @@ -99,7 +99,7 @@ static void event_seq_changed(struct venus_core *core, struct venus_inst *inst,
->  		case HFI_PROPERTY_CONFIG_BUFFER_REQUIREMENTS:
->  			data_ptr += sizeof(u32);
->  			bufreq = (struct hfi_buffer_requirements *)data_ptr;
-> -			event.buf_count = HFI_BUFREQ_COUNT_MIN(bufreq, ver);
-> +			event.buf_count = hfi_bufreq_get_count_min(bufreq, ver);
->  			data_ptr += sizeof(*bufreq);
->  			break;
->  		case HFI_INDEX_EXTRADATA_INPUT_CROP:
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 063a8b0d357b..2a1e038f92cf 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -899,13 +899,13 @@ static int vdec_num_buffers(struct venus_inst *inst, unsigned int *in_num,
->  	if (ret)
->  		return ret;
->  
-> -	*in_num = HFI_BUFREQ_COUNT_MIN(&bufreq, ver);
-> +	*in_num = hfi_bufreq_get_count_min(&bufreq, ver);
->  
->  	ret = venus_helper_get_bufreq(inst, HFI_BUFFER_OUTPUT, &bufreq);
->  	if (ret)
->  		return ret;
->  
-> -	*out_num = HFI_BUFREQ_COUNT_MIN(&bufreq, ver);
-> +	*out_num = hfi_bufreq_get_count_min(&bufreq, ver);
->  
->  	return 0;
->  }
-> @@ -1019,14 +1019,14 @@ static int vdec_verify_conf(struct venus_inst *inst)
->  		return ret;
->  
->  	if (inst->num_output_bufs < bufreq.count_actual ||
-> -	    inst->num_output_bufs < HFI_BUFREQ_COUNT_MIN(&bufreq, ver))
-> +	    inst->num_output_bufs < hfi_bufreq_get_count_min(&bufreq, ver))
->  		return -EINVAL;
->  
->  	ret = venus_helper_get_bufreq(inst, HFI_BUFFER_INPUT, &bufreq);
->  	if (ret)
->  		return ret;
->  
-> -	if (inst->num_input_bufs < HFI_BUFREQ_COUNT_MIN(&bufreq, ver))
-> +	if (inst->num_input_bufs < hfi_bufreq_get_count_min(&bufreq, ver))
->  		return -EINVAL;
->  
->  	return 0;
-> diff --git a/drivers/media/platform/qcom/venus/vdec_ctrls.c b/drivers/media/platform/qcom/venus/vdec_ctrls.c
-> index fbe12a608b21..7e0f29bf7fae 100644
-> --- a/drivers/media/platform/qcom/venus/vdec_ctrls.c
-> +++ b/drivers/media/platform/qcom/venus/vdec_ctrls.c
-> @@ -79,7 +79,7 @@ static int vdec_op_g_volatile_ctrl(struct v4l2_ctrl *ctrl)
->  	case V4L2_CID_MIN_BUFFERS_FOR_CAPTURE:
->  		ret = venus_helper_get_bufreq(inst, HFI_BUFFER_OUTPUT, &bufreq);
->  		if (!ret)
-> -			ctrl->val = HFI_BUFREQ_COUNT_MIN(&bufreq, ver);
-> +			ctrl->val = hfi_bufreq_get_count_min(&bufreq, ver);
->  		break;
->  	default:
->  		return -EINVAL;
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index b60772cc2cdc..d2e2d3108752 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -1207,7 +1207,7 @@ static int venc_verify_conf(struct venus_inst *inst)
->  		return ret;
->  
->  	if (inst->num_output_bufs < bufreq.count_actual ||
-> -	    inst->num_output_bufs < HFI_BUFREQ_COUNT_MIN(&bufreq, ver))
-> +	    inst->num_output_bufs < hfi_bufreq_get_count_min(&bufreq, ver))
->  		return -EINVAL;
->  
->  	ret = venus_helper_get_bufreq(inst, HFI_BUFFER_INPUT, &bufreq);
-> @@ -1215,7 +1215,7 @@ static int venc_verify_conf(struct venus_inst *inst)
->  		return ret;
->  
->  	if (inst->num_input_bufs < bufreq.count_actual ||
-> -	    inst->num_input_bufs < HFI_BUFREQ_COUNT_MIN(&bufreq, ver))
-> +	    inst->num_input_bufs < hfi_bufreq_get_count_min(&bufreq, ver))
->  		return -EINVAL;
->  
->  	return 0;
-> diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> index 7468e43800a9..d9d2a293f3ef 100644
-> --- a/drivers/media/platform/qcom/venus/venc_ctrls.c
-> +++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
-> @@ -358,7 +358,7 @@ static int venc_op_g_volatile_ctrl(struct v4l2_ctrl *ctrl)
->  	case V4L2_CID_MIN_BUFFERS_FOR_OUTPUT:
->  		ret = venus_helper_get_bufreq(inst, HFI_BUFFER_INPUT, &bufreq);
->  		if (!ret)
-> -			ctrl->val = HFI_BUFREQ_COUNT_MIN(&bufreq, ver);
-> +			ctrl->val = hfi_bufreq_get_count_min(&bufreq, ver);
->  		break;
->  	default:
->  		return -EINVAL;
-> 
