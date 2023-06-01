@@ -2,95 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D6D7C71EF04
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 18:31:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF1FB71EF36
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 18:39:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231423AbjFAQbO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 12:31:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49882 "EHLO
+        id S230022AbjFAQjU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 12:39:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230252AbjFAQbL (ORCPT
+        with ESMTP id S231651AbjFAQjQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 12:31:11 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6F82C12C;
-        Thu,  1 Jun 2023 09:31:10 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3517NgCp003407;
-        Thu, 1 Jun 2023 16:31:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=gXoHAQNmOOAgQOQONOTMIbcMC8tismx6YIuIy2t6OhQ=;
- b=id9dTz1I7GrRsvCLNZPVEpPXUt3d1mT3qtW3yN8TfV6+xz2drmJFuS93M3/zGC64vvtg
- yR3eZWqCf8oP+7y0XB5KJOiQy4B2ZPIuc6ZyR8c56zoWB2wM5fUBIk/ViXm/jgRVCPI2
- 3RnfNFAHDYtEj/wjOVn4HMRfgax/OZ69W1SmZ/nsY628rGP0p22kOHvMc3ye7MDv4e6B
- s2FxxpWg8WSNX7usMK8ay+KPELVm00Oid0nXzOtJoDdBEjW78Nn0juBL5qjLloqIXSWl
- 9iZY4Wm3kozSgIryisCXswD3M7+Y+ylC/Y32Ba5cvXDF0OlPN9RiETsrLZ97oE2+S4qx kw== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qxnwv1ma3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 01 Jun 2023 16:31:03 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 351GUcEf004186
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 1 Jun 2023 16:30:38 GMT
-Received: from [10.110.26.45] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 1 Jun 2023
- 09:30:36 -0700
-Message-ID: <5d38df6b-f93f-d28b-f346-cdfb5298933f@quicinc.com>
-Date:   Thu, 1 Jun 2023 09:30:34 -0700
+        Thu, 1 Jun 2023 12:39:16 -0400
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E286ED1
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 09:39:14 -0700 (PDT)
+Received: by mail-pf1-x42c.google.com with SMTP id d2e1a72fcca58-65055aa4ed7so511058b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 09:39:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685637554; x=1688229554;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=sOOciFoH4cpEM1lcqTLO3ukPDE6ER2ndNsc0mysgwXc=;
+        b=K0aslblqvpdTYqwkS4XYEl7gVij/GDApljQ8rkkcVbC10b2ClMbHVm3fLa5AlJcKY0
+         ESsZW5Sfaw5W55g+20mplkeIWb04BxIq40oWqYGl+a5622EUxNjDbcqP4HR5Jxhc5hde
+         06xaXqZCYud+S/5qX+Bpsr4iFUGfwH2rb8lNX/cOJRIuV7Rm2Ok2xvkYRVlOx+AbEDEa
+         Mht+YSaXCNaDjObK1J/5lEEzqNKPnWaXM61ss6d+55y3Q0+dfLp+HrY2cMcK9x3StibI
+         robd2eL/wWjjyb7KHT5OIUQ7OK9GFMEoqjmjDZNefM8CdQNxDYC5/hicj13ZNmGwIuF4
+         7+qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685637554; x=1688229554;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sOOciFoH4cpEM1lcqTLO3ukPDE6ER2ndNsc0mysgwXc=;
+        b=e81k0auSdnj4PM7Saas2KgIOzowv1A90qJK+Fmtos7EbUJ13JNhzNLmHUQ3Vs55i5V
+         6VLhBJ4rB0o5Lh2bPPBQ1UqEXLG/Y9w4zBDJVIgZXdCM6ysreF1ByTp6lqiI0ND9N7Nd
+         +YouzQAgsGTN7eyU+e++RJXuWLOIu5JwhZ5BqCUySYKxSiLcyYGbC6HtKhLJ4CFl1Jrh
+         UKGneTnkCGgwA/+W/scojbi1MJLR/PFMW69YhyMqbQFHhWuWt5n0Dh4MmItl24JCvWqn
+         TAC7plkfy/KIvCNjyyEah3jyegtJxZSX4IF33CcgNtXKd2AMx1GMNtii84fbmXNiN+sQ
+         fzuw==
+X-Gm-Message-State: AC+VfDypbOYEad57Jk29UaA8ixvl8UeVDY5+RfPS6L0Qc4S9kM613u78
+        J2uFGc3XDaI4wp/LN5YD0trtwaMO7OnrLOLeYA==
+X-Google-Smtp-Source: ACHHUZ69860DO9v4Sa6prJ4OIPewxb4aEA42dlmX9ftkLqMZq96X1XrGVDAkguz08vsZtyV4Ddcarg==
+X-Received: by 2002:a05:6a00:170b:b0:64d:1451:8233 with SMTP id h11-20020a056a00170b00b0064d14518233mr8621898pfc.21.1685637554416;
+        Thu, 01 Jun 2023 09:39:14 -0700 (PDT)
+Received: from localhost.localdomain ([117.217.186.123])
+        by smtp.gmail.com with ESMTPSA id a9-20020aa78649000000b0064f83595bbcsm5273630pfo.58.2023.06.01.09.39.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Jun 2023 09:39:14 -0700 (PDT)
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     lpieralisi@kernel.org, kw@linux.com, bhelgaas@google.com
+Cc:     robh@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, steev@kali.org,
+        quic_srichara@quicinc.com,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v3 0/8] PCI: qcom: Do not advertise hotplug capability
+Date:   Thu,  1 Jun 2023 22:08:52 +0530
+Message-Id: <20230601163900.15500-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [Freedreno] [PATCH] drm/msm: Remove unnecessary (void*)
- conversions
-Content-Language: en-US
-To:     Su Hui <suhui@nfschina.com>, Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-CC:     <linux-arm-msm@vger.kernel.org>, <kernel-janitors@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230522013213.25876-1-suhui@nfschina.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230522013213.25876-1-suhui@nfschina.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Eu8kf52tGLFEk29dzJ-E82oyW3Y2zztf
-X-Proofpoint-ORIG-GUID: Eu8kf52tGLFEk29dzJ-E82oyW3Y2zztf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-01_08,2023-05-31_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 adultscore=0
- priorityscore=1501 lowpriorityscore=0 phishscore=0 suspectscore=0
- bulkscore=0 clxscore=1011 malwarescore=0 impostorscore=0 mlxscore=0
- mlxlogscore=953 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2306010143
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
+The SoCs making use of Qualcomm PCIe controllers do not support the PCIe hotplug
+functionality. But the hotplug capability bit is set by default in the hardware.
+This causes the kernel PCI core to register hotplug service for the controller
+and send hotplug commands to it. But those commands will timeout generating
+messages as below during boot and suspend/resume.
+    
+[    5.782159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2020 msec ago)
+[    5.810161] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x03c0 (issued 2048 msec ago)
+[    7.838162] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2020 msec ago)
+[    7.870159] pcieport 0001:00:00.0: pciehp: Timeout on hotplug command 0x07c0 (issued 2052 msec ago)
+    
+This not only spams the console output but also induces a delay of a couple of
+seconds. To fix this issue, this series clears the HPC bit in PCI_EXP_SLTCAP
+register as a part of the post init sequence for all IP versions to not
+advertise the hotplug capability for the controller.
 
-On 5/21/2023 6:32 PM, Su Hui wrote:
-> Pointer variables of (void*) type do not require type cast.
-> 
-> Signed-off-by: Su Hui <suhui@nfschina.com>
-> ---
+Testing
+=======
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+This series has been tested on DB845c (SDM845 SoC) and Lenovo Thinkpad X13s
+(SC8280XP SoC).
+
+Thanks,
+Mani
+
+Changes in v3:
+
+* Dropped double signed-off tags
+* Dropped Dmitry's gmail reviewed tag as per his request
+* Mentioned the newline change in commit log of patch 2/8
+
+Changes in v2:
+
+* Collected tags
+* Moved the HPC clearing to a separate function and reused across different
+  configs
+
+Manivannan Sadhasivam (8):
+  PCI: qcom: Use DWC helpers for modifying the read-only DBI registers
+  PCI: qcom: Disable write access to read only registers for IP v2.9.0
+  PCI: qcom: Do not advertise hotplug capability for IPs v2.7.0 and
+    v1.9.0
+  PCI: qcom: Do not advertise hotplug capability for IPs v2.3.3 and
+    v2.9.0
+  PCI: qcom: Do not advertise hotplug capability for IP v2.3.2
+  PCI: qcom: Use post init sequence of IP v2.3.2 for v2.4.0
+  PCI: qcom: Do not advertise hotplug capability for IP v1.0.0
+  PCI: qcom: Do not advertise hotplug capability for IP v2.1.0
+
+ drivers/pci/controller/dwc/pcie-qcom.c | 73 ++++++++++++++------------
+ 1 file changed, 38 insertions(+), 35 deletions(-)
+
+-- 
+2.25.1
 
