@@ -2,65 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8715871A0B6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 16:44:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4EFA71A0C7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 16:46:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234337AbjFAOoQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 10:44:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58432 "EHLO
+        id S233780AbjFAOqn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 10:46:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234218AbjFAOoP (ORCPT
+        with ESMTP id S233476AbjFAOqm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 10:44:15 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A7E261B4
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 07:43:39 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f60bc818d7so400683e87.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 07:43:39 -0700 (PDT)
+        Thu, 1 Jun 2023 10:46:42 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25060128
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 07:46:39 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f60bc818d7so407084e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 07:46:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685630615; x=1688222615;
+        d=linaro.org; s=google; t=1685630797; x=1688222797;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=F9vPerXquIQBsMeR29IRTLCwtaBHY9UEGu+yqjA2ANM=;
-        b=x/qqM/Bjrd4MksXHcIRMXeDh7A69sar4aQzUw7XXhcdu2uJXiRFBmSCANdfAK5CSg5
-         qc6w1x5RQhsrBrgTDPlnw9DsMlCnGfAyj2rkeU3iXfs7M2N+A7AlNTApXfDRDANhV6Cs
-         aiXwW5Zn6CZSHo2j9qQS4OGa1vpdCCResdu0CUndVEaRsPtT4WnaXnw2s2Exnd9p4k/I
-         TrrQzt+MKnTHRylx5GDp6cESTubIGKvpCmtA9Es+MnZTsxU75MqHenu1uHq7QY/ByI12
-         nje5hdQKSSl+Iy28B//eGcFMwiexToIRO6bnegU8YVZaeOQ0tIlDp2AMQo1BDlzfQq36
-         g4Cg==
+        bh=xixYGYlwUyF0I+OFHzEUwOqoaLpveoc9s/Ml2gFPUxo=;
+        b=E9eRYXWB3xis66zsjFFV8dJyHpyMHuT0sxbGkRwMFvzjD9c8msT/a+WkKW+Ya0BgPD
+         2Bv5lOYiVRK8Ne0IBhg9KbbucirVYVdAghuBR5q2F0sTipJ8fxf2WwBrXnSLjc1qSkgq
+         sOhzFiD7+FHM0WleSn50OazfrffFixdFkd+dxdo9tihJviTdWZw2Xr4p2PsJIUntz1fQ
+         f7b3U4vENTQLeMyTl4RuS3pszKrCmbbQyugs5CsfvGW0Mu6yTuNFVrps6QMK891rEOES
+         MFetSjGP2tYMEDZFCldn5pUL6qyy2IiCDsXhYRnQ8vxXMC4TM86klTLfIqdUwg5I+t8c
+         Xzww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685630615; x=1688222615;
+        d=1e100.net; s=20221208; t=1685630797; x=1688222797;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=F9vPerXquIQBsMeR29IRTLCwtaBHY9UEGu+yqjA2ANM=;
-        b=G/aDUiRz180UeLQd8891oxXy18HaVfCzvU7OxE/f6qft22JQKjexNASptRypRPlcj/
-         Z+UXtICgUdd5ZbjAtgrXj1Bj3a5KosSSpts9Sfz7u+E8sCjwzP/7j6e3ZR5aHvNL/ABe
-         DlqTacjwOeSywQYjB/dpO0OyzRj7NYwjvqcRSe5ZRqJigUUNuQFjXDkICScuVtrIrbWo
-         NF18XsXN6rTLYGty9klt2ZjlT0a61mBFWp8a5e0ggGbFiOSQfUV61ByeekJcnUONW7aU
-         50MMae5whQGDPpfD2W3dkwjY4M3r0jLJseM7IqZk4GmVpdhdRTbkdNvdRHslp0boKfvP
-         Ckvw==
-X-Gm-Message-State: AC+VfDyDoqFwV7quYRweh2zp8oJXsoFITgbFUVYIK4YrFbbK1Mn8J90u
-        S3GAYAh7HtsAgMSb8eK+Vpvp7A==
-X-Google-Smtp-Source: ACHHUZ76ao2NbgDl2Kv9JBguW1m9Ny566OnnpttU/IAXt2WxRdrpKBZk6h9s+DkgkhW451313+K37Q==
-X-Received: by 2002:ac2:434e:0:b0:4f6:ab8:bc12 with SMTP id o14-20020ac2434e000000b004f60ab8bc12mr99020lfl.20.1685630614778;
-        Thu, 01 Jun 2023 07:43:34 -0700 (PDT)
+        bh=xixYGYlwUyF0I+OFHzEUwOqoaLpveoc9s/Ml2gFPUxo=;
+        b=kx2v2yJNeWF9B5YUshezKwsCJoUpwFHOVNm+TK6Voo0NevCrfhf/llPoCtzcz+I7LL
+         6bJdcH7eNB+8R01Nz/awdbAN4uLkxFSlDg3Qd/ROZibHtx71C9NYIt/QGd4+9iFKiYqi
+         A23Rf5DyY9n00fjZty4Qiz0ovmHkw9z3j+WIWzi/qfNhxl4Ccj+e2fXb9iLEdDDW3mT+
+         LJhMZyDK3e+SHL2CdhDzbxJJGZdBAH1RVRrrNEprWo7JwYglgKwcdb9OZnXgyP1ERFz8
+         LOT2J4rU5/dm0TJ6wnQV1tC956hOGYZPueLBaoPsBPXlPE26jK86TdDRiwKUNhw2AIsP
+         y8DQ==
+X-Gm-Message-State: AC+VfDwJXGRogPXKu25bTgBIjnHpiRgLax56qhCBcwKT04rTEQ14zgSe
+        ZxTkbpKbEHNys+xI8fi2xSFh7w==
+X-Google-Smtp-Source: ACHHUZ5nrobEjk3ms0pLbmU8FAAt0umdcwyVqfIoCrmIZ2iwdxX1OX5DuXFgxBiXnyeE7pRfeLidiQ==
+X-Received: by 2002:ac2:44a2:0:b0:4f3:a08b:275e with SMTP id c2-20020ac244a2000000b004f3a08b275emr73653lfm.53.1685630797287;
+        Thu, 01 Jun 2023 07:46:37 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id c25-20020ac24159000000b004cc8196a308sm1108910lfi.98.2023.06.01.07.43.34
+        by smtp.gmail.com with ESMTPSA id x17-20020a19f611000000b004f1430ee142sm1107794lfe.17.2023.06.01.07.46.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Jun 2023 07:43:34 -0700 (PDT)
-Message-ID: <c60bb4d9-1b53-6c60-8b9d-13069bdff882@linaro.org>
-Date:   Thu, 1 Jun 2023 17:43:33 +0300
+        Thu, 01 Jun 2023 07:46:36 -0700 (PDT)
+Message-ID: <1d29bc3f-12db-a676-56f8-b8c1a09063dc@linaro.org>
+Date:   Thu, 1 Jun 2023 17:46:36 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH V2 3/6] clk: qcom: clk-alpha-pll: Remove explicit CAL_L
- configuration for EVO PLL
+Subject: Re: [PATCH V3 2/5] clk: qcom: Remove support to set CAL_L field in
+ lucid evo pll configure
 Content-Language: en-GB
 To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
         Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
@@ -74,15 +74,12 @@ Cc:     Bjorn Andersson <andersson@kernel.org>,
         Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
         Imran Shaik <quic_imrashai@quicinc.com>,
         Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20230525172142.9039-1-quic_jkona@quicinc.com>
- <20230525172142.9039-4-quic_jkona@quicinc.com>
- <6e1d098d-03b9-aa63-a0bf-6cf748a0db0d@linaro.org>
- <7074f718-a3d5-8a03-3830-77a5a0b15500@linaro.org>
- <df7ab6f7-6c5e-9a7d-8d9b-09ff32da34d6@quicinc.com>
+References: <20230601143430.5595-1-quic_jkona@quicinc.com>
+ <20230601143430.5595-3-quic_jkona@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <df7ab6f7-6c5e-9a7d-8d9b-09ff32da34d6@quicinc.com>
+In-Reply-To: <20230601143430.5595-3-quic_jkona@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
@@ -93,78 +90,242 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/06/2023 17:33, Jagadeesh Kona wrote:
-> Hi Dmitry, Konrad,
+On 01/06/2023 17:34, Jagadeesh Kona wrote:
+> For lucid evo and ole pll's the CAL_L, RINGOSC_CAL_L and L_VAL are
+> part of the same register, hence update the l configuration value
+> to include these fields across all the chipsets.
 > 
-> On 5/26/2023 9:23 PM, Dmitry Baryshkov wrote:
->> On 26/05/2023 12:33, Konrad Dybcio wrote:
->>>
->>>
->>> On 25.05.2023 19:21, Jagadeesh Kona wrote:
->>>> In lucid evo pll, the CAL_L field is part of L value register 
->>>> itself, and
->>>> the l value configuration passed from clock controller driver includes
->>>> CAL_L and L values as well. Hence remove explicit configuration of 
->>>> CAL_L
->>>> for evo pll.
->>>>
->>>> Fixes: 260e36606a03 ("clk: qcom: clk-alpha-pll: add Lucid EVO PLL 
->>>> configuration interfaces")
->>>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->>>> ---
->>> Oh that isn't obvious at first sight, nice find!
->>>
->>> I'd suggest a different solution though:
->>>
->>> #define LUCID_EVO_PLL_L_LVAL    GENMASK(..
->>> #define LUCID_EVO_PLL_L_CAL_L    GENMASK(..
->>>
->>> lval = FIELD_PREP(LUCID_EVO_PLL_L_LVAL, config->l) |
->>>         FIELD_PREP(LUCID_EVO_PLL_L_CAL_L, config->cal_l);
->>>
->>> This would make the separation between the two parts more explicit
->>>
->>> however
->>>
->>> config->l would then represent the L value and not the end value
->>> written to the L register
->>
->> Yes. I think there should be separate config->l and config->cal_l 
->> values (and probably ringosc_cal_l, basing on the comment in the source).
->> Thanks for your suggestions. In all recent chipsets, L & CAL_L fields 
-> are encapsulated in the same register, so we feel it is better to 
-> directly pass the combined configuration value in config->l itself and 
-> program it directly into register without any additional handling 
-> required in pll driver code.
+> Since the l configuration value now includes both L and CAL_L fields,
+> there is no need to explicitly set CAL_L field again in lucid evo pll
+> configure, Hence remove support to explicity set CAL_L field for evo pll.
+> 
+> Fixes: 260e36606a03 ("clk: qcom: clk-alpha-pll: add Lucid EVO PLL configuration interfaces")
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+> ---
+> Changes since V2:
+>   - Squashed update L val and remove explicit cal_l configuration to single patch
+>   - Updated L configuration for gpucc-sm8450 as well which was merged recently
+> Changes since V1:
+>   - Newly added.
+> 
+>   drivers/clk/qcom/camcc-sm8450.c  | 24 ++++++++++++++++--------
+>   drivers/clk/qcom/clk-alpha-pll.c |  6 +-----
+>   drivers/clk/qcom/dispcc-sm8450.c |  6 ++++--
+>   drivers/clk/qcom/dispcc-sm8550.c |  6 ++++--
+>   drivers/clk/qcom/gpucc-sa8775p.c |  6 ++++--
+>   drivers/clk/qcom/gpucc-sm8450.c  |  6 ++++--
+>   6 files changed, 33 insertions(+), 21 deletions(-)
 
-My feeling is that it is better to split it, since these are the 
-different fields. The value .l = 0x4444003e doesn't mean anything per se.
-
-Three values are much more meaningful:
-.l = 0x3e,
-.cal_l = 0x44,
-.ringosc_cal_l = 0x44,
-
-Not to mention that this way you don't have to touch pll configuration 
-for the existing Lucid EVO PLL. Not to mention that for the Lucid ole 
-PLLs the cal_l and ringosc_cal_l values seem to be static (0x44), so 
-there is no need to put them to the variable data.
+I'd say, this is still not a correct solution from my point of view. A 
+correct solution would be to follow the existing code and use constants 
+for the constant values (of CAL_L, and RINGOSC_CAL_L).
 
 > 
-> Also the evo pll code is currently reused for both lucid evo and ole 
-> pll's. Lucid ole PLL has an additional RINGOSC_CAL_L field along with L, 
-> CAL_L fields in the same L register. By passing combined configuration 
-> value in config->l itself, we feel we can avoid all the additional 
-> handling required in PLL code.
-> 
->> Just a question: is camcc-sm8550 using the same PLL type or is it some 
->> kind of subtype of lucid_evo PLL?
->>
-> No, it is not the same lucid evo PLL. It uses lucid ole PLL.
-
-Then please don't reuse the clk_lucid_evo_pll_configure() call.
-You can add a new one, which will handle L/CAL_L/RINGOSC_CAL_L differences.
+> diff --git a/drivers/clk/qcom/camcc-sm8450.c b/drivers/clk/qcom/camcc-sm8450.c
+> index 51338a2884d2..6a5a08f88598 100644
+> --- a/drivers/clk/qcom/camcc-sm8450.c
+> +++ b/drivers/clk/qcom/camcc-sm8450.c
+> @@ -57,7 +57,8 @@ static const struct pll_vco rivian_evo_vco[] = {
+>   static const struct clk_parent_data pll_parent_data_tcxo = { .index = DT_BI_TCXO };
+>   
+>   static const struct alpha_pll_config cam_cc_pll0_config = {
+> -	.l = 0x3e,
+> +	/* .l includes CAL_L_VAL, L_VAL fields */
+> +	.l = 0x0044003e,
+>   	.alpha = 0x8000,
+>   	.config_ctl_val = 0x20485699,
+>   	.config_ctl_hi_val = 0x00182261,
+> @@ -128,7 +129,8 @@ static struct clk_alpha_pll_postdiv cam_cc_pll0_out_odd = {
+>   };
+>   
+>   static const struct alpha_pll_config cam_cc_pll1_config = {
+> -	.l = 0x25,
+> +	/* .l includes CAL_L_VAL, L_VAL fields */
+> +	.l = 0x00440025,
+>   	.alpha = 0xeaaa,
+>   	.config_ctl_val = 0x20485699,
+>   	.config_ctl_hi_val = 0x00182261,
+> @@ -199,7 +201,8 @@ static struct clk_alpha_pll cam_cc_pll2 = {
+>   };
+>   
+>   static const struct alpha_pll_config cam_cc_pll3_config = {
+> -	.l = 0x2d,
+> +	/* .l includes CAL_L_VAL, L_VAL fields */
+> +	.l = 0x0044002d,
+>   	.alpha = 0x0,
+>   	.config_ctl_val = 0x20485699,
+>   	.config_ctl_hi_val = 0x00182261,
+> @@ -247,7 +250,8 @@ static struct clk_alpha_pll_postdiv cam_cc_pll3_out_even = {
+>   };
+>   
+>   static const struct alpha_pll_config cam_cc_pll4_config = {
+> -	.l = 0x2d,
+> +	/* .l includes CAL_L_VAL, L_VAL fields */
+> +	.l = 0x0044002d,
+>   	.alpha = 0x0,
+>   	.config_ctl_val = 0x20485699,
+>   	.config_ctl_hi_val = 0x00182261,
+> @@ -295,7 +299,8 @@ static struct clk_alpha_pll_postdiv cam_cc_pll4_out_even = {
+>   };
+>   
+>   static const struct alpha_pll_config cam_cc_pll5_config = {
+> -	.l = 0x2d,
+> +	/* .l includes CAL_L_VAL, L_VAL fields */
+> +	.l = 0x0044002d,
+>   	.alpha = 0x0,
+>   	.config_ctl_val = 0x20485699,
+>   	.config_ctl_hi_val = 0x00182261,
+> @@ -343,7 +348,8 @@ static struct clk_alpha_pll_postdiv cam_cc_pll5_out_even = {
+>   };
+>   
+>   static const struct alpha_pll_config cam_cc_pll6_config = {
+> -	.l = 0x2d,
+> +	/* .l includes CAL_L_VAL, L_VAL fields */
+> +	.l = 0x0044002d,
+>   	.alpha = 0x0,
+>   	.config_ctl_val = 0x20485699,
+>   	.config_ctl_hi_val = 0x00182261,
+> @@ -391,7 +397,8 @@ static struct clk_alpha_pll_postdiv cam_cc_pll6_out_even = {
+>   };
+>   
+>   static const struct alpha_pll_config cam_cc_pll7_config = {
+> -	.l = 0x2d,
+> +	/* .l includes CAL_L_VAL, L_VAL fields */
+> +	.l = 0x0044002d,
+>   	.alpha = 0x0,
+>   	.config_ctl_val = 0x20485699,
+>   	.config_ctl_hi_val = 0x00182261,
+> @@ -439,7 +446,8 @@ static struct clk_alpha_pll_postdiv cam_cc_pll7_out_even = {
+>   };
+>   
+>   static const struct alpha_pll_config cam_cc_pll8_config = {
+> -	.l = 0x32,
+> +	/* .l includes CAL_L_VAL, L_VAL fields */
+> +	.l = 0x00440032,
+>   	.alpha = 0x0,
+>   	.config_ctl_val = 0x20485699,
+>   	.config_ctl_hi_val = 0x00182261,
+> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
+> index f81c7c561352..68a80395997b 100644
+> --- a/drivers/clk/qcom/clk-alpha-pll.c
+> +++ b/drivers/clk/qcom/clk-alpha-pll.c
+> @@ -270,7 +270,6 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
+>   #define LUCID_EVO_PCAL_NOT_DONE		BIT(8)
+>   #define LUCID_EVO_ENABLE_VOTE_RUN       BIT(25)
+>   #define LUCID_EVO_PLL_L_VAL_MASK        GENMASK(15, 0)
+> -#define LUCID_EVO_PLL_CAL_L_VAL_SHIFT	16
+>   
+>   /* ZONDA PLL specific */
+>   #define ZONDA_PLL_OUT_MASK	0xf
+> @@ -2084,10 +2083,7 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_zonda_ops);
+>   void clk_lucid_evo_pll_configure(struct clk_alpha_pll *pll, struct regmap *regmap,
+>   				 const struct alpha_pll_config *config)
+>   {
+> -	u32 lval = config->l;
+> -
+> -	lval |= TRION_PLL_CAL_VAL << LUCID_EVO_PLL_CAL_L_VAL_SHIFT;
+> -	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), lval);
+> +	clk_alpha_pll_write_config(regmap, PLL_L_VAL(pll), config->l);
+>   	clk_alpha_pll_write_config(regmap, PLL_ALPHA_VAL(pll), config->alpha);
+>   	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL(pll), config->config_ctl_val);
+>   	clk_alpha_pll_write_config(regmap, PLL_CONFIG_CTL_U(pll), config->config_ctl_hi_val);
+> diff --git a/drivers/clk/qcom/dispcc-sm8450.c b/drivers/clk/qcom/dispcc-sm8450.c
+> index adbfd30bfc96..293eae670a23 100644
+> --- a/drivers/clk/qcom/dispcc-sm8450.c
+> +++ b/drivers/clk/qcom/dispcc-sm8450.c
+> @@ -76,7 +76,8 @@ static struct pll_vco lucid_evo_vco[] = {
+>   };
+>   
+>   static const struct alpha_pll_config disp_cc_pll0_config = {
+> -	.l = 0xD,
+> +	/* .l includes CAL_L_VAL, L_VAL fields */
+> +	.l = 0x0044000d,
+>   	.alpha = 0x6492,
+>   	.config_ctl_val = 0x20485699,
+>   	.config_ctl_hi_val = 0x00182261,
+> @@ -103,7 +104,8 @@ static struct clk_alpha_pll disp_cc_pll0 = {
+>   };
+>   
+>   static const struct alpha_pll_config disp_cc_pll1_config = {
+> -	.l = 0x1F,
+> +	/* .l includes CAL_L_VAL, L_VAL fields */
+> +	.l = 0x0044001f,
+>   	.alpha = 0x4000,
+>   	.config_ctl_val = 0x20485699,
+>   	.config_ctl_hi_val = 0x00182261,
+> diff --git a/drivers/clk/qcom/dispcc-sm8550.c b/drivers/clk/qcom/dispcc-sm8550.c
+> index 1e5a11081860..b0d4c623731d 100644
+> --- a/drivers/clk/qcom/dispcc-sm8550.c
+> +++ b/drivers/clk/qcom/dispcc-sm8550.c
+> @@ -76,7 +76,8 @@ static struct pll_vco lucid_ole_vco[] = {
+>   };
+>   
+>   static const struct alpha_pll_config disp_cc_pll0_config = {
+> -	.l = 0xd,
+> +	/* .l includes RINGOSC_CAL_L_VAL, CAL_L_VAL, L_VAL fields */
+> +	.l = 0x4444000d,
+>   	.alpha = 0x6492,
+>   	.config_ctl_val = 0x20485699,
+>   	.config_ctl_hi_val = 0x00182261,
+> @@ -103,7 +104,8 @@ static struct clk_alpha_pll disp_cc_pll0 = {
+>   };
+>   
+>   static const struct alpha_pll_config disp_cc_pll1_config = {
+> -	.l = 0x1f,
+> +	/* .l includes RINGOSC_CAL_L_VAL, CAL_L_VAL, L_VAL fields */
+> +	.l = 0x4444001f,
+>   	.alpha = 0x4000,
+>   	.config_ctl_val = 0x20485699,
+>   	.config_ctl_hi_val = 0x00182261,
+> diff --git a/drivers/clk/qcom/gpucc-sa8775p.c b/drivers/clk/qcom/gpucc-sa8775p.c
+> index 18d23be8d435..153bf6ecb795 100644
+> --- a/drivers/clk/qcom/gpucc-sa8775p.c
+> +++ b/drivers/clk/qcom/gpucc-sa8775p.c
+> @@ -46,7 +46,8 @@ static const struct pll_vco lucid_evo_vco[] = {
+>   
+>   /* 810MHz configuration */
+>   static struct alpha_pll_config gpu_cc_pll0_config = {
+> -	.l = 0x2a,
+> +	/* .l includes CAL_L_VAL, L_VAL fields */
+> +	.l = 0x0044002a,
+>   	.alpha = 0x3000,
+>   	.config_ctl_val = 0x20485699,
+>   	.config_ctl_hi_val = 0x00182261,
+> @@ -72,7 +73,8 @@ static struct clk_alpha_pll gpu_cc_pll0 = {
+>   
+>   /* 1000MHz configuration */
+>   static struct alpha_pll_config gpu_cc_pll1_config = {
+> -	.l = 0x34,
+> +	/* .l includes CAL_L_VAL, L_VAL fields */
+> +	.l = 0x00440034,
+>   	.alpha = 0x1555,
+>   	.config_ctl_val = 0x20485699,
+>   	.config_ctl_hi_val = 0x00182261,
+> diff --git a/drivers/clk/qcom/gpucc-sm8450.c b/drivers/clk/qcom/gpucc-sm8450.c
+> index 16c0381b3087..dddfda880202 100644
+> --- a/drivers/clk/qcom/gpucc-sm8450.c
+> +++ b/drivers/clk/qcom/gpucc-sm8450.c
+> @@ -40,7 +40,8 @@ static struct pll_vco lucid_evo_vco[] = {
+>   };
+>   
+>   static struct alpha_pll_config gpu_cc_pll0_config = {
+> -	.l = 0x1d,
+> +	/* .l includes CAL_L_VAL, L_VAL fields */
+> +	.l = 0x0044001d,
+>   	.alpha = 0xb000,
+>   	.config_ctl_val = 0x20485699,
+>   	.config_ctl_hi_val = 0x00182261,
+> @@ -67,7 +68,8 @@ static struct clk_alpha_pll gpu_cc_pll0 = {
+>   };
+>   
+>   static struct alpha_pll_config gpu_cc_pll1_config = {
+> -	.l = 0x34,
+> +	/* .l includes CAL_L_VAL, L_VAL fields */
+> +	.l = 0x00440034,
+>   	.alpha = 0x1555,
+>   	.config_ctl_val = 0x20485699,
+>   	.config_ctl_hi_val = 0x00182261,
 
 -- 
 With best wishes
