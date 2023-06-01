@@ -2,138 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD7D6719DF8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 15:28:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97790719E1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 15:29:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233784AbjFAN2D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 09:28:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35836 "EHLO
+        id S233881AbjFAN3Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 09:29:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37476 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233840AbjFAN1u (ORCPT
+        with ESMTP id S234004AbjFAN3A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 09:27:50 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA6471A6
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 06:27:29 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-51492ae66a4so1310161a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 06:27:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685626045; x=1688218045;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=0Bh0NwcmQVDulBJjQlFxoXeFk9v1DzA4S7ePzbUk4+w=;
-        b=q1iotZxbLy8szFOTeC5e/G0VQdDeibKUxN1V13zopsKDoRyLSyc6Z3+4NCEAYIHRcr
-         0Y+SOKRkc0h/8PrlcU2NIUN1lDLPBiHpGdDNpR2mlagpo/gvLvFSQS3CValEhaAtjE+2
-         RE+eVynh/sqxFzs+LL8qvlWKtlmi6qvz/TKHDm0/IH+D5aOrdEusPcJwXPMYNre/ulBW
-         FI9QWATMBhOQi00g1fzNaUT9uFmVOiAy+PvM5ML4OmjN50l9Q4JqXau5CjGGmBr819kT
-         fq1kDhA1u4fUCbzvrfZF+RjuYK9zU0Wo40z60SZLVIhSRl3FKihyEIC7AAk5scS9W995
-         Kp9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685626045; x=1688218045;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0Bh0NwcmQVDulBJjQlFxoXeFk9v1DzA4S7ePzbUk4+w=;
-        b=k6Xr+pNTkX1QH6sNmh7RWQIrVb8fPG+uW8HgDGiVAXCN0ldF+wdvOYV/fPse8UA/dP
-         PzFtslkfc0oQhOtFfzcJmwHjVo/6kOlh5s752Ol+ViJd3QEFYAEXAwgdqR5WjFWLBvNM
-         1fMJRrx9GhyiF8fJvsRTWFS3umDbd5arU+pFIdArz91RSm+hBxs23hsVe58uEOl5YeDq
-         xyhluS0DRbOg9t3aq4nLbG2SwwM91SZQXdEfA1vc0qFJmYhbEmRdZAFo1ZwayKTL+7Zo
-         Zxniu3UBIKFM2G3vSC284hSI1XoyApxi8KNUhJR/GZ0tsAzUePLBCls1CEnsDVteo4gp
-         30ZA==
-X-Gm-Message-State: AC+VfDyig0WpO+VV/R+aZE4dPGIub0dtr7h1GA79dMPvkeoUhK9EHmi5
-        YqYpUNrZGAcf6hB89+xvRtK7lQ==
-X-Google-Smtp-Source: ACHHUZ56vTDQLpgZcsfUFAD+UPccMtNn7lITWkhbfSA78O9BcUWWDHiZ5WDLxtlvxFtNO3fcz/01mw==
-X-Received: by 2002:a05:6402:12ce:b0:514:938a:67cd with SMTP id k14-20020a05640212ce00b00514938a67cdmr5009231edx.38.1685626045251;
-        Thu, 01 Jun 2023 06:27:25 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.199.204])
-        by smtp.gmail.com with ESMTPSA id y1-20020aa7c241000000b0050bfeb15049sm7070997edo.60.2023.06.01.06.27.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Jun 2023 06:27:24 -0700 (PDT)
-Message-ID: <33979417-2c0c-5474-23e0-7e72add99873@linaro.org>
-Date:   Thu, 1 Jun 2023 15:27:22 +0200
+        Thu, 1 Jun 2023 09:29:00 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 4EA0E1B8;
+        Thu,  1 Jun 2023 06:28:29 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2643AC14;
+        Thu,  1 Jun 2023 06:29:14 -0700 (PDT)
+Received: from [10.57.22.125] (unknown [10.57.22.125])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 22A703F7D8;
+        Thu,  1 Jun 2023 06:28:26 -0700 (PDT)
+Message-ID: <6be47f1a-16ca-76ca-b133-ee453c261c21@arm.com>
+Date:   Thu, 1 Jun 2023 14:28:24 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH V7 4/8] pinctrl: qcom: Add IPQ5018 pinctrl driver
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        andy.shevchenko@gmail.com
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, ulf.hansson@linaro.org,
-        linus.walleij@linaro.org, catalin.marinas@arm.com, will@kernel.org,
-        p.zabel@pengutronix.de, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, robimarko@gmail.com
-References: <20230519125409.497439-1-quic_srichara@quicinc.com>
- <20230519125409.497439-5-quic_srichara@quicinc.com>
- <CAHp75VfVx+oGYKcija3h9-eWc6jggMx8p5SAQTEHTBEbjTaJKw@mail.gmail.com>
- <1823419a-6bb4-03f7-d5ae-e32204c5e598@quicinc.com>
- <ZHTK7uEzO7kcx_cV@surfacebook>
- <aefd0df1-8dfb-1b69-589b-974dea312845@quicinc.com>
- <664940c3-9ec1-b4bd-9db5-fa3529e3d1ff@linaro.org>
- <8146f367-c539-bea5-12b6-424213018488@quicinc.com>
- <eb109116-94eb-5b6d-0049-7bb31feada36@linaro.org>
-Content-Language: en-US
-In-Reply-To: <eb109116-94eb-5b6d-0049-7bb31feada36@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.11.1
+Subject: Re: [PATCH v4 08/11] coresight-tpdm: Add nodes to configure pattern
+ match output
+To:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org
+References: <1682586037-25973-1-git-send-email-quic_taozha@quicinc.com>
+ <1682586037-25973-9-git-send-email-quic_taozha@quicinc.com>
+From:   Suzuki K Poulose <suzuki.poulose@arm.com>
+In-Reply-To: <1682586037-25973-9-git-send-email-quic_taozha@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/06/2023 13:53, Krzysztof Kozlowski wrote:
-> On 01/06/2023 13:41, Sricharan Ramabadhran wrote:
->>
->>
->> On 6/1/2023 3:21 PM, Krzysztof Kozlowski wrote:
->>> On 01/06/2023 11:50, Sricharan Ramabadhran wrote:
->>>>
->>>>
->>>> On 5/29/2023 9:25 PM, andy.shevchenko@gmail.com wrote:
->>>>> Mon, May 29, 2023 at 03:58:09PM +0530, Sricharan Ramabadhran kirjoitti:
->>>>>> On 5/20/2023 12:17 AM, Andy Shevchenko wrote:
->>>>>>> On Fri, May 19, 2023 at 3:55 PM Sricharan Ramabadhran
->>>>>>> <quic_srichara@quicinc.com> wrote:
->>>>>
->>>>> ...
->>>>>
->>>>>>>      depends on OF || COMPILE_TEST
->>>>>>
->>>>>>    Yeah sure. COMPILE_TEST could be standalone. Will fix it and repost.
->>>>>
->>>>> Standalone COMPILE_TEST will give you definitely NOT what you want.
->>>>> And actually it's strange to have it standalone.
->>>>>
->>>>
->>>>    Ho ok, i meant like this, "depends on ARM64 || COMPILE_TEST"
->>>
->>> Don't do it differently than all other drivers. Open the Kconfig and
->>> look at existing entries.
->>>
->>    The latest added has this below, will use this
->>
->> 	depends on OF || COMPILE_TEST
+On 27/04/2023 10:00, Tao Zhang wrote:
+> Add nodes to configure trigger pattern and trigger pattern mask.
+> Each DSB subunit TPDM has maximum of n(n<7) XPR registers to
+> configure trigger pattern match output. Eight 32 bit registers
+> providing DSB interface trigger output pattern match comparison.
+> And each DSB subunit TPDM has maximum of m(m<7) XPMR registers to
+> configure trigger pattern mask match output. Eight 32 bit
+> registers providing DSB interface trigger output pattern match
+> mask.
 > 
-> I would even drop this... Lemme check, it looks odd. We depend on
-> ARCH_QCOM which uses OF. We have few drivers which depend on ACPI, but
-> that also seems wrong. These are platform drivers so they should expect
-> platform select proper firmware interface. I think none of other
-> platform drivers do like this (neither Samsung pinctrl nor other
-> Qualcomm drivers)).
+> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> ---
+>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 30 ++++++++
+>   drivers/hwtracing/coresight/coresight-tpdm.c       | 85 ++++++++++++++++++++++
+>   drivers/hwtracing/coresight/coresight-tpdm.h       |  8 ++
+>   3 files changed, 123 insertions(+)
 > 
-> I will fix this. For your patch I would just skip OF entirely.
+> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> index a57f000..c04c735 100644
+> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+> @@ -92,3 +92,33 @@ Description:
+>   		<integer1> : Start EDCMR register number
+>   		<integer2> : End EDCMR register number
+>   		<integer3> : The value need to be written
+> +
+> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_trig_patt_val
+> +Date:		March 2023
+> +KernelVersion	6.3
+> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
+> +Description:
+> +		(Write) Set the trigger pattern value of DSB tpdm.
+> +		Read the trigger pattern value of DSB tpdm.
+> +
+> +		Expected format is the following:
+> +		<integer1> <integer2>
+> +
+> +		Where:
+> +		<integer1> : Index number of XPR register, the range is 0 to 7
+> +		<integer2> : The value need to be written
 
-Correction: you need OF :(
+I assume the values written to the registers are not special and doesn't
+have meaning and thus need not be documented ?
 
-Best regards,
-Krzysztof
+> +
+> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_trig_patt_mask
+> +Date:		March 2023
+> +KernelVersion	6.3
+
+Same as the previous one, 6.5 please
+
+> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
+> +Description:
+> +		(Write) Set the trigger pattern mask of DSB tpdm.
+> +		Read the trigger pattern mask of DSB tpdm.
+> +
+> +		Expected format is the following:
+> +		<integer1> <integer2>
+> +
+> +		Where:
+> +		<integer1> : Index number of XPMR register,  the range is 0 to 7
+> +		<integer2> : The value need to be written
+> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
+> index a40e458..9387bdf 100644
+> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+> @@ -89,6 +89,13 @@ static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
+>   		writel_relaxed(drvdata->dsb->edge_ctrl_mask[i],
+>   			   drvdata->base + TPDM_DSB_EDCMR(i));
+>   
+> +	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
+
+Same as the previous, can we safely assume that write to these
+registers won't trigger an Error if not impelemented ?
+
+> +		writel_relaxed(drvdata->dsb->trig_patt_val[i],
+> +			    drvdata->base + TPDM_DSB_XPR(i));
+> +		writel_relaxed(drvdata->dsb->trig_patt_mask[i],
+> +			    drvdata->base + TPDM_DSB_XPMR(i));
+> +	}
+> +
+>   	val = readl_relaxed(drvdata->base + TPDM_DSB_TIER);
+>   	/* Set trigger timestamp */
+>   	if (drvdata->dsb->trig_ts)
+> @@ -444,6 +451,82 @@ static ssize_t dsb_edge_ctrl_mask_store(struct device *dev,
+>   }
+>   static DEVICE_ATTR_RW(dsb_edge_ctrl_mask);
+>   
+> +static ssize_t dsb_trig_patt_val_show(struct device *dev,
+> +					   struct device_attribute *attr,
+> +					   char *buf)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	ssize_t size = 0;
+> +	int i = 0;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
+> +		size += sysfs_emit_at(buf, size,
+> +				  "Index: 0x%x Value: 0x%x\n", i,
+> +				  drvdata->dsb->trig_patt_val[i]);
+
+Please detect the return of 0 and break. Same below.
+
+
+> +	}
+> +	spin_unlock(&drvdata->spinlock);
+> +	return size;
+> +}
+> +
+> +static ssize_t dsb_trig_patt_val_store(struct device *dev,
+> +					    struct device_attribute *attr,
+> +					    const char *buf,
+> +					    size_t size)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	unsigned long index, val;
+> +
+> +	if (sscanf(buf, "%lx %lx", &index, &val) != 2)
+> +		return -EINVAL;
+> +	if (index >= TPDM_DSB_MAX_PATT)
+> +		return -EPERM;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	drvdata->dsb->trig_patt_val[index] = val;
+> +	spin_unlock(&drvdata->spinlock);
+> +	return size;
+> +}
+> +static DEVICE_ATTR_RW(dsb_trig_patt_val);
+> +
+> +static ssize_t dsb_trig_patt_mask_show(struct device *dev,
+> +					    struct device_attribute *attr,
+> +					    char *buf)
+> +{
+> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+> +	ssize_t size = 0;
+> +	int i = 0;
+> +
+> +	spin_lock(&drvdata->spinlock);
+> +	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
+> +		size += sysfs_emit_at(buf, size,
+> +				  "Index: 0x%x Value: 0x%x\n", i,
+> +				  drvdata->dsb->trig_patt_mask[i]);
+> +	}
+> +	spin_unlock(&drvdata->spinlock);
+> +	return size;
+
+Suzuki
 
