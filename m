@@ -2,84 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 864937197B1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 11:51:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E6AF7197C3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 11:52:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232254AbjFAJvt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 05:51:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35572 "EHLO
+        id S233103AbjFAJwl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 05:52:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232587AbjFAJvs (ORCPT
+        with ESMTP id S233118AbjFAJwh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 05:51:48 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 168E113E
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 02:51:43 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-96fe2a1db26so78092766b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 02:51:42 -0700 (PDT)
+        Thu, 1 Jun 2023 05:52:37 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EA811A1
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 02:52:29 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f3b9755961so702263e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 02:52:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685613101; x=1688205101;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QG9pHzzcyK6b24WKR++ZmeXnFl9pwi+O6EouelciZaI=;
-        b=RuoajPozdhZntVDqrt1dOELtD3PuASBkJJqgjFSWckckoj+ZbYkFQIhqlYXROuBSUk
-         A06fkccrZV8021BwHMGRKkG+emj4yClL6ZC9C+VqeR5GK98zbG25W/x8OOp87iUGaIzk
-         oIVthKVSbS9N4/LWTwj07LgxgxegakQiX5HCBt5apCJIYQALr8A/h4gZwLIOmjYCxXcK
-         qLuVmeobXokE0O7vgvRw4C/+SAws7AZZVQu6z73D0JQhS5eM7CtaSKwlNUGP6Lxggdnr
-         I/zXxhopWMJz+FUXYXYChQIzOubYewmtlhf8mzHWX9seLh8XQSASkKeciZSNKkYDso5d
-         pRDw==
+        d=linaro.org; s=google; t=1685613148; x=1688205148;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=y2bw6uNKVCI6U19iql+rCt1aF5z0wTrLKqO0P2Rc510=;
+        b=NBbpBAxGKyQocr77i0a5t9E0m6mgAmxTb8m+WO6BDMNHYW75JXEHjbD1t0VURgKcj9
+         HjBQAlVpd4OdztsjGZUWKxVnaGxWjaJiLP258pZ8MuhMsmyKMQp4W9jxEsp9KH1+kNlB
+         CjIpZhNeuv7t3Ng9d1h/4PutJcdqISwooUjALm7HtDOxnDB6Cm4PofsyvyTodJdSU8TR
+         e0bJ9z36R/q+D56SHRqLPMjlvwr1Z5z4mfuu5ExGjImT/fu8IZi7RLQmDBv54neyPW6Z
+         O1IK3oY16+GqwFJfyYHYUQ+HEOsYgcpml18r3kPnSbCYX7lgO00Li6rRQs77hzclEUx7
+         GmsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685613101; x=1688205101;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QG9pHzzcyK6b24WKR++ZmeXnFl9pwi+O6EouelciZaI=;
-        b=WBvd3hIWKcwR4xoohlpQ72O6i4XKYOsbejorsgHeqHuJV+Qt3h4HSupI/PgLTsEGTL
-         ijyt72tqCC8CQyXv/RNSkU7Fz+il3KkeXyXNSrmEYBuYCPYYb3aORyAwbPKg4YOsLSdQ
-         gdXEjr05X//nWEnd9GxhjLEemD8ZCsthS1mROerR52SGnX9hgSklUFh3ur0hRwoBTsyR
-         QdG4UTgN9noFKiwGcVHDo9Wdd5hLR+gOBphfUxsmOXUkbl4d6nEXZRIp4aNHMS+S8D+4
-         V5u6BxV6vAloy2lOqeHclNqCCIqggnK1SXsnqH2aaDUHJCSKIddLOrJsmjDr2In+co20
-         mP4A==
-X-Gm-Message-State: AC+VfDwLWAl1JYN5YzT4anAMRfH7MWB5rbMzUMuCZ1rpxjnWhd+eTOAY
-        etiHjKLq24hPfwrCDhoaWaLO/w==
-X-Google-Smtp-Source: ACHHUZ7D9TmemflT+NV4U6bJeJ6lfj1rIcifZvhAelKJmzqQ5l0NUReLgGxytAOtXg4CuZgjcTXW2Q==
-X-Received: by 2002:a17:907:7f8c:b0:96f:a0ee:113c with SMTP id qk12-20020a1709077f8c00b0096fa0ee113cmr9010761ejc.19.1685613101389;
-        Thu, 01 Jun 2023 02:51:41 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.199.204])
-        by smtp.gmail.com with ESMTPSA id a6-20020a170906244600b00965b416585bsm10248223ejb.118.2023.06.01.02.51.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Jun 2023 02:51:40 -0700 (PDT)
-Message-ID: <664940c3-9ec1-b4bd-9db5-fa3529e3d1ff@linaro.org>
-Date:   Thu, 1 Jun 2023 11:51:37 +0200
+        d=1e100.net; s=20221208; t=1685613148; x=1688205148;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=y2bw6uNKVCI6U19iql+rCt1aF5z0wTrLKqO0P2Rc510=;
+        b=NwJNMU/2e5RdpSWMHGKU03e2koy6J2o7Vi14Nv05qRCQo+CftcnvteMYvTRAtEyS3Z
+         FeYJ7FaPzmXTIMBh44D7OtyVXDul9l/+7OxFipT1sLh/g0w/fc6Wxd80wo2lj0gRE6VH
+         zM9FEuDWfk2RFXZw5QBBv/YHobZRXJ/HpOGwvSwS84oGQR+B3X5LIfn4XRFMtuvv6nxm
+         fDdveOr/tuVxl0Q5MTvw832QJ4BJAMfio7gPmlW4a/JqyTHE530u34N+R/Mh0vvOHOGo
+         wxRxg0Z8eEHtRNiCFGP92CZQk101fO3qG9qNoOL/1fferyl+yh2Ug1taXbMhBseyBdQZ
+         qysQ==
+X-Gm-Message-State: AC+VfDwa7s0MWSyD0xNRqylinug1EaOjdSKsBy4DUqjBSYnYXo6nD8JW
+        EqyjCVKPoWp0WSzVGPRHcnHTmw==
+X-Google-Smtp-Source: ACHHUZ7ifnNxUvcXHFlBUde/XloL6IFdXyMJGnTj8SYGCpikBvjKHcKlzjBvbFc2ay1bTenhMZw5fQ==
+X-Received: by 2002:a19:7406:0:b0:4f4:c30f:fafd with SMTP id v6-20020a197406000000b004f4c30ffafdmr1127657lfe.28.1685613147802;
+        Thu, 01 Jun 2023 02:52:27 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id z9-20020a5d4409000000b0030af05fce4dsm9746150wrq.77.2023.06.01.02.52.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Jun 2023 02:52:27 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 0/2] arm64: dts: qcom: add DP Controller to SM8550 DTS
+Date:   Thu, 01 Jun 2023 11:52:23 +0200
+Message-Id: <20230601-topic-sm8550-upstream-dp-v1-0-29efe2689553@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH V7 4/8] pinctrl: qcom: Add IPQ5018 pinctrl driver
-To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        andy.shevchenko@gmail.com
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, ulf.hansson@linaro.org,
-        linus.walleij@linaro.org, catalin.marinas@arm.com, will@kernel.org,
-        p.zabel@pengutronix.de, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-mmc@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, robimarko@gmail.com
-References: <20230519125409.497439-1-quic_srichara@quicinc.com>
- <20230519125409.497439-5-quic_srichara@quicinc.com>
- <CAHp75VfVx+oGYKcija3h9-eWc6jggMx8p5SAQTEHTBEbjTaJKw@mail.gmail.com>
- <1823419a-6bb4-03f7-d5ae-e32204c5e598@quicinc.com>
- <ZHTK7uEzO7kcx_cV@surfacebook>
- <aefd0df1-8dfb-1b69-589b-974dea312845@quicinc.com>
-Content-Language: en-US
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <aefd0df1-8dfb-1b69-589b-974dea312845@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFdqeGQC/x2NQQrCMBBFr1Jm7UCSEiNeRVxMktEOtGnItCKU3
+ t3g8n14/x2g3IQV7sMBjT+ispYO9jJAmqi8GSV3BmfcaK7G4rZWSajLzXuDe9WtMS2YK8Zgx0g
+ u+BwSdD2SMsZGJU39oOzz3Mfa+CXff+/xPM8fS169P38AAAA=
+To:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=855;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=78Pn3vfQ0fnvRp/CVKWnUOhYpamMQ67eHI2wN4OuTBI=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkeGpZFUd6USnWEtosfZ2Y3u+jhXj22us0IQenPVbG
+ TiKsboOJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZHhqWQAKCRB33NvayMhJ0SVqD/
+ wLW2P7B3IdV2jqcWZlz6bm6adI8b/Js2FK7S0Sza/wBNtrwJP2t8aMiQxauAla/OH55p+6RxK3nYwm
+ J+0i9NHYqkR8JScLagFlMVeV5h9gzNBhOShEMpkUXeQyGc4P/6eNC9dJRTtVZgAPLrMTzrnDmsfHk9
+ P73Sj5cI451fEYl9sCyU61PCN3XmB6k9+rSrqeRWwKmsXKDENegQqAv3k0XZgT0IUzMuQRPbbSCK6i
+ w0ATn39FVRWZbwCAydO12dfXIPPRhSTt+AX5TotkpCUdO+EfbQYfq/a9RVKghHjBetRKu90KzP0Ib6
+ drKw29G9Cr3gTKrzU0rM2v+L3uOBPuBFFi/pUr6xCFCR5WhTBV1wXkQ8ftOWS9/UUG8YMZo5iFjJPe
+ /l8BfuFOkOCCn01mwgwpek1Rtf1/FsaGXAmMkLoSSu2opGifmGPleqYmEjn5F5ThZkCQPjqm9W0kw8
+ FB0NoTV97QsVi7j8Zg54WClz5x7rhw/v3khMxfnwBIPeeLIvDpvLXdIWJMP9Q1xFQBx7B0zXgDJwlw
+ eiCBefKxRzt62ljn5qVPwoCCcGjYfFipb0PCWqlVEdCXh9Z6KapSxKys5/bHHU2hz4GvSEB7X+6yL6
+ JVtifJz2SfM+HbO+c9bCfY9eDhqZGjCUUznaIHrB+OaxINqoVv23S1wBy33A==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -87,30 +104,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/06/2023 11:50, Sricharan Ramabadhran wrote:
-> 
-> 
-> On 5/29/2023 9:25 PM, andy.shevchenko@gmail.com wrote:
->> Mon, May 29, 2023 at 03:58:09PM +0530, Sricharan Ramabadhran kirjoitti:
->>> On 5/20/2023 12:17 AM, Andy Shevchenko wrote:
->>>> On Fri, May 19, 2023 at 3:55 PM Sricharan Ramabadhran
->>>> <quic_srichara@quicinc.com> wrote:
->>
->> ...
->>
->>>>     depends on OF || COMPILE_TEST
->>>
->>>   Yeah sure. COMPILE_TEST could be standalone. Will fix it and repost.
->>
->> Standalone COMPILE_TEST will give you definitely NOT what you want.
->> And actually it's strange to have it standalone.
->>
-> 
->   Ho ok, i meant like this, "depends on ARM64 || COMPILE_TEST"
+The DP output is shared with the USB3 SuperSpeed lanes and is
+usually connected to an USB-C port which Altmode is controlled
+by the PMIC Glink infrastructure.
 
-Don't do it differently than all other drivers. Open the Kconfig and
-look at existing entries.
+DT changes tying the DP controller to the USB-C port on the QRD
+board will be sent later.
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Neil Armstrong (2):
+      dt-bindings: display: msm: dp-controller: document SM8550 compatible
+      arm64: dts: qcom: sm8550: add display port nodes
+
+ .../bindings/display/msm/dp-controller.yaml        |  1 +
+ arch/arm64/boot/dts/qcom/sm8550.dtsi               | 89 +++++++++++++++++++++-
+ 2 files changed, 88 insertions(+), 2 deletions(-)
+---
+base-commit: d4cee89031c80066ec461bb77b5e13a4f37d5fd2
+change-id: 20230601-topic-sm8550-upstream-dp-b713ba275d7c
 
 Best regards,
-Krzysztof
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
