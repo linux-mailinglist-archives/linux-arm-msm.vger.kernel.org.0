@@ -2,51 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C3B8A719FB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 16:21:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C717719FB1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 16:21:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233888AbjFAOVR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 10:21:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41128 "EHLO
+        id S233905AbjFAOVt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 10:21:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233745AbjFAOVM (ORCPT
+        with ESMTP id S234211AbjFAOVl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 10:21:12 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A6617E5B;
-        Thu,  1 Jun 2023 07:21:03 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 351DhCWQ030316;
-        Thu, 1 Jun 2023 14:20:56 GMT
+        Thu, 1 Jun 2023 10:21:41 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD80519F;
+        Thu,  1 Jun 2023 07:21:34 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 351Ccfnw013844;
+        Thu, 1 Jun 2023 14:21:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=8jVwNXOhLX3ySZX+usj472rMyUf3rSUPDttHfO6hxa0=;
- b=e3A9jd3eW6yf103QE894U4ibE8mMoFwmAYAmC412clsCqY4laiF3eKRK1QaBcaJMw8Zt
- +bYHZUuXJYgMEZWpUxARC7AXPw/1aaPZyHgjBwQ+NAplmdpCMH0jalD3MYnQ/X0AbjZ0
- HCTg68dqRecD04vfiiSyU+3Ogoix1ZhAyOXExt8ojTQiQcTm+rbYOdbkxiGQ1/i2MV2X
- f/+oSqR2/5ZkY1QGpFtU5MyukRp2lyEVaVDpZrQsbZcWGsxeBfJUohhdzJM4k3/nHXI3
- bY6pggWuBhPnyWisdGkMwJvo5MCF21QHFjpna7HVDB9e5kFc9ghhcmPyNiLJKsDGJpMH lg== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qxugrr8aw-1
+ bh=lJPdbz7A/B8+30UyfEG0+4oTiCnmLB62xHI9CLsg4z4=;
+ b=ZJe3XiTcNkxRL90vgrf9hhw8X2yDJeqWtJYz++GgyqCji0N+aoKsqXrwKfYQdmJuKvsg
+ t8K62lUnMQdDVi0FmF5XrhJ8vmsO01mgHAqGxBtHrzS8HX5JoViRIUKYdZ2ZnrnEOfl7
+ Y3xSjTLPDCUbmXiK3oMux+1Zj6hc1iuTgvMV0A2IdVYLWLPe8ayLpNh9D979zHtzVWAe
+ W8MnPbsiRwovt1voPsFnSankdV0FSS1QI4X1vs8I8536+5/IfOHZOBmHtQ7fkk/axS4c
+ Xz/aZ0lRJTAM+fH/Ox2aq92urWkjWRMUniRkPQo9kPlunUEl8ZPGT5IQl+J7hvVY3iDs bA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qxugr88uu-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 01 Jun 2023 14:20:56 +0000
+        Thu, 01 Jun 2023 14:21:30 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 351EKusV012559
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 351ELSiw027023
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 1 Jun 2023 14:20:56 GMT
+        Thu, 1 Jun 2023 14:21:28 GMT
 Received: from [10.217.216.21] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 1 Jun 2023
- 07:20:50 -0700
-Message-ID: <42f94fbc-ca0a-7441-2e4f-9dbc276da04f@quicinc.com>
-Date:   Thu, 1 Jun 2023 19:50:47 +0530
+ 07:21:23 -0700
+Message-ID: <a97da679-7ac8-78f8-9b3d-5df8f690287f@quicinc.com>
+Date:   Thu, 1 Jun 2023 19:51:21 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.10.1
-Subject: Re: [PATCH V2 2/6] clk: qcom: Update l value configuration for lucid
- ole and evo plls
-To:     Bryan O'Donoghue <pure.logic@nexus-software.ie>,
+Subject: Re: [PATCH V2 3/6] clk: qcom: clk-alpha-pll: Remove explicit CAL_L
+ configuration for EVO PLL
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Michael Turquette <mturquette@baylibre.com>,
         "Stephen Boyd" <sboyd@kernel.org>,
@@ -63,10 +63,11 @@ CC:     Bjorn Andersson <andersson@kernel.org>,
         Imran Shaik <quic_imrashai@quicinc.com>,
         Ajit Pandey <quic_ajipan@quicinc.com>
 References: <20230525172142.9039-1-quic_jkona@quicinc.com>
- <20230525172142.9039-3-quic_jkona@quicinc.com>
- <76343325-b06c-9329-2d0a-e1d351bcafac@nexus-software.ie>
+ <20230525172142.9039-4-quic_jkona@quicinc.com>
+ <240fa683-afb1-eb60-c24f-2b3f1d7f1339@linaro.org>
+ <58310306-2d70-eab4-4564-e77e1fb638a1@linaro.org>
 From:   Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <76343325-b06c-9329-2d0a-e1d351bcafac@nexus-software.ie>
+In-Reply-To: <58310306-2d70-eab4-4564-e77e1fb638a1@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
@@ -74,20 +75,20 @@ X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: V58mWVqgjHFx6Yc36z6E8lzFE7BV2a3g
-X-Proofpoint-GUID: V58mWVqgjHFx6Yc36z6E8lzFE7BV2a3g
+X-Proofpoint-GUID: 6RF3Uf2koquMTvwMtElwIQ5q3f3L0cal
+X-Proofpoint-ORIG-GUID: 6RF3Uf2koquMTvwMtElwIQ5q3f3L0cal
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
  definitions=2023-06-01_08,2023-05-31_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
- mlxlogscore=786 lowpriorityscore=0 bulkscore=0 suspectscore=0 mlxscore=0
- phishscore=0 spamscore=0 impostorscore=0 priorityscore=1501 clxscore=1011
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2306010126
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ priorityscore=1501 adultscore=0 malwarescore=0 suspectscore=0
+ impostorscore=0 lowpriorityscore=0 mlxlogscore=635 phishscore=0
+ bulkscore=0 clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2306010126
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -98,22 +99,36 @@ Hi Bryan,
 
 Thanks for your review!
 
-On 5/26/2023 6:52 PM, Bryan O'Donoghue wrote:
-> On 25/05/2023 18:21, Jagadeesh Kona wrote:
->> -    .config_ctl_hi1_val = 0x32AA299C,
->> +    .config_ctl_hi1_val = 0x32aa299c,
+On 5/26/2023 9:27 PM, Bryan O'Donoghue wrote:
+> On 26/05/2023 16:54, Bryan O'Donoghue wrote:
+>> On 25/05/2023 18:21, Jagadeesh Kona wrote:
+>>> Fixes: 260e36606a03 ("clk: qcom: clk-alpha-pll: add Lucid EVO PLL 
+>>> configuration interfaces")
+>>
+>> Is this a "Fixes" without the previous patch to stuff the CAL_L_VAL 
+>> and VAL_L fields ?
+>>
+>> [PATCH V2 3/6] clk: qcom: clk-alpha-pll: Remove explicit CAL_L 
+>> configuration for EVO PLL
+>>
+>> Surely you need _both_ with this patch depending on the previous, per 
+>> your comment ?
+>>
+>> -    .l = 0x3e,
+>> +    /* .l includes CAL_L_VAL, L_VAL fields */
+>> +    .l = 0x0044003e,
+>>
+>> ---
+>> bod
 > 
-> You should separate out this change from this patch.
+> i.e. if you pick up this patch on its own you won't populate 
+> CAL_L_VAL... right ?
 > 
-> There's nothing wrong with having a preliminary patch to change all 
-> upper-case HEX to lowercase hex.
+> It would make more sense to squash the two patches.
 > 
-> You should do that since the log here "update l value" != change UCASE 
-> to lcase hex.
-> 
-Sure, will remove this in the next series.
+Sure, will squash both the patches in next series.
 > ---
-> 0xb0d
+> bod
 
 Thanks & Regards,
 Jagadeesh
