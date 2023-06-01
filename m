@@ -2,358 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B932719BC2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 14:15:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 530D1719BF1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 14:22:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232640AbjFAMP1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 08:15:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58112 "EHLO
+        id S232466AbjFAMWY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 08:22:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33704 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233332AbjFAMPS (ORCPT
+        with ESMTP id S232759AbjFAMWX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 08:15:18 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id F26A71B7;
-        Thu,  1 Jun 2023 05:14:45 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 7F5BD1063;
-        Thu,  1 Jun 2023 05:14:52 -0700 (PDT)
-Received: from [10.57.22.125] (unknown [10.57.22.125])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 740183F7D8;
-        Thu,  1 Jun 2023 05:14:04 -0700 (PDT)
-Message-ID: <606b8a25-0468-c310-ccff-1477e2b238b2@arm.com>
-Date:   Thu, 1 Jun 2023 13:14:03 +0100
+        Thu, 1 Jun 2023 08:22:23 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CBBA139
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 05:22:20 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f4d80bac38so863545e87.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 05:22:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685622138; x=1688214138;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=11FBe/d51xNtYkFruVUclUiXwmDTiJy1xe16XS1Df+4=;
+        b=PsS+kHpu9lywXQAiGKvDHHSfTPM31QYhndLpfsfB4ujoP8ik65VIYSRIykKoinO4++
+         kgEF6c7ECD72M8IjwHFoS0mYuqU1aTXzY7BQSq5NohabH4HNjoSVgBH/dq+jR4o42SZQ
+         LUUNqNPZ3Vmu9GUuu3dKbvzjuEMCG+8tSzh2lA+x+kEC2mptErGelxw2xFQHbs8inGld
+         UcOC4ssXOFH5+KHQbtepcLQV00aDFNiDmNLsV75gWw/EGve6r5fsAxnpqFhWPaC6luRA
+         6zPuS8t9xpB5CjywFHgw6cEnlTQgO3UYFIAGGVfa/JMFKUwXAifrIKasewbmG8igzNAU
+         Hf1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685622138; x=1688214138;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=11FBe/d51xNtYkFruVUclUiXwmDTiJy1xe16XS1Df+4=;
+        b=CY4noSD866rVBcBaexFOhlG7G851HPd49eur0b3Vsv3tOSQEd0aXXSYucziHFGHugf
+         jhq62FNLukHVLh6yIlLQP3OMFpcgSd4tZEr0QIsnEVOyTlQO+DLpNM4fzOoxfJPbP6+i
+         F3pi/P+Mqhk+cvRO1Zu+OH4YZRIuHZWmqRSD5+kiFFf3UJ8DSXXEAU366W2IdK9Gc1TE
+         gcw7hn1ah4ZCqp9+KE9vSGGbrHyA2puQ2myqs9WCXitHyqdaV4hOspgh+f22LxWgvpMX
+         BuynE+3cHqs+G4EAHjNuoOHJmecYQjt2OvKBuhV+3f/HT4ThIsYIlhUkO3aeXf1zarvy
+         euKA==
+X-Gm-Message-State: AC+VfDxYbGDZLlw3DDyT5n/iTFXGOslLsOz77sLjab4D8tvBzbHU4owA
+        +B3UrUEqmx8Sop06IfxzmMBJRQ==
+X-Google-Smtp-Source: ACHHUZ50Rrip55/ddc74tFk2nWPjpMvZZivBTx45aF4Txp4S5F7lWf9iaYBa5ZMhhWm+JGMaXrNBoQ==
+X-Received: by 2002:ac2:4c25:0:b0:4ef:eb50:4d3d with SMTP id u5-20020ac24c25000000b004efeb504d3dmr1419022lfq.18.1685622138458;
+        Thu, 01 Jun 2023 05:22:18 -0700 (PDT)
+Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
+        by smtp.gmail.com with ESMTPSA id h8-20020a05651211c800b004f26f699e9dsm1067817lfr.184.2023.06.01.05.22.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 Jun 2023 05:22:17 -0700 (PDT)
+Message-ID: <58d0e91d-c67f-407d-76ac-d227905ab1cf@linaro.org>
+Date:   Thu, 1 Jun 2023 14:22:16 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.11.1
-Subject: Re: [PATCH v4 07/11] coresight-tpdm: Add nodes for dsb edge control
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: sm8150: Add missing interconnect
+ paths to USB HCs
+Content-Language: en-US
+To:     Abel Vesa <abel.vesa@linaro.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1682586037-25973-1-git-send-email-quic_taozha@quicinc.com>
- <1682586037-25973-8-git-send-email-quic_taozha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1682586037-25973-8-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+References: <20230601120029.38859-1-abel.vesa@linaro.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230601120029.38859-1-abel.vesa@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/04/2023 10:00, Tao Zhang wrote:
-> Add the nodes to set value for DSB edge control and DSB edge
-> control mask. Each DSB subunit TPDM has maximum of n(n<16) EDCR
-> resgisters to configure edge control. DSB edge detection control
-> 00: Rising edge detection
-> 01: Falling edge detection
-> 10: Rising and falling edge detection (toggle detection)
-> And each DSB subunit TPDM has maximum of m(m<8) ECDMR registers to
-> configure mask. Eight 32 bit registers providing DSB interface
-> edge detection mask control.
+
+
+On 1.06.2023 14:00, Abel Vesa wrote:
+> The USB HCs nodes are missing the interconnect paths, so add them.
 > 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   |  32 +++++
->   drivers/hwtracing/coresight/coresight-tpdm.c       | 135 ++++++++++++++++++++-
->   drivers/hwtracing/coresight/coresight-tpdm.h       |  21 ++++
->   3 files changed, 187 insertions(+), 1 deletion(-)
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
-> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> index 348e167..a57f000 100644
-> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> @@ -60,3 +60,35 @@ Description:
->   		Bit[3] : Set to 0 for low performance mode.
->   				 Set to 1 for high performance mode.
->   		Bit[4:8] : Select byte lane for high performance mode.
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_edge_ctrl
-> +Date:		March 2023
-> +KernelVersion	6.3
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		Read/Write a set of the edge control registers of the DSB
-> +		in TPDM.
-> +
-> +		Expected format is the following:
-> +		<integer1> <integer2> <integer3>
-> +
-> +		Where:
-> +		<integer1> : Start EDCR register number
-> +		<integer2> : End EDCR register number
-> +		<integer3> : The value need to be written
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_edge_ctrl_mask
-> +Date:		March 2023
-> +KernelVersion	6.3
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		Read/Write a set of the edge control mask registers of the
-> +		DSB in TPDM.
-> +
-> +		Expected format is the following:
-> +		<integer1> <integer2> <integer3>
-> +
-> +		Where:
-> +		<integer1> : Start EDCMR register number
-> +		<integer2> : End EDCMR register number
-> +		<integer3> : The value need to be written
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index 1bacaa5..a40e458 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -80,7 +80,14 @@ static void set_trigger_type(struct tpdm_drvdata *drvdata, u32 *val)
->   
->   static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
->   {
-> -	u32 val;
-> +	u32 val, i;
-> +
-> +	for (i = 0; i < TPDM_DSB_MAX_EDCR; i++)
-> +		writel_relaxed(drvdata->dsb->edge_ctrl[i],
-> +			   drvdata->base + TPDM_DSB_EDCR(i));
-> +	for (i = 0; i < TPDM_DSB_MAX_EDCMR; i++)
-> +		writel_relaxed(drvdata->dsb->edge_ctrl_mask[i],
-> +			   drvdata->base + TPDM_DSB_EDCMR(i));
+> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> index 197c016aaeba..4e73808c7bb1 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+> @@ -3595,6 +3595,10 @@ usb_1: usb@a6f8800 {
+>  
+>  			resets = <&gcc GCC_USB30_PRIM_BCR>;
+>  
+> +			interconnects = <&aggre1_noc MASTER_USB3 0 &mc_virt SLAVE_EBI_CH0 0>,
+> +					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_USB3 0>;
+> +			interconnect-names = "usb-ddr", "apps-usb";
+You need to update interconnect-cells to 2.
 
-Do all TPDM DSBs have MAX_EDCR registers ? Or some have less than that ?
-If it is latter, do we need special care to avoid writing to inexistent
-registers ?
-
->   
->   	val = readl_relaxed(drvdata->base + TPDM_DSB_TIER);
->   	/* Set trigger timestamp */
-> @@ -313,6 +320,130 @@ static ssize_t dsb_mode_store(struct device *dev,
->   }
->   static DEVICE_ATTR_RW(dsb_mode);
->   
-> +static ssize_t dsb_edge_ctrl_show(struct device *dev,
-> +				       struct device_attribute *attr,
-> +				       char *buf)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	ssize_t size = 0;
-> +	int i;
+Konrad
 > +
-> +	spin_lock(&drvdata->spinlock);
-> +	for (i = 0; i < TPDM_DSB_MAX_EDCR; i++) {
-> +		size += sysfs_emit_at(buf, size,
-> +				  "Index:0x%x Val:0x%x\n", i,
-> +				  drvdata->dsb->edge_ctrl[i]);
-
-It may be safe, but please add a check to make sure that we don't
-overflow. At least bail out when we hit a return of 0, indicating
-reached the end of buffer.
-
-> +	}
-> +	spin_unlock(&drvdata->spinlock);
-> +	return size;
-> +}
+>  			usb_1_dwc3: usb@a600000 {
+>  				compatible = "snps,dwc3";
+>  				reg = <0 0x0a600000 0 0xcd00>;
+> @@ -3644,6 +3648,10 @@ usb_2: usb@a8f8800 {
+>  
+>  			resets = <&gcc GCC_USB30_SEC_BCR>;
+>  
+> +			interconnects = <&aggre1_noc MASTER_USB3_1 0 &mc_virt SLAVE_EBI_CH0 0>,
+> +					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_USB3_1 0>;
+> +			interconnect-names = "usb-ddr", "apps-usb";
 > +
-> +/*
-> + * value 1: Start EDCR register number
-> + * value 2: End EDCR register number
-> + * value 3: The value need to be written
-> + * The EDCR registers can include up to 16 32-bit registers, and each
-> + * one can be configured to control up to 16 edge detections(2 bits
-> + * control one edge detection). So a total 256 edge detections can be
-> + * configured. So the starting number(value 1) and ending number(value 2)
-> + * cannot be greater than 256, and value 1 should be less than value 2.
-> + * The following values are the rage of value 3.
-> + * 0 - Rising edge detection
-> + * 1 - Falling edge detection
-> + * 2 - Rising and falling edge detection (toggle detection)
-> + */
-> +static ssize_t dsb_edge_ctrl_store(struct device *dev,
-> +					struct device_attribute *attr,
-> +					const char *buf,
-> +					size_t size)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	unsigned long val, mask, start, end, edge_ctrl, edge_ctrl_shift;
-> +	int i, reg;
-> +
-> +	if (sscanf(buf, "%lx %lx %lx", &start, &end, &edge_ctrl) != 3)
-> +		return -EINVAL;
-> +	if ((start >= TPDM_DSB_MAX_LINES) || (end >= TPDM_DSB_MAX_LINES) ||
-> +	    (start > end) || (edge_ctrl > 0x2))
-> +		return -EPERM;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	for (i = start; i <= end; i++) {
-> +		/*
-> +		 * There are 2 bit per DSB Edge Control line.
-> +		 * Thus we have 16 lines in a 32bit word.
-> +		 */
-> +		reg = EDCR_TO_WORD_IDX(i);
-> +		mask = EDCR_TO_WORD_MASK(i);
-> +		val = drvdata->dsb->edge_ctrl[reg];
-
-> +		edge_ctrl_shift = EDCR_TO_WORD_VAL(edge_ctrl, i);
-> +		bitmap_replace(&val, &val, &edge_ctrl_shift, &mask, 32);
-
-Could we simply do :
-
-		reg &= ~mask;
-		reg |= FIELD_PREP(mask, edge_ctrl);
-
-
-> +		drvdata->dsb->edge_ctrl[reg] = val;
-> +	}
-> +	spin_unlock(&drvdata->spinlock);
-> +
-> +	return size;
-> +}
-> +static DEVICE_ATTR_RW(dsb_edge_ctrl);
-> +
-> +static ssize_t dsb_edge_ctrl_mask_show(struct device *dev,
-> +					    struct device_attribute *attr,
-> +					    char *buf)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	ssize_t size = 0;
-> +	int i;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	for (i = 0; i < TPDM_DSB_MAX_EDCMR; i++) {
-> +		size += sysfs_emit_at(buf, size,
-> +				  "Index:0x%x Val:0x%x\n", i,
-> +				  drvdata->dsb->edge_ctrl_mask[i]);
-> +	}
-> +	spin_unlock(&drvdata->spinlock);
-> +	return size;
-> +}
-> +
-> +/*
-> + * value 1: Start EDCMR register number
-> + * value 2: End EDCMR register number
-> + * value 3: The value need to be written
-> + */
-> +static ssize_t dsb_edge_ctrl_mask_store(struct device *dev,
-> +					     struct device_attribute *attr,
-> +					     const char *buf,
-> +					     size_t size)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	unsigned long start, end, val;
-> +	u32 set;
-> +	int i, reg;
-> +
-> +	if (sscanf(buf, "%lx %lx %lx", &start, &end, &val) != 3)
-> +		return -EINVAL;
-> +	if ((start >= TPDM_DSB_MAX_LINES) || (end >= TPDM_DSB_MAX_LINES)
-> +		|| (start > end) || (val & ~1UL))
-> +		return -EPERM;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	for (i = start; i <= end; i++) {
-> +		/*
-> +		 * There is 1 bit per DSB Edge Control Mark line.
-> +		 * Thus we have 32 lines in a 32bit word.
-> +		 */
-> +		reg = EDCMR_TO_WORD_IDX(i);
-> +		set = drvdata->dsb->edge_ctrl_mask[reg];
-> +		if (val)
-> +			set |= BIT(EDCR_TO_WORD_SHIFT(i));
-> +		else
-> +			set &= ~BIT(EDCR_TO_WORD_SHIFT(i));
-> +		drvdata->dsb->edge_ctrl_mask[reg] = set;
-> +	}
-> +	spin_unlock(&drvdata->spinlock);
-> +	return size;
-> +}
-> +static DEVICE_ATTR_RW(dsb_edge_ctrl_mask);
-> +
->   static ssize_t dsb_trig_type_show(struct device *dev,
->   				     struct device_attribute *attr, char *buf)
->   {
-> @@ -385,6 +516,8 @@ static DEVICE_ATTR_RW(dsb_trig_ts);
->   
->   static struct attribute *tpdm_dsb_attrs[] = {
->   	&dev_attr_dsb_mode.attr,
-> +	&dev_attr_dsb_edge_ctrl.attr,
-> +	&dev_attr_dsb_edge_ctrl_mask.attr,
->   	&dev_attr_dsb_trig_ts.attr,
->   	&dev_attr_dsb_trig_type.attr,
->   	NULL,
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
-> index 79df07e..f25dcdec 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
-> @@ -12,6 +12,8 @@
->   /* DSB Subunit Registers */
->   #define TPDM_DSB_CR		(0x780)
->   #define TPDM_DSB_TIER		(0x784)
-> +#define TPDM_DSB_EDCR(n)	(0x808 + (n * 4))
-> +#define TPDM_DSB_EDCMR(n)	(0x848 + (n * 4))
->   
->   /* Enable bit for DSB subunit */
->   #define TPDM_DSB_CR_ENA		BIT(0)
-> @@ -34,6 +36,15 @@
->   #define TPDM_DSB_TEST_MODE		GENMASK(10, 9)
->   #define TPDM_DSB_HPSEL		GENMASK(6, 2)
->   
-> +#define EDCRS_PER_WORD				16
-> +#define EDCR_TO_WORD_IDX(r)			((r) / EDCRS_PER_WORD)
-> +#define EDCR_TO_WORD_SHIFT(r)		((r % EDCRS_PER_WORD) * 2)
-> +#define EDCR_TO_WORD_VAL(val, r)	(val << EDCR_TO_WORD_SHIFT(r))
-> +#define EDCR_TO_WORD_MASK(r)		EDCR_TO_WORD_VAL(0x3, r)
-
-minor nit: add a new line here please
-
-> +#define EDCMRS_PER_WORD				32
-> +#define EDCMR_TO_WORD_IDX(r)		((r) / EDCMRS_PER_WORD)
-> +#define EDCMR_TO_WORD_SHIFT(r)		((r) % EDCMRS_PER_WORD)
-> +
->   /* TPDM integration test registers */
->   #define TPDM_ITATBCNTRL		(0xEF0)
->   #define TPDM_ITCNTRL		(0xF00)
-> @@ -60,14 +71,24 @@
->   #define TPDM_PIDR0_DS_IMPDEF	BIT(0)
->   #define TPDM_PIDR0_DS_DSB	BIT(1)
->   
-> +#define TPDM_DSB_MAX_LINES	256
-> +/* MAX number of EDCR registers */
-> +#define TPDM_DSB_MAX_EDCR	16
-> +/* MAX number of EDCMR registers */
-> +#define TPDM_DSB_MAX_EDCMR	8
-> +
->   /**
->    * struct dsb_dataset - specifics associated to dsb dataset
->    * @mode:             DSB programming mode
-> + * @edge_ctrl:        Save value for edge control
-> + * @edge_ctrl_mask:   Save value for edge control mask
->    * @trig_ts:          Enable/Disable trigger timestamp.
->    * @trig_type:        Enable/Disable trigger type.
->    */
->   struct dsb_dataset {
->   	u32				mode;
-> +	u32				edge_ctrl[TPDM_DSB_MAX_EDCR];
-> +	u32				edge_ctrl_mask[TPDM_DSB_MAX_EDCMR];
-
-minor nit: Please align it with the fields below.
-
->   	bool			trig_ts;
->   	bool			trig_type;
->   };
-
-Suzuki
+>  			usb_2_dwc3: usb@a800000 {
+>  				compatible = "snps,dwc3";
+>  				reg = <0 0x0a800000 0 0xcd00>;
