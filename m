@@ -2,56 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 93D9B7193FB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 09:17:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A501B71940D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 09:21:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230399AbjFAHRL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 03:17:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39588 "EHLO
+        id S231649AbjFAHVM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 03:21:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41058 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230215AbjFAHRK (ORCPT
+        with ESMTP id S229524AbjFAHVL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 03:17:10 -0400
+        Thu, 1 Jun 2023 03:21:11 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E48F129;
-        Thu,  1 Jun 2023 00:17:09 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 278FA129;
+        Thu,  1 Jun 2023 00:21:10 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C6F6B641CE;
-        Thu,  1 Jun 2023 07:17:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6881BC433EF;
-        Thu,  1 Jun 2023 07:17:07 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id B11A1641CA;
+        Thu,  1 Jun 2023 07:21:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60119C433EF;
+        Thu,  1 Jun 2023 07:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685603828;
-        bh=lFxVqHllcG3lgD1iV1Z0FPSYL2IAzqEz/TFrgzuj/GE=;
+        s=k20201202; t=1685604069;
+        bh=pmLSdXbONq+1c2ihmwSq1qnFoYmgEOhAOEH7wiew6bM=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=JwRgk1d9gEBP9CbER7TDB8+paz2PnwQBNBP1/61cr1B4pNsTwx4mxnaMinxnzfHJf
-         OJX1ngqsE9Y+K/bZp/suNhK55GaKN4HkF55QZCrTyYC1tRvDkmXpDaXWg4Rc9B7J/8
-         h19sUk8AUsHX3Rpd/VBc2voLbUvT5g8sDi9+KF1Gk4d0fZX86YP3DvC0yqrkaR9WeR
-         z+7YQ3hHPjjEUFs70kgeuE8qHSWscE+PfUl3vtcKzrywjv1tPK0UOWigy9jfQoV/C/
-         5bemy6mv3f3kC6gYvdAkNsaQt30wC9dyfIlrZcqddlDKjPwJt+ZBFTS+JHdz7DNvJq
-         9/scfj3CQb6NA==
-Date:   Thu, 1 Jun 2023 12:47:03 +0530
+        b=VEIAx4GQHbvtTqupBoAb5aySjHXBYatSg7etJDzO6LN1ltog/4JpmzYFumg764eBF
+         bzM2YY22VZvaYPlsllQ08j8HhXcmTjQEMMFstSB+AZ2zToPzhE6wbikGr0+crDQF/b
+         RiK06qB1i1uTNek6gGCWGKTU1clyNx1iAKAEpKWyEQ4RD269S1whRxGZwl1aa56crK
+         m7KKKeyS9daWIPB8mkjPtnxYQkcKt6sPZ1Pe3KF0b68xa+ShQ/jyefDa98lAmhTwmA
+         EQMvw9fIlSnXLkf5lOZvmIWbKu77B/xSw9ZNysWl6Iwx77hmy+qw2hSsqkNVs2QHpg
+         JvpfvErQnDy/Q==
+Date:   Thu, 1 Jun 2023 12:51:04 +0530
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 07/15] arm64: dts: qcom: sc8180x: Add interconnects
- and lmh
-Message-ID: <ZHhF7zbPYyqdfURV@matsya>
+Subject: Re: [PATCH v3 01/15] dt-bindings: PCI: qcom: Fix sc8180x clocks and
+ interrupts
+Message-ID: <ZHhG4LOgfYgWbFt7@matsya>
 References: <20230530162454.51708-1-vkoul@kernel.org>
- <20230530162454.51708-8-vkoul@kernel.org>
- <7d4089df-e572-4d3b-6fb7-061d69479dce@linaro.org>
+ <20230530162454.51708-2-vkoul@kernel.org>
+ <4fcbb3b7-ed44-d8e6-a601-e3e957c55ebf@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <7d4089df-e572-4d3b-6fb7-061d69479dce@linaro.org>
+In-Reply-To: <4fcbb3b7-ed44-d8e6-a601-e3e957c55ebf@linaro.org>
 X-Spam-Status: No, score=-7.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -62,22 +67,86 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31-05-23, 10:26, Krzysztof Kozlowski wrote:
+On 31-05-23, 10:19, Krzysztof Kozlowski wrote:
 > On 30/05/2023 18:24, Vinod Koul wrote:
-> > This add interconnect nodes and add LMH to sc8180x SoC dtsi
+> > Commit 45a3ec891370 ("PCI: qcom: Add sc8180x compatible") added sc8180x
+> > compatible and commit 075a9d55932e ("dt-bindings: PCI: qcom: Convert to
+> > YAML") converted the description to yaml
 > > 
-> > Co-developed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > But there are still some errors specific to sc8180x which this change
+> > attempts to fix. The clocks and resets for sc8180 pcie controller are
+> > different so need to be documented separately
+> 
+> I don't get what's the error here to fix. The clocks you list are
+> already there as part of oneOf.
+
+It was listed with sm8150 block which has different set of clocks than
+used in sc81880x, so this needs to have its own block of clocks and
+resets
+
+> > 
 > > Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > > ---
+> >  .../devicetree/bindings/pci/qcom,pcie.yaml    | 29 ++++++++++++++++++-
+> >  1 file changed, 28 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> > index 81971be4e554..40a1f451a3d3 100644
+> > --- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+> > @@ -476,6 +476,33 @@ allOf:
+> >            items:
+> >              - const: pci # PCIe core reset
+> >  
+> > +  - if:
+> > +      properties:
+> > +        compatible:
+> > +          contains:
+> > +            enum:
+> > +              - qcom,pcie-sc8180x
+> > +    then:
+> > +      properties:
+> > +        clocks:
+> > +          minItems: 8
+> > +          maxItems: 8
+> > +        clock-names:
+> > +          items:
+> > +            - const: pipe # PIPE clock
+> > +            - const: aux # Auxiliary clock
+> > +            - const: cfg # Configuration clock
+> > +            - const: bus_master # Master AXI clock
+> > +            - const: bus_slave # Slave AXI clock
+> > +            - const: slave_q2a # Slave Q2A clock
+> > +            - const: ref # REFERENCE clock
+> > +            - const: tbu # PCIe TBU clock
+> > +        resets:
+> > +          maxItems: 1
+> > +        reset-names:
+> > +          items:
+> > +            - const: pci # PCIe core reset
+> > +
+> >    - if:
+> >        properties:
+> >          compatible:
+> > @@ -524,7 +551,6 @@ allOf:
+> >          compatible:
+> >            contains:
+> >              enum:
+> > -              - qcom,pcie-sc8180x
+> >                - qcom,pcie-sm8150
+> >                - qcom,pcie-sm8250
+> >      then:
+> > @@ -749,6 +775,7 @@ allOf:
+> >            contains:
+> >              enum:
+> >                - qcom,pcie-sa8540p
+> > +              - qcom,pcie-sc8180x
+> >                - qcom,pcie-sc8280xp
+> >      then:
+> >        required:
 > 
-> I don't understand why this was split. We talked on IRC many times on
-> this - artificial splits are not "release early, release often". Your
-> previous patchset was correct in that approach, but why this is separate
-> patch?
-
-Coz the patch was big to review. This is usual Linux approach to break a
-change into smaller chunks for review!
+> Best regards,
+> Krzysztof
 
 -- 
 ~Vinod
