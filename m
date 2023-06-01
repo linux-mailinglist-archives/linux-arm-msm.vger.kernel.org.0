@@ -2,253 +2,264 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE6EB71A115
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 16:55:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C067C71A122
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 16:57:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233423AbjFAOzs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 10:55:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38420 "EHLO
+        id S234554AbjFAO5A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 10:57:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232776AbjFAOzr (ORCPT
+        with ESMTP id S233870AbjFAO47 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 10:55:47 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57E9A123;
-        Thu,  1 Jun 2023 07:55:46 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id d9443c01a7336-1b041cceb16so7987845ad.2;
-        Thu, 01 Jun 2023 07:55:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685631346; x=1688223346;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=4pZdoC/20g9zOwcLzXAs2apfb3PaixtoFPSdJ6IW6n0=;
-        b=N8dp1iYo3E5hO84dWb4Ei0WEVb5Ma1gchI3zvNNzhi06+inO1GBMyuvgzHq79Xkkhe
-         fGmdYdGDfW2TKgz0gHTtN+PRuWK3ki5vrUm9uf/dhmJpPTDpou6L4YLxRT8FOTccgDkW
-         9s3TQ6pNrsjvYADZMrKEGvfCflw00Zmdn4m9vBKvPtvbjWZhPLpVHQuDfHKwVW3KXCCv
-         jFr+2XNSSx6PcsziUzsQRqt9r7vdo94krdzSrEgVKJqS4rcz4wnQg9TlMT/8HiIA0MK1
-         G9SnCrri+3VXZD+WDWj6lWnOAqYm8QXXzmdPG5scUAf1/9uUtF3VvgskkayF0Eq3TASi
-         O86w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685631346; x=1688223346;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4pZdoC/20g9zOwcLzXAs2apfb3PaixtoFPSdJ6IW6n0=;
-        b=DRju1M6cpfVIWnDq4rtJ3thUXrmdXxkgAs3pAIMI1SZZpF16MMeIC8vNEFfam6jwDt
-         zb7/e37SNBdAqQuY6dxG6xH9a8f56TJ8Niz1Wlu/7zE2Q7DcXmlC3lsgnJBmdwgJR9qP
-         Ezz3tyFi9DWJ45U6ukAxuiTsNgtNfv6vFhgpjZYE3/o6ZtbgoIkyR6mayh5BxOoP8y6f
-         2AAwzbHL3GDGx1mFkclcF8B121VAzMs9aN9vDInq0s+yR6opXTXW8aKgQFikmClNl4FK
-         zG2rV3ce/Tg3cEMCaxfLxyQBMMfpM1XjZ6yeRfhJDemOTsJoSqtIakONXDpXkUOtTXt3
-         8pCw==
-X-Gm-Message-State: AC+VfDxbj6HQV1IZ1Ozt5oDSKRXTR7/7cE9bS0Axv8sAiBhjcj1Kcx/+
-        o7EfFGbOQ69+rZzgDaT8iyolYwwKWkzqp2YGxgY=
-X-Google-Smtp-Source: ACHHUZ6H/hyjAHMQEdJaTRFvI+F7VrwjRcNvW2kAXvCn/liJPvBJwUVnSXQjJbVoJ15uIZ7IzfHwnLCUZPzJqwVieSw=
-X-Received: by 2002:a17:902:6a89:b0:1b0:6544:1d4 with SMTP id
- n9-20020a1709026a8900b001b0654401d4mr7605968plk.27.1685631345692; Thu, 01 Jun
- 2023 07:55:45 -0700 (PDT)
+        Thu, 1 Jun 2023 10:56:59 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [5.144.164.168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6DFD18F
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 07:56:56 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 08D153F6C1;
+        Thu,  1 Jun 2023 16:56:52 +0200 (CEST)
+Date:   Thu, 1 Jun 2023 16:56:51 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux.dev
+Subject: Re: [PATCH v5 08/12] drm/msm/dpu: Add SM6375 support
+Message-ID: <h56lpxfxujaia6jfgvbpu2dp3dqdilaormxr5plms44vev2qdf@qhkrsuhlarga>
+References: <20230411-topic-straitlagoon_mdss-v5-0-998b4d2f7dd1@linaro.org>
+ <20230411-topic-straitlagoon_mdss-v5-8-998b4d2f7dd1@linaro.org>
 MIME-Version: 1.0
-References: <20230530165807.642084-1-robimarko@gmail.com> <b565b9b5-d7c1-7779-532e-565c3f5c5cd3@quicinc.com>
- <CAOX2RU6ay_Bc0JYQ6rBcTRadm-71Jie5YH9B0J_1UywkcyqZ8g@mail.gmail.com>
- <70de3314-766d-4c7f-5b1a-41740cfeac8c@quicinc.com> <2a78c9ce-f631-53fd-581f-2e8c906be989@quicinc.com>
-In-Reply-To: <2a78c9ce-f631-53fd-581f-2e8c906be989@quicinc.com>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Thu, 1 Jun 2023 16:55:34 +0200
-Message-ID: <CAOX2RU4k4bDvtU8m4cxA=9x6b2B0mwiKsBWXFV3TY+jvk49vwg@mail.gmail.com>
-Subject: Re: [RESEND PATCH v2 1/2] cpufreq: qcom-nvmem: add support for IPQ8074
-To:     Kathiravan T <quic_kathirav@quicinc.com>
-Cc:     rafael@kernel.org, viresh.kumar@linaro.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        ilia.lin@kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        ansuelsmth@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230411-topic-straitlagoon_mdss-v5-8-998b4d2f7dd1@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 1 Jun 2023 at 16:49, Kathiravan T <quic_kathirav@quicinc.com> wrote:
->
->
-> On 6/1/2023 6:54 PM, Kathiravan T wrote:
-> >
-> > On 6/1/2023 6:40 PM, Robert Marko wrote:
-> >> On Thu, 1 Jun 2023 at 14:57, Kathiravan T <quic_kathirav@quicinc.com>
-> >> wrote:
-> >>>
-> >>> On 5/30/2023 10:28 PM, Robert Marko wrote:
-> >>>> IPQ8074 comes in 2 families:
-> >>>> * IPQ8070A/IPQ8071A (Acorn) up to 1.4GHz
-> >>>> * IPQ8072A/IPQ8074A/IPQ8076A/IPQ8078A (Hawkeye) up to 2.2GHz
-> >>>>
-> >>>> So, in order to be able to share one OPP table lets add support for
-> >>>> IPQ8074
-> >>>> family based of SMEM SoC ID-s as speedbin fuse is always 0 on IPQ8074.
-> >>>>
-> >>>> IPQ8074 compatible is blacklisted from DT platdev as the cpufreq
-> >>>> device
-> >>>> will get created by NVMEM CPUFreq driver.
-> >>>>
-> >>>> Signed-off-by: Robert Marko <robimarko@gmail.com>
-> >>>> ---
-> >>>> Changes in v2:
-> >>>> * Print an error if SMEM ID is not part of the IPQ8074 family
-> >>>> and restrict the speed to Acorn variant (1.4GHz)
-> >>>> ---
-> >>>>    drivers/cpufreq/cpufreq-dt-platdev.c |  1 +
-> >>>>    drivers/cpufreq/qcom-cpufreq-nvmem.c | 43
-> >>>> ++++++++++++++++++++++++++++
-> >>>>    2 files changed, 44 insertions(+)
-> >>>>
-> >>>> diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c
-> >>>> b/drivers/cpufreq/cpufreq-dt-platdev.c
-> >>>> index ea86c9f3ed7a..78f6ff933f93 100644
-> >>>> --- a/drivers/cpufreq/cpufreq-dt-platdev.c
-> >>>> +++ b/drivers/cpufreq/cpufreq-dt-platdev.c
-> >>>> @@ -170,6 +170,7 @@ static const struct of_device_id blocklist[]
-> >>>> __initconst = {
-> >>>>        { .compatible = "ti,am62a7", },
-> >>>>
-> >>>>        { .compatible = "qcom,ipq8064", },
-> >>>> +     { .compatible = "qcom,ipq8074", },
-> >>>>        { .compatible = "qcom,apq8064", },
-> >>>>        { .compatible = "qcom,msm8974", },
-> >>>>        { .compatible = "qcom,msm8960", },
-> >>>> diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> >>>> b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> >>>> index a88b6fe5db50..ce444b5962f2 100644
-> >>>> --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> >>>> +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> >>>> @@ -31,6 +31,9 @@
-> >>>>
-> >>>>    #include <dt-bindings/arm/qcom,ids.h>
-> >>>>
-> >>>> +#define IPQ8074_HAWKEYE_VERSION              BIT(0)
-> >>>> +#define IPQ8074_ACORN_VERSION                BIT(1)
-> >>>> +
-> >>>>    struct qcom_cpufreq_drv;
-> >>>>
-> >>>>    struct qcom_cpufreq_match_data {
-> >>>> @@ -204,6 +207,41 @@ static int
-> >>>> qcom_cpufreq_krait_name_version(struct device *cpu_dev,
-> >>>>        return ret;
-> >>>>    }
-> >>>>
-> >>>> +static int qcom_cpufreq_ipq8074_name_version(struct device *cpu_dev,
-> >>>> +                                          struct nvmem_cell
-> >>>> *speedbin_nvmem,
-> >>>> +                                          char **pvs_name,
-> >>>> +                                          struct qcom_cpufreq_drv
-> >>>> *drv)
-> >>>
-> >>> Most of the IPQ SoCs also supports the fuse based frequency selection.
-> >>> Can we rename the function name to generic so that all the IPQ chips
-> >>> can
-> >>> use the same function?
-> >> Well, the only speedbin fuse I was able to dig from downstream is the
-> >> one from
-> >> CPR driver and that one is 0 on all devices so it's not helpful.
-> >> Do you maybe know if there is one in the IPQ8074 family?
-> >
-> >
-> > Let me check on this and get back to you probably by tomorrow...
->
->
-> Robert, checked with the team and IPQ807x doesn't use fuse to determine
-> the CPU freq limits. Current approach (SoC ID based) should be fine.
-> BTW, are the DTS changes already posted or yet to be posted?
+On 2023-05-23 09:46:19, Konrad Dybcio wrote:
+> Add basic SM6375 support to the DPU1 driver to enable display output.
 
-Thanks for checking,
-DTS changes are not posted as CPR support is required in order for scaling to
-properly work, otherwise, all I could do is try and guess some safe voltages.
-There was an effort to get CPR upstreamed, but I think that stalled out for now.
+Nit: The SM6350 commit doesn't use the word "basic" here: what does it
+mean?  Is this addition not complete (because it seems so)?
 
-Regards,
-Robert
->
->
-> >
-> >
-> >>
-> >> Function is not supposed to be shared between SoC-s, so I dont see a
-> >> point in it
-> >> having a generic name cause for example IPQ6018 has a working fuse
-> >> and its logic
-> >> is completely different for setting the versioning than IPQ8074, I
-> >> dont think having a
-> >> catch-all would work here.
-> >
-> >
-> > Makes sense, thanks Robert and Konrad.
-> >
-> >
-> >>
-> >>>
-> >>>> +{
-> >>>> +     u32 msm_id;
-> >>>
-> >>> soc_id please...?
-> >> Sure, that is more suitable.
-> >>
-> >> Regards,
-> >> Robert
-> >>>
-> >>>> +     int ret;
-> >>>> +     *pvs_name = NULL;
-> >>>> +
-> >>>> +     ret = qcom_smem_get_soc_id(&msm_id);
-> >>>> +     if (ret)
-> >>>> +             return ret;
-> >>>> +
-> >>>> +     switch (msm_id) {
-> >>>> +     case QCOM_ID_IPQ8070A:
-> >>>> +     case QCOM_ID_IPQ8071A:
-> >>>> +             drv->versions = IPQ8074_ACORN_VERSION;
-> >>>> +             break;
-> >>>> +     case QCOM_ID_IPQ8072A:
-> >>>> +     case QCOM_ID_IPQ8074A:
-> >>>> +     case QCOM_ID_IPQ8076A:
-> >>>> +     case QCOM_ID_IPQ8078A:
-> >>>> +             drv->versions = IPQ8074_HAWKEYE_VERSION;
-> >>>> +             break;
-> >>>> +     default:
-> >>>> +             dev_err(cpu_dev,
-> >>>> +                     "SoC ID %u is not part of IPQ8074 family,
-> >>>> limiting to 1.4GHz!\n",
-> >>>> +                     msm_id);
-> >>>> +             drv->versions = IPQ8074_ACORN_VERSION;
-> >>>> +             break;
-> >>>> +     }
-> >>>> +
-> >>>> +     return 0;
-> >>>> +}
-> >>>> +
-> >>>>    static const struct qcom_cpufreq_match_data match_data_kryo = {
-> >>>>        .get_version = qcom_cpufreq_kryo_name_version,
-> >>>>    };
-> >>>> @@ -218,6 +256,10 @@ static const struct qcom_cpufreq_match_data
-> >>>> match_data_qcs404 = {
-> >>>>        .genpd_names = qcs404_genpd_names,
-> >>>>    };
-> >>>>
-> >>>> +static const struct qcom_cpufreq_match_data match_data_ipq8074 = {
-> >>>> +     .get_version = qcom_cpufreq_ipq8074_name_version,
-> >>>> +};
-> >>>> +
-> >>>>    static int qcom_cpufreq_probe(struct platform_device *pdev)
-> >>>>    {
-> >>>>        struct qcom_cpufreq_drv *drv;
-> >>>> @@ -363,6 +405,7 @@ static const struct of_device_id
-> >>>> qcom_cpufreq_match_list[] __initconst = {
-> >>>>        { .compatible = "qcom,msm8996", .data = &match_data_kryo },
-> >>>>        { .compatible = "qcom,qcs404", .data = &match_data_qcs404 },
-> >>>>        { .compatible = "qcom,ipq8064", .data = &match_data_krait },
-> >>>> +     { .compatible = "qcom,ipq8074", .data = &match_data_ipq8074 },
-> >>>>        { .compatible = "qcom,apq8064", .data = &match_data_krait },
-> >>>>        { .compatible = "qcom,msm8974", .data = &match_data_krait },
-> >>>>        { .compatible = "qcom,msm8960", .data = &match_data_krait },
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h | 139 +++++++++++++++++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   1 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   1 +
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   1 +
+>  4 files changed, 142 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
+> new file mode 100644
+> index 000000000000..924f2526c06a
+> --- /dev/null
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h
+> @@ -0,0 +1,139 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+> +/*
+> + * Copyright (c) 2022. Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Copyright (c) 2015-2018, 2020 The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2023, Linaro Limited
+> + */
+> +
+> +#ifndef _DPU_6_9_SM6375_H
+> +#define _DPU_6_9_SM6375_H
+> +
+> +static const struct dpu_caps sm6375_dpu_caps = {
+> +	.max_mixer_width = DEFAULT_DPU_LINE_WIDTH,
+> +	.max_mixer_blendstages = 0x4,
+> +	.qseed_type = DPU_SSPP_SCALER_QSEED4,
+> +	.has_dim_layer = true,
+> +	.has_idle_pc = true,
+> +	.max_linewidth = 2160,
+> +	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+> +};
+> +
+> +static const struct dpu_ubwc_cfg sm6375_ubwc_cfg = {
+> +	.ubwc_version = DPU_HW_UBWC_VER_20,
+> +	.ubwc_swizzle = 6,
+> +	.highest_bank_bit = 1,
+> +};
+> +
+> +static const struct dpu_mdp_cfg sm6375_mdp[] = {
+> +	{
+> +	.name = "top_0", .id = MDP_TOP,
+> +	.base = 0x0, .len = 0x494,
+> +	.features = 0,
+> +	.clk_ctrls[DPU_CLK_CTRL_VIG0] = { .reg_off = 0x2ac, .bit_off = 0 },
+> +	.clk_ctrls[DPU_CLK_CTRL_DMA0] = { .reg_off = 0x2ac, .bit_off = 8 },
+> +	},
+> +};
+> +
+> +static const struct dpu_ctl_cfg sm6375_ctl[] = {
+> +	{
+> +	.name = "ctl_0", .id = CTL_0,
+> +	.base = 0x1000, .len = 0x1dc,
+> +	.features = BIT(DPU_CTL_ACTIVE_CFG),
+> +	.intr_start = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 9),
+> +	},
+> +};
+> +
+> +static const struct dpu_sspp_cfg sm6375_sspp[] = {
+> +	SSPP_BLK("sspp_0", SSPP_VIG0, 0x4000, 0x1f8, VIG_SC7180_MASK,
+> +		sm6115_vig_sblk_0, 0, SSPP_TYPE_VIG, DPU_CLK_CTRL_VIG0),
+> +	SSPP_BLK("sspp_8", SSPP_DMA0, 0x24000, 0x1f8, DMA_SDM845_MASK,
+> +		sdm845_dma_sblk_0, 1, SSPP_TYPE_DMA, DPU_CLK_CTRL_DMA0),
+> +};
+> +
+> +static const struct dpu_lm_cfg sm6375_lm[] = {
+> +	LM_BLK("lm_0", LM_0, 0x44000, MIXER_QCM2290_MASK,
+> +		&qcm2290_lm_sblk, PINGPONG_0, 0, DSPP_0),
+> +};
+> +
+> +static const struct dpu_dspp_cfg sm6375_dspp[] = {
+> +	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+> +		&sm8150_dspp_sblk),
+> +};
+> +
+> +static const struct dpu_pingpong_cfg sm6375_pp[] = {
+> +	PP_BLK("pingpong_0", PINGPONG_0, 0x70000, PINGPONG_SM8150_MASK, 0, sdm845_pp_sblk,
+> +		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+> +		-1),
+> +};
+> +
+> +static const struct dpu_dsc_cfg sm6375_dsc[] = {
+> +	DSC_BLK("dsc_0", DSC_0, 0x80000, BIT(DPU_DSC_OUTPUT_CTRL)),
+> +};
+> +
+> +static const struct dpu_intf_cfg sm6375_intf[] = {
+> +	INTF_BLK("intf_0", INTF_0, 0x00000, 0x280, INTF_NONE, 0, 0, 0, 0, 0),
+> +	INTF_BLK_DSI_TE("intf_1", INTF_1, 0x6a800, 0x2c0, INTF_DSI, 0, 24, INTF_SC7280_MASK,
+
+Did you forget to set this back to SC7180?  This will be enabling
+DPU_INTF_DATA_COMPRESS otherwise, which is a DPU 7.x feature.
+
+- Marijn
+
+> +		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 26),
+> +		DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 27),
+> +		DPU_IRQ_IDX(MDP_INTF1_TEAR_INTR, 2)),
+> +};
+> +
+> +static const struct dpu_perf_cfg sm6375_perf_data = {
+> +	.max_bw_low = 5200000,
+> +	.max_bw_high = 6200000,
+> +	.min_core_ib = 2500000,
+> +	.min_llcc_ib = 0, /* No LLCC on this SoC */
+> +	.min_dram_ib = 1600000,
+> +	.min_prefill_lines = 24,
+> +	/* TODO: confirm danger_lut_tbl */
+> +	.danger_lut_tbl = {0xffff, 0xffff, 0x0},
+> +	.safe_lut_tbl = {0xfe00, 0xfe00, 0xffff},
+> +	.qos_lut_tbl = {
+> +		{.nentry = ARRAY_SIZE(sm6350_qos_linear_macrotile),
+> +		.entries = sm6350_qos_linear_macrotile
+> +		},
+> +		{.nentry = ARRAY_SIZE(sm6350_qos_linear_macrotile),
+> +		.entries = sm6350_qos_linear_macrotile
+> +		},
+> +		{.nentry = ARRAY_SIZE(sc7180_qos_nrt),
+> +		.entries = sc7180_qos_nrt
+> +		},
+> +	},
+> +	.cdp_cfg = {
+> +		{.rd_enable = 1, .wr_enable = 1},
+> +		{.rd_enable = 1, .wr_enable = 0}
+> +	},
+> +	.clk_inefficiency_factor = 105,
+> +	.bw_inefficiency_factor = 120,
+> +};
+> +
+> +const struct dpu_mdss_cfg dpu_sm6375_cfg = {
+> +	.caps = &sm6375_dpu_caps,
+> +	.ubwc = &sm6375_ubwc_cfg,
+> +	.mdp_count = ARRAY_SIZE(sm6375_mdp),
+> +	.mdp = sm6375_mdp,
+> +	.ctl_count = ARRAY_SIZE(sm6375_ctl),
+> +	.ctl = sm6375_ctl,
+> +	.sspp_count = ARRAY_SIZE(sm6375_sspp),
+> +	.sspp = sm6375_sspp,
+> +	.mixer_count = ARRAY_SIZE(sm6375_lm),
+> +	.mixer = sm6375_lm,
+> +	.dspp_count = ARRAY_SIZE(sm6375_dspp),
+> +	.dspp = sm6375_dspp,
+> +	.dsc_count = ARRAY_SIZE(sm6375_dsc),
+> +	.dsc = sm6375_dsc,
+> +	.pingpong_count = ARRAY_SIZE(sm6375_pp),
+> +	.pingpong = sm6375_pp,
+> +	.intf_count = ARRAY_SIZE(sm6375_intf),
+> +	.intf = sm6375_intf,
+> +	.vbif_count = ARRAY_SIZE(sdm845_vbif),
+> +	.vbif = sdm845_vbif,
+> +	.perf = &sm6375_perf_data,
+> +	.mdss_irqs = BIT(MDP_SSPP_TOP0_INTR) | \
+> +		     BIT(MDP_SSPP_TOP0_INTR2) | \
+> +		     BIT(MDP_SSPP_TOP0_HIST_INTR) | \
+> +		     BIT(MDP_INTF1_INTR) | \
+> +		     BIT(MDP_INTF1_TEAR_INTR),
+> +};
+> +
+> +#endif
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index 6e338d569632..7cfdcf7aa486 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -750,6 +750,7 @@ static const struct dpu_qos_lut_entry sc7180_qos_nrt[] = {
+>  #include "catalog/dpu_6_3_sm6115.h"
+>  #include "catalog/dpu_6_4_sm6350.h"
+>  #include "catalog/dpu_6_5_qcm2290.h"
+> +#include "catalog/dpu_6_9_sm6375.h"
+>  
+>  #include "catalog/dpu_7_0_sm8350.h"
+>  #include "catalog/dpu_7_2_sc7280.h"
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index ed4311f6aaf0..b84c14318449 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -836,6 +836,7 @@ extern const struct dpu_mdss_cfg dpu_sc7180_cfg;
+>  extern const struct dpu_mdss_cfg dpu_sm6115_cfg;
+>  extern const struct dpu_mdss_cfg dpu_sm6350_cfg;
+>  extern const struct dpu_mdss_cfg dpu_qcm2290_cfg;
+> +extern const struct dpu_mdss_cfg dpu_sm6375_cfg;
+>  extern const struct dpu_mdss_cfg dpu_sm8350_cfg;
+>  extern const struct dpu_mdss_cfg dpu_sc7280_cfg;
+>  extern const struct dpu_mdss_cfg dpu_sc8280xp_cfg;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index d9925097626c..d3ca8c3c808c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -1329,6 +1329,7 @@ static const struct of_device_id dpu_dt_match[] = {
+>  	{ .compatible = "qcom,sc8280xp-dpu", .data = &dpu_sc8280xp_cfg, },
+>  	{ .compatible = "qcom,sm6115-dpu", .data = &dpu_sm6115_cfg, },
+>  	{ .compatible = "qcom,sm6350-dpu", .data = &dpu_sm6350_cfg, },
+> +	{ .compatible = "qcom,sm6375-dpu", .data = &dpu_sm6375_cfg, },
+>  	{ .compatible = "qcom,sm8150-dpu", .data = &dpu_sm8150_cfg, },
+>  	{ .compatible = "qcom,sm8250-dpu", .data = &dpu_sm8250_cfg, },
+>  	{ .compatible = "qcom,sm8350-dpu", .data = &dpu_sm8350_cfg, },
+> 
+> -- 
+> 2.40.1
+> 
