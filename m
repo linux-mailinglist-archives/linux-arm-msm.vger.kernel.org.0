@@ -2,262 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 220AA719F2A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 16:07:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B366B719F69
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 16:15:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233806AbjFAOHh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 10:07:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56674 "EHLO
+        id S234086AbjFAOPA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 10:15:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36264 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233691AbjFAOH0 (ORCPT
+        with ESMTP id S234294AbjFAOOz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 10:07:26 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8305219B
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 07:07:15 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f603d4bc5bso8707535e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 07:07:15 -0700 (PDT)
+        Thu, 1 Jun 2023 10:14:55 -0400
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 578CBFC;
+        Thu,  1 Jun 2023 07:14:54 -0700 (PDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f50470d77cso1170216e87.0;
+        Thu, 01 Jun 2023 07:14:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685628434; x=1688220434;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4orPicnt68KcAk51goo/EZdt5c9EB1sU8JStjJm7IEc=;
-        b=ExQKvzEoBSwlAyG1Wemz5LrDsU4TsLGKzctvRbL0HH+OV8JgNX9UeJOFrfAnk0CbZm
-         fcECF86KhXQNoTLTTSomLr6QnRtIU/Rz7cwlfCtoHOFqm6ckfZv0RDlegMSNryt8Nd3j
-         O9pAeSJj/edIgYY2zA3VouMznMd6D+6paw1WWPrbrR0X9ruq+I4OEmjdiHg6FhIyH6xP
-         XxXH/E+Q9n3K4V6LNkhgceHemkuNPi5qk7ZDhEA8/NnCeD39RBgHhl7elEDlm7DBRoBG
-         CEYuPgesulwwy3A1Gs3rX7by4QZjohE2Gh6O/1bVJTCcOJjTURFsfyTlQqWEeLQSUH61
-         zH5w==
+        d=gmail.com; s=20221208; t=1685628892; x=1688220892;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DeEt3ZtY/qgPpIG3Juy6jxgig7CNozbybAWZDbKu/2U=;
+        b=EA6QMh0SF1z/MTpMCRKX9Wem4Jbt9wiCcnjreK854AVtiORKI2PsSN79zxKO/ZRuvH
+         he7xl4p/EgXNjbb0tGcGODweznwFnioHPqiX1EZuVwCn8HNL+2VENunXXh0TUIRIgtoO
+         SNWIsXG1pOToRqQL8NGZ5TVMAwYkgYUkjnecI1TL2VCAy99EVn5bWCW+fJILMGZfWEYP
+         SK2W9Irhygls/2htBENC8xH8KNvPZ4SV11mlGK86spve9XhKwz6YVDsvkPbc3Aaan//D
+         RilNeQcQojDJ1HsnPi2lZSFpdQoO6QjsfaZeSqevXWkx8yZAWqTKJM6VQPqC5BmSMLE6
+         khNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685628434; x=1688220434;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20221208; t=1685628892; x=1688220892;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4orPicnt68KcAk51goo/EZdt5c9EB1sU8JStjJm7IEc=;
-        b=KX+SW23n8BD1+dDWFZRX0oy/2XcVVXqP3nio1CKO6Gt3k9+BA2/kaY+2yNSoukuhtu
-         96WhXq5yiV/Ro4gp2nQIbzykVbT0aK9yLSlkS/I7ExIdWpHjcg2d31bYQ4yDSD9LzRoi
-         nVCfWeXo4qL2Oj6afO0ZnQhdSE6JVNAoHi7kcSB/nE+k8CiIZm4CvjR6AU5RJR3LFa85
-         EdJWOgf+bZgDENsyIfkzThJVAoQCSkHirw4+2yS4+vkI9gZZE3eqB8FdBQUHAe8UH7cS
-         tU9qXCA7L62pBWjFIOMSpUKg5JDAXH2iSV90NkRegiYtsprL882BKWUniEaHJ+fZbn+6
-         nwQQ==
-X-Gm-Message-State: AC+VfDxDsVzrxmjqnnQEnw7TbxibqmbH06eicF5JHY5u/TKsNJf9++T8
-        TogS5G/x2e3urClzAEqLIObzog==
-X-Google-Smtp-Source: ACHHUZ7rsW88N6lOxdJEgvlQNko6WAiNoPfRl9CKXdC3X0aZFPLtHge3mhbdR9rSridmzH5YyHBkIg==
-X-Received: by 2002:a5d:6889:0:b0:306:3204:3633 with SMTP id h9-20020a5d6889000000b0030632043633mr1967387wru.22.1685628433808;
-        Thu, 01 Jun 2023 07:07:13 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id k11-20020adfe3cb000000b003078a3f3a24sm10504166wrm.114.2023.06.01.07.07.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jun 2023 07:07:13 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Thu, 01 Jun 2023 16:07:07 +0200
-Subject: [PATCH RFC 7/7] arm64: dts: qcom: sm8550-qrd: add pmic glink
- port/endpoints
+        bh=DeEt3ZtY/qgPpIG3Juy6jxgig7CNozbybAWZDbKu/2U=;
+        b=gzDGDOM8sHpEbLTuDsQyvKVQGhfhYHosEKAyBnJXe6OLBhOTQ25NHgBtNlszSiQnGt
+         KyVdYJZ08RNw/ahBHeC/Yp8+RABSAcJZ/bcWW8Z7QRydCTohhx+9VEayzXoLtRm64Ct5
+         J/qrZSovYhhzV93zllwxDyiY3XOCuqNd81aTriaF+0LSV1fdmhMqh0DQ5Q/8ld3EF+kd
+         1CarRccA3nyVU0pk/c1GHBUbAIUou7EfvavZNCqcqfAn9PZ9W4/EPHyjpBVURHTet59i
+         DdONXBSgBLscBmFkZmM0WsNT2+M0MO5ew0ozrx10UrwFb4NGczDEkG/gIYJ1q+7spKnx
+         ytEg==
+X-Gm-Message-State: AC+VfDxEyoQuQPNKIJH+d9AsbrYsGjqD5HDWC5IU0dlHcU39Klg0Ijr2
+        XiaK+WMqHKyl5PgfEe3Y6jKOMROpuOmA+kCYAQQ=
+X-Google-Smtp-Source: ACHHUZ5aZbU8uqtUstqjsROwRBmYjoZddv/BBhfDrYD2/3YDUKKqXKbBGkdUqIRDFOIon0Wjh3OmpR/FjZOPjI6eNUU=
+X-Received: by 2002:ac2:4c2b:0:b0:4f4:b41c:a8c1 with SMTP id
+ u11-20020ac24c2b000000b004f4b41ca8c1mr171lfq.69.1685628892019; Thu, 01 Jun
+ 2023 07:14:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230601-topic-sm8550-upstream-type-c-v1-7-d4d97b4d8bab@linaro.org>
-References: <20230601-topic-sm8550-upstream-type-c-v1-0-d4d97b4d8bab@linaro.org>
-In-Reply-To: <20230601-topic-sm8550-upstream-type-c-v1-0-d4d97b4d8bab@linaro.org>
-To:     Rob Herring <robh+dt@kernel.org>,
+References: <20230531-topic-8998_mmssclk-v1-0-2b5a8fc90991@linaro.org> <20230531-topic-8998_mmssclk-v1-4-2b5a8fc90991@linaro.org>
+In-Reply-To: <20230531-topic-8998_mmssclk-v1-4-2b5a8fc90991@linaro.org>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Thu, 1 Jun 2023 08:14:41 -0600
+Message-ID: <CAOCk7Nogy3+5rvyzPEgsyJe7xE_17MXVs-=mniJJj=ELsCqzNQ@mail.gmail.com>
+Subject: Re: [PATCH 4/4] clk: qcom: mmcc-msm8998: Fix the SMMU GDSC
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3104;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=2o8Mr95zHAAYTm7V2lzbLu+s4H+9UDeicqA1V3dHXNo=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkeKYJmAFvc6BjEkKgpghb9tYE0YV5C2eXm9oGCQp7
- R/7e+iaJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZHimCQAKCRB33NvayMhJ0WooD/
- 9/xGvuH88qDBLtFtze9Ine8Ag3ZbydiMNbl2M8Bg8RIl10V68FmzQyCfpMOt33COaeYLHzqcegp/mA
- MJjJ9yX7GFTUbdUWgARFKbeRbDIAKuFnrNcQIt9Kdddfs0CJxwB5K6yo8PYnlInbwsz71P289GFCKn
- gKOoj5I0EJKyxtXfacHYzclDPSaHBc0YumgcuTc1cVsHQ2C+GGewSSAyUAb4h92Al9dNEJAgD6DKi1
- K2gC/jhyP4CrXeJnXfDlNE1iLMX5NZ7T6PjchqaeD6vcJv7bgt6IfY01jfXfWYV3IuJamTbdzH5OSz
- SidVT6thXS9IO5ui6BbNahXnJMnzAybJX8Ip14/WdzLKFWWCcujF3hp2TQ5ztxHq72nfrnqMuJ2ZOo
- IZRoZyzBXtXiPlfSPXo6eRTGml2TpeM/bUmtf/yqW4msaKikzuex2/2YBtHgzRCO7Cx9+bu7jFq9tH
- XzjTB3xoYrv9rWAT3UHCHjIgG0H1wb/tDhZvImtmDQ14Yn/rmskFbMQohuu0dHgCqUtl0R3Bg7QOYB
- osQyUKDdCZ71810TLxgPjca93sxca3T9vRqzPNg4eJnrHbd/v6DmfdVOEaMTkHbixeBt7hUIY+YLDA
- VmjY4Z/mpTr8vn4B49cj2p1g+iR8eF2L7Vt2zSKA1/PZROrIh6xjxkgouNbQ==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Imran Khan <kimran@codeaurora.org>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Joonwoo Park <joonwoop@codeaurora.org>,
+        Jeffrey Hugo <jhugo@codeaurora.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add nodes to support Type-C USB/DP functionality.
+On Wed, May 31, 2023 at 3:01=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linaro=
+.org> wrote:
+>
+> The SMMU GDSC doesn't have to be ALWAYS-ON and shouldn't feature the
+> HW_CTRL flag (it's separate from hw_ctrl_addr).  In addition to that,
+> it should feature a cxc entry for bimc_smmu_axi_clk and be marked as
+> votable.
+>
+> Fix all of these issues.
+>
+> Fixes: d14b15b5931c ("clk: qcom: Add MSM8998 Multimedia Clock Controller =
+(MMCC) driver")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-On this platform, a Type-C redriver is added to the
-SuperSpeed graph.
+Was this tested on a system where the bootloader has enabled the
+display and it is active during Linux boot?
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 99 ++++++++++++++++++++++++++++++++-
- 1 file changed, 97 insertions(+), 2 deletions(-)
+I seem to recall that in that scenario, Linux would boot up, see that
+the GDSC is on, not see any clients for it (still initializing), turn
+it off, and kill the display which then results in either a mess of
+errors or a bus lockup.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-index 8669d29144bb..edb31efa563a 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
-@@ -64,6 +64,7 @@ connector@0 {
- 			reg = <0>;
- 			power-role = "dual";
- 			data-role = "dual";
-+			orientation-gpios = <&tlmm 11 GPIO_ACTIVE_HIGH>;
- 
- 			ports {
- 				#address-cells = <1>;
-@@ -81,7 +82,15 @@ port@1 {
- 					reg = <1>;
- 
- 					pmic_glink_ss_in: endpoint {
--						remote-endpoint = <&usb_1_dwc3_ss>;
-+						remote-endpoint = <&redriver_ss_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_sbu: endpoint {
-+						remote-endpoint = <&fsa4480_sbu_mux>;
- 					};
- 				};
- 			};
-@@ -420,6 +429,69 @@ vreg_l3g_1p2: ldo3 {
- 	};
- };
- 
-+&i2c_master_hub_0 {
-+	status = "okay";
-+};
-+
-+&i2c_hub_2 {
-+	status = "okay";
-+
-+	typec-mux@1c {
-+		compatible = "onnn,nb7vpq904m";
-+		reg = <0x1c>;
-+
-+		vcc-supply = <&vreg_l15b_1p8>;
-+
-+		mode-switch;
-+		orientation-switch;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				redriver_ss_out: endpoint {
-+					remote-endpoint = <&pmic_glink_ss_in>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				redriver_ss_in: endpoint {
-+					data-lanes = <2 3 0 1>;
-+					remote-endpoint = <&usb_dp_qmpphy_out>;
-+				};
-+			};
-+		};
-+	};
-+
-+	fsa4480@42 {
-+		compatible = "fcs,fsa4480";
-+		reg = <0x42>;
-+
-+		vcc-supply = <&vreg_bob1>;
-+
-+		mode-switch;
-+		orientation-switch;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				fsa4480_sbu_mux: endpoint {
-+					remote-endpoint = <&pmic_glink_sbu>;
-+				};
-+			};
-+		};
-+	};
-+};
-+
- &gcc {
- 	clocks = <&bi_tcxo_div2>, <&sleep_clk>,
- 		 <&pcie0_phy>,
-@@ -471,6 +543,15 @@ &mdss_dsi0_phy {
- 	status = "okay";
- };
- 
-+&mdss_dp0 {
-+	status = "okay";
-+};
-+
-+&mdss_dp0_out {
-+	data-lanes = <0 1>;
-+	remote-endpoint = <&usb_dp_qmpphy_dp_in>;
-+};
-+
- &pcie_1_phy_aux_clk {
- 	status = "disabled";
- };
-@@ -650,7 +731,7 @@ &usb_1_dwc3_hs {
- };
- 
- &usb_1_dwc3_ss {
--	remote-endpoint = <&pmic_glink_ss_in>;
-+	remote-endpoint = <&usb_dp_qmpphy_usb_ss_in>;
- };
- 
- &usb_1_hsphy {
-@@ -666,9 +747,23 @@ &usb_dp_qmpphy {
- 	vdda-phy-supply = <&vreg_l3e_1p2>;
- 	vdda-pll-supply = <&vreg_l3f_0p88>;
- 
-+	orientation-switch;
-+
- 	status = "okay";
- };
- 
-+&usb_dp_qmpphy_dp_in {
-+	remote-endpoint = <&mdss_dp0_out>;
-+};
-+
-+&usb_dp_qmpphy_out {
-+	remote-endpoint = <&redriver_ss_in>;
-+};
-+
-+&usb_dp_qmpphy_usb_ss_in {
-+	remote-endpoint = <&usb_1_dwc3_ss>;
-+};
-+
- &xo_board {
- 	clock-frequency = <76800000>;
- };
-
--- 
-2.34.1
-
+-Jeff
