@@ -2,142 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C65B7195DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 10:42:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E7DB7195F9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 10:48:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231895AbjFAImv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 04:42:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47388 "EHLO
+        id S230268AbjFAIsl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 04:48:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231694AbjFAImu (ORCPT
+        with ESMTP id S231513AbjFAIse (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 04:42:50 -0400
-Received: from mail-qt1-x836.google.com (mail-qt1-x836.google.com [IPv6:2607:f8b0:4864:20::836])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DE19FB
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 01:42:46 -0700 (PDT)
-Received: by mail-qt1-x836.google.com with SMTP id d75a77b69052e-3f767eec104so4937481cf.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 01:42:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=nexus-software-ie.20221208.gappssmtp.com; s=20221208; t=1685608965; x=1688200965;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=mOHClv3EmZ5BC3wC17xcl4hTpc6sk/oBTzMD5jV9A1U=;
-        b=T+fEJ8MlR4KHrrWHZaVkuXopdtCLepCVfBAECMwZjmqdNEwNC6Bgag4lvkdnJttjqG
-         kvPSAHJclDqCmk2FjFHQ8uyCRrJL2PaHeluGbzlQRi2NqgfZZVRdL0GQ0LwzKQ3jHmnZ
-         v/AFlGwYnGklHBhYx7Fn/2CeFAkzTYucPr/j3zZXXc3msN9KyfKR3n1sZN09ALFhkdW8
-         dVL8TVf7xu9Nohbt/DNVjnHEaW1Ys4IYv5QQBOnhZZBb/KSkKorVUDMf6CjnuKulVZvP
-         cF7QiDngi14DRKbYW9qE4Ls9dcr33RkZHy8U8iT+bt0YF+2buWVR7Vqv3UeL86eGGN3M
-         B2KA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685608965; x=1688200965;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mOHClv3EmZ5BC3wC17xcl4hTpc6sk/oBTzMD5jV9A1U=;
-        b=N/G5xHVxHSjS0bEosXhuNWfm5aXW9NLTvoa9PVQSHl4BRZxQtm0bIErvu3WKNsOLxB
-         BxJBl8PKrb4PkRZtGV3LGiKR6apPl9nGZxeW4H73+LzEP3IixAqjaPfVWJMlktyL1DVN
-         xdavjC53KC+lsjw+Ee3OWs5QLDSTi0hAMh4q3owG5eLla/yh8Wqm047Mdi0sdf/Y51jg
-         5Ta7M5zKiZOIXp0GAVittlE/CsbfJqIEA7cKTQNwrzoo4rCG6Rut6wpT1wkgVHL7uDEG
-         OJMsglQuSz0e/TYBSgm4lQz9pMQycy+ca7hLcb5qHunx41bgzrSFM1gnPuhoT+W45w9i
-         /G7A==
-X-Gm-Message-State: AC+VfDxeklH/0lVIza7oaX/r9zFq+tdMLMDoIfG/4j8d5bnSVngYUQEJ
-        N8+GGozX65A0DRHLBj6QTmIIKs1Xn92gbPLcl53TIw==
-X-Google-Smtp-Source: ACHHUZ64B9aPj3MnaxAoV1VqJcmNXpqutdESG4B/ynheLTITdb7rBWLgFOJzuXb75zVf3DoZRlJQepZrwBTnxNF+Mtc=
-X-Received: by 2002:a05:622a:58a:b0:3f6:b151:7db1 with SMTP id
- c10-20020a05622a058a00b003f6b1517db1mr9299207qtb.62.1685608965598; Thu, 01
- Jun 2023 01:42:45 -0700 (PDT)
+        Thu, 1 Jun 2023 04:48:34 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E139BFB;
+        Thu,  1 Jun 2023 01:48:32 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3516hAtg020567;
+        Thu, 1 Jun 2023 08:48:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=+8BwsHWd4c0uXjrzeIGtm+Jr9VaGFCgDkEJk+2NC3jo=;
+ b=OAdH3bZjGJ2xjJ5JFf1jFGuiQl20/UuWmYuUuSOB4F9t+uDKYatwefMSErzTLZ/zc2QQ
+ K9FocKVpar1aR6NXXTQ7cNtEelTLpK5Pw8zPV/4Wwbr9JKxI/dnQAweJCRKeibjq2iSB
+ 6yTcn7dh/oaATqEaA0ozMGn3inv7i5v4BSyScHbZhdP/tvnB6eZqOwCge0QDeYpdERFx
+ 0CsnjNRXCh2m9UA22JHP7zr2M8KEPioTMMnZbNEUZlxiBRlaVaSZkX6DRll5wUWq07ST
+ 3mH2FH9mwY5eKWlR9fEUfcQrDmSuELKjOYOcN6N+gTgaP95bc4wmiQlf1Bs/ToiXiWGC qA== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qxdr996hf-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 01 Jun 2023 08:48:28 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3518mRoI018673
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 1 Jun 2023 08:48:27 GMT
+Received: from [10.214.67.128] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 1 Jun 2023
+ 01:48:23 -0700
+Message-ID: <0bfcf006-1649-56b9-d4a8-38d06846cf6f@quicinc.com>
+Date:   Thu, 1 Jun 2023 14:18:20 +0530
 MIME-Version: 1.0
-References: <20230531-topic-8998_mmssclk-v1-0-2b5a8fc90991@linaro.org> <20230531-topic-8998_mmssclk-v1-1-2b5a8fc90991@linaro.org>
-In-Reply-To: <20230531-topic-8998_mmssclk-v1-1-2b5a8fc90991@linaro.org>
-From:   "Bryan O'Donoghue" <pure.logic@nexus-software.ie>
-Date:   Thu, 1 Jun 2023 10:42:33 +0200
-Message-ID: <CAJB8c076FOXDzCzYWmzfm_PF6UieYx-XMwAqUBHTc+UubjYu6g@mail.gmail.com>
-Subject: Re: [PATCH 1/4] arm64: dts: qcom: msm8998: Properly describe MMSS SMMU
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.1
+Subject: Re: [PATCH v4 3/4] arm64: dts: qcom: qdu1000: Add SDHCI pin
+ configuration to DTSI
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Imran Khan <kimran@codeaurora.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Joonwoo Park <joonwoop@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>
+CC:     <linux-mmc@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+References: <20230601065805.18079-1-quic_kbajaj@quicinc.com>
+ <20230601065805.18079-4-quic_kbajaj@quicinc.com>
+ <96f40b17-ad7a-ede2-dcbc-a35b6b7df1d2@linaro.org>
+From:   Komal Bajaj <quic_kbajaj@quicinc.com>
+In-Reply-To: <96f40b17-ad7a-ede2-dcbc-a35b6b7df1d2@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: BfKLO3KSFvy6xPlZ1tKNSmBd7125pKz7
+X-Proofpoint-GUID: BfKLO3KSFvy6xPlZ1tKNSmBd7125pKz7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-01_05,2023-05-31_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ impostorscore=0 mlxlogscore=444 suspectscore=0 malwarescore=0 phishscore=0
+ spamscore=0 lowpriorityscore=0 adultscore=0 priorityscore=1501 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2306010078
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, May 31, 2023 at 11:01=E2=80=AFAM Konrad Dybcio <konrad.dybcio@linar=
-o.org> wrote:
+
+
+On 6/1/2023 12:30 PM, Krzysztof Kozlowski wrote:
+> On 01/06/2023 08:58, Komal Bajaj wrote:
+>> Add required pins for SDHCI, so that the interface can work reliably.
+>>
+> This is not a separate commit. The pin configuration by itself does not
+> make sense and we don't need it. It's part of adding SDHCI, so squash it.
+
+Okay, will combine this patch with 2nd in the next patch series.
+
+Thanks
+Komal
+
 >
-> The MMSS SMMU has been abusingly consuming the exposed RPM interconnect
-> clock and not describing the power domain it needs. Put an end to that.
->
-> Fixes: 05ce21b54423 ("arm64: dts: qcom: msm8998: Configure the multimedia=
- subsystem iommu")
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/msm8998.dtsi | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
->
-> diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/=
-qcom/msm8998.dtsi
-> index f0e943ff0046..a4016085b750 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-> @@ -2737,10 +2737,10 @@ mmss_smmu: iommu@cd00000 {
->
->                         clocks =3D <&mmcc MNOC_AHB_CLK>,
->                                  <&mmcc BIMC_SMMU_AHB_CLK>,
-> -                                <&rpmcc RPM_SMD_MMAXI_CLK>,
->                                  <&mmcc BIMC_SMMU_AXI_CLK>;
-> -                       clock-names =3D "iface-mm", "iface-smmu",
-> -                                     "bus-mm", "bus-smmu";
-> +                       clock-names =3D "iface-mm",
-> +                                     "iface-smmu",
-> +                                     "bus-smmu";
->
->                         #global-interrupts =3D <0>;
->                         interrupts =3D
-> @@ -2764,6 +2764,8 @@ mmss_smmu: iommu@cd00000 {
->                                 <GIC_SPI 261 IRQ_TYPE_LEVEL_HIGH>,
->                                 <GIC_SPI 262 IRQ_TYPE_LEVEL_HIGH>,
->                                 <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +                       power-domains =3D <&mmcc BIMC_SMMU_GDSC>;
->                 };
->
->                 remoteproc_adsp: remoteproc@17300000 {
->
-> --
-> 2.40.1
+> Best regards,
+> Krzysztof
 >
 
-I think you should split this up.
-
-This should be two patches. One to describe the power-domain and
-another for the removal of interconnect clocks.
-
-I guess none of the multi-media connected stuff on 8998 works ... no
-venus, mdp, camera - which would surely fail without the multi-media
-AXI clock being on..
-
-Anyway please split this patch up !
