@@ -2,81 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 33A8D719750
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 11:43:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 592357197A9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 11:51:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232853AbjFAJnA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 05:43:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57926 "EHLO
+        id S233066AbjFAJvN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 05:51:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35014 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232713AbjFAJm7 (ORCPT
+        with ESMTP id S232541AbjFAJvE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 05:42:59 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D047B139;
-        Thu,  1 Jun 2023 02:42:44 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-5149c76f4dbso1022135a12.1;
-        Thu, 01 Jun 2023 02:42:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685612563; x=1688204563;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7q5khLoEX4J3lidnUZjzKtgn8/eZ/Y3adwlIXy+1pGo=;
-        b=DOk+vfUpNWI6QjumU5Q8+7tLd2D676JlGoIQM4t1DetpGC9GA89dMTgrSitzFdCjeN
-         Z77tsGABwvU36zQJ2XcPN5KRSYoPcsSCNtdMjbV3W84CJI8D40lGXeEH+pGa3ob3liUO
-         I5DqokWzpfOu/jU0+/NveUCl6Gv4CFsXhYJZyvVW7hGnYAJRsRlbBj/rZkXkfRW+62tC
-         v/hIZyCWXaXmcOZDAYUhB9UtQ8nr/4l3/EBrhO1EKwjqVc7SjAYpDtb/bCUF/RiOGS/e
-         jGgBjF+wuFDJ79cqaBA4FNM/aiRA+bs51RAV/5u+pTNzxt7ZPSEs/fsg6Tak4a/ReNNO
-         cxKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685612563; x=1688204563;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7q5khLoEX4J3lidnUZjzKtgn8/eZ/Y3adwlIXy+1pGo=;
-        b=fPFSNPOrW/Y/yAPcALeB9684STjQh/9X1H9d4Mp9QXzQec3WOvEV0sHjNEEYcpAevH
-         AZaRsSg4HoTd/3ZSs9kCuIHulFhdj9+qacvVlttXLKSBhDSFjGCRx0xMkEncQV9mcI8M
-         0ZSA+kjiSoqhl2+k3WpMPA/vQBJO+qS56Xhy2biYo6rX5ELfy+pkWIt4T4TVK0Xl25IA
-         aYhNRSH3Rhd/w+ElDYzD0+ObswvgAYa6zx1aF8UnaW3flpH6QYzvbYxKzUhaUnn9E46O
-         PUBOZptKYeSkrH5fXLo2PIOAiXDlmbxxhT4A0FDOaOYBFxxJmfzuKD9jZzgDKlnVGHp2
-         9JUg==
-X-Gm-Message-State: AC+VfDzNo1oFWKXgLM6CfaXY+Zqfio7pwHCQD3sUQez6PfI0z75ELRF8
-        PVFU24Pu6e7wTUBRm2TKXq8=
-X-Google-Smtp-Source: ACHHUZ4Ut/2p85sdNMlqXBYqd/kF5rcU9VA6xQW4nb4z+SUKQQBkigJa799rdC1rKMIMKpGvTRQY1g==
-X-Received: by 2002:a05:6402:349:b0:50b:c89f:f381 with SMTP id r9-20020a056402034900b0050bc89ff381mr5344371edw.29.1685612563085;
-        Thu, 01 Jun 2023 02:42:43 -0700 (PDT)
-Received: from orome (p200300e41f305300f22f74fffe1f3a53.dip0.t-ipconnect.de. [2003:e4:1f30:5300:f22f:74ff:fe1f:3a53])
-        by smtp.gmail.com with ESMTPSA id n15-20020a05640206cf00b004fbdfbb5acesm6916135edy.89.2023.06.01.02.42.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jun 2023 02:42:42 -0700 (PDT)
-Date:   Thu, 1 Jun 2023 11:42:40 +0200
-From:   Thierry Reding <thierry.reding@gmail.com>
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     daniel@ffwll.ch, airlied@gmail.com,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        javierm@redhat.com, sam@ravnborg.org, suijingfeng@loongson.cn,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        amd-gfx@lists.freedesktop.org, linux-tegra@vger.kernel.org,
-        Mikko Perttunen <mperttunen@nvidia.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>
-Subject: Re: [PATCH v5 09/13] drm/tegra: Use regular fbdev I/O helpers
-Message-ID: <ZHhoEHn_i79j8IAf@orome>
-References: <20230530151228.22979-1-tzimmermann@suse.de>
- <20230530151228.22979-10-tzimmermann@suse.de>
+        Thu, 1 Jun 2023 05:51:04 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8684185;
+        Thu,  1 Jun 2023 02:50:55 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3517KIdN030232;
+        Thu, 1 Jun 2023 09:50:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=M2ACdLiI80TB334uM9ffG2qmS8AIr+NJm3xsnYzYQx0=;
+ b=GkytSWUSi6y+cGWu6BP7xm6CJpyBz+SkRRP6pgmA9h1rL8E/rO3McOY0JpPXngYALjdA
+ aKwvK2IuM22a09MRwyBvBak1vuVU7AD//a0T8paF/yaiMgm/T9D7w3XrlmHyCWDVH3Oo
+ WExH8iU1PQgwLA013DlmxcHw4klvqLyxtxKPpwm6OhKL4LtUz0P3HDIMK9Jk83DjIis8
+ BPlV0btqczu4oiA2xGlAqjit/heb8BUNTm3PocguGAljzVzaZE/jcg873IVIdTif5ytO
+ x0gDcmllLvj5JoEu/Oqd/PoegE66cVySOHjLj2++R7RiVRxHvv1SnoOTYVVk1/1ANQ+a Zw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qxjk2rum4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 01 Jun 2023 09:50:41 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3519oeki018623
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 1 Jun 2023 09:50:40 GMT
+Received: from [10.216.52.42] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 1 Jun 2023
+ 02:50:33 -0700
+Message-ID: <aefd0df1-8dfb-1b69-589b-974dea312845@quicinc.com>
+Date:   Thu, 1 Jun 2023 15:20:30 +0530
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="J8y/7sWNqq9Yj/uK"
-Content-Disposition: inline
-In-Reply-To: <20230530151228.22979-10-tzimmermann@suse.de>
-User-Agent: Mutt/2.2.10 (2023-03-25)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH V7 4/8] pinctrl: qcom: Add IPQ5018 pinctrl driver
+Content-Language: en-US
+To:     <andy.shevchenko@gmail.com>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
+        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <robimarko@gmail.com>
+References: <20230519125409.497439-1-quic_srichara@quicinc.com>
+ <20230519125409.497439-5-quic_srichara@quicinc.com>
+ <CAHp75VfVx+oGYKcija3h9-eWc6jggMx8p5SAQTEHTBEbjTaJKw@mail.gmail.com>
+ <1823419a-6bb4-03f7-d5ae-e32204c5e598@quicinc.com>
+ <ZHTK7uEzO7kcx_cV@surfacebook>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <ZHTK7uEzO7kcx_cV@surfacebook>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: OdNCsxv-v28It_m775SSj3OsKAR8huPz
+X-Proofpoint-ORIG-GUID: OdNCsxv-v28It_m775SSj3OsKAR8huPz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-01_06,2023-05-31_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 adultscore=0
+ spamscore=0 malwarescore=0 bulkscore=0 lowpriorityscore=0
+ priorityscore=1501 impostorscore=0 mlxlogscore=652 phishscore=0
+ suspectscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2306010088
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -84,54 +92,24 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---J8y/7sWNqq9Yj/uK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 30, 2023 at 05:12:24PM +0200, Thomas Zimmermann wrote:
-> Use the regular fbdev helpers for framebuffer I/O instead of DRM's
-> helpers. Tegra does not use damage handling, so DRM's fbdev helpers
-> are mere wrappers around the fbdev code.
->=20
-> By using fbdev helpers directly within each DRM fbdev emulation,
-> we can eventually remove DRM's wrapper functions entirely.
->=20
-> v4:
-> 	* use initializer macros for struct fb_ops
-> v2:
-> 	* use FB_SYS_HELPERS option
->=20
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> Acked-by: Sam Ravnborg <sam@ravnborg.org>
-> Cc: Thierry Reding <thierry.reding@gmail.com>
-> Cc: Mikko Perttunen <mperttunen@nvidia.com>
-> Cc: Jonathan Hunter <jonathanh@nvidia.com>
-> ---
->  drivers/gpu/drm/tegra/Kconfig | 1 +
->  drivers/gpu/drm/tegra/fbdev.c | 8 +++-----
->  2 files changed, 4 insertions(+), 5 deletions(-)
+On 5/29/2023 9:25 PM, andy.shevchenko@gmail.com wrote:
+> Mon, May 29, 2023 at 03:58:09PM +0530, Sricharan Ramabadhran kirjoitti:
+>> On 5/20/2023 12:17 AM, Andy Shevchenko wrote:
+>>> On Fri, May 19, 2023 at 3:55 PM Sricharan Ramabadhran
+>>> <quic_srichara@quicinc.com> wrote:
+> 
+> ...
+> 
+>>>     depends on OF || COMPILE_TEST
+>>
+>>   Yeah sure. COMPILE_TEST could be standalone. Will fix it and repost.
+> 
+> Standalone COMPILE_TEST will give you definitely NOT what you want.
+> And actually it's strange to have it standalone.
+> 
 
-Acked-by: Thierry Reding <treding@nvidia.com>
+  Ho ok, i meant like this, "depends on ARM64 || COMPILE_TEST"
 
---J8y/7sWNqq9Yj/uK
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEiOrDCAFJzPfAjcif3SOs138+s6EFAmR4aBAACgkQ3SOs138+
-s6EMnhAApvbF83jJgB6q5JCxzWJ69rSVfi9hjhGoa9Wz9miYwATuP3yzLuDbf21b
-6diFMn3cJ9yU+3PrBZasS4/WLyXsu0DIW8ZWsexZ2nCnjEmMjBshzfr7CaOHCHAQ
-PeobxSDdVCgv898nMOwOOlDHSVpuGbexSge1pq9Tsfid4IDWZHTap1y3a56iyhxy
-tsP27T0aQ+2jKYTegSaokFocUaeFper7JWV3mSr1FZH4N8CqskB3p+YMSzdWp9K4
-KiSrfAo8w09MPTwy3A/LxzIGXaGofiOUITd/zk6CWEl33Be2v1iva7Anq3cljKiT
-KU5vNPVgmK3Fhz0o08cFuUS6t42GtMh/iij/1ZE5HePx5IPkZjJGSpg/9DXNHOA1
-68V0xsUPRSUpEIm6Q91oPZVFTF4PGK0rYkRWCIH+C6JW67wvfKbRoUgwbEN+ZrC7
-yQMNtpi9HKHq3v/+PahWPiWTEp3K7GAy2HAoEdtP5whzNqohKwn+qIHXC7Cu9tPC
-aexe4C80Aq8PBX1v2E/cVRq69BnzDwDZEiBXjRugfzDZn0KhMuPNxFJxwyi27ibK
-dWrkkLHypmvS04FY0HGzt5OxuuIPTiiPfg57DAfl9LmTisbXRI9RyPHF508ll9T6
-HgJJLHycd7x1y639mAntcOoe9GfgQwA9rUiv4mvIe3EkrJQqBgg=
-=793F
------END PGP SIGNATURE-----
-
---J8y/7sWNqq9Yj/uK--
+Regards,
+  Sricharan
