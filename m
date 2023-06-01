@@ -2,146 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16B2271F0C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 19:29:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CDC371F1EA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 20:28:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229554AbjFAR3Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 13:29:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59514 "EHLO
+        id S231993AbjFASZu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 14:25:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59346 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232693AbjFAR3P (ORCPT
+        with ESMTP id S229648AbjFASZs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 13:29:15 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 703761A2
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 10:29:12 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-96f5685f902so154668966b.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 10:29:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685640551; x=1688232551;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2nRorulo8l9EWqetty+54wVsnkEP1yOUP1LrEre/GnQ=;
-        b=ZNaeDBePrijnAElVBQ70atFd37aVdE47rydLEHYNyifXkzCPL247d7TEJPDjDGGXAO
-         sZaWcSxhWyQjuh8BYSmy4I2kKn5mDsvdRCoDD+lOdVWgzCd9TuNhYs9EDYRPQhgf2BTf
-         ocuEq3uzLnZ6/pdQb7oDhc+n7jtx6OBMnAF3xUNkGHa89g+TOMp6O/mRnkebxMeU32u7
-         X7j/XdXvik8OD8dObfY6xQNIySWp7rSNA+Js1NvxzqvqBPzaQRLO6gh5Ti5/MhHlcqhk
-         660xq9cogGn1aA5Cc5xrS2cj88dp7scn77xrN4mnS1LZ3Cv2/MpY1Db+pKuHokJ32aoD
-         T55w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685640551; x=1688232551;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2nRorulo8l9EWqetty+54wVsnkEP1yOUP1LrEre/GnQ=;
-        b=AS2SadycdZZ5JLGcjvi8JSZ5ovznDdZG+QLYrHCpIBnCzLlJoyxFWk0LegtO5PijH1
-         daZYjDxEiX6+vNceYBLCtZV7Hngly+FZnIxmpRITRI70jfBdtf0xe5uVuI6VA5JDvfSj
-         Op1hQnAuhdV4zKrKtrT6/cHSQ3eGLRQ/b/dKMJn1hCOj5uSA9lpT9Ixji9ycBWC5xbh9
-         zMqvW5ZieTtzkMA1zdvvhzWjgC9tUix7wA5a5USUvOgq9r/TR27mRMOXkNIS91Fky9Yu
-         zWWkr4L5R/Lle/YmyGzxA6+4x5xWQuynGt4EF4xvn5fbksbyRKXwrRYIVSosEPlliZ1M
-         T9iA==
-X-Gm-Message-State: AC+VfDzInjw4NhF85OkP45slkdxWwZr/EdJpUTLCC4mH6ptESmTyljDq
-        dVL3ezU1RQv65mXQFZKx1GbedA==
-X-Google-Smtp-Source: ACHHUZ5Yvq39R/qxe719VElY83GsQ1v9v78v05/3uOknrDrOSQXOj4f+KY630fwb9VORCGNeuTwwbg==
-X-Received: by 2002:a17:907:6e8a:b0:96b:559d:ff19 with SMTP id sh10-20020a1709076e8a00b0096b559dff19mr10617053ejc.21.1685640550938;
-        Thu, 01 Jun 2023 10:29:10 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.199.204])
-        by smtp.gmail.com with ESMTPSA id bx16-20020a170906a1d000b0096607baaf19sm10794646ejb.101.2023.06.01.10.29.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 01 Jun 2023 10:29:10 -0700 (PDT)
-Message-ID: <91c63634-eb39-fdca-2c76-6f8182c2d47c@linaro.org>
-Date:   Thu, 1 Jun 2023 19:29:08 +0200
+        Thu, 1 Jun 2023 14:25:48 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 7B12D97;
+        Thu,  1 Jun 2023 11:25:46 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 4B9511063;
+        Thu,  1 Jun 2023 11:26:31 -0700 (PDT)
+Received: from [10.57.84.85] (unknown [10.57.84.85])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id B053E3F663;
+        Thu,  1 Jun 2023 11:25:38 -0700 (PDT)
+Message-ID: <914124dd-c319-15c5-cc03-c5db0e4002f4@arm.com>
+Date:   Thu, 1 Jun 2023 19:25:32 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH RESEND 4/4] arm64: dts: qcom: ipq5332: add support for the
- RDP474 variant
-Content-Language: en-US
-To:     Kathiravan T <quic_kathirav@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v2 04/25] iommu: Add IOMMU_DOMAIN_PLATFORM for S390
+Content-Language: en-GB
+To:     Jason Gunthorpe <jgg@nvidia.com>, Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
         Bjorn Andersson <andersson@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Kevin Tian <kevin.tian@intel.com>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230601042054.29075-1-quic_kathirav@quicinc.com>
- <20230601042054.29075-5-quic_kathirav@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230601042054.29075-5-quic_kathirav@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+        linuxppc-dev@lists.ozlabs.org,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>
+Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Nicolin Chen <nicolinc@nvidia.com>,
+        Niklas Schnelle <schnelle@linux.ibm.com>,
+        Steven Price <steven.price@arm.com>,
+        Thierry Reding <treding@nvidia.com>
+References: <4-v2-8d1dc464eac9+10f-iommu_all_defdom_jgg@nvidia.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <4-v2-8d1dc464eac9+10f-iommu_all_defdom_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/06/2023 06:20, Kathiravan T wrote:
-> Add the initial device tree support for the Reference Design
-> Platform(RDP) 474 based on IPQ5332 family of SoC. This patch carries
-> the support for Console UART, eMMC, I2C and GPIO based buttons.
+On 2023-05-16 01:00, Jason Gunthorpe wrote:
+> The PLATFORM domain will be set as the default domain and attached as
+> normal during probe. The driver will ignore the initial attach from a NULL
+> domain to the PLATFORM domain.
 > 
-> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> After this, the PLATFORM domain's attach_dev will be called whenever we
+> detach from an UNMANAGED domain (eg for VFIO). This is the same time the
+> original design would have called op->detach_dev().
+> 
+> This is temporary until the S390 dma-iommu.c conversion is merged.
+
+If we do need a stopgap here, can we please just call the current 
+situation an identity domain? It's true enough in the sense that the 
+IOMMU API is not offering any translation or guarantee of isolation, so 
+the semantics of an identity domain - from the point of view of anything 
+inside the IOMMU API that would be looking - are no weaker or less 
+useful than a "platform" domain whose semantics are intentionally unknown.
+
+Then similarly for patch #3 - since we already know s390 is temporary, 
+it seems an anathema to introduce a whole domain type with its own weird 
+ops->default_domain mechanism solely for POWER to not actually use 
+domains with.
+
+In terms of reasoning, I don't see that IOMMU_DOMAIN_PLATFORM is any 
+more useful than a NULL default domain, it just renames the problem, and 
+gives us more code to maintain for the privilege. As I say, though, we 
+don't actually need to juggle the semantic of a "we don't know what's 
+happening here" domain around any further, since it works out that a 
+"we're not influencing anything here" domain actually suffices for what 
+we want to reason about, and those are already well-defined. Sure, the 
+platform DMA ops *might* be doing more, but that's beyond the scope of 
+the IOMMU API either way. At that point, lo and behold, s390 and POWER 
+now look just like ARM and the core code only needs a single special 
+case for arch-specific default identity domains, lovely!
+
+Thanks,
+Robin.
+
+> Tested-by: Heiko Stuebner <heiko@sntech.de>
+> Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile           |   1 +
->  arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts | 112 ++++++++++++++++++++
->  2 files changed, 113 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts
+>   drivers/iommu/s390-iommu.c | 21 +++++++++++++++++++--
+>   1 file changed, 19 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index 4f9e81253e18..0f8c763a9bd9 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -7,6 +7,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-mi01.2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp442.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp468.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp474.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c1.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts
-> new file mode 100644
-> index 000000000000..085729a0fdf1
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts
-> @@ -0,0 +1,112 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
+> diff --git a/drivers/iommu/s390-iommu.c b/drivers/iommu/s390-iommu.c
+> index fbf59a8db29b11..f0c867c57a5b9b 100644
+> --- a/drivers/iommu/s390-iommu.c
+> +++ b/drivers/iommu/s390-iommu.c
+> @@ -142,14 +142,31 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
+>   	return 0;
+>   }
+>   
+> -static void s390_iommu_set_platform_dma(struct device *dev)
 > +/*
-> + * IPQ5332 RDP474 board device tree source
-> + *
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + * Switch control over the IOMMU to S390's internal dma_api ops
 > + */
+> +static int s390_iommu_platform_attach(struct iommu_domain *platform_domain,
+> +				      struct device *dev)
+>   {
+>   	struct zpci_dev *zdev = to_zpci_dev(dev);
+>   
+> +	if (!zdev->s390_domain)
+> +		return 0;
 > +
-> +/dts-v1/;
+>   	__s390_iommu_detach_device(zdev);
+>   	zpci_dma_init_device(zdev);
+> +	return 0;
+>   }
+>   
+> +static struct iommu_domain_ops s390_iommu_platform_ops = {
+> +	.attach_dev = s390_iommu_platform_attach,
+> +};
 > +
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/input/input.h>
-> +#include "ipq5332.dtsi"
+> +static struct iommu_domain s390_iommu_platform_domain = {
+> +	.type = IOMMU_DOMAIN_PLATFORM,
+> +	.ops = &s390_iommu_platform_ops,
+> +};
 > +
-> +/ {
-> +	model = "Qualcomm Technologies, Inc. IPQ5332 MI01.9";
-> +	compatible = "qcom,ipq5332-ap-mi01.9", "qcom,ipq5332";
-> +
-> +	aliases {
-> +		serial0 = &blsp1_uart0;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = "serial0";
-> +	};
-> +
-> +	gpio_keys {
-
-No, srsly, so not only ignored the tags but also feedback?
-
-Best regards,
-Krzysztof
-
+>   static void s390_iommu_get_resv_regions(struct device *dev,
+>   					struct list_head *list)
+>   {
+> @@ -428,12 +445,12 @@ void zpci_destroy_iommu(struct zpci_dev *zdev)
+>   }
+>   
+>   static const struct iommu_ops s390_iommu_ops = {
+> +	.default_domain = &s390_iommu_platform_domain,
+>   	.capable = s390_iommu_capable,
+>   	.domain_alloc = s390_domain_alloc,
+>   	.probe_device = s390_iommu_probe_device,
+>   	.release_device = s390_iommu_release_device,
+>   	.device_group = generic_device_group,
+> -	.set_platform_dma_ops = s390_iommu_set_platform_dma,
+>   	.pgsize_bitmap = SZ_4K,
+>   	.get_resv_regions = s390_iommu_get_resv_regions,
+>   	.default_domain_ops = &(const struct iommu_domain_ops) {
