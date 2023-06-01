@@ -2,68 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BAE4719C0F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 14:26:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E68A719C34
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  1 Jun 2023 14:34:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232130AbjFAM00 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 08:26:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35864 "EHLO
+        id S232505AbjFAMeN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 08:34:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38812 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231759AbjFAM0Z (ORCPT
+        with ESMTP id S229589AbjFAMeM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 08:26:25 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BD329D;
-        Thu,  1 Jun 2023 05:26:22 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1685622380; cv=none;
+        Thu, 1 Jun 2023 08:34:12 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79838133;
+        Thu,  1 Jun 2023 05:34:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1685622848; cv=none;
     d=strato.com; s=strato-dkim-0002;
-    b=XiG+Vi6gGHQowjb9Bf55mFt3xWEo+WLrPcjZ59s+YmLHF78da17+FBfIctd0IADxwe
-    2d5QFc+abGWb6yCVUXWkelWacXu3jdoY38irxUjSsdU2wJsmlKb7AHkz2JolSG+Ov/K1
-    1f+teExknD4NzUh5Q3BdknlwxDBv1/qfFbeKNumeNKoICrhIlgZFra6zLXocBIo7KoZk
-    VX0Yzydi3Qhus7njRfgDKcSFpRQSjGhZm+6rNJj+kldbXdF8deQDajRHPrp9E9R3eRWR
-    3FLB/nPVajRVn/BQ5WqrIieRSF7BKYAloP3/O7FhyhzEeHe1edkKJ8ToOAScvsDqCMZS
-    ReFg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1685622380;
+    b=S3TBJ4EETCTJKpfs1QEg8mc0iQOxrlN0wStMeC5mPmNTQBeTWoCFzc+/KsfzGpSHbW
+    hXatTPRtsR1pQ05kaNiqf1uHM6EmZyZ7+zp/lN+dMpApVomP11+VbHL8AqpsjJQVvRRZ
+    4+wwhy4sxQgCawlC6oQEixBPGh9LxvZ/s0/ek2JFmbnd0CTIWAeMclJr5pC+AumPafNm
+    AciTyhiaUHhxiWBNUQZYnDllKX802z3zJSBrU2c4BAVJduaZ4Q6yARUAF1uSDfxvUqKn
+    x7Zm+LT7hI8AhJP8/30MRU/ZU0Eu/f6JhB2T55kHsjOuloiAVyeVtccrkHvGYo3E9UXt
+    C90Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1685622848;
     s=strato-dkim-0002; d=strato.com;
     h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
     From:Subject:Sender;
-    bh=4nlI0t8cVc1lkSa6LiiU7VWHaD2KWNpreTHmhmut4hU=;
-    b=V6RfA2WGKv2qpcqLiAuBj4s/LF5jRgIvir2h1kaHmi/32a3PACXmprmYDwo5GbAqgC
-    xNEYj2j9mADfbA1LTolLvyRqWSPdvRLZfTc6VihRiZfGK/r4VZ4fG839oJ0fGm8uUDLY
-    3QYH6tyVcBP5gQ0i5vmS3YW7hlYrB9qYlNsPBotUrLxiwhSJldnK5FvcQR5ODlkJOrKa
-    Iv2QQfe+FHTC873CwYhf050DVBWzNm5XtASa10LcJGKo+E5eQewj95d22B9SfTgkke/g
-    hk6XJi2JWxhSfrmKGdeeer8o3J1HXbmYfpC/LWrIqq8q9PKw7Vwc/SM2iyi0PjQwTmGo
-    U5HA==
+    bh=+p5IHgtCJ++8nSCghrBfYm3V7/hpk9AekMBHzhUufmw=;
+    b=TCIbyLUdBwYatC5Qzcv+0rNQMwMgi4FxnNfiuO/UmeFeafA0/LZCHPgpJYnmn1qg+S
+    UKcrUUC7FYfTlXymbXoYyXUcys1LO8O/0cuWM0fR2o+Ubgk6tPTkWw7FIP/gxcW/rQXz
+    4SwI1wxMjFr734f7qqGj5oxlyUkgBrNLHgwonRI32mwud25qV3NWwgPEtK2e4/Dwfikd
+    kxzx3A7/BQX5F3Wqgfdl4r6M1+VqNsGJzzBKMWFIzhFXrp8o/dyTeKnkN5EGQt2JwSbc
+    fV/SzW5nhpBS4vS2BJeWx0sE/s8d8RoeiC6WIxM7rEhSKlGVvKTXgcPtV8HrdQvwbF9v
+    icyQ==
 ARC-Authentication-Results: i=1; strato.com;
     arc=none;
     dkim=none
 X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1685622380;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1685622848;
     s=strato-dkim-0002; d=gerhold.net;
     h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
     From:Subject:Sender;
-    bh=4nlI0t8cVc1lkSa6LiiU7VWHaD2KWNpreTHmhmut4hU=;
-    b=iYLH01kMgs6ZDj7J8rFGkkbm/WKj3keNH6pA8doB01oiknePtmcbw0ewNa2eJOk3UM
-    7WWrT8HLfgsIeIw8F+VxPPta5PmQa+NgvW1HcVGb/B7kuIreqATN6BZ/X6dkCquYgB1Z
-    RAlCbp6kzzPR1DUVkTG1JkX0JzCh9coJpD0GTnkpUFvRwnt2O8H37+cJYQxBKcCE/FVz
-    epAbZHQJYHqscbDQPRcZ1E/VHfEFUvI5Dhes9xudYFDW7ctLZcsiraUlDITwxMTxj7Ic
-    COPmoZV13XaRCaI5xx0JaGxntDBXJkIAP1gLyojgU06HVrk5pjVbJjX2cC9ACe6HvpF+
-    C2Ww==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1685622380;
+    bh=+p5IHgtCJ++8nSCghrBfYm3V7/hpk9AekMBHzhUufmw=;
+    b=XLt1PbAKn5SRWofP0EC/8zRj9xmoVvk5qlUiOwIme2QmDSBmBx6AS80jQQQ0Nz1PCY
+    ++BieydRN9J92FdNrsYVIWjNT/UttScAdvFTBCvRJpSzpKU0osbUZHUS4kms3BTboJ1R
+    e8WoiyimUrye08j0fAT54jgPZwu5hgCQQ8TYtAb5c+2yOgfEh3xGE0kByYD7EyJbrw/V
+    yt03/KqT9w+Prf+ktKoNYW/1wjfcMHQTrtIztRydV6SsjIDk6hU8O1NATbyWtjbT7V+e
+    V+gvKEqjlvL80dM++Baq/0ZamodxrUVg2ru6fAYANPZTMDHqGFHafm/ptwQy8nBIJ2/c
+    XRyw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1685622848;
     s=strato-dkim-0003; d=gerhold.net;
     h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
     From:Subject:Sender;
-    bh=4nlI0t8cVc1lkSa6LiiU7VWHaD2KWNpreTHmhmut4hU=;
-    b=MNsSLRO1kKKD7zWnKTz1vLypyEmOef19RLKMhrf9ruh2rOoYJfjZ1zHZEGt9OmWr6p
-    0DafpbOwkx4aZdSzsfAg==
+    bh=+p5IHgtCJ++8nSCghrBfYm3V7/hpk9AekMBHzhUufmw=;
+    b=Bdcp32Svcck/rleKarQHmuINUKKaHfaMODtq8EDOz5RPqzMylJ0xDzd50lOUL02/sc
+    tyhyOlDYXjWfjT8pj7CQ==
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA9J/h"
 Received: from gerhold.net
     by smtp.strato.de (RZmta 49.4.0 DYNA|AUTH)
-    with ESMTPSA id j6420az51CQJquT
+    with ESMTPSA id j6420az51CY7qxR
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
-    Thu, 1 Jun 2023 14:26:19 +0200 (CEST)
-Date:   Thu, 1 Jun 2023 14:26:12 +0200
+    Thu, 1 Jun 2023 14:34:07 +0200 (CEST)
+Date:   Thu, 1 Jun 2023 14:34:00 +0200
 From:   Stephan Gerhold <stephan@gerhold.net>
 To:     Bjorn Andersson <quic_bjorande@quicinc.com>
 Cc:     Bjorn Andersson <andersson@kernel.org>,
@@ -73,68 +73,82 @@ Cc:     Bjorn Andersson <andersson@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/3] soc: qcom: rmtfs: Support discarding guard pages
-Message-ID: <ZHiOZPQYlvxfAAFq@gerhold.net>
+Subject: Re: [PATCH v2 1/3] dt-bindings: reserved-memory: rmtfs: Allow guard
+ pages
+Message-ID: <ZHiQON3Or-JCGMur@gerhold.net>
 References: <20230530233643.4044823-1-quic_bjorande@quicinc.com>
- <20230530233643.4044823-3-quic_bjorande@quicinc.com>
+ <20230530233643.4044823-2-quic_bjorande@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230530233643.4044823-3-quic_bjorande@quicinc.com>
+In-Reply-To: <20230530233643.4044823-2-quic_bjorande@quicinc.com>
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 30, 2023 at 04:36:42PM -0700, Bjorn Andersson wrote:
-> In some configurations, the exact placement of the rmtfs shared memory
-> region isn't so strict. The DeviceTree author can then choose to use the
-> "size" property and rely on the OS for placement (in combination with
-> "alloc-ranges", if desired).
+On Tue, May 30, 2023 at 04:36:41PM -0700, Bjorn Andersson wrote:
+> On some Qualcomm platforms it's required that the rmtfs memory is not
+> placed adjacent to allocations performed by other clients. Some
+> DeviceTree authors have solved this by reserving the space around
+> the region, but this prevents such author to use rely on the OS to place
+> the region, through the use of "size" (instead of a fixed location).
 > 
-> But on some platforms the rmtfs memory region may not be allocated
-> adjacent to regions allocated by other clients. Add support for
-> discarding the first and last 4k block in the region, if
-> qcom,use-guard-pages is specified in DeviceTree.
+> So introduce a flag to indicate that guard pages should be carved at the
+> beginning and end of the memory region. The user shall account for the
+> two 4k blocks in the defined size.
 > 
 > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
 > ---
 > 
 > Changes since v1:
-> - Drop the dma_alloc_coherent() based approach and just add support for
->   the guard pages.
+> - Drop qcom,alloc-size in favour of using reserved-memory/size
+> - Introduce explicit property to signal that guard pages should be
+>   carved out from this region (rather than always do it in the dynamic
+>   case).
 > 
->  drivers/soc/qcom/rmtfs_mem.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
+>  .../bindings/reserved-memory/qcom,rmtfs-mem.yaml           | 7 +++++++
+>  1 file changed, 7 insertions(+)
 > 
-> diff --git a/drivers/soc/qcom/rmtfs_mem.c b/drivers/soc/qcom/rmtfs_mem.c
-> index f83811f51175..28238974d913 100644
-> --- a/drivers/soc/qcom/rmtfs_mem.c
-> +++ b/drivers/soc/qcom/rmtfs_mem.c
-> @@ -213,6 +213,16 @@ static int qcom_rmtfs_mem_probe(struct platform_device *pdev)
->  		goto put_device;
->  	}
+> diff --git a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml b/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
+> index bab982f00485..26e24e7b08cf 100644
+> --- a/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
+> +++ b/Documentation/devicetree/bindings/reserved-memory/qcom,rmtfs-mem.yaml
+> @@ -26,6 +26,13 @@ properties:
+>      description: >
+>        identifier of the client to use this region for buffers
 >  
-> +	/*
-> +	 * If requested, discard the first and last 4k block in order to ensure
-> +	 * that the rmtfs region isn't adjacent to other protected regions.
-> +	 */
-> +	if (of_property_present(node, "qcom,use-guard-pages")) {
-> +		rmtfs_mem->addr += SZ_4K;
-> +		rmtfs_mem->base += SZ_4K;
-> +		rmtfs_mem->size -= 2 * SZ_4K;
-> +	}
+> +  qcom,use-guard-pages:
+> +    type: boolean
+> +    description: >
+> +      Indicates that the OS should ignore the first and last 4k block of the
+> +      memory region, for the purpose of ensuring that the allocation is not
+> +      adjacent to other protected regions.
+> +
 
-It probably doesn't make a big difference in practice but I would say
-there is no need to even memremap() the guard pages. If you adjust the
-->addr and ->size before the memremap() then you don't need to modify
-the ->base at all.
+The name "page(s)" is kind of ambiguous nowadays given that systems are
+configured with a variety of page sizes other than 4k.
+
+I wonder if it would be more clear to add the actual size of the guard
+pages to the device tree, e.g.
+
+	rmtfs {
+		compatible = "qcom,rmtfs-mem";
+		size = <(2*1024*1024 + 2*4096)>;
+		qcom,guard-size = <4096>;
+	};
+
+This could also handle a different padding - in the unlikely case that
+this is needed on some platform...
+
+It's probably also fine the way you added it though, this is just
+a random thought I had. :)
 
 Thanks,
 Stephan
