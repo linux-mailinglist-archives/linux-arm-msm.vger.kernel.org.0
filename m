@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A787171FA9A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 09:05:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2C70771FA9F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 09:05:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234216AbjFBHFQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Jun 2023 03:05:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55152 "EHLO
+        id S233761AbjFBHFt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Jun 2023 03:05:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54442 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234257AbjFBHEs (ORCPT
+        with ESMTP id S234163AbjFBHFN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Jun 2023 03:04:48 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3588310DF
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jun 2023 00:04:31 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-51480d3e161so2567880a12.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jun 2023 00:04:31 -0700 (PDT)
+        Fri, 2 Jun 2023 03:05:13 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA660E42
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jun 2023 00:04:48 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-514924b4f8cso2499609a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jun 2023 00:04:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685689469; x=1688281469;
+        d=linaro.org; s=google; t=1685689487; x=1688281487;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=UnQX0y9CucftjRft49d3HMPlBdEUnz94TDnE0qcYiJ8=;
-        b=s6EvqgVxtO4TBZu0WwHgiMFZml20ChuVeE8PMA7UyEmuVlbEbmdnB/ols1Qg0V/bsm
-         U7qvcR76k7KNGdEnpat3QPD9gQbN4ntl1E8F+4/F7otHawL/Qrw8dLep0BlYRpUowZv1
-         JwBEalTrdoq4fSOXIderQuHNI0NUOfNXT/SU6qhOIWKZ/wMif3iqYPVgIOh3FM5mf3UQ
-         P6KXMb304exvpzMwUd9bXbpQC1dpYVxSW6ppRwmLX1JXk4Wl7NT3r6oY8VLftXaDOdrm
-         /4TxZdlJ5IEUbLr8xquB1aOjKn9gACXDhvPl4/vmTomZMDEMf0EKYB8XZFxJjL69vwjI
-         hQ6g==
+        bh=T1d9DD10q4AGlk7MmO9oJ82DC3m4s3pLFpDFQj0JQ9g=;
+        b=XkPv8H3u1C3h5x50F2jBCg1cDvAQSm/uKEUAOlGwe5kiLeH7DfKYfR5bh3/ykBCMSw
+         7MJDdfIDSgGVDhLQvqoH2KcEafsh78zInlSb0ASytHq4jUHyu5UdwuEmR9GSSlcqMmaM
+         IF41VNoGRPa8itPzW1ZahujSW2+r5+k57oWawH0NmRteJWzuLn8CoYJBdPZck0PcSxqN
+         w6ZgAZx9Q3A4iGVs2VzTF/2wsDobdt2XxQzp6hneP0JkIEgP4Ob2BuzB0ZY9w8oFfrgG
+         0rP9sFBHhiHpnzNdjE1rQaxVTG7wUzY6JfjJp4bgQ0+4X97N2lVjPHJ4zlcSnINbnD1u
+         pnhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685689469; x=1688281469;
+        d=1e100.net; s=20221208; t=1685689487; x=1688281487;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UnQX0y9CucftjRft49d3HMPlBdEUnz94TDnE0qcYiJ8=;
-        b=UHR50M744Y2aJ//PPhnZcyKCQyhnWdJcxGUu5z/tu6dynUc2t8yy9wJ5hN3t4fol/J
-         ti+r5g/hEL5nlzcpOVu0LkC3zOIq0wSS73vXktHU6Ve5z+siKfmRu6Q8jy1eJE/yRs4z
-         UC638frbVvgApGc7O+DF4Uh6xzdDygtWXTZBfnGQqFQ9G8Pe/iKYiHanlMH1wwfceOuX
-         IOhM5VkZz54PiPDVNRkPVUecHRwNWDvLzYLDIxeSeUP2PvKj+yrZIaAnc+WHV6kjsDxA
-         lSx5vybTixOl3Y9e1xTZUPK2ftR6Yp+bFq1lsLm4AvHehEJ5jDArSzOu1BSOCgXHc9K0
-         dS4A==
-X-Gm-Message-State: AC+VfDx4PwIdc15uQBpT3DYfFmKtKo1oxb22xN3nPBHrWh4V3N+hLw0z
-        9HNigm7NatMFqXJI85TCHFGyOg==
-X-Google-Smtp-Source: ACHHUZ5uGlEwXV94UmdP/Z9fWCmXFFhewyP4sS3Cx877kjsyOBbrr1YU/wJs7N49Oe5p5ZtfMuPs3g==
-X-Received: by 2002:a17:907:3e9d:b0:96f:f451:1874 with SMTP id hs29-20020a1709073e9d00b0096ff4511874mr11116346ejc.59.1685689469543;
-        Fri, 02 Jun 2023 00:04:29 -0700 (PDT)
+        bh=T1d9DD10q4AGlk7MmO9oJ82DC3m4s3pLFpDFQj0JQ9g=;
+        b=Dn3NcBGMLbGdrMRLKaPO1gXK1456HQFbXUw0D7+UeWdvKuGDNa9hu0d62jNgTqElf4
+         HuC9ICWzNOhogqkYOScrfa+bAlDg9c3wIsmeLnD9cJ9aZ5mHJJz+++UKWbpRmVUs/y1a
+         q/Exb6jxTHVpD6jqCUILnATRaPhCVMKt/smFV8mruzQt/3dP4D4juSoB2/oCeMlEZ39S
+         575JACUv+9u0Ex2HzX8BJqoZp3NQ9wpRAEcDoHQn8YS13S8dfypeGfj4ICgXeGd3pZ91
+         LIP/Ag6TuVk7J3cZ1RETZBLRDv4WF1eHzrAjONVfNzKxMZr+HHoBoCkr/46KGfzCVM/5
+         3yGw==
+X-Gm-Message-State: AC+VfDw2X9U/gOsKyuLgNZSsi42p0Rv5Oa3kyT4DuQktECuv8wg0nRcO
+        bL/1wQ0qjeEm16qAShxX9nox1g==
+X-Google-Smtp-Source: ACHHUZ54Aa/2X1I6zgJBwKrcqiCN3K+p4gMYWSb0zSpvLbFJ0Wi7SQcQl0L8UPgGnZ7ebjD+dcfCZg==
+X-Received: by 2002:a05:6402:2027:b0:514:9934:de96 with SMTP id ay7-20020a056402202700b005149934de96mr1218078edb.26.1685689487347;
+        Fri, 02 Jun 2023 00:04:47 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.199.204])
-        by smtp.gmail.com with ESMTPSA id z13-20020a170906240d00b0094e597f0e4dsm386722eja.121.2023.06.02.00.04.27
+        by smtp.gmail.com with ESMTPSA id r9-20020a056402018900b0051056dc47e0sm338506edv.8.2023.06.02.00.04.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Jun 2023 00:04:29 -0700 (PDT)
-Message-ID: <201cb02b-b7b0-eecc-a9d5-3a7535c91d8d@linaro.org>
-Date:   Fri, 2 Jun 2023 09:04:27 +0200
+        Fri, 02 Jun 2023 00:04:46 -0700 (PDT)
+Message-ID: <a3101b56-867d-4c95-b6a2-de63a85ee64b@linaro.org>
+Date:   Fri, 2 Jun 2023 09:04:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH RESEND 4/4] arm64: dts: qcom: ipq5332: add support for the
- RDP474 variant
+Subject: Re: [PATCH RESEND 1/4] dt-bindings: arm: qcom,ids: add SoC ID for
+ IPQ5300
 Content-Language: en-US
 To:     Kathiravan T <quic_kathirav@quicinc.com>,
         Andy Gross <agross@kernel.org>,
@@ -68,11 +68,9 @@ To:     Kathiravan T <quic_kathirav@quicinc.com>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 References: <20230601042054.29075-1-quic_kathirav@quicinc.com>
- <20230601042054.29075-5-quic_kathirav@quicinc.com>
- <91c63634-eb39-fdca-2c76-6f8182c2d47c@linaro.org>
- <2dd8e5be-c5b5-02e7-32d0-587a40cb70cc@quicinc.com>
+ <20230601042054.29075-2-quic_kathirav@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <2dd8e5be-c5b5-02e7-32d0-587a40cb70cc@quicinc.com>
+In-Reply-To: <20230601042054.29075-2-quic_kathirav@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,90 +83,16 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02/06/2023 06:05, Kathiravan T wrote:
+On 01/06/2023 06:20, Kathiravan T wrote:
+> Add the SoC ID for IPQ5300, which belong to the family of IPQ5332 SoC.
 > 
-> On 6/1/2023 10:59 PM, Krzysztof Kozlowski wrote:
->> On 01/06/2023 06:20, Kathiravan T wrote:
->>> Add the initial device tree support for the Reference Design
->>> Platform(RDP) 474 based on IPQ5332 family of SoC. This patch carries
->>> the support for Console UART, eMMC, I2C and GPIO based buttons.
->>>
->>> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
->>> ---
->>>   arch/arm64/boot/dts/qcom/Makefile           |   1 +
->>>   arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts | 112 ++++++++++++++++++++
->>>   2 files changed, 113 insertions(+)
->>>   create mode 100644 arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->>> index 4f9e81253e18..0f8c763a9bd9 100644
->>> --- a/arch/arm64/boot/dts/qcom/Makefile
->>> +++ b/arch/arm64/boot/dts/qcom/Makefile
->>> @@ -7,6 +7,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
->>>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-mi01.2.dtb
->>>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp442.dtb
->>>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp468.dtb
->>> +dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp474.dtb
->>>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
->>>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
->>>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c1.dtb
->>> diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts
->>> new file mode 100644
->>> index 000000000000..085729a0fdf1
->>> --- /dev/null
->>> +++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts
->>> @@ -0,0 +1,112 @@
->>> +// SPDX-License-Identifier: BSD-3-Clause
->>> +/*
->>> + * IPQ5332 RDP474 board device tree source
->>> + *
->>> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
->>> + */
->>> +
->>> +/dts-v1/;
->>> +
->>> +#include <dt-bindings/gpio/gpio.h>
->>> +#include <dt-bindings/input/input.h>
->>> +#include "ipq5332.dtsi"
->>> +
->>> +/ {
->>> +	model = "Qualcomm Technologies, Inc. IPQ5332 MI01.9";
->>> +	compatible = "qcom,ipq5332-ap-mi01.9", "qcom,ipq5332";
->>> +
->>> +	aliases {
->>> +		serial0 = &blsp1_uart0;
->>> +	};
->>> +
->>> +	chosen {
->>> +		stdout-path = "serial0";
->>> +	};
->>> +
->>> +	gpio_keys {
->> No, srsly, so not only ignored the tags but also feedback?
-> 
-> 
-> Please correct me if I am wrong here..
-> 
-> This is RESEND of V1 patches (only minor correction in the subject line
-
-I sent you three emails and I assumed you got my feedback, thus it
-should not have been resend...
+> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+> ---
+>  include/dt-bindings/arm/qcom,ids.h | 1 +
+>  1 file changed, 1 insertion(+)
 
 
-> in cover letter). Also I don't see review comments as such in original 
-> V1 as well 
-> https://lore.kernel.org/linux-arm-msm/20230531135048.19164-1-quic_kathirav@quicinc.com/
-> 
-> Can you help to point out your review comments, I couldn't able to find out.
-
-... but I don't see them on lore. So apparently you also did not get them.
-
-I apologize in such case. Mails are nicely sent in my outbox but
-apparently went to /dev/null.
-
-Original feedback:
-
-Same problems as with most of recent patches. No underscores in node names.
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
