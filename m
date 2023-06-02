@@ -2,114 +2,290 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4388871F812
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 03:37:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37DCD71F86C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 04:30:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233669AbjFBBhr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 21:37:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60000 "EHLO
+        id S229542AbjFBCa1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 22:30:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233549AbjFBBhp (ORCPT
+        with ESMTP id S229524AbjFBCa0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 21:37:45 -0400
-Received: from devico.uberspace.de (devico.uberspace.de [185.26.156.185])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A096CE5D
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 18:37:13 -0700 (PDT)
-Received: (qmail 10122 invoked by uid 990); 2 Jun 2023 01:36:36 -0000
-Authentication-Results: devico.uberspace.de;
-        auth=pass (plain)
+        Thu, 1 Jun 2023 22:30:26 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7DCF180;
+        Thu,  1 Jun 2023 19:30:24 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35229dS6021413;
+        Fri, 2 Jun 2023 02:30:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=z4PGhJicd64CLNRAi7yXlmeie/hBJ8KiRE5vR6dLI3Y=;
+ b=T2gk7s76YivrQKBkE42kHbX1hXBSu4BZf4lz4nzRN1H9+76Ky8RmfH4DfSr0YKaUQ5nm
+ bw5cbPEmCXTNFZBrlIbQ76L30rXIwBc11teMqdFVSjsei5W+kF7BG7hlFDesifPMY5Jc
+ eFqNUf90GimokCeOAiZDgovy6FAqQV+idj7Z+eCH8OSNhNpNixzF8b2DmvNilMvzBsKD
+ MoulHlXy7WSXojT8itrZhWo8WYzhqEWX5kJPcRJ1GJBulhVbQ/nyZl59kKSte0ue8uva
+ hVpDpQ1cp+ys8q8pYH3wRNsYJd4nPa9OoG4f/wMEBfFB1u3tD8G7qLZ8+EIuDZAJOwx7 bA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qxqyda8hy-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 02 Jun 2023 02:29:59 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3522Tw2T019651
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 2 Jun 2023 02:29:58 GMT
+Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 1 Jun 2023
+ 19:29:52 -0700
+Message-ID: <e7909578-6538-b3bd-7bca-3e19015cfdef@quicinc.com>
+Date:   Fri, 2 Jun 2023 10:29:50 +0800
 MIME-Version: 1.0
-Date:   Fri, 02 Jun 2023 01:36:35 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From:   "Leonard Lausen" <leonard@lausen.nl>
-Message-ID: <f98dcffe4b1dc91edf692fbaa766a263910f2c5b@lausen.nl>
-TLS-Required: No
-Subject: Re: [Freedreno] [PATCH] Revert "drm/msm/dp: Remove INIT_SETUP delay"
-To:     "Abhinav Kumar" <quic_abhinavk@quicinc.com>,
-        "Kuogee Hsieh" <quic_khsieh@quicinc.com>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        "Bjorn Andersson" <andersson@kernel.org>
-Cc:     freedreno@lists.freedesktop.org,
-        "Sankeerth Billakanti" <quic_sbillaka@quicinc.com>,
-        "Bjorn Andersson" <quic_bjorande@quicinc.com>,
-        regressions@lists.linux.dev, "David Airlie" <airlied@gmail.com>,
-        "Nikita Travkin" <nikita@trvn.ru>, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, "Rob Clark" <robdclark@gmail.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        "Stephen Boyd" <swboyd@chromium.org>,
-        "Sean Paul" <sean@poorly.run>,
-        "Johan Hovold" <johan+linaro@kernel.org>
-In-Reply-To: <932ee149-c524-25e7-ee49-5ea1a7e6708c@quicinc.com>
-References: <932ee149-c524-25e7-ee49-5ea1a7e6708c@quicinc.com>
- <e547edf4-1b48-5d12-1600-45f78e7cab49@quicinc.com>
- <1345a125-f745-4fe3-0f5e-bfe84225958d@quicinc.com>
- <b0cc40d5-6de1-91cc-e2cd-f47cc53551e4@quicinc.com>
- <ebbcd56ac883d3c3d3024d368fab63d26e02637a@lausen.nl>
- <20230508021536.txtamifw2vkfncnx@ripper>
- <3802269cd54ce105ef6dece03b1b9af575b4fa06@lausen.nl>
- <ad351c02-1c29-3601-53e8-f8cdeca2ac63@linaro.org>
- <49d175ec16e3f65a18265063e51092ee8d0d79c1@lausen.nl>
- <f2d1bb37-ea83-4d5d-6ef5-ae84c26d6ac1@quicinc.com>
- <b9c8243ed53c5c9d7c1b5711237f6130976ea99b@lausen.nl>
-X-Rspamd-Bar: /
-X-Rspamd-Report: MIME_GOOD(-0.1) BAYES_HAM(-0.653806) SUSPICIOUS_RECIPS(1.5)
-X-Rspamd-Score: 0.746193
-Received: from unknown (HELO unkown) (::1)
-        by devico.uberspace.de (Haraka/3.0.1) with ESMTPSA; Fri, 02 Jun 2023 03:36:35 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-        d=lausen.nl; s=uberspace;
-        h=from;
-        bh=F1dvcx9M5aUHwpLVgbzf/l4rVtHAAaC7rv6RpWusZ5s=;
-        b=wFk1temRwaSxBD9VI5V46NvXc365LyX2Oy2QNyMIivszup70xaT/XGMZU9EImnz2BJ4OAZR/Ng
-        /+LZGTrJC+Vrm93lm6S9PM/qij10wuT53Ig7zCv+9c085Xm+9fxf5fDzKYr05woN1avArs2muKTc
-        +dQytvX5Q7DgjKbcJZtFQkQ7QseKeklh9Qlue7F9wQTLCHfdOqm4Y4qQk2cGlL34GzXda63ViAd5
-        8yfFe5zJjWkTACc5P7Avxr5evqcUzZuolE9tMP76oAtyEu8RCVAOQs47MP3uAUyhLqWJVkSid/h3
-        dnWDVjz4YUH9H878dg0emKksBhR3ZpSi4RQP1CPXanMBcAshgbjBxHGigY+PejnMoOGfw1jJrvqO
-        dubxnpOH3IyfpKlLY+F28N2lSoYyedtoSACiRy59GWHWiiOwkaO51SoFYwU5VM/dYG3RpEiFnoLP
-        n3YP+gMxFqv+UrRpHzz+QulynVDBaFiizMzwpoMiHSvlczC5AUI+aJhlhQyT4nlYf95/UGIs96Ih
-        /try9w4FMiDYKpELz9gP22UMwK5Xi9j27MK2yn3uKcs25g7GIy+87Wbb2b3sp9wwD5jTGq4urLRt
-        8TGdvJxgrlCuiZ9cNuJLk9V7KDF+aseLMe6kLuvoWQXSd/l1Ju+nlTIxaR7GLjuxqscmWxWZeyDe
-        s=
-X-Spam-Status: No, score=-2.4 required=5.0 tests=BAYES_00,DKIM_INVALID,
-        DKIM_SIGNED,MSGID_FROM_MTA_HEADER,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v4 05/11] coresight-tpdm: Add nodes to set trigger
+ timestamp and type
+Content-Language: en-US
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
+References: <1682586037-25973-1-git-send-email-quic_taozha@quicinc.com>
+ <1682586037-25973-6-git-send-email-quic_taozha@quicinc.com>
+ <ccdc58ff-f86b-6ca8-cdf6-299cc454873c@arm.com>
+From:   Tao Zhang <quic_taozha@quicinc.com>
+In-Reply-To: <ccdc58ff-f86b-6ca8-cdf6-299cc454873c@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 4ewbk22m80blD3fl4BtDufLGKaIwIPuf
+X-Proofpoint-GUID: 4ewbk22m80blD3fl4BtDufLGKaIwIPuf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-01_08,2023-05-31_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ mlxlogscore=999 phishscore=0 mlxscore=0 bulkscore=0 spamscore=0
+ adultscore=0 impostorscore=0 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2306020017
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Abhinav,
 
-June 1, 2023 at 3:20 PM, "Abhinav Kumar" <quic_abhinavk@quicinc.com> wrot=
-e:
-> >=20
->=20>  [drm:drm_mode_config_helper_resume] *ERROR* Failed to resume (-107=
-)
-> >=20
->=20
-> We are not able to recreate this on sc7280 chromebooks , will need to c=
-heck on sc7180. This does not seem directly related to any of the hotplug=
- changes though so needs to be checked separately. So please feel free to=
- raise a gitlab bug for this and assign to me.
+On 6/1/2023 5:05 PM, Suzuki K Poulose wrote:
+> On 27/04/2023 10:00, Tao Zhang wrote:
+>> The nodes are needed to set or show the trigger timestamp and
+>> trigger type. This change is to add these nodes to achieve these
+>> function.
+>>
+>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>> ---
+>>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 24 ++++++
+>>   drivers/hwtracing/coresight/coresight-tpdm.c       | 95 
+>> ++++++++++++++++++++++
+>>   2 files changed, 119 insertions(+)
+>>
+>> diff --git 
+>> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm 
+>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> index 686bdde..77e67f2 100644
+>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> @@ -21,3 +21,27 @@ Description:
+>>             Accepts only one value -  1.
+>>           1 : Reset the dataset of the tpdm
+>> +
+>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_trig_type
+>> +Date:        March 2023
+>> +KernelVersion    6.3
+>
+> This would need updating. We are not sure if this can make it to 6.5, 
+> with dependency on James' series. Fix this with 6.5 here and we can take
+> a shot.
+Sure, I will update this in the next patch series.
+>
+>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
+>> (QUIC) <quic_taozha@quicinc.com>
+>> +Description:
+>> +        (Write) Set the trigger type of DSB tpdm. Read the trigger
+>> +        type of DSB tpdm.
+>> +
+>> +        Accepts only one of the 2 values -  0 or 1.
+>> +        0 : Set the DSB trigger type to false
+>> +        1 : Set the DSB trigger type to true
+>> +
+>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_trig_ts
+>> +Date:        March 2023
+>> +KernelVersion    6.3
+>
+> Same here
+Sure, I will update this in the next patch series.
+>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
+>> (QUIC) <quic_taozha@quicinc.com>
+>> +Description:
+>> +        (Write) Set the trigger timestamp of DSB tpdm. Read the
+>> +        trigger timestamp of DSB tpdm.
+>> +
+>> +        Accepts only one of the 2 values -  0 or 1.
+>> +        0 : Set the DSB trigger type to false
+>> +        1 : Set the DSB trigger type to true
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c 
+>> b/drivers/hwtracing/coresight/coresight-tpdm.c
+>> index 2e64cfd..14f4352 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+>> @@ -20,6 +20,19 @@
+>>     DEFINE_CORESIGHT_DEVLIST(tpdm_devs, "tpdm");
+>>   +static umode_t tpdm_dsb_is_visible(struct kobject *kobj,
+>> +                                   struct attribute *attr, int n)
+>
+> minor nit: alignment ?
+Sure, I will update this in the next patch series.
+>
+>> +{
+>> +    struct device *dev = kobj_to_dev(kobj);
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +
+>> +    if (drvdata)
+>> +        if (drvdata && (drvdata->datasets & TPDM_PIDR0_DS_DSB))
+>> +            return attr->mode;
+>
+> Duplicate check for drvdata ?
+>
+>     if (drvdata && (drvdata->datasets & TPDM_PIDR0_DS_DSB))
+>         return attr->mode;
 
-Thank you for checking with sc7280. I created https://gitlab.freedesktop.=
-org/drm/msm/-/issues/25 and CCed you. I've also verified that the error p=
-ersists with v6.4.0-rc4 + Kuogee's patch (just in case you may have teste=
-d on sc7280 with 6.4).
-=20
->=20>  https://patchwork.freedesktop.org/patch/538601/?series=3D118148&re=
-v=3D3
-> >  Apologies if you were not CCed on this, if a next version is CCed,
-> >  will ask kuogee to cc you.
-> >  Meanwhile, will be great if you can verify if it works for you and
-> >  provide Tested-by tags.
+Don't need double check here, I will change this in the next patch series.
 
-I see Bjorn also tested the patch. As it fixes a serious USB-C DP regress=
-ion which broke USB-C DP completely on lazor for v6.3, can it be included=
- in upcoming 6.3.y release?
 
-Thank you
-Leonard
+Best,
+
+Tao
+
+>> +
+>> +    return 0;
+>> +}
+>> +
+>>   static void tpdm_reset_datasets(struct tpdm_drvdata *drvdata)
+>>   {
+>>       if (drvdata->datasets & TPDM_PIDR0_DS_DSB) {
+>> @@ -239,8 +252,90 @@ static struct attribute_group tpdm_attr_grp = {
+>>       .attrs = tpdm_attrs,
+>>   };
+>>   +static ssize_t dsb_trig_type_show(struct device *dev,
+>> +                     struct device_attribute *attr, char *buf)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +
+>> +    return sysfs_emit(buf, "%u\n",
+>> +             (unsigned int)drvdata->dsb->trig_type);
+>> +}
+>> +
+>> +/*
+>> + * Trigger type (boolean):
+>> + * false - Disable trigger type.
+>> + * true  - Enable trigger type.
+>> + */
+>> +static ssize_t dsb_trig_type_store(struct device *dev,
+>> +                      struct device_attribute *attr,
+>> +                      const char *buf,
+>> +                      size_t size)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +    unsigned long val;
+>> +
+>> +    if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
+>> +        return -EINVAL;
+>> +
+>> +    spin_lock(&drvdata->spinlock);
+>> +    if (val)
+>> +        drvdata->dsb->trig_type = true;
+>> +    else
+>> +        drvdata->dsb->trig_type = false;
+>> +    spin_unlock(&drvdata->spinlock);
+>> +    return size;
+>> +}
+>> +static DEVICE_ATTR_RW(dsb_trig_type);
+>> +
+>> +static ssize_t dsb_trig_ts_show(struct device *dev,
+>> +                     struct device_attribute *attr, char *buf)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +
+>> +    return sysfs_emit(buf, "%u\n",
+>> +             (unsigned int)drvdata->dsb->trig_ts);
+>> +}
+>> +
+>> +/*
+>> + * Trigger timestamp (boolean):
+>> + * false - Disable trigger timestamp.
+>> + * true  - Enable trigger timestamp.
+>> + */
+>> +static ssize_t dsb_trig_ts_store(struct device *dev,
+>> +                      struct device_attribute *attr,
+>> +                      const char *buf,
+>> +                      size_t size)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +    unsigned long val;
+>> +
+>> +    if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
+>> +        return -EINVAL;
+>> +
+>> +    spin_lock(&drvdata->spinlock);
+>> +    if (val)
+>> +        drvdata->dsb->trig_ts = true;
+>> +    else
+>> +        drvdata->dsb->trig_ts = false;
+>> +    spin_unlock(&drvdata->spinlock);
+>> +    return size;
+>> +}
+>> +static DEVICE_ATTR_RW(dsb_trig_ts);
+>> +
+>> +static struct attribute *tpdm_dsb_attrs[] = {
+>> +    &dev_attr_dsb_trig_ts.attr,
+>> +    &dev_attr_dsb_trig_type.attr,
+>> +    NULL,
+>> +};
+>> +
+>> +static struct attribute_group tpdm_dsb_attr_grp = {
+>> +    .attrs = tpdm_dsb_attrs,
+>> +    .is_visible = tpdm_dsb_is_visible,
+>> +};
+>> +
+>>   static const struct attribute_group *tpdm_attr_grps[] = {
+>>       &tpdm_attr_grp,
+>> +    &tpdm_dsb_attr_grp,
+>>       NULL,
+>>   };
+>
+> Rest looks fine to me
+>
+> Suzuki
+>
