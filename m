@@ -2,91 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FC5171FC7D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 10:49:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 02C6171FCC1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 10:54:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234837AbjFBItO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Jun 2023 04:49:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49008 "EHLO
+        id S234843AbjFBIyj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Jun 2023 04:54:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52456 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234248AbjFBIsd (ORCPT
+        with ESMTP id S234557AbjFBIyC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Jun 2023 04:48:33 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D6E81B0
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jun 2023 01:48:31 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id 38308e7fff4ca-2b1a3fa2cd2so20886511fa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jun 2023 01:48:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685695709; x=1688287709;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=IoQFQr/nPSNFex22doBQPMhVul05JZ1RLUaTofGh6rc=;
-        b=oIOrjmJMTtBBGOq/2Ap4Pc5fVooiIfofixNKfmoziFbJDansAXfxM2Lzl5qgL6CuK/
-         E0dmtS2SyWFo0da/54uB8NmmavclqDHnNVPpj9Rd31x71CHwZltsAxjHvrfytOFajcM8
-         mMqnp0hJPEwDKHxbC2P221cVgnFIttyu2aJ+s16T75ctesZk8ltNNDyzXij8lwvOM71E
-         Gkj8SAju7i2h7BdQsVxZfFMAwyhVEDQaQtECkoE/3LCSd0fzXTAWY0SXE+t0pKYnLtm9
-         CuXFXPJiyomBtlI5sFvW7M5ZY+MTqqkjxJqN6Fyc1oKHcTAWO6mUcX/yZjLPTUCaOTxW
-         QHbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685695709; x=1688287709;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IoQFQr/nPSNFex22doBQPMhVul05JZ1RLUaTofGh6rc=;
-        b=k2N9SAV6+RCabXe0/qVyvSleQp2pk6bj6XVCtTfSrEFo5y5K7TtvfMd0zm5OC88YIN
-         bTuMa0D2MqKQ0hK5X3SyCtJRXaKtnZQtKHpbLbGgdOuvCnn+xiBUcTRsKySIoNIM97i4
-         yJkc2ufK07uvmATYX9F7knDUkf4XJvaH0DVxp8PvdfA1VlZyp7MGgFwEhSbhmIOp+Hnt
-         GlwBZSHaaEZs5YrSL0HVeC5RyrTgOcSUainWFI+mXhuq4OsxuFw7YOOv1S9sL5UE1EQx
-         hAqAj/2J2bgn9E5wHzLqat83k1AEN0v/6XyQTYsO/vhsa3inzPf4rg2WbXthtUghPQxY
-         BZUw==
-X-Gm-Message-State: AC+VfDxU55++4eGQsoSbE8BSgRiV2KSNwJifdDIWOBSoNnqk+dmRujDy
-        zJfTgRSNJChysUBfY4XgiY0RBg==
-X-Google-Smtp-Source: ACHHUZ4CteD5aDWXschtOOQKsN+0Vs7jmkj6ydwf/dShOQgl0gKLTUFIt0A5KbHdVwxKiVNQPMfMYw==
-X-Received: by 2002:a2e:801a:0:b0:2ac:7d3b:6312 with SMTP id j26-20020a2e801a000000b002ac7d3b6312mr1323052ljg.22.1685695709498;
-        Fri, 02 Jun 2023 01:48:29 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id w22-20020a2e9996000000b002ab5421959fsm142943lji.90.2023.06.02.01.48.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Jun 2023 01:48:28 -0700 (PDT)
-Message-ID: <ff395fd4-1100-6276-f8c5-a3815b64ceb8@linaro.org>
-Date:   Fri, 2 Jun 2023 10:48:27 +0200
+        Fri, 2 Jun 2023 04:54:02 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C308E47;
+        Fri,  2 Jun 2023 01:53:21 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3527steb018334;
+        Fri, 2 Jun 2023 08:53:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=m32xqfafdcX/VXStuKyJNVLtJJE3KbtHvb0uXWbIgns=;
+ b=P8Es0wXqt3wovE/DUiuS3HbtntnGugtIXfRl7r9bTjvV5FCDCg+DrXAKmiXqNYNIemN1
+ 8+3x8/oSOdewbb4Prwl6kLBga7lAZ6odMGy0b0jxVctVt/l0mci534SedkOkn4/UFxTw
+ TSqZUi+C2tNd4D9t22Qcv226obViNgwlsu2WX61JUlbvD+JQ9laaL59RaFbeZPFhwzra
+ nqmc3Vq/mWhiunU5Ld0L2gnGlj5QvYft30/ffc+WzvAUrv4mwkWqqYoVEmVAAddW8obh
+ cYmP5GdZLTKgXJb3Peg+qhKmSDRBTAsYV/Tmta5GYA7M2oQVBwEvoJJ3taBh2ncTC+qJ eQ== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qybnbr66q-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 02 Jun 2023 08:53:18 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3528rHIJ003441
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 2 Jun 2023 08:53:17 GMT
+Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 2 Jun 2023
+ 01:53:12 -0700
+Message-ID: <c3b05763-0153-e422-9874-bfaab461003b@quicinc.com>
+Date:   Fri, 2 Jun 2023 14:23:09 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH 4/4] clk: qcom: mmcc-msm8998: Fix the SMMU GDSC
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Imran Khan <kimran@codeaurora.org>,
-        Rajendra Nayak <quic_rjendra@quicinc.com>,
-        Joonwoo Park <joonwoop@codeaurora.org>,
-        Jeffrey Hugo <jhugo@codeaurora.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20230531-topic-8998_mmssclk-v1-0-2b5a8fc90991@linaro.org>
- <20230531-topic-8998_mmssclk-v1-4-2b5a8fc90991@linaro.org>
- <CAOCk7Nogy3+5rvyzPEgsyJe7xE_17MXVs-=mniJJj=ELsCqzNQ@mail.gmail.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH] arm64: dts: qcom: ipq9574: add few more reserved memory
+ region
+To:     Anusha Rao <quic_anusha@quicinc.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_gokulsri@quicinc.com>,
+        <quic_sjaganat@quicinc.com>, <quic_arajkuma@quicinc.com>,
+        <quic_poovendh@quicinc.com>
+References: <20230602084431.19134-1-quic_anusha@quicinc.com>
 Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <CAOCk7Nogy3+5rvyzPEgsyJe7xE_17MXVs-=mniJJj=ELsCqzNQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+In-Reply-To: <20230602084431.19134-1-quic_anusha@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: EDAXQl5IkftLbLZj9-UROBvnqmu3rpiW
+X-Proofpoint-ORIG-GUID: EDAXQl5IkftLbLZj9-UROBvnqmu3rpiW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-02_06,2023-05-31_03,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ mlxlogscore=574 lowpriorityscore=0 bulkscore=0 malwarescore=0
+ clxscore=1015 mlxscore=0 spamscore=0 impostorscore=0 adultscore=0
+ suspectscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2306020066
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -94,35 +86,59 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+On 6/2/2023 2:14 PM, Anusha Rao wrote:
+> In IPQ SoCs, bootloader will collect the system RAM contents upon crash
+> for post-morterm analysis. If we don't reserve the memory region used
+> by bootloader, obviously linux will consume it and upon next boot on
+> crash, bootloader will be loaded in the same region, which will lead to
+> loss of some data, sometimes we may miss out critical information.
+> So lets reserve the region used by the bootloader.
+>
+> Similarly SBL copies some data into the reserved region and it will be
+> used in the crash scenario. So reserve 1MB for SBL as well.
+>
+> While at it, drop the size padding in the reserved memory region,
+> wherever applicable
 
-On 1.06.2023 16:14, Jeffrey Hugo wrote:
-> On Wed, May 31, 2023 at 3:01 AM Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
->>
->> The SMMU GDSC doesn't have to be ALWAYS-ON and shouldn't feature the
->> HW_CTRL flag (it's separate from hw_ctrl_addr).  In addition to that,
->> it should feature a cxc entry for bimc_smmu_axi_clk and be marked as
->> votable.
->>
->> Fix all of these issues.
->>
->> Fixes: d14b15b5931c ("clk: qcom: Add MSM8998 Multimedia Clock Controller (MMCC) driver")
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
-> Was this tested on a system where the bootloader has enabled the
-> display and it is active during Linux boot?
-No, I only have a device whose bootloader doesn't initialize display.
 
-> 
-> I seem to recall that in that scenario, Linux would boot up, see that
-> the GDSC is on, not see any clients for it (still initializing), turn
-> it off, and kill the display which then results in either a mess of
-> errors or a bus lockup.
-I see 2 possible scenarios: either the display shuts off (because
-somebody hasn't described the hardware properly and Linux isn't)
-aware of all dependencies, or we get bus errors because we only
-shut down / initialize some hardware partially, also possibly due
-to bad dependency description.
+LGTM.
 
-Konrad
-> 
-> -Jeff
+Reviewed-by: Kathiravan T <quic_kathirav@quicinc.com>
+
+
+>
+> Signed-off-by: Anusha Rao <quic_anusha@quicinc.com>
+> ---
+>   arch/arm64/boot/dts/qcom/ipq9574.dtsi | 12 +++++++++++-
+>   1 file changed, 11 insertions(+), 1 deletion(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> index 0baeb10bbdae..7d21ec0909fb 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> @@ -156,6 +156,16 @@
+>   		#size-cells = <2>;
+>   		ranges;
+>   
+> +		bootloader@4a100000 {
+> +			reg = <0x0 0x4a100000 0x0 0x400000>;
+> +			no-map;
+> +		};
+> +
+> +		sbl@4a500000 {
+> +			reg = <0x0 0x4a500000 0x0 0x100000>;
+> +			no-map;
+> +		};
+> +
+>   		tz_region: tz@4a600000 {
+>   			reg = <0x0 0x4a600000 0x0 0x400000>;
+>   			no-map;
+> @@ -163,7 +173,7 @@
+>   
+>   		smem@4aa00000 {
+>   			compatible = "qcom,smem";
+> -			reg = <0x0 0x4aa00000 0x0 0x00100000>;
+> +			reg = <0x0 0x4aa00000 0x0 0x100000>;
+>   			hwlocks = <&tcsr_mutex 0>;
+>   			no-map;
+>   		};
