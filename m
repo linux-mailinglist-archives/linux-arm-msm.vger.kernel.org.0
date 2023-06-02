@@ -2,49 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5881572004A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 13:23:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 968D272007E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 13:36:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232512AbjFBLXe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Jun 2023 07:23:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56268 "EHLO
+        id S234251AbjFBLgz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Jun 2023 07:36:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229488AbjFBLXc (ORCPT
+        with ESMTP id S235233AbjFBLgy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Jun 2023 07:23:32 -0400
-X-Greylist: delayed 813 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 02 Jun 2023 04:23:31 PDT
-Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B827194
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jun 2023 04:23:31 -0700 (PDT)
-DKIM-Signature: a=rsa-sha256; b=61q3OwamPbGx/ro9KiQNc+v6drxwXKz2zrM0A0GL1uedVHnoxXJDAFSJa490A4aQHlZlHNbXEM2LwX3x52KUm+bBHnBDZ6VuCa6ZY81S3g1/0vtDW9rgCHGSAbAQVgVq2FhethrEuWDs9oPVD/b+HChDdV8agNp+RmLYLwSkn5JJQLmLAMmP3qE3Epno7AQW+95/sGy9Bi9yNn3Q8ngsH7/RAz/MmIKH1KH/QSPeFxFU6SmqIZX2H9f13xNGsfnYW/UDfqHZgeR+IeEd8LOqAk4feEAupmDuMLtqac4HVhJf9CzPs2c7iXk8+9VVsqW89QDWF+SxDmQ6NaaxwNXhvQ==; s=purelymail1; d=iskren.info; v=1; bh=9glP7S3bzL4kyCTsFMdSym0Q2pPbCIRMlIsGoQdrp3k=; h=Received:From:To:Subject;
-DKIM-Signature: a=rsa-sha256; b=7GAh/pzd6kx0tAv72MXMlwua0xEuxQHe3LDW48s4D6cSWHQPIIrgrDymIbL7hp1r+WzN9kGfj0D02JQrRdmulPHJaYTu7ADu2I2vWH6KKIiyRNvLcjhk/Ur/doPa3kqWntNtaY+j+9/O1OuIBCqPecTWRmcJxLGheljG1cWj8iKf24opIw9eHnvqZgnw/mUioyG4fRrtcMMFheXNYlVIu4mg/+pyA65cuYkOP2TM/tV3XuUbhSTDoerySLrznZ9EWyM2z3HYOWuz+SC3ugc0caYAperK2a7Liz6AQEbCHfa2zdLjUsWXkHmlYMjH+DWnBHDBhyNHrDw9qWPatSZMRg==; s=purelymail1; d=purelymail.com; v=1; bh=9glP7S3bzL4kyCTsFMdSym0Q2pPbCIRMlIsGoQdrp3k=; h=Feedback-ID:Received:From:To:Subject;
-Feedback-ID: 10275:2339:null:purelymail
-X-Pm-Original-To: linux-arm-msm@vger.kernel.org
-Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1231945857;
-          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
-          Fri, 02 Jun 2023 11:08:40 +0000 (UTC)
-Date:   Fri, 02 Jun 2023 14:08:37 +0300
-From:   Iskren Chernev <me@iskren.info>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-CC:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] Update parts of PLL_TEST_CTL(_U) if required
-User-Agent: K-9 Mail for Android
-In-Reply-To: <20230601-topic-alpha_ctl-v1-0-b6a932dfcf68@linaro.org>
-References: <20230601-topic-alpha_ctl-v1-0-b6a932dfcf68@linaro.org>
-Message-ID: <9F5D5FD2-1D35-4EFF-B7A5-9459CB409309@iskren.info>
+        Fri, 2 Jun 2023 07:36:54 -0400
+Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B856D194;
+        Fri,  2 Jun 2023 04:36:52 -0700 (PDT)
+Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1b04706c974so16969305ad.2;
+        Fri, 02 Jun 2023 04:36:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685705812; x=1688297812;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+8V9XaMYituDt7+Ry1Yz1LEHFfSZsiDESteY20tnKzk=;
+        b=Q4A85mLrn14X9FOV42CgmzkR4k+KXvZ53kbaZtqc371x1/6AtR7p3aqNg1/Oa2pzoK
+         Unr9RT5ksJcwuHvnCx2cB4K+RL3IRV23mymRfNz+PYRdAkGOi1KBgGr1OfUru4LHyvnm
+         QidulZlthrn/XkscLqzSvPY7BJHZQAFFMedjZ175ZzvFB2ix5hHQGSGvlVQIWYx0jieq
+         YWE+HFHdJc0x24xr983kxR+kKo7KYwyDpqsXEZdm2vZujT0FrlIMwfvKqKiFNAZsDh6s
+         bj9wHjSUl8suLi+CLlI6ivnrvEbbX2LX2wSfe5S4BcgZneDBDNx54xoXLMfBQ/Lk6g9U
+         8ADA==
+X-Gm-Message-State: AC+VfDwIBFLYgshrQKLSIG5nZzWxlAnHjJad5pXFE5tI4iZciF8jg3+B
+        iCepdz09vw+vYhdNO02ZC2o=
+X-Google-Smtp-Source: ACHHUZ5kW48TS0f90vTRqxS3q8MXbKl4HpGm4tJCgIeeIQepEBZcvvx/c1d2m5+wve9VwXgAoK89/g==
+X-Received: by 2002:a17:902:74c4:b0:1b0:46c:9944 with SMTP id f4-20020a17090274c400b001b0046c9944mr2006230plt.48.1685705812001;
+        Fri, 02 Jun 2023 04:36:52 -0700 (PDT)
+Received: from dev-linux.lan (cpe-70-95-21-110.san.res.rr.com. [70.95.21.110])
+        by smtp.gmail.com with ESMTPSA id u11-20020a170902714b00b001a525705aa8sm1159716plm.136.2023.06.02.04.36.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Jun 2023 04:36:51 -0700 (PDT)
+From:   Sukrut Bellary <sukrut.bellary@linux.com>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Dan Carpenter <dan.carpenter@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+Cc:     Sukrut Bellary <sukrut.bellary@linux.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org,
+        Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH v2] misc: fastrpc: Fix double free of 'buf' in error path
+Date:   Fri,  2 Jun 2023 04:36:02 -0700
+Message-Id: <20230602113602.1271695-1-sukrut.bellary@linux.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
+        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
         version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -52,37 +66,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+smatch warning:
+drivers/misc/fastrpc.c:1926 fastrpc_req_mmap() error: double free of 'buf'
 
+In fastrpc_req_mmap() error path, the fastrpc buffer is freed in
+fastrpc_req_munmap_impl() if unmap is successful.
 
-On June 1, 2023 12:39:06 PM GMT+03:00, Konrad Dybcio <konrad=2Edybcio@lina=
-ro=2Eorg> wrote:
->Some recent-ish clock drivers touching on the "standard" Alpha PLLs
->have been specifying the values that should be written into the CTL
->registers as mask-value combos, but that wasn't always reflected
->properly (or at all)=2E
+But in the end, there is an unconditional call to fastrpc_buf_free().
+So the above case triggers the double free of fastrpc buf.
 
-Yeah, that would be me=2E I didn't feel confident enough to add the mask p=
-arameter, but it seems very reasonable=2E
+Fixes: 72fa6f7820c4 ("misc: fastrpc: Rework fastrpc_req_munmap")
+Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Signed-off-by: Sukrut Bellary <sukrut.bellary@linux.com>
+---
+This is based on static analysis. Compilation tested.
+---
+Changes in v2: 
+- Fixed the commit message.
+- Addressed the review comment about deleting buf from the list
+  before freeing.
+- Link to v1: https://lore.kernel.org/all/20230518100829.515143-1-sukrut.bellary@linux.com/
+---
+ drivers/misc/fastrpc.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-> This series tries to fix that without affecitng
->the drivers that actually provide the full register values=2E
->
->Signed-off-by: Konrad Dybcio <konrad=2Edybcio@linaro=2Eorg>
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index f48466960f1b..b3b520fcfb75 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1882,7 +1882,8 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+ 				      &args[0]);
+ 	if (err) {
+ 		dev_err(dev, "mmap error (len 0x%08llx)\n", buf->size);
+-		goto err_invoke;
++		fastrpc_buf_free(buf);
++		return err;
+ 	}
+ 
+ 	/* update the buffer to be able to deallocate the memory on the DSP */
+@@ -1922,8 +1923,6 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+ 
+ err_assign:
+ 	fastrpc_req_munmap_impl(fl, buf);
+-err_invoke:
+-	fastrpc_buf_free(buf);
+ 
+ 	return err;
+ }
+-- 
+2.34.1
 
-Reviewed-by: Iskren Chernev <me@iskren=2Einfo>
-
->---
->Konrad Dybcio (2):
->      clk: qcom: clk-alpha-pll: Add a way to update some bits of test_ctl=
-(_hi)
->      clk: qcom: gcc-sm6115: Add missing PLL config properties
->
-> drivers/clk/qcom/clk-alpha-pll=2Ec | 19 +++++++++++++++----
-> drivers/clk/qcom/clk-alpha-pll=2Eh |  2 ++
-> drivers/clk/qcom/gcc-sm6115=2Ec    |  8 ++++++++
-> 3 files changed, 25 insertions(+), 4 deletions(-)
->---
->base-commit: 571d71e886a5edc89b4ea6d0fe6f445282938320
->change-id: 20230601-topic-alpha_ctl-ab0dc0ad3654
->
->Best regards,
