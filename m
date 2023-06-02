@@ -2,70 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16D6671F92A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 06:13:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BCA071F99B
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 07:18:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233418AbjFBENr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Jun 2023 00:13:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41736 "EHLO
+        id S229542AbjFBFSP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Jun 2023 01:18:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233381AbjFBENf (ORCPT
+        with ESMTP id S232674AbjFBFSO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Jun 2023 00:13:35 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF78619F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 21:13:30 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id d9443c01a7336-1b025d26f4fso14304915ad.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 21:13:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685679210; x=1688271210;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=CEV47gt+ZCZAA8du0k/DRIUXH34XMcva/BFXCCGFINc=;
-        b=XuwSId57gjd8r07z06gEvKOJy7AhpKGKpbN238DHatkKvVPw5ZqvBupXh1owDImg8/
-         KDMNQJrf10NXVNMbAJFy8W/oe6/buICZnojYYykjKrAVrhvPZASaQy/lSFoESFEZ+vXt
-         I+emnc9KjBi1gSDvMsPi2P6RKqWGfZUpSD45I1Tlzl04D+XCLta/luk3K99tzO+othxz
-         qHveZIELIiM7ET0h7pTtN2Iammc1GNhFIU8jUZXoWFfuJz+nbcNimueLXBbAJ0D1dYJr
-         GLjbi108pvoUmcXA6mBru20GFY88sjFAKY3PEqVtgb9CynZ3KZoJgFe1IxyVxskB2lRR
-         RDcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685679210; x=1688271210;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CEV47gt+ZCZAA8du0k/DRIUXH34XMcva/BFXCCGFINc=;
-        b=a7z0BsZ4ZmDN7fDXU000OA2q7Vqw9WT/cMphwunMzfT6ERk3vSPf0s6nIS+u5ZhZzR
-         qeZNcXh3by38SRknXZVhVt2gRHMY9AEgIGNCn812tjbxg/XqNxVM33xoIGJZGz50abm6
-         dPw2OfrgQDlPFxDFzBBAJXXhI23yCkR0BhLK8COmXJc9RVLmhXzNo2NnQTc18k5ueOIJ
-         IAeHFWrYD/3VH1DZH9SZuWofwV3F2OyLPIu7FbDYvJafRNoJSYlA5fji3aMGJBIIJ6+x
-         AKcOt+E+1RXOjyYt2XBjJjfwk3TjrVfJk4Ae8NWow8W9/PrEkk4pPrmQ2tUH828u5fCe
-         u/TA==
-X-Gm-Message-State: AC+VfDyRZvBzFzUJpu1coVpEEZJL/y7j/uvcTz3udgpYIBq0ghu0I5be
-        bXIoE4sEESKXUalLlWRneXoPVw==
-X-Google-Smtp-Source: ACHHUZ62tXR3tRhbGClnMrXrJBv4svBg6ZDY81NDJr5a+svSbolCg1mmUaznB+ELePuz5sRaQK1smg==
-X-Received: by 2002:a17:903:249:b0:1b0:522d:8ff4 with SMTP id j9-20020a170903024900b001b0522d8ff4mr1360769plh.21.1685679210408;
-        Thu, 01 Jun 2023 21:13:30 -0700 (PDT)
-Received: from localhost ([122.172.87.195])
-        by smtp.gmail.com with ESMTPSA id w5-20020a170902904500b001ae365072cfsm187707plz.219.2023.06.01.21.13.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 01 Jun 2023 21:13:29 -0700 (PDT)
-Date:   Fri, 2 Jun 2023 09:43:27 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Robert Marko <robimarko@gmail.com>
-Cc:     rafael@kernel.org, ilia.lin@kernel.org, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, ansuelsmth@gmail.com
-Subject: Re: [PATCH 1/2] cpufreq: qcom-nvmem: add support for IPQ8074
-Message-ID: <20230602041327.klyjs4cevmzn6vs7@vireshk-i7>
-References: <20230530165409.641661-1-robimarko@gmail.com>
+        Fri, 2 Jun 2023 01:18:14 -0400
+Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AA941B0;
+        Thu,  1 Jun 2023 22:18:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1685683092; x=1717219092;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=AkE4DmguvzxUYQULl8hlVDhWYZ9BtM+PE9kSUOgXzs4=;
+  b=LnIzkeB5EDJ0/groIMPB3RVAUhHIkld9wCCQ5vxegiKt5W4fRb4Krx77
+   kYzmve5UDzO/ypnKsNRyD/y6zNUjWdGK6Hk3lEd+wUBsiPBdDgmVnhif/
+   Kw7ghlAohuNb2mM/ZLmGMEX9CpMetJhDrsV5/5uiubA+QB8zFUcYRvEMI
+   OZJb82sMKPUidxgMEgSh30z7yLfKfK8o6xvvSHHTxBG/bLewh+S9gPRkd
+   Y1PxVEim3LVwYlr7VYUoXrWaQ6CN8Id2Sb5s87ffPNDkG5iniERogw+L+
+   j6FS0fy4/1E+rs21bvVC1fl5k0MXKzgthQNWS1160FcBPaEFNlTffm/OP
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10728"; a="421596306"
+X-IronPort-AV: E=Sophos;i="6.00,211,1681196400"; 
+   d="scan'208";a="421596306"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2023 22:18:12 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10728"; a="701821904"
+X-IronPort-AV: E=Sophos;i="6.00,211,1681196400"; 
+   d="scan'208";a="701821904"
+Received: from lkp-server01.sh.intel.com (HELO 15ab08e44a81) ([10.239.97.150])
+  by orsmga007.jf.intel.com with ESMTP; 01 Jun 2023 22:18:09 -0700
+Received: from kbuild by 15ab08e44a81 with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1q4xAv-00006x-0c;
+        Fri, 02 Jun 2023 05:18:09 +0000
+Date:   Fri, 2 Jun 2023 13:17:41 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        lpieralisi@kernel.org, kw@linux.com
+Cc:     oe-kbuild-all@lists.linux.dev, kishon@kernel.org,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH v5 9/9] PCI: endpoint: Add PCI Endpoint function driver
+ for MHI bus
+Message-ID: <202306021200.ndNlhtdv-lkp@intel.com>
+References: <20230601145718.12204-10-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230530165409.641661-1-robimarko@gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+In-Reply-To: <20230601145718.12204-10-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -73,20 +69,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 30-05-23, 18:54, Robert Marko wrote:
-> IPQ8074 comes in 2 families:
-> * IPQ8070A/IPQ8071A (Acorn) up to 1.4GHz
-> * IPQ8072A/IPQ8074A/IPQ8076A/IPQ8078A (Hawkeye) up to 2.2GHz
-> 
-> So, in order to be able to share one OPP table lets add support for IPQ8074
-> family based of SMEM SoC ID-s as speedbin fuse is always 0 on IPQ8074.
-> 
-> IPQ8074 compatible is blacklisted from DT platdev as the cpufreq device
-> will get created by NVMEM CPUFreq driver.
-> 
-> Signed-off-by: Robert Marko <robimarko@gmail.com>
+Hi Manivannan,
 
-I am waiting for someone from Qcom to review this stuff.
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on pci/next]
+[also build test WARNING on pci/for-linus jonmason-ntb/ntb-next linus/master v6.4-rc4 next-20230601]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam/MAINTAINERS-Add-entry-for-MHI-networking-drivers-under-MHI-bus/20230601-232444
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
+patch link:    https://lore.kernel.org/r/20230601145718.12204-10-manivannan.sadhasivam%40linaro.org
+patch subject: [PATCH v5 9/9] PCI: endpoint: Add PCI Endpoint function driver for MHI bus
+config: x86_64-allyesconfig (https://download.01.org/0day-ci/archive/20230602/202306021200.ndNlhtdv-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
+reproduce (this is a W=1 build):
+        # https://github.com/intel-lab-lkp/linux/commit/b6931b37d070b86af64eeb92c1d52b4a0c6d61e8
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Manivannan-Sadhasivam/MAINTAINERS-Add-entry-for-MHI-networking-drivers-under-MHI-bus/20230601-232444
+        git checkout b6931b37d070b86af64eeb92c1d52b4a0c6d61e8
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        make W=1 O=build_dir ARCH=x86_64 olddefconfig
+        make W=1 O=build_dir ARCH=x86_64 SHELL=/bin/bash drivers/pci/endpoint/functions/
+
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202306021200.ndNlhtdv-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   drivers/pci/endpoint/functions/pci-epf-mhi.c: In function 'pci_epf_mhi_link_down':
+>> drivers/pci/endpoint/functions/pci-epf-mhi.c:307:43: warning: unused variable 'info' [-Wunused-variable]
+     307 |         const struct pci_epf_mhi_ep_info *info = epf_mhi->info;
+         |                                           ^~~~
+   drivers/pci/endpoint/functions/pci-epf-mhi.c: In function 'pci_epf_mhi_bme':
+   drivers/pci/endpoint/functions/pci-epf-mhi.c:321:43: warning: unused variable 'info' [-Wunused-variable]
+     321 |         const struct pci_epf_mhi_ep_info *info = epf_mhi->info;
+         |                                           ^~~~
+
+
+vim +/info +307 drivers/pci/endpoint/functions/pci-epf-mhi.c
+
+   303	
+   304	static int pci_epf_mhi_link_down(struct pci_epf *epf)
+   305	{
+   306		struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
+ > 307		const struct pci_epf_mhi_ep_info *info = epf_mhi->info;
+   308		struct mhi_ep_cntrl *mhi_cntrl = &epf_mhi->mhi_cntrl;
+   309	
+   310		if (mhi_cntrl->mhi_dev) {
+   311			mhi_ep_power_down(mhi_cntrl);
+   312			mhi_ep_unregister_controller(mhi_cntrl);
+   313		}
+   314	
+   315		return 0;
+   316	}
+   317	
 
 -- 
-viresh
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
