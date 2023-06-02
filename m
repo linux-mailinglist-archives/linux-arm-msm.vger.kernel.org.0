@@ -2,323 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 510A471FFEB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 13:04:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5881572004A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 13:23:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235300AbjFBLE2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Jun 2023 07:04:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46018 "EHLO
+        id S232512AbjFBLXe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Jun 2023 07:23:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235549AbjFBLE1 (ORCPT
+        with ESMTP id S229488AbjFBLXc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Jun 2023 07:04:27 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0ED7D18D;
-        Fri,  2 Jun 2023 04:04:26 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 352AkOaD023391;
-        Fri, 2 Jun 2023 11:04:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=gM0DDxKPzyI61z+wl1A5wOzmSM5QqZdd04x7K7mtZ/M=;
- b=j3EbV2/ltfHZBWsDHeSHszRQnD83AHI3PjIt0Bo0GkDrEQ07Ui/8pOskARA/iRqgIS3b
- VSwKYCrbZJsqY9YUTnwsi31ucwdcrDZ1MyvaDewbjYXuBs6XKpc6D9Ubme+pCkymaqQQ
- zOiwBoaH8PmQZFZej3YmxjEiwQ8oyimllpkgK+tlk/nmypF+qi10UIYG6HRrB7OvY6Ly
- sZeec7P78BXzaXPV5FJZxSjtd2TULtIfBa8xrcE3vHMCvDGsMj4PVVSWxDpAVARHs8X4
- aGNwuObhp+fAb7RxXeb5DEoiH2qr5kDtVNV0s11DLHzwytHTeeQOzvydlBmrRuZ1ZGqZ GA== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qxugraeeq-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 02 Jun 2023 11:04:20 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 352B4Ks1006589
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 2 Jun 2023 11:04:20 GMT
-Received: from varda-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 2 Jun 2023 04:04:15 -0700
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <amitk@kernel.org>,
-        <thara.gopinath@gmail.com>, <rafael@kernel.org>,
-        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     Varadarajan Narayanan <quic_varada@quicinc.com>,
-        Praveenkumar I <quic_ipkumar@quicinc.com>
-Subject: [PATCH v5 3/3] arm64: dts: qcom: ipq9574: add thermal zone nodes
-Date:   Fri, 2 Jun 2023 16:33:52 +0530
-Message-ID: <4cc3aa1c93aacfc8ddf236a3d6ed07bfe75da1a4.1685703605.git.quic_varada@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1685703605.git.quic_varada@quicinc.com>
-References: <cover.1685703605.git.quic_varada@quicinc.com>
+        Fri, 2 Jun 2023 07:23:32 -0400
+X-Greylist: delayed 813 seconds by postgrey-1.37 at lindbergh.monkeyblade.net; Fri, 02 Jun 2023 04:23:31 PDT
+Received: from sendmail.purelymail.com (sendmail.purelymail.com [34.202.193.197])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B827194
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jun 2023 04:23:31 -0700 (PDT)
+DKIM-Signature: a=rsa-sha256; b=61q3OwamPbGx/ro9KiQNc+v6drxwXKz2zrM0A0GL1uedVHnoxXJDAFSJa490A4aQHlZlHNbXEM2LwX3x52KUm+bBHnBDZ6VuCa6ZY81S3g1/0vtDW9rgCHGSAbAQVgVq2FhethrEuWDs9oPVD/b+HChDdV8agNp+RmLYLwSkn5JJQLmLAMmP3qE3Epno7AQW+95/sGy9Bi9yNn3Q8ngsH7/RAz/MmIKH1KH/QSPeFxFU6SmqIZX2H9f13xNGsfnYW/UDfqHZgeR+IeEd8LOqAk4feEAupmDuMLtqac4HVhJf9CzPs2c7iXk8+9VVsqW89QDWF+SxDmQ6NaaxwNXhvQ==; s=purelymail1; d=iskren.info; v=1; bh=9glP7S3bzL4kyCTsFMdSym0Q2pPbCIRMlIsGoQdrp3k=; h=Received:From:To:Subject;
+DKIM-Signature: a=rsa-sha256; b=7GAh/pzd6kx0tAv72MXMlwua0xEuxQHe3LDW48s4D6cSWHQPIIrgrDymIbL7hp1r+WzN9kGfj0D02JQrRdmulPHJaYTu7ADu2I2vWH6KKIiyRNvLcjhk/Ur/doPa3kqWntNtaY+j+9/O1OuIBCqPecTWRmcJxLGheljG1cWj8iKf24opIw9eHnvqZgnw/mUioyG4fRrtcMMFheXNYlVIu4mg/+pyA65cuYkOP2TM/tV3XuUbhSTDoerySLrznZ9EWyM2z3HYOWuz+SC3ugc0caYAperK2a7Liz6AQEbCHfa2zdLjUsWXkHmlYMjH+DWnBHDBhyNHrDw9qWPatSZMRg==; s=purelymail1; d=purelymail.com; v=1; bh=9glP7S3bzL4kyCTsFMdSym0Q2pPbCIRMlIsGoQdrp3k=; h=Feedback-ID:Received:From:To:Subject;
+Feedback-ID: 10275:2339:null:purelymail
+X-Pm-Original-To: linux-arm-msm@vger.kernel.org
+Received: by smtp.purelymail.com (Purelymail SMTP) with ESMTPSA id -1231945857;
+          (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384);
+          Fri, 02 Jun 2023 11:08:40 +0000 (UTC)
+Date:   Fri, 02 Jun 2023 14:08:37 +0300
+From:   Iskren Chernev <me@iskren.info>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>
+CC:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] Update parts of PLL_TEST_CTL(_U) if required
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20230601-topic-alpha_ctl-v1-0-b6a932dfcf68@linaro.org>
+References: <20230601-topic-alpha_ctl-v1-0-b6a932dfcf68@linaro.org>
+Message-ID: <9F5D5FD2-1D35-4EFF-B7A5-9459CB409309@iskren.info>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Yt3P0_MHZ9SlF2KKejSyxuOLm2gGktFk
-X-Proofpoint-ORIG-GUID: Yt3P0_MHZ9SlF2KKejSyxuOLm2gGktFk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-02_08,2023-06-02_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- spamscore=0 mlxscore=0 clxscore=1015 impostorscore=0 adultscore=0
- malwarescore=0 phishscore=0 bulkscore=0 mlxlogscore=999 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2306020082
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds thermal zone nodes for the various
-sensors present in IPQ9574
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
----
-[v2]:
-	Rename clusterX nodes as cpussX nodes
 
-[v1]:
-	Fix node names
----
- arch/arm64/boot/dts/qcom/ipq9574.dtsi | 208 ++++++++++++++++++++++++++++++++++
- 1 file changed, 208 insertions(+)
+On June 1, 2023 12:39:06 PM GMT+03:00, Konrad Dybcio <konrad=2Edybcio@lina=
+ro=2Eorg> wrote:
+>Some recent-ish clock drivers touching on the "standard" Alpha PLLs
+>have been specifying the values that should be written into the CTL
+>registers as mask-value combos, but that wasn't always reflected
+>properly (or at all)=2E
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-index cda3fd4..392dbe5 100644
---- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-@@ -592,6 +592,214 @@
- 		};
- 	};
- 
-+	thermal-zones {
-+		nss-top-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 3>;
-+
-+			trips {
-+				nss-top-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		ubi-0-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 4>;
-+
-+			trips {
-+				ubi_0-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		ubi-1-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 5>;
-+
-+			trips {
-+				ubi_1-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		ubi-2-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 6>;
-+
-+			trips {
-+				ubi_2-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		ubi-3-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 7>;
-+
-+			trips {
-+				ubi_3-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpuss0-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 8>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpuss1-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 9>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		cpu0-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 10>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <120000>;
-+					hysteresis = <10000>;
-+					type = "critical";
-+				};
-+
-+				cpu-passive {
-+					temperature = <110000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		cpu1-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 11>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <120000>;
-+					hysteresis = <10000>;
-+					type = "critical";
-+				};
-+
-+				cpu-passive {
-+					temperature = <110000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		cpu2-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 12>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <120000>;
-+					hysteresis = <10000>;
-+					type = "critical";
-+				};
-+
-+				cpu-passive {
-+					temperature = <110000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		cpu3-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 13>;
-+
-+			trips {
-+				cpu-critical {
-+					temperature = <120000>;
-+					hysteresis = <10000>;
-+					type = "critical";
-+				};
-+
-+				cpu-passive {
-+					temperature = <110000>;
-+					hysteresis = <1000>;
-+					type = "passive";
-+				};
-+			};
-+		};
-+
-+		wcss-phyb-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 14>;
-+
-+			trips {
-+				wcss_phyb-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+
-+		top-glue-thermal {
-+			polling-delay-passive = <0>;
-+			polling-delay = <0>;
-+			thermal-sensors = <&tsens 15>;
-+
-+			trips {
-+				top_glue-critical {
-+					temperature = <125000>;
-+					hysteresis = <1000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+	};
-+
- 	timer {
- 		compatible = "arm,armv8-timer";
- 		interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
--- 
-2.7.4
+Yeah, that would be me=2E I didn't feel confident enough to add the mask p=
+arameter, but it seems very reasonable=2E
 
+> This series tries to fix that without affecitng
+>the drivers that actually provide the full register values=2E
+>
+>Signed-off-by: Konrad Dybcio <konrad=2Edybcio@linaro=2Eorg>
+
+Reviewed-by: Iskren Chernev <me@iskren=2Einfo>
+
+>---
+>Konrad Dybcio (2):
+>      clk: qcom: clk-alpha-pll: Add a way to update some bits of test_ctl=
+(_hi)
+>      clk: qcom: gcc-sm6115: Add missing PLL config properties
+>
+> drivers/clk/qcom/clk-alpha-pll=2Ec | 19 +++++++++++++++----
+> drivers/clk/qcom/clk-alpha-pll=2Eh |  2 ++
+> drivers/clk/qcom/gcc-sm6115=2Ec    |  8 ++++++++
+> 3 files changed, 25 insertions(+), 4 deletions(-)
+>---
+>base-commit: 571d71e886a5edc89b4ea6d0fe6f445282938320
+>change-id: 20230601-topic-alpha_ctl-ab0dc0ad3654
+>
+>Best regards,
