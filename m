@@ -2,183 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3656D71F8ED
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 05:26:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A51171F8F1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 05:27:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230492AbjFBD0e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 1 Jun 2023 23:26:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33336 "EHLO
+        id S233564AbjFBD11 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 1 Jun 2023 23:27:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34068 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233463AbjFBD0d (ORCPT
+        with ESMTP id S232558AbjFBD1Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 1 Jun 2023 23:26:33 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 610E0107;
-        Thu,  1 Jun 2023 20:26:32 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3520wOcA021915;
-        Fri, 2 Jun 2023 03:26:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=vDWbJ7HDaCubY9wkl48RoAc7jy9aTsxfSYjQMdr7mM4=;
- b=D0gXV/KQn5rfANCO/YJqs2MlhkM5AYzJvSuB5vVluz7V6xOnDNdHahmDKCpRTrbXDS++
- H5+YjNWoOkwnQ1fvcczZ85Ose/GGkETJAgSfxiPYJO7u7yCC5vVbnjdx40LhloiOf6SO
- NGjvYgY+FDbB4q6QR1KbgKyOtzqRUdsHgXUYe+UIbB/m//6SHssuSnw8BBDlDDQcoZ7w
- V/WnhENoq2TQAaGwl6nquZ6j33gNM9cAE/XM3Y3DpF7x2xh5a4KkOdUODYi4WR3SAloQ
- +fCmQQ42nc+L/FyJItINQEvtsSbqpVMC8jDeH/KDKBUVE1JO/JWThalk3pcx8KLxFwaj mQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qy2v10gkw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 02 Jun 2023 03:26:27 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3523QQ8d017143
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 2 Jun 2023 03:26:26 GMT
-Received: from hu-namajain-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 1 Jun 2023 20:26:23 -0700
-From:   Naman Jain <quic_namajain@quicinc.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-CC:     Naman Jain <quic_namajain@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_kaushalk@quicinc.com>
-Subject: [PATCH 2/2] soc: qcom: socinfo: Add support for new fields in revision 19
-Date:   Fri, 2 Jun 2023 08:56:00 +0530
-Message-ID: <20230602032600.14790-2-quic_namajain@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230602032600.14790-1-quic_namajain@quicinc.com>
-References: <20230602032600.14790-1-quic_namajain@quicinc.com>
+        Thu, 1 Jun 2023 23:27:25 -0400
+Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 196301A1
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 20:27:19 -0700 (PDT)
+Received: by mail-qt1-x82c.google.com with SMTP id d75a77b69052e-3f6c0d651adso15827361cf.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 20:27:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685676438; x=1688268438;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=4fzVJ1Qh6n3X3yZDJNAOPlld3Ovzv7tP/YDPTpU3UdA=;
+        b=Q1unEDD5B8N2OMFUKodzQfNolloTMgh+wChrYJzcIXlBbNVn0ldgIUk7WtMJqH/tQf
+         Ra5VN0HBmkXb4e9+vS9Nu00wlSO+YK544nB58c4MGaghrlcPSgfpHzX3oCymvWMDUlzH
+         hE7bG1lZ6KZPAoAWv1G8ewhhYScwgDncNBjo1q96QXR4ieyWDikKnm0p0TEJexzyhfZG
+         f7nwsncgXV4nydaOpNTGvsZxNLCnuqTQh/0w9yRgNR6QWNhak06QWQ/NVRg+qc5MJlBJ
+         Y/uujXOmJwaUeW1dHBZRP0oa+OhX+gIRwXF5ZOvNg7RcaO4xoY3pgUsyshKXZ58E2hGx
+         MOJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685676438; x=1688268438;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4fzVJ1Qh6n3X3yZDJNAOPlld3Ovzv7tP/YDPTpU3UdA=;
+        b=SaFV5sf+hW2FRmRVKAY8dc8WQs5tAeUIzMIlCatQpnbudZKsEcOg4CQYbbN1HsGjfQ
+         m0htn9cKNupHXFue5auyS3yD5fkk9aG0cliKTbmueKbR8BmwgHnItAOH7V7xDK8F9Xn9
+         PTcfbO2YPYXr6umlrqPT2Vwd52QNMpGVyWV0oBY6hV8FRl1g1EWA/B0mFBAe5iVVWBye
+         oycat4z+1z0KV1K9UHVUYYk/YUfCwwwllN7jXs8nePjJC0e8Hs6VlyR8ULl1QvelEzD3
+         qS13CMcRHroNlTdpwOVCoRjov4W5T+VjFgpVY0Qw3Fso7Je8bWMqCp65/eqr1FQ9yw3O
+         ZBHQ==
+X-Gm-Message-State: AC+VfDxsfI2NNh3AZbQ3tBfbMsauu1GHsAhHhZdLttiAOgtKCQRAhcEa
+        0ImtvTWTeaoTJbTM3IPAfjMdrAnWMPZW3yrGLw==
+X-Google-Smtp-Source: ACHHUZ5qq/CUeWNWrIdQjdJCptiuULwNuUnpW4lEK1sxxbELp3XsV5M3T7hVKplXbzSdHnxjxOPNgw==
+X-Received: by 2002:a05:622a:1004:b0:3f6:833b:2368 with SMTP id d4-20020a05622a100400b003f6833b2368mr16010417qte.46.1685676438253;
+        Thu, 01 Jun 2023 20:27:18 -0700 (PDT)
+Received: from thinkpad ([117.217.186.123])
+        by smtp.gmail.com with ESMTPSA id r9-20020a632b09000000b0052c9d1533b6sm187387pgr.56.2023.06.01.20.27.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Jun 2023 20:27:17 -0700 (PDT)
+Date:   Fri, 2 Jun 2023 08:57:10 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Damien Le Moal <dlemoal@kernel.org>
+Cc:     lpieralisi@kernel.org, kw@linux.com, kishon@kernel.org,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v5 4/9] PCI: endpoint: Warn and return if EPC is
+ started/stopped multiple times
+Message-ID: <20230602032710.GB5341@thinkpad>
+References: <20230601145718.12204-1-manivannan.sadhasivam@linaro.org>
+ <20230601145718.12204-5-manivannan.sadhasivam@linaro.org>
+ <c691d9bd-9596-373e-0abe-2e776eb0d54b@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: eAcIqrFboGBddE-IRpjN7nfbG7Bo8uCN
-X-Proofpoint-GUID: eAcIqrFboGBddE-IRpjN7nfbG7Bo8uCN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-02_01,2023-05-31_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- malwarescore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
- suspectscore=0 priorityscore=1501 adultscore=0 bulkscore=0 mlxlogscore=999
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2306020024
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c691d9bd-9596-373e-0abe-2e776eb0d54b@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for below fields coming in socinfo structure under v19:
-* num_func_clusters: number of clusters with at least one functional core
-* boot_cluster: cluster selected as boot cluster
-* boot_core: core selected as boot core
-While at it, rename some variables to align them with their
-functionalities.
+On Fri, Jun 02, 2023 at 08:18:58AM +0900, Damien Le Moal wrote:
+> On 6/1/23 23:57, Manivannan Sadhasivam wrote:
+> > When the EPC is started or stopped multiple times from configfs, just emit
+> > a once time warning and return. There is no need to call the EPC start/stop
+> > functions in those cases.
+> > 
+> > Reviewed-by: Kishon Vijay Abraham I <kishon@kernel.org>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  drivers/pci/endpoint/pci-ep-cfs.c | 3 +++
+> >  1 file changed, 3 insertions(+)
+> > 
+> > diff --git a/drivers/pci/endpoint/pci-ep-cfs.c b/drivers/pci/endpoint/pci-ep-cfs.c
+> > index 4b8ac0ac84d5..62c8e09c59f4 100644
+> > --- a/drivers/pci/endpoint/pci-ep-cfs.c
+> > +++ b/drivers/pci/endpoint/pci-ep-cfs.c
+> > @@ -178,6 +178,9 @@ static ssize_t pci_epc_start_store(struct config_item *item, const char *page,
+> >  	if (kstrtobool(page, &start) < 0)
+> >  		return -EINVAL;
+> >  
+> > +	if (WARN_ON_ONCE(start == epc_group->start))
+> > +		return 0;
+> 
+> WARN will dump a backtrace which is fairly scary for the user. This case is
+> simply a bad user manipulation of the device, so why not simply add a pr_err()
+> (optional) and return -EALREADY ?
+> 
 
-Signed-off-by: Naman Jain <quic_namajain@quicinc.com>
----
- drivers/soc/qcom/socinfo.c | 40 ++++++++++++++++++++++++++++----------
- 1 file changed, 30 insertions(+), 10 deletions(-)
+There EPF core uses WARN_ON_ONCE in other similar places, so thought of sticking
+to that pattern. But I agree, WARN_ON_ONCE is not strictly required here. Will
+add a error log and return the appropriate error no.
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index a76006ea8a37..745afada508b 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -170,8 +170,8 @@ struct socinfo {
- 	/* Version 14 */
- 	__le32 num_clusters;
- 	__le32 ncluster_array_offset;
--	__le32 num_defective_parts;
--	__le32 ndefective_parts_array_offset;
-+	__le32 num_subset_parts;
-+	__le32 nsubset_parts_array_offset;
- 	/* Version 15 */
- 	__le32 nmodem_supported;
- 	/* Version 16 */
-@@ -184,6 +184,10 @@ struct socinfo {
- 	/* Version 18 */
- 	__le32 num_kvps;
- 	__le32 kvps_offset;
-+	/* Version 19 */
-+	__le32 num_func_clusters;
-+	__le32 boot_cluster;
-+	__le32 boot_core;
- };
- 
- #ifdef CONFIG_DEBUG_FS
-@@ -201,12 +205,15 @@ struct socinfo_params {
- 	u32 nproduct_id;
- 	u32 num_clusters;
- 	u32 ncluster_array_offset;
--	u32 num_defective_parts;
--	u32 ndefective_parts_array_offset;
-+	u32 num_subset_parts;
-+	u32 nsubset_parts_array_offset;
- 	u32 nmodem_supported;
- 	u32 feature_code;
- 	u32 pcode;
- 	u32 oem_variant;
-+	u32 num_func_clusters;
-+	u32 boot_cluster;
-+	u32 boot_core;
- };
- 
- struct smem_image_version {
-@@ -623,6 +630,18 @@ static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
- 			   &qcom_socinfo->info.fmt);
- 
- 	switch (qcom_socinfo->info.fmt) {
-+	case SOCINFO_VERSION(0, 19):
-+		qcom_socinfo->info.num_func_clusters = __le32_to_cpu(info->num_func_clusters);
-+		qcom_socinfo->info.boot_cluster = __le32_to_cpu(info->boot_cluster);
-+		qcom_socinfo->info.boot_core = __le32_to_cpu(info->boot_core);
-+
-+		debugfs_create_u32("num_func_clusters", 0444, qcom_socinfo->dbg_root,
-+				   &qcom_socinfo->info.num_func_clusters);
-+		debugfs_create_u32("boot_cluster", 0444, qcom_socinfo->dbg_root,
-+				   &qcom_socinfo->info.boot_cluster);
-+		debugfs_create_u32("boot_core", 0444, qcom_socinfo->dbg_root,
-+				   &qcom_socinfo->info.boot_core);
-+		fallthrough;
- 	case SOCINFO_VERSION(0, 18):
- 	case SOCINFO_VERSION(0, 17):
- 		qcom_socinfo->info.oem_variant = __le32_to_cpu(info->oem_variant);
-@@ -647,17 +666,18 @@ static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
- 	case SOCINFO_VERSION(0, 14):
- 		qcom_socinfo->info.num_clusters = __le32_to_cpu(info->num_clusters);
- 		qcom_socinfo->info.ncluster_array_offset = __le32_to_cpu(info->ncluster_array_offset);
--		qcom_socinfo->info.num_defective_parts = __le32_to_cpu(info->num_defective_parts);
--		qcom_socinfo->info.ndefective_parts_array_offset = __le32_to_cpu(info->ndefective_parts_array_offset);
-+		qcom_socinfo->info.num_subset_parts = __le32_to_cpu(info->num_subset_parts);
-+		qcom_socinfo->info.nsubset_parts_array_offset =
-+			__le32_to_cpu(info->nsubset_parts_array_offset);
- 
- 		debugfs_create_u32("num_clusters", 0444, qcom_socinfo->dbg_root,
- 				   &qcom_socinfo->info.num_clusters);
- 		debugfs_create_u32("ncluster_array_offset", 0444, qcom_socinfo->dbg_root,
- 				   &qcom_socinfo->info.ncluster_array_offset);
--		debugfs_create_u32("num_defective_parts", 0444, qcom_socinfo->dbg_root,
--				   &qcom_socinfo->info.num_defective_parts);
--		debugfs_create_u32("ndefective_parts_array_offset", 0444, qcom_socinfo->dbg_root,
--				   &qcom_socinfo->info.ndefective_parts_array_offset);
-+		debugfs_create_u32("num_subset_parts", 0444, qcom_socinfo->dbg_root,
-+				   &qcom_socinfo->info.num_subset_parts);
-+		debugfs_create_u32("nsubset_parts_array_offset", 0444, qcom_socinfo->dbg_root,
-+				   &qcom_socinfo->info.nsubset_parts_array_offset);
- 		fallthrough;
- 	case SOCINFO_VERSION(0, 13):
- 		qcom_socinfo->info.nproduct_id = __le32_to_cpu(info->nproduct_id);
+Moreover, will push a patch later to change other instances as well.
+
+- Mani
+
+> > +
+> >  	if (!start) {
+> >  		pci_epc_stop(epc);
+> >  		epc_group->start = 0;
+> 
+> -- 
+> Damien Le Moal
+> Western Digital Research
+> 
+
 -- 
-2.17.1
-
+மணிவண்ணன் சதாசிவம்
