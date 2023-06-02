@@ -2,166 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E133171F918
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 06:05:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16D6671F92A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 06:13:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231407AbjFBEF1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Jun 2023 00:05:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39292 "EHLO
+        id S233418AbjFBENr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Jun 2023 00:13:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231259AbjFBEFZ (ORCPT
+        with ESMTP id S233381AbjFBENf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Jun 2023 00:05:25 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9923F132;
-        Thu,  1 Jun 2023 21:05:23 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3523X2Bn032395;
-        Fri, 2 Jun 2023 04:05:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=g2YsiNDXH7x12Xq/HmkFBsnoCy87pQRc7ageQK0z4nQ=;
- b=Qc02lk/NvNiQBxPeMC3SnIDEoHX+lJdEyFKR2DMLSLwpBpfyVO1qrz37C3EM5mC+oAoL
- GIQ2LYbXwKZpbV+Dvt9SVhE0iVYTyoDHTQvyROO4iqYQsnHnH33nd8m/hhUPwHpWDHFv
- gEry2rMPqDHKVJPjfcdyT6YvbP5ovXV3RVHg4oRo7Bf8KhIKxXjhCV9jG8uRFrHE258O
- +kFjkMeO7VyD8m5XpDTsMsvt3FhA405DTl41lDNao+47eUbZOHsNdrAYkFNYO5h1iqez
- 2FTx753zNMi/4RqU8f4xUlN2Zj5HASgjHgo/fpomzEHUotV4594MHhwyDooInRPBYMmI dw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qxs9gt4fx-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 02 Jun 2023 04:05:18 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35245HtZ013574
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 2 Jun 2023 04:05:17 GMT
-Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 1 Jun 2023
- 21:05:13 -0700
-Message-ID: <2dd8e5be-c5b5-02e7-32d0-587a40cb70cc@quicinc.com>
-Date:   Fri, 2 Jun 2023 09:35:10 +0530
+        Fri, 2 Jun 2023 00:13:35 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF78619F
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 21:13:30 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id d9443c01a7336-1b025d26f4fso14304915ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 21:13:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685679210; x=1688271210;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CEV47gt+ZCZAA8du0k/DRIUXH34XMcva/BFXCCGFINc=;
+        b=XuwSId57gjd8r07z06gEvKOJy7AhpKGKpbN238DHatkKvVPw5ZqvBupXh1owDImg8/
+         KDMNQJrf10NXVNMbAJFy8W/oe6/buICZnojYYykjKrAVrhvPZASaQy/lSFoESFEZ+vXt
+         I+emnc9KjBi1gSDvMsPi2P6RKqWGfZUpSD45I1Tlzl04D+XCLta/luk3K99tzO+othxz
+         qHveZIELIiM7ET0h7pTtN2Iammc1GNhFIU8jUZXoWFfuJz+nbcNimueLXBbAJ0D1dYJr
+         GLjbi108pvoUmcXA6mBru20GFY88sjFAKY3PEqVtgb9CynZ3KZoJgFe1IxyVxskB2lRR
+         RDcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685679210; x=1688271210;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CEV47gt+ZCZAA8du0k/DRIUXH34XMcva/BFXCCGFINc=;
+        b=a7z0BsZ4ZmDN7fDXU000OA2q7Vqw9WT/cMphwunMzfT6ERk3vSPf0s6nIS+u5ZhZzR
+         qeZNcXh3by38SRknXZVhVt2gRHMY9AEgIGNCn812tjbxg/XqNxVM33xoIGJZGz50abm6
+         dPw2OfrgQDlPFxDFzBBAJXXhI23yCkR0BhLK8COmXJc9RVLmhXzNo2NnQTc18k5ueOIJ
+         IAeHFWrYD/3VH1DZH9SZuWofwV3F2OyLPIu7FbDYvJafRNoJSYlA5fji3aMGJBIIJ6+x
+         AKcOt+E+1RXOjyYt2XBjJjfwk3TjrVfJk4Ae8NWow8W9/PrEkk4pPrmQ2tUH828u5fCe
+         u/TA==
+X-Gm-Message-State: AC+VfDyRZvBzFzUJpu1coVpEEZJL/y7j/uvcTz3udgpYIBq0ghu0I5be
+        bXIoE4sEESKXUalLlWRneXoPVw==
+X-Google-Smtp-Source: ACHHUZ62tXR3tRhbGClnMrXrJBv4svBg6ZDY81NDJr5a+svSbolCg1mmUaznB+ELePuz5sRaQK1smg==
+X-Received: by 2002:a17:903:249:b0:1b0:522d:8ff4 with SMTP id j9-20020a170903024900b001b0522d8ff4mr1360769plh.21.1685679210408;
+        Thu, 01 Jun 2023 21:13:30 -0700 (PDT)
+Received: from localhost ([122.172.87.195])
+        by smtp.gmail.com with ESMTPSA id w5-20020a170902904500b001ae365072cfsm187707plz.219.2023.06.01.21.13.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Jun 2023 21:13:29 -0700 (PDT)
+Date:   Fri, 2 Jun 2023 09:43:27 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     rafael@kernel.org, ilia.lin@kernel.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, ansuelsmth@gmail.com
+Subject: Re: [PATCH 1/2] cpufreq: qcom-nvmem: add support for IPQ8074
+Message-ID: <20230602041327.klyjs4cevmzn6vs7@vireshk-i7>
+References: <20230530165409.641661-1-robimarko@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.0
-Subject: Re: [PATCH RESEND 4/4] arm64: dts: qcom: ipq5332: add support for the
- RDP474 variant
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20230601042054.29075-1-quic_kathirav@quicinc.com>
- <20230601042054.29075-5-quic_kathirav@quicinc.com>
- <91c63634-eb39-fdca-2c76-6f8182c2d47c@linaro.org>
-Content-Language: en-US
-From:   Kathiravan T <quic_kathirav@quicinc.com>
-In-Reply-To: <91c63634-eb39-fdca-2c76-6f8182c2d47c@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: g4DpGIfWTwAKhhT0ZB13JAvySdUUa8i1
-X-Proofpoint-GUID: g4DpGIfWTwAKhhT0ZB13JAvySdUUa8i1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-02_01,2023-05-31_03,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- spamscore=0 priorityscore=1501 malwarescore=0 bulkscore=0 adultscore=0
- phishscore=0 lowpriorityscore=0 mlxlogscore=999 suspectscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2306020027
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230530165409.641661-1-robimarko@gmail.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 30-05-23, 18:54, Robert Marko wrote:
+> IPQ8074 comes in 2 families:
+> * IPQ8070A/IPQ8071A (Acorn) up to 1.4GHz
+> * IPQ8072A/IPQ8074A/IPQ8076A/IPQ8078A (Hawkeye) up to 2.2GHz
+> 
+> So, in order to be able to share one OPP table lets add support for IPQ8074
+> family based of SMEM SoC ID-s as speedbin fuse is always 0 on IPQ8074.
+> 
+> IPQ8074 compatible is blacklisted from DT platdev as the cpufreq device
+> will get created by NVMEM CPUFreq driver.
+> 
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
 
-On 6/1/2023 10:59 PM, Krzysztof Kozlowski wrote:
-> On 01/06/2023 06:20, Kathiravan T wrote:
->> Add the initial device tree support for the Reference Design
->> Platform(RDP) 474 based on IPQ5332 family of SoC. This patch carries
->> the support for Console UART, eMMC, I2C and GPIO based buttons.
->>
->> Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/Makefile           |   1 +
->>   arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts | 112 ++++++++++++++++++++
->>   2 files changed, 113 insertions(+)
->>   create mode 100644 arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts
->>
->> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->> index 4f9e81253e18..0f8c763a9bd9 100644
->> --- a/arch/arm64/boot/dts/qcom/Makefile
->> +++ b/arch/arm64/boot/dts/qcom/Makefile
->> @@ -7,6 +7,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-mi01.2.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp442.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp468.dtb
->> +dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp474.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk10-c1.dtb
->> diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts
->> new file mode 100644
->> index 000000000000..085729a0fdf1
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp474.dts
->> @@ -0,0 +1,112 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +/*
->> + * IPQ5332 RDP474 board device tree source
->> + *
->> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
->> + */
->> +
->> +/dts-v1/;
->> +
->> +#include <dt-bindings/gpio/gpio.h>
->> +#include <dt-bindings/input/input.h>
->> +#include "ipq5332.dtsi"
->> +
->> +/ {
->> +	model = "Qualcomm Technologies, Inc. IPQ5332 MI01.9";
->> +	compatible = "qcom,ipq5332-ap-mi01.9", "qcom,ipq5332";
->> +
->> +	aliases {
->> +		serial0 = &blsp1_uart0;
->> +	};
->> +
->> +	chosen {
->> +		stdout-path = "serial0";
->> +	};
->> +
->> +	gpio_keys {
-> No, srsly, so not only ignored the tags but also feedback?
+I am waiting for someone from Qcom to review this stuff.
 
-
-Please correct me if I am wrong here..
-
-This is RESEND of V1 patches (only minor correction in the subject line 
-in cover letter). Also I don't see review comments as such in original 
-V1 as well 
-https://lore.kernel.org/linux-arm-msm/20230531135048.19164-1-quic_kathirav@quicinc.com/
-
-Can you help to point out your review comments, I couldn't able to find out.
-
-Thanks,
-
-
->
-> Best regards,
-> Krzysztof
->
+-- 
+viresh
