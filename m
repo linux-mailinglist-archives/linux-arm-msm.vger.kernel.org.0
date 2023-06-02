@@ -2,66 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BCA071F99B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 07:18:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2326071F9BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 07:43:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229542AbjFBFSP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Jun 2023 01:18:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52328 "EHLO
+        id S233669AbjFBFnL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Jun 2023 01:43:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232674AbjFBFSO (ORCPT
+        with ESMTP id S233644AbjFBFnJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Jun 2023 01:18:14 -0400
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AA941B0;
-        Thu,  1 Jun 2023 22:18:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1685683092; x=1717219092;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=AkE4DmguvzxUYQULl8hlVDhWYZ9BtM+PE9kSUOgXzs4=;
-  b=LnIzkeB5EDJ0/groIMPB3RVAUhHIkld9wCCQ5vxegiKt5W4fRb4Krx77
-   kYzmve5UDzO/ypnKsNRyD/y6zNUjWdGK6Hk3lEd+wUBsiPBdDgmVnhif/
-   Kw7ghlAohuNb2mM/ZLmGMEX9CpMetJhDrsV5/5uiubA+QB8zFUcYRvEMI
-   OZJb82sMKPUidxgMEgSh30z7yLfKfK8o6xvvSHHTxBG/bLewh+S9gPRkd
-   Y1PxVEim3LVwYlr7VYUoXrWaQ6CN8Id2Sb5s87ffPNDkG5iniERogw+L+
-   j6FS0fy4/1E+rs21bvVC1fl5k0MXKzgthQNWS1160FcBPaEFNlTffm/OP
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10728"; a="421596306"
-X-IronPort-AV: E=Sophos;i="6.00,211,1681196400"; 
-   d="scan'208";a="421596306"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jun 2023 22:18:12 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10728"; a="701821904"
-X-IronPort-AV: E=Sophos;i="6.00,211,1681196400"; 
-   d="scan'208";a="701821904"
-Received: from lkp-server01.sh.intel.com (HELO 15ab08e44a81) ([10.239.97.150])
-  by orsmga007.jf.intel.com with ESMTP; 01 Jun 2023 22:18:09 -0700
-Received: from kbuild by 15ab08e44a81 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1q4xAv-00006x-0c;
-        Fri, 02 Jun 2023 05:18:09 +0000
-Date:   Fri, 2 Jun 2023 13:17:41 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        lpieralisi@kernel.org, kw@linux.com
-Cc:     oe-kbuild-all@lists.linux.dev, kishon@kernel.org,
-        bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v5 9/9] PCI: endpoint: Add PCI Endpoint function driver
- for MHI bus
-Message-ID: <202306021200.ndNlhtdv-lkp@intel.com>
-References: <20230601145718.12204-10-manivannan.sadhasivam@linaro.org>
+        Fri, 2 Jun 2023 01:43:09 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78C191A1
+        for <linux-arm-msm@vger.kernel.org>; Thu,  1 Jun 2023 22:43:08 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-30adc51b65cso1526606f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 01 Jun 2023 22:43:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685684587; x=1688276587;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=sNTg+KuLBbcTe5HDJe8O03xlL6tR45AjRJnyQRIY63E=;
+        b=t+5e6M32D48uebn5lqVZohvfd6CQuRjE8hp4CEoy/uc9tWUsuAUoZ2qX2po9RVG/5h
+         GkJJUQKo7LEzljbhWFao2eUdJrxbEvAlrxXO+1MhwdMNfjFEWhB7y19PI4r1EQKFDQeW
+         SW4lMo3jDW3OCWEHj8QvNPspIJYjDH5U1EzvJnxtx3/swyzGt7rrIrVcsjkcGRntsTdI
+         O5PrjcXu/gfSkv1Cbf/4GoMVBvctFMTMgSk0dH3Wn4YuIj2y4COmdXHAnr6AedBM2VI/
+         zjRZEcLTvtNLweP4t6Nz5IWghaCLBuMDMKz8C33BsQC0TS0ijQp0+fPWE2n0ngzIyu+j
+         9MkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685684587; x=1688276587;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sNTg+KuLBbcTe5HDJe8O03xlL6tR45AjRJnyQRIY63E=;
+        b=fgj1Jb/NAKedD+TUXK8LR2I34XWSXKT5IAEGh1HRh9qIDFcCWPUIR68TFK1hMuiEQT
+         pkOOpYD4bQ+h4VDpPFzOsv9u8SLg+rcZW6IhYCnpMiNm2kutoJXi/5Mxffl6tfy6oXIE
+         O78sBZgsNGVDXvswG39pp6KryC0UUA7liKiy/Vxk78tF5asjkVlgNpJGKLYhathsG9/F
+         aYVAlc107jLO1oE1DNf7TA/XlTPxvWcXAhx/y/mbMIUUWxEc/mGXqoKrRC6Gr+Z+2NCn
+         9GnsB/Zt09/syvBQPigbNsgLtg1b0w2f63dqUbsrJNrTqeAjp5+T7/3RHWWMZAwVqXFn
+         Qwzw==
+X-Gm-Message-State: AC+VfDztY4Fj6hb+zTNbn5MkBTHBRI656AKR/6R13osAsa+wOh2i7/ha
+        35Z/jLaXQaqN+0rU3ynFBcCwqQ==
+X-Google-Smtp-Source: ACHHUZ5m3+HGO2Q09xGpHY7AnCCpDNZfAg5pNondET17bqvD/cQcPcbYOXnBlS2NfNQ79ctkLbpC/g==
+X-Received: by 2002:adf:d84a:0:b0:309:4a0f:facc with SMTP id k10-20020adfd84a000000b003094a0ffaccmr3238420wrl.40.1685684586965;
+        Thu, 01 Jun 2023 22:43:06 -0700 (PDT)
+Received: from linaro.org ([86.121.163.20])
+        by smtp.gmail.com with ESMTPSA id d6-20020a5d5386000000b00307c46f4f08sm551869wrv.79.2023.06.01.22.43.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Jun 2023 22:43:06 -0700 (PDT)
+Date:   Fri, 2 Jun 2023 08:43:05 +0300
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 2/4] arm64: dts: qcom: sm8250: Add missing interconnect
+ paths to USB HCs
+Message-ID: <ZHmBaVFF7Vys9dev@linaro.org>
+References: <20230601120029.38859-1-abel.vesa@linaro.org>
+ <20230601120029.38859-2-abel.vesa@linaro.org>
+ <eb7b8485-6c6c-da4d-cf90-334139b21ce6@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230601145718.12204-10-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+In-Reply-To: <eb7b8485-6c6c-da4d-cf90-334139b21ce6@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -69,66 +79,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Manivannan,
+On 23-06-01 14:22:35, Konrad Dybcio wrote:
+> 
+> 
+> On 1.06.2023 14:00, Abel Vesa wrote:
+> > The USB HCs nodes are missing the interconnect paths, so add them.
+> > 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sm8250.dtsi | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > index e5c60a6e4074..eefd3dcbb2e1 100644
+> > --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+> > @@ -3750,6 +3750,10 @@ usb_1: usb@a6f8800 {
+> >  
+> >  			resets = <&gcc GCC_USB30_PRIM_BCR>;
+> >  
+> > +			interconnects = <&aggre1_noc MASTER_USB3 0 &mc_virt SLAVE_EBI_CH0 0>,
+> > +					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_USB3 0>;
+> You need to update #interconnect-cells to 2.
 
-kernel test robot noticed the following build warnings:
+Ugh, missed that. Will send a new version.
 
-[auto build test WARNING on pci/next]
-[also build test WARNING on pci/for-linus jonmason-ntb/ntb-next linus/master v6.4-rc4 next-20230601]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Thanks,
+Abel
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam/MAINTAINERS-Add-entry-for-MHI-networking-drivers-under-MHI-bus/20230601-232444
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git next
-patch link:    https://lore.kernel.org/r/20230601145718.12204-10-manivannan.sadhasivam%40linaro.org
-patch subject: [PATCH v5 9/9] PCI: endpoint: Add PCI Endpoint function driver for MHI bus
-config: x86_64-allyesconfig (https://download.01.org/0day-ci/archive/20230602/202306021200.ndNlhtdv-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.2.0-14) 12.2.0
-reproduce (this is a W=1 build):
-        # https://github.com/intel-lab-lkp/linux/commit/b6931b37d070b86af64eeb92c1d52b4a0c6d61e8
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Manivannan-Sadhasivam/MAINTAINERS-Add-entry-for-MHI-networking-drivers-under-MHI-bus/20230601-232444
-        git checkout b6931b37d070b86af64eeb92c1d52b4a0c6d61e8
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        make W=1 O=build_dir ARCH=x86_64 olddefconfig
-        make W=1 O=build_dir ARCH=x86_64 SHELL=/bin/bash drivers/pci/endpoint/functions/
-
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202306021200.ndNlhtdv-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/pci/endpoint/functions/pci-epf-mhi.c: In function 'pci_epf_mhi_link_down':
->> drivers/pci/endpoint/functions/pci-epf-mhi.c:307:43: warning: unused variable 'info' [-Wunused-variable]
-     307 |         const struct pci_epf_mhi_ep_info *info = epf_mhi->info;
-         |                                           ^~~~
-   drivers/pci/endpoint/functions/pci-epf-mhi.c: In function 'pci_epf_mhi_bme':
-   drivers/pci/endpoint/functions/pci-epf-mhi.c:321:43: warning: unused variable 'info' [-Wunused-variable]
-     321 |         const struct pci_epf_mhi_ep_info *info = epf_mhi->info;
-         |                                           ^~~~
-
-
-vim +/info +307 drivers/pci/endpoint/functions/pci-epf-mhi.c
-
-   303	
-   304	static int pci_epf_mhi_link_down(struct pci_epf *epf)
-   305	{
-   306		struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
- > 307		const struct pci_epf_mhi_ep_info *info = epf_mhi->info;
-   308		struct mhi_ep_cntrl *mhi_cntrl = &epf_mhi->mhi_cntrl;
-   309	
-   310		if (mhi_cntrl->mhi_dev) {
-   311			mhi_ep_power_down(mhi_cntrl);
-   312			mhi_ep_unregister_controller(mhi_cntrl);
-   313		}
-   314	
-   315		return 0;
-   316	}
-   317	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+> 
+> Konrad
+> > +			interconnect-names = "usb-ddr", "apps-usb";
+> > +
+> >  			usb_1_dwc3: usb@a600000 {
+> >  				compatible = "snps,dwc3";
+> >  				reg = <0 0x0a600000 0 0xcd00>;
+> > @@ -3810,6 +3814,10 @@ usb_2: usb@a8f8800 {
+> >  
+> >  			resets = <&gcc GCC_USB30_SEC_BCR>;
+> >  
+> > +			interconnects = <&aggre1_noc MASTER_USB3_1 0 &mc_virt SLAVE_EBI_CH0 0>,
+> > +					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_USB3_1 0>;
+> > +			interconnect-names = "usb-ddr", "apps-usb";
+> > +
+> >  			usb_2_dwc3: usb@a800000 {
+> >  				compatible = "snps,dwc3";
+> >  				reg = <0 0x0a800000 0 0xcd00>;
