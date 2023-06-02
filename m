@@ -2,105 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F2B472038A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 15:39:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C16E972042F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 16:20:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235664AbjFBNjl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Jun 2023 09:39:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46982 "EHLO
+        id S235612AbjFBOUl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Jun 2023 10:20:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234848AbjFBNjk (ORCPT
+        with ESMTP id S235412AbjFBOUk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Jun 2023 09:39:40 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3012F1B6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jun 2023 06:39:38 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b1b3836392so4953591fa.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jun 2023 06:39:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685713176; x=1688305176;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=55brW+iiqQZU3U4ATbpWs6UQaJT/M5kVk9naukILYbg=;
-        b=KZ011BeeVmf8SiU/LbVv1IOLCdwdga3jA+5YffDWrbswzPvg/bl/r/qBuklednytfa
-         n7q31NPgUQstES8DmSvSoZ/qQa5/yD/z5uvDn7Cd26XuFvfJC7WEDIHtWKTIhSfb1Iab
-         dz1Scg2JVfNXE2O80F8TOQDuVzJMD/dKAN0bR66YJfOsZAuPLUuhebp5IuS2pYRgIH+O
-         QdAGVETof9nQpmPjsrYdvzPg1CSzXOC49+qQs18ouTrrG5AZexQYmKSAAddXVr9BwEpi
-         QYEu6hY58L0c5N7lKIdiaJTB/zHL5A0e6/vXVRBW7KhDI++1+1qRShHdWK2WX9bYWLsr
-         MV8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685713176; x=1688305176;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=55brW+iiqQZU3U4ATbpWs6UQaJT/M5kVk9naukILYbg=;
-        b=FLfSMI19qgHkWhUUFuvx9VWdF4MORhA10adquTCR1/T9lxZQjZaM6aZ63mcuyU84Ne
-         M19uoXfLk5OT7k0U7vzs1sGsTLMz+T5IoXoiIF5kmzeGBWP0eCFeSftaitdDl8B7zUxu
-         gC/B8qOFqVzTW8PHUc0DqS61RYsyr5/YZYj39doi/FKDVuzMgq1Bo4wwkBFYbRBTUwGT
-         n3HEhl9qUmNdHDN3u8h7NKZf8s2jO02ycNy5c7kmnGRfpS7Frm3nCETq9QhB4J1uEsJz
-         FKVRKZe5+2+cFE1R2jNd10Oz/dFQRPpg64lkS6hZPbNZHfggLYfca6OBHCyDDqUFQQqu
-         UQhg==
-X-Gm-Message-State: AC+VfDzhGRm3c2V58gA+Hbm7IwNIwvCxLl97GWImLMJXfeC9D8Y6fy/a
-        vcZKzUYJhf6V7Nb6Xj0q8LYFCA==
-X-Google-Smtp-Source: ACHHUZ5VXEiuCcdFzknOLseqdS50yg/IecTf0s0owUi+fueqMfql6O2PelFFz39byNr2wsoteWCRlw==
-X-Received: by 2002:a2e:9b93:0:b0:2a9:ee54:9fad with SMTP id z19-20020a2e9b93000000b002a9ee549fadmr35054lji.7.1685713176404;
-        Fri, 02 Jun 2023 06:39:36 -0700 (PDT)
-Received: from [192.168.1.101] (abyj77.neoplus.adsl.tpnet.pl. [83.9.29.77])
-        by smtp.gmail.com with ESMTPSA id u11-20020a2e91cb000000b002b1ac2bcf99sm226486ljg.120.2023.06.02.06.39.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 Jun 2023 06:39:35 -0700 (PDT)
-Message-ID: <9f770d30-29c6-7390-0d14-ec9c5b4b1bc7@linaro.org>
-Date:   Fri, 2 Jun 2023 15:39:34 +0200
+        Fri, 2 Jun 2023 10:20:40 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E68711B1;
+        Fri,  2 Jun 2023 07:20:39 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 352DSXCS002681;
+        Fri, 2 Jun 2023 14:20:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=rzisjzYPG1T4V2HnEGP9R2oZPQUZr/edpXv1hEe87Sg=;
+ b=DxLqAdioiD+CnUMvese0SlTBLrlqD30k1IfvHmt5ReNA1t477nsMo3ibRx/cDnH1lGSq
+ 1E/Da4qoJpMsmYeTbhg3sEmUvQYEkR9x1kZOT1SkOukMYrGkEVvHiSurOVX9CQfn8JTQ
+ nGsUl5bddMhtWzw0McR54YGwxHZDjJX69a8F3CodTQAEOLm95uqQuSsvkgmYzt0TWfa+
+ 2/bHrOGLM/ykv6Bs8ecclOC63czlTWeDH82GUDr+r0YDCxC51mFFl0SyoY+XOFLHl9k2
+ dpm2f8GXc16GWlfNH7HgCPS105dVGZuTt2IMc0gsMNiwokhAvXW1QP3+MawUfeD0DbiN WA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qyhb903ng-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 02 Jun 2023 14:20:02 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 352EK1sn008230
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 2 Jun 2023 14:20:01 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 2 Jun 2023
+ 07:20:00 -0700
+Message-ID: <28f44214-0e38-9823-7914-c1f5e42ee012@quicinc.com>
+Date:   Fri, 2 Jun 2023 08:19:59 -0600
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v2 6/6] arm64: defconfig: Enable sc828x0xp lpasscc clock
- controller
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH 3/4] clk: qcom: mmcc-msm8998: Don't check halt bit on some
+ branch clks
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org
-Cc:     johan+linaro@kernel.org, agross@kernel.org,
-        mturquette@baylibre.com, sboyd@kernel.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230525122930.17141-1-srinivas.kandagatla@linaro.org>
- <20230525122930.17141-7-srinivas.kandagatla@linaro.org>
- <b06070d3-a272-9a0b-2d02-df8fbca4e951@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <b06070d3-a272-9a0b-2d02-df8fbca4e951@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Imran Khan <kimran@codeaurora.org>,
+        "Rajendra Nayak" <quic_rjendra@quicinc.com>,
+        Joonwoo Park <joonwoop@codeaurora.org>
+CC:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-clk@vger.kernel.org>
+References: <20230531-topic-8998_mmssclk-v1-0-2b5a8fc90991@linaro.org>
+ <20230531-topic-8998_mmssclk-v1-3-2b5a8fc90991@linaro.org>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20230531-topic-8998_mmssclk-v1-3-2b5a8fc90991@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: hLNbDxFLzhDzOFta5O4MfiNrM0zNnEAW
+X-Proofpoint-ORIG-GUID: hLNbDxFLzhDzOFta5O4MfiNrM0zNnEAW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-02_10,2023-06-02_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
+ priorityscore=1501 clxscore=1011 suspectscore=0 lowpriorityscore=0
+ adultscore=0 mlxlogscore=752 bulkscore=0 malwarescore=0 impostorscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2306020108
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 5/31/2023 3:01 AM, Konrad Dybcio wrote:
+> Some branch clocks are governed externally and we're only supposed to
+> send a request concerning their shutdown, not actually ensure it happens.
+> 
+> Use the BRANCH_HALT_SKIP define to skip checking the halt bit.
+> 
+> Fixes: d14b15b5931c ("clk: qcom: Add MSM8998 Multimedia Clock Controller (MMCC) driver")
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-
-On 2.06.2023 15:18, Krzysztof Kozlowski wrote:
-> Resending as my previous email probably got lost. If you got it twice,
-> apologies.
-> 
-> On 25/05/2023 14:29, Srinivas Kandagatla wrote:
->> Enabled sc828x0xp lpasscc clock controller driver required for X13s laptop.
-sc8280xp
-
-Konrad
->>
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
->> ---
-> 
-> 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> Best regards,
-> Krzysztof
-> 
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
