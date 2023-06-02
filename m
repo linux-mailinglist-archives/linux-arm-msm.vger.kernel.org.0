@@ -2,71 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F0C99720082
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 13:38:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 708B272009F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 13:48:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235233AbjFBLig (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Jun 2023 07:38:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33182 "EHLO
+        id S234672AbjFBLsR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Jun 2023 07:48:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36546 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235100AbjFBLif (ORCPT
+        with ESMTP id S234153AbjFBLsQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Jun 2023 07:38:35 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C628198
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jun 2023 04:38:33 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-514859f3ffbso2831870a12.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jun 2023 04:38:33 -0700 (PDT)
+        Fri, 2 Jun 2023 07:48:16 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B8DBE42
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jun 2023 04:48:13 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-973bf581759so292879266b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jun 2023 04:48:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685705911; x=1688297911;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=g4pVi7VOBRFaULLi4SVb4N0TF+UwJd4kFrSgP2liy+0=;
-        b=SRBOfRjcMUxkwQmK+GMU6ugb72NtsDBOdlKm2/+NDhdflQR5OD8Virae/S2OrpTlwO
-         ZjTzB626ks47GxAxK84SDSj1Tc3sIqO1dbzcOou0RHHXUCGn0cb7BIjMcEWsKOCQ9C4M
-         tPhbIcfhih3eRF0vixDhbxQ1z8D+GAZFZgazYUGZUEXQl1jcIZLxQobWdCQXF5m1xTjV
-         9Id59zqHmc9JcD2zUVHT1rQMIjhf0+5Sh5eTFyFHd9wjCd8xD8MBix6alPUWxr1ddJcW
-         2+eDvfzxDxwzpdyR1+lIogaHYzwAvkMe/Hizzbc7+CmakKaBvxuQxlfBQ35oFTKJTHqK
-         kOaQ==
+        d=linaro.org; s=google; t=1685706491; x=1688298491;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hXHt/F6cxWFS3BYmXwXGvvRPw+ZTSiBC/eIgUd2mArA=;
+        b=wj0XIQP/rTg/5nXkxVSCA53BnQGRxN2J4y5KaqTRdtjxHZxjoUCS1ilNEfFX5Knw4D
+         ssFO5DGV7lQZY+iZB3AjN+TwmKaxueV+EdUPTbOdYgl0dF7yfGy5eKLnKdlHwSN9KJbY
+         fwRLuOVuO+Gfc8dPgg8crGGdGUphWzALUAdFcrDE1E0MbCN5uDnhZ28KwZpipx+ax1oB
+         ZLlRdBBU7rNF9/oiYoU3LyFCu3ap3iePx+HF8X9vF/z2po7uqlblXQGLbEJn68ZupO55
+         cEi/8KoaPcL5Sqkt0wAyhjaKGW9yOcq5Z+Iuif0GkW+bsYr8DKAQWosnAUhjfYkkr27S
+         ZhOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685705911; x=1688297911;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=g4pVi7VOBRFaULLi4SVb4N0TF+UwJd4kFrSgP2liy+0=;
-        b=kOas4dCAhyMLTmDVjn9NeHO5QqExCskazUnXVT/Cpx4wPYuyRuRqGmaCTIIaurGUOa
-         665yD2LBs1NxZAZMZ3WTMlerDTRWkSyMQTr/uypwVmNPjvXNoE5VL6+8IU4X+bTh7GQV
-         86UJWzg+68tG0T9itJfFiJ36SHfC2MVU5xj/AknjKn01FQ6lfQceZ8Q6w6vjGZVwLm+Z
-         ouPWq4p6Gg2Z1ZlI69bYRh18C8tM+GbWl5n4Xcmo4OKo8+wo9AQcwBhFAWJX8ynZ0tYy
-         tlQb/3kD481JJj6gUvCxZlsTFhD1B8oyt1UedlXCUA3MrOInza5dTpgimfqpENZtGUL9
-         UwFg==
-X-Gm-Message-State: AC+VfDwOBwL49xDgj14NTKWF2AvOicoXNojUL19Gun584AYwmdP6AAu8
-        S2KBVym3n1YVrW58J7iXS/z/BkbuRQFywd54Lw==
-X-Google-Smtp-Source: ACHHUZ6VUn698+qtREhO6oDsLHHVh8G2t6Kbo1RoMnm9smgysN+NtVSs8CbNvZvvDyoAZ8jpv79wzA==
-X-Received: by 2002:a05:6402:b34:b0:50c:9582:e968 with SMTP id bo20-20020a0564020b3400b0050c9582e968mr1801501edb.36.1685705911452;
-        Fri, 02 Jun 2023 04:38:31 -0700 (PDT)
-Received: from thinkpad ([117.217.186.79])
-        by smtp.gmail.com with ESMTPSA id w15-20020a056402070f00b00514bb73b8casm602807edx.57.2023.06.02.04.38.26
+        d=1e100.net; s=20221208; t=1685706491; x=1688298491;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hXHt/F6cxWFS3BYmXwXGvvRPw+ZTSiBC/eIgUd2mArA=;
+        b=YlgKnjaafmvf7oTXwhMOTD1UoTVxYCTW87z83+xbIUuqPN/ztba0grSfvUkA789s3S
+         BhRXq7bfexzT0W+YhSX5FqyibwiCATMcJesTJDZKbZu461ZadPwc9xgNWj0ZSM1W8t7C
+         rcx2CvgKLJi0gxznRhIW5x4YXfWVOQwUolHPXvK4haqsOzu62cIN+KKgS7H8oWr+55MG
+         jN2eD8AxiAkkYBqbvjhGJFdq0cTLh10UjhcJZTjSdTQ7z9a5PTzBuyPZBU/qFtsvqvPz
+         ISAvJEM/3PfhF/NdAvrQKg37AycLYhiqs33YrCQP8e3Xodn9OksQo4uKUErZ7rSBXEOr
+         QtPQ==
+X-Gm-Message-State: AC+VfDzi+Rdhmc2lPcQKjwCsNbOljQTuQE82dqpxXJfiK4UIvOQcqlrO
+        MKgdb5PQZls0ldEQkSZRV0MZ
+X-Google-Smtp-Source: ACHHUZ6iLw5nkvbgddTHDWVNyO3Au6GNkrD3ItgoZVpqW7pxpw2mmntZ7s91z1vHc/uaTTNToG9mKg==
+X-Received: by 2002:a17:906:4fca:b0:96f:9a90:c924 with SMTP id i10-20020a1709064fca00b0096f9a90c924mr10508636ejw.74.1685706491469;
+        Fri, 02 Jun 2023 04:48:11 -0700 (PDT)
+Received: from localhost.localdomain ([117.217.186.79])
+        by smtp.gmail.com with ESMTPSA id qu25-20020a170907111900b00974530bb44dsm658924ejb.183.2023.06.02.04.48.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jun 2023 04:38:31 -0700 (PDT)
-Date:   Fri, 2 Jun 2023 17:08:20 +0530
+        Fri, 02 Jun 2023 04:48:11 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Damien Le Moal <dlemoal@kernel.org>
-Cc:     lpieralisi@kernel.org, kw@linux.com, kishon@kernel.org,
-        bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v5 9/9] PCI: endpoint: Add PCI Endpoint function driver
- for MHI bus
-Message-ID: <20230602113820.GA34855@thinkpad>
-References: <20230601145718.12204-1-manivannan.sadhasivam@linaro.org>
- <20230601145718.12204-10-manivannan.sadhasivam@linaro.org>
- <c13b5771-e619-60cb-791d-1458f7adc9ac@kernel.org>
+To:     lpieralisi@kernel.org, kw@linux.com
+Cc:     kishon@kernel.org, bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dlemoal@kernel.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v6 0/9] Add support for MHI Endpoint function driver
+Date:   Fri,  2 Jun 2023 17:17:47 +0530
+Message-Id: <20230602114756.36586-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <c13b5771-e619-60cb-791d-1458f7adc9ac@kernel.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -77,138 +71,120 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 02, 2023 at 08:31:31AM +0900, Damien Le Moal wrote:
-> On 6/1/23 23:57, Manivannan Sadhasivam wrote:
-> > Add PCI Endpoint driver for the Qualcomm MHI (Modem Host Interface) bus.
-> > The driver implements the MHI function over PCI in the endpoint device
-> > such as SDX55 modem. The MHI endpoint function driver acts as a
-> > controller driver for the MHI Endpoint stack and carries out all PCI
-> > related activities like mapping the host memory using iATU, triggering
-> > MSIs etc...
-> > 
-> > Reviewed-by: Kishon Vijay Abraham I <kishon@kernel.org>
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
-> Looks good, but not knowing this hardware, I only did a style review. I added
-> some nits below.
-> 
-> Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-> 
-> 
-> > ---
-> >  drivers/pci/endpoint/functions/Kconfig       |  10 +
-> >  drivers/pci/endpoint/functions/Makefile      |   1 +
-> >  drivers/pci/endpoint/functions/pci-epf-mhi.c | 462 +++++++++++++++++++
-> >  3 files changed, 473 insertions(+)
-> >  create mode 100644 drivers/pci/endpoint/functions/pci-epf-mhi.c
-> > 
-> > diff --git a/drivers/pci/endpoint/functions/Kconfig b/drivers/pci/endpoint/functions/Kconfig
-> > index 9fd560886871..f5171b4fabbe 100644
-> > --- a/drivers/pci/endpoint/functions/Kconfig
-> > +++ b/drivers/pci/endpoint/functions/Kconfig
-> > @@ -37,3 +37,13 @@ config PCI_EPF_VNTB
-> >  	  between PCI Root Port and PCIe Endpoint.
-> >  
-> >  	  If in doubt, say "N" to disable Endpoint NTB driver.
-> > +
-> > +config PCI_EPF_MHI
-> > +	tristate "PCI Endpoint driver for MHI bus"
-> > +	depends on PCI_ENDPOINT && MHI_BUS_EP
-> > +	help
-> > +	   Enable this configuration option to enable the PCI Endpoint
-> > +	   driver for Modem Host Interface (MHI) bus in Qualcomm Endpoint
-> > +	   devices such as SDX55.
-> > +
-> > +	   If in doubt, say "N" to disable Endpoint driver for MHI bus.
-> > diff --git a/drivers/pci/endpoint/functions/Makefile b/drivers/pci/endpoint/functions/Makefile
-> > index 5c13001deaba..696473fce50e 100644
-> > --- a/drivers/pci/endpoint/functions/Makefile
-> > +++ b/drivers/pci/endpoint/functions/Makefile
-> > @@ -6,3 +6,4 @@
-> >  obj-$(CONFIG_PCI_EPF_TEST)		+= pci-epf-test.o
-> >  obj-$(CONFIG_PCI_EPF_NTB)		+= pci-epf-ntb.o
-> >  obj-$(CONFIG_PCI_EPF_VNTB) 		+= pci-epf-vntb.o
-> > +obj-$(CONFIG_PCI_EPF_MHI)		+= pci-epf-mhi.o
-> > diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-> > new file mode 100644
-> > index 000000000000..98f0d96cfd46
-> > --- /dev/null
-> > +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+Hello,
 
-[...]
+This series adds support for Modem Host Interface (MHI) Endpoint function
+driver and few updates to the PCI endpoint core.
 
-> > +static int pci_epf_mhi_write_to_host(struct mhi_ep_cntrl *mhi_cntrl,
-> > +				     void __iomem *from, u64 to, size_t size)
-> > +{
-> > +	struct pci_epf_mhi *epf_mhi = to_epf_mhi(mhi_cntrl);
-> > +	struct pci_epf *epf = epf_mhi->epf;
-> > +	struct pci_epc *epc = epf_mhi->epf->epc;
-> > +	void __iomem *tre_buf;
-> > +	phys_addr_t tre_phys;
-> > +	size_t offset = to % SZ_4K;
-> > +	int ret;
-> > +
-> > +	mutex_lock(&epf_mhi->lock);
-> > +
-> > +	tre_buf = pci_epc_mem_alloc_addr(epc, &tre_phys, size + offset);
-> > +	if (!tre_buf) {
-> > +		ret = -ENOMEM;
-> > +		goto err_unlock;
-> > +	}
-> > +
-> > +	ret = pci_epc_map_addr(epc, epf->func_no, epf->vfunc_no, tre_phys,
-> > +			       to - offset, size + offset);
-> > +	if (ret) {
-> > +		pci_epc_mem_free_addr(epc, tre_phys, tre_buf, size + offset);
-> > +		goto err_unlock;
-> > +	}
-> 
-> The above 2 hunks are that same as in pci_epf_mhi_read_from_host(). May be pack
-> these in a helper function ? E.g. pci_epf_mhi_map() ?
-> Note that I have a patch series in the work that does that at the pci_epc API
-> level (pci_epc_map() + pci_epc_unmap()) to simplify function drivers.
-> 
-> > +
-> > +	memcpy_toio(tre_buf + offset, from, size);
-> > +
-> > +	pci_epc_unmap_addr(epc, epf->func_no, epf->vfunc_no, tre_phys);
-> > +	pci_epc_mem_free_addr(epc, tre_phys, tre_buf, size + offset);
-> 
-> Same here: pci_epf_mhi_unmap() ?
-> 
+MHI
+===
 
-Agree with both of the above comments. At have this change in my local tree but
-that's not part of this series. Will merge it to this patch itself.
+MHI is the communication protocol used by the host machines to control and
+communicate with the Qualcomm modems/WLAN devices over any high speed physical
+bus like PCIe. In Linux kernel, MHI is modeled as a bus driver [1] and there
+are two instances of MHI used in a typical setup.
 
-> > +
-> > +err_unlock:
-> > +	mutex_unlock(&epf_mhi->lock);
-> > +
-> > +	return ret;
-> > +}
-> > +
+1. MHI host - MHI implementation for the host machines like x86/ARM64.
+2. MHI Endpoint - MHI implementation for the endpoint devices like modems.
 
-[...]
+MHI EPF
+=======
 
-> > +static int pci_epf_mhi_bind(struct pci_epf *epf)
-> > +{
-> > +	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
-> > +	struct pci_epc *epc = epf->epc;
-> > +	struct platform_device *pdev = to_platform_device(epc->dev.parent);
-> > +	struct device *dev = &epf->dev;
-> > +	struct resource *res;
-> > +	int ret;
-> > +
-> > +	if (WARN_ON_ONCE(!epc))
-> > +		return -EINVAL;
-> 
-> This should never happen. If there is a possibility that the EPC core code calls
-> bind with epc == NULL, we need to fix that there.
-> 
+The MHI Endpoint function driver (MHI EPF) is used on the MHI endpoint devices
+like modems. The MHI EPF driver sits in between the PCIe EP and MHI EP bus and
+carries out all of the PCIe related activities like BAR config, PCIe Event
+handling, MMIO read/write etc,... for the MHI EP bus.
 
-Right, this seems to be redundant.
+Below is the simple representation of the setup:
 
-- Mani
+
+                 +----------------------------------------------------+
+                 |                  Endpoint CPU                      |                   
+                 |                                                    |
++------------+   |   +------------+   +-----------+   +-----------+   |
+|            |   |   |            |   |           |   |           |   |
+|            |   |   |   MHI EP   |   |           |   |           |   | PCIe Bus
+|  Modem DSP +---+---+    Bus     +---+  MHI EPF  +---+  PCIe EP  +---+---------
+|            |   |   |            |   |           |   |           |   |
+|            |   |   |            |   |           |   |           |   |
++------------+   |   +------------+   +-----------+   +-----------+   |
+                 |                                                    |
+                 |                                                    |
+                 +----------------------------------------------------+
+
+The data packets will be read from the Modem DSP by the MHI stack and will be
+transmitted to the host machine over PCIe bus with the help of MHI EPF driver.
+
+Test setup
+==========
+
+This series has been tested on Snapdragon X55 modem a.k.a SDX55 connected to
+the ARM64 host machine.
+
+Thanks,
+Mani
+
+[1] https://www.kernel.org/doc/html/latest/mhi/mhi.html
+
+Changes in v6:
+
+* Moved the alloc/map and unmap/free code to separate helper functions and used
+  them to avoid code duplication in epf driver.
+* Removed superfluous WARN_ON_ONCE() from epf driver.
+
+Changes in v5:
+
+* Moved the PCI EPF driver match logic to pci_epf_match_id() function and used
+  that to get the matched driver ID for passing to driver probe instead of
+  storing the id during match.
+* Added a patch to fix the missing documentation about MSI/MSI-X start vector.
+* Addressed the review comments on the MHI EPF driver. Most notably, got rid of
+  local variable for tracking MHI registration and used the mhi_dev pointer.
+  Also, modified the MSI vector increment comment to make it clear.
+* Added a patch for adding MHI EPF driver to MAINTAINERS file
+
+Changes in v4:
+
+* Collected review tag from Kishon
+* Changed the IP_SW0 channel numbers as per latest MHI spec
+
+Changes in v3:
+
+* Fixed the probe function of EPF_VNTB driver
+
+Changes in v2:
+
+* Rebased on top of v6.3-rc1
+* Switched to the new callback interface for passing events from EPC to EPF
+* Dropped one patch related to notifier
+
+Manivannan Sadhasivam (9):
+  PCI: endpoint: Add missing documentation about the MSI/MSI-X range
+  PCI: endpoint: Pass EPF device ID to the probe function
+  PCI: endpoint: Return error if EPC is started/stopped multiple times
+  PCI: endpoint: Add linkdown notifier support
+  PCI: endpoint: Add BME notifier support
+  PCI: qcom-ep: Add support for Link down notification
+  PCI: qcom-ep: Add support for BME notification
+  PCI: endpoint: Add PCI Endpoint function driver for MHI bus
+  MAINTAINERS: Add PCI MHI endpoint function driver under MHI bus
+
+ MAINTAINERS                                   |   1 +
+ drivers/pci/controller/dwc/pcie-qcom-ep.c     |   2 +
+ drivers/pci/endpoint/functions/Kconfig        |  10 +
+ drivers/pci/endpoint/functions/Makefile       |   1 +
+ drivers/pci/endpoint/functions/pci-epf-mhi.c  | 465 ++++++++++++++++++
+ drivers/pci/endpoint/functions/pci-epf-ntb.c  |   3 +-
+ drivers/pci/endpoint/functions/pci-epf-test.c |   2 +-
+ drivers/pci/endpoint/functions/pci-epf-vntb.c |   2 +-
+ drivers/pci/endpoint/pci-ep-cfs.c             |   3 +
+ drivers/pci/endpoint/pci-epc-core.c           |  56 ++-
+ drivers/pci/endpoint/pci-epf-core.c           |  18 +-
+ include/linux/pci-epc.h                       |   2 +
+ include/linux/pci-epf.h                       |   8 +-
+ 13 files changed, 560 insertions(+), 13 deletions(-)
+ create mode 100644 drivers/pci/endpoint/functions/pci-epf-mhi.c
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.25.1
+
