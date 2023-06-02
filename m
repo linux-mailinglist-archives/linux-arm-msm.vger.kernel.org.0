@@ -2,119 +2,213 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 968D272007E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 13:36:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F0C99720082
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 13:38:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234251AbjFBLgz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Jun 2023 07:36:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60822 "EHLO
+        id S235233AbjFBLig (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Jun 2023 07:38:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235233AbjFBLgy (ORCPT
+        with ESMTP id S235100AbjFBLif (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Jun 2023 07:36:54 -0400
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B856D194;
-        Fri,  2 Jun 2023 04:36:52 -0700 (PDT)
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-1b04706c974so16969305ad.2;
-        Fri, 02 Jun 2023 04:36:52 -0700 (PDT)
+        Fri, 2 Jun 2023 07:38:35 -0400
+Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C628198
+        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jun 2023 04:38:33 -0700 (PDT)
+Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-514859f3ffbso2831870a12.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jun 2023 04:38:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685705911; x=1688297911;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=g4pVi7VOBRFaULLi4SVb4N0TF+UwJd4kFrSgP2liy+0=;
+        b=SRBOfRjcMUxkwQmK+GMU6ugb72NtsDBOdlKm2/+NDhdflQR5OD8Virae/S2OrpTlwO
+         ZjTzB626ks47GxAxK84SDSj1Tc3sIqO1dbzcOou0RHHXUCGn0cb7BIjMcEWsKOCQ9C4M
+         tPhbIcfhih3eRF0vixDhbxQ1z8D+GAZFZgazYUGZUEXQl1jcIZLxQobWdCQXF5m1xTjV
+         9Id59zqHmc9JcD2zUVHT1rQMIjhf0+5Sh5eTFyFHd9wjCd8xD8MBix6alPUWxr1ddJcW
+         2+eDvfzxDxwzpdyR1+lIogaHYzwAvkMe/Hizzbc7+CmakKaBvxuQxlfBQ35oFTKJTHqK
+         kOaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685705812; x=1688297812;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+8V9XaMYituDt7+Ry1Yz1LEHFfSZsiDESteY20tnKzk=;
-        b=Q4A85mLrn14X9FOV42CgmzkR4k+KXvZ53kbaZtqc371x1/6AtR7p3aqNg1/Oa2pzoK
-         Unr9RT5ksJcwuHvnCx2cB4K+RL3IRV23mymRfNz+PYRdAkGOi1KBgGr1OfUru4LHyvnm
-         QidulZlthrn/XkscLqzSvPY7BJHZQAFFMedjZ175ZzvFB2ix5hHQGSGvlVQIWYx0jieq
-         YWE+HFHdJc0x24xr983kxR+kKo7KYwyDpqsXEZdm2vZujT0FrlIMwfvKqKiFNAZsDh6s
-         bj9wHjSUl8suLi+CLlI6ivnrvEbbX2LX2wSfe5S4BcgZneDBDNx54xoXLMfBQ/Lk6g9U
-         8ADA==
-X-Gm-Message-State: AC+VfDwIBFLYgshrQKLSIG5nZzWxlAnHjJad5pXFE5tI4iZciF8jg3+B
-        iCepdz09vw+vYhdNO02ZC2o=
-X-Google-Smtp-Source: ACHHUZ5kW48TS0f90vTRqxS3q8MXbKl4HpGm4tJCgIeeIQepEBZcvvx/c1d2m5+wve9VwXgAoK89/g==
-X-Received: by 2002:a17:902:74c4:b0:1b0:46c:9944 with SMTP id f4-20020a17090274c400b001b0046c9944mr2006230plt.48.1685705812001;
-        Fri, 02 Jun 2023 04:36:52 -0700 (PDT)
-Received: from dev-linux.lan (cpe-70-95-21-110.san.res.rr.com. [70.95.21.110])
-        by smtp.gmail.com with ESMTPSA id u11-20020a170902714b00b001a525705aa8sm1159716plm.136.2023.06.02.04.36.50
+        d=1e100.net; s=20221208; t=1685705911; x=1688297911;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=g4pVi7VOBRFaULLi4SVb4N0TF+UwJd4kFrSgP2liy+0=;
+        b=kOas4dCAhyMLTmDVjn9NeHO5QqExCskazUnXVT/Cpx4wPYuyRuRqGmaCTIIaurGUOa
+         665yD2LBs1NxZAZMZ3WTMlerDTRWkSyMQTr/uypwVmNPjvXNoE5VL6+8IU4X+bTh7GQV
+         86UJWzg+68tG0T9itJfFiJ36SHfC2MVU5xj/AknjKn01FQ6lfQceZ8Q6w6vjGZVwLm+Z
+         ouPWq4p6Gg2Z1ZlI69bYRh18C8tM+GbWl5n4Xcmo4OKo8+wo9AQcwBhFAWJX8ynZ0tYy
+         tlQb/3kD481JJj6gUvCxZlsTFhD1B8oyt1UedlXCUA3MrOInza5dTpgimfqpENZtGUL9
+         UwFg==
+X-Gm-Message-State: AC+VfDwOBwL49xDgj14NTKWF2AvOicoXNojUL19Gun584AYwmdP6AAu8
+        S2KBVym3n1YVrW58J7iXS/z/BkbuRQFywd54Lw==
+X-Google-Smtp-Source: ACHHUZ6VUn698+qtREhO6oDsLHHVh8G2t6Kbo1RoMnm9smgysN+NtVSs8CbNvZvvDyoAZ8jpv79wzA==
+X-Received: by 2002:a05:6402:b34:b0:50c:9582:e968 with SMTP id bo20-20020a0564020b3400b0050c9582e968mr1801501edb.36.1685705911452;
+        Fri, 02 Jun 2023 04:38:31 -0700 (PDT)
+Received: from thinkpad ([117.217.186.79])
+        by smtp.gmail.com with ESMTPSA id w15-20020a056402070f00b00514bb73b8casm602807edx.57.2023.06.02.04.38.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Jun 2023 04:36:51 -0700 (PDT)
-From:   Sukrut Bellary <sukrut.bellary@linux.com>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Dan Carpenter <dan.carpenter@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>
-Cc:     Sukrut Bellary <sukrut.bellary@linux.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org,
-        Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH v2] misc: fastrpc: Fix double free of 'buf' in error path
-Date:   Fri,  2 Jun 2023 04:36:02 -0700
-Message-Id: <20230602113602.1271695-1-sukrut.bellary@linux.com>
-X-Mailer: git-send-email 2.34.1
+        Fri, 02 Jun 2023 04:38:31 -0700 (PDT)
+Date:   Fri, 2 Jun 2023 17:08:20 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Damien Le Moal <dlemoal@kernel.org>
+Cc:     lpieralisi@kernel.org, kw@linux.com, kishon@kernel.org,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v5 9/9] PCI: endpoint: Add PCI Endpoint function driver
+ for MHI bus
+Message-ID: <20230602113820.GA34855@thinkpad>
+References: <20230601145718.12204-1-manivannan.sadhasivam@linaro.org>
+ <20230601145718.12204-10-manivannan.sadhasivam@linaro.org>
+ <c13b5771-e619-60cb-791d-1458f7adc9ac@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.4 required=5.0 tests=BAYES_00,
-        FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no
-        version=3.4.6
+In-Reply-To: <c13b5771-e619-60cb-791d-1458f7adc9ac@kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-smatch warning:
-drivers/misc/fastrpc.c:1926 fastrpc_req_mmap() error: double free of 'buf'
+On Fri, Jun 02, 2023 at 08:31:31AM +0900, Damien Le Moal wrote:
+> On 6/1/23 23:57, Manivannan Sadhasivam wrote:
+> > Add PCI Endpoint driver for the Qualcomm MHI (Modem Host Interface) bus.
+> > The driver implements the MHI function over PCI in the endpoint device
+> > such as SDX55 modem. The MHI endpoint function driver acts as a
+> > controller driver for the MHI Endpoint stack and carries out all PCI
+> > related activities like mapping the host memory using iATU, triggering
+> > MSIs etc...
+> > 
+> > Reviewed-by: Kishon Vijay Abraham I <kishon@kernel.org>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> 
+> Looks good, but not knowing this hardware, I only did a style review. I added
+> some nits below.
+> 
+> Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+> 
+> 
+> > ---
+> >  drivers/pci/endpoint/functions/Kconfig       |  10 +
+> >  drivers/pci/endpoint/functions/Makefile      |   1 +
+> >  drivers/pci/endpoint/functions/pci-epf-mhi.c | 462 +++++++++++++++++++
+> >  3 files changed, 473 insertions(+)
+> >  create mode 100644 drivers/pci/endpoint/functions/pci-epf-mhi.c
+> > 
+> > diff --git a/drivers/pci/endpoint/functions/Kconfig b/drivers/pci/endpoint/functions/Kconfig
+> > index 9fd560886871..f5171b4fabbe 100644
+> > --- a/drivers/pci/endpoint/functions/Kconfig
+> > +++ b/drivers/pci/endpoint/functions/Kconfig
+> > @@ -37,3 +37,13 @@ config PCI_EPF_VNTB
+> >  	  between PCI Root Port and PCIe Endpoint.
+> >  
+> >  	  If in doubt, say "N" to disable Endpoint NTB driver.
+> > +
+> > +config PCI_EPF_MHI
+> > +	tristate "PCI Endpoint driver for MHI bus"
+> > +	depends on PCI_ENDPOINT && MHI_BUS_EP
+> > +	help
+> > +	   Enable this configuration option to enable the PCI Endpoint
+> > +	   driver for Modem Host Interface (MHI) bus in Qualcomm Endpoint
+> > +	   devices such as SDX55.
+> > +
+> > +	   If in doubt, say "N" to disable Endpoint driver for MHI bus.
+> > diff --git a/drivers/pci/endpoint/functions/Makefile b/drivers/pci/endpoint/functions/Makefile
+> > index 5c13001deaba..696473fce50e 100644
+> > --- a/drivers/pci/endpoint/functions/Makefile
+> > +++ b/drivers/pci/endpoint/functions/Makefile
+> > @@ -6,3 +6,4 @@
+> >  obj-$(CONFIG_PCI_EPF_TEST)		+= pci-epf-test.o
+> >  obj-$(CONFIG_PCI_EPF_NTB)		+= pci-epf-ntb.o
+> >  obj-$(CONFIG_PCI_EPF_VNTB) 		+= pci-epf-vntb.o
+> > +obj-$(CONFIG_PCI_EPF_MHI)		+= pci-epf-mhi.o
+> > diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
+> > new file mode 100644
+> > index 000000000000..98f0d96cfd46
+> > --- /dev/null
+> > +++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
 
-In fastrpc_req_mmap() error path, the fastrpc buffer is freed in
-fastrpc_req_munmap_impl() if unmap is successful.
+[...]
 
-But in the end, there is an unconditional call to fastrpc_buf_free().
-So the above case triggers the double free of fastrpc buf.
+> > +static int pci_epf_mhi_write_to_host(struct mhi_ep_cntrl *mhi_cntrl,
+> > +				     void __iomem *from, u64 to, size_t size)
+> > +{
+> > +	struct pci_epf_mhi *epf_mhi = to_epf_mhi(mhi_cntrl);
+> > +	struct pci_epf *epf = epf_mhi->epf;
+> > +	struct pci_epc *epc = epf_mhi->epf->epc;
+> > +	void __iomem *tre_buf;
+> > +	phys_addr_t tre_phys;
+> > +	size_t offset = to % SZ_4K;
+> > +	int ret;
+> > +
+> > +	mutex_lock(&epf_mhi->lock);
+> > +
+> > +	tre_buf = pci_epc_mem_alloc_addr(epc, &tre_phys, size + offset);
+> > +	if (!tre_buf) {
+> > +		ret = -ENOMEM;
+> > +		goto err_unlock;
+> > +	}
+> > +
+> > +	ret = pci_epc_map_addr(epc, epf->func_no, epf->vfunc_no, tre_phys,
+> > +			       to - offset, size + offset);
+> > +	if (ret) {
+> > +		pci_epc_mem_free_addr(epc, tre_phys, tre_buf, size + offset);
+> > +		goto err_unlock;
+> > +	}
+> 
+> The above 2 hunks are that same as in pci_epf_mhi_read_from_host(). May be pack
+> these in a helper function ? E.g. pci_epf_mhi_map() ?
+> Note that I have a patch series in the work that does that at the pci_epc API
+> level (pci_epc_map() + pci_epc_unmap()) to simplify function drivers.
+> 
+> > +
+> > +	memcpy_toio(tre_buf + offset, from, size);
+> > +
+> > +	pci_epc_unmap_addr(epc, epf->func_no, epf->vfunc_no, tre_phys);
+> > +	pci_epc_mem_free_addr(epc, tre_phys, tre_buf, size + offset);
+> 
+> Same here: pci_epf_mhi_unmap() ?
+> 
 
-Fixes: 72fa6f7820c4 ("misc: fastrpc: Rework fastrpc_req_munmap")
-Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Signed-off-by: Sukrut Bellary <sukrut.bellary@linux.com>
----
-This is based on static analysis. Compilation tested.
----
-Changes in v2: 
-- Fixed the commit message.
-- Addressed the review comment about deleting buf from the list
-  before freeing.
-- Link to v1: https://lore.kernel.org/all/20230518100829.515143-1-sukrut.bellary@linux.com/
----
- drivers/misc/fastrpc.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+Agree with both of the above comments. At have this change in my local tree but
+that's not part of this series. Will merge it to this patch itself.
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index f48466960f1b..b3b520fcfb75 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1882,7 +1882,8 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
- 				      &args[0]);
- 	if (err) {
- 		dev_err(dev, "mmap error (len 0x%08llx)\n", buf->size);
--		goto err_invoke;
-+		fastrpc_buf_free(buf);
-+		return err;
- 	}
- 
- 	/* update the buffer to be able to deallocate the memory on the DSP */
-@@ -1922,8 +1923,6 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
- 
- err_assign:
- 	fastrpc_req_munmap_impl(fl, buf);
--err_invoke:
--	fastrpc_buf_free(buf);
- 
- 	return err;
- }
+> > +
+> > +err_unlock:
+> > +	mutex_unlock(&epf_mhi->lock);
+> > +
+> > +	return ret;
+> > +}
+> > +
+
+[...]
+
+> > +static int pci_epf_mhi_bind(struct pci_epf *epf)
+> > +{
+> > +	struct pci_epf_mhi *epf_mhi = epf_get_drvdata(epf);
+> > +	struct pci_epc *epc = epf->epc;
+> > +	struct platform_device *pdev = to_platform_device(epc->dev.parent);
+> > +	struct device *dev = &epf->dev;
+> > +	struct resource *res;
+> > +	int ret;
+> > +
+> > +	if (WARN_ON_ONCE(!epc))
+> > +		return -EINVAL;
+> 
+> This should never happen. If there is a possibility that the EPC core code calls
+> bind with epc == NULL, we need to fix that there.
+> 
+
+Right, this seems to be redundant.
+
+- Mani
+
 -- 
-2.34.1
-
+மணிவண்ணன் சதாசிவம்
