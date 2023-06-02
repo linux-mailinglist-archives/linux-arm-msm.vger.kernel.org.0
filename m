@@ -2,146 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B5FDF720ACF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 23:05:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC108720B0D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  2 Jun 2023 23:37:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234860AbjFBVFv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 2 Jun 2023 17:05:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36266 "EHLO
+        id S236373AbjFBVhj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 2 Jun 2023 17:37:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44032 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234452AbjFBVFu (ORCPT
+        with ESMTP id S236246AbjFBVhi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 2 Jun 2023 17:05:50 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2402E4E
-        for <linux-arm-msm@vger.kernel.org>; Fri,  2 Jun 2023 14:05:39 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id 3f1490d57ef6-bacf685150cso2708368276.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 02 Jun 2023 14:05:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685739939; x=1688331939;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bGtOFR2mphGb3w/SKqqatTcmK2Pjhu9d+mT6IMF2bsA=;
-        b=O8cWtf9dK3IVBtCzRm56Bvob5Vhhmtc5jm/bwtrzzNg5NFGeACg0/roonLuhnaKj9w
-         l9zK+/K1wWpvLNvKbUMpYKoE5GSPi2MzMfZLq2V8rYqnQdDI79ckTFzhENhOotuajVBx
-         rZLnuOHFhJdTfuviF+xyrGeIZowEG6c591jS++W2CWKFRNVKmG8W4l6ucVyIz0hqICLn
-         1SJduWUuUDVhlUWYgc8KpFRBJyi/pdoJtLxorMHFCbmjaHgvsxBC8jZMAsTfAOIcK9Ta
-         rxXWbKQojO6qVCNjmvwICCaFkBklLVyIxuyXU1of/N+71b5mF2YPzLb5Uln13dIpUknZ
-         feUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685739939; x=1688331939;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=bGtOFR2mphGb3w/SKqqatTcmK2Pjhu9d+mT6IMF2bsA=;
-        b=Iv+WX17LvTckVWcjr4G24SAL+3PWrzjw6cc4PjU4AasZy/vfvapz9ktonJBDdfONcG
-         klGccPpD13Oar1f4uw3pgAUM796IM7GNNiHYxoHcqPOty8KfgjdfLZ1ZJ1z8PJWK74MB
-         qkGdkSfte5kZMig+nHNT6qYjqWhykH602L/L5m+MEtz0hlShiKj/eG6kZSN+GKem2Lze
-         WclGWu6cbpbolBl18Ef88jRS+7nKKUQYHD5mJ4bMIPBYJ4LOHMuYz2fBnyQqQsD9qWac
-         i4C94XQtRBJhwxC0pz54mZ+B+nSsLQjwzdKn7ddDx+j+bOiLo2lb3NzEy6JjcKYWA94M
-         TcOA==
-X-Gm-Message-State: AC+VfDxzUPgkU3aNqtsx9PKxt/PM3SQ7gHDkOx2V4XZja19KrelGj8Za
-        W0TFa3xcagD08u1mck24Rc+lKldaRUUMDQqFzWP0Vw==
-X-Google-Smtp-Source: ACHHUZ7Gn7c4DGB7V9sdrivTf8wBNtf7tCUcHwzPgc4kwSOC01IapgteGYaVZI1W8k3JxzfxAXKuXpFOGHc0YMbxFh8=
-X-Received: by 2002:a25:768a:0:b0:ba9:6b90:e551 with SMTP id
- r132-20020a25768a000000b00ba96b90e551mr4566101ybc.50.1685739938909; Fri, 02
- Jun 2023 14:05:38 -0700 (PDT)
+        Fri, 2 Jun 2023 17:37:38 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FEC51B5;
+        Fri,  2 Jun 2023 14:37:37 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id CE6BA61ED3;
+        Fri,  2 Jun 2023 21:37:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC9ACC433D2;
+        Fri,  2 Jun 2023 21:37:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685741856;
+        bh=1FcV/MmMD469O1FQZ7KzmQXuisSwf/qS6Cx5HeBprRU=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=G1SmzjFN1fwdTVy/JX+tcplLxTUjUTUxEYFqWy36jkRCY8CssArfmtY6hLyIJ+eEl
+         Bsh5696NyIdCrSPjt2TUjM0RFMQlO0wpybcSRG6UraTxRxGXt4VITakX9oYodhFdyh
+         rfKi2TNtnhoeQ1oqNFE8gfgG28MlI7yJP3b9ig8g9v5cVOy5x4enFGWy4eo4eOhL/D
+         t0558CmqNSsrs8MIMUgAirdzk2AkEhL549O1T9Ri7JyW34yBjFQ+ghpcI6WWPzIPLi
+         /OsVnvTW9zVJhYn0W1r/GVQ7YvbUz4DhG+Daqqs+lJJtWaWxaXh3OmZq4hyGtUOW+P
+         FAVYBtTinWEBw==
+Date:   Fri, 2 Jun 2023 16:37:34 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+Cc:     Bjorn Helgaas <bhelgaas@google.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Joyce Ooi <joyce.ooi@intel.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Jim Quinlan <jim2101024@gmail.com>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Tom Joseph <tjoseph@cadence.com>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Rahul Tanwar <rtanwar@maxlinear.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Vidya Sagar <vidyas@nvidia.com>,
+        Jisheng Zhang <jszhang@kernel.org>,
+        Miaoqian Lin <linmq006@gmail.com>, Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Ryder Lee <ryder.lee@mediatek.com>,
+        Jianjun Wang <jianjun.wang@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+        Shawn Lin <shawn.lin@rock-chips.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Toan Le <toan@os.amperecomputing.com>,
+        Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        linux-rpi-kernel@lists.infradead.org, kernel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Subject: Re: [PATCH 00/15] PCI: Convert to platform remove callback returning
+ void
+Message-ID: <ZHphHkNLO4tEJIm/@bhelgaas>
 MIME-Version: 1.0
-References: <1685464318-25031-1-git-send-email-quic_khsieh@quicinc.com>
- <1685464318-25031-3-git-send-email-quic_khsieh@quicinc.com>
- <dfa12c8b-ccec-261c-9c83-54536e17c02d@linaro.org> <157e8219-7af2-c7ed-6d99-3caa6fbc11ba@quicinc.com>
- <CAA8EJponkEne2vVsNP=2Fxmv=Uc6i_LzAGBSEz9hPPotCEpGzg@mail.gmail.com>
- <e69f02b7-eba9-5f33-5ca1-eb0638928414@quicinc.com> <CAA8EJpr9dfrrEsFf8heOvG3BWRTVCY-q1QYNH_3OBeMAWEwotA@mail.gmail.com>
- <d1a320c4-d851-ba75-ef7b-80dc369d1cfd@quicinc.com> <CAA8EJpqzyYQAg+VXLzttan7zGWv4w+k6kgS2SbRo26hFZ_9Efg@mail.gmail.com>
- <32aa41ee-4ab0-0915-a77f-5b0d6874b3e1@quicinc.com>
-In-Reply-To: <32aa41ee-4ab0-0915-a77f-5b0d6874b3e1@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 3 Jun 2023 00:05:27 +0300
-Message-ID: <CAA8EJpp0aWd2i4vkbURgDx+s99KNZYeEkd9RK0+fP+QfzDgZKg@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH v1 2/3] drm/msm/dpu: retrieve DSI DSC struct
- at atomic_check()
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <dri-devel@lists.freedesktop.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Vinod Koul <vkoul@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
-        Dave Airlie <airlied@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230530140742.ebbrxmpieuphbmz3@pengutronix.de>
+X-Spam-Status: No, score=-4.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Generic note: please use reply-to-all instead of any other options to
-answer the email. You have dropped all recipients (except the
-freedreno@) in the message
-<d1a320c4-d851-ba75-ef7b-80dc369d1cfd@quicinc.com> (and it was left
-unnoticed).
+On Tue, May 30, 2023 at 04:07:42PM +0200, Uwe Kleine-König wrote:
+> Hello Bjorn,
+> 
+> On Tue, Mar 21, 2023 at 08:31:53PM +0100, Uwe Kleine-König wrote:
+> > this series adapts the platform drivers below drivers/pci to use the
+> > .remove_new() callback. Compared to the traditional .remove() callback
+> > .remove_new() returns no value. This is a good thing because the driver core
+> > doesn't (and cannot) cope for errors during remove. The only effect of a
+> > non-zero return value in .remove() is that the driver core emits a warning. The
+> > device is removed anyhow and an early return from .remove() usually yields a
+> > resource leak.
+> > 
+> > By changing the remove callback to return void driver authors cannot
+> > reasonably assume any more that there is some kind of cleanup later.
+> > 
+> > All drivers were easy to convert as they all returned zero in their
+> > remove callback. Only for iproc the conversion wasn't trivial, the other
+> > were converted using coccinelle.
+> > 
+> > There are no interdependencies between these patches. So even if there
+> > are some concerns for individual patches, I ask you to apply the
+> > remaining set. Then I only have to care for the review feedback of the
+> > refused patches. (Having said that I don't expect any serious objection,
+> > just things like squashing or separating patches, or maybe I picked a
+> > wrong subject prefix.)
+> 
+> These patches wait for application for quite some time now. They apply
+> just fine to v6.4-rc1 and next/master. Would be great to get them in
+> during the next merge window and ideally give them some time in next
+> before.
 
+Thanks, these seem fine to me, and Lorenzo normally takes care of
+drivers/pci/controller/.  Lorenzo, if it's easier to have me apply
+them, that's fine, too, just let me know.
 
-On Fri, 2 Jun 2023 at 20:00, Kuogee Hsieh <quic_khsieh@quicinc.com> wrote:
-> >> There is one option which is keep current
-> >>
-> >> 1) keep struct drm_dsc_config *msm_dsi_get_dsc_config(struct msm_dsi
-> >> *msm_dsi) at dsi.c
-> >>
-> >> 2) use  struct msm_display_info *disp_info saved at dpu_enc to locate
-> >> struct msm_dsi from priv->dsi[] list (see item #3)
-> >>
-> >> 3)  info.dsc = msm_dsi_get_dsc_config(priv->dsi[info.h_tile_instance[0]]);
-> >>
-> >> 4) ballistically, keep original code but move  info.dsc =
-> >> msm_dsi_get_dsc_config(priv->dsi[i]); to other place sush as
-> >> atomic_check() and atomic_enable().
-> >>
-> > 5) leave drm_dsc_config handling as is, update the dsc config from the
-> > DP driver as suitable. If DSC is not supported, set
-> > dsc->dsc_version_major = 0 and dsc->dsc_version_minor = 0 on the DP
-> > side. In DPU driver verify that dsc->dsc_version_major/_minor != 0.
->
-> I am confusing with item 5)
->
-> Currently, msm_dsi_get_dsc_config() of dsi side return dsc pointer if
-> dsc enabled and NULL if dsc not enabled.
->
-> Should checking dsc == NULL is good enough to differentiate between dsc
-> is supported and not supported?
+The only tweaks I would make would be:
 
-This is called a "shared memory area". Instead of either providing a
-dynamic data pointer, one can provide a pointer to the static area
-which is filled by DP or DSI. If there is no DSC available, one flags
-'data not valid' by setting major,minor to 0.
+  PCI: j721e: Convert to platform remove callback returning void
+  PCI: dwc: Convert to platform remove callback returning void
 
->
-> Why need to set both dsc->dsc_version_major = 0 and
-> dsc->dsc_version_minor = 0 for dsc is not supported?
-
-6) Another option (which is more in style of what is done in the
-vendor kernel, if I'm not mistaken):
-
-Enhance struct drm_display_mode to contain a pointer to the DSC
-config. Use this pointer to check whether DSC should be enabled for
-the particular mode or not. The panels with the static DSC
-configuration can use a static data pointer.
-
-
--- 
-With best wishes
-Dmitry
+to match the git history.
