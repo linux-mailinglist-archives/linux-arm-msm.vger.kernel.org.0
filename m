@@ -2,74 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22CA9721898
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jun 2023 18:28:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBA337218EF
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jun 2023 19:57:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231738AbjFDQ2M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Jun 2023 12:28:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50872 "EHLO
+        id S232025AbjFDR5k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Jun 2023 13:57:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232103AbjFDQ2L (ORCPT
+        with ESMTP id S229449AbjFDR5j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Jun 2023 12:28:11 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D2EDBC
-        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Jun 2023 09:28:09 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f4b0a0b557so4891862e87.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Jun 2023 09:28:08 -0700 (PDT)
+        Sun, 4 Jun 2023 13:57:39 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B36E8DE
+        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Jun 2023 10:57:38 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-977c89c47bdso227754366b.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Jun 2023 10:57:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685896087; x=1688488087;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OD4VSBop6Xe6IAXvlnXwYSBEWEofkBHKAtiY14/IogE=;
-        b=bny4Q7NjewEpfdbJkyheQLvx2+J3u5uRdFETmKLnQS+GIY6uiF6Ss82ftMpLrE+LHe
-         dbwdFlEYZuXSLiOMVBWff/12ZXS4QBARzZ0GRQ7qwQ7wpwwjjcUU/x0ja9vge3ZCm0zV
-         y1lpqixqXthBUbe8lf0c8R3fcRXPIlq9GU9Bda5vs+b7MlFvGCCFZyFOLWrQJD1FjqYd
-         Q6KmN+AD8vZ0Jes2GttYzwFB3RDEyBlmphU9bWIHkRO1g02uesm3hIWakasBeyIvaP6L
-         vc5JPtSDO82Aj8vTWT0aJY2Vsl67DTPqJ7dhrJ6yPYXy/3qVEyP8U8CRKRd8bL50nee0
-         0D0w==
+        d=linaro.org; s=google; t=1685901457; x=1688493457;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ls45VQQIUyzoH7noNjdXrCaXMXOXQFDg/zHramtLqdM=;
+        b=PvmReiyAK7QRh5JN2sHHbdpCwbBfOriS3FNHDYsIkTUaaqQ/L8+FihSC4I2Wz5VIjm
+         McYw/UsoCBp8WiMimkT7v+mK/I7Whr0XS7PwrqsSZvRQfv6iNkEvfWmLvCfHCCSiPLP+
+         Qlb04qpALQJlQ1XY0y416zyf6SNFc21DjT73r9fSNULXwApEWk+gqsgZrEHlLY50VRvI
+         FSsZHJmjSA6oxiTtv0ezbmj3MMIFO8p3PQysQX9paW6TlY+JVR0rCRd6tj9W/kPvkcSI
+         gt1ZSAj+4jHMlrgIcXzL8EkZZu5ANo7IuK4VNpzWz+bsH/GXiTQubRMRUiB13kuoSYIl
+         WXPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685896087; x=1688488087;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OD4VSBop6Xe6IAXvlnXwYSBEWEofkBHKAtiY14/IogE=;
-        b=PUMVNLdO/sx3yGPg0aUQ1M4GuZXHxqLbY7kqfQsjqhN87HkK7VBphVQ5hugVadjsW+
-         lqL4hfL1jCIz6BMrsk07sFBjSQEanRqAo12oar8NF0zvHwCR6xJL8mLKAGSPdm8sifKJ
-         cSL8fQ3tLLs1XUcTFLolOn65R6UmMWHDfoC5G9zlN2YK6KR2lTIjudgIkTHcYuaL6KFt
-         z7DfgCdjPcfPHGodyjWeOSFZ8KP0hZl1KBjkEO/MInRE0FfQ1x8a6DQT5WmpnGKgAE7L
-         RKp76Tfm8DHn8RYj960Fi/544WPX2vBn6Ml2uSlYqeaPbSzD/qoFqsxIPOYu+kvjoTdq
-         fJGg==
-X-Gm-Message-State: AC+VfDz5m5OAwnbHcG5qFf9xSC6DmCUoShawoIbb6Squi+eJUEzcAbh9
-        JYe66+NOKJ4kJgw19ag7HejdQw==
-X-Google-Smtp-Source: ACHHUZ4Ieepkzan1a4s1pPV+qHF90erGblcDqHtOP4QYqPtROu/MDxlrvormUU7MsyhtDyjXpjGx8w==
-X-Received: by 2002:ac2:420d:0:b0:4f3:845e:f9e with SMTP id y13-20020ac2420d000000b004f3845e0f9emr4020141lfh.13.1685896087255;
-        Sun, 04 Jun 2023 09:28:07 -0700 (PDT)
-Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id g14-20020a19ee0e000000b004f61a57797esm537975lfb.69.2023.06.04.09.28.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Jun 2023 09:28:06 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH 8/8] drm/msm/dpu: shift IRQ indices by 1
-Date:   Sun,  4 Jun 2023 19:28:00 +0300
-Message-Id: <20230604162800.1048327-9-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230604162800.1048327-1-dmitry.baryshkov@linaro.org>
-References: <20230604162800.1048327-1-dmitry.baryshkov@linaro.org>
+        d=1e100.net; s=20221208; t=1685901457; x=1688493457;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ls45VQQIUyzoH7noNjdXrCaXMXOXQFDg/zHramtLqdM=;
+        b=FHdID+qbiOnh+C4fRiwaHdwEvpyZuRr7Syd2NXOnC/NO+E00fZ+LADcRmWy6YHcSeQ
+         GoWkqUbuaNKd6JlIPCQOMa078i/tPdPisjITYwxt/l/bot2ZtV+P9gJC9D+1aOp/ZThv
+         DSwGuAYHq/N9OlJH9bE+BpGS/PFArU2zcaCkdqTpRrWyN+N41LAbI8uJK+XXCV0MV6R/
+         xscWJEspLuM9S/kgyN0DMXoSg6pv+66TmFhx7J2HWUObS3STdErL6v8Xkuz1xGJoj4Th
+         2svmTgI6L+7qXkhi/WezOkIhDKOtei0GONx/a3k0n32R3moKECWtrPdet2aAEWsbOy0E
+         s9Qg==
+X-Gm-Message-State: AC+VfDz/9vpo1SoZuIkfsDNOL2WCFPO18FKeOnfV1BHa7qFWdeW92h0f
+        LsZFR8S/Mr3JUNShRAaiynSYtQ==
+X-Google-Smtp-Source: ACHHUZ7ZTbEOAIM4tY91C54D0FYjxaN4oqFmOFXsAHhex4sytDP6QvuKaoBFbxk10faqOQdXZp6Xaw==
+X-Received: by 2002:a17:906:fe45:b0:96f:f046:9a92 with SMTP id wz5-20020a170906fe4500b0096ff0469a92mr4579876ejb.37.1685901457150;
+        Sun, 04 Jun 2023 10:57:37 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.199.204])
+        by smtp.gmail.com with ESMTPSA id bj21-20020a170906b05500b009661484e84esm3294252ejb.191.2023.06.04.10.57.34
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 04 Jun 2023 10:57:36 -0700 (PDT)
+Message-ID: <f33106d5-ea0c-131c-f615-a8df4da58990@linaro.org>
+Date:   Sun, 4 Jun 2023 19:57:33 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v5 03/12] dt-bindings: display/msm: sc7180-dpu: Describe
+ SM6350 and SM6375
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux.dev
+References: <20230411-topic-straitlagoon_mdss-v5-0-998b4d2f7dd1@linaro.org>
+ <20230411-topic-straitlagoon_mdss-v5-3-998b4d2f7dd1@linaro.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230411-topic-straitlagoon_mdss-v5-3-998b4d2f7dd1@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,366 +92,22 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In order to simplify IRQ declarations, shift IRQ indices by 1. This
-makes 0 the 'no IRQ' value. Thanks to this change, we do no longer have
-to explicitly set the 'no interrupt' fields in catalog structures.
+On 23/05/2023 09:46, Konrad Dybcio wrote:
+> SC7180, SM6350 and SM6375 use a rather similar hw setup for DPU, with
+> the main exception being that the last one requires an additional
+> throttle clock.
+> 
+> It is not well understood yet, but failing to toggle it on makes the
+> display hardware stall and not output any frames.
+> 
+> Document SM6350 and SM6375 DPU.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  4 +-
- .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  4 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h  |  6 +--
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |  2 +-
- .../gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h  |  2 +-
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    |  3 --
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    | 14 +++---
- .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c | 47 +++++++++----------
- .../gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h |  8 ++--
- 9 files changed, 44 insertions(+), 46 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-index 182e91bb7dda..47a719449798 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_1_sm8450.h
-@@ -141,9 +141,9 @@ static const struct dpu_pingpong_cfg sm8450_pp[] = {
- 	PP_BLK_DITHER("pingpong_5", PINGPONG_5, 0x6e000, MERGE_3D_2, sc7280_pp_sblk,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31)),
- 	PP_BLK_DITHER("pingpong_6", PINGPONG_6, 0x65800, MERGE_3D_3, sc7280_pp_sblk,
--			-1),
-+			DPU_NO_IRQ),
- 	PP_BLK_DITHER("pingpong_7", PINGPONG_7, 0x65c00, MERGE_3D_3, sc7280_pp_sblk,
--			-1),
-+			DPU_NO_IRQ),
- };
- 
- static const struct dpu_merge_3d_cfg sm8450_merge_3d[] = {
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-index 3d48d961977f..8c08c856d38c 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_0_sm8550.h
-@@ -145,9 +145,9 @@ static const struct dpu_pingpong_cfg sm8550_pp[] = {
- 	PP_BLK_DITHER("pingpong_5", PINGPONG_5, 0x6e000, MERGE_3D_2, sc7280_pp_sblk,
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31)),
- 	PP_BLK_DITHER("pingpong_6", PINGPONG_6, 0x66000, MERGE_3D_3, sc7280_pp_sblk,
--			-1),
-+			DPU_NO_IRQ),
- 	PP_BLK_DITHER("pingpong_7", PINGPONG_7, 0x66400, MERGE_3D_3, sc7280_pp_sblk,
--			-1),
-+			DPU_NO_IRQ),
- };
- 
- static const struct dpu_merge_3d_cfg sm8550_merge_3d[] = {
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
-index ba06312cbb16..7c286bafb948 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_core_irq.h
-@@ -37,7 +37,7 @@ irqreturn_t dpu_core_irq(struct msm_kms *kms);
-  */
- u32 dpu_core_irq_read(
- 		struct dpu_kms *dpu_kms,
--		int irq_idx);
-+		unsigned int irq_idx);
- 
- /**
-  * dpu_core_irq_register_callback - For registering callback function on IRQ
-@@ -52,7 +52,7 @@ u32 dpu_core_irq_read(
-  */
- int dpu_core_irq_register_callback(
- 		struct dpu_kms *dpu_kms,
--		int irq_idx,
-+		unsigned int irq_idx,
- 		void (*irq_cb)(void *arg),
- 		void *irq_arg);
- 
-@@ -67,7 +67,7 @@ int dpu_core_irq_register_callback(
-  */
- int dpu_core_irq_unregister_callback(
- 		struct dpu_kms *dpu_kms,
--		int irq_idx);
-+		unsigned int irq_idx);
- 
- /**
-  * dpu_debugfs_core_irq_init - register core irq debugfs
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 701c5265c98d..d96eb1a8fd72 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -2540,7 +2540,7 @@ void dpu_encoder_phys_init(struct dpu_encoder_phys *phys_enc,
- 	phys_enc->enable_state = DPU_ENC_DISABLED;
- 
- 	for (i = 0; i < ARRAY_SIZE(phys_enc->irq); i++)
--		phys_enc->irq[i] = -EINVAL;
-+		phys_enc->irq[i] = DPU_NO_IRQ;
- 
- 	atomic_set(&phys_enc->vblank_refcount, 0);
- 	atomic_set(&phys_enc->pending_kickoff_cnt, 0);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-index f91661a69888..e203f3775ed3 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-@@ -193,7 +193,7 @@ struct dpu_encoder_phys {
- 	atomic_t pending_ctlstart_cnt;
- 	atomic_t pending_kickoff_cnt;
- 	wait_queue_head_t pending_kickoff_wq;
--	int irq[INTR_IDX_MAX];
-+	unsigned int irq[INTR_IDX_MAX];
- 	bool has_intf_te;
- };
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 42f8c12c91a2..356280aefa3b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -489,7 +489,6 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
- 	.merge_3d = _merge_3d, \
- 	.sblk = &_sblk, \
- 	.intr_done = _done, \
--	.intr_rdptr = -1, \
- 	}
- #define PP_BLK_NO_TE(_name, _id, _base, _features, _merge_3d, _sblk, _done) \
- 	{\
-@@ -499,7 +498,6 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
- 	.merge_3d = _merge_3d, \
- 	.sblk = &_sblk, \
- 	.intr_done = _done, \
--	.intr_rdptr = -1, \
- 	}
- #define PP_BLK(_name, _id, _base, _features, _merge_3d, _sblk, _done, _rdptr) \
- 	{\
-@@ -546,7 +544,6 @@ static const struct dpu_pingpong_sub_blks sc7280_pp_sblk = {
- 	.prog_fetch_lines_worst_case = _progfetch, \
- 	.intr_underrun = _underrun, \
- 	.intr_vsync = _vsync, \
--	.intr_tear_rd_ptr = -1, \
- 	}
- 
- /* DSI Interface sub-block with TEAR registers (since DPU 5.0.0) */
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index d59a9027c4b6..d6365144af8a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -500,7 +500,7 @@ struct dpu_ubwc_cfg {
-  */
- struct dpu_ctl_cfg {
- 	DPU_HW_BLK_INFO;
--	s32 intr_start;
-+	unsigned int intr_start;
- };
- 
- /**
-@@ -563,8 +563,8 @@ struct dpu_dspp_cfg  {
- struct dpu_pingpong_cfg  {
- 	DPU_HW_BLK_INFO;
- 	u32 merge_3d;
--	s32 intr_done;
--	s32 intr_rdptr;
-+	unsigned int intr_done;
-+	unsigned int intr_rdptr;
- 	const struct dpu_pingpong_sub_blks *sblk;
- };
- 
-@@ -608,9 +608,9 @@ struct dpu_intf_cfg  {
- 	u32 type;   /* interface type*/
- 	u32 controller_id;
- 	u32 prog_fetch_lines_worst_case;
--	s32 intr_underrun;
--	s32 intr_vsync;
--	s32 intr_tear_rd_ptr;
-+	unsigned int intr_underrun;
-+	unsigned int intr_vsync;
-+	unsigned int intr_tear_rd_ptr;
- };
- 
- /**
-@@ -629,7 +629,7 @@ struct dpu_wb_cfg {
- 	u8 vbif_idx;
- 	u32 maxlinewidth;
- 	u32 xin_id;
--	s32 intr_wb_done;
-+	unsigned int intr_wb_done;
- 	const u32 *format_list;
- 	u32 num_formats;
- 	enum dpu_clk_ctrl_type clk_ctrl;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-index 91d3818956ce..633d22152113 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.c
-@@ -181,7 +181,7 @@ static const struct dpu_intr_reg dpu_intr_set[] = {
- #define DPU_IRQ_MASK(irq_idx)	(BIT(DPU_IRQ_OFFSET(irq_idx)))
- 
- static inline struct dpu_hw_intr_entry *dpu_core_irq_get_entry(struct dpu_kms *dpu_kms,
--							       int irq_idx)
-+							       unsigned int irq_idx)
- {
- 	return &dpu_kms->hw_intr->irq_tbl[irq_idx];
- }
-@@ -191,7 +191,7 @@ static inline struct dpu_hw_intr_entry *dpu_core_irq_get_entry(struct dpu_kms *d
-  * @dpu_kms:		Pointer to DPU's KMS structure
-  * @irq_idx:		interrupt index
-  */
--static void dpu_core_irq_callback_handler(struct dpu_kms *dpu_kms, int irq_idx)
-+static void dpu_core_irq_callback_handler(struct dpu_kms *dpu_kms, unsigned int irq_idx)
- {
- 	struct dpu_hw_intr_entry *irq_entry = dpu_core_irq_get_entry(dpu_kms, irq_idx);
- 
-@@ -213,7 +213,7 @@ irqreturn_t dpu_core_irq(struct msm_kms *kms)
- 	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
- 	struct dpu_hw_intr *intr = dpu_kms->hw_intr;
- 	int reg_idx;
--	int irq_idx;
-+	unsigned int irq_idx;
- 	u32 irq_status;
- 	u32 enable_mask;
- 	int bit;
-@@ -269,7 +269,8 @@ irqreturn_t dpu_core_irq(struct msm_kms *kms)
- 	return IRQ_HANDLED;
- }
- 
--static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
-+static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr,
-+					 unsigned int irq_idx)
- {
- 	int reg_idx;
- 	const struct dpu_intr_reg *reg;
-@@ -279,7 +280,7 @@ static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
- 	if (!intr)
- 		return -EINVAL;
- 
--	if (irq_idx < 0 || irq_idx >= intr->total_irqs) {
-+	if (irq_idx == DPU_NO_IRQ || irq_idx > intr->total_irqs) {
- 		pr_err("invalid IRQ index: [%d]\n", irq_idx);
- 		return -EINVAL;
- 	}
-@@ -318,7 +319,8 @@ static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
- 	return 0;
- }
- 
--static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
-+static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr,
-+					  unsigned int irq_idx)
- {
- 	int reg_idx;
- 	const struct dpu_intr_reg *reg;
-@@ -328,7 +330,7 @@ static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
- 	if (!intr)
- 		return -EINVAL;
- 
--	if (irq_idx < 0 || irq_idx >= intr->total_irqs) {
-+	if (irq_idx == DPU_NO_IRQ || irq_idx > intr->total_irqs) {
- 		pr_err("invalid IRQ index: [%d]\n", irq_idx);
- 		return -EINVAL;
- 	}
-@@ -403,7 +405,8 @@ static void dpu_disable_all_irqs(struct dpu_kms *dpu_kms)
- 	wmb();
- }
- 
--u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx)
-+u32 dpu_core_irq_read(struct dpu_kms *dpu_kms,
-+		      unsigned int irq_idx)
- {
- 	struct dpu_hw_intr *intr = dpu_kms->hw_intr;
- 	int reg_idx;
-@@ -413,13 +416,7 @@ u32 dpu_core_irq_read(struct dpu_kms *dpu_kms, int irq_idx)
- 	if (!intr)
- 		return 0;
- 
--	if (irq_idx < 0) {
--		DPU_ERROR("[%pS] invalid irq_idx=%d\n",
--				__builtin_return_address(0), irq_idx);
--		return 0;
--	}
--
--	if (irq_idx < 0 || irq_idx >= intr->total_irqs) {
-+	if (irq_idx == DPU_NO_IRQ || irq_idx > intr->total_irqs) {
- 		pr_err("invalid IRQ index: [%d]\n", irq_idx);
- 		return 0;
- 	}
-@@ -477,9 +474,10 @@ void dpu_hw_intr_destroy(struct dpu_hw_intr *intr)
- 	kfree(intr);
- }
- 
--int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms, int irq_idx,
--		void (*irq_cb)(void *arg),
--		void *irq_arg)
-+int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms,
-+				   unsigned int irq_idx,
-+				   void (*irq_cb)(void *arg),
-+				   void *irq_arg)
- {
- 	struct dpu_hw_intr_entry *irq_entry;
- 	unsigned long irq_flags;
-@@ -490,7 +488,7 @@ int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms, int irq_idx,
- 		return -EINVAL;
- 	}
- 
--	if (irq_idx < 0 || irq_idx >= dpu_kms->hw_intr->total_irqs) {
-+	if (irq_idx == DPU_NO_IRQ || irq_idx > dpu_kms->hw_intr->total_irqs) {
- 		DPU_ERROR("invalid IRQ index: [%d]\n", irq_idx);
- 		return -EINVAL;
- 	}
-@@ -523,13 +521,14 @@ int dpu_core_irq_register_callback(struct dpu_kms *dpu_kms, int irq_idx,
- 	return 0;
- }
- 
--int dpu_core_irq_unregister_callback(struct dpu_kms *dpu_kms, int irq_idx)
-+int dpu_core_irq_unregister_callback(struct dpu_kms *dpu_kms,
-+				     unsigned int irq_idx)
- {
- 	struct dpu_hw_intr_entry *irq_entry;
- 	unsigned long irq_flags;
- 	int ret;
- 
--	if (irq_idx < 0 || irq_idx >= dpu_kms->hw_intr->total_irqs) {
-+	if (irq_idx == DPU_NO_IRQ || irq_idx > dpu_kms->hw_intr->total_irqs) {
- 		DPU_ERROR("invalid IRQ index: [%d]\n", irq_idx);
- 		return -EINVAL;
- 	}
-@@ -564,7 +563,7 @@ static int dpu_debugfs_core_irq_show(struct seq_file *s, void *v)
- 	int i, irq_count;
- 	void *cb;
- 
--	for (i = 0; i < dpu_kms->hw_intr->total_irqs; i++) {
-+	for (i = 1; i <= dpu_kms->hw_intr->total_irqs; i++) {
- 		spin_lock_irqsave(&dpu_kms->hw_intr->irq_lock, irq_flags);
- 		irq_entry = dpu_core_irq_get_entry(dpu_kms, i);
- 		irq_count = atomic_read(&irq_entry->count);
-@@ -599,7 +598,7 @@ void dpu_core_irq_preinstall(struct msm_kms *kms)
- 	dpu_disable_all_irqs(dpu_kms);
- 	pm_runtime_put_sync(&dpu_kms->pdev->dev);
- 
--	for (i = 0; i < dpu_kms->hw_intr->total_irqs; i++) {
-+	for (i = 1; i <= dpu_kms->hw_intr->total_irqs; i++) {
- 		irq_entry = dpu_core_irq_get_entry(dpu_kms, i);
- 		atomic_set(&irq_entry->count, 0);
- 	}
-@@ -615,7 +614,7 @@ void dpu_core_irq_uninstall(struct msm_kms *kms)
- 		return;
- 
- 	pm_runtime_get_sync(&dpu_kms->pdev->dev);
--	for (i = 0; i < dpu_kms->hw_intr->total_irqs; i++) {
-+	for (i = 1; i <= dpu_kms->hw_intr->total_irqs; i++) {
- 		irq_entry = dpu_core_irq_get_entry(dpu_kms, i);
- 		if (irq_entry->cb)
- 			DPU_ERROR("irq_idx=%d still enabled/registered\n", i);
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-index 2238e3f724db..173022df5ce2 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_interrupts.h
-@@ -41,9 +41,11 @@ enum dpu_hw_intr_reg {
- 	MDP_INTR_MAX,
- };
- 
--#define DPU_IRQ_IDX(reg_idx, offset)	(reg_idx * 32 + offset)
--#define DPU_IRQ_REG(irq_idx)		((irq_idx) / 32)
--#define DPU_IRQ_OFFSET(irq_idx)		((irq_idx) % 32)
-+#define DPU_IRQ_IDX(reg_idx, offset)	(reg_idx * 32 + offset + 1)
-+#define DPU_IRQ_REG(irq_idx)		((irq_idx - 1) / 32)
-+#define DPU_IRQ_OFFSET(irq_idx)		((irq_idx - 1) % 32)
-+
-+#define DPU_NO_IRQ			0
- 
- struct dpu_hw_intr_entry {
- 	void (*cb)(void *arg);
--- 
-2.39.2
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Best regards,
+Krzysztof
 
