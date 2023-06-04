@@ -2,85 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 07B0672142A
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jun 2023 04:39:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0844721435
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jun 2023 05:01:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229485AbjFDCjS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 3 Jun 2023 22:39:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44446 "EHLO
+        id S229577AbjFDDBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 3 Jun 2023 23:01:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229904AbjFDCjR (ORCPT
+        with ESMTP id S229518AbjFDDBo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 3 Jun 2023 22:39:17 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43579ED
-        for <linux-arm-msm@vger.kernel.org>; Sat,  3 Jun 2023 19:39:15 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b1c30a1653so4083541fa.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 03 Jun 2023 19:39:15 -0700 (PDT)
+        Sat, 3 Jun 2023 23:01:44 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00FC61A5
+        for <linux-arm-msm@vger.kernel.org>; Sat,  3 Jun 2023 20:01:41 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f4e71a09a7so4474297e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 03 Jun 2023 20:01:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685846353; x=1688438353;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=oMukeZsIPK9VY+jN6lO5nE+HniRt3DWSTDLIp8k6jQc=;
-        b=jtROz0fXdfiIHIOYlEGo1RqI57Xt9Eh7ZYyQddwsfunow3aWsMu+/HxczEcLuRPp4Z
-         dKNJIgsMVM+VI9k3As1NYL/xM04D0fuv5WSC60Osribmnui3GsuILV5nN7UdslLRJOr4
-         GTgyMtPEEn9aI5eHz3iisjsZ2bfqOL6povcl77pSnghRPbZVb4BoDtq/QDjEmBNZmgU2
-         Atsa6su2/AssHHBu/bWGpBELJ1aj3i046yFYYR6rwNaF/4Lt6eBARlYFG0VqxSjOciIT
-         yRbwGjO6oWfFV+za0yY6Wfz7P7JcI7raZvcOfx4x8MZ/FdPqu+kJOZpK46YhRY8rZ3TX
-         u2qw==
+        d=linaro.org; s=google; t=1685847700; x=1688439700;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iW8Li2n0rZD7NzpAXirqLsFNZMxHZzT9M5Uh4WLCquk=;
+        b=oUuTNwpXCVwN7isRcBeO4rW750QoBBz0forLMpsixuYaTStFVRpB3hTRNR2dpPG6/K
+         3jwkHqla4JIKwoS56k8vrxCd3aGjE4w6woxJ35bmU2V2kx6eLncAt/tLdooxUC5IJnMH
+         GOx8loJ/JSsv/87umq1Rfm0Xtm+JiCCqZmhLMWvuUH4dDZH37jCzE4A6n90nqukZ8dca
+         zzimW/4F7Hd0K2OlVBABitmLZ+FMXRHAEojG95alypaLThfwJfXgwqMFBTUT9Z0wb+Lw
+         LZvs4gsd43NFawyP2UWgns+f1GRKRKyPxAfzpxb/K0NJlqBZjquRrbp1Zn4xlsImajF/
+         k0XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685846353; x=1688438353;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oMukeZsIPK9VY+jN6lO5nE+HniRt3DWSTDLIp8k6jQc=;
-        b=A5MgNe2Ke3EtCSGYapWOtF93lQkkYd1QfVHhVDf5bYTyDhj42uOf0U0q4Y5qW4dDjP
-         Dp7mo0pQi2NCe4qk/6I/pqW/Gf9Gd98P6XLZ8jTm8gUw1Evsf7aFnaYoTt2iDR+gCv7n
-         KHWE5ZyWIVKK2mtJ7gL2f7r4IImKP8ivCFuRzpUw8PTPyxQ30wuA3TrGBDH2q9u8X3Lj
-         N/dBJWmdkbq2DePuOnuzZ8tyYOj9TuJccyM5q7oQIZN1gSCTIXt3q8X7I8Y9m9lIjwhd
-         OI973hAJ+yMw4xtDd7FPdVOcMXYHoaWhRuGTtJcu4gCqNWPBtYHNNVdtdh+xfPoAtlXz
-         yksQ==
-X-Gm-Message-State: AC+VfDyiSJF3wf+6YMnMemJ6YNopLS3uEcRDPjpbLbrYFGBnpn2PeenA
-        cYH6JH5NpwAe9rZGGl4Ig08lRg==
-X-Google-Smtp-Source: ACHHUZ5D9QfTFJ7LYIjyZ34kZ1xnm+FM48ToTGYMYOaQS6D5GlphlJ2LfDuS/Lo1Qo+BuGyfh75rVw==
-X-Received: by 2002:a2e:6a18:0:b0:2b1:af36:93d9 with SMTP id f24-20020a2e6a18000000b002b1af3693d9mr1987200ljc.26.1685846353479;
-        Sat, 03 Jun 2023 19:39:13 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id d9-20020ac244c9000000b004f24db9248dsm210750lfm.141.2023.06.03.19.39.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 03 Jun 2023 19:39:12 -0700 (PDT)
-Message-ID: <b038052c-c8e2-9aa1-2b80-792563d219ba@linaro.org>
-Date:   Sun, 4 Jun 2023 05:39:12 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v3 6/7] drm/msm/dsi: Add phy configuration for MSM8226
-Content-Language: en-GB
-To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        d=1e100.net; s=20221208; t=1685847700; x=1688439700;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iW8Li2n0rZD7NzpAXirqLsFNZMxHZzT9M5Uh4WLCquk=;
+        b=jg/oS+CA0cxTVX02oFWNAao67Yw5Zv2o6lStIr5WOoyjPBwSFz9TPeOufL0Oja1JEc
+         Pp2EOgxBv6mbhCEoHe4ZIXvoCJBPcGjR+v3v9y3+2rF/I4uLEVMh/ISEYCsdDRYqdk3t
+         fBJD4y2QIaE8Ix5yPbn79UFFix2QNm6YwbPqwLj6Qj4U2kVfNzzeTfr4ge525jfdBJvg
+         iLsBMBfoWS9lg7788/z2ZfmW/T0heY8Ypeoo8NrqwPh5JRfWMXG7BuWyHIrjYxcW8ZN4
+         MTYTM+QCSDQkSYf6eiuzxQzmHPeVzquY3c3STep5/wrmNxUNaBpUHv+y1RLOtXmmPVj+
+         cx2A==
+X-Gm-Message-State: AC+VfDxnTuW+KNjDG55jey8pIuBNNjPPofClK1ZRKVA9cLRBZcmhDJQ3
+        Pm2EbgS0Xqg2YPxFDKqJngTHWQ==
+X-Google-Smtp-Source: ACHHUZ4gNdjSeZJPzmWovGSc/x4MjDwnYJBgKddZijOqQwsfXwnD9Ek1REVt6tKvEYHFV0jVQdtnow==
+X-Received: by 2002:ac2:4f8a:0:b0:4f6:ac9:2eba with SMTP id z10-20020ac24f8a000000b004f60ac92ebamr1771664lfs.11.1685847700079;
+        Sat, 03 Jun 2023 20:01:40 -0700 (PDT)
+Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id d15-20020ac24c8f000000b004eb4357122bsm653181lfl.259.2023.06.03.20.01.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 03 Jun 2023 20:01:39 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>,
+        Dan Carpenter <dan.carpenter@linaro.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230308-msm8226-mdp-v3-0-b6284145d67a@z3ntu.xyz>
- <20230308-msm8226-mdp-v3-6-b6284145d67a@z3ntu.xyz>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230308-msm8226-mdp-v3-6-b6284145d67a@z3ntu.xyz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Liu Shixin <liushixin2@huawei.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH v2] drm/msm/dpu: clean up dpu_kms_get_clk_rate() returns
+Date:   Sun,  4 Jun 2023 06:01:27 +0300
+Message-Id: <168584750429.890410.15848312463141330600.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <28644c5e-950e-41cd-8389-67f37b067bdc@kili.mountain>
+References: <28644c5e-950e-41cd-8389-67f37b067bdc@kili.mountain>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,34 +82,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01/06/2023 20:00, Luca Weiss wrote:
-> MSM8226 uses a modified PLL lock sequence compared to MSM8974, which is
-> based on the function dsi_pll_enable_seq_m in the msm-3.10 kernel.
-> 
-> Worth noting that the msm-3.10 downstream kernel also will try other
-> sequences in case this one doesn't work, but during testing it has shown
-> that the _m sequence succeeds first time also:
-> 
->    .pll_enable_seqs[0] = dsi_pll_enable_seq_m,
->    .pll_enable_seqs[1] = dsi_pll_enable_seq_m,
->    .pll_enable_seqs[2] = dsi_pll_enable_seq_d,
->    .pll_enable_seqs[3] = dsi_pll_enable_seq_d,
->    .pll_enable_seqs[4] = dsi_pll_enable_seq_f1,
->    .pll_enable_seqs[5] = dsi_pll_enable_seq_c,
->    .pll_enable_seqs[6] = dsi_pll_enable_seq_e,
-> 
-> We may need to expand this in the future.
-> 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c      |  2 +
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy.h      |  3 +-
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c | 97 ++++++++++++++++++++++++++++++
->   3 files changed, 101 insertions(+), 1 deletion(-)
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Fri, 26 May 2023 14:51:59 +0300, Dan Carpenter wrote:
+> Static analysis tools complain about the -EINVAL error code being
+> stored in an unsigned variable.  Let's change this to match
+> the clk_get_rate() function which is type unsigned long and returns
+> zero on error.
+> 
+> 
 
+Applied, thanks!
+
+[1/1] drm/msm/dpu: clean up dpu_kms_get_clk_rate() returns
+      https://gitlab.freedesktop.org/lumag/msm/-/commit/025e3d97867c
+
+Best regards,
 -- 
-With best wishes
-Dmitry
-
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
