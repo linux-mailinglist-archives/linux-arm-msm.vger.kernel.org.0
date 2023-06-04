@@ -2,46 +2,47 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 715BA721A82
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 00:00:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 706B0721AC2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 00:01:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229680AbjFDWAa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Jun 2023 18:00:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40920 "EHLO
+        id S231596AbjFDWBU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Jun 2023 18:01:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229635AbjFDWA3 (ORCPT
+        with ESMTP id S229670AbjFDWBT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Jun 2023 18:00:29 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34053AC
-        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Jun 2023 15:00:28 -0700 (PDT)
+        Sun, 4 Jun 2023 18:01:19 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81788AC
+        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Jun 2023 15:01:18 -0700 (PDT)
 Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id F38743E761;
-        Mon,  5 Jun 2023 00:00:25 +0200 (CEST)
-Date:   Mon, 5 Jun 2023 00:00:24 +0200
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E2EAB3E761;
+        Mon,  5 Jun 2023 00:01:16 +0200 (CEST)
+Date:   Mon, 5 Jun 2023 00:01:15 +0200
 From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dan Carpenter <dan.carpenter@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Liu Shixin <liushixin2@huawei.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH v2] drm/msm/dpu: clean up dpu_kms_get_clk_rate() returns
-Message-ID: <kpxutvwb57ufiveujewgzqotnnx6xgdcws5e5r6lpl6qipadh7@umn3l2l2z3j3>
-References: <28644c5e-950e-41cd-8389-67f37b067bdc@kili.mountain>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>,
+        Bjorn Andersson <andersson@kernel.org>,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 1/2] drm/msm/dpu: drop SSPP register dumpers
+Message-ID: <ojvx4uowxgxj73vwxrjeelp5drre5sw4rq43pbathfce4mw5vz@fwjsg3rhmox5>
+References: <20230521172147.4163085-1-dmitry.baryshkov@linaro.org>
+ <300fc53c-2a58-714c-855a-08a0dbef3ed9@quicinc.com>
+ <bvjtgmuyz4zdjvt4jyjyt5hasiwnnaz4lyse6mf6b7grtig23f@yuji3z2mxue2>
+ <c18c8687-0c4e-894e-a629-bc55e54031c5@quicinc.com>
+ <6se25tikdg2tkiprz4h4umfta34tc5orddksvwi6woklf7c74k@rbserwp5kt3a>
+ <9001aaaf-778e-5b3c-e87f-2b196d8b62ed@quicinc.com>
+ <CAA8EJpp2mGcOHf5KJ8Zt_MQK+grAvbb=tVtaiT7MBLzCis20fg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <28644c5e-950e-41cd-8389-67f37b067bdc@kili.mountain>
+In-Reply-To: <CAA8EJpp2mGcOHf5KJ8Zt_MQK+grAvbb=tVtaiT7MBLzCis20fg@mail.gmail.com>
 X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
         SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
         version=3.4.6
@@ -51,64 +52,103 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-05-26 14:51:59, Dan Carpenter wrote:
-> Static analysis tools complain about the -EINVAL error code being
-> stored in an unsigned variable.  Let's change this to match
-> the clk_get_rate() function which is type unsigned long and returns
-> zero on error.
+On 2023-05-30 23:14:19, Dmitry Baryshkov wrote:
+> On Tue, 30 May 2023 at 20:37, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+> >
+> >
+> >
+> > On 5/29/2023 2:36 PM, Marijn Suijten wrote:
+> > > On 2023-05-24 12:18:09, Abhinav Kumar wrote:
+> > >>
+> > >>
+> > >> On 5/24/2023 2:48 AM, Marijn Suijten wrote:
+> > >>> On 2023-05-23 13:01:13, Abhinav Kumar wrote:
+> > >>>>
+> > >>>>
+> > >>>> On 5/21/2023 10:21 AM, Dmitry Baryshkov wrote:
+> > >>>>> Drop SSPP-specifig debugfs register dumps in favour of using
+> > >>>>> debugfs/dri/0/kms or devcoredump.
+> > >>>>>
+> > >>>>
+> > >>>> I did see another series which removes src_blk from the catalog (I am
+> > >>>> yet to review that one) . Lets assume that one is fine and this change
+> > >>>> will be going on top of that one right?
+> > >>>
+> > >>> It replaces src_blk with directly accessing the blk (non-sub-block)
+> > >>> directly, because they were overlapping anyway.
+> > >>>
+> > >>>> The concern I have with this change is that although I do agree that we
+> > >>>> should be in favor of using debugfs/dri/0/kms ( i have used it a few
+> > >>>> times and it works pretty well ), devcoredump does not have the support
+> > >>>> to dump sub-blocks . Something which we should add with priority because
+> > >>>> even with DSC blocks with the separation of enc/ctl blocks we need that
+> > >>>> like I wrote in one of the responses.
+> > >>>>
+> > >>>> So the "len" of the blocks having sub-blocks will be ignored in favor of
+> > >>>> the len of the sub-blocks.
+> > >>>
+> > >>> The sub-blocks are not always contiguous with their parent block, are
+> > >>> they?  It's probably better to print the sub-blocks separately with
+> > >>
+> > >> Yes, not contiguous otherwise we could have just had them in one big range.
+> > >>
+> > >>> clear headers anyway rather than dumping the range parent_blk_base to
+> > >>> max(parent_blk_base+len, parent_blk_base+sblk_base+sblk_len...).
+> > >>>
+> > >>> - Marijn
+> > >>
+> > >> When I meant sub-block support to devcoredump, this is how I visualize
+> > >> them to be printed
+> > >>
+> > >> =========================SSPP xxx =======================
+> > >> =========================SSPP_CSC =======================(for SSPP_xxx)
+> > >> =========================SSPP_QSEED =====================(for SSPP_xxx)
+> > >
+> > > Yeah something along those lines, though I don't really like the `(for
+> > > SSPP_xxx)` suffix which we should either drop entirely and make the
+> > > "heading" less of a "heading"
+> > >
+> >
+> > I wrote that "for SSPP_xxx" to explain the idea, ofcourse it wont be
+> > part of the print itself.
+> >
+> > Without that, it matches what you have shared below.
+> >
+> >
+> > > ========================= SSPP xxx =======================
+> > > ...
+> > > ------------------------- SSPP_CSC -----------------------
+> > > ...
+> > > ------------------------- SSPP_QSEED ---------------------
+> > > ...
+> > >
+> > > And/or inline the numbers:
+> > >
+> > > ========================= SSPP xxx =======================
+> > > ...
+> > > ----------------------- SSPP_xxx_CSC ---------------------
+> > > ...
+> > > ---------------------- SSPP_xxx_QSEED --------------------
+> > > ...
 > 
-> Fixes: 25fdd5933e4c ("drm/msm: Add SDM845 DPU support")
-> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-> ---
-> v2: In v1 I change the type to int which was wrong.  This is a different
->     approach.  CC the freedreno list this time too.
+> I'd prefer this format. It eases grepping.
 
-Just like v1, should we clean up the <= in
-dpu_encoder_phys_cmd_tearcheck_config (to just `if (!vsync_hz)`),
-because doing a <=0 on a u32 has a more limited meaning?
-
-> 
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 4 ++--
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 2 +-
->  2 files changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 0e7a68714e9e..25e6a15eaf9f 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -979,13 +979,13 @@ static int _dpu_kms_mmu_init(struct dpu_kms *dpu_kms)
->  	return 0;
->  }
->  
-> -u64 dpu_kms_get_clk_rate(struct dpu_kms *dpu_kms, char *clock_name)
-> +unsigned long dpu_kms_get_clk_rate(struct dpu_kms *dpu_kms, char *clock_name)
->  {
->  	struct clk *clk;
->  
->  	clk = msm_clk_bulk_get_clock(dpu_kms->clocks, dpu_kms->num_clocks, clock_name);
->  	if (!clk)
-> -		return -EINVAL;
-> +		return 0;
->  
->  	return clk_get_rate(clk);
->  }
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> index aca39a4689f4..961918e5a5b3 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-> @@ -201,6 +201,6 @@ void dpu_disable_vblank(struct msm_kms *kms, struct drm_crtc *crtc);
->   *
->   * Return: current clock rate
-
-Or 0 if this clock is not available/present.
+Cool.  And let's also have spaces around the names :)
 
 - Marijn
 
->   */
-> -u64 dpu_kms_get_clk_rate(struct dpu_kms *dpu_kms, char *clock_name);
-> +unsigned long dpu_kms_get_clk_rate(struct dpu_kms *dpu_kms, char *clock_name);
->  
->  #endif /* __dpu_kms_H__ */
-> -- 
-> 2.39.2
 > 
+> > >
+> >
+> > sure this is also fine with me.
+> >
+> > > Either works, or any other pattern in the title (e.g `SSPP xxx: CSC`)
+> > > that clearly tells the blocks and sub-blocks apart.
+> > >
+> > > - Marijn
+> 
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
