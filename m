@@ -2,77 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B4596721403
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jun 2023 03:47:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D045A72140A
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jun 2023 03:58:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229904AbjFDBrM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 3 Jun 2023 21:47:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39370 "EHLO
+        id S229577AbjFDB6K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 3 Jun 2023 21:58:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40334 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229490AbjFDBrL (ORCPT
+        with ESMTP id S229571AbjFDB6J (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 3 Jun 2023 21:47:11 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D5A7B3
-        for <linux-arm-msm@vger.kernel.org>; Sat,  3 Jun 2023 18:47:10 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b1a3fa2cd2so41546491fa.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 03 Jun 2023 18:47:10 -0700 (PDT)
+        Sat, 3 Jun 2023 21:58:09 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3426ACF
+        for <linux-arm-msm@vger.kernel.org>; Sat,  3 Jun 2023 18:58:07 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f619c2ba18so1089090e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 03 Jun 2023 18:58:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685843228; x=1688435228;
+        d=linaro.org; s=google; t=1685843885; x=1688435885;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=x6uhed2cRD1eObTiku8eArjPbSJO8HLDvaDTuRDrq6w=;
-        b=HKnoeDu8EixKceqBBFvpU9P+QRH3IX8FEk9TQYQDJ3iJmrbDnQyTK6252KRtnWZtWM
-         QZJVYxY4zLK+zBCiLLceEp85IvFU7yx8a/4p193Yweeo3x37BVrHcVLmeKyCKSA9JxWI
-         WdLGLx6LUDhlpcSADD9xD/8g76UpIYvA6NKtzjLWHN39321b0orl7QcKRqSRLOHUH1Z/
-         vf0hbDSvMBE26B7OgbPvf9WEs3q2kaXoK+T7P1Pv1yJM1ukZGRftryr4ZZ0I+bM2ADP2
-         qht3NBfcbgLy0MU422PpCnSSZNMp9WV1KDKvqTTxCHYDpPVvQC6nQHaK4RynWSGafQRO
-         arpw==
+        bh=yyuq1OAkX1njnwRBO2trMGeyKaw4cQAV1Knyp+U6sec=;
+        b=n9E+rRx0AO5FR0rquegNF4I26nDcU5SOvG3whnQ3ArY0bI4PoWP4DRf70ubPAK0bUV
+         PrKuzgKBii9XWP0o1uDVQUdljf1CZq2wOOLOZC/XJwDiDu4oB0N3JEOEB19ZGAdsLzJQ
+         C/PTbSgKycbx6WyODQdX7b3DwEzWy8rMeDeSKEygJ1rNV8FjiOrVQFwqqSlK2QZgKS8I
+         zNNwpJvlKSJs44J3vbiihA+Wup4e38wSUlm31CAdUBdHvJ83laX8iDYOvb2I914vyrRG
+         CXXsqR4wqgh5jC9XhNcaQQ/5nbnM/64Q6dlP6kl+ubbZ76B0nBVvFRChFUZZEgYx7EZH
+         XwSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685843228; x=1688435228;
+        d=1e100.net; s=20221208; t=1685843885; x=1688435885;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=x6uhed2cRD1eObTiku8eArjPbSJO8HLDvaDTuRDrq6w=;
-        b=Hca6ebnRXq2vkEG9Ww03QB8vH3YJGm0HDgLWodjB6Vl/WWrwIuihRvPvf3PH1sCcMX
-         UAhYJlD2IgWaLqpjzys9FpUPYwQ0uD92jdszeJIRfi4hctFWR0ljTz8RQbUvImwfqz6f
-         o+gdNCwOyQt/gQcm/qKNlJw7gKNO6Tce48/oslikWyMZkSdH0QBpAAdzHhx2tGlLL+ms
-         2glXEb9VJTcdQh4Mky4jEz5aqk57F72C5CIGh4w++mNBB9AznYJjLfO5S3xyo+ak06mK
-         7UI2D4FO1GjsLA9rCCY79jYm8YuzvKEDdkGsKc1TXEnHuRw19Rzy8XZpiiC4ROXWIMRA
-         RmkA==
-X-Gm-Message-State: AC+VfDyn9ImRjMKzCZyofqSkU0C9LwO1myJs/JK5H3WI3L0Cp20HA/YH
-        7YLNsDnyqYvpT98YT2UNkU/efg==
-X-Google-Smtp-Source: ACHHUZ69Mr3ytCwbUFh1zGQoEbiGYyUW20IKowwatT9sHBg2KFGkbsAZRez464428oxbWJ2XCzKDRQ==
-X-Received: by 2002:a2e:3318:0:b0:2b1:b68d:b10c with SMTP id d24-20020a2e3318000000b002b1b68db10cmr2079491ljc.32.1685843228375;
-        Sat, 03 Jun 2023 18:47:08 -0700 (PDT)
+        bh=yyuq1OAkX1njnwRBO2trMGeyKaw4cQAV1Knyp+U6sec=;
+        b=IgIA6UIfjJZ368w6YpI+uwcF4ThmljWX7q2ZdYR/8vdp9+grgip8HyfmmOdV67OIRE
+         SYExBTELZD+xZWQgeYR79nXbRI7hX/1f5K/u1wv5RudmX8w50zh22cUuGR41c0qiApGT
+         lW7zQNFv6/93bqp1ixuND9utl2gwNMDSnF7hPrgh2ID6MOPEBy3Q+/uaFXoYJzihMTW5
+         yVrtTlPRrqBV1ATnRg/wLlt1tQc47mWnPC65p+oSyaCMhFKcQFLGRJ6pnEO4AdNo0gFP
+         FiTN2gfJ6ML2ZRkjNzvxVNS0bGmfsu1zMTfPnbz0ebJw+w2x5tOitpWxIiK0e6n1oKum
+         tSsw==
+X-Gm-Message-State: AC+VfDx5Ic8mta0VlQfrq+v0gO6Xxb2XdfcSQu2pRLlfamGpk/l9UdXZ
+        PVJQWudFuz8nIpMR5SDDUVf3Dg==
+X-Google-Smtp-Source: ACHHUZ75Cw+rmmH9r3AmD2CjoBK8KWeZVioVZDvuSIkimmNEVZfs8IpYHmDoXKzsvs9dItdifAGhXw==
+X-Received: by 2002:a2e:a41b:0:b0:2b1:a8b9:4543 with SMTP id p27-20020a2ea41b000000b002b1a8b94543mr2026139ljn.53.1685843885452;
+        Sat, 03 Jun 2023 18:58:05 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id d4-20020a2e8904000000b002b1bb9a3febsm464479lji.74.2023.06.03.18.47.07
+        by smtp.gmail.com with ESMTPSA id i21-20020ac25235000000b004ec7c0f2178sm645352lfl.63.2023.06.03.18.58.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 03 Jun 2023 18:47:07 -0700 (PDT)
-Message-ID: <e242509b-6602-9a70-a624-0141673fd75c@linaro.org>
-Date:   Sun, 4 Jun 2023 04:47:06 +0300
+        Sat, 03 Jun 2023 18:58:04 -0700 (PDT)
+Message-ID: <de718a32-cc3d-849e-522a-dca9a17e1a4b@linaro.org>
+Date:   Sun, 4 Jun 2023 04:58:04 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH 3/3] drm/msm/dp: Clean up pdev/dev duplication in dp_power
+Subject: Re: [PATCH] drm/msm: Use struct fb_info.screen_buffer
 Content-Language: en-GB
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Johan Hovold <johan+linaro@kernel.org>,
-        Vinod Polimera <quic_vpolimer@quicinc.com>,
-        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-References: <20230515030256.300104-1-quic_bjorande@quicinc.com>
- <20230515030256.300104-3-quic_bjorande@quicinc.com>
- <d7d27051-2853-c979-b965-3cad47f2b693@linaro.org>
- <euxiqfx3q5cs3z2unai67w3h33y225whstauqezwbcx4pcqegl@jct5c7crcet7>
+To:     Thomas Zimmermann <tzimmermann@suse.de>, robdclark@gmail.com,
+        quic_abhinavk@quicinc.com, sean@poorly.run, airlied@gmail.com,
+        daniel@ffwll.ch
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20230522191701.13406-1-tzimmermann@suse.de>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <euxiqfx3q5cs3z2unai67w3h33y225whstauqezwbcx4pcqegl@jct5c7crcet7>
+In-Reply-To: <20230522191701.13406-1-tzimmermann@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -85,80 +77,15 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/05/2023 06:53, Bjorn Andersson wrote:
-> On Sat, May 20, 2023 at 04:26:59AM +0300, Dmitry Baryshkov wrote:
->> On 15/05/2023 06:02, Bjorn Andersson wrote:
->>> The dp_power module keeps track of both the DP controller's struct
->>> platform_device and struct device - with the prior pulled out of the
->>> dp_parser module.
->>>
->>> Clean up the duplication by dropping the platform_device reference and
->>> just track the passed struct device.
->>>
->>> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
->>> ---
->>>    drivers/gpu/drm/msm/dp/dp_power.c | 16 +++++++---------
->>>    1 file changed, 7 insertions(+), 9 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/dp/dp_power.c b/drivers/gpu/drm/msm/dp/dp_power.c
->>> index 031d2eefef07..9be645f91211 100644
->>> --- a/drivers/gpu/drm/msm/dp/dp_power.c
->>> +++ b/drivers/gpu/drm/msm/dp/dp_power.c
->>> @@ -14,7 +14,6 @@
->>>    struct dp_power_private {
->>>    	struct dp_parser *parser;
->>> -	struct platform_device *pdev;
->>>    	struct device *dev;
->>>    	struct drm_device *drm_dev;
->>>    	struct clk *link_clk_src;
->>> @@ -28,7 +27,7 @@ static int dp_power_clk_init(struct dp_power_private *power)
->>>    {
->>>    	int rc = 0;
->>>    	struct dss_module_power *core, *ctrl, *stream;
->>> -	struct device *dev = &power->pdev->dev;
->>> +	struct device *dev = power->dev;
->>>    	core = &power->parser->mp[DP_CORE_PM];
->>>    	ctrl = &power->parser->mp[DP_CTRL_PM];
->>> @@ -153,7 +152,7 @@ int dp_power_client_init(struct dp_power *dp_power)
->>>    	power = container_of(dp_power, struct dp_power_private, dp_power);
->>> -	pm_runtime_enable(&power->pdev->dev);
->>> +	pm_runtime_enable(power->dev);
->>>    	return dp_power_clk_init(power);
->>>    }
->>> @@ -164,7 +163,7 @@ void dp_power_client_deinit(struct dp_power *dp_power)
->>>    	power = container_of(dp_power, struct dp_power_private, dp_power);
->>> -	pm_runtime_disable(&power->pdev->dev);
->>> +	pm_runtime_disable(power->dev);
->>>    }
->>>    int dp_power_init(struct dp_power *dp_power, bool flip)
->>> @@ -174,11 +173,11 @@ int dp_power_init(struct dp_power *dp_power, bool flip)
->>>    	power = container_of(dp_power, struct dp_power_private, dp_power);
->>> -	pm_runtime_get_sync(&power->pdev->dev);
->>> +	pm_runtime_get_sync(power->dev);
->>>    	rc = dp_power_clk_enable(dp_power, DP_CORE_PM, true);
->>>    	if (rc)
->>> -		pm_runtime_put_sync(&power->pdev->dev);
->>> +		pm_runtime_put_sync(power->dev);
->>>    	return rc;
->>>    }
->>> @@ -190,7 +189,7 @@ int dp_power_deinit(struct dp_power *dp_power)
->>>    	power = container_of(dp_power, struct dp_power_private, dp_power);
->>>    	dp_power_clk_enable(dp_power, DP_CORE_PM, false);
->>> -	pm_runtime_put_sync(&power->pdev->dev);
->>> +	pm_runtime_put_sync(power->dev);
->>>    	return 0;
->>>    }
->>> @@ -199,12 +198,11 @@ struct dp_power *dp_power_get(struct device *dev, struct dp_parser *parser)
->>
->> Technically we don't even need to pass struct device here, we can get it
->> from parser->pdev->dev.
->>
+On 22/05/2023 22:17, Thomas Zimmermann wrote:
+> The fbdev framebuffer is in system memory. Store the address in
+> the field 'screen_buffer'. Fixes the following sparse warning.
 > 
-> Right, but afaict dp_init_sub_modules() passes struct device * as first
-> parameter to all the "module" initializers. So it feels reasonable to
-> keep it, for now, for symmetry.
+> ../drivers/gpu/drm/msm/msm_fbdev.c:124:26: warning: incorrect type in assignment (different address spaces)
+> ../drivers/gpu/drm/msm/msm_fbdev.c:124:26:    expected char [noderef] __iomem *screen_base
+> ../drivers/gpu/drm/msm/msm_fbdev.c:124:26:    got void *
 > 
-> What do you think?
+> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
