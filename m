@@ -2,35 +2,35 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B3047217F4
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jun 2023 16:56:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03367721816
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jun 2023 17:04:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231791AbjFDO4m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Jun 2023 10:56:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33056 "EHLO
+        id S231231AbjFDPEo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Jun 2023 11:04:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231916AbjFDO4m (ORCPT
+        with ESMTP id S229578AbjFDPEo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Jun 2023 10:56:42 -0400
-Received: from smtp.smtpout.orange.fr (smtp-25.smtpout.orange.fr [80.12.242.25])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8F29CA
-        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Jun 2023 07:56:39 -0700 (PDT)
+        Sun, 4 Jun 2023 11:04:44 -0400
+Received: from smtp.smtpout.orange.fr (smtp-29.smtpout.orange.fr [80.12.242.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34250A8
+        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Jun 2023 08:04:43 -0700 (PDT)
 Received: from pop-os.home ([86.243.2.178])
         by smtp.orange.fr with ESMTPA
-        id 5p9nqXazR0h9k5p9nqRBSI; Sun, 04 Jun 2023 16:56:37 +0200
+        id 5pHaqkubz3VqD5pHaqmLaW; Sun, 04 Jun 2023 17:04:41 +0200
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-        s=t20230301; t=1685890597;
-        bh=yUaA6iuQ+wEq2pR0TTwubVvItnjACHFQxAMGLNFZLXc=;
+        s=t20230301; t=1685891081;
+        bh=NfjbgkAX/VWQ3hWeynVgd6EdQsxLuZ5+rb8DZm9QVqs=;
         h=From:To:Cc:Subject:Date;
-        b=mMHiVsx0L/Wo7j7u0lVmTjpJqxcW22V7qqbr7+xp8MfIeWnrIvcT+whm9RpjuDHJG
-         HdG8VPA7o/RzclfA+4MTBo1zyfWoBcwfB9fkfBoXAHjLmuXokxVRfY0S88LOifaOPO
-         WHkw9VboJnGcypPIkYCKAeSjHi0VRhlotQrF2fdvuilcA826dmrATM8e/wNGdCKlJ8
-         tY3eZaHiO/DTE+EN4LYMzr3sJjf1kfBk6A/xqdlLBYqng8TRgK+bLxu8CDDL6JVS4O
-         g1qpHslIg5fF6YLg9MTAvdwJt68q4i7PKxKOcVoCLFOFSkCrWLE5K9hfI+dzOkJoMb
-         D6k3cxiftJysw==
+        b=hULECYwvTeJyaJ2a7O6eNOVCbIezpWGQL6hghC6xVzVT2MYnklEtC0aLHdKHN+5FO
+         3VFeh//4tZktLv43+8sEoGBgPk+goBtMM3L2cmRfH/ow65WiqS6Hm5zE10g1DhMMhM
+         HC46iYgxTbWhp9Gq0SUgAC6lgOUYPtZY5XyyrJ6iyiT3ukanR9KvY0NgBb679/qFtK
+         t/7hUCAKXCqk4HY7DG/oB/eJGNbVLBM8gNM91J7NX9lXfI73kUMT2tYfh05wAU7JKS
+         yVLWamHgANOWVhShruMjwn4L3PrQGI87lX7gsSLVERMHd1JrR+X1d5JPWVSf8x17bY
+         wBu6qbf39zZoA==
 X-ME-Helo: pop-os.home
 X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Sun, 04 Jun 2023 16:56:37 +0200
+X-ME-Date: Sun, 04 Jun 2023 17:04:41 +0200
 X-ME-IP: 86.243.2.178
 From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 To:     Andy Gross <agross@kernel.org>,
@@ -38,53 +38,61 @@ To:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Shawn Guo <shawn.guo@linaro.org>
+        Felipe Balbi <felipe.balbi@linux.intel.com>,
+        Lee Jones <lee@kernel.org>
 Cc:     linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org,
         Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
         linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org
-Subject: [PATCH] usb: dwc3: qcom: Fix an error handling path in dwc3_qcom_probe()
-Date:   Sun,  4 Jun 2023 16:56:34 +0200
-Message-Id: <b69fa8dd68d816e7d24c88d3eda776ceb28c5dc5.1685890571.git.christophe.jaillet@wanadoo.fr>
+Subject: [PATCH] usb: dwc3: qcom: Release the correct resources in dwc3_qcom_remove()
+Date:   Sun,  4 Jun 2023 17:04:37 +0200
+Message-Id: <c0215a84cdf18fb3514c81842783ec53cf149deb.1685891059.git.christophe.jaillet@wanadoo.fr>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-If dwc3_qcom_create_urs_usb_platdev() fails, some resources still need to
-be released, as already done in the other error handling path of the
-probe.
+In the probe, some resources are allocated with
+dwc3_qcom_of_register_core() or dwc3_qcom_acpi_register_core(). The
+corresponding resources are already coorectly freed in the error handling
+path of the probe, but not in the remove function.
 
-Fixes: c25c210f590e ("usb: dwc3: qcom: add URS Host support for sdm845 ACPI boot")
+Fix it.
+
+Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
 Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 ---
- drivers/usb/dwc3/dwc3-qcom.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/usb/dwc3/dwc3-qcom.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 822735814050..aa96c473f839 100644
+index aa96c473f839..9c95f1d909ba 100644
 --- a/drivers/usb/dwc3/dwc3-qcom.c
 +++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -856,9 +856,10 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 			if (IS_ERR_OR_NULL(qcom->urs_usb)) {
- 				dev_err(dev, "failed to create URS USB platdev\n");
- 				if (!qcom->urs_usb)
--					return -ENODEV;
-+					ret = -ENODEV;
- 				else
--					return PTR_ERR(qcom->urs_usb);
-+					ret = PTR_ERR(qcom->urs_usb);
-+				goto clk_disable;
- 			}
- 		}
- 	}
+@@ -942,11 +942,15 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+ static void dwc3_qcom_remove(struct platform_device *pdev)
+ {
+ 	struct dwc3_qcom *qcom = platform_get_drvdata(pdev);
++	struct device_node *np = pdev->dev.of_node;
+ 	struct device *dev = &pdev->dev;
+ 	int i;
+ 
+ 	device_remove_software_node(&qcom->dwc3->dev);
+-	of_platform_depopulate(dev);
++	if (np)
++		of_platform_depopulate(&pdev->dev);
++	else
++		platform_device_put(pdev);
+ 
+ 	for (i = qcom->num_clocks - 1; i >= 0; i--) {
+ 		clk_disable_unprepare(qcom->clks[i]);
 -- 
 2.34.1
 
