@@ -2,72 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E7F60721551
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jun 2023 09:23:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 709B57215AF
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jun 2023 11:11:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230003AbjFDHXb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Jun 2023 03:23:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47942 "EHLO
+        id S230523AbjFDJLZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Jun 2023 05:11:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230168AbjFDHXa (ORCPT
+        with ESMTP id S229507AbjFDJLX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Jun 2023 03:23:30 -0400
-Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2BE8CDF;
-        Sun,  4 Jun 2023 00:23:29 -0700 (PDT)
-Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-33aa60f4094so12024045ab.1;
-        Sun, 04 Jun 2023 00:23:29 -0700 (PDT)
+        Sun, 4 Jun 2023 05:11:23 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73D59DE
+        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Jun 2023 02:11:22 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id a640c23a62f3a-976a0a1a92bso285966566b.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Jun 2023 02:11:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685869881; x=1688461881;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZcvHDMkzrwljyNeqpGNC3T31sTZEZ5CPQHa0w+swo54=;
+        b=VoEiuTKhox4FxPtyHUZo0MDz2jEB3iPUWcOtskKnYlgI5xUfeeyHR80H/Xd8y50x4a
+         Xmz4lF80hj3Awe6QSk3OFrXBJ2mkg+wRmUa4AjbiHmGbb2tYYEgvqKnOQfZ4sEECVaNu
+         wwlQZ7svBYxm1tVo4PPoADDBNcrY2uWK1BdZV8ka2tAD/hs6CQ44W1hRMwqYFWSvtq8F
+         7KDq9y+DqpD5/x0//twWxOTfI4trd7Dt2MUNdSUpPnWHfR75VnBQB+87sYRTB0z+cZTJ
+         kzciNhrKF1dibz+jtrTEw/oClcIrGdK57FbxsIioAzw/5C6ky22BUiBGH1ukKkYn6bru
+         k0YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685863408; x=1688455408;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=zgPKCKVWGaVP4PRgO+7v9O84nNu7FFnZbyDG2O38/nk=;
-        b=TEeUW7+YvLKNYJN6nNn/Ch8rU4TALPH/9HH25DuQlm72ogNRmUQuV1hLdVHSjELapf
-         wpEedZnkb/jaSnCzYaymACy7PsXAVU/vEVwpqMCzkiz5NF49ZnqNVBoF/NfJZzgVqdgq
-         0Ro1vxKgmnHWRXJP32XIR3ehfEO+2heJ54Rlq3XXXvYjk325oh/vU1GsPqOaZr2/ctlt
-         2mv4QD7Y20ncoqtq05v2GDmo/zYyGo6daBBqL0jdKW1AgUiNWT4WwG0UO61BI77O/DKT
-         wgIeCCMeO5L3B6/9y9+75G2tKZcQtD8rRa9QFxJ5MDsJWKv0Bi97BHuH42CUzz2yvBGA
-         WjuQ==
-X-Gm-Message-State: AC+VfDw8PvIgkURkxD1NlU3frLBrOXRpmPg7Sq1/QMWoxbK47MDs/JNZ
-        zC1IFWqP+6G0zrX30PmB1Q==
-X-Google-Smtp-Source: ACHHUZ5mPo1CZA0UQUsgNUIwwXRnjWLAemMxRkV8hskeXDFwOSorGRHi5TrEITG+gXvs83p52nltEA==
-X-Received: by 2002:a92:2808:0:b0:331:acc9:b554 with SMTP id l8-20020a922808000000b00331acc9b554mr8701509ilf.14.1685863408372;
-        Sun, 04 Jun 2023 00:23:28 -0700 (PDT)
-Received: from robh_at_kernel.org ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id m13-20020a924b0d000000b003231580e8e2sm1529159ilg.6.2023.06.04.00.23.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Jun 2023 00:23:27 -0700 (PDT)
-Received: (nullmailer pid 3052774 invoked by uid 1000);
-        Sun, 04 Jun 2023 07:23:25 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20221208; t=1685869881; x=1688461881;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZcvHDMkzrwljyNeqpGNC3T31sTZEZ5CPQHa0w+swo54=;
+        b=AMUFZm2TnZbEvCME0rH/beOFoao6Kb9lkhaddoNM9cM3qwRFOm5eFu44y/wrpwDzZm
+         4Eh+hVJdGz5USNOvvc3a+ETuih79RNS4JqpGn0GsL+kDWKo6s28ImKGnaCik0ggp/Y9v
+         MIh2nPSZ3N1lM568P0h3BUbVMWWn6tpJ08LUEY6lY0NTE9W8LqDPq3pCCo/yJenv0kYM
+         1bnR9X+kzV9yTzNLRJjlPWQtIiZdSVYZL2ugPsw3emchjIvDengeiZdFR5Wxn5uHI0Zf
+         Q1qAlASBiJLndSRza7L2T93bUPv1expLtzyGHjbaREUgr7aREDiP0EjVs31O+qequIH6
+         z2GA==
+X-Gm-Message-State: AC+VfDzdp54mrrKuAvhBeCqrfZYp3IUmd7vy48tnRPsbewnwyx+cZ5z0
+        QO1MGb5ur7fysXpGFHBoT0OIYQ==
+X-Google-Smtp-Source: ACHHUZ6Ja8AuRkcS56tswppum6NJfV+7Lt04jvt9yGevB0CVpYfVOuZ3hgOMDkFyPLTTP0esvYYDTQ==
+X-Received: by 2002:a17:906:fe04:b0:96f:45cd:6c21 with SMTP id wy4-20020a170906fe0400b0096f45cd6c21mr3643942ejb.30.1685869880966;
+        Sun, 04 Jun 2023 02:11:20 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.199.204])
+        by smtp.gmail.com with ESMTPSA id be21-20020a0564021a3500b00514b0f6a75esm2525893edb.97.2023.06.04.02.11.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 04 Jun 2023 02:11:20 -0700 (PDT)
+Message-ID: <05658f98-ddc1-702b-ea4b-4ea95d0b3313@linaro.org>
+Date:   Sun, 4 Jun 2023 11:11:18 +0200
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Rudraksha Gupta <guptarud@gmail.com>
-Cc:     Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-phy@lists.infradead.org, Olof Johansson <olof@lixom.net>,
-        Vinod Koul <vkoul@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        soc@kernel.org, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Rob Herring <robh+dt@kernel.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH 1/3] dt-bindings: remoteproc: qcom,msm8996-mss-pil: Add
+ SDM660 compatible
+To:     Alexey Minnekhanov <alexeymin@postmarketos.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-kernel@vger.kernel.org,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org
-In-Reply-To: <20230604063032.365775-3-guptarud@gmail.com>
-References: <20230604063032.365775-1-guptarud@gmail.com>
- <20230604063032.365775-3-guptarud@gmail.com>
-Message-Id: <168586340547.3052749.2763112173580157119.robh@kernel.org>
-Subject: Re: [PATCH v3 2/4] dt-bindings: phy: qcom,usb-hs-phy: Add
- compatible
-Date:   Sun, 04 Jun 2023 01:23:25 -0600
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20230604061421.3787649-1-alexeymin@postmarketos.org>
+Content-Language: en-US
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230604061421.3787649-1-alexeymin@postmarketos.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,43 +84,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Sun, 04 Jun 2023 02:30:19 -0400, Rudraksha Gupta wrote:
-> Adds qcom,usb-hs-phy-msm8960 compatible
+On 04/06/2023 08:14, Alexey Minnekhanov wrote:
+> Mention sdm660-mss-pil in compatibles list.
 > 
-> Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
+> Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
 > ---
->  Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml | 5 ++++-
+>  .../devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml | 5 ++++-
 >  1 file changed, 4 insertions(+), 1 deletion(-)
 > 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml
+> index c1ac6ca1e759d..09da5616e1e5a 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,msm8996-mss-pil.yaml
+> @@ -19,6 +19,7 @@ properties:
+>      enum:
+>        - qcom,msm8996-mss-pil
+>        - qcom,msm8998-mss-pil
+> +      - qcom,sdm660-mss-pil
+>        - qcom,sdm845-mss-pil
+>  
+>    reg:
+> @@ -245,7 +246,9 @@ allOf:
+>    - if:
+>        properties:
+>          compatible:
+> -          const: qcom,msm8998-mss-pil
+> +          enum:
+> +            - qcom,msm8998-mss-pil
+> +            - qcom,sdm660-mss-pil
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+You also need to restrict/constrain power domains and resets.
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.example.dtb: phy: resets: [[4294967295, 10], [1, 0]] is too long
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.example.dtb: phy: reset-names:0: 'por' was expected
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.example.dtb: phy: reset-names: ['phy', 'por'] is too long
-	From schema: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/phy/qcom,usb-hs-phy.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230604063032.365775-3-guptarud@gmail.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Best regards,
+Krzysztof
 
