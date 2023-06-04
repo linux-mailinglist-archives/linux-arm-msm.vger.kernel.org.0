@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B1A7C7219D2
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jun 2023 22:36:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 306797219D5
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  4 Jun 2023 22:36:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231618AbjFDUf7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Jun 2023 16:35:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55732 "EHLO
+        id S229680AbjFDUgB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 4 Jun 2023 16:36:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231389AbjFDUf7 (ORCPT
+        with ESMTP id S231723AbjFDUgA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Jun 2023 16:35:59 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D37D4D2
-        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Jun 2023 13:35:57 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f62b552751so171426e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Jun 2023 13:35:57 -0700 (PDT)
+        Sun, 4 Jun 2023 16:36:00 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E12D4CF
+        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Jun 2023 13:35:58 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f3b9755961so5079922e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Jun 2023 13:35:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685910956; x=1688502956;
+        d=linaro.org; s=google; t=1685910957; x=1688502957;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/7a2jHc/DyhJMJRLInb6BfdZQNZbmd1K8XURm/ZPutU=;
-        b=FoPaNe3tRvupOMuLv4A5B38++2L7Kg2ZkK0T4iT6IfiuPA4dAhj4jnQgDJYo6NrAjt
-         WVfRBUPDcvkmHyufqzUOylzw7Pb/yIFPKkd+sOC+93ZlAmwqJhP28J+ljQvF0nGPb/Iz
-         u1LmX00Wj3Kkvy2vb5QBF4RT2GNfoT6GFgaHlnrNgSCdTSdPd8IoJXrOVj7GrQso76kV
-         ELjoVZQQBKj5cu7Gz8+MeJ41+tya1mZMwxM9MTnwR0gdwjQ4oCwyPR47WE48jXgowGg3
-         ggrdmgRULpyZ2YPoxJ/lwI2k9adcSS8SH0pipzZdr1ethWpZ37QrPJLXO/H2GA+5999d
-         ggwg==
+        bh=pgF29by2cX+xVh67NQRQCW8xUhS6ue0+V88q6lvLAK0=;
+        b=ryzQKtmBvaP+jNevXTcSucgI8XjR3u/JwT1lDcOXkHD57B1+MhAgm/CBvpPBqcyRas
+         CEJ7dKBP5vrBPOfG85TAoCOVij9XwhbtNRlhpQKQOUJxEd+q3YLcXdPiPssZkzNwG6Jz
+         22mir+r0vRG1BuOUT+hnwnLEJNb+3aRxpeRGVC90gfED/8kbfItb5vk1Bb+JaDcxBo4U
+         buLBRHGPjwgjQGlQUt7uXM9o+Umy5cWyaQaLosdeChfEKkUAetvPN3A9LY3XQ+4giskY
+         nrg9Dr9acqQcAPTm3q8cjv4bfjaYGfa3Gzz0cfZw6p5QSiaGQJhv0AoMfoR4tjEOPabq
+         kd9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685910956; x=1688502956;
+        d=1e100.net; s=20221208; t=1685910957; x=1688502957;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/7a2jHc/DyhJMJRLInb6BfdZQNZbmd1K8XURm/ZPutU=;
-        b=KD+2i0O10X0VYzF1QoLrCQ0W9YGN7XX/uBmSeUP0doRiAj4ne/SKJvzAOO4iobO9bQ
-         13e91eaCeRAcDvQxTnBZAmIEr3KFrGGV8uhv1m1nK6MwBcgcyt2D5MV/IoLXn8KvOgQA
-         8A+59INY7+MLP2pUzIafsgeV4n1zBZGEufyL4pSH2yu4Z3EzsZ1ruU/2BIDcwkXoDPDL
-         lBHSK9cO5NYrQSy98+h05qPN4skN2jqq3XzQAGt4/oSixfvTcXF70ZPWcZSP3ZhoySFb
-         yQDXllKtJDlNTaz3nESmw35/A+RAG4Zbx5izwUFcHWWpIVbwJaoCyxF32J1qKaDirwZv
-         DPdw==
-X-Gm-Message-State: AC+VfDyUuiLI5ndYcQb4ok2rlem8S2f/a+SIUntxtKX5oke/HQ9rM4Wn
-        JfF94yOqPI8wsKB7P2KICRoDC3LwRq2bkTzFKKo=
-X-Google-Smtp-Source: ACHHUZ7zTf4TXsYk0/vhYYCbDsdxyTE/J+oWK9bWiB9cywLifJiFRJR+1PS5/RcwI6j1Ge+FGV2YCA==
-X-Received: by 2002:ac2:5e9d:0:b0:4f3:872d:10ff with SMTP id b29-20020ac25e9d000000b004f3872d10ffmr4779543lfq.64.1685910956229;
-        Sun, 04 Jun 2023 13:35:56 -0700 (PDT)
+        bh=pgF29by2cX+xVh67NQRQCW8xUhS6ue0+V88q6lvLAK0=;
+        b=dt8dakuezl0OL6i89KNcmlyVKL6SAS/brX+WVUdR9pci1JIx2OXd+gHv1MfG6KnEk7
+         y/XuRjxVd2KxHuIHTsClmNr2FMUfhlQ78+WCeewzIpxQkB/WQFsMl2xQxkT/Mhq9ZSsd
+         I6kepKmoDkDuIlJVYqirfy+Kb1aqpz/3V8pGCJuKq2NPlVvJZW5Yh/TwAvDhAfP3uak1
+         lFAGJoAqFmEqU/lCHpCZhSUg58xjIlJ4Rtoq+TdmghsbkhpIh6l8bGnVfPgpemvHgjwE
+         bnHI08dDcyKl+InVZU1flAFPJWcJnNtQaro1rnFdnPnPvN6q7XnP9rNdjpRfrgkruM0x
+         5Y8Q==
+X-Gm-Message-State: AC+VfDyTgiAARGGgvr+q5/omy1vNSSf5gD7+QfZIVEglogb0PmxJh/T9
+        gbC7A+0jCWcyTDRReSE1Hofu6Q==
+X-Google-Smtp-Source: ACHHUZ4iJHEjL5CYMphetkyMeOZ/TkMqMKi9QrR3WJgYLZi+BwYyVt9s7wGvkj+EJLIn6urgGx7RZQ==
+X-Received: by 2002:a05:6512:3882:b0:4f2:5d38:2c37 with SMTP id n2-20020a056512388200b004f25d382c37mr4977659lft.15.1685910957190;
+        Sun, 04 Jun 2023 13:35:57 -0700 (PDT)
 Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id a19-20020a19f813000000b004f2794dcb4asm875822lff.255.2023.06.04.13.35.55
+        by smtp.gmail.com with ESMTPSA id a19-20020a19f813000000b004f2794dcb4asm875822lff.255.2023.06.04.13.35.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 04 Jun 2023 13:35:55 -0700 (PDT)
+        Sun, 04 Jun 2023 13:35:56 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -60,9 +60,9 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH 21/22] drm/msm/dpu: drop empty features mask INTF_SDM845_MASK
-Date:   Sun,  4 Jun 2023 23:35:31 +0300
-Message-Id: <20230604203532.1094249-22-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 22/22] drm/msm/dpu: move DPU_PINGPONG_DSC to PINGPONG_SDM845_MASK
+Date:   Sun,  4 Jun 2023 23:35:32 +0300
+Message-Id: <20230604203532.1094249-23-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230604203532.1094249-1-dmitry.baryshkov@linaro.org>
 References: <20230604203532.1094249-1-dmitry.baryshkov@linaro.org>
@@ -78,100 +78,109 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The INTF_SDM845_MASK features mask is zero. Drop it completely.
+Move BIT(DPU_PINGPONG_DSC) back to PINGPONG_SDM845_MASK, we do not have
+to be that explicit anymore.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h | 4 ----
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h  | 4 ----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c          | 2 --
- 3 files changed, 10 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h | 8 ++++----
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h  | 8 ++++----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c          | 2 +-
+ 3 files changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-index a7940b6a2034..21744d2b3fe0 100644
+index 21744d2b3fe0..82c098725112 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
-@@ -254,7 +254,6 @@ static const struct dpu_intf_cfg msm8998_intf[] = {
+@@ -204,7 +204,7 @@ static const struct dpu_pingpong_cfg msm8998_pp[] = {
  	{
- 		.name = "intf_0", .id = INTF_0,
- 		.base = 0x6a000, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_0,
- 		.prog_fetch_lines_worst_case = 21,
-@@ -264,7 +263,6 @@ static const struct dpu_intf_cfg msm8998_intf[] = {
+ 		.name = "pingpong_0", .id = PINGPONG_0,
+ 		.base = 0x70000, .len = 0xd4,
+-		.features = PINGPONG_SDM845_TE2_MASK | BIT(DPU_PINGPONG_TE),
++		.features = PINGPONG_SDM845_TE2_MASK,
+ 		.sblk = &sdm845_pp_sblk_te,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+ 		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
+@@ -212,7 +212,7 @@ static const struct dpu_pingpong_cfg msm8998_pp[] = {
  	{
- 		.name = "intf_1", .id = INTF_1,
- 		.base = 0x6a800, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DSI,
- 		.controller_id = MSM_DSI_CONTROLLER_0,
- 		.prog_fetch_lines_worst_case = 21,
-@@ -274,7 +272,6 @@ static const struct dpu_intf_cfg msm8998_intf[] = {
+ 		.name = "pingpong_1", .id = PINGPONG_1,
+ 		.base = 0x70800, .len = 0xd4,
+-		.features = PINGPONG_SDM845_TE2_MASK | BIT(DPU_PINGPONG_TE),
++		.features = PINGPONG_SDM845_TE2_MASK,
+ 		.sblk = &sdm845_pp_sblk_te,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+ 		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13),
+@@ -220,7 +220,7 @@ static const struct dpu_pingpong_cfg msm8998_pp[] = {
  	{
- 		.name = "intf_2", .id = INTF_2,
- 		.base = 0x6b000, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DSI,
- 		.controller_id = MSM_DSI_CONTROLLER_1,
- 		.prog_fetch_lines_worst_case = 21,
-@@ -284,7 +281,6 @@ static const struct dpu_intf_cfg msm8998_intf[] = {
+ 		.name = "pingpong_2", .id = PINGPONG_2,
+ 		.base = 0x71000, .len = 0xd4,
+-		.features = PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE),
++		.features = PINGPONG_SDM845_MASK,
+ 		.sblk = &sdm845_pp_sblk,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+ 		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14),
+@@ -228,7 +228,7 @@ static const struct dpu_pingpong_cfg msm8998_pp[] = {
  	{
- 		.name = "intf_3", .id = INTF_3,
- 		.base = 0x6b800, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_HDMI,
- 		.prog_fetch_lines_worst_case = 21,
- 		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 30),
+ 		.name = "pingpong_3", .id = PINGPONG_3,
+ 		.base = 0x71800, .len = 0xd4,
+-		.features = PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE),
++		.features = PINGPONG_SDM845_MASK,
+ 		.sblk = &sdm845_pp_sblk,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+ 		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15),
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-index 9dd864c47d48..a0b3bdf2e450 100644
+index a0b3bdf2e450..a53881669206 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
 +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
-@@ -254,7 +254,6 @@ static const struct dpu_intf_cfg sdm845_intf[] = {
+@@ -200,7 +200,7 @@ static const struct dpu_pingpong_cfg sdm845_pp[] = {
  	{
- 		.name = "intf_0", .id = INTF_0,
- 		.base = 0x6a000, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_0,
- 		.prog_fetch_lines_worst_case = 24,
-@@ -264,7 +263,6 @@ static const struct dpu_intf_cfg sdm845_intf[] = {
+ 		.name = "pingpong_0", .id = PINGPONG_0,
+ 		.base = 0x70000, .len = 0xd4,
+-		.features = PINGPONG_SDM845_TE2_MASK | BIT(DPU_PINGPONG_TE),
++		.features = PINGPONG_SDM845_TE2_MASK,
+ 		.sblk = &sdm845_pp_sblk_te,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+ 		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 12),
+@@ -208,7 +208,7 @@ static const struct dpu_pingpong_cfg sdm845_pp[] = {
  	{
- 		.name = "intf_1", .id = INTF_1,
- 		.base = 0x6a800, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DSI,
- 		.controller_id = MSM_DSI_CONTROLLER_0,
- 		.prog_fetch_lines_worst_case = 24,
-@@ -274,7 +272,6 @@ static const struct dpu_intf_cfg sdm845_intf[] = {
+ 		.name = "pingpong_1", .id = PINGPONG_1,
+ 		.base = 0x70800, .len = 0xd4,
+-		.features = PINGPONG_SDM845_TE2_MASK | BIT(DPU_PINGPONG_TE),
++		.features = PINGPONG_SDM845_TE2_MASK,
+ 		.sblk = &sdm845_pp_sblk_te,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 9),
+ 		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 13),
+@@ -216,7 +216,7 @@ static const struct dpu_pingpong_cfg sdm845_pp[] = {
  	{
- 		.name = "intf_2", .id = INTF_2,
- 		.base = 0x6b000, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DSI,
- 		.controller_id = MSM_DSI_CONTROLLER_1,
- 		.prog_fetch_lines_worst_case = 24,
-@@ -284,7 +281,6 @@ static const struct dpu_intf_cfg sdm845_intf[] = {
+ 		.name = "pingpong_2", .id = PINGPONG_2,
+ 		.base = 0x71000, .len = 0xd4,
+-		.features = PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE),
++		.features = PINGPONG_SDM845_MASK,
+ 		.sblk = &sdm845_pp_sblk,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 10),
+ 		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 14),
+@@ -224,7 +224,7 @@ static const struct dpu_pingpong_cfg sdm845_pp[] = {
  	{
- 		.name = "intf_3", .id = INTF_3,
- 		.base = 0x6b800, .len = 0x280,
--		.features = INTF_SDM845_MASK,
- 		.type = INTF_DP,
- 		.controller_id = MSM_DP_CONTROLLER_1,
- 		.prog_fetch_lines_worst_case = 24,
+ 		.name = "pingpong_3", .id = PINGPONG_3,
+ 		.base = 0x71800, .len = 0xd4,
+-		.features = PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE),
++		.features = PINGPONG_SDM845_MASK,
+ 		.sblk = &sdm845_pp_sblk,
+ 		.intr_done = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 11),
+ 		.intr_rdptr = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15),
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index aa45ed378884..206ff71227cb 100644
+index 206ff71227cb..6088164dc306 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -95,8 +95,6 @@
+@@ -76,7 +76,7 @@
+ 	(BIT(DPU_DIM_LAYER) | BIT(DPU_MIXER_COMBINED_ALPHA))
  
- #define DSPP_SC7180_MASK BIT(DPU_DSPP_PCC)
+ #define PINGPONG_SDM845_MASK \
+-	(BIT(DPU_PINGPONG_DITHER) | BIT(DPU_PINGPONG_DSC))
++	(BIT(DPU_PINGPONG_DITHER) | BIT(DPU_PINGPONG_TE) | BIT(DPU_PINGPONG_DSC))
  
--#define INTF_SDM845_MASK (0)
--
- #define INTF_SC7180_MASK \
- 	(BIT(DPU_INTF_INPUT_CTRL) | \
- 	 BIT(DPU_INTF_TE) | \
+ #define PINGPONG_SDM845_TE2_MASK \
+ 	(PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE2))
 -- 
 2.39.2
 
