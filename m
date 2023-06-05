@@ -2,85 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3619F722CBF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 18:35:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8376722CC4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 18:35:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234860AbjFEQff (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 12:35:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47872 "EHLO
+        id S234375AbjFEQfq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 12:35:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229590AbjFEQfZ (ORCPT
+        with ESMTP id S234783AbjFEQfj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 12:35:25 -0400
+        Mon, 5 Jun 2023 12:35:39 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7721EC;
-        Mon,  5 Jun 2023 09:35:24 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16CF5E6;
+        Mon,  5 Jun 2023 09:35:34 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6A3976281F;
-        Mon,  5 Jun 2023 16:35:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA573C433D2;
-        Mon,  5 Jun 2023 16:35:20 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9F56C6281F;
+        Mon,  5 Jun 2023 16:35:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64862C433EF;
+        Mon,  5 Jun 2023 16:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685982923;
-        bh=9MUmkLDtIToYd9V8NeIlMZ2u6glZyMADhdjMo7PXa/k=;
+        s=k20201202; t=1685982933;
+        bh=kzk1uLqR7lhr9MbM4g4pUuPLXhPsS5eosz4kR4msr3s=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=o9p3vloDHX1j/zkqijJx5n840xvdqcWa9nb+UxkHX546s1eNB8WZghVr2JfQ2SloE
-         ujooE/1fhezPJyZu1STyVIFo/5sbR/WPZI6b1rv5603nKQoCWSg3whzirKvfVr7M15
-         NOlafbciQ5cnRJagU4e+z42JXsySpUWkrq8KY78uyVnyvZ2mbBIZyW3ikuZWZq8/AO
-         CPLZ2EmC2hqbatV0VBRWs0klxIG/FVryjtAnUQ7cisrRznAazL9VL8TdGYhDDLpvoi
-         +m4nzW33PsGMJ5k5Myr6/969o+SN5t0CovZEZWq+5wA9Y8d/SDRrOdgYOQ9UB4DzSL
-         BuIoSeXoUnNJg==
+        b=hvY+Tt2nizHAIAgmP5WHt6hWuudvrSwOCe10koDSb3NB8He5rzfv5MxqH06/64Qsl
+         vB6ln02PopoxNU4jIuF7PgdtTKorOSpcLvj2h8MHpEtuOTwMrlJux/UDbAnajiQnZ6
+         fJVm6GDiqXBMKvwJrbcsx/p/Y2DomzS5tSnSYS5B5USJi878hgOiG/XpxEDNPujtE8
+         EImRhN4DcIUKooEg+HpKDOaBxMD2fZ4Ny2e1vRTLmnV1jIg7Kn8NlzqjjzAZotp6l2
+         Yu9uDf+YZe4UEGkM5+QrXbW2HNiXcWStzRF71cblpc5mUu5c3OTKv8kS7HJ3j11+/4
+         LCAcdE7Xdh3zw==
 From:   Will Deacon <will@kernel.org>
-To:     Joerg Roedel <joro@8bytes.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>
+To:     conor+dt@kernel.org, andersson@kernel.org, robin.murphy@arm.com,
+        maz@kernel.org, Rohit Agarwal <quic_rohiagar@quicinc.com>,
+        tglx@linutronix.de, robimarko@gmail.com, robh+dt@kernel.org,
+        agross@kernel.org, quic_gurus@quicinc.com, joro@8bytes.org,
+        konrad.dybcio@linaro.org, krzysztof.kozlowski+dt@linaro.org
 Cc:     catalin.marinas@arm.com, kernel-team@android.com,
-        Will Deacon <will@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        iommu@lists.linux.dev
-Subject: Re: [PATCH 0/2] SM6375 GPU SMMU
-Date:   Mon,  5 Jun 2023 17:35:04 +0100
-Message-Id: <168597965563.30054.140440008485884265.b4-ty@kernel.org>
+        Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/8] Add devicetree support for SDX75 Modem and IDP
+Date:   Mon,  5 Jun 2023 17:35:07 +0100
+Message-Id: <168597991653.31513.630869633781794728.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20230531-topic-sm6375_gpusmmu-v1-0-860943894c71@linaro.org>
-References: <20230531-topic-sm6375_gpusmmu-v1-0-860943894c71@linaro.org>
+In-Reply-To: <1684487350-30476-1-git-send-email-quic_rohiagar@quicinc.com>
+References: <1684487350-30476-1-git-send-email-quic_rohiagar@quicinc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-6.6 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,SUBJ_ALL_CAPS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 31 May 2023 17:04:22 +0200, Konrad Dybcio wrote:
-> This series hooks up the GPU SMMU, as well as GPUCC as its direct
-> dependency.
+On Fri, 19 May 2023 14:39:02 +0530, Rohit Agarwal wrote:
+> This series adds devicetree support for Qualcomm SDX75 platform and IDP
+> board. This series functionally depends on GCC and RPMh Clock support
+> series [1], and pinctrl support for SDX75 [2] which are under review.
 > 
-> The thing sadly can't seem to be able to do PPPT, not even on downstream..
+> With this current devicetree support, the IDP can boot into initramfsshell.
 > 
-> Depends on (bindings and functionality-wise):
-> https://lore.kernel.org/linux-arm-msm/20230529-topic-sm6375gpuccpd-v1-0-8d57c41a6066@linaro.org/
+> [1] https://lore.kernel.org/lkml/20230419133013.2563-3-quic_tdas@quicinc.com/
+> [2] https://lore.kernel.org/all/1684409015-25196-1-git-send-email-quic_rohiagar@quicinc.com/
 > 
 > [...]
 
 Applied bindings patch to will (for-joerg/arm-smmu/bindings), thanks!
 
-[1/2] dt-bindings: arm-smmu: Add SM6375 GPU SMMU
-      https://git.kernel.org/will/c/44984d56e059
+[4/8] dt-bindings: arm-smmu: Add SDX75 SMMU compatible
+      https://git.kernel.org/will/c/48989c0b25ca
 
 Cheers,
 -- 
