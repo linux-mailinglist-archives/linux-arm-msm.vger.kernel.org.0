@@ -2,67 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 613967224FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 13:56:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25362722504
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 13:57:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233005AbjFEL4W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 07:56:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36224 "EHLO
+        id S233111AbjFEL5z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 07:57:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37666 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232997AbjFEL4S (ORCPT
+        with ESMTP id S233104AbjFEL5y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 07:56:18 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28EE5D3
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 04:56:16 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f6ffc2b314so41938085e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 04:56:16 -0700 (PDT)
+        Mon, 5 Jun 2023 07:57:54 -0400
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 929EFDB
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 04:57:52 -0700 (PDT)
+Received: by mail-pg1-x534.google.com with SMTP id 41be03b00d2f7-543ae6ce8d1so935612a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 04:57:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685966174; x=1688558174;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=vkvtpUZa+WNJu/9LgV9hMES117F+4ewA0642BFfUJVw=;
-        b=BAYU4aFmBg0ZyMTZNGRbL3f/Z0s5Uy8eiKthMZGFw29QHdDhc2BdwQkGLm3O0hY02Q
-         Ys9ls4OwE1PFwpdx8TPaaSL4QDeWXbOVe5aheZzW/XtBAYPRXJvnxQlmEcg2ebsEEjPr
-         kToYHyGW3DDTcRnCFmvW4ZxWGsSxQD8QIXfec3UyHDGvIxdzAa6u3rdBsOLLD2EcYPWu
-         7hhJGgiwwAPjiGkBJSeiRis/pAtwm/YkB4zooWGt1ULMX3BNNsWsBGel5+BYKtZx3qxZ
-         ncQYRBYcmvjWo+8CsXZXMb9icJo/yyj4kL1V2X+MTIfG/jsrU06whRAZA7+VNY7YcR1f
-         2Mvg==
+        d=linaro.org; s=google; t=1685966272; x=1688558272;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=gouN0vd5luN8i9wXHezxl1lZ6vDwVZF4YFz6F585j8Y=;
+        b=sT46klF8oPWNCSa4tYk8NZg2AHnz7f5S6Qrc+YUQyeCMf4+wrktgvPVZn98ZfSxjzD
+         eODX6w96HN8Gbh/o5SQb528EcyO1nFLywQPOvBviBw03Q5vL11+SG50At4MQpeflGSVf
+         gWO3d3xj20zKPTjzX4MqiMKx+09WONcrPqJuwgAx1CRd48p/QYTK+36fWHTYhnesSesc
+         erQ93d9oM6wAtcHhDZE+wASrbFRHMxQAWo4PP3+QjQBX7rgP5u1XYSE77UgVg7pUYzFU
+         vJ0LDZbvN/T4BGpBbPz5ixl1IwG/x7Fz1Gz6NxIrwPzIVBJBsURER6y1HjXQ/y5Op0FZ
+         lW5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685966174; x=1688558174;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vkvtpUZa+WNJu/9LgV9hMES117F+4ewA0642BFfUJVw=;
-        b=lpkAUtU124rkmGRyyFZyardzUPeozcZEptxTiVBSr7jr7s9o2b+l1q6917pq8TcE2D
-         m8X7xBe0dxm/8uNYdzWiUiaN7VIazvERPRyUz1ygrlZ1xn/dSHXFVabh8StxmUn/vu5i
-         L+7bXqBG+eYXa/v/dbrdFGnWqhn3KSI+LCafeOipd0VUrllAc9Bf9Rk385vwwGOUvgeW
-         8qmCZaBM78hsRj+VM9sW4535e3eLRp+1eTHh0SCMVr+j4d+rY+8wzbe4mO9CvF9fHkWv
-         9SO04By4hviJmBl0bNDtfxsfzcUJVsmhmftUzLRjBhbQVQRG4qKX3TsX4pkIDf7XUlwv
-         n6Sg==
-X-Gm-Message-State: AC+VfDwg65r5SF8etAD+HzovqRery2xh79Ilk7ZxpmRwviJ2k0V5erQu
-        owVMIM6j8c7Ei2ohIJo15pN85g==
-X-Google-Smtp-Source: ACHHUZ6NZP6T00+DLX0Dq4eGhE7MGLZa7rHDq9fDuqmMsjSahFOJGidDf1eWYEJqDckwivYG+8Nmuw==
-X-Received: by 2002:a1c:ed03:0:b0:3f4:1ce0:a606 with SMTP id l3-20020a1ced03000000b003f41ce0a606mr7738878wmh.1.1685966174612;
-        Mon, 05 Jun 2023 04:56:14 -0700 (PDT)
-Received: from hackbox.lan ([86.121.163.20])
-        by smtp.gmail.com with ESMTPSA id n24-20020a7bc5d8000000b003f17848673fsm10631636wmk.27.2023.06.05.04.56.13
+        d=1e100.net; s=20221208; t=1685966272; x=1688558272;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gouN0vd5luN8i9wXHezxl1lZ6vDwVZF4YFz6F585j8Y=;
+        b=M4uCda2iFOyrPgaMBW9i/aHrl+m2tol1RGEtnnwtrsy4hsspVwXsBxtY9K/fbcHC5s
+         eNday9iTRQKuBvV2Ix8ZDMb3Cz3K/Atq+GxRv3mxet6Ei026IXKFyR2iU0LfVZ7ONeHN
+         Y69GOLOBFB3CEP4X22unCeHgcqPuVcBGBU9qHB4w6ygcqlSpQM/ohsx7DZTSZ6vVfhVq
+         giS7iJKgr3+IMAKVSZ2L1EsC+T2YkKPNDk47eazAkgrT5XLG7mgxgDtaTNWmajyhPH2+
+         c1cP9CVboJHEh+OgpbvVgqeoIIjTJGQDDUGb8YrAqOqqvjjv2G3K6Qhjg4lWupi+rw53
+         MslQ==
+X-Gm-Message-State: AC+VfDzmGdBiYuShBsS0rLiPFVd8lHYq6/MfO9TOdfryQywA2Oe27m/Y
+        4SzCIdTYL7X0UldLnbn9lbkB
+X-Google-Smtp-Source: ACHHUZ5W0Z8gQGBJ0iFzTR48CtwbHP4eM7wjSQDBRc0my5cbJYSwmnyjts94N8DkAgx5RE5bvqaMpA==
+X-Received: by 2002:a17:902:788c:b0:1af:babd:7b84 with SMTP id q12-20020a170902788c00b001afbabd7b84mr6300792pll.41.1685966271931;
+        Mon, 05 Jun 2023 04:57:51 -0700 (PDT)
+Received: from thinkpad ([120.138.12.115])
+        by smtp.gmail.com with ESMTPSA id jh1-20020a170903328100b001a6cd1e4205sm6404072plb.279.2023.06.05.04.57.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Jun 2023 04:56:14 -0700 (PDT)
-From:   Abel Vesa <abel.vesa@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Mark Brown <broonie@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: [PATCH] regulator: qcom-rpmh: Fix regulators for PM8550
-Date:   Mon,  5 Jun 2023 14:56:07 +0300
-Message-Id: <20230605115607.921308-1-abel.vesa@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        Mon, 05 Jun 2023 04:57:51 -0700 (PDT)
+Date:   Mon, 5 Jun 2023 17:27:46 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc:     kw@linux.com, kishon@kernel.org, bhelgaas@google.com,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dlemoal@kernel.org
+Subject: Re: [PATCH v6 2/9] PCI: endpoint: Pass EPF device ID to the probe
+ function
+Message-ID: <20230605115746.GD5536@thinkpad>
+References: <20230602114756.36586-1-manivannan.sadhasivam@linaro.org>
+ <20230602114756.36586-3-manivannan.sadhasivam@linaro.org>
+ <ZH2qbS1I25lIMOPi@lpieralisi>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZH2qbS1I25lIMOPi@lpieralisi>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -73,76 +77,178 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The PM8550 uses only NLDOs 515 and the LDO 6 through 8 are low voltage
-type, so fix accordingly.
+On Mon, Jun 05, 2023 at 11:27:09AM +0200, Lorenzo Pieralisi wrote:
+> On Fri, Jun 02, 2023 at 05:17:49PM +0530, Manivannan Sadhasivam wrote:
+> > Currently, the EPF probe function doesn't get the device ID argument needed
+> > to correctly identify the device table ID of the EPF device.
+> > 
+> > When multiple entries are added to the "struct pci_epf_device_id" table,
+> > the probe function needs to identify the correct one. This is achieved by
+> > modifying the pci_epf_match_id() function to return the match ID pointer
+> > and passing it to the driver's probe function.
+> > 
+> > pci_epf_device_match() function can return bool based on the return value
+> > of pci_epf_match_id().
+> > 
+> > Reviewed-by: Kishon Vijay Abraham I <kishon@kernel.org>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > ---
+> >  drivers/pci/endpoint/functions/pci-epf-ntb.c  |  3 ++-
+> >  drivers/pci/endpoint/functions/pci-epf-test.c |  2 +-
+> >  drivers/pci/endpoint/functions/pci-epf-vntb.c |  2 +-
+> >  drivers/pci/endpoint/pci-epf-core.c           | 18 +++++++++++-------
+> >  include/linux/pci-epf.h                       |  4 +++-
+> >  5 files changed, 18 insertions(+), 11 deletions(-)
+> > 
+> > diff --git a/drivers/pci/endpoint/functions/pci-epf-ntb.c b/drivers/pci/endpoint/functions/pci-epf-ntb.c
+> > index 9a00448c7e61..980b4ecf19a2 100644
+> > --- a/drivers/pci/endpoint/functions/pci-epf-ntb.c
+> > +++ b/drivers/pci/endpoint/functions/pci-epf-ntb.c
+> > @@ -2075,11 +2075,12 @@ static struct config_group *epf_ntb_add_cfs(struct pci_epf *epf,
+> >  /**
+> >   * epf_ntb_probe() - Probe NTB function driver
+> >   * @epf: NTB endpoint function device
+> > + * @id: NTB endpoint function device ID
+> >   *
+> >   * Probe NTB function driver when endpoint function bus detects a NTB
+> >   * endpoint function.
+> >   */
+> > -static int epf_ntb_probe(struct pci_epf *epf)
+> > +static int epf_ntb_probe(struct pci_epf *epf, const struct pci_epf_device_id *id)
+> >  {
+> >  	struct epf_ntb *ntb;
+> >  	struct device *dev;
+> > diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
+> > index 0f9d2ec822ac..d5fcc78a5b73 100644
+> > --- a/drivers/pci/endpoint/functions/pci-epf-test.c
+> > +++ b/drivers/pci/endpoint/functions/pci-epf-test.c
+> > @@ -980,7 +980,7 @@ static const struct pci_epf_device_id pci_epf_test_ids[] = {
+> >  	{},
+> >  };
+> >  
+> > -static int pci_epf_test_probe(struct pci_epf *epf)
+> > +static int pci_epf_test_probe(struct pci_epf *epf, const struct pci_epf_device_id *id)
+> >  {
+> >  	struct pci_epf_test *epf_test;
+> >  	struct device *dev = &epf->dev;
+> > diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> > index b7c7a8af99f4..122eb7a12028 100644
+> > --- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> > +++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+> > @@ -1401,7 +1401,7 @@ static struct pci_epf_ops epf_ntb_ops = {
+> >   *
+> >   * Returns: Zero for success, or an error code in case of failure
+> >   */
+> > -static int epf_ntb_probe(struct pci_epf *epf)
+> > +static int epf_ntb_probe(struct pci_epf *epf, const struct pci_epf_device_id *id)
+> >  {
+> >  	struct epf_ntb *ntb;
+> >  	struct device *dev;
+> > diff --git a/drivers/pci/endpoint/pci-epf-core.c b/drivers/pci/endpoint/pci-epf-core.c
+> > index 2036e38be093..ea6e0aef0bb3 100644
+> > --- a/drivers/pci/endpoint/pci-epf-core.c
+> > +++ b/drivers/pci/endpoint/pci-epf-core.c
+> > @@ -493,16 +493,16 @@ static const struct device_type pci_epf_type = {
+> >  	.release	= pci_epf_dev_release,
+> >  };
+> >  
+> > -static int
+> > -pci_epf_match_id(const struct pci_epf_device_id *id, const struct pci_epf *epf)
+> > +static const struct pci_epf_device_id
+> > +*pci_epf_match_id(const struct pci_epf_device_id *id, const struct pci_epf *epf)
+> >  {
+> >  	while (id->name[0]) {
+> >  		if (strcmp(epf->name, id->name) == 0)
+> > -			return true;
+> > +			return id;
+> >  		id++;
+> >  	}
+> >  
+> > -	return false;
+> > +	return NULL;
+> >  }
+> >  
+> >  static int pci_epf_device_match(struct device *dev, struct device_driver *drv)
+> > @@ -510,8 +510,12 @@ static int pci_epf_device_match(struct device *dev, struct device_driver *drv)
+> >  	struct pci_epf *epf = to_pci_epf(dev);
+> >  	struct pci_epf_driver *driver = to_pci_epf_driver(drv);
+> >  
+> > -	if (driver->id_table)
+> > -		return pci_epf_match_id(driver->id_table, epf);
+> > +	if (driver->id_table) {
+> > +		if (pci_epf_match_id(driver->id_table, epf))
+> > +			return true;
+> > +		else
+> > +			return false;
+> > +	}
+> >  
+> >  	return !strcmp(epf->name, drv->name);
+> >  }
+> > @@ -526,7 +530,7 @@ static int pci_epf_device_probe(struct device *dev)
+> >  
+> >  	epf->driver = driver;
+> >  
+> > -	return driver->probe(epf);
+> > +	return driver->probe(epf, pci_epf_match_id(driver->id_table, epf));
+> 
+> I don't think we should do it this way. If we are probing a driver that
+> means that we have got a driver that matches a device id. The device id
+> is a property of the device, there is no reason why we should pass it
+> to the probe function, it has got to be stored somewhere at device
+> creation stage (well, not in the match function - since that's what
+> we changed), probe() should retrieve it from the device structure.
+> 
 
-Fixes: e6e3776d682d ("regulator: qcom-rpmh: Add support for PM8550 regulators")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/regulator/qcom-rpmh-regulator.c | 30 ++++++++++++-------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+Device id defined by the drivers will only be known during the match() stage as
+that's when the drivers are queried for match of the device. During device
+creation stage, there is no way for the EPF core to fetch the ids.
 
-diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index b0a58c62b1e2..f3b280af0773 100644
---- a/drivers/regulator/qcom-rpmh-regulator.c
-+++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -1057,21 +1057,21 @@ static const struct rpmh_vreg_init_data pm8450_vreg_data[] = {
- };
- 
- static const struct rpmh_vreg_init_data pm8550_vreg_data[] = {
--	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_pldo,    "vdd-l1-l4-l10"),
-+	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo515,    "vdd-l1-l4-l10"),
- 	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_pldo,    "vdd-l2-l13-l14"),
--	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo,    "vdd-l3"),
--	RPMH_VREG("ldo4",   "ldo%s4",  &pmic5_nldo,    "vdd-l1-l4-l10"),
-+	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo515,    "vdd-l3"),
-+	RPMH_VREG("ldo4",   "ldo%s4",  &pmic5_nldo515,    "vdd-l1-l4-l10"),
- 	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_pldo,    "vdd-l5-l16"),
--	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_pldo_lv, "vdd-l6-l7"),
--	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo_lv, "vdd-l6-l7"),
--	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_pldo_lv, "vdd-l8-l9"),
-+	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_pldo, "vdd-l6-l7"),
-+	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo, "vdd-l6-l7"),
-+	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_pldo, "vdd-l8-l9"),
- 	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_pldo,    "vdd-l8-l9"),
--	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_nldo,    "vdd-l1-l4-l10"),
--	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_nldo,    "vdd-l11"),
-+	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_nldo515,    "vdd-l1-l4-l10"),
-+	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_nldo515,    "vdd-l11"),
- 	RPMH_VREG("ldo12",  "ldo%s12", &pmic5_pldo,    "vdd-l12"),
- 	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_pldo,    "vdd-l2-l13-l14"),
- 	RPMH_VREG("ldo14",  "ldo%s14", &pmic5_pldo,    "vdd-l2-l13-l14"),
--	RPMH_VREG("ldo15",  "ldo%s15", &pmic5_pldo,    "vdd-l15"),
-+	RPMH_VREG("ldo15",  "ldo%s15", &pmic5_nldo515,    "vdd-l15"),
- 	RPMH_VREG("ldo16",  "ldo%s16", &pmic5_pldo,    "vdd-l5-l16"),
- 	RPMH_VREG("ldo17",  "ldo%s17", &pmic5_pldo,    "vdd-l17"),
- 	RPMH_VREG("bob1",   "bob%s1",  &pmic5_bob,     "vdd-bob1"),
-@@ -1086,9 +1086,9 @@ static const struct rpmh_vreg_init_data pm8550vs_vreg_data[] = {
- 	RPMH_VREG("smps4",  "smp%s4",  &pmic5_ftsmps525_lv, "vdd-s4"),
- 	RPMH_VREG("smps5",  "smp%s5",  &pmic5_ftsmps525_lv, "vdd-s5"),
- 	RPMH_VREG("smps6",  "smp%s6",  &pmic5_ftsmps525_mv, "vdd-s6"),
--	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo,   "vdd-l1"),
--	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_nldo,   "vdd-l2"),
--	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo,   "vdd-l3"),
-+	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo515,   "vdd-l1"),
-+	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_nldo515,   "vdd-l2"),
-+	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo515,   "vdd-l3"),
- 	{}
- };
- 
-@@ -1101,9 +1101,9 @@ static const struct rpmh_vreg_init_data pm8550ve_vreg_data[] = {
- 	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525_lv, "vdd-s6"),
- 	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525_lv, "vdd-s7"),
- 	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525_lv, "vdd-s8"),
--	RPMH_VREG("ldo1",  "ldo%s1", &pmic5_nldo,   "vdd-l1"),
--	RPMH_VREG("ldo2",  "ldo%s2", &pmic5_nldo,   "vdd-l2"),
--	RPMH_VREG("ldo3",  "ldo%s3", &pmic5_nldo,   "vdd-l3"),
-+	RPMH_VREG("ldo1",  "ldo%s1", &pmic5_nldo515,   "vdd-l1"),
-+	RPMH_VREG("ldo2",  "ldo%s2", &pmic5_nldo515,   "vdd-l2"),
-+	RPMH_VREG("ldo3",  "ldo%s3", &pmic5_nldo515,   "vdd-l3"),
- 	{}
- };
- 
+And, passing id during probe() is not new. For most of the non-platform devices,
+the bus driver will pass the id. The PCI core itself is doing the same for the
+client drivers as well and I'd like to keep it same for EPF also:
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/include/linux/pci.h#n921
+
+- Mani
+
+> Thanks,
+> Lorenzo
+> 
+> >  }
+> >  
+> >  static void pci_epf_device_remove(struct device *dev)
+> > diff --git a/include/linux/pci-epf.h b/include/linux/pci-epf.h
+> > index a215dc8ce693..bc613f0df7e3 100644
+> > --- a/include/linux/pci-epf.h
+> > +++ b/include/linux/pci-epf.h
+> > @@ -89,7 +89,7 @@ struct pci_epc_event_ops {
+> >   * @id_table: identifies EPF devices for probing
+> >   */
+> >  struct pci_epf_driver {
+> > -	int	(*probe)(struct pci_epf *epf);
+> > +	int	(*probe)(struct pci_epf *epf, const struct pci_epf_device_id *id);
+> >  	void	(*remove)(struct pci_epf *epf);
+> >  
+> >  	struct device_driver	driver;
+> > @@ -131,6 +131,7 @@ struct pci_epf_bar {
+> >   * @epc: the EPC device to which this EPF device is bound
+> >   * @epf_pf: the physical EPF device to which this virtual EPF device is bound
+> >   * @driver: the EPF driver to which this EPF device is bound
+> > + * @id: Pointer to the EPF device ID
+> >   * @list: to add pci_epf as a list of PCI endpoint functions to pci_epc
+> >   * @lock: mutex to protect pci_epf_ops
+> >   * @sec_epc: the secondary EPC device to which this EPF device is bound
+> > @@ -158,6 +159,7 @@ struct pci_epf {
+> >  	struct pci_epc		*epc;
+> >  	struct pci_epf		*epf_pf;
+> >  	struct pci_epf_driver	*driver;
+> > +	const struct pci_epf_device_id *id;
+> >  	struct list_head	list;
+> >  	/* mutex to protect against concurrent access of pci_epf_ops */
+> >  	struct mutex		lock;
+> > -- 
+> > 2.25.1
+> > 
+
 -- 
-2.34.1
-
+மணிவண்ணன் சதாசிவம்
