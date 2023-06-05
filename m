@@ -2,92 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3FAB072324B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 23:32:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E27FD723396
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 01:14:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232291AbjFEVcf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 17:32:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45742 "EHLO
+        id S230324AbjFEXOL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 19:14:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231562AbjFEVcO (ORCPT
+        with ESMTP id S233191AbjFEXOK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 17:32:14 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 398F7118
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 14:32:10 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-30af0aa4812so4796771f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 14:32:10 -0700 (PDT)
+        Mon, 5 Jun 2023 19:14:10 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB5B0D2
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 16:14:04 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so6904818e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 16:14:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686000728; x=1688592728;
+        d=linaro.org; s=google; t=1686006843; x=1688598843;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=UrTr9XAYEjTO35MKMHMxs3xgUKqnqRNLUUN5dmfsN3g=;
-        b=ofAryuKBgy81qyH2dDPHwwtFDtuVDj0HbTLvXWgJ6vaXlqL9uZrtmy2hocTvi5mLmX
-         tmfGVDvKNXtu4l0c7kCGPtp9JoZWCgul1nS8XnMVmT3FP0eahFz4WJqQyANRAeDTBk9u
-         RCfCuiJGaI4BR4Vlul+t2tGWurvw924vGPNc5vuo5wbRIH9QKPICaBPSsEYBTrH2OMyl
-         pGBxvjeu8eiVU2p5D/J92rVWYYCTzMpYgOP2+PD2pToC9/KdnbpnvBCcwqeweDm0WTYK
-         kH1JTJcH8QAaGM0RChHu3CCCXrMRxoJVh7If6ACgia3Eqkhbpek/5jUPD8R2iDHrqi5H
-         faoQ==
+        bh=fglrneJgPq0OiD5qkA1ASIqwU5N6cXFR8XgLk734s/Y=;
+        b=dM+ipUGm+Lgz/I+QA3j/+VPx5LJvJORb8MTX+ArxtZ97HRaYOI7dSqhyXVoY35ObSm
+         WPJw2Ko+RzzQ4yG0nqC+XSEK1xigpkFISLibbHITEbAUsZncPlonvIXm/jRsAm1coNhl
+         4IU2roEApaQglbCdN8zR83YbE/HTS/e1388x/FVRXwLxyGe8jn3WDPB0HxWTBfCYdTF8
+         n3E8gy6vqtq//+nK1yIj99bufUBrnTVRRCbvt6rq0ipkOcZ908fpSzyWvhdQ9yRXFCid
+         U94+d2jnrecx5H+9GGYv2jG0rTDMu3e46yIjGUK/41obx+pVkJBU5QnHC10nhRLi57Vn
+         yk8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686000728; x=1688592728;
+        d=1e100.net; s=20221208; t=1686006843; x=1688598843;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UrTr9XAYEjTO35MKMHMxs3xgUKqnqRNLUUN5dmfsN3g=;
-        b=Cs94dTaFJvb4i3yr885nBuH8VLpH/G3gfOVwRzbtUi2Uzd8xgUHzZkiOdqdmhPP8Sc
-         MPROCaldnJE0Dqigyv2vfRPvCD0aCb3DjJok0v7+azExxZmj833IHawLZxaPqykdIkFW
-         krbQvmt+/nxh03HLAiJ57DRwltMpyqClJ0bGYDqv0XdwkkhX2NUGhRgrFfXpHtup5ips
-         +bLhf+/GVOOO5GHXbm1ATlpYX0R6Asl10vy7Pyj2hWE5vlEBE2lTbjkr3e9jRubcK3Yi
-         uS8gRWmXH8I+pR1lo9/RzBSSsSYUSz3eWCuPUrQHvsbVrAgbN6v7qjlTe6S8PmG4sCCk
-         rk9g==
-X-Gm-Message-State: AC+VfDz7OVRNfUMbo8MnMa3PNVFnB/Ov6AtqeMplD9oRI8XsNTJ+ihO0
-        flBGoFNGVzPYS7FcV5Nc2jWerA==
-X-Google-Smtp-Source: ACHHUZ6kfXJpwGIWVeHdosA6jRyeaak0zq3BCp01X0rUO75fT3qcf+KPe/bOcIicA5wdpOlD46XboQ==
-X-Received: by 2002:a05:6000:11d1:b0:30a:ea5c:a97c with SMTP id i17-20020a05600011d100b0030aea5ca97cmr131992wrx.18.1686000728635;
-        Mon, 05 Jun 2023 14:32:08 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id y6-20020a5d4ac6000000b002c70ce264bfsm10869240wrs.76.2023.06.05.14.32.06
+        bh=fglrneJgPq0OiD5qkA1ASIqwU5N6cXFR8XgLk734s/Y=;
+        b=AMkOLgFsDVan695hJExOKbfufXvHGTHTH27NUxpRMHgfn0H/ZaGBciHSfRuNiKKB/C
+         zH+6XxGzq1bVfTRwLrc4iYlBo8W+KjM+X6gMkgBYtDr6wb3ai2FatiuAMyrxpV6wCJhz
+         vlms035yxIrND5V/d1g5dVcZ3vzwr5EyV0Blapt/6O2RwuuufVhnmHXlpEdPIetSbvUv
+         ovUuBSA++laNygA9ez5BjyGt+2DPOJsSjE3DKu5JDNz1XyhcLKXAjfd/rrN7FlNgTOjq
+         px0OGTR7jhaYPWvFUPk/Noi6VNQJEnk/09y6HxV1SV0OHv4Y9TKi10EwzT3IHDqR8X9/
+         gXIA==
+X-Gm-Message-State: AC+VfDzPrN0fSoXQFMvrOCgYpduv+GulR73PccmtgEXkpob07lF1pA6x
+        oFjPvXWQhu48DsbjKJFK96N/vA==
+X-Google-Smtp-Source: ACHHUZ5Te+XUX1/CKkj+bCw159WdkwIYU6uMDTC1Qrj6ErShwleY0+eVsaKW1xWpkjPz38GLL1Hijw==
+X-Received: by 2002:a19:a40e:0:b0:4f1:4504:2679 with SMTP id q14-20020a19a40e000000b004f145042679mr200436lfc.41.1686006842678;
+        Mon, 05 Jun 2023 16:14:02 -0700 (PDT)
+Received: from [192.168.1.101] (abyj96.neoplus.adsl.tpnet.pl. [83.9.29.96])
+        by smtp.gmail.com with ESMTPSA id t12-20020ac2548c000000b004eb4074f40fsm1282304lfk.241.2023.06.05.16.14.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Jun 2023 14:32:07 -0700 (PDT)
-Message-ID: <df84c765-f4d8-a2ab-29cd-f8e879b580b6@linaro.org>
-Date:   Mon, 5 Jun 2023 22:32:06 +0100
+        Mon, 05 Jun 2023 16:14:02 -0700 (PDT)
+Message-ID: <fe51f704-3d24-d184-0251-39dc64a25598@linaro.org>
+Date:   Tue, 6 Jun 2023 01:14:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v13 05/24] mailbox: Add Gunyah message queue mailbox
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v2 1/2] phy: qcom-snps-femto-v2: properly enable ref clock
 Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Jassi Brar <jassisinghbrar@gmail.com>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+To:     Adrien Thierry <athierry@redhat.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
- <20230509204801.2824351-6-quic_eberman@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20230509204801.2824351-6-quic_eberman@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        Philipp Zabel <pza@pengutronix.de>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+References: <20230605184455.34832-1-athierry@redhat.com>
+ <20230605184455.34832-2-athierry@redhat.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230605184455.34832-2-athierry@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -97,343 +85,188 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 09/05/2023 21:47, Elliot Berman wrote:
-> Gunyah message queues are a unidirectional inter-VM pipe for messages up
-> to 1024 bytes. This driver supports pairing a receiver message queue and
-> a transmitter message queue to expose a single mailbox channel.
+On 5.06.2023 20:44, Adrien Thierry wrote:
+> The driver is not enabling the ref clock, which thus gets disabled by
+> the clk_disable_unused initcall. This leads to the dwc3 controller
+> failing to initialize if probed after clk_disable_unused is called, for
+> instance when the driver is built as a module.
 > 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> To fix this, switch to the clk_bulk API to handle both cfg_ahb and ref
+> clocks at the proper places.
+> 
+> Note that the cfg_ahb clock is currently not used by any device tree
+> instantiation of the PHY. Work needs to be done separately to fix this.
+> 
+> Link: https://lore.kernel.org/linux-arm-msm/ZEqvy+khHeTkC2hf@fedora/
+> Fixes: 51e8114f80d0 ("phy: qcom-snps: Add SNPS USB PHY driver for QCOM based SOCs")
+> Signed-off-by: Adrien Thierry <athierry@redhat.com>
 > ---
-
-
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
---srini
-
->   Documentation/virt/gunyah/message-queue.rst |   8 +
->   drivers/mailbox/Makefile                    |   2 +
->   drivers/mailbox/gunyah-msgq.c               | 212 ++++++++++++++++++++
->   include/linux/gunyah.h                      |  57 ++++++
->   4 files changed, 279 insertions(+)
->   create mode 100644 drivers/mailbox/gunyah-msgq.c
+>  drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 67 ++++++++++++++-----
+>  1 file changed, 49 insertions(+), 18 deletions(-)
 > 
-> diff --git a/Documentation/virt/gunyah/message-queue.rst b/Documentation/virt/gunyah/message-queue.rst
-> index b352918ae54b..70d82a4ef32d 100644
-> --- a/Documentation/virt/gunyah/message-queue.rst
-> +++ b/Documentation/virt/gunyah/message-queue.rst
-> @@ -61,3 +61,11 @@ vIRQ: two TX message queues will have two vIRQs (and two capability IDs).
->         |               |         |                 |         |               |
->         |               |         |                 |         |               |
->         +---------------+         +-----------------+         +---------------+
+> diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> index 6c237f3cc66d..ce1d2f8b568a 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> @@ -110,11 +110,13 @@ struct phy_override_seq {
+>  /**
+>   * struct qcom_snps_hsphy - snps hs phy attributes
+>   *
+> + * @dev: device structure
+> + *
+>   * @phy: generic phy
+>   * @base: iomapped memory space for snps hs phy
+>   *
+> - * @cfg_ahb_clk: AHB2PHY interface clock
+> - * @ref_clk: phy reference clock
+> + * @num_clks: number of clocks
+> + * @clks: array of clocks
+>   * @phy_reset: phy reset control
+>   * @vregs: regulator supplies bulk data
+>   * @phy_initialized: if PHY has been initialized correctly
+> @@ -122,11 +124,13 @@ struct phy_override_seq {
+>   * @update_seq_cfg: tuning parameters for phy init
+>   */
+>  struct qcom_snps_hsphy {
+> +	struct device *dev;
 > +
-> +Gunyah message queues are exposed as mailboxes. To create the mailbox, create
-> +a mbox_client and call `gh_msgq_init()`. On receipt of the RX_READY interrupt,
-> +all messages in the RX message queue are read and pushed via the `rx_callback`
-> +of the registered mbox_client.
-> +
-> +.. kernel-doc:: drivers/mailbox/gunyah-msgq.c
-> +   :identifiers: gh_msgq_init
-> diff --git a/drivers/mailbox/Makefile b/drivers/mailbox/Makefile
-> index fc9376117111..5f929bb55e9a 100644
-> --- a/drivers/mailbox/Makefile
-> +++ b/drivers/mailbox/Makefile
-> @@ -55,6 +55,8 @@ obj-$(CONFIG_MTK_CMDQ_MBOX)	+= mtk-cmdq-mailbox.o
->   
->   obj-$(CONFIG_ZYNQMP_IPI_MBOX)	+= zynqmp-ipi-mailbox.o
->   
-> +obj-$(CONFIG_GUNYAH)		+= gunyah-msgq.o
-> +
->   obj-$(CONFIG_SUN6I_MSGBOX)	+= sun6i-msgbox.o
->   
->   obj-$(CONFIG_SPRD_MBOX)		+= sprd-mailbox.o
-> diff --git a/drivers/mailbox/gunyah-msgq.c b/drivers/mailbox/gunyah-msgq.c
-> new file mode 100644
-> index 000000000000..b7a54f233680
-> --- /dev/null
-> +++ b/drivers/mailbox/gunyah-msgq.c
-> @@ -0,0 +1,212 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/mailbox_controller.h>
-> +#include <linux/module.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/gunyah.h>
-> +#include <linux/printk.h>
-> +#include <linux/init.h>
-> +#include <linux/slab.h>
-> +#include <linux/wait.h>
-> +
-> +#define mbox_chan_to_msgq(chan) (container_of(chan->mbox, struct gh_msgq, mbox))
-> +
-> +static irqreturn_t gh_msgq_rx_irq_handler(int irq, void *data)
+>  	struct phy *phy;
+>  	void __iomem *base;
+>  
+> -	struct clk *cfg_ahb_clk;
+> -	struct clk *ref_clk;
+> +	int num_clks;
+> +	struct clk_bulk_data *clks;
+>  	struct reset_control *phy_reset;
+>  	struct regulator_bulk_data vregs[SNPS_HS_NUM_VREGS];
+>  
+> @@ -135,6 +139,32 @@ struct qcom_snps_hsphy {
+>  	struct phy_override_seq update_seq_cfg[NUM_HSPHY_TUNING_PARAMS];
+>  };
+>  
+> +static int qcom_snps_hsphy_clk_init(struct qcom_snps_hsphy *hsphy)
 > +{
-> +	struct gh_msgq *msgq = data;
-> +	struct gh_msgq_rx_data rx_data;
-> +	enum gh_error gh_error;
-> +	bool ready = true;
+> +	struct device *dev = hsphy->dev;
 > +
-> +	while (ready) {
-> +		gh_error = gh_hypercall_msgq_recv(msgq->rx_ghrsc->capid,
-> +				&rx_data.data, sizeof(rx_data.data),
-> +				&rx_data.length, &ready);
-> +		if (gh_error != GH_ERROR_OK) {
-> +			if (gh_error != GH_ERROR_MSGQUEUE_EMPTY)
-> +				dev_warn(msgq->mbox.dev, "Failed to receive data: %d\n", gh_error);
-> +			break;
-> +		}
-> +		if (likely(gh_msgq_chan(msgq)->cl))
-> +			mbox_chan_received_data(gh_msgq_chan(msgq), &rx_data);
-> +	}
+> +	hsphy->num_clks = 2;
+> +	hsphy->clks = devm_kcalloc(dev, hsphy->num_clks, sizeof(*hsphy->clks), GFP_KERNEL);
+> +	if (!hsphy->clks)
+> +		return -ENOMEM;
 > +
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +/* Fired when message queue transitions from "full" to "space available" to send messages */
-> +static irqreturn_t gh_msgq_tx_irq_handler(int irq, void *data)
-> +{
-> +	struct gh_msgq *msgq = data;
-> +
-> +	mbox_chan_txdone(gh_msgq_chan(msgq), 0);
-> +
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +/* Fired after sending message and hypercall told us there was more space available. */
-> +static void gh_msgq_txdone_tasklet(struct tasklet_struct *tasklet)
-> +{
-> +	struct gh_msgq *msgq = container_of(tasklet, struct gh_msgq, txdone_tasklet);
-> +
-> +	mbox_chan_txdone(gh_msgq_chan(msgq), msgq->last_ret);
-> +}
-> +
-> +static int gh_msgq_send_data(struct mbox_chan *chan, void *data)
-> +{
-> +	struct gh_msgq *msgq = mbox_chan_to_msgq(chan);
-> +	struct gh_msgq_tx_data *msgq_data = data;
-> +	u64 tx_flags = 0;
-> +	enum gh_error gh_error;
-> +	bool ready;
-> +
-> +	if (!msgq->tx_ghrsc)
-> +		return -EOPNOTSUPP;
-> +
-> +	if (msgq_data->push)
-> +		tx_flags |= GH_HYPERCALL_MSGQ_TX_FLAGS_PUSH;
-> +
-> +	gh_error = gh_hypercall_msgq_send(msgq->tx_ghrsc->capid, msgq_data->length, msgq_data->data,
-> +						tx_flags, &ready);
-> +
-> +	/**
-> +	 * unlikely because Linux tracks state of msgq and should not try to
-> +	 * send message when msgq is full.
+> +	/*
+> +	 * HACK: For cfg_ahb clock, use devm_clk_get_optional() because currently no device
+> +	 * tree instantiation of the PHY is using the clock. This needs to be fixed in order
+> +	 * for this code to be able to use devm_clk_bulk_get().
 > +	 */
-> +	if (unlikely(gh_error == GH_ERROR_MSGQUEUE_FULL))
-> +		return -EAGAIN;
+> +	hsphy->clks[0].id = "cfg_ahb";
+> +	hsphy->clks[0].clk = devm_clk_get_optional(dev, "cfg_ahb");
+Hm, maybe you could first check if we can get this clock
+properly (!IS_ERR_OR_NULL) and then allocate the second
+slot..
+
 > +
-> +	/**
-> +	 * Propagate all other errors to client. If we return error to mailbox
-> +	 * framework, then no other messages can be sent and nobody will know
-> +	 * to retry this message.
-> +	 */
-> +	msgq->last_ret = gh_error_remap(gh_error);
-> +
-> +	/**
-> +	 * This message was successfully sent, but message queue isn't ready to
-> +	 * accept more messages because it's now full. Mailbox framework
-> +	 * requires that we only report that message was transmitted when
-> +	 * we're ready to transmit another message. We'll get that in the form
-> +	 * of tx IRQ once the other side starts to drain the msgq.
-> +	 */
-> +	if (gh_error == GH_ERROR_OK) {
-> +		if (!ready)
-> +			return 0;
-> +	} else
-> +		dev_err(msgq->mbox.dev, "Failed to send data: %d (%d)\n", gh_error, msgq->last_ret);
-> +
-> +	/**
-> +	 * We can send more messages. Mailbox framework requires that tx done
-> +	 * happens asynchronously to sending the message. Gunyah message queues
-> +	 * tell us right away on the hypercall return whether we can send more
-> +	 * messages. To work around this, defer the txdone to a tasklet.
-> +	 */
-> +	tasklet_schedule(&msgq->txdone_tasklet);
+> +	hsphy->clks[1].id = "ref";
+> +	hsphy->clks[1].clk = devm_clk_get(dev, "ref");
+> +	if (IS_ERR(hsphy->clks[1].clk))
+> +		return dev_err_probe(dev, PTR_ERR(hsphy->clks[1].clk),
+> +				     "failed to get ref clk\n");
 > +
 > +	return 0;
 > +}
 > +
-> +static struct mbox_chan_ops gh_msgq_ops = {
-> +	.send_data = gh_msgq_send_data,
-> +};
+>  static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
+>  						u32 mask, u32 val)
+>  {
+> @@ -165,7 +195,7 @@ static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
+>  					   0, USB2_AUTO_RESUME);
+>  	}
+>  
+> -	clk_disable_unprepare(hsphy->cfg_ahb_clk);
+> +	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
+>  	return 0;
+>  }
+>  
+> @@ -175,9 +205,9 @@ static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
+>  
+>  	dev_dbg(&hsphy->phy->dev, "Resume QCOM SNPS PHY, mode\n");
+>  
+> -	ret = clk_prepare_enable(hsphy->cfg_ahb_clk);
+> +	ret = clk_bulk_prepare_enable(hsphy->num_clks, hsphy->clks);
+Aren't you dereferencing NULL if the optional clock is absent?
+
+Konrad
+>  	if (ret) {
+> -		dev_err(&hsphy->phy->dev, "failed to enable cfg ahb clock\n");
+> +		dev_err(&hsphy->phy->dev, "failed to enable clocks\n");
+>  		return ret;
+>  	}
+>  
+> @@ -374,16 +404,16 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+>  	if (ret)
+>  		return ret;
+>  
+> -	ret = clk_prepare_enable(hsphy->cfg_ahb_clk);
+> +	ret = clk_bulk_prepare_enable(hsphy->num_clks, hsphy->clks);
+>  	if (ret) {
+> -		dev_err(&phy->dev, "failed to enable cfg ahb clock, %d\n", ret);
+> +		dev_err(&phy->dev, "failed to enable clocks, %d\n", ret);
+>  		goto poweroff_phy;
+>  	}
+>  
+>  	ret = reset_control_assert(hsphy->phy_reset);
+>  	if (ret) {
+>  		dev_err(&phy->dev, "failed to assert phy_reset, %d\n", ret);
+> -		goto disable_ahb_clk;
+> +		goto disable_clks;
+>  	}
+>  
+>  	usleep_range(100, 150);
+> @@ -391,7 +421,7 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+>  	ret = reset_control_deassert(hsphy->phy_reset);
+>  	if (ret) {
+>  		dev_err(&phy->dev, "failed to de-assert phy_reset, %d\n", ret);
+> -		goto disable_ahb_clk;
+> +		goto disable_clks;
+>  	}
+>  
+>  	qcom_snps_hsphy_write_mask(hsphy->base, USB2_PHY_USB_PHY_CFG0,
+> @@ -448,8 +478,8 @@ static int qcom_snps_hsphy_init(struct phy *phy)
+>  
+>  	return 0;
+>  
+> -disable_ahb_clk:
+> -	clk_disable_unprepare(hsphy->cfg_ahb_clk);
+> +disable_clks:
+> +	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
+>  poweroff_phy:
+>  	regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
+>  
+> @@ -461,7 +491,7 @@ static int qcom_snps_hsphy_exit(struct phy *phy)
+>  	struct qcom_snps_hsphy *hsphy = phy_get_drvdata(phy);
+>  
+>  	reset_control_assert(hsphy->phy_reset);
+> -	clk_disable_unprepare(hsphy->cfg_ahb_clk);
+> +	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
+>  	regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
+>  	hsphy->phy_initialized = false;
+>  
+> @@ -554,14 +584,15 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
+>  	if (!hsphy)
+>  		return -ENOMEM;
+>  
+> +	hsphy->dev = dev;
 > +
-> +/**
-> + * gh_msgq_init() - Initialize a Gunyah message queue with an mbox_client
-> + * @parent: device parent used for the mailbox controller
-> + * @msgq: Pointer to the gh_msgq to initialize
-> + * @cl: A mailbox client to bind to the mailbox channel that the message queue creates
-> + * @tx_ghrsc: optional, the transmission side of the message queue
-> + * @rx_ghrsc: optional, the receiving side of the message queue
-> + *
-> + * At least one of tx_ghrsc and rx_ghrsc must be not NULL. Most message queue use cases come with
-> + * a pair of message queues to facilitate bidirectional communication. When tx_ghrsc is set,
-> + * the client can send messages with mbox_send_message(gh_msgq_chan(msgq), msg). When rx_ghrsc
-> + * is set, the mbox_client must register an .rx_callback() and the message queue driver will
-> + * deliver all available messages upon receiving the RX ready interrupt. The messages should be
-> + * consumed or copied by the client right away as the gh_msgq_rx_data will be replaced/destroyed
-> + * after the callback.
-> + *
-> + * Returns - 0 on success, negative otherwise
-> + */
-> +int gh_msgq_init(struct device *parent, struct gh_msgq *msgq, struct mbox_client *cl,
-> +		 struct gh_resource *tx_ghrsc, struct gh_resource *rx_ghrsc)
-> +{
-> +	int ret;
-> +
-> +	/* Must have at least a tx_ghrsc or rx_ghrsc and that they are the right device types */
-> +	if ((!tx_ghrsc && !rx_ghrsc) ||
-> +	    (tx_ghrsc && tx_ghrsc->type != GH_RESOURCE_TYPE_MSGQ_TX) ||
-> +	    (rx_ghrsc && rx_ghrsc->type != GH_RESOURCE_TYPE_MSGQ_RX))
-> +		return -EINVAL;
-> +
-> +	msgq->mbox.dev = parent;
-> +	msgq->mbox.ops = &gh_msgq_ops;
-> +	msgq->mbox.num_chans = 1;
-> +	msgq->mbox.txdone_irq = true;
-> +	msgq->mbox.chans = &msgq->mbox_chan;
-> +
-> +	ret = mbox_controller_register(&msgq->mbox);
+>  	hsphy->base = devm_platform_ioremap_resource(pdev, 0);
+>  	if (IS_ERR(hsphy->base))
+>  		return PTR_ERR(hsphy->base);
+>  
+> -	hsphy->ref_clk = devm_clk_get(dev, "ref");
+> -	if (IS_ERR(hsphy->ref_clk))
+> -		return dev_err_probe(dev, PTR_ERR(hsphy->ref_clk),
+> -				     "failed to get ref clk\n");
+> +	ret = qcom_snps_hsphy_clk_init(hsphy);
 > +	if (ret)
-> +		return ret;
-> +
-> +	ret = mbox_bind_client(gh_msgq_chan(msgq), cl);
-> +	if (ret)
-> +		goto err_mbox;
-> +
-> +	if (tx_ghrsc) {
-> +		msgq->tx_ghrsc = tx_ghrsc;
-> +
-> +		ret = request_irq(msgq->tx_ghrsc->irq, gh_msgq_tx_irq_handler, 0, "gh_msgq_tx",
-> +				msgq);
-> +		if (ret)
-> +			goto err_tx_ghrsc;
-> +
-> +		tasklet_setup(&msgq->txdone_tasklet, gh_msgq_txdone_tasklet);
-> +	}
-> +
-> +	if (rx_ghrsc) {
-> +		msgq->rx_ghrsc = rx_ghrsc;
-> +
-> +		ret = request_threaded_irq(msgq->rx_ghrsc->irq, NULL, gh_msgq_rx_irq_handler,
-> +						IRQF_ONESHOT, "gh_msgq_rx", msgq);
-> +		if (ret)
-> +			goto err_tx_irq;
-> +	}
-> +
-> +	return 0;
-> +err_tx_irq:
-> +	if (msgq->tx_ghrsc)
-> +		free_irq(msgq->tx_ghrsc->irq, msgq);
-> +
-> +	msgq->rx_ghrsc = NULL;
-> +err_tx_ghrsc:
-> +	msgq->tx_ghrsc = NULL;
-> +err_mbox:
-> +	mbox_controller_unregister(&msgq->mbox);
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(gh_msgq_init);
-> +
-> +void gh_msgq_remove(struct gh_msgq *msgq)
-> +{
-> +	if (msgq->rx_ghrsc)
-> +		free_irq(msgq->rx_ghrsc->irq, msgq);
-> +
-> +	if (msgq->tx_ghrsc) {
-> +		tasklet_kill(&msgq->txdone_tasklet);
-> +		free_irq(msgq->tx_ghrsc->irq, msgq);
-> +	}
-> +
-> +	mbox_controller_unregister(&msgq->mbox);
-> +
-> +	msgq->rx_ghrsc = NULL;
-> +	msgq->tx_ghrsc = NULL;
-> +}
-> +EXPORT_SYMBOL_GPL(gh_msgq_remove);
-> +
-> +MODULE_LICENSE("GPL");
-> +MODULE_DESCRIPTION("Gunyah Message Queue Driver");
-> diff --git a/include/linux/gunyah.h b/include/linux/gunyah.h
-> index 01a6f202d037..982e27d10d57 100644
-> --- a/include/linux/gunyah.h
-> +++ b/include/linux/gunyah.h
-> @@ -8,11 +8,68 @@
->   
->   #include <linux/bitfield.h>
->   #include <linux/errno.h>
-> +#include <linux/interrupt.h>
->   #include <linux/limits.h>
-> +#include <linux/mailbox_controller.h>
-> +#include <linux/mailbox_client.h>
->   #include <linux/types.h>
->   
-> +/* Matches resource manager's resource types for VM_GET_HYP_RESOURCES RPC */
-> +enum gh_resource_type {
-> +	GH_RESOURCE_TYPE_BELL_TX	= 0,
-> +	GH_RESOURCE_TYPE_BELL_RX	= 1,
-> +	GH_RESOURCE_TYPE_MSGQ_TX	= 2,
-> +	GH_RESOURCE_TYPE_MSGQ_RX	= 3,
-> +	GH_RESOURCE_TYPE_VCPU		= 4,
-> +};
-> +
-> +struct gh_resource {
-> +	enum gh_resource_type type;
-> +	u64 capid;
-> +	unsigned int irq;
-> +};
-> +
-> +/**
-> + * Gunyah Message Queues
-> + */
-> +
-> +#define GH_MSGQ_MAX_MSG_SIZE		240
-> +
-> +struct gh_msgq_tx_data {
-> +	size_t length;
-> +	bool push;
-> +	char data[];
-> +};
-> +
-> +struct gh_msgq_rx_data {
-> +	size_t length;
-> +	char data[GH_MSGQ_MAX_MSG_SIZE];
-> +};
-> +
-> +struct gh_msgq {
-> +	struct gh_resource *tx_ghrsc;
-> +	struct gh_resource *rx_ghrsc;
-> +
-> +	/* msgq private */
-> +	int last_ret; /* Linux error, not GH_STATUS_* */
-> +	struct mbox_chan mbox_chan;
-> +	struct mbox_controller mbox;
-> +	struct tasklet_struct txdone_tasklet;
-> +};
-> +
-> +
-> +int gh_msgq_init(struct device *parent, struct gh_msgq *msgq, struct mbox_client *cl,
-> +		     struct gh_resource *tx_ghrsc, struct gh_resource *rx_ghrsc);
-> +void gh_msgq_remove(struct gh_msgq *msgq);
-> +
-> +static inline struct mbox_chan *gh_msgq_chan(struct gh_msgq *msgq)
-> +{
-> +	return &msgq->mbox.chans[0];
-> +}
-> +
->   /******************************************************************************/
->   /* Common arch-independent definitions for Gunyah hypercalls                  */
-> +
->   #define GH_CAPID_INVAL	U64_MAX
->   #define GH_VMID_ROOT_VM	0xff
->   
+> +		return dev_err_probe(dev, ret, "failed to initialize clocks\n");
+>  
+>  	hsphy->phy_reset = devm_reset_control_get_exclusive(&pdev->dev, NULL);
+>  	if (IS_ERR(hsphy->phy_reset)) {
