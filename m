@@ -2,192 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 048ED7223C2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 12:46:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 613967224FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 13:56:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232019AbjFEKqB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 06:46:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56378 "EHLO
+        id S233005AbjFEL4W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 07:56:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231432AbjFEKqA (ORCPT
+        with ESMTP id S232997AbjFEL4S (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 06:46:00 -0400
-Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46EF0EA;
-        Mon,  5 Jun 2023 03:45:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1685961959; x=1717497959;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=p5URlSMRlx8Wq02hvARuSDlMSFf/lU44gWl/ckAOxo8=;
-  b=UX4tWJ8x0MblyLcx+Jd5tfqW+gAaeghFljVTxAKg2086tvLSf2+XkK2I
-   SyIoN7wjshEIOD8P+qCLu8g4N8oMGEOSh9Utdf4Ku+AN6cPsRvcsGEJPU
-   bAuMx5/6eO642/c29lg2yePjfPZgnqhXWlAXfEaWJ8M1oPyJXiVGp6lpn
-   6mmePpHWUqgKip8Qk52bY2xfC4YcpCsrwHJDpvtcc0Vlgzum+OwxglHU4
-   GIvWjYaUzFCxZOGOVn1U6tka8bGFVRS0QudO2+1tQioN4K6vXb/XN33mV
-   dYkoy0FAJ9S0z7tpujlPz//cmJoy8zJNDpzfEAXp2fFE2j36IcWdDrFU9
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10731"; a="335954387"
-X-IronPort-AV: E=Sophos;i="6.00,217,1681196400"; 
-   d="scan'208";a="335954387"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Jun 2023 03:45:56 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10731"; a="852929198"
-X-IronPort-AV: E=Sophos;i="6.00,217,1681196400"; 
-   d="scan'208";a="852929198"
-Received: from kuha.fi.intel.com ([10.237.72.185])
-  by fmsmga001.fm.intel.com with SMTP; 05 Jun 2023 03:45:51 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Mon, 05 Jun 2023 13:45:50 +0300
-Date:   Mon, 5 Jun 2023 13:45:50 +0300
-From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        Mon, 5 Jun 2023 07:56:18 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28EE5D3
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 04:56:16 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id 5b1f17b1804b1-3f6ffc2b314so41938085e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 04:56:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685966174; x=1688558174;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vkvtpUZa+WNJu/9LgV9hMES117F+4ewA0642BFfUJVw=;
+        b=BAYU4aFmBg0ZyMTZNGRbL3f/Z0s5Uy8eiKthMZGFw29QHdDhc2BdwQkGLm3O0hY02Q
+         Ys9ls4OwE1PFwpdx8TPaaSL4QDeWXbOVe5aheZzW/XtBAYPRXJvnxQlmEcg2ebsEEjPr
+         kToYHyGW3DDTcRnCFmvW4ZxWGsSxQD8QIXfec3UyHDGvIxdzAa6u3rdBsOLLD2EcYPWu
+         7hhJGgiwwAPjiGkBJSeiRis/pAtwm/YkB4zooWGt1ULMX3BNNsWsBGel5+BYKtZx3qxZ
+         ncQYRBYcmvjWo+8CsXZXMb9icJo/yyj4kL1V2X+MTIfG/jsrU06whRAZA7+VNY7YcR1f
+         2Mvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685966174; x=1688558174;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vkvtpUZa+WNJu/9LgV9hMES117F+4ewA0642BFfUJVw=;
+        b=lpkAUtU124rkmGRyyFZyardzUPeozcZEptxTiVBSr7jr7s9o2b+l1q6917pq8TcE2D
+         m8X7xBe0dxm/8uNYdzWiUiaN7VIazvERPRyUz1ygrlZ1xn/dSHXFVabh8StxmUn/vu5i
+         L+7bXqBG+eYXa/v/dbrdFGnWqhn3KSI+LCafeOipd0VUrllAc9Bf9Rk385vwwGOUvgeW
+         8qmCZaBM78hsRj+VM9sW4535e3eLRp+1eTHh0SCMVr+j4d+rY+8wzbe4mO9CvF9fHkWv
+         9SO04By4hviJmBl0bNDtfxsfzcUJVsmhmftUzLRjBhbQVQRG4qKX3TsX4pkIDf7XUlwv
+         n6Sg==
+X-Gm-Message-State: AC+VfDwg65r5SF8etAD+HzovqRery2xh79Ilk7ZxpmRwviJ2k0V5erQu
+        owVMIM6j8c7Ei2ohIJo15pN85g==
+X-Google-Smtp-Source: ACHHUZ6NZP6T00+DLX0Dq4eGhE7MGLZa7rHDq9fDuqmMsjSahFOJGidDf1eWYEJqDckwivYG+8Nmuw==
+X-Received: by 2002:a1c:ed03:0:b0:3f4:1ce0:a606 with SMTP id l3-20020a1ced03000000b003f41ce0a606mr7738878wmh.1.1685966174612;
+        Mon, 05 Jun 2023 04:56:14 -0700 (PDT)
+Received: from hackbox.lan ([86.121.163.20])
+        by smtp.gmail.com with ESMTPSA id n24-20020a7bc5d8000000b003f17848673fsm10631636wmk.27.2023.06.05.04.56.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Jun 2023 04:56:14 -0700 (PDT)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org
-Subject: Re: [PATCH RFC 3/7] usb: ucsi: glink: use the connector orientation
- GPIO to provide switch events
-Message-ID: <ZH283tlyRffPMXGm@kuha.fi.intel.com>
-References: <20230601-topic-sm8550-upstream-type-c-v1-0-d4d97b4d8bab@linaro.org>
- <20230601-topic-sm8550-upstream-type-c-v1-3-d4d97b4d8bab@linaro.org>
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Subject: [PATCH] regulator: qcom-rpmh: Fix regulators for PM8550
+Date:   Mon,  5 Jun 2023 14:56:07 +0300
+Message-Id: <20230605115607.921308-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230601-topic-sm8550-upstream-type-c-v1-3-d4d97b4d8bab@linaro.org>
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,SPF_HELO_PASS,
-        SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 01, 2023 at 04:07:03PM +0200, Neil Armstrong wrote:
-> On SM8550, the non-altmode orientation is not given anymore within
-> altmode events, even with USB SVIDs events.
-> 
-> On the other side, the Type-C connector orientation is correctly
-> reported by a signal from the PMIC.
-> 
-> Take this gpio signal when we detect some Type-C port activity
-> to notify any Type-C switches tied to the Type-C port connectors.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+The PM8550 uses only NLDOs 515 and the LDO 6 through 8 are low voltage
+type, so fix accordingly.
 
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Fixes: e6e3776d682d ("regulator: qcom-rpmh: Add support for PM8550 regulators")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+---
+ drivers/regulator/qcom-rpmh-regulator.c | 30 ++++++++++++-------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-> ---
->  drivers/usb/typec/ucsi/ucsi_glink.c | 52 ++++++++++++++++++++++++++++++++++++-
->  1 file changed, 51 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> index 1fe9cb5b6bd9..88491dbff7e3 100644
-> --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> @@ -9,9 +9,13 @@
->  #include <linux/mutex.h>
->  #include <linux/property.h>
->  #include <linux/soc/qcom/pdr.h>
-> +#include <linux/usb/typec_mux.h>
-> +#include <linux/gpio/consumer.h>
->  #include <linux/soc/qcom/pmic_glink.h>
->  #include "ucsi.h"
->  
-> +#define PMIC_GLINK_MAX_PORTS	2
-> +
->  #define UCSI_BUF_SIZE                   48
->  
->  #define MSG_TYPE_REQ_RESP               1
-> @@ -53,6 +57,9 @@ struct ucsi_notify_ind_msg {
->  struct pmic_glink_ucsi {
->  	struct device *dev;
->  
-> +	struct gpio_desc *port_orientation[PMIC_GLINK_MAX_PORTS];
-> +	struct typec_switch *port_switch[PMIC_GLINK_MAX_PORTS];
-> +
->  	struct pmic_glink_client *client;
->  
->  	struct ucsi *ucsi;
-> @@ -221,8 +228,20 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
->  	}
->  
->  	con_num = UCSI_CCI_CONNECTOR(cci);
-> -	if (con_num)
-> +	if (con_num) {
-> +		if (con_num < PMIC_GLINK_MAX_PORTS &&
-> +		    ucsi->port_orientation[con_num - 1]) {
-> +			int orientation = gpiod_get_value(ucsi->port_orientation[con_num - 1]);
-> +
-> +			if (orientation >= 0) {
-> +				typec_switch_set(ucsi->port_switch[con_num - 1],
-> +						 orientation ? TYPEC_ORIENTATION_REVERSE
-> +							     : TYPEC_ORIENTATION_NORMAL);
-> +			}
-> +		}
-> +
->  		ucsi_connector_change(ucsi->ucsi, con_num);
-> +	}
->  
->  	if (ucsi->sync_pending && cci & UCSI_CCI_BUSY) {
->  		ucsi->sync_val = -EBUSY;
-> @@ -283,6 +302,7 @@ static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
->  {
->  	struct pmic_glink_ucsi *ucsi;
->  	struct device *dev = &adev->dev;
-> +	struct fwnode_handle *fwnode;
->  	int ret;
->  
->  	ucsi = devm_kzalloc(dev, sizeof(*ucsi), GFP_KERNEL);
-> @@ -310,6 +330,36 @@ static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
->  
->  	ucsi_set_drvdata(ucsi->ucsi, ucsi);
->  
-> +	device_for_each_child_node(dev, fwnode) {
-> +		u32 port;
-> +
-> +		ret = fwnode_property_read_u32(fwnode, "reg", &port);
-> +		if (ret < 0) {
-> +			dev_err(dev, "missing reg property of %pOFn\n", fwnode);
-> +			return ret;
-> +		}
-> +
-> +		if (port >= PMIC_GLINK_MAX_PORTS) {
-> +			dev_warn(dev, "invalid connector number, ignoring\n");
-> +			continue;
-> +		}
-> +
-> +		ucsi->port_orientation[port] = devm_fwnode_gpiod_get(&adev->dev, fwnode,
-> +								     "orientation",
-> +								     GPIOD_IN, NULL);
-> +		if (IS_ERR(ucsi->port_orientation[port]))
-> +			return dev_err_probe(dev, PTR_ERR(ucsi->port_orientation[port]),
-> +					     "unable to acquire orientation gpio\n");
-> +
-> +		if (!ucsi->port_orientation[port])
-> +			continue;
-> +
-> +		ucsi->port_switch[port] = fwnode_typec_switch_get(fwnode);
-> +		if (IS_ERR(ucsi->port_switch[port]))
-> +			return dev_err_probe(dev, PTR_ERR(ucsi->port_switch[port]),
-> +					"failed to acquire orientation-switch\n");
-> +	}
-> +
->  	ucsi->client = devm_pmic_glink_register_client(dev,
->  						       PMIC_GLINK_OWNER_USBC,
->  						       pmic_glink_ucsi_callback,
-> 
-> -- 
-> 2.34.1
-
+diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
+index b0a58c62b1e2..f3b280af0773 100644
+--- a/drivers/regulator/qcom-rpmh-regulator.c
++++ b/drivers/regulator/qcom-rpmh-regulator.c
+@@ -1057,21 +1057,21 @@ static const struct rpmh_vreg_init_data pm8450_vreg_data[] = {
+ };
+ 
+ static const struct rpmh_vreg_init_data pm8550_vreg_data[] = {
+-	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_pldo,    "vdd-l1-l4-l10"),
++	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo515,    "vdd-l1-l4-l10"),
+ 	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_pldo,    "vdd-l2-l13-l14"),
+-	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo,    "vdd-l3"),
+-	RPMH_VREG("ldo4",   "ldo%s4",  &pmic5_nldo,    "vdd-l1-l4-l10"),
++	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo515,    "vdd-l3"),
++	RPMH_VREG("ldo4",   "ldo%s4",  &pmic5_nldo515,    "vdd-l1-l4-l10"),
+ 	RPMH_VREG("ldo5",   "ldo%s5",  &pmic5_pldo,    "vdd-l5-l16"),
+-	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_pldo_lv, "vdd-l6-l7"),
+-	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo_lv, "vdd-l6-l7"),
+-	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_pldo_lv, "vdd-l8-l9"),
++	RPMH_VREG("ldo6",   "ldo%s6",  &pmic5_pldo, "vdd-l6-l7"),
++	RPMH_VREG("ldo7",   "ldo%s7",  &pmic5_pldo, "vdd-l6-l7"),
++	RPMH_VREG("ldo8",   "ldo%s8",  &pmic5_pldo, "vdd-l8-l9"),
+ 	RPMH_VREG("ldo9",   "ldo%s9",  &pmic5_pldo,    "vdd-l8-l9"),
+-	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_nldo,    "vdd-l1-l4-l10"),
+-	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_nldo,    "vdd-l11"),
++	RPMH_VREG("ldo10",  "ldo%s10", &pmic5_nldo515,    "vdd-l1-l4-l10"),
++	RPMH_VREG("ldo11",  "ldo%s11", &pmic5_nldo515,    "vdd-l11"),
+ 	RPMH_VREG("ldo12",  "ldo%s12", &pmic5_pldo,    "vdd-l12"),
+ 	RPMH_VREG("ldo13",  "ldo%s13", &pmic5_pldo,    "vdd-l2-l13-l14"),
+ 	RPMH_VREG("ldo14",  "ldo%s14", &pmic5_pldo,    "vdd-l2-l13-l14"),
+-	RPMH_VREG("ldo15",  "ldo%s15", &pmic5_pldo,    "vdd-l15"),
++	RPMH_VREG("ldo15",  "ldo%s15", &pmic5_nldo515,    "vdd-l15"),
+ 	RPMH_VREG("ldo16",  "ldo%s16", &pmic5_pldo,    "vdd-l5-l16"),
+ 	RPMH_VREG("ldo17",  "ldo%s17", &pmic5_pldo,    "vdd-l17"),
+ 	RPMH_VREG("bob1",   "bob%s1",  &pmic5_bob,     "vdd-bob1"),
+@@ -1086,9 +1086,9 @@ static const struct rpmh_vreg_init_data pm8550vs_vreg_data[] = {
+ 	RPMH_VREG("smps4",  "smp%s4",  &pmic5_ftsmps525_lv, "vdd-s4"),
+ 	RPMH_VREG("smps5",  "smp%s5",  &pmic5_ftsmps525_lv, "vdd-s5"),
+ 	RPMH_VREG("smps6",  "smp%s6",  &pmic5_ftsmps525_mv, "vdd-s6"),
+-	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo,   "vdd-l1"),
+-	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_nldo,   "vdd-l2"),
+-	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo,   "vdd-l3"),
++	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo515,   "vdd-l1"),
++	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_nldo515,   "vdd-l2"),
++	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo515,   "vdd-l3"),
+ 	{}
+ };
+ 
+@@ -1101,9 +1101,9 @@ static const struct rpmh_vreg_init_data pm8550ve_vreg_data[] = {
+ 	RPMH_VREG("smps6", "smp%s6", &pmic5_ftsmps525_lv, "vdd-s6"),
+ 	RPMH_VREG("smps7", "smp%s7", &pmic5_ftsmps525_lv, "vdd-s7"),
+ 	RPMH_VREG("smps8", "smp%s8", &pmic5_ftsmps525_lv, "vdd-s8"),
+-	RPMH_VREG("ldo1",  "ldo%s1", &pmic5_nldo,   "vdd-l1"),
+-	RPMH_VREG("ldo2",  "ldo%s2", &pmic5_nldo,   "vdd-l2"),
+-	RPMH_VREG("ldo3",  "ldo%s3", &pmic5_nldo,   "vdd-l3"),
++	RPMH_VREG("ldo1",  "ldo%s1", &pmic5_nldo515,   "vdd-l1"),
++	RPMH_VREG("ldo2",  "ldo%s2", &pmic5_nldo515,   "vdd-l2"),
++	RPMH_VREG("ldo3",  "ldo%s3", &pmic5_nldo515,   "vdd-l3"),
+ 	{}
+ };
+ 
 -- 
-heikki
+2.34.1
+
