@@ -2,164 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BFC61721F38
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 09:13:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 317A0721F8A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 09:31:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229983AbjFEHNr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 03:13:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45964 "EHLO
+        id S229704AbjFEHbA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 03:31:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55222 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229959AbjFEHNk (ORCPT
+        with ESMTP id S230428AbjFEHao (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 03:13:40 -0400
-Received: from mo4-p04-ob.smtp.rzone.de (mo4-p04-ob.smtp.rzone.de [85.215.255.121])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3C696E6A;
-        Mon,  5 Jun 2023 00:13:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1685948957; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=UOrMiIL1SF5FAbFXlawSHUMQF+2Fw9+nKZ71MLtbBRI8NxruzB0Zg/0IXZRG5S/CUz
-    1PIV23NJVcsMsoEAdMpKWZqfUKaUH1TYSb39He6lJxgGQMbg0ulT2c0WsdsMHdNf2WzE
-    bFkD0iFgAlZI+Nua4IPazgg8uuQj65zHQwS17C7/QfKvrCg+ekXg8WvU/E0BWk5zHnv1
-    /GoM0UvU274ENFwg5Pw3hiMCrEI9bMjpbvaKa44u7UCrrhAiF/AO4VkJvNeA5sbKzcP7
-    uRVR0kP35crUsqsEbxWJ20clGQu3GtRBtDHyfHqM+eXx/9pkmTnm6rD26QzMy1gx7wlq
-    aVQQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1685948957;
-    s=strato-dkim-0002; d=strato.com;
-    h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
-    From:Subject:Sender;
-    bh=GfBDq1/JDZEt7Wx9DVlRP8wb6ffwFP/iSu6DkmVRk0w=;
-    b=WXgjRSLv4DmXhq4K2LT6a6mrh55WHcMkfbxkvHvz2kTNI6BwaOOQwSQDo1p+IzjWyk
-    fpDSNERwYNQ54PI0wSlcdkzhZLaPXHE+eFf1RVTNWgaFvNurEOPpZmFvyTmRqcXXVXkM
-    qROQ53fxMHqTFfs4U40VBhB+0Nm8Kmtc8cS9SU8ZIden+P1HYmMJ27Q/8UoczdTx5vXO
-    3s1A1hOGHa6T8I57je/WbFZsWR1EsEY/kfNpa9B03jzA8hkVwmlY3S8wajA1LkbfI7yz
-    HGpWetNh/XoLiOvlmkkWp+rcqDuPSgx0gIBHyeZEOPCe29SFgTR3Y+GMUtH1pghqRxqj
-    ckEg==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo04
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1685948957;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
-    From:Subject:Sender;
-    bh=GfBDq1/JDZEt7Wx9DVlRP8wb6ffwFP/iSu6DkmVRk0w=;
-    b=lpO/8cNPAQi8uIltRhXvOO4ApsoqNG+p2gnpkfJGvFendRLq+zR7b0zKCGEUbhWGon
-    Uj9Y7jg/KT3WrMF5m9Cz2Gkus/uKOSaRDUbejvyWz5kpJZ8VEDTFLmo7Lry8XLoOqCmL
-    PxWG8rpA4yNnAcGRcTK4IL1Rr4DvQmEIf8EJWSQfVAj8IqVreP7G+xcqD2ELLvR6LYq8
-    BU7ksc/v+6mahIT/Z9x3Ko9C480gvT97E2NkKLFfS3c5HUCENxBdLqSGnH/9+tAf1422
-    BP+qDP7P2HHtiZO1hH05KMjoaGmp2yHEr8O3rKpU6RXk5DfUFJiM7PXpmOm7cBUlwBOf
-    bWcQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1685948957;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=Cc:To:In-Reply-To:References:Message-Id:Subject:Date:From:Cc:Date:
-    From:Subject:Sender;
-    bh=GfBDq1/JDZEt7Wx9DVlRP8wb6ffwFP/iSu6DkmVRk0w=;
-    b=IPqLoc5o3c2zU2XSgGbfKJGj13HEGz9lToc1gz8jT1XZM1REiT0a9N/RMB8VHgtqBr
-    u4kNh0Xe+U0XNEx12RBg==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn9VOL5nz0="
-Received: from [192.168.244.3]
-    by smtp.strato.de (RZmta 49.5.3 DYNA|AUTH)
-    with ESMTPSA id Z82ec2z5579H8aE
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 5 Jun 2023 09:09:17 +0200 (CEST)
-From:   Stephan Gerhold <stephan@gerhold.net>
-Date:   Mon, 05 Jun 2023 09:08:30 +0200
-Subject: [PATCH 14/14] ARM: dts: qcom: apq8064: Drop redundant /smd node
+        Mon, 5 Jun 2023 03:30:44 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01589B7
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 00:30:42 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id ffacd0b85a97d-30c2bd52f82so4610999f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 00:30:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685950241; x=1688542241;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=NFReZyZu2iufJZ3PDykLvhpXb6SdQ7mEv/WAkqm0RQ4=;
+        b=G02f0WmoAeY4+9XZg+1cZOAQP3nXivmQNupC0n58RdCR20l7Cklw6KwEqnY+0sZY+3
+         nX0bl1m8bjeHTwSdTKgZhuat7x8KOrzfwmPMVwFqjhNlxis5GGXB+Ew6yLMKJaRAbmBV
+         k0Ipxom2LnOuYjGjDcLAS9xREEsh+hk1vgOY6N4ogJeNyUDEj//4oicRgj2houMThQbS
+         C8Vws74jZta+oyDEO2XPoHlF1ltIEPou/MIgHVSYLkDtG9COJEetZkGSIbbYwyjq5w9d
+         w40Cq/ILqZa/JNT9qlM7h5zfy5eHKf947k7+TIUwnnZfYOyKsfXmK9bCdZMerLNnrQm9
+         cJIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685950241; x=1688542241;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NFReZyZu2iufJZ3PDykLvhpXb6SdQ7mEv/WAkqm0RQ4=;
+        b=Gypks54PCNtEyrentblfVXNLPF3ri2o4sg09z3DCRGzIBFcIeqboZRef1H9hGRd+WE
+         S+geYAje0fPDZDk42rGHmG4WN3k0z2xlawLYTd9nodevSP5oazZK6XaSv0isqq3Bma1Q
+         Xcft3Y+fnhuFYzZwa7meWPvb9X3/jXvHBnfu5O9yucsA1ZJYqlau0kk+J9vpyajnc3T2
+         yicOmRhzKyfeAxquNIacNDt3f786CYq+bd8cwnhNINIwxQ4/acfsJSyOZfdm5ECSuOZv
+         gr7mZxlLQSSBcB2uPZoepPWI4bdMpr1e7KZXBpBiihX4+bq8Yo/GQc4jpQj2irI1/lm2
+         Q4pQ==
+X-Gm-Message-State: AC+VfDwm+79eWj1OSvKNrLVdoQO7WhkCcQiO8XiUyOmjOB0dLcMQDo6/
+        CShOo4HgytKi4VcZ1qSpxSpUYw==
+X-Google-Smtp-Source: ACHHUZ6DpZpxjDccEpr6NoOK08qI/JWn6PS5N8QU7mRlJwWTPUm7Jom2HtRWIntgSYG9nDc9HaANvg==
+X-Received: by 2002:a05:6000:10c4:b0:30e:1fc4:d0c9 with SMTP id b4-20020a05600010c400b0030e1fc4d0c9mr3668177wrx.9.1685950241092;
+        Mon, 05 Jun 2023 00:30:41 -0700 (PDT)
+Received: from [192.168.7.188] (679773502.box.freepro.com. [212.114.21.58])
+        by smtp.gmail.com with ESMTPSA id k16-20020a056000005000b003079986fd71sm8921578wrx.88.2023.06.05.00.30.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Jun 2023 00:30:40 -0700 (PDT)
+Message-ID: <d7da64a8-8d49-595f-f519-9cdc2092d9e7@linaro.org>
+Date:   Mon, 5 Jun 2023 09:30:40 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230531-rpm-rproc-v1-14-e0a3b6de1f14@gerhold.net>
-References: <20230531-rpm-rproc-v1-0-e0a3b6de1f14@gerhold.net>
-In-Reply-To: <20230531-rpm-rproc-v1-0-e0a3b6de1f14@gerhold.net>
-To:     Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH RFC 1/7] dt-bindings: connector: usb-connector: add a gpio
+ used to determine the Type-C port plug orientation
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Stephan Gerhold <stephan@gerhold.net>
-X-Mailer: b4 0.12.2
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org
+References: <20230601-topic-sm8550-upstream-type-c-v1-0-d4d97b4d8bab@linaro.org>
+ <20230601-topic-sm8550-upstream-type-c-v1-1-d4d97b4d8bab@linaro.org>
+ <0fbf55e7-2140-751d-5347-f907a46ef78c@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <0fbf55e7-2140-751d-5347-f907a46ef78c@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The "smd-edge"s for remote processors are typically specified below the
-remoteproc nodes. For some reason apq8064 also has them all listed in a
-top-level /smd node, disabled by default. None of the boards enable them.
+On 03/06/2023 22:22, Dmitry Baryshkov wrote:
+> On 01/06/2023 17:07, Neil Armstrong wrote:
+>> On some platforms, the Type-C plug orientation is given on a GPIO line.
+>>
+>> Document this optional Type-C connector property, and take the
+>> assumption an active level represents an inverted/flipped orientation.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   Documentation/devicetree/bindings/connector/usb-connector.yaml | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/connector/usb-connector.yaml b/Documentation/devicetree/bindings/connector/usb-connector.yaml
+>> index ae515651fc6b..c3884eed6ba4 100644
+>> --- a/Documentation/devicetree/bindings/connector/usb-connector.yaml
+>> +++ b/Documentation/devicetree/bindings/connector/usb-connector.yaml
+>> @@ -114,6 +114,11 @@ properties:
+>>       description: Set this property if the Type-C connector has no power delivery support.
+>>       type: boolean
+>> +  orientation-gpios:
+>> +    description: An input gpio for Type-C connector orientation, used to detect orientation
+>> +      of the Type-C connector. GPIO active level means "CC2" or Reversed/Flipped orientation.
+>> +    maxItems: 1
+> 
+> Should this be a property of the connector or of the parent device node? I mean, unlike usb-b-connector (where ID and Vbus can be simple GPIOs nearly directly connected to the pins of the connector) for the USB-C the orientation is not a connector's GPIO, but rather some additional not elementary logic.
 
-Right now apq8064 only has support for WCNSS/riva, but there the
-smd-edge is already defined with the same interrupt etc below the
-riva-pil node.
+I don't see the issue, orientation is a property of the connector itself,
+even if it's provided by another ic.
 
-Drop these redundant definitions since the /smd top-level node is now
-deprecated.
+Neil
 
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
- arch/arm/boot/dts/qcom-apq8064.dtsi | 40 -------------------------------------
- 1 file changed, 40 deletions(-)
-
-diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-index d2289205ff81..e0adf237fc5c 100644
---- a/arch/arm/boot/dts/qcom-apq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-@@ -226,46 +226,6 @@ smem {
- 		hwlocks = <&sfpb_mutex 3>;
- 	};
- 
--	smd {
--		compatible = "qcom,smd";
--
--		modem-edge {
--			interrupts = <0 37 IRQ_TYPE_EDGE_RISING>;
--
--			qcom,ipc = <&l2cc 8 3>;
--			qcom,smd-edge = <0>;
--
--			status = "disabled";
--		};
--
--		q6-edge {
--			interrupts = <0 90 IRQ_TYPE_EDGE_RISING>;
--
--			qcom,ipc = <&l2cc 8 15>;
--			qcom,smd-edge = <1>;
--
--			status = "disabled";
--		};
--
--		dsps-edge {
--			interrupts = <0 138 IRQ_TYPE_EDGE_RISING>;
--
--			qcom,ipc = <&sps_sic_non_secure 0x4080 0>;
--			qcom,smd-edge = <3>;
--
--			status = "disabled";
--		};
--
--		riva-edge {
--			interrupts = <0 198 IRQ_TYPE_EDGE_RISING>;
--
--			qcom,ipc = <&l2cc 8 25>;
--			qcom,smd-edge = <6>;
--
--			status = "disabled";
--		};
--	};
--
- 	smsm {
- 		compatible = "qcom,smsm";
- 
-
--- 
-2.40.1
+> 
+>> +
+>>     # The following are optional properties for "usb-c-connector" with power
+>>     # delivery support.
+>>     source-pdos:
+>>
+> 
 
