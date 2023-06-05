@@ -2,301 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D925E722040
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 09:55:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EE09E72206C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 10:04:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229686AbjFEHzr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 03:55:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45126 "EHLO
+        id S231418AbjFEIEN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 04:04:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49158 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231328AbjFEHzc (ORCPT
+        with ESMTP id S229660AbjFEIEM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 03:55:32 -0400
-Received: from mail.zeus03.de (www.zeus03.de [194.117.254.33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 978D4127
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 00:55:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=sang-engineering.com; h=
-        date:from:to:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=k1; bh=qNV9qf6rhJyxF+PFiRZlT81q/Mvm
-        db/EcAsD5Y7RO4A=; b=o54X53HfsxbpVsf5OsUMs5hqfUKh1FtMAgIvGYf/ao8X
-        OfgN/S/1QbXgW8iXetNizszdV6LmLLnwJIh/Ml2IAWrSsKhBUlY5kCxt0pa+RfrM
-        Hgft1OFLr+tM1Ea0Ob4WmgW4UT5YMSDHvFkIuQkEfMYIGIj3rB9wkDUyFzgsx04=
-Received: (qmail 2935631 invoked from network); 5 Jun 2023 09:54:54 +0200
-Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 5 Jun 2023 09:54:54 +0200
-X-UD-Smtp-Session: l3s3148p1@qaPYN1391MQujnt4
-Date:   Mon, 5 Jun 2023 09:54:53 +0200
-From:   Wolfram Sang <wsa+renesas@sang-engineering.com>
-To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
-        Thor Thayer <thor.thayer@linux.intel.com>,
-        Elie Morisse <syniurge@gmail.com>,
-        Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
-        Brendan Higgins <brendan.higgins@linux.dev>,
-        Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        ye xingchen <ye.xingchen@zte.com.cn>,
-        Krzysztof Adamski <krzysztof.adamski@nokia.com>,
-        Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Allison Randal <allison@lohutok.net>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Kamal Dasu <kdasu.kdev@gmail.com>,
-        Michal Simek <michal.simek@amd.com>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Jochen Friedrich <jochen@scram.de>,
-        Benson Leung <bleung@chromium.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-        Baruch Siach <baruch@tkos.co.il>,
-        Jean-Marie Verdun <verdun@hpe.com>,
-        Nick Hawkins <nick.hawkins@hpe.com>,
-        Dong Aisheng <aisheng.dong@nxp.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Oleksij Rempel <linux@rempel-privat.de>,
-        Jean Delvare <jdelvare@suse.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Chris Pringle <chris.pringle@phabrix.com>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Julia Lawall <Julia.Lawall@inria.fr>,
-        Conor Dooley <conor.dooley@microchip.com>,
-        Daire McNamara <daire.mcnamara@microchip.com>,
-        Khalil Blaiech <kblaiech@nvidia.com>,
-        Asmaa Mnebhi <asmaa@nvidia.com>,
-        Vadim Pasternak <vadimp@nvidia.com>,
-        Michael Shych <michaelsh@nvidia.com>,
-        Chris Packham <chris.packham@alliedtelesis.co.nz>,
-        Qii Wang <qii.wang@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Stefan Roese <sr@denx.de>,
-        Gregory CLEMENT <gregory.clement@bootlin.com>,
-        Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-        Stefan Wahren <stefan.wahren@i2se.com>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Peter Korsgaard <peter@korsgaard.com>,
-        Andrew Lunn <andrew@lunn.ch>, Robert Richter <rric@kernel.org>,
-        Tony Lindgren <tony@atomide.com>,
-        Aaro Koskinen <aaro.koskinen@iki.fi>,
-        Janusz Krzysztofik <jmkrzyszt@gmail.com>,
-        Vignesh R <vigneshr@ti.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Hector Martin <marcan@marcan.st>,
-        Sven Peter <sven@svenpeter.dev>, Rob Herring <robh@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <rfoss@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Chris Brandt <chris.brandt@renesas.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Jim Cromie <jim.cromie@gmail.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Andi Shyti <andi.shyti@kernel.org>,
-        Wei Chen <harperchen1110@gmail.com>,
-        George Cherian <gcherian@marvell.com>,
-        Peter Rosin <peda@axentia.se>,
-        Peter Korsgaard <peter.korsgaard@barco.com>,
-        linux-aspeed@lists.ozlabs.org,
-        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        Jan Dabros <jsd@semihalf.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Guenter Roeck <groeck@chromium.org>,
-        linux-riscv@lists.infradead.org,
-        Fabio Estevam <festevam@gmail.com>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        chrome-platform@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
-        Benjamin Fair <benjaminfair@google.com>,
-        linux-rockchip@lists.infradead.org, openbmc@lists.ozlabs.org,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Nancy Yuen <yuenn@google.com>,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-sunxi@lists.linux.dev, Joel Stanley <joel@jms.id.au>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        linux-arm-msm@vger.kernel.org, Nicholas Piggin <npiggin@gmail.com>,
-        linux-mediatek@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-        linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        linux-arm-kernel@lists.infradead.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Patrick Venture <venture@google.com>,
-        linux-mips@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        Dmitry Osipenko <digetx@gmail.com>, asahi@lists.linux.dev,
-        kernel@pengutronix.de, linuxppc-dev@lists.ozlabs.org,
-        linux-i2c@vger.kernel.org
-Subject: Re: [PATCH 00/89] i2c: Convert to platform remove callback returning
- void
-Message-ID: <ZH2UzYLPEQay3MBT@shikoro>
-Mail-Followup-To: Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-        Thor Thayer <thor.thayer@linux.intel.com>,
-        Elie Morisse <syniurge@gmail.com>,
-        Shyam Sundar S K <shyam-sundar.s-k@amd.com>,
-        Brendan Higgins <brendan.higgins@linux.dev>,
-        Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        ye xingchen <ye.xingchen@zte.com.cn>,
-        Krzysztof Adamski <krzysztof.adamski@nokia.com>,
-        Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Allison Randal <allison@lohutok.net>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Kamal Dasu <kdasu.kdev@gmail.com>,
-        Michal Simek <michal.simek@amd.com>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Jochen Friedrich <jochen@scram.de>,
-        Benson Leung <bleung@chromium.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bartosz Golaszewski <brgl@bgdev.pl>,
-        Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-        Baruch Siach <baruch@tkos.co.il>,
-        Jean-Marie Verdun <verdun@hpe.com>,
-        Nick Hawkins <nick.hawkins@hpe.com>,
-        Dong Aisheng <aisheng.dong@nxp.com>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Oleksij Rempel <linux@rempel-privat.de>,
-        Jean Delvare <jdelvare@suse.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Chris Pringle <chris.pringle@phabrix.com>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Julia Lawall <Julia.Lawall@inria.fr>,
-        Conor Dooley <conor.dooley@microchip.com>,
-        Daire McNamara <daire.mcnamara@microchip.com>,
-        Khalil Blaiech <kblaiech@nvidia.com>,
-        Asmaa Mnebhi <asmaa@nvidia.com>,
-        Vadim Pasternak <vadimp@nvidia.com>,
-        Michael Shych <michaelsh@nvidia.com>,
-        Chris Packham <chris.packham@alliedtelesis.co.nz>,
-        Qii Wang <qii.wang@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Stefan Roese <sr@denx.de>,
-        Gregory CLEMENT <gregory.clement@bootlin.com>,
-        Matthias Schiffer <matthias.schiffer@ew.tq-group.com>,
-        Stefan Wahren <stefan.wahren@i2se.com>,
-        Avi Fishman <avifishman70@gmail.com>,
-        Tomer Maimon <tmaimon77@gmail.com>,
-        Tali Perry <tali.perry1@gmail.com>,
-        Peter Korsgaard <peter@korsgaard.com>, Andrew Lunn <andrew@lunn.ch>,
-        Robert Richter <rric@kernel.org>, Tony Lindgren <tony@atomide.com>,
-        Aaro Koskinen <aaro.koskinen@iki.fi>,
-        Janusz Krzysztofik <jmkrzyszt@gmail.com>,
-        Vignesh R <vigneshr@ti.com>, Michael Ellerman <mpe@ellerman.id.au>,
-        Hector Martin <marcan@marcan.st>, Sven Peter <sven@svenpeter.dev>,
-        Rob Herring <robh@kernel.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Miquel Raynal <miquel.raynal@bootlin.com>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Robert Foss <rfoss@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Chris Brandt <chris.brandt@renesas.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Jim Cromie <jim.cromie@gmail.com>,
-        Patrice Chotard <patrice.chotard@foss.st.com>,
-        Pierre-Yves MORDRET <pierre-yves.mordret@foss.st.com>,
-        Alain Volmat <alain.volmat@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Ard Biesheuvel <ardb@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Laxman Dewangan <ldewangan@nvidia.com>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Andi Shyti <andi.shyti@kernel.org>,
-        Wei Chen <harperchen1110@gmail.com>,
-        George Cherian <gcherian@marvell.com>,
-        Peter Rosin <peda@axentia.se>,
-        Peter Korsgaard <peter.korsgaard@barco.com>,
-        linux-aspeed@lists.ozlabs.org,
-        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-        Jan Dabros <jsd@semihalf.com>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Guenter Roeck <groeck@chromium.org>,
-        linux-riscv@lists.infradead.org, Fabio Estevam <festevam@gmail.com>,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        chrome-platform@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
-        Benjamin Fair <benjaminfair@google.com>,
-        linux-rockchip@lists.infradead.org, openbmc@lists.ozlabs.org,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Nancy Yuen <yuenn@google.com>,
-        Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-sunxi@lists.linux.dev, Joel Stanley <joel@jms.id.au>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        linux-arm-msm@vger.kernel.org, Nicholas Piggin <npiggin@gmail.com>,
-        linux-mediatek@lists.infradead.org,
-        linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
-        linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org,
-        Mika Westerberg <mika.westerberg@linux.intel.com>,
-        linux-arm-kernel@lists.infradead.org,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-        Andrew Jeffery <andrew@aj.id.au>,
-        Patrick Venture <venture@google.com>, linux-mips@vger.kernel.org,
-        linux-renesas-soc@vger.kernel.org,
-        Dmitry Osipenko <digetx@gmail.com>, asahi@lists.linux.dev,
-        kernel@pengutronix.de, linuxppc-dev@lists.ozlabs.org,
-        linux-i2c@vger.kernel.org
-References: <20230508205306.1474415-1-u.kleine-koenig@pengutronix.de>
- <20230601073322.ww25ajaurktqsryr@pengutronix.de>
- <ZHijKtBbH2sCSuT4@shikoro>
+        Mon, 5 Jun 2023 04:04:12 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6CFCA1;
+        Mon,  5 Jun 2023 01:04:10 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3555J0BI005531;
+        Mon, 5 Jun 2023 08:04:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=FgelzlNZrZQDJbbxI5cN6UWdLWhLGyGq/eoC6QGHnF8=;
+ b=HFbFTvKCpUUSirgBh/NsrtnX51gWpwp54hBsObGRsKNC2X5Gx2CTONwLbluZWlsHCVbG
+ vdzQVitaiBFgYcW7uL+fmk6HQRM/jTsQzkyxwbbqX8PLNK5kOgajCEDXSq40zprDZQNp
+ Mvo38tisBycImNV4kydR8n2cziO9LcjiqEb5d71zbKkoDUv4Zfg1nARs3e+HEzU5DMMr
+ NK7VDG8YXZfNgw4+cAHTckvUtCfnxvb0oh3p2lb2fNeNcxuQCVnBXZpbTuCpm4ryZkV8
+ low1Iwk6m8q84CM304IGOzjinu4aXj0a1f/qYDzxi1CfcgomEcHgqBYmDa9RxHmgiPjG MA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qytvuu5e4-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 05 Jun 2023 08:04:05 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 355844Ww011726
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 5 Jun 2023 08:04:04 GMT
+Received: from [10.201.206.238] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 5 Jun 2023
+ 01:03:55 -0700
+Message-ID: <e7969545-ead3-4d74-0514-05d54abaf25d@quicinc.com>
+Date:   Mon, 5 Jun 2023 13:33:52 +0530
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="pOTGJ+ASVLoKQ1Xi"
-Content-Disposition: inline
-In-Reply-To: <ZHijKtBbH2sCSuT4@shikoro>
-X-Spam-Status: No, score=-1.7 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+Subject: Re: [PATCH V2 01/13] dt-bindings: remoteproc: qcom: Add support for
+ multipd model
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <jassisinghbrar@gmail.com>, <mathieu.poirier@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <quic_eberman@quicinc.com>, <quic_mojha@quicinc.com>,
+        <kvalo@kernel.org>, <loic.poulain@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>
+CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_poovendh@quicinc.com>, <quic_varada@quicinc.com>,
+        <quic_devipriy@quicinc.com>
+References: <20230521222852.5740-1-quic_mmanikan@quicinc.com>
+ <20230521222852.5740-2-quic_mmanikan@quicinc.com>
+ <7940c743-815f-f864-d015-43d7e916ecfa@linaro.org>
+From:   Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+In-Reply-To: <7940c743-815f-f864-d015-43d7e916ecfa@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: Wl_fFTtD-lvgZL94sjT3dwxOX1Cvt0ae
+X-Proofpoint-ORIG-GUID: Wl_fFTtD-lvgZL94sjT3dwxOX1Cvt0ae
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-03_08,2023-06-02_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 clxscore=1015
+ mlxscore=0 spamscore=0 suspectscore=0 mlxlogscore=999 phishscore=0
+ priorityscore=1501 lowpriorityscore=0 bulkscore=0 impostorscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2306050072
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -304,41 +95,257 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---pOTGJ+ASVLoKQ1Xi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 01, 2023 at 03:54:50PM +0200, Wolfram Sang wrote:
->=20
-> > I wonder how this series will go in. My expectation was that Wolfram
-> > picks up the whole series via his tree?!
->=20
-> Will do. I am currently super-busy, though.
+On 5/30/2023 4:28 PM, Krzysztof Kozlowski wrote:
+> On 22/05/2023 00:28, Manikanta Mylavarapu wrote:
+>> Add new binding document for multipd model remoteproc.
+>> IPQ5018, IPQ9574 follows multipd model.
+>>
+>> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+>> ---
+>> Changes in V2:
+>> 	- Fixed all comments and rebased for TOT.
+>> 	- Changed to BSD-3-Clause based on internal open source team
+>>            suggestion.
+>> 	- Added firmware-name.
+>>
+>>   .../bindings/remoteproc/qcom,multipd-pil.yaml | 265 ++++++++++++++++++
+>>   1 file changed, 265 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
+>> new file mode 100644
+>> index 000000000000..3257f27dc569
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
+>> @@ -0,0 +1,265 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-3-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/remoteproc/qcom,multipd-pil.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Multipd Secure Peripheral Image Loader
+>> +
+>> +maintainers:
+>> +  - Bjorn Andersson <andersson@kernel.org>
+>> +  - Mathieu Poirier <mathieu.poirier@linaro.org>
+>> +
+>> +description:
+>> +  Multipd Peripheral Image Loader loads firmware and boots Q6 pd, WCSS pd
+> 
+> ... boots Q6 Protection Domain (PD), WCSS PD ...
+> 
+I will replace 'PD' with 'protection domain' wherever applicable.
 
-Whole series applied to for-next. I squashed all the commits into one.
-These are mostly simple changes which we won't revert anyhow, but fix
-incrementally if we ever find an issue.
+>> +  remoteproc's on the Qualcomm IPQ5018, IPQ9574 SoC.
+> 
+>> Pd means protection
+>> +  domain.
+> 
+> so you can skip this sentence as it is explained already.
+> 
+Sure. I will skip.
 
+>> It's similar to process in Linux. Here QDSP6 processor runs each
+>> +  wifi radio functionality on a separate process. One process can't access
+>> +  other process resources, so this is termed as PD i.e protection domain.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,ipq5018-q6-mpd
+>> +      - qcom,ipq9574-q6-mpd
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  firmware-name:
+>> +    $ref: /schemas/types.yaml#/definitions/string-array
+>> +    description: Firmware name of the Hexagon core
+> 
+> No need for ref and description. Instead maxItems.
+> 
+Ok. I will remove ref, description and add maxItems.
 
---pOTGJ+ASVLoKQ1Xi
-Content-Type: application/pgp-signature; name="signature.asc"
+>> +
+>> +  interrupts-extended:
+>> +    items:
+>> +      - description: Watchdog interrupt
+>> +      - description: Fatal interrupt
+>> +      - description: Ready interrupt
+>> +      - description: Handover interrupt
+>> +      - description: Stop acknowledge interrupt
+>> +
+>> +  interrupt-names:
+>> +    items:
+>> +      - const: wdog
+>> +      - const: fatal
+>> +      - const: ready
+>> +      - const: handover
+>> +      - const: stop-ack
+>> +
+>> +  qcom,smem-states:
+>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+>> +    description: States used by the AP to signal the remote processor
+>> +    items:
+>> +      - description: Shutdown Q6
+>> +      - description: Stop Q6
+>> +
+>> +  qcom,smem-state-names:
+>> +    description:
+>> +      Names of the states used by the AP to signal the remote processor
+>> +    items:
+>> +      - const: shutdown
+>> +      - const: stop
+>> +
+>> +  memory-region:
+>> +    items:
+>> +      - description: Q6 pd reserved region
+>> +
+>> +  glink-edge:
+>> +    $ref: /schemas/remoteproc/qcom,glink-edge.yaml#
+>> +    description:
+>> +      Qualcomm G-Link subnode which represents communication edge, channels
+>> +      and devices related to the Modem.
+>> +
+>> +patternProperties:
+>> +  "^pd-1|pd-2|pd-3":
+>> +    type: object
+>> +    description:
+>> +      In Multipd model, WCSS pd depends on Q6 pd i.e Q6 pd should be up before
+>> +      WCSS. It can be achieved by keeping wcss pd node as subnode of Q6
+>> +      device node.
+> 
+> That's not enough. Your description does not say what is this, why you
+> have two protection domains for same compatible. What's more, it a bit
+> deviates from hardware description.
+> 
+>> +
+>> +    properties:
+>> +      compatible:
+>> +        enum:
+>> +          - qcom,ipq5018-wcss-ahb-mpd
+>> +          - qcom,ipq9574-wcss-ahb-mpd
+>> +          - qcom,ipq5018-wcss-pcie-mpd
+> 
+> Keep rather alphabetical order (so both 5018 together).
+> 
+Sure, i will update.
 
------BEGIN PGP SIGNATURE-----
+> I also do not understand these at all. Why adding bus type to
+> compatible? This rarely is allowed (unless it is PCIe controller within
+> soc).
+> 
+>> +
+>> +      firmware-name:
+>> +        $ref: /schemas/types.yaml#/definitions/string-array
+>> +        items:
+>> +          - description: Firmware name of the Hexagon core
+> 
+> same comments
+> 
+Ok. I will remove ref, description and add maxItems.
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmR9lM0ACgkQFA3kzBSg
-KbZSPhAAsfk7pusys7GFW8hUTH1/MqaEtjs2e4zgiR1STw1eeim+O6Ayd8LuEdGz
-eXWZfv2E4SYhFi1+lXo4jFP3tPkCynMqn8BLbfRwq6XzXboMRQtEOXXnmRM7aOKN
-5x2CbAPlQQZ3A4Bbht92ESvKN54WRDM8V5wg0YUkowAlK6wtG0H8ajUOqYJdfVeN
-OPftzfdxQUDphHtitAoIYgHrz8UDxZSuASIjHBbb5ppBwZNtxc81DQYuIE42ajf8
-uYRrujqm1lKaRKdWvbZrOwZ42he5QLFl88mVLpQ9OmuhexOuBryk/847XdGDUMP6
-LdI40mazpIk+X2txyOySPbR0e3nCmq8gHBUKw1VQ3FMcCwAf60CxaO6fz0WLKPnU
-ezWsW6ETk7l52upnb0oSFnTH7ZHBN30Ebtb6xqMoDWs4i6RX/DX//leVHoHb+rD1
-tj0EV3wgmvXgyo2wcha8I05YeTYiFofK5PmHq3L3yXBDusslXdEsyVdFU/Mjy01G
-vFMWb2wJliDaJy3u9c2LkNBeWdlScTUM7U978o1sakXd6k4AcFJ9iufF0QDoTKqF
-iZmdoZaQuVCiGtwB/gUFMtbQDnikh1r2XxLSeeIIe1Fj2yfWr/GzVUq2tCzWu2J/
-D0nf7ftd8Y/SK1BYHfuuHox68zo4O8+CNB9WKjgkdt4JsXBlV0U=
-=xv1r
------END PGP SIGNATURE-----
+>> +
+>> +      interrupts-extended:
+>> +        items:
+>> +          - description: Fatal interrupt
+>> +          - description: Ready interrupt
+>> +          - description: Spawn acknowledge interrupt
+>> +          - description: Stop acknowledge interrupt
+> 
+> ditto
+> 
+I will use 'interrupts' here.
 
---pOTGJ+ASVLoKQ1Xi--
+Thanks & Regards,
+Manikanta.
+
+>> +
+>> +      interrupt-names:
+>> +        items:
+>> +          - const: fatal
+>> +          - const: ready
+>> +          - const: spawn-ack
+>> +          - const: stop-ack
+>> +
+>> +      qcom,smem-states:
+>> +        $ref: /schemas/types.yaml#/definitions/phandle-array
+>> +        description: States used by the AP to signal the remote processor
+>> +        items:
+>> +          - description: Shutdown WCSS pd
+>> +          - description: Stop WCSS pd
+>> +          - description: Spawn WCSS pd
+>> +
+>> +      qcom,smem-state-names:
+>> +        description:
+>> +          Names of the states used by the AP to signal the remote processor
+>> +        items:
+>> +          - const: shutdown
+>> +          - const: stop
+>> +          - const: spawn
+>> +
+>> +    required:
+>> +      - compatible
+>> +      - firmware-name
+>> +      - interrupts-extended
+>> +      - interrupt-names
+>> +      - qcom,smem-states
+>> +      - qcom,smem-state-names
+>> +
+>> +    unevaluatedProperties: false
+>> +
+>> +required:
+>> +  - compatible
+>> +  - firmware-name
+>> +  - reg
+>> +  - interrupts-extended
+>> +  - interrupt-names
+>> +  - qcom,smem-states
+>> +  - qcom,smem-state-names
+>> +  - memory-region
+>> +
+>> +allOf:
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - qcom,ipq5018-q6-mpd
+>> +    then:
+>> +      properties:
+>> +        firmware-name:
+>> +          items:
+>> +            - const: IPQ5018/q6_fw.mdt
+>> +            - const: IPQ5018/m3_fw.mdt
+>> +            - const: qcn6122/m3_fw.mdt
+> 
+> No, names are not part of bindings. Also paths do not look correct. Open
+> linux-firmware package and verify these are good...
+> 
+>> +
+>> +  - if:
+>> +      properties:
+>> +        compatible:
+>> +          contains:
+>> +            enum:
+>> +              - qcom,ipq9574-q6-mpd
+>> +    then:
+>> +      properties:
+>> +        firmware-name:
+>> +          items:
+>> +            - const: IPQ9574/q6_fw.mdt
+>> +            - const: IPQ9574/m3_fw.mdt
+> 
+> Drop.
+> 
+>> +
+>> +unevaluatedProperties: false
+> 
+> This changed... why?
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
