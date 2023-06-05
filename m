@@ -2,140 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D6DE7227EF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 15:55:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3CEED72287F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 16:13:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232428AbjFENzf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 09:55:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56700 "EHLO
+        id S233820AbjFEONl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 10:13:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231292AbjFENze (ORCPT
+        with ESMTP id S233825AbjFEONZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 09:55:34 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64EDB90
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 06:55:33 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-652dd220d67so3634958b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 06:55:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685973333; x=1688565333;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=JxwDQhCAuPGIb3iHcVUC4+fUCXLvKFtEBk4rG+JbNsE=;
-        b=pnkJLWSOGbzo1NvVO/8XOxioEO7TsaL5uds5covOj8vyRYu8Gz35EjX5v+BTx86tLE
-         3sI12/6C1e8jLWUR18wRea0ZREohGMNgpWqWeRzatJVsg4Y/5kJAcEn+d+kWjPYVJMUk
-         IYN5lgjTLEChlQDU6s6ZweGIzGkYytSDQCiKtJR8KijFK+oSELp1uZDf+1mRIU+VTjqM
-         Du2uEtHkc0PCwE1RFRtzckxjwBt3tI7vUkTa7j0PFyqa0OBOeTOFALDemwbYFWU01qIv
-         Ao0em5bYtCHktzJ3ZJCZQDN9HnAWBTOIYVyA8e4fj3lKp8JGJXAqSzz6jQijhf3GNA5O
-         SbaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685973333; x=1688565333;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JxwDQhCAuPGIb3iHcVUC4+fUCXLvKFtEBk4rG+JbNsE=;
-        b=JKl2D0BWrsVYKDG7yA9r2WrbovWbr/x4fDqsihSI24QPmRLZbfpKwMBTN/l2yWsmkr
-         sQsfg12MSSJOR/bVN681fUHHk/ERs0//GkN7C+aU13NEaPGJ/XYYyTnxj+i6D17lTewT
-         tWngbpMzkcgldgZlOuqd11Xipx4gxe1h8YW8je1eZ+JeLJg+Tk3kH5ULxTdq159xXfUU
-         ybkPIRTVeYsf778DuF6YP0u2myXOlysj5nV2s4P8FHEVhGc6SH+wfJGDNB4YSXSr14Ff
-         hhWy8B4gqiKyvs4yrahKApEN6VzT92SOjcD3K+ahNZl3+ipxtgt0qVuitTeNSowaVhJS
-         IOHA==
-X-Gm-Message-State: AC+VfDzqjC+3vIPylIQilGw9jb3YP2gPeC8iwHhep9kNpUbJmkdRkkV0
-        5xk/xdrE5DwoW06Hwif0yqyV
-X-Google-Smtp-Source: ACHHUZ5hQGlm/xEWO3otl7disCK8xOa/jNYnGs3o8HN+8Dm8ow4rqjkcVwoK25Qverdcell0Q7E6FQ==
-X-Received: by 2002:a05:6a00:1501:b0:65a:6870:3acb with SMTP id q1-20020a056a00150100b0065a68703acbmr4472586pfu.31.1685973332897;
-        Mon, 05 Jun 2023 06:55:32 -0700 (PDT)
-Received: from thinkpad ([120.138.12.115])
-        by smtp.gmail.com with ESMTPSA id d18-20020aa78152000000b00640e64aa9b7sm5417015pfn.10.2023.06.05.06.55.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Jun 2023 06:55:32 -0700 (PDT)
-Date:   Mon, 5 Jun 2023 19:25:28 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Lorenzo Pieralisi <lpieralisi@kernel.org>
-Cc:     Damien Le Moal <dlemoal@kernel.org>, kw@linux.com,
-        kishon@kernel.org, bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v6 2/9] PCI: endpoint: Pass EPF device ID to the probe
- function
-Message-ID: <20230605135528.GF5536@thinkpad>
-References: <20230602114756.36586-1-manivannan.sadhasivam@linaro.org>
- <20230602114756.36586-3-manivannan.sadhasivam@linaro.org>
- <fdf5ea08-f3a1-3c9f-66a3-1cfa3743dae2@kernel.org>
- <ZH3eUQaIvWAQLI9A@lpieralisi>
+        Mon, 5 Jun 2023 10:13:25 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25AC81985;
+        Mon,  5 Jun 2023 07:12:36 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 355DQNb1010118;
+        Mon, 5 Jun 2023 14:11:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=J6spjeZSHivNH3RNmesMtSKJnvJqRAmSwJdeKD0qAjs=;
+ b=PzNaT1cv091teOjH/TOAOdnVwxTN+HqoZGqgfkHl3ztdWaDpZNq/mq1NIZiyxR1VPOEK
+ 7PEXGmQfg+f3mFR8gmk2xfgU8Pl+oCdyzgNgRD/8JJ+96R3zz3n6QKhfvyjl1mMWRnR4
+ Xzl+fipzl0D+6jEt2NQ59LqeRGvWbZMf+IywDraaHIsyjaxidc4lTooTDs2RmQzVkuvU
+ HngTz/b4/8x9DyhEbQQff013/ToXe8PjiJeFPRh01vYFOB7K4N8UWPPkgT++79tYYraR
+ +cOcmssb99DeH7GIu5chFoTiRWbEVJp9ClwYPNqQuZKbNFu/0es9kPlL3lbsLlZAI2S1 Fg== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qyx9p3qxp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 05 Jun 2023 14:11:25 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 355EBO20011354
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 5 Jun 2023 14:11:24 GMT
+Received: from ekangupt-linux.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Mon, 5 Jun 2023 07:11:21 -0700
+From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
+To:     <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
+CC:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
+        <ekangupt@qti.qualcomm.com>, <gregkh@linuxfoundation.org>,
+        <linux-kernel@vger.kernel.org>, <bkumar@qti.qualcomm.com>,
+        <fastrpc.upstream@qti.qualcomm.com>, stable <stable@kernel.org>
+Subject: [PATCH v1] misc: fastrpc: Fix remote heap allocation request
+Date:   Mon, 5 Jun 2023 19:41:16 +0530
+Message-ID: <1685974276-23435-1-git-send-email-quic_ekangupt@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZH3eUQaIvWAQLI9A@lpieralisi>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 2pQAyMiJqJNcepXDyO2d-h4qiX3A9b99
+X-Proofpoint-GUID: 2pQAyMiJqJNcepXDyO2d-h4qiX3A9b99
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-05_28,2023-06-02_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=999
+ clxscore=1015 mlxscore=0 adultscore=0 impostorscore=0 lowpriorityscore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2306050123
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 05, 2023 at 03:08:33PM +0200, Lorenzo Pieralisi wrote:
-> On Fri, Jun 02, 2023 at 09:13:25PM +0900, Damien Le Moal wrote:
-> > On 6/2/23 20:47, Manivannan Sadhasivam wrote:
-> > > Currently, the EPF probe function doesn't get the device ID argument needed
-> > > to correctly identify the device table ID of the EPF device.
-> > > 
-> > > When multiple entries are added to the "struct pci_epf_device_id" table,
-> > > the probe function needs to identify the correct one. This is achieved by
-> > > modifying the pci_epf_match_id() function to return the match ID pointer
-> > > and passing it to the driver's probe function.
-> > > 
-> > > pci_epf_device_match() function can return bool based on the return value
-> > > of pci_epf_match_id().
-> > > 
-> > > Reviewed-by: Kishon Vijay Abraham I <kishon@kernel.org>
-> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > 
-> > [...]
-> > 
-> > >  static int pci_epf_device_match(struct device *dev, struct device_driver *drv)
-> > > @@ -510,8 +510,12 @@ static int pci_epf_device_match(struct device *dev, struct device_driver *drv)
-> > >  	struct pci_epf *epf = to_pci_epf(dev);
-> > >  	struct pci_epf_driver *driver = to_pci_epf_driver(drv);
-> > >  
-> > > -	if (driver->id_table)
-> > > -		return pci_epf_match_id(driver->id_table, epf);
-> > > +	if (driver->id_table) {
-> > > +		if (pci_epf_match_id(driver->id_table, epf))
-> > > +			return true;
-> > > +		else
-> > > +			return false;
-> > 
-> > You prefer keeping this pattern ?
-> > 
-> > return pci_epf_match_id(driver->id_table, epf) != NULL;
-> > 
-> > is no much nicer !
-> 
-> s/no/so
-> 
-> Yes it is, I can change it myself to spare Mani few cycles.
-> 
+Remote heap is used by DSP audioPD on need basis. This memory is
+allocated from reserved CMA memory region and is then shared with
+audioPD to use it for it's functionality.
 
-Please do!
+Current implementation of remote heap is not allocating the memory
+from CMA region, instead it is allocating the memory from SMMU
+context bank. The arguments passed to scm call for the reassignment
+of ownership is also not correct. Added changes to allocate CMA
+memory and have a proper ownership reassignment.
 
-- Mani
+Fixes: 532ad70c6d44 ("misc: fastrpc: Add mmap request assigning for static PD pool")
+Cc: stable <stable@kernel.org>
+Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+---
+ drivers/misc/fastrpc.c | 26 ++++++++++++++++++++------
+ 1 file changed, 20 insertions(+), 6 deletions(-)
 
-> Lorenzo
-> 
-> > 
-> > Anyway:
-> > 
-> > Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-> > 
-> > -- 
-> > Damien Le Moal
-> > Western Digital Research
-> > 
-
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index 30d4d04..f5fc2de 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -1866,7 +1866,11 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+ 		return -EINVAL;
+ 	}
+ 
+-	err = fastrpc_buf_alloc(fl, fl->sctx->dev, req.size, &buf);
++	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR)
++		err = fastrpc_remote_heap_alloc(fl, dev, req.size, &buf);
++	else
++		err = fastrpc_buf_alloc(fl, dev, req.size, &buf);
++
+ 	if (err) {
+ 		dev_err(dev, "failed to allocate buffer\n");
+ 		return err;
+@@ -1905,12 +1909,22 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+ 
+ 	/* Add memory to static PD pool, protection thru hypervisor */
+ 	if (req.flags == ADSP_MMAP_REMOTE_HEAP_ADDR && fl->cctx->vmcount) {
+-		struct qcom_scm_vmperm perm;
++		u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
++		struct qcom_scm_vmperm *dst_perms;
++		u32 i;
+ 
+-		perm.vmid = QCOM_SCM_VMID_HLOS;
+-		perm.perm = QCOM_SCM_PERM_RWX;
+-		err = qcom_scm_assign_mem(buf->phys, buf->size,
+-			&fl->cctx->perms, &perm, 1);
++		dst_perms = kcalloc(fl->cctx->vmcount,
++			sizeof(struct qcom_scm_vmperm), GFP_KERNEL);
++		if (!dst_perms)
++			return -ENOMEM;
++		for (i = 0; i < fl->cctx->vmcount; i++) {
++			dst_perms[i].vmid = fl->cctx->vmperms[i].vmid;
++			dst_perms[i].perm = fl->cctx->vmperms[i].perm;
++		}
++
++		err = qcom_scm_assign_mem(buf->phys,(u64)buf->size,
++			&src_perms, dst_perms, fl->cctx->vmcount);
++		kfree(dst_perms);
+ 		if (err) {
+ 			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
+ 					buf->phys, buf->size, err);
 -- 
-மணிவண்ணன் சதாசிவம்
+2.7.4
+
