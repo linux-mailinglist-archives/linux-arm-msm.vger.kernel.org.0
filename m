@@ -2,74 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45A047228A3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 16:19:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 01CBA7228FF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 16:39:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233773AbjFEOTA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 10:19:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47116 "EHLO
+        id S234358AbjFEOj3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 10:39:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233400AbjFEOS5 (ORCPT
+        with ESMTP id S231348AbjFEOj2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 10:18:57 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6AAB10C;
-        Mon,  5 Jun 2023 07:18:48 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 347D66241A;
-        Mon,  5 Jun 2023 14:18:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 632DBC433EF;
-        Mon,  5 Jun 2023 14:18:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685974727;
-        bh=zq25hJ0fHK6GtehEcofkCZeAy8jNCWwt6NKJQEwBpSM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=FvbA7sETZUW5ZcfTxbhvBaQKfBV28xcoqYaInME55BvENaD8mTZnOhJJubLqBfwas
-         S2+KfwHil+AQh6U5BY7kxfxfsXzIRbc9Fm1jsuCYqwhPzADC3AiOKBuPyMSCT0XqyT
-         cedzg8Vp/4wtQVT4K8gDNrunucZWVy+D0nvntkUiCe89JGFnvfxB/ML5apb7lEPBog
-         eBDa4Md6P6ZWalE+1acYuyw8GgqeNvLOy8glnwIMA+6yqLP4YDQl+3oF6ZExl56ExD
-         mffuTaNBhr+08U3L0Mdi2mJLHbRxkINhvTP/Ijb/8ECezrov4sJ5PhAhCoLumjP55S
-         unYQlpAMd6HmQ==
-Date:   Mon, 5 Jun 2023 15:18:39 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Elliot Berman <quic_eberman@quicinc.com>
-Cc:     Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Mon, 5 Jun 2023 10:39:28 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DB119C
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 07:39:26 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3f6ef9a928fso41200335e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 07:39:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685975965; x=1688567965;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Fm6omFP2aCod8XtHm5L9yMfAAfEAX4qQM59CrdBf6A4=;
+        b=RMH5yFvFB0L/bXyqSylorgHfQYaSpe5UFg3pbVvpMOsYNLI+duwnbm4E/mAvX75tff
+         pftEb/5lY+zanSgbOgffu9KDhISS58D8Xzemn47sA6Q2fqNB/zT7GhuayAIJ04hgumfb
+         8hkcYIkG+zOleWLy2rc1b3Gda2R/6i9NZ9VIh66Oir26xsZEdC5BxsaywJ7Ma9YRl5kK
+         vl/J2WNI6h+e4m3szVQJcin+zCaQYog6iyf8jn0GOsw+Nbd7lLfuyRn6YZ5Z8Qh4gOtt
+         qfwpfL/HDDZE7drv2hGb4s5QnTyB1oQelYwLG9VaI2suY8m/wNeNqCM7IbbYsBmNcSAg
+         ppQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685975965; x=1688567965;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Fm6omFP2aCod8XtHm5L9yMfAAfEAX4qQM59CrdBf6A4=;
+        b=CS6ySTYFUPRfpKBpFX3ACow/tQ5Ov9AbCphOCweIc5iLJ4f2CqpcMCEildPLN8dV13
+         aQdrEkb0NbssnuDEtPSe5mtcSUs2eznNHgS+8EvNtS74el7c7rN6JJMy0d6PNbuCaByY
+         ArrAiAdaxOBRRIxvLc146v+IsLxQJWN1bm25rBVPMb8hCJyUngEGduvkq8aNIowGuYQx
+         tsyV2oGcksof/y+ZIlkcTaml77P/thr5fqvpIBSEHKGBNwjy9V9JeKFXmPK7yciEBEfs
+         e/oG3wD/1/lbuvFrcGzboLrSymNN7jQ6b79US+dsaQ4uUNMxtLZ+AbYSxzyo+ArlnS8F
+         +5fQ==
+X-Gm-Message-State: AC+VfDwByAKhzop+qTVhDFtHME1+L4CqGroW/LxiyY2tgdMhBls2PyOX
+        cauLuv1uRT/dCHQSJJ6qUoCuHQ==
+X-Google-Smtp-Source: ACHHUZ7Qw6Z8nNf0J0a233uM9vzNDjf3b+Y4VTNAP90U+Djmy4CPnjwmIeGuRE/YDnhaRXFeMoTCcQ==
+X-Received: by 2002:a05:600c:2947:b0:3f7:3074:d2f2 with SMTP id n7-20020a05600c294700b003f73074d2f2mr3626394wmd.34.1685975964911;
+        Mon, 05 Jun 2023 07:39:24 -0700 (PDT)
+Received: from ?IPV6:2a05:6e02:1041:c10:2385:9257:ace1:1efc? ([2a05:6e02:1041:c10:2385:9257:ace1:1efc])
+        by smtp.googlemail.com with ESMTPSA id c4-20020a5d4144000000b0030ade1b9400sm9960903wrq.30.2023.06.05.07.39.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Jun 2023 07:39:24 -0700 (PDT)
+Message-ID: <4097223e-5297-1536-18bb-512ef28c8329@linaro.org>
+Date:   Mon, 5 Jun 2023 16:39:23 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [PATCH 3/6] thermal/drivers/qcom/tsens-v0_1: Add support for
+ MSM8226
+Content-Language: en-US
+To:     =?UTF-8?Q?Matti_Lehtim=c3=a4ki?= <matti.lehtimaki@gmail.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, qperret@google.com
-Subject: Re: [PATCH v13 10/24] gunyah: vm_mgr: Add/remove user memory regions
-Message-ID: <20230605141839.GD21212@willie-the-truck>
-References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
- <20230509204801.2824351-11-quic_eberman@quicinc.com>
- <20230519115948.GB2637@willie-the-truck>
- <e22c31bd-10ed-f242-3e72-debf40e01e3c@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e22c31bd-10ed-f242-3e72-debf40e01e3c@quicinc.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230507201225.89694-1-matti.lehtimaki@gmail.com>
+ <20230507201225.89694-4-matti.lehtimaki@gmail.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <20230507201225.89694-4-matti.lehtimaki@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -78,79 +85,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Elliot,
-
-[+Quentin since he's looked at the MMU notifiers]
-
-Sorry for the slow response, I got buried in email during a week away.
-
-On Fri, May 19, 2023 at 10:02:29AM -0700, Elliot Berman wrote:
-> On 5/19/2023 4:59 AM, Will Deacon wrote:
-> > On Tue, May 09, 2023 at 01:47:47PM -0700, Elliot Berman wrote:
-> > > +	ret = account_locked_vm(ghvm->mm, mapping->npages, true);
-> > > +	if (ret)
-> > > +		goto free_mapping;
-> > > +
-> > > +	mapping->pages = kcalloc(mapping->npages, sizeof(*mapping->pages), GFP_KERNEL_ACCOUNT);
-> > > +	if (!mapping->pages) {
-> > > +		ret = -ENOMEM;
-> > > +		mapping->npages = 0; /* update npages for reclaim */
-> > > +		goto unlock_pages;
-> > > +	}
-> > > +
-> > > +	gup_flags = FOLL_LONGTERM;
-> > > +	if (region->flags & GH_MEM_ALLOW_WRITE)
-> > > +		gup_flags |= FOLL_WRITE;
-> > > +
-> > > +	pinned = pin_user_pages_fast(region->userspace_addr, mapping->npages,
-> > > +					gup_flags, mapping->pages);
-> > > +	if (pinned < 0) {
-> > > +		ret = pinned;
-> > > +		goto free_pages;
-> > > +	} else if (pinned != mapping->npages) {
-> > > +		ret = -EFAULT;
-> > > +		mapping->npages = pinned; /* update npages for reclaim */
-> > > +		goto unpin_pages;
-> > > +	}
-> > 
-> > Sorry if I missed it, but I still don't see where you reject file mappings
-> > here.
-> > 
+On 07/05/2023 22:12, Matti Lehtimäki wrote:
+> The MSM8226 TSENS IP has 6 thermal sensors in a TSENS v0.1 block.
+> The thermal sensors use non-standard slope values.
 > 
-> Sure, I can reject file mappings. I didn't catch that was the ask previously
-> and thought it was only a comment about behavior of file mappings.
+> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
+> ---
 
-I thought the mention of filesystem corruption was clear enough! It's
-definitely something we shouldn't allow.
+Applied, thanks
 
-> > This is also the wrong interface for upstream. Please get involved with
-> > the fd-based guest memory discussions [1] and port your series to that.
-> > 
-> 
-> The user interface design for *shared* memory aligns with
-> KVM_SET_USER_MEMORY_REGION.
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
-I don't think it does. For example, file mappings don't work (as above),
-you're placing additional rlimit requirements on the caller, read-only
-memslots are not functional, the memory cannot be swapped or migrated,
-dirty logging doesn't work etc. pKVM is in the same boat, but that's why
-we're not upstreaming this part in its current form.
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
 
-> I understood we want to use restricted memfd for giving guest-private memory
-> (Gunyah calls this "lending memory"). When I went through the changes, I
-> gathered KVM is using restricted memfd only for guest-private memory and not
-> for shared memory. Thus, I dropped support for lending memory to the guest
-> VM and only retained the shared memory support in this series. I'd like to
-> merge what we can today and introduce the guest-private memory support in
-> tandem with the restricted memfd; I don't see much reason to delay the
-> series.
-
-Right, protected guests will use the new restricted memfd ("guest mem"
-now, I think?), but non-protected guests should implement the existing
-interface *without* the need for the GUP pin on guest memory pages. Yes,
-that means full support for MMU notifiers so that these pages can be
-managed properly by the host kernel. We're working on that for pKVM, but
-it requires a more flexible form of memory sharing over what we currently
-have so that e.g. the zero page can be shared between multiple entities.
-
-Will
