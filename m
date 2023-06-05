@@ -2,116 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 860DF721ADC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 00:29:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE7FE721D7D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 07:30:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229635AbjFDW32 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 4 Jun 2023 18:29:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43718 "EHLO
+        id S232130AbjFEFaD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 01:30:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231560AbjFDW31 (ORCPT
+        with ESMTP id S232715AbjFEFaB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 4 Jun 2023 18:29:27 -0400
-Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 986BFB0
-        for <linux-arm-msm@vger.kernel.org>; Sun,  4 Jun 2023 15:29:26 -0700 (PDT)
-Received: by mail-oo1-xc30.google.com with SMTP id 006d021491bc7-559b0ddcd4aso53478eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 04 Jun 2023 15:29:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685917766; x=1688509766;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=0HYIe7NBs3P4VaCcSqqfBcyZi2lvil1HmX6vOv0yNEs=;
-        b=Q/2KGS45cvdOZ9hNhKmQXnE6X8tXuMiyNxBwA7vPtUgEZvZHp9XTAgnmJzDiqhd4T3
-         Pmsk4nQGquBXMafK41YK+fdbuxsEw0yu/SDXaErGB2HFawdcslVCuTfLjZIovKgzQVJN
-         rqgSqdAQj3Rnc9MCdvrEgQk/qBYTbDxy53LjNOyRF6vrcDzrIJn5hwIBB6NSbLxnXd9X
-         KYOXp05O+CIJJslcTQzmkhfRBLiF7RN89+TPd4EBOnc8ZTBdReT7Wse4xRDS4g2Gumv+
-         py+7nAAQGFAwa05SE+Iuv4U/vsoXhROy8t6LIYW3Ot5mVBXIAM1xCko3Vy2KeRNKdqVP
-         3QEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685917766; x=1688509766;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0HYIe7NBs3P4VaCcSqqfBcyZi2lvil1HmX6vOv0yNEs=;
-        b=btXU/3VBQDn72oGdRZY1W2OT6F1DOCBftDNQHTr8KszWjKhd3tnPxllaLaShYHgPPR
-         K68N/U9DAegBNPd6J83F/rwOfV4DMwroggmhUwUeLD9SNIGO4hXXkHmNehS1JFIOrQ1a
-         GwsNKEAUvN8iPBqfKD+3MpVbsG8B3vlXt2meBU0onD3AcY91eYGycFzZ/4my1F3Q6e8W
-         rOVv9tgVMNlSBHheXEIvua+1+GWyoZw8+DJsxlRJAFmTHacs6gl1F8bkHV/y74TxX0gn
-         ExAZoI0aZNsiHG5qmGzvrHF063DSTXnFv3K46dxYGsIKOw1Ss1RT/I0NVe9+yBy90B7r
-         Jieg==
-X-Gm-Message-State: AC+VfDwZH0ffMieGWk2l40aH3kVYbOmn4a8AM71UwOqY2v5bgv7VSO9t
-        2nqiTFVEvUxjFzzO9YtpNSvjBOJc+lp0MM2SrBw=
-X-Google-Smtp-Source: ACHHUZ4jbbYC91lwNstgBF4Cg9ALfDPcvokzPLiT9nXdqsg66TSnmhhB/lR59A34A8B7NIHdzVg9VH79OKPi21U+vHk=
-X-Received: by 2002:a4a:97ca:0:b0:555:7682:7644 with SMTP id
- x10-20020a4a97ca000000b0055576827644mr10516748ooi.2.1685917765747; Sun, 04
- Jun 2023 15:29:25 -0700 (PDT)
+        Mon, 5 Jun 2023 01:30:01 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BFB3DDA;
+        Sun,  4 Jun 2023 22:30:00 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35558Csn009125;
+        Mon, 5 Jun 2023 05:29:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=GYvKC/BuUbwvCcEPHzu8xJOy0DyY1lXU4C20wmC9xq8=;
+ b=JkV5y7Rr65msB6BBrOWo0chqtw1J7U11T0JxS7MOXkoVjcDh2dkZVm6FjLR7JqebwY9c
+ u3btluWPlaKAnHwKLN4QUf6dmGxqm4RPuHGhbPGC67IY5nJxAqkUn+cB3zRvYIH1yqDb
+ I0xFrFDvjmxR02wNeeSKxfhi0Kqh3HG6KjuXG8H2TO8W8jaXQtwUjnim5Pii5KZwISww
+ PJjBp55f7SMGWA5qgr9yQDCmVApUoAxTlP2o+BL1FHddIp5l/E6JQ8sQ2JbxZZxatCGU
+ noyh7DcxrjtCnbGV5z4zzqeTb0M2sAjdaAi1EeRo+NDH9NRtp6fji52SFMvbVmAOGwMA cA== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3qyvfxjqqe-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 05 Jun 2023 05:29:58 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3555TvJ6003315
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 5 Jun 2023 05:29:57 GMT
+Received: from sridsn-linux.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Sun, 4 Jun 2023 22:29:53 -0700
+From:   Sridharan S N <quic_sridsn@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Sridharan S N <quic_sridsn@quicinc.com>
+Subject: [PATCH V2 0/2] Add support for GPIO based leds and buttons
+Date:   Mon, 5 Jun 2023 10:59:05 +0530
+Message-ID: <20230605052907.18837-1-quic_sridsn@quicinc.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Sun, 4 Jun 2023 15:29:14 -0700
-Message-ID: <CAF6AEGuHujkFjRa6ys36Uyh0KUr4Hd16u1EMqJo8tOZ3ifVubQ@mail.gmail.com>
-Subject: [pull] drm/msm: drm-msm-fixes-2023-06-04 for v6.4-rc6
-To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Kuogee Hsieh (QUIC)" <quic_khsieh@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: lYLKkNv9v6hfWyshcvFSoiHoHc_e6lTN
+X-Proofpoint-ORIG-GUID: lYLKkNv9v6hfWyshcvFSoiHoHc_e6lTN
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-03_08,2023-06-02_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=561
+ malwarescore=0 adultscore=0 priorityscore=1501 phishscore=0 bulkscore=0
+ impostorscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2306050048
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave,
+Add support for wlan-2g led and wps button available on IPQ5332 and
+IPQ9574
 
-A few late fixes for v6.4.. meant to send this out last week but got
-distracted setting my new x13s.
+Sridharan S N (2):
+  arm64: dts: qcom: ipq5332: enable GPIO based LEDs and Buttons
+  arm64: dts: qcom: ipq9574: enable GPIO based LEDs
 
-The following changes since commit 5c054db54c43a5fcb5cc81012361f5e3fac37637:
+ arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts | 42 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts | 42 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts | 42 +++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp418.dts | 20 ++++++++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 20 ++++++++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp449.dts | 20 ++++++++++
+ arch/arm64/boot/dts/qcom/ipq9574-rdp453.dts | 20 ++++++++++
+ 7 files changed, 206 insertions(+)
 
-  drm/msm: Be more shouty if per-process pgtables aren't working
-(2023-05-17 08:53:47 -0700)
+-- 
+2.17.1
 
-are available in the Git repository at:
-
-  https://gitlab.freedesktop.org/drm/msm.git tags/drm-msm-fixes-2023-06-04
-
-for you to fetch changes up to 203a878ae6f483fa6a99895f90bddd425626b9d2:
-
-  drm/msm/a6xx: initialize GMU mutex earlier (2023-06-04 09:59:03 -0700)
-
-----------------------------------------------------------------
-A few more late fixes for v6.4-rc6
-
-+ Fix max segment size to address splat on newer a6xx
-+ Disable PSR by default w/ modparam to re-enable, since there
-  still seems to be a lingering issue
-+ Fix HPD issue
-+ Fix issue with unitialized GMU mutex
-
-----------------------------------------------------------------
-Abhinav Kumar (1):
-      drm/msm/dp: add module parameter for PSR
-
-Dmitry Baryshkov (1):
-      drm/msm/a6xx: initialize GMU mutex earlier
-
-Kuogee Hsieh (1):
-      drm/msm/dp: enable HDP plugin/unplugged interrupts at hpd_enable/disable
-
-Rob Clark (1):
-      drm/msm: Set max segment size earlier
-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c |  2 -
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c |  2 +
- drivers/gpu/drm/msm/dp/dp_catalog.c   | 15 ++++++-
- drivers/gpu/drm/msm/dp/dp_catalog.h   |  3 +-
- drivers/gpu/drm/msm/dp/dp_display.c   | 77 +++++++++++------------------------
- drivers/gpu/drm/msm/msm_drv.c         |  4 +-
- 6 files changed, 44 insertions(+), 59 deletions(-)
