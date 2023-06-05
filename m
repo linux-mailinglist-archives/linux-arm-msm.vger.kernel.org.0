@@ -2,75 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC377722EE1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 20:46:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A43A5722EE0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 20:46:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234863AbjFESqO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 14:46:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53474 "EHLO
+        id S232598AbjFESqN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 14:46:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234557AbjFESqO (ORCPT
+        with ESMTP id S229529AbjFESqN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 14:46:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8BACF1
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 11:45:24 -0700 (PDT)
+        Mon, 5 Jun 2023 14:46:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 467EBED
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 11:45:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1685990723;
+        s=mimecast20190719; t=1685990725;
         h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
          to:to:cc:cc:mime-version:mime-version:
          content-transfer-encoding:content-transfer-encoding:
          in-reply-to:in-reply-to:references:references;
-        bh=cIk38l37E6hXe6+p5eeVC3Bjfx5cAZMiuspPWHWk1HU=;
-        b=a2bhd45PnqXFKbm4RgHTfH7gbZMC2Bkn+6C9aVD7iTcLbCGtTys4xuHh1dwS+tABzRj8BB
-        V8Q4TWPO6QbbG0504VQdqhofRT9JC+O9eIw3qPO3pxqoqoB/F9VZhmDOK9nieUKclFec40
-        NsuqCIbe+9E4cU1/Q3lMdG0jqq7wvfc=
-Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com
- [209.85.167.200]) by relay.mimecast.com with ESMTP with STARTTLS
+        bh=IvlL4u9x0nM8y/6XiWfoJMQ/1cupgKWd5JyS3D3qy1Q=;
+        b=Y9UHdXC4AIMjoHHh2USdijum+6yP/sMK2z7G0iCxU+nKbvxYKcZWskoi6edA/PEedGW6Co
+        iLd+rO2Ih78a4mJrKw/0Xe/SRwkByCNFrQHZCGdKLcks7jG2h88TaJpfcv6wCQNCuW91jn
+        YSzM2J9FUiKLXt3PO2Ixu6r7CdO+MY8=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-117-EEI90alZNAaPz4Dn0L7Kyw-1; Mon, 05 Jun 2023 14:45:22 -0400
-X-MC-Unique: EEI90alZNAaPz4Dn0L7Kyw-1
-Received: by mail-oi1-f200.google.com with SMTP id 5614622812f47-38bedafc58dso3885825b6e.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 11:45:22 -0700 (PDT)
+ us-mta-518-X-GzU_WgPXC0i0K0XIIkCg-1; Mon, 05 Jun 2023 14:45:24 -0400
+X-MC-Unique: X-GzU_WgPXC0i0K0XIIkCg-1
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-3f994c591bdso12219131cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 11:45:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685990722; x=1688582722;
+        d=1e100.net; s=20221208; t=1685990724; x=1688582724;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cIk38l37E6hXe6+p5eeVC3Bjfx5cAZMiuspPWHWk1HU=;
-        b=j/I0K6MelWDuJzRMcrhn1tyrcCSnU+AWUgj87lihkKLFZ/bcR2Qh+LY641T5v1AaFX
-         etPTs9qNWk2xdcClz93YP6CNcksxYZ7iof95AiDe7qi0HRqPOCukr1mr5wlqmvwC5f2I
-         ZR42ClaUPSYBLkg2gFmEdP2T833wFIc6Ci5jRpseKESQKCkPostwPLxInBMH2YxjbnzT
-         1Xvh8SpaoxSVh3ZhDaKEO9OS85QBIK9rpzAWjzLaybmFQous+HvwuuCIYRcfRAVlIqUB
-         wNr1N+LDV/PtIpp1S/3IAT69js3RAnCREOOI0uI1mFHtnQSctLfcciCWXKhhpYnCLXVA
-         vbAA==
-X-Gm-Message-State: AC+VfDwkW7zTixgEL9jJWdlj96ruKNhgQBTZY02LcA1QmupwKvBvgMrm
-        rS4nqqsYDQ5tBYuf+8H3x99OxQHa09cotMwv5PQMHXA8dzoSFPp7j5+hNn3C2BYr/a5J99o0zrv
-        6HuD6/Tp6GLOc/wRSDHI22Ecc0EHxF//NiA==
-X-Received: by 2002:aca:d0e:0:b0:39a:be43:6f13 with SMTP id 14-20020aca0d0e000000b0039abe436f13mr2661001oin.43.1685990721877;
-        Mon, 05 Jun 2023 11:45:21 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ5aKRoOVG33caBXHFKr+14vig9tpTuBnhpRF8RLbpsx2FRYHffkPb3HLCIfmdsedIIYhKcWXg==
-X-Received: by 2002:aca:d0e:0:b0:39a:be43:6f13 with SMTP id 14-20020aca0d0e000000b0039abe436f13mr2660983oin.43.1685990721608;
-        Mon, 05 Jun 2023 11:45:21 -0700 (PDT)
+        bh=IvlL4u9x0nM8y/6XiWfoJMQ/1cupgKWd5JyS3D3qy1Q=;
+        b=fLhUYq6K8J5Jc5qlaGc1LApx2g8s7izRl1u1o5HL0pwjK1NQ99Ia8+9kgoVQgFZVQk
+         k7N47uFup3RHaFi6k2EpCzi2hs4Hkra20XYB4P8QSFbWli8D+hfxaLlfa0quDswBNZIW
+         7c6cUUV47dnI/4DBOYultHCsMl8kDDa6td9HKHS+vZzH8bAZZXBRbL/1GpCKaZX/bhnT
+         cVWW/X9OjcwrpY/YjMtE3FuNF0tKfs5LkXAa6H6l7qUyWv+dHT7RrmRlxOOkFzjnbdZO
+         x3dkHjckCQ1x3wigiVZHLq8qu0vQJLE8iRZvixPmTzy3HlwjUgZUscZaHj+FxH9ow9bK
+         7n+w==
+X-Gm-Message-State: AC+VfDysTO5FBdIOn5yEhVEgKpGiRUDbFoiU1JKW53t9vQ/jzjyYTQRU
+        lDef2jviQWZBCJZdhUrlUy9DYxhWjP4SOt6wkmfb66ZVNBGfqZp9wq4roI+vlSy35f6X82r5uDv
+        Ti06tKAjrG4/5wzN7KL4IPPl30g==
+X-Received: by 2002:ad4:5b81:0:b0:623:8387:3d0f with SMTP id 1-20020ad45b81000000b0062383873d0fmr9484802qvp.28.1685990723858;
+        Mon, 05 Jun 2023 11:45:23 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ6uGsAN6Rgou4IAJFUeHThaNt3mtxhiTfnqxO+Phzr4/amHBJd57R7UDnsl9/VbGKolkXItIA==
+X-Received: by 2002:ad4:5b81:0:b0:623:8387:3d0f with SMTP id 1-20020ad45b81000000b0062383873d0fmr9484784qvp.28.1685990723598;
+        Mon, 05 Jun 2023 11:45:23 -0700 (PDT)
 Received: from fedora.redhat.com ([107.171.218.122])
-        by smtp.gmail.com with ESMTPSA id d10-20020a0cc68a000000b00625da789003sm4785771qvj.110.2023.06.05.11.45.20
+        by smtp.gmail.com with ESMTPSA id d10-20020a0cc68a000000b00625da789003sm4785771qvj.110.2023.06.05.11.45.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Jun 2023 11:45:21 -0700 (PDT)
+        Mon, 05 Jun 2023 11:45:23 -0700 (PDT)
 From:   Adrien Thierry <athierry@redhat.com>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        Philipp Zabel <pza@pengutronix.de>
+        Kishon Vijay Abraham I <kishon@kernel.org>
 Cc:     Adrien Thierry <athierry@redhat.com>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-Subject: [PATCH v2 1/2] phy: qcom-snps-femto-v2: properly enable ref clock
-Date:   Mon,  5 Jun 2023 14:44:53 -0400
-Message-Id: <20230605184455.34832-2-athierry@redhat.com>
+Subject: [PATCH v2 2/2] phy: qcom-snps-femto-v2: add system sleep PM ops
+Date:   Mon,  5 Jun 2023 14:44:54 -0400
+Message-Id: <20230605184455.34832-3-athierry@redhat.com>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230605184455.34832-1-athierry@redhat.com>
 References: <20230605184455.34832-1-athierry@redhat.com>
@@ -86,183 +82,83 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The driver is not enabling the ref clock, which thus gets disabled by
-the clk_disable_unused initcall. This leads to the dwc3 controller
-failing to initialize if probed after clk_disable_unused is called, for
-instance when the driver is built as a module.
+Add the system sleep suspend and resume callbacks, reusing the same code
+as the runtime suspend and resume callbacks.
 
-To fix this, switch to the clk_bulk API to handle both cfg_ahb and ref
-clocks at the proper places.
-
-Note that the cfg_ahb clock is currently not used by any device tree
-instantiation of the PHY. Work needs to be done separately to fix this.
-
-Link: https://lore.kernel.org/linux-arm-msm/ZEqvy+khHeTkC2hf@fedora/
-Fixes: 51e8114f80d0 ("phy: qcom-snps: Add SNPS USB PHY driver for QCOM based SOCs")
 Signed-off-by: Adrien Thierry <athierry@redhat.com>
 ---
- drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 67 ++++++++++++++-----
- 1 file changed, 49 insertions(+), 18 deletions(-)
+I'm still a bit confused as to what the difference is between
+suspend/resume PM ops and the struct usb_phy set_suspend() callback.
+Please tell me if I should be populating the latter instead.
+
+ drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-index 6c237f3cc66d..ce1d2f8b568a 100644
+index ce1d2f8b568a..378a5029f61e 100644
 --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
 +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
-@@ -110,11 +110,13 @@ struct phy_override_seq {
- /**
-  * struct qcom_snps_hsphy - snps hs phy attributes
-  *
-+ * @dev: device structure
-+ *
-  * @phy: generic phy
-  * @base: iomapped memory space for snps hs phy
-  *
-- * @cfg_ahb_clk: AHB2PHY interface clock
-- * @ref_clk: phy reference clock
-+ * @num_clks: number of clocks
-+ * @clks: array of clocks
-  * @phy_reset: phy reset control
-  * @vregs: regulator supplies bulk data
-  * @phy_initialized: if PHY has been initialized correctly
-@@ -122,11 +124,13 @@ struct phy_override_seq {
-  * @update_seq_cfg: tuning parameters for phy init
-  */
- struct qcom_snps_hsphy {
-+	struct device *dev;
-+
- 	struct phy *phy;
- 	void __iomem *base;
+@@ -179,7 +179,7 @@ static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
+ 	readl_relaxed(base + offset);
+ }
  
--	struct clk *cfg_ahb_clk;
--	struct clk *ref_clk;
-+	int num_clks;
-+	struct clk_bulk_data *clks;
- 	struct reset_control *phy_reset;
- 	struct regulator_bulk_data vregs[SNPS_HS_NUM_VREGS];
- 
-@@ -135,6 +139,32 @@ struct qcom_snps_hsphy {
- 	struct phy_override_seq update_seq_cfg[NUM_HSPHY_TUNING_PARAMS];
- };
- 
-+static int qcom_snps_hsphy_clk_init(struct qcom_snps_hsphy *hsphy)
-+{
-+	struct device *dev = hsphy->dev;
-+
-+	hsphy->num_clks = 2;
-+	hsphy->clks = devm_kcalloc(dev, hsphy->num_clks, sizeof(*hsphy->clks), GFP_KERNEL);
-+	if (!hsphy->clks)
-+		return -ENOMEM;
-+
-+	/*
-+	 * HACK: For cfg_ahb clock, use devm_clk_get_optional() because currently no device
-+	 * tree instantiation of the PHY is using the clock. This needs to be fixed in order
-+	 * for this code to be able to use devm_clk_bulk_get().
-+	 */
-+	hsphy->clks[0].id = "cfg_ahb";
-+	hsphy->clks[0].clk = devm_clk_get_optional(dev, "cfg_ahb");
-+
-+	hsphy->clks[1].id = "ref";
-+	hsphy->clks[1].clk = devm_clk_get(dev, "ref");
-+	if (IS_ERR(hsphy->clks[1].clk))
-+		return dev_err_probe(dev, PTR_ERR(hsphy->clks[1].clk),
-+				     "failed to get ref clk\n");
-+
-+	return 0;
-+}
-+
- static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
- 						u32 mask, u32 val)
+-static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
++static int qcom_snps_hsphy_do_suspend(struct qcom_snps_hsphy *hsphy)
  {
-@@ -165,7 +195,7 @@ static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
- 					   0, USB2_AUTO_RESUME);
- 	}
+ 	dev_dbg(&hsphy->phy->dev, "Suspend QCOM SNPS PHY\n");
  
--	clk_disable_unprepare(hsphy->cfg_ahb_clk);
-+	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
+@@ -199,7 +199,7 @@ static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
  	return 0;
  }
  
-@@ -175,9 +205,9 @@ static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
+-static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
++static int qcom_snps_hsphy_do_resume(struct qcom_snps_hsphy *hsphy)
+ {
+ 	int ret;
  
- 	dev_dbg(&hsphy->phy->dev, "Resume QCOM SNPS PHY, mode\n");
- 
--	ret = clk_prepare_enable(hsphy->cfg_ahb_clk);
-+	ret = clk_bulk_prepare_enable(hsphy->num_clks, hsphy->clks);
- 	if (ret) {
--		dev_err(&hsphy->phy->dev, "failed to enable cfg ahb clock\n");
-+		dev_err(&hsphy->phy->dev, "failed to enable clocks\n");
- 		return ret;
- 	}
- 
-@@ -374,16 +404,16 @@ static int qcom_snps_hsphy_init(struct phy *phy)
- 	if (ret)
- 		return ret;
- 
--	ret = clk_prepare_enable(hsphy->cfg_ahb_clk);
-+	ret = clk_bulk_prepare_enable(hsphy->num_clks, hsphy->clks);
- 	if (ret) {
--		dev_err(&phy->dev, "failed to enable cfg ahb clock, %d\n", ret);
-+		dev_err(&phy->dev, "failed to enable clocks, %d\n", ret);
- 		goto poweroff_phy;
- 	}
- 
- 	ret = reset_control_assert(hsphy->phy_reset);
- 	if (ret) {
- 		dev_err(&phy->dev, "failed to assert phy_reset, %d\n", ret);
--		goto disable_ahb_clk;
-+		goto disable_clks;
- 	}
- 
- 	usleep_range(100, 150);
-@@ -391,7 +421,7 @@ static int qcom_snps_hsphy_init(struct phy *phy)
- 	ret = reset_control_deassert(hsphy->phy_reset);
- 	if (ret) {
- 		dev_err(&phy->dev, "failed to de-assert phy_reset, %d\n", ret);
--		goto disable_ahb_clk;
-+		goto disable_clks;
- 	}
- 
- 	qcom_snps_hsphy_write_mask(hsphy->base, USB2_PHY_USB_PHY_CFG0,
-@@ -448,8 +478,8 @@ static int qcom_snps_hsphy_init(struct phy *phy)
- 
+@@ -214,25 +214,25 @@ static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
  	return 0;
+ }
  
--disable_ahb_clk:
--	clk_disable_unprepare(hsphy->cfg_ahb_clk);
-+disable_clks:
-+	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
- poweroff_phy:
- 	regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
+-static int __maybe_unused qcom_snps_hsphy_runtime_suspend(struct device *dev)
++static int __maybe_unused qcom_snps_hsphy_suspend(struct device *dev)
+ {
+ 	struct qcom_snps_hsphy *hsphy = dev_get_drvdata(dev);
  
-@@ -461,7 +491,7 @@ static int qcom_snps_hsphy_exit(struct phy *phy)
- 	struct qcom_snps_hsphy *hsphy = phy_get_drvdata(phy);
+ 	if (!hsphy->phy_initialized)
+ 		return 0;
  
- 	reset_control_assert(hsphy->phy_reset);
--	clk_disable_unprepare(hsphy->cfg_ahb_clk);
-+	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
- 	regulator_bulk_disable(ARRAY_SIZE(hsphy->vregs), hsphy->vregs);
- 	hsphy->phy_initialized = false;
+-	qcom_snps_hsphy_suspend(hsphy);
++	qcom_snps_hsphy_do_suspend(hsphy);
+ 	return 0;
+ }
  
-@@ -554,14 +584,15 @@ static int qcom_snps_hsphy_probe(struct platform_device *pdev)
- 	if (!hsphy)
- 		return -ENOMEM;
+-static int __maybe_unused qcom_snps_hsphy_runtime_resume(struct device *dev)
++static int __maybe_unused qcom_snps_hsphy_resume(struct device *dev)
+ {
+ 	struct qcom_snps_hsphy *hsphy = dev_get_drvdata(dev);
  
-+	hsphy->dev = dev;
-+
- 	hsphy->base = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(hsphy->base))
- 		return PTR_ERR(hsphy->base);
+ 	if (!hsphy->phy_initialized)
+ 		return 0;
  
--	hsphy->ref_clk = devm_clk_get(dev, "ref");
--	if (IS_ERR(hsphy->ref_clk))
--		return dev_err_probe(dev, PTR_ERR(hsphy->ref_clk),
--				     "failed to get ref clk\n");
-+	ret = qcom_snps_hsphy_clk_init(hsphy);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to initialize clocks\n");
+-	qcom_snps_hsphy_resume(hsphy);
++	qcom_snps_hsphy_do_resume(hsphy);
+ 	return 0;
+ }
  
- 	hsphy->phy_reset = devm_reset_control_get_exclusive(&pdev->dev, NULL);
- 	if (IS_ERR(hsphy->phy_reset)) {
+@@ -518,8 +518,10 @@ static const struct of_device_id qcom_snps_hsphy_of_match_table[] = {
+ MODULE_DEVICE_TABLE(of, qcom_snps_hsphy_of_match_table);
+ 
+ static const struct dev_pm_ops qcom_snps_hsphy_pm_ops = {
+-	SET_RUNTIME_PM_OPS(qcom_snps_hsphy_runtime_suspend,
+-			   qcom_snps_hsphy_runtime_resume, NULL)
++	SET_RUNTIME_PM_OPS(qcom_snps_hsphy_suspend,
++			   qcom_snps_hsphy_resume, NULL)
++	SET_SYSTEM_SLEEP_PM_OPS(qcom_snps_hsphy_suspend,
++				qcom_snps_hsphy_resume)
+ };
+ 
+ static void qcom_snps_hsphy_override_param_update_val(
 -- 
 2.40.1
 
