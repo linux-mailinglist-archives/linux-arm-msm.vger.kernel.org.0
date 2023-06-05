@@ -2,85 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50A73722905
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 16:40:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79340722918
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 16:45:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234363AbjFEOkA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 10:40:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59768 "EHLO
+        id S234532AbjFEOpb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 10:45:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230348AbjFEOkA (ORCPT
+        with ESMTP id S234453AbjFEOpX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 10:40:00 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCB12F9
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 07:39:57 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f505aace48so6260598e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 07:39:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685975996; x=1688567996;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mZ/Wx/zgJSwTp0t38WigvjTJRaMO4qIiJIqQKGcMOHk=;
-        b=nTxpFfcBbzT/AvpjfHhD0vjOL/nnhWeDIgReAfU/7mTBRdEo7UTeyRb+celMb6ool6
-         YvHkgSKDWEgEWiohHMQ6gCaYspB4RcZSE3w1+XosRPylxtbtGcpjPxAB1EpYNGH1s3om
-         5DLnkvUz9+VBulBxLJj5S66zZSr2OcO2st0sEiSq0RCYB/qFwV1UmDly+WiaaGmRW8hy
-         1o750eifhSEE4t2APzqhbV2o+OPJCB6F5G8XNNn3GULCL/WP9es3atal4Yno1/jWm+9u
-         DU6FPYbnA+yoqk7nex7sOVAldrEFfu9pZr9fYh6DIyg0NX9ej8Hcow9XlwjPZfhVgBqZ
-         qstg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685975996; x=1688567996;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mZ/Wx/zgJSwTp0t38WigvjTJRaMO4qIiJIqQKGcMOHk=;
-        b=KuFCdQPw5Nk21aNeOeGbkL4CXVRlpPmuy/9iz7RvUNpOxyFcSwD6S5PS3IQ95ROJ+y
-         iKGNcOR//dTMuxuF8sL/WIx0GzEy+L6A3p5AD/gngBfmsd+2Bvz4KjUjKK/It54oB/07
-         CnHZ5G8LRYqKKJ75PrDNHg88kYmWcv2CzguBaaLSURVIJTm1V3LNZfYYeRTFtE9n4wu5
-         hb4IW5SKjJzSVcr5ARyVsT/FSKGL17Sx0n+sQHNeAav5KSOOwnp8HWtKepiNujcjpqsO
-         0b5BYXTQaV6042+TtL7WTEXCCPGgGRBVz3CAwq4smfOYxP6HwqgpqQhuk7sOVoT6GgUZ
-         IEHw==
-X-Gm-Message-State: AC+VfDy+3IlXvjJQ92TLw4/rJHBc/Kg+adWsk1mfQLzE17qkQvF0nNxO
-        bDMbgWpJApCv76ND9M3r16nxdg==
-X-Google-Smtp-Source: ACHHUZ7WDoAhYXeQfKqx3mhLebnwXX+a5Kx8rUIlNfmQYvJmv/Cuj8dkaJfOMD2HqLlQTsBU2ee3cw==
-X-Received: by 2002:a19:740f:0:b0:4f6:217a:5620 with SMTP id v15-20020a19740f000000b004f6217a5620mr2681255lfe.39.1685975995851;
-        Mon, 05 Jun 2023 07:39:55 -0700 (PDT)
-Received: from ?IPV6:2a05:6e02:1041:c10:2385:9257:ace1:1efc? ([2a05:6e02:1041:c10:2385:9257:ace1:1efc])
-        by smtp.googlemail.com with ESMTPSA id g26-20020a7bc4da000000b003f50e88ffc1sm14725899wmk.0.2023.06.05.07.39.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Jun 2023 07:39:55 -0700 (PDT)
-Message-ID: <751ed2d6-3008-bd47-1921-2f2ca7cc92e1@linaro.org>
-Date:   Mon, 5 Jun 2023 16:39:54 +0200
+        Mon, 5 Jun 2023 10:45:23 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C356E9;
+        Mon,  5 Jun 2023 07:45:22 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id C6B19625E8;
+        Mon,  5 Jun 2023 14:45:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB61FC433A1;
+        Mon,  5 Jun 2023 14:45:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685976321;
+        bh=+Q6hWNw4cvZkLGpiw1bRBGU1wmtxT/1vdjg4Hg9F6cs=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=ihQ7pDOt+nazCAAkqERNtmqAlsRLDw+j0FNRBQXnGk2b6Jutq1Bxj1c6vpQx4PlxE
+         8pQ3v8EXIoYQCpgzrSmmBkn9VetDaRv3+vRxZRN+Q5rTHCL5+/N8H4VrnSU2c1jNfs
+         lz/6uvlWgv9ptTntVjRU3srs1O3BV6I3NJ/WTPVds+1rysYu6yGN18CFcEREcdx4qj
+         /7/t2rSKxNu+ybu3qgJ3jBfg4SXjS+88EoKQGQeFuH6YERFtwaea2HtBc1J0RZOjja
+         5w+Rs2UyEdmClN5EVP1+3XjbZ3Fee5ZnyRxWiTVxw2pXYFkAJA5E95htQG9eb+d0Pf
+         kdHuKBF/9b/fg==
+From:   Lorenzo Pieralisi <lpieralisi@kernel.org>
+To:     kw@linux.com, Manivannan Sadhasivam <mani@kernel.org>
+Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>, kishon@kernel.org,
+        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dlemoal@kernel.org
+Subject: Re: [PATCH v6 0/9] Add support for MHI Endpoint function driver
+Date:   Mon,  5 Jun 2023 16:45:14 +0200
+Message-Id: <168597627549.35299.2498849386988446406.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230602114756.36586-1-manivannan.sadhasivam@linaro.org>
+References: <20230602114756.36586-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [PATCH 2/6] dt-bindings: thermal: tsens: Add compatible for
- MSM8226
-Content-Language: en-US
-To:     =?UTF-8?Q?Matti_Lehtim=c3=a4ki?= <matti.lehtimaki@gmail.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230507201225.89694-1-matti.lehtimaki@gmail.com>
- <20230507201225.89694-3-matti.lehtimaki@gmail.com>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-In-Reply-To: <20230507201225.89694-3-matti.lehtimaki@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -88,18 +57,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/05/2023 22:12, Matti Lehtimäki wrote:
-> Qualcomm MSM8226 has tsens v0.1 block.
+On Fri, 02 Jun 2023 17:17:47 +0530, Manivannan Sadhasivam wrote:
+> This series adds support for Modem Host Interface (MHI) Endpoint function
+> driver and few updates to the PCI endpoint core.
 > 
-> Signed-off-by: Matti Lehtimäki <matti.lehtimaki@gmail.com>
-> ---
+> MHI
+> ===
+> 
+> MHI is the communication protocol used by the host machines to control and
+> communicate with the Qualcomm modems/WLAN devices over any high speed physical
+> bus like PCIe. In Linux kernel, MHI is modeled as a bus driver [1] and there
+> are two instances of MHI used in a typical setup.
+> 
+> [...]
 
-Applied, thanks
+Applied [with few changes, please check] to controller/endpoint, thanks!
 
--- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+[1/9] PCI: endpoint: Add missing documentation about the MSI/MSI-X range
+      https://git.kernel.org/pci/pci/c/4753e6a0fe22
+[2/9] PCI: endpoint: Pass EPF device ID to the probe function
+      https://git.kernel.org/pci/pci/c/765b0e80681a
+[3/9] PCI: endpoint: Return error if EPC is started/stopped multiple times
+      https://git.kernel.org/pci/pci/c/0ff3de7a6c87
+[4/9] PCI: endpoint: Add linkdown notifier support
+      https://git.kernel.org/pci/pci/c/755cb1cc2615
+[5/9] PCI: endpoint: Add BME notifier support
+      https://git.kernel.org/pci/pci/c/a2bd0e62f6fd
+[6/9] PCI: qcom-ep: Add support for Link down notification
+      https://git.kernel.org/pci/pci/c/c53dc1547231
+[7/9] PCI: qcom-ep: Add support for BME notification
+      https://git.kernel.org/pci/pci/c/258dfe82065c
+[8/9] PCI: endpoint: Add PCI Endpoint function driver for MHI bus
+      https://git.kernel.org/pci/pci/c/fd0fda1ef61a
+[9/9] MAINTAINERS: Add PCI MHI endpoint function driver under MHI bus
+      https://git.kernel.org/pci/pci/c/71f1861bb90d
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
-
+Thanks,
+Lorenzo
