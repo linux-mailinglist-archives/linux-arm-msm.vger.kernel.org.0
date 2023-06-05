@@ -2,150 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D99217227D3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 15:48:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4D6DE7227EF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 15:55:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231501AbjFENs4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 09:48:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53640 "EHLO
+        id S232428AbjFENzf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 09:55:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231313AbjFENsz (ORCPT
+        with ESMTP id S231292AbjFENze (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 09:48:55 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CBC799C;
-        Mon,  5 Jun 2023 06:48:54 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 355CPW1K030950;
-        Mon, 5 Jun 2023 13:48:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=9z0PA9AKMhKUQkcp6ir2m1Wg6FOKEV1od3lPMM0PPU4=;
- b=Bq7xd2ufY9cppAx86CotK85mvdpegQo3DJdVdsRerO9HLyHQoDLL6p70ufGrk/PXNt7P
- h+0m7ztKMkrI+xESO+c7ak3NJC3TElBNhxJFnbqoDb9b5EspX7JYWiM9l3rLxAWK/mOq
- jJwLdDiV4luLgXwqHO1wXVeb/4yDw24l6mdMtcIXtMIi0FHDmZBWG4JTmCzT1yRqMxRP
- QK63XyN5vRqTFTRZRU4Mew3ijsSVkAi5PDZLQWCgI8b3eRXJjHoLBoNNEH9LTOaaiOpi
- ua6SY4AMXY8xdBK8sZ3s5BMNFH1merQETyZ2/X40HlsQZFMzX4RwbU9AHwZaY7uzIRXv WA== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r1ahp903h-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 05 Jun 2023 13:48:50 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 355DmnJM024996
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 5 Jun 2023 13:48:49 GMT
-Received: from ekangupt-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Mon, 5 Jun 2023 06:48:46 -0700
-From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
-To:     <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
-CC:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        <ekangupt@qti.qualcomm.com>, <gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>, <bkumar@qti.qualcomm.com>,
-        <fastrpc.upstream@qti.qualcomm.com>, stable <stable@kernel.org>
-Subject: [PATCH v1] misc: fastrpc: Pass proper scm arguments for static process init
-Date:   Mon, 5 Jun 2023 19:18:38 +0530
-Message-ID: <1685972918-30371-1-git-send-email-quic_ekangupt@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Mon, 5 Jun 2023 09:55:34 -0400
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64EDB90
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 06:55:33 -0700 (PDT)
+Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-652dd220d67so3634958b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 06:55:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685973333; x=1688565333;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=JxwDQhCAuPGIb3iHcVUC4+fUCXLvKFtEBk4rG+JbNsE=;
+        b=pnkJLWSOGbzo1NvVO/8XOxioEO7TsaL5uds5covOj8vyRYu8Gz35EjX5v+BTx86tLE
+         3sI12/6C1e8jLWUR18wRea0ZREohGMNgpWqWeRzatJVsg4Y/5kJAcEn+d+kWjPYVJMUk
+         IYN5lgjTLEChlQDU6s6ZweGIzGkYytSDQCiKtJR8KijFK+oSELp1uZDf+1mRIU+VTjqM
+         Du2uEtHkc0PCwE1RFRtzckxjwBt3tI7vUkTa7j0PFyqa0OBOeTOFALDemwbYFWU01qIv
+         Ao0em5bYtCHktzJ3ZJCZQDN9HnAWBTOIYVyA8e4fj3lKp8JGJXAqSzz6jQijhf3GNA5O
+         SbaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685973333; x=1688565333;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JxwDQhCAuPGIb3iHcVUC4+fUCXLvKFtEBk4rG+JbNsE=;
+        b=JKl2D0BWrsVYKDG7yA9r2WrbovWbr/x4fDqsihSI24QPmRLZbfpKwMBTN/l2yWsmkr
+         sQsfg12MSSJOR/bVN681fUHHk/ERs0//GkN7C+aU13NEaPGJ/XYYyTnxj+i6D17lTewT
+         tWngbpMzkcgldgZlOuqd11Xipx4gxe1h8YW8je1eZ+JeLJg+Tk3kH5ULxTdq159xXfUU
+         ybkPIRTVeYsf778DuF6YP0u2myXOlysj5nV2s4P8FHEVhGc6SH+wfJGDNB4YSXSr14Ff
+         hhWy8B4gqiKyvs4yrahKApEN6VzT92SOjcD3K+ahNZl3+ipxtgt0qVuitTeNSowaVhJS
+         IOHA==
+X-Gm-Message-State: AC+VfDzqjC+3vIPylIQilGw9jb3YP2gPeC8iwHhep9kNpUbJmkdRkkV0
+        5xk/xdrE5DwoW06Hwif0yqyV
+X-Google-Smtp-Source: ACHHUZ5hQGlm/xEWO3otl7disCK8xOa/jNYnGs3o8HN+8Dm8ow4rqjkcVwoK25Qverdcell0Q7E6FQ==
+X-Received: by 2002:a05:6a00:1501:b0:65a:6870:3acb with SMTP id q1-20020a056a00150100b0065a68703acbmr4472586pfu.31.1685973332897;
+        Mon, 05 Jun 2023 06:55:32 -0700 (PDT)
+Received: from thinkpad ([120.138.12.115])
+        by smtp.gmail.com with ESMTPSA id d18-20020aa78152000000b00640e64aa9b7sm5417015pfn.10.2023.06.05.06.55.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Jun 2023 06:55:32 -0700 (PDT)
+Date:   Mon, 5 Jun 2023 19:25:28 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Lorenzo Pieralisi <lpieralisi@kernel.org>
+Cc:     Damien Le Moal <dlemoal@kernel.org>, kw@linux.com,
+        kishon@kernel.org, bhelgaas@google.com, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v6 2/9] PCI: endpoint: Pass EPF device ID to the probe
+ function
+Message-ID: <20230605135528.GF5536@thinkpad>
+References: <20230602114756.36586-1-manivannan.sadhasivam@linaro.org>
+ <20230602114756.36586-3-manivannan.sadhasivam@linaro.org>
+ <fdf5ea08-f3a1-3c9f-66a3-1cfa3743dae2@kernel.org>
+ <ZH3eUQaIvWAQLI9A@lpieralisi>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: P19P0KUy9CZKD-Vk_8zPLktbAn2t2ACn
-X-Proofpoint-ORIG-GUID: P19P0KUy9CZKD-Vk_8zPLktbAn2t2ACn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-05_28,2023-06-02_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- malwarescore=0 adultscore=0 mlxlogscore=999 spamscore=0 mlxscore=0
- impostorscore=0 lowpriorityscore=0 clxscore=1011 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2306050120
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZH3eUQaIvWAQLI9A@lpieralisi>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Memory is allocated for dynamic loading when audio daemon is trying
-to attach to audioPD on DSP side. This memory is allocated from
-reserved CMA memory region and needs ownership assignment to
-new VMID in order to use it from audioPD.
+On Mon, Jun 05, 2023 at 03:08:33PM +0200, Lorenzo Pieralisi wrote:
+> On Fri, Jun 02, 2023 at 09:13:25PM +0900, Damien Le Moal wrote:
+> > On 6/2/23 20:47, Manivannan Sadhasivam wrote:
+> > > Currently, the EPF probe function doesn't get the device ID argument needed
+> > > to correctly identify the device table ID of the EPF device.
+> > > 
+> > > When multiple entries are added to the "struct pci_epf_device_id" table,
+> > > the probe function needs to identify the correct one. This is achieved by
+> > > modifying the pci_epf_match_id() function to return the match ID pointer
+> > > and passing it to the driver's probe function.
+> > > 
+> > > pci_epf_device_match() function can return bool based on the return value
+> > > of pci_epf_match_id().
+> > > 
+> > > Reviewed-by: Kishon Vijay Abraham I <kishon@kernel.org>
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > 
+> > [...]
+> > 
+> > >  static int pci_epf_device_match(struct device *dev, struct device_driver *drv)
+> > > @@ -510,8 +510,12 @@ static int pci_epf_device_match(struct device *dev, struct device_driver *drv)
+> > >  	struct pci_epf *epf = to_pci_epf(dev);
+> > >  	struct pci_epf_driver *driver = to_pci_epf_driver(drv);
+> > >  
+> > > -	if (driver->id_table)
+> > > -		return pci_epf_match_id(driver->id_table, epf);
+> > > +	if (driver->id_table) {
+> > > +		if (pci_epf_match_id(driver->id_table, epf))
+> > > +			return true;
+> > > +		else
+> > > +			return false;
+> > 
+> > You prefer keeping this pattern ?
+> > 
+> > return pci_epf_match_id(driver->id_table, epf) != NULL;
+> > 
+> > is no much nicer !
+> 
+> s/no/so
+> 
+> Yes it is, I can change it myself to spare Mani few cycles.
+> 
 
-In the current implementation, arguments are not correctly passed
-to the scm call which might result in failure of dynamic loading
-on audioPD. Added changes to pass correct arguments during daemon
-attach request.
+Please do!
 
-Fixes: 	0871561055e6 ("misc: fastrpc: Add support for audiopd")
-Cc: stable <stable@kernel.org>
-Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
----
- drivers/misc/fastrpc.c | 31 +++++++++++++++++++++++++------
- 1 file changed, 25 insertions(+), 6 deletions(-)
+- Mani
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 30d4d04..b7335dd 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -1278,10 +1278,23 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 
- 		/* Map if we have any heap VMIDs associated with this ADSP Static Process. */
- 		if (fl->cctx->vmcount) {
-+			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
-+			struct qcom_scm_vmperm *dst_perms;
-+			u32 i;
-+
-+			dst_perms = kcalloc(fl->cctx->vmcount,
-+							sizeof(struct qcom_scm_vmperm), GFP_KERNEL);
-+			if (!dst_perms)
-+				return -ENOMEM;
-+			for (i = 0; i < fl->cctx->vmcount; i++) {
-+				dst_perms[i].vmid = fl->cctx->vmperms[i].vmid;
-+				dst_perms[i].perm = fl->cctx->vmperms[i].perm;
-+			}
-+
- 			err = qcom_scm_assign_mem(fl->cctx->remote_heap->phys,
- 							(u64)fl->cctx->remote_heap->size,
--							&fl->cctx->perms,
--							fl->cctx->vmperms, fl->cctx->vmcount);
-+							&src_perms, dst_perms, fl->cctx->vmcount);
-+			kfree(dst_perms);
- 			if (err) {
- 				dev_err(fl->sctx->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
- 					fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
-@@ -1322,13 +1335,19 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
- 	return 0;
- err_invoke:
- 	if (fl->cctx->vmcount) {
--		struct qcom_scm_vmperm perm;
-+		u64 src_perms = 0;
-+		struct qcom_scm_vmperm dst_perms;
-+		u32 i;
- 
--		perm.vmid = QCOM_SCM_VMID_HLOS;
--		perm.perm = QCOM_SCM_PERM_RWX;
-+		for (i = 0; i < fl->cctx->vmcount; i++) {
-+			src_perms |= BIT(fl->cctx->vmperms[i].vmid);
-+		}
-+
-+		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
-+		dst_perms.perm = QCOM_SCM_PERM_RWX;
- 		err = qcom_scm_assign_mem(fl->cctx->remote_heap->phys,
- 						(u64)fl->cctx->remote_heap->size,
--						&fl->cctx->perms, &perm, 1);
-+						&src_perms, &dst_perms, 1);
- 		if (err)
- 			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
- 				fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
+> Lorenzo
+> 
+> > 
+> > Anyway:
+> > 
+> > Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+> > 
+> > -- 
+> > Damien Le Moal
+> > Western Digital Research
+> > 
+
 -- 
-2.7.4
-
+மணிவண்ணன் சதாசிவம்
