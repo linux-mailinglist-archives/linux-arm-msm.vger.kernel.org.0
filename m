@@ -2,208 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC1F472235E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 12:24:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E3C17223A8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 12:37:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232006AbjFEKY4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 06:24:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47846 "EHLO
+        id S229873AbjFEKh2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 06:37:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54306 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229687AbjFEKYr (ORCPT
+        with ESMTP id S229511AbjFEKh1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 06:24:47 -0400
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 6EF38EA;
-        Mon,  5 Jun 2023 03:24:45 -0700 (PDT)
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id ADABAD75;
-        Mon,  5 Jun 2023 03:25:30 -0700 (PDT)
-Received: from [10.57.25.141] (unknown [10.57.25.141])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 7128E3F793;
-        Mon,  5 Jun 2023 03:24:42 -0700 (PDT)
-Message-ID: <08c9f926-53f2-2b2f-1acc-274643c7de00@arm.com>
-Date:   Mon, 5 Jun 2023 11:24:40 +0100
+        Mon, 5 Jun 2023 06:37:27 -0400
+Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3A79EA
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 03:37:25 -0700 (PDT)
+Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-977c72b116fso285273566b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 03:37:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1685961444; x=1688553444;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aOcvx95y08Gz26+xoTBjezMM0R9qofVzp0SopEjZHOQ=;
+        b=rt0Rcc/eCQBeaPHqu7XDXzAGCyuRJOzkJQOyy1aX6nkGg+82+j5cbs4bVtgXqmWwII
+         3Mh3y6GijeEiUvlu2xdPSaxfgGshRlGJRxrAzKA1KgHUGk9lc12YXCD5D4xZL7tKAs4u
+         QmTxa9VKBOb8VbSZRT9i9Ci+sCZgCom+x7SYHO9kSgzq5ZJoHBzelKG2gmlIUtggDaz8
+         m5hTOkfhdxICvVpYqFa24mYzCHL3Sb+OkTWvfaTuRQ5fqJZvwZUC5dR3ku0d2X5S1PZu
+         hgKVPq/sgaJSnlTj4nFsGutvSIKoqBKb+WVR/f+nn4znyoCqsKw9Ra91e3kG4N/ALFdH
+         YCQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685961444; x=1688553444;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aOcvx95y08Gz26+xoTBjezMM0R9qofVzp0SopEjZHOQ=;
+        b=ljoXhUiF2SRdS7uovoR/2eZRPH/htV+FUNOHanazpqfnPjz/Ys5+lrAkOdJ9rWk/MY
+         O77mhthY/FfoJqk70T09D0i0VSVYlU22Pgm0yeXzcAxlrtgpnZrcSk2DKVxwfuUTZt2u
+         BLLnMzDoX24ULV6isTyVH5kjw3jYsTEd5eGnAFj3vkaReMc1Wsk1WsmRzuAzQWuUBc9Z
+         8/hO4eGYSfS6hrhnWhIHEIAO2wO4gP/DmCKiTkge+LXFfadzONuFhq3FEW9qqOthXE9a
+         aFltkLq9P+v8kJRYes3Afm6FMKlDCYX89xN2RHqIvNaoRZqgx3qrM8KMQ4RvZE1Z2XYE
+         ZgTQ==
+X-Gm-Message-State: AC+VfDwADdYHqeKeod1ItVip4JRiBnWJtigtl08ktvt9dyCEhb2inVPN
+        4xBv79aaUiD99adJkeWtXAO7Dg==
+X-Google-Smtp-Source: ACHHUZ48K2Razvdp0nA1z9juD0kw8ynNAAg6/azRFolmB6OaGaQUC8gJo44/8kdX7ZDfR6mnkTGLzQ==
+X-Received: by 2002:a17:907:36c3:b0:960:ddba:e5c6 with SMTP id bj3-20020a17090736c300b00960ddbae5c6mr5332528ejc.22.1685961444353;
+        Mon, 05 Jun 2023 03:37:24 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id kq6-20020a170906abc600b0096599bf7029sm4160816ejb.145.2023.06.05.03.37.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Jun 2023 03:37:23 -0700 (PDT)
+Message-ID: <cd71ee53-391a-90fd-27ca-c174f2b24a94@linaro.org>
+Date:   Mon, 5 Jun 2023 12:37:21 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.11.1
-Subject: Re: [PATCH v4 11/11] coresight-tpdm: Add nodes for dsb msr support
-To:     Tao Zhang <quic_taozha@quicinc.com>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Cc:     Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, andersson@kernel.org
-References: <1682586037-25973-1-git-send-email-quic_taozha@quicinc.com>
- <1682586037-25973-12-git-send-email-quic_taozha@quicinc.com>
-From:   Suzuki K Poulose <suzuki.poulose@arm.com>
-In-Reply-To: <1682586037-25973-12-git-send-email-quic_taozha@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH] arm64: dts: qcom: Split sdm845-db845c to add headless
+ support
+Content-Language: en-US
+To:     Amit Pundir <amit.pundir@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+References: <20230605094710.2037879-1-amit.pundir@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230605094710.2037879-1-amit.pundir@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/04/2023 10:00, Tao Zhang wrote:
-> Add the nodes for DSB subunit MSR(mux select register) support.
-> The TPDM MSR (mux select register) interface is an optional
-> interface and associated bank of registers per TPDM subunit.
-> The intent of mux select registers is to control muxing structures
-> driving the TPDM’s’ various subunit interfaces.
+On 05/06/2023 11:47, Amit Pundir wrote:
+> This is a follow-up of the upstream discussion,
+> https://lore.kernel.org/linux-kernel/20230124182857.1524912-1-amit.pundir@linaro.org/T/#u,
+> around adding a reserved memory region in sdm845-db845c
+> for the framebuffer memory (the splash region set up by
+> the bootloader) but the general opinion was to avoid
+> adding that reserved memory for the headless DB845c
+> usecase.
 > 
-> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+> So this patch splits the sdm845-db845c into a common dtsi,
+> a new sdm845-db845-headless DT, which disables the mdss
+> display subsystem, and a new sdm845-db845c DT with an
+> additional reserved-memory region for the framebuffer.
+> 
+> The default sdm845-db845c.dtb remains pretty much the same
+> (with an exception of additional reserved-memory region),
+> while others can use sdm845-db845c-headless.dtb for their
+> headless systems.
+
+You should describe the hardware in commit msg. What is "headless"? If
+no HDMI plugged in, then it is a NAK because plug or unplugged HDMI
+cable is not a property of a DTS.
+
+> 
+> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
 > ---
->   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 15 ++++++
->   drivers/hwtracing/coresight/coresight-tpdm.c       | 53 ++++++++++++++++++++++
->   drivers/hwtracing/coresight/coresight-tpdm.h       |  3 ++
->   3 files changed, 71 insertions(+)
+> Please pick this after the lvs regulator nodes reordering patch
+> https://lore.kernel.org/lkml/20230602161246.1855448-1-amit.pundir@linaro.org/T/#u.
+> I'll rebase and resend this patch otherwise.
 > 
-> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> index 639b6fb8..f746f25 100644
-> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-> @@ -170,3 +170,18 @@ Description:
->   		Accepts only one of the 2 values -  0 or 1.
->   		0 : Set the DSB pattern type to value.
->   		1 : Set the DSB pattern type to toggle.
-> +
-> +What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_msr
-> +Date:		March 2023
-> +KernelVersion	6.3
-> +Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-> +Description:
-> +		(Write) Set the MSR(mux select register) of DSB tpdm. Read
-> +		the MSR(mux select register) of DSB tpdm.
-> +
-> +		Expected format is the following:
-> +		<integer1> <integer2>
-> +
-> +		Where:
-> +		<integer1> : Index number of MSR register
-> +		<integer2> : The value need to be written
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index 627de36..5fe0bd5c 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -240,6 +240,14 @@ static int tpdm_datasets_setup(struct tpdm_drvdata *drvdata)
->   			if (!drvdata->dsb)
->   				return -ENOMEM;
->   		}
-> +		if (!of_property_read_u32(drvdata->dev->of_node,
-> +			   "qcom,dsb_msr_num", &drvdata->dsb->msr_num)) {
-> +			drvdata->dsb->msr = devm_kzalloc(drvdata->dev,
-> +				   (drvdata->dsb->msr_num * sizeof(*drvdata->dsb->msr)),
-> +				   GFP_KERNEL);
-> +			if (!drvdata->dsb->msr)
-> +				return -ENOMEM;
-> +		}
->   	}
->   
->   	return 0;
-> @@ -765,6 +773,50 @@ static ssize_t dsb_trig_ts_store(struct device *dev,
->   }
->   static DEVICE_ATTR_RW(dsb_trig_ts);
->   
-> +static ssize_t dsb_msr_show(struct device *dev,
-> +				 struct device_attribute *attr,
-> +				 char *buf)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	unsigned int i;
-> +	ssize_t size = 0;
-> +
-> +	if (drvdata->dsb->msr_num == 0)
-> +		return -EINVAL;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
+>  arch/arm64/boot/dts/qcom/Makefile             |    1 +
+>  .../boot/dts/qcom/sdm845-db845c-common.dtsi   | 1178 +++++++++++++++++
+>  .../boot/dts/qcom/sdm845-db845c-headless.dts  |    9 +
+>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts    | 1172 +---------------
 
-Shouldn't this be  "i < drvdata->dsb->msr_num" ?
+A lot of duplication. Are you sure you generated the patches with
+correct -M/-C/-B arguments to rename or copy?
 
-
-> +		size += sysfs_emit_at(buf, size,
-> +				  "%u 0x%x\n", i, drvdata->dsb->msr[i]);
-> +	}
-> +	spin_unlock(&drvdata->spinlock);
+>  4 files changed, 1194 insertions(+), 1166 deletions(-)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sdm845-db845c-common.dtsi
+>  create mode 100644 arch/arm64/boot/dts/qcom/sdm845-db845c-headless.dts
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 4f9e81253e18..22876ea2e409 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -166,6 +166,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r3.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
+> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c-headless.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c-navigation-mezzanine.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-lg-judyln.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-lg-judyp.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-db845c-common.dtsi
+> new file mode 100644
+> index 000000000000..ecc4a851e29c
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-common.dtsi
+> @@ -0,0 +1,1178 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2019, Linaro Ltd.
+> + */
 > +
-> +	return size;
-> +}
+> +/dts-v1/;
 > +
-> +static ssize_t dsb_msr_store(struct device *dev,
-> +				  struct device_attribute *attr,
-> +				  const char *buf,
-> +				  size_t size)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-> +	unsigned int num, val;
-> +	int nval;
+> +#include <dt-bindings/leds/common.h>
+> +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +#include <dt-bindings/sound/qcom,q6afe.h>
+> +#include <dt-bindings/sound/qcom,q6asm.h>
+> +#include "sdm845.dtsi"
+> +#include "sdm845-wcd9340.dtsi"
+> +#include "pm8998.dtsi"
+> +#include "pmi8998.dtsi"
 > +
-> +	if (drvdata->dsb->msr_num == 0)
-> +		return -EINVAL;
-> +
-> +	nval = sscanf(buf, "%u %x", &num, &val);
-> +	if ((nval != 2) || (num >= (drvdata->dsb->msr_num - 1)))
+> +/ {
+> +	model = "Thundercomm Dragonboard 845c";
+> +	compatible = "thundercomm,db845c", "qcom,sdm845";
 
-(num >= drvdata->dsb->msr_num) ?
+So it is the same hardware? Why compatible is in common part? I don't
+understand this change.
 
-> +		return -EINVAL;
-> +
-> +	spin_lock(&drvdata->spinlock);
-> +	drvdata->dsb->msr[num] = val;
-> +	spin_unlock(&drvdata->spinlock);
-> +	return size;
-> +}
-> +static DEVICE_ATTR_RW(dsb_msr);
-> +
->   static struct attribute *tpdm_dsb_attrs[] = {
->   	&dev_attr_dsb_mode.attr,
->   	&dev_attr_dsb_edge_ctrl.attr,
-> @@ -777,6 +829,7 @@ static struct attribute *tpdm_dsb_attrs[] = {
->   	&dev_attr_dsb_trig_patt_mask.attr,
->   	&dev_attr_dsb_trig_ts.attr,
->   	&dev_attr_dsb_trig_type.attr,
-> +	&dev_attr_dsb_msr.attr,
->   	NULL,
->   };
->   
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
-> index 9ad32a6..05e9f8e 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
-> @@ -18,6 +18,7 @@
->   #define TPDM_DSB_XPMR(n)	(0x7E8 + (n * 4))
->   #define TPDM_DSB_EDCR(n)	(0x808 + (n * 4))
->   #define TPDM_DSB_EDCMR(n)	(0x848 + (n * 4))
-> +#define TPDM_DSB_MSR(n)		(0x980 + (n * 4))
->   
->   /* Enable bit for DSB subunit */
->   #define TPDM_DSB_CR_ENA		BIT(0)
-> @@ -113,6 +114,8 @@ struct dsb_dataset {
->   	u32				trig_patt_mask[TPDM_DSB_MAX_PATT];
->   	bool			trig_ts;
->   	bool			trig_type;
-> +	u32				msr_num;
-> +	u32				*msr;
->   };
->   
->   /**
+Best regards,
+Krzysztof
 
-
-Where/when do we write to these registers in the DSB ?
-
-Suzuki
