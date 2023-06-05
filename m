@@ -2,158 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 94912722FB6
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 21:21:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD8B3722FE0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 21:37:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235629AbjFETVb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 15:21:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45474 "EHLO
+        id S235177AbjFEThk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 15:37:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51470 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235689AbjFETVW (ORCPT
+        with ESMTP id S232644AbjFEThj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 15:21:22 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [81.169.146.170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00468127;
-        Mon,  5 Jun 2023 12:21:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1685992688; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=KpZaH3G5VeHecBV0b5jJ1EmTd13VdsdZXsmN7ErZB/x5W7EPOTKyinFfB2nk3LQuSV
-    xrmcC0GgEOe+wW54iqW3Ty4Yf1uVdya1nvW//Ds6latbCyf7wZ+p8O68OdlATr5EcpI5
-    AgD4LruF0xIxI3TRMnYbTVc+nAeamm0HO57v2s+KAMYBudhRLIHni2TA5CLXoBeG1JB0
-    gzITxTiD5Ie3y/B8rk2fLQO9qb2FBQ0wk1jL6L3r6qZytEZqvp0SFT22/0oZ3fP3pOyK
-    K7Nx8kdQW9kanwhUbeXSKFl3oPG/TwLlSqmPWDsWGihFv2LCeWGLqwJI4oBaQyK/MWi0
-    cvdg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1685992688;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=nwUZOE4ivaFUd1EhPNuWsSDQJ499AupgZ2LyVSZEuns=;
-    b=bs3u2o29hMxiKPrUGh7vRtYDzkDkCllvLgcL0Ky6doepstCFzIwv2kzfCYxa4fyeRe
-    GVhvXX0X0Ze4dT3krFi73SO1a958aFzxEWHP6WkHaDFSpjx/GFE0TAzv8NAQjnGzAfrv
-    FD5ntoAb9TioUrk44ngVDalqP4fs5DTJzJ8YTmv8Qju7Msxh0Wd1cJWlUPibiQaZmcCe
-    GF7ry0043toGiQ+LHJ6YXW7QNlLdOLb+1W0MShQPtoDNa+B4p1+z5zxA5cE37y8MrAFZ
-    ES+l+2SlLMWxZoku3Hh5yVioZ+7qpVrnBJRAMuOdaO3uJgf4EPWnQr4s7hQmVWQKS92c
-    9EYQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1685992688;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=nwUZOE4ivaFUd1EhPNuWsSDQJ499AupgZ2LyVSZEuns=;
-    b=DZHWisTGOO/EEJwVBCMmJ3hkE4vFQiujPVoWol2njjfGa5W69V1DJdl4qYzgDWaiaG
-    I4P+TxYpfzKIvo4NbJ9dTPeewGSBUnoe9Hlj/tde7TjQmVnM+LNQs1KZ7sRZSIA5Rnvv
-    t3JLXUO2NrPPfgPOX0u8EraTYrkRkp+dNwXK2PncLQwC1zDZyJK9AePvUgSraITRigd/
-    gEcyJcFdgtaWdlMPf8uPcnOrQDENhML6FgQ7pK0HzQW+8eilxAk8ZifKBgY7v40a0FiE
-    JZDPZuaNksONMVJIcRsm0lImP+xQqvT0L8/7yMuv0jUqU8WtbqHTkTlXCXHcvfiX6suW
-    OdXg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1685992688;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=nwUZOE4ivaFUd1EhPNuWsSDQJ499AupgZ2LyVSZEuns=;
-    b=3tI4pC3TpPXOUDplXAjCFodcAxe0byBa5z+OaNnNT34CGLZIHtR/KRNzePoJewJ7Wm
-    Xjl6jbPfYpOu6j+2WEBQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8Z+J1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.5.3 DYNA|AUTH)
-    with ESMTPSA id Z82ec2z55JI8Bgj
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 5 Jun 2023 21:18:08 +0200 (CEST)
-Date:   Mon, 5 Jun 2023 21:18:07 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH 09/14] rpmsg: qcom_smd: Use qcom_smem_is_available()
-Message-ID: <ZH407yP8RQmTlQtf@gerhold.net>
-References: <20230531-rpm-rproc-v1-0-e0a3b6de1f14@gerhold.net>
- <20230531-rpm-rproc-v1-9-e0a3b6de1f14@gerhold.net>
- <0f48649e-27d6-97f7-98b8-fe10b99d0236@linaro.org>
+        Mon, 5 Jun 2023 15:37:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A9FB6F2
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 12:36:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1685993812;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=ZdsOmjyrs4jhLmzcDuk5dNVYdME54p2VYx1Wgg2u6KQ=;
+        b=chuO3czuD5nv18GJqDYfGIzPKOcVrMSvHyydmU5JxNR++kjYaXc9N7nuYe23k9mykgoeiy
+        JZUF6fA9nh049tMiT68dKwXEstbDaPADmhpeZsMFOepCXnl/mefG9pZYdLjxX74HBeu2W2
+        l4Z/08dyPqlrFYRtaKxBCd8k0eCcTnk=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-240-TbpIn2BpNeeH8SYiVeFogg-1; Mon, 05 Jun 2023 15:36:51 -0400
+X-MC-Unique: TbpIn2BpNeeH8SYiVeFogg-1
+Received: by mail-oi1-f199.google.com with SMTP id 5614622812f47-39a3d136164so2721548b6e.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 12:36:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685993810; x=1688585810;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZdsOmjyrs4jhLmzcDuk5dNVYdME54p2VYx1Wgg2u6KQ=;
+        b=Gt/XSXM7SVAjsdqgrxYAnXiqPKbOs5MSOOza+2BOZKgU0pXnGGLw3mms2Tb7lSP4E3
+         rV8TEr62H4qFONEL0S14Ft0QFueg6W9D+SdvoGdo9gYBnTzolUEGEAlsRT2OwRfECk8x
+         ZTqDM4gykVEonRDJTPWgIG43Z5JiK6AsPmauyUGj2DBe7wEmSw+VUWg864LMZMzryyoL
+         fqYZm5c6P9XEK93j9K6WBbAA3JOGwChwpJT+2KgFIsT3IclchhWkT1oPN6OArqMUFxyB
+         1IxP7tVz3uKMJ7v9WC5dBP6k1BUhD0/Cmc6Gxu+Qw9JWKliTw50uKA2A3SKSMZgRvj9N
+         Kmpg==
+X-Gm-Message-State: AC+VfDxIiexgy68Hs11gluSEzqf/lRjCro2uxEJ7rDrvDZLUdksEweMO
+        EjE1b8Sp0HxnP7AStnhGm74/WfKBQjBZDvwj9h8G8e175nb7ZfvK5enMCAtFaw7IuYk9JHf9wSu
+        4KRA7zHfFgamYzaaH5jBLapIYZQ==
+X-Received: by 2002:a05:6808:8d6:b0:397:f1b3:f940 with SMTP id k22-20020a05680808d600b00397f1b3f940mr4970750oij.27.1685993810595;
+        Mon, 05 Jun 2023 12:36:50 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ6ueGspllETv0SMUfDs8YpvS0EZ7IsQ8bkSRSjyjFbUOUQArdfQ8luljWDBTynlY93U2iggSQ==
+X-Received: by 2002:a05:6808:8d6:b0:397:f1b3:f940 with SMTP id k22-20020a05680808d600b00397f1b3f940mr4970736oij.27.1685993810364;
+        Mon, 05 Jun 2023 12:36:50 -0700 (PDT)
+Received: from halaney-x13s.attlocal.net ([2600:1700:1ff0:d0e0::22])
+        by smtp.gmail.com with ESMTPSA id x62-20020acae041000000b00397f453aae6sm3836667oig.38.2023.06.05.12.36.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 Jun 2023 12:36:49 -0700 (PDT)
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     linux-kernel@vger.kernel.org
+Cc:     linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        p.zabel@pengutronix.de, gregkh@linuxfoundation.org,
+        Thinh.Nguyen@synopsys.com, konrad.dybcio@linaro.org,
+        andersson@kernel.org, Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH] usb: dwc3: qcom: use dev_err_probe() where appropriate
+Date:   Mon,  5 Jun 2023 14:36:25 -0500
+Message-Id: <20230605193625.63187-1-ahalaney@redhat.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0f48649e-27d6-97f7-98b8-fe10b99d0236@linaro.org>
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-type: text/plain
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 05, 2023 at 08:56:44PM +0200, Konrad Dybcio wrote:
-> 
-> 
-> On 5.06.2023 09:08, Stephan Gerhold wrote:
-> > Rather than looking up a dummy item from SMEM, use the new
-> > qcom_smem_is_available() function to make the code more clear
-> > (and reduce the overhead slightly).
-> > 
-> > Add the same check to qcom_smd_register_edge() as well to ensure that
-> > it only succeeds if SMEM is already available - if a driver calls the
-> > function and SMEM is not available yet then the initial state will be
-> > read incorrectly and the RPMSG devices might never become available.
-> > 
-> > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> > ---
-> >  drivers/rpmsg/qcom_smd.c | 10 +++++-----
-> >  1 file changed, 5 insertions(+), 5 deletions(-)
-> > 
-> > diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-> > index 7b9c298aa491..43f601c84b4f 100644
-> > --- a/drivers/rpmsg/qcom_smd.c
-> > +++ b/drivers/rpmsg/qcom_smd.c
-> > @@ -1479,6 +1479,9 @@ struct qcom_smd_edge *qcom_smd_register_edge(struct device *parent,
-> >  	struct qcom_smd_edge *edge;
-> >  	int ret;
-> >  
-> > +	if (!qcom_smem_is_available())
-> > +		return ERR_PTR(-EPROBE_DEFER);
-> > +
-> >  	edge = kzalloc(sizeof(*edge), GFP_KERNEL);
-> >  	if (!edge)
-> >  		return ERR_PTR(-ENOMEM);
-> > @@ -1553,12 +1556,9 @@ EXPORT_SYMBOL(qcom_smd_unregister_edge);
-> >  static int qcom_smd_probe(struct platform_device *pdev)
-> >  {
-> >  	struct device_node *node;
-> > -	void *p;
-> >  
-> > -	/* Wait for smem */
-> > -	p = qcom_smem_get(QCOM_SMEM_HOST_ANY, smem_items[0].alloc_tbl_id, NULL);
-> > -	if (PTR_ERR(p) == -EPROBE_DEFER)
-> > -		return PTR_ERR(p);
-> > +	if (!qcom_smem_is_available())
-> > +		return -EPROBE_DEFER;
-> >  
-> >  	for_each_available_child_of_node(pdev->dev.of_node, node)
-> >  		qcom_smd_register_edge(&pdev->dev, node);
-> Hm.. we're not checking the return value here, at all.. Perhaps that
-> could be improved and we could only check for smem presence inside
-> qcom_smd_register_edge()?
-> 
+Update to using dev_err_probe() throughout to reduce spam and log useful
+information in devices_deferred.
 
-I think the goal here it to register as many of the edges as possible,
-so we wouldn't necessarily want to abort if one of them fails. That's
-why it's enough to check for only for a possible -EPROBE_DEFER first.
+Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+---
+ drivers/usb/dwc3/dwc3-qcom.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
-But more importantly after this series this is legacy code that exists
-only for backwards compatibility with older DTBs. The probe function
-won't be called for DTBs in mainline anymore. So I think it's not worth
-to improve it much anymore. ;)
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index 822735814050..a1f3d95c0832 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -167,7 +167,8 @@ static int dwc3_qcom_register_extcon(struct dwc3_qcom *qcom)
+ 
+ 	qcom->edev = extcon_get_edev_by_phandle(dev, 0);
+ 	if (IS_ERR(qcom->edev))
+-		return PTR_ERR(qcom->edev);
++		return dev_err_probe(dev, PTR_ERR(qcom->edev),
++				     "Failed to get extcon\n");
+ 
+ 	qcom->vbus_nb.notifier_call = dwc3_qcom_vbus_notifier;
+ 
+@@ -252,16 +253,14 @@ static int dwc3_qcom_interconnect_init(struct dwc3_qcom *qcom)
+ 
+ 	qcom->icc_path_ddr = of_icc_get(dev, "usb-ddr");
+ 	if (IS_ERR(qcom->icc_path_ddr)) {
+-		dev_err(dev, "failed to get usb-ddr path: %ld\n",
+-				PTR_ERR(qcom->icc_path_ddr));
+-		return PTR_ERR(qcom->icc_path_ddr);
++		return dev_err_probe(dev, PTR_ERR(qcom->icc_path_ddr),
++				     "failed to get usb-ddr path\n");
+ 	}
+ 
+ 	qcom->icc_path_apps = of_icc_get(dev, "apps-usb");
+ 	if (IS_ERR(qcom->icc_path_apps)) {
+-		dev_err(dev, "failed to get apps-usb path: %ld\n",
+-				PTR_ERR(qcom->icc_path_apps));
+-		ret = PTR_ERR(qcom->icc_path_apps);
++		ret = dev_err_probe(dev, PTR_ERR(qcom->icc_path_apps),
++				    "failed to get apps-usb path\n");
+ 		goto put_path_ddr;
+ 	}
+ 
+@@ -813,9 +812,8 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+ 
+ 	qcom->resets = devm_reset_control_array_get_optional_exclusive(dev);
+ 	if (IS_ERR(qcom->resets)) {
+-		ret = PTR_ERR(qcom->resets);
+-		dev_err(&pdev->dev, "failed to get resets, err=%d\n", ret);
+-		return ret;
++		return dev_err_probe(&pdev->dev, PTR_ERR(qcom->resets),
++				     "failed to get resets\n");
+ 	}
+ 
+ 	ret = reset_control_assert(qcom->resets);
+@@ -834,7 +832,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+ 
+ 	ret = dwc3_qcom_clk_init(qcom, of_clk_get_parent_count(np));
+ 	if (ret) {
+-		dev_err(dev, "failed to get clocks\n");
++		dev_err_probe(dev, ret, "failed to get clocks\n");
+ 		goto reset_assert;
+ 	}
+ 
+-- 
+2.40.1
 
-Thanks,
-Stephan
