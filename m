@@ -2,53 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 79340722918
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 16:45:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3904722B0E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 17:30:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234532AbjFEOpb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 10:45:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33688 "EHLO
+        id S234244AbjFEPaY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 11:30:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37598 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234453AbjFEOpX (ORCPT
+        with ESMTP id S235127AbjFEPaU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 10:45:23 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C356E9;
-        Mon,  5 Jun 2023 07:45:22 -0700 (PDT)
+        Mon, 5 Jun 2023 11:30:20 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42B04E4B;
+        Mon,  5 Jun 2023 08:30:04 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C6B19625E8;
-        Mon,  5 Jun 2023 14:45:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB61FC433A1;
-        Mon,  5 Jun 2023 14:45:17 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id D285C61B6F;
+        Mon,  5 Jun 2023 15:30:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94F19C433EF;
+        Mon,  5 Jun 2023 15:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1685976321;
-        bh=+Q6hWNw4cvZkLGpiw1bRBGU1wmtxT/1vdjg4Hg9F6cs=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=ihQ7pDOt+nazCAAkqERNtmqAlsRLDw+j0FNRBQXnGk2b6Jutq1Bxj1c6vpQx4PlxE
-         8pQ3v8EXIoYQCpgzrSmmBkn9VetDaRv3+vRxZRN+Q5rTHCL5+/N8H4VrnSU2c1jNfs
-         lz/6uvlWgv9ptTntVjRU3srs1O3BV6I3NJ/WTPVds+1rysYu6yGN18CFcEREcdx4qj
-         /7/t2rSKxNu+ybu3qgJ3jBfg4SXjS+88EoKQGQeFuH6YERFtwaea2HtBc1J0RZOjja
-         5w+Rs2UyEdmClN5EVP1+3XjbZ3Fee5ZnyRxWiTVxw2pXYFkAJA5E95htQG9eb+d0Pf
-         kdHuKBF/9b/fg==
-From:   Lorenzo Pieralisi <lpieralisi@kernel.org>
-To:     kw@linux.com, Manivannan Sadhasivam <mani@kernel.org>
-Cc:     Lorenzo Pieralisi <lpieralisi@kernel.org>, kishon@kernel.org,
-        bhelgaas@google.com, linux-pci@vger.kernel.org,
+        s=k20201202; t=1685979003;
+        bh=ITRoqiSFBqs21EPM1WuquxlL6puwwCP+3OcM6hMuGgQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=TG3CnnAZ8j2w4olHjvjztA+ySw7tuRtmd/8/j/Dzu7SP3om53z723eZ/ROvyfOk2C
+         0mm46Ll2aUgLVTACTbf82/zjfLS5n6zpJzxNka1WDgRHOlLJgjAd8IY1/+9leKRrj0
+         xv7wwX6gJLvi+Un96tei5GCoua9F+YkbJuIlyrFcyh6PhyGri/UIdkYi7Az7flHeUQ
+         D5HWfVqVDtDoftVaNHqavtBz+SUATTsQWlBeZ2EBo4Bni0CWcTjEDAe1MedBN4bvkK
+         BtADJhyeExmg01JX4KcyBDoMM59rK/c1ZHMr221zjmm0TNaYL0d6wqp7vlFFWkXRCN
+         mndVs2dRmn+Yw==
+Date:   Mon, 5 Jun 2023 16:29:57 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Bartosz Golaszewski <brgl@bgdev.pl>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Sebastian Reichel <sre@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dlemoal@kernel.org
-Subject: Re: [PATCH v6 0/9] Add support for MHI Endpoint function driver
-Date:   Mon,  5 Jun 2023 16:45:14 +0200
-Message-Id: <168597627549.35299.2498849386988446406.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230602114756.36586-1-manivannan.sadhasivam@linaro.org>
-References: <20230602114756.36586-1-manivannan.sadhasivam@linaro.org>
+        linux-arm-kernel@lists.infradead.org,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v4 4/5] dt-bindings: iommu: arm,smmu: enable clocks for
+ sa8775p Adreno SMMU
+Message-ID: <20230605152956.GA21796@willie-the-truck>
+References: <20230417125844.400782-1-brgl@bgdev.pl>
+ <20230417125844.400782-5-brgl@bgdev.pl>
+ <9f2c0b2d-b11e-512f-1566-5097547c60d1@linaro.org>
+ <CAMRc=Mey2mjNppokxcNBTyaZPTjBkiuQX-DHTvMXJkiLKq7UoA@mail.gmail.com>
+ <83fb5973-5514-6c66-fc15-84fb439f1398@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+In-Reply-To: <83fb5973-5514-6c66-fc15-84fb439f1398@linaro.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -57,40 +72,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 02 Jun 2023 17:17:47 +0530, Manivannan Sadhasivam wrote:
-> This series adds support for Modem Host Interface (MHI) Endpoint function
-> driver and few updates to the PCI endpoint core.
+On Tue, May 30, 2023 at 03:17:43PM +0200, Krzysztof Kozlowski wrote:
+> On 30/05/2023 11:47, Bartosz Golaszewski wrote:
+> > On Tue, May 16, 2023 at 1:42 PM Krzysztof Kozlowski
+> > <krzysztof.kozlowski@linaro.org> wrote:
+> >>
+> >> On 17/04/2023 14:58, Bartosz Golaszewski wrote:
+> >>> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >>>
+> >>> The GPU SMMU will require the clocks property to be set so put the
+> >>> relevant compatible into the adreno if-then block.
+> >>>
+> >>> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >>> ---
+> >>
+> >>
+> >> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> >>
+> >> Best regards,
+> >> Krzysztof
+> >>
+> > 
+> > Hey IOMMU maintainers, could you please pick this one up for the next
+> > merge window?
 > 
-> MHI
-> ===
-> 
-> MHI is the communication protocol used by the host machines to control and
-> communicate with the Qualcomm modems/WLAN devices over any high speed physical
-> bus like PCIe. In Linux kernel, MHI is modeled as a bus driver [1] and there
-> are two instances of MHI used in a typical setup.
-> 
-> [...]
+> I think you missed to Cc them (except Will).
 
-Applied [with few changes, please check] to controller/endpoint, thanks!
+Sorry for the delay, I'll grab this one now.
 
-[1/9] PCI: endpoint: Add missing documentation about the MSI/MSI-X range
-      https://git.kernel.org/pci/pci/c/4753e6a0fe22
-[2/9] PCI: endpoint: Pass EPF device ID to the probe function
-      https://git.kernel.org/pci/pci/c/765b0e80681a
-[3/9] PCI: endpoint: Return error if EPC is started/stopped multiple times
-      https://git.kernel.org/pci/pci/c/0ff3de7a6c87
-[4/9] PCI: endpoint: Add linkdown notifier support
-      https://git.kernel.org/pci/pci/c/755cb1cc2615
-[5/9] PCI: endpoint: Add BME notifier support
-      https://git.kernel.org/pci/pci/c/a2bd0e62f6fd
-[6/9] PCI: qcom-ep: Add support for Link down notification
-      https://git.kernel.org/pci/pci/c/c53dc1547231
-[7/9] PCI: qcom-ep: Add support for BME notification
-      https://git.kernel.org/pci/pci/c/258dfe82065c
-[8/9] PCI: endpoint: Add PCI Endpoint function driver for MHI bus
-      https://git.kernel.org/pci/pci/c/fd0fda1ef61a
-[9/9] MAINTAINERS: Add PCI MHI endpoint function driver under MHI bus
-      https://git.kernel.org/pci/pci/c/71f1861bb90d
-
-Thanks,
-Lorenzo
+Will
