@@ -2,65 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC5B4723050
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 21:50:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A6DD723053
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 21:50:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236078AbjFETu3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 15:50:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58086 "EHLO
+        id S236201AbjFETum (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 15:50:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236118AbjFETuM (ORCPT
+        with ESMTP id S236175AbjFETuW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 15:50:12 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D184E44
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 12:49:52 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id ca18e2360f4ac-777a4c8e8f4so119711039f.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 12:49:52 -0700 (PDT)
+        Mon, 5 Jun 2023 15:50:22 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 325A01B3
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 12:50:03 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id ca18e2360f4ac-777a4926555so59754739f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 12:50:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1685994590; x=1688586590;
+        d=linaro.org; s=google; t=1685994601; x=1688586601;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:from:user-agent:mime-version:date:message-id:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=cPlOjdlJ+dRPlBsswQpKMNmBPkhakhRaFVQ24sk5p48=;
-        b=JfzQ4nFnxsDVVweSWRoSCcbfNulBTZT6AhFmi+GrblhAGn6SN9IyYc1Q9647sBsTVt
-         5A3awQZoHTqt1RX1Wg/y+Yu5XoboQeFoAv4LZioXXGarpJ3XdGzj7V6x39toEaKe8xkx
-         6T3rYZJWRHRKK/zrkJiuek556swCuPgBjcUlI0Md80mOQH8krj0JjbqziCLt8/YlhiDA
-         td0e8yBRJMDomz+I7kuMIPsDBI+l+TP50udtaxGjpIxFrQNKRoYfB5uJRSACckH6tOe0
-         gxcqJIritft3hxsvAafmv0YyHrlZ0xGc0lB1nGxGXYRgxFj3NFUKTSqr+2YeLNQnzR9f
-         SdVA==
+        bh=zqUbmlyyOpVxtzSDJaeMbmrOzSyNHvJjWJRif5DapRE=;
+        b=BTWbRhmXvUhVB/espD07rFre+Ia1t3SkAcewyxuS40cXxQ55tz00JRfq571J6pqYR2
+         lR5hpjUrFVk/NckEWR2TeEVsLOVxrNb0LiNCBno5ZDQvmnnmnNM586TjJZmRbHTD3bs9
+         rDhyal+pr1KIRHSrtffQXaIzPs07pFGuubS1AWZYmzLdrJm6bvMZb19qEPSKlQqlIWmC
+         7RWalRtDd1+nphyBCedY8So2SbfYaoBWA+Idlw7/sq9MjRJKhqNLyBb3C7caBRGW/HDc
+         cbaWZ8QwZGmB4kxW8I8w7R30leN+9dwjeJv38NJNRLKwqAmIuuZLnYz+vwqUXb1A17CE
+         afUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685994590; x=1688586590;
+        d=1e100.net; s=20221208; t=1685994601; x=1688586601;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cPlOjdlJ+dRPlBsswQpKMNmBPkhakhRaFVQ24sk5p48=;
-        b=Fe8oquOK9MzsrlLcFU53RqcbyE2u9yh5xglnxCsLLvBU3IZvDeRv3Xpprqh10lUC+s
-         qNj3+C/DIXWi62uu3H+Sb06wYc7ZRDT3bhv8gaNakqu7TJY+SZoWuOOuq7QTaxsKg/9r
-         oTQ/BzvmiMqhhUXxky0MSur2jWgLYnhT/4AGHjatw3ELzCI3I4wgodoqEEz4DQY3UJ3u
-         uO08356XxYnS6g4ssBw3+kt1qAGZc6yWhiT89oeLJAGtYFPUh6k+67U4lsaMNK9Zrua0
-         rwe5fH7ChKYFvT9b4ZQETNaRehl+QcQZxFxNwzsoMzeHtvQalUH2T+V/bEBu7IXwQHZP
-         7CSA==
-X-Gm-Message-State: AC+VfDya4P3TN1WBHjHtZUYVHFKvvWgzoTkeVJPRwWyrnZjOAP4oLrtt
-        LkHC+4BCOs/FEWjX03B9puBhFQ==
-X-Google-Smtp-Source: ACHHUZ6BgjxdZJaa9/9OIGfA+S4eoi5nWLa5slc+tS1TwE8UHFlKzkebBHIbP9/q7lYMkcbpshec8g==
-X-Received: by 2002:a5e:d710:0:b0:774:9c64:e0a4 with SMTP id v16-20020a5ed710000000b007749c64e0a4mr287414iom.4.1685994590054;
-        Mon, 05 Jun 2023 12:49:50 -0700 (PDT)
+        bh=zqUbmlyyOpVxtzSDJaeMbmrOzSyNHvJjWJRif5DapRE=;
+        b=kdGFx2X3SlYQPUgHJ/uPrflZXjqiG2pynjCJJpeMYl7nx9NVNatyblkIiPk+YCSKOL
+         06U1zaiFNQI6v87C0dKnjWizyQUfPbMMHA9P2IBJaosdMXmyIxweoUBDkfcuV0uiyrp7
+         2QXiFIsMhzvu+zE4PeSpcxO/W71hvWANQ+CoL0zEGa4EzZjMoxka/HoK6Fl0r8TcdSLv
+         hWnbtTgNhkrbT1882bISxk1MAkXULdlfzX0kXzO+gtBAtDmnE+M9alPJnQ8kARnINXOt
+         Ynu7G5AD+gLNxYZE2O3sQmy9hrrcKv0VbRDIfmZPprm/qtM/3KEzT7x49qnlkzeBj+Mw
+         80Bw==
+X-Gm-Message-State: AC+VfDyQaNnryPNJ3f6+e5LtH1bKQAzMw4Vm077DA10aU7p40zshvYPY
+        19rLRkyoNTagI+kDk+1FcawqFQ==
+X-Google-Smtp-Source: ACHHUZ7Mm9wiy5ptelw2AO98uw36L+kIz6u8B45c3gTGltaBfqoiSqhByCWJ3vMSfPouKBiVei/PzA==
+X-Received: by 2002:a05:6602:2195:b0:777:b556:c130 with SMTP id b21-20020a056602219500b00777b556c130mr23077iob.8.1685994601248;
+        Mon, 05 Jun 2023 12:50:01 -0700 (PDT)
 Received: from [172.22.22.28] ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id l22-20020a6bd116000000b0076c81bf2731sm2735824iob.20.2023.06.05.12.49.48
+        by smtp.gmail.com with ESMTPSA id p5-20020a5d8d05000000b0076c7a2f0f41sm2714186ioj.46.2023.06.05.12.50.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Jun 2023 12:49:49 -0700 (PDT)
-Message-ID: <3dd82ec0-2a9a-3401-5385-965c624f9f32@linaro.org>
-Date:   Mon, 5 Jun 2023 14:49:48 -0500
+        Mon, 05 Jun 2023 12:50:00 -0700 (PDT)
+Message-ID: <85fe3f90-12ff-cb91-73c1-0efe66dae695@linaro.org>
+Date:   Mon, 5 Jun 2023 14:49:59 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
 From:   Alex Elder <elder@linaro.org>
-Subject: Re: [PATCH v13 17/24] gunyah: vm_mgr: Add framework for VM Functions
+Subject: Re: [PATCH v13 18/24] virt: gunyah: Add resource tickets
 To:     Elliot Berman <quic_eberman@quicinc.com>,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
 Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
         Trilok Soni <quic_tsoni@quicinc.com>,
         Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
@@ -72,6 +71,7 @@ Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
         Bagas Sanjaya <bagasdotme@gmail.com>,
         Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
         Catalin Marinas <catalin.marinas@arm.com>,
@@ -80,14 +80,14 @@ Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
         linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
 References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
- <20230509204801.2824351-18-quic_eberman@quicinc.com>
+ <20230509204801.2824351-19-quic_eberman@quicinc.com>
 Content-Language: en-US
-In-Reply-To: <20230509204801.2824351-18-quic_eberman@quicinc.com>
+In-Reply-To: <20230509204801.2824351-19-quic_eberman@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -96,134 +96,35 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 5/9/23 3:47 PM, Elliot Berman wrote:
-> Introduce a framework for Gunyah userspace to install VM functions. VM
-> functions are optional interfaces to the virtual machine. vCPUs,
-> ioeventfs, and irqfds are examples of such VM functions and are
-
-s/ioventfs/ioventfds/
-
-Also, these aren't just examples of VM functions, they *are* the
-VM functions implemented.
-
-> implemented in subsequent patches.
+> Some VM functions need to acquire Gunyah resources. For instance, Gunyah
+> vCPUs are exposed to the host as a resource. The Gunyah vCPU function
+> will register a resource ticket and be able to interact with the
+> hypervisor once the resource ticket is filled.
 > 
-> A generic framework is implemented instead of individual ioctls to
-> create vCPUs, irqfds, etc., in order to simplify the VM manager core
-> implementation and allow dynamic loading of VM function modules.
-
-This also allows the set of VM functions to be extended without
-updating the API (like it or not).
-
+> Resource tickets are the mechanism for functions to acquire ownership of
+> Gunyah resources. Gunyah functions can be created before the VM's
+> resources are created and made available to Linux. A resource ticket
+> identifies a type of resource and a label of a resource which the ticket
+> holder is interested in.
+> 
+> Resources are created by Gunyah as configured in the VM's devicetree
+> configuration. Gunyah doesn't process the label and that makes it
+> possible for userspace to create multiple resources with the same label.
+> Resource ticket owners need to be prepared for populate to be called
+> multiple times if userspace created multiple resources with the same
+> label.
 > 
 > Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 
-I have a few more comments, but this looks pretty good.
+Looks good to me.
 
 Reviewed-by: Alex Elder <elder@linaro.org>
 
 > ---
->   Documentation/virt/gunyah/vm-manager.rst |  18 ++
->   drivers/virt/gunyah/vm_mgr.c             | 216 ++++++++++++++++++++++-
->   drivers/virt/gunyah/vm_mgr.h             |   4 +
->   include/linux/gunyah_vm_mgr.h            |  87 +++++++++
->   include/uapi/linux/gunyah.h              |  18 ++
->   5 files changed, 340 insertions(+), 3 deletions(-)
->   create mode 100644 include/linux/gunyah_vm_mgr.h
-> 
-> diff --git a/Documentation/virt/gunyah/vm-manager.rst b/Documentation/virt/gunyah/vm-manager.rst
-> index 50d8ae7fabcd..3b51bab9d793 100644
-> --- a/Documentation/virt/gunyah/vm-manager.rst
-> +++ b/Documentation/virt/gunyah/vm-manager.rst
-> @@ -17,6 +17,24 @@ sharing userspace memory with a VM is done via the `GH_VM_SET_USER_MEM_REGION`_
->   ioctl. The VM itself is configured to use the memory region via the
->   devicetree.
->   
-> +Gunyah Functions
-> +================
-> +
-> +Components of a Gunyah VM's configuration that need kernel configuration are
-> +called "functions" and are built on top of a framework. Functions are identified
-> +by a string and have some argument(s) to configure them. They are typically
-> +created by the `GH_VM_ADD_FUNCTION`_ ioctl.
-
-Is a function *type* (e.g., VCPU or ioeventfd) identified by a string?
-Or a function *instance* (e.g. four VCPUs)?  Or both?
-
-> +
-> +Functions typically will always do at least one of these operations:
-
-Typically, or always?
-
-> +
-> +1. Create resource ticket(s). Resource tickets allow a function to register
-> +   itself as the client for a Gunyah resource (e.g. doorbell or vCPU) and
-> +   the function is given the pointer to the &struct gh_resource when the
-> +   VM is starting.
-> +
-
-What I think this means is that tickets are used to allow functions
-to be defined *before* the VM is actually started.  So once it starts,
-the functions get added.  (I might have this slightly wrong, but in
-any case I'm not sure the above sentence is very clear.)
-
-> +2. Register IO handler(s). IO handlers allow a function to handle stage-2 faults
-> +   from the virtual machine.
-> +
->   Sample Userspace VMM
->   ====================
->   
-> diff --git a/drivers/virt/gunyah/vm_mgr.c b/drivers/virt/gunyah/vm_mgr.c
-> index a800061f56bf..56464451b262 100644
-> --- a/drivers/virt/gunyah/vm_mgr.c
-> +++ b/drivers/virt/gunyah/vm_mgr.c
-> @@ -6,10 +6,13 @@
->   #define pr_fmt(fmt) "gh_vm_mgr: " fmt
->   
->   #include <linux/anon_inodes.h>
-> +#include <linux/compat.h>
->   #include <linux/file.h>
->   #include <linux/gunyah_rsc_mgr.h>
-> +#include <linux/gunyah_vm_mgr.h>
->   #include <linux/miscdevice.h>
->   #include <linux/module.h>
-> +#include <linux/xarray.h>
->   
->   #include <uapi/linux/gunyah.h>
->   
-> @@ -17,6 +20,172 @@
->   
->   static void gh_vm_free(struct work_struct *work);
->   
-> +static DEFINE_XARRAY(gh_vm_functions);
-> +
-> +static void gh_vm_put_function(struct gh_vm_function *fn)
-> +{
-> +	module_put(fn->mod);
-> +}
-> +
-> +static struct gh_vm_function *gh_vm_get_function(u32 type)
-> +{
-> +	struct gh_vm_function *fn;
-> +	int r;
-> +
-> +	fn = xa_load(&gh_vm_functions, type);
-> +	if (!fn) {
-> +		r = request_module("ghfunc:%d", type);
-> +		if (r)
-> +			return ERR_PTR(r > 0 ? -r : r);
-
-Almost all callers of request_module() simply ignore the
-return value.  What positive values are you expecting to
-see here (and are you sure they're positive errno values)?
-
-> +
-> +		fn = xa_load(&gh_vm_functions, type);
-> +	}
-> +
-> +	if (!fn || !try_module_get(fn->mod))
-> +		fn = ERR_PTR(-ENOENT);
-> +
-> +	return fn;
-> +}
+>   drivers/virt/gunyah/vm_mgr.c  | 117 +++++++++++++++++++++++++++++++++-
+>   drivers/virt/gunyah/vm_mgr.h  |   4 ++
+>   include/linux/gunyah_vm_mgr.h |  14 ++++
+>   3 files changed, 134 insertions(+), 1 deletion(-)
 
 . . .
+
