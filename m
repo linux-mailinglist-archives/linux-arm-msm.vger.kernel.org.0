@@ -2,69 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F08B272210D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 10:34:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EB737221B9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  5 Jun 2023 11:07:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229822AbjFEIeE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 04:34:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60130 "EHLO
+        id S229614AbjFEJHy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 05:07:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45160 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229724AbjFEIeD (ORCPT
+        with ESMTP id S229473AbjFEJHx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 04:34:03 -0400
-Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D289DC7;
-        Mon,  5 Jun 2023 01:34:01 -0700 (PDT)
-Received: by mail-il1-f181.google.com with SMTP id e9e14a558f8ab-33b00ce51caso17365425ab.2;
-        Mon, 05 Jun 2023 01:34:01 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685954041; x=1688546041;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=bOjvC740On4cxmCmZ+ZA5JJyHC5J2DDm+AfE5TCoosc=;
-        b=KLbuwANX9h7k39bIyzcUpxZ5b1CR3prX9BMAIPnS8VXqRY8vH5pO0AuCqM+/+qvNss
-         kFPS0o9fsYSwhSK422nTgLDisp2HIdNq3nYIFbJxUWE04QRaD3bOikTE8DWQrXBJHZU/
-         d6jfD998k3Cj4Xg4+KzOSTgnNOgU74CtzKOZMj26y0q0rL2ipOFuskCpCmj7baYoNj28
-         lg54Jpae5C2fQr1bs//XTXbiOGnkk5us0J0gU+l9R9d5NB/OPj+kF8LHs5Ssk04JFVnI
-         SB6jPxHEKu3cjnw1kBmYTz1Qs5YWKfEL5uJohHIJXaeJpumQgftJVcdlDXZ77aS/IjTD
-         Uy/Q==
-X-Gm-Message-State: AC+VfDxW/H2pNPBphyVJJMRkOTbZJYps376mkUFJAVt/vYgh0Uk+N92b
-        AgmY17/0Zc7WAzsUEdhVcA==
-X-Google-Smtp-Source: ACHHUZ4d+PH4LnVmRIQ81wOVcfEQYf0UiqGR2sd3uq2AHz4k5TauRk+/drYNhLvLXsLopUkmEnnoMg==
-X-Received: by 2002:a92:da89:0:b0:334:c74c:4403 with SMTP id u9-20020a92da89000000b00334c74c4403mr15650410iln.11.1685954040924;
-        Mon, 05 Jun 2023 01:34:00 -0700 (PDT)
-Received: from robh_at_kernel.org ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id m16-20020a92c530000000b0033b2a123254sm2218432ili.61.2023.06.05.01.33.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Jun 2023 01:34:00 -0700 (PDT)
-Received: (nullmailer pid 208973 invoked by uid 1000);
-        Mon, 05 Jun 2023 08:33:58 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+        Mon, 5 Jun 2023 05:07:53 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10B33BD;
+        Mon,  5 Jun 2023 02:07:53 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A063C611F5;
+        Mon,  5 Jun 2023 09:07:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE45C433EF;
+        Mon,  5 Jun 2023 09:07:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1685956072;
+        bh=CuI2tVljCJg/uTnwW/xgr7RXJ/JrsJTuWbycO8jOShI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mYZI5s+5qSa/ow2tsEjjY+EvhvbFWNyH9uXWC/Y4YNuD0G7fFI6rh/nPGTFW4WE/y
+         4K5acr+UcQr6LZqaWJOiusVBnruRQtDyxw8nRwCHrpobfyXlY8JelNHZy84oJPPVA9
+         u8haE7I8ii50L7ruCtWAqyyEEcQ0YAZhOWrKElkjB261/EZufh6c7LuwBuI7AEx0am
+         h5wfnmYmE+pndTQR3W9RwZrCxeONqh7sGhTckcWKINqEKZZgJ4pXrfPtpSplnQOAwz
+         wxSl/+C2TKMDsv95uplyvePxcsb29ErZtXJJaP2mw/KrDrM/Q0yAlFBynYIJ1cIouj
+         uOmK6+Hxzy/rQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1q66C9-0001TD-5M; Mon, 05 Jun 2023 11:08:09 +0200
+Date:   Mon, 5 Jun 2023 11:08:09 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc:     vkoul@kernel.org, andersson@kernel.org,
+        yung-chuan.liao@linux.intel.com,
+        pierre-louis.bossart@linux.intel.com, sanyog.r.kale@intel.com,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 0/4] soundwire: qcom: stablity fixes
+Message-ID: <ZH2l-UbMyLi5Uwph@hovoldconsulting.com>
+References: <20230525133812.30841-1-srinivas.kandagatla@linaro.org>
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-remoteproc@vger.kernel.org
-In-Reply-To: <20230531-rpm-rproc-v1-5-e0a3b6de1f14@gerhold.net>
-References: <20230531-rpm-rproc-v1-0-e0a3b6de1f14@gerhold.net>
- <20230531-rpm-rproc-v1-5-e0a3b6de1f14@gerhold.net>
-Message-Id: <168595403632.208907.7805006523202767813.robh@kernel.org>
-Subject: Re: [PATCH 05/14] dt-bindings: remoteproc: Add Qualcomm RPM
- processor/subsystem
-Date:   Mon, 05 Jun 2023 02:33:58 -0600
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230525133812.30841-1-srinivas.kandagatla@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,60 +60,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Mon, 05 Jun 2023 09:08:21 +0200, Stephan Gerhold wrote:
-> On Qualcomm platforms, most subsystems (e.g. audio/modem DSP) are
-> described as remote processors in the device tree, with a dedicated
-> node where properties and services related to them can be described.
+On Thu, May 25, 2023 at 02:38:08PM +0100, Srinivas Kandagatla wrote:
+> During x13s audio testing we hit few corner cases due to issues
+> in codec drivers and some obvious code bugs.
 > 
-> The Resource Power Manager (RPM) is also such a subsystem, with a
-> remote processor that is running a special firmware. Unfortunately,
-> the RPM never got a dedicated node representing it properly in the
-> device tree. Most of the RPM services are described below a top-level
-> /smd or /rpm-glink node.
+> Here are the fixes for those issues, mostly the issues are around
+> devices loosing the sync in between runtime pm suspend resume path.
 > 
-> However, SMD/GLINK is just one of the communication channels to the RPM
-> firmware. For example, the MPM interrupt functionality provided by the
-> RPM does not use SMD/GLINK but writes directly to a special memory
-> region allocated by the RPM firmware in combination with a mailbox.
-> Currently there is no good place in the device tree to describe this
-> functionality. It doesn't belong below SMD/GLINK but it's not an
-> independent top-level device either.
+> With codec fixes along with these fixes, audio on x13s is pretty stable.
 > 
-> Introduce a new "qcom,rpm-proc" compatible that allows describing the
-> RPM as a remote processor/subsystem like all others. The SMD/GLINK node
-> is moved to a "smd-edge"/"glink-edge" subnode consistent with other
-> existing bindings. Additional subnodes (e.g. interrupt-controller for
-> MPM, rpm-master-stats) can be also added there.
+> Thanks,
+> Srini
 > 
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> ---
->  .../bindings/remoteproc/qcom,rpm-proc.yaml         | 125 +++++++++++++++++++++
->  1 file changed, 125 insertions(+)
-> 
+> Changes since v1:
+> 	- dropped runtime pm changes patch as unable to reproduced it anymore
+> 	- fixed clk stop flag as suggested by Pierre
+> 	- rebased on top of linux-next
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+I tried to update to this series on my 6.4-rc5 branch for the X13s and
+the above changes appear to lead to breakages again.
 
-yamllint warnings/errors:
+Specifically, with the updated clk stop flag (simple_clk_stop_capable) I
+see:
 
-dtschema/dtc warnings/errors:
-./Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/soc/qcom/qcom,rpm-master-stats.yaml
+[   14.789533] wcd9380-codec sdw:0:0217:010d:00:3: Slave 1 state check1: UNATTACHED, status was 1
+[   14.789717] qcom-soundwire 3330000.soundwire-controller: qcom_swrm_irq_handler: SWR bus clsh detected
+[   14.796164] wcd9380-codec sdw:0:0217:010d:00:3: Slave 1 state check1: UNATTACHED, status was 1
 
-doc reference errors (make refcheckdocs):
+and without the runtime pm patch that you dropped in v2 I get
+intermittent (e.g. twice in five boots):
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230531-rpm-rproc-v1-5-e0a3b6de1f14@gerhold.net
+[   11.527301] snd-sc8280xp sound: ASoC: adding FE link failed
+[   11.527409] snd-sc8280xp sound: ASoC: topology: could not load header: -517
+[   11.527557] qcom-apm gprsvc:service:2:1: tplg component load failed-517
+[   11.527640] qcom-apm gprsvc:service:2:1: ASoC: error at snd_soc_component_probe on gprsvc:service:2:1: -22
+[   11.528079] snd-sc8280xp sound: ASoC: failed to instantiate card -22
+[   11.533388] snd-sc8280xp: probe of sound failed with error -22
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+Again, this was with 6.4-rc5, but these problems are likely still there
+also with linux-next.
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+Johan
