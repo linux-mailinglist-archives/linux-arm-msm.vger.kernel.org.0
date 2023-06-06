@@ -2,88 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BC6837242FA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 14:50:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D7DC724313
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 14:51:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237724AbjFFMuG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 08:50:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48844 "EHLO
+        id S237775AbjFFMvB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 08:51:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236368AbjFFMuE (ORCPT
+        with ESMTP id S237784AbjFFMuy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 08:50:04 -0400
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAC5E1707
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 05:49:40 -0700 (PDT)
-Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3f6d38a140bso43908035e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 05:49:40 -0700 (PDT)
+        Tue, 6 Jun 2023 08:50:54 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1BA731701
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 05:50:32 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f3ba703b67so7475771e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 05:50:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686055778; x=1688647778;
+        d=linaro.org; s=google; t=1686055820; x=1688647820;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=VCGHAbK4qVWlhCUlXtth8nNW6RRYub17kBe2eEw9rQ0=;
-        b=gOaL1iHl+uJXek6eEz1EGiLy1ng8H0PbjHVVrOqWA9TjJXnNSOtbPBReoO5pJH8uCT
-         RIxMQbrCDTajPzQRwMhbkNnDOdo6F3O4sPwLU8j/JNQGzc7M6HCsc+AF5vLTwo2YPsly
-         BNZU6/4MZd9oEHpJVSKRCGTIEuy6AxuQCZTb28raxAvVhAZ6kxRUAq8JbEAmIE0bmKTJ
-         ejzyFUBvUd4rsI+hZTrJIs8Cm0xOxZuO8IVQhtuGY/l6UbwM9ooor19e5bqLa2UyflwC
-         cXNx3noJHdvQq2uQWmr3gugL8ifH68Ylie14Y0mfGDgqQOHLQBqZ4ZHWF5sLHkejHn5t
-         g8Mg==
+        bh=wyaDAeF5F3ya0H2Tt5M7GqFjZHMBxCl1PByfjSc9IM0=;
+        b=sg/fn/LP4T98vqK7J06CTcM1xWWhpaiETXdTxN0iyfmKx4avnn6f8QtfkJwqzQw7vE
+         p0fp1s4kjDo8IEOirogy6pmvbsutr5cjxcj8RHkDI3AEJnU2Zs+fd1dw9HHokcyvkXn9
+         kMj289MmSuVzatmCP1IfN0V1llUPHCCGA0up78/HciRYojx7CDTcB5PqDgtLjZLHyKCT
+         gsiyCrJJ36DBmhtCGHy9o1QjO5rM+sunRwZs9DkkuvF44eYggLNRnyNH9s53ywMa849T
+         rd3pWv5rtkF2fFMsbNs5uiIsHXHxR406bpoR4du3lAh30u4JAao+xdzVXUVGBIMJGksl
+         qEEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686055778; x=1688647778;
+        d=1e100.net; s=20221208; t=1686055821; x=1688647821;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VCGHAbK4qVWlhCUlXtth8nNW6RRYub17kBe2eEw9rQ0=;
-        b=gcKK+rexMZFyS8WteV2UhI9znOLeVOLUFhESH/QxyciI5qoOLTj0Ht1y0DgjMfVwmn
-         eCk6hbPIyVEIFEwSscNDdk7hZYRXBhHN6sICDYftg/nwgiwyz4UqvAvAKU6GJ3SGhbA8
-         oRzkqCjoj2KrsZWg4nmZzGwHRuAZbOutKIuh6emAhppgYCuPEApI8M5ARW6Nli/3uxUl
-         hxnhAmQ7MRpQCLk8tIvNM/FhSTjbgp6GvzlQ6++Bt3FYTlcYfmwOhFCXjJaXUkpOGw0A
-         4GFC2f/DRvaEjk4S8Pd0cE5fs9ZE5EREJk4oAMcZfP2EeSXJNBnz2pumVu0C24khIbyd
-         G+eg==
-X-Gm-Message-State: AC+VfDzvSZlngiDOSHAZxm3SJQ2yf7yj7fcL+MNbW5k059x0rUgayjYM
-        fnogZs9QNmOXDZcJ6DHSIBfk3w==
-X-Google-Smtp-Source: ACHHUZ4TNeE7rzV/AZKb1vaYemUZqSiNlFkmK0MEaptlGGmCvKgIrCL/c64z0CAvCfY7BUkDs2X3Mg==
-X-Received: by 2002:a05:600c:46c7:b0:3f7:16dd:1c3b with SMTP id q7-20020a05600c46c700b003f716dd1c3bmr10715952wmo.10.1686055778622;
-        Tue, 06 Jun 2023 05:49:38 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id f18-20020a1cc912000000b003f4e3ed98ffsm13920918wmb.35.2023.06.06.05.49.37
+        bh=wyaDAeF5F3ya0H2Tt5M7GqFjZHMBxCl1PByfjSc9IM0=;
+        b=cO+dQkF0d5WhXOJ7ic+GktRR5jOExteDnxWka4S/8h4rCCbppBaMuMrDHlPOX4YUbu
+         bGvoKsFvuhGHRhB8pZ65WYjcXPNRQxJqfxAcltI6YGT0PkdsWWYvZPxNVvOs33CMmZpM
+         iIt/ZFKdUcLHvfyO1VuEWHc27kB6pJq0Vd9lrJZFrTRy6CpH8dOu4rCsbSrJUMaL1X8P
+         CTaQCcrLVjHkzxTG7Ov9QiPivhGJ01GkxJdM5RYgfF1L95mt1mPeaT7M/QP1EqdAU1mv
+         74ipqVXNguq3nZP1cWB0IY+V3/ijqmsEeQIIrYJ89bdf7eFWLWff6qY+UPlLRV887b+q
+         IcMQ==
+X-Gm-Message-State: AC+VfDzrsf3VLohIQVXT17i/zlERFlmOe5d1Udx737zymnIF5rR1v50F
+        u7LNjj8iQle3VjzogMLbwVKL+g==
+X-Google-Smtp-Source: ACHHUZ4Y81qFM9U/GDkX5tXxeRfM60Qt/9uvjraZLnDE2TOtWXWePKm5uGOXaAJX30RsgDBdyD+bUw==
+X-Received: by 2002:a19:7514:0:b0:4f6:274e:42f0 with SMTP id y20-20020a197514000000b004f6274e42f0mr1050438lfe.15.1686055820708;
+        Tue, 06 Jun 2023 05:50:20 -0700 (PDT)
+Received: from [192.168.1.101] (abyl150.neoplus.adsl.tpnet.pl. [83.9.31.150])
+        by smtp.gmail.com with ESMTPSA id m7-20020a195207000000b004f11e965308sm1456274lfb.20.2023.06.06.05.50.19
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jun 2023 05:49:37 -0700 (PDT)
-Message-ID: <b88d096b-7714-d06c-0daf-41c35885369a@linaro.org>
-Date:   Tue, 6 Jun 2023 13:49:36 +0100
+        Tue, 06 Jun 2023 05:50:20 -0700 (PDT)
+Message-ID: <d7132808-1b24-08ab-0d78-9f4012c4da04@linaro.org>
+Date:   Tue, 6 Jun 2023 14:50:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v13 07/24] gunyah: rsc_mgr: Add VM lifecycle RPC
+ Thunderbird/102.11.2
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sdm630: Add support for modem
+ remoteproc
 Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Alex Elder <elder@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+To:     Alexey Minnekhanov <alexeymin@postmarketos.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
- <20230509204801.2824351-8-quic_eberman@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <20230509204801.2824351-8-quic_eberman@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+References: <20230604061421.3787649-1-alexeymin@postmarketos.org>
+ <20230604061421.3787649-3-alexeymin@postmarketos.org>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <20230604061421.3787649-3-alexeymin@postmarketos.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -97,379 +86,91 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 09/05/2023 21:47, Elliot Berman wrote:
-> Add Gunyah Resource Manager RPC to launch an unauthenticated VM.
+On 4.06.2023 08:14, Alexey Minnekhanov wrote:
+> Modem subsystem in SDM630/660 is similar to MSM8998 and
+> device tree node for it is based on the one from msm8998.dtsi.
 > 
-> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
 > ---
-
-
-
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
---srini
-
-
->   drivers/virt/gunyah/Makefile      |   2 +-
->   drivers/virt/gunyah/rsc_mgr_rpc.c | 259 ++++++++++++++++++++++++++++++
->   include/linux/gunyah_rsc_mgr.h    |  73 +++++++++
->   3 files changed, 333 insertions(+), 1 deletion(-)
->   create mode 100644 drivers/virt/gunyah/rsc_mgr_rpc.c
+>  arch/arm64/boot/dts/qcom/sdm630.dtsi | 57 ++++++++++++++++++++++++++++
+>  1 file changed, 57 insertions(+)
 > 
-> diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
-> index 0f5aec834698..241bab357b86 100644
-> --- a/drivers/virt/gunyah/Makefile
-> +++ b/drivers/virt/gunyah/Makefile
-> @@ -1,4 +1,4 @@
->   # SPDX-License-Identifier: GPL-2.0
->   
-> -gunyah-y += rsc_mgr.o
-> +gunyah-y += rsc_mgr.o rsc_mgr_rpc.o
->   obj-$(CONFIG_GUNYAH) += gunyah.o
-> diff --git a/drivers/virt/gunyah/rsc_mgr_rpc.c b/drivers/virt/gunyah/rsc_mgr_rpc.c
-> new file mode 100644
-> index 000000000000..a4a9f0ba4e1f
-> --- /dev/null
-> +++ b/drivers/virt/gunyah/rsc_mgr_rpc.c
-> @@ -0,0 +1,259 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
+> diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> index 5c4086d2fa99c..5e68972d48fb4 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> @@ -1026,6 +1026,63 @@ data-pins {
+>  			};
+>  		};
+>  
+> +		remoteproc_mss: remoteproc@4080000 {
+> +			compatible = "qcom,sdm660-mss-pil";
+> +			reg = <0x04080000 0x100>, <0x04180000 0x40>;
+> +			reg-names = "qdsp6", "rmb";
 > +
-> +#include <linux/gunyah_rsc_mgr.h>
-> +#include "rsc_mgr.h"
+> +			interrupts-extended =
+> +				<&intc GIC_SPI 448 IRQ_TYPE_EDGE_RISING>,
+> +				<&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+> +				<&modem_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
+> +				<&modem_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
+> +				<&modem_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
+> +				<&modem_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
+Please remove the \n\t\t\t after = and align them to the first entry
+
+> +			interrupt-names = "wdog", "fatal", "ready",
+> +					"handover", "stop-ack",
+> +					"shutdown-ack";
+Please turn this and clock-names into vertical lists with one
+entry per line
+
 > +
-> +/* Message IDs: VM Management */
-> +#define GH_RM_RPC_VM_ALLOC_VMID			0x56000001
-> +#define GH_RM_RPC_VM_DEALLOC_VMID		0x56000002
-> +#define GH_RM_RPC_VM_START			0x56000004
-> +#define GH_RM_RPC_VM_STOP			0x56000005
-> +#define GH_RM_RPC_VM_RESET			0x56000006
-> +#define GH_RM_RPC_VM_CONFIG_IMAGE		0x56000009
-> +#define GH_RM_RPC_VM_INIT			0x5600000B
-> +#define GH_RM_RPC_VM_GET_HYP_RESOURCES		0x56000020
-> +#define GH_RM_RPC_VM_GET_VMID			0x56000024
+> +			clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
+> +				<&gcc GCC_BIMC_MSS_Q6_AXI_CLK>,
+And these too, align them with a space.
+
+
+looks good otherwise!
+
+Konrad
+> +				<&gcc GCC_BOOT_ROM_AHB_CLK>,
+> +				<&gcc GPLL0_OUT_MSSCC>,
+> +				<&gcc GCC_MSS_SNOC_AXI_CLK>,
+> +				<&gcc GCC_MSS_MNOC_BIMC_AXI_CLK>,
+> +				<&rpmcc RPM_SMD_QDSS_CLK>,
+> +				<&rpmcc RPM_SMD_XO_CLK_SRC>;
+> +			clock-names = "iface", "bus", "mem", "gpll0_mss",
+> +				"snoc_axi", "mnoc_axi", "qdss", "xo";
 > +
-> +struct gh_rm_vm_common_vmid_req {
-> +	__le16 vmid;
-> +	__le16 _padding;
-> +} __packed;
+> +			qcom,smem-states = <&modem_smp2p_out 0>;
+> +			qcom,smem-state-names = "stop";
 > +
-> +/* Call: VM_ALLOC */
-> +struct gh_rm_vm_alloc_vmid_resp {
-> +	__le16 vmid;
-> +	__le16 _padding;
-> +} __packed;
+> +			resets = <&gcc GCC_MSS_RESTART>;
+> +			reset-names = "mss_restart";
 > +
-> +/* Call: VM_STOP */
-> +#define GH_RM_VM_STOP_FLAG_FORCE_STOP		BIT(0)
+> +			qcom,halt-regs = <&tcsr_regs_1 0x3000 0x5000 0x4000>;
 > +
-> +#define GH_RM_VM_STOP_REASON_FORCE_STOP		3
+> +			power-domains = <&rpmpd SDM660_VDDCX>,
+> +					<&rpmpd SDM660_VDDMX>;
+> +			power-domain-names = "cx", "mx";
 > +
-> +struct gh_rm_vm_stop_req {
-> +	__le16 vmid;
-> +	u8 flags;
-> +	u8 _padding;
-> +	__le32 stop_reason;
-> +} __packed;
+> +			status = "disabled";
 > +
-> +/* Call: VM_CONFIG_IMAGE */
-> +struct gh_rm_vm_config_image_req {
-> +	__le16 vmid;
-> +	__le16 auth_mech;
-> +	__le32 mem_handle;
-> +	__le64 image_offset;
-> +	__le64 image_size;
-> +	__le64 dtb_offset;
-> +	__le64 dtb_size;
-> +} __packed;
+> +			mba {
+> +				memory-region = <&mba_region>;
+> +			};
 > +
-> +/*
-> + * Several RM calls take only a VMID as a parameter and give only standard
-> + * response back. Deduplicate boilerplate code by using this common call.
-> + */
-> +static int gh_rm_common_vmid_call(struct gh_rm *rm, u32 message_id, u16 vmid)
-> +{
-> +	struct gh_rm_vm_common_vmid_req req_payload = {
-> +		.vmid = cpu_to_le16(vmid),
-> +	};
+> +			mpss {
+> +				memory-region = <&mpss_region>;
+> +			};
 > +
-> +	return gh_rm_call(rm, message_id, &req_payload, sizeof(req_payload), NULL, NULL);
-> +}
+> +			glink-edge {
+> +				interrupts = <GIC_SPI 452 IRQ_TYPE_EDGE_RISING>;
+> +				label = "modem";
+> +				qcom,remote-pid = <1>;
+> +				mboxes = <&apcs_glb 15>;
+> +			};
+> +		};
 > +
-> +/**
-> + * gh_rm_alloc_vmid() - Allocate a new VM in Gunyah. Returns the VM identifier.
-> + * @rm: Handle to a Gunyah resource manager
-> + * @vmid: Use 0 to dynamically allocate a VM. A reserved VMID can be supplied
-> + *        to request allocation of a platform-defined VM.
-> + *
-> + * Returns - the allocated VMID or negative value on error
-> + */
-> +int gh_rm_alloc_vmid(struct gh_rm *rm, u16 vmid)
-> +{
-> +	struct gh_rm_vm_common_vmid_req req_payload = {
-> +		.vmid = cpu_to_le16(vmid),
-> +	};
-> +	struct gh_rm_vm_alloc_vmid_resp *resp_payload;
-> +	size_t resp_size;
-> +	void *resp;
-> +	int ret;
-> +
-> +	ret = gh_rm_call(rm, GH_RM_RPC_VM_ALLOC_VMID, &req_payload, sizeof(req_payload), &resp,
-> +			&resp_size);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (!vmid) {
-> +		resp_payload = resp;
-> +		ret = le16_to_cpu(resp_payload->vmid);
-> +		kfree(resp);
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +/**
-> + * gh_rm_dealloc_vmid() - Dispose of a VMID
-> + * @rm: Handle to a Gunyah resource manager
-> + * @vmid: VM identifier allocated with gh_rm_alloc_vmid
-> + */
-> +int gh_rm_dealloc_vmid(struct gh_rm *rm, u16 vmid)
-> +{
-> +	return gh_rm_common_vmid_call(rm, GH_RM_RPC_VM_DEALLOC_VMID, vmid);
-> +}
-> +
-> +/**
-> + * gh_rm_vm_reset() - Reset a VM's resources
-> + * @rm: Handle to a Gunyah resource manager
-> + * @vmid: VM identifier allocated with gh_rm_alloc_vmid
-> + *
-> + * As part of tearing down the VM, request RM to clean up all the VM resources
-> + * associated with the VM. Only after this, Linux can clean up all the
-> + * references it maintains to resources.
-> + */
-> +int gh_rm_vm_reset(struct gh_rm *rm, u16 vmid)
-> +{
-> +	return gh_rm_common_vmid_call(rm, GH_RM_RPC_VM_RESET, vmid);
-> +}
-> +
-> +/**
-> + * gh_rm_vm_start() - Move a VM into "ready to run" state
-> + * @rm: Handle to a Gunyah resource manager
-> + * @vmid: VM identifier allocated with gh_rm_alloc_vmid
-> + *
-> + * On VMs which use proxy scheduling, vcpu_run is needed to actually run the VM.
-> + * On VMs which use Gunyah's scheduling, the vCPUs start executing in accordance with Gunyah
-> + * scheduling policies.
-> + */
-> +int gh_rm_vm_start(struct gh_rm *rm, u16 vmid)
-> +{
-> +	return gh_rm_common_vmid_call(rm, GH_RM_RPC_VM_START, vmid);
-> +}
-> +
-> +/**
-> + * gh_rm_vm_stop() - Send a request to Resource Manager VM to forcibly stop a VM.
-> + * @rm: Handle to a Gunyah resource manager
-> + * @vmid: VM identifier allocated with gh_rm_alloc_vmid
-> + */
-> +int gh_rm_vm_stop(struct gh_rm *rm, u16 vmid)
-> +{
-> +	struct gh_rm_vm_stop_req req_payload = {
-> +		.vmid = cpu_to_le16(vmid),
-> +		.flags = GH_RM_VM_STOP_FLAG_FORCE_STOP,
-> +		.stop_reason = cpu_to_le32(GH_RM_VM_STOP_REASON_FORCE_STOP),
-> +	};
-> +
-> +	return gh_rm_call(rm, GH_RM_RPC_VM_STOP, &req_payload, sizeof(req_payload), NULL, NULL);
-> +}
-> +
-> +/**
-> + * gh_rm_vm_configure() - Prepare a VM to start and provide the common
-> + *			  configuration needed by RM to configure a VM
-> + * @rm: Handle to a Gunyah resource manager
-> + * @vmid: VM identifier allocated with gh_rm_alloc_vmid
-> + * @auth_mechanism: Authentication mechanism used by resource manager to verify
-> + *                  the virtual machine
-> + * @mem_handle: Handle to a previously shared memparcel that contains all parts
-> + *              of the VM image subject to authentication.
-> + * @image_offset: Start address of VM image, relative to the start of memparcel
-> + * @image_size: Size of the VM image
-> + * @dtb_offset: Start address of the devicetree binary with VM configuration,
-> + *              relative to start of memparcel.
-> + * @dtb_size: Maximum size of devicetree binary.
-> + */
-> +int gh_rm_vm_configure(struct gh_rm *rm, u16 vmid, enum gh_rm_vm_auth_mechanism auth_mechanism,
-> +		u32 mem_handle, u64 image_offset, u64 image_size, u64 dtb_offset, u64 dtb_size)
-> +{
-> +	struct gh_rm_vm_config_image_req req_payload = {
-> +		.vmid = cpu_to_le16(vmid),
-> +		.auth_mech = cpu_to_le16(auth_mechanism),
-> +		.mem_handle = cpu_to_le32(mem_handle),
-> +		.image_offset = cpu_to_le64(image_offset),
-> +		.image_size = cpu_to_le64(image_size),
-> +		.dtb_offset = cpu_to_le64(dtb_offset),
-> +		.dtb_size = cpu_to_le64(dtb_size),
-> +	};
-> +
-> +	return gh_rm_call(rm, GH_RM_RPC_VM_CONFIG_IMAGE, &req_payload, sizeof(req_payload),
-> +			  NULL, NULL);
-> +}
-> +
-> +/**
-> + * gh_rm_vm_init() - Move the VM to initialized state.
-> + * @rm: Handle to a Gunyah resource manager
-> + * @vmid: VM identifier
-> + *
-> + * RM will allocate needed resources for the VM.
-> + */
-> +int gh_rm_vm_init(struct gh_rm *rm, u16 vmid)
-> +{
-> +	return gh_rm_common_vmid_call(rm, GH_RM_RPC_VM_INIT, vmid);
-> +}
-> +
-> +/**
-> + * gh_rm_get_hyp_resources() - Retrieve hypervisor resources (capabilities) associated with a VM
-> + * @rm: Handle to a Gunyah resource manager
-> + * @vmid: VMID of the other VM to get the resources of
-> + * @resources: Set by gh_rm_get_hyp_resources and contains the returned hypervisor resources.
-> + *             Caller must free the resources pointer if successful.
-> + */
-> +int gh_rm_get_hyp_resources(struct gh_rm *rm, u16 vmid,
-> +				struct gh_rm_hyp_resources **resources)
-> +{
-> +	struct gh_rm_vm_common_vmid_req req_payload = {
-> +		.vmid = cpu_to_le16(vmid),
-> +	};
-> +	struct gh_rm_hyp_resources *resp;
-> +	size_t resp_size;
-> +	int ret;
-> +
-> +	ret = gh_rm_call(rm, GH_RM_RPC_VM_GET_HYP_RESOURCES,
-> +			 &req_payload, sizeof(req_payload),
-> +			 (void **)&resp, &resp_size);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (!resp_size)
-> +		return -EBADMSG;
-> +
-> +	if (resp_size < struct_size(resp, entries, 0) ||
-> +		resp_size != struct_size(resp, entries, le32_to_cpu(resp->n_entries))) {
-> +		kfree(resp);
-> +		return -EBADMSG;
-> +	}
-> +
-> +	*resources = resp;
-> +	return 0;
-> +}
-> +
-> +/**
-> + * gh_rm_get_vmid() - Retrieve VMID of this virtual machine
-> + * @rm: Handle to a Gunyah resource manager
-> + * @vmid: Filled with the VMID of this VM
-> + */
-> +int gh_rm_get_vmid(struct gh_rm *rm, u16 *vmid)
-> +{
-> +	static u16 cached_vmid = GH_VMID_INVAL;
-> +	size_t resp_size;
-> +	__le32 *resp;
-> +	int ret;
-> +
-> +	if (cached_vmid != GH_VMID_INVAL) {
-> +		*vmid = cached_vmid;
-> +		return 0;
-> +	}
-> +
-> +	ret = gh_rm_call(rm, GH_RM_RPC_VM_GET_VMID, NULL, 0, (void **)&resp, &resp_size);
-> +	if (ret)
-> +		return ret;
-> +
-> +	*vmid = cached_vmid = lower_16_bits(le32_to_cpu(*resp));
-> +	kfree(resp);
-> +
-> +	return ret;
-> +}
-> +EXPORT_SYMBOL_GPL(gh_rm_get_vmid);
-> diff --git a/include/linux/gunyah_rsc_mgr.h b/include/linux/gunyah_rsc_mgr.h
-> index f2a312e80af5..1ac66d9004d2 100644
-> --- a/include/linux/gunyah_rsc_mgr.h
-> +++ b/include/linux/gunyah_rsc_mgr.h
-> @@ -18,4 +18,77 @@ int gh_rm_notifier_unregister(struct gh_rm *rm, struct notifier_block *nb);
->   struct device *gh_rm_get(struct gh_rm *rm);
->   void gh_rm_put(struct gh_rm *rm);
->   
-> +struct gh_rm_vm_exited_payload {
-> +	__le16 vmid;
-> +	__le16 exit_type;
-> +	__le32 exit_reason_size;
-> +	u8 exit_reason[];
-> +} __packed;
-> +
-> +#define GH_RM_NOTIFICATION_VM_EXITED		 0x56100001
-> +
-> +enum gh_rm_vm_status {
-> +	GH_RM_VM_STATUS_NO_STATE	= 0,
-> +	GH_RM_VM_STATUS_INIT		= 1,
-> +	GH_RM_VM_STATUS_READY		= 2,
-> +	GH_RM_VM_STATUS_RUNNING		= 3,
-> +	GH_RM_VM_STATUS_PAUSED		= 4,
-> +	GH_RM_VM_STATUS_LOAD		= 5,
-> +	GH_RM_VM_STATUS_AUTH		= 6,
-> +	GH_RM_VM_STATUS_INIT_FAILED	= 8,
-> +	GH_RM_VM_STATUS_EXITED		= 9,
-> +	GH_RM_VM_STATUS_RESETTING	= 10,
-> +	GH_RM_VM_STATUS_RESET		= 11,
-> +};
-> +
-> +struct gh_rm_vm_status_payload {
-> +	__le16 vmid;
-> +	u16 reserved;
-> +	u8 vm_status;
-> +	u8 os_status;
-> +	__le16 app_status;
-> +} __packed;
-> +
-> +#define GH_RM_NOTIFICATION_VM_STATUS		 0x56100008
-> +
-> +/* RPC Calls */
-> +int gh_rm_alloc_vmid(struct gh_rm *rm, u16 vmid);
-> +int gh_rm_dealloc_vmid(struct gh_rm *rm, u16 vmid);
-> +int gh_rm_vm_reset(struct gh_rm *rm, u16 vmid);
-> +int gh_rm_vm_start(struct gh_rm *rm, u16 vmid);
-> +int gh_rm_vm_stop(struct gh_rm *rm, u16 vmid);
-> +
-> +enum gh_rm_vm_auth_mechanism {
-> +	GH_RM_VM_AUTH_NONE		= 0,
-> +	GH_RM_VM_AUTH_QCOM_PIL_ELF	= 1,
-> +	GH_RM_VM_AUTH_QCOM_ANDROID_PVM	= 2,
-> +};
-> +
-> +int gh_rm_vm_configure(struct gh_rm *rm, u16 vmid, enum gh_rm_vm_auth_mechanism auth_mechanism,
-> +			u32 mem_handle, u64 image_offset, u64 image_size,
-> +			u64 dtb_offset, u64 dtb_size);
-> +int gh_rm_vm_init(struct gh_rm *rm, u16 vmid);
-> +
-> +struct gh_rm_hyp_resource {
-> +	u8 type;
-> +	u8 reserved;
-> +	__le16 partner_vmid;
-> +	__le32 resource_handle;
-> +	__le32 resource_label;
-> +	__le64 cap_id;
-> +	__le32 virq_handle;
-> +	__le32 virq;
-> +	__le64 base;
-> +	__le64 size;
-> +} __packed;
-> +
-> +struct gh_rm_hyp_resources {
-> +	__le32 n_entries;
-> +	struct gh_rm_hyp_resource entries[];
-> +} __packed;
-> +
-> +int gh_rm_get_hyp_resources(struct gh_rm *rm, u16 vmid,
-> +				struct gh_rm_hyp_resources **resources);
-> +int gh_rm_get_vmid(struct gh_rm *rm, u16 *vmid);
-> +
->   #endif
+>  		adreno_gpu: gpu@5000000 {
+>  			compatible = "qcom,adreno-508.0", "qcom,adreno";
+>  
