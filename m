@@ -2,302 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3341B72435E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 14:58:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD704724378
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 15:00:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237920AbjFFM6C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 08:58:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56628 "EHLO
+        id S235435AbjFFNAU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 09:00:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237860AbjFFM55 (ORCPT
+        with ESMTP id S238021AbjFFNAC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 08:57:57 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AAA01722
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 05:57:22 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4effb818c37so7482872e87.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 05:57:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686056240; x=1688648240;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3Zi9U7lw+Rmv5fPmQ5a1N7/KX1eblAqJrMCOPf7hQjU=;
-        b=Ol6t/0tlizL9LbWvuIlizRXEsWvJHOavhVSubv+9cokguHXRCIzHSvxtVhXQuPZ7Tk
-         x0hzioA03uGHg8SoWu5hsNK/Bi8u35Yl2u+gWdtplEcsZeBa89OKegUxgivnXr6RD4vG
-         Rgt7XNoTlUdgxQzpIHeTdC2re210sk1XUuxbgnuBMQIOZ3/PWF9rLS4CGrXpADcU9hvf
-         Dm8IZMag/OUv6B0Kie3vaMgA3xJGCkx3EAB7zr6hV0whyyMbt/JieeYR+iBieAkupnSl
-         r42l3GmXvL8vuXulD10ETlmMfaIpAxVTfdgLy7bBDIzQhy4odPLAwnMl5wFw8Yt3Hf2b
-         QMQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686056240; x=1688648240;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3Zi9U7lw+Rmv5fPmQ5a1N7/KX1eblAqJrMCOPf7hQjU=;
-        b=lCLzM6KngAnXDp8KIxS1Zp8dsJWXGPhe5ehb2kgYFd1VP93wRxTbXohw0CkWZWRzGy
-         FcuUdyBk9prd7v/SiJPT0ZBtDUu894ObJy99rxaEewlNLbPiy6HaTyXlTWTHta5PJGdp
-         9m45YEMQHgTo7pcTnOnxPO7c6uMkl6qyYoS+nRUkFrMLFkSAwGQhfGTQTUSmAaSE296d
-         2Q7Q46TRImBtqdZCqSKwVf4I5Qs0AgEKXY1UrKCGBVpHm2OF/Ht/dAo4F8eOwoHnA4qM
-         N8FPSzRCfkVqOC90S1Dn/lWplxeFnnofGF+LsWwZgI57F03wQO68ZO5EDD0Gmnbrw/1I
-         /L8g==
-X-Gm-Message-State: AC+VfDyrKKXg58RxYAdb+fPRG9xcCMO3hbynjv6GxlFeZjAw5lakjqk6
-        VkbEXT0RO7KUTGEkFm+EDR52EQ==
-X-Google-Smtp-Source: ACHHUZ7mLqoIH/C3aDwfEn0ouGUAjY86F/ZLh417p6v5iPca9DuvSbjT9K74RGrPvR8UGvAZKlV3gA==
-X-Received: by 2002:ac2:5610:0:b0:4ee:e0c7:434d with SMTP id v16-20020ac25610000000b004eee0c7434dmr892033lfd.51.1686056240006;
-        Tue, 06 Jun 2023 05:57:20 -0700 (PDT)
-Received: from [192.168.1.101] (abyl150.neoplus.adsl.tpnet.pl. [83.9.31.150])
-        by smtp.gmail.com with ESMTPSA id q16-20020ac25290000000b004f25c29f64esm1452192lfm.176.2023.06.06.05.57.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jun 2023 05:57:19 -0700 (PDT)
-Message-ID: <669d2745-c7fc-dff5-a6e6-c2c55b4428ee@linaro.org>
-Date:   Tue, 6 Jun 2023 14:57:18 +0200
+        Tue, 6 Jun 2023 09:00:02 -0400
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46419173A;
+        Tue,  6 Jun 2023 05:59:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+        bh=JBzFOAQ3XIEwIfPf6gzDHs3g12s3r3/k8QYv78kFr9Q=; b=iJ1GBZU7395iT/S0hTb4/CFA8+
+        epY/qHDWZSXzrOrO2QucaB9FHlqgHXvlVh3wnykYMiF7GZ+5Bx/xn13fNR+b062vjpD6k2Hn7VLXo
+        4bmiea3UoRMbpk7VOeT4HDObgGm1M/qcW9jR+6HIE46xmOGsfwP8qqCD5Uwu1xYx22ms=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+        (envelope-from <andrew@lunn.ch>)
+        id 1q6WH6-00F1Mf-AK; Tue, 06 Jun 2023 14:59:00 +0200
+Date:   Tue, 6 Jun 2023 14:59:00 +0200
+From:   Andrew Lunn <andrew@lunn.ch>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, loic.poulain@linaro.org
+Subject: Re: [PATCH 0/3] Add MHI Endpoint network driver
+Message-ID: <c769c95d-e8cb-4cf6-a41a-9bef5a786bb1@lunn.ch>
+References: <20230606123119.57499-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH V2 1/2] arm64: dts: qcom: ipq5332: enable GPIO based LEDs
- and Buttons
-Content-Language: en-US
-To:     Sridharan S N <quic_sridsn@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230605052907.18837-1-quic_sridsn@quicinc.com>
- <20230605052907.18837-2-quic_sridsn@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230605052907.18837-2-quic_sridsn@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230606123119.57499-1-manivannan.sadhasivam@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5.06.2023 07:29, Sridharan S N wrote:
-> Add support for wlan-2g LED on GPIO 36 and wps buttons on GPIO 35.
+On Tue, Jun 06, 2023 at 06:01:16PM +0530, Manivannan Sadhasivam wrote:
+> Hi,
 > 
-> Signed-off-by: Sridharan S N <quic_sridsn@quicinc.com>
-> ---
-> Changes in V2:
-> 	- Used the hypen in node name instead of underscore
-> 	- Dropped the status property
->  
->  arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts | 42 +++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts | 42 +++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts | 42 +++++++++++++++++++++
->  3 files changed, 126 insertions(+)
+> This series adds a network driver for the Modem Host Interface (MHI) endpoint
+> devices that provides network interfaces to the PCIe based Qualcomm endpoint
+> devices supporting MHI bus (like Modems). This driver allows the MHI endpoint
+> devices to establish IP communication with the host machines (x86, ARM64) over
+> MHI bus.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts b/arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts
-> index 3af1d5556950..5bd4ff3ad86b 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts
-> +++ b/arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts
-> @@ -7,6 +7,8 @@
->  
->  /dts-v1/;
->  
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/input/input.h>
->  #include "ipq5332.dtsi"
->  
->  / {
-> @@ -20,6 +22,32 @@
->  	chosen {
->  		stdout-path = "serial0";
->  	};
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +		pinctrl-0 = <&gpio_keys_default>;
-> +		pinctrl-names = "default";
-> +
-> +		button-wps {
-> +			label = "wps";
-> +			linux,code = <KEY_WPS_BUTTON>;
-> +			gpios = <&tlmm 35 GPIO_ACTIVE_LOW>;
-> +			linux,input-type = <1>;
-> +			debounce-interval = <60>;
-> +		};
-> +	};
-All of these changes seem very repetetive.. Are these devboards based
-on a common design? Maybe ipq5332-rdp-common.dtsi would be beneficial
-here?
+> On the host side, the existing mhi_net driver provides the network connectivity
+> to the host.
+> 
+> - Mani
+> 
+> Manivannan Sadhasivam (3):
+>   net: Add MHI Endpoint network driver
+>   MAINTAINERS: Add entry for MHI networking drivers under MHI bus
+>   net: mhi: Increase the default MTU from 16K to 32K
+> 
+>  MAINTAINERS              |   1 +
+>  drivers/net/Kconfig      |   9 ++
+>  drivers/net/Makefile     |   1 +
+>  drivers/net/mhi_ep_net.c | 331 +++++++++++++++++++++++++++++++++++++++
+>  drivers/net/mhi_net.c    |   2 +-
 
-Konrad
-> +
-> +	leds {
-> +		compatible = "gpio-leds";
-> +		pinctrl-0 = <&gpio_leds_default>;
-> +		pinctrl-names = "default";
-> +
-> +		led-0 {
-> +			gpios = <&tlmm 36 GPIO_ACTIVE_HIGH>;
-> +			linux,default-trigger = "phy0tx";
-> +			default-state = "off";
-> +		};
-> +	};
->  };
->  
->  &blsp1_uart0 {
-> @@ -57,6 +85,20 @@
->  /* PINCTRL */
->  
->  &tlmm {
-> +	gpio_keys_default: gpio-keys-default-state {
-> +		pins = "gpio35";
-> +		function = "gpio";
-> +		drive-strength = <8>;
-> +		bias-pull-up;
-> +	};
-> +
-> +	gpio_leds_default: gpio-leds-default-state {
-> +		pins = "gpio36";
-> +		function = "gpio";
-> +		drive-strength = <8>;
-> +		bias-pull-down;
-> +	};
-> +
->  	i2c_1_pins: i2c-1-state {
->  		pins = "gpio29", "gpio30";
->  		function = "blsp1_i2c0";
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts
-> index bcf3b31c20e3..36cbebb75c48 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts
-> +++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts
-> @@ -7,6 +7,8 @@
->  
->  /dts-v1/;
->  
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/input/input.h>
->  #include "ipq5332.dtsi"
->  
->  / {
-> @@ -20,6 +22,32 @@
->  	chosen {
->  		stdout-path = "serial0";
->  	};
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +		pinctrl-0 = <&gpio_keys_default>;
-> +		pinctrl-names = "default";
-> +
-> +		button-wps {
-> +			label = "wps";
-> +			linux,code = <KEY_WPS_BUTTON>;
-> +			gpios = <&tlmm 35 GPIO_ACTIVE_LOW>;
-> +			linux,input-type = <1>;
-> +			debounce-interval = <60>;
-> +		};
-> +	};
-> +
-> +	leds {
-> +		compatible = "gpio-leds";
-> +		pinctrl-0 = <&gpio_leds_default>;
-> +		pinctrl-names = "default";
-> +
-> +		led-0 {
-> +			gpios = <&tlmm 36 GPIO_ACTIVE_HIGH>;
-> +			linux,default-trigger = "phy0tx";
-> +			default-state = "off";
-> +		};
-> +	};
->  };
->  
->  &blsp1_uart0 {
-> @@ -71,6 +99,20 @@
->  /* PINCTRL */
->  
->  &tlmm {
-> +	gpio_keys_default: gpio-keys-default-state {
-> +		pins = "gpio35";
-> +		function = "gpio";
-> +		drive-strength = <8>;
-> +		bias-pull-up;
-> +	};
-> +
-> +	gpio_leds_default: gpio-leds-default-state {
-> +		pins = "gpio36";
-> +		function = "gpio";
-> +		drive-strength = <8>;
-> +		bias-pull-down;
-> +	};
-> +
->  	i2c_1_pins: i2c-1-state {
->  		pins = "gpio29", "gpio30";
->  		function = "blsp1_i2c0";
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts
-> index 3b6a5cb8bf07..2d27f48f00c0 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts
-> +++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts
-> @@ -7,6 +7,8 @@
->  
->  /dts-v1/;
->  
-> +#include <dt-bindings/gpio/gpio.h>
-> +#include <dt-bindings/input/input.h>
->  #include "ipq5332.dtsi"
->  
->  / {
-> @@ -20,6 +22,32 @@
->  	chosen {
->  		stdout-path = "serial0";
->  	};
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +		pinctrl-0 = <&gpio_keys_default>;
-> +		pinctrl-names = "default";
-> +
-> +		button-wps {
-> +			label = "wps";
-> +			linux,code = <KEY_WPS_BUTTON>;
-> +			gpios = <&tlmm 35 GPIO_ACTIVE_LOW>;
-> +			linux,input-type = <1>;
-> +			debounce-interval = <60>;
-> +		};
-> +	};
-> +
-> +	leds {
-> +		compatible = "gpio-leds";
-> +		pinctrl-0 = <&gpio_leds_default>;
-> +		pinctrl-names = "default";
-> +
-> +		led-0 {
-> +			gpios = <&tlmm 36 GPIO_ACTIVE_HIGH>;
-> +			linux,default-trigger = "phy0tx";
-> +			default-state = "off";
-> +		};
-> +	};
->  };
->  
->  &blsp1_uart0 {
-> @@ -64,6 +92,20 @@
->  /* PINCTRL */
->  
->  &tlmm {
-> +	gpio_keys_default: gpio-keys-default-state {
-> +		pins = "gpio35";
-> +		function = "gpio";
-> +		drive-strength = <8>;
-> +		bias-pull-up;
-> +	};
-> +
-> +	gpio_leds_default: gpio-leds-default-state {
-> +		pins = "gpio36";
-> +		function = "gpio";
-> +		drive-strength = <8>;
-> +		bias-pull-down;
-> +	};
-> +
->  	sdc_default_state: sdc-default-state {
->  		clk-pins {
->  			pins = "gpio13";
+Should we add a drivers/net/modem directory? Maybe modem is too
+generic, we want something which represents GSM, LTE, UMTS, 3G, 4G,
+5G, ... XG etc.
+
+    Andrew
