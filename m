@@ -2,79 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 52726724C05
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 21:02:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA3BA724C88
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 21:08:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239184AbjFFTCI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 15:02:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38056 "EHLO
+        id S239397AbjFFTIS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 15:08:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238931AbjFFTCH (ORCPT
+        with ESMTP id S239395AbjFFTHY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 15:02:07 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A14B810D5;
-        Tue,  6 Jun 2023 12:02:05 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id 41be03b00d2f7-543d32eed7cso882733a12.2;
-        Tue, 06 Jun 2023 12:02:05 -0700 (PDT)
+        Tue, 6 Jun 2023 15:07:24 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 698672107
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 12:05:13 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f3ba703b67so7963289e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 12:05:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686078125; x=1688670125;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zorJynEf8LptTjq6m+OnDgS8VLEV9nuJA4KmkfWWNG8=;
-        b=ZbWuK61Uqo6PeYq7Bqzwio2drMqyWcH/IU2N3d6E16gOmNN2z9maqpqUr81gt9atwP
-         vdudEdOr0jhihTNZUDVlJQjuSBMz94I61e+oo1aIW89fVgXImvD2DCoyDJXX3cz2+2n8
-         I+KPuiETAaL501bjYz9VWmKCeHdEAHt/BjEp5h38jH5883WJNBSvNiKuGMmywKjoN9nS
-         uw7O6OA4b1EjZBklW/AE3WzHARGy0G2W4jo7WTfPTPjP5hqOnnothhFXW5AyYSiL3cXN
-         pd76lvwLfWHKylBmGefA1n1ikkBl09LCeqYGKqWyIrmNd813dBqT7RktiglAZdo/i8fs
-         /tGg==
+        d=linaro.org; s=google; t=1686078292; x=1688670292;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gtFgxYwjpUt68r3YPqakTIdPhlEwVeuW3nCboOazwYw=;
+        b=hC5RWVnOExAfo1+RCwZD04IMwg7WZ8kKQK6HVJCvLuu5xXsnFGnn1bPKZA6UCn90Cs
+         /kGaLoAvXe6lD6gqi9YHIsWSvBfuQIavrLXsBRFUdb0GRsQfduxItmUIqFnIYNRZOLMb
+         3JNaaugZQCcdU7NIQ02HLzjOxmv/PMCH+vCzuvZv4/qwDorzdSNTxEqSKjcfIYIWxxDT
+         uevZ3i2n1xw1iaKTIZqs0AXnw9+fBltRRAH7Ucjte3sCiuFAkRWmbfX1r08SNhRn+8xW
+         +XZQxOUhxIjF554m09kK08wbe/xUqHgX7YQcBLxz2XmD7VV9L6pwkXdncvy6pUZDbAjh
+         z6Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686078125; x=1688670125;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zorJynEf8LptTjq6m+OnDgS8VLEV9nuJA4KmkfWWNG8=;
-        b=G5x3vSqnTEjK2W4s23NaFjI0iHXVMkCWqIoL1AwAI64Zmqx885nNOOpU8DMomAvsJg
-         +U+AHHd7FmjvlNtaa9gHP6FPJ3Gd29tgz66/00TsSLaJWHjEpHREF1XsCh3iEKuR5zm5
-         61l2RkJZhCCf6Ypd76GSwKGW/Pmb1TnQitQO+c8QrNYj9WuZj6QzHA/jgSrWbM/Vv2+9
-         5xLxxbSlgm75yjp+ZRK4zTPlAmUuTUOzcG1d2Gf/e5H6LZHk8VdXHH+sBYnrq18FArEu
-         rOASW68azrdI3GmAg33DuPG5lSo9oQxGQ9X532wEa+alAmhHVmFAuSwJidO3z3TJaJCp
-         IUpA==
-X-Gm-Message-State: AC+VfDwiVyKXprF+hBlwQj30bWJz/AOaz99dh8iR0bwv/yl/1MCIJaZO
-        2KPb/OMMt8STlGB+ZIoQwlM=
-X-Google-Smtp-Source: ACHHUZ6Qk17vBLxhsvAUdKKB6ZljlKIyCDj81ro9Z7d7yrElU6XmjFTVfl6sjofEU7M+iFnoUn1mJA==
-X-Received: by 2002:a17:903:1110:b0:1a6:74f6:fa92 with SMTP id n16-20020a170903111000b001a674f6fa92mr1952737plh.19.1686078124951;
-        Tue, 06 Jun 2023 12:02:04 -0700 (PDT)
-Received: from google.com ([2620:15c:9d:2:f59e:5ad5:28cc:2003])
-        by smtp.gmail.com with ESMTPSA id c1-20020a170903234100b00199193e5ea1sm8899234plh.61.2023.06.06.12.02.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jun 2023 12:02:04 -0700 (PDT)
-Date:   Tue, 6 Jun 2023 12:02:01 -0700
-From:   Dmitry Torokhov <dmitry.torokhov@gmail.com>
-To:     Neil Armstrong <neil.armstrong@linaro.org>
-Cc:     Hans de Goede <hdegoede@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        Henrik Rydberg <rydberg@bitmath.org>,
-        linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC 0/4] input: touchscreen: add initial support for
- Goodix Berlin touchscreen IC
-Message-ID: <ZH+CqXOFt6WsdZ8L@google.com>
-References: <20230606-topic-goodix-berlin-upstream-initial-v1-0-4a0741b8aefd@linaro.org>
- <f5f20de8-851a-fe20-4664-62b6de14ebd7@redhat.com>
- <2677ae8c-59d3-b658-dc3f-918838ac0fb6@linaro.org>
- <ZH9+ndrF0RIgFhnI@google.com>
- <665c9aa5-ef70-65ce-7d9c-4b3b93874934@linaro.org>
+        d=1e100.net; s=20221208; t=1686078292; x=1688670292;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gtFgxYwjpUt68r3YPqakTIdPhlEwVeuW3nCboOazwYw=;
+        b=Cysg3qXfz3XgNTsiyiKixpbUYQfqoJxyTZtS1v1TnHqu1SEFnf4EDQG1yIagwm/idO
+         qW3KuV0T4OTKoTswe9Ux6QKtQzRc1z0DOpy14KRx6xsafB847bzbhSMcSeHO264R2dYq
+         qq7MUVgfYZe5tPJ949+iMA304hxeklyP1+H2unV4RILREFvjhc9nUb+yXArCLxOOjxyU
+         ZCCxIXNU9YCB7a6OE6lsdKmvLv7fre61zgdVGaCu8h2TikdunVQ7ni8S0sgKgIeI4b95
+         iM1hjByqdUmZa8ORjMAmrbsFF9IXv5/kOD8oLoA8SpMqsCAxQeYeGrJpmT4N3OFCnREB
+         tgsQ==
+X-Gm-Message-State: AC+VfDzKCb5PxAl1Pfq4IzRyc7DVBAZxSgLvSPdfVHPbeFbAEbOm/Waw
+        XLqT/LoCza59lAzr5wdRgAoFgg==
+X-Google-Smtp-Source: ACHHUZ6bgt/R2v8mJhbothbqAYtjCEQJuoHpVxJyzRnUW3hd73sKHWap/htT50fIsZIcT2Nm54StGw==
+X-Received: by 2002:ac2:43b3:0:b0:4f3:b32d:f744 with SMTP id t19-20020ac243b3000000b004f3b32df744mr1289528lfl.11.1686078292036;
+        Tue, 06 Jun 2023 12:04:52 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id f2-20020ac25322000000b004cb14fa604csm1537514lfh.262.2023.06.06.12.04.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Jun 2023 12:04:51 -0700 (PDT)
+Message-ID: <0ab30652-4ee5-e4e8-9802-d8211dfb8d67@linaro.org>
+Date:   Tue, 6 Jun 2023 22:04:50 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <665c9aa5-ef70-65ce-7d9c-4b3b93874934@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,FSL_HELO_FAKE,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v16] drm/msm/dpu: add DSC blocks to the catalog of MSM8998
+ and SC8180X
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org,
+        marijn.suijten@somainline.org
+Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1686076299-11504-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <1686076299-11504-1-git-send-email-quic_khsieh@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,77 +82,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 06, 2023 at 08:55:35PM +0200, Neil Armstrong wrote:
-> Hi Dmitry,
+On 06/06/2023 21:31, Kuogee Hsieh wrote:
+> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > 
-> On 06/06/2023 20:44, Dmitry Torokhov wrote:
-> > On Tue, Jun 06, 2023 at 08:12:04PM +0200, Neil Armstrong wrote:
-> > > Hi,
-> > > 
-> > > On 06/06/2023 17:31, Hans de Goede wrote:
-> > > > Hi Neil,
-> > > > 
-> > > > On 6/6/23 16:31, Neil Armstrong wrote:
-> > > > > These touchscreen ICs support SPI, I2C and I3C interface, up to
-> > > > > 10 finger touch, stylus and gestures events.
-> > > > > 
-> > > > > This initial driver is derived from the Goodix goodix_ts_berlin
-> > > > > available at [1] and [2] and only supports the GT9916 IC
-> > > > > present on the Qualcomm SM8550 MTP & QRD touch panel.
-> > > > > 
-> > > > > The current implementation only supports BerlinD, aka GT9916.
-> > > > > 
-> > > > > Support for advanced features like:
-> > > > > - Firmware & config update
-> > > > > - Stylus events
-> > > > > - Gestures events
-> > > > > - Previous revisions support (BerlinA or BerlinB)
-> > > > > is not included in current version.
-> > > > > 
-> > > > > The current support will work with currently flashed firmware
-> > > > > and config, and bail out if firmware or config aren't flashed yet.
-> > > > 
-> > > > What I'm missing here / in the commit msg of
-> > > > "input: touchscreen: add core support for Goodix Berlin Touchscreen IC"
-> > > > 
-> > > > is an explanation why this is a new driver instead of adding
-> > > > support to the existing goodix.c code.
-> > > > 
-> > > > I assume you have good reasons for this, but it would be good
-> > > > if you can write the reasons for this down.
-> > > 
-> > > Sure, should I write it down here and/or update the commit message in a new revision ?
-> > > 
-> > > Anyway, here's the reasons:
-> > > - globally the event handling "looks like" the current goodix.c, but again the offsets
-> > > are again different and none of the register address are the same, and unlike the current
-> > > support all registers are provided by the "ic_info" structure
-> > > - while with the current code it *could* be possible to merge it, with a lot of changes,
-> > > the firmware management looks really different, and it would be really hard to merge.
-> > > 
-> > > But I may be wrong, and may be misleaded by the goodix driver structure (even if it
-> > > went through a really heavy cleaning process).
-> > > 
-> > > Globally it seems they tried to match the "event handling" process of the previous
-> > > generations, but the firmware interface is completely different.
-> > 
-> > It is not unprecedented for drivers to share event processing and
-> > implement several ways/generations of firmware update mechanisms.
+> Some platforms have DSC blocks which have not been declared in the catalog.
+> Complete DSC 1.1 support for all platforms by adding the missing blocks to
+> MSM8998 and SC8180X.
 > 
-> Thanks for your reply, I'm perfectly aware of that, this is why I posted
-> this as RFC.
+> Changes in v9:
+> -- add MSM8998 and SC8180x to commit title
 > 
-> If the event handling is vaguely similar, I'm not sure it's worth refactoring the
-> current driver since I do not have the old and current IC datasheet nor
-> HW to check for current support non-regression.
+> Changes in v10:
+> -- fix grammar at commit text
 > 
-> What I'm sure is that not a single register address, flag or struct is even close
-> to the current upstream defined ones.
+> Changes in v12:
+> -- fix "titil" with "title" at changes in v9
+> 
+> Changes in v14:
+> -- "dsc" tp "DSC" at commit title
+> 
+> Changes in v15:
+> -- fix merge conflicts at dpu_5_1_sc8180x.h
+> 
+> Changes in v16
+> -- fix cherry-pick error by deleting both redundant .dsc and .dsc_count
+>     assignment from dpu_5_1_sc8180x.h
+> 
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-OK, it looks like Hans' preference is also to have a separate driver, so
-let's keep them separate.
+The patch was changed significantly. Thus the review-by's do not apply 
+anymore. Please take care to drop reviewed-by and acked-by tags when you 
+change the patch was changed in a sensible manner. Otherwise it would be 
+impossible to understand if the patch was really reviewed or not.
 
-Thanks.
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h | 7 +++++++
+>   1 file changed, 7 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+> index 3c732a0..7d0d0e7 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
+> @@ -126,6 +126,11 @@ static const struct dpu_pingpong_cfg msm8998_pp[] = {
+>   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
+>   };
+>   
+> +static const struct dpu_dsc_cfg msm8998_dsc[] = {
+> +	DSC_BLK("dsc_0", DSC_0, 0x80000, 0),
+> +	DSC_BLK("dsc_1", DSC_1, 0x80400, 0),
+> +};
+> +
+>   static const struct dpu_dspp_cfg msm8998_dspp[] = {
+>   	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+>   		 &msm8998_dspp_sblk),
+> @@ -199,6 +204,8 @@ const struct dpu_mdss_cfg dpu_msm8998_cfg = {
+>   	.dspp = msm8998_dspp,
+>   	.pingpong_count = ARRAY_SIZE(msm8998_pp),
+>   	.pingpong = msm8998_pp,
+> +	.dsc_count = ARRAY_SIZE(msm8998_dsc),
+> +	.dsc = msm8998_dsc,
+>   	.intf_count = ARRAY_SIZE(msm8998_intf),
+>   	.intf = msm8998_intf,
+>   	.vbif_count = ARRAY_SIZE(msm8998_vbif),
 
 -- 
+With best wishes
 Dmitry
+
