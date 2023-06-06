@@ -2,127 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DE4C7723F0B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 12:15:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31465723F91
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 12:33:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233827AbjFFKPK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 06:15:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42112 "EHLO
+        id S236715AbjFFKdK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 06:33:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54192 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233058AbjFFKPI (ORCPT
+        with ESMTP id S236847AbjFFKdD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 06:15:08 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DD60E5B
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 03:15:06 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-30ae967ef74so4653159f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 03:15:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686046505; x=1688638505;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qNkliQDOX5/DehjdcQjHrvfLhUKbrTQj51iuKhg8zgQ=;
-        b=PeTPaH5ibJCAkBRiyVus6ZSYfqU8v5zhbB1pCsTbPy/BzRdPgzKA4Na0VRu2XdyKav
-         JSm0XHG57qT7+kLkY73VFINxtuFRnMruq75OTD75iU9vt2ODFzjCJcnOG8yD0mohc4DT
-         61dWdJdQJhKIaltHJQfbELKuvqrgdwOHcwYNwnMHXLhFz7w5VCBGnRnufuCmIlcfJAsI
-         wP0/k8CLAB11/Rfj+yHdr6Csp9efQgxULzpxSqCxHSVgp42cC3QZQoDCQhCewqfrMWT0
-         GgijQkB/moacltprbDhn2JYX19tIBBpb2DlizG9k3JI675+bUPEtOeoLn/YlpO+SgykV
-         StXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686046505; x=1688638505;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qNkliQDOX5/DehjdcQjHrvfLhUKbrTQj51iuKhg8zgQ=;
-        b=OaRgOq6elZxEGn5LvBbVwhd8Dy37ruM0LylIguUBBOmLP/9HPXGWcBhnVcB5cRSNCd
-         6THpjn5JKOLN0aFyBDuwBfMfeORyFWkEGq2bNwtFsqvgiWOModJ86MthOONTrH5zptqp
-         HFlEE+sSwXsxsnsCFjSudLCbkp72K9I1WEVHhzmZaQNtFTtVpDnMMHdyVvsoG7Rfw+uG
-         w4axp1TMY57bSH9vivxIXFat3CUzDXj+/1ttTP0OY1gAnCnkSsHf+eaCMz9hZg7ji0Ab
-         KqfSKPYXruUcS1Tt5NsBOOanebT9MYdp40g1G1hoO1C4B0gjzELMiB1INHLDdiyx5MP5
-         6weA==
-X-Gm-Message-State: AC+VfDz9ecjCt1ggK8lXaPdbnFOQZGzJ6/6dCXc0n/NwvFOFMyMUAVUC
-        HbGMdl1hzH7N+kzWUDybEc9L4A==
-X-Google-Smtp-Source: ACHHUZ7UXzN3sjrmWHqnF6qF45MerD7fGvSmOZEJhXivlS7r1ZQTZXAdh6hooFfVKS3RP5fx9S7ekw==
-X-Received: by 2002:a05:6000:4c8:b0:30a:eeee:2fba with SMTP id h8-20020a05600004c800b0030aeeee2fbamr1481125wri.34.1686046504842;
-        Tue, 06 Jun 2023 03:15:04 -0700 (PDT)
-Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
-        by smtp.gmail.com with ESMTPSA id h14-20020a5d504e000000b00300aee6c9cesm12229550wrt.20.2023.06.06.03.15.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jun 2023 03:15:04 -0700 (PDT)
-Message-ID: <4742a6b6-f647-34a8-682a-af5ed181608c@linaro.org>
-Date:   Tue, 6 Jun 2023 11:15:03 +0100
+        Tue, 6 Jun 2023 06:33:03 -0400
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A3E010C8;
+        Tue,  6 Jun 2023 03:32:55 -0700 (PDT)
+Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
+        by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+        id 1q6Tze-0000VO-4a; Tue, 06 Jun 2023 12:32:50 +0200
+Message-ID: <f55d98c0-69c8-23d6-1b07-57597f4d4066@leemhuis.info>
+Date:   Tue, 6 Jun 2023 12:32:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] arm64: dts: qcom: Split sdm845-db845c to add headless
- support
-Content-Language: en-US
-To:     Amit Pundir <amit.pundir@linaro.org>,
+ Thunderbird/102.10.0
+Subject: Re: [PATCH] Revert "drm/msm/dp: set self refresh aware based on PSR
+ support"
+Content-Language: en-US, de-DE
+To:     Johan Hovold <johan@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-References: <20230605094710.2037879-1-amit.pundir@linaro.org>
-From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-In-Reply-To: <20230605094710.2037879-1-amit.pundir@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        regressions@lists.linux.dev
+References: <20230523151646.28366-1-johan+linaro@kernel.org>
+ <ZH2ys6dVeL02JLCU@hovoldconsulting.com>
+ <CAA8EJprBNzw4o4m0sn2OoOqnwioQWNcTPcKoKGqxLWGc_8xjWA@mail.gmail.com>
+ <ZH22jMTq6fi8iBpe@hovoldconsulting.com>
+From:   "Linux regression tracking #adding (Thorsten Leemhuis)" 
+        <regressions@leemhuis.info>
+Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
+In-Reply-To: <ZH22jMTq6fi8iBpe@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1686047576;786e9832;
+X-HE-SMSGID: 1q6Tze-0000VO-4a
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,T_SCC_BODY_TEXT_LINE,T_SPF_TEMPERROR,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/06/2023 10:47, Amit Pundir wrote:
-> This is a follow-up of the upstream discussion,
-> https://lore.kernel.org/linux-kernel/20230124182857.1524912-1-amit.pundir@linaro.org/T/#u,
-> around adding a reserved memory region in sdm845-db845c
-> for the framebuffer memory (the splash region set up by
-> the bootloader) but the general opinion was to avoid
-> adding that reserved memory for the headless DB845c
-> usecase.
+
+
+On 05.06.23 12:18, Johan Hovold wrote:
+> On Mon, Jun 05, 2023 at 01:05:36PM +0300, Dmitry Baryshkov wrote:
+>> On Mon, 5 Jun 2023 at 13:02, Johan Hovold <johan@kernel.org> wrote:
 > 
-> So this patch splits the sdm845-db845c into a common dtsi,
-> a new sdm845-db845-headless DT, which disables the mdss
-> display subsystem, and a new sdm845-db845c DT with an
-> additional reserved-memory region for the framebuffer.
+>>> Virtual terminals are still broken with 6.4-rc5 on the Lenovo ThinkPad
+>>> X13s two weeks after I reported this, and there has been no indication
+>>> of any progress in the other related thread:
+>>>
+>>>         https://lore.kernel.org/lkml/ZHYPHnWoDbXB-fqe@hovoldconsulting.com
+>>>
+>>> Seems like it is time to merge this revert to get this sorted.
+
+BTW, thx for bringing this to my attention!
+
+>>> Rob, Abhinav, Dmitry, can either of you merge this one and get it into
+>>> 6.4-rc6?
+>>
+>> Rob sent the pull request few hours ago, see
+>> https://lore.kernel.org/dri-devel/CAF6AEGuHujkFjRa6ys36Uyh0KUr4Hd16u1EMqJo8tOZ3ifVubQ@mail.gmail.com/
 > 
-> The default sdm845-db845c.dtb remains pretty much the same
-> (with an exception of additional reserved-memory region),
-> while others can use sdm845-db845c-headless.dtb for their
-> headless systems.
-> 
-> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> Ok, so you guys went with the module parameter hack. Whatever. As long
+> as the regression is finally fixed.
 
-Walk me through this one again.
+Yup. Let me tell regzbot about the fix:
 
-We only need this reserved memory for as long as the splash screen 
-persists - correct ?
+#regzbot fix: drm/msm/dp: add module parameter for PSR
+#regzbot ignore-activity
 
-If there is no HDMI or DSI connected then XBL will never allocate this 
-memory.
+> Next time, some visibility into your process would be appreciated to
+> avoid unnecessary work.
 
-If the MDPSS? driver runs, the display hardware gets pointed at 
-different memory and the splashscreen memory is either marked as 
-reserved - and never usable again or its not marked as reserved and we 
-have system race but in the racy case, the memory is usable.
+Yeah, that's something we IMHO sooner or later need to improve for all
+of kernel development -- among others to give people that find existing
+bug reports a chance to find patches that were posted or applied to
+address the issue (and of course reporters also, like in this case).
 
-Is the solution then not to make the MDSS driver always liberate this 
-memory - irrespective of whether or not a display is connected ?
+Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
+--
+Everything you wanna know about Linux kernel regression tracking:
+https://linux-regtracking.leemhuis.info/about/#tldr
+That page also explains what to do if mails like this annoy you.
 
-It seems wrong to sacrifice ~ 37 megabytes of memory permanently. If I 
-were building an embedded system based on db845 I would want to have 
-that memory available to me either way.
-
----
-bod
