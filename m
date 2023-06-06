@@ -2,87 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3111E724801
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 17:40:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56061724842
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 17:53:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237288AbjFFPkQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 11:40:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58046 "EHLO
+        id S238094AbjFFPxs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 11:53:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238445AbjFFPkL (ORCPT
+        with ESMTP id S236236AbjFFPxr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 11:40:11 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C474910D1;
-        Tue,  6 Jun 2023 08:40:10 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 356DvJNq030987;
-        Tue, 6 Jun 2023 15:40:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=tUScCHzizZ/C+ej3pCM4XinFAiRehlQxC2s7tiS5bfs=;
- b=KcM0G2SbrCusBexwQweYkkwQYV/B5BNteCKCOzKhZhiQXtgVrVsWriyvnXi6qiAm7PcN
- AioMY4zFW4j3c80YwvcGA3VdzIBJDMzckbtmrD2O4LhHhnlD+dYSrQAIlWgKFu0+1xwy
- /NluWp+iv7vGwmp3851cVIcHyXWGCKnKuyCY1oM5VZrI+LOgy0BLxoshCzqnBwF6v3dh
- z7UAH1XCC4W3X+VV6KNgCMhqiPPJ2M8TcBHVClba0SJKdhhbeOsUoFVJEMW8qTZwybAj
- 7SU9JAXbSxEMD/RPGH7sSyk5C+06NuZ4358DwZO5ZE0JDVMEn9ZRDHY9iui0uz8VTUM/ TQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r1jg3jk8r-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 06 Jun 2023 15:40:01 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 356Fe0nw027434
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 6 Jun 2023 15:40:00 GMT
-Received: from akhilpo-linux.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 6 Jun 2023 08:39:55 -0700
-Date:   Tue, 6 Jun 2023 21:09:52 +0530
-From:   Akhil P Oommen <quic_akhilpo@quicinc.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        "Marijn Suijten" <marijn.suijten@somainline.org>,
-        <freedreno@lists.freedesktop.org>
-Subject: Re: [Freedreno] [PATCH v8 11/18] drm/msm/adreno: Disable
- has_cached_coherent in GMU wrapper configurations
-Message-ID: <yx4pb2j2dn274ebhufxibti7zt6tozgd7c6qkaun6q7eonz3tw@roapp52oed75>
-References: <20230223-topic-gmuwrapper-v8-0-69c68206609e@linaro.org>
- <20230223-topic-gmuwrapper-v8-11-69c68206609e@linaro.org>
+        Tue, 6 Jun 2023 11:53:47 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B192D10D2;
+        Tue,  6 Jun 2023 08:53:46 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4D47661323;
+        Tue,  6 Jun 2023 15:53:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 074CEC433EF;
+        Tue,  6 Jun 2023 15:53:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686066825;
+        bh=PcAvLu57+uPUyhNIbnTyWjEN30qr9EKto+KBv+2pxKM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=efPBv2fpEdY/h4jXsv61647g0ZfryKfikn7qwuUEjMRvw5Regxy3iTZ2gfpn8GN4+
+         ncvHlHCEds4sqVys46nBRzZz/tQMQOdJWbh8oq9T97FvXbrlgUfOKaOelG81uywXaB
+         tUK2MYQ0JwdeZnaKvSs1GemHPhJPB2yoIVCR7fyXDxh0ybLiUGzyCVai7MJr/m8Mwt
+         cdEsb0ZDV8iIXJcgwnffFTkYIQg2fZi4vilpSJ8IR8EKWpFWx3qUMJkCiUeBKj1/5H
+         KBFEVyYyGZLDhBjcQv0VroEBRBfiDbEvWp9mW0rnOiSl4FP2Zp3ArB/E/7W4gGRoaW
+         7DQhbflGeLlHw==
+Date:   Tue, 6 Jun 2023 16:53:39 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_msavaliy@quicinc.com,
+        mka@chromium.org, swboyd@chromium.org, quic_vtanuku@quicinc.com,
+        quic_ptalari@quicinc.com
+Subject: Re: [PATCH v2 1/2] soc: qcom: geni-se: Add interfaces
+ geni_se_tx_init_dma() and geni_se_rx_init_dma()
+Message-ID: <9dd8ac78-984e-4588-9a45-0ceb3c51845c@sirena.org.uk>
+References: <1684325894-30252-1-git-send-email-quic_vnivarth@quicinc.com>
+ <1684325894-30252-2-git-send-email-quic_vnivarth@quicinc.com>
+ <CAD=FV=Xbx9h3B1u5NcK7XeEKWC30pn=AWYToqYbAs+oNrV+7Ww@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="oIxXRhOs3lXBAO+h"
 Content-Disposition: inline
-In-Reply-To: <20230223-topic-gmuwrapper-v8-11-69c68206609e@linaro.org>
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: pnloLZMP3zTSKVaX3P58vlyOKhb92D_H
-X-Proofpoint-ORIG-GUID: pnloLZMP3zTSKVaX3P58vlyOKhb92D_H
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-06_11,2023-06-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 malwarescore=0 impostorscore=0 spamscore=0 bulkscore=0
- suspectscore=0 lowpriorityscore=0 adultscore=0 phishscore=0
- mlxlogscore=999 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2306060134
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+In-Reply-To: <CAD=FV=Xbx9h3B1u5NcK7XeEKWC30pn=AWYToqYbAs+oNrV+7Ww@mail.gmail.com>
+X-Cookie: Keep out of the sunlight.
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -90,46 +63,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, May 29, 2023 at 03:52:30PM +0200, Konrad Dybcio wrote:
-> 
-> A610 and A619_holi don't support the feature. Disable it to make the GPU stop
-> crashing after almost each and every submission - the received data on
-> the GPU end was simply incomplete in garbled, resulting in almost nothing
-> being executed properly. Extend the disablement to adreno_has_gmu_wrapper,
-> as none of the GMU wrapper Adrenos that don't support yet seem to feature it.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
-Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
 
--Akhil
->  drivers/gpu/drm/msm/adreno/adreno_device.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> index 8cff86e9d35c..b133755a56c4 100644
-> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
-> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
-> @@ -551,7 +551,6 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
->  		config.rev.minor, config.rev.patchid);
->  
->  	priv->is_a2xx = config.rev.core == 2;
-> -	priv->has_cached_coherent = config.rev.core >= 6;
->  
->  	gpu = info->init(drm);
->  	if (IS_ERR(gpu)) {
-> @@ -563,6 +562,10 @@ static int adreno_bind(struct device *dev, struct device *master, void *data)
->  	if (ret)
->  		return ret;
->  
-> +	if (config.rev.core >= 6)
-> +		if (!adreno_has_gmu_wrapper(to_adreno_gpu(gpu)))
-> +			priv->has_cached_coherent = true;
-> +
->  	return 0;
->  }
->  
-> 
-> -- 
-> 2.40.1
-> 
+--oIxXRhOs3lXBAO+h
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, May 17, 2023 at 07:18:17AM -0700, Doug Anderson wrote:
+> On Wed, May 17, 2023 at 5:18=E2=80=AFAM Vijaya Krishna Nivarthi
+
+> > The geni_se_xx_dma_prep() interfaces necessarily do DMA mapping before
+> > initiating DMA transfers. This is not suitable for spi where framework
+> > is expected to handle map/unmap.
+
+> Mark and Bjorn will have to coordinate how they want to land this,
+> since normally patch #1 would go through the Qualcomm tree and patch
+> #2 through the SPI tree. In any case:
+
+Bjorn?
+
+--oIxXRhOs3lXBAO+h
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmR/VoIACgkQJNaLcl1U
+h9DNbAf/fh8LlkDLW/S414Dw4hRRtPWFWa3f5q+YMrH3wppUwQm3QCcDf+gxyrP2
+EAkEmr83Baazi1kD7OGICz+rMl1Jn5x9+JBPaR9TJfydd7WUT6M/Q4mNfKoGRXDA
+W7gX134fbTMD0V6oU0imcLqLZA1KFNyzEgRvR9eArYWQCXGz51NaUGnjwjgvGbF2
+ovQlhIgs9aTysO30q2+a9Hi/LqFgohqhM/L7WtV4m01NlZtVB63rkPTCyuWS2q9K
+KQNLxCWpyaa3YV+znaJpHj/iAOGwF+oxTKvCGpdVCttXv028zMLTtfori7Qzf0xY
+abNBPxbokhhGRUiGSDhyzyc5URAzBQ==
+=Cizk
+-----END PGP SIGNATURE-----
+
+--oIxXRhOs3lXBAO+h--
