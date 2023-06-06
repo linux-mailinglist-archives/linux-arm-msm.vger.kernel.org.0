@@ -2,189 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F1A47244C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 15:47:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B44827244D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 15:49:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237971AbjFFNrs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 09:47:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35562 "EHLO
+        id S235864AbjFFNt4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 09:49:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237945AbjFFNrp (ORCPT
+        with ESMTP id S232836AbjFFNtz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 09:47:45 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D366110DB;
-        Tue,  6 Jun 2023 06:47:43 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 356CpVtN031086;
-        Tue, 6 Jun 2023 13:47:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=LGCE91aZXqKj515jG6PMD4RLeYQTxSol+qiTA25j64k=;
- b=OyVm/oyusXTyjsrSm8ihqIPMyLj6es+gFHQk0ksniJaZHoDYFwsAo4YdmWVdftVCRCyn
- GJXp7Pf2E0400J2qUf9JJlspCdWlViK6Kzj9aCVn8pfwYtU1zZcLQigg9RCXi3RDIm9Z
- lpFdQfcTKiUwUZDR6QkRAQGl467BkYWxkM9uLXtpvnncFOe3EYT9T5HWRVz/q7vCnoOQ
- 9ERjs6UKbXf7aoSrwb+DJ+JtgpFEGSKeUKqbVvitnX+ui9p3wZbX3p1ux8UibOkrF7ff
- gFAN9klBEe7y83WwGQ+IWugxwCyCIwjS33VEtomkbg+OY9sxVTSPA3F+BzBois5++yJm lQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r1wgv13ua-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 06 Jun 2023 13:47:37 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 356DlY0a003524
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 6 Jun 2023 13:47:35 GMT
-Received: from hu-namajain-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 6 Jun 2023 06:47:04 -0700
-From:   Naman Jain <quic_namajain@quicinc.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-CC:     Naman Jain <quic_namajain@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <quic_pkondeti@quicinc.com>, <quic_kaushalk@quicinc.com>,
-        Robert Marko <robimarko@gmail.com>
-Subject: [PATCH v2 2/2] soc: qcom: socinfo: Add support for new fields in revision 19
-Date:   Tue, 6 Jun 2023 19:16:26 +0530
-Message-ID: <20230606134626.18790-3-quic_namajain@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230606134626.18790-1-quic_namajain@quicinc.com>
-References: <20230606134626.18790-1-quic_namajain@quicinc.com>
+        Tue, 6 Jun 2023 09:49:55 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7FA310D2;
+        Tue,  6 Jun 2023 06:49:48 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 7269262986;
+        Tue,  6 Jun 2023 13:49:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76479C433EF;
+        Tue,  6 Jun 2023 13:49:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686059387;
+        bh=stRutyLmvZS3ZidmZrx+6DH+SkXbyrihyoYS0xtC69w=;
+        h=From:To:Cc:Subject:References:Date:In-Reply-To:From;
+        b=VVZidBJU0486+do3/FJQ8NyB+Y5KjPf5GBJEiRD52x50qTVkjJfwt6iMDZzCoJ423
+         yIi+j5KfY4eXGj2B+dbwjZMeQ2I6lcdAurKkwM/AIXBOiif8lhMSLORaYgPrswrG16
+         +KbWyEHmSs5cKPpDkSx6c4JiXVnZJE2kFKXanWScOF8H6LsSgASQy3aMVfFFsjIoLW
+         1UAKV326sLzlKtUWHowJDg2r0/ngMDwGGbSIonL4ujVA+7aq6FTiV/m151elYT7PGQ
+         2I5SkmXRDhdQAjrs8b03hBb4tAA1Wk07ae9mhbb1LoL8GPH1swX1Qcx9J8sqGE5vcd
+         NPwxLujMFuxCA==
+From:   Kalle Valo <kvalo@kernel.org>
+To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <jassisinghbrar@gmail.com>, <mathieu.poirier@linaro.org>,
+        <mturquette@baylibre.com>, <sboyd@kernel.org>,
+        <quic_eberman@quicinc.com>, <quic_mojha@quicinc.com>,
+        <loic.poulain@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
+        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
+        <quic_poovendh@quicinc.com>, <quic_varada@quicinc.com>,
+        <quic_devipriy@quicinc.com>
+Subject: Re: [PATCH V2 01/13] dt-bindings: remoteproc: qcom: Add support for multipd model
+References: <20230521222852.5740-1-quic_mmanikan@quicinc.com>
+        <20230521222852.5740-2-quic_mmanikan@quicinc.com>
+        <7940c743-815f-f864-d015-43d7e916ecfa@linaro.org>
+        <a1456f62-d0a7-d5ec-b379-db1b6035c89c@quicinc.com>
+        <d187eafb-4a80-9479-d063-3a01b47d8efa@linaro.org>
+        <feb0d11d-0930-d0b8-ab6e-cf477bbf114b@quicinc.com>
+Date:   Tue, 06 Jun 2023 16:49:40 +0300
+In-Reply-To: <feb0d11d-0930-d0b8-ab6e-cf477bbf114b@quicinc.com> (Manikanta
+        Mylavarapu's message of "Tue, 6 Jun 2023 17:41:00 +0530")
+Message-ID: <87edmoitu3.fsf@kernel.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: rqCTN4skhdzQTdMaAnKsBBKyzdgP1FFy
-X-Proofpoint-GUID: rqCTN4skhdzQTdMaAnKsBBKyzdgP1FFy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-06_08,2023-06-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- lowpriorityscore=0 mlxlogscore=999 adultscore=0 priorityscore=1501
- malwarescore=0 impostorscore=0 phishscore=0 mlxscore=0 clxscore=1015
- suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2306060115
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for below fields coming in socinfo structure under v19:
-* num_func_clusters: number of clusters with at least one functional core
-* boot_cluster: cluster selected as boot cluster
-* boot_core: core selected as boot core
-While at it, rename some variables to align them with their
-functionalities.
+Manikanta Mylavarapu <quic_mmanikan@quicinc.com> writes:
 
-Signed-off-by: Naman Jain <quic_namajain@quicinc.com>
----
- drivers/soc/qcom/socinfo.c       | 32 ++++++++++++++++++++++++--------
- include/linux/soc/qcom/socinfo.h |  8 ++++++--
- 2 files changed, 30 insertions(+), 10 deletions(-)
+>>>>> +
+>>>>> +    properties:
+>>>>> +      compatible:
+>>>>> +        enum:
+>>>>> +          - qcom,ipq5018-wcss-ahb-mpd
+>>>>> +          - qcom,ipq9574-wcss-ahb-mpd
+>>>>> +          - qcom,ipq5018-wcss-pcie-mpd
+>>>>
+>>>> Keep rather alphabetical order (so both 5018 together).
+>>>>
+>>>> I also do not understand these at all. Why adding bus type to
+>>>> compatible? This rarely is allowed (unless it is PCIe controller within
+>>>> soc).
+>>>>
+>>> IPQ5018 SOC has in-built PCIE controller. Here QDSP6 will bring up
+>>> external(PCIE) and internal (AHB) wifi radio's. To separate AHB, PCIE
+>>> radio's properties, i have added bus type to compatible.
+>>
+>> It's the same device - WCSS - right? We do not create multiple nodes and
+>> compatibles for the same devices. Bus suffixes are almost never parts of
+>> compatibles.
+>
+>
+> No it's not the same device. WCSS on inside IPQ5018 and WCSS attached
+> via pcie to IPQ5018. Here QDSP6 managing both WCSS's.
+>
+> So for better clarity i will use attached SOC ID in compatible.
+> Below are the new compatible's.
+>
+> - qcom,ipq5018-wcss-mpd //IPQ5018 internal radio
+> - qcom,ipq9574-wcss-mpd	//IPQ9574 internal radio
+> - qcom,qcn6122-wcss-mpd //IPQ5018 attached radio
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index cb70f8439cfa..a30d8bb6e938 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -133,12 +133,15 @@ struct socinfo_params {
- 	u32 nproduct_id;
- 	u32 num_clusters;
- 	u32 ncluster_array_offset;
--	u32 num_defective_parts;
--	u32 ndefective_parts_array_offset;
-+	u32 num_subset_parts;
-+	u32 nsubset_parts_array_offset;
- 	u32 nmodem_supported;
- 	u32 feature_code;
- 	u32 pcode;
- 	u32 oem_variant;
-+	u32 num_func_clusters;
-+	u32 boot_cluster;
-+	u32 boot_core;
- };
- 
- struct smem_image_version {
-@@ -565,6 +568,18 @@ static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
- 			   &qcom_socinfo->info.fmt);
- 
- 	switch (qcom_socinfo->info.fmt) {
-+	case SOCINFO_VERSION(0, 19):
-+		qcom_socinfo->info.num_func_clusters = __le32_to_cpu(info->num_func_clusters);
-+		qcom_socinfo->info.boot_cluster = __le32_to_cpu(info->boot_cluster);
-+		qcom_socinfo->info.boot_core = __le32_to_cpu(info->boot_core);
-+
-+		debugfs_create_u32("num_func_clusters", 0444, qcom_socinfo->dbg_root,
-+				   &qcom_socinfo->info.num_func_clusters);
-+		debugfs_create_u32("boot_cluster", 0444, qcom_socinfo->dbg_root,
-+				   &qcom_socinfo->info.boot_cluster);
-+		debugfs_create_u32("boot_core", 0444, qcom_socinfo->dbg_root,
-+				   &qcom_socinfo->info.boot_core);
-+		fallthrough;
- 	case SOCINFO_VERSION(0, 18):
- 	case SOCINFO_VERSION(0, 17):
- 		qcom_socinfo->info.oem_variant = __le32_to_cpu(info->oem_variant);
-@@ -589,17 +604,18 @@ static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
- 	case SOCINFO_VERSION(0, 14):
- 		qcom_socinfo->info.num_clusters = __le32_to_cpu(info->num_clusters);
- 		qcom_socinfo->info.ncluster_array_offset = __le32_to_cpu(info->ncluster_array_offset);
--		qcom_socinfo->info.num_defective_parts = __le32_to_cpu(info->num_defective_parts);
--		qcom_socinfo->info.ndefective_parts_array_offset = __le32_to_cpu(info->ndefective_parts_array_offset);
-+		qcom_socinfo->info.num_subset_parts = __le32_to_cpu(info->num_subset_parts);
-+		qcom_socinfo->info.nsubset_parts_array_offset =
-+			__le32_to_cpu(info->nsubset_parts_array_offset);
- 
- 		debugfs_create_u32("num_clusters", 0444, qcom_socinfo->dbg_root,
- 				   &qcom_socinfo->info.num_clusters);
- 		debugfs_create_u32("ncluster_array_offset", 0444, qcom_socinfo->dbg_root,
- 				   &qcom_socinfo->info.ncluster_array_offset);
--		debugfs_create_u32("num_defective_parts", 0444, qcom_socinfo->dbg_root,
--				   &qcom_socinfo->info.num_defective_parts);
--		debugfs_create_u32("ndefective_parts_array_offset", 0444, qcom_socinfo->dbg_root,
--				   &qcom_socinfo->info.ndefective_parts_array_offset);
-+		debugfs_create_u32("num_subset_parts", 0444, qcom_socinfo->dbg_root,
-+				   &qcom_socinfo->info.num_subset_parts);
-+		debugfs_create_u32("nsubset_parts_array_offset", 0444, qcom_socinfo->dbg_root,
-+				   &qcom_socinfo->info.nsubset_parts_array_offset);
- 		fallthrough;
- 	case SOCINFO_VERSION(0, 13):
- 		qcom_socinfo->info.nproduct_id = __le32_to_cpu(info->nproduct_id);
-diff --git a/include/linux/soc/qcom/socinfo.h b/include/linux/soc/qcom/socinfo.h
-index 3cc266d8a8b4..e78777bb0f4a 100644
---- a/include/linux/soc/qcom/socinfo.h
-+++ b/include/linux/soc/qcom/socinfo.h
-@@ -54,8 +54,8 @@ struct socinfo {
- 	/* Version 14 */
- 	__le32 num_clusters;
- 	__le32 ncluster_array_offset;
--	__le32 num_defective_parts;
--	__le32 ndefective_parts_array_offset;
-+	__le32 num_subset_parts;
-+	__le32 nsubset_parts_array_offset;
- 	/* Version 15 */
- 	__le32 nmodem_supported;
- 	/* Version 16 */
-@@ -68,6 +68,10 @@ struct socinfo {
- 	/* Version 18 */
- 	__le32 num_kvps;
- 	__le32 kvps_offset;
-+	/* Version 19 */
-+	__le32 num_func_clusters;
-+	__le32 boot_cluster;
-+	__le32 boot_core;
- };
- 
- #endif
+What mandates that there's just one QCN6122 device attached to PCI?
+Assuming fixed PCI configurations like that makes me worried.
+
 -- 
-2.17.1
+https://patchwork.kernel.org/project/linux-wireless/list/
 
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
