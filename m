@@ -2,87 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BB8D7250B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 01:21:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0AFB7250D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 01:30:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239795AbjFFXVl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 19:21:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53908 "EHLO
+        id S239960AbjFFX3r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 19:29:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239823AbjFFXVj (ORCPT
+        with ESMTP id S234447AbjFFX3q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 19:21:39 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AE1C1702
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 16:21:37 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f6170b1486so51670e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 16:21:37 -0700 (PDT)
+        Tue, 6 Jun 2023 19:29:46 -0400
+Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 030CF1706
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 16:29:45 -0700 (PDT)
+Received: by mail-qk1-x72d.google.com with SMTP id af79cd13be357-75d4df773b4so299339485a.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 16:29:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686093695; x=1688685695;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=n0tlPXqbLJGaYQ6NS1ZilhIHMIXaOOlhIbxk59xanGI=;
-        b=GIzDkpCqhgHS6ZIncgdbBp5dU9OAvWa02cfMoXqBXnygF2MGpune38gyDdd6jXRBlx
-         YEd1AMp1WkBfO+LWaaOeXESl1YZQhu7AfULz9TXsTXwpDTEz4Ui632Pn5BQZfG+BBU4j
-         2aYvDek5RpT+BA9nSGC/II9zjo/6aSYdimrO6KG+56x9rVpNgEyBq6PrBwFm6gUvDFu6
-         c1mDQgm7BwCcYsGRoygj4SZnDKeJTWZzMUBOwALnEWG14LKvfk2k8/BN2xYxs9cL+w7d
-         ovmm6KD648RItPI0AWzwG5Q31a/h0rb3rg6cTfeflM2ODYC40cyo7KS/D74KRVhBVNLm
-         Wp1g==
+        d=chromium.org; s=google; t=1686094183; x=1688686183;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3MsMMRNLOOIcaszNuAp1qcl0j4LaOAq2DZVdH1za2FE=;
+        b=J1YllwY2sL+go7atSfRAhPE9tG7iZ/NSL7z//gQsGsw/zDDXmQcvDmS/HdMh9D2yhm
+         qhZ4dxtPr3QvJj91/OnsQse8Xef6hq5puAV5EnqhG6VKgQWN7hVeSdCS+un81Qe0hcj2
+         o2DYth093ymixhK3kTj5rCROVjz6HPhk3eK6o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686093695; x=1688685695;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n0tlPXqbLJGaYQ6NS1ZilhIHMIXaOOlhIbxk59xanGI=;
-        b=BFrzeIq3YIBNgVbK10kD6TIlDmHaa+LQwn3ZZIUnXQPrkGhYWLHU8hBxcJrnMHKeNn
-         ve1YTlWNI5rxZbYINBxEMAku5Y0ms0MkD9M6WmN4zbMdIe8p/HFsX6W2RS+lRBugoGpj
-         DaEZrJngop7cysTUirVvigSFHPcgZLgyDV5EszmzuUyf82qhGH37m1E9/xBedpqUYuDr
-         HBSAooy44VvCCHASHboCFMiYFckwcPtmJmwQL4xZqlnxvq4M2XQOyIFWD+mDqY6eSkNj
-         QQgwu/HWT6SPvWtOcLm0X95HjFH81plRf4zEYNlBYDDY3FSPrTrDMeP5hBPHRWKkz8CG
-         pUQA==
-X-Gm-Message-State: AC+VfDzTXTIMOh2wqnw9+76o5ZksBIjwrcgQzOvfgItl6znOnZbl1TCF
-        wbYNzk3zD+xhhcwnuiiG6SeJcw==
-X-Google-Smtp-Source: ACHHUZ4YOP/wtS47JRGyvVl7YbgUiVbr9qgveh559sTBgxv5SOhA0GoPzd2Nqk2EE48SMkKJH1aPbw==
-X-Received: by 2002:a05:6512:3d05:b0:4f3:822d:bcf7 with SMTP id d5-20020a0565123d0500b004f3822dbcf7mr5086223lfv.21.1686093695294;
-        Tue, 06 Jun 2023 16:21:35 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id r11-20020ac25a4b000000b004f391a2028dsm1599768lfn.265.2023.06.06.16.21.34
+        d=1e100.net; s=20221208; t=1686094183; x=1688686183;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3MsMMRNLOOIcaszNuAp1qcl0j4LaOAq2DZVdH1za2FE=;
+        b=iaCYHA6taHMHRMWEEpBooKfKUKzJSoHMKfqxwvsT14CAU7USl5YjP6rpJryizvDhHE
+         hqK3RqlS/MQd68TpKI5l9Eukcmb+SvmFLUBhBvDKsTGYh8h9Oa5PNMhkzNV1oeG9yPoI
+         QstGigeoUVsNzWrh/sfhi3oUAiJz47DpDuHdTZFjaAbEKZNiGIRZu4oet6TXLcaVE+7i
+         R1p0/+NB1dNGfjWcB1S+HNQQtqn4FcW1csgfS/MXNeYyh3tUzYb+F/IqyhYUpxUDNiaH
+         3icGfOduorasceQVleldK7exWlTDqyLKifsCff4ZYdJ/zQaA4ToarDJRLmC6ATue087K
+         ao8g==
+X-Gm-Message-State: AC+VfDy4Xv6AqxAYfxgOwpU5Q+GKd1ILy1td8OpwoRpYEaBDqIxZ7jFO
+        JkjUvkWlJd/I0r42m2jqPOWkFbTYTfkgL9JiRMY=
+X-Google-Smtp-Source: ACHHUZ53PsqfEbv5gGHAsANzyoMuK0H3dxKT0N0gp7IxED3prs+9trHIy5waWJkCsGo79T6fJ+f62A==
+X-Received: by 2002:ad4:5ba5:0:b0:628:2db0:ebb8 with SMTP id 5-20020ad45ba5000000b006282db0ebb8mr1140863qvq.54.1686094183462;
+        Tue, 06 Jun 2023 16:29:43 -0700 (PDT)
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com. [209.85.160.173])
+        by smtp.gmail.com with ESMTPSA id y15-20020a0ce04f000000b006238d903f9bsm5765173qvk.42.2023.06.06.16.29.42
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jun 2023 16:21:34 -0700 (PDT)
-Message-ID: <fa38edf1-a3e4-0859-8f00-73708fe8cbbc@linaro.org>
-Date:   Wed, 7 Jun 2023 02:21:33 +0300
+        Tue, 06 Jun 2023 16:29:42 -0700 (PDT)
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-3f9a81da5d7so92761cf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 16:29:42 -0700 (PDT)
+X-Received: by 2002:ac8:7f81:0:b0:3f7:ffc8:2f6f with SMTP id
+ z1-20020ac87f81000000b003f7ffc82f6fmr93895qtj.28.1686094182143; Tue, 06 Jun
+ 2023 16:29:42 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [Freedreno] [RFC PATCH v2 10/13] drm/msm/dpu: add list of
- supported formats to the DPU caps
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     freedreno@lists.freedesktop.org,
+References: <20230324063357.1.Ifdf3625a3c5c9467bd87bfcdf726c884ad220a35@changeid>
+ <CAMi1Hd1avQDcDQf137m2auz2znov4XL8YGrLZsw5edb-NtRJRw@mail.gmail.com>
+ <552345c5-b1e9-41f6-f275-b6eeeb51df25@linaro.org> <CAMi1Hd05z8uBotO4vs7Ropmt7W2gSA__tTu_=X1t0mze7bXrhg@mail.gmail.com>
+ <CAD=FV=VSFDe445WEVTHXxU1WS_HGUV5jR5E8_Vgd4eyhn3rHyA@mail.gmail.com>
+ <CAMi1Hd28FJUjB8A-9YF7xpKOzSyNWXX3qung4aDjpLBhOvw_eA@mail.gmail.com>
+ <CAD=FV=W13L0H88G1gt8qRnXfpV-_7E9QfHufN_a23_B1bb=aww@mail.gmail.com>
+ <CAMi1Hd1WCtNvNaY_kVMx5F8T0nMVHvsjk9LsSETCMWWQyaq_Vw@mail.gmail.com>
+ <CAD=FV=W5Y_SHp0y2MEs8d1k255bm_PXdRYEmYei+g79pjnzYuA@mail.gmail.com>
+ <CAMi1Hd2OeL940r7jq0=Z_oxE8MYVioy0YnJXQC_5e0vJONd2sQ@mail.gmail.com>
+ <1bc79c48-7cba-476d-9a7e-5754a88fcdae@sirena.org.uk> <CAMi1Hd2BLB6H3QRLB5svRTkGoXaUeEsakNsmfCOjbDBcCEeqkA@mail.gmail.com>
+In-Reply-To: <CAMi1Hd2BLB6H3QRLB5svRTkGoXaUeEsakNsmfCOjbDBcCEeqkA@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 6 Jun 2023 16:29:29 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UKyjRNZG-ED2meUAR9aXdco+AbUTHiKixTzjCkaJbjTg@mail.gmail.com>
+Message-ID: <CAD=FV=UKyjRNZG-ED2meUAR9aXdco+AbUTHiKixTzjCkaJbjTg@mail.gmail.com>
+Subject: Re: [PATCH] regulator: qcom-rpmh: Revert "regulator: qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS"
+To:     Amit Pundir <amit.pundir@linaro.org>
+Cc:     Mark Brown <broonie@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, Sean Paul <sean@poorly.run>
-References: <20230321011821.635977-1-dmitry.baryshkov@linaro.org>
- <20230321011821.635977-11-dmitry.baryshkov@linaro.org>
- <2a003674-29ef-f6c6-9a23-3eb93d2e479f@quicinc.com>
- <CAA8EJpr0DcVfG86SYKRb-4Ph82dfXafed9CFgY1qFSECFbAcTw@mail.gmail.com>
- <6c61a8f1-f77e-3a18-15f8-7c004a99f78d@quicinc.com>
- <cfad7817-2d7e-843d-033d-cf2f3aba440d@linaro.org>
- <868e69f5-0f47-18cf-0e1e-377c37376437@quicinc.com>
- <e258fce0-9044-399c-fcc9-634ea1d53f7a@linaro.org>
- <e43c9e17-1c0b-f3cd-036f-1a4968a0150d@quicinc.com>
- <12aacfc4-8ed5-1c85-8c1c-abd0aed7f8a9@linaro.org>
- <9addd6fc-460a-0bb6-d6d1-b2b51354c695@quicinc.com>
- <0cf278c9-d28a-34c4-f45d-c2c9fb5271e8@linaro.org>
- <c21baf52-8993-8036-9378-f276166b509d@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <c21baf52-8993-8036-9378-f276166b509d@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Saravana Kannan <saravanak@google.com>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -91,174 +92,84 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/06/2023 02:14, Abhinav Kumar wrote:
-> 
-> 
-> On 6/6/2023 3:59 PM, Dmitry Baryshkov wrote:
->> On 07/06/2023 01:57, Abhinav Kumar wrote:
->>>
->>>
->>> On 6/6/2023 3:50 PM, Dmitry Baryshkov wrote:
->>>> On 07/06/2023 01:47, Abhinav Kumar wrote:
->>>>>
->>>>>
->>>>> On 6/6/2023 2:52 PM, Dmitry Baryshkov wrote:
->>>>>> On 07/06/2023 00:47, Abhinav Kumar wrote:
->>>>>>>
->>>>>>>
->>>>>>> On 6/6/2023 2:29 PM, Dmitry Baryshkov wrote:
->>>>>>>> On 07/06/2023 00:14, Abhinav Kumar wrote:
->>>>>>>>>
->>>>>>>>>
->>>>>>>>> On 5/24/2023 6:47 PM, Dmitry Baryshkov wrote:
->>>>>>>>>> On Thu, 25 May 2023 at 02:16, Abhinav Kumar 
->>>>>>>>>> <quic_abhinavk@quicinc.com> wrote:
->>>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>> On 3/20/2023 6:18 PM, Dmitry Baryshkov wrote:
->>>>>>>>>>>> As we are going to add virtual planes, add the list of 
->>>>>>>>>>>> supported formats
->>>>>>>>>>>> to the hw catalog entry. It will be used to setup universal 
->>>>>>>>>>>> planes, with
->>>>>>>>>>>> later selecting a pipe depending on whether the YUV format 
->>>>>>>>>>>> is used for
->>>>>>>>>>>> the framebuffer.
->>>>>>>>>>>>
->>>>>>>>>>>
->>>>>>>>>>> If your usage of format_list is going to be internal to 
->>>>>>>>>>> dpu_plane.c, I
->>>>>>>>>>> can think of another idea for this change.
->>>>>>>>>>>
->>>>>>>>>>> This essentially translates to if (num_vig >= 1)
->>>>>>>>>>>
->>>>>>>>>>> If we can just have a small helper to detect that from the 
->>>>>>>>>>> catalog can
->>>>>>>>>>> we use that instead of adding formats to the dpu caps?
->>>>>>>>>>
->>>>>>>>>> I'd prefer to be explicit here. The list of supported formats 
->>>>>>>>>> might
->>>>>>>>>> vary between generations, might it not? Also we don't have a 
->>>>>>>>>> case of
->>>>>>>>>> the devices not having VIG planes. Even the qcm2290 (which 
->>>>>>>>>> doesn't
->>>>>>>>>> have CSC) lists YUV as supported.
->>>>>>>>>>
->>>>>>>>>
->>>>>>>>> the list of formats is tied to the sspps the dpu generation has 
->>>>>>>>> and the capabilities of those sspps.
->>>>>>>>>
->>>>>>>>> qcm2290 is really an interesting case. It has one vig sspp but 
->>>>>>>>> no csc block for that vig sspp, hence it cannot support non-RGB 
->>>>>>>>> formats.
->>>>>>>>>
->>>>>>>>> I have confirmed that downstream is incorrect to populate yuv 
->>>>>>>>> formats for qcm2290.
->>>>>>>>>
->>>>>>>>> I still think that having atleast one vig sspp with csc sub-blk 
->>>>>>>>> is the right condition to check if we want to decide if the dpu 
->>>>>>>>> for that chipset supports yuv formats. Extra csc-blk check to 
->>>>>>>>> handle qcm2290.
->>>>>>>>>
->>>>>>>>> Having a small helper in dpu_plane.c is good enough for that 
->>>>>>>>> because with virtual planes, you only need to know "if such a 
->>>>>>>>> plane exists and not which plane" and a full catalog change 
->>>>>>>>> isnt needed IMO
->>>>>>>>
->>>>>>>> This goes down to the question: is the list of YUV and non-YUV 
->>>>>>>> formats static or not? Do all DPU devices support the same set 
->>>>>>>> of YUV and non-YUV formats? If it is static, we might as well 
->>>>>>>> drop dpu_sspp_sub_blks::format_list.
->>>>>>>>
->>>>>>>
->>>>>>> I would say yes based on the below reference:
->>>>>>>
->>>>>>> https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/clo/main/msm/sde/sde_hw_catalog.c#L3858
->>>>>>>
->>>>>>> We always add the same set of YUV formats for all Vig SSPPs 
->>>>>>> irrespective of the chipsets.
->>>>>>
->>>>>> Well, as your example pointed out, few lines below it starts 
->>>>>> adding formats to the list, so the format list is not static and 
->>>>>> depends on the generation.
->>>>>>
->>>>>
->>>>> No, the DPU revision checks are there to add P010 UBWC formats on 
->>>>> top of the Vig formats.
->>>>>
->>>>> At the moment, the latest downstream code (code which is not on CLO 
->>>>> hence I cannot share) has dropped all that and just checks if P010 
->>>>> UBWC is supported for the Vig SSPP and adds all those.
->>>>>
->>>>> So its still tied to the feature bit whether P010 UBWC is supported 
->>>>> in the Vig SSPP and not at the chipset level.
->>>>
->>>> So, what is the difference? This means that depending on some 
->>>> conditions either we can support P010 UBWC or we can not. So the 
->>>> list of all suppored formats is not static.
->>>>
->>>
->>> The difference is SSPP level vs chipset level. This patch was made 
->>> with chipset level in mind and had to expand the format list for each 
->>> chipset.
->>>
->>> What I am suggesting is its a SSPP level decision. Please note its 
->>> not just P010 UBWC but P010 UBWC FOR Vig SSPP.
->>>
->>> So expanding each chipset's format list is not needed when the 
->>> decision can be made just on the basis of the SSPP's feature flag OR 
->>> the presence of the csc blk.
->>
->> Maybe I misunderstand something. Is P010 UBWC format supported on VIG 
->> SSPPs on all generations? The code that you have pointed me suggests 
->> that is is not.
->>
-> 
-> No, your understanding is correct that P010 UBWC format is supported 
-> only on Vig SSPPs of certain generations.
-> 
-> But my point is that, its still a SSPP level decision.
-> 
-> So even if we add P010 UBWC formats later to the list of supported 
-> formats, what we will do is add that feature bit alone in the Vig SSPP's 
-> feature mask of that chipset and based on that all the P010 UBWC formats 
-> for the virtual planes.
-> 
-> But if we follow your approach, we will add another array called 
-> plane_formats_p010_ubwc and add that to each chipset which will support it.
+Hi,
 
-sspp->sblk->formats_list is constant, so we will have to add another 
-formats array anyway.
+On Fri, Jun 2, 2023 at 6:13=E2=80=AFAM Amit Pundir <amit.pundir@linaro.org>=
+ wrote:
+>
+> On Fri, 2 Jun 2023 at 18:07, Mark Brown <broonie@kernel.org> wrote:
+> >
+> > > > If you reorder the nodes in the device tree, I think it'll change t=
+he
+> > > > probe order. Does that affect anything? I'm wondering if there's so=
+me
+> > > > sort of delayed reaction from a previous regulator.
+> >
+> > > Hi, Bumping lvs1 and lvs2 regulators up to the top of the list in the
+> > > DTS https://bugs.linaro.org/show_bug.cgi?id=3D5975#c4 does seem to wo=
+rk.
+> > > I can't reproduce the crash in 125 reboots so far, while I'm still
+> > > testing with only qcom-rpmh-regulator kernel module. I'll do some mor=
+e
+> > > testing with full system running and send this re-ordering fix I can'=
+t
+> > > reproduce the crash further.
+> >
+> > So whatever the issue is here it's a timing/race condition - this seems
+> > like a workaround which works just now but it's not getting to whatever
+> > the actual issue is and that could come back.
+>
+> Hi, I'm happy to debug this issue further or test run any
+> patches/ideas if that helps.
 
-> The only difference in idea is that, based on the SSPP's feature set of 
-> that chipset we can still determine that Vs adding it to each chipset.
-> 
->>>
->>>>>
->>>>>>>
->>>>>>>> Note to myself: consider 
->>>>>>>> dpu_mdss_cfg::{dma_formats,cursor_formats,vig_formats}. Either 
->>>>>>>> migrate dpu_sspp_sub_blks::format_list users to these fields or 
->>>>>>>> drop them.
->>>>>>>>
->>>>>>>
->>>>>>> Yes, I agree. There is no need to have format list in the sub_blk 
->>>>>>> as for one type of SSPP, it supports the same format across DPU 
->>>>>>> generations.
->>>>>>>
->>>>>>>>>
->>>>>>>>>
->>>>>>>>>> Note: I think at some point we should have a closer look at 
->>>>>>>>>> the list
->>>>>>>>>> of supported formats and crosscheck that we do not have either
->>>>>>>>>> unsupported formats being listed, or missing formats which are 
->>>>>>>>>> not
->>>>>>>>>> listed as supported.
->>>>>>>>>>
->>>>
->>
+I guess it's a better workaround than reverting the async patch. ...at
+least it has a chance of having a real effect. That being said, it's
+still a bit of a hack.
 
--- 
-With best wishes
-Dmitry
+Ideally you'd be able to somehow get information about RPMH's state
+when things fail. Maybe this might be possible with ramdumps or maybe
+with JTAG. Unfortunately, I'm not super familiar with either of them.
+I assume you aren't either or you would have already tried them...
 
+From a black box perspective, I guess the things I could think of
+would be to keep poking around with things that you control. Best
+ideas I have:
+
+1. Use "bisect" style techniques to figure out how much you really
+need to move the "lvs" regulators. Try moving it halfway up the list.
+If that works, move it closer to the bottom. If that doesn't work,
+move it closer to the top. Eventually you'd find out which regulator
+it's important to be before.
+
+2. Try adding some delays to some of the regulators with
+"regulator-enable-ramp-delay" and/or "regulator-settling-time-us".
+Without a scope, it'll be tricky to figure out exactly which
+regulators might need delays, but you could at least confirm if the
+"overkill" approach of having all the regulators have some delay
+helps... I guess you could also try putting a big delay for "ldo26".
+If that works, you could try moving it up (again using a bisect style
+approach) to see where the delay matters?
+
+
+Currently, I guess my mental model of what might be going wrong is
+that regulators are all turning on / adjusting really quickly. Maybe
+they aren't switching into "high power mode" quickly enough, maybe
+they are busy ramping up or down, or maybe there's simply some other
+issue, but I suppose that something happening could be causing the
+voltage to droop down (or be too high) and then that's making RPMH
+upset. Changing the order could be helping avoid this droop, but the
+more proper fix would be to actually account for it with regulator
+constraints.
+
+My mental model still doesn't really explain what async probe has to
+do with anything, at least if you're loading _just_ rpmh-regulator all
+on its own. Assuming you're loading rpmh-regulator all on its own then
+async probe should do almost nothing. Unless I'm mistaken, async probe
+won't cause all the RPMH regulators to initialize in parallel. They
+still initialize synchronously in the rpmh-regulator probe routine.
+Async probe would _just_ allow some other driver to run its probe at
+the same time. ...but if no other drivers being loaded at the same
+time then I'm perplexed about how it could make any difference.
+
+
+-Doug
