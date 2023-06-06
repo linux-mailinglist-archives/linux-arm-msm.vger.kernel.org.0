@@ -2,62 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C1AA72401D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 12:51:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 433FE72403B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 12:57:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237159AbjFFKvd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 06:51:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34238 "EHLO
+        id S231766AbjFFK5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 06:57:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237312AbjFFKum (ORCPT
+        with ESMTP id S232099AbjFFK5H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 06:50:42 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEC441BD9;
-        Tue,  6 Jun 2023 03:49:01 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2238061166;
-        Tue,  6 Jun 2023 10:49:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F17C433EF;
-        Tue,  6 Jun 2023 10:48:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686048540;
-        bh=mGpW1sYk4BoYaNj1ZpTyd3YRrRDOS8mnJVJiFOEwmKw=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=qv1MfK/M4gv2aPifqyhB4dWawUg2cphvBuUqMDtbzTNBOZHhEd5LWCj9PxyDWmS4P
-         FimSA2qNOW5pn5hL3P2qbIx3j3rYGg2fGlWdWdK03R4JLZzI17Lffoq0wlvyqK1h6b
-         6IDnivFRgQyl37mv4FqnDiZ48XQywVsMJqUerhVmtKpTvfVBN0C8q6YUlWTF082eR7
-         rqGvA2Ah/PWnoo/eG7tKUC7n56T0IJ7+8EDZfbCTUu4lnfZgJG3c82pwVSKoZdBDdv
-         r5fGBv6PXHO3hdI9Yqxt/IXxR+MVuPoqLg4k8rExtqCJ+GW6rnNYrXPf/VL8dN0n67
-         vZ6EVWR8DjfGw==
-Message-ID: <903bf7c5-1665-4602-a7ba-f4a0741e720f@kernel.org>
-Date:   Tue, 6 Jun 2023 13:48:52 +0300
+        Tue, 6 Jun 2023 06:57:07 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C96FF1703;
+        Tue,  6 Jun 2023 03:55:56 -0700 (PDT)
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3569S5u7022237;
+        Tue, 6 Jun 2023 10:55:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=cHN0MR6rv7I8UDrHo85o969qF6fGucQSWiRoMaEFFCI=;
+ b=aQH605e/l3vUwau5LZ/04VPfK+gpWgXh8XNsdwBbJ0gcKvoMbDhynmqubcwB09UGtpmp
+ fAY8s7jmhq8Zx3pEzhdQweePfZMzexdB2gfMLSanAjFB3ITRLiOVUklF+FcEdVAw5Q6H
+ oHS6wC7sBTzpE39dbEleYE1Q5le98BSP03trobjpuGBxED5EHxhCojWQ/XTzKxnik/NR
+ SuVu2rEYQSbnWBLHbjN5XEDd6dFZB8LOOCmvYVMvEWL89kCToDvUEWv/xkiUAmY81le0
+ q/iKc0fmPT8kvl4y9KfVFMA6BXIBCbWDBoPkyGs0ZeB6er12hm+rtrQc9FoTM7iq+auh yw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r1wgv0s7s-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 06 Jun 2023 10:55:38 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 356AtbCF001911
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 6 Jun 2023 10:55:37 GMT
+Received: from [10.239.133.211] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 6 Jun 2023
+ 03:55:32 -0700
+Message-ID: <0f1e6931-b3c6-f7e4-c4fd-bd55e0f286e5@quicinc.com>
+Date:   Tue, 6 Jun 2023 18:55:28 +0800
 MIME-Version: 1.0
-Subject: Re: [PATCH] PCI: qcom-ep: Add ICC bandwidth voting support
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v4 09/11] coresight-tpdm: Add nodes for timestamp request
 Content-Language: en-US
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        manivannan.sadhasivam@linaro.org
-Cc:     quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM" 
-        <linux-pci@vger.kernel.org>,
-        "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM" 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1686030570-5439-1-git-send-email-quic_krichai@quicinc.com>
-From:   Georgi Djakov <djakov@kernel.org>
-In-Reply-To: <1686030570-5439-1-git-send-email-quic_krichai@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+CC:     Jinlong Mao <quic_jinlmao@quicinc.com>,
+        Leo Yan <leo.yan@linaro.org>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Hao Zhang <quic_hazha@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
+References: <1682586037-25973-1-git-send-email-quic_taozha@quicinc.com>
+ <1682586037-25973-10-git-send-email-quic_taozha@quicinc.com>
+ <35b3facc-88bf-189b-513e-9666f4ee1de4@arm.com>
+From:   Tao Zhang <quic_taozha@quicinc.com>
+In-Reply-To: <35b3facc-88bf-189b-513e-9666f4ee1de4@arm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 8U38yvKnGDP5raf8wVWIovsSGCgKuqt_
+X-Proofpoint-GUID: 8U38yvKnGDP5raf8wVWIovsSGCgKuqt_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-06_06,2023-06-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
+ lowpriorityscore=0 mlxlogscore=999 adultscore=0 priorityscore=1501
+ malwarescore=0 impostorscore=0 phishscore=0 mlxscore=0 clxscore=1015
+ suspectscore=0 bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2306060091
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -65,166 +96,395 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krishna,
 
-Thanks for the patch!
+On 6/5/2023 6:19 PM, Suzuki K Poulose wrote:
+> On 27/04/2023 10:00, Tao Zhang wrote:
+>> Add nodes to configure the timestamp request based on input
+>> pattern match. Each TPDM that support DSB subunit has maximum of
+>> n(n<7) TPR registers to configure value for timestamp request
+>> based on input pattern match. Eight 32 bit registers providing
+>> DSB interface timestamp request  pattern match comparison. And
+>> each TPDM that support DSB subunit has maximum of m(m<7) TPMR
+>> registers to configure pattern mask for timestamp request. Eight
+>> 32 bit registers providing DSB interface timestamp request
+>> pattern match mask generation. Add nodes to enable/disable
+>> pattern timestamp and set pattern timestamp type.
+>>
+>> Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+>> ---
+>>   .../ABI/testing/sysfs-bus-coresight-devices-tpdm   |  48 ++++++
+>>   drivers/hwtracing/coresight/coresight-tpdm.c       | 182 
+>> ++++++++++++++++++++-
+>>   drivers/hwtracing/coresight/coresight-tpdm.h       |  14 ++
+>>   3 files changed, 239 insertions(+), 5 deletions(-)
+>>
+>> diff --git 
+>> a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm 
+>> b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> index c04c735..639b6fb8 100644
+>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
+>> @@ -122,3 +122,51 @@ Description:
+>>           Where:
+>>           <integer1> : Index number of XPMR register,  the range is 0 
+>> to 7
+>>           <integer2> : The value need to be written
+>> +
+>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_patt_val
+>> +Date:        March 2023
+>> +KernelVersion    6.3
+>
+> Similar to the previous comments, please update this.
+Sure, I will update this in the next patch series.
+>
+>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
+>> (QUIC) <quic_taozha@quicinc.com>
+>> +Description:
+>> +        (Write) Set the pattern value of DSB tpdm. Read
+>> +        the pattern value of DSB tpdm.
+>> +
+>> +        Accepts the following two values.
+>> +        value 1: Index number of TPR register
+>> +        value 2: The value need to be written
+>> +
+>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_patt_mask
+>> +Date:        March 2023
+>> +KernelVersion    6.3
+>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
+>> (QUIC) <quic_taozha@quicinc.com>
+>> +Description:
+>> +        (Write) Set the pattern mask of DSB tpdm. Read
+>> +        the pattern mask of DSB tpdm.
+>> +
+>> +        Accepts the following two values.
+>> +        value 1: Index number of TPMR register
+>> +        value 2: The value need to be written
+>> +
+>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_patt_ts
+>> +Date:        March 2023
+>> +KernelVersion    6.3
+>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
+>> (QUIC) <quic_taozha@quicinc.com>
+>> +Description:
+>> +        (Write) Set the pattern timestamp of DSB tpdm. Read
+>> +        the pattern timestamp of DSB tpdm.
+>> +
+>> +        Accepts only one of the 2 values -  0 or 1.
+>> +        0 : Disable DSB pattern timestamp.
+>> +        1 : Enable DSB pattern timestamp.
+>> +
+>> +What: /sys/bus/coresight/devices/<tpdm-name>/dsb_patt_type
+>> +Date:        March 2023
+>> +KernelVersion    6.3
+>> +Contact:    Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang 
+>> (QUIC) <quic_taozha@quicinc.com>
+>> +Description:
+>> +        (Write) Set the pattern type of DSB tpdm. Read
+>> +        the pattern type of DSB tpdm.
+>> +
+>> +        Accepts only one of the 2 values -  0 or 1.
+>> +        0 : Set the DSB pattern type to value.
+>> +        1 : Set the DSB pattern type to toggle.
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c 
+>> b/drivers/hwtracing/coresight/coresight-tpdm.c
+>> index 9387bdf..627de36 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
+>> @@ -78,6 +78,27 @@ static void set_trigger_type(struct tpdm_drvdata 
+>> *drvdata, u32 *val)
+>>           *val &= ~TPDM_DSB_CR_TRIG_TYPE;
+>>   }
+>>   +static void set_dsb_tier(struct tpdm_drvdata *drvdata, u32 *val)
+>> +{
+>> +    /* Set pattern timestamp type and enablement */
+>> +    if (drvdata->dsb->patt_ts) {
+>> +        *val |= TPDM_DSB_TIER_PATT_TSENAB;
+>> +        if (drvdata->dsb->patt_type)
+>> +            *val |= TPDM_DSB_TIER_PATT_TYPE;
+>> +        else
+>> +            *val &= ~TPDM_DSB_TIER_PATT_TYPE;
+>> +    } else {
+>> +        *val &= ~TPDM_DSB_TIER_PATT_TSENAB;
+>> +    }
+>> +
+>> +    /* Set trigger timestamp */
+>> +    if (drvdata->dsb->trig_ts)
+>> +        *val |= TPDM_DSB_TIER_XTRIG_TSENAB;
+>> +    else
+>> +        *val &= ~TPDM_DSB_TIER_XTRIG_TSENAB;
+>> +
+>> +}
+>> +
+>>   static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
+>>   {
+>>       u32 val, i;
+>> @@ -90,6 +111,10 @@ static void tpdm_enable_dsb(struct tpdm_drvdata 
+>> *drvdata)
+>>                  drvdata->base + TPDM_DSB_EDCMR(i));
+>>         for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
+>> +        writel_relaxed(drvdata->dsb->patt_val[i],
+>> +                drvdata->base + TPDM_DSB_TPR(i));
+>> +        writel_relaxed(drvdata->dsb->patt_mask[i],
+>> +                drvdata->base + TPDM_DSB_TPMR(i));
+>>           writel_relaxed(drvdata->dsb->trig_patt_val[i],
+>>                   drvdata->base + TPDM_DSB_XPR(i));
+>>           writel_relaxed(drvdata->dsb->trig_patt_mask[i],
+>> @@ -97,11 +122,7 @@ static void tpdm_enable_dsb(struct tpdm_drvdata 
+>> *drvdata)
+>>       }
+>>         val = readl_relaxed(drvdata->base + TPDM_DSB_TIER);
+>> -    /* Set trigger timestamp */
+>> -    if (drvdata->dsb->trig_ts)
+>> -        val |= TPDM_DSB_TIER_XTRIG_TSENAB;
+>> -    else
+>> -        val &= ~TPDM_DSB_TIER_XTRIG_TSENAB;
+>> +    set_dsb_tier(drvdata, &val);
+>>       writel_relaxed(val, drvdata->base + TPDM_DSB_TIER);
+>>         val = readl_relaxed(drvdata->base + TPDM_DSB_CR);
+>> @@ -451,6 +472,153 @@ static ssize_t dsb_edge_ctrl_mask_store(struct 
+>> device *dev,
+>>   }
+>>   static DEVICE_ATTR_RW(dsb_edge_ctrl_mask);
+>>   +static ssize_t dsb_patt_val_show(struct device *dev,
+>> +                      struct device_attribute *attr,
+>> +                      char *buf)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +    ssize_t size = 0;
+>> +    int i = 0;
+>> +
+>> +    spin_lock(&drvdata->spinlock);
+>> +    for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
+>> +        size += sysfs_emit_at(buf, size,
+>> +                  "Index: 0x%x Value: 0x%x\n", i,
+>> +                  drvdata->dsb->patt_val[i]);
+>> +    }
+>
+> Similarly here, please check for overflows and stop in case.
+Sure, I will update this in the next patch series.
+>
+>> + spin_unlock(&drvdata->spinlock);
+>> +    return size;
+>> +}
+>> +
+>> +/*
+>> + * value 1: Index of TPR register
+>> + * value 2: Value need to be written
+>> + */
+>> +static ssize_t dsb_patt_val_store(struct device *dev,
+>> +                       struct device_attribute *attr,
+>> +                       const char *buf,
+>> +                       size_t size)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +    unsigned long index, val;
+>> +
+>> +    if (sscanf(buf, "%lx %lx", &index, &val) != 2)
+>> +        return -EINVAL;
+>> +    if (index >= TPDM_DSB_MAX_PATT)
+>> +        return -EPERM;
+>> +
+>> +    spin_lock(&drvdata->spinlock);
+>> +    drvdata->dsb->patt_val[index] = val;
+>> +    spin_unlock(&drvdata->spinlock);
+>> +    return size;
+>> +}
+>> +static DEVICE_ATTR_RW(dsb_patt_val);
+>> +
+>> +static ssize_t dsb_patt_mask_show(struct device *dev,
+>> +                       struct device_attribute *attr,
+>> +                       char *buf)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +    ssize_t size = 0;
+>> +    int i = 0;
+>> +
+>> +    spin_lock(&drvdata->spinlock);
+>> +    for (i = 0; i < TPDM_DSB_MAX_PATT; i++) {
+>> +        size += sysfs_emit_at(buf, size,
+>> +                  "Index: 0x%x Value: 0x%x\n", i,
+>> +                  drvdata->dsb->patt_mask[i]);
+>
+> Same here
+Sure, I will update this in the next patch series.
+>
+>> +    }
+>> +    spin_unlock(&drvdata->spinlock);
+>> +    return size;
+>> +}
+>> +
+>> +/*
+>> + * value 1: Index of TPMR register
+>> + * value 2: Value need to be written
+>> + */
+>> +static ssize_t dsb_patt_mask_store(struct device *dev,
+>> +                    struct device_attribute *attr,
+>> +                    const char *buf,
+>> +                    size_t size)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +    unsigned long index, val;
+>> +
+>> +    if (sscanf(buf, "%lx %lx", &index, &val) != 2)
+>> +        return -EINVAL;
+>> +    if (index >= TPDM_DSB_MAX_PATT)
+>> +        return -EPERM;
+>> +
+>> +    spin_lock(&drvdata->spinlock);
+>> +    drvdata->dsb->patt_mask[index] = val;
+>> +    spin_unlock(&drvdata->spinlock);
+>> +    return size;
+>> +}
+>> +static DEVICE_ATTR_RW(dsb_patt_mask);
+>> +
+>> +static ssize_t dsb_patt_ts_show(struct device *dev,
+>> +                     struct device_attribute *attr,
+>> +                     char *buf)
+>
+> minor nit: alignment ?
 
-On 6.06.23 8:49, Krishna chaitanya chundru wrote:
-> Add support to vote for ICC bandwidth based up on the link
-> speed and width.
-> 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> ---
->   drivers/pci/controller/dwc/pcie-qcom-ep.c | 73 +++++++++++++++++++++++++++++++
->   1 file changed, 73 insertions(+)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> index 19b3283..79e7559 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> @@ -17,6 +17,7 @@
->   #include <linux/phy/pcie.h>
->   #include <linux/phy/phy.h>
->   #include <linux/platform_device.h>
-> +#include <linux/interconnect.h>
->   #include <linux/pm_domain.h>
->   #include <linux/regmap.h>
->   #include <linux/reset.h>
-> @@ -28,6 +29,7 @@
->   #define PARF_SYS_CTRL				0x00
->   #define PARF_DB_CTRL				0x10
->   #define PARF_PM_CTRL				0x20
-> +#define PARF_PM_STTS				0x24
->   #define PARF_MHI_CLOCK_RESET_CTRL		0x174
->   #define PARF_MHI_BASE_ADDR_LOWER		0x178
->   #define PARF_MHI_BASE_ADDR_UPPER		0x17c
-> @@ -128,6 +130,9 @@
->   /* DBI register fields */
->   #define DBI_CON_STATUS_POWER_STATE_MASK		GENMASK(1, 0)
->   
-> +#define DBI_LINKCTRLSTATUS			0x80
-> +#define DBI_LINKCTRKSTATUS_SHIFT	16
-> +
->   #define XMLH_LINK_UP				0x400
->   #define CORE_RESET_TIME_US_MIN			1000
->   #define CORE_RESET_TIME_US_MAX			1005
-> @@ -187,6 +192,8 @@ struct qcom_pcie_ep {
->   	enum qcom_pcie_ep_link_status link_status;
->   	int global_irq;
->   	int perst_irq;
-> +
-> +	struct icc_path *icc;
->   };
->   
->   static int qcom_pcie_ep_core_reset(struct qcom_pcie_ep *pcie_ep)
-> @@ -253,9 +260,56 @@ static void qcom_pcie_dw_stop_link(struct dw_pcie *pci)
->   	disable_irq(pcie_ep->perst_irq);
->   }
->   
-> +static void qcom_pcie_icc_update(struct qcom_pcie_ep *pcie_ep)
-> +{
-> +	struct dw_pcie *pci = &pcie_ep->pci;
-> +	u32 val, bw;
-> +	int speed, width;
-> +	int ret;
-> +
-> +	if (!pcie_ep->icc)
-> +		return;
-> +
-> +	val = dw_pcie_readl_dbi(pci, DBI_LINKCTRLSTATUS);
-> +	val = val >> DBI_LINKCTRKSTATUS_SHIFT;
-> +
-> +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, val);
-> +	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, val);
-> +
-> +	/*
-> +	 * ICC needs avg bw in KBps.
-> +	 *
-> +	 * For example for 2Gbps the avg BW = 2x1000x1000x1000/8*1000 = 250000
-> +	 */
-> +	switch (speed) {
-> +	case 1:
-> +		bw = 250000;	/* avg bw for GEN1 per lane: 2Gbps, peak bw: no vote */
-> +		break;
-> +	case 2:
-> +		bw = 500000;	/* avg bw for GEN2 per lane: 4Gbps, peak bw no vote */
-> +		break;
-> +	case 3:
-> +		bw = 1000000;	/* avg bw for GEN3 per lane: 8Gbps, peak bw no vote */
-> +		break;
-> +	default:
-> +		WARN_ON_ONCE(1);
-> +		fallthrough;
-> +	case 4:
-> +		bw = 2000000;	/* avg bw for GEN4 per lane: 16Gbps, peak bw no vote */
-> +		break;
-> +	}
-> +
-> +	ret = icc_set_bw(pcie_ep->icc, width * bw, 0);
+Is there a criteria for the alignment?
 
-Here you should use a non-zero value for peak bandwidth. You can use the average value also as peak. 
-There are some existing macros like GBps_to_icc(). Please use them.
+I edit the file by Notepad++, and seems like these lines have been aligned.
 
-> +	if (ret) {
-> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
-> +			ret);
-> +	}
-> +}
-> +
->   static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
->   {
->   	int ret;
-> +	struct dw_pcie *pci = &pcie_ep->pci;
->   
->   	ret = clk_bulk_prepare_enable(pcie_ep->num_clks, pcie_ep->clks);
->   	if (ret)
-> @@ -277,6 +331,20 @@ static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
->   	if (ret)
->   		goto err_phy_exit;
->   
-> +	/*
-> +	 * Some Qualcomm platforms require interconnect bandwidth constraints
-> +	 * to be set before enabling interconnect clocks.
-> +	 *
-> +	 * Set an initial average bandwidth corresponding to single-lane Gen 1
-> +	 * for the pcie to mem path.
-> +	 */
-> +	ret = icc_set_bw(pcie_ep->icc, 250000, 0); /* avg bw: 2Gbps, peak bw: no vote */
-
-Ditto.
-
-> +	if (ret) {
-> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
-> +			ret);
-> +		goto err_phy_exit;
-> +	}
-> +
->   	return 0;
->   
->   err_phy_exit:
-> @@ -550,6 +618,10 @@ static int qcom_pcie_ep_get_resources(struct platform_device *pdev,
->   	if (IS_ERR(pcie_ep->phy))
->   		ret = PTR_ERR(pcie_ep->phy);
->   
-> +	pcie_ep->icc = devm_of_icc_get(dev, "pci");
-
-Is this "pci" path documented in the bindings?
-
-Thanks,
-Georgi
-
-> +	if (IS_ERR(pcie_ep->icc))
-> +		ret = PTR_ERR(pcie_ep->icc);
-> +
->   	return ret;
->   }
->   
-> @@ -572,6 +644,7 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
->   	} else if (FIELD_GET(PARF_INT_ALL_BME, status)) {
->   		dev_dbg(dev, "Received BME event. Link is enabled!\n");
->   		pcie_ep->link_status = QCOM_PCIE_EP_LINK_ENABLED;
-> +		qcom_pcie_icc_update(pcie_ep);
->   	} else if (FIELD_GET(PARF_INT_ALL_PM_TURNOFF, status)) {
->   		dev_dbg(dev, "Received PM Turn-off event! Entering L23\n");
->   		val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
-
+>
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +
+>> +    return sysfs_emit(buf, "%u\n",
+>> +             (unsigned int)drvdata->dsb->patt_ts);
+>> +}
+>> +
+>> +/*
+>> + * value 1: Enable/Disable DSB pattern timestamp
+>> + */
+>> +static ssize_t dsb_patt_ts_store(struct device *dev,
+>> +                      struct device_attribute *attr,
+>> +                      const char *buf,
+>> +                      size_t size)
+>
+> minor nit: Alignmnet
+Same as my previous comment.
+>
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +    unsigned long val;
+>> +
+>> +    if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
+>> +        return -EINVAL;
+>> +
+>> +    spin_lock(&drvdata->spinlock);
+>> +    if (val)
+>> +        drvdata->dsb->patt_ts = true;
+>> +    else
+>> +        drvdata->dsb->patt_ts = false;
+>
+> ultra minor nit:
+>
+>     drvdata->dsb->patt_ts = !!val;
+>
+>
+>> + spin_unlock(&drvdata->spinlock);
+>> +    return size;
+>> +}
+>> +static DEVICE_ATTR_RW(dsb_patt_ts);
+>> +
+>> +static ssize_t dsb_patt_type_show(struct device *dev,
+>> +                       struct device_attribute *attr, char *buf)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +
+>> +    return sysfs_emit(buf, "%u\n",
+>> +             (unsigned int)drvdata->dsb->patt_type);
+>> +}
+>> +
+>> +/*
+>> + * value 1: Set DSB pattern type
+>> + */
+>> +static ssize_t dsb_patt_type_store(struct device *dev,
+>> +                    struct device_attribute *attr,
+>> +                    const char *buf, size_t size)
+>> +{
+>> +    struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +    unsigned long val;
+>> +
+>> +    if ((kstrtoul(buf, 0, &val)) || (val & ~1UL))
+>> +        return -EINVAL;
+>> +
+>> +    spin_lock(&drvdata->spinlock);
+>> +    drvdata->dsb->patt_type = val;
+>> +    spin_unlock(&drvdata->spinlock);
+>> +    return size;
+>> +}
+>> +static DEVICE_ATTR_RW(dsb_patt_type);
+>> +
+>>   static ssize_t dsb_trig_patt_val_show(struct device *dev,
+>>                          struct device_attribute *attr,
+>>                          char *buf)
+>> @@ -601,6 +769,10 @@ static struct attribute *tpdm_dsb_attrs[] = {
+>>       &dev_attr_dsb_mode.attr,
+>>       &dev_attr_dsb_edge_ctrl.attr,
+>>       &dev_attr_dsb_edge_ctrl_mask.attr,
+>> +    &dev_attr_dsb_patt_val.attr,
+>> +    &dev_attr_dsb_patt_mask.attr,
+>> +    &dev_attr_dsb_patt_ts.attr,
+>> +    &dev_attr_dsb_patt_type.attr,
+>>       &dev_attr_dsb_trig_patt_val.attr,
+>>       &dev_attr_dsb_trig_patt_mask.attr,
+>>       &dev_attr_dsb_trig_ts.attr,
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h 
+>> b/drivers/hwtracing/coresight/coresight-tpdm.h
+>> index 55c620f..9ad32a6 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
+>> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
+>> @@ -12,6 +12,8 @@
+>>   /* DSB Subunit Registers */
+>>   #define TPDM_DSB_CR        (0x780)
+>>   #define TPDM_DSB_TIER        (0x784)
+>> +#define TPDM_DSB_TPR(n)        (0x788 + (n * 4))
+>> +#define TPDM_DSB_TPMR(n)    (0x7A8 + (n * 4))
+>>   #define TPDM_DSB_XPR(n)        (0x7C8 + (n * 4))
+>>   #define TPDM_DSB_XPMR(n)    (0x7E8 + (n * 4))
+>>   #define TPDM_DSB_EDCR(n)    (0x808 + (n * 4))
+>> @@ -24,8 +26,12 @@
+>>   /* Enable bit for DSB subunit trigger type */
+>>   #define TPDM_DSB_CR_TRIG_TYPE        BIT(12)
+>>   +/* Enable bit for DSB subunit pattern timestamp */
+>> +#define TPDM_DSB_TIER_PATT_TSENAB        BIT(0)
+>>   /* Enable bit for DSB subunit trigger timestamp */
+>>   #define TPDM_DSB_TIER_XTRIG_TSENAB        BIT(1)
+>> +/* Bit for DSB subunit pattern type */
+>> +#define TPDM_DSB_TIER_PATT_TYPE        BIT(2)
+>>     /* DSB programming modes */
+>>   /* Test mode control bit*/
+>> @@ -86,6 +92,10 @@
+>>    * @mode:             DSB programming mode
+>>    * @edge_ctrl:        Save value for edge control
+>>    * @edge_ctrl_mask:   Save value for edge control mask
+>> + * @patt_val:         Save value for pattern
+>> + * @patt_mask:        Save value for pattern mask
+>> + * @patt_ts:          Enable/Disable pattern timestamp
+>> + * @patt_type:        Set pattern type
+>>    * @trig_patt_val:    Save value for trigger pattern
+>>    * @trig_patt_mask:   Save value for trigger pattern mask
+>>    * @trig_ts:          Enable/Disable trigger timestamp.
+>> @@ -95,6 +105,10 @@ struct dsb_dataset {
+>>       u32                mode;
+>>       u32                edge_ctrl[TPDM_DSB_MAX_EDCR];
+>>       u32                edge_ctrl_mask[TPDM_DSB_MAX_EDCMR];
+>> +    u32                patt_val[TPDM_DSB_MAX_PATT];
+>> +    u32                patt_mask[TPDM_DSB_MAX_PATT];
+>> +    bool            patt_ts;
+>> +    bool            patt_type;
+>
+> minor nit: Alignment of the bool fields ?
+>
+> Also, it may be good to move the bool fields together, for better
+> packing of the structure.
+Sure, I will update in the next patch series.
+>
+>>       u32 trig_patt_val[TPDM_DSB_MAX_PATT];
+>>       u32                trig_patt_mask[TPDM_DSB_MAX_PATT];
+>>       bool            trig_ts;
+>
+> Suzuki
