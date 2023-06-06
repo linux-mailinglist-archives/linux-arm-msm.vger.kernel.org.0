@@ -2,72 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B89D723756
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 08:12:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2559A72375D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 08:14:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234446AbjFFGM3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 02:12:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59240 "EHLO
+        id S232906AbjFFGOm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 02:14:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234678AbjFFGM2 (ORCPT
+        with ESMTP id S234614AbjFFGOk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 02:12:28 -0400
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30F1D1A7
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 23:12:26 -0700 (PDT)
-Received: by mail-qv1-xf2c.google.com with SMTP id 6a1803df08f44-6260e8a1424so40962736d6.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 23:12:26 -0700 (PDT)
+        Tue, 6 Jun 2023 02:14:40 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 183C61B5
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 23:14:38 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-5149390b20aso8559733a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 23:14:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686031945; x=1688623945;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=g0yP0hKSoGNQHQJOAvhdyai2x0vVbUlOAYuNmq90NvQ=;
-        b=Yf3zsxCn+XyD5apxlwhoKiYC23ySiy8noGTHklGgicBumpof4sFFDtlm5WGq/1VEbi
-         QHLkJitYP34RslgpJ8xw23KeiiyvwSBE5dtBMv4pI0VG8RrDsgHxiugcEytaJ6JmLVj2
-         jhzcvHVTd/51GPvdtnE7Qo5ubkS/xbsa7FjIXQX+Ne8d+8hVkdmoxJMuFV55OXd9LzwO
-         fKlLasKIX+BXiJhQkT5H6CERLikY6SGhVCIsDjuPGlxW1H5JnrhWeQEFP0lYoy3NJw87
-         fWhGK2FFTnXBnDFIW5facYxVc+vP5fw3ndYZaVaQgs5D+SxDrqAah8AQKcZMsXEROH9c
-         ic5w==
+        d=linaro.org; s=google; t=1686032076; x=1688624076;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=c9/ke8vQiyBtX+dMh7jOybxE1aXL3oACs0/tXuO+L4U=;
+        b=eWY5hKNC6JKDtcg4koedkUquXkdz4Qm7ioMxMxeSjG40XG3NTMTnzK7wOpWQfTHpZM
+         3UipQrboWk2BEtNpxv9nzlw7CkPmQzMREcltPyxNq7b+1A48GKNiLAYrDYMQDD2CxpgU
+         jKFLfBUWdm1nlGtj5XilnON1j3BW3L0Vfde6K1BcsaaJAHUoDPUCrwiygj+BBINUFoQG
+         +mfNC3eVh7aFzeMtwa4CM0CjLBCegI8dvl1QgNKPSF62tBw2cUrpCPzE92UTSO/rWrSD
+         vKVw291npS8n956cbRw5LDbVtiwsemu4h3S1VOup36wy3m1ZJpmQpb1Djcf4XRP2IgbL
+         Tq5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686031945; x=1688623945;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=g0yP0hKSoGNQHQJOAvhdyai2x0vVbUlOAYuNmq90NvQ=;
-        b=G6HkGBeKqXSOykqirv0vaMlE6rOs/jWqXKfA9XxwPR8alLM+xPwXCvIbn2FkzMmhrx
-         kw6ZWanDgG7L5Flx0PuukpOiuvVVr+tt0OK/iozozb0uqOq7wO14LoR1o0Bopg2D2eJu
-         fz9Qfei5wi8U5T6XZMSvMDPJrL8LAr+wc9xGC/yxA8ZcpKpF8whQgBg6cuscCu7S5/dR
-         /ArFwI316ui9cJmXkfSRSs1mA9YIcuuHbjuUxmA6Lh3AJzTRL9j5fg8u6NfB3CKnzfhz
-         MlKf0WGeljrRRe2ELrxTZ8A7hCRBwz0U3+YLMoJSTCnvMIZKbo6j+D2mHrFYbCRTHzeV
-         yq6Q==
-X-Gm-Message-State: AC+VfDyQVH5r3qAkfYZXP2vO7sV6O7BRHhIyUpaRwkAC2XaxLn2YOAsv
-        UucNMJtf/gX97G8WEuJ5DMJyRT+Gv3+jqFsK1whQ7w==
-X-Google-Smtp-Source: ACHHUZ4Pp6l6ZPzuoYCGnS7PtRbw4wsx5xYkRMJnsEhA2T8k0AyHRJhwMSIy2FzE78BXBY2HjCEywX3NOT6GL7Wkqug=
-X-Received: by 2002:a05:6214:29ec:b0:625:aa49:19ed with SMTP id
- jv12-20020a05621429ec00b00625aa4919edmr1058826qvb.58.1686031945214; Mon, 05
- Jun 2023 23:12:25 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686032076; x=1688624076;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=c9/ke8vQiyBtX+dMh7jOybxE1aXL3oACs0/tXuO+L4U=;
+        b=AXAhCbPJFPQWIB41UqDaBeARUl4SYb4wIrfd6Bp8KALDb2axPtku1d2pdR3z2j/lej
+         YuDxQWk7GXd8ZRG3fQLquXtZSm6mLE3NzeYtj3juG3HyU9T4GxjGWM/jD2BFLC3EAAQn
+         OkxDvQ+09bS+aNaFScQrBzJtM/ElZRJ9N96XDKRkNXV3cHQ4pFKBhRDNOz2VLG1KsUJ0
+         gchRd4q1wWB/sbvWozyxCUDvsao8yBBPu8WGnK8tK1w4jfqa1MA94BRVWlfO8w68v/43
+         ab8fGKwQTV2MsI+ibhhCcZk5e1fxKbbEcWAlkFVEURSpbZu5uUoaPI+tycnrYkVhTNrB
+         oW1w==
+X-Gm-Message-State: AC+VfDz2Vc/dHZxLsPLZYk8C4uf8+Ij22Dja/puJjAg1MFclF752nLaC
+        HY4YB47/iRQF43iba4ZkDmktnw==
+X-Google-Smtp-Source: ACHHUZ64Z9lKKWilVnf6tdOypQFOM3iC4izULYvUu+KGcG0PYJwTnO62ZR0THx9JxKoLkPlyBtVhVA==
+X-Received: by 2002:aa7:d3c3:0:b0:516:4394:244f with SMTP id o3-20020aa7d3c3000000b005164394244fmr954905edr.12.1686032076496;
+        Mon, 05 Jun 2023 23:14:36 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id s25-20020aa7c559000000b005163c39645bsm4672584edr.51.2023.06.05.23.14.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Jun 2023 23:14:36 -0700 (PDT)
+Message-ID: <d187eafb-4a80-9479-d063-3a01b47d8efa@linaro.org>
+Date:   Tue, 6 Jun 2023 08:14:33 +0200
 MIME-Version: 1.0
-References: <20230605094710.2037879-1-amit.pundir@linaro.org> <cd71ee53-391a-90fd-27ca-c174f2b24a94@linaro.org>
-In-Reply-To: <cd71ee53-391a-90fd-27ca-c174f2b24a94@linaro.org>
-From:   Amit Pundir <amit.pundir@linaro.org>
-Date:   Tue, 6 Jun 2023 11:41:48 +0530
-Message-ID: <CAMi1Hd0MhOyn1HHq5YYFxJwWrkMZbS9ZqksNDBLM9Ayx67rEOg@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: Split sdm845-db845c to add headless support
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH V2 01/13] dt-bindings: remoteproc: qcom: Add support for
+ multipd model
+Content-Language: en-US
+To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, jassisinghbrar@gmail.com,
+        mathieu.poirier@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, quic_eberman@quicinc.com, quic_mojha@quicinc.com,
+        kvalo@kernel.org, loic.poulain@linaro.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
+        quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
+        quic_poovendh@quicinc.com, quic_varada@quicinc.com,
+        quic_devipriy@quicinc.com
+References: <20230521222852.5740-1-quic_mmanikan@quicinc.com>
+ <20230521222852.5740-2-quic_mmanikan@quicinc.com>
+ <7940c743-815f-f864-d015-43d7e916ecfa@linaro.org>
+ <a1456f62-d0a7-d5ec-b379-db1b6035c89c@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <a1456f62-d0a7-d5ec-b379-db1b6035c89c@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -76,114 +90,80 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 5 Jun 2023 at 16:07, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 05/06/2023 11:47, Amit Pundir wrote:
-> > This is a follow-up of the upstream discussion,
-> > https://lore.kernel.org/linux-kernel/20230124182857.1524912-1-amit.pundir@linaro.org/T/#u,
-> > around adding a reserved memory region in sdm845-db845c
-> > for the framebuffer memory (the splash region set up by
-> > the bootloader) but the general opinion was to avoid
-> > adding that reserved memory for the headless DB845c
-> > usecase.
-> >
-> > So this patch splits the sdm845-db845c into a common dtsi,
-> > a new sdm845-db845-headless DT, which disables the mdss
-> > display subsystem, and a new sdm845-db845c DT with an
-> > additional reserved-memory region for the framebuffer.
-> >
-> > The default sdm845-db845c.dtb remains pretty much the same
-> > (with an exception of additional reserved-memory region),
-> > while others can use sdm845-db845c-headless.dtb for their
-> > headless systems.
->
-> You should describe the hardware in commit msg. What is "headless"? If
-> no HDMI plugged in, then it is a NAK because plug or unplugged HDMI
-> cable is not a property of a DTS.
+On 05/06/2023 14:02, Manikanta Mylavarapu wrote:
+>>> +  memory-region:
+>>> +    items:
+>>> +      - description: Q6 pd reserved region
+>>> +
+>>> +  glink-edge:
+>>> +    $ref: /schemas/remoteproc/qcom,glink-edge.yaml#
+>>> +    description:
+>>> +      Qualcomm G-Link subnode which represents communication edge, channels
+>>> +      and devices related to the Modem.
+>>> +
+>>> +patternProperties:
+>>> +  "^pd-1|pd-2|pd-3":
+>>> +    type: object
+>>> +    description:
+>>> +      In Multipd model, WCSS pd depends on Q6 pd i.e Q6 pd should be up before
+>>> +      WCSS. It can be achieved by keeping wcss pd node as subnode of Q6
+>>> +      device node.
+>>
+>> That's not enough. Your description does not say what is this, why you
+>> have two protection domains for same compatible. What's more, it a bit
+>> deviates from hardware description.
+>>
+> WCSS means 'wireless connectivity sub system', in simple words it's a
+> wifi radio block.
+> 
+> IPQ5018 SOC has both internal (AHB) wifi radio/WCSS and external (PCIE)
+> wifi radio/WCSS. In Q6, Root protection domain will provide services to
+> both internal (AHB) and external (PCIE) wifi radio's protection domain.
+> So we have two protection domains for IPQ5018, one is for internal(AHB) 
+> and other is for external(PCIE) wifi radio.
 
-Hi, my only intended goal [1] is to add a reserved-memory region
-(specific to the framebuffer memory reserved by the bootloader for the
-boot splash) in sdm45-db845c. But I have been told that reserving
-these 30+ MBs for every DB845c is a waste in case we are not using
-display at all (a headless system?). So I prepared this patch for RFC.
-The definition of headless is ambiguous to me as well. It could be no
-HDMI plugged in or no display drivers enabled at all. I believe it all
-comes down to specific use cases.
+So it is now in email, but not in the code...
+> 
+>>> +
+>>> +    properties:
+>>> +      compatible:
+>>> +        enum:
+>>> +          - qcom,ipq5018-wcss-ahb-mpd
+>>> +          - qcom,ipq9574-wcss-ahb-mpd
+>>> +          - qcom,ipq5018-wcss-pcie-mpd
+>>
+>> Keep rather alphabetical order (so both 5018 together).
+>>
+>> I also do not understand these at all. Why adding bus type to
+>> compatible? This rarely is allowed (unless it is PCIe controller within
+>> soc).
+>>
+> IPQ5018 SOC has in-built PCIE controller. Here QDSP6 will bring up
+> external(PCIE) and internal (AHB) wifi radio's. To separate AHB, PCIE 
+> radio's properties, i have added bus type to compatible.
 
-As far as my use-case (vanilla AOSP) is concerned, display is a
-critical component and device doesn't boot to completion unless it is
-hooked to any kind of display. May I suggest we go back to my original
-change [1] of adding a reserved-memory region for now and let the
-users of a headless system, define or come up with their respective
-use-case?
+It's the same device - WCSS - right? We do not create multiple nodes and
+compatibles for the same devices. Bus suffixes are almost never parts of
+compatibles.
 
-Regards,
-Amit Pundir
-[1] https://lore.kernel.org/linux-kernel/20230124182857.1524912-1-amit.pundir@linaro.org/T/#u
 
->
-> >
-> > Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
-> > ---
-> > Please pick this after the lvs regulator nodes reordering patch
-> > https://lore.kernel.org/lkml/20230602161246.1855448-1-amit.pundir@linaro.org/T/#u.
-> > I'll rebase and resend this patch otherwise.
-> >
-> >  arch/arm64/boot/dts/qcom/Makefile             |    1 +
-> >  .../boot/dts/qcom/sdm845-db845c-common.dtsi   | 1178 +++++++++++++++++
-> >  .../boot/dts/qcom/sdm845-db845c-headless.dts  |    9 +
-> >  arch/arm64/boot/dts/qcom/sdm845-db845c.dts    | 1172 +---------------
->
-> A lot of duplication. Are you sure you generated the patches with
-> correct -M/-C/-B arguments to rename or copy?
->
-> >  4 files changed, 1194 insertions(+), 1166 deletions(-)
-> >  create mode 100644 arch/arm64/boot/dts/qcom/sdm845-db845c-common.dtsi
-> >  create mode 100644 arch/arm64/boot/dts/qcom/sdm845-db845c-headless.dts
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> > index 4f9e81253e18..22876ea2e409 100644
-> > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > @@ -166,6 +166,7 @@ dtb-$(CONFIG_ARCH_QCOM)   += sdm845-cheza-r1.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += sdm845-cheza-r2.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += sdm845-cheza-r3.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += sdm845-db845c.dtb
-> > +dtb-$(CONFIG_ARCH_QCOM)      += sdm845-db845c-headless.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += sdm845-db845c-navigation-mezzanine.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += sdm845-lg-judyln.dtb
-> >  dtb-$(CONFIG_ARCH_QCOM)      += sdm845-lg-judyp.dtb
-> > diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-db845c-common.dtsi
-> > new file mode 100644
-> > index 000000000000..ecc4a851e29c
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-common.dtsi
-> > @@ -0,0 +1,1178 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +/*
-> > + * Copyright (c) 2019, Linaro Ltd.
-> > + */
-> > +
-> > +/dts-v1/;
-> > +
-> > +#include <dt-bindings/leds/common.h>
-> > +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> > +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-> > +#include <dt-bindings/sound/qcom,q6afe.h>
-> > +#include <dt-bindings/sound/qcom,q6asm.h>
-> > +#include "sdm845.dtsi"
-> > +#include "sdm845-wcd9340.dtsi"
-> > +#include "pm8998.dtsi"
-> > +#include "pmi8998.dtsi"
-> > +
-> > +/ {
-> > +     model = "Thundercomm Dragonboard 845c";
-> > +     compatible = "thundercomm,db845c", "qcom,sdm845";
->
-> So it is the same hardware? Why compatible is in common part? I don't
-> understand this change.
->
-> Best regards,
-> Krzysztof
->
+>>
+>> Drop.
+>>
+>>> +
+>>> +unevaluatedProperties: false
+>>
+>> This changed... why?
+>>
+>>
+> 'unevaluatedProperties' is similar to 'additionalProperties' except
+> that it recognize properties declared in subschemas as well.
+
+You don't have to explain me what are unevaluatedProperties or
+additionalProperties. Let's assume that I know them. What you should
+explain is why you changed it. Where is the reference to other schema?
+
+
+Best regards,
+Krzysztof
+
