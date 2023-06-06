@@ -2,197 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DD53723E95
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 11:58:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE4C7723F0B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 12:15:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237546AbjFFJ6Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 05:58:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60572 "EHLO
+        id S233827AbjFFKPK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 06:15:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236970AbjFFJ6U (ORCPT
+        with ESMTP id S233058AbjFFKPI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 05:58:20 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E89F210F2;
-        Tue,  6 Jun 2023 02:58:09 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3566f70r018590;
-        Tue, 6 Jun 2023 09:58:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=k4qCw/xNHwNtKcdRQNUTH/pfdWG3pyOk5FKCOUcEiCc=;
- b=ICGihW2zYJ9FnhDWrgbTrl2GLy/H+U8SIwYNdt0t3a2G6Qnuz4vWP+j+ifqfDSUlaAHc
- vKb/2PfgfDhEwimho2s20lLy1TmrF8vgS+u1/X3QZki4X+Vmu4Gd0xEn0hj8oZciHuwD
- aAVQnHOiMOem8ccUVv58t556BpMR+owchSwfIp4Pa8eY4lomeRH8nndGHFRoEczJI2xh
- aowIp5EtxSVUfsOdvHXtNTbNYzh4Gr+KRKeANcFRiazmHQc+I9gBBt9eAHTZgqNKjfj2
- hqrvMifoPpT8oVGD5Hpt3DQJFgBjFI7IbZHOpirw+UTsQMmUKai4NzMye2sGQO1NT3nt +A== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r1jg3huvc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 06 Jun 2023 09:58:06 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3569w5c7022087
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 6 Jun 2023 09:58:05 GMT
-Received: from harihk-linux.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 6 Jun 2023 02:58:00 -0700
-From:   Hariharan K <quic_harihk@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_arajkuma@quicinc.com>,
-        <quic_anusha@quicinc.com>
-Subject: [PATCH 2/2] arm64: dts: qcom: ipq5332: add support for the RDP446 variant
-Date:   Tue, 6 Jun 2023 15:27:32 +0530
-Message-ID: <20230606095732.12884-3-quic_harihk@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230606095732.12884-1-quic_harihk@quicinc.com>
-References: <20230606095732.12884-1-quic_harihk@quicinc.com>
+        Tue, 6 Jun 2023 06:15:08 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6DD60E5B
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 03:15:06 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id ffacd0b85a97d-30ae967ef74so4653159f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 03:15:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686046505; x=1688638505;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qNkliQDOX5/DehjdcQjHrvfLhUKbrTQj51iuKhg8zgQ=;
+        b=PeTPaH5ibJCAkBRiyVus6ZSYfqU8v5zhbB1pCsTbPy/BzRdPgzKA4Na0VRu2XdyKav
+         JSm0XHG57qT7+kLkY73VFINxtuFRnMruq75OTD75iU9vt2ODFzjCJcnOG8yD0mohc4DT
+         61dWdJdQJhKIaltHJQfbELKuvqrgdwOHcwYNwnMHXLhFz7w5VCBGnRnufuCmIlcfJAsI
+         wP0/k8CLAB11/Rfj+yHdr6Csp9efQgxULzpxSqCxHSVgp42cC3QZQoDCQhCewqfrMWT0
+         GgijQkB/moacltprbDhn2JYX19tIBBpb2DlizG9k3JI675+bUPEtOeoLn/YlpO+SgykV
+         StXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686046505; x=1688638505;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qNkliQDOX5/DehjdcQjHrvfLhUKbrTQj51iuKhg8zgQ=;
+        b=OaRgOq6elZxEGn5LvBbVwhd8Dy37ruM0LylIguUBBOmLP/9HPXGWcBhnVcB5cRSNCd
+         6THpjn5JKOLN0aFyBDuwBfMfeORyFWkEGq2bNwtFsqvgiWOModJ86MthOONTrH5zptqp
+         HFlEE+sSwXsxsnsCFjSudLCbkp72K9I1WEVHhzmZaQNtFTtVpDnMMHdyVvsoG7Rfw+uG
+         w4axp1TMY57bSH9vivxIXFat3CUzDXj+/1ttTP0OY1gAnCnkSsHf+eaCMz9hZg7ji0Ab
+         KqfSKPYXruUcS1Tt5NsBOOanebT9MYdp40g1G1hoO1C4B0gjzELMiB1INHLDdiyx5MP5
+         6weA==
+X-Gm-Message-State: AC+VfDz9ecjCt1ggK8lXaPdbnFOQZGzJ6/6dCXc0n/NwvFOFMyMUAVUC
+        HbGMdl1hzH7N+kzWUDybEc9L4A==
+X-Google-Smtp-Source: ACHHUZ7UXzN3sjrmWHqnF6qF45MerD7fGvSmOZEJhXivlS7r1ZQTZXAdh6hooFfVKS3RP5fx9S7ekw==
+X-Received: by 2002:a05:6000:4c8:b0:30a:eeee:2fba with SMTP id h8-20020a05600004c800b0030aeeee2fbamr1481125wri.34.1686046504842;
+        Tue, 06 Jun 2023 03:15:04 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id h14-20020a5d504e000000b00300aee6c9cesm12229550wrt.20.2023.06.06.03.15.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Jun 2023 03:15:04 -0700 (PDT)
+Message-ID: <4742a6b6-f647-34a8-682a-af5ed181608c@linaro.org>
+Date:   Tue, 6 Jun 2023 11:15:03 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: dEQ6wCbNvyjs8vK4eucgaEPJ86M0NyWi
-X-Proofpoint-ORIG-GUID: dEQ6wCbNvyjs8vK4eucgaEPJ86M0NyWi
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-06_06,2023-06-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- priorityscore=1501 malwarescore=0 impostorscore=0 spamscore=0 bulkscore=0
- suspectscore=0 lowpriorityscore=0 adultscore=0 phishscore=0
- mlxlogscore=999 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2306060084
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH] arm64: dts: qcom: Split sdm845-db845c to add headless
+ support
+Content-Language: en-US
+To:     Amit Pundir <amit.pundir@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+References: <20230605094710.2037879-1-amit.pundir@linaro.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+In-Reply-To: <20230605094710.2037879-1-amit.pundir@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the initial device tree support for the Reference Design
-Platform(RDP) 446 based on IPQ5332 family of SoC. This patch carries
-the support for Console UART, SPI NOR and I2C.
+On 05/06/2023 10:47, Amit Pundir wrote:
+> This is a follow-up of the upstream discussion,
+> https://lore.kernel.org/linux-kernel/20230124182857.1524912-1-amit.pundir@linaro.org/T/#u,
+> around adding a reserved memory region in sdm845-db845c
+> for the framebuffer memory (the splash region set up by
+> the bootloader) but the general opinion was to avoid
+> adding that reserved memory for the headless DB845c
+> usecase.
+> 
+> So this patch splits the sdm845-db845c into a common dtsi,
+> a new sdm845-db845-headless DT, which disables the mdss
+> display subsystem, and a new sdm845-db845c DT with an
+> additional reserved-memory region for the framebuffer.
+> 
+> The default sdm845-db845c.dtb remains pretty much the same
+> (with an exception of additional reserved-memory region),
+> while others can use sdm845-db845c-headless.dtb for their
+> headless systems.
+> 
+> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
 
-Signed-off-by: Hariharan K <quic_harihk@quicinc.com>
+Walk me through this one again.
+
+We only need this reserved memory for as long as the splash screen 
+persists - correct ?
+
+If there is no HDMI or DSI connected then XBL will never allocate this 
+memory.
+
+If the MDPSS? driver runs, the display hardware gets pointed at 
+different memory and the splashscreen memory is either marked as 
+reserved - and never usable again or its not marked as reserved and we 
+have system race but in the racy case, the memory is usable.
+
+Is the solution then not to make the MDSS driver always liberate this 
+memory - irrespective of whether or not a display is connected ?
+
+It seems wrong to sacrifice ~ 37 megabytes of memory permanently. If I 
+were building an embedded system based on db845 I would want to have 
+that memory available to me either way.
+
 ---
- arch/arm64/boot/dts/qcom/Makefile           |  1 +
- arch/arm64/boot/dts/qcom/ipq5332-rdp446.dts | 83 +++++++++++++++++++++
- 2 files changed, 84 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/ipq5332-rdp446.dts
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 4f9e81253e18..f962e1b7cf7a 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -6,6 +6,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-mi01.2.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp442.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp446.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp468.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq6018-cp01-c1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= ipq8074-hk01.dtb
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp446.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp446.dts
-new file mode 100644
-index 000000000000..0e1d98b093e4
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp446.dts
-@@ -0,0 +1,83 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * IPQ5332 AP-MI04.1 board device tree source
-+ *
-+ * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All rights reserved.
-+ */
-+
-+/dts-v1/;
-+
-+#include "ipq5332.dtsi"
-+
-+/ {
-+	model = "Qualcomm Technologies, Inc. IPQ5332 MI04.1";
-+	compatible = "qcom,ipq5332-ap-mi04.1", "qcom,ipq5332";
-+
-+	aliases {
-+		serial0 = &blsp1_uart0;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+};
-+
-+&blsp1_uart0 {
-+	pinctrl-0 = <&serial_0_pins>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
-+
-+&blsp1_i2c1 {
-+	clock-frequency  = <400000>;
-+	pinctrl-0 = <&i2c_1_pins>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
-+
-+&blsp1_spi0 {
-+	pinctrl-0 = <&spi_0_data_clk_pins &spi_0_cs_pins>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+
-+	flash@0 {
-+		compatible = "micron,n25q128a11", "jedec,spi-nor";
-+		reg = <0>;
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		spi-max-frequency = <50000000>;
-+	};
-+};
-+
-+&sleep_clk {
-+	clock-frequency = <32000>;
-+};
-+
-+&xo_board {
-+	clock-frequency = <24000000>;
-+};
-+
-+/* PINCTRL */
-+
-+&tlmm {
-+	i2c_1_pins: i2c-1-state {
-+		pins = "gpio29", "gpio30";
-+		function = "blsp1_i2c0";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+
-+	spi_0_data_clk_pins: spi-0-data-clk-state {
-+		pins = "gpio14", "gpio15", "gpio16";
-+		function = "blsp0_spi";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
-+
-+	spi_0_cs_pins: spi-0-cs-state {
-+		pins = "gpio17";
-+		function = "blsp0_spi";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+};
--- 
-2.17.1
-
+bod
