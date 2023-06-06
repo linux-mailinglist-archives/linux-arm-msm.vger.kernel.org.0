@@ -2,350 +2,238 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 88FAD724617
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 16:32:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A8AF724644
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 16:36:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237937AbjFFOcr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 10:32:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36890 "EHLO
+        id S237553AbjFFOgQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 10:36:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39748 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237959AbjFFOcX (ORCPT
+        with ESMTP id S237567AbjFFOgM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 10:32:23 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54DEB10D9
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 07:32:07 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f7a8089709so25535345e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 07:32:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686061926; x=1688653926;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AAHo2Ft1e4SvLLm6iTKloBaUK4EchMGqUU8Wjhy/k70=;
-        b=i7rKKYAWjtux0sW8cNhrKOwcwFUPxVcbo/0SjSgImMZjkSaffUeTyAQYXhRPJc1gZl
-         AUl/HK4V1nU+4UAT/Q3XFtiDKQHgAvHSw4Y0INDupYdTUCYtbnl7IUiTHjmp60bW+JiH
-         68uBJJr76114iRVOYdaCBA0mq5KkTjJ6Hm23mNIO/K3xtyKNQsXiNACkguJ56p0QfOQK
-         Ir7qYx7p6+9sCEUjRG0/iEbju382qlUY/Ps84PxuqbUegtZRwABk7rZfosQJ5Ol0I8m2
-         mHgX2ZcmLgs5StnCzANrCAqU2y3cu5I6Y3G01toV32miX0r35p2f8F0bv24yZGDQAZhR
-         zgiw==
+        Tue, 6 Jun 2023 10:36:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DBAF0E6E
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 07:35:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1686062122;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=0ACc+nO/rqX5bFrH4LrwXPZUBRGP8worhyNyqkSAZpc=;
+        b=fjWLmiH3hF+hYnDNHxCy8/2rNU4HuJ4P9raYp/QY/mzPhv5sRjE40lFfVXu9c1YPmiLf7E
+        EQTUIObgYgrBH0Qha7GEiYD7E0ZIH85tnLNxvlPWlHF7RWlhNzSpw1Pxrkp4CN+AG/Zj9B
+        XCPXkaS8kbZfoao/LJXMUq6orsK8p5E=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-322-wYhmERrTPO2g5zm3Z56sxQ-1; Tue, 06 Jun 2023 10:35:21 -0400
+X-MC-Unique: wYhmERrTPO2g5zm3Z56sxQ-1
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-3f86c1990c7so31053361cf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 07:35:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686061926; x=1688653926;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AAHo2Ft1e4SvLLm6iTKloBaUK4EchMGqUU8Wjhy/k70=;
-        b=Ikvnq9LUa+DOZuSyaZ/mx0zLi2utT3cpsU3/fIkLVvdnAoUvm0SI8KnwybwpLfmHSz
-         qjx6hCz3NSI3QXgCT6yhqzL97J9aYfO2FrS2efIGtrwGT83QEPGgCUzK6LzhcoAYnPCF
-         ngrgNt/Tz/Ze74zqBjC6nPRfUWeJD73zU7EBBMQq899UbNW3SnG16a3HibA4qxDxgANY
-         rj6wmw2aXljXBdJLZ20A2tdKpk83Z49Vcr+bNnLltlZdSFAgFymYS878Hge7ofZPnd2U
-         YE2Rf3G78aA5VuyxxS9TNsxoL+V9laaufigJ88UbIENZgP/jmWsVIr8wdDsvr/EV21M9
-         yN1A==
-X-Gm-Message-State: AC+VfDwYAngh9aonlQH9814x/zVkdydft55SaDFbDZehWy9LvIPLIvlb
-        7v9/pPZTz2M8qlnjwu/pFmod9A==
-X-Google-Smtp-Source: ACHHUZ65Rt0pJyezM2Tl8YuCIG2oNvDJONeF0pQC1k3stBKHW6YpNweuacyHAcVHvem4ha8kuDcTYA==
-X-Received: by 2002:a05:600c:b45:b0:3f4:d18f:b2fb with SMTP id k5-20020a05600c0b4500b003f4d18fb2fbmr2481431wmr.8.1686061925651;
-        Tue, 06 Jun 2023 07:32:05 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id fc14-20020a05600c524e00b003f61177faffsm3883600wmb.0.2023.06.06.07.32.04
+        d=1e100.net; s=20221208; t=1686062120; x=1688654120;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0ACc+nO/rqX5bFrH4LrwXPZUBRGP8worhyNyqkSAZpc=;
+        b=HPSzYrjQQ8Qp4mwTM8TUWR3lkkMQuGJ17EJ7+4AGrPGN8iKrHvON9bE3YkXKb5vFn1
+         8G2hIGoao8CfcE6GwxNLmoA6cO5zpE9HzBUnfz9Imdc0aNFT6eCvpbJWMFxpT1cYMzFU
+         UW1PhuipB5W9oXXpKJkQUkNeOgYwZ9vDY/PBO4JKQtc5gnW5uGYVPmnt38kfN8Lo9CGu
+         +afKjri3hgf43P4rVAMcL4RmGIZ6ymcoVitgDBMz74A9SawdM13K+PGStU+PuwUNllpI
+         n8wB5DlFg2mzhKmBx/kMQ4cr0+dLx+ow1GdnealCJn1n/6SZXEN/LenLUbn6C1di247C
+         ee+A==
+X-Gm-Message-State: AC+VfDyquEFvAdpR8k13KxM6droJ2BOlCOqJqUwXKUulSDtNV1B4o9w2
+        e8f9Bnq1P1nUxz73ybTPA70fof4XHH4YgrwF2UmNFXgynDe2G3HjMldTDP3j/ZQP7yGghZ/G/SP
+        yr1cdL1ISaSwluFCkdx8ZvGjUww==
+X-Received: by 2002:ac8:7f50:0:b0:3f4:dec2:76c3 with SMTP id g16-20020ac87f50000000b003f4dec276c3mr2166172qtk.22.1686062120357;
+        Tue, 06 Jun 2023 07:35:20 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ5FMBEjdhk60sTgnBtFRPFO/Ri01rTuW3D530U8twgZB6YG7GiehJcAzFCboEtkwbccxVk5mQ==
+X-Received: by 2002:ac8:7f50:0:b0:3f4:dec2:76c3 with SMTP id g16-20020ac87f50000000b003f4dec276c3mr2166145qtk.22.1686062120010;
+        Tue, 06 Jun 2023 07:35:20 -0700 (PDT)
+Received: from fedora ([107.171.218.122])
+        by smtp.gmail.com with ESMTPSA id fg26-20020a05622a581a00b003f9a79fe046sm1690585qtb.38.2023.06.06.07.35.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jun 2023 07:32:05 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Tue, 06 Jun 2023 16:31:59 +0200
-Subject: [PATCH RFC 4/4] input: touchscreen: add SPI support for Goodix
- Berlin Touchscreen IC
+        Tue, 06 Jun 2023 07:35:19 -0700 (PDT)
+Date:   Tue, 6 Jun 2023 10:35:17 -0400
+From:   Adrien Thierry <athierry@redhat.com>
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        Philipp Zabel <pza@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v2 1/2] phy: qcom-snps-femto-v2: properly enable ref clock
+Message-ID: <ZH9EJfkeQN7c5KHU@fedora>
+References: <20230605184455.34832-1-athierry@redhat.com>
+ <20230605184455.34832-2-athierry@redhat.com>
+ <fe51f704-3d24-d184-0251-39dc64a25598@linaro.org>
+ <20230606135516.beujjl2oyvt6gaig@halaney-x13s>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230606-topic-goodix-berlin-upstream-initial-v1-4-4a0741b8aefd@linaro.org>
-References: <20230606-topic-goodix-berlin-upstream-initial-v1-0-4a0741b8aefd@linaro.org>
-In-Reply-To: <20230606-topic-goodix-berlin-upstream-initial-v1-0-4a0741b8aefd@linaro.org>
-To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        Hans de Goede <hdegoede@redhat.com>,
-        Henrik Rydberg <rydberg@bitmath.org>
-Cc:     linux-input@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7697;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=vn7duBP7sfXMbumxh4swTtaBAVKnUxfLgRt1So/mze8=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkf0Ng06P6FQgdVTW3g+9T+7UF1C2g0KM+3+N0Zltm
- QPbDh/2JAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZH9DYAAKCRB33NvayMhJ0YjhEA
- C6nwIRpZK0MNlYr4k7ypGtVDu4d1S4ESVBQ4+4z9/GVYV/XfGPn1uE1gSG7XWYrdoK4xzoC34dxDAz
- crMw8S83+OLAF2lGMpBqWX4tZMpyE/2NuZR2hLlV8PpqUYK5YohbCAoHOOVhh4aaic9h3HYhvciqGK
- JPd27nq2mvNEME76uId3mvcZCTkOBcr7Tk3LQXBQXOQoML/79xIZWWC4MLld9pHLJ5NAfZgdUSym/A
- zAOH795HyLMK6ShMPcclujqrIW8LjScuEXhgGyXLP+Tp3xP47XO5gv5NmXW7uZh8Z7LcbwDJWE7LrT
- LMajy8rMmsQGbnx1EIl3x8Ls3EAXD5FxCFm0alAMduMWaPRE5xG5sbCNiJkt44H2K7OCJhb2ji2dRA
- idjd0gXbOKyAqT03/uKlUV2Y6vcf8nVPJ/nvXgum8oMNFQHtzQ9//74J9oe6raK5UM/Pwa9v36mE74
- QAMejwwVgUjXgAP0zGGaTdDcH1hWbltQrVeUrnLF37is7tX5EgTWN/qtlxwY1V987aHnUVaEJycxql
- cG+pxpgUEb3Vhoxo6Op5l0ZkijGZbqvxAen/kCAcsdh7fgXtQ28rVm/OpdbwmZQm3RtETgMn8i1e+N
- aEjp7f3uqw00eklQdojjwBN1BwnHh7rSN74Bei9EayVj52XQnL7/9JOM4XSg==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230606135516.beujjl2oyvt6gaig@halaney-x13s>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add initial support for the new Goodix "Berlin" touchscreen ICs
-over the SPI interface.
+Thanks for your feedback Konrad and Andrew!
 
-The driver doesn't use the regmap_spi code since the SPI messages
-needs to be prefixed, thus this custom regmap code.
+On Tue, Jun 06, 2023 at 08:55:16AM -0500, Andrew Halaney wrote:
+> On Tue, Jun 06, 2023 at 01:14:00AM +0200, Konrad Dybcio wrote:
+> > 
+> > 
+> > On 5.06.2023 20:44, Adrien Thierry wrote:
+> > > The driver is not enabling the ref clock, which thus gets disabled by
+> > > the clk_disable_unused initcall. This leads to the dwc3 controller
+> > > failing to initialize if probed after clk_disable_unused is called, for
+> > > instance when the driver is built as a module.
+> > > 
+> > > To fix this, switch to the clk_bulk API to handle both cfg_ahb and ref
+> > > clocks at the proper places.
+> > > 
+> > > Note that the cfg_ahb clock is currently not used by any device tree
+> > > instantiation of the PHY. Work needs to be done separately to fix this.
+> > > 
+> > > Link: https://lore.kernel.org/linux-arm-msm/ZEqvy+khHeTkC2hf@fedora/
+> > > Fixes: 51e8114f80d0 ("phy: qcom-snps: Add SNPS USB PHY driver for QCOM based SOCs")
+> > > Signed-off-by: Adrien Thierry <athierry@redhat.com>
+> > > ---
+> > >  drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 67 ++++++++++++++-----
+> > >  1 file changed, 49 insertions(+), 18 deletions(-)
+> > > 
+> > > diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> > > index 6c237f3cc66d..ce1d2f8b568a 100644
+> > > --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> > > +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> > > @@ -110,11 +110,13 @@ struct phy_override_seq {
+> > >  /**
+> > >   * struct qcom_snps_hsphy - snps hs phy attributes
+> > >   *
+> > > + * @dev: device structure
+> > > + *
+> > >   * @phy: generic phy
+> > >   * @base: iomapped memory space for snps hs phy
+> > >   *
+> > > - * @cfg_ahb_clk: AHB2PHY interface clock
+> > > - * @ref_clk: phy reference clock
+> > > + * @num_clks: number of clocks
+> > > + * @clks: array of clocks
+> > >   * @phy_reset: phy reset control
+> > >   * @vregs: regulator supplies bulk data
+> > >   * @phy_initialized: if PHY has been initialized correctly
+> > > @@ -122,11 +124,13 @@ struct phy_override_seq {
+> > >   * @update_seq_cfg: tuning parameters for phy init
+> > >   */
+> > >  struct qcom_snps_hsphy {
+> > > +	struct device *dev;
+> > > +
+> > >  	struct phy *phy;
+> > >  	void __iomem *base;
+> > >  
+> > > -	struct clk *cfg_ahb_clk;
+> > > -	struct clk *ref_clk;
+> > > +	int num_clks;
+> > > +	struct clk_bulk_data *clks;
+> > >  	struct reset_control *phy_reset;
+> > >  	struct regulator_bulk_data vregs[SNPS_HS_NUM_VREGS];
+> > >  
+> > > @@ -135,6 +139,32 @@ struct qcom_snps_hsphy {
+> > >  	struct phy_override_seq update_seq_cfg[NUM_HSPHY_TUNING_PARAMS];
+> > >  };
+> > >  
+> > > +static int qcom_snps_hsphy_clk_init(struct qcom_snps_hsphy *hsphy)
+> > > +{
+> > > +	struct device *dev = hsphy->dev;
+> > > +
+> > > +	hsphy->num_clks = 2;
+> > > +	hsphy->clks = devm_kcalloc(dev, hsphy->num_clks, sizeof(*hsphy->clks), GFP_KERNEL);
+> > > +	if (!hsphy->clks)
+> > > +		return -ENOMEM;
+> > > +
+> > > +	/*
+> > > +	 * HACK: For cfg_ahb clock, use devm_clk_get_optional() because currently no device
+> > > +	 * tree instantiation of the PHY is using the clock. This needs to be fixed in order
+> > > +	 * for this code to be able to use devm_clk_bulk_get().
+> > > +	 */
+> > > +	hsphy->clks[0].id = "cfg_ahb";
+> > > +	hsphy->clks[0].clk = devm_clk_get_optional(dev, "cfg_ahb");
+> > Hm, maybe you could first check if we can get this clock
+> > properly (!IS_ERR_OR_NULL) and then allocate the second
+> > slot..
+> > 
+> 
+> The bulk clk api handles NULL clks without issue if I am reading right,
+> so personally if we're going to use the bulk api I say we carry the extra
+> slot unconditionally. No expert on this stuff but that seems more
+> straightforward. Honestly I wouldn't mind using the bulk optional API,
+> then checking the "non optional ref clock" manually. That's closer to
+> the ideal flow to me. Super opinionated though, don't take my word as
+> right.
+>
 
-This initial driver is derived from the Goodix goodix_ts_berlin
-available at [1] and [2] and only supports the GT9916 IC
-present on the Qualcomm SM8550 MTP & QRD touch panel.
+Agree with Andrew. Since cfg_ahb is always NULL, I'm certainly "wasting"
+an array cell here but I think it also better highlights the fact that
+it's a hack and that cfg_ahb needs to be properly wired in the DTs. As for
+using the bulk optional API, I'm fine with both!
 
-The current implementation only supports BerlinD, aka GT9916.
+> > > +
+> > > +	hsphy->clks[1].id = "ref";
+> > > +	hsphy->clks[1].clk = devm_clk_get(dev, "ref");
+> > > +	if (IS_ERR(hsphy->clks[1].clk))
+> > > +		return dev_err_probe(dev, PTR_ERR(hsphy->clks[1].clk),
+> > > +				     "failed to get ref clk\n");
+> > > +
+> > > +	return 0;
+> > > +}
+> > > +
+> > >  static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
+> > >  						u32 mask, u32 val)
+> > >  {
+> > > @@ -165,7 +195,7 @@ static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
+> > >  					   0, USB2_AUTO_RESUME);
+> > >  	}
+> > >  
+> > > -	clk_disable_unprepare(hsphy->cfg_ahb_clk);
+> > > +	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
+> > >  	return 0;
+> > >  }
+> > >  
+> > > @@ -175,9 +205,9 @@ static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
+> > >  
+> > >  	dev_dbg(&hsphy->phy->dev, "Resume QCOM SNPS PHY, mode\n");
+> > >  
+> > > -	ret = clk_prepare_enable(hsphy->cfg_ahb_clk);
+> > > +	ret = clk_bulk_prepare_enable(hsphy->num_clks, hsphy->clks);
+> > Aren't you dereferencing NULL if the optional clock is absent?
+> > 
+> 
+> Similar to above, the bulk api seems to handle NULL clks gracefully.
+>
 
-[1] https://github.com/goodix/goodix_ts_berlin
-[2] https://git.codelinaro.org/clo/la/platform/vendor/opensource/touch-drivers
+devm_clk_get_optional() will return NULL for cfg_ahb, but AFAIU NULL
+serves as a dummy clock [1] with which the clock API deals gracefully. The
+various functions like clk_prepare(), clk_enable() check if the clock is
+NULL and return 0 immediately if that's the case (see for instance [2]).
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/input/touchscreen/Kconfig             |  14 ++
- drivers/input/touchscreen/Makefile            |   1 +
- drivers/input/touchscreen/goodix_berlin_spi.c | 183 ++++++++++++++++++++++++++
- 3 files changed, 198 insertions(+)
+[1] https://elixir.bootlin.com/linux/v6.4-rc5/source/include/linux/clk.h#L514
+[2] https://elixir.bootlin.com/linux/v6.4-rc5/source/drivers/clk/clk.c#L1045
 
-diff --git a/drivers/input/touchscreen/Kconfig b/drivers/input/touchscreen/Kconfig
-index da6d5d75c42d..ffe0c0a4cd15 100644
---- a/drivers/input/touchscreen/Kconfig
-+++ b/drivers/input/touchscreen/Kconfig
-@@ -435,6 +435,20 @@ config TOUCHSCREEN_GOODIX_BERLIN_I2C
- 	  To compile this driver as a module, choose M here: the
- 	  module will be called goodix_berlin_i2c.
- 
-+config TOUCHSCREEN_GOODIX_BERLIN_SPI
-+	tristate "Goodix Berlin SPI touchscreen"
-+	depends on SPI_MASTER
-+	depends on REGMAP
-+	select TOUCHSCREEN_GOODIX_BERLIN_CORE
-+	help
-+	  Say Y here if you have the a touchscreen connected to your
-+	  system using the Goodix Berlin IC connection via SPI.
-+
-+	  If unsure, say N.
-+
-+	  To compile this driver as a module, choose M here: the
-+	  module will be called goodix_berlin_spi.
-+
- config TOUCHSCREEN_HIDEEP
- 	tristate "HiDeep Touch IC"
- 	depends on I2C
-diff --git a/drivers/input/touchscreen/Makefile b/drivers/input/touchscreen/Makefile
-index 921a2da0c2be..29524e8a83db 100644
---- a/drivers/input/touchscreen/Makefile
-+++ b/drivers/input/touchscreen/Makefile
-@@ -49,6 +49,7 @@ obj-$(CONFIG_TOUCHSCREEN_FUJITSU)	+= fujitsu_ts.o
- obj-$(CONFIG_TOUCHSCREEN_GOODIX)	+= goodix_ts.o
- obj-$(CONFIG_TOUCHSCREEN_GOODIX_BERLIN_CORE)	+= goodix_berlin_core.o
- obj-$(CONFIG_TOUCHSCREEN_GOODIX_BERLIN_I2C)	+= goodix_berlin_i2c.o
-+obj-$(CONFIG_TOUCHSCREEN_GOODIX_BERLIN_SPI)	+= goodix_berlin_spi.o
- obj-$(CONFIG_TOUCHSCREEN_HIDEEP)	+= hideep.o
- obj-$(CONFIG_TOUCHSCREEN_HYNITRON_CSTXXX)	+= hynitron_cstxxx.o
- obj-$(CONFIG_TOUCHSCREEN_ILI210X)	+= ili210x.o
-diff --git a/drivers/input/touchscreen/goodix_berlin_spi.c b/drivers/input/touchscreen/goodix_berlin_spi.c
-new file mode 100644
-index 000000000000..0f4f650fdf3f
---- /dev/null
-+++ b/drivers/input/touchscreen/goodix_berlin_spi.c
-@@ -0,0 +1,183 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * Goodix Berlin Touchscreen Driver
-+ *
-+ * Copyright (C) 2020 - 2021 Goodix, Inc.
-+ * Copyright (C) 2023 Linaro Ltd.
-+ *
-+ * Based on goodix_ts_berlin driver.
-+ */
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/spi/spi.h>
-+#include <linux/regmap.h>
-+#include <asm/unaligned.h>
-+
-+#include "goodix_berlin.h"
-+
-+#define SPI_TRANS_PREFIX_LEN	1
-+#define REGISTER_WIDTH		4
-+#define SPI_READ_DUMMY_LEN	3
-+#define SPI_READ_PREFIX_LEN	(SPI_TRANS_PREFIX_LEN + REGISTER_WIDTH + SPI_READ_DUMMY_LEN)
-+#define SPI_WRITE_PREFIX_LEN	(SPI_TRANS_PREFIX_LEN + REGISTER_WIDTH)
-+
-+#define SPI_WRITE_FLAG		0xF0
-+#define SPI_READ_FLAG		0xF1
-+
-+static int goodix_berlin_spi_read(void *context, const void *reg_buf,
-+				  size_t reg_size, void *val_buf,
-+				  size_t val_size)
-+{
-+	struct spi_device *spi = context;
-+	struct spi_transfer xfers;
-+	struct spi_message spi_msg;
-+	const u32 *reg = reg_buf; /* reg is stored as native u32 at start of buffer */
-+	u8 *buf = NULL;
-+	int ret = 0;
-+
-+	if (reg_size != REGISTER_WIDTH)
-+		return -EINVAL;
-+
-+	buf = kzalloc(SPI_READ_PREFIX_LEN + val_size, GFP_KERNEL);
-+	if (!buf)
-+		return -ENOMEM;
-+
-+	spi_message_init(&spi_msg);
-+	memset(&xfers, 0, sizeof(xfers));
-+
-+	/* buffer format: 0xF1 + addr(4bytes) + dummy(3bytes) + data */
-+	buf[0] = SPI_READ_FLAG;
-+	put_unaligned_be32(*reg, buf + SPI_TRANS_PREFIX_LEN);
-+	memset(buf + SPI_TRANS_PREFIX_LEN + REGISTER_WIDTH, 0xff,
-+	       SPI_READ_DUMMY_LEN);
-+
-+	xfers.tx_buf = buf;
-+	xfers.rx_buf = buf;
-+	xfers.len = SPI_READ_PREFIX_LEN + val_size;
-+	xfers.cs_change = 0;
-+	spi_message_add_tail(&xfers, &spi_msg);
-+
-+	ret = spi_sync(spi, &spi_msg);
-+	if (ret < 0) {
-+		dev_err(&spi->dev, "transfer error:%d", ret);
-+		goto exit;
-+	}
-+
-+	memcpy(val_buf, buf + SPI_READ_PREFIX_LEN, val_size);
-+exit:
-+	kfree(buf);
-+	return ret;
-+}
-+
-+static int goodix_berlin_spi_write(void *context, const void *data,
-+				   size_t count)
-+{
-+	unsigned int len = count - REGISTER_WIDTH;
-+	struct spi_device *spi = context;
-+	struct spi_transfer xfers;
-+	struct spi_message spi_msg;
-+	const u32 *reg = data; /* reg is stored as native u32 at start of buffer */
-+	u8 *buf = NULL;
-+	int ret = 0;
-+
-+	buf = kzalloc(SPI_WRITE_PREFIX_LEN + len, GFP_KERNEL);
-+	if (!buf)
-+		return -ENOMEM;
-+
-+	spi_message_init(&spi_msg);
-+	memset(&xfers, 0, sizeof(xfers));
-+
-+	buf[0] = SPI_WRITE_FLAG;
-+	put_unaligned_be32(*reg, buf + SPI_TRANS_PREFIX_LEN);
-+	memcpy(buf + SPI_WRITE_PREFIX_LEN, data + REGISTER_WIDTH, len);
-+
-+	xfers.tx_buf = buf;
-+	xfers.len = SPI_WRITE_PREFIX_LEN + len;
-+	xfers.cs_change = 0;
-+	spi_message_add_tail(&xfers, &spi_msg);
-+
-+	ret = spi_sync(spi, &spi_msg);
-+	if (ret < 0)
-+		dev_err(&spi->dev, "transfer error:%d", ret);
-+
-+	kfree(buf);
-+	return ret;
-+}
-+
-+static const struct regmap_config goodix_berlin_spi_regmap_conf = {
-+	.reg_bits = 32,
-+	.val_bits = 8,
-+	.read = goodix_berlin_spi_read,
-+	.write = goodix_berlin_spi_write,
-+};
-+
-+static const struct input_id goodix_berlin_spi_input_id = {
-+	.bustype = BUS_SPI,
-+	.vendor = 0x0416,
-+	.product = 0x1001,
-+};
-+
-+static int goodix_berlin_spi_probe(struct spi_device *spi)
-+{
-+	struct regmap_config *cfg;
-+	struct regmap *map;
-+	size_t max_size;
-+	int ret = 0;
-+
-+	cfg = devm_kmemdup(&spi->dev, &goodix_berlin_spi_regmap_conf,
-+			   sizeof(*cfg), GFP_KERNEL);
-+	if (!cfg)
-+		return -ENOMEM;
-+
-+	spi->mode = SPI_MODE_0;
-+	spi->bits_per_word = 8;
-+	ret = spi_setup(spi);
-+	if (ret)
-+		return ret;
-+
-+	max_size = spi_max_transfer_size(spi);
-+	cfg->max_raw_read = max_size - SPI_READ_PREFIX_LEN;
-+	cfg->max_raw_write = max_size - SPI_WRITE_PREFIX_LEN;
-+
-+	map = devm_regmap_init(&spi->dev, NULL, spi, cfg);
-+	if (IS_ERR(map))
-+		return PTR_ERR(map);
-+
-+	return goodix_berlin_probe(&spi->dev, spi->irq,
-+				   &goodix_berlin_spi_input_id, map);
-+}
-+
-+static void goodix_berlin_spi_remove(struct spi_device *spi)
-+{
-+	goodix_berlin_remove(&spi->dev);
-+}
-+
-+static const struct of_device_id goodix_berlin_spi_of_match[] = {
-+	{
-+		.compatible = "goodix,gt9916",
-+	},
-+	{ },
-+};
-+MODULE_DEVICE_TABLE(of, goodix_berlin_spi_of_match);
-+
-+static const struct spi_device_id goodix_berlin_spi_ids[] = {
-+	{ "gt9916" },
-+	{ },
-+};
-+MODULE_DEVICE_TABLE(spi, goodix_berlin_spi_ids);
-+
-+static struct spi_driver goodix_berlin_spi_driver = {
-+	.driver = {
-+		.name = "goodix-berlin-spi",
-+		.of_match_table = goodix_berlin_spi_of_match,
-+		.pm = pm_sleep_ptr(&goodix_berlin_pm_ops),
-+	},
-+	.id_table = goodix_berlin_spi_ids,
-+	.probe = goodix_berlin_spi_probe,
-+	.remove = goodix_berlin_spi_remove,
-+};
-+module_spi_driver(goodix_berlin_spi_driver);
-+
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("Goodix Berlin SPI Touchscreen driver");
-+MODULE_AUTHOR("Neil Armstrong <neil.armstrong@linaro.org>");
+Best,
+Adrien
 
--- 
-2.34.1
+> Thanks,
+> Andrew
+> 
 
