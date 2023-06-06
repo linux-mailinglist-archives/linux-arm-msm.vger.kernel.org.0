@@ -2,68 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46270723C48
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 10:55:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A29D3723C88
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 11:07:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237325AbjFFIz5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 04:55:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44708 "EHLO
+        id S229519AbjFFJG7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 05:06:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237319AbjFFIzz (ORCPT
+        with ESMTP id S229669AbjFFJG6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 04:55:55 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.51])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B45DE8;
-        Tue,  6 Jun 2023 01:55:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1686041751; cv=none;
+        Tue, 6 Jun 2023 05:06:58 -0400
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.83])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CC02E8;
+        Tue,  6 Jun 2023 02:06:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1686042414; cv=none;
     d=strato.com; s=strato-dkim-0002;
-    b=GW0xPc4Sa1cylTuKVowWNeWjralIkTs84iUHFe2GtdvcgzCiupPhcC/egtmFxpXSbt
-    P5jV1VNjr6UeubxRyPHLHhdfCG3Zahig1tM9HYP0bofsUXXilZ/zK9hc7FCFxzFBOC71
-    JaKVOCm3rO1PhhwINKTDk2phyqm1bgrNqZ+UAEDnACuBVcPaAenEPByGiUfrxk5uK9cF
-    Epv4iCmrDOzAuwyd0r+8DGJeF9O7MKUxGINY9C/m5z18SPVbAtzXi/cTHHUtdRZiZEli
-    +yzFNHGDmqu6/x5XewOOHxWJN7cwJ6LAnvPcnwW8MuD4m6IDeKwR5vJQ3KVK1mEKEodf
-    Se7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686041751;
+    b=iDCNYdm7JTLiDLNmFtfUAjZr1UiesJxNO8/KTf5OlGv6WaSHk1cfpluOhHKYdnNgQi
+    YRlva+6qyWHAJ+EBpybp0N7BWx0rfyqcD+qbHgHgzUuuU1spLmwxYEDMy/nWG4Pdeg5x
+    YbV6GoY+hx4dT3VsuEu0VvB/W5BVEsl+KNWGIY4vscN3KPbNfwbgP46pGKEIzQ9/DSZ6
+    hwNU+02Qp7ShjhfqM0/xeI4wqnwDihuutvuyyY/j3K1Ovukdq1rv+WuMH6wtfbs9MoFT
+    KPsv4zXuwQuhc+FA83ABtm3xpSTDLcT71hcOFHsN8dCx2/Fl410ik1sjzjBE2VJc6lxv
+    XzCw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686042414;
     s=strato-dkim-0002; d=strato.com;
     h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
     From:Subject:Sender;
-    bh=BexHV/0Sl/N5FJTkcmkKNLN4abHpu5qYlg15VyapGS8=;
-    b=G0qrqe1HfEHmqoN65iw4WwAE9B/CvHenQZVy+6ZIMbvCjIE2EX3TUCBLbJ3l/oVV9m
-    OGa8sq5kTKZvvXoWb++xvxLBEObGsHDr8fG+iTVebGKNQZZcrVjxYA2HDg5eC0JVcjLP
-    SJyzL9x11PE8dFsAGq0A10IqT8B8EDLf5HhNmNnfJmxlpybuxinGxKj1uVfgrXF0L6p+
-    hgy9PJSdHecBuywZB64lghZx+n6oI7arYTiiyoQ0JTrGKGKbOKMUB4Fxx8OoTUaUda7r
-    wAXUC+5WsU8cSEOmtySyhc5BztLA8yDxp1keDEpSLrSnrMhFBKFGb/G6mLcfetuGmwp1
-    0Yxw==
+    bh=MxljD7ks5H/LgsphPWxQ4t5v0cK2mi0IBL2/Ko8mMDc=;
+    b=aPCHaPCXgIzHF5ea2rVIfvll1o7hQytOKlcC/FHoPFKnF7BJxwi1DwUbs1mMgoHs0L
+    L/Rr/Dq7XmzsrKUV7Bm7vBnuCbCuNiQsHdWeBScL0b8QSqBP6nH9GOuruS1z1OrLccfO
+    JLgM2jCh9vYLehIiQIP0bOMFH9VwABN9kRGb5RRxLH5Eet8IQ9GiG0kGMUZm44dRlQ/I
+    eKm0V0azlJ4bRd9ndkas62zrU9JXhhZxSNwERCedRRxVtKJvvAyWg91hFZnSc/7BMXiN
+    lPewi5mvoaK7DAb5D+lLIkV4zQXaxmajMV9DCQSZaNZrcPnuem+BgBcqIHmNuN6UMX7E
+    8cGQ==
 ARC-Authentication-Results: i=1; strato.com;
     arc=none;
     dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686041751;
+X-RZG-CLASS-ID: mo02
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686042414;
     s=strato-dkim-0002; d=gerhold.net;
     h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
     From:Subject:Sender;
-    bh=BexHV/0Sl/N5FJTkcmkKNLN4abHpu5qYlg15VyapGS8=;
-    b=nHm0deeRWOaQfsLdsAlkY4MSx9ONDFylu1nW5rl1bmU+2eJ3iCaKknXIjMVNSInO02
-    RoEBCo/iBHriaUT11HeDtzZZfAIvarlMTLRiaH+agt1f8dxGkis++f5OzHJ4TQHIgNpi
-    TuliB9fNB3b0oSjyF6Gis95KvViH1L3Yzaxbz1PWMHASdBipL4A1mFnOzhbovdy1rCyD
-    /p1vMvl8SCq9H50xS9wY4wLIkx7hjmDR5roK7dbH4DJisfUgSijjBBhLY5HaX7KYn7V9
-    Wi10yI5nKziI5FiGOyM8UOr10QhqmyGe859jtTaN0VwFFpeVIlsSZlZeQrrQo0fusEg4
-    YEyw==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686041751;
+    bh=MxljD7ks5H/LgsphPWxQ4t5v0cK2mi0IBL2/Ko8mMDc=;
+    b=Nivw6PPvm02HZYqAm05b3lzcVMCMSsJfhE2uHUSDWDO0K9NL/8QqHNX7R6iqJRzpI8
+    S6GPRXpzPVj80e/Rp63uZBqNgdARi1MLeEOhyE3HUCXeaSz9R8VJiUQY8kX3As/FNwrP
+    CBwAitMqjmx7HQEaab3xyrRH6nhrL3s1NvB7wZDH3ZjCqCx7/2mBgSCWKMrIrb5qbHgv
+    ascfbvbSG0IK+bAxkKLYnVPhBSPgG59bUOLo311KliuygFO46F5gzRy/B2qAnfxNjxWT
+    4t4I/VcqycbnuMTR9GHV92BL4C8mAj8HqQNKD4KCkb8lPbclPjk+yYDrjru86I1RhLVd
+    q5dA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686042414;
     s=strato-dkim-0003; d=gerhold.net;
     h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
     From:Subject:Sender;
-    bh=BexHV/0Sl/N5FJTkcmkKNLN4abHpu5qYlg15VyapGS8=;
-    b=zPGX7uvSTet/UZk5nNx+mYgomR+tsZc6ha73lFMFBOxhzYmv1jIyRct9ByK3kutf+R
-    xhXOrCdT5EvJn9k6YLBg==
+    bh=MxljD7ks5H/LgsphPWxQ4t5v0cK2mi0IBL2/Ko8mMDc=;
+    b=0o844zOm9ZCfU50CXT8WN6pfx0hJyuhU1CUluPy8qDAZJQgnHL+buhlBpa46FvQwKd
+    9HqoUeQS87NnLxdRnABQ==
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8Z+J1A=="
 Received: from gerhold.net
     by smtp.strato.de (RZmta 49.5.3 DYNA|AUTH)
-    with ESMTPSA id Z82ec2z568toDD9
+    with ESMTPSA id Z82ec2z5696sDLQ
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
-    Tue, 6 Jun 2023 10:55:50 +0200 (CEST)
-Date:   Tue, 6 Jun 2023 10:55:44 +0200
+    Tue, 6 Jun 2023 11:06:54 +0200 (CEST)
+Date:   Tue, 6 Jun 2023 11:06:47 +0200
 From:   Stephan Gerhold <stephan@gerhold.net>
 To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Bjorn Andersson <andersson@kernel.org>,
@@ -75,16 +75,16 @@ Cc:     Bjorn Andersson <andersson@kernel.org>,
         Mathieu Poirier <mathieu.poirier@linaro.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH 05/14] dt-bindings: remoteproc: Add Qualcomm RPM
- processor/subsystem
-Message-ID: <ZH70kG7jZZgd9Esi@gerhold.net>
+Subject: Re: [PATCH 06/14] dt-bindings: soc: qcom: smd-rpm: Use qcom,rpm-proc
+ in example
+Message-ID: <ZH73JxLd1i1vUcyw@gerhold.net>
 References: <20230531-rpm-rproc-v1-0-e0a3b6de1f14@gerhold.net>
- <20230531-rpm-rproc-v1-5-e0a3b6de1f14@gerhold.net>
- <2a479fd0-1d3c-2c28-d2fd-86a8cf610cf9@linaro.org>
+ <20230531-rpm-rproc-v1-6-e0a3b6de1f14@gerhold.net>
+ <d0fa3b01-edab-fe8e-c309-036cbbcec7ab@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2a479fd0-1d3c-2c28-d2fd-86a8cf610cf9@linaro.org>
+In-Reply-To: <d0fa3b01-edab-fe8e-c309-036cbbcec7ab@linaro.org>
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -96,189 +96,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-<On Tue, Jun 06, 2023 at 08:36:10AM +0200, Krzysztof Kozlowski wrote:
+On Tue, Jun 06, 2023 at 08:37:04AM +0200, Krzysztof Kozlowski wrote:
 > On 05/06/2023 09:08, Stephan Gerhold wrote:
-> > On Qualcomm platforms, most subsystems (e.g. audio/modem DSP) are
-> > described as remote processors in the device tree, with a dedicated
-> > node where properties and services related to them can be described.
-> > 
-> > The Resource Power Manager (RPM) is also such a subsystem, with a
-> > remote processor that is running a special firmware. Unfortunately,
-> > the RPM never got a dedicated node representing it properly in the
-> > device tree. Most of the RPM services are described below a top-level
-> > /smd or /rpm-glink node.
-> 
-> Then what is rpm-requests? This is the true RPM. It looks like you now
-> duplicate half of it in a node above. Unless you want here to describe
-> ways to communicate with the RPM, not the RPM itself.
->
-
-I think you're confusing hardware and firmware here. The rpm-proc node
-represents the RPM hardware block (or perhaps the RPM firmware overall),
-while rpm-requests is just *one* communication interface provided by the
-RPM firmware. Here is a rough picture of the RPM "subsystem" I'm trying
-to describe:
-
-                +--------------------------------------------+      
-                |       RPM subsystem (qcom,rpm-proc)        |      
-                |                                            |      
-          reset | +---------------+     +-----+  +-----+     |      
-        --------->|               |     | MPM |  | CPR | ... |      
- IPC interrupts | | ARM Cortex-M3 |     +-----+  +-----+     |      
------------------>|               |---     |        |        |      
-                | +---------------+  |---------------------- |      
-                | +---------------+  |                       |      
-                | |   Code RAM    |--|  +------------------+ |      
-                | +---------------+  |  |                  | |      
-                | +---------------+  |  |   Message RAM    | |      
-                | |   Data RAM    |--|--|                  | |      
-                | +---------------+  |  +------------------+ |      
-                +--------------------|-----------------------+      
-                                     v                              
-                                    NoC                             
-
-(Somewhat adapted from Figure 8-1 RPM overview in the APQ8016E Technical
- Reference Manual, but I added some extra stuff.)
-
-As you can see neither "SMD" nor "rpm-requests" exist in hardware.
-Again, it's just one communication protocol implemented by the RPM
-firmware running on the Cortex-M3 processor, much like a webserver
-running on a PC.
-
-When the SoC is started only the hardware block exists. Usually a
-component in the boot chain loads firmware into the code/data RAM and
-then de-asserts the reset line to start the Cortex-M3 processor.
-
-This is not guaranteed to happen. For example, I have a special firmware
-version where the firmware is only loaded but not brought out of reset.
-In this case Linux is responsible to de-assert the reset line.
-In follow-up patches I add that to the outer qcom,rpm-proc node:
-
-	remoteproc {
-		compatible = "qcom,msm8916-rpm-proc", "qcom,rpm-proc";
-		resets = <&gcc GCC_RPM_RESET>;
-		iommus = <&apps_smmu 0x0040>;
-
-		smd-edge {
-			/* ... */
-			rpm-requests {
-				qcom,smd-channels = "rpm_requests";
-			};
-		};
-	};
-
-This reset line cannot be described on the rpm-requests node. Until the
-firmware is started there is no such thing as "SMD" or "rpm-requests".
-
-When the RPM firmware is started it sets up some data structures in the
-message RAM and then begins serving requests, perhaps like this:
-
-               +----------------------------------+                                    
-               |          ARM Cortex-M3           |                                    
-               | +------------------------------+ |  +--------------------------------+
-               | |  RPM Firmware                | |  |          Message RAM           |
- IPC Interrupt | | +----------------------+     | |  | +----------------------------+ |
------------------->| SMD Server           |     | |  | | SMD Data Structures & FIFO | |
-               | | | +--------------+     |     | |  | | +--------------+           | |
-               | | | | rpm_requests | ... |     | |  | | | rpm_requests |    ...    | |
-               | | | +--------------+     | ... | |  | | +--------------+           | |
-               | | +----------------------+     | |  | +----------------------------+ |
-               | +------------------------------+ |  |                ...             |
-               +----------------------------------+  +--------------------------------+
-
-The "smd-edge" node represents the SMD part and "rpm_requests" is one
-of the communication channels that can be used to talk to the RPM firmware.
-
-Everything below rpm-requests: clocks, regulators, power domains are
-pure firmware constructions. They do not exist in the RPM hardware block,
-the firmware just acts as a proxy to collect votes from different
-clients and then configures the actual hardware.
- 
-> 
-> > However, SMD/GLINK is just one of the communication channels to the RPM
-> > firmware. For example, the MPM interrupt functionality provided by the
-> > RPM does not use SMD/GLINK but writes directly to a special memory
-> > region allocated by the RPM firmware in combination with a mailbox.
-> > Currently there is no good place in the device tree to describe this
-> > functionality. It doesn't belong below SMD/GLINK but it's not an
-> > independent top-level device either.
-> > 
-> > Introduce a new "qcom,rpm-proc" compatible that allows describing the
-> > RPM as a remote processor/subsystem like all others. The SMD/GLINK node
-> > is moved to a "smd-edge"/"glink-edge" subnode consistent with other
-> > existing bindings. Additional subnodes (e.g. interrupt-controller for
-> > MPM, rpm-master-stats) can be also added there.
-> 
-> If this was about to stay, you should also update the qcom,smd.yaml, so
-> there will be no duplication.
-> 
-
-qcom,smd.yaml is deprecated in the next patch (PATCH 07/14).
-
+> > Use the new top-level rpm-proc node instead of having a dummy top-level
+> > /smd node that only contains the RPM but not other remote processors.
 > > 
 > > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 > > ---
-> >  .../bindings/remoteproc/qcom,rpm-proc.yaml         | 125 +++++++++++++++++++++
-> >  1 file changed, 125 insertions(+)
+> >  Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml | 6 +++---
+> >  1 file changed, 3 insertions(+), 3 deletions(-)
 > > 
-> > diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.yaml
-> > new file mode 100644
-> > index 000000000000..c06dd4f66503
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.yaml
-> > @@ -0,0 +1,125 @@
+> > diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
+> > index c6930706bfa9..06e574239bd4 100644
+> > --- a/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
+> > +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml
+> > @@ -120,10 +120,10 @@ examples:
 > > [...]
-> > +  interrupt-controller:
-> > +    type: object
-> > +    $ref: /schemas/interrupt-controller/qcom,mpm.yaml#
-> > +    description:
-> > +      MSM Power Manager (MPM) interrupt controller that monitors interrupts
-> > +      when the system is asleep.
+> > +        compatible = "qcom,msm8916-rpm-proc", "qcom,rpm-proc";
+> >  
+> > -        rpm {
+> > +        smd-edge {
 > 
-> Isn't this a service of RPM?
-> 
-> > +
-> > +  master-stats:
-> > +    $ref: /schemas/soc/qcom/qcom,rpm-master-stats.yaml#
-> > +    description:
-> > +      Subsystem-level low-power mode statistics provided by RPM.
-> 
-> The same question.
+> What about binding updates?
+>
+
+The binding for this is in PATCH 05/14. The old binding replaced here is
+deprecated in PATCH 07/14.
+ 
+> Anyway, this should be squashed with previous one.
 > 
 
-Yes, they are services of the RPM firmware. But they have no relation to
-the SMD/GLINK channel.
-
-To clarify this I extend my picture from above with MPM:
-
-                 +----------------------------------+                                    
-                 |          ARM Cortex-M3           |                                    
-                 | +------------------------------+ |  +--------------------------------+
-                 | |  RPM Firmware                | |  |          Message RAM           |
- IPC Interrupt 0 | | +----------------------+     | |  | +----------------------------+ |
- ------------------->| SMD Server           |     | |  | | SMD Data Structures & FIFO | |
-                 | | | +--------------+     |     | |  | | +--------------+           | |
-                 | | | | rpm_requests | ... |     | |  | | | rpm_requests |    ...    | |
-                 | | | +--------------+     | ... | |  | | +--------------+           | |
-                 | | +----------------------+     | |  | +----------------------------+ |
- IPC Interrupt 1 | | +----------------------+     | |  | +----------------------------+ |
- ------------------->| MPM virtualization   |<-----------| MPM register copy (vMPM)   | |
-                 | | +----------------------+     | |  | +----------------------------+ |
-                 | +-----------|------------------+ |  |              ...               |
-                 +-------------v--------------------+  +--------------------------------+
-                       +--------------+                                                  
-                       | MPM Hardware |                                                  
-                       +--------------+                                                  
-
-As you can see, SMD and MPM are siblings. The MPM functionality
-implemented by the RPM firmware is not a child of the SMD server.
-
-It's a bit like a webserver and emailserver running on the same PC.
-Two separate services accessible via different ports and protocols.
+Sure, I can squash in v2.
 
 Thanks,
 Stephan
-
-NOTE: All of this is just my interpretation based on the public hints
-that exist. I have no access to internal documentation or source code
-that would prove that all of this is correct.
