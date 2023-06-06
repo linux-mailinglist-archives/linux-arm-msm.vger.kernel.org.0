@@ -2,83 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71ECE724336
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 14:55:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D60C724356
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 14:57:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237653AbjFFMzF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 08:55:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53760 "EHLO
+        id S236095AbjFFM5A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 08:57:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237930AbjFFMy7 (ORCPT
+        with ESMTP id S233363AbjFFM47 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 08:54:59 -0400
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F68010FA
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 05:54:44 -0700 (PDT)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b1b66a8fd5so48583211fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 05:54:43 -0700 (PDT)
+        Tue, 6 Jun 2023 08:56:59 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8432D10FC
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 05:56:28 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f004cc54f4so7648465e87.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 05:56:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686056082; x=1688648082;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=linaro.org; s=google; t=1686056181; x=1688648181;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=29byLYkD06epxWvaEwoGaPGYgdfPe7JpaZeRRJG1+CU=;
-        b=D5XaxIQKQ/doqcc8DuXkgTHCTvXjNsqVWPozqMUda9OiW7AjyFLHFyJkH9Nsx7ML2i
-         aWv31ktclhLy45aXYbmF+U5v3iOMc+raYmqOmFe7qZoBBor/nyp6888wvAEEEqtnXb0A
-         xAV/PMg6nUMdRFkKan9zlqdcnfBEssrMFKLnw0/7l2yv49WZCvyZFHq6I65Rv6NsUX0G
-         DTJQ2KEYTsDCf3b9fas55+m7+wmZAIkZcA5DMpYaIov5qsKuQsQH0srevTXs7EAkBjsK
-         bpMXitjocOV4Xz4JYYIVBGzn4lDEMxs1p1Cm8nVnbOUprTw9leyl2Pm44tuPMksrTwBE
-         iQCg==
+        bh=5EWLD0Rfz3KKrdobJ//Od8DveKQqxFwChlYWDKvD1K8=;
+        b=SbBhSHEsahjkXd38bCYxST+5aWAex60Uxom+t73rO26FYsMtUA8GHsLQyIEVvaXkFt
+         ng0u5ww5fjsgdPIghF7GXIDwZJFiQA9nyFmOkc548nUUFIv85QOBp4FDqu5qZNPq7+IR
+         bGK71m8g06mpImGo3OQznCh0QOub9i69ViANW919GaLnPRabJZ9UdZUrHT2CAp0AUn+N
+         UODuIfhP3qBFqIHJYxf4dMZ97Tu++i9Ar2TEGaVQ3WqzZYC+QqErSaWy3sOqKNk5X5zu
+         yGyNHNlP2TnFbYrQ4A2/QkgExbMqde6szux/m+YOUN3rgr0AqdZDvY79X9Yr3AvgQTIc
+         9vdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686056082; x=1688648082;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+        d=1e100.net; s=20221208; t=1686056181; x=1688648181;
+        h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=29byLYkD06epxWvaEwoGaPGYgdfPe7JpaZeRRJG1+CU=;
-        b=hOHgUcjEMhw+iui2SvxbvjG9b25pXnwb9cPdzkqq7BPTMm6NEmjlVy7hLw72btpTHb
-         E6SbgJfi94owbzrXMEYy/bLD9SN5HtXcvvMqlI0bmT4DDP1traFQeKa+cjvyuyikUywW
-         VXqcCh6nkeLgyaZaAN8LfBFORv4OH2u9wNXxcEMfiALO+6/UU050Ic+i4caVdLdaZnYE
-         M4qg4+iRd1nQtm7eQHNwftA7fGYhG5SuI/czsbbvyNfNK/vAles+6QhdDV5k7TKzGrPh
-         7HRUtBYvdHJccTn90BTkNndzitxXYM/Q09LbO83LWkMDx+U4eBcJhA+BVokeq0URZ8Dc
-         fF4Q==
-X-Gm-Message-State: AC+VfDxqvVWVXRp6hGoN5VVj5H07gq90PD+iDK6ZB2VMRw2Ju1J68WIe
-        eyMkYGBTBrot2OVlZHqDy+aqfg==
-X-Google-Smtp-Source: ACHHUZ49XQlBrwtKYXFqe0/3nJfe8j1/38BI40A3xg/WttZ1Xjsx/kEy5WnlSU5+sttm1HBSPstNWw==
-X-Received: by 2002:a05:651c:d5:b0:2ad:9c17:a78f with SMTP id 21-20020a05651c00d500b002ad9c17a78fmr1099893ljr.53.1686056082286;
-        Tue, 06 Jun 2023 05:54:42 -0700 (PDT)
+        bh=5EWLD0Rfz3KKrdobJ//Od8DveKQqxFwChlYWDKvD1K8=;
+        b=KIpsDZwl0a4nf4HeKNTttTETjV7DM2+4npWadoB6j572hucCJmbpTsd3xM56Xfdxjd
+         8sfyv+q9j0+MCb4MirNWxumUVpuYhsbirkOpiXUnLfw98o9vHb9kyL5wbha2jaVM/ar5
+         ygvGEMGSNEMWFDq6e0FdN4nX36ymh3HPhPcTnc3VIHW4KC0YaedCvSBHAjQYmOGpB4fb
+         Tadn1M6X1ayYUKZg/898/bqbiK5+R2Ny4Ah7ljX5MQk+l7tUhmFX/skkzJ8eYe52L73f
+         V+z3965+6rr13KHz8nYSvRLK7UN4LrdMpevez8WfifSwWcnbmlr8YaDVHj85KlUqWWZ0
+         a8Xw==
+X-Gm-Message-State: AC+VfDwO7v1TWWwPpKZWh2mDnDSaWrgvEai7fIMJODJoRl5dCg0Kc3wV
+        Uavt26MAMzHD5Lpghv31LhNoNg==
+X-Google-Smtp-Source: ACHHUZ4YPYdaGBZxa3Dn0r5wPTNNQKeSBZX8DQxyR3F0zuXXLkW4RYvNg043l1e/Ozz4/jBSIwfjEg==
+X-Received: by 2002:ac2:5610:0:b0:4f3:aa09:e7e8 with SMTP id v16-20020ac25610000000b004f3aa09e7e8mr1045270lfd.44.1686056181602;
+        Tue, 06 Jun 2023 05:56:21 -0700 (PDT)
 Received: from [192.168.1.101] (abyl150.neoplus.adsl.tpnet.pl. [83.9.31.150])
-        by smtp.gmail.com with ESMTPSA id w13-20020a2e300d000000b002af25598f07sm1843047ljw.78.2023.06.06.05.54.40
+        by smtp.gmail.com with ESMTPSA id u20-20020ac243d4000000b004eb0c51780bsm1453202lfl.29.2023.06.06.05.56.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jun 2023 05:54:41 -0700 (PDT)
-Message-ID: <1f1cdf5d-075a-7e75-9dac-840f3dcfe9e9@linaro.org>
-Date:   Tue, 6 Jun 2023 14:54:40 +0200
+        Tue, 06 Jun 2023 05:56:21 -0700 (PDT)
+Message-ID: <37c56ce0-3333-7434-2d8b-90d43790db06@linaro.org>
+Date:   Tue, 6 Jun 2023 14:56:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH 2/3] remoteproc: qcom: q6v5-mss: Add support for
- SDM630/636/660
+Subject: Re: [PATCH V2 0/2] Add support for GPIO based leds and buttons
 Content-Language: en-US
-To:     Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Konrad Dybcio <konradybcio@gmail.com>
-References: <20230604061421.3787649-1-alexeymin@postmarketos.org>
- <20230604061421.3787649-2-alexeymin@postmarketos.org>
+To:     Sridharan S N <quic_sridsn@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230605052907.18837-1-quic_sridsn@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230604061421.3787649-2-alexeymin@postmarketos.org>
+In-Reply-To: <20230605052907.18837-1-quic_sridsn@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -87,163 +79,28 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 4.06.2023 08:14, Alexey Minnekhanov wrote:
-> Snapdragon 630/660 modem subsystem is similar to one in MSM8998
-> and can almost reuse it's reset sequence.
-> 
-> Downstream sources call this q6v5 version "qdsp6v62-1-5" and its
-> code path has additional checks for QDSP6v55_BHS_EN_REST_ACK
-> status [2].
-> 
-> Inspiration is taken from Konrad Dybcio's work in [1], but reworked
-> to use common code path with MSM8996/8998, instead of completely
-> separate "if" block for SDM660.
-> 
-> [1] https://github.com/SoMainline/linux/commit/7dd6dd9b936dc8d6c1f1abe299e5b065c33741e8
-> [2] https://github.com/MiCode/Xiaomi_Kernel_OpenSource/blob/lavender-q-oss/drivers/soc/qcom/pil-q6v5.c#L393
-> 
-> Co-developed-by: Konrad Dybcio <konradybcio@gmail.com>
-> Signed-off-by: Konrad Dybcio <konradybcio@gmail.com>
-> Signed-off-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
-> 
-> ---
-> 
-> In his commit Konrad mentions that modem was unstable, but I don't
-> observe such behaviour on my device. Modem does not restart by itself,
-> and I could successfully enable ath10k Wi-Fi with this (and it was
-> also stable).
-> 
-> Also worth saying that in my initial tests just using qcom,msm8998-mss-pil
-> as-is, without separate resource struct and separate code paths for
-> SDM660, was also working fine. So I'm not sure if separate struct and
-> code path is even needed for sdm660.
-> ---
->  drivers/remoteproc/qcom_q6v5_mss.c | 54 ++++++++++++++++++++++++++++--
->  1 file changed, 52 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
-> index 8e15e4f85de13..e270fc4798766 100644
-> --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> @@ -71,6 +71,7 @@
->  #define QDSP6SS_MEM_PWR_CTL		0x0B0
->  #define QDSP6V6SS_MEM_PWR_CTL		0x034
->  #define QDSP6SS_STRAP_ACC		0x110
-> +#define QDSP6V62SS_BHS_STATUS		0x0C4
->  
->  /* AXI Halt Register Offsets */
->  #define AXI_HALTREQ_REG			0x0
-> @@ -123,6 +124,7 @@
->  #define QDSP6v56_CLAMP_QMC_MEM		BIT(22)
->  #define QDSP6SS_XO_CBCR		0x0038
->  #define QDSP6SS_ACC_OVERRIDE_VAL		0x20
-> +#define QDSP6v55_BHS_EN_REST_ACK	BIT(0)
->  
->  /* QDSP6v65 parameters */
->  #define QDSP6SS_CORE_CBCR		0x20
-> @@ -130,6 +132,7 @@
->  #define QDSP6SS_BOOT_CORE_START         0x400
->  #define QDSP6SS_BOOT_CMD                0x404
->  #define BOOT_FSM_TIMEOUT                10000
-> +#define BHS_CHECK_MAX_LOOPS             200
->  
->  struct reg_info {
->  	struct regulator *reg;
-> @@ -250,6 +253,7 @@ enum {
->  	MSS_MSM8998,
->  	MSS_SC7180,
->  	MSS_SC7280,
-> +	MSS_SDM660,
->  	MSS_SDM845,
->  };
->  
-> @@ -700,7 +704,8 @@ static int q6v5proc_reset(struct q6v5 *qproc)
->  	} else if (qproc->version == MSS_MSM8909 ||
->  		   qproc->version == MSS_MSM8953 ||
->  		   qproc->version == MSS_MSM8996 ||
-> -		   qproc->version == MSS_MSM8998) {
-> +		   qproc->version == MSS_MSM8998 ||
-> +		   qproc->version == MSS_SDM660) {
->  
->  		if (qproc->version != MSS_MSM8909 &&
->  		    qproc->version != MSS_MSM8953)
-> @@ -734,6 +739,19 @@ static int q6v5proc_reset(struct q6v5 *qproc)
->  		val |= readl(qproc->reg_base + QDSP6SS_PWR_CTL_REG);
->  		udelay(1);
->  
-> +		if (qproc->version == MSS_SDM660) {
-> +			for (i = BHS_CHECK_MAX_LOOPS; i > 0; i--) {
-> +				if (readl_relaxed(qproc->reg_base + QDSP6V62SS_BHS_STATUS)
-> +					& QDSP6v55_BHS_EN_REST_ACK)
-> +					break;
-> +				udelay(1);
-> +			}
-> +			if (!i) {
-> +				dev_err(qproc->dev, "BHS_EN_REST_ACK not set!\n");
-> +				return -ETIMEDOUT;
-> +			}
-> +		}
-We could use something like readl_relaxed_poll_timeout instead!
+On 5.06.2023 07:29, Sridharan S N wrote:
+> Add support for wlan-2g led and wps button available on IPQ5332 and
+> IPQ9574
+Please roughly mention the platform in the series title, e.g.
 
-I think it looks good otherwise!
+"Add support for GPIO based leds and buttons on IPQ5332/9574 devices"
+
+otherwise it sounds as if you were just adding support for that to
+the kernel ^^
 
 Konrad
-> +
->  		/* Put LDO in bypass mode */
->  		val |= QDSP6v56_LDO_BYP;
->  		writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
-> @@ -756,7 +774,7 @@ static int q6v5proc_reset(struct q6v5 *qproc)
->  				mem_pwr_ctl = QDSP6SS_MEM_PWR_CTL;
->  				i = 19;
->  			} else {
-> -				/* MSS_MSM8998 */
-> +				/* MSS_MSM8998, MSS_SDM660 */
->  				mem_pwr_ctl = QDSP6V6SS_MEM_PWR_CTL;
->  				i = 28;
->  			}
-> @@ -2193,6 +2211,37 @@ static const struct rproc_hexagon_res sc7280_mss = {
->  	.version = MSS_SC7280,
->  };
->  
-> +static const struct rproc_hexagon_res sdm660_mss = {
-> +	.hexagon_mba_image = "mba.mbn",
-> +	.proxy_clk_names = (char*[]){
-> +			"xo",
-> +			"qdss",
-> +			"mem",
-> +			NULL
-> +	},
-> +	.active_clk_names = (char*[]){
-> +			"iface",
-> +			"bus",
-> +			"gpll0_mss",
-> +			"mnoc_axi",
-> +			"snoc_axi",
-> +			NULL
-> +	},
-> +	.proxy_pd_names = (char*[]){
-> +			"cx",
-> +			"mx",
-> +			NULL
-> +	},
-> +	.need_mem_protection = true,
-> +	.has_alt_reset = false,
-> +	.has_mba_logs = false,
-> +	.has_spare_reg = false,
-> +	.has_qaccept_regs = false,
-> +	.has_ext_cntl_regs = false,
-> +	.has_vq6 = false,
-> +	.version = MSS_SDM660,
-> +};
-> +
->  static const struct rproc_hexagon_res sdm845_mss = {
->  	.hexagon_mba_image = "mba.mbn",
->  	.proxy_clk_names = (char*[]){
-> @@ -2475,6 +2524,7 @@ static const struct of_device_id q6v5_of_match[] = {
->  	{ .compatible = "qcom,msm8998-mss-pil", .data = &msm8998_mss},
->  	{ .compatible = "qcom,sc7180-mss-pil", .data = &sc7180_mss},
->  	{ .compatible = "qcom,sc7280-mss-pil", .data = &sc7280_mss},
-> +	{ .compatible = "qcom,sdm660-mss-pil", .data = &sdm660_mss},
->  	{ .compatible = "qcom,sdm845-mss-pil", .data = &sdm845_mss},
->  	{ },
->  };
+> 
+> Sridharan S N (2):
+>   arm64: dts: qcom: ipq5332: enable GPIO based LEDs and Buttons
+>   arm64: dts: qcom: ipq9574: enable GPIO based LEDs
+> 
+>  arch/arm64/boot/dts/qcom/ipq5332-mi01.2.dts | 42 +++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts | 42 +++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/ipq5332-rdp468.dts | 42 +++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/ipq9574-rdp418.dts | 20 ++++++++++
+>  arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 20 ++++++++++
+>  arch/arm64/boot/dts/qcom/ipq9574-rdp449.dts | 20 ++++++++++
+>  arch/arm64/boot/dts/qcom/ipq9574-rdp453.dts | 20 ++++++++++
+>  7 files changed, 206 insertions(+)
+> 
