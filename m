@@ -2,58 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A7A5724A88
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 19:49:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B314C724A94
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 19:51:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238810AbjFFRt3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 13:49:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49108 "EHLO
+        id S236940AbjFFRvq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 13:51:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50522 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233638AbjFFRt2 (ORCPT
+        with ESMTP id S233040AbjFFRvp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 13:49:28 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9600910F4;
-        Tue,  6 Jun 2023 10:49:27 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2B5DB6306F;
-        Tue,  6 Jun 2023 17:49:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76EAEC433EF;
-        Tue,  6 Jun 2023 17:49:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686073766;
-        bh=pgWxxc2pXaOIXxZHnc21uLoXRzmI3gMVWZH7Ahht6W8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=p6CkLvGT6/u2gYsz2ZI9hsYNyI3961g9ByfPqZHHlddzADAlS4V7qRk/yYmkgO3SP
-         Ns4wZs1+t/vQI10WhNoIFVCMMalJiGq57xVqDsF1un74bOLtavajk/clxqYjx6Ppeg
-         faNiRttu1ryG+NxJHpAt0n3zClE/z8wkCsFVyj7buTX16ffEbiTcNoDpaUQZJbHnfS
-         8WuyB3/mk8DKVRcJuUClaXfoKxy8jFiVHYGdFKxyC/74go0DR5ehdHstQytcCdJW2/
-         DrtcJE4IcMvrDKUb/tEfIr5yxJx98dJ994HnlEZhu1+UYXUuFQGWf10HLGHvBJAz2k
-         CpPpcuuqYNI8g==
-Date:   Tue, 6 Jun 2023 18:49:19 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        dianders@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_msavaliy@quicinc.com, mka@chromium.org, swboyd@chromium.org,
-        quic_vtanuku@quicinc.com, quic_ptalari@quicinc.com
-Subject: Re: [PATCH v2 0/2] spi-geni-qcom: Add new interfaces and utilise
- them to do map/unmap in framework for SE DMA
-Message-ID: <bffedd6c-acc2-4c89-9e4d-82aa70249b57@sirena.org.uk>
-References: <1684325894-30252-1-git-send-email-quic_vnivarth@quicinc.com>
+        Tue, 6 Jun 2023 13:51:45 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51727E47;
+        Tue,  6 Jun 2023 10:51:44 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 356HLYbb020090;
+        Tue, 6 Jun 2023 17:51:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=dfNFd9hC/gzGUKncVdumfSTgcn4L6rTZHm5OrFSh7xE=;
+ b=apExBgBUF7t2ahbAwP8H6fGsX+anhFZTWB4WJGYVssfyWTxibGSUGRl5utdp86ghxm3K
+ z0apYr1KTSD1Gm1qZS7AfUgYw6S7rIw8nnh5zNXRAaqWclWQcY8NyzihuIgYBPy/1zAu
+ WsKVS7QwtNR78K2cq7k4dIoSTHp3BkCTojphLqEnVnQ7O3o+N7+r9qodxrNjJBDW/cLs
+ AXKz6EikUrdIQEhMHIW/dbN7c9U532GJSO6keUibyFLZRFjD6VZI1qDdEuvi5e0SJwtl
+ Qec8b9oCat6smkh0lhsIb6LlruLAQmHw0Acq2K+/bASBSUlfYJgMvh63+4wP7g/bst6n VQ== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r249n0tr5-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 06 Jun 2023 17:51:38 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 356Hpbdn028326
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 6 Jun 2023 17:51:37 GMT
+Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 6 Jun 2023
+ 10:51:36 -0700
+Message-ID: <b605d666-8b79-67c2-f16e-1e45c01287c2@quicinc.com>
+Date:   Tue, 6 Jun 2023 10:51:36 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="AcBOIuEM4L/yvJax"
-Content-Disposition: inline
-In-Reply-To: <1684325894-30252-1-git-send-email-quic_vnivarth@quicinc.com>
-X-Cookie: Keep out of the sunlight.
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [Freedreno] [PATCH] drm/msm/dpu: re-introduce dpu core revision
+ to the catalog
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Sean Paul <sean@poorly.run>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <quic_khsieh@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        <quic_jesszhan@quicinc.com>, <freedreno@lists.freedesktop.org>
+References: <20230531005358.18090-1-quic_abhinavk@quicinc.com>
+ <CAA8EJpryw0h8TgpJ+SFJ7s0=LCjkQ6oqAjCKsm60dk_Q5e+wWA@mail.gmail.com>
+ <0af4df3d-8048-98cd-6c91-7cd553f4f65f@quicinc.com>
+ <98e4bda7-19e9-09b6-f008-383adada97cb@linaro.org>
+ <a0b7a9fc-eb3c-3b26-b11d-fe1fb47b2c51@quicinc.com>
+ <451b114c-05e1-541c-1d3e-26bb81a307c4@linaro.org>
+ <47fda908-d76f-65d5-e001-8773c5b160b9@quicinc.com>
+ <48cc3d26-10fe-5b10-30b6-0772d62a2a53@linaro.org>
+ <804363cf-f6cf-71a6-be8f-5fc00eea3154@quicinc.com>
+ <CAA8EJprDSd79AXQvqW+=0xvTrTMCTL+CJ2E6Rhjro3g3E9UWog@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJprDSd79AXQvqW+=0xvTrTMCTL+CJ2E6Rhjro3g3E9UWog@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: G6_fKLj-zJDe_wQL5c_2DLgKnNjpGNNB
+X-Proofpoint-GUID: G6_fKLj-zJDe_wQL5c_2DLgKnNjpGNNB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-06_13,2023-06-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ adultscore=0 clxscore=1015 impostorscore=0 spamscore=0 priorityscore=1501
+ mlxscore=0 mlxlogscore=999 bulkscore=0 suspectscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2304280000
+ definitions=main-2306060153
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -61,33 +93,243 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---AcBOIuEM4L/yvJax
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Wed, May 17, 2023 at 05:48:12PM +0530, Vijaya Krishna Nivarthi wrote:
-> A "known issue" during implementation of SE DMA for spi geni driver was
-> that it does DMA map/unmap internally instead of in spi framework.
-> Current patches remove this hiccup and also clean up code a bit.
+On 6/6/2023 4:14 AM, Dmitry Baryshkov wrote:
+> On Tue, 6 Jun 2023 at 05:35, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 6/5/2023 6:03 PM, Dmitry Baryshkov wrote:
+>>> On 06/06/2023 03:55, Abhinav Kumar wrote:
+>>>>
+>>>>
+>>>> On 6/3/2023 7:21 PM, Dmitry Baryshkov wrote:
+>>>>> On 31/05/2023 21:25, Abhinav Kumar wrote:
+>>>>>>
+>>>>>>
+>>>>>> On 5/31/2023 3:07 AM, Dmitry Baryshkov wrote:
+>>>>>>> On 31/05/2023 06:05, Abhinav Kumar wrote:
+>>>>>>>>
+>>>>>>>>
+>>>>>>>> On 5/30/2023 7:53 PM, Dmitry Baryshkov wrote:
+>>>>>>>>> On Wed, 31 May 2023 at 03:54, Abhinav Kumar
+>>>>>>>>> <quic_abhinavk@quicinc.com> wrote:
+>>>>>>>>>>
+>>>>>>>>>> With [1] dpu core revision was dropped in favor of using the
+>>>>>>>>>> compatible string from the device tree to select the dpu catalog
+>>>>>>>>>> being used in the device.
+>>>>>>>>>>
+>>>>>>>>>> This approach works well however also necessitates adding catalog
+>>>>>>>>>> entries for small register level details as dpu capabilities and/or
+>>>>>>>>>> features bloating the catalog unnecessarily. Examples include but
+>>>>>>>>>> are not limited to data_compress, interrupt register set,
+>>>>>>>>>> widebus etc.
+>>>>>>>>>>
+>>>>>>>>>> Introduce the dpu core revision back as an entry to the catalog
+>>>>>>>>>> so that
+>>>>>>>>>> we can just use dpu revision checks and enable those bits which
+>>>>>>>>>> should be enabled unconditionally and not controlled by a catalog
+>>>>>>>>>> and also simplify the changes to do something like:
+>>>>>>>>>>
+>>>>>>>>>> if (dpu_core_revision > xxxxx && dpu_core_revision < xxxxx)
+>>>>>>>>>>           enable the bit;
+>>>>>>>>>>
+>>>>>>>>>> Also, add some of the useful macros back to be able to use dpu core
+>>>>>>>>>> revision effectively.
+>>>>>>>>>>
+>>>>>>>>>> [1]:
+>>>>>>>>>> https://patchwork.freedesktop.org/patch/530891/?series=113910&rev=4
+>>>>>>>>>>
+>>>>>>>>>> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+>>>>>>>>>> ---
+>>>>>>>>>>    .../msm/disp/dpu1/catalog/dpu_3_0_msm8998.h   |  1 +
+>>>>>>>>>>    .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    |  1 +
+>>>>>>>>>>    .../msm/disp/dpu1/catalog/dpu_5_0_sm8150.h    |  1 +
+>>>>>>>>>>    .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  1 +
+>>>>>>>>>>    .../msm/disp/dpu1/catalog/dpu_6_0_sm8250.h    |  1 +
+>>>>>>>>>>    .../msm/disp/dpu1/catalog/dpu_6_2_sc7180.h    |  1 +
+>>>>>>>>>>    .../msm/disp/dpu1/catalog/dpu_6_3_sm6115.h    |  1 +
+>>>>>>>>>>    .../msm/disp/dpu1/catalog/dpu_6_5_qcm2290.h   |  1 +
+>>>>>>>>>>    .../msm/disp/dpu1/catalog/dpu_7_0_sm8350.h    |  1 +
+>>>>>>>>>>    .../msm/disp/dpu1/catalog/dpu_7_2_sc7280.h    |  1 +
+>>>>>>>>>>    .../msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h  |  1 +
+>>>>>>>>>>    .../msm/disp/dpu1/catalog/dpu_8_1_sm8450.h    |  1 +
+>>>>>>>>>>    .../msm/disp/dpu1/catalog/dpu_9_0_sm8550.h    |  1 +
+>>>>>>>>>>    .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    | 31
+>>>>>>>>>> ++++++++++++++++++-
+>>>>>>>>>>    14 files changed, 43 insertions(+), 1 deletion(-)
+>>>>>>>>>>
+>>>>>>>>>
+>>>>>>>>> [skipped catalog changes]
+>>>>>>>>>
+>>>>>>>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>>>>>>>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>>>>>>>>>> index 677048cc3b7d..cc4aa75a1219 100644
+>>>>>>>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>>>>>>>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>>>>>>>>>> @@ -19,6 +19,33 @@
+>>>>>>>>>>     */
+>>>>>>>>>>    #define MAX_BLOCKS    12
+>>>>>>>>>>
+>>>>>>>>>> +#define DPU_HW_VER(MAJOR, MINOR, STEP)\
+>>>>>>>>>> +                 ((((unsigned int)MAJOR & 0xF) << 28) |\
+>>>>>>>>>> +                 ((MINOR & 0xFFF) << 16) |\
+>>>>>>>>>> +                 (STEP & 0xFFFF))
+>>>>>>>>>> +
+>>>>>>>>>> +#define DPU_HW_MAJOR(rev)((rev) >> 28)
+>>>>>>>>>> +#define DPU_HW_MINOR(rev)(((rev) >> 16) & 0xFFF)
+>>>>>>>>>> +#define DPU_HW_STEP(rev)((rev) & 0xFFFF)
+>>>>>>>>>> +#define DPU_HW_MAJOR_MINOR(rev)((rev) >> 16)
+>>>>>>>>>> +
+>>>>>>>>>> +#define IS_DPU_MAJOR_MINOR_SAME(rev1, rev2)   \
+>>>>>>>>>> +(DPU_HW_MAJOR_MINOR((rev1)) == DPU_HW_MAJOR_MINOR((rev2)))
+>>>>>>>>>> +
+>>>>>>>>>> +#define DPU_HW_VER_300 DPU_HW_VER(3, 0, 0) /* 8998 v1.0 */
+>>>>>>>>>> +#define DPU_HW_VER_400 DPU_HW_VER(4, 0, 0) /* sdm845 v1.0 */
+>>>>>>>>>> +#define DPU_HW_VER_500 DPU_HW_VER(5, 0, 0) /* sm8150 v1.0 */
+>>>>>>>>>> +#define DPU_HW_VER_510 DPU_HW_VER(5, 1, 1) /* sc8180 */
+>>>>>>>>>> +#define DPU_HW_VER_600 DPU_HW_VER(6, 0, 0) /* sm8250 */
+>>>>>>>>>> +#define DPU_HW_VER_620 DPU_HW_VER(6, 2, 0) /* sc7180 v1.0 */
+>>>>>>>>>> +#define DPU_HW_VER_630 DPU_HW_VER(6, 3, 0) /* sm6115|sm4250 */
+>>>>>>>>>> +#define DPU_HW_VER_650 DPU_HW_VER(6, 5, 0) /* qcm2290|sm4125 */
+>>>>>>>>>> +#define DPU_HW_VER_700 DPU_HW_VER(7, 0, 0) /* sm8350 */
+>>>>>>>>>> +#define DPU_HW_VER_720 DPU_HW_VER(7, 2, 0) /* sc7280 */
+>>>>>>>>>> +#define DPU_HW_VER_800 DPU_HW_VER(8, 0, 0) /* sc8280xp */
+>>>>>>>>>> +#define DPU_HW_VER_810 DPU_HW_VER(8, 1, 0) /* sm8450 */
+>>>>>>>>>> +#define DPU_HW_VER_900 DPU_HW_VER(9, 0, 0) /* sm8550 */
+>>>>>>>>>
+>>>>>>>>> Instead of having defines for all SoCs (which can quickly become
+>>>>>>>>> unmanageable) and can cause merge conflicts, I'd suggest inlining
+>>>>>>>>> all
+>>>>>>>>> the defines into respective catalog files.
+>>>>>>>>>
+>>>>>>>>
+>>>>>>>> Sure, that can be done.
+>>>>>>>>
+>>>>>>>>> Also, I'm not sure that the "step" should be a part of the
+>>>>>>>>> catalog. I
+>>>>>>>>> know that this follows the hardware revision. However, please
+>>>>>>>>> correct
+>>>>>>>>> me if I'm wrong, different step levels are used for revisions of the
+>>>>>>>>> same SoC. The original code that was reading the hw revision from
+>>>>>>>>> the
+>>>>>>>>> hardware register, listed both 5.0.0 and 5.0.1 for sm8150.
+>>>>>>>>>
+>>>>>>>>
+>>>>>>>> This is one of the things i noticed while making this change.
+>>>>>>>>
+>>>>>>>> Before the catalog rework, we used to handle even steps as we used
+>>>>>>>> to read that from the register and match it with the mdss_cfg
+>>>>>>>> handler. But after the rework, we dont handle steps anymore. Yes,
+>>>>>>>> you are right that different step levels are used for the
+>>>>>>>> revisions of the same SOC and so with that, i dont expect or
+>>>>>>>> atleast am not aware of DPU differences between steps but I am not
+>>>>>>>> able to rule it out.
+>>>>>>>>
+>>>>>>>> So are you suggesting we drop step altogether and DPU_HW_VER()
+>>>>>>>> macro shall only handle major and minor versions? With the current
+>>>>>>>> chipsets I see, it should not make a difference . Its just that I
+>>>>>>>> am not sure if that will never happen.
+>>>>>>>
+>>>>>>> Yes. The goal of this rework would be to drop generic features and
+>>>>>>> to replace those checks with DPU-revision lookups. Correct?
+>>>>>>
+>>>>>> Yes thats right.
+>>>>>>
+>>>>>>> I think that from this perspective having to handle toe step
+>>>>>>> revision is a sign of an overkill. Having to handle the step
+>>>>>>> revision is a sign of paltform feature (or mis-feature) rather than
+>>>>>>> a generic DPU bit.
+>>>>>>>
+>>>>>>
+>>>>>> Not entirely. Lets not forget that at the moment even dpu_perf_cfg
+>>>>>> is part of the catalog. Even if in terms of major HW blocks steps
+>>>>>> shouldnt change, there is absolutely no guarantee that perf data
+>>>>>> cannot.
+>>>>>>
+>>>>>> This is what is the sticking point for me which is holding me back
+>>>>>> against dropping step. Thoughts?
+>>>>>
+>>>>> We usually do not support ES versions of the chips, only the final
+>>>>> version. So supporting the perf data for earlier revisions is also
+>>>>> not required.
+>>>>>
+>>>>
+>>>> ack, we will drop step in that case. and good to know about the ES
+>>>> versions.
+>>>>
+>>>>>>
+>>>>>>> In fact I suppose that even handling a minor revision would be an
+>>>>>>> overkill. Why don't we start with .dpu_major instead of .core_rev?
+>>>>>>> We can add .dpu_minor if/when required.
+>>>>>>>
+>>>>>>
+>>>>>> No, unfortunately we cannot drop minor version for sure. I am seeing
+>>>>>> examples in downstream code where some of the features are available
+>>>>>> after a minor verion as well.
+>>>>>
+>>>>> Can you please give an example?
+>>>>>
+>>>>
+>>>> Yes, watchdog timer, intf reset counter are available only after DPU
+>>>> HW version 8.1 (not major version 8).
+>>>
+>>> Hmm, IIRC, wd timer was available for ages. Was it moved together with
+>>> the introduction of MDSS_PERIPH_0_REMOVED?
+>>>
+>>
+>> I am not sure of the timeline but its certainly tied to 8.1.
+>>
+>>> But anyway, I see your point. Let's have major and minor. I'd probably
+>>> still ask for the separate major and minor fields, if you don't mind.
+>>>
+>>
+>> hmmm so something like this?
+>>
+>> +#define DPU_HW_VER_300 DPU_HW_VER(3, 0) /* 8998 v1.0 */
+>>
+>> const struct dpu_mdss_cfg dpu_msm8998_cfg = {
+>> .......
+>> .dpu_major_rev = DPU_HW_MAJOR(DPU_HW_VER_300),
+>> .dpu_minor_rev = DPU_HW_MINOR(DPU_HW_VER_300)
+> 
+> Just:
+> 
+> const struct dpu_mdss_cfg dpu_msm8998_cfg = {
+>      .dpu_major_rev = 3,
+>      .dpu_minor_rev = 0,
+>      /* .... */
+> };
+> 
+> We do not need a single enumeration of all the versions. It can easily
+> become a source of merge conflicts.
+> 
 
-Given Konrad's review I'll go ahead and apply these on a branch
-(assuming my CI is happy), if there's a need to merge them into the qcom
-tree I can sign a pull request (or revert the commits).  Hopefully
-that's OK with everyone.
+The issue with this approch is then the DPU_HW_VER_xxx macros become 
+redundant but we should keep them. Because in the code, its much more 
+readable to have
 
---AcBOIuEM4L/yvJax
-Content-Type: application/pgp-signature; name="signature.asc"
+if (core_rev > DPU_HW_MAJOR(DPU_HW_VER_xxx))
+	then enable feature;
 
------BEGIN PGP SIGNATURE-----
+But now we will have to do
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmR/cZ8ACgkQJNaLcl1U
-h9C1MAf/b+Cz+UhbCvp93H9oihETiPDy+5bjUooM27kl60urEm1j+ViCXUDFJwE4
-ZoctmMVAUSWKbZs9Ad1iaukoiVJ52HjcmPUXu1V7KTnNNCMBUSRGA12Rt4e38G0b
-2kg8YqAo7QhHaCBmIWNoUgZfCCiezuDBX/4Y3kRUIqUZT48ymfUwMUdIMwstDfWd
-ehx+XCQkFm/qfXf735N+fg98AVVGpbdLakgSdK3BtA6eh2Et60xtckdzl32oJTYj
-RSgoM8R7nS0R0YQmf5bPpkMt4x+xcCH9/sw/wT1sPi5Dif7lH5w0DoOTwcp3x7/2
-IhFRytVhDnNzUZ3H92Phh47EoS5nnw==
-=VF1y
------END PGP SIGNATURE-----
+if (dpu_major_rev > xxx && dpu_minor_ver > yyy)
+	then enable feature;
 
---AcBOIuEM4L/yvJax--
+/// probably folks will question this xxx and yyy as to what it means.
+
+Can you please explain the single enumeration a bit more?
+
+I thought we are going to move each revision to its separate file to 
+avoid the conflicts as you suggested earlier in the comments. Isnt that 
+enough?
+
+>> .......
+>> }
+>>
+>> But may I ask why? Since the manor/minor version macros handle this
+>> nicely for us.
+> 
+> 
+> 
