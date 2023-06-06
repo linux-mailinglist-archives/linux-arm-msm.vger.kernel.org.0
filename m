@@ -2,134 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D070723F9E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 12:34:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40B90723FD7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 12:42:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236936AbjFFKeS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 06:34:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55202 "EHLO
+        id S236713AbjFFKmi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 06:42:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236904AbjFFKeH (ORCPT
+        with ESMTP id S236775AbjFFKmD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 06:34:07 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E71BE42;
-        Tue,  6 Jun 2023 03:34:03 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3567GQVM002049;
-        Tue, 6 Jun 2023 10:33:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=i9Rvne1JjTYZ/ypfVKCw95t74IgXT4Np+ksPCaAY24k=;
- b=Tie28ARwQLbryfYKumOz5+aJdQxAspVYZwGvIja6JmbOmSlEnjpnTkzfq4LUzkTjP/xG
- hSeu3jQE6OMHPnjzmoHCfSey8cnoQy8/DOs0z8jzL3RhVmYDWZJ4KZwvPZ3sEBTUVvbY
- YdTlKLklNaiA4aR17AOIkH+JTkihhcg9D9rjYOnPcnNeNkpEZ/jIT9LuvkwerMSemLbu
- rmztMo9oViKPpfupyGDMsWMWwftTNulXJMANDkdXuHfREKSVD3dom8MElxnZvNFumz8X
- rx42/HHiZI5KsdOcQengNB1hzrOOh6Tc2EnK99inHnhcwPg0Mk5brT8eXYLW1GRWlQ5x JQ== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r1s4uh5r8-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 06 Jun 2023 10:33:59 +0000
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 356AXwCb026081
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 6 Jun 2023 10:33:58 GMT
-Received: from varda-linux.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 6 Jun 2023 03:33:53 -0700
-Date:   Tue, 6 Jun 2023 16:03:49 +0530
-From:   Varadarajan Narayanan <quic_varada@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <amitk@kernel.org>,
-        <thara.gopinath@gmail.com>, <rafael@kernel.org>,
-        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v5 0/3] Enable IPQ9574 TSENS support
-Message-ID: <20230606103349.GA675@varda-linux.qualcomm.com>
-References: <cover.1685703605.git.quic_varada@quicinc.com>
+        Tue, 6 Jun 2023 06:42:03 -0400
+Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.199])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 85C6710E7
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 03:40:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+        s=s110527; h=From:Subject:Date:Message-Id:MIME-Version:
+        Content-Type; bh=qyXtGWS1mywUlTqnAaOv5Fx0KyUBRe3RE3M3xbQ/fOk=;
+        b=p2WOJPcCZmK/EWQWypbkJrQQKoMO3qKGOaueeMvWejtExJI3wnxP3BoKkFg/6X
+        8NLqsJCRsnQRE19LvCv0XpAChfpNgKwgpWU9AYciWNwCcFYvNbscPlkCCkXbBm5m
+        Gu6K/a2h1S8+36v7hym0fS81ZIjvlKqhZDtmu4EOgozv8=
+Received: from ubuntu.localdomain (unknown [220.180.239.55])
+        by zwqz-smtp-mta-g5-0 (Coremail) with SMTP id _____wCXU5nnDH9k6S94Bg--.15940S2;
+        Tue, 06 Jun 2023 18:39:38 +0800 (CST)
+From:   =?UTF-8?q?Duke=20Xin=28=E8=BE=9B=E5=AE=89=E6=96=87=29?= 
+        <duke_xinanwen@163.com>
+To:     mani@kernel.org, loic.poulain@linaro.org, slark_xiao@163.com
+Cc:     fabio.porcedda@gmail.com, koen.vandeputte@citymesh.com,
+        quic_jhugo@quicinc.com, johan+linaro@kernel.org,
+        bhelgaas@google.com, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, jerry.meng@quectel.com,
+        duke.xin@quectel.com,
+        =?UTF-8?q?Duke=20Xin=28=E8=BE=9B=E5=AE=89=E6=96=87=29?= 
+        <duke_xinanwen@163.com>
+Subject: [PATCH v6] bus: mhi: host: pci_generic: Add support for Quectel RM520N-GL modem
+Date:   Tue,  6 Jun 2023 03:39:32 -0700
+Message-Id: <20230606103932.2790-1-duke_xinanwen@163.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <cover.1685703605.git.quic_varada@quicinc.com>
-User-Agent: Mutt/1.5.24 (2015-08-30)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: xTn3_lGA0rZMujC2FP7xnrbhfsZgpH54
-X-Proofpoint-GUID: xTn3_lGA0rZMujC2FP7xnrbhfsZgpH54
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-06_06,2023-06-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 mlxlogscore=954 impostorscore=0 malwarescore=0 bulkscore=0
- adultscore=0 priorityscore=1501 clxscore=1015 mlxscore=0 suspectscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2306060089
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: _____wCXU5nnDH9k6S94Bg--.15940S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7tF47Jr17tr1kJFykZry7Wrg_yoW8Ary5pF
+        4F9rW0vF4qvrWay397C34DGFn5ua13ury7KF9rCw1IqF1qy3yFqryv9Fy2vF4jva95XFW3
+        tF1rJr90g3WqyFUanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+        9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0JU1RR_UUUUU=
+X-Originating-IP: [220.180.239.55]
+X-CM-SenderInfo: 5gxnvsp0lqt0xzhqqiywtou0bp/1tbiVwyGe1etrLNHOwAAs-
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_BL,RCVD_IN_MSPIKE_L4,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 02, 2023 at 04:33:49PM +0530, Varadarajan Narayanan wrote:
-> This patch set enables tsens in IPQ9574
->
-> Depends on
-> 	https://lore.kernel.org/linux-arm-msm/20230406061314.10916-1-quic_devipriy@quicinc.com/
-> [v5]:
-> 	Fix make DT_CHECKER_FLAGS=-m dt_binding_check and make dtbs_check errors without removing existing entries
->
-> [v4]:
-> 	Drop the sm6375-tsens and qcm2290-tsens related bindings
-> 	fix as it is already posted
->
-> 	Remove unnecessary changes from previous version
->
-> [v3]:
-> 	Fix make DT_CHECKER_FLAGS=-m dt_binding_check and make dtbs_check errors
->
-> [v2]:
-> 	Drop the driver change (https://lore.kernel.org/lkml/b45d33d38a334aabbd52c83b0d6028af1f4c74c8.1682682753.git.quic_varada@quicinc.com/)
-> 	since the tsens device is compatible with 8074's tsens
-> 	and use 8074's compatible itself
->
-> 	Rename clusterX nodes as cpussX
->
-> [v1]:
-> 	Fix DT node names
->
-> [v0]:
-> 	Initial patch introducing TSENS support
->
-> Praveenkumar I (1):
->   dt-bindings: thermal: tsens: Add ipq9574 compatible
->
-> Varadarajan Narayanan (2):
->   arm64: dts: qcom: ipq9574: add tsens node
->   arm64: dts: qcom: ipq9574: add thermal zone nodes
->
->  .../devicetree/bindings/thermal/qcom-tsens.yaml    |   6 +
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi              | 218 +++++++++++++++++++++
->  2 files changed, 224 insertions(+)
->
-> --
-> 2.7.4
->
+Add MHI interface definition for RM520 product based on Qualcomm SDX6X chip
 
-Bjorn,
+Signed-off-by: Duke Xin(辛安文) <duke_xinanwen@163.com>
+---
+ drivers/bus/mhi/host/pci_generic.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-Can this series be taken for 6.5?
-All comments have been addressed.
+diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
+index db0a0b062d8e..69be969672f1 100644
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -334,6 +334,16 @@ static const struct mhi_pci_dev_info mhi_quectel_em1xx_info = {
+ 	.sideband_wake = true,
+ };
+ 
++static const struct mhi_pci_dev_info mhi_quectel_rm5xx_info = {
++	.name = "quectel-rm5xx",
++	.edl = "qcom/prog_firehose_sdx6x.elf",
++	.config = &modem_quectel_em1xx_config,
++	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
++	.dma_data_width = 32,
++	.mru_default = 32768,
++	.sideband_wake = true,
++};
++
+ static const struct mhi_channel_config mhi_foxconn_sdx55_channels[] = {
+ 	MHI_CHANNEL_CONFIG_UL(0, "LOOPBACK", 32, 0),
+ 	MHI_CHANNEL_CONFIG_DL(1, "LOOPBACK", 32, 0),
+@@ -573,6 +583,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+ 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
+ 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
++	/* RM520N-GL (sdx6x), eSIM */
++	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1004),
++		.driver_data = (kernel_ulong_t) &mhi_quectel_rm5xx_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x2001), /* EM120R-GL for FCCL (sdx24) */
+ 		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+ 	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
+-- 
+2.25.1
 
-Thanks
-Varada
