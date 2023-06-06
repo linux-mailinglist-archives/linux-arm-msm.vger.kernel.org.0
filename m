@@ -2,79 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 41E17724E25
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 22:29:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83996724E32
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 22:36:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238484AbjFFU30 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 16:29:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52876 "EHLO
+        id S232172AbjFFUgf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 16:36:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53674 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236918AbjFFU3X (ORCPT
+        with ESMTP id S229741AbjFFUge (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 16:29:23 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C857B0
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 13:29:22 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f61735676fso5691454e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 13:29:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686083360; x=1688675360;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=hF5eGVNixQNvDp+Il2XhkfMFtmBZo3W/YgfbUs4NESk=;
-        b=E3QnRfHkXAZHhjknIm2jTxjtvWEGglOSUcriiZvWIcSqIB+qDPR0SA0DMckT9SbT6/
-         2MtZO4gsDmH89upDFeSMFJpDaGaau/eOXiWYNiZN8Igb6Hqzda7p7KAESIpGU6DgBMfW
-         QvLHQWzfxKYDuNdok9vTPlqj3LNU+gMMVlj/8gXj74rJWNeDuSQ3QkBYrRz0YkuClfSi
-         ohYYmesAw/v6cPuM7l5YSr5gdkd3S6MISdLZ0aCStGWcnhpIwyi/MbBzLqYWCXfqtgwY
-         qQZ91NmEaehX4bgfsny23z4ERplGNXMyAwvplXrkXqZ7WbCNrk/P0ZYi3Gcwg0bFei6R
-         Qx8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686083360; x=1688675360;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hF5eGVNixQNvDp+Il2XhkfMFtmBZo3W/YgfbUs4NESk=;
-        b=VtP0dT3qd5FXSqqYpvBZ3MrcOdnnKRZaRIphyKFuvhKLOzp2WhAI8lWcjcfwQBuIns
-         M5nBGK0f5jS+VDC9hB7GTHwoMaCejVb4UXR8HPPqJqHaIBxkVbx/aOO3t8bq79jANLS4
-         cnCYdBkLLkW5Ax6xHRM00AY1uFwfaH3OTqZLAfkk7m1HIuuUlSAZBJ0RfZToHajczORD
-         i1NYtqIODY/KV5vtqkDhAodiB70Fjykb01dT7xQN4aQ2mAsH4tJi0vWTrItENqVL3h9n
-         /fM+cqbGNF8ENVqX0A8KbTrKVvoxlmkOkfl1GYfvrE/LtG1IJLrRI3SQfPraCvcP9W+3
-         Qigg==
-X-Gm-Message-State: AC+VfDwEcgPcS1pYBjqt2gFBD0yCwb96/HNzQKLrIsIQtQkmoChYlDDt
-        tpLmcBHuUk3syy6M81VJ5Ux5uA==
-X-Google-Smtp-Source: ACHHUZ7mj2uTobyo8UlfxQ2Ve5z2RYjLEUJwOO/my7qgJsLk8vjKmSK/8o/F6nrgm2MglmJ9FZ+C0g==
-X-Received: by 2002:a05:6512:61:b0:4f1:458c:c4c with SMTP id i1-20020a056512006100b004f1458c0c4cmr1311631lfo.43.1686083360282;
-        Tue, 06 Jun 2023 13:29:20 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id w8-20020a05651204c800b004f3afa1767dsm1546747lfq.197.2023.06.06.13.29.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jun 2023 13:29:19 -0700 (PDT)
-Message-ID: <5bcbee05-5468-d853-df48-82bf3ae448d8@linaro.org>
-Date:   Tue, 6 Jun 2023 23:29:18 +0300
+        Tue, 6 Jun 2023 16:36:34 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70AB21A7
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 13:36:33 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 356JMYTI031608;
+        Tue, 6 Jun 2023 20:36:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=nIXCfbY+N4bgA3JgPdpuMsnhcQ/xO+DVIepsN79Nd1g=;
+ b=cWbEHA/ahrRitslRqOh9bzs5tTbOLeP6olErOKUKiuWik/yuIktMbLLzr2NNWMpkbWND
+ kcI1H7BIBzMsb59kW1wWDoAi3ZpHlNFYoheuf9s8mrqD85Id5OF2omM0kJ7O5PU1OuZK
+ zfBw26fdPWRuqXc9YKZchgsxUIb9Dwyp10FsNuvoFVY/uc4xoFuvLUG6B7ffn8Yp0EcR
+ QzPbwf73LIIJxZd/o2IKh9w7fWpSOhVbp4DwYeKdrbmX6cLv1C9HvELZNox+cUTmt4ZH
+ KM5Y9KSsrtlzoDvvkJaXSdxTkJq5w3hkg3hf/QP3OQURhofyxsH1twAyz0B0wJUuwcU1 sA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r2a72075x-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 06 Jun 2023 20:36:27 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 356KaQAg012661
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 6 Jun 2023 20:36:26 GMT
+Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 6 Jun 2023
+ 13:36:25 -0700
+Message-ID: <34f18541-29d7-c3bd-2973-0deb1f6b0a2d@quicinc.com>
+Date:   Tue, 6 Jun 2023 13:36:23 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
 Subject: Re: [Freedreno] [RFC PATCH v2 04/13] drm/msm/dpu: remove unused
  fields from dpu_encoder_virt
-Content-Language: en-GB
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+CC:     <linux-arm-msm@vger.kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org,
+        <dri-devel@lists.freedesktop.org>,
         Stephen Boyd <swboyd@chromium.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@gmail.com>
+        <freedreno@lists.freedesktop.org>
 References: <20230321011821.635977-1-dmitry.baryshkov@linaro.org>
  <20230321011821.635977-5-dmitry.baryshkov@linaro.org>
  <94d7d0bf-ad61-628b-f10e-2d676ebe3838@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <94d7d0bf-ad61-628b-f10e-2d676ebe3838@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <5bcbee05-5468-d853-df48-82bf3ae448d8@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <5bcbee05-5468-d853-df48-82bf3ae448d8@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: mBKgGMujej0qNF5WGjTaPzhwI2XSvg9i
+X-Proofpoint-GUID: mBKgGMujej0qNF5WGjTaPzhwI2XSvg9i
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-06_15,2023-06-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501 mlxscore=0
+ bulkscore=0 adultscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
+ clxscore=1015 mlxlogscore=999 impostorscore=0 suspectscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306060175
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,85 +87,93 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/06/2023 23:25, Abhinav Kumar wrote:
-> 
-> 
-> On 3/20/2023 6:18 PM, Dmitry Baryshkov wrote:
->> Remove historical fields intfs_swapped and topology fields from struct
->> dpu_encoder_virt and also remove even more historical docs.
+
+
+On 6/6/2023 1:29 PM, Dmitry Baryshkov wrote:
+> On 06/06/2023 23:25, Abhinav Kumar wrote:
 >>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 10 ----------
->>   1 file changed, 10 deletions(-)
 >>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> index 28729c77364f..4ee708264f3b 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
->> @@ -130,18 +130,12 @@ enum dpu_enc_rc_states {
->>    *            pingpong blocks can be different than num_phys_encs.
->>    * @hw_dsc:        Handle to the DSC blocks used for the display.
->>    * @dsc_mask:        Bitmask of used DSC blocks.
->> - * @intfs_swapped:    Whether or not the phys_enc interfaces have 
->> been swapped
->> - *            for partial update right-only cases, such as pingpong
->> - *            split where virtual pingpong does not generate IRQs
->>    * @crtc:        Pointer to the currently assigned crtc. Normally you
->>    *            would use crtc->state->encoder_mask to determine the
->>    *            link between encoder/crtc. However in this case we need
->>    *            to track crtc in the disable() hook which is called
->>    *            _after_ encoder_mask is cleared.
->>    * @connector:        If a mode is set, cached pointer to the active 
->> connector
->> - * @crtc_kickoff_cb:        Callback into CRTC that will flush & start
->> - *                all CTL paths
->> - * @crtc_kickoff_cb_data:    Opaque user data given to crtc_kickoff_cb
+>> On 3/20/2023 6:18 PM, Dmitry Baryshkov wrote:
+>>> Remove historical fields intfs_swapped and topology fields from struct
+>>> dpu_encoder_virt and also remove even more historical docs.
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 10 ----------
+>>>   1 file changed, 10 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
+>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> index 28729c77364f..4ee708264f3b 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>>> @@ -130,18 +130,12 @@ enum dpu_enc_rc_states {
+>>>    *            pingpong blocks can be different than num_phys_encs.
+>>>    * @hw_dsc:        Handle to the DSC blocks used for the display.
+>>>    * @dsc_mask:        Bitmask of used DSC blocks.
+>>> - * @intfs_swapped:    Whether or not the phys_enc interfaces have 
+>>> been swapped
+>>> - *            for partial update right-only cases, such as pingpong
+>>> - *            split where virtual pingpong does not generate IRQs
+>>>    * @crtc:        Pointer to the currently assigned crtc. Normally you
+>>>    *            would use crtc->state->encoder_mask to determine the
+>>>    *            link between encoder/crtc. However in this case we need
+>>>    *            to track crtc in the disable() hook which is called
+>>>    *            _after_ encoder_mask is cleared.
+>>>    * @connector:        If a mode is set, cached pointer to the 
+>>> active connector
+>>> - * @crtc_kickoff_cb:        Callback into CRTC that will flush & start
+>>> - *                all CTL paths
+>>> - * @crtc_kickoff_cb_data:    Opaque user data given to crtc_kickoff_cb
+>>
+>> no concerns with the above 3
+>>
+>>>    * @enc_lock:            Lock around physical encoder
+>>>    *                create/destroy/enable/disable
+>>>    * @frame_busy_mask:        Bitmask tracking which phys_enc we are 
+>>> still
+>>> @@ -160,7 +154,6 @@ enum dpu_enc_rc_states {
+>>>    * @delayed_off_work:        delayed worker to schedule disabling of
+>>>    *                clks and resources after IDLE_TIMEOUT time.
+>>>    * @vsync_event_work:        worker to handle vsync event for 
+>>> autorefresh
+>>> - * @topology:                   topology of the display
+>>
+>> As we are still going to go ahead with encoder based allocation for 
+>> now, we should keep this topology and start using it for DP DSC's 
+>> 1:1:1 topology.
 > 
-> no concerns with the above 3
+> It is currently unused, so it can be dropped. Your patchset would have 
+> to reintroduce it.
 > 
->>    * @enc_lock:            Lock around physical encoder
->>    *                create/destroy/enable/disable
->>    * @frame_busy_mask:        Bitmask tracking which phys_enc we are 
->> still
->> @@ -160,7 +154,6 @@ enum dpu_enc_rc_states {
->>    * @delayed_off_work:        delayed worker to schedule disabling of
->>    *                clks and resources after IDLE_TIMEOUT time.
->>    * @vsync_event_work:        worker to handle vsync event for 
->> autorefresh
->> - * @topology:                   topology of the display
+
+Ok same old argument which I tend to always lose. We will add it back 
+with DP DSC.
+
+> And I'm still not happy about the encoder-based allocation. You 
+> persuaded me that it is irrelevant for the wide planes. So I'd split it 
+> and post the allocation patchset after the virtual-wide is fully 
+> reviewed (when would come that blissful moment, btw?).
 > 
-> As we are still going to go ahead with encoder based allocation for now, 
-> we should keep this topology and start using it for DP DSC's 1:1:1 
-> topology.
 
-It is currently unused, so it can be dropped. Your patchset would have 
-to reintroduce it.
+Post the allocation with a compelling feature for us to be convinced.
 
-And I'm still not happy about the encoder-based allocation. You 
-persuaded me that it is irrelevant for the wide planes. So I'd split it 
-and post the allocation patchset after the virtual-wide is fully 
-reviewed (when would come that blissful moment, btw?).
+The moment is happening as we speak :)
 
+>>
+>>>    * @idle_timeout:        idle timeout duration in milliseconds
+>>>    * @wide_bus_en:        wide bus is enabled on this interface
+>>>    * @dsc:            drm_dsc_config pointer, for DSC-enabled encoders
+>>> @@ -180,8 +173,6 @@ struct dpu_encoder_virt {
+>>>       unsigned int dsc_mask;
+>>> -    bool intfs_swapped;
+>>> -
+>>>       struct drm_crtc *crtc;
+>>>       struct drm_connector *connector;
+>>> @@ -201,7 +192,6 @@ struct dpu_encoder_virt {
+>>>       enum dpu_enc_rc_states rc_state;
+>>>       struct delayed_work delayed_off_work;
+>>>       struct kthread_work vsync_event_work;
+>>> -    struct msm_display_topology topology;
+>>>       u32 idle_timeout;
 > 
->>    * @idle_timeout:        idle timeout duration in milliseconds
->>    * @wide_bus_en:        wide bus is enabled on this interface
->>    * @dsc:            drm_dsc_config pointer, for DSC-enabled encoders
->> @@ -180,8 +173,6 @@ struct dpu_encoder_virt {
->>       unsigned int dsc_mask;
->> -    bool intfs_swapped;
->> -
->>       struct drm_crtc *crtc;
->>       struct drm_connector *connector;
->> @@ -201,7 +192,6 @@ struct dpu_encoder_virt {
->>       enum dpu_enc_rc_states rc_state;
->>       struct delayed_work delayed_off_work;
->>       struct kthread_work vsync_event_work;
->> -    struct msm_display_topology topology;
->>       u32 idle_timeout;
-
--- 
-With best wishes
-Dmitry
-
