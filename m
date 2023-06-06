@@ -2,105 +2,232 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C6127236A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 07:09:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA7247236F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 07:50:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232670AbjFFFJp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 01:09:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40520 "EHLO
+        id S232123AbjFFFuA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 01:50:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230035AbjFFFJo (ORCPT
+        with ESMTP id S231670AbjFFFt7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 01:09:44 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AB6F123
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 22:09:43 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id 5614622812f47-3980f2df1e7so4802407b6e.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 22:09:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686028182; x=1688620182;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4QAmYzkZJYwnJJFYZpQxGTcgFYpbZNs+6+zl7l0n4pU=;
-        b=JXFSn6VNhygL1OAk3/ZP0liCG/XEnZWOsOFIzpkLeJid5YgJ/0UBH95KhvW+OQJiqq
-         PTV80ggbnXi52CYWyai3ElIfou8S0cLneNhd5a3rr6PDGCiiazrcLIHJv5RFHIYhAo6G
-         cZI3JHXDJQeBard1omGS9y9hMPr/+9dEVFIRQoKbceJX0wgX9zG+1SUN+fZbbwav5qAP
-         Q8OZECiThm0WQSXeakApMmZc3Ng5oZjZtcnlnG+IOXXJ5au58Srui8K10ENsmcSB10TZ
-         p8MBS90sii5U1HIE+InCJZXRMXlMF3ivep5n1kNza2kek2/mTC9h/Yct/pTEipCuTZZr
-         7HlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686028182; x=1688620182;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4QAmYzkZJYwnJJFYZpQxGTcgFYpbZNs+6+zl7l0n4pU=;
-        b=QawgIQqKaXBJNmW+Ta2EJiYgsWIiPoP4EavplSRRPii1wBFLbmqGFLcVu/fiGStd5P
-         9HvpaOdyJXe3foVui+IryvJlYPMdiBLwvBkrAhuA0ulbWfjgII5+1SZWZvZxHH9PApPf
-         Dk7LDXxxg9KyrLf9jdT3pyAHyeTmEUDFtqaTymWIMyugLvr9836hVWGU7Ba8YUd/E1+q
-         tHhdqpEf0HFDpFOOGVD1PDrTKC8FwOcWNh5a92SGpU4gCmlLuR6mAm5Klr4ZXWjt+yZV
-         73PAGXbVeBtZhR5YPWapJwMLSLieQMrlmXKgJh9zkB18Pw8jaE7zCtJdmYeT3V01EhbI
-         Gj1w==
-X-Gm-Message-State: AC+VfDzprrFC42Ioh5plx1rNYz2+5UTLAkgLHs3FV3Ksuf+TKALfdxCa
-        YknCcNbS+GrqTBGpYEBhfAl4vg==
-X-Google-Smtp-Source: ACHHUZ4LPB7P+/U4Q9XmCW1NRg+AD+DxaS2uUaaghhhEJeB0XPHf03Y/D3Km/OUJ1v+WJgOlH0YoFw==
-X-Received: by 2002:a54:401a:0:b0:398:a09:3d5 with SMTP id x26-20020a54401a000000b003980a0903d5mr977168oie.41.1686028182536;
-        Mon, 05 Jun 2023 22:09:42 -0700 (PDT)
-Received: from localhost ([122.172.87.195])
-        by smtp.gmail.com with ESMTPSA id f3-20020a170902ce8300b001aaf2e7b06csm7444051plg.132.2023.06.05.22.09.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 Jun 2023 22:09:42 -0700 (PDT)
-Date:   Tue, 6 Jun 2023 10:39:39 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, rafael@kernel.org, tglx@linutronix.de,
-        maz@kernel.org, will@kernel.org, robin.murphy@arm.com,
-        joro@8bytes.org, mani@kernel.org, robimarko@gmail.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev
-Subject: Re: [PATCH v2 05/10] dt-bindings: cpufreq: cpufreq-qcom-hw: Add
- SDX75 compatible
-Message-ID: <20230606050939.jzpiuupwhirpyooq@vireshk-i7>
-References: <1685982557-28326-1-git-send-email-quic_rohiagar@quicinc.com>
- <1685982557-28326-6-git-send-email-quic_rohiagar@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1685982557-28326-6-git-send-email-quic_rohiagar@quicinc.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        Tue, 6 Jun 2023 01:49:59 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77EDF9E;
+        Mon,  5 Jun 2023 22:49:58 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3561Jvq2007753;
+        Tue, 6 Jun 2023 05:49:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=aQ6KnwOt1mwRRlCCHY+UFOi0CAj60uT8JU+m6VHJT9I=;
+ b=Xu44K9su7X2iH4DmyKH+Lu6InkbauADcpZSlksSjsLeD8/F936yL5xjM4SNchIaTiZW6
+ 9vhu8Ydx04eGWEAHw9/nUcKYQGtK4g7ro7jpvI4fpkFWPYhVym/I6dBtWFPJr2Rt8Av7
+ vflwolp4VIsJXXmZtyMh5jnXAlbSa6JO0/AlVLhjgkNokIf6QZBzDSAoEmUpUvjsYWVT
+ 9w13oIkyxhRTngI4LymJ1rcRZRuwO6anaHdwR32ZvZhuSXECxjwGih2EcGzdmLDQDPw2
+ Mj3u9B0PI3iMELW5ZIv22YOdzFYmrP9dUswHpHzbmPTY+gWMTF6QiEBJnxkc/xsena3J YA== 
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r1d4et5vx-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 06 Jun 2023 05:49:45 +0000
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 3565nef8022823;
+        Tue, 6 Jun 2023 05:49:40 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3qyxkka702-1;
+        Tue, 06 Jun 2023 05:49:40 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 3565neGi022817;
+        Tue, 6 Jun 2023 05:49:40 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-krichai-hyd.qualcomm.com [10.213.110.112])
+        by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 3565ndPT022816;
+        Tue, 06 Jun 2023 05:49:40 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
+        id 2CD50376D; Tue,  6 Jun 2023 11:19:39 +0530 (+0530)
+From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        linux-pci@vger.kernel.org (open list:PCIE ENDPOINT DRIVER FOR QUALCOMM),
+        linux-arm-msm@vger.kernel.org (open list:PCIE ENDPOINT DRIVER FOR
+        QUALCOMM), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] PCI: qcom-ep: Add ICC bandwidth voting support
+Date:   Tue,  6 Jun 2023 11:19:29 +0530
+Message-Id: <1686030570-5439-1-git-send-email-quic_krichai@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: 1DPZgL_PPjqpcx1wvrIyr-YKE5TnYmq_
+X-Proofpoint-GUID: 1DPZgL_PPjqpcx1wvrIyr-YKE5TnYmq_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-06_03,2023-06-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 phishscore=0
+ clxscore=1011 priorityscore=1501 malwarescore=0 mlxscore=0
+ lowpriorityscore=0 adultscore=0 impostorscore=0 spamscore=0
+ mlxlogscore=964 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2304280000 definitions=main-2306060049
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05-06-23, 21:59, Rohit Agarwal wrote:
-> Add compatible for EPSS CPUFREQ-HW on SDX75.
-> 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
-> index a6b3bb8..866ed2d 100644
-> --- a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
-> +++ b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
-> @@ -36,6 +36,7 @@ properties:
->                - qcom,sa8775p-cpufreq-epss
->                - qcom,sc7280-cpufreq-epss
->                - qcom,sc8280xp-cpufreq-epss
-> +              - qcom,sdx75-cpufreq-epss
->                - qcom,sm6375-cpufreq-epss
->                - qcom,sm8250-cpufreq-epss
->                - qcom,sm8350-cpufreq-epss
+Add support to vote for ICC bandwidth based up on the link
+speed and width.
 
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+---
+ drivers/pci/controller/dwc/pcie-qcom-ep.c | 73 +++++++++++++++++++++++++++++++
+ 1 file changed, 73 insertions(+)
 
+diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+index 19b3283..79e7559 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
++++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+@@ -17,6 +17,7 @@
+ #include <linux/phy/pcie.h>
+ #include <linux/phy/phy.h>
+ #include <linux/platform_device.h>
++#include <linux/interconnect.h>
+ #include <linux/pm_domain.h>
+ #include <linux/regmap.h>
+ #include <linux/reset.h>
+@@ -28,6 +29,7 @@
+ #define PARF_SYS_CTRL				0x00
+ #define PARF_DB_CTRL				0x10
+ #define PARF_PM_CTRL				0x20
++#define PARF_PM_STTS				0x24
+ #define PARF_MHI_CLOCK_RESET_CTRL		0x174
+ #define PARF_MHI_BASE_ADDR_LOWER		0x178
+ #define PARF_MHI_BASE_ADDR_UPPER		0x17c
+@@ -128,6 +130,9 @@
+ /* DBI register fields */
+ #define DBI_CON_STATUS_POWER_STATE_MASK		GENMASK(1, 0)
+ 
++#define DBI_LINKCTRLSTATUS			0x80
++#define DBI_LINKCTRKSTATUS_SHIFT	16
++
+ #define XMLH_LINK_UP				0x400
+ #define CORE_RESET_TIME_US_MIN			1000
+ #define CORE_RESET_TIME_US_MAX			1005
+@@ -187,6 +192,8 @@ struct qcom_pcie_ep {
+ 	enum qcom_pcie_ep_link_status link_status;
+ 	int global_irq;
+ 	int perst_irq;
++
++	struct icc_path *icc;
+ };
+ 
+ static int qcom_pcie_ep_core_reset(struct qcom_pcie_ep *pcie_ep)
+@@ -253,9 +260,56 @@ static void qcom_pcie_dw_stop_link(struct dw_pcie *pci)
+ 	disable_irq(pcie_ep->perst_irq);
+ }
+ 
++static void qcom_pcie_icc_update(struct qcom_pcie_ep *pcie_ep)
++{
++	struct dw_pcie *pci = &pcie_ep->pci;
++	u32 val, bw;
++	int speed, width;
++	int ret;
++
++	if (!pcie_ep->icc)
++		return;
++
++	val = dw_pcie_readl_dbi(pci, DBI_LINKCTRLSTATUS);
++	val = val >> DBI_LINKCTRKSTATUS_SHIFT;
++
++	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, val);
++	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, val);
++
++	/*
++	 * ICC needs avg bw in KBps.
++	 *
++	 * For example for 2Gbps the avg BW = 2x1000x1000x1000/8*1000 = 250000
++	 */
++	switch (speed) {
++	case 1:
++		bw = 250000;	/* avg bw for GEN1 per lane: 2Gbps, peak bw: no vote */
++		break;
++	case 2:
++		bw = 500000;	/* avg bw for GEN2 per lane: 4Gbps, peak bw no vote */
++		break;
++	case 3:
++		bw = 1000000;	/* avg bw for GEN3 per lane: 8Gbps, peak bw no vote */
++		break;
++	default:
++		WARN_ON_ONCE(1);
++		fallthrough;
++	case 4:
++		bw = 2000000;	/* avg bw for GEN4 per lane: 16Gbps, peak bw no vote */
++		break;
++	}
++
++	ret = icc_set_bw(pcie_ep->icc, width * bw, 0);
++	if (ret) {
++		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
++			ret);
++	}
++}
++
+ static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
+ {
+ 	int ret;
++	struct dw_pcie *pci = &pcie_ep->pci;
+ 
+ 	ret = clk_bulk_prepare_enable(pcie_ep->num_clks, pcie_ep->clks);
+ 	if (ret)
+@@ -277,6 +331,20 @@ static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
+ 	if (ret)
+ 		goto err_phy_exit;
+ 
++	/*
++	 * Some Qualcomm platforms require interconnect bandwidth constraints
++	 * to be set before enabling interconnect clocks.
++	 *
++	 * Set an initial average bandwidth corresponding to single-lane Gen 1
++	 * for the pcie to mem path.
++	 */
++	ret = icc_set_bw(pcie_ep->icc, 250000, 0); /* avg bw: 2Gbps, peak bw: no vote */
++	if (ret) {
++		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
++			ret);
++		goto err_phy_exit;
++	}
++
+ 	return 0;
+ 
+ err_phy_exit:
+@@ -550,6 +618,10 @@ static int qcom_pcie_ep_get_resources(struct platform_device *pdev,
+ 	if (IS_ERR(pcie_ep->phy))
+ 		ret = PTR_ERR(pcie_ep->phy);
+ 
++	pcie_ep->icc = devm_of_icc_get(dev, "pci");
++	if (IS_ERR(pcie_ep->icc))
++		ret = PTR_ERR(pcie_ep->icc);
++
+ 	return ret;
+ }
+ 
+@@ -572,6 +644,7 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
+ 	} else if (FIELD_GET(PARF_INT_ALL_BME, status)) {
+ 		dev_dbg(dev, "Received BME event. Link is enabled!\n");
+ 		pcie_ep->link_status = QCOM_PCIE_EP_LINK_ENABLED;
++		qcom_pcie_icc_update(pcie_ep);
+ 	} else if (FIELD_GET(PARF_INT_ALL_PM_TURNOFF, status)) {
+ 		dev_dbg(dev, "Received PM Turn-off event! Entering L23\n");
+ 		val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
 -- 
-viresh
+2.7.4
+
