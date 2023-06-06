@@ -2,234 +2,306 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 241E9724996
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 18:57:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72E5F724993
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 18:56:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238168AbjFFQ5A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 12:57:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46242 "EHLO
+        id S238134AbjFFQ4i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 12:56:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46102 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237730AbjFFQ4m (ORCPT
+        with ESMTP id S232152AbjFFQ4e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 12:56:42 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92CB610F0;
-        Tue,  6 Jun 2023 09:56:40 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 356Arf6s025511;
-        Tue, 6 Jun 2023 16:56:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-type; s=qcppdkim1;
- bh=seP5KvSteYNKsZd6TSSGt+lcTlRlXQMHEzpjqzHhvfQ=;
- b=h4m9FfTQCgsWeW3D89WjLBoPMKFzjmzXvhRZIM1tXCj1Y1QJjN/vTCTlTYEZRxBu55oM
- OIjJcSgmdpbsNbJlRI/Lkb3db9swMBQWtGSDfQXY2qMIih/IJIIsI/am+jIIo+sfmyo3
- Du1Kfr3o1Yw05ejrtYG8WYi6Rqw2f4IaDxGVPUNwfDR6OTMgj4YxBE66xvsZrYSxrQvW
- JGwwJp52xfBbZQWCnoCUMPsNSK/2n6FbcmcC7e8OavWX/Rlb1d/gvN5m3Nu5NDs4zJ8X
- kuPGnq1LGGo41vgmwo4hj4aoNT89FJXM+AeNiLVFC3BwVxeFFxQzkPe6Q4KdnWN95758 GQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r1uvv1r3e-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 06 Jun 2023 16:56:38 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 356Gu6Te024721
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 6 Jun 2023 16:56:06 GMT
-Received: from ekangupt-linux.qualcomm.com (10.80.80.8) by
- nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 6 Jun 2023 09:56:01 -0700
-From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
-To:     <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
-CC:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        <ekangupt@qti.qualcomm.com>, <gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>, <bkumar@qti.qualcomm.com>,
-        <fastrpc.upstream@qti.qualcomm.com>
-Subject: [PATCH v1] misc: fastrpc: Collect driver-remote processor transaction logs
-Date:   Tue, 6 Jun 2023 22:25:55 +0530
-Message-ID: <1686070555-11154-1-git-send-email-quic_ekangupt@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Tue, 6 Jun 2023 12:56:34 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8C5E10C6
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 09:56:29 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-4f62d93f38aso2812618e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 09:56:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686070588; x=1688662588;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fFwK8EwMZfbISMM8sr4s6RoQW2if9Lq5P8SAswp11wQ=;
+        b=AE0Pg6ilcmMwKmvdDvzbEO1+VG43VT9U6GXxRjNajH/sYWBtoCBCe1IYSYBfOmPXvE
+         m9FYd0u9EuXLWAqHT7egB+nryZZ3J/ldoQiOKYe4M/ub9q5V2HWDmjazmq6v+aXueXEw
+         U08NPUq/H+0MGfB7wRcsRXblQcdoSYfvXNKt32TAY5vM/uYKpjIAz6xe+Z0qgGA5C6fn
+         kEWBj6ZhbMCtoOkmYIb8eXqoxerPP+MGj1GM+B6GKPFeifkvHH1L5LZa7cR3bGrUxp+s
+         LmxYWl1Wp0E9D/2enasdwQMDRu2/PZ7zrLDd7e3IvQwKvmWUEKf/9xxDiU1AhVr2VT1I
+         bRXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686070588; x=1688662588;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fFwK8EwMZfbISMM8sr4s6RoQW2if9Lq5P8SAswp11wQ=;
+        b=bpiozNZ2KvzCq9uW5qRnQ/xw8QirgbUK7CKW6iq2iN+h4pzos6/DDAgSfOMXjz7oEP
+         FjZN5xWXaddC5WIdkkHNFuRahxsZTzoxhtQNOXNDGJtVVjO9+SZWXkUv5JGkYwnScRRl
+         pMJ/ygp8ialWF4twelJIyoxn03b7FLvANndYXKwkYMv5F57uSKH9ktWxETpFVw7UQBZu
+         zmLUqb+fEKJla0clNXX/B6OcPUgrXWn2Qoky8VAr07He3G8RQBxXvQaIxKpSPfzYX7q2
+         +4nlTfHoL+ihSASRlX44JkgvZ98oMyh9HB0a0kSLoP5a/Y8LLFJlkpElMm79le3a0IPf
+         FUDA==
+X-Gm-Message-State: AC+VfDz6LBPrlxK1iY2pqQyx/mWbkvHme9DNOpCUlp7gCeOFn98Q3tUH
+        n+icn8rdaYZvlmUW8MH22qlzGw==
+X-Google-Smtp-Source: ACHHUZ6a0E3XFI2iCSrdfdaqeDso65bzF2WfaHxy661qLzJv1mDqQ0LyKdd0IUWL+ztOnxQl2h7urQ==
+X-Received: by 2002:ac2:44d8:0:b0:4f6:1c08:e9b0 with SMTP id d24-20020ac244d8000000b004f61c08e9b0mr1072876lfm.63.1686070588050;
+        Tue, 06 Jun 2023 09:56:28 -0700 (PDT)
+Received: from [192.168.1.101] (abyl150.neoplus.adsl.tpnet.pl. [83.9.31.150])
+        by smtp.gmail.com with ESMTPSA id a22-20020ac25216000000b004f42718cbb1sm1497803lfl.292.2023.06.06.09.56.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Jun 2023 09:56:27 -0700 (PDT)
+Message-ID: <9a1cf84c-e48c-f41d-2e2f-5c106fc1fed4@linaro.org>
+Date:   Tue, 6 Jun 2023 18:56:26 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: Vm4RVySWaBisWMzXTof339pgMq0xK9oC
-X-Proofpoint-GUID: Vm4RVySWaBisWMzXTof339pgMq0xK9oC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-06_12,2023-06-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 impostorscore=0 lowpriorityscore=0
- suspectscore=0 spamscore=0 clxscore=1015 mlxscore=0 mlxlogscore=999
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2306060146
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v2 2/2] spi: spi-geni-qcom: Do not do DMA map/unmap inside
+ driver, use framework instead
+Content-Language: en-US
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, broonie@kernel.org,
+        dianders@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, mka@chromium.org, swboyd@chromium.org,
+        quic_vtanuku@quicinc.com, quic_ptalari@quicinc.com
+References: <1684325894-30252-1-git-send-email-quic_vnivarth@quicinc.com>
+ <1684325894-30252-3-git-send-email-quic_vnivarth@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1684325894-30252-3-git-send-email-quic_vnivarth@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add changes to collect driver-remote processor rpmsg transaction
-logs. These logs will carry payload information for the rpmsg message
-instance. These logs are channel specific and are collected in
-channel context structure.
 
-These rpmsg transaction logs can help in improving debugability as
-all requests from processes are getting captured in channel context
-structure.
 
-Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
----
- drivers/misc/fastrpc.c | 88 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 88 insertions(+)
+On 17.05.2023 14:18, Vijaya Krishna Nivarthi wrote:
+> The spi geni driver in SE DMA mode, unlike GSI DMA, is not making use of
+> DMA mapping functionality available in the framework.
+> The driver does mapping internally which makes dma buffer fields available
+> in spi_transfer struct superfluous while requiring additional members in
+> spi_geni_master struct.
+> 
+> Conform to the design by having framework handle map/unmap and do only
+> DMA transfer in the driver; this also simplifies code a bit.
+> 
+> Fixes: e5f0dfa78ac7 ("spi: spi-geni-qcom: Add support for SE DMA mode")
+> Suggested-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> ---
+I don't really have a good insight in this code, but these changes
+seem sane.
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 30d4d04..6447cee 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -104,6 +104,9 @@
- 
- #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
- 
-+/* Length of glink transaction history to store */
-+#define GLINK_MSG_HISTORY_LEN	(128)
-+
- static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
- 						"sdsp", "cdsp"};
- struct fastrpc_phy_page {
-@@ -181,6 +184,28 @@ struct fastrpc_invoke_rsp {
- 	int retval;		/* invoke return value */
- };
- 
-+struct fastrpc_tx_msg {
-+	struct fastrpc_msg msg;	/* Msg sent to remote subsystem */
-+	int rpmsg_send_err;	/* rpmsg error */
-+	s64 ns;			/* Timestamp (in ns) of msg */
-+};
-+
-+struct fastrpc_rx_msg {
-+	struct fastrpc_invoke_rsp rsp;	/* Response from remote subsystem */
-+	s64 ns;		/* Timestamp (in ns) of response */
-+};
-+
-+struct fastrpc_rpmsg_log {
-+	u32 tx_index;	/* Current index of 'tx_msgs' array */
-+	u32 rx_index;	/* Current index of 'rx_msgs' array */
-+	/* Rolling history of messages sent to remote subsystem */
-+	struct fastrpc_tx_msg tx_msgs[GLINK_MSG_HISTORY_LEN];
-+	/* Rolling history of responses from remote subsystem */
-+	struct fastrpc_rx_msg rx_msgs[GLINK_MSG_HISTORY_LEN];
-+	spinlock_t tx_lock;
-+	spinlock_t rx_lock;
-+};
-+
- struct fastrpc_buf_overlap {
- 	u64 start;
- 	u64 end;
-@@ -277,6 +302,7 @@ struct fastrpc_channel_ctx {
- 	struct fastrpc_device *fdevice;
- 	struct fastrpc_buf *remote_heap;
- 	struct list_head invoke_interrupted_mmaps;
-+	struct fastrpc_rpmsg_log gmsg_log[FASTRPC_DEV_MAX];
- 	bool secure;
- 	bool unsigned_support;
- 	u64 dma_mask;
-@@ -1097,6 +1123,64 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
- 	return 0;
- }
- 
-+static s64 get_timestamp_in_ns(void)
-+{
-+	s64 ns = 0;
-+	struct timespec64 ts;
-+
-+	ktime_get_real_ts64(&ts);
-+	ns = timespec64_to_ns(&ts);
-+	return ns;
-+}
-+
-+static void fastrpc_update_txmsg_buf(struct fastrpc_channel_ctx *chan,
-+				struct fastrpc_msg *msg, int rpmsg_send_err, s64 ns)
-+{
-+	unsigned long flags = 0;
-+	u32 tx_index = 0;
-+	struct fastrpc_tx_msg *tx_msg = NULL;
-+
-+	spin_lock_irqsave(&(chan->gmsg_log[chan->domain_id].tx_lock), flags);
-+
-+	tx_index = chan->gmsg_log[chan->domain_id].tx_index;
-+	tx_msg = &(chan->gmsg_log[chan->domain_id].tx_msgs[tx_index]);
-+
-+	memcpy(&tx_msg->msg, msg, sizeof(struct fastrpc_msg));
-+	tx_msg->rpmsg_send_err = rpmsg_send_err;
-+	tx_msg->ns = ns;
-+
-+	tx_index++;
-+	chan->gmsg_log[chan->domain_id].tx_index =
-+		(tx_index > (GLINK_MSG_HISTORY_LEN - 1)) ? 0 : tx_index;
-+
-+	spin_unlock_irqrestore(&(chan->gmsg_log[chan->domain_id].tx_lock), flags);
-+}
-+
-+static void fastrpc_update_rxmsg_buf(struct fastrpc_channel_ctx *chan,
-+							u64 ctx, int retval, s64 ns)
-+{
-+	unsigned long flags = 0;
-+	u32 rx_index = 0;
-+	struct fastrpc_rx_msg *rx_msg = NULL;
-+	struct fastrpc_invoke_rsp *rsp = NULL;
-+
-+	spin_lock_irqsave(&(chan->gmsg_log[chan->domain_id].rx_lock), flags);
-+
-+	rx_index = chan->gmsg_log[chan->domain_id].rx_index;
-+	rx_msg = &(chan->gmsg_log[chan->domain_id].rx_msgs[rx_index]);
-+	rsp = &rx_msg->rsp;
-+
-+	rsp->ctx = ctx;
-+	rsp->retval = retval;
-+	rx_msg->ns = ns;
-+
-+	rx_index++;
-+	chan->gmsg_log[chan->domain_id].rx_index =
-+		(rx_index > (GLINK_MSG_HISTORY_LEN - 1)) ? 0 : rx_index;
-+
-+	spin_unlock_irqrestore(&(chan->gmsg_log[chan->domain_id].rx_lock), flags);
-+}
-+
- static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
- 			       struct fastrpc_invoke_ctx *ctx,
- 			       u32 kernel, uint32_t handle)
-@@ -1124,6 +1208,7 @@ static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
- 
- 	if (ret)
- 		fastrpc_context_put(ctx);
-+	fastrpc_update_txmsg_buf(cctx, msg, ret, get_timestamp_in_ns());
- 
- 	return ret;
- 
-@@ -2323,6 +2408,8 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
- 	INIT_LIST_HEAD(&data->users);
- 	INIT_LIST_HEAD(&data->invoke_interrupted_mmaps);
- 	spin_lock_init(&data->lock);
-+	spin_lock_init(&(data->gmsg_log[data->domain_id].tx_lock));
-+	spin_lock_init(&(data->gmsg_log[data->domain_id].rx_lock));
- 	idr_init(&data->ctx_idr);
- 	data->domain_id = domain_id;
- 	data->rpdev = rpdev;
-@@ -2398,6 +2485,7 @@ static int fastrpc_rpmsg_callback(struct rpmsg_device *rpdev, void *data,
- 
- 	if (len < sizeof(*rsp))
- 		return -EINVAL;
-+	fastrpc_update_rxmsg_buf(cctx, rsp->ctx, rsp->retval, get_timestamp_in_ns());
- 
- 	ctxid = ((rsp->ctx & FASTRPC_CTXID_MASK) >> 4);
- 
--- 
-2.7.4
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
+Konrad
+> v1 -> v2:
+> - pass dma address to new geni interfaces instead of pointer
+> - set max_dma_len as per HPG
+> - remove expendable local variables
+> ---
+>  drivers/spi/spi-geni-qcom.c | 103 +++++++++++++++++++++-----------------------
+>  1 file changed, 50 insertions(+), 53 deletions(-)
+> 
+> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+> index e423efc..206cc04 100644
+> --- a/drivers/spi/spi-geni-qcom.c
+> +++ b/drivers/spi/spi-geni-qcom.c
+> @@ -97,8 +97,6 @@ struct spi_geni_master {
+>  	struct dma_chan *tx;
+>  	struct dma_chan *rx;
+>  	int cur_xfer_mode;
+> -	dma_addr_t tx_se_dma;
+> -	dma_addr_t rx_se_dma;
+>  };
+>  
+>  static int get_spi_clk_cfg(unsigned int speed_hz,
+> @@ -174,7 +172,7 @@ static void handle_se_timeout(struct spi_master *spi,
+>  unmap_if_dma:
+>  	if (mas->cur_xfer_mode == GENI_SE_DMA) {
+>  		if (xfer) {
+> -			if (xfer->tx_buf && mas->tx_se_dma) {
+> +			if (xfer->tx_buf) {
+>  				spin_lock_irq(&mas->lock);
+>  				reinit_completion(&mas->tx_reset_done);
+>  				writel(1, se->base + SE_DMA_TX_FSM_RST);
+> @@ -182,9 +180,8 @@ static void handle_se_timeout(struct spi_master *spi,
+>  				time_left = wait_for_completion_timeout(&mas->tx_reset_done, HZ);
+>  				if (!time_left)
+>  					dev_err(mas->dev, "DMA TX RESET failed\n");
+> -				geni_se_tx_dma_unprep(se, mas->tx_se_dma, xfer->len);
+>  			}
+> -			if (xfer->rx_buf && mas->rx_se_dma) {
+> +			if (xfer->rx_buf) {
+>  				spin_lock_irq(&mas->lock);
+>  				reinit_completion(&mas->rx_reset_done);
+>  				writel(1, se->base + SE_DMA_RX_FSM_RST);
+> @@ -192,7 +189,6 @@ static void handle_se_timeout(struct spi_master *spi,
+>  				time_left = wait_for_completion_timeout(&mas->rx_reset_done, HZ);
+>  				if (!time_left)
+>  					dev_err(mas->dev, "DMA RX RESET failed\n");
+> -				geni_se_rx_dma_unprep(se, mas->rx_se_dma, xfer->len);
+>  			}
+>  		} else {
+>  			/*
+> @@ -523,17 +519,36 @@ static int setup_gsi_xfer(struct spi_transfer *xfer, struct spi_geni_master *mas
+>  	return 1;
+>  }
+>  
+> +static u32 get_xfer_len_in_words(struct spi_transfer *xfer,
+> +				struct spi_geni_master *mas)
+> +{
+> +	u32 len;
+> +
+> +	if (!(mas->cur_bits_per_word % MIN_WORD_LEN))
+> +		len = xfer->len * BITS_PER_BYTE / mas->cur_bits_per_word;
+> +	else
+> +		len = xfer->len / (mas->cur_bits_per_word / BITS_PER_BYTE + 1);
+> +	len &= TRANS_LEN_MSK;
+> +
+> +	return len;
+> +}
+> +
+>  static bool geni_can_dma(struct spi_controller *ctlr,
+>  			 struct spi_device *slv, struct spi_transfer *xfer)
+>  {
+>  	struct spi_geni_master *mas = spi_master_get_devdata(slv->master);
+> +	u32 len, fifo_size;
+>  
+> -	/*
+> -	 * Return true if transfer needs to be mapped prior to
+> -	 * calling transfer_one which is the case only for GPI_DMA.
+> -	 * For SE_DMA mode, map/unmap is done in geni_se_*x_dma_prep.
+> -	 */
+> -	return mas->cur_xfer_mode == GENI_GPI_DMA;
+> +	if (mas->cur_xfer_mode == GENI_GPI_DMA)
+> +		return true;
+> +
+> +	len = get_xfer_len_in_words(xfer, mas);
+> +	fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
+> +
+> +	if (len > fifo_size)
+> +		return true;
+> +	else
+> +		return false;
+>  }
+>  
+>  static int spi_geni_prepare_message(struct spi_master *spi,
+> @@ -772,7 +787,7 @@ static int setup_se_xfer(struct spi_transfer *xfer,
+>  				u16 mode, struct spi_master *spi)
+>  {
+>  	u32 m_cmd = 0;
+> -	u32 len, fifo_size;
+> +	u32 len;
+>  	struct geni_se *se = &mas->se;
+>  	int ret;
+>  
+> @@ -804,11 +819,7 @@ static int setup_se_xfer(struct spi_transfer *xfer,
+>  	mas->tx_rem_bytes = 0;
+>  	mas->rx_rem_bytes = 0;
+>  
+> -	if (!(mas->cur_bits_per_word % MIN_WORD_LEN))
+> -		len = xfer->len * BITS_PER_BYTE / mas->cur_bits_per_word;
+> -	else
+> -		len = xfer->len / (mas->cur_bits_per_word / BITS_PER_BYTE + 1);
+> -	len &= TRANS_LEN_MSK;
+> +	len = get_xfer_len_in_words(xfer, mas);
+>  
+>  	mas->cur_xfer = xfer;
+>  	if (xfer->tx_buf) {
+> @@ -823,9 +834,20 @@ static int setup_se_xfer(struct spi_transfer *xfer,
+>  		mas->rx_rem_bytes = xfer->len;
+>  	}
+>  
+> -	/* Select transfer mode based on transfer length */
+> -	fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
+> -	mas->cur_xfer_mode = (len <= fifo_size) ? GENI_SE_FIFO : GENI_SE_DMA;
+> +	/*
+> +	 * Select DMA mode if sgt are present; and with only 1 entry
+> +	 * This is not a serious limitation because the xfer buffers are
+> +	 * expected to fit into in 1 entry almost always, and if any
+> +	 * doesn't for any reason we fall back to FIFO mode anyway
+> +	 */
+> +	if (!xfer->tx_sg.nents && !xfer->rx_sg.nents)
+> +		mas->cur_xfer_mode = GENI_SE_FIFO;
+> +	else if (xfer->tx_sg.nents > 1 || xfer->rx_sg.nents > 1) {
+> +		dev_warn_once(mas->dev, "Doing FIFO, cannot handle tx_nents-%d, rx_nents-%d\n",
+> +			xfer->tx_sg.nents, xfer->rx_sg.nents);
+> +		mas->cur_xfer_mode = GENI_SE_FIFO;
+> +	} else
+> +		mas->cur_xfer_mode = GENI_SE_DMA;
+>  	geni_se_select_mode(se, mas->cur_xfer_mode);
+>  
+>  	/*
+> @@ -836,35 +858,17 @@ static int setup_se_xfer(struct spi_transfer *xfer,
+>  	geni_se_setup_m_cmd(se, m_cmd, FRAGMENTATION);
+>  
+>  	if (mas->cur_xfer_mode == GENI_SE_DMA) {
+> -		if (m_cmd & SPI_RX_ONLY) {
+> -			ret =  geni_se_rx_dma_prep(se, xfer->rx_buf,
+> -				xfer->len, &mas->rx_se_dma);
+> -			if (ret) {
+> -				dev_err(mas->dev, "Failed to setup Rx dma %d\n", ret);
+> -				mas->rx_se_dma = 0;
+> -				goto unlock_and_return;
+> -			}
+> -		}
+> -		if (m_cmd & SPI_TX_ONLY) {
+> -			ret =  geni_se_tx_dma_prep(se, (void *)xfer->tx_buf,
+> -				xfer->len, &mas->tx_se_dma);
+> -			if (ret) {
+> -				dev_err(mas->dev, "Failed to setup Tx dma %d\n", ret);
+> -				mas->tx_se_dma = 0;
+> -				if (m_cmd & SPI_RX_ONLY) {
+> -					/* Unmap rx buffer if duplex transfer */
+> -					geni_se_rx_dma_unprep(se, mas->rx_se_dma, xfer->len);
+> -					mas->rx_se_dma = 0;
+> -				}
+> -				goto unlock_and_return;
+> -			}
+> -		}
+> +		if (m_cmd & SPI_RX_ONLY)
+> +			geni_se_rx_init_dma(se, sg_dma_address(xfer->rx_sg.sgl),
+> +				sg_dma_len(xfer->rx_sg.sgl));
+> +		if (m_cmd & SPI_TX_ONLY)
+> +			geni_se_tx_init_dma(se, sg_dma_address(xfer->tx_sg.sgl),
+> +				sg_dma_len(xfer->tx_sg.sgl));
+>  	} else if (m_cmd & SPI_TX_ONLY) {
+>  		if (geni_spi_handle_tx(mas))
+>  			writel(mas->tx_wm, se->base + SE_GENI_TX_WATERMARK_REG);
+>  	}
+>  
+> -unlock_and_return:
+>  	spin_unlock_irq(&mas->lock);
+>  	return ret;
+>  }
+> @@ -965,14 +969,6 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
+>  		if (dma_rx_status & RX_RESET_DONE)
+>  			complete(&mas->rx_reset_done);
+>  		if (!mas->tx_rem_bytes && !mas->rx_rem_bytes && xfer) {
+> -			if (xfer->tx_buf && mas->tx_se_dma) {
+> -				geni_se_tx_dma_unprep(se, mas->tx_se_dma, xfer->len);
+> -				mas->tx_se_dma = 0;
+> -			}
+> -			if (xfer->rx_buf && mas->rx_se_dma) {
+> -				geni_se_rx_dma_unprep(se, mas->rx_se_dma, xfer->len);
+> -				mas->rx_se_dma = 0;
+> -			}
+>  			spi_finalize_current_transfer(spi);
+>  			mas->cur_xfer = NULL;
+>  		}
+> @@ -1057,6 +1053,7 @@ static int spi_geni_probe(struct platform_device *pdev)
+>  	spi->bits_per_word_mask = SPI_BPW_RANGE_MASK(4, 32);
+>  	spi->num_chipselect = 4;
+>  	spi->max_speed_hz = 50000000;
+> +	spi->max_dma_len = 0xffff0; /* 24 bits for tx/rx dma length */
+>  	spi->prepare_message = spi_geni_prepare_message;
+>  	spi->transfer_one = spi_geni_transfer_one;
+>  	spi->can_dma = geni_can_dma;
