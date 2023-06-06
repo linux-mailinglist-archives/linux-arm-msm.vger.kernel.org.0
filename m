@@ -2,81 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CD704724378
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 15:00:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 707EF72441E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 15:16:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235435AbjFFNAU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 09:00:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58868 "EHLO
+        id S237939AbjFFNQF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 09:16:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44196 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238021AbjFFNAC (ORCPT
+        with ESMTP id S238113AbjFFNQB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 09:00:02 -0400
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46419173A;
-        Tue,  6 Jun 2023 05:59:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-        bh=JBzFOAQ3XIEwIfPf6gzDHs3g12s3r3/k8QYv78kFr9Q=; b=iJ1GBZU7395iT/S0hTb4/CFA8+
-        epY/qHDWZSXzrOrO2QucaB9FHlqgHXvlVh3wnykYMiF7GZ+5Bx/xn13fNR+b062vjpD6k2Hn7VLXo
-        4bmiea3UoRMbpk7VOeT4HDObgGm1M/qcW9jR+6HIE46xmOGsfwP8qqCD5Uwu1xYx22ms=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-        (envelope-from <andrew@lunn.ch>)
-        id 1q6WH6-00F1Mf-AK; Tue, 06 Jun 2023 14:59:00 +0200
-Date:   Tue, 6 Jun 2023 14:59:00 +0200
-From:   Andrew Lunn <andrew@lunn.ch>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, loic.poulain@linaro.org
-Subject: Re: [PATCH 0/3] Add MHI Endpoint network driver
-Message-ID: <c769c95d-e8cb-4cf6-a41a-9bef5a786bb1@lunn.ch>
-References: <20230606123119.57499-1-manivannan.sadhasivam@linaro.org>
+        Tue, 6 Jun 2023 09:16:01 -0400
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC92210DB
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 06:15:59 -0700 (PDT)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b1b2ca09b9so51718841fa.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 06:15:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686057358; x=1688649358;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xjfzzwF9PKOo4h8atONi+JyNDf6hWNqVhb1cXUpUuTE=;
+        b=bkUafAYRKMl7obj5VZygpxdv6WKJzh7W8Bb+29JXza6gHHAqmLDU+78nB11IssGpd2
+         1OeSum7JKLGe3AtmgU5duJPPseFOzrBDJHxkWtC8xAriHYwZsuiRZNV0WyUHUMVXDqs/
+         5T+r6JPzh4cjODp1oLHDLadYkWRq0SkPAG50aRYOWQBmQJkX8za0enofCFOgea0+xUPJ
+         mEWMIw4B5I9d4+VN+gnf21j5Zx8wkVTRWusz4qlZRFJwfD5kIPYq47812k3B+AI2wAt0
+         1ZAQqI48j85LezYeg6NFuP+L1py0Xqx0soGRpegawL23Og9ZjOTj3Iw1tPK6zpNc22Zk
+         AA+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686057358; x=1688649358;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xjfzzwF9PKOo4h8atONi+JyNDf6hWNqVhb1cXUpUuTE=;
+        b=bSZyP6YOlbSJ0tIAVCNC7dDqry/HWhbXoIWV/oXQEbQVJyvLvFbtSkJEXV3mFZHAHh
+         r7X0TbteeI430Jy+wqdXeSl25nFYo16eNQKO/8RslJm/boJjZQiJCH1zYUtu1SeSyx4L
+         GXTduhj0RuU4NEGdzuodDUpuivr0y25hIUVFuhj29oGVlwAd+qR/x8pJo9WMintVODYX
+         onHRszMxidedANOPrHZX/PSdIrn07uWf/Z7Z6HZMsu1ZzErhqke7DTk4y+uOd7tvsEcc
+         fM+XILAQ4ymJXEUQKd6DHGEiExEis0ig3mlcvMvWvphrRnrO5eD58YP3wLGtjeXFSviq
+         hxHg==
+X-Gm-Message-State: AC+VfDzdNiGATa1k6vLfmjBTKG7t5PL+j/nxf1B9vdUgu+B9gtXAWhol
+        tSG0Dgsxq10Wf6pyVKzJawxJNw==
+X-Google-Smtp-Source: ACHHUZ5IDqB1ip1czs+yGIxH79eoli8GF0lqxAjULpLkARWJnwH4tpKVVQ2/mhJde3ptIOTiIdA83g==
+X-Received: by 2002:a05:651c:8c:b0:2b1:e8f8:e0ff with SMTP id 12-20020a05651c008c00b002b1e8f8e0ffmr1430127ljq.10.1686057358069;
+        Tue, 06 Jun 2023 06:15:58 -0700 (PDT)
+Received: from [192.168.1.101] (abyl150.neoplus.adsl.tpnet.pl. [83.9.31.150])
+        by smtp.gmail.com with ESMTPSA id x13-20020a2e880d000000b002ac7b0fc473sm1850597ljh.38.2023.06.06.06.15.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Jun 2023 06:15:57 -0700 (PDT)
+Message-ID: <6548a1d5-9635-7d97-7a0a-0114c463b152@linaro.org>
+Date:   Tue, 6 Jun 2023 15:15:56 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230606123119.57499-1-manivannan.sadhasivam@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v5 2/3] arm64: dts: qcom: ipq9574: add tsens node
+Content-Language: en-US
+To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, amitk@kernel.org, thara.gopinath@gmail.com,
+        rafael@kernel.org, daniel.lezcano@linaro.org, rui.zhang@intel.com,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Praveenkumar I <quic_ipkumar@quicinc.com>
+References: <cover.1685703605.git.quic_varada@quicinc.com>
+ <dcb682766d8e01f8f4eed7f26fcbfba1b4091137.1685703605.git.quic_varada@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <dcb682766d8e01f8f4eed7f26fcbfba1b4091137.1685703605.git.quic_varada@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 06, 2023 at 06:01:16PM +0530, Manivannan Sadhasivam wrote:
-> Hi,
-> 
-> This series adds a network driver for the Modem Host Interface (MHI) endpoint
-> devices that provides network interfaces to the PCIe based Qualcomm endpoint
-> devices supporting MHI bus (like Modems). This driver allows the MHI endpoint
-> devices to establish IP communication with the host machines (x86, ARM64) over
-> MHI bus.
-> 
-> On the host side, the existing mhi_net driver provides the network connectivity
-> to the host.
-> 
-> - Mani
-> 
-> Manivannan Sadhasivam (3):
->   net: Add MHI Endpoint network driver
->   MAINTAINERS: Add entry for MHI networking drivers under MHI bus
->   net: mhi: Increase the default MTU from 16K to 32K
-> 
->  MAINTAINERS              |   1 +
->  drivers/net/Kconfig      |   9 ++
->  drivers/net/Makefile     |   1 +
->  drivers/net/mhi_ep_net.c | 331 +++++++++++++++++++++++++++++++++++++++
->  drivers/net/mhi_net.c    |   2 +-
 
-Should we add a drivers/net/modem directory? Maybe modem is too
-generic, we want something which represents GSM, LTE, UMTS, 3G, 4G,
-5G, ... XG etc.
 
-    Andrew
+On 2.06.2023 13:03, Varadarajan Narayanan wrote:
+> IPQ9574 has a tsens v2.3.1 peripheral which monitors temperatures
+> around the various subsystems on the die.
+> 
+> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> ---
+> [v5]:
+> 	Incorporate review comments
+"fix bug" is too vague..
+
+> 
+> [v2]:
+> 	Add "qcom,ipq8074-tsens" as fallback compatible
+> ---
+>  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> index 0baeb10..cda3fd4 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
+> @@ -206,6 +206,16 @@
+>  			#size-cells = <1>;
+>  		};
+>  
+> +		tsens: thermal-sensor@4a9000 {
+> +			compatible = "qcom,ipq9574-tsens", "qcom,ipq8074-tsens";
+> +			reg = <0x004a9000 0x1000>, /* TM */
+> +			      <0x004a8000 0x1000>; /* SROT */
+The comments are unnecessary, we've been copypasting them from SoC to SoC
+but it's time we stop.
+
+With that:
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+
+Konrad
+> +			interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
+> +			interrupt-names = "combined";
+> +			#qcom,sensors = <16>;
+> +			#thermal-sensor-cells = <1>;
+> +		};
+> +
+>  		tlmm: pinctrl@1000000 {
+>  			compatible = "qcom,ipq9574-tlmm";
+>  			reg = <0x01000000 0x300000>;
