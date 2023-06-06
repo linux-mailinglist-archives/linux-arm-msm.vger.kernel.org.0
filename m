@@ -2,111 +2,272 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0CC117237BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 08:33:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB1A87237CC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 08:36:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232645AbjFFGdm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 02:33:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42340 "EHLO
+        id S235090AbjFFGgX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 02:36:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232402AbjFFGdl (ORCPT
+        with ESMTP id S234654AbjFFGgU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 02:33:41 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B8A9123;
-        Mon,  5 Jun 2023 23:33:36 -0700 (PDT)
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3565kBw0021598;
-        Tue, 6 Jun 2023 06:33:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=wGNR35vj0lPMC8yPcOx3emygX/jN2PAWABJ3cTjLVpo=;
- b=UVzTF3a2IdxFbtx67yd9Fd8UKRt9dqqF9WJ1lPFog6lZ/7pe+MV4TT5SIf2G5fwzgL5o
- MXor21wmZzTj7v68wBCdMqs0hji001dMxESeUegDli/u9JRGvDIYi8gEhrEeTJGdmSzB
- x2WuWlePQ4608qwkDvcGUqjbXzYcfjIC6YrFKmLk4LCs7V5VBxlEsLH6Pzb8uRyEASGq
- nXL3uVA3+oxJ6OM0TJP+jUJWMaGot32cfeFpMZs3mZNiLNlovfx5e+DWFcgfmagfd0j4
- s226Mttgnr+ByiBgePKjmM48WN9LI/cHOohQERRNl9GUgjbfdMU43bU53AUKt4HTLqQ2 1w== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r1xxr040m-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 06 Jun 2023 06:33:11 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3566X99S020873
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 6 Jun 2023 06:33:09 GMT
-Received: from [10.214.66.58] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 5 Jun 2023
- 23:33:03 -0700
-Message-ID: <3cd1d957-007e-d5d2-a33d-6b826916c892@quicinc.com>
-Date:   Tue, 6 Jun 2023 12:03:00 +0530
+        Tue, 6 Jun 2023 02:36:20 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17CC5E44
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 23:36:15 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-9745d99cfccso736343166b.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 23:36:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686033373; x=1688625373;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ZZOzjrYJ8vg5ALOYOGUwj9aJcj7UgxzEF98joZ3xLB8=;
+        b=yncnrNe45sOUCtZ8rykwKmev+OL7Rj6l6op9Iahkmb0PLANZqmGrAMF+l0u5hLOjjx
+         y+XdutT8bGIqf6Om7CAxnIu895wSze/B4A9J4ZsyPjrZiAWi9jdhh2ss3du8vJH9H2ak
+         A5ZDSWzamPB5T2oafW/TSn5oFTGSlmVLc7j89lNiUZjajZhcz3ElSWy5sEPfCuCuT1ds
+         PRGfzEo7UoQrLtHEIZa7EdXZk7N2iI7LKX9UL1CAAkjRacmyTG67ojwJqkbp5FUOSTlx
+         t+yMK7x2voBGF0VK+gISFr3flKXdWLHZbOMQyYdOvsEFW+ou09jDg1+VA4mFzYjQvd4K
+         aHSg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686033373; x=1688625373;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZZOzjrYJ8vg5ALOYOGUwj9aJcj7UgxzEF98joZ3xLB8=;
+        b=WR9JP7NO5tCg66RyeW8N1xKsq1OLRU2+0yKXouwW/ILDE1FkuvapxPNu3L+2kRuRQW
+         ECkamo88hgUWNNFAxw0ZX1UNCtsxx8QyoYZte+01bLfCpNQavODlHuDH3JktTw9i/gLu
+         3fLxnCwnSy5xxULJvVPJiWk+1HiqigU93fHwKRwJY/is6YCBLjGxnSDnI6R+nVxn6MUx
+         HsFPwwId/dsgkm6KJ3DeQk1mxKSle2LG+JR1JHOEeU5KXnj43Ua3jVCsg97e8VFNtLu4
+         ahdBzZ8oapR7x+E/DQ1+CDr1Oe4hp1W32uYTdbvIz31zockIqo7o9xQs8v7Ym+kZI57x
+         LgSg==
+X-Gm-Message-State: AC+VfDwqBnnba5AkfeI+vCdN8yIWcLGO2IJvszBi8mQKTZG67TY/mvIe
+        1jeExpLVW9Ai6RE+cLNtMtJsf0DO1K4Ki6YQSuERNw==
+X-Google-Smtp-Source: ACHHUZ4hm9ehBM1tm5O/uZUvcsyFtnRbE61r0zYdM66CtNloO+x91/38GZaLofn+fiPLwpJ3itq07A==
+X-Received: by 2002:a17:906:9753:b0:94f:3980:bf91 with SMTP id o19-20020a170906975300b0094f3980bf91mr1619272ejy.19.1686033373499;
+        Mon, 05 Jun 2023 23:36:13 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id v3-20020a1709063bc300b0096650f46004sm5120588ejf.56.2023.06.05.23.36.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Jun 2023 23:36:12 -0700 (PDT)
+Message-ID: <2a479fd0-1d3c-2c28-d2fd-86a8cf610cf9@linaro.org>
+Date:   Tue, 6 Jun 2023 08:36:10 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH v2 08/10] arm64: dts: qcom: Add QUPv3 UART console node
- for SDX75
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH 05/14] dt-bindings: remoteproc: Add Qualcomm RPM
+ processor/subsystem
 Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <rafael@kernel.org>, <viresh.kumar@linaro.org>,
-        <tglx@linutronix.de>, <maz@kernel.org>, <will@kernel.org>,
-        <robin.murphy@arm.com>, <joro@8bytes.org>, <mani@kernel.org>,
-        <robimarko@gmail.com>
-CC:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>
-References: <1685982557-28326-1-git-send-email-quic_rohiagar@quicinc.com>
- <1685982557-28326-9-git-send-email-quic_rohiagar@quicinc.com>
- <7a6544b0-5c8d-8b61-71e8-32f59e93c2d4@linaro.org>
-From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
-In-Reply-To: <7a6544b0-5c8d-8b61-71e8-32f59e93c2d4@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
+References: <20230531-rpm-rproc-v1-0-e0a3b6de1f14@gerhold.net>
+ <20230531-rpm-rproc-v1-5-e0a3b6de1f14@gerhold.net>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230531-rpm-rproc-v1-5-e0a3b6de1f14@gerhold.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: omBu5-ParGuCgWQyZRV6y31HxOW8NBcS
-X-Proofpoint-ORIG-GUID: omBu5-ParGuCgWQyZRV6y31HxOW8NBcS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-06_03,2023-06-05_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 suspectscore=0 phishscore=0 impostorscore=0
- mlxlogscore=791 spamscore=0 mlxscore=0 adultscore=0 priorityscore=1501
- bulkscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2306060055
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 05/06/2023 09:08, Stephan Gerhold wrote:
+> On Qualcomm platforms, most subsystems (e.g. audio/modem DSP) are
+> described as remote processors in the device tree, with a dedicated
+> node where properties and services related to them can be described.
+> 
+> The Resource Power Manager (RPM) is also such a subsystem, with a
+> remote processor that is running a special firmware. Unfortunately,
+> the RPM never got a dedicated node representing it properly in the
+> device tree. Most of the RPM services are described below a top-level
+> /smd or /rpm-glink node.
 
-On 6/6/2023 11:36 AM, Krzysztof Kozlowski wrote:
-> On 05/06/2023 18:29, Rohit Agarwal wrote:
->> Add the debug uart console node in devicetree.
->>
->> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
->> ---
->>   arch/arm64/boot/dts/qcom/sdx75.dtsi | 49 +++++++++++++++++++++++++++++++++++++
->>   1 file changed, 49 insertions(+)
-> GCC and UART are parts of basic DTSI and do not make sense on their own.
-> Otherwise, what exactly boots on your "basic DTSI" commit if you do not
-> have any clocks and serial console?
-Ok Will club all the additional patches into the same base dtsi patch.
+Then what is rpm-requests? This is the true RPM. It looks like you now
+duplicate half of it in a node above. Unless you want here to describe
+ways to communicate with the RPM, not the RPM itself.
 
-Thanks,
-Rohit.
->
-> Best regards,
-> Krzysztof
->
+
+> However, SMD/GLINK is just one of the communication channels to the RPM
+> firmware. For example, the MPM interrupt functionality provided by the
+> RPM does not use SMD/GLINK but writes directly to a special memory
+> region allocated by the RPM firmware in combination with a mailbox.
+> Currently there is no good place in the device tree to describe this
+> functionality. It doesn't belong below SMD/GLINK but it's not an
+> independent top-level device either.
+> 
+> Introduce a new "qcom,rpm-proc" compatible that allows describing the
+> RPM as a remote processor/subsystem like all others. The SMD/GLINK node
+> is moved to a "smd-edge"/"glink-edge" subnode consistent with other
+> existing bindings. Additional subnodes (e.g. interrupt-controller for
+> MPM, rpm-master-stats) can be also added there.
+
+If this was about to stay, you should also update the qcom,smd.yaml, so
+there will be no duplication.
+
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+>  .../bindings/remoteproc/qcom,rpm-proc.yaml         | 125 +++++++++++++++++++++
+>  1 file changed, 125 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.yaml
+> new file mode 100644
+> index 000000000000..c06dd4f66503
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.yaml
+> @@ -0,0 +1,125 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/remoteproc/qcom,rpm-proc.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Resource Power Manager (RPM) Processor/Subsystem
+> +
+> +maintainers:
+> +  - Bjorn Andersson <andersson@kernel.org>
+> +  - Konrad Dybcio <konrad.dybcio@linaro.org>
+> +
+> +description:
+> +  Resource Power Manager (RPM) subsystem found in various Qualcomm platforms.
+> +  The RPM allows each component in the system to vote for state of the system
+> +  resources, such as clocks, regulators and bus frequencies. rpm-proc is the
+> +  top-level device tree node that groups all the RPM functionality together.
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,apq8084-rpm-proc
+> +          - qcom,ipq6018-rpm-proc
+> +          - qcom,ipq9574-rpm-proc
+> +          - qcom,mdm9607-rpm-proc
+> +          - qcom,msm8226-rpm-proc
+> +          - qcom,msm8610-rpm-proc
+> +          - qcom,msm8909-rpm-proc
+> +          - qcom,msm8916-rpm-proc
+> +          - qcom,msm8917-rpm-proc
+> +          - qcom,msm8936-rpm-proc
+> +          - qcom,msm8937-rpm-proc
+> +          - qcom,msm8952-rpm-proc
+> +          - qcom,msm8953-rpm-proc
+> +          - qcom,msm8974-rpm-proc
+> +          - qcom,msm8976-rpm-proc
+> +          - qcom,msm8994-rpm-proc
+> +          - qcom,msm8996-rpm-proc
+> +          - qcom,msm8998-rpm-proc
+> +          - qcom,qcm2290-rpm-proc
+> +          - qcom,qcs404-rpm-proc
+> +          - qcom,sdm660-rpm-proc
+> +          - qcom,sm6115-rpm-proc
+> +          - qcom,sm6125-rpm-proc
+> +          - qcom,sm6375-rpm-proc
+> +      - const: qcom,rpm-proc
+> +
+> +  smd-edge:
+> +    $ref: /schemas/remoteproc/qcom,smd-edge.yaml#
+> +    description:
+> +      Qualcomm Shared Memory subnode which represents communication edge,
+> +      channels and devices related to the RPM subsystem.
+> +
+> +  glink-rpm:
+> +    $ref: /schemas/remoteproc/qcom,glink-rpm-edge.yaml#
+> +    description:
+> +      Qualcomm G-Link subnode which represents communication edge,
+> +      channels and devices related to the RPM subsystem.
+> +
+> +  interrupt-controller:
+> +    type: object
+> +    $ref: /schemas/interrupt-controller/qcom,mpm.yaml#
+> +    description:
+> +      MSM Power Manager (MPM) interrupt controller that monitors interrupts
+> +      when the system is asleep.
+
+Isn't this a service of RPM?
+
+> +
+> +  master-stats:
+> +    $ref: /schemas/soc/qcom/qcom,rpm-master-stats.yaml#
+> +    description:
+> +      Subsystem-level low-power mode statistics provided by RPM.
+
+The same question.
+
+> +
+> +required:
+> +  - compatible
+> +
+> +oneOf:
+> +  - required:
+> +      - smd-edge
+> +  - required:
+> +      - glink-rpm
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  # SMD
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +
+> +    remoteproc-rpm {
+
+remoteproc
+
+> +      compatible = "qcom,msm8916-rpm-proc", "qcom,rpm-proc";
+> +
+> +      smd-edge {
+> +        interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
+> +        qcom,ipc = <&apcs 8 0>;
+> +        qcom,smd-edge = <15>;
+> +
+> +        rpm-requests {
+> +          compatible = "qcom,rpm-msm8916";
+> +          qcom,smd-channels = "rpm_requests";
+> +          /* ... */
+> +        };
+> +      };
+> +    };
+> +  # GLINK
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +
+> +    remoteproc-rpm {
+
+remoteproc
+
+> +      compatible = "qcom,qcm2290-rpm-proc", "qcom,rpm-proc";
+> +
+> +      glink-rpm {
+> +        compatible = "qcom,glink-rpm";
+> +        interrupts = <GIC_SPI 194 IRQ_TYPE_EDGE_RISING>;
+> +        qcom,rpm-msg-ram = <&rpm_msg_ram>;
+> +        mboxes = <&apcs_glb 0>;
+> +
+> +        rpm-requests {
+> +          compatible = "qcom,rpm-qcm2290";
+> +          qcom,glink-channels = "rpm_requests";
+> +          /* ... */
+> +        };
+> +      };
+> +    };
+> 
+
+Best regards,
+Krzysztof
+
