@@ -2,79 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 94FB772372C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 08:07:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7B89D723756
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 08:12:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234114AbjFFGHS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 02:07:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55458 "EHLO
+        id S234446AbjFFGM3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 02:12:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59240 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234614AbjFFGHI (ORCPT
+        with ESMTP id S234678AbjFFGM2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 02:07:08 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D43A9E44
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 23:06:52 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id a640c23a62f3a-977d0288fd2so350734566b.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 23:06:52 -0700 (PDT)
+        Tue, 6 Jun 2023 02:12:28 -0400
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30F1D1A7
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 23:12:26 -0700 (PDT)
+Received: by mail-qv1-xf2c.google.com with SMTP id 6a1803df08f44-6260e8a1424so40962736d6.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 23:12:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686031611; x=1688623611;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=70U1Q012Arkvcx5mvXubiW/F2gAfaONAjH5lT/7WlvU=;
-        b=FwdJwg7KgSK2Wwy3ECLHhpcdMeuZtbx74g2OGRGidhbgcQ6qiPYftWQ6JompvNiqEk
-         ik1DnRnNyTyx2AxisrtPJIx3kSzcb14U8FuIBxYtLUviWKbYtdfgz3TG1zCNgK3XWPE8
-         y1RcCHxueGsKoE/KC8gIjB7fGXBMtd876kdjdEaVhklRfO3fLQlAaYaZDNfx+eJ94SLZ
-         WlsjkjCJALb5Do+A1uF51PSYL3/tbkK3bh5C93nXPAHUywZBCYPdV+FNJasQEL/QVHx1
-         at4UlUi3vSsDOdSYAZ0kVU9VKD4p70Lecc6EiCjKdDoX0gOaKYptJT+SgwKMBQDuia8y
-         1gsA==
+        d=linaro.org; s=google; t=1686031945; x=1688623945;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=g0yP0hKSoGNQHQJOAvhdyai2x0vVbUlOAYuNmq90NvQ=;
+        b=Yf3zsxCn+XyD5apxlwhoKiYC23ySiy8noGTHklGgicBumpof4sFFDtlm5WGq/1VEbi
+         QHLkJitYP34RslgpJ8xw23KeiiyvwSBE5dtBMv4pI0VG8RrDsgHxiugcEytaJ6JmLVj2
+         jhzcvHVTd/51GPvdtnE7Qo5ubkS/xbsa7FjIXQX+Ne8d+8hVkdmoxJMuFV55OXd9LzwO
+         fKlLasKIX+BXiJhQkT5H6CERLikY6SGhVCIsDjuPGlxW1H5JnrhWeQEFP0lYoy3NJw87
+         fWhGK2FFTnXBnDFIW5facYxVc+vP5fw3ndYZaVaQgs5D+SxDrqAah8AQKcZMsXEROH9c
+         ic5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686031611; x=1688623611;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=70U1Q012Arkvcx5mvXubiW/F2gAfaONAjH5lT/7WlvU=;
-        b=h9Fg9ctvbD7n16sm0wAkgGXJBUQuUrIWPudTlqFywf7jR8cY/sq2GxXoYVJAg+AFvo
-         dlqikRWhKi1oIV0NRvPAGkqwYXnG5RQzL+vmu4i03eIgtnWrFRZ4rdTfuDzWqcPmjmGd
-         fA8hsXffF23Dut2aY9Ul48gpC9mujulYrvtyZM124kA10DCCMWxaSf2pzNbOgY6/Qa0w
-         jDLsBBkfV4gMq4cy406mvPqQKrTgcW0i8W3QsVP1gz1lAzHbt+DAXGstFDos0BvPsr35
-         zoQTv+hEU38Z+RPb8Y9AQfouj3GhFYTYKsBo/EaQCqF0p1q4LGgjtOrbqCYPgter+ANx
-         sZwQ==
-X-Gm-Message-State: AC+VfDzHOiZh66zb/gDuy3MtLvO1EcBxmvrNRRfESCK5RHKrlV8noR/D
-        +u31NfEO7X7Er6TnuoVki3zYkQ==
-X-Google-Smtp-Source: ACHHUZ7K+10SlLxGan8XiIuR06mM+0EdUD7vth1kPHI0gcVWF/WLesu537LbR8tywrkYFsC332XcBQ==
-X-Received: by 2002:a17:907:60d5:b0:973:ff35:a9b8 with SMTP id hv21-20020a17090760d500b00973ff35a9b8mr1062659ejc.62.1686031610221;
-        Mon, 05 Jun 2023 23:06:50 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id h26-20020aa7c95a000000b00514bddcb87csm4669771edt.31.2023.06.05.23.06.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Jun 2023 23:06:49 -0700 (PDT)
-Message-ID: <a2761197-7121-d6bc-6bb3-a716339f4e26@linaro.org>
-Date:   Tue, 6 Jun 2023 08:06:47 +0200
+        d=1e100.net; s=20221208; t=1686031945; x=1688623945;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=g0yP0hKSoGNQHQJOAvhdyai2x0vVbUlOAYuNmq90NvQ=;
+        b=G6HkGBeKqXSOykqirv0vaMlE6rOs/jWqXKfA9XxwPR8alLM+xPwXCvIbn2FkzMmhrx
+         kw6ZWanDgG7L5Flx0PuukpOiuvVVr+tt0OK/iozozb0uqOq7wO14LoR1o0Bopg2D2eJu
+         fz9Qfei5wi8U5T6XZMSvMDPJrL8LAr+wc9xGC/yxA8ZcpKpF8whQgBg6cuscCu7S5/dR
+         /ArFwI316ui9cJmXkfSRSs1mA9YIcuuHbjuUxmA6Lh3AJzTRL9j5fg8u6NfB3CKnzfhz
+         MlKf0WGeljrRRe2ELrxTZ8A7hCRBwz0U3+YLMoJSTCnvMIZKbo6j+D2mHrFYbCRTHzeV
+         yq6Q==
+X-Gm-Message-State: AC+VfDyQVH5r3qAkfYZXP2vO7sV6O7BRHhIyUpaRwkAC2XaxLn2YOAsv
+        UucNMJtf/gX97G8WEuJ5DMJyRT+Gv3+jqFsK1whQ7w==
+X-Google-Smtp-Source: ACHHUZ4Pp6l6ZPzuoYCGnS7PtRbw4wsx5xYkRMJnsEhA2T8k0AyHRJhwMSIy2FzE78BXBY2HjCEywX3NOT6GL7Wkqug=
+X-Received: by 2002:a05:6214:29ec:b0:625:aa49:19ed with SMTP id
+ jv12-20020a05621429ec00b00625aa4919edmr1058826qvb.58.1686031945214; Mon, 05
+ Jun 2023 23:12:25 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v2 09/10] arm64: dts: qcom: Enable the QUPv3 UART console
- for SDX75
-Content-Language: en-US
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        rafael@kernel.org, viresh.kumar@linaro.org, tglx@linutronix.de,
-        maz@kernel.org, will@kernel.org, robin.murphy@arm.com,
-        joro@8bytes.org, mani@kernel.org, robimarko@gmail.com
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev
-References: <1685982557-28326-1-git-send-email-quic_rohiagar@quicinc.com>
- <1685982557-28326-10-git-send-email-quic_rohiagar@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1685982557-28326-10-git-send-email-quic_rohiagar@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+References: <20230605094710.2037879-1-amit.pundir@linaro.org> <cd71ee53-391a-90fd-27ca-c174f2b24a94@linaro.org>
+In-Reply-To: <cd71ee53-391a-90fd-27ca-c174f2b24a94@linaro.org>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Tue, 6 Jun 2023 11:41:48 +0530
+Message-ID: <CAMi1Hd0MhOyn1HHq5YYFxJwWrkMZbS9ZqksNDBLM9Ayx67rEOg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: Split sdm845-db845c to add headless support
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,29 +76,114 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/06/2023 18:29, Rohit Agarwal wrote:
-> Enable the debug uart console for the SDX75 IDP board.
-> 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
-> ---
->  arch/arm64/boot/dts/qcom/sdx75-idp.dts | 15 +++++++++++++++
->  1 file changed, 15 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdx75-idp.dts b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
-> index 1e08f25..cbe5cdf 100644
-> --- a/arch/arm64/boot/dts/qcom/sdx75-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
-> @@ -11,8 +11,23 @@
->  	model = "Qualcomm Technologies, Inc. SDX75 IDP";
->  	compatible = "qcom,sdx75-idp", "qcom,sdx75";
->  
-> +	aliases {
-> +		serial0 = &uart1;
-> +	};
+On Mon, 5 Jun 2023 at 16:07, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 05/06/2023 11:47, Amit Pundir wrote:
+> > This is a follow-up of the upstream discussion,
+> > https://lore.kernel.org/linux-kernel/20230124182857.1524912-1-amit.pundir@linaro.org/T/#u,
+> > around adding a reserved memory region in sdm845-db845c
+> > for the framebuffer memory (the splash region set up by
+> > the bootloader) but the general opinion was to avoid
+> > adding that reserved memory for the headless DB845c
+> > usecase.
+> >
+> > So this patch splits the sdm845-db845c into a common dtsi,
+> > a new sdm845-db845-headless DT, which disables the mdss
+> > display subsystem, and a new sdm845-db845c DT with an
+> > additional reserved-memory region for the framebuffer.
+> >
+> > The default sdm845-db845c.dtb remains pretty much the same
+> > (with an exception of additional reserved-memory region),
+> > while others can use sdm845-db845c-headless.dtb for their
+> > headless systems.
+>
+> You should describe the hardware in commit msg. What is "headless"? If
+> no HDMI plugged in, then it is a NAK because plug or unplugged HDMI
+> cable is not a property of a DTS.
 
-You just added this board. Don't add it without serial, it is basic
-functionality.
+Hi, my only intended goal [1] is to add a reserved-memory region
+(specific to the framebuffer memory reserved by the bootloader for the
+boot splash) in sdm45-db845c. But I have been told that reserving
+these 30+ MBs for every DB845c is a waste in case we are not using
+display at all (a headless system?). So I prepared this patch for RFC.
+The definition of headless is ambiguous to me as well. It could be no
+HDMI plugged in or no display drivers enabled at all. I believe it all
+comes down to specific use cases.
 
-Best regards,
-Krzysztof
+As far as my use-case (vanilla AOSP) is concerned, display is a
+critical component and device doesn't boot to completion unless it is
+hooked to any kind of display. May I suggest we go back to my original
+change [1] of adding a reserved-memory region for now and let the
+users of a headless system, define or come up with their respective
+use-case?
 
+Regards,
+Amit Pundir
+[1] https://lore.kernel.org/linux-kernel/20230124182857.1524912-1-amit.pundir@linaro.org/T/#u
+
+>
+> >
+> > Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+> > ---
+> > Please pick this after the lvs regulator nodes reordering patch
+> > https://lore.kernel.org/lkml/20230602161246.1855448-1-amit.pundir@linaro.org/T/#u.
+> > I'll rebase and resend this patch otherwise.
+> >
+> >  arch/arm64/boot/dts/qcom/Makefile             |    1 +
+> >  .../boot/dts/qcom/sdm845-db845c-common.dtsi   | 1178 +++++++++++++++++
+> >  .../boot/dts/qcom/sdm845-db845c-headless.dts  |    9 +
+> >  arch/arm64/boot/dts/qcom/sdm845-db845c.dts    | 1172 +---------------
+>
+> A lot of duplication. Are you sure you generated the patches with
+> correct -M/-C/-B arguments to rename or copy?
+>
+> >  4 files changed, 1194 insertions(+), 1166 deletions(-)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/sdm845-db845c-common.dtsi
+> >  create mode 100644 arch/arm64/boot/dts/qcom/sdm845-db845c-headless.dts
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> > index 4f9e81253e18..22876ea2e409 100644
+> > --- a/arch/arm64/boot/dts/qcom/Makefile
+> > +++ b/arch/arm64/boot/dts/qcom/Makefile
+> > @@ -166,6 +166,7 @@ dtb-$(CONFIG_ARCH_QCOM)   += sdm845-cheza-r1.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sdm845-cheza-r2.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sdm845-cheza-r3.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sdm845-db845c.dtb
+> > +dtb-$(CONFIG_ARCH_QCOM)      += sdm845-db845c-headless.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sdm845-db845c-navigation-mezzanine.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sdm845-lg-judyln.dtb
+> >  dtb-$(CONFIG_ARCH_QCOM)      += sdm845-lg-judyp.dtb
+> > diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-db845c-common.dtsi
+> > new file mode 100644
+> > index 000000000000..ecc4a851e29c
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c-common.dtsi
+> > @@ -0,0 +1,1178 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +/*
+> > + * Copyright (c) 2019, Linaro Ltd.
+> > + */
+> > +
+> > +/dts-v1/;
+> > +
+> > +#include <dt-bindings/leds/common.h>
+> > +#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> > +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> > +#include <dt-bindings/sound/qcom,q6afe.h>
+> > +#include <dt-bindings/sound/qcom,q6asm.h>
+> > +#include "sdm845.dtsi"
+> > +#include "sdm845-wcd9340.dtsi"
+> > +#include "pm8998.dtsi"
+> > +#include "pmi8998.dtsi"
+> > +
+> > +/ {
+> > +     model = "Thundercomm Dragonboard 845c";
+> > +     compatible = "thundercomm,db845c", "qcom,sdm845";
+>
+> So it is the same hardware? Why compatible is in common part? I don't
+> understand this change.
+>
+> Best regards,
+> Krzysztof
+>
