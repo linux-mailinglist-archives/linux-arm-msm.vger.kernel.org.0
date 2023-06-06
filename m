@@ -2,80 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE1FA7244E3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 15:51:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E4137244FD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 15:56:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237664AbjFFNvT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 09:51:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38652 "EHLO
+        id S233338AbjFFN4J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 09:56:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41126 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232541AbjFFNvS (ORCPT
+        with ESMTP id S231915AbjFFN4I (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 09:51:18 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1951DE7E;
-        Tue,  6 Jun 2023 06:51:17 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 356DMaGw001364;
-        Tue, 6 Jun 2023 13:51:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3WO5+MvW1JC+1kcdXtf6mjIMsvUcRKC4UFB7wiOTRE0=;
- b=npSNIV3CzJ99gtyYCM62C8APPa2Tg7f8QlD5ZUwP4WfrNV6K9fjsASC02k3GbkJZisz5
- /ZIdw6POv7bdfVRM5+Eda56DRvty+O/HYINrOVSl3E9Qy5HtHWdbD7YmhK6lwDqiWOrR
- N6OEMFvCHWLjyERjVsfbIvmdLkQogKoGMbgbcVGFf67JGBc+1jraXq6a/WVjttL0aHUg
- 1lBCUeIgQhIBqLrGE+8QoDFR8An2l6OjnDKDL7rzYrQhjevtiRbC//LKDQoDral2QbyT
- j6btNUBKNKOGfc05fGstUXpcoUzW5IKtkf3PE1swS7BwhdppxekF0m/Qw/5XXF/cUkd/ zA== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r1uvv18sj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 06 Jun 2023 13:51:00 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 356Doxi1015101
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 6 Jun 2023 13:50:59 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 6 Jun 2023
- 06:50:24 -0700
-Message-ID: <b8a25a70-8781-8b82-96d8-bc1ecf2d5468@quicinc.com>
-Date:   Tue, 6 Jun 2023 07:50:23 -0600
+        Tue, 6 Jun 2023 09:56:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B2E883
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 06:55:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1686059722;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=+2vpzcTLmhOhv9xEcha3D2h3sBmK8u0Uc+ZK8J67Uc0=;
+        b=WkBUmzrPF80W0nQL0286X3Ok2aHd1uQCQujXSDgI/kB5yk2xhMHSShUvoXwSGemIPvxZ0E
+        toE69ABfF30NDLgFKTepoIxiVs0js8hAXc91TeNDFn7ooxKYcdHDjw0OYWcfIbLIvAJnsR
+        7MPcwoSAC8xtSIK08dhhoapGo6cNufs=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-610-IY5To2-iO6Wg_Lo_0pR3sA-1; Tue, 06 Jun 2023 09:55:21 -0400
+X-MC-Unique: IY5To2-iO6Wg_Lo_0pR3sA-1
+Received: by mail-yw1-f200.google.com with SMTP id 00721157ae682-5692be06cb2so85480217b3.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 06:55:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686059720; x=1688651720;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+2vpzcTLmhOhv9xEcha3D2h3sBmK8u0Uc+ZK8J67Uc0=;
+        b=UY8ZQ5VpkWhbUKLSLDhERprWJNc8koQQkC9YoTsKYASVc8Z60x/ADoeaGw6k+jwb9s
+         yS6hWqY3i7vxgvOyz1r9kuTktqclu5jD8M9p1buh3gwT788aU8rpUBZgVwT563cRRUyh
+         bQn8QAhPPLODRbGxLdfMhOfgdmNkTJSGnkL+n6tGAtVLEUE2Wlff92fYgMBlLDPC0GSz
+         j21xy3/a/socTs+si7zfT3PzUm2gDjUFcJMbrOezk96JzOPdLnZiElRRz27IMvmjzlpP
+         Q6YJaguErTTivSG22d/wLsm/lL9CyTO0QQZEEXaZ/tAg+MybqK6mobZIrln46bWrh4ex
+         fvCQ==
+X-Gm-Message-State: AC+VfDwBhLOo2FldTcX2x2Viy0Qkcvyh880Jfqciv8SspMfxl5S3vEop
+        aCznjaZfOkPdH2yrkOATjYIMv/Ww7cyeEsAgVsNlanXjXrJ6E0kn5sH2mGKHuzau/tojBEDfzI7
+        M1TTuh0o3D1pRsKZRE04NZXlaKQ==
+X-Received: by 2002:a0d:d2c6:0:b0:569:44c3:b39 with SMTP id u189-20020a0dd2c6000000b0056944c30b39mr2095593ywd.11.1686059720550;
+        Tue, 06 Jun 2023 06:55:20 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ5Sxu0H11Z3SFSH722R28CZSrOu/ebvsQLCb2Cyw85/QC4Fg3z8y60d2PtVniYr9lJA5vtk7g==
+X-Received: by 2002:a0d:d2c6:0:b0:569:44c3:b39 with SMTP id u189-20020a0dd2c6000000b0056944c30b39mr2095568ywd.11.1686059720247;
+        Tue, 06 Jun 2023 06:55:20 -0700 (PDT)
+Received: from halaney-x13s ([2600:1700:1ff0:d0e0::22])
+        by smtp.gmail.com with ESMTPSA id a138-20020a0dd890000000b00565de196516sm4095534ywe.32.2023.06.06.06.55.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 Jun 2023 06:55:19 -0700 (PDT)
+Date:   Tue, 6 Jun 2023 08:55:16 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Adrien Thierry <athierry@redhat.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        Philipp Zabel <pza@pengutronix.de>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v2 1/2] phy: qcom-snps-femto-v2: properly enable ref clock
+Message-ID: <20230606135516.beujjl2oyvt6gaig@halaney-x13s>
+References: <20230605184455.34832-1-athierry@redhat.com>
+ <20230605184455.34832-2-athierry@redhat.com>
+ <fe51f704-3d24-d184-0251-39dc64a25598@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH 3/3] net: mhi: Increase the default MTU from 16K to 32K
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
-        <pabeni@redhat.com>
-CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <loic.poulain@linaro.org>
-References: <20230606123119.57499-1-manivannan.sadhasivam@linaro.org>
- <20230606123119.57499-4-manivannan.sadhasivam@linaro.org>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20230606123119.57499-4-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: -0PRjNpp-hdFXFsGbdgX9cW_9MySjR6f
-X-Proofpoint-GUID: -0PRjNpp-hdFXFsGbdgX9cW_9MySjR6f
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-06_10,2023-06-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 adultscore=0
- priorityscore=1501 malwarescore=0 impostorscore=0 lowpriorityscore=0
- suspectscore=0 spamscore=0 clxscore=1011 mlxscore=0 mlxlogscore=655
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2306060115
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fe51f704-3d24-d184-0251-39dc64a25598@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,39 +87,130 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/6/2023 6:31 AM, Manivannan Sadhasivam wrote:
-> Most of the Qualcomm endpoint devices are supporting 32K MTU for the
-> UL (Uplink) and DL (Downlink) channels. So let's use the same value
-> in the MHI NET driver also. This gives almost 2x increase in the throughput
-> for the UL channel.
+On Tue, Jun 06, 2023 at 01:14:00AM +0200, Konrad Dybcio wrote:
 > 
-> Below is the comparision:
 > 
-> iperf on the UL channel with 16K MTU:
+> On 5.06.2023 20:44, Adrien Thierry wrote:
+> > The driver is not enabling the ref clock, which thus gets disabled by
+> > the clk_disable_unused initcall. This leads to the dwc3 controller
+> > failing to initialize if probed after clk_disable_unused is called, for
+> > instance when the driver is built as a module.
+> > 
+> > To fix this, switch to the clk_bulk API to handle both cfg_ahb and ref
+> > clocks at the proper places.
+> > 
+> > Note that the cfg_ahb clock is currently not used by any device tree
+> > instantiation of the PHY. Work needs to be done separately to fix this.
+> > 
+> > Link: https://lore.kernel.org/linux-arm-msm/ZEqvy+khHeTkC2hf@fedora/
+> > Fixes: 51e8114f80d0 ("phy: qcom-snps: Add SNPS USB PHY driver for QCOM based SOCs")
+> > Signed-off-by: Adrien Thierry <athierry@redhat.com>
+> > ---
+> >  drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 67 ++++++++++++++-----
+> >  1 file changed, 49 insertions(+), 18 deletions(-)
+> > 
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> > index 6c237f3cc66d..ce1d2f8b568a 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> > +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
+> > @@ -110,11 +110,13 @@ struct phy_override_seq {
+> >  /**
+> >   * struct qcom_snps_hsphy - snps hs phy attributes
+> >   *
+> > + * @dev: device structure
+> > + *
+> >   * @phy: generic phy
+> >   * @base: iomapped memory space for snps hs phy
+> >   *
+> > - * @cfg_ahb_clk: AHB2PHY interface clock
+> > - * @ref_clk: phy reference clock
+> > + * @num_clks: number of clocks
+> > + * @clks: array of clocks
+> >   * @phy_reset: phy reset control
+> >   * @vregs: regulator supplies bulk data
+> >   * @phy_initialized: if PHY has been initialized correctly
+> > @@ -122,11 +124,13 @@ struct phy_override_seq {
+> >   * @update_seq_cfg: tuning parameters for phy init
+> >   */
+> >  struct qcom_snps_hsphy {
+> > +	struct device *dev;
+> > +
+> >  	struct phy *phy;
+> >  	void __iomem *base;
+> >  
+> > -	struct clk *cfg_ahb_clk;
+> > -	struct clk *ref_clk;
+> > +	int num_clks;
+> > +	struct clk_bulk_data *clks;
+> >  	struct reset_control *phy_reset;
+> >  	struct regulator_bulk_data vregs[SNPS_HS_NUM_VREGS];
+> >  
+> > @@ -135,6 +139,32 @@ struct qcom_snps_hsphy {
+> >  	struct phy_override_seq update_seq_cfg[NUM_HSPHY_TUNING_PARAMS];
+> >  };
+> >  
+> > +static int qcom_snps_hsphy_clk_init(struct qcom_snps_hsphy *hsphy)
+> > +{
+> > +	struct device *dev = hsphy->dev;
+> > +
+> > +	hsphy->num_clks = 2;
+> > +	hsphy->clks = devm_kcalloc(dev, hsphy->num_clks, sizeof(*hsphy->clks), GFP_KERNEL);
+> > +	if (!hsphy->clks)
+> > +		return -ENOMEM;
+> > +
+> > +	/*
+> > +	 * HACK: For cfg_ahb clock, use devm_clk_get_optional() because currently no device
+> > +	 * tree instantiation of the PHY is using the clock. This needs to be fixed in order
+> > +	 * for this code to be able to use devm_clk_bulk_get().
+> > +	 */
+> > +	hsphy->clks[0].id = "cfg_ahb";
+> > +	hsphy->clks[0].clk = devm_clk_get_optional(dev, "cfg_ahb");
+> Hm, maybe you could first check if we can get this clock
+> properly (!IS_ERR_OR_NULL) and then allocate the second
+> slot..
 > 
-> [ ID] Interval       Transfer     Bandwidth
-> [  3]  0.0-10.0 sec   353 MBytes   296 Mbits/sec
-> 
-> iperf on the UL channel with 32K MTU:
-> 
-> [ ID] Interval       Transfer     Bandwidth
-> [  3]  0.0-10.0 sec   695 MBytes   583 Mbits/sec
-> 
-> Cc: Loic Poulain <loic.poulain@linaro.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
->   drivers/net/mhi_net.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
-> index 3d322ac4f6a5..eddc2c701da4 100644
-> --- a/drivers/net/mhi_net.c
-> +++ b/drivers/net/mhi_net.c
-> @@ -14,7 +14,7 @@
->   
->   #define MHI_NET_MIN_MTU		ETH_MIN_MTU
->   #define MHI_NET_MAX_MTU		0xffff
-> -#define MHI_NET_DEFAULT_MTU	0x4000
-> +#define MHI_NET_DEFAULT_MTU	0x8000
 
-Why not SZ_32K?
+The bulk clk api handles NULL clks without issue if I am reading right,
+so personally if we're going to use the bulk api I say we carry the extra
+slot unconditionally. No expert on this stuff but that seems more
+straightforward. Honestly I wouldn't mind using the bulk optional API,
+then checking the "non optional ref clock" manually. That's closer to
+the ideal flow to me. Super opinionated though, don't take my word as
+right.
+
+> > +
+> > +	hsphy->clks[1].id = "ref";
+> > +	hsphy->clks[1].clk = devm_clk_get(dev, "ref");
+> > +	if (IS_ERR(hsphy->clks[1].clk))
+> > +		return dev_err_probe(dev, PTR_ERR(hsphy->clks[1].clk),
+> > +				     "failed to get ref clk\n");
+> > +
+> > +	return 0;
+> > +}
+> > +
+> >  static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
+> >  						u32 mask, u32 val)
+> >  {
+> > @@ -165,7 +195,7 @@ static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
+> >  					   0, USB2_AUTO_RESUME);
+> >  	}
+> >  
+> > -	clk_disable_unprepare(hsphy->cfg_ahb_clk);
+> > +	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
+> >  	return 0;
+> >  }
+> >  
+> > @@ -175,9 +205,9 @@ static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
+> >  
+> >  	dev_dbg(&hsphy->phy->dev, "Resume QCOM SNPS PHY, mode\n");
+> >  
+> > -	ret = clk_prepare_enable(hsphy->cfg_ahb_clk);
+> > +	ret = clk_bulk_prepare_enable(hsphy->num_clks, hsphy->clks);
+> Aren't you dereferencing NULL if the optional clock is absent?
+> 
+
+Similar to above, the bulk api seems to handle NULL clks gracefully.
+
+Thanks,
+Andrew
+
