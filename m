@@ -2,129 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E8F2723F96
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 12:33:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D070723F9E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 12:34:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236819AbjFFKdf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 06:33:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54718 "EHLO
+        id S236936AbjFFKeS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 06:34:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55202 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236904AbjFFKdV (ORCPT
+        with ESMTP id S236904AbjFFKeH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 06:33:21 -0400
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E66810F4;
-        Tue,  6 Jun 2023 03:33:19 -0700 (PDT)
-Received: by mail-ej1-x62d.google.com with SMTP id a640c23a62f3a-976a0a1a92bso653867166b.1;
-        Tue, 06 Jun 2023 03:33:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686047598; x=1688639598;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=v72gOkh5ySs+rPb5lkghVzJGN7aHk5temS9sTulamdI=;
-        b=WUhN2JTRz4tz9v6i4p4vfr36PhFx/ZVjLtuf929wzGGw8zucpdhoofpv1fuUx5Y+7Z
-         ol7oO2BhyVLfH+GiQTDQDeSXH8KCNiW6q7Ipb4Dt83btHM8n8Kv5F5apy30qC9U/ljkB
-         2r5FExbOzTbLh0POTe/SymlcdSA8GITcMNDm+wAPikf7NUAp45g032i6kmx+DjDd+ikf
-         waeTqqIc3Rgal5oQi4N8ZSvmqODR5etv9wwZuHKo/fDk57eyNfZFY4hij+35FAg2qM0i
-         NbH7i5Ao+PMHK1gvkLYeuPPMjt/XugnlIv8Hl3/poL5h1GOrVajeCNx7mqVRlQPUNVZW
-         6PLA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686047598; x=1688639598;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=v72gOkh5ySs+rPb5lkghVzJGN7aHk5temS9sTulamdI=;
-        b=ZnqhNkxDANjKknKLf5nQx35zVXVeghMwZJz5VoK05GLXzRVT6I1MluYEzAb4c0uBdM
-         hVlZor0UOS2iqUwYjL0Xz9GnNXmcDNY8iKX1gzhgnY4WYTy8gpLORm22SwLS/6hCQoXm
-         YMRlsC3NiCTuWZf5ZasjmAUqFw6Umjq8KazwxNd/psDQ1dnikutHnaxbHODuApP0a7ts
-         F5jYs4CNYT2DrrLLNfMOceq4bG7n8a2m2VHg5+ilCwn4C6Qsmi0rr48yDCjrV79b9D+B
-         lDEYW4cvyrA+te6Zfew1mXC0t4Xk6os24bvvphZv4LFHVVkwTYJ8XTT4GTk4gTMLJgfm
-         rE7g==
-X-Gm-Message-State: AC+VfDzolMTF04a440VhjtNFv3IX9HhynzNWWmYhGWt6XE92xEAxxil+
-        AMwYZ/vNdxyaUPc1G5+BqOs=
-X-Google-Smtp-Source: ACHHUZ5FDIT31lLqX+d2WZEVgpfGdyYvHd2yEZzG/gvZh89/R/9GO/DRugEllHwD8Ir0IYypcprYuw==
-X-Received: by 2002:a17:907:16a5:b0:978:6be4:7efb with SMTP id hc37-20020a17090716a500b009786be47efbmr1803714ejc.7.1686047597821;
-        Tue, 06 Jun 2023 03:33:17 -0700 (PDT)
-Received: from [192.168.3.32] (dh207-99-62.xnet.hr. [88.207.99.62])
-        by smtp.gmail.com with ESMTPSA id q27-20020a17090622db00b0096ae4451c65sm5349886eja.157.2023.06.06.03.33.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jun 2023 03:33:17 -0700 (PDT)
-Message-ID: <955b8b78-eb50-7ee2-f5f7-6b66a2daa963@gmail.com>
-Date:   Tue, 6 Jun 2023 12:33:15 +0200
+        Tue, 6 Jun 2023 06:34:07 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E71BE42;
+        Tue,  6 Jun 2023 03:34:03 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3567GQVM002049;
+        Tue, 6 Jun 2023 10:33:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=i9Rvne1JjTYZ/ypfVKCw95t74IgXT4Np+ksPCaAY24k=;
+ b=Tie28ARwQLbryfYKumOz5+aJdQxAspVYZwGvIja6JmbOmSlEnjpnTkzfq4LUzkTjP/xG
+ hSeu3jQE6OMHPnjzmoHCfSey8cnoQy8/DOs0z8jzL3RhVmYDWZJ4KZwvPZ3sEBTUVvbY
+ YdTlKLklNaiA4aR17AOIkH+JTkihhcg9D9rjYOnPcnNeNkpEZ/jIT9LuvkwerMSemLbu
+ rmztMo9oViKPpfupyGDMsWMWwftTNulXJMANDkdXuHfREKSVD3dom8MElxnZvNFumz8X
+ rx42/HHiZI5KsdOcQengNB1hzrOOh6Tc2EnK99inHnhcwPg0Mk5brT8eXYLW1GRWlQ5x JQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r1s4uh5r8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 06 Jun 2023 10:33:59 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 356AXwCb026081
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 6 Jun 2023 10:33:58 GMT
+Received: from varda-linux.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 6 Jun 2023 03:33:53 -0700
+Date:   Tue, 6 Jun 2023 16:03:49 +0530
+From:   Varadarajan Narayanan <quic_varada@quicinc.com>
+To:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <amitk@kernel.org>,
+        <thara.gopinath@gmail.com>, <rafael@kernel.org>,
+        <daniel.lezcano@linaro.org>, <rui.zhang@intel.com>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v5 0/3] Enable IPQ9574 TSENS support
+Message-ID: <20230606103349.GA675@varda-linux.qualcomm.com>
+References: <cover.1685703605.git.quic_varada@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Subject: Re: [PATCH 1/2] soc: qcom: socinfo: Add support for new fields in
- revision 18
-To:     Naman Jain <quic_namajain@quicinc.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_pkondeti@quicinc.com, quic_kaushalk@quicinc.com
-References: <20230602032600.14790-1-quic_namajain@quicinc.com>
-Content-Language: en-US
-From:   Robert Marko <robimarko@gmail.com>
-In-Reply-To: <20230602032600.14790-1-quic_namajain@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <cover.1685703605.git.quic_varada@quicinc.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: xTn3_lGA0rZMujC2FP7xnrbhfsZgpH54
+X-Proofpoint-GUID: xTn3_lGA0rZMujC2FP7xnrbhfsZgpH54
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-06_06,2023-06-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ spamscore=0 mlxlogscore=954 impostorscore=0 malwarescore=0 bulkscore=0
+ adultscore=0 priorityscore=1501 clxscore=1015 mlxscore=0 suspectscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2306060089
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On 02. 06. 2023. 05:25, Naman Jain wrote:
-> Add support for below fields coming in socinfo structure under v18:
-> * num_kvps: number of key value pairs (KVP)
-> * kvps_offset: the offset of the KVP table from the base address of
->    socinfo structure in SMEM
-> KVP table has boolean values for certain feature flags, used to determine
-> hardware configuration.
+On Fri, Jun 02, 2023 at 04:33:49PM +0530, Varadarajan Narayanan wrote:
+> This patch set enables tsens in IPQ9574
 >
-> Signed-off-by: Naman Jain <quic_namajain@quicinc.com>
-
-Hi,
-The socinfo struct itself was moved into a separate header[1] so it can 
-be reused,
-so this patch series needs to be rebased on top of linux-next.
-
-[1] 
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/include/linux/soc/qcom/socinfo.h?h=next-20230606&id=ec001bb71e4476f7f5be9db693d5f43e65b9d8cb
-
-Regards,
-Robert
-
-> ---
->   drivers/soc/qcom/socinfo.c | 4 ++++
->   1 file changed, 4 insertions(+)
+> Depends on
+> 	https://lore.kernel.org/linux-arm-msm/20230406061314.10916-1-quic_devipriy@quicinc.com/
+> [v5]:
+> 	Fix make DT_CHECKER_FLAGS=-m dt_binding_check and make dtbs_check errors without removing existing entries
 >
-> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-> index c2e4a57dd666..a76006ea8a37 100644
-> --- a/drivers/soc/qcom/socinfo.c
-> +++ b/drivers/soc/qcom/socinfo.c
-> @@ -181,6 +181,9 @@ struct socinfo {
->   	__le32  nnum_partname_mapping;
->   	/* Version 17 */
->   	__le32 oem_variant;
-> +	/* Version 18 */
-> +	__le32 num_kvps;
-> +	__le32 kvps_offset;
->   };
->   
->   #ifdef CONFIG_DEBUG_FS
-> @@ -620,6 +623,7 @@ static void socinfo_debugfs_init(struct qcom_socinfo *qcom_socinfo,
->   			   &qcom_socinfo->info.fmt);
->   
->   	switch (qcom_socinfo->info.fmt) {
-> +	case SOCINFO_VERSION(0, 18):
->   	case SOCINFO_VERSION(0, 17):
->   		qcom_socinfo->info.oem_variant = __le32_to_cpu(info->oem_variant);
->   		debugfs_create_u32("oem_variant", 0444, qcom_socinfo->dbg_root,
+> [v4]:
+> 	Drop the sm6375-tsens and qcm2290-tsens related bindings
+> 	fix as it is already posted
 >
+> 	Remove unnecessary changes from previous version
+>
+> [v3]:
+> 	Fix make DT_CHECKER_FLAGS=-m dt_binding_check and make dtbs_check errors
+>
+> [v2]:
+> 	Drop the driver change (https://lore.kernel.org/lkml/b45d33d38a334aabbd52c83b0d6028af1f4c74c8.1682682753.git.quic_varada@quicinc.com/)
+> 	since the tsens device is compatible with 8074's tsens
+> 	and use 8074's compatible itself
+>
+> 	Rename clusterX nodes as cpussX
+>
+> [v1]:
+> 	Fix DT node names
+>
+> [v0]:
+> 	Initial patch introducing TSENS support
+>
+> Praveenkumar I (1):
+>   dt-bindings: thermal: tsens: Add ipq9574 compatible
+>
+> Varadarajan Narayanan (2):
+>   arm64: dts: qcom: ipq9574: add tsens node
+>   arm64: dts: qcom: ipq9574: add thermal zone nodes
+>
+>  .../devicetree/bindings/thermal/qcom-tsens.yaml    |   6 +
+>  arch/arm64/boot/dts/qcom/ipq9574.dtsi              | 218 +++++++++++++++++++++
+>  2 files changed, 224 insertions(+)
+>
+> --
+> 2.7.4
+>
+
+Bjorn,
+
+Can this series be taken for 6.5?
+All comments have been addressed.
+
+Thanks
+Varada
