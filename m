@@ -2,95 +2,293 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 48BC7724E92
+	by mail.lfdr.de (Postfix) with ESMTP id 9E94F724E93
 	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 23:14:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238175AbjFFVOd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 17:14:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36590 "EHLO
+        id S238328AbjFFVOe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 17:14:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36592 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238008AbjFFVOc (ORCPT
+        with ESMTP id S237930AbjFFVOd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 17:14:32 -0400
-Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0943C1725;
-        Tue,  6 Jun 2023 14:14:30 -0700 (PDT)
-Received: from localhost.localdomain (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id EC0C53F7B7;
-        Tue,  6 Jun 2023 23:14:28 +0200 (CEST)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] arm64: dts: qcom: sm8250-edo: Panel framebuffer is 2.5k instead of 4k
-Date:   Tue,  6 Jun 2023 23:14:18 +0200
-Message-ID: <20230606211418.587676-1-marijn.suijten@somainline.org>
-X-Mailer: git-send-email 2.41.0
+        Tue, 6 Jun 2023 17:14:33 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DEFAA1727
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 14:14:31 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 356KqUWr001682;
+        Tue, 6 Jun 2023 21:14:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=4FB/AudLoEZsGboVh+bSnhmDWWcPPwPYHe+CuPc88bU=;
+ b=HYrLVDbNiTrQg5Cpn7mQaQn8rktoWMtwoN4qb3GmK9APrFmDy7f7rNMfOocHXSlNaMAr
+ vwTpramCOU4ymhAOTCIRjDDHg73zAGgtrRK3F4o2ldTthZoA/nan57TYoHwMqBJ2ny3s
+ bo4xy6gm8238uCkJcaDQjJtcMalKSPQW1Etl9KgCs3YOAOMqdxYVc2ypNtVfq+Eplro7
+ c1gKe3+bY8JF4zd2bwG7pPkENK1A7VPZB2XoWm/SEaahS8oHA5x1dN3YWp3yrVNo3CJp
+ u0JGQNGu3XeM1tZnCIq3gBj1+WU7rc0fM4JAZ9a//T8SAqOzXbBq37PxzWqDKmXUGA0O Ww== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r2a9tg88x-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 06 Jun 2023 21:14:24 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 356LENFV029868
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 6 Jun 2023 21:14:23 GMT
+Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 6 Jun 2023
+ 14:14:22 -0700
+Message-ID: <6c61a8f1-f77e-3a18-15f8-7c004a99f78d@quicinc.com>
+Date:   Tue, 6 Jun 2023 14:14:22 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [RFC PATCH v2 10/13] drm/msm/dpu: add list of supported formats
+ to the DPU caps
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>
+References: <20230321011821.635977-1-dmitry.baryshkov@linaro.org>
+ <20230321011821.635977-11-dmitry.baryshkov@linaro.org>
+ <2a003674-29ef-f6c6-9a23-3eb93d2e479f@quicinc.com>
+ <CAA8EJpr0DcVfG86SYKRb-4Ph82dfXafed9CFgY1qFSECFbAcTw@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAA8EJpr0DcVfG86SYKRb-4Ph82dfXafed9CFgY1qFSECFbAcTw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: qzV-aM5lmrqETD1GTGswjStKDGFFmldY
+X-Proofpoint-ORIG-GUID: qzV-aM5lmrqETD1GTGswjStKDGFFmldY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-06_16,2023-06-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ malwarescore=0 mlxlogscore=975 bulkscore=0 mlxscore=0 adultscore=0
+ impostorscore=0 suspectscore=0 priorityscore=1501 clxscore=1015
+ phishscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306060177
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The framebuffer configuration for edo pdx203, written in edo dtsi (which
-is overwritten in pdx206 dts for its smaller panel) has to use a
-1096x2560 configuration as this is what the panel (and framebuffer area)
-has been initialized to.  Downstream userspace also has access to (and
-uses) this 2.5k mode by default, and only switches the panel to 4k when
-requested.
 
-This is similar to commit be8de06dc397 ("arm64: dts: qcom:
-sm8150-kumano: Panel framebuffer is 2.5k instead of 4k") which fixed the
-same for the previous generation Sony platform.
 
-Fixes: 69cdb97ef652 ("arm64: dts: qcom: sm8250: Add support for SONY Xperia 1 II / 5 II (Edo platform)")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
----
+On 5/24/2023 6:47 PM, Dmitry Baryshkov wrote:
+> On Thu, 25 May 2023 at 02:16, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
+>>
+>>
+>>
+>> On 3/20/2023 6:18 PM, Dmitry Baryshkov wrote:
+>>> As we are going to add virtual planes, add the list of supported formats
+>>> to the hw catalog entry. It will be used to setup universal planes, with
+>>> later selecting a pipe depending on whether the YUV format is used for
+>>> the framebuffer.
+>>>
+>>
+>> If your usage of format_list is going to be internal to dpu_plane.c, I
+>> can think of another idea for this change.
+>>
+>> This essentially translates to if (num_vig >= 1)
+>>
+>> If we can just have a small helper to detect that from the catalog can
+>> we use that instead of adding formats to the dpu caps?
+> 
+> I'd prefer to be explicit here. The list of supported formats might
+> vary between generations, might it not? Also we don't have a case of
+> the devices not having VIG planes. Even the qcm2290 (which doesn't
+> have CSC) lists YUV as supported.
+> 
 
-Changes since v2:
-- Rename griffin (copy-paste from related patch) to pdx203 in comment.
+the list of formats is tied to the sspps the dpu generation has and the 
+capabilities of those sspps.
 
- arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+qcm2290 is really an interesting case. It has one vig sspp but no csc 
+block for that vig sspp, hence it cannot support non-RGB formats.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-index 3d22be747f042..8f867f841cb83 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-@@ -54,9 +54,10 @@ chosen {
- 		framebuffer: framebuffer@9c000000 {
- 			compatible = "simple-framebuffer";
- 			reg = <0 0x9c000000 0 0x2300000>;
--			width = <1644>;
--			height = <3840>;
--			stride = <(1644 * 4)>;
-+			/* pdx203 BL initializes in 2.5k mode, not 4k */
-+			width = <1096>;
-+			height = <2560>;
-+			stride = <(1096 * 4)>;
- 			format = "a8r8g8b8";
- 		};
- 	};
--- 
-2.41.0
+I have confirmed that downstream is incorrect to populate yuv formats 
+for qcm2290.
 
+I still think that having atleast one vig sspp with csc sub-blk is the 
+right condition to check if we want to decide if the dpu for that 
+chipset supports yuv formats. Extra csc-blk check to handle qcm2290.
+
+Having a small helper in dpu_plane.c is good enough for that because 
+with virtual planes, you only need to know "if such a plane exists and 
+not which plane" and a full catalog change isnt needed IMO
+
+
+> Note: I think at some point we should have a closer look at the list
+> of supported formats and crosscheck that we do not have either
+> unsupported formats being listed, or missing formats which are not
+> listed as supported.
+> 
+>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>    .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 26 +++++++++++++++++++
+>>>    .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  4 +++
+>>>    2 files changed, 30 insertions(+)
+>>>
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>> index 212d546b6c5d..2d6944a9679a 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+>>> @@ -315,6 +315,8 @@ static const struct dpu_caps msm8998_dpu_caps = {
+>>>        .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>>        .max_hdeci_exp = MAX_HORZ_DECIMATION,
+>>>        .max_vdeci_exp = MAX_VERT_DECIMATION,
+>>> +     .format_list = plane_formats_yuv,
+>>> +     .num_formats = ARRAY_SIZE(plane_formats_yuv),
+>>>    };
+>>>
+>>>    static const struct dpu_caps qcm2290_dpu_caps = {
+>>> @@ -324,6 +326,8 @@ static const struct dpu_caps qcm2290_dpu_caps = {
+>>>        .has_idle_pc = true,
+>>>        .max_linewidth = 2160,
+>>>        .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>> +     .format_list = plane_formats_yuv,
+>>> +     .num_formats = ARRAY_SIZE(plane_formats_yuv),
+>>>    };
+>>>
+>>>    static const struct dpu_caps sdm845_dpu_caps = {
+>>> @@ -339,6 +343,8 @@ static const struct dpu_caps sdm845_dpu_caps = {
+>>>        .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>>        .max_hdeci_exp = MAX_HORZ_DECIMATION,
+>>>        .max_vdeci_exp = MAX_VERT_DECIMATION,
+>>> +     .format_list = plane_formats_yuv,
+>>> +     .num_formats = ARRAY_SIZE(plane_formats_yuv),
+>>>    };
+>>>
+>>>    static const struct dpu_caps sc7180_dpu_caps = {
+>>> @@ -350,6 +356,8 @@ static const struct dpu_caps sc7180_dpu_caps = {
+>>>        .has_idle_pc = true,
+>>>        .max_linewidth = DEFAULT_DPU_OUTPUT_LINE_WIDTH,
+>>>        .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>> +     .format_list = plane_formats_yuv,
+>>> +     .num_formats = ARRAY_SIZE(plane_formats_yuv),
+>>>    };
+>>>
+>>>    static const struct dpu_caps sm6115_dpu_caps = {
+>>> @@ -361,6 +369,8 @@ static const struct dpu_caps sm6115_dpu_caps = {
+>>>        .has_idle_pc = true,
+>>>        .max_linewidth = 2160,
+>>>        .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>> +     .format_list = plane_formats_yuv,
+>>> +     .num_formats = ARRAY_SIZE(plane_formats_yuv),
+>>>    };
+>>>
+>>>    static const struct dpu_caps sm8150_dpu_caps = {
+>>> @@ -376,6 +386,8 @@ static const struct dpu_caps sm8150_dpu_caps = {
+>>>        .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>>        .max_hdeci_exp = MAX_HORZ_DECIMATION,
+>>>        .max_vdeci_exp = MAX_VERT_DECIMATION,
+>>> +     .format_list = plane_formats_yuv,
+>>> +     .num_formats = ARRAY_SIZE(plane_formats_yuv),
+>>>    };
+>>>
+>>>    static const struct dpu_caps sc8180x_dpu_caps = {
+>>> @@ -391,6 +403,8 @@ static const struct dpu_caps sc8180x_dpu_caps = {
+>>>        .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>>        .max_hdeci_exp = MAX_HORZ_DECIMATION,
+>>>        .max_vdeci_exp = MAX_VERT_DECIMATION,
+>>> +     .format_list = plane_formats_yuv,
+>>> +     .num_formats = ARRAY_SIZE(plane_formats_yuv),
+>>>    };
+>>>
+>>>    static const struct dpu_caps sc8280xp_dpu_caps = {
+>>> @@ -404,6 +418,8 @@ static const struct dpu_caps sc8280xp_dpu_caps = {
+>>>        .has_3d_merge = true,
+>>>        .max_linewidth = 5120,
+>>>        .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>> +     .format_list = plane_formats_yuv,
+>>> +     .num_formats = ARRAY_SIZE(plane_formats_yuv),
+>>>    };
+>>>
+>>>    static const struct dpu_caps sm8250_dpu_caps = {
+>>> @@ -417,6 +433,8 @@ static const struct dpu_caps sm8250_dpu_caps = {
+>>>        .has_3d_merge = true,
+>>>        .max_linewidth = 900,
+>>>        .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>> +     .format_list = plane_formats_yuv,
+>>> +     .num_formats = ARRAY_SIZE(plane_formats_yuv),
+>>>    };
+>>>
+>>>    static const struct dpu_caps sm8350_dpu_caps = {
+>>> @@ -430,6 +448,8 @@ static const struct dpu_caps sm8350_dpu_caps = {
+>>>        .has_3d_merge = true,
+>>>        .max_linewidth = 4096,
+>>>        .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>> +     .format_list = plane_formats_yuv,
+>>> +     .num_formats = ARRAY_SIZE(plane_formats_yuv),
+>>>    };
+>>>
+>>>    static const struct dpu_caps sm8450_dpu_caps = {
+>>> @@ -443,6 +463,8 @@ static const struct dpu_caps sm8450_dpu_caps = {
+>>>        .has_3d_merge = true,
+>>>        .max_linewidth = 5120,
+>>>        .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>> +     .format_list = plane_formats_yuv,
+>>> +     .num_formats = ARRAY_SIZE(plane_formats_yuv),
+>>>    };
+>>>
+>>>    static const struct dpu_caps sm8550_dpu_caps = {
+>>> @@ -456,6 +478,8 @@ static const struct dpu_caps sm8550_dpu_caps = {
+>>>        .has_3d_merge = true,
+>>>        .max_linewidth = 5120,
+>>>        .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>> +     .format_list = plane_formats_yuv,
+>>> +     .num_formats = ARRAY_SIZE(plane_formats_yuv),
+>>>    };
+>>>
+>>>    static const struct dpu_caps sc7280_dpu_caps = {
+>>> @@ -467,6 +491,8 @@ static const struct dpu_caps sc7280_dpu_caps = {
+>>>        .has_idle_pc = true,
+>>>        .max_linewidth = 2400,
+>>>        .pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>>> +     .format_list = plane_formats_yuv,
+>>> +     .num_formats = ARRAY_SIZE(plane_formats_yuv),
+>>>    };
+>>>
+>>>    static const struct dpu_mdp_cfg msm8998_mdp[] = {
+>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>>> index 89b372cdca92..4847aae78db2 100644
+>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+>>> @@ -404,6 +404,8 @@ struct dpu_rotation_cfg {
+>>>     * @pixel_ram_size     size of latency hiding and de-tiling buffer in bytes
+>>>     * @max_hdeci_exp      max horizontal decimation supported (max is 2^value)
+>>>     * @max_vdeci_exp      max vertical decimation supported (max is 2^value)
+>>> + * @format_list: Pointer to list of supported formats
+>>> + * @num_formats: Number of supported formats
+>>>     */
+>>>    struct dpu_caps {
+>>>        u32 max_mixer_width;
+>>> @@ -419,6 +421,8 @@ struct dpu_caps {
+>>>        u32 pixel_ram_size;
+>>>        u32 max_hdeci_exp;
+>>>        u32 max_vdeci_exp;
+>>> +     const u32 *format_list;
+>>> +     u32 num_formats;
+>>>    };
+>>>
+>>>    /**
+> 
+> 
+> 
