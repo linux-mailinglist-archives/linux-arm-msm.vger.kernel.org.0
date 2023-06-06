@@ -2,74 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 707EF72441E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 15:16:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDC71724485
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 15:35:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237939AbjFFNQF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 09:16:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44196 "EHLO
+        id S237591AbjFFNfs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 09:35:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238113AbjFFNQB (ORCPT
+        with ESMTP id S232880AbjFFNfq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 09:16:01 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC92210DB
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 06:15:59 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b1b2ca09b9so51718841fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 06:15:59 -0700 (PDT)
+        Tue, 6 Jun 2023 09:35:46 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01E5412F
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 06:35:43 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f730c1253fso26714465e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 06:35:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686057358; x=1688649358;
+        d=linaro.org; s=google; t=1686058541; x=1688650541;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=xjfzzwF9PKOo4h8atONi+JyNDf6hWNqVhb1cXUpUuTE=;
-        b=bkUafAYRKMl7obj5VZygpxdv6WKJzh7W8Bb+29JXza6gHHAqmLDU+78nB11IssGpd2
-         1OeSum7JKLGe3AtmgU5duJPPseFOzrBDJHxkWtC8xAriHYwZsuiRZNV0WyUHUMVXDqs/
-         5T+r6JPzh4cjODp1oLHDLadYkWRq0SkPAG50aRYOWQBmQJkX8za0enofCFOgea0+xUPJ
-         mEWMIw4B5I9d4+VN+gnf21j5Zx8wkVTRWusz4qlZRFJwfD5kIPYq47812k3B+AI2wAt0
-         1ZAQqI48j85LezYeg6NFuP+L1py0Xqx0soGRpegawL23Og9ZjOTj3Iw1tPK6zpNc22Zk
-         AA+g==
+        bh=p/Ujp/AD9YOOfXlc1eN4uRJawzh0f8+V5Q/m4o75UsQ=;
+        b=SYbHTqY3TtaFf59L1qeP+nYcDjJyj7CFSrKUpEYfZjeFhHTjpDNz4fC3h6ywrl3EBz
+         IXt3CNqa1bWlEGGteyIrlqBNT7xsezrLu7MeK0dfrRaSdgewTE2XUeJeQYcZitLllZX8
+         IFQDaiOGLCWTFs59mZHwMvuDPStFLJkr7L8hwYCuRAZID5bRd+tmZhzjUrZmAWoRBEzn
+         d8xR6p6oNCcIOLF5GmIrOql9IMGCiOGVKLKir2F+nxgq3cKzEXf3ebFwebYXB5UWJRlp
+         IVzcifIJ3GDlltl9OedXUpcXEbV0vmmmZCe00aGIj+nGM0fplqU2v0DCn0uZriHsRyGI
+         16jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686057358; x=1688649358;
+        d=1e100.net; s=20221208; t=1686058541; x=1688650541;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xjfzzwF9PKOo4h8atONi+JyNDf6hWNqVhb1cXUpUuTE=;
-        b=bSZyP6YOlbSJ0tIAVCNC7dDqry/HWhbXoIWV/oXQEbQVJyvLvFbtSkJEXV3mFZHAHh
-         r7X0TbteeI430Jy+wqdXeSl25nFYo16eNQKO/8RslJm/boJjZQiJCH1zYUtu1SeSyx4L
-         GXTduhj0RuU4NEGdzuodDUpuivr0y25hIUVFuhj29oGVlwAd+qR/x8pJo9WMintVODYX
-         onHRszMxidedANOPrHZX/PSdIrn07uWf/Z7Z6HZMsu1ZzErhqke7DTk4y+uOd7tvsEcc
-         fM+XILAQ4ymJXEUQKd6DHGEiExEis0ig3mlcvMvWvphrRnrO5eD58YP3wLGtjeXFSviq
-         hxHg==
-X-Gm-Message-State: AC+VfDzdNiGATa1k6vLfmjBTKG7t5PL+j/nxf1B9vdUgu+B9gtXAWhol
-        tSG0Dgsxq10Wf6pyVKzJawxJNw==
-X-Google-Smtp-Source: ACHHUZ5IDqB1ip1czs+yGIxH79eoli8GF0lqxAjULpLkARWJnwH4tpKVVQ2/mhJde3ptIOTiIdA83g==
-X-Received: by 2002:a05:651c:8c:b0:2b1:e8f8:e0ff with SMTP id 12-20020a05651c008c00b002b1e8f8e0ffmr1430127ljq.10.1686057358069;
-        Tue, 06 Jun 2023 06:15:58 -0700 (PDT)
-Received: from [192.168.1.101] (abyl150.neoplus.adsl.tpnet.pl. [83.9.31.150])
-        by smtp.gmail.com with ESMTPSA id x13-20020a2e880d000000b002ac7b0fc473sm1850597ljh.38.2023.06.06.06.15.56
+        bh=p/Ujp/AD9YOOfXlc1eN4uRJawzh0f8+V5Q/m4o75UsQ=;
+        b=Da/M5DJVF1eIree7VGmkXS9RdgkMVX1zlE+1svxQWxS1AJUiepGSuwE5ib2+aOoggn
+         pjDhv4tGN099ZVqRx/+J33nf3F96RiqtgKqp5m5i+C77udPBtwVMJnLNdfsb2h/Ry6LC
+         CNqPeJ9ohlO+F1HQM91qqERKirz6DrOZMoJUawIoPBs9lI0F4+pyy5Sc58W8Og6NmN7N
+         k9nNHd9jy+KN49v/NDyuRZXTxoFFJpll6FRsN0RAlZhQ3xVYl1/X+NkVSxm1pvQaeKU9
+         He3wXG3E7H+cpxDwmsoGAUbXwGZUv29ycjammZfA3kEk7MCf68XxiMJ51VESAx81SrIe
+         dwPA==
+X-Gm-Message-State: AC+VfDzyaLOvT4nQp7DkgF+hIjPiSyUBrIMNE2nO9j3MgGjjrFIu/uTh
+        lythjDroFL2QoEQMuRHf2abfbg==
+X-Google-Smtp-Source: ACHHUZ6NnQo1KPM2CAhRTl9x2B9+y4SDHlWnPg4f8EEedLSlw/SAk5n3w7vgn0Ak19sAJi1ppNaNNQ==
+X-Received: by 2002:a1c:750a:0:b0:3f6:69f:75cd with SMTP id o10-20020a1c750a000000b003f6069f75cdmr2208951wmc.0.1686058541112;
+        Tue, 06 Jun 2023 06:35:41 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id c11-20020a05600c0acb00b003f72d7dc66esm10871828wmr.13.2023.06.06.06.35.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 Jun 2023 06:15:57 -0700 (PDT)
-Message-ID: <6548a1d5-9635-7d97-7a0a-0114c463b152@linaro.org>
-Date:   Tue, 6 Jun 2023 15:15:56 +0200
+        Tue, 06 Jun 2023 06:35:40 -0700 (PDT)
+Message-ID: <3ed018a1-d2fe-d210-158d-c1a13928eab2@linaro.org>
+Date:   Tue, 6 Jun 2023 14:35:39 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v5 2/3] arm64: dts: qcom: ipq9574: add tsens node
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v13 09/24] gunyah: rsc_mgr: Add RPC for sharing memory
 Content-Language: en-US
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, amitk@kernel.org, thara.gopinath@gmail.com,
-        rafael@kernel.org, daniel.lezcano@linaro.org, rui.zhang@intel.com,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Praveenkumar I <quic_ipkumar@quicinc.com>
-References: <cover.1685703605.git.quic_varada@quicinc.com>
- <dcb682766d8e01f8f4eed7f26fcbfba1b4091137.1685703605.git.quic_varada@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <dcb682766d8e01f8f4eed7f26fcbfba1b4091137.1685703605.git.quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+To:     Elliot Berman <quic_eberman@quicinc.com>,
+        Alex Elder <elder@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
+ <20230509204801.2824351-10-quic_eberman@quicinc.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230509204801.2824351-10-quic_eberman@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -83,51 +97,370 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 2.06.2023 13:03, Varadarajan Narayanan wrote:
-> IPQ9574 has a tsens v2.3.1 peripheral which monitors temperatures
-> around the various subsystems on the die.
+On 09/05/2023 21:47, Elliot Berman wrote:
+> Gunyah resource manager provides API to manipulate stage 2 page tables.
+> Manipulations are represented as a memory parcel. Memory parcels
+> describe a list of memory regions (intermediate physical address and
+> size), a list of new permissions for VMs, and the memory type (DDR or
+> MMIO). Memory parcels are uniquely identified by a handle allocated by
+> Gunyah. There are a few types of memory parcel sharing which Gunyah
+> supports:
 > 
-> Co-developed-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>   - Sharing: the guest and host VM both have access
+>   - Lending: only the guest has access; host VM loses access
+>   - Donating: Permanently lent (not reclaimed even if guest shuts down)
+> 
+> Memory parcels that have been shared or lent can be reclaimed by the
+> host via an additional call. The reclaim operation restores the original
+> access the host VM had to the memory parcel and removes the access to
+> other VM.
+> 
+> One point to note that memory parcels don't describe where in the guest
+> VM the memory parcel should reside. The guest VM must accept the memory
+> parcel either explicitly via a "gh_rm_mem_accept" call (not introduced
+> here) or be configured to accept it automatically at boot. As the guest
+> VM accepts the memory parcel, it also mentions the IPA it wants to place
+> memory parcel.
+> 
+> Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+> Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > ---
-> [v5]:
-> 	Incorporate review comments
-"fix bug" is too vague..
 
+
+
+
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+
+--srini
+
+>   drivers/virt/gunyah/rsc_mgr_rpc.c | 227 ++++++++++++++++++++++++++++++
+>   include/linux/gunyah_rsc_mgr.h    |  48 +++++++
+>   2 files changed, 275 insertions(+)
 > 
-> [v2]:
-> 	Add "qcom,ipq8074-tsens" as fallback compatible
-> ---
->  arch/arm64/boot/dts/qcom/ipq9574.dtsi | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574.dtsi b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> index 0baeb10..cda3fd4 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574.dtsi
-> @@ -206,6 +206,16 @@
->  			#size-cells = <1>;
->  		};
->  
-> +		tsens: thermal-sensor@4a9000 {
-> +			compatible = "qcom,ipq9574-tsens", "qcom,ipq8074-tsens";
-> +			reg = <0x004a9000 0x1000>, /* TM */
-> +			      <0x004a8000 0x1000>; /* SROT */
-The comments are unnecessary, we've been copypasting them from SoC to SoC
-but it's time we stop.
-
-With that:
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
-> +			interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "combined";
-> +			#qcom,sensors = <16>;
-> +			#thermal-sensor-cells = <1>;
-> +		};
+> diff --git a/drivers/virt/gunyah/rsc_mgr_rpc.c b/drivers/virt/gunyah/rsc_mgr_rpc.c
+> index a4a9f0ba4e1f..4f25f07400b3 100644
+> --- a/drivers/virt/gunyah/rsc_mgr_rpc.c
+> +++ b/drivers/virt/gunyah/rsc_mgr_rpc.c
+> @@ -6,6 +6,12 @@
+>   #include <linux/gunyah_rsc_mgr.h>
+>   #include "rsc_mgr.h"
+>   
+> +/* Message IDs: Memory Management */
+> +#define GH_RM_RPC_MEM_LEND			0x51000012
+> +#define GH_RM_RPC_MEM_SHARE			0x51000013
+> +#define GH_RM_RPC_MEM_RECLAIM			0x51000015
+> +#define GH_RM_RPC_MEM_APPEND			0x51000018
 > +
->  		tlmm: pinctrl@1000000 {
->  			compatible = "qcom,ipq9574-tlmm";
->  			reg = <0x01000000 0x300000>;
+>   /* Message IDs: VM Management */
+>   #define GH_RM_RPC_VM_ALLOC_VMID			0x56000001
+>   #define GH_RM_RPC_VM_DEALLOC_VMID		0x56000002
+> @@ -22,6 +28,46 @@ struct gh_rm_vm_common_vmid_req {
+>   	__le16 _padding;
+>   } __packed;
+>   
+> +/* Call: MEM_LEND, MEM_SHARE */
+> +#define GH_MEM_SHARE_REQ_FLAGS_APPEND		BIT(1)
+> +
+> +struct gh_rm_mem_share_req_header {
+> +	u8 mem_type;
+> +	u8 _padding0;
+> +	u8 flags;
+> +	u8 _padding1;
+> +	__le32 label;
+> +} __packed;
+> +
+> +struct gh_rm_mem_share_req_acl_section {
+> +	__le32 n_entries;
+> +	struct gh_rm_mem_acl_entry entries[];
+> +};
+> +
+> +struct gh_rm_mem_share_req_mem_section {
+> +	__le16 n_entries;
+> +	__le16 _padding;
+> +	struct gh_rm_mem_entry entries[];
+> +};
+> +
+> +/* Call: MEM_RELEASE */
+> +struct gh_rm_mem_release_req {
+> +	__le32 mem_handle;
+> +	u8 flags; /* currently not used */
+> +	u8 _padding0;
+> +	__le16 _padding1;
+> +} __packed;
+> +
+> +/* Call: MEM_APPEND */
+> +#define GH_MEM_APPEND_REQ_FLAGS_END		BIT(0)
+> +
+> +struct gh_rm_mem_append_req_header {
+> +	__le32 mem_handle;
+> +	u8 flags;
+> +	u8 _padding0;
+> +	__le16 _padding1;
+> +} __packed;
+> +
+>   /* Call: VM_ALLOC */
+>   struct gh_rm_vm_alloc_vmid_resp {
+>   	__le16 vmid;
+> @@ -51,6 +97,8 @@ struct gh_rm_vm_config_image_req {
+>   	__le64 dtb_size;
+>   } __packed;
+>   
+> +#define GH_RM_MAX_MEM_ENTRIES	512
+> +
+>   /*
+>    * Several RM calls take only a VMID as a parameter and give only standard
+>    * response back. Deduplicate boilerplate code by using this common call.
+> @@ -64,6 +112,185 @@ static int gh_rm_common_vmid_call(struct gh_rm *rm, u32 message_id, u16 vmid)
+>   	return gh_rm_call(rm, message_id, &req_payload, sizeof(req_payload), NULL, NULL);
+>   }
+>   
+> +static int _gh_rm_mem_append(struct gh_rm *rm, u32 mem_handle, bool end_append,
+> +			struct gh_rm_mem_entry *mem_entries, size_t n_mem_entries)
+> +{
+> +	struct gh_rm_mem_share_req_mem_section *mem_section;
+> +	struct gh_rm_mem_append_req_header *req_header;
+> +	size_t msg_size = 0;
+> +	void *msg;
+> +	int ret;
+> +
+> +	msg_size += sizeof(struct gh_rm_mem_append_req_header);
+> +	msg_size += struct_size(mem_section, entries, n_mem_entries);
+> +
+> +	msg = kzalloc(msg_size, GFP_KERNEL);
+> +	if (!msg)
+> +		return -ENOMEM;
+> +
+> +	req_header = msg;
+> +	mem_section = (void *)req_header + sizeof(struct gh_rm_mem_append_req_header);
+> +
+> +	req_header->mem_handle = cpu_to_le32(mem_handle);
+> +	if (end_append)
+> +		req_header->flags |= GH_MEM_APPEND_REQ_FLAGS_END;
+> +
+> +	mem_section->n_entries = cpu_to_le16(n_mem_entries);
+> +	memcpy(mem_section->entries, mem_entries, sizeof(*mem_entries) * n_mem_entries);
+> +
+> +	ret = gh_rm_call(rm, GH_RM_RPC_MEM_APPEND, msg, msg_size, NULL, NULL);
+> +	kfree(msg);
+> +
+> +	return ret;
+> +}
+> +
+> +static int gh_rm_mem_append(struct gh_rm *rm, u32 mem_handle,
+> +			struct gh_rm_mem_entry *mem_entries, size_t n_mem_entries)
+> +{
+> +	bool end_append;
+> +	int ret = 0;
+> +	size_t n;
+> +
+> +	while (n_mem_entries) {
+> +		if (n_mem_entries > GH_RM_MAX_MEM_ENTRIES) {
+> +			end_append = false;
+> +			n = GH_RM_MAX_MEM_ENTRIES;
+> +		} else {
+> +			end_append = true;
+> +			n = n_mem_entries;
+> +		}
+> +
+> +		ret = _gh_rm_mem_append(rm, mem_handle, end_append, mem_entries, n);
+> +		if (ret)
+> +			break;
+> +
+> +		mem_entries += n;
+> +		n_mem_entries -= n;
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +static int gh_rm_mem_lend_common(struct gh_rm *rm, u32 message_id, struct gh_rm_mem_parcel *p)
+> +{
+> +	size_t msg_size = 0, initial_mem_entries = p->n_mem_entries, resp_size;
+> +	size_t acl_section_size, mem_section_size;
+> +	struct gh_rm_mem_share_req_acl_section *acl_section;
+> +	struct gh_rm_mem_share_req_mem_section *mem_section;
+> +	struct gh_rm_mem_share_req_header *req_header;
+> +	u32 *attr_section;
+> +	__le32 *resp;
+> +	void *msg;
+> +	int ret;
+> +
+> +	if (!p->acl_entries || !p->n_acl_entries || !p->mem_entries || !p->n_mem_entries ||
+> +	    p->n_acl_entries > U8_MAX || p->mem_handle != GH_MEM_HANDLE_INVAL)
+> +		return -EINVAL;
+> +
+> +	if (initial_mem_entries > GH_RM_MAX_MEM_ENTRIES)
+> +		initial_mem_entries = GH_RM_MAX_MEM_ENTRIES;
+> +
+> +	acl_section_size = struct_size(acl_section, entries, p->n_acl_entries);
+> +	mem_section_size = struct_size(mem_section, entries, initial_mem_entries);
+> +	/* The format of the message goes:
+> +	 * request header
+> +	 * ACL entries (which VMs get what kind of access to this memory parcel)
+> +	 * Memory entries (list of memory regions to share)
+> +	 * Memory attributes (currently unused, we'll hard-code the size to 0)
+> +	 */
+> +	msg_size += sizeof(struct gh_rm_mem_share_req_header);
+> +	msg_size += acl_section_size;
+> +	msg_size += mem_section_size;
+> +	msg_size += sizeof(u32); /* for memory attributes, currently unused */
+> +
+> +	msg = kzalloc(msg_size, GFP_KERNEL);
+> +	if (!msg)
+> +		return -ENOMEM;
+> +
+> +	req_header = msg;
+> +	acl_section = (void *)req_header + sizeof(*req_header);
+> +	mem_section = (void *)acl_section + acl_section_size;
+> +	attr_section = (void *)mem_section + mem_section_size;
+> +
+> +	req_header->mem_type = p->mem_type;
+> +	if (initial_mem_entries != p->n_mem_entries)
+> +		req_header->flags |= GH_MEM_SHARE_REQ_FLAGS_APPEND;
+> +	req_header->label = cpu_to_le32(p->label);
+> +
+> +	acl_section->n_entries = cpu_to_le32(p->n_acl_entries);
+> +	memcpy(acl_section->entries, p->acl_entries,
+> +		flex_array_size(acl_section, entries, p->n_acl_entries));
+> +
+> +	mem_section->n_entries = cpu_to_le16(initial_mem_entries);
+> +	memcpy(mem_section->entries, p->mem_entries,
+> +		flex_array_size(mem_section, entries, initial_mem_entries));
+> +
+> +	/* Set n_entries for memory attribute section to 0 */
+> +	*attr_section = 0;
+> +
+> +	ret = gh_rm_call(rm, message_id, msg, msg_size, (void **)&resp, &resp_size);
+> +	kfree(msg);
+> +
+> +	if (ret)
+> +		return ret;
+> +
+> +	p->mem_handle = le32_to_cpu(*resp);
+> +	kfree(resp);
+> +
+> +	if (initial_mem_entries != p->n_mem_entries) {
+> +		ret = gh_rm_mem_append(rm, p->mem_handle,
+> +					&p->mem_entries[initial_mem_entries],
+> +					p->n_mem_entries - initial_mem_entries);
+> +		if (ret) {
+> +			gh_rm_mem_reclaim(rm, p);
+> +			p->mem_handle = GH_MEM_HANDLE_INVAL;
+> +		}
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +/**
+> + * gh_rm_mem_lend() - Lend memory to other virtual machines.
+> + * @rm: Handle to a Gunyah resource manager
+> + * @parcel: Information about the memory to be lent.
+> + *
+> + * Lending removes Linux's access to the memory while the memory parcel is lent.
+> + */
+> +int gh_rm_mem_lend(struct gh_rm *rm, struct gh_rm_mem_parcel *parcel)
+> +{
+> +	return gh_rm_mem_lend_common(rm, GH_RM_RPC_MEM_LEND, parcel);
+> +}
+> +
+> +
+> +/**
+> + * gh_rm_mem_share() - Share memory with other virtual machines.
+> + * @rm: Handle to a Gunyah resource manager
+> + * @parcel: Information about the memory to be shared.
+> + *
+> + * Sharing keeps Linux's access to the memory while the memory parcel is shared.
+> + */
+> +int gh_rm_mem_share(struct gh_rm *rm, struct gh_rm_mem_parcel *parcel)
+> +{
+> +	return gh_rm_mem_lend_common(rm, GH_RM_RPC_MEM_SHARE, parcel);
+> +}
+> +
+> +/**
+> + * gh_rm_mem_reclaim() - Reclaim a memory parcel
+> + * @rm: Handle to a Gunyah resource manager
+> + * @parcel: Information about the memory to be reclaimed.
+> + *
+> + * RM maps the associated memory back into the stage-2 page tables of the owner VM.
+> + */
+> +int gh_rm_mem_reclaim(struct gh_rm *rm, struct gh_rm_mem_parcel *parcel)
+> +{
+> +	struct gh_rm_mem_release_req req = {
+> +		.mem_handle = cpu_to_le32(parcel->mem_handle),
+> +	};
+> +
+> +	return gh_rm_call(rm, GH_RM_RPC_MEM_RECLAIM, &req, sizeof(req), NULL, NULL);
+> +}
+> +
+>   /**
+>    * gh_rm_alloc_vmid() - Allocate a new VM in Gunyah. Returns the VM identifier.
+>    * @rm: Handle to a Gunyah resource manager
+> diff --git a/include/linux/gunyah_rsc_mgr.h b/include/linux/gunyah_rsc_mgr.h
+> index 1ac66d9004d2..dfac088420bd 100644
+> --- a/include/linux/gunyah_rsc_mgr.h
+> +++ b/include/linux/gunyah_rsc_mgr.h
+> @@ -11,6 +11,7 @@
+>   #include <linux/gunyah.h>
+>   
+>   #define GH_VMID_INVAL		U16_MAX
+> +#define GH_MEM_HANDLE_INVAL	U32_MAX
+>   
+>   struct gh_rm;
+>   int gh_rm_notifier_register(struct gh_rm *rm, struct notifier_block *nb);
+> @@ -51,7 +52,54 @@ struct gh_rm_vm_status_payload {
+>   
+>   #define GH_RM_NOTIFICATION_VM_STATUS		 0x56100008
+>   
+> +#define GH_RM_ACL_X		BIT(0)
+> +#define GH_RM_ACL_W		BIT(1)
+> +#define GH_RM_ACL_R		BIT(2)
+> +
+> +struct gh_rm_mem_acl_entry {
+> +	__le16 vmid;
+> +	u8 perms;
+> +	u8 reserved;
+> +} __packed;
+> +
+> +struct gh_rm_mem_entry {
+> +	__le64 phys_addr;
+> +	__le64 size;
+> +} __packed;
+> +
+> +enum gh_rm_mem_type {
+> +	GH_RM_MEM_TYPE_NORMAL	= 0,
+> +	GH_RM_MEM_TYPE_IO	= 1,
+> +};
+> +
+> +/*
+> + * struct gh_rm_mem_parcel - Info about memory to be lent/shared/donated/reclaimed
+> + * @mem_type: The type of memory: normal (DDR) or IO
+> + * @label: An client-specified identifier which can be used by the other VMs to identify the purpose
+> + *         of the memory parcel.
+> + * @n_acl_entries: Count of the number of entries in the @acl_entries array.
+> + * @acl_entries: An array of access control entries. Each entry specifies a VM and what access
+> + *               is allowed for the memory parcel.
+> + * @n_mem_entries: Count of the number of entries in the @mem_entries array.
+> + * @mem_entries: An array of regions to be associated with the memory parcel. Addresses should be
+> + *               (intermediate) physical addresses from Linux's perspective.
+> + * @mem_handle: On success, filled with memory handle that RM allocates for this memory parcel
+> + */
+> +struct gh_rm_mem_parcel {
+> +	enum gh_rm_mem_type mem_type;
+> +	u32 label;
+> +	size_t n_acl_entries;
+> +	struct gh_rm_mem_acl_entry *acl_entries;
+> +	size_t n_mem_entries;
+> +	struct gh_rm_mem_entry *mem_entries;
+> +	u32 mem_handle;
+> +};
+> +
+>   /* RPC Calls */
+> +int gh_rm_mem_lend(struct gh_rm *rm, struct gh_rm_mem_parcel *parcel);
+> +int gh_rm_mem_share(struct gh_rm *rm, struct gh_rm_mem_parcel *parcel);
+> +int gh_rm_mem_reclaim(struct gh_rm *rm, struct gh_rm_mem_parcel *parcel);
+> +
+>   int gh_rm_alloc_vmid(struct gh_rm *rm, u16 vmid);
+>   int gh_rm_dealloc_vmid(struct gh_rm *rm, u16 vmid);
+>   int gh_rm_vm_reset(struct gh_rm *rm, u16 vmid);
