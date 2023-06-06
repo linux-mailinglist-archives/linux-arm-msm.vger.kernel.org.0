@@ -2,97 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 04A72723B47
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 10:21:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 485DB723BDE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 10:33:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236222AbjFFIVc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 04:21:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48880 "EHLO
+        id S236741AbjFFIdr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 04:33:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236176AbjFFIV3 (ORCPT
+        with ESMTP id S236758AbjFFIdn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 04:21:29 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98E80AF
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 01:21:28 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id ffacd0b85a97d-30ad8f33f1aso5110275f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 01:21:28 -0700 (PDT)
+        Tue, 6 Jun 2023 04:33:43 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 434E4E6E
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 01:33:15 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-30ae4ec1ac7so4565306f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 01:33:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686039687; x=1688631687;
+        d=linaro.org; s=google; t=1686040388; x=1688632388;
         h=content-disposition:mime-version:message-id:subject:cc:to:from:date
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=dkb7K4StnKyUjyVkKmBhJSVtp9R5+nxnmnxLzZaoi6w=;
-        b=rhUgvkH5GQYV1LSKhWNnnqP5gDkgzCN0Uk7ZZu1BcKEJ0r8VW/+CMtHkEnScUr5r0w
-         PHxBHuJZvNz4ebw+kqDIajqx820jmkb1x+sycocmoGs2S/qNdmThLgHver2tFCwsqkHi
-         5ZgCb4s6IjYhM7YBM+nv8AkyZ5C0CdDNuozNkgqzVl98vx472j28SDngUtDiOB4gUTC9
-         Fam2iP0hvtVHweUYpAbf2SvJr8bp29Pmp1eCSCNtzHTd0yNyt89T52Z9xuvZl59WOQ3o
-         16kPqyFLDX9iDIlKTZEny/V9tTM2OQzbwblpAVzwijWltjW1O+uKZSEiQ/rcCPwKFE7t
-         xSgA==
+        bh=HGNvezJMXfjn7ToqqZuXUFZItGnK+ZI8rSYUZp66fL0=;
+        b=ebW+dZ4PFwVmuzs+A/1mErcEfwlk42eaHMnN0FTXdU4DToHNMqjg4hps7BaomOmmnG
+         ULeztuZ667nKmYkB8ryIIMId0Ya0i1cXnLd/2Jms6MjS7sKP1cyJAOU6jeF085HhLoTY
+         lRn40UYUUe074EBieFDm8LmII0z3VjGADQOBO416duu0D4HLC/dxSxgOShk3e9tnQu6G
+         z7cIOOTpWmTUCCKwHUfk/AY8KznVOufjFOyrDOcxDNKRzEAmuKQ+1SEEhsDwkOAvnlKK
+         SOeWPzLVkwYxz5X6SCq/3oB97ZfRVn3MS5PjBh6rNiLAom3mBQQdr8q4n7gRCRwvF5dc
+         wi9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686039687; x=1688631687;
+        d=1e100.net; s=20221208; t=1686040388; x=1688632388;
         h=content-disposition:mime-version:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dkb7K4StnKyUjyVkKmBhJSVtp9R5+nxnmnxLzZaoi6w=;
-        b=JUzOBRttcWEOiuwQjYbQBK6t8Qnrms7nAWukbjmGgcur8ZaOoZhUiv55c0xud97OSw
-         w/iyu3Evf1tKM7dhNe+iL5lkdL56xlrsM5yX2G0ZEQGOqcyJq9iqCSnoQdSPAwEgautf
-         RAl66276KVC238hZWyFMxwTx6IH9tbDP2lCjy61zn1jztMHFLd9h1MkflcdzwRcLhab1
-         Fb3I8XLwu5/nomgypEoMFGf2J0+4tiIaIz1lFjDqw26nXEugSm+TcN6rneAT92YjD/Zp
-         A1Vg0qCZEMOtHQ/LK+6Cn+onq1GneAgK1jSM3+XeMolestiOUPOTSP8cuS0L7E4Z28xb
-         y4Bg==
-X-Gm-Message-State: AC+VfDxkCYWlcihdIcWBDhTkyY0qJCWce3XCJhL8M+tIEhRTgG1iVD3V
-        FQHhtKS/v/Jmztuo1yOIyCoAOTE0U76n48Lj3zk=
-X-Google-Smtp-Source: ACHHUZ582VJN7tt1i9t/RVdnErvIR9E3CpAbm1nOMk9BRM+6GkV31FFnhRwclGusnapEapIej4vIYA==
-X-Received: by 2002:adf:e5cf:0:b0:309:33c4:52e1 with SMTP id a15-20020adfe5cf000000b0030933c452e1mr1120986wrn.64.1686039687095;
-        Tue, 06 Jun 2023 01:21:27 -0700 (PDT)
+        bh=HGNvezJMXfjn7ToqqZuXUFZItGnK+ZI8rSYUZp66fL0=;
+        b=A+LiT1gad1CtN+4TrfTUF3x3LcdLHWy7IlmEDagYHMK584UAndy34kVCgnfLo5y81E
+         coAZwCB3YSrrgMifDemy1H34SNAuKCd8yLcOvN34tBUE+FB/8QMgAw0tmOM4YcFbfHNc
+         Bl9HyVlWhUVz/c1g5YdeVnQsWuZE2sj+KoiO4iox7JEkqpGEzYgb+9fBdBpQdLeGIr20
+         Ym95sVVbJYjcIhFWzOCCQFu8w47zW3+4725FiCr5Ngbn8tL5Ksh8cLWFkuTRxSeBaco8
+         /2FTOX7cxz/FyhrcFTRP+6dx0ed0ZLK+WfkJGG/OMtnpv3lA37HCd7OSkr3/28daAIOD
+         WGlA==
+X-Gm-Message-State: AC+VfDw3OTklzN/mYRx98W1n29ppmRrYwU9lPaq+PyGLjR20QtvKaNBQ
+        01yugnQbkqL4vXCVgwl9Pb5ZeA==
+X-Google-Smtp-Source: ACHHUZ69J8r5vJcWEWXn2VmWqlCRB7PTWJZj88krqf7/cGT0YE5tj+fKqFHTvwx1gzn5SpOc8uSZ5g==
+X-Received: by 2002:adf:fccb:0:b0:30c:2bbf:bf75 with SMTP id f11-20020adffccb000000b0030c2bbfbf75mr1071217wrs.26.1686040388227;
+        Tue, 06 Jun 2023 01:33:08 -0700 (PDT)
 Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id n2-20020a5d4c42000000b00306415ac69asm11781849wrt.15.2023.06.06.01.21.25
+        by smtp.gmail.com with ESMTPSA id l24-20020a1ced18000000b003f31cb7a203sm13443342wmh.14.2023.06.06.01.33.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jun 2023 01:21:25 -0700 (PDT)
-Date:   Tue, 6 Jun 2023 11:21:22 +0300
+        Tue, 06 Jun 2023 01:33:07 -0700 (PDT)
+Date:   Tue, 6 Jun 2023 11:33:03 +0300
 From:   Dan Carpenter <dan.carpenter@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org
-Subject: [PATCH] soc: qcom: Fix a IS_ERR() vs NULL bug in probe
-Message-ID: <ZH7sgpLAN23bCz9v@moroto>
+To:     Rob Clark <robdclark@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, kernel-janitors@vger.kernel.org
+Subject: [PATCH] drm/msm/dpu: tidy up some error checking
+Message-ID: <ZH7vP2Swu8CYpgUL@moroto>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The devm_ioremap() function returns NULL on error, it never returns
-error pointers.
+The "vsync_hz" variable is unsigned int so it can't be less
+than zero.  The dpu_kms_get_clk_rate() function used to return a u64
+but I previously changed it to return an unsigned long and zero on
+error so it matches clk_get_rate().
 
-Fixes: a77b2a0b1280 ("soc: qcom: Introduce RPM master stats driver")
+Change the "vsync_hz" type to unsigned long as well and change the
+error checking to check for zero instead of negatives.  This change
+does not affect runtime at all.  It's just a clean up.
+
 Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 ---
- drivers/soc/qcom/rpm_master_stats.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/qcom/rpm_master_stats.c b/drivers/soc/qcom/rpm_master_stats.c
-index 6dd98b9f7129..9ca13bcf67d3 100644
---- a/drivers/soc/qcom/rpm_master_stats.c
-+++ b/drivers/soc/qcom/rpm_master_stats.c
-@@ -105,7 +105,7 @@ static int master_stats_probe(struct platform_device *pdev)
- 		}
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+index d8ed85a238af..6aecaba14e7e 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+@@ -324,7 +324,7 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
+ 	struct dpu_hw_tear_check tc_cfg = { 0 };
+ 	struct drm_display_mode *mode;
+ 	bool tc_enable = true;
+-	u32 vsync_hz;
++	unsigned long vsync_hz;
+ 	struct dpu_kms *dpu_kms;
  
- 		data[i].base = devm_ioremap(dev, res.start, resource_size(&res));
--		if (IS_ERR(data[i].base)) {
-+		if (!data[i].base) {
- 			debugfs_remove_recursive(root);
- 			return dev_err_probe(dev, -EINVAL,
- 					     "Could not map the MSG RAM slice idx %d!\n", i);
+ 	if (phys_enc->has_intf_te) {
+@@ -359,8 +359,8 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
+ 	 * frequency divided by the no. of rows (lines) in the LCDpanel.
+ 	 */
+ 	vsync_hz = dpu_kms_get_clk_rate(dpu_kms, "vsync");
+-	if (vsync_hz <= 0) {
+-		DPU_DEBUG_CMDENC(cmd_enc, "invalid - vsync_hz %u\n",
++	if (!vsync_hz) {
++		DPU_DEBUG_CMDENC(cmd_enc, "invalid - vsync_hz %lu\n",
+ 				 vsync_hz);
+ 		return;
+ 	}
+@@ -381,7 +381,7 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
+ 	tc_cfg.rd_ptr_irq = mode->vdisplay + 1;
+ 
+ 	DPU_DEBUG_CMDENC(cmd_enc,
+-		"tc vsync_clk_speed_hz %u vtotal %u vrefresh %u\n",
++		"tc vsync_clk_speed_hz %lu vtotal %u vrefresh %u\n",
+ 		vsync_hz, mode->vtotal, drm_mode_vrefresh(mode));
+ 	DPU_DEBUG_CMDENC(cmd_enc,
+ 		"tc enable %u start_pos %u rd_ptr_irq %u\n",
 -- 
-2.30.2
+2.39.2
 
