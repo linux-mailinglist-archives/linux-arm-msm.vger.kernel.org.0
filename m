@@ -2,82 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 94A0B7248BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 18:16:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C133724987
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 18:53:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237260AbjFFQQM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 12:16:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51342 "EHLO
+        id S237748AbjFFQxl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 12:53:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44834 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237347AbjFFQQL (ORCPT
+        with ESMTP id S232124AbjFFQxk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 12:16:11 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76C6A1728
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 09:15:49 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f61735676fso5381628e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 09:15:49 -0700 (PDT)
+        Tue, 6 Jun 2023 12:53:40 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01181191
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 09:53:38 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b1b86146afso48557331fa.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 09:53:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686068138; x=1688660138;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=1SRSxQC2WdIw+o34oUy6oIpy06/ZQlGIR8S4Mw4guc8=;
-        b=JLQx6wZg51LiGMJkB3FuCjWr1x2UpBIkYLDQr63kVjxZtnetkqCycqMuOnVKYS8W6p
-         X8bnJZQSB0IsltdDIC1bL/bk0ApBWzeyGMVfRTu7UsWRTnqE1idyPI4qWktu+zxgxdFe
-         8EWaimCcjEkWMUkdQBrCshIaeSaSIsLsI1l/95rD4uD0lPOGvpIGzew7I1tqc2eZoIG+
-         nOVSAIS50nClYKRrhl6wS6NDTOZCOrmfRR6KNt/Cyjgea/R/yUwc1jiZvlXGGeSiZED1
-         zvTQEgUkBUFWLEo/r89I+YT9NagB6ujSBGcqskTxgVwb1xNCoU0MZKU47rJTrbT7oDAV
-         s3ag==
+        d=linaro.org; s=google; t=1686070417; x=1688662417;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HgrSnorLuof4G6AWiNG2oMpArjTudY7Y6W05DTsApig=;
+        b=xlYnHBX223yxAWf3QUKgvdo/20jkFTi76GToVAAXeONtDtnEr/m+lF7XPyLE3pxmJn
+         BezM+LYvmEib1+ZOUbH3X7GrUmCx+F3zA6yy15W8P9oZyQd98YzgsGy0tO1hXcfFwVmR
+         sEatc1muSJOpkuBnb7BSoUPpGZJ5hFsUrVZcCFamzw1mM/D8PitRiFSLBdZ3+/Z8DVT7
+         5yzZXQ3lsFmMOgq2ZWZYXGlFzscUvjfJX4ZqzmW3OoYidztSvfd7XPweGnhVZJhf/GZl
+         JsGbDSZu8b/yt0Po1OXJ8ahrSH2L9E8gI9okNHN9+dm2wQIwStAbrUIqh7JFpib8OVh5
+         lVAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686068138; x=1688660138;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1SRSxQC2WdIw+o34oUy6oIpy06/ZQlGIR8S4Mw4guc8=;
-        b=SGFVAPdD6PiWLsIain4+k9xtzXMeuQU+4kwBpflwgZfROSCz3xKSjFxa9WaOQzXfru
-         DHk5OA77GNsVidQrjV8oZ4cwz9YarQPFBYkq6WfaL2wn3yBapWssj9JTTegzk1MCKFVr
-         PgLTSQslTlCHNT1hVS19cwQQSfTHlcHBLzj/Lpjj/vg9qq+iONFH9MLvDVcf5ILLeuM3
-         bqxBkxhuvXGvu/Q8XokD3EaO+gfG56KNDU0Wp1p3ws0To0uX9tQ5OcmsrPUybQ/Gwtbb
-         DhDQ6IjYhm6G+3u9WO4iQFNmwFZBbC1B18H5f1WWkyxMNkoIPj9soeDuZ/NwGhJeq+33
-         EuCA==
-X-Gm-Message-State: AC+VfDyceUQXNlRsX5lnG+VpLOaEx4pdx/+0aGYvujyDW3XquMxm3njk
-        FkPytSthpFkgXlOE/OZydAXTcA==
-X-Google-Smtp-Source: ACHHUZ5EwNmXbbl+bq5I/Nio0HUpAFM64hQwYFzQVck3Kdo2r0JJTnANiLUHg4xh50MZp7RecdKH5w==
-X-Received: by 2002:a19:c50a:0:b0:4f4:d2ed:410 with SMTP id w10-20020a19c50a000000b004f4d2ed0410mr959991lfe.41.1686068138383;
-        Tue, 06 Jun 2023 09:15:38 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686070417; x=1688662417;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=HgrSnorLuof4G6AWiNG2oMpArjTudY7Y6W05DTsApig=;
+        b=YHKjI2xfouk7p8iv+3lasXhuW3KEIwoQGsx0GVQ9tDiCXvSY/RE98P517D7VqMc4hd
+         bxwxP2wzwmZim+9Crn1XDn5FpFt+Exo/Vd8tmRNk1imRPN+Fyxl1UjqWbk/92taZd4UR
+         2+8sGFtnQC2jME4Tl06GOmhKoLFLfvFc8AY+TAzfE2Df5cRNzFKI1BznpGpoRerBxD7/
+         5jcqCSsQr5aqZy8GS3gD21VnAJ8WeC48pk8r5jBflHQtnHxy8G8opahoD+cI1T855Mm9
+         bAJVabVix0BcvHLptKEIl7plMNHSlV5Cx4Ae6vY+4vrRUBnOkptHPtbMnr19VQrAlSHn
+         WgIQ==
+X-Gm-Message-State: AC+VfDyaU7q3IAtX71XEOGJsFEeoHFCgej/aecPtJb4eeaM9+wPqyblS
+        2DiHnpned2CqR5RyncwsxQD9N8Vk1rCM62dSRTI=
+X-Google-Smtp-Source: ACHHUZ4BI66AqOgJkQv4p35BZAutlqUk6dLE91ZpNOeuv2wHjzcHvl0f4NeJSHKMPmxzRpn2zZLqWw==
+X-Received: by 2002:a2e:3013:0:b0:2a6:18c0:2b35 with SMTP id w19-20020a2e3013000000b002a618c02b35mr1326583ljw.0.1686070417207;
+        Tue, 06 Jun 2023 09:53:37 -0700 (PDT)
 Received: from [192.168.1.101] (abyl150.neoplus.adsl.tpnet.pl. [83.9.31.150])
-        by smtp.gmail.com with ESMTPSA id d8-20020ac241c8000000b004f160559d4asm1508197lfi.183.2023.06.06.09.15.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jun 2023 09:15:37 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 06 Jun 2023 18:15:28 +0200
-Subject: [PATCH] arm64: dts: qcom: qcm2290: Add CPU idle states
+        by smtp.gmail.com with ESMTPSA id 9-20020a05651c00c900b002aa3ad9014asm1943304ljr.54.2023.06.06.09.53.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Jun 2023 09:53:36 -0700 (PDT)
+Message-ID: <dec20727-bf6f-fdfc-c5fd-2c00a4848987@linaro.org>
+Date:   Tue, 6 Jun 2023 18:53:35 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v2 1/2] soc: qcom: geni-se: Add interfaces
+ geni_se_tx_init_dma() and geni_se_rx_init_dma()
+Content-Language: en-US
+To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>,
+        agross@kernel.org, andersson@kernel.org, broonie@kernel.org,
+        dianders@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-spi@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, mka@chromium.org, swboyd@chromium.org,
+        quic_vtanuku@quicinc.com, quic_ptalari@quicinc.com
+References: <1684325894-30252-1-git-send-email-quic_vnivarth@quicinc.com>
+ <1684325894-30252-2-git-send-email-quic_vnivarth@quicinc.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+In-Reply-To: <1684325894-30252-2-git-send-email-quic_vnivarth@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230606-topic-qcm2290_idlestates-v1-1-dd77eef0086e@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAJ9bf2QC/x2NUQrCMBBEr1L224W41oBeRUSSdGsXYlqzUQqld
- 3fx883wZjZQrsIK126Dyl9RmYvB8dBBmkJ5MspgDOTo5Lzz2OZFEr7Ti+jiHjJk1hYaK56j1RT
- d2CcPpsegjLGGkiYbKJ+cLVwqj7L+/273ff8B9GGfQn8AAAA=
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1686068136; l=3232;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=mpM3TvARKVZf/Judx+8Gfrm0HsqhvtIO1689cde3IoQ=;
- b=OwAjVMp/BY+dJ4CzOFcuAV/14H/Ih5vqbWLvyxZEL4/GyjJTtRPPDnqzd71lTSyiCAlKLOkBV
- ATUt818LLNYDlHMrwBXC2IFd39FPui1Pd7BNNNm8Mu+hffnfdM31FD8
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,127 +80,152 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the (scarce) idle states for the individual CPUs, as well as the
-whole cluster. This enables deeper-than-WFI cpuidle
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/qcm2290.dtsi | 61 +++++++++++++++++++++++++++++++++++
- 1 file changed, 61 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-index b29bc4e4b837..a8a1ce58c0b7 100644
---- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-@@ -48,6 +48,8 @@ CPU0: cpu@0 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			power-domains = <&CPU_PD0>;
-+			power-domain-names = "psci";
- 			L2_0: l2-cache {
- 				compatible = "cache";
- 				cache-level = <2>;
-@@ -65,6 +67,8 @@ CPU1: cpu@1 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			power-domains = <&CPU_PD1>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CPU2: cpu@2 {
-@@ -77,6 +81,8 @@ CPU2: cpu@2 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			power-domains = <&CPU_PD2>;
-+			power-domain-names = "psci";
- 		};
- 
- 		CPU3: cpu@3 {
-@@ -89,6 +95,8 @@ CPU3: cpu@3 {
- 			enable-method = "psci";
- 			next-level-cache = <&L2_0>;
- 			qcom,freq-domain = <&cpufreq_hw 0>;
-+			power-domains = <&CPU_PD3>;
-+			power-domain-names = "psci";
- 		};
- 
- 		cpu-map {
-@@ -110,6 +118,30 @@ core3 {
- 				};
- 			};
- 		};
-+
-+		domain-idle-states {
-+			CLUSTER_SLEEP: cluster-sleep-0 {
-+				compatible = "domain-idle-state";
-+				arm,psci-suspend-param = <0x40000044>;
-+				entry-latency-us = <800>;
-+				exit-latency-us = <2118>;
-+				min-residency-us = <7376>;
-+			};
-+		};
-+
-+		idle-states {
-+			entry-method = "psci";
-+
-+			CPU_SLEEP: cpu-sleep-0 {
-+				compatible = "arm,idle-state";
-+				idle-state-name = "power-collapse";
-+				arm,psci-suspend-param = <0x40000003>;
-+				entry-latency-us = <290>;
-+				exit-latency-us = <376>;
-+				min-residency-us = <1182>;
-+				local-timer-stop;
-+			};
-+		};
- 	};
- 
- 	firmware {
-@@ -135,6 +167,35 @@ pmu {
- 	psci {
- 		compatible = "arm,psci-1.0";
- 		method = "smc";
-+
-+		CPU_PD0: power-domain-cpu0 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&CPU_SLEEP>;
-+		};
-+
-+		CPU_PD1: power-domain-cpu1 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&CPU_SLEEP>;
-+		};
-+
-+		CPU_PD2: power-domain-cpu2 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&CPU_SLEEP>;
-+		};
-+
-+		CPU_PD3: power-domain-cpu3 {
-+			#power-domain-cells = <0>;
-+			power-domains = <&CLUSTER_PD>;
-+			domain-idle-states = <&CPU_SLEEP>;
-+		};
-+
-+		CLUSTER_PD: power-domain-cpu-cluster {
-+			#power-domain-cells = <0>;
-+			domain-idle-states = <&CLUSTER_SLEEP>;
-+		};
- 	};
- 
- 	reserved_memory: reserved-memory {
+On 17.05.2023 14:18, Vijaya Krishna Nivarthi wrote:
+> The geni_se_xx_dma_prep() interfaces necessarily do DMA mapping before
+> initiating DMA transfers. This is not suitable for spi where framework
+> is expected to handle map/unmap.
+> 
+> Expose new interfaces geni_se_xx_init_dma() which do only DMA transfer.
+> 
+> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
----
-base-commit: 6db29e14f4fb7bce9eb5290288e71b05c2b0d118
-change-id: 20230606-topic-qcm2290_idlestates-5b6062b0f4c6
-
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
-
+Konrad
+> v1 -> v2:
+> - interfaces to take dma address as argument instead of its pointer
+> ---
+>  drivers/soc/qcom/qcom-geni-se.c  | 67 +++++++++++++++++++++++++++++-----------
+>  include/linux/soc/qcom/geni-se.h |  4 +++
+>  2 files changed, 53 insertions(+), 18 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/qcom-geni-se.c b/drivers/soc/qcom/qcom-geni-se.c
+> index 795a2e1..dd50a25 100644
+> --- a/drivers/soc/qcom/qcom-geni-se.c
+> +++ b/drivers/soc/qcom/qcom-geni-se.c
+> @@ -682,6 +682,30 @@ EXPORT_SYMBOL(geni_se_clk_freq_match);
+>  #define GENI_SE_DMA_EOT_EN BIT(1)
+>  #define GENI_SE_DMA_AHB_ERR_EN BIT(2)
+>  #define GENI_SE_DMA_EOT_BUF BIT(0)
+> +
+> +/**
+> + * geni_se_tx_init_dma() - Initiate TX DMA transfer on the serial engine
+> + * @se:			Pointer to the concerned serial engine.
+> + * @iova:		Mapped DMA address.
+> + * @len:		Length of the TX buffer.
+> + *
+> + * This function is used to initiate DMA TX transfer.
+> + */
+> +void geni_se_tx_init_dma(struct geni_se *se, dma_addr_t iova, size_t len)
+> +{
+> +	u32 val;
+> +
+> +	val = GENI_SE_DMA_DONE_EN;
+> +	val |= GENI_SE_DMA_EOT_EN;
+> +	val |= GENI_SE_DMA_AHB_ERR_EN;
+> +	writel_relaxed(val, se->base + SE_DMA_TX_IRQ_EN_SET);
+> +	writel_relaxed(lower_32_bits(iova), se->base + SE_DMA_TX_PTR_L);
+> +	writel_relaxed(upper_32_bits(iova), se->base + SE_DMA_TX_PTR_H);
+> +	writel_relaxed(GENI_SE_DMA_EOT_BUF, se->base + SE_DMA_TX_ATTR);
+> +	writel(len, se->base + SE_DMA_TX_LEN);
+> +}
+> +EXPORT_SYMBOL(geni_se_tx_init_dma);
+> +
+>  /**
+>   * geni_se_tx_dma_prep() - Prepare the serial engine for TX DMA transfer
+>   * @se:			Pointer to the concerned serial engine.
+> @@ -697,7 +721,6 @@ int geni_se_tx_dma_prep(struct geni_se *se, void *buf, size_t len,
+>  			dma_addr_t *iova)
+>  {
+>  	struct geni_wrapper *wrapper = se->wrapper;
+> -	u32 val;
+>  
+>  	if (!wrapper)
+>  		return -EINVAL;
+> @@ -706,17 +729,34 @@ int geni_se_tx_dma_prep(struct geni_se *se, void *buf, size_t len,
+>  	if (dma_mapping_error(wrapper->dev, *iova))
+>  		return -EIO;
+>  
+> +	geni_se_tx_init_dma(se, *iova, len);
+> +	return 0;
+> +}
+> +EXPORT_SYMBOL(geni_se_tx_dma_prep);
+> +
+> +/**
+> + * geni_se_rx_init_dma() - Initiate RX DMA transfer on the serial engine
+> + * @se:			Pointer to the concerned serial engine.
+> + * @iova:		Mapped DMA address.
+> + * @len:		Length of the RX buffer.
+> + *
+> + * This function is used to initiate DMA RX transfer.
+> + */
+> +void geni_se_rx_init_dma(struct geni_se *se, dma_addr_t iova, size_t len)
+> +{
+> +	u32 val;
+> +
+>  	val = GENI_SE_DMA_DONE_EN;
+>  	val |= GENI_SE_DMA_EOT_EN;
+>  	val |= GENI_SE_DMA_AHB_ERR_EN;
+> -	writel_relaxed(val, se->base + SE_DMA_TX_IRQ_EN_SET);
+> -	writel_relaxed(lower_32_bits(*iova), se->base + SE_DMA_TX_PTR_L);
+> -	writel_relaxed(upper_32_bits(*iova), se->base + SE_DMA_TX_PTR_H);
+> -	writel_relaxed(GENI_SE_DMA_EOT_BUF, se->base + SE_DMA_TX_ATTR);
+> -	writel(len, se->base + SE_DMA_TX_LEN);
+> -	return 0;
+> +	writel_relaxed(val, se->base + SE_DMA_RX_IRQ_EN_SET);
+> +	writel_relaxed(lower_32_bits(iova), se->base + SE_DMA_RX_PTR_L);
+> +	writel_relaxed(upper_32_bits(iova), se->base + SE_DMA_RX_PTR_H);
+> +	/* RX does not have EOT buffer type bit. So just reset RX_ATTR */
+> +	writel_relaxed(0, se->base + SE_DMA_RX_ATTR);
+> +	writel(len, se->base + SE_DMA_RX_LEN);
+>  }
+> -EXPORT_SYMBOL(geni_se_tx_dma_prep);
+> +EXPORT_SYMBOL(geni_se_rx_init_dma);
+>  
+>  /**
+>   * geni_se_rx_dma_prep() - Prepare the serial engine for RX DMA transfer
+> @@ -733,7 +773,6 @@ int geni_se_rx_dma_prep(struct geni_se *se, void *buf, size_t len,
+>  			dma_addr_t *iova)
+>  {
+>  	struct geni_wrapper *wrapper = se->wrapper;
+> -	u32 val;
+>  
+>  	if (!wrapper)
+>  		return -EINVAL;
+> @@ -742,15 +781,7 @@ int geni_se_rx_dma_prep(struct geni_se *se, void *buf, size_t len,
+>  	if (dma_mapping_error(wrapper->dev, *iova))
+>  		return -EIO;
+>  
+> -	val = GENI_SE_DMA_DONE_EN;
+> -	val |= GENI_SE_DMA_EOT_EN;
+> -	val |= GENI_SE_DMA_AHB_ERR_EN;
+> -	writel_relaxed(val, se->base + SE_DMA_RX_IRQ_EN_SET);
+> -	writel_relaxed(lower_32_bits(*iova), se->base + SE_DMA_RX_PTR_L);
+> -	writel_relaxed(upper_32_bits(*iova), se->base + SE_DMA_RX_PTR_H);
+> -	/* RX does not have EOT buffer type bit. So just reset RX_ATTR */
+> -	writel_relaxed(0, se->base + SE_DMA_RX_ATTR);
+> -	writel(len, se->base + SE_DMA_RX_LEN);
+> +	geni_se_rx_init_dma(se, *iova, len);
+>  	return 0;
+>  }
+>  EXPORT_SYMBOL(geni_se_rx_dma_prep);
+> diff --git a/include/linux/soc/qcom/geni-se.h b/include/linux/soc/qcom/geni-se.h
+> index c55a0bc..821a191 100644
+> --- a/include/linux/soc/qcom/geni-se.h
+> +++ b/include/linux/soc/qcom/geni-se.h
+> @@ -490,9 +490,13 @@ int geni_se_clk_freq_match(struct geni_se *se, unsigned long req_freq,
+>  			   unsigned int *index, unsigned long *res_freq,
+>  			   bool exact);
+>  
+> +void geni_se_tx_init_dma(struct geni_se *se, dma_addr_t iova, size_t len);
+> +
+>  int geni_se_tx_dma_prep(struct geni_se *se, void *buf, size_t len,
+>  			dma_addr_t *iova);
+>  
+> +void geni_se_rx_init_dma(struct geni_se *se, dma_addr_t iova, size_t len);
+> +
+>  int geni_se_rx_dma_prep(struct geni_se *se, void *buf, size_t len,
+>  			dma_addr_t *iova);
+>  
