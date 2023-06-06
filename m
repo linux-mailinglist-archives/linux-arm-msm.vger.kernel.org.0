@@ -2,166 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2559A72375D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 08:14:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E64D9723773
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 08:19:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232906AbjFFGOm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 02:14:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59788 "EHLO
+        id S234891AbjFFGTT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 02:19:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234614AbjFFGOk (ORCPT
+        with ESMTP id S235017AbjFFGTD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 02:14:40 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 183C61B5
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 23:14:38 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-5149390b20aso8559733a12.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 23:14:38 -0700 (PDT)
+        Tue, 6 Jun 2023 02:19:03 -0400
+Received: from mail-ej1-x636.google.com (mail-ej1-x636.google.com [IPv6:2a00:1450:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B26A810D8
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 23:18:56 -0700 (PDT)
+Received: by mail-ej1-x636.google.com with SMTP id a640c23a62f3a-97467e06511so653647866b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 23:18:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686032076; x=1688624076;
+        d=linaro.org; s=google; t=1686032335; x=1688624335;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=c9/ke8vQiyBtX+dMh7jOybxE1aXL3oACs0/tXuO+L4U=;
-        b=eWY5hKNC6JKDtcg4koedkUquXkdz4Qm7ioMxMxeSjG40XG3NTMTnzK7wOpWQfTHpZM
-         3UipQrboWk2BEtNpxv9nzlw7CkPmQzMREcltPyxNq7b+1A48GKNiLAYrDYMQDD2CxpgU
-         jKFLfBUWdm1nlGtj5XilnON1j3BW3L0Vfde6K1BcsaaJAHUoDPUCrwiygj+BBINUFoQG
-         +mfNC3eVh7aFzeMtwa4CM0CjLBCegI8dvl1QgNKPSF62tBw2cUrpCPzE92UTSO/rWrSD
-         vKVw291npS8n956cbRw5LDbVtiwsemu4h3S1VOup36wy3m1ZJpmQpb1Djcf4XRP2IgbL
-         Tq5Q==
+        bh=TcC1qoneJVOOtN78kGiXwcDuBc2gcGUkS51tsnB17tQ=;
+        b=U7Bp26lblxK6rqz4f36Z4rtc6s3UtK/o69ihCBp9Zc5AlbJCK6B3LWUnaJMxA+UjxR
+         d/F1ZT8piNAH0EowaLW+cCTPSDV9WcRvjYuWyQuBnxVJMI10bBDFND0jX67IPpHDOo3D
+         tFevT8ChE05cOcTigYLVWPb7Qs0cerEwMYkTbQv9443J9SKrjDYkENxJaqRIP5ZaQbDU
+         IiNLKf5p7W7S71qeEiRRHfbPXj4Y/vONki9nZbhwY0dDSbNIGBOCXBao4rH7fEICI46K
+         9PY4d9nJzpa3MiWXu67naiVbtn8EcyphiEm17+8RgAEAzQr22hmqvvDFz89nfhJbpBrz
+         Fcmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686032076; x=1688624076;
+        d=1e100.net; s=20221208; t=1686032335; x=1688624335;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=c9/ke8vQiyBtX+dMh7jOybxE1aXL3oACs0/tXuO+L4U=;
-        b=AXAhCbPJFPQWIB41UqDaBeARUl4SYb4wIrfd6Bp8KALDb2axPtku1d2pdR3z2j/lej
-         YuDxQWk7GXd8ZRG3fQLquXtZSm6mLE3NzeYtj3juG3HyU9T4GxjGWM/jD2BFLC3EAAQn
-         OkxDvQ+09bS+aNaFScQrBzJtM/ElZRJ9N96XDKRkNXV3cHQ4pFKBhRDNOz2VLG1KsUJ0
-         gchRd4q1wWB/sbvWozyxCUDvsao8yBBPu8WGnK8tK1w4jfqa1MA94BRVWlfO8w68v/43
-         ab8fGKwQTV2MsI+ibhhCcZk5e1fxKbbEcWAlkFVEURSpbZu5uUoaPI+tycnrYkVhTNrB
-         oW1w==
-X-Gm-Message-State: AC+VfDz2Vc/dHZxLsPLZYk8C4uf8+Ij22Dja/puJjAg1MFclF752nLaC
-        HY4YB47/iRQF43iba4ZkDmktnw==
-X-Google-Smtp-Source: ACHHUZ64Z9lKKWilVnf6tdOypQFOM3iC4izULYvUu+KGcG0PYJwTnO62ZR0THx9JxKoLkPlyBtVhVA==
-X-Received: by 2002:aa7:d3c3:0:b0:516:4394:244f with SMTP id o3-20020aa7d3c3000000b005164394244fmr954905edr.12.1686032076496;
-        Mon, 05 Jun 2023 23:14:36 -0700 (PDT)
+        bh=TcC1qoneJVOOtN78kGiXwcDuBc2gcGUkS51tsnB17tQ=;
+        b=hxP4rQJiX8OoXlbIWAA9a7Wlu9QQ44cBygODPkcGrFTaMAqvCHgNAuA5KBDPutVaPp
+         iRrviUFGvVFsnXEi0/dOi16pWvsBUZCEL1JJgJDt0ysJa5GLVuhcBT2Hh0id2JBOGLFx
+         RG/T2PEUinNFjEAGssbxxaAloRKrbS/wyORujmGoQwlgxP3iiZ5dzfRgXbw3a83t3DYw
+         XxnAXCzNco9E7YTCXzf0HDp0TwtS3wUUolNeco24AlqHwkI/V4usYGRQlJsMyKTZeCyt
+         Py4hxDYDutCbya56C/xmMo8B0OvWngLaVihcn/0keJZD6OuWr5yKh0OD+nM0jbTEF+Ma
+         fP8Q==
+X-Gm-Message-State: AC+VfDy8fQh/klciGPHnkKRUtYCggcP16D6lV9PK/Dw9L4qh3VVjC0Qv
+        v7OBooLltf1VJg6ZbS0IwqAEuw==
+X-Google-Smtp-Source: ACHHUZ45G9j0pzeQUOct1hHceG1+pc3xYwnKX0l7Q33gXId8y2o0MSSsfIAY11FDamNiTNnC/yckpg==
+X-Received: by 2002:a17:907:6e89:b0:973:da59:7c91 with SMTP id sh9-20020a1709076e8900b00973da597c91mr1356581ejc.51.1686032334949;
+        Mon, 05 Jun 2023 23:18:54 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id s25-20020aa7c559000000b005163c39645bsm4672584edr.51.2023.06.05.23.14.33
+        by smtp.gmail.com with ESMTPSA id f14-20020a170906494e00b0097461fecc91sm5088128ejt.81.2023.06.05.23.18.53
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Jun 2023 23:14:36 -0700 (PDT)
-Message-ID: <d187eafb-4a80-9479-d063-3a01b47d8efa@linaro.org>
-Date:   Tue, 6 Jun 2023 08:14:33 +0200
+        Mon, 05 Jun 2023 23:18:54 -0700 (PDT)
+Message-ID: <dd5f274f-46f5-c20b-bc61-ba7d1c4e4869@linaro.org>
+Date:   Tue, 6 Jun 2023 08:18:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH V2 01/13] dt-bindings: remoteproc: qcom: Add support for
- multipd model
+Subject: Re: [PATCH] arm64: dts: qcom: Split sdm845-db845c to add headless
+ support
 Content-Language: en-US
-To:     Manikanta Mylavarapu <quic_mmanikan@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, jassisinghbrar@gmail.com,
-        mathieu.poirier@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, quic_eberman@quicinc.com, quic_mojha@quicinc.com,
-        kvalo@kernel.org, loic.poulain@linaro.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-clk@vger.kernel.org
-Cc:     quic_srichara@quicinc.com, quic_sjaganat@quicinc.com,
-        quic_kathirav@quicinc.com, quic_anusha@quicinc.com,
-        quic_poovendh@quicinc.com, quic_varada@quicinc.com,
-        quic_devipriy@quicinc.com
-References: <20230521222852.5740-1-quic_mmanikan@quicinc.com>
- <20230521222852.5740-2-quic_mmanikan@quicinc.com>
- <7940c743-815f-f864-d015-43d7e916ecfa@linaro.org>
- <a1456f62-d0a7-d5ec-b379-db1b6035c89c@quicinc.com>
+To:     Amit Pundir <amit.pundir@linaro.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+References: <20230605094710.2037879-1-amit.pundir@linaro.org>
+ <cd71ee53-391a-90fd-27ca-c174f2b24a94@linaro.org>
+ <CAMi1Hd0MhOyn1HHq5YYFxJwWrkMZbS9ZqksNDBLM9Ayx67rEOg@mail.gmail.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <a1456f62-d0a7-d5ec-b379-db1b6035c89c@quicinc.com>
+In-Reply-To: <CAMi1Hd0MhOyn1HHq5YYFxJwWrkMZbS9ZqksNDBLM9Ayx67rEOg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 05/06/2023 14:02, Manikanta Mylavarapu wrote:
->>> +  memory-region:
->>> +    items:
->>> +      - description: Q6 pd reserved region
->>> +
->>> +  glink-edge:
->>> +    $ref: /schemas/remoteproc/qcom,glink-edge.yaml#
->>> +    description:
->>> +      Qualcomm G-Link subnode which represents communication edge, channels
->>> +      and devices related to the Modem.
->>> +
->>> +patternProperties:
->>> +  "^pd-1|pd-2|pd-3":
->>> +    type: object
->>> +    description:
->>> +      In Multipd model, WCSS pd depends on Q6 pd i.e Q6 pd should be up before
->>> +      WCSS. It can be achieved by keeping wcss pd node as subnode of Q6
->>> +      device node.
+On 06/06/2023 08:11, Amit Pundir wrote:
+> On Mon, 5 Jun 2023 at 16:07, Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
 >>
->> That's not enough. Your description does not say what is this, why you
->> have two protection domains for same compatible. What's more, it a bit
->> deviates from hardware description.
+>> On 05/06/2023 11:47, Amit Pundir wrote:
+>>> This is a follow-up of the upstream discussion,
+>>> https://lore.kernel.org/linux-kernel/20230124182857.1524912-1-amit.pundir@linaro.org/T/#u,
+>>> around adding a reserved memory region in sdm845-db845c
+>>> for the framebuffer memory (the splash region set up by
+>>> the bootloader) but the general opinion was to avoid
+>>> adding that reserved memory for the headless DB845c
+>>> usecase.
+>>>
+>>> So this patch splits the sdm845-db845c into a common dtsi,
+>>> a new sdm845-db845-headless DT, which disables the mdss
+>>> display subsystem, and a new sdm845-db845c DT with an
+>>> additional reserved-memory region for the framebuffer.
+>>>
+>>> The default sdm845-db845c.dtb remains pretty much the same
+>>> (with an exception of additional reserved-memory region),
+>>> while others can use sdm845-db845c-headless.dtb for their
+>>> headless systems.
 >>
-> WCSS means 'wireless connectivity sub system', in simple words it's a
-> wifi radio block.
+>> You should describe the hardware in commit msg. What is "headless"? If
+>> no HDMI plugged in, then it is a NAK because plug or unplugged HDMI
+>> cable is not a property of a DTS.
 > 
-> IPQ5018 SOC has both internal (AHB) wifi radio/WCSS and external (PCIE)
-> wifi radio/WCSS. In Q6, Root protection domain will provide services to
-> both internal (AHB) and external (PCIE) wifi radio's protection domain.
-> So we have two protection domains for IPQ5018, one is for internal(AHB) 
-> and other is for external(PCIE) wifi radio.
+> Hi, my only intended goal [1] is to add a reserved-memory region
+> (specific to the framebuffer memory reserved by the bootloader for the
+> boot splash) in sdm45-db845c. But I have been told that reserving
+> these 30+ MBs for every DB845c is a waste in case we are not using
+> display at all (a headless system?). So I prepared this patch for RFC.
+> The definition of headless is ambiguous to me as well. It could be no
+> HDMI plugged in or no display drivers enabled at all. I believe it all
+> comes down to specific use cases.
 
-So it is now in email, but not in the code...
+HDMI is plug-n-play, thus you do not need new DTSI to describe that
+something is plugged or not. How would it even work? You plug HDMI, so
+you need to boot your system with different DTB!
+
+Whether driver are enabled or not, does not change the hardware and does
+not matter. If I disable MMC driver, shall I create a "no-mmc" DTS variant?
+
+NAK
+
 > 
->>> +
->>> +    properties:
->>> +      compatible:
->>> +        enum:
->>> +          - qcom,ipq5018-wcss-ahb-mpd
->>> +          - qcom,ipq9574-wcss-ahb-mpd
->>> +          - qcom,ipq5018-wcss-pcie-mpd
->>
->> Keep rather alphabetical order (so both 5018 together).
->>
->> I also do not understand these at all. Why adding bus type to
->> compatible? This rarely is allowed (unless it is PCIe controller within
->> soc).
->>
-> IPQ5018 SOC has in-built PCIE controller. Here QDSP6 will bring up
-> external(PCIE) and internal (AHB) wifi radio's. To separate AHB, PCIE 
-> radio's properties, i have added bus type to compatible.
+> As far as my use-case (vanilla AOSP) is concerned, display is a
+> critical component and device doesn't boot to completion unless it is
+> hooked to any kind of display. 
 
-It's the same device - WCSS - right? We do not create multiple nodes and
-compatibles for the same devices. Bus suffixes are almost never parts of
-compatibles.
+That's problem in AOSP to fix, not in DTS. Systems with no display
+attached are perfectly normal and valid systems. They do not need any
+tweaks, changes, fixes.
 
+> May I suggest we go back to my original
+> change [1] of adding a reserved-memory region for now and let the
+> users of a headless system, define or come up with their respective
+> use-case?
+> 
 
->>
->> Drop.
->>
->>> +
->>> +unevaluatedProperties: false
->>
->> This changed... why?
->>
->>
-> 'unevaluatedProperties' is similar to 'additionalProperties' except
-> that it recognize properties declared in subschemas as well.
-
-You don't have to explain me what are unevaluatedProperties or
-additionalProperties. Let's assume that I know them. What you should
-explain is why you changed it. Where is the reference to other schema?
 
 
 Best regards,
