@@ -2,125 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C6CD724E20
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 22:27:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41E17724E25
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 22:29:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234080AbjFFU1l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 6 Jun 2023 16:27:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52700 "EHLO
+        id S238484AbjFFU30 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 6 Jun 2023 16:29:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52876 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238484AbjFFU1k (ORCPT
+        with ESMTP id S236918AbjFFU3X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 6 Jun 2023 16:27:40 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE803EA
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 13:27:38 -0700 (PDT)
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 356JMmSp029905;
-        Tue, 6 Jun 2023 20:27:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=cFd1H5CzAzRPW3VocmtdJifsDwbMigFaCl9ukT47ExY=;
- b=n2GtH3v9/Yt1PxRvhp2Cf2mVKSraAHiQZTNKRKT7XR1B+O0R2FfC3TjBzMd/4itkouVV
- d3zSgjwnKqhS+LIr2A63fY8i9DHsKpatYrIgwzz60fjPQLFBmK3sNE2rhZepYYJIPR6H
- 87NvT7qq5ayEUKZbTPa71CoMhXknAJghnZrm7A2Tix/Yme20wZ+j6vsRrcwrK++9btr0
- M/p2XcEZlnwFARC4RiCBu5HszOO5VNUVn+qLoNgNTqcltQAJCNoXJHY/LquYkOxNmBeP
- 1l+hsBXuTE6VOroqn72T1xrmdDXsEpm6KYZuzJ3to2g5qxv9NTHIwnNa43taSnudkFfi dA== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r2a9u8669-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 06 Jun 2023 20:27:33 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 356KRWFH024382
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 6 Jun 2023 20:27:32 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 6 Jun 2023
- 13:27:30 -0700
-Message-ID: <2d96100f-4dab-58a2-3455-6d599284deba@quicinc.com>
-Date:   Tue, 6 Jun 2023 13:27:28 -0700
+        Tue, 6 Jun 2023 16:29:23 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C857B0
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 13:29:22 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f61735676fso5691454e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 13:29:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686083360; x=1688675360;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hF5eGVNixQNvDp+Il2XhkfMFtmBZo3W/YgfbUs4NESk=;
+        b=E3QnRfHkXAZHhjknIm2jTxjtvWEGglOSUcriiZvWIcSqIB+qDPR0SA0DMckT9SbT6/
+         2MtZO4gsDmH89upDFeSMFJpDaGaau/eOXiWYNiZN8Igb6Hqzda7p7KAESIpGU6DgBMfW
+         QvLHQWzfxKYDuNdok9vTPlqj3LNU+gMMVlj/8gXj74rJWNeDuSQ3QkBYrRz0YkuClfSi
+         ohYYmesAw/v6cPuM7l5YSr5gdkd3S6MISdLZ0aCStGWcnhpIwyi/MbBzLqYWCXfqtgwY
+         qQZ91NmEaehX4bgfsny23z4ERplGNXMyAwvplXrkXqZ7WbCNrk/P0ZYi3Gcwg0bFei6R
+         Qx8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686083360; x=1688675360;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hF5eGVNixQNvDp+Il2XhkfMFtmBZo3W/YgfbUs4NESk=;
+        b=VtP0dT3qd5FXSqqYpvBZ3MrcOdnnKRZaRIphyKFuvhKLOzp2WhAI8lWcjcfwQBuIns
+         M5nBGK0f5jS+VDC9hB7GTHwoMaCejVb4UXR8HPPqJqHaIBxkVbx/aOO3t8bq79jANLS4
+         cnCYdBkLLkW5Ax6xHRM00AY1uFwfaH3OTqZLAfkk7m1HIuuUlSAZBJ0RfZToHajczORD
+         i1NYtqIODY/KV5vtqkDhAodiB70Fjykb01dT7xQN4aQ2mAsH4tJi0vWTrItENqVL3h9n
+         /fM+cqbGNF8ENVqX0A8KbTrKVvoxlmkOkfl1GYfvrE/LtG1IJLrRI3SQfPraCvcP9W+3
+         Qigg==
+X-Gm-Message-State: AC+VfDwEcgPcS1pYBjqt2gFBD0yCwb96/HNzQKLrIsIQtQkmoChYlDDt
+        tpLmcBHuUk3syy6M81VJ5Ux5uA==
+X-Google-Smtp-Source: ACHHUZ7mj2uTobyo8UlfxQ2Ve5z2RYjLEUJwOO/my7qgJsLk8vjKmSK/8o/F6nrgm2MglmJ9FZ+C0g==
+X-Received: by 2002:a05:6512:61:b0:4f1:458c:c4c with SMTP id i1-20020a056512006100b004f1458c0c4cmr1311631lfo.43.1686083360282;
+        Tue, 06 Jun 2023 13:29:20 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id w8-20020a05651204c800b004f3afa1767dsm1546747lfq.197.2023.06.06.13.29.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Jun 2023 13:29:19 -0700 (PDT)
+Message-ID: <5bcbee05-5468-d853-df48-82bf3ae448d8@linaro.org>
+Date:   Tue, 6 Jun 2023 23:29:18 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [Freedreno] [RFC PATCH v2 09/13] drm/msm/dpu: move pstate->pipe
- initialization to dpu_plane_atomic_check
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     Sean Paul <sean@poorly.run>,
+Subject: Re: [Freedreno] [RFC PATCH v2 04/13] drm/msm/dpu: remove unused
+ fields from dpu_encoder_virt
+Content-Language: en-GB
+To:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
+        dri-devel@lists.freedesktop.org,
         Stephen Boyd <swboyd@chromium.org>,
-        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@gmail.com>
 References: <20230321011821.635977-1-dmitry.baryshkov@linaro.org>
- <20230321011821.635977-10-dmitry.baryshkov@linaro.org>
- <4af411bf-290c-0818-bdf2-878b2da15146@quicinc.com>
- <f010d346-fdbe-62b9-c403-4928b2e929fc@quicinc.com>
- <CAA8EJprOQdotGKv914khFuhC1UGLLwLp0nngPBORYtbCXJ5Nfg@mail.gmail.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <CAA8EJprOQdotGKv914khFuhC1UGLLwLp0nngPBORYtbCXJ5Nfg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: C79ux-a5JrXoc1bEl3_KJ35IICXl_oxc
-X-Proofpoint-GUID: C79ux-a5JrXoc1bEl3_KJ35IICXl_oxc
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-06_15,2023-06-06_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- suspectscore=0 impostorscore=0 adultscore=0 clxscore=1015 bulkscore=0
- priorityscore=1501 phishscore=0 mlxscore=0 mlxlogscore=999 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306060173
+ <20230321011821.635977-5-dmitry.baryshkov@linaro.org>
+ <94d7d0bf-ad61-628b-f10e-2d676ebe3838@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <94d7d0bf-ad61-628b-f10e-2d676ebe3838@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/24/2023 6:40 PM, Dmitry Baryshkov wrote:
-> On Thu, 25 May 2023 at 02:04, Abhinav Kumar <quic_abhinavk@quicinc.com> wrote:
->>
->>
->>
->> On 5/24/2023 3:46 PM, Abhinav Kumar wrote:
->>>
->>>
->>> On 3/20/2023 6:18 PM, Dmitry Baryshkov wrote:
->>>> In preparation to virtualized planes support, move pstate->pipe
->>>> initialization from dpu_plane_reset() to dpu_plane_atomic_check(). In
->>>> case of virtual planes the plane's pipe will not be known up to the
->>>> point of atomic_check() callback.
->>>>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>
->>> Will legacy paths be broken with this? So lets say there is no
->>> atomic_check we will not have a valid sspp anymore.
->>
->> I think it should still work, even if goes through the modeset crtc, it
->> should still call drm_atomic_commit() internally which should have the
->> call to atomic_check, once you confirm this , i can ack this particular
->> change.
+On 06/06/2023 23:25, Abhinav Kumar wrote:
 > 
-> Can you please describe the scenario you have in mind? If I got you
-> correctly, you were asking about the non-commit IOCTLs. Because of the
-> atomic helpers being used (e.g. drm_atomic_helper_set_config()), they
-> will also result in a call to drm_atomic_commit(), which invokes
-> drm_atomic_check_only().
 > 
+> On 3/20/2023 6:18 PM, Dmitry Baryshkov wrote:
+>> Remove historical fields intfs_swapped and topology fields from struct
+>> dpu_encoder_virt and also remove even more historical docs.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 10 ----------
+>>   1 file changed, 10 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c 
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> index 28729c77364f..4ee708264f3b 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+>> @@ -130,18 +130,12 @@ enum dpu_enc_rc_states {
+>>    *            pingpong blocks can be different than num_phys_encs.
+>>    * @hw_dsc:        Handle to the DSC blocks used for the display.
+>>    * @dsc_mask:        Bitmask of used DSC blocks.
+>> - * @intfs_swapped:    Whether or not the phys_enc interfaces have 
+>> been swapped
+>> - *            for partial update right-only cases, such as pingpong
+>> - *            split where virtual pingpong does not generate IRQs
+>>    * @crtc:        Pointer to the currently assigned crtc. Normally you
+>>    *            would use crtc->state->encoder_mask to determine the
+>>    *            link between encoder/crtc. However in this case we need
+>>    *            to track crtc in the disable() hook which is called
+>>    *            _after_ encoder_mask is cleared.
+>>    * @connector:        If a mode is set, cached pointer to the active 
+>> connector
+>> - * @crtc_kickoff_cb:        Callback into CRTC that will flush & start
+>> - *                all CTL paths
+>> - * @crtc_kickoff_cb_data:    Opaque user data given to crtc_kickoff_cb
+> 
+> no concerns with the above 3
+> 
+>>    * @enc_lock:            Lock around physical encoder
+>>    *                create/destroy/enable/disable
+>>    * @frame_busy_mask:        Bitmask tracking which phys_enc we are 
+>> still
+>> @@ -160,7 +154,6 @@ enum dpu_enc_rc_states {
+>>    * @delayed_off_work:        delayed worker to schedule disabling of
+>>    *                clks and resources after IDLE_TIMEOUT time.
+>>    * @vsync_event_work:        worker to handle vsync event for 
+>> autorefresh
+>> - * @topology:                   topology of the display
+> 
+> As we are still going to go ahead with encoder based allocation for now, 
+> we should keep this topology and start using it for DP DSC's 1:1:1 
+> topology.
 
-Yes, that was pretty much the scenario I was referring to, thanks for 
-confirming.
+It is currently unused, so it can be dropped. Your patchset would have 
+to reintroduce it.
+
+And I'm still not happy about the encoder-based allocation. You 
+persuaded me that it is irrelevant for the wide planes. So I'd split it 
+and post the allocation patchset after the virtual-wide is fully 
+reviewed (when would come that blissful moment, btw?).
+
+> 
+>>    * @idle_timeout:        idle timeout duration in milliseconds
+>>    * @wide_bus_en:        wide bus is enabled on this interface
+>>    * @dsc:            drm_dsc_config pointer, for DSC-enabled encoders
+>> @@ -180,8 +173,6 @@ struct dpu_encoder_virt {
+>>       unsigned int dsc_mask;
+>> -    bool intfs_swapped;
+>> -
+>>       struct drm_crtc *crtc;
+>>       struct drm_connector *connector;
+>> @@ -201,7 +192,6 @@ struct dpu_encoder_virt {
+>>       enum dpu_enc_rc_states rc_state;
+>>       struct delayed_work delayed_off_work;
+>>       struct kthread_work vsync_event_work;
+>> -    struct msm_display_topology topology;
+>>       u32 idle_timeout;
+
+-- 
+With best wishes
+Dmitry
 
