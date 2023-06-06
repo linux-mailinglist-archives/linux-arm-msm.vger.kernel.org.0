@@ -2,55 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 688A87233EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 02:04:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EACF723407
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  6 Jun 2023 02:25:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232392AbjFFAEo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 5 Jun 2023 20:04:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34764 "EHLO
+        id S232974AbjFFAZu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 5 Jun 2023 20:25:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230483AbjFFAEn (ORCPT
+        with ESMTP id S229836AbjFFAZt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 5 Jun 2023 20:04:43 -0400
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BACBF9
-        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 17:04:40 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 3E8DB201D5;
-        Tue,  6 Jun 2023 02:04:36 +0200 (CEST)
-Date:   Tue, 6 Jun 2023 02:04:34 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch,
-        airlied@gmail.com, agross@kernel.org, dmitry.baryshkov@linaro.org,
-        andersson@kernel.org, quic_abhinavk@quicinc.com,
-        quic_jesszhan@quicinc.com, quic_sbillaka@quicinc.com,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v15] drm/msm/dpu: add DSC blocks to the catalog of
- MSM8998 and SC8180X
-Message-ID: <vuukfepyik4jmtotfwv2lgwvpysn5eijqkxabxtjottgnst2m4@tyy2sk2yhm7i>
-References: <1686009494-25127-1-git-send-email-quic_khsieh@quicinc.com>
+        Mon, 5 Jun 2023 20:25:49 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A24BD100
+        for <linux-arm-msm@vger.kernel.org>; Mon,  5 Jun 2023 17:25:47 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f122ff663eso6908838e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 05 Jun 2023 17:25:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686011146; x=1688603146;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6pVDecfV/BYz9QMaz3qiB/Z106nCFvvqH4oCFzszVqo=;
+        b=N7ZEF6Wkj+bZNrM2qtv7sDbfsw+hmChjhFwjUJba2Qo9s8RmpUwOOxnJ7c8vHpf+A8
+         NA7O4tiebw8A1rK3EF05AbxtJ1YkvtAhVPtBpXGTcZTg8bO/TbP1OjkLxCddOGzjVLqJ
+         5KMoXqzaFUUNy7NeXPjrG/Lez5PfbuJsFC5devTBTcoIQgBwfp79EjMGmmx4AqS6/sAH
+         QvDxyYLG99A2QRwz/d6wVIHxvApnz8jHf+zLz/g91zXC5M4s/rHFCOXwgO9kxBJpHDjP
+         1VUG/Ph3dEBnbAzZeZBybtvT+t6DCsH4tTCQKAXfgO4Wck8eGnnOg03ChGSCaPIaw/l/
+         BUFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686011146; x=1688603146;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6pVDecfV/BYz9QMaz3qiB/Z106nCFvvqH4oCFzszVqo=;
+        b=kISgnKBSW19/A1wxzxPL/MpCJhXicWEkaIuFEBrxrcnlJm+5ruslTPY/TjPMwbv1OE
+         0G8u5NpAmYaS9/NBndRzCpg9SoCdh2VAWURWOBaKSFCxu7SkY/x+dhk4sREf9rhTt5cu
+         diaGnSImrcXMK5IqRozSHyj5W3ohuP9wq5Oa0n01bh7491SxHim50yoswyMj0yJWNCgd
+         B+nTFhzr5IOhc0rFHpCnzT5I81fkWsjLZsGnPCmxfD6ueCGK+NDJ8nZy5PqUU+zM/jNF
+         1gD5E/xTANJloUWsre3b6GLY6SwGu3h4LFdrOliybhu4pjeFiqBFWXQk4P9ennvBQaNP
+         kPdQ==
+X-Gm-Message-State: AC+VfDyEXRFuaxCSXuSsiVfGrgCmMidbaLJTrM6aXFJPINL/YBqLlwT6
+        J/vyQDXY/jclF+oAKNLSsKyaSw==
+X-Google-Smtp-Source: ACHHUZ5scGBZR1QRRrZKXR6QfQndX4wHi2oXhUk7wNlJ2XP7wmi6Ugo/J8fNXMTFBRqRHTlIFpGjgg==
+X-Received: by 2002:ac2:53bc:0:b0:4f6:13f1:38a4 with SMTP id j28-20020ac253bc000000b004f613f138a4mr239027lfh.41.1686011145891;
+        Mon, 05 Jun 2023 17:25:45 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id u16-20020a056512095000b004f38260f196sm1271670lft.218.2023.06.05.17.25.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 05 Jun 2023 17:25:45 -0700 (PDT)
+Message-ID: <6be601ab-b5a4-3967-ea45-9965827e9f66@linaro.org>
+Date:   Tue, 6 Jun 2023 03:25:44 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v15] drm/msm/dpu: add DSC blocks to the catalog of MSM8998
+ and SC8180X
+Content-Language: en-GB
+To:     Kuogee Hsieh <quic_khsieh@quicinc.com>, robdclark@gmail.com,
+        sean@poorly.run, swboyd@chromium.org, dianders@chromium.org,
+        vkoul@kernel.org, daniel@ffwll.ch, airlied@gmail.com,
+        agross@kernel.org, andersson@kernel.org,
+        marijn.suijten@somainline.org
+Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
+        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <1686009494-25127-1-git-send-email-quic_khsieh@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 In-Reply-To: <1686009494-25127-1-git-send-email-quic_khsieh@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SC8180 aleady has it?
-
-On 2023-06-05 16:58:14, Kuogee Hsieh wrote:
+On 06/06/2023 02:58, Kuogee Hsieh wrote:
 > From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > 
 > Some platforms have DSC blocks which have not been declared in the catalog.
@@ -76,55 +108,53 @@ On 2023-06-05 16:58:14, Kuogee Hsieh wrote:
 > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h | 7 +++++++
->  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h | 2 ++
->  2 files changed, 9 insertions(+)
+>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h | 7 +++++++
+>   drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h | 2 ++
+>   2 files changed, 9 insertions(+)
 > 
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
 > index 3c732a0..7d0d0e7 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_3_0_msm8998.h
 > @@ -126,6 +126,11 @@ static const struct dpu_pingpong_cfg msm8998_pp[] = {
->  			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
->  };
->  
+>   			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 15)),
+>   };
+>   
 > +static const struct dpu_dsc_cfg msm8998_dsc[] = {
 > +	DSC_BLK("dsc_0", DSC_0, 0x80000, 0),
 > +	DSC_BLK("dsc_1", DSC_1, 0x80400, 0),
 > +};
 > +
->  static const struct dpu_dspp_cfg msm8998_dspp[] = {
->  	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
->  		 &msm8998_dspp_sblk),
+>   static const struct dpu_dspp_cfg msm8998_dspp[] = {
+>   	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
+>   		 &msm8998_dspp_sblk),
 > @@ -199,6 +204,8 @@ const struct dpu_mdss_cfg dpu_msm8998_cfg = {
->  	.dspp = msm8998_dspp,
->  	.pingpong_count = ARRAY_SIZE(msm8998_pp),
->  	.pingpong = msm8998_pp,
+>   	.dspp = msm8998_dspp,
+>   	.pingpong_count = ARRAY_SIZE(msm8998_pp),
+>   	.pingpong = msm8998_pp,
 > +	.dsc_count = ARRAY_SIZE(msm8998_dsc),
 > +	.dsc = msm8998_dsc,
->  	.intf_count = ARRAY_SIZE(msm8998_intf),
->  	.intf = msm8998_intf,
->  	.vbif_count = ARRAY_SIZE(msm8998_vbif),
+>   	.intf_count = ARRAY_SIZE(msm8998_intf),
+>   	.intf = msm8998_intf,
+>   	.vbif_count = ARRAY_SIZE(msm8998_vbif),
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
 > index 8ed2b263..b5c575c 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
 > @@ -230,6 +230,8 @@ const struct dpu_mdss_cfg dpu_sc8180x_cfg = {
->  	.dsc = sc8180x_dsc,
-    ^^^^^^^^^^^^^^^^^^
-
->  	.pingpong_count = ARRAY_SIZE(sc8180x_pp),
->  	.pingpong = sc8180x_pp,
+>   	.dsc = sc8180x_dsc,
+>   	.pingpong_count = ARRAY_SIZE(sc8180x_pp),
+>   	.pingpong = sc8180x_pp,
 > +	.dsc_count = ARRAY_SIZE(sc8180x_dsc),
 > +	.dsc = sc8180x_dsc,
 
-NAK.
+If you take a glance three lines above, you'll see .dsc assignment.
 
-- Marijn
+>   	.merge_3d_count = ARRAY_SIZE(sc8180x_merge_3d),
+>   	.merge_3d = sc8180x_merge_3d,
+>   	.intf_count = ARRAY_SIZE(sc8180x_intf),
 
->  	.merge_3d_count = ARRAY_SIZE(sc8180x_merge_3d),
->  	.merge_3d = sc8180x_merge_3d,
->  	.intf_count = ARRAY_SIZE(sc8180x_intf),
-> -- 
-> 2.7.4
-> 
+-- 
+With best wishes
+Dmitry
+
