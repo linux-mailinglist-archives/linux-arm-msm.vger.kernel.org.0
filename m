@@ -2,191 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EEED8725B63
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 12:17:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7873F725BAD
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 12:34:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235492AbjFGKRH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 06:17:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42838 "EHLO
+        id S235921AbjFGKeg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 06:34:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235821AbjFGKRF (ORCPT
+        with ESMTP id S234352AbjFGKeg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 06:17:05 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CFA31BF8
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 03:16:59 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-510d6b939bfso1218313a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 03:16:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686133018; x=1688725018;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=bHtmIDD4uaTq4ABNxhYKW6qHDGlLDL1+HvFDCmmnPDM=;
-        b=aMzYf6YMdsw58k4/wDNtAfJLXXqxovmskhmugL855D5kSCqCJjdRY+o2q8WTho6dy7
-         r9INUS6z3glv3VuHQ+s872OmExPym88zOxwEvr66swh/5vYkAiY0wmzn9BsHFRaGXrzh
-         vb+DSlYUKFwAYBznX2p3t+gpnGYKxtQoakYYUy0FkUHDsJ6MCLoqTK2NgY5sMntJHOn+
-         TImv1OfDcFMGIvEkZ+iLp+bZy7I3Gz0WXSEbefn8Akij7Lhv6wat8MqIUfNGInASKTbj
-         4cyhJjHxqVwQfYg4mjvBWhkGuZI1dWIH/4f/E4JGdBy5nxV2T+Pi6k2mDkG1ws9foy5w
-         9Yqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686133018; x=1688725018;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bHtmIDD4uaTq4ABNxhYKW6qHDGlLDL1+HvFDCmmnPDM=;
-        b=LwDTMWK5dQembuHNojZJPXhkmGdFzOlfy/LRq86bk/qerRrHIDwSbBz+US9/6yLGov
-         62NOebU6ArJIuLd4ac/IT9GrVSDXsHNiulgJpifzqW4lRc5tQNUgu7Fy2AwNRkjmMu7S
-         26md8VizmRBbWrU51xHaFRRtTrgOuHHhsiaggwIFFTrqwJ5sWlMfiiZ4F8hT9n+cQxp1
-         hnfFCy9pL3gfPoTTXHgDAA97a/3mno3NIWMGRU1a2akL3KF54JKULjezElYF6uqH6c3y
-         NubEkWam90CyzeWGN7nF0CaMLLybNi3JNctfPs4pPS4FH09ldlIdMZhfNJ4T6uqqJMw2
-         mFVQ==
-X-Gm-Message-State: AC+VfDzA0iAuAtSLEZwlWtBJCDWTMjn7vJREupktUrpk5vFrYsBRhSQ6
-        q2F9F2jeQBTcb+T9XyvorD9PDw==
-X-Google-Smtp-Source: ACHHUZ4lRRxrWth26CaqnLWO9ge6gORx93AXTbvI8KrjJTI8Zd7pTHxYuR04YqlYa5SlHY4O/9m+EA==
-X-Received: by 2002:aa7:d315:0:b0:510:82b4:844d with SMTP id p21-20020aa7d315000000b0051082b4844dmr3980381edq.2.1686133017905;
-        Wed, 07 Jun 2023 03:16:57 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id w15-20020a056402070f00b00514bb73b8casm6158198edx.57.2023.06.07.03.16.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Jun 2023 03:16:57 -0700 (PDT)
-Message-ID: <55f07600-3fa5-f3c2-eb3e-e87a57244812@linaro.org>
-Date:   Wed, 7 Jun 2023 12:16:55 +0200
+        Wed, 7 Jun 2023 06:34:36 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD976EA;
+        Wed,  7 Jun 2023 03:34:35 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3831C62DEF;
+        Wed,  7 Jun 2023 10:34:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1670BC433D2;
+        Wed,  7 Jun 2023 10:34:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686134074;
+        bh=EnWyL/RGZVIPRednPxgadT7R3he2GlukPWhgaMHT7gw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Hd0GZexWOXSaSGDZT9lqrMXsp4ss4me/8CSkbFA0Zl09kEn295vV5t7omARWN+yF+
+         TNjYnTS4TbdjxxFVdTrzdep/OEfveLzAbfuIXw9aGcuxe4a8Xr4KOSKNnQ7hTRlhk5
+         0seKiKVRAPQuOurxVu24CUrVKUJswMa0fKyN2OKcKEA/5AzxB9uQujexZFbjYbkNXP
+         XxgQw4i0h0xHQIgo42//4c1o80Mrr6hdpfEcff5ccSScHpuqIFX7qahwIAPUhvg7bM
+         Yox5OQKitnZTFGtVhOaAxhmztxyYADhZ8cW/pg+aIxQLrAfJv7Ecf4ZPtLXO06CfHM
+         NSWYZNiTSfxYg==
+Date:   Wed, 7 Jun 2023 12:34:31 +0200
+From:   Wolfram Sang <wsa@kernel.org>
+To:     Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc:     loic.poulain@linaro.org, rfoss@kernel.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_sjaganat@quicinc.com,
+        quic_srichara@quicinc.com, quic_varada@quicinc.com
+Subject: Re: [PATCH 3/5] i2c: qcom-cci:Use
+ devm_platform_get_and_ioremap_resource()
+Message-ID: <ZIBdN/16vizJqNZp@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+        Md Sadre Alam <quic_mdalam@quicinc.com>, loic.poulain@linaro.org,
+        rfoss@kernel.org, linux-i2c@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        quic_sjaganat@quicinc.com, quic_srichara@quicinc.com,
+        quic_varada@quicinc.com
+References: <20230306144522.15699-1-quic_mdalam@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-db845c: Move LVS regulator nodes
- up
-Content-Language: en-US
-To:     Amit Pundir <amit.pundir@linaro.org>
-Cc:     Doug Anderson <dianders@chromium.org>,
-        Mark Brown <broonie@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        regressions <regressions@lists.linux.dev>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-References: <20230602161246.1855448-1-amit.pundir@linaro.org>
- <CAD=FV=U9xwxC4+wDYFMSoLWaj8vaLH_jettZ=nxEZP+1tNk=oA@mail.gmail.com>
- <d0dfdfba-7a70-7d12-2c30-ad32b3f95bb8@linaro.org>
- <CAMi1Hd1Upo8zV4MPtdqHgEaMQ72yK0gZgf5Z4uOaqKqhw8Hndg@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CAMi1Hd1Upo8zV4MPtdqHgEaMQ72yK0gZgf5Z4uOaqKqhw8Hndg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="bsZdphsPPiw7WIHD"
+Content-Disposition: inline
+In-Reply-To: <20230306144522.15699-1-quic_mdalam@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/06/2023 11:17, Amit Pundir wrote:
-> On Wed, 7 Jun 2023 at 13:19, Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
->>
->> On 07/06/2023 01:34, Doug Anderson wrote:
->>> Hi,
->>>
->>> On Fri, Jun 2, 2023 at 9:12 AM Amit Pundir <amit.pundir@linaro.org> wrote:
->>>>
->>>> Move lvs1 and lvs2 regulator nodes up in the rpmh-regulators
->>>> list to workaround a boot regression uncovered by the upstream
->>>> commit ad44ac082fdf ("regulator: qcom-rpmh: Revert "regulator:
->>>> qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS"").
->>>>
->>>> Without this fix DB845c fail to boot at times because one of the
->>>> lvs1 or lvs2 regulators fail to turn ON in time.
->>>>
->>>> Link: https://lore.kernel.org/all/CAMi1Hd1avQDcDQf137m2auz2znov4XL8YGrLZsw5edb-NtRJRw@mail.gmail.com/
->>>> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
->>>> ---
->>>>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 24 +++++++++++-----------
->>>>  1 file changed, 12 insertions(+), 12 deletions(-)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
->>>> index e14fe9bbb386..df2fde9063dc 100644
->>>> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
->>>> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
->>>> @@ -301,6 +301,18 @@ regulators-0 {
->>>>                 vdd-l26-supply = <&vreg_s3a_1p35>;
->>>>                 vin-lvs-1-2-supply = <&vreg_s4a_1p8>;
->>>>
->>>> +               vreg_lvs1a_1p8: lvs1 {
->>>> +                       regulator-min-microvolt = <1800000>;
->>>> +                       regulator-max-microvolt = <1800000>;
->>>> +                       regulator-always-on;
->>>> +               };
->>>> +
->>>> +               vreg_lvs2a_1p8: lvs2 {
->>>> +                       regulator-min-microvolt = <1800000>;
->>>> +                       regulator-max-microvolt = <1800000>;
->>>> +                       regulator-always-on;
->>>> +               };
->>>> +
->>>>                 vreg_s3a_1p35: smps3 {
->>>>                         regulator-min-microvolt = <1352000>;
->>>>                         regulator-max-microvolt = <1352000>;
->>>> @@ -381,18 +393,6 @@ vreg_l26a_1p2: ldo26 {
->>>>                         regulator-max-microvolt = <1200000>;
->>>>                         regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->>>>                 };
->>>> -
->>>> -               vreg_lvs1a_1p8: lvs1 {
->>>> -                       regulator-min-microvolt = <1800000>;
->>>> -                       regulator-max-microvolt = <1800000>;
->>>> -                       regulator-always-on;
->>>> -               };
->>>> -
->>>> -               vreg_lvs2a_1p8: lvs2 {
->>>> -                       regulator-min-microvolt = <1800000>;
->>>> -                       regulator-max-microvolt = <1800000>;
->>>> -                       regulator-always-on;
->>>> -               };
->>>
->>> This is a hack, but it at least feels less bad than reverting the
->>> async probe patch. I'll leave it to Bjorn to decide if he's OK with
->>> it. Personally, it feels like this would deserve a comment in the dts
->>> to document that these regulators need to be listed first.
->>>
->>> Ideally, we could still work towards a root cause. I added a few more
->>> ideas to help with root causing in reply to the original thread about
->>> this.
->>>
->>> https://lore.kernel.org/r/CAD=FV=UKyjRNZG-ED2meUAR9aXdco+AbUTHiKixTzjCkaJbjTg@mail.gmail.com/
->>
->> We do not shape DTS based on given OS behavior. AOSP needs this, BSD
->> needs that and Linux needs something else. Next time someone will move
->> these regulators down because on his system probing is from end of list,
->> not beginning and he has the same problem.
->>
->> No, really, are we going to reshuffle nodes because AOSP needs it?
-> 
-> Hi, other than the fact that I reproduced it on AOSP, there is nothing
-> AOSP specific in this patch. I'm sure there may be another
-> platforms/OS (which load kernel modules from a ramdisk) that may trip
-> on this bug. But I can try reproducing it on an OS of your choice if
-> it helps.
 
-I wrote earlier imaginary system where RPM driver loads the regulators
-from the end. It would require re-shuffling to previous order of the
-nodes. Feel free to change the RPM drivers to simulate it and you should
-see that your patch stops helping.
+--bsZdphsPPiw7WIHD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The problem looks like in missing consumers, missing probe dependencies
-or something in the driver how it handles these.
+On Mon, Mar 06, 2023 at 08:15:22PM +0530, Md Sadre Alam wrote:
+> Convert platform_get_resource(), devm_ioremap_resource() to a single
+> call to devm_platform_get_and_ioremap_resource(), as this is exactly
+> what this function does.
+>=20
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
 
-DTS should not be used for solving OS related problems.
+Loic, Robert, do you agree with this patch?
 
-Best regards,
-Krzysztof
 
+--bsZdphsPPiw7WIHD
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmSAXTcACgkQFA3kzBSg
+KbarcQ//Y+9HmY6t53QDwVMuvc4Z8203aKAUdHggYnJ6n5kwNoCcutIFR8+/AYIT
+rz5uytUYJg956cMgaqSk8eAJJTZf+/8JOyWIWkawDEwG710RDjDj1+ULYGe1h77U
+o7a52fRi+88AMG7V2COvq3umsxVKecjyMQtJ7ysTR+Up0vaLF0Nq7p/nvM2l583o
+h/VwWxwrd8NbPIzaEAlczrQPJXwxQymkNK2QQm3x0tWxZXm6ZzYAzduKpRMX3JXT
++g/n5obKYtqDl/GCB+vMzzoDh/144H34KTZYZN6IpQeuTkh/nJMp6xdGJ6pfZRc5
+TtKzvrHreKu6pYVxuxCzkbOzt56knibv/EDpFlF3ckzW9SC3AIPAjHkBV+70ChMh
+kgVuk9z6zlI2h8BykYQHF46SJTdZS03msfHg+ROXgkeffMt0JV0gZCYYnP3ZB6y6
+2oI4/gd3W4h+IWQxAFhfGFLVheLIDnnuamb5F/cXPwzfv0oSXNblkD2uSif5uOxh
+X3D4FyjJ0G2P5xkcjpvMLYqGRFfdVDW9lW/wTK5vICXBywjGCZhMqEIQYjgGgJaV
+7h4NEscOfSmqkRbE2DMEBN+z/Nzf8tIUPSixf1j0CgwLVZFGbvnwLJEn4tgNu0zP
+rPSNx3VxXEH/Miu7qFbF8o8VWt43H4otn5AIbj8gh4mjvdbhZqo=
+=83z4
+-----END PGP SIGNATURE-----
+
+--bsZdphsPPiw7WIHD--
