@@ -2,105 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D448272618F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 15:42:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 022187264AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 17:31:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240433AbjFGNm2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 09:42:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59088 "EHLO
+        id S240212AbjFGPbA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 11:31:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42376 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235717AbjFGNmY (ORCPT
+        with ESMTP id S240645AbjFGPa6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 09:42:24 -0400
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7748A1BCE
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 06:42:22 -0700 (PDT)
-Received: by mail-pl1-x62e.google.com with SMTP id d9443c01a7336-1b02085bf8dso32053295ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 06:42:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686145342; x=1688737342;
-        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ec/k1wvGxGvdE4jxIOmJS63ZehuBUnWANKuZJnM188U=;
-        b=ND+2sJHFW0N+8ZRVhL3D3IC3WicPhvNMz8zDEMJ/Ydif7d8D6uhW9DgAQCqKijIH7+
-         EEtv3n80SiuDLddAV71PasXe7Owgl82SBkGITOOnnoCM0AjbO6ZmtSrmpQTrf/9fOaR+
-         /TLO47J2oYU+9lNYN7zV4nF2idsXLaoatbiPvJrcsLjYIyTnqRKAbERGk9tWQ58KQV3C
-         lpSmmqOvMMz2UarYcRVwg+WEPGIg36enf5FCN7S+gLBryK64il9lvZZCuYjiOaqwFM82
-         rzMnD69nBhXrxs1osebH1brHXe/3TWS+Bb2RXnOs9fUhrvhpqNEU7e1iRGhpWWmW2tTm
-         hwCA==
+        Wed, 7 Jun 2023 11:30:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 845CF1FE2
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 08:29:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1686151743;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=fxLtlaE05xIT9NZmGVGxp/EURIr6OC1Lp2hDELcXxAU=;
+        b=hY4Hp0X7GMMX3ghASGj9u23WCsugZ6xTZgYozEzgK+Rli4pEImXlRJ3LsRaLPn3CDPdaZG
+        KUWsVCEIJLJYrkWtGM5eyWPWeOZu3oReid1FXcLR819razB6wnZUNQuTlFfrlbwIMg16rg
+        536q//MOOT5ywv5PIenw0/9KGswZliM=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-347-GRZTzZyxNL-rJ3iEjMruCw-1; Wed, 07 Jun 2023 09:44:59 -0400
+X-MC-Unique: GRZTzZyxNL-rJ3iEjMruCw-1
+Received: by mail-yw1-f200.google.com with SMTP id 00721157ae682-568ab5c813eso122736547b3.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 06:44:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686145342; x=1688737342;
-        h=to:subject:message-id:date:from:reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ec/k1wvGxGvdE4jxIOmJS63ZehuBUnWANKuZJnM188U=;
-        b=fHKY8inzHiSf0z04vfohLlE+VD8cUjGqTvNxQB7IdpV+c2KOap+D466x58NvUqdtxl
-         T/QnlPFiuI+c3E9Ap1IpyWCP49XV32CcQl1tyhqAen60NpHoriiOKfWRQwqiS+LTrro2
-         1/9PV1C1RP3U7oH6LrK6nwR6eVX2IQJUPnM8zHnzYkl6SUA56kQ2uuLP7oWzdQT0k6Dq
-         IjHquiHqtGAn/Bs6Mir/X/iZO29QCu6a6YA/ZgEugfNgcYJFpUzbxLA7eSIbM6cqm55u
-         lMageDvkS0hjXK/pEYPkyBb3URV6KTnzCwDidQF5qoqhPZSiTbA3fYu78qcLYBRJDqzz
-         WC6w==
-X-Gm-Message-State: AC+VfDwxiT3bf6xr4v2X+9v28Wj2dAwdPAQXLYmTymJviwgfdVL+wzw/
-        WQ/Fc+vBal0k1eOCyftHQBFrQRNSfTGYDu/D6XQ=
-X-Google-Smtp-Source: ACHHUZ71OFDzjkgVctwtWX/rX0yh2N8shRc0awXK0PP+MAoK9ZfuXu7+MCY552+jpOS5NGFRV5yncZZq6fK/mWjkj4Y=
-X-Received: by 2002:a17:902:7b95:b0:1aa:ff41:31a7 with SMTP id
- w21-20020a1709027b9500b001aaff4131a7mr1849895pll.13.1686145341487; Wed, 07
- Jun 2023 06:42:21 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686145493; x=1688737493;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fxLtlaE05xIT9NZmGVGxp/EURIr6OC1Lp2hDELcXxAU=;
+        b=QdNzuFta/sJvpo82yEJZo3mZ2XNnXv237tc+s6GzfuC5tD4Kr5ZxVsSzeAUMQSf8Zo
+         0qU6DLEL0OXqQc/NV8RiZQhWgIyBQ2vtx8fVLToqv371N8eDfY5Gyna8jeMX/y1w74/l
+         OfhaBvbzpvy2QSRkvlvlU4JkmKVfAhzXNL1HbXkPewyrmlDJb/TJSxWDErI+0hfnUqwK
+         QNqK8D2EkdTTrmbcazgh/zneoaxOcJ+j3nx2XSvZSrTz9RMN/AvQkHCJ+DLQIrsM8PnB
+         e4llFkvTklvtdEH138fZkvcenok0HBNSk694EEnypE8cn6Sjy7kf69O8VV5JpozrOLO2
+         jiJA==
+X-Gm-Message-State: AC+VfDzIyUYtOCKO2vN/6DpdAYOv5lwpsBbpMptnJR6ejdBRFccNWYTr
+        vewCgtmFOquOeoZNYTL0pk1B1bu+nNfCsWIbZ7S6C+xRo9r5xVRIeHIGPPy0TUcliFVaHqSbx+0
+        rEYx4n8A9V4JobC95Reu6tQvCAg==
+X-Received: by 2002:a0d:eb0b:0:b0:565:99c0:a690 with SMTP id u11-20020a0deb0b000000b0056599c0a690mr7226035ywe.36.1686145493487;
+        Wed, 07 Jun 2023 06:44:53 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ5wTaHqLBZp6jWJoe619kJAiY31OJl2xtPem1GubEkGBi48Y4e3G4HrsBbsiFfYL5yENCqRhw==
+X-Received: by 2002:a0d:eb0b:0:b0:565:99c0:a690 with SMTP id u11-20020a0deb0b000000b0056599c0a690mr7226006ywe.36.1686145493096;
+        Wed, 07 Jun 2023 06:44:53 -0700 (PDT)
+Received: from brian-x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
+        by smtp.gmail.com with ESMTPSA id j203-20020a8192d4000000b00568cbb028c6sm1115953ywg.85.2023.06.07.06.44.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Jun 2023 06:44:52 -0700 (PDT)
+Date:   Wed, 7 Jun 2023 09:44:50 -0400
+From:   Brian Masney <bmasney@redhat.com>
+To:     Lucas Karpinski <lkarpins@redhat.com>
+Cc:     linux-kernel@vger.kernel.org, agross@kernel.org,
+        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, ahalaney@redhat.com,
+        echanude@redhat.com, quic_shazhuss@quicinc.com
+Subject: Re: [PATCH] Revert "arm64: dts: qcom: sa8540p-ride: enable pcie2a
+ node"
+Message-ID: <ZICJ0pFc9wM4vjz2@brian-x1>
+References: <pmodcoakbs25z2a7mlo5gpuz63zluh35vbgb5itn6k5aqhjnny@jvphbpvahtse>
 MIME-Version: 1.0
-Received: by 2002:a05:7300:214d:b0:c5:9c51:ed79 with HTTP; Wed, 7 Jun 2023
- 06:42:20 -0700 (PDT)
-Reply-To: wormer.amos@aol.com
-From:   Wormer Amos <djaliasow10@gmail.com>
-Date:   Wed, 7 Jun 2023 14:42:20 +0100
-Message-ID: <CAF_pCkwHT9tDQVO4Yo9jqn6u4z5=VLhrE-k8tpf06FX9w4W0bA@mail.gmail.com>
-Subject: Partnership investment?
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: Yes, score=5.9 required=5.0 tests=BAYES_50,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_ENVFROM_END_DIGIT,
-        FREEMAIL_FROM,FREEMAIL_REPLYTO,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,UNDISC_FREEM,UNDISC_MONEY autolearn=no
-        autolearn_force=no version=3.4.6
-X-Spam-Report: * -0.0 RCVD_IN_DNSWL_NONE RBL: Sender listed at
-        *      https://www.dnswl.org/, no trust
-        *      [2607:f8b0:4864:20:0:0:0:62e listed in]
-        [list.dnswl.org]
-        *  0.8 BAYES_50 BODY: Bayes spam probability is 40 to 60%
-        *      [score: 0.5000]
-        *  0.0 SPF_HELO_NONE SPF: HELO does not publish an SPF Record
-        *  0.0 FREEMAIL_FROM Sender email is commonly abused enduser mail
-        *      provider
-        *      [djaliasow10[at]gmail.com]
-        *  0.2 FREEMAIL_ENVFROM_END_DIGIT Envelope-from freemail username ends
-        *       in digit
-        *      [djaliasow10[at]gmail.com]
-        * -0.0 SPF_PASS SPF: sender matches SPF record
-        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
-        *       valid
-        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
-        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
-        *      envelope-from domain
-        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
-        *      author's domain
-        * -0.0 T_SCC_BODY_TEXT_LINE No description available.
-        *  2.7 UNDISC_FREEM Undisclosed recipients + freemail reply-to
-        *  1.0 FREEMAIL_REPLYTO Reply-To/From or Reply-To/body contain
-        *      different freemails
-        *  1.3 UNDISC_MONEY Undisclosed recipients + money/fraud signs
-X-Spam-Level: *****
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pmodcoakbs25z2a7mlo5gpuz63zluh35vbgb5itn6k5aqhjnny@jvphbpvahtse>
+User-Agent: Mutt/2.2.9 (2022-11-12)
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Friend good day? Please I want to know if you are able to handle it
-investment
-project in
-your country because i
-Need a serious business partnership with a good background, please reply
-I'll discuss the details right away. I will appreciate you contacting me
-On the same email?
+Hi Lucas,
 
-Thanks and waiting for your prompt reply,
+On Fri, Jun 02, 2023 at 03:33:21PM -0400, Lucas Karpinski wrote:
+> This reverts commit 2eb4cdcd5aba2db83f2111de1242721eeb659f71.
 
-Wormer
+I am all for reverting this commit however I think your commit message
+needs cleaned up.
+
+> The patch introduced a sporadic error where the Qdrive3 will fail to
+> boot occasionally due to an rcu preempt stall.
+> Qualcomm has disabled pcie2a downstream:
+> https://git.codelinaro.org/clo/la/platform/vendor/qcom-opensource/rh-patch/-/commit/447f2135909683d1385af36f95fae5e1d63a7e2f
+
+Personally I'd remove the mention of the downstream kernel is this case.
+
+Also your paragraphs are formatted weird with a newline at the end
+of every sentence. Get them to flow together as a regular paragraph.
+This is the relevant line that I have in my muttrc file to help.
+
+set editor="vim -c 'set spell spelllang=en' -c 'set tw=72' -c 'set wrap'"
+
+> rcu: INFO: rcu_preempt self-detected stall on CPU
+> rcu:     0-....: (1 GPs behind) idle=77fc/1/0x4000000000000004 softirq=841/841 fqs=2476
+> rcu:     (t=5253 jiffies g=-175 q=2552 ncpus=8)
+> Call trace:
+>  __do_softirq
+>  ____do_softirq
+>  call_on_irq_stack
+>  do_softirq_own_stack
+>  __irq_exit_rcu
+>  irq_exit_rcu
+> 
+> The issue occurs normally once every 3-4 boot cycles.
+> There is likely a race condition caused when setting up the two pcie
+> domains concurrently (pcie2a and pcie3a).
+
+I would also add that Qualcomm told us that upgrading the firmware on
+the PCIe switch would correct this issue. We've upgraded the PCIe switch
+to the latest firmware and this issue is still present. Apparently we
+need to use a specific older version of the firmware that we can't get
+from the PCIe switch vendor or Qualcomm.
+
+Nothing is hooked up to pcie2a on the QDrive3 so there's no loss in
+functionality by disabling this. We always have to remember to revert
+this commit when working with an upstream kernel.
+
+> This is not a solution, so this patch is disabling pcie2a as it seems
+> Red Hat are the only ones working on the board,
+> we're find with disabling the node until a root cause is found. If
+> anyone has further suggestions for debugging, let me know.
+
+This should go under the ---.
+
+Brian
+
