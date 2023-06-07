@@ -2,119 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 292C17254E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 08:57:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52FD97254EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 08:58:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238466AbjFGG5E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 02:57:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40618 "EHLO
+        id S238513AbjFGG6E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 02:58:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41056 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237478AbjFGG5C (ORCPT
+        with ESMTP id S235332AbjFGG6D (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 02:57:02 -0400
-Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 926871732
-        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 23:56:58 -0700 (PDT)
-Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-64d24136685so221315b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 23:56:58 -0700 (PDT)
+        Wed, 7 Jun 2023 02:58:03 -0400
+Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C4241984
+        for <linux-arm-msm@vger.kernel.org>; Tue,  6 Jun 2023 23:58:02 -0700 (PDT)
+Received: by mail-ed1-x52b.google.com with SMTP id 4fb4d7f45d1cf-5147e40bbbbso704287a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 06 Jun 2023 23:58:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686121018; x=1688713018;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=BbZJHWFvG7e+6T+OE9cOP6p9FlABT7Ry2hM+Lk72cDc=;
-        b=AtcviKsaV0B4EF556reyoOW2LCZy7pRGbV+sJGDClAn2lPnwzATJsG5mpYhK8i8dNL
-         rseOQqvTvv4WaQ9N7c9S6/LsTJ0+q2eb0aJHEySbPdL/HoZRGpPjWszxwMTEu6IJGgYg
-         TbOrqzyeV99mw3VRkFrzlFP6Eh+bBw6cl00E0SMgqC2DAr13upNgOdCA2v6PYTuhdV8w
-         HS6yTwT1m9EBKM9aByNiND/7HvIDN/HsEXcXcfwY88XdpTj1g29XlNCAgEpiRcPdFjmA
-         DqRjQyzx3zQYZAyMm4kwEDgTdRGRhiljnDQVggkouQHgqkl/3zedF6ZIraXp78C21WsV
-         +3zw==
+        d=linaro.org; s=google; t=1686121081; x=1688713081;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4r5ckWADvIeunNEBSYEKM/Q/81CyZ43oAc3SDHOV06A=;
+        b=D5LHu0NTTbEdUyGlMZ43xZPsl509RpHKHHhl33Qtv5+IetJFJX9U92zpFIdk/i1RLf
+         4eNXmSRqrbIQVFYTRHxZm1aKIPebzkD1fBQDFjzGsVeHKS2wzjUKeBzPqQfsxtsXV14a
+         5NrG7kd/PvckTQmCTpUHGy+IUFgT+HmqoImaC/5bCXZcKq0I27285PXg1InggQEUE8HZ
+         W+is7a9B9fsx+ZIlSXs3rw8bVSnUtGiyhU6jIMCulcaio0t94so88ivQS4eHRsl3S5fF
+         7fiV2DEYsxx0/dsmbicQoa1YwBR23HsQGwaZ5DGaQJKKxbG7evIzlV4sP6W7HKXtVJSl
+         Yojw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686121018; x=1688713018;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20221208; t=1686121081; x=1688713081;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BbZJHWFvG7e+6T+OE9cOP6p9FlABT7Ry2hM+Lk72cDc=;
-        b=ko8Wi4As38bTx6OvLkrO2jJfOYyHyPzcGJ23FwV8hM2oUw+PfSnQj0BWScmD5BP0rm
-         TwTc2FzQMc8JtilqSeZIT0UnPE8Q/Mni+NVmCI2bMV70Ajo0l4SK3CFUAExvT3/bkkNp
-         RYrKL+FdMWUxL5AfGkDJQkig27szfMgBhX2vVkM/B9QQv7eQSmE6nNwMN4pG6p81nXcM
-         wEARru9yU6ny1w6C4T+KYtX/cgDtocwlNEaGFD156r6Xt+Rw3X+qjMr95Ts5TrAYBgty
-         Uc4oMjj7iFkSe5itm+jgFq6U+ZEBe7TKqr5Rd/aNM3d+P/hkkLdyXJwt/41ue7YlvKuT
-         jF0w==
-X-Gm-Message-State: AC+VfDxT/57gK568Ay1B5BQZohD/3UX6o748jj7D9o3r0WXvZBhBN2oj
-        Qep8ULftDye4Vo+73C85Nog1
-X-Google-Smtp-Source: ACHHUZ6cWKiLSdxkl6dJrjEECAzxAPc6F+Sm5bcROs9nSVpcodcj9uJ9abskwUWFmI9Do8QHxlEdSg==
-X-Received: by 2002:a05:6a00:2e0e:b0:646:6e40:b421 with SMTP id fc14-20020a056a002e0e00b006466e40b421mr5004834pfb.1.1686121018003;
-        Tue, 06 Jun 2023 23:56:58 -0700 (PDT)
-Received: from thinkpad ([59.92.97.244])
-        by smtp.gmail.com with ESMTPSA id t17-20020a62ea11000000b0065c8c5b3a7dsm3962043pfh.13.2023.06.06.23.56.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jun 2023 23:56:57 -0700 (PDT)
-Date:   Wed, 7 Jun 2023 12:26:52 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Andrew Lunn <andrew@lunn.ch>
-Cc:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, loic.poulain@linaro.org
-Subject: Re: [PATCH 0/3] Add MHI Endpoint network driver
-Message-ID: <20230607065652.GA5025@thinkpad>
-References: <20230606123119.57499-1-manivannan.sadhasivam@linaro.org>
- <c769c95d-e8cb-4cf6-a41a-9bef5a786bb1@lunn.ch>
+        bh=4r5ckWADvIeunNEBSYEKM/Q/81CyZ43oAc3SDHOV06A=;
+        b=Hq+H0zwleSK3l1XqWP5PadbCgBs4NgcC7xs4muGZ7WTGBP9+UNfGkGuh9PDOvJyuIi
+         ZtMVckjYuIS+1qlwQp8/o1OWNvxsEeHGWWOO3i4r8gTwQiuBPxkC2C6fv64MyiyZ7h0m
+         AH/Dw9Rw4fNb4h6TgcoVipjob8jDs7J/9RdoacbdOxRrCpdn3JKBYSsRBARFX6bOkDXc
+         /ppX1kbJYGGtJeD9F+xzoFhjp+gPM6R87GKXON7+69n6jXkq3+gL57KfQc3Od6KHwwvR
+         mlpTQMxn9BO2z3OBPc3I3CiLn3sxpzqOzwv37mc9R0AVGz2DvJJk2cE6ye3amhAVTY2Z
+         bx6A==
+X-Gm-Message-State: AC+VfDwx1R3oO3A/T53cMrRIA3qntrU7q98bShbTU9Z7NldphRouAcYM
+        C4HKY4EVsii+7XJe+UuEuPM87g==
+X-Google-Smtp-Source: ACHHUZ7fu0rabSgiRWnoDuVUvfCn6LZF2OhmoDNeDBuj4KR7YKeD2MulnLNleOKJe6o6wIMQqNdSFQ==
+X-Received: by 2002:a17:907:2d93:b0:973:cc48:f19c with SMTP id gt19-20020a1709072d9300b00973cc48f19cmr4610485ejc.56.1686121080808;
+        Tue, 06 Jun 2023 23:58:00 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id u26-20020a1709060b1a00b00977d7bd9069sm3826614ejg.179.2023.06.06.23.57.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 Jun 2023 23:58:00 -0700 (PDT)
+Message-ID: <2edc5ad1-0000-572d-317c-387dd9c25450@linaro.org>
+Date:   Wed, 7 Jun 2023 08:57:58 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <c769c95d-e8cb-4cf6-a41a-9bef5a786bb1@lunn.ch>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v5 2/4] dt-bindings: phy: qcom,usb-hs-phy: Add compatible
+Content-Language: en-US
+To:     Rudraksha Gupta <guptarud@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+        soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20230607050025.86636-1-guptarud@gmail.com>
+ <20230607050025.86636-3-guptarud@gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230607050025.86636-3-guptarud@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 06, 2023 at 02:59:00PM +0200, Andrew Lunn wrote:
-> On Tue, Jun 06, 2023 at 06:01:16PM +0530, Manivannan Sadhasivam wrote:
-> > Hi,
-> > 
-> > This series adds a network driver for the Modem Host Interface (MHI) endpoint
-> > devices that provides network interfaces to the PCIe based Qualcomm endpoint
-> > devices supporting MHI bus (like Modems). This driver allows the MHI endpoint
-> > devices to establish IP communication with the host machines (x86, ARM64) over
-> > MHI bus.
-> > 
-> > On the host side, the existing mhi_net driver provides the network connectivity
-> > to the host.
-> > 
-> > - Mani
-> > 
-> > Manivannan Sadhasivam (3):
-> >   net: Add MHI Endpoint network driver
-> >   MAINTAINERS: Add entry for MHI networking drivers under MHI bus
-> >   net: mhi: Increase the default MTU from 16K to 32K
-> > 
-> >  MAINTAINERS              |   1 +
-> >  drivers/net/Kconfig      |   9 ++
-> >  drivers/net/Makefile     |   1 +
-> >  drivers/net/mhi_ep_net.c | 331 +++++++++++++++++++++++++++++++++++++++
-> >  drivers/net/mhi_net.c    |   2 +-
+On 07/06/2023 07:00, Rudraksha Gupta wrote:
+> Adds qcom,usb-hs-phy-msm8960 compatible
 > 
-> Should we add a drivers/net/modem directory? Maybe modem is too
-> generic, we want something which represents GSM, LTE, UMTS, 3G, 4G,
-> 5G, ... XG etc.
-> 
+> Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
 
-The generic modem hierarchy sounds good to me because most of the times a
-single driver handles multiple technologies. The existing drivers supporting
-modems are already under different hierarchy like usb, wwan etc... So unifying
-them makes sense. But someone from networking community should take a call.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-- Mani
+Best regards,
+Krzysztof
 
->     Andrew
-
--- 
-மணிவண்ணன் சதாசிவம்
