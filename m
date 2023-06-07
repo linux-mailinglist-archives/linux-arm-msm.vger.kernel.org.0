@@ -2,140 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E061E726A33
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 21:55:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6879A726A77
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 22:13:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231449AbjFGTzy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 15:55:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59388 "EHLO
+        id S230034AbjFGUNo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 16:13:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40642 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229980AbjFGTzx (ORCPT
+        with ESMTP id S229822AbjFGUNn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 15:55:53 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5B0111A;
-        Wed,  7 Jun 2023 12:55:51 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 357Jcn0f027806;
-        Wed, 7 Jun 2023 19:55:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=zYnkk6rfdEFQh2yitNyYzT1Hcvi6eRKpKuWIs9uYX4c=;
- b=JLQIwLTlcMUDa/7ai3tpCX+U2S2LklqIqR3vH0/g0pOfJubaUFFq+O/fxESgKLGr17CP
- LXyPMisMIa4jH3icL8DhPUTPmJudHiCrD74Ji0PV6SKaIcKGCcW7Dw8woNjZ4KCvZf+/
- LVJO+Ij2ybgEVpTqiDt7/vqEyngGWkFRiCX4JS3wZGUErO42TmF4R0lNTKhkarObCJSZ
- 157DtTw9WA44WkG3cDxluMRmUjyGxeAwuMxE6nqut99Bk6xPcpUDFZEf3yO0G3xc3bL/
- VU0NCTW0e6u/QEXQ9HMtyVOzpfn26pcBjDrLJRPGwyjYaUYCVt7l3/r8KBTYlUL/BYW5 0A== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r2rbth6n5-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 07 Jun 2023 19:55:42 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 357JteFt003724
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 7 Jun 2023 19:55:40 GMT
-Received: from [10.216.57.240] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 7 Jun 2023
- 12:55:32 -0700
-Message-ID: <3010d855-86b0-f87a-5eb7-85204be9b4b0@quicinc.com>
-Date:   Thu, 8 Jun 2023 01:25:25 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.1
-Subject: Re: [PATCH v8 6/9] usb: dwc3: qcom: Add multiport controller support
- for qcom wrapper
-Content-Language: en-US
-To:     Johan Hovold <johan@kernel.org>
-CC:     Bjorn Andersson <andersson@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Wed, 7 Jun 2023 16:13:43 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.53])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B671D1BD2;
+        Wed,  7 Jun 2023 13:13:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1686168818; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=IgYpLoYI88PuP7oxfU+8D4Mhwlf11riVuWY+c/S4acRK5JxvpsBe8T+gcsWrF8e6G0
+    tZ96s1GnnU3oT0633I8uVLZzNy7ZlOY8y5cfq18YJQIsM0sbgrJZnYVgOnVyMtL9iYtB
+    7n+BktHbK1A4CsXak4/t+kmEqV6NQWA+j523Xq9GctriMU3y9b4EyDfn1S9jEmmfyL/T
+    uTWQ5eLeKS/sZ7ZHgSUsNcC/y5L97pQ7ZTv5ggn6wyFtmK0ori5YFhzf12aae9U1xYmE
+    P9F2vI+e39Vmrm976jy6/sV5r5TMIkPmkkRzkSfO0fIobnTS9bpOYtearNtjq6PLZBnU
+    bdGw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686168818;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=57dNky1WSV1Gg88IInb1YHiL1a4+3LhzPgnDq+D60K8=;
+    b=OwIqBTNR9ZNuhi8Ye8BWlVbEioO1f+GW3LWuUrEPfVyVdLgamjFdcJs7ZSwnfvOmS6
+    NPRKA0AUknbYZIf7wXbvu2/2BNvOMWMGsFYRWlltlceYa6EU5OkbzBGqtC4jFS9Wjpj8
+    CT+HDbYigfGOHP/xHKU7Cm1RSTVlHjCeXXUOlcOoFasSMDX4PkZC1UCNx09hDwHyG0bd
+    cF5qCOo4GT1tmdC7I6KGdw1AxlL5OzOS0Tzr6VtCt08YDgKjQVJvXzY+QNritlSsxMjX
+    wzgoLX7aTgqLkx08MIr/PDBJk7WIgiEPSD1pirDLm+siFrFeMMfA3jl+OB7Bjz0HYvMr
+    xIEQ==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686168818;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=57dNky1WSV1Gg88IInb1YHiL1a4+3LhzPgnDq+D60K8=;
+    b=I6JUq0CDJklqAcoZOxdxAtL6Zj4UHUnjdHrrXdfUDjCN78oqZu54vRRbyL3qCG9HY+
+    lb67vsbYpotNGwB6MqDRtDlOwTPf2VRqp8jM6NSgo5c2ZQRm93CooXOtDltfFrHCIQND
+    3P/UWIYeHZrwfT+ZbyYcTVNi0LfZ+hMYDd5MTFvEyswZlPCbQRHo1tYl27U+A0Ku0BMN
+    VhSp7EvRuuuBrAS/o0tvMtyYQ3Nl3A1ruGDwJLSzuDuEG7exbH7COnd62xyxlNizouwq
+    9AMfJgerSa7qFfjOQ8ZzBtlPUk2kKHKPxRuC+hsQgQgWUXQ4mADwcXWptZiXe36WJyke
+    vkjg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686168818;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=57dNky1WSV1Gg88IInb1YHiL1a4+3LhzPgnDq+D60K8=;
+    b=5Wp5JDjxHOyWgKqDfdrOLGs8gn/L0w2FNCmiGx2FXcZdEo8uoerXFFqMSZ9wu+wEiU
+    BEB/ymXAPhjl1b5dMdDw==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8Z+J1A=="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.5.3 DYNA|AUTH)
+    with ESMTPSA id Z82ec2z57KDcJdM
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Wed, 7 Jun 2023 22:13:38 +0200 (CEST)
+Date:   Wed, 7 Jun 2023 22:13:30 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, <linux-usb@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
-        <quic_ppratap@quicinc.com>, <quic_wcheng@quicinc.com>,
-        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
-        <ahalaney@redhat.com>
-References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-7-quic_kriskura@quicinc.com>
- <20230515222730.7snn2i33gkg6ctd2@ripper>
- <20230526025554.ni527gsr2bqxadl3@ripper>
- <37fd026e-ecb1-3584-19f3-f8c1e5a9d20a@quicinc.com>
- <ZIBtnPp0oV6_GFFk@hovoldconsulting.com>
-From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-In-Reply-To: <ZIBtnPp0oV6_GFFk@hovoldconsulting.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        Conor Dooley <conor+dt@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] arm64: dts: qcom: qcm2290: Add CPU idle states
+Message-ID: <ZIDk6hdFJWIMesqR@gerhold.net>
+References: <20230606-topic-qcm2290_idlestates-v2-1-580a5a2d28c9@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230606-topic-qcm2290_idlestates-v2-1-580a5a2d28c9@linaro.org>
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9smbBK24iUOq0l7o4f8vb29_VzCFTRnr
-X-Proofpoint-ORIG-GUID: 9smbBK24iUOq0l7o4f8vb29_VzCFTRnr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-07_11,2023-06-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
- adultscore=0 mlxlogscore=799 spamscore=0 priorityscore=1501 phishscore=0
- impostorscore=0 mlxscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306070172
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Jun 07, 2023 at 01:04:19AM +0200, Konrad Dybcio wrote:
+> Add the (scarce) idle states for the individual CPUs, as well as the
+> whole cluster. This enables deeper-than-WFI cpuidle
+                                                     .
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
+FWIW:
 
-On 6/7/2023 5:14 PM, Johan Hovold wrote:
-> On Fri, May 26, 2023 at 08:55:22PM +0530, Krishna Kurapati PSSNV wrote:
->> On 5/26/2023 8:25 AM, Bjorn Andersson wrote:
-> 
->>> We need to fix the dwc3 glue design, so that the glue and the core can
->>> cooperate - and we have a few other use cases where this is needed (e.g.
->>> usb_role_switch propagation to the glue code).
-> 
->>     Thanks for the comments on this patch. I had some suggestions come in
->> from the team internally:
->>
->> 1. To use the notifier call available in drivers/usb/core/notify.c and
->> make sure that host mode is enabled. That way we can access dwc or xhci
->> without any issue.
-> 
-> I don't think this is a good idea and instead the callbacks should be
-> dedicated for the xhci and dwc3 drivers. A struct with callbacks can be
-> passed down to the child devices, which call back into the drivers of
-> their parents for notifications and when they need services from them
-> (e.g. during suspend or on role changes).
-> 
-Hi Johan,
+Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
 
-   While I agree with you that these notifications are to be used during 
-role switch or suspend/resume, there is no restriction on using them for 
-checking whether we are in host mode or not. IMO, it would be cleaner as 
-we won't be dereferencing dwc driver data at all to check if we are in 
-host mode or not.
-
-Regards,
-Krishna,
-
->> 2. For this particular case where we are trying to get info on number of
->> ports present (dwc->num_usb2_ports), we can add compatible data for
->> sc8280-mp and provide input to driver telling num ports is 4.
+> ---
+> Changes in v2:
+> - Add missing BIT(24) ("last in power level")
+> - Use the correct CPU low-power state (0x3 instead of 0x4)
+> - Link to v1: https://lore.kernel.org/r/20230606-topic-qcm2290_idlestates-v1-1-dd77eef0086e@linaro.org
+> ---
+>  arch/arm64/boot/dts/qcom/qcm2290.dtsi | 61 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 61 insertions(+)
 > 
-> That may also work as a way to avoid parsing the xhci registers, but I'm
-> still not sure why simply counting the PHYs in DT would not work.
+> diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+> index b29bc4e4b837..0ed11e80e5e2 100644
+> --- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
+> @@ -48,6 +48,8 @@ CPU0: cpu@0 {
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_0>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+> +			power-domains = <&CPU_PD0>;
+> +			power-domain-names = "psci";
+>  			L2_0: l2-cache {
+>  				compatible = "cache";
+>  				cache-level = <2>;
+> @@ -65,6 +67,8 @@ CPU1: cpu@1 {
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_0>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+> +			power-domains = <&CPU_PD1>;
+> +			power-domain-names = "psci";
+>  		};
+>  
+>  		CPU2: cpu@2 {
+> @@ -77,6 +81,8 @@ CPU2: cpu@2 {
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_0>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+> +			power-domains = <&CPU_PD2>;
+> +			power-domain-names = "psci";
+>  		};
+>  
+>  		CPU3: cpu@3 {
+> @@ -89,6 +95,8 @@ CPU3: cpu@3 {
+>  			enable-method = "psci";
+>  			next-level-cache = <&L2_0>;
+>  			qcom,freq-domain = <&cpufreq_hw 0>;
+> +			power-domains = <&CPU_PD3>;
+> +			power-domain-names = "psci";
+>  		};
+>  
+>  		cpu-map {
+> @@ -110,6 +118,30 @@ core3 {
+>  				};
+>  			};
+>  		};
+> +
+> +		domain-idle-states {
+> +			CLUSTER_SLEEP: cluster-sleep-0 {
+> +				compatible = "domain-idle-state";
+> +				arm,psci-suspend-param = <0x41000043>;
+> +				entry-latency-us = <800>;
+> +				exit-latency-us = <2118>;
+> +				min-residency-us = <7376>;
+> +			};
+> +		};
+> +
+> +		idle-states {
+> +			entry-method = "psci";
+> +
+> +			CPU_SLEEP: cpu-sleep-0 {
+> +				compatible = "arm,idle-state";
+> +				idle-state-name = "power-collapse";
+> +				arm,psci-suspend-param = <0x40000003>;
+> +				entry-latency-us = <290>;
+> +				exit-latency-us = <376>;
+> +				min-residency-us = <1182>;
+> +				local-timer-stop;
+> +			};
+> +		};
+>  	};
+>  
+>  	firmware {
+> @@ -135,6 +167,35 @@ pmu {
+>  	psci {
+>  		compatible = "arm,psci-1.0";
+>  		method = "smc";
+> +
+> +		CPU_PD0: power-domain-cpu0 {
+> +			#power-domain-cells = <0>;
+> +			power-domains = <&CLUSTER_PD>;
+> +			domain-idle-states = <&CPU_SLEEP>;
+> +		};
+> +
+> +		CPU_PD1: power-domain-cpu1 {
+> +			#power-domain-cells = <0>;
+> +			power-domains = <&CLUSTER_PD>;
+> +			domain-idle-states = <&CPU_SLEEP>;
+> +		};
+> +
+> +		CPU_PD2: power-domain-cpu2 {
+> +			#power-domain-cells = <0>;
+> +			power-domains = <&CLUSTER_PD>;
+> +			domain-idle-states = <&CPU_SLEEP>;
+> +		};
+> +
+> +		CPU_PD3: power-domain-cpu3 {
+> +			#power-domain-cells = <0>;
+> +			power-domains = <&CLUSTER_PD>;
+> +			domain-idle-states = <&CPU_SLEEP>;
+> +		};
+> +
+> +		CLUSTER_PD: power-domain-cpu-cluster {
+> +			#power-domain-cells = <0>;
+> +			domain-idle-states = <&CLUSTER_SLEEP>;
+> +		};
+>  	};
+>  
+>  	reserved_memory: reserved-memory {
 > 
-> Johan
+> ---
+> base-commit: 6db29e14f4fb7bce9eb5290288e71b05c2b0d118
+> change-id: 20230606-topic-qcm2290_idlestates-5b6062b0f4c6
+> 
+> Best regards,
+> -- 
+> Konrad Dybcio <konrad.dybcio@linaro.org>
+> 
