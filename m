@@ -2,107 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 28CA9726833
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 20:13:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D57B72683B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 20:15:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229572AbjFGSM4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 14:12:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56588 "EHLO
+        id S229436AbjFGSPt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 14:15:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233007AbjFGSMi (ORCPT
+        with ESMTP id S229580AbjFGSPs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 14:12:38 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3F0E2723
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 11:12:04 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-510d6b939bfso2143341a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 11:12:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686161523; x=1688753523;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=c8LLkELG8pk1deRrNltGQ2MtkxURXpppj04DS98maLQ=;
-        b=mQwtQAxpJG8jV/xuinu93mq/TbKBa7bsRoILZ55z99uqXXE5DKZVFKH7DpniJCQN1O
-         JtBEzsgI5qPT30X/q0Ql60fQqMuONlqxwLiKA7rXEx8zAscuJcOUApu9ynYG/zDz8AAZ
-         yaiZnamd97s2iyhRdQ6Okaql4+ryQb3SwBY4YNl7kNJ+HRy1qJPxw4WeNqJZaXWlbO0J
-         8j9JXYJRVIh/WIx5MtpUQNuVjTwyALsOrfeJeyaUTiYmEkPHvxCvCXSu4pxjC2GL9bN+
-         dO9tWQFuJMI96rn4DT7hGU4eGoGPA47VuIOOtE6tCe61TclepLRJE98yM/i3EPz1lMe6
-         SEtQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686161523; x=1688753523;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=c8LLkELG8pk1deRrNltGQ2MtkxURXpppj04DS98maLQ=;
-        b=SCwoVdMgVOmlY/GeM5hfnhx00lAqrg8B0vrASxVSH24lFzlMGo0zM4o1J/X4cvbNOG
-         7lU5Nk7A6Ob3Oeu2NEPA+MCcfuaRwLIefPJwC6WDuA8qqFV17dGdyZa2D6A5pdrJweHc
-         0IZnG8QcWU5lgpml5NFiZKnOb+j0zooEBS0i5B7S89W1nevpy6fP3O4q7HbzIYJHJL9V
-         a1/NXdDq7lFvQCRP2R1IDZ5gGcWxiAiDwB5DCxt4yDaGnKkaM08WMaNuE3k20LUHIYm0
-         EkZI4nnJRduE7FD5MvAqSoT958WBNoAQE6qL0/Z4Ov4X4OplgO95xuRpYT4CPzaek1Ki
-         zxKw==
-X-Gm-Message-State: AC+VfDzfsFpjLGx+0MjJUQgn/a3+MWdeb+e0lhogCuln5ky4NYYzDdV0
-        ppqLQ3aPV3QQ/sBT0lxq1hWjbw==
-X-Google-Smtp-Source: ACHHUZ4atA66ozVYI+ahtfsSLEEsIg2F4Rpb/cEGKV9GpyA79gCHhdMvWAlwmA4CitsH2GXDKLrxQQ==
-X-Received: by 2002:a17:907:7da3:b0:977:d676:d3ca with SMTP id oz35-20020a1709077da300b00977d676d3camr7269835ejc.33.1686161523172;
-        Wed, 07 Jun 2023 11:12:03 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id q20-20020a170906a09400b009786ae9ed50sm2488347ejy.194.2023.06.07.11.12.00
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Jun 2023 11:12:02 -0700 (PDT)
-Message-ID: <7717cc1b-d258-4fb6-3379-05b2de27dc70@linaro.org>
-Date:   Wed, 7 Jun 2023 20:11:59 +0200
+        Wed, 7 Jun 2023 14:15:48 -0400
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8EA62135;
+        Wed,  7 Jun 2023 11:15:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+        bh=rwP8NTNH2Q6n+MZ4JXwJhAX1XWocWHZPOYyXpdS4lqo=; b=PU0wKnZrtgQMRYj6qfniT+fCgX
+        EZoZx2Xq7hCpCJj4j5OyMiAswAY8aXr9hpojQ3NQbAOXAcMDl0FPospMxECWN+XHfScyVUWulkU7S
+        gxPn4MDtiHw/sQAgSq07hylEU+Aims6XtAZozTokdfVNfzxMTZ9Yg6HfTBW6DbzeTgAU=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+        (envelope-from <andrew@lunn.ch>)
+        id 1q6xf2-00FB1U-1k; Wed, 07 Jun 2023 20:13:32 +0200
+Date:   Wed, 7 Jun 2023 20:13:32 +0200
+From:   Andrew Lunn <andrew@lunn.ch>
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        loic.poulain@linaro.org
+Subject: Re: [PATCH v2 0/2] Add MHI Endpoint network driver
+Message-ID: <eb4b45ab-1f51-47e9-a286-a9e26461ebed@lunn.ch>
+References: <20230607152427.108607-1-manivannan.sadhasivam@linaro.org>
+ <20230607094922.43106896@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v6 05/12] dt-bindings: display/msm: Add SM6375 MDSS
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux.dev
-References: <20230411-topic-straitlagoon_mdss-v6-0-dee6a882571b@linaro.org>
- <20230411-topic-straitlagoon_mdss-v6-5-dee6a882571b@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230411-topic-straitlagoon_mdss-v6-5-dee6a882571b@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230607094922.43106896@kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/06/2023 14:43, Konrad Dybcio wrote:
-> Document the SM6375 MDSS.
+On Wed, Jun 07, 2023 at 09:49:22AM -0700, Jakub Kicinski wrote:
+> On Wed,  7 Jun 2023 20:54:25 +0530 Manivannan Sadhasivam wrote:
+> > This series adds a network driver for the Modem Host Interface (MHI) endpoint
+> > devices that provides network interfaces to the PCIe based Qualcomm endpoint
+> > devices supporting MHI bus (like Modems). This driver allows the MHI endpoint
+> > devices to establish IP communication with the host machines (x86, ARM64) over
+> > MHI bus.
+> > 
+> > On the host side, the existing mhi_net driver provides the network connectivity
+> > to the host.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  .../bindings/display/msm/qcom,sm6375-mdss.yaml     | 215 +++++++++++++++++++++
->  1 file changed, 215 insertions(+)
+> Why are you posting the next version before the discussion on the
+> previous one concluded? :|
 > 
+> In any case, I'm opposed to reuse of the networking stack to talk
+> to firmware. It's a local device. The networking subsystem doesn't
+> have to cater to fake networks. Please carry:
+> 
+> Nacked-by: Jakub Kicinski <kuba@kernel.org>
 
+Remote Processor Messaging (rpmsg) Framework does seem to be what is
+supposed to be used for these sorts of situations. Not that i know
+much about it.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
-
+     Andrew
