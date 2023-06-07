@@ -2,72 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 95751726A17
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 21:47:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 758B6726A2B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 21:51:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231843AbjFGTrN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 15:47:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55536 "EHLO
+        id S231940AbjFGTva (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 15:51:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58150 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231643AbjFGTrG (ORCPT
+        with ESMTP id S231238AbjFGTv3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 15:47:06 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B26052682;
-        Wed,  7 Jun 2023 12:46:44 -0700 (PDT)
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 357JT57k000503;
-        Wed, 7 Jun 2023 19:46:37 GMT
+        Wed, 7 Jun 2023 15:51:29 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CB421BEF;
+        Wed,  7 Jun 2023 12:51:28 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 357JJQBg029061;
+        Wed, 7 Jun 2023 19:51:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=5G6HDYV61owlTxtOzctRQ3nN88GKhOoD0XA1tYt2JAs=;
- b=PgOT/HZXCbQa1kGYbLsNeVg+XA/ISyVi7VDGg3iEazwC/5Gfgdx1eXNwPCgb2vxCRUYg
- 3gnx+6a72JCWpsQx2wkXuma3aQ0Yl9cSOHZhfcQZrYd2GqiaDtz2pW5dORmuRmBF30iD
- m4W/81yuUyFrcOCcPCAZtZh4xH91i5IbPQH0fecYIj9nvPXErCeG9CEjwrhh2EQVAz8v
- FaM4I4iKG1OaQmuK7MTdx1vVSHOSN0Zi+JXlzM7EYJvJs58dk8c+mWMrUTkax3Iiq4ht
- zPgFNrXTwhu9k+NV+fxLc5Ug/xGurKqw9xYbo5SIQIbAv0RSWHVmisC5l/Z8m9hD7koC 1Q== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r2a7k2sm5-1
+ bh=MyBe12xlukVDy21RV8mGvzxBCep4BCefuMYAHQJmVTA=;
+ b=erT+YlfWAvAso0poGql0wbYfGzp55tNqeAswL0ZN3Sh1dmus7+is+zxWoxuMDjyAyrvM
+ iDiPBrWObbvQjFs9PQMW/C6h9IyroAztxaMdxEbCA2nXSHMUHRl/A4kSdf6I72Cv9ljq
+ upAnEKz1ZTXKISq8IJTDAuVqfhHRzVFxpMWrEpI8UIQqW4B5wHaF0HFjjj+zf+StVudl
+ 4PY9HW+qP1kxwbdCbdAaVaAS/K7P9FtPkrXdlmjvqXIo/YI8ZRsVg0xFgIfK440Bt0ud
+ wgppbM7o8pqC+WqLz5hq06HXdD/qbFAs0iSODV2z2twRoO1JSK+wGQWhnec0wRrR7oP3 KQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r2a71au0f-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 07 Jun 2023 19:46:36 +0000
+        Wed, 07 Jun 2023 19:51:16 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 357JkZ6e026091
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 357JpD6D003593
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 7 Jun 2023 19:46:35 GMT
-Received: from [10.110.54.114] (10.80.80.8) by nalasex01a.na.qualcomm.com
+        Wed, 7 Jun 2023 19:51:13 GMT
+Received: from [10.216.57.240] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 7 Jun 2023
- 12:46:34 -0700
-Message-ID: <51712e34-c964-a5b3-3df8-1af10c7751f6@quicinc.com>
-Date:   Wed, 7 Jun 2023 12:46:31 -0700
+ 12:51:06 -0700
+Message-ID: <99cded6f-6a71-ffce-8479-c7c0726bfb8e@quicinc.com>
+Date:   Thu, 8 Jun 2023 01:21:02 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [Freedreno] [PATCH v3 6/7] drm/msm/dsi: Add phy configuration for
- MSM8226
+ Thunderbird/102.11.1
+Subject: Re: [PATCH v8 6/9] usb: dwc3: qcom: Add multiport controller support
+ for qcom wrapper
 Content-Language: en-US
-To:     Luca Weiss <luca@z3ntu.xyz>,
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        <phone-devel@vger.kernel.org>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+To:     Johan Hovold <johan@kernel.org>
+CC:     Bjorn Andersson <andersson@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     <devicetree@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>
-References: <20230308-msm8226-mdp-v3-0-b6284145d67a@z3ntu.xyz>
- <20230308-msm8226-mdp-v3-6-b6284145d67a@z3ntu.xyz>
-From:   Jeykumar Sankaran <quic_jeykumar@quicinc.com>
-In-Reply-To: <20230308-msm8226-mdp-v3-6-b6284145d67a@z3ntu.xyz>
+        Felipe Balbi <balbi@kernel.org>, <linux-usb@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <quic_pkondeti@quicinc.com>,
+        <quic_ppratap@quicinc.com>, <quic_wcheng@quicinc.com>,
+        <quic_jackp@quicinc.com>, <quic_harshq@quicinc.com>,
+        <ahalaney@redhat.com>
+References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
+ <20230514054917.21318-7-quic_kriskura@quicinc.com>
+ <20230515222730.7snn2i33gkg6ctd2@ripper>
+ <bc347624-4539-4a3a-9399-9b4e272cdb32@quicinc.com>
+ <ZGUCykpDFt9zgeTU@hovoldconsulting.com>
+ <82553597-ce0e-48f4-44d4-9eeaaf4cb1c4@quicinc.com>
+ <ZIBsDQJtgDZRe7MG@hovoldconsulting.com>
+From:   Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+In-Reply-To: <ZIBsDQJtgDZRe7MG@hovoldconsulting.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
@@ -75,20 +78,20 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: JfdO3l81FXQYiHJVxQ4Of-WTisJFXX7-
-X-Proofpoint-GUID: JfdO3l81FXQYiHJVxQ4Of-WTisJFXX7-
+X-Proofpoint-GUID: SMXrvb58mo55Ql3-t1vKI85-JROj7oCV
+X-Proofpoint-ORIG-GUID: SMXrvb58mo55Ql3-t1vKI85-JROj7oCV
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-07_09,2023-06-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
- impostorscore=0 spamscore=0 lowpriorityscore=0 phishscore=0
- mlxlogscore=999 adultscore=0 bulkscore=0 suspectscore=0 priorityscore=1501
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306070171
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+ definitions=2023-06-07_10,2023-06-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ impostorscore=0 bulkscore=0 phishscore=0 spamscore=0 adultscore=0
+ priorityscore=1501 mlxlogscore=999 suspectscore=0 malwarescore=0
+ clxscore=1011 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306070172
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -97,195 +100,98 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 6/1/2023 10:00 AM, Luca Weiss wrote:
-> MSM8226 uses a modified PLL lock sequence compared to MSM8974, which is
-> based on the function dsi_pll_enable_seq_m in the msm-3.10 kernel.
+On 6/7/2023 5:07 PM, Johan Hovold wrote:
+> Hi Krishna,
 > 
-> Worth noting that the msm-3.10 downstream kernel also will try other
-> sequences in case this one doesn't work, but during testing it has shown
-> that the _m sequence succeeds first time also:
+> and sorry about the delay in following up on this. As usual, there are
+> just way too many threads and this one in particular requires a bit of
+> thought.
 > 
->    .pll_enable_seqs[0] = dsi_pll_enable_seq_m,
->    .pll_enable_seqs[1] = dsi_pll_enable_seq_m,
->    .pll_enable_seqs[2] = dsi_pll_enable_seq_d,
->    .pll_enable_seqs[3] = dsi_pll_enable_seq_d,
->    .pll_enable_seqs[4] = dsi_pll_enable_seq_f1,
->    .pll_enable_seqs[5] = dsi_pll_enable_seq_c,
->    .pll_enable_seqs[6] = dsi_pll_enable_seq_e,
-> 
-> We may need to expand this in the future.
-> 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy.c      |  2 +
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy.h      |  3 +-
->   drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c | 97 ++++++++++++++++++++++++++++++
->   3 files changed, 101 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> index bb09cbe8ff86..9d5795c58a98 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> @@ -541,6 +541,8 @@ static const struct of_device_id dsi_phy_dt_match[] = {
->   	  .data = &dsi_phy_28nm_hpm_famb_cfgs },
->   	{ .compatible = "qcom,dsi-phy-28nm-lp",
->   	  .data = &dsi_phy_28nm_lp_cfgs },
-> +	{ .compatible = "qcom,dsi-phy-28nm-8226",
-> +	  .data = &dsi_phy_28nm_8226_cfgs },
->   #endif
->   #ifdef CONFIG_DRM_MSM_DSI_20NM_PHY
->   	{ .compatible = "qcom,dsi-phy-20nm",
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> index 7137a17ae523..8b640d174785 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> @@ -46,8 +46,9 @@ struct msm_dsi_phy_cfg {
->   extern const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_cfgs;
->   extern const struct msm_dsi_phy_cfg dsi_phy_28nm_hpm_famb_cfgs;
->   extern const struct msm_dsi_phy_cfg dsi_phy_28nm_lp_cfgs;
-> -extern const struct msm_dsi_phy_cfg dsi_phy_20nm_cfgs;
-> +extern const struct msm_dsi_phy_cfg dsi_phy_28nm_8226_cfgs;
->   extern const struct msm_dsi_phy_cfg dsi_phy_28nm_8960_cfgs;
-> +extern const struct msm_dsi_phy_cfg dsi_phy_20nm_cfgs;
->   extern const struct msm_dsi_phy_cfg dsi_phy_14nm_cfgs;
->   extern const struct msm_dsi_phy_cfg dsi_phy_14nm_660_cfgs;
->   extern const struct msm_dsi_phy_cfg dsi_phy_14nm_2290_cfgs;
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-> index 4c1bf55c5f38..ceec7bb87bf1 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-> @@ -37,6 +37,7 @@
->   
->   /* v2.0.0 28nm LP implementation */
->   #define DSI_PHY_28NM_QUIRK_PHY_LP	BIT(0)
-> +#define DSI_PHY_28NM_QUIRK_PHY_8226	BIT(1)
->   
->   #define LPFR_LUT_SIZE			10
->   struct lpfr_cfg {
-> @@ -377,6 +378,74 @@ static int dsi_pll_28nm_vco_prepare_hpm(struct clk_hw *hw)
->   	return ret;
->   }
->   
-> +static int dsi_pll_28nm_vco_prepare_8226(struct clk_hw *hw)
-> +{
-> +	struct dsi_pll_28nm *pll_28nm = to_pll_28nm(hw);
-> +	struct device *dev = &pll_28nm->phy->pdev->dev;
-> +	void __iomem *base = pll_28nm->phy->pll_base;
-> +	u32 max_reads = 5, timeout_us = 100;
-> +	bool locked;
-> +	u32 val;
-> +	int i;
-> +
-> +	DBG("id=%d", pll_28nm->phy->id);
-> +
-> +	pll_28nm_software_reset(pll_28nm);
-> +
-> +	/*
-> +	 * PLL power up sequence.
-> +	 * Add necessary delays recommended by hardware.
-> +	 */
-> +	dsi_phy_write(base + REG_DSI_28nm_PHY_PLL_CAL_CFG1, 0x34);
-> +
-> +	val = DSI_28nm_PHY_PLL_GLB_CFG_PLL_PWRDN_B;
-> +	dsi_phy_write_udelay(base + REG_DSI_28nm_PHY_PLL_GLB_CFG, val, 200);
-> +
-> +	val |= DSI_28nm_PHY_PLL_GLB_CFG_PLL_PWRGEN_PWRDN_B;
-> +	dsi_phy_write_udelay(base + REG_DSI_28nm_PHY_PLL_GLB_CFG, val, 200);
-> +
-> +	val |= DSI_28nm_PHY_PLL_GLB_CFG_PLL_LDO_PWRDN_B;
-> +	val |= DSI_28nm_PHY_PLL_GLB_CFG_PLL_ENABLE;
-> +	dsi_phy_write_udelay(base + REG_DSI_28nm_PHY_PLL_GLB_CFG, val, 600);
-> +
-> +	for (i = 0; i < 7; i++) {
-> +		/* DSI Uniphy lock detect setting */
-> +		dsi_phy_write(base + REG_DSI_28nm_PHY_PLL_LKDET_CFG2, 0x0d);
-> +		dsi_phy_write_udelay(base + REG_DSI_28nm_PHY_PLL_LKDET_CFG2,
-> +				0x0c, 100);
-> +		dsi_phy_write(base + REG_DSI_28nm_PHY_PLL_LKDET_CFG2, 0x0d);
-> +
-> +		/* poll for PLL ready status */
-> +		locked = pll_28nm_poll_for_ready(pll_28nm,
-> +						max_reads, timeout_us);
-> +		if (locked)
-> +			break;
-> +
-> +		pll_28nm_software_reset(pll_28nm);
-> +
-> +		/*
-> +		 * PLL power up sequence.
-> +		 * Add necessary delays recommended by hardware.
-> +		 */
-> +		dsi_phy_write_udelay(base + REG_DSI_28nm_PHY_PLL_PWRGEN_CFG, 0x00, 50);
-> +
-> +		val = DSI_28nm_PHY_PLL_GLB_CFG_PLL_PWRDN_B;
-> +		val |= DSI_28nm_PHY_PLL_GLB_CFG_PLL_PWRGEN_PWRDN_B;
-> +		dsi_phy_write_udelay(base + REG_DSI_28nm_PHY_PLL_GLB_CFG, val, 100);
-> +
-> +		val |= DSI_28nm_PHY_PLL_GLB_CFG_PLL_LDO_PWRDN_B;
-> +		val |= DSI_28nm_PHY_PLL_GLB_CFG_PLL_ENABLE;
-> +		dsi_phy_write_udelay(base + REG_DSI_28nm_PHY_PLL_GLB_CFG, val, 600);
-> +	}
-> +
-> +	if (unlikely(!locked))
-> +		DRM_DEV_ERROR(dev, "DSI PLL lock failed\n");
-> +	else
-> +		DBG("DSI PLL Lock success");
-> +
-> +	return locked ? 0 : -EINVAL;
-> +}
-> +
-Could you please share the downstream reference you used to come up with 
-this sequence?
+Hi Johan,
 
-Thanks and Regards,
-Jeykumar S.
->   static int dsi_pll_28nm_vco_prepare_lp(struct clk_hw *hw)
->   {
->   	struct dsi_pll_28nm *pll_28nm = to_pll_28nm(hw);
-> @@ -471,6 +540,15 @@ static const struct clk_ops clk_ops_dsi_pll_28nm_vco_lp = {
->   	.is_enabled = dsi_pll_28nm_clk_is_enabled,
->   };
->   
-> +static const struct clk_ops clk_ops_dsi_pll_28nm_vco_8226 = {
-> +	.round_rate = dsi_pll_28nm_clk_round_rate,
-> +	.set_rate = dsi_pll_28nm_clk_set_rate,
-> +	.recalc_rate = dsi_pll_28nm_clk_recalc_rate,
-> +	.prepare = dsi_pll_28nm_vco_prepare_8226,
-> +	.unprepare = dsi_pll_28nm_vco_unprepare,
-> +	.is_enabled = dsi_pll_28nm_clk_is_enabled,
-> +};
-> +
->   /*
->    * PLL Callbacks
->    */
-> @@ -536,6 +614,8 @@ static int pll_28nm_register(struct dsi_pll_28nm *pll_28nm, struct clk_hw **prov
->   
->   	if (pll_28nm->phy->cfg->quirks & DSI_PHY_28NM_QUIRK_PHY_LP)
->   		vco_init.ops = &clk_ops_dsi_pll_28nm_vco_lp;
-> +	else if (pll_28nm->phy->cfg->quirks & DSI_PHY_28NM_QUIRK_PHY_8226)
-> +		vco_init.ops = &clk_ops_dsi_pll_28nm_vco_8226;
->   	else
->   		vco_init.ops = &clk_ops_dsi_pll_28nm_vco_hpm;
->   
-> @@ -820,3 +900,20 @@ const struct msm_dsi_phy_cfg dsi_phy_28nm_lp_cfgs = {
->   	.quirks = DSI_PHY_28NM_QUIRK_PHY_LP,
->   };
->   
-> +const struct msm_dsi_phy_cfg dsi_phy_28nm_8226_cfgs = {
-> +	.has_phy_regulator = true,
-> +	.regulator_data = dsi_phy_28nm_regulators,
-> +	.num_regulators = ARRAY_SIZE(dsi_phy_28nm_regulators),
-> +	.ops = {
-> +		.enable = dsi_28nm_phy_enable,
-> +		.disable = dsi_28nm_phy_disable,
-> +		.pll_init = dsi_pll_28nm_init,
-> +		.save_pll_state = dsi_28nm_pll_save_state,
-> +		.restore_pll_state = dsi_28nm_pll_restore_state,
-> +	},
-> +	.min_pll_rate = VCO_MIN_RATE,
-> +	.max_pll_rate = VCO_MAX_RATE,
-> +	.io_start = { 0xfd922b00 },
-> +	.num_dsi_phy = 1,
-> +	.quirks = DSI_PHY_28NM_QUIRK_PHY_8226,
-> +};
+   Thanks for taking the time out and reviewing the patches again.
+
+> On Sat, May 20, 2023 at 11:18:52PM +0530, Krishna Kurapati PSSNV wrote:
+>> On 5/17/2023 10:07 PM, Johan Hovold wrote:
 > 
+>>> I don't think we should be adding more of these layering violations. A
+>>> parent device driver has no business messing with the driver data for a
+>>> child device which may or may not even have probed yet.
+>>>
+>>> I added a FIXME elsewhere in the driver about fixing up the current
+>>> instances that have already snuck in (which in some sense is even worse
+>>> by accessing driver data of a grandchild device).
+>>>
+>>> We really need to try sort this mess out and how to properly handle the
+>>> interactions between these layers (e.g. glue, dwc3 core and xhci). This
+>>> will likely involve adding callbacks from the child to the parent, for
+>>> example, when the child is suspending.
+> 
+>>    I agree with you, but in this case I believe there is no other way we
+>> can find the number of ports present. Unless its a dt property which
+>> parent driver can access the child's of node and get the details. Like
+>> done in v4 [1]. But it would be adding redundant data into DT as pointed
+>> out by Rob and Krzysztof and so we removed these properties.
+> 
+> So there at least two issues with this series:
+> 
+> 	1. accessing xhci registers from the dwc3 core
+> 	2. accessing driver data of a child device
+> 
+> 1. The first part about accessing xhci registers goes against the clear
+> separation between glue, core and xhci that Felipe tried to maintain.
+> 
+> I'm not entirely against doing this from the core driver before
+> registering the xhci platform device as the registers are unmapped
+> afterwards. But if this is to be allowed, then the implementation should
+> be shared with xhci rather than copied verbatim.
+> 
+> The alternative that avoids this issue entirely could indeed be to
+> simply count the number of PHYs described in DT as Rob initially
+> suggested. Why would that not work?
+> 
+The reason why I didn't want to read the Phy's from DT is explained in 
+[1]. I felt it makes the code unreadable and its very tricky to read the 
+phy's properly, so we decided we would initialize phy's for all ports 
+and if a phy is missing in DT, the corresponding member in 
+dwc->usbX_generic_phy[] would be NULL and any phy op on it would be a NOP.
+
+Also as per Krzysztof suggestion on [2], we can add a compatible to read 
+number of phy's / ports present. This avoids accessing xhci members 
+atleast in driver core. But the layering violations would still be present.
+
+> 2. The driver is already accessing driver data of the child device so
+> arguably your series is not really making things much worse than they
+> already are.
+> 
+> I've just sent a couple of fixes to address some of the symptoms of
+> this layering violation here:
+> 
+> 	https://lore.kernel.org/lkml/20230607100540.31045-1-johan+linaro@kernel.org/
+>
+
+  As you pointed out offline to me that using xhci event notifiers I 
+mentioned on [3], if it is not acceptable to use them as notifications 
+to check whether we are in host mode, I believe the only way would be to 
+use the patches you pushed in.
+
+> Getting this fixed properly is going to take a bit of work, and
+> depending on how your multiport wake up implementation is going to look
+> like, adding support for multiport controllers may not make this much
+> harder to address.
+> 
+> So perhaps we can indeed merge support for multiport and then get back
+> to cleaning this up.
+So, you are referring to use the patches you pushed today as a partial 
+way to cleanup layering violations and merge multiport on top of it ? If 
+so, I am fine with it. I can rebase my changes on top of them.
+
+[1]: 
+https://lore.kernel.org/all/4eb26a54-148b-942f-01c6-64e66541de8b@quicinc.com/
+[2]: 
+https://lore.kernel.org/all/ca729f62-672e-d3de-4069-e2205c97e7d8@linaro.org/
+[3]: 
+https://lore.kernel.org/all/37fd026e-ecb1-3584-19f3-f8c1e5a9d20a@quicinc.com/
+
+Regards,
+Krishna,
