@@ -2,105 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 452307260B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 15:10:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6190C7260E1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 15:15:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240471AbjFGNKi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 09:10:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40890 "EHLO
+        id S234809AbjFGNPb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 09:15:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43664 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240536AbjFGNKd (ORCPT
+        with ESMTP id S240256AbjFGNPa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 09:10:33 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF1EB1FE0;
-        Wed,  7 Jun 2023 06:10:25 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4A6B460EA1;
-        Wed,  7 Jun 2023 13:10:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1CE6C433D2;
-        Wed,  7 Jun 2023 13:10:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686143424;
-        bh=U6UMlyzDkgPx8am93KGtfw1FlG1r4wUGZioBIzE02VU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=I3GG4+rKWWRdBfGfigs+YiHT2xXEuFwt0VgsL+2Z+ZnR36gPtccfQK1EZNzIuxC4x
-         Pox53+xizN4tytd4XIx2L60j9tBG27xGu77jKFzJTaPmRytthIJy3eOIFmPCIh3Np3
-         q5ft4GzD+8icYvAiZQm+N1TvQV5GRU9exmTDk0+/7AHmvunT+EspnZBBF8vtNHJOgY
-         H0eTgXMJwUuxfEwPPJCZaZxvUq0Km8LA2bK/2OTxIcTrMAS9PG9un4DXuNSMZ97mmd
-         q7qd4KhUPl7Q/ylKPffqow2XHheC6ieZWQK0uhvHwNrLbXmamD/dXjRCyJp0Sbbln9
-         7SEyhTBD+sB5Q==
-Date:   Wed, 7 Jun 2023 18:40:20 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        kernel test robot <lkp@intel.com>,
-        Dan Carpenter <error27@gmail.com>
-Subject: Re: [PATCH] soundwire: qcom: fix storing port config out-of-bounds
-Message-ID: <ZICBvP33XyOswWFM@matsya>
-References: <20230601102525.609627-1-krzysztof.kozlowski@linaro.org>
+        Wed, 7 Jun 2023 09:15:30 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5874199D
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 06:15:27 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f6da07feb2so72423075e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 06:15:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686143726; x=1688735726;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=L/XDMIe8IJ1TNLWHUR7TJpPgpdAL0coo33L6HePwpwU=;
+        b=rgkSeyK6REC2K8CC46he6AXgrB7wYAPVS7LghjkP/5NhroHDJsZyo3DB67My1scX/g
+         Lz4nqWPdD633J8XEMNb2H0l9FCmsSE7B/eWs6Z8qtPZfuJmRKCyuITdLl/uJ074oqOp9
+         bDjMCEV8yQof+dBaGzqL71LH1tmm1CjzfI10AQXXVozrA2u39SmUcQn6Uth2sGa4rNS2
+         4+Q20qygv1yQB68EM6RT6arNkr9gmrWABJMOO2+jOUDPHq/lXsTz6PkbbfGU3vzIYMBB
+         n1myet4TbeqTycp4qKR9jipJJ2VgZKYScVMxrcmCfI6gfcPvPnCvSmtJ/cuYxj5Eo60w
+         k8Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686143726; x=1688735726;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=L/XDMIe8IJ1TNLWHUR7TJpPgpdAL0coo33L6HePwpwU=;
+        b=NrZS7BqZ17A6C6LOv2szwbtmHSyweZ3w4FqA8dZXgcpIbAypKLaYyPgCVzAgRWYCiP
+         0N3QSb5nQEWXWWxxXsyUDu6UBFnssdqVCqCUcXJ34zGvBulMpGWMPkKdQSbQZTgRpOCm
+         IxYVNd124gHr+z5AC0Ib+wjbPXqCd3rVr+laLSkrh+khMo/tNK/oz0rexsN+iNRYGOfW
+         b3LDzfuHS0B//dcgzgKCc1B3KqQXya7RgwjfbXSks+9bjbKr3lCyYvXrdGReZAykRk0G
+         dyJa+AepXnCSLIOUD5gvaGzTiNNB4q3OVHKcLpzLiHuJUUkrjGo7UsN+BkYR5tfAGZpx
+         q/Nw==
+X-Gm-Message-State: AC+VfDw7aASKumxJiRJMF1FBkGRcXE66pblQ27clG8cY1fX2xoNEpSpt
+        wy9Cpt0Y+crW+QXL0smkoy/fQQ==
+X-Google-Smtp-Source: ACHHUZ5Jf7LWXz1e+RTA+nHiKsr62YMfGAjPeAgxWlws56ig+Je4GztBeAe/15TZdaZhLTX2F5iAbw==
+X-Received: by 2002:a05:600c:2256:b0:3f4:2255:8608 with SMTP id a22-20020a05600c225600b003f422558608mr4593091wmm.31.1686143726096;
+        Wed, 07 Jun 2023 06:15:26 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id m9-20020a7bcb89000000b003f72468833esm2163856wmi.26.2023.06.07.06.15.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Jun 2023 06:15:25 -0700 (PDT)
+Message-ID: <7ff3ba78-2af3-5226-0289-6aff63f41060@linaro.org>
+Date:   Wed, 7 Jun 2023 14:15:24 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230601102525.609627-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2 2/6] dt-bindings: clock: Add YAML schemas for LPASS
+ AUDIOCC and reset on SC8280XP
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     johan+linaro@kernel.org, agross@kernel.org,
+        konrad.dybcio@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230525122930.17141-1-srinivas.kandagatla@linaro.org>
+ <20230525122930.17141-3-srinivas.kandagatla@linaro.org>
+ <ebe8dc00-d937-240f-e9a5-e9049fd278ad@linaro.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <ebe8dc00-d937-240f-e9a5-e9049fd278ad@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 01-06-23, 12:25, Krzysztof Kozlowski wrote:
-> The 'qcom_swrm_ctrl->pconfig' has size of QCOM_SDW_MAX_PORTS (14),
-> however we index it starting from 1, not 0, to match real port numbers.
-> This can lead to writing port config past 'pconfig' bounds and
-> overwriting next member of 'qcom_swrm_ctrl' struct.  Reported also by
-> smatch:
-> 
->   drivers/soundwire/qcom.c:1269 qcom_swrm_get_port_config() error: buffer overflow 'ctrl->pconfig' 14 <= 14
-> 
-> Fixes: 9916c02ccd74 ("soundwire: qcom: cleanup internal port config indexing")
-> Cc: <stable@vger.kernel.org>
-> Reported-by: kernel test robot <lkp@intel.com>
-> Reported-by: Dan Carpenter <error27@gmail.com>
-> Link: https://lore.kernel.org/r/202305201301.sCJ8UDKV-lkp@intel.com/
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  drivers/soundwire/qcom.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-> index 7cb1b7eba814..88a772075907 100644
-> --- a/drivers/soundwire/qcom.c
-> +++ b/drivers/soundwire/qcom.c
-> @@ -202,7 +202,8 @@ struct qcom_swrm_ctrl {
->  	u32 intr_mask;
->  	u8 rcmd_id;
->  	u8 wcmd_id;
-> -	struct qcom_swrm_port_config pconfig[QCOM_SDW_MAX_PORTS];
-> +	/* Port numbers are 1 - 14 */
-> +	struct qcom_swrm_port_config pconfig[QCOM_SDW_MAX_PORTS + 1];
 
-Better use SDW_MAX_PORTS ?
 
->  	struct sdw_stream_runtime *sruntime[SWRM_MAX_DAIS];
->  	enum sdw_slave_status status[SDW_MAX_DEVICES + 1];
->  	int (*reg_read)(struct qcom_swrm_ctrl *ctrl, int reg, u32 *val);
-> -- 
-> 2.34.1
+On 31/05/2023 20:59, Krzysztof Kozlowski wrote:
+> On 25/05/2023 14:29, Srinivas Kandagatla wrote:
+>> The LPASS (Low Power Audio Subsystem) Audio clock controller provides reset
+>> support when it is under the control of Q6DSP.
+>>
+> 
+> A nit, subject: drop second/last, redundant "YAML schemas for". The
+> "dt-bindings" prefix is already stating that these are
+> bindings/schemas/YAML/etc.
+> 
+> Same comment for first patch.
+> 
+Thanks, will fix in v3
 
--- 
-~Vinod
+--srini
+> 
+>> Add support for those resets and adds IDs for clients to request the reset.
+>>
+>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> ---
+>>   .../bindings/clock/qcom,sc8280xp-lpasscc.yaml         | 11 +++++++++++
+>>   include/dt-bindings/clock/qcom,lpasscc-sc8280xp.h     |  5 +++++
+>>   2 files changed, 16 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml
+>> index 08a9ae60a365..0557e74d3c3b 100644
+>> --- a/Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml
+>> +++ b/Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml
+>> @@ -21,6 +21,7 @@ properties:
+>>   
+>>     compatible:
+>>       enum:
+>> +      - qcom,sc8280xp-lpassaudiocc
+>>         - qcom,sc8280xp-lpasscc
+>>   
+>>     qcom,adsp-pil-mode:
+>> @@ -45,6 +46,16 @@ required:
+>>   additionalProperties: false
+>>   
+>>   examples:
+>> +  - |
+>> +    #include <dt-bindings/clock/qcom,lpasscc-sc8280xp.h>
+>> +    lpass_audiocc: clock-controller@32a9000 {
+>> +        compatible = "qcom,sc8280xp-lpassaudiocc";
+>> +        reg = <0x032a9000 0x1000>;
+>> +        qcom,adsp-pil-mode;
+>> +        #reset-cells = <1>;
+>> +        #clock-cells = <1>;
+>> +    };
+> 
+> No need for new example - it's basically the same.
+> 
+> Best regards,
+> Krzysztof
+> 
