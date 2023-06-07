@@ -2,82 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BEA83726296
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 16:20:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B78E726323
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 16:43:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240303AbjFGOUN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 10:20:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50884 "EHLO
+        id S241134AbjFGOnY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 10:43:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36204 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235140AbjFGOUN (ORCPT
+        with ESMTP id S234832AbjFGOnY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 10:20:13 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0AB7A1BCA;
-        Wed,  7 Jun 2023 07:20:11 -0700 (PDT)
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 357DQGOx019196;
-        Wed, 7 Jun 2023 14:19:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=jt/7L4v4EiEJBGCv1kf/QGiKB7+gAcvXfpJHw1kCJz4=;
- b=OZSYTAZQ6zVI8dy/33OWhYGd1CN2ZTK9EGtfxfGmBkm92fGRDcBdpYiS5LsrYhtx8NCk
- qrdlUCmFihtpzigpq/v/lA00G6VqF4xJ3wXBtvnnEQxWrcTGB5yw1E3R/2lDE2q17uSS
- 9RIZ79apa+ZTY6xicP+2MQUTb8OrtjAVlmjxjXVd1DnDPTfcVn0inLjh+FB+5cfuXWn9
- XrBFcR/ltC+KcrXak3KZvFWwYJxO6yJVxaJrRr6RzVg9UKBt/0rOGhwI2E1uzwMs2dDK
- 5bXtG25QTqAsElrtFxNGlUEb6IKS7OsR0cU0IKQvc4RcgvBMsiBDmGrx6kXRIh4eI7vF Rw== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r2a71a2sv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 07 Jun 2023 14:19:52 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 357EJqWg010994
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 7 Jun 2023 14:19:52 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 7 Jun 2023
- 07:19:51 -0700
-Message-ID: <f27064a6-c792-55d1-5fe9-c5fbd432a88f@quicinc.com>
-Date:   Wed, 7 Jun 2023 08:19:50 -0600
+        Wed, 7 Jun 2023 10:43:24 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D25E91BFA
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 07:43:05 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id ffacd0b85a97d-30b023b0068so584539f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 07:43:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686148984; x=1688740984;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=TgVx/ivppv/BoC/MHBYYnozcIe3rB0Gk/93SvU0ieGk=;
+        b=iH7pl4QNui1hU+6JKz4/bUDAgdQYy03ZueQYLgxmh6OIy3u7Gx1wldh/KcHEiq+6kz
+         /Vk/iu4XBqjg8U2XjuWn0BAvz2yomQV6DTDLPaBt33TM9xnkL7KTx6+9QfRjnYiWBxxP
+         7lSGdu75EAUROtZNp1GiMCDTtrtLbEhh80noXR5Aq/52MX9Ya4ep1h65dqGxo0Vcy7ht
+         Z2/KZzISCKKxY1U2ltcw40/Qkjlq+Soeu5uwySeDDck2fgWOMg/GHSxmVpqJ+rBfK9wN
+         nE/gVlqnGX9oc6g6K8O0S4FytYEa4LnLPDFLy8G/8gsI6tD7tWXy2REN47hPUqFGwVZI
+         96Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686148984; x=1688740984;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TgVx/ivppv/BoC/MHBYYnozcIe3rB0Gk/93SvU0ieGk=;
+        b=Hw9rfFmONGRFAUgxMft3EEsa/dETYfT6jbMNsowWTWD94eCstAx5kzyhqiZhJw787u
+         gdznHJ36vl60TfSczA4KeDXxt37NAXWZRM2m3WfKhlc9GrxjeI+KZTu9egoDDG02u/ie
+         UpNAHpaX4ttdXuF+t+inNaCcstfL4L204y7gG4fV2skf5H3ck7sMZCzn1sgriX1Mws46
+         naYQfNe8W483Yk/gOQOYX5/CnZojPR6e+NpwGZ6Pgi0DpcGa4MN2PS58RZYG2FJpF2Kk
+         GyXHDXY0gut6wUbD9aKKxXIcMBNRb6P/19jIgDFtUF2fSlmeNPZUKB7Z0MFbs4wiNTSi
+         TW1Q==
+X-Gm-Message-State: AC+VfDx3/xu4L5/RzA7ygIpTJOYboGWmXn7ksNsfK29RC8HlStuCpJRa
+        WPHuFGTGkGpcuDFz20/IuTXwEw==
+X-Google-Smtp-Source: ACHHUZ4BJFkUr8BQPVvtoygEGhGFQ/34JaENFvbKrT9Mxiyyf1zIQ0xfupRRBYQHPNv3qH+L0Ngz+A==
+X-Received: by 2002:a5d:458c:0:b0:309:5029:95a9 with SMTP id p12-20020a5d458c000000b00309502995a9mr4791008wrq.32.1686148984213;
+        Wed, 07 Jun 2023 07:43:04 -0700 (PDT)
+Received: from localhost ([102.36.222.112])
+        by smtp.gmail.com with ESMTPSA id j14-20020adff54e000000b0030aec5e020fsm15785659wrp.86.2023.06.07.07.43.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Jun 2023 07:43:01 -0700 (PDT)
+Date:   Wed, 7 Jun 2023 17:42:58 +0300
+From:   Dan Carpenter <dan.carpenter@linaro.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dpu: tidy up some error checking
+Message-ID: <b27d016b-ff87-435b-8341-45a4369049fa@kadam.mountain>
+References: <ZH7vP2Swu8CYpgUL@moroto>
+ <gkeclhi5ouudxiwbd6wds7y2svtdcamyuqcnk42z7hr2js52qh@25ox3nxgeuzp>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH 0/3] Add MHI Endpoint network driver
-Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>
-CC:     Andrew Lunn <andrew@lunn.ch>, <davem@davemloft.net>,
-        <edumazet@google.com>, <kuba@kernel.org>, <pabeni@redhat.com>,
-        <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-References: <20230606123119.57499-1-manivannan.sadhasivam@linaro.org>
- <c769c95d-e8cb-4cf6-a41a-9bef5a786bb1@lunn.ch>
- <20230607065652.GA5025@thinkpad>
- <CAMZdPi-xJAj_eFvosVTmSzA99m3eYhrwoKPfBk-qH87yZzNupQ@mail.gmail.com>
- <20230607074118.GD5025@thinkpad>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <20230607074118.GD5025@thinkpad>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: AQvPgQUdBU1GiP7JR0VvuMz3JotwfZ-D
-X-Proofpoint-ORIG-GUID: AQvPgQUdBU1GiP7JR0VvuMz3JotwfZ-D
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-07_07,2023-06-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 bulkscore=0 phishscore=0 spamscore=0 adultscore=0
- priorityscore=1501 mlxlogscore=566 suspectscore=0 malwarescore=0
- clxscore=1011 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306070121
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <gkeclhi5ouudxiwbd6wds7y2svtdcamyuqcnk42z7hr2js52qh@25ox3nxgeuzp>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,59 +78,23 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/7/2023 1:41 AM, Manivannan Sadhasivam wrote:
-> On Wed, Jun 07, 2023 at 09:12:00AM +0200, Loic Poulain wrote:
->> On Wed, 7 Jun 2023 at 08:56, Manivannan Sadhasivam
->> <manivannan.sadhasivam@linaro.org> wrote:
->>>
->>> On Tue, Jun 06, 2023 at 02:59:00PM +0200, Andrew Lunn wrote:
->>>> On Tue, Jun 06, 2023 at 06:01:16PM +0530, Manivannan Sadhasivam wrote:
->>>>> Hi,
->>>>>
->>>>> This series adds a network driver for the Modem Host Interface (MHI) endpoint
->>>>> devices that provides network interfaces to the PCIe based Qualcomm endpoint
->>>>> devices supporting MHI bus (like Modems). This driver allows the MHI endpoint
->>>>> devices to establish IP communication with the host machines (x86, ARM64) over
->>>>> MHI bus.
->>>>>
->>>>> On the host side, the existing mhi_net driver provides the network connectivity
->>>>> to the host.
->>>>>
->>>>> - Mani
->>>>>
->>>>> Manivannan Sadhasivam (3):
->>>>>    net: Add MHI Endpoint network driver
->>>>>    MAINTAINERS: Add entry for MHI networking drivers under MHI bus
->>>>>    net: mhi: Increase the default MTU from 16K to 32K
->>>>>
->>>>>   MAINTAINERS              |   1 +
->>>>>   drivers/net/Kconfig      |   9 ++
->>>>>   drivers/net/Makefile     |   1 +
->>>>>   drivers/net/mhi_ep_net.c | 331 +++++++++++++++++++++++++++++++++++++++
->>>>>   drivers/net/mhi_net.c    |   2 +-
->>>>
->>>> Should we add a drivers/net/modem directory? Maybe modem is too
->>>> generic, we want something which represents GSM, LTE, UMTS, 3G, 4G,
->>>> 5G, ... XG etc.
->>>>
->>>
->>> The generic modem hierarchy sounds good to me because most of the times a
->>> single driver handles multiple technologies. The existing drivers supporting
->>> modems are already under different hierarchy like usb, wwan etc... So unifying
->>> them makes sense. But someone from networking community should take a call.
->>
->>
->> Yes, so there is already a drivers/net/wwan directory for this, in
->> which there are drivers for control and data path, that together
->> represent a given 'wwan' (modem) entity. So the generic mhi_net could
->> be moved there, but the point is AFAIU, that MHI, despite his name, is
->> not (more) used only for modem, but as a generic memory sharing based
->> transport protocol, such as virtio. It would then not be necessarily
->> true that a peripheral exposing MHI net channel is actually a modem?
->>
+On Tue, Jun 06, 2023 at 10:23:46PM +0200, Marijn Suijten wrote:
+> > @@ -359,8 +359,8 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
+> >  	 * frequency divided by the no. of rows (lines) in the LCDpanel.
+> >  	 */
+> >  	vsync_hz = dpu_kms_get_clk_rate(dpu_kms, "vsync");
+> > -	if (vsync_hz <= 0) {
+> > -		DPU_DEBUG_CMDENC(cmd_enc, "invalid - vsync_hz %u\n",
+> > +	if (!vsync_hz) {
+> > +		DPU_DEBUG_CMDENC(cmd_enc, "invalid - vsync_hz %lu\n",
+> >  				 vsync_hz);
 > 
-> Agree, mhi_*_net drivers can be used by non-modem devices too as long as they
-> support MHI protocol.
+> Nit: no need to print the value here, you know it's zero.  Could be
+> clarified to just "no vsync clock".
+> 
 
-I know of at-least 1 non-modem product in development that would benefit 
-from these drivers.
+Yeah.  That's obviously not useful.  Sorry, I will resend.
+
+regards,
+dan carpenter
+
