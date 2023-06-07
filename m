@@ -2,94 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EDD9C72706E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 23:19:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A29D7270BF
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 23:53:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229681AbjFGVTq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 17:19:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44960 "EHLO
+        id S231906AbjFGVxK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 17:53:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54648 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229536AbjFGVTp (ORCPT
+        with ESMTP id S230370AbjFGVxJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 17:19:45 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A23401984;
-        Wed,  7 Jun 2023 14:19:44 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 30F31648D3;
-        Wed,  7 Jun 2023 21:19:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2D3C433D2;
-        Wed,  7 Jun 2023 21:19:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686172783;
-        bh=kPvir4ZLGQOIvoukeOAmyBe+ZNEwToynta1WPvI98us=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=l0CWu4k/EmTG+pvWHcMifGGTMeSBy+7GNaDZcly9c4fJJrCNY3+c8SQ929wWq+Zkq
-         nUMXR9LMAA743dHVIn0MPJlPa9rwlZK39iV7jcl5BIebw+tst0VGShLGvnhuRWX/jc
-         ncaXWegQgYqBAH0ZKzPZatAhQNug6N3wDoriNzzZ0JLF8mtaUZk4M0RpKVys5wED28
-         Y43yN4sHHvVyoZ+Wt0k1Xd4ZACEI4gUQa6SzLuEIbhT2xGM6k9YtDgPZp0TL4l+veF
-         y8LorTecMe69Qduynnv0EbaFPuMOxxJTwdhtQXWU0V/GwW06Y2Q7lYdhNxTZGQDJZ4
-         oxWfQNKKOgTvQ==
-Date:   Wed, 7 Jun 2023 16:19:41 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     lpieralisi@kernel.org, kw@linux.com, kishon@kernel.org,
-        bhelgaas@google.com, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dlemoal@kernel.org, Yang Li <yang.lee@linux.alibaba.com>
-Subject: Re: [PATCH v6 8/9] PCI: endpoint: Add PCI Endpoint function driver
- for MHI bus
-Message-ID: <20230607211941.GA1176583@bhelgaas>
+        Wed, 7 Jun 2023 17:53:09 -0400
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com [IPv6:2607:f8b0:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21CA91FF7
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 14:53:07 -0700 (PDT)
+Received: by mail-pf1-x42e.google.com with SMTP id d2e1a72fcca58-653fcd58880so3274713b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 14:53:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1686174786; x=1688766786;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zyvg8QoYW74O3dONADg7EXfdyKnd4yv7Gmv6YiJL6Jc=;
+        b=iePh4xT2Yhrear5qpZ3eugazHSxMjjqSEgKmar+Ut8XG0gUXqV3+DPWIWO09stke09
+         0sr+XWhd8OagjvtCkuJCoF6Om04OkLWuToCO2Gt6TAD4ec0pmpgF/GmtqJihDHZ8KABU
+         x8jE5yePkFVZ6kuRL45vOx05NhD4JAgE/H3Zk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686174786; x=1688766786;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zyvg8QoYW74O3dONADg7EXfdyKnd4yv7Gmv6YiJL6Jc=;
+        b=LBT5FkMJUcwZ7omyApUuvp15ZqmRp0PHeaUrO1/4U3/Ul+D0N3gL1nVoUygzKblH+S
+         N+/aeVAvFKzbYdYP+LxXlytlC86E5CJwDaa5HUTSYccpEU5bN5ssLM5Mg1LVkTHCG6VC
+         F3Ad9wChndQ4+ufrl231LBlLxu9JKNEv5lfSQLOu7y9/a6Ej3+NDShSlAWYRDZiUPXYE
+         gbAoA8t0dkAsKlZEChNWYwhT9BSRhM21BieJHA8t1ahaoJGEMwHu6FnWOu/OoN+3TF5t
+         jShxk0T0DSxkTaDhN2W1xEk2QP06AaOShsoctL8/cnOkokSzdV7asxKaJmv2OY6mXKso
+         3/HQ==
+X-Gm-Message-State: AC+VfDx4qQkKrbAFIlWiFEs2+qjU7xXRuMqfUM41Df2X3NGB935B/LNV
+        79oKpPEx++y1R4WYgF8wGtLiYw==
+X-Google-Smtp-Source: ACHHUZ6H7ZkK58BxyoTwnLorjymlRn/oik+FiO502U+pJ/YGoiUFqx9sXjwVAXid4XKljYd63Yhfgw==
+X-Received: by 2002:a05:6a20:9384:b0:10b:f590:5a26 with SMTP id x4-20020a056a20938400b0010bf5905a26mr2885518pzh.26.1686174786491;
+        Wed, 07 Jun 2023 14:53:06 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:9d:2:34b2:b638:6b53:f6c2])
+        by smtp.gmail.com with ESMTPSA id j25-20020aa78d19000000b0065dd1e7c2c1sm1376486pfe.63.2023.06.07.14.53.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Jun 2023 14:53:05 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Jiri Kosina <jikos@kernel.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Cc:     dri-devel@lists.freedesktop.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-input@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org, hsinyi@google.com,
+        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
+        yangcong5@huaqin.corp-partner.google.com,
+        linux-arm-msm@vger.kernel.org,
+        Chris Morgan <macroalpha82@gmail.com>,
+        Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH v2 00/10] drm/panel and i2c-hid: Allow panels and touchscreens to power sequence together
+Date:   Wed,  7 Jun 2023 14:49:22 -0700
+Message-ID: <20230607215224.2067679-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.41.0.162.gfafddb0af9-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230607204923.GA1174664@bhelgaas>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[+cc Yang Li, sorry I didn't notice your patch earlier:
-https://lore.kernel.org/r/20230607093514.104012-1-yang.lee@linux.alibaba.com]
 
-I think we can squash this into the original commit since it hasn't
-gone upstream yet.  Also note that removing the dev_err() apparently
-makes "dev" unused, so we'd have to remove that as well, based on this
-report [2].
+The big motivation for this patch series is mostly described in the patch
+("drm/panel: Add a way for other devices to follow panel state"), but to
+quickly summarize here: for touchscreens that are connected to a panel we
+need the ability to power sequence the two device together. This is not a
+new need, but so far we've managed to get by through a combination of
+inefficiency, added costs, or perhaps just a little bit of brokenness.
+It's time to do better. This patch series allows us to do better.
 
-[2] https://lore.kernel.org/r/202306080418.i64hTj5T-lkp@intel.com
+Assuming that people think this patch series looks OK, we'll have to
+figure out the right way to land it. The panel patches and i2c-hid
+patches will go through very different trees and so either we'll need
+an Ack from one side or the other or someone to create a tag for the
+other tree to pull in. This will _probably_ require the true drm-misc
+maintainers to get involved, not a lowly committer. ;-)
 
-On Wed, Jun 07, 2023 at 03:49:25PM -0500, Bjorn Helgaas wrote:
-> On Fri, Jun 02, 2023 at 05:17:55PM +0530, Manivannan Sadhasivam wrote:
-> > Add PCI Endpoint driver for the Qualcomm MHI (Modem Host Interface) bus.
-> > The driver implements the MHI function over PCI in the endpoint device
-> > such as SDX55 modem. The MHI endpoint function driver acts as a
-> > controller driver for the MHI Endpoint stack and carries out all PCI
-> > related activities like mapping the host memory using iATU, triggering
-> > MSIs etc...
-> > ...
-> 
-> > +static int pci_epf_mhi_bind(struct pci_epf *epf)
-> > +{
-> > ...
-> 
-> > +	ret = platform_get_irq_byname(pdev, "doorbell");
-> > +	if (ret < 0) {
-> > +		dev_err(dev, "Failed to get Doorbell IRQ\n");
-> 
-> This dev_err() causes this new warning from the 0-day robot [1]:
-> 
->   drivers/pci/endpoint/functions/pci-epf-mhi.c:362:2-9: line 362 is redundant because platform_get_irq() already prints an error
-> 
-> Maybe we could drop it?
-> 
-> Bjorn
-> 
-> [1] https://lore.kernel.org/all/20230607163937.ZTc-D%25lkp@intel.com/
+Version 2 of this patch series doesn't change too much. At a high level:
+* I added all the forgotten "static" to functions.
+* I've hopefully made the bindings better.
+* I've integrated into fw_devlink.
+* I cleaned up a few descriptions / comments.
+
+This still needs someone to say that the idea looks OK or to suggest
+an alternative that solves the problems. ;-)
+
+Changes in v2:
+- Move the description to the generic touchscreen.yaml.
+- Update the desc to make it clearer it's only for integrated devices.
+- Add even more text to the commit message.
+- A few comment cleanups.
+- ("Add a devlink for panel followers") new for v2.
+- i2c_hid_core_initial_power_up() is now static.
+- i2c_hid_core_panel_prepared() and ..._unpreparing() are now static.
+- ihid_core_panel_prepare_work() is now static.
+- Improve documentation for smp_wmb().
+
+Douglas Anderson (10):
+  dt-bindings: HID: i2c-hid: Add "panel" property to i2c-hid backed
+    touchscreens
+  drm/panel: Check for already prepared/enabled in drm_panel
+  drm/panel: Add a way for other devices to follow panel state
+  of: property: fw_devlink: Add a devlink for panel followers
+  HID: i2c-hid: Switch to SYSTEM_SLEEP_PM_OPS()
+  HID: i2c-hid: Rearrange probe() to power things up later
+  HID: i2c-hid: Make suspend and resume into helper functions
+  HID: i2c-hid: Support being a panel follower
+  HID: i2c-hid: Do panel follower work on the system_wq
+  arm64: dts: qcom: sc7180: Link trogdor touchscreens to the panels
+
+ .../bindings/input/elan,ekth6915.yaml         |   5 +
+ .../bindings/input/goodix,gt7375p.yaml        |   5 +
+ .../bindings/input/hid-over-i2c.yaml          |   2 +
+ .../input/touchscreen/touchscreen.yaml        |   7 +
+ .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |   1 +
+ .../dts/qcom/sc7180-trogdor-homestar.dtsi     |   1 +
+ .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |   1 +
+ .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |   1 +
+ .../qcom/sc7180-trogdor-quackingstick.dtsi    |   1 +
+ .../dts/qcom/sc7180-trogdor-wormdingler.dtsi  |   1 +
+ drivers/gpu/drm/drm_panel.c                   | 196 +++++++++-
+ drivers/hid/i2c-hid/i2c-hid-core.c            | 338 +++++++++++++-----
+ drivers/of/property.c                         |   2 +
+ include/drm/drm_panel.h                       |  89 +++++
+ 14 files changed, 555 insertions(+), 95 deletions(-)
+
+-- 
+2.41.0.162.gfafddb0af9-goog
+
