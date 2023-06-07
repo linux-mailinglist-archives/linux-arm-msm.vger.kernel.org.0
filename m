@@ -2,57 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82B81726349
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 16:50:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E59B726541
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 17:57:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234794AbjFGOuG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 10:50:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39938 "EHLO
+        id S241053AbjFGP5H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 11:57:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240256AbjFGOto (ORCPT
+        with ESMTP id S241375AbjFGP5A (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 10:49:44 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 964C71BF3;
-        Wed,  7 Jun 2023 07:49:42 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 28E546402C;
-        Wed,  7 Jun 2023 14:49:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADBE0C433EF;
-        Wed,  7 Jun 2023 14:49:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686149381;
-        bh=UZXWmyrdgPrq2KVSeFy+H+GEAHfry3pcDwYgm6TYohA=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-        b=o7wQukWrtH47OJFIQHX8NdIWqXZmAaQ81SHn4hOcRBv1jgsTf3Sc91pX2znhks/wK
-         lQofQpY/jkk7Xy7DZ+hGL/SkmqMBc0YK4WfqdN7HuiYmwP7+gKqsEdeX0r5FnEanBF
-         TLAKLRmNAjnMxbme1d708XaRy+l3VbU9olEzIFocbk0G8JKLnpmp4EDTkwMNLnwDQu
-         /0hTsQ6R6b9OAXZ7BSmCoKGwU6+ceAbksusCPPzTL7DjewH0EYQaokxI1gTMHYGprZ
-         gUIhk+IKZAsXHsBVBgkra05278/C9Vt1hjrcvZePQSFuyepPJbujWX+6Im8UT22Rg/
-         99HcFiZ7pnTfA==
-Message-ID: <6ffa4d1b-0015-effc-2b7a-4426eadea84b@kernel.org>
-Date:   Wed, 7 Jun 2023 16:49:35 +0200
+        Wed, 7 Jun 2023 11:57:00 -0400
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B42D91FE5;
+        Wed,  7 Jun 2023 08:56:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1686153416; x=1717689416;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=cZe/eY9WGZFDdbzJxKfNGQkftH/W4BRuRruN4kLXhu0=;
+  b=PFavA8LIwNPmlbm5CY1FbpcE1sbNXmPCOurYPpvimN8CEyD5iZup/I7t
+   KeA5QTIwbH/sg8a9u2R9nzypxMSlQvMWOxY6StoBqK6l4zq9a0YbhqQDn
+   yuOQg1pkV7II3GwM8+nO6crsqiOWYS0ivjK/eqaRyuqLYXHajCbcKO6iU
+   QKk2qKmRgooCPmSJaZ16ubWyeTBPuXRKrqwQJEIhGFo816/MJwakj8V6R
+   SerxgeU4SqYz9eSl7E5+XM6XRzqpwZsa1jr4sXkox16RjNerzQZ/TN7oW
+   AjDX5JwSHyndv9iojwyO9EAXvokt5JLvNVerWG4GERCS6mS1hTbp1SD+5
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10734"; a="360360060"
+X-IronPort-AV: E=Sophos;i="6.00,224,1681196400"; 
+   d="scan'208";a="360360060"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2023 08:56:52 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10734"; a="739335786"
+X-IronPort-AV: E=Sophos;i="6.00,224,1681196400"; 
+   d="scan'208";a="739335786"
+Received: from sorrin-mobl3.amr.corp.intel.com (HELO [10.209.124.63]) ([10.209.124.63])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2023 08:56:50 -0700
+Message-ID: <5f647902-436a-ea1c-412e-30afbc4e71a8@linux.intel.com>
+Date:   Wed, 7 Jun 2023 09:51:44 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v1 1/2] dt-bindings: misc: fastrpc: add fastrpc group IDs
- property
+ Firefox/102.0 Thunderbird/102.11.0
+Subject: Re: [PATCH] soundwire: qcom: fix storing port config out-of-bounds
 Content-Language: en-US
-To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org
-Cc:     ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
-References: <1686138864-17136-1-git-send-email-quic_ekangupt@quicinc.com>
- <1686138864-17136-2-git-send-email-quic_ekangupt@quicinc.com>
-From:   Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <1686138864-17136-2-git-send-email-quic_ekangupt@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Bard Liao <yung-chuan.liao@linux.intel.com>,
+        Sanyog Kale <sanyog.r.kale@intel.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+        kernel test robot <lkp@intel.com>,
+        Dan Carpenter <error27@gmail.com>
+References: <20230601102525.609627-1-krzysztof.kozlowski@linaro.org>
+ <ZICBvP33XyOswWFM@matsya> <c39dc157-bd3d-a627-4eb0-a34ff43ab664@linaro.org>
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+In-Reply-To: <c39dc157-bd3d-a627-4eb0-a34ff43ab664@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
-        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -60,21 +74,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/06/2023 13:54, Ekansh Gupta wrote:
-> Add "qcom,fastrpc-gids" property to the list of optional properties.
-> This property contains the list of privileged group IDs which is
-> used to offload process to remote subsystem with increased privileges.
+
+
+On 6/7/23 08:51, Krzysztof Kozlowski wrote:
+> On 07/06/2023 15:10, Vinod Koul wrote:
+>> On 01-06-23, 12:25, Krzysztof Kozlowski wrote:
+>>> The 'qcom_swrm_ctrl->pconfig' has size of QCOM_SDW_MAX_PORTS (14),
+>>> however we index it starting from 1, not 0, to match real port numbers.
+>>> This can lead to writing port config past 'pconfig' bounds and
+>>> overwriting next member of 'qcom_swrm_ctrl' struct.  Reported also by
+>>> smatch:
+>>>
+>>>   drivers/soundwire/qcom.c:1269 qcom_swrm_get_port_config() error: buffer overflow 'ctrl->pconfig' 14 <= 14
+>>>
+>>> Fixes: 9916c02ccd74 ("soundwire: qcom: cleanup internal port config indexing")
+>>> Cc: <stable@vger.kernel.org>
+>>> Reported-by: kernel test robot <lkp@intel.com>
+>>> Reported-by: Dan Carpenter <error27@gmail.com>
+>>> Link: https://lore.kernel.org/r/202305201301.sCJ8UDKV-lkp@intel.com/
+>>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> ---
+>>>  drivers/soundwire/qcom.c | 3 ++-
+>>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+>>> index 7cb1b7eba814..88a772075907 100644
+>>> --- a/drivers/soundwire/qcom.c
+>>> +++ b/drivers/soundwire/qcom.c
+>>> @@ -202,7 +202,8 @@ struct qcom_swrm_ctrl {
+>>>  	u32 intr_mask;
+>>>  	u8 rcmd_id;
+>>>  	u8 wcmd_id;
+>>> -	struct qcom_swrm_port_config pconfig[QCOM_SDW_MAX_PORTS];
+>>> +	/* Port numbers are 1 - 14 */
+>>> +	struct qcom_swrm_port_config pconfig[QCOM_SDW_MAX_PORTS + 1];
+>>
+>> Better use SDW_MAX_PORTS ?
 > 
-> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+> That's interesting idea, but except of value, is the meaning actually
+> the same? Driver claims that port 0 is masked and max number of ports is
+> 14. Therefore it uses in all places constant QCOM_SDW_MAX_PORTS. We need
+> here +1, only because we index from 1, not 0, but we still index over
+> QCOM_SDW_MAX_PORTS, not SDW_MAX_PORTS. Wouldn't it be also confusing to
+> use here SDW_MAX_PORTS but then index over something else?
 
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC.  It might happen, that command when run on an older
-kernel, gives you outdated entries.  Therefore please be sure you base
-your patches on recent Linux kernel.
+SDW_MAX_PORTS only applies for the peripheral. DP0 is reserved for
+non-audio/Bulk request, DP15 is an alias for "all ports"
 
-You missed at least DT list (maybe more), so this won't be tested.
-Please resend and include all necessary entries.
+There's nothing in the spec that restricts the ports on the manager
+side, be it to dedicate Port0 or Port15 to a specific purpose or even
+the number of ports.
 
-Best regards,
-Krzysztof
-
+I would recommend using a vendor-specific definition rather than
+overloading a peripheral specification requirement.
