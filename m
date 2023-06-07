@@ -2,75 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 17AEB727304
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 01:33:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47979727331
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 01:39:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229499AbjFGXdh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 19:33:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43282 "EHLO
+        id S232728AbjFGXjZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 19:39:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47734 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231917AbjFGXdg (ORCPT
+        with ESMTP id S233397AbjFGXjW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 19:33:36 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31F282695
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 16:33:35 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f6255ad8aeso55083e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 16:33:35 -0700 (PDT)
+        Wed, 7 Jun 2023 19:39:22 -0400
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8464F26A5
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 16:39:09 -0700 (PDT)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b1b92845e1so59430301fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 16:39:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686180813; x=1688772813;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/lDlutq59/7K4O/ryHd5kkyj0gex47Jt6UQeyUtN12c=;
-        b=J1TWoMenYdXW7obNzZw8NOC/SdNCGnZFQHwTb+KuyzNhslN/CNgiYWG4I4mYo8mA0p
-         Pjtgaf68KovPIblJBL0S+zMTL22sUxFWT0BtwVwOILPBy/UskI8p1F5winjluuMFhQyv
-         X38s5ii26ANVaMtySX40ZZMNTgcR2QDKiJMiYZdT8JUBwECCFTIQrzahvQsvGG2jGFfy
-         uhjqFKxpvSUIWMtsmQ83yv+vIvJ9xq/PPPSujykLQ6QUjLEXVs7+4rdEaL/8PG7/g3EH
-         vaasv86oeJgAoq3phFBNRX0BnE5SIk4in1G2h4bb+RMiJDSHMTxhv18sN35WUelMGfl+
-         5Ktg==
+        d=linaro.org; s=google; t=1686181148; x=1688773148;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XONB9T8Mj7o/MLrEwoJSSBYj969JG7tPSlspH2W5BIw=;
+        b=GTSY7qEdobWh7LkTRnOAImvPKZUJQfgOgETcJ+tk6DI5sF/chuwr6uFDqqlVN23O2W
+         //yo7tNg480hQs0zkZINMpSZx3sk/T3RykwcV+TsgCqjcm6lxUr7OIiZgxIFpwSR5GDM
+         4G0wg5Ie0zBjwOhgMcBHNt5pPR8zWZkXbyFtqUc4AfJayZmsCu3RwDeCa8spwMuwj3kd
+         l7IFXSZtuqtnQi6PcQ7vFnWwXhpYhZaVzrLSjtc6apATcNyaMuyKL3dvg8eSImkt7HNR
+         s3HuH1jxWmY/bYrPhnN5PoHhxg9HXsMayW/9mjwSHTu08V8Fjpsb3fvDLgVQ95kyqjtA
+         HJ8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686180813; x=1688772813;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/lDlutq59/7K4O/ryHd5kkyj0gex47Jt6UQeyUtN12c=;
-        b=UZ05sz4ry0BcI2DtRzenm+MvmVZ7MJstclCWm5GZs9ZL2fw4sGDqCITGpwSQhVxI0+
-         99F6E7PLM+x+8+RvYtSJzLHLCMnPOiPeLIbSjTAMxpoN4NFk2wIYz44HZ51sGVBqvH28
-         dmuPK/NXzRbafbyvf+EK+u2Z+LvL1oDOK63/hMxuszdXENBAE+aGomAyKT1fQP1XeXUb
-         OVtpBAHFRDo+Ydz5qlKNVOdAdPfalAQtMXneLY1UlnOT+zz3Ji2uTaT2q5UqoqogdCZu
-         r5ntxktd08hEmWlXZiMcul8XokE+LUv0GMcfoRO24lKPfgrTIbxQzXuSZRNk30avr2CX
-         K7bA==
-X-Gm-Message-State: AC+VfDxdvdGIlujRQELkw66C3pj55uCrX3+MCGWmGVWIQD2u5wp6/e8f
-        bW4XzB30KWPInQuJW3rLd5sexA==
-X-Google-Smtp-Source: ACHHUZ5PDGB3d5i12eL55i/NBR8u8kJFenkMlHl7KQCxpRKMLa9dTwF9ztv8RLWp1CgAvjOdeb0e1w==
-X-Received: by 2002:a19:f00a:0:b0:4f4:d41b:f421 with SMTP id p10-20020a19f00a000000b004f4d41bf421mr2490086lfc.33.1686180813420;
-        Wed, 07 Jun 2023 16:33:33 -0700 (PDT)
-Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id b17-20020ac25631000000b004f001b0eda2sm1951199lff.56.2023.06.07.16.33.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jun 2023 16:33:32 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        dianders@chromium.org, vkoul@kernel.org, daniel@ffwll.ch,
-        airlied@gmail.com, agross@kernel.org, andersson@kernel.org,
-        marijn.suijten@somainline.org,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>
-Cc:     quic_abhinavk@quicinc.com, quic_jesszhan@quicinc.com,
-        quic_sbillaka@quicinc.com, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v17] drm/msm/dpu: add DSC blocks to the catalog of MSM8998
-Date:   Thu,  8 Jun 2023 02:33:31 +0300
-Message-Id: <168618077608.1883603.14367317273588128557.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <1686082272-22191-1-git-send-email-quic_khsieh@quicinc.com>
-References: <1686082272-22191-1-git-send-email-quic_khsieh@quicinc.com>
+        d=1e100.net; s=20221208; t=1686181148; x=1688773148;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XONB9T8Mj7o/MLrEwoJSSBYj969JG7tPSlspH2W5BIw=;
+        b=SXK2LyfXnbh/0tif3Kbi9HmO9sRBwOPgxw09bb0RttcF+jUoURO4c6yWGg5mj0niX8
+         FQ6TnhaId581zV3xhRftxNwiHIeQriPF7v6QHm9/hNJr87XHHS4ECIcoyjpjB53kX6AV
+         W1t754rhrFLyBkRdOCdyjoQUzQ+liMHOGtetqY5z9CmAweCxacodlqUpvY0ubiPUDlau
+         GU9NuLvdE+THDWHTlnnz/RJRTgihwjKhV0BJ1rfvFx3J+V6FNWH/lVFDXtnHXl8Wsirl
+         k4y0eC+bO7x37FkjbNgL6HLS5AbWy542hcRHmvtnOMV1b2InlCwRQheTROk1an0e04D7
+         g/nw==
+X-Gm-Message-State: AC+VfDw70JrjYzCr5vFJydww503ZZ5JbcJlhzrj/7vO8C/a3mhFXPGJg
+        RqSg4rhS9v+0KfcUBSMMswRDvA==
+X-Google-Smtp-Source: ACHHUZ5Ti07xNp1+TYebI62vHoSL/r5taUDlEmn3ZQRy27Ik7N84bpsPjsq4VfKfSjqdaopI0zXg+A==
+X-Received: by 2002:a2e:730c:0:b0:2a7:7100:ff5a with SMTP id o12-20020a2e730c000000b002a77100ff5amr2976356ljc.6.1686181147775;
+        Wed, 07 Jun 2023 16:39:07 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id o15-20020a2e90cf000000b002b1b92910c8sm346ljg.86.2023.06.07.16.39.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Jun 2023 16:39:07 -0700 (PDT)
+Message-ID: <e70b266b-85bb-f23f-dac8-47702a2aaf37@linaro.org>
+Date:   Thu, 8 Jun 2023 02:39:06 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v6 00/12] SM63(50|75) DPU support
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        iommu@lists.linux.dev, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+References: <20230411-topic-straitlagoon_mdss-v6-0-dee6a882571b@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230411-topic-straitlagoon_mdss-v6-0-dee6a882571b@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -79,22 +91,48 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 06/06/2023 15:43, Konrad Dybcio wrote:
 
-On Tue, 06 Jun 2023 13:11:12 -0700, Kuogee Hsieh wrote:
-> Some platforms have DSC blocks which have not been declared in the catalog.
-> Complete DSC 1.1 support for all platforms by adding the missing blocks to
-> MSM8998.
+[skipped the changelog]
+
+> ---
+> Konrad Dybcio (12):
+>        dt-bindings: display/msm: dsi-controller-main: Add SM6350
+>        dt-bindings: display/msm: dsi-controller-main: Add SM6375
+>        dt-bindings: display/msm: sc7180-dpu: Describe SM6350 and SM6375
+>        dt-bindings: display/msm: Add SM6350 MDSS
+>        dt-bindings: display/msm: Add SM6375 MDSS
+>        drm/msm/dpu: Add SM6350 support
+>        drm/msm: mdss: Add SM6350 support
+>        drm/msm/dpu: Add SM6375 support
+>        drm/msm: mdss: Add SM6375 support
+
+Will, we have finally picked up the display related patches. Could you 
+please pick up the IOMMU patches if they look fine to you.
+
+>        iommu/arm-smmu-qcom: Sort the compatible list alphabetically
+>        iommu/arm-smmu-qcom: Add SM6375 DPU compatible
+>        iommu/arm-smmu-qcom: Add SM6350 DPU compatible
 > 
-> Changes in v9:
-> -- add MSM8998 and SC8180x to commit title
+>   .../bindings/display/msm/dsi-controller-main.yaml  |   4 +
+>   .../bindings/display/msm/qcom,sc7180-dpu.yaml      |  23 ++-
+>   .../bindings/display/msm/qcom,sm6350-mdss.yaml     | 213 ++++++++++++++++++++
+>   .../bindings/display/msm/qcom,sm6375-mdss.yaml     | 215 +++++++++++++++++++++
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_4_sm6350.h | 173 +++++++++++++++++
+>   .../gpu/drm/msm/disp/dpu1/catalog/dpu_6_9_sm6375.h | 139 +++++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c     |   6 +
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h     |   2 +
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |   2 +
+>   drivers/gpu/drm/msm/msm_mdss.c                     |  10 +
+>   drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c         |   6 +-
+>   11 files changed, 790 insertions(+), 3 deletions(-)
+> ---
+> base-commit: 6db29e14f4fb7bce9eb5290288e71b05c2b0d118
+> change-id: 20230411-topic-straitlagoon_mdss-8f34cacd5e26
 > 
-> [...]
+> Best regards,
 
-Applied, thanks!
-
-[1/1] drm/msm/dpu: add DSC blocks to the catalog of MSM8998
-      https://gitlab.freedesktop.org/lumag/msm/-/commit/203b2019b3ac
-
-Best regards,
 -- 
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+With best wishes
+Dmitry
+
