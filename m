@@ -2,67 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D09F72671C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 19:21:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 759DF726728
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 19:24:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231238AbjFGRVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 13:21:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55088 "EHLO
+        id S231602AbjFGRYA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 13:24:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57110 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230042AbjFGRVg (ORCPT
+        with ESMTP id S231660AbjFGRX7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 13:21:36 -0400
-Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A86131725;
-        Wed,  7 Jun 2023 10:21:35 -0700 (PDT)
-Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-777ac4344f9so129627939f.0;
-        Wed, 07 Jun 2023 10:21:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686158495; x=1688750495;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=OMqgVdX9Zz/X8ixIFydMOZK3AqgJ4bp/xohKlAbcPao=;
-        b=Ip7VRYWw1pgoNd4hnOyYeBI9WcXQnrFbegNzK0mWYnX9oLJvswMsCJ3uNPLxJfnnvP
-         /BXaberyyfxQfWDpMS0/Y2myZgKFz+bgU2ENh5k93QLWNZLjhD5j0Dhgtz6cRzOUYEDb
-         00GrvNN6coIV9CK9mF0oEMsYdyhR0vGAlc+8hab7aobOPJd6ryFhZOwn4XXFpPUlXxqs
-         sBqNFKvEU0hsPq/0K+oIit+ikNOOXi4nhFz+kI7l6RYSaHtduJmUSiYq0+Rv9JeUk6Fj
-         S7G9F1DVy/4R8YpvRYC3am2xTloPpPJWpxXOy+b8KKmmGXvQdDrpLGv4BMNhwbXxTrwy
-         Rhqw==
-X-Gm-Message-State: AC+VfDzTk09WeJR54LxhgJDyezjZlAjm41nsJoInaf32rmXSLM2ydpWq
-        apZP8rqnZboMSIb79q4Uiw==
-X-Google-Smtp-Source: ACHHUZ6XIddSBEqrxRfMhoQYmpM9/x70i9xG4ujpQEXjTtUsUvfCGMHBT3QLAIuDVGgwjUARpXTnBg==
-X-Received: by 2002:a05:6602:218c:b0:777:b4b7:f6ac with SMTP id b12-20020a056602218c00b00777b4b7f6acmr6950873iob.10.1686158494747;
-        Wed, 07 Jun 2023 10:21:34 -0700 (PDT)
-Received: from robh_at_kernel.org ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id l9-20020a056638220900b004168295d33esm3670915jas.47.2023.06.07.10.21.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jun 2023 10:21:34 -0700 (PDT)
-Received: (nullmailer pid 3589542 invoked by uid 1000);
-        Wed, 07 Jun 2023 17:21:28 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        Wed, 7 Jun 2023 13:23:59 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC7D01FC2;
+        Wed,  7 Jun 2023 10:23:57 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 5EF12641FD;
+        Wed,  7 Jun 2023 17:23:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A56FC4339B;
+        Wed,  7 Jun 2023 17:23:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686158636;
+        bh=ysTQmFwcrMaqtH0/fQKIWDIqrZAmWkJtUOp6eA2jO3Q=;
+        h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+        b=BLtQ/YEq3DLQPvlWQQg1WppzW6CisxWFAfz371VCOAdPHz3KywMwhmub+66ev5bq2
+         tEczhXs1h3aelxFBqBXDf2ciJ7dUVXRIP2Kq3gkqeMAAlNCDYpE1zfJsY6yTC5RTdh
+         QnkA9h2QxWVSfxYwDcqFlc5lOs3yzpcQ32tI4WeWC1RErxFzjMgsVODKksIGROKkmD
+         GGu58Ub8OALiABj49Msr96yA71FmRdIjgpf6rLWfjO4a/T89pQiYXqZ3Iq4ouLrHeN
+         tILlBeoXLjYwCjVbpE1h1OAE/c3bWhXMlF1pD+Pw0g5WxfjyBqr9G/mRApvlTmWdTT
+         on0nFwWwAM0vg==
+From:   Mark Brown <broonie@kernel.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Abel Vesa <abel.vesa@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+In-Reply-To: <20230605115607.921308-1-abel.vesa@linaro.org>
+References: <20230605115607.921308-1-abel.vesa@linaro.org>
+Subject: Re: [PATCH] regulator: qcom-rpmh: Fix regulators for PM8550
+Message-Id: <168615863501.61774.16381253106507638065.b4-ty@kernel.org>
+Date:   Wed, 07 Jun 2023 18:23:55 +0100
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Ekansh Gupta <quic_ekangupt@quicinc.com>
-Cc:     linux-kernel@vger.kernel.org, konrad.dybcio@linaro.org,
-        srinivas.kandagatla@linaro.org, fastrpc.upstream@qti.qualcomm.com,
-        gregkh@linuxfoundation.org, robh+dt@kernel.org,
-        devicetree@vger.kernel.org, ekangupt@qti.qualcomm.com,
-        linux-arm-msm@vger.kernel.org, conor+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, andersson@kernel.org,
-        agross@kernel.org
-In-Reply-To: <1686155407-20054-2-git-send-email-quic_ekangupt@quicinc.com>
-References: <1686155407-20054-1-git-send-email-quic_ekangupt@quicinc.com>
- <1686155407-20054-2-git-send-email-quic_ekangupt@quicinc.com>
-Message-Id: <168615848839.3589502.17296725428809710882.robh@kernel.org>
-Subject: Re: [RESEND PATCH v1 1/2] dt-bindings: misc: fastrpc: add fastrpc
- group IDs property
-Date:   Wed, 07 Jun 2023 11:21:28 -0600
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13-dev-bfdf5
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,44 +59,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Wed, 07 Jun 2023 22:00:06 +0530, Ekansh Gupta wrote:
-> Add "qcom,fastrpc-gids" property to the list of optional properties.
-> This property contains the list of privileged group IDs which is
-> used to offload process to remote subsystem with increased privileges.
+On Mon, 05 Jun 2023 14:56:07 +0300, Abel Vesa wrote:
+> The PM8550 uses only NLDOs 515 and the LDO 6 through 8 are low voltage
+> type, so fix accordingly.
 > 
-> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml | 6 ++++++
->  1 file changed, 6 insertions(+)
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Applied to
 
-yamllint warnings/errors:
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
 
-dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/misc/qcom,fastrpc.example.dts:36.17-18 syntax error
-FATAL ERROR: Unable to parse input tree
-make[1]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/misc/qcom,fastrpc.example.dtb] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1512: dt_binding_check] Error 2
+Thanks!
 
-doc reference errors (make refcheckdocs):
+[1/1] regulator: qcom-rpmh: Fix regulators for PM8550
+      commit: b00de0000a69579f4d730077fe3ea8ca31404255
 
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1686155407-20054-2-git-send-email-quic_ekangupt@quicinc.com
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
 
-pip3 install dtschema --upgrade
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Thanks,
+Mark
 
