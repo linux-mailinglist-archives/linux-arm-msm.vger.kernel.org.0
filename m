@@ -2,118 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98194726980
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 21:09:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BC387269D5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 21:32:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231839AbjFGTJJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 15:09:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39730 "EHLO
+        id S230033AbjFGTcO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 15:32:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48050 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230447AbjFGTJI (ORCPT
+        with ESMTP id S229775AbjFGTbl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 15:09:08 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D6B21FC3
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 12:09:05 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f61b45ee0dso5970116e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 12:09:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686164943; x=1688756943;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UIB5Ez5/1zBL2wNPD4WgzbQ/0M0sdqjHOgDZ8J5dSvM=;
-        b=VdFAJtCLm+jUSR4aAxpLHLWbbFunpa2036Ss5uTS8Faf++8xMxEtm2XmjIKqT8sy4h
-         pDlzrwMepskf82EvzfInp/CueXdX9pcl67N3GZDqH+q+ed1CnpqvdFJyCBxRpFpwTh3d
-         rmVtBu4kFTBNDdgtTCjLH0ahjca4odKTFL7uPWbM5sUXudxM4U6B9C/ASZHxM/RGcay6
-         VEVgB/0VYaRMlDcKskZJSngefhIxYrBtRa+TO4+2ZOSeC1U7FCUmvjnmqRqpEQPhSWU0
-         2STruIBEzukUN3YKPEacvFISXSoGJrUBlJLWHhyJNUJ7tLSqjzS1O3ZySFAdK9ilLw0d
-         t0JQ==
+        Wed, 7 Jun 2023 15:31:41 -0400
+Received: from mail-io1-f52.google.com (mail-io1-f52.google.com [209.85.166.52])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 983B21FEA;
+        Wed,  7 Jun 2023 12:31:40 -0700 (PDT)
+Received: by mail-io1-f52.google.com with SMTP id ca18e2360f4ac-77807e43b7cso156545339f.1;
+        Wed, 07 Jun 2023 12:31:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686164943; x=1688756943;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UIB5Ez5/1zBL2wNPD4WgzbQ/0M0sdqjHOgDZ8J5dSvM=;
-        b=VGYOTwfbtiJvm5klycWxoZ5AJUUejZ0bU+LYvmcOV6cpIsrronadN0wsPugpmEYdmi
-         LJO3BBoaEyU8JBJenDRzgCKskdB3vmQkbPr8ikUQ4aNMajvdS6l8MCPW7A+Z1CaXvNQ6
-         riY2JkqB13g1vj+WqNQLj/+PjFXU/mn4erbWABHlmKyruOUO9sE/4+q4uqck2Vu44tRA
-         AZf0avx8oglBUcbJOYZzkjrV/yxmacCDEa4COIcD45g9DJ51G93OgEsiIRqPi6/q3K+A
-         EDoAsly4fRrIqYRspUy7jUVrYe95jLy3fGJfGNn1PmBZQ8pu3RNGFBOBkML+su4fHrZM
-         mzPQ==
-X-Gm-Message-State: AC+VfDx33Eyvbn/VYFFQra79jtLafs1t4AzPtcCylveFHwY0fNsF1xuW
-        bVGEQ6pKdoNbfD/IAzGNdNG7xw==
-X-Google-Smtp-Source: ACHHUZ710ZCReHCFhPP1TIIATmB/KflMtrDahZqphOkAf/9lJrhLsazyy74FGBr3u7yhOEKpAf7yiA==
-X-Received: by 2002:a05:6512:61:b0:4f4:b10a:349f with SMTP id i1-20020a056512006100b004f4b10a349fmr2306981lfo.34.1686164943627;
-        Wed, 07 Jun 2023 12:09:03 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id c7-20020a197607000000b004f38411f148sm1896781lff.84.2023.06.07.12.09.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Jun 2023 12:09:03 -0700 (PDT)
-Message-ID: <594582c6-6b20-7a44-a833-834c6e5eb9c6@linaro.org>
-Date:   Wed, 7 Jun 2023 21:08:56 +0200
+        d=1e100.net; s=20221208; t=1686166300; x=1688758300;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=k1u2R6kgxvDFNKARcsVD2fJrn977MYP6Tc2v9DawHyk=;
+        b=SxABloHv+cgyaafDl0uV8dXDemrwDi4hObvI8bwnItiok1co6mNlKztzqKwG1JR7O6
+         PG7KjF/0Ragv0Yo5yXvR6w07KKUJirLRJGoEKcpMEITvwXuJcex3vCfMFvXAyq3BQJMi
+         2wxj6jzEq+W6Yhyja4TlF8Zkp9HY5ybximM92pwVFDDqXKIL2Ig0Cz72lBhTBhltphjd
+         GEv37o2gcMMfJWrw6SI7b0ke48IMqzmWCaz47Zu7tIVFw/apom1Qjubz6PeeR+g52Tg3
+         QIODnjaBCpfpfFz2Yc/KLY14qeHXOg79CwW+BGJXr/Sg6Aw/s/jH86nllXeO715yEWgI
+         jUxg==
+X-Gm-Message-State: AC+VfDwKLts8/TMB8ECDZ24XkKXsNuhbkB83//JVWti3e6BMPwvwyI+Y
+        1AAnhS93dQkGvuwwaRwTn5vPcFNbnw==
+X-Google-Smtp-Source: ACHHUZ5S2ceWX4iPBmKUeRfViIixtZuHANUofqYLyWjtNJqUbChDXwaucONOETKXNqf7lakhI9TD4A==
+X-Received: by 2002:a6b:6502:0:b0:777:94ea:3658 with SMTP id z2-20020a6b6502000000b0077794ea3658mr8852783iob.5.1686166299738;
+        Wed, 07 Jun 2023 12:31:39 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id t17-20020a6b0911000000b0076c872823b7sm3945979ioi.22.2023.06.07.12.31.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Jun 2023 12:31:38 -0700 (PDT)
+Received: (nullmailer pid 3880182 invoked by uid 1000);
+        Wed, 07 Jun 2023 19:31:37 -0000
+Date:   Wed, 7 Jun 2023 13:31:37 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 13/15] arm64: dts: qcom: sc8180x: Add pmics
+Message-ID: <20230607193137.GA3874033-robh@kernel.org>
+References: <20230530162454.51708-1-vkoul@kernel.org>
+ <20230530162454.51708-14-vkoul@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v12 4/5] arm64: dts: qcom: ipq9574: Add LDO regulator node
-Content-Language: en-US
-To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, gregkh@linuxfoundation.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, mturquette@baylibre.com, sboyd@kernel.org,
-        quic_wcheng@quicinc.com, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org
-References: <cover.1686045347.git.quic_varada@quicinc.com>
- <1e795c18d6e19dbb5eebee357dddeb5022033825.1686045347.git.quic_varada@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <1e795c18d6e19dbb5eebee357dddeb5022033825.1686045347.git.quic_varada@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230530162454.51708-14-vkoul@kernel.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 7.06.2023 12:48, Varadarajan Narayanan wrote:
-> Add LDO regulator node
+On Tue, May 30, 2023 at 09:54:52PM +0530, Vinod Koul wrote:
+> SC8180X based platforms have PM8150, PM8150C, PMC8180 and SMB2351 PMICs,
+> so add these as well
 > 
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+> Co-developed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  Changes in v10:
-> 	- Add LDO regulator node
-> ---
->  arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts | 7 +++++++
->  1 file changed, 7 insertions(+)
+>  arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi | 326 ++++++++++++++++++++
+>  1 file changed, 326 insertions(+)
+>  create mode 100644 arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-> index 2b3ed8d..42d45e1 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-> +++ b/arch/arm64/boot/dts/qcom/ipq9574-rdp433.dts
-> @@ -45,6 +45,13 @@
->  			regulator-min-microvolt = <725000>;
->  			regulator-max-microvolt = <1075000>;
->  		};
+> diff --git a/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
+> new file mode 100644
+> index 000000000000..8247af01c84a
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc8180x-pmics.dtsi
+> @@ -0,0 +1,326 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
+> + * Copyright (c) 2021-2023, Linaro Limited
+> + */
 > +
-> +		mp5496_l2: l2 {
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-boot-on;
-> +			regulator-always-on;
-Nit: since it looks like you'll need to send another revision,
-if you switched the order of the last two properties, it'd make
-a nice reverse-Christmas-tree
-
-Konrad
+> +#include <dt-bindings/input/input.h>
+> +#include <dt-bindings/interrupt-controller/irq.h>
+> +#include <dt-bindings/spmi/spmi.h>
+> +#include <dt-bindings/iio/qcom,spmi-vadc.h>
+> +
+> +/ {
+> +	thermal-zones {
+> +		pmc8180-thermal {
+> +			polling-delay-passive = <100>;
+> +			polling-delay = <0>;
+> +
+> +			thermal-sensors = <&pmc8180_temp>;
+> +
+> +			trips {
+> +				trip0 {
+> +					temperature = <95000>;
+> +					hysteresis = <0>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip1 {
+> +					temperature = <115000>;
+> +					hysteresis = <0>;
+> +					type = "hot";
+> +				};
+> +
+> +				trip2 {
+> +					temperature = <145000>;
+> +					hysteresis = <0>;
+> +					type = "critical";
+> +				};
+> +			};
 > +		};
->  	};
->  };
->  
+> +
+> +		pmc8180c-thermal {
+> +			polling-delay-passive = <100>;
+> +			polling-delay = <0>;
+> +
+> +			thermal-sensors = <&pmc8180c_temp>;
+> +
+> +			trips {
+> +				trip0 {
+> +					temperature = <95000>;
+> +					hysteresis = <0>;
+> +					type = "passive";
+> +				};
+> +
+> +				trip1 {
+> +					temperature = <115000>;
+> +					hysteresis = <0>;
+> +					type = "hot";
+> +				};
+> +
+> +				trip2 {
+> +					temperature = <145000>;
+> +					hysteresis = <0>;
+> +					type = "critical";
+> +				};
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&spmi_bus {
+> +	pmc8180_0: pmic@0 {
+> +		compatible = "qcom,pm8150", "qcom,spmi-pmic";
+> +		reg = <0x0 SPMI_USID>;
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +
+> +		pon: power-on@800 {
+> +			compatible = "qcom,pm8916-pon";
+> +			reg = <0x0800>;
+> +			pwrkey {
+> +				compatible = "qcom,pm8941-pwrkey";
+> +				interrupts = <0x0 0x8 0x0 IRQ_TYPE_EDGE_BOTH>;
+> +				debounce = <15625>;
+> +				bias-pull-up;
+> +				linux,code = <KEY_POWER>;
+> +
+> +				status = "disabled";
+> +			};
+> +		};
+> +
+> +		pmc8180_temp: temp-alarm@2400 {
+> +			compatible = "qcom,spmi-temp-alarm";
+> +			reg = <0x2400>;
+> +			interrupts = <0x0 0x24 0x0 IRQ_TYPE_EDGE_BOTH>;
+> +			io-channels = <&pmc8180_adc ADC5_DIE_TEMP>;
+> +			io-channel-names = "thermal";
+> +			#thermal-sensor-cells = <0>;
+> +		};
+> +
+> +		pmc8180_adc: adc@3100 {
+> +			compatible = "qcom,spmi-adc5";
+> +			reg = <0x3100>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			#io-channel-cells = <1>;
+> +			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
+> +
+> +			ref-gnd@0 {
+> +				reg = <ADC5_REF_GND>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "ref_gnd";
+> +			};
+> +
+> +			vref-1p25@1 {
+> +				reg = <ADC5_1P25VREF>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "vref_1p25";
+> +			};
+> +
+> +			die-temp@6 {
+> +				reg = <ADC5_DIE_TEMP>;
+> +				qcom,pre-scaling = <1 1>;
+> +				label = "die_temp";
+> +			};
+> +		};
+> +
+> +		pmc8180_adc_tm: adc-tm@3500 {
+> +			compatible = "qcom,spmi-adc-tm5";
+> +			reg = <0x3500>;
+> +			interrupts = <0x0 0x35 0x0 IRQ_TYPE_EDGE_RISING>;
+> +			#thermal-sensor-cells = <1>;
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			status = "disabled";
+> +		};
+> +
+> +		rtc@6000 {
+> +			compatible = "qcom,pm8941-rtc";
+> +			reg = <0x6000>;
+> +			reg-names = "rtc", "alarm";
+> +			interrupts = <0x0 0x61 0x1 IRQ_TYPE_NONE>;
+> +		};
+> +
+> +		pmc8180_gpios: gpio@c000 {
+> +			compatible = "qcom,pmc8180-gpio";
+> +			reg = <0xc000>;
+> +			gpio-controller;
+> +			#gpio-cells = <2>;
+> +			interrupt-controller;
+> +			#interrupt-cells = <2>;
+> +		};
+> +	};
+> +
+> +	pmic@1 {
+> +		compatible = "qcom,pmc8180", "qcom,spmi-pmic";
+
+Not documented.
+
+Rob
