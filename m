@@ -2,103 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1B8CD725D7A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 13:44:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 087CE725D96
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 13:48:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239865AbjFGLoJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 07:44:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39200 "EHLO
+        id S240423AbjFGLsJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 07:48:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41152 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234932AbjFGLoI (ORCPT
+        with ESMTP id S239978AbjFGLsG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 07:44:08 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A34419BD;
-        Wed,  7 Jun 2023 04:44:08 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9F35B63DEC;
-        Wed,  7 Jun 2023 11:44:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24B6C4339B;
-        Wed,  7 Jun 2023 11:44:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686138247;
-        bh=MwyhiYcJENevj1dluDqPre/wvn9RYsMbpU1n3B8UBGc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=XP5fEfMWhR1k6iKYyVbghg7Zpf0snzMJyW2y9bOGK3IxsQ5pf82vV4ZhdQCoV9604
-         CW25JEqmDKX69xEOQDDVte4q8yZeGdJ9tGVPh5z2Ufa0B0mP/OeLHEwmfLDpv2O2e/
-         +7z64XYje57uCu3pJ/t0E0jutzfBuqx/GYjHgQO8JqXff3p/LE9OKS6O0FlPubA7Fp
-         a150cXzUyFoo+zxAQaqLuwbZElgTfJ72pXnKMQs0YT60BFpBQ8R5fxY5jLM8uXw71X
-         6IxHLMjGc+JN0Z0b2zcOf7ms1vYhFf1RQhTok5XNwOpiIjS1ARgRiYuA6vwowFrzmY
-         TR+KUDe32WlVA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1q6raW-0008Uw-VQ; Wed, 07 Jun 2023 13:44:29 +0200
-Date:   Wed, 7 Jun 2023 13:44:28 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com
-Subject: Re: [PATCH v8 6/9] usb: dwc3: qcom: Add multiport controller support
- for qcom wrapper
-Message-ID: <ZIBtnPp0oV6_GFFk@hovoldconsulting.com>
-References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-7-quic_kriskura@quicinc.com>
- <20230515222730.7snn2i33gkg6ctd2@ripper>
- <20230526025554.ni527gsr2bqxadl3@ripper>
- <37fd026e-ecb1-3584-19f3-f8c1e5a9d20a@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <37fd026e-ecb1-3584-19f3-f8c1e5a9d20a@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Wed, 7 Jun 2023 07:48:06 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 193FB19D;
+        Wed,  7 Jun 2023 04:48:06 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 357BUF5l001215;
+        Wed, 7 Jun 2023 11:47:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id; s=qcppdkim1;
+ bh=V5VxbyKrbJL/YaD4lToHiz/oU8BiLRJMivsLrvBR6/E=;
+ b=SDkI55MjKKtLPYyNbzAj9BeeT2n2xINGQSs1hMUOmCMfS4wzOhpDGdlyokrnS2EI/PL2
+ plEzweqdxVn9vSjnQLYUsacNIRF9Mq00jmwfwEJh1Rv1sb2fgPNu/dZUQ9HnFgc4kOD5
+ xTVwIGqYg8vmv9M7oL9oOZubKSWdKKAIHXx7ZVloOjJcH3IEgVMBDNusYu4e8cfFFWgF
+ 9yEdt1Zu8pY0rfvheB0JnlpwJQtrB7CuMRTlJvvK6aKc6TP4BF+LfOTxJxqfl1uSmhK7
+ njOB2NibbpkJ7FXMK/EbJJXgpUr5LwqZC4esAXTnj+8wJVcdYuJBfSAiCj8R3YelLwQF xQ== 
+Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r2a719rmg-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 07 Jun 2023 11:47:55 +0000
+Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 357Bl2mV030269;
+        Wed, 7 Jun 2023 11:47:51 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3qyxkm28p6-1;
+        Wed, 07 Jun 2023 11:47:51 +0000
+Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
+        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 357BlpMQ030886;
+        Wed, 7 Jun 2023 11:47:51 GMT
+Received: from hu-sgudaval-hyd.qualcomm.com (hu-rohiagar-hyd.qualcomm.com [10.213.106.138])
+        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 357BlpH2030883;
+        Wed, 07 Jun 2023 11:47:51 +0000
+Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 3970568)
+        id 52E005F24; Wed,  7 Jun 2023 17:17:50 +0530 (+0530)
+From:   Rohit Agarwal <quic_rohiagar@quicinc.com>
+To:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, rafael@kernel.org, viresh.kumar@linaro.org,
+        tglx@linutronix.de, maz@kernel.org, mani@kernel.org,
+        robimarko@gmail.com
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>
+Subject: [PATCH v3 0/5] Add devicetree support for SDX75 Modem and IDP
+Date:   Wed,  7 Jun 2023 17:17:44 +0530
+Message-Id: <1686138469-1464-1-git-send-email-quic_rohiagar@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 8TLqnmKwnLTB1Ej_LjLh22mBNPnoXKSw
+X-Proofpoint-ORIG-GUID: 8TLqnmKwnLTB1Ej_LjLh22mBNPnoXKSw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-07_06,2023-06-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ impostorscore=0 bulkscore=0 phishscore=0 spamscore=0 adultscore=0
+ priorityscore=1501 mlxlogscore=561 suspectscore=0 malwarescore=0
+ clxscore=1015 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306070097
+X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
+        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, May 26, 2023 at 08:55:22PM +0530, Krishna Kurapati PSSNV wrote:
-> On 5/26/2023 8:25 AM, Bjorn Andersson wrote:
+Hi,
 
-> > We need to fix the dwc3 glue design, so that the glue and the core can
-> > cooperate - and we have a few other use cases where this is needed (e.g.
-> > usb_role_switch propagation to the glue code).
+Changes in v3:
+ - Clubbed all the dt node into a single patch as suggested by Krzysztof.
+ - Removed the applied patch.
+ - Addressed some comments from Konrad and Dmitry.
 
->    Thanks for the comments on this patch. I had some suggestions come in 
-> from the team internally:
-> 
-> 1. To use the notifier call available in drivers/usb/core/notify.c and 
-> make sure that host mode is enabled. That way we can access dwc or xhci 
-> without any issue.
+Changes in v2:
+ - Added the CPUFreq support patch.
+ - Collected the Acked by tags.
+ - Addressed some minor comments from Konrad.
 
-I don't think this is a good idea and instead the callbacks should be
-dedicated for the xhci and dwc3 drivers. A struct with callbacks can be
-passed down to the child devices, which call back into the drivers of
-their parents for notifications and when they need services from them
-(e.g. during suspend or on role changes).
+This series adds devicetree support for Qualcomm SDX75 platform and IDP
+board. This series functionally depends on GCC and RPMh Clock support
+series [1], and pinctrl support for SDX75 [2] which are under review.
 
-> 2. For this particular case where we are trying to get info on number of 
-> ports present (dwc->num_usb2_ports), we can add compatible data for 
-> sc8280-mp and provide input to driver telling num ports is 4.
+With this current devicetree support, the IDP can boot into initramfsshell.
 
-That may also work as a way to avoid parsing the xhci registers, but I'm
-still not sure why simply counting the PHYs in DT would not work.
+[1] https://lore.kernel.org/lkml/20230419133013.2563-3-quic_tdas@quicinc.com/
+[2] https://lore.kernel.org/all/1684409015-25196-1-git-send-email-quic_rohiagar@quicinc.com/
 
-Johan
+Thanks,
+Rohit.
+
+
+Rohit Agarwal (5):
+  dt-bindings: arm: qcom: Document SDX75 platform and boards
+  dt-bindings: firmware: scm: Add compatible for SDX75
+  dt-bindings: interrupt-controller: Add SDX75 PDC compatible
+  dt-bindings: cpufreq: cpufreq-qcom-hw: Add SDX75 compatible
+  arm64: dts: qcom: Add SDX75 platform and IDP board support
+
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   7 +
+ .../bindings/cpufreq/cpufreq-qcom-hw.yaml          |   1 +
+ .../devicetree/bindings/firmware/qcom,scm.yaml     |   1 +
+ .../bindings/interrupt-controller/qcom,pdc.yaml    |   1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+ arch/arm64/boot/dts/qcom/sdx75-idp.dts             |  33 ++
+ arch/arm64/boot/dts/qcom/sdx75.dtsi                | 660 +++++++++++++++++++++
+ 7 files changed, 704 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sdx75-idp.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sdx75.dtsi
+
+-- 
+2.7.4
+
