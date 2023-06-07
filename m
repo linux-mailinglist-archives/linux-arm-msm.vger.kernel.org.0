@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7D3AB7268F5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 20:36:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AEB367268FB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 20:37:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232956AbjFGSgz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 14:36:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51654 "EHLO
+        id S232646AbjFGShJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 14:37:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52194 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232724AbjFGSgr (ORCPT
+        with ESMTP id S229904AbjFGShI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 14:36:47 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CF156210A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 11:36:26 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id 4fb4d7f45d1cf-5149c51fd5bso2033679a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 11:36:26 -0700 (PDT)
+        Wed, 7 Jun 2023 14:37:08 -0400
+Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D83E61BEB
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 11:36:50 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-514859f3ffbso1869844a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 11:36:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686162984; x=1688754984;
+        d=linaro.org; s=google; t=1686163009; x=1688755009;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=N3nc7yvS38a66Hs/mYzWRVagS1AxICPdH5Cqth3w9cQ=;
-        b=D88sJsHC5TTSdVjCNnP8dKHKMCecaWzVZpY/ySjxfeX/wCpPElfsvttMwSzcnkaj2E
-         P4JypKreP1nAcb1QUqZ3pFxqYBhi2YsbZhDmCt9Fticnv8dwQcMwGDBB2/SJidLpZLgN
-         73G0VSePPUsBfiQEAG3MeIUSHjhn2BkOR2Xt4mpzMbG+1NUO9B1gMPHED/seiV/xfkLR
-         FTIw1eN8jnt53k2LBNOBdRUs8MI1nzP70EG41krrWyKD+/Wy5r9xIpyWAQzhaY9eeKRn
-         OH0LovT6zCYnMlPDgkOfT4K3vCcBrsLeSXfxN97zuuucZ6Mhc/Xe8OuPjqJrcB6MKJRT
-         qjEQ==
+        bh=WUrZIzSJIRlczWd6GDv9NQC7NlUjf5TxBBAYmp5SqcM=;
+        b=qNtY3+bmVG8jU5WdiB+8DA6SyFimd3qArmdD82vsrPRn2/h2gRi/9aarnRIgH+j9mM
+         ThwPsaJrj6qNYiwYb/N7Jl4wzA6BHxyuqEuhfsyl7C1UKepauBZoKVYiGz311OPceDsx
+         4sDeJ0FDwq0Lj/F7WZEV63zt/a4+9wXLlYj5/hFsJBHuyDbOvFxqdmLOQ4CMfuT/qf3T
+         dMzQQL+oJYJnmwuxR13OIMXpl2WojUuKKMbjGzeU+X4FeZt5IpaRlvvsiGvZPZDt1FXU
+         8HD40xMTMv5a4HhBfVsxjPDz/0C3nGUDZ80HoxPq5wiTE3dUwv+ibj51RsArP2wKAHBw
+         +caQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686162984; x=1688754984;
+        d=1e100.net; s=20221208; t=1686163009; x=1688755009;
         h=content-transfer-encoding:in-reply-to:from:references:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=N3nc7yvS38a66Hs/mYzWRVagS1AxICPdH5Cqth3w9cQ=;
-        b=CPUaEEWtES27L/hYTmTkX6+QYThOTjwceObii5FSEUd6U0h6pV3c/LxsRwBXic6LSy
-         eblElrwmLP43MmElEIsUiw/NbCKqvJ7u7Htinhgjvsxy4vkztsBeZLdaPPYV4UX5UY1B
-         ImeR0dCEShY9K15NHp3AOL0+2ldP9oqtkEfDEk6lGCs8nDPk1C6ABAFpjMIfM1KKXFJZ
-         RnYvz9+AVRWW4eP/9kYlh9ayzhkvQlDcxHoE9KpdDBvDWcP6V68Ti93roy7ykhFwESj4
-         TE3T5oxTXZFNQwfY9y9Vpt3G2e87FogTxSKvTq5nBxYViJMqzKpMpXiUBxaWsMzqeK4A
-         HTfA==
-X-Gm-Message-State: AC+VfDwpMuBIJ+wZBbZPz5lw1vm7oHXCt3Pq05oUqwVcHFEHfSTRHUQJ
-        TQhM7Gg3mbwwVAtTZ0o+KA8pEQ==
-X-Google-Smtp-Source: ACHHUZ7nGuEhVJ38jsgvyId2kGf22wlefHu+wUCPOAjlvIRMer4MbAKklw+bmZjp+BFcARuqC7UR0g==
-X-Received: by 2002:a17:907:9718:b0:978:8685:71cd with SMTP id jg24-20020a170907971800b00978868571cdmr2751998ejc.71.1686162984584;
-        Wed, 07 Jun 2023 11:36:24 -0700 (PDT)
+        bh=WUrZIzSJIRlczWd6GDv9NQC7NlUjf5TxBBAYmp5SqcM=;
+        b=JXE/+laVIuZiDMjS+qUOCXzUujh/TrJcjiDuAFIcqMalhuyFIKFcXRdbcynhGRsYkF
+         FZrHZAWJ/tqGKo5susIYG7DeSXJZfneS8C3FxlqLOukbjufFMrIL8MdT6uSvwZuO3hfv
+         /yVmfyK/SG+6XbADHRrwg5iHItEFJDYDwquXpsVRRwGtht5Gf25TDIYKw7crnKU6Hsr4
+         0PFpFn2btxgOHSdT7ANtZrJ/sduFwclX7f0MHIi5Z/fpH5tTAzGyhZnJgXicn9DAo5/+
+         mf+wxNISdMGQ6YaFbMsMko3GR78uNZTTFS1of/k7DK3+Jqzi3zE31beG8X+6G93UJpT2
+         SsJw==
+X-Gm-Message-State: AC+VfDyAlwz9fRF/86NuM8Bv/Qs6Q5UnnBNyguqWP+9zGui6Hu0QZtFS
+        LF5FdlihbxHW3J2aYjDJzWEaOg==
+X-Google-Smtp-Source: ACHHUZ6Kslk/hZ+XFOlhi4ADtp8yKeRWk+pl++7bGMlZBsOk5y3KrpkIDuTfF8PrEbppQ+zPjcZmvg==
+X-Received: by 2002:a17:907:c1e:b0:974:5ef9:f4d4 with SMTP id ga30-20020a1709070c1e00b009745ef9f4d4mr6992165ejc.5.1686163009416;
+        Wed, 07 Jun 2023 11:36:49 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id s10-20020a056402014a00b0051422f31b1bsm6389826edu.63.2023.06.07.11.36.21
+        by smtp.gmail.com with ESMTPSA id fx12-20020a170906b74c00b0094ebc041e20sm7167411ejb.46.2023.06.07.11.36.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Jun 2023 11:36:24 -0700 (PDT)
-Message-ID: <21bfe86f-8257-d0ff-883b-bbe451d8f77b@linaro.org>
-Date:   Wed, 7 Jun 2023 20:36:21 +0200
+        Wed, 07 Jun 2023 11:36:48 -0700 (PDT)
+Message-ID: <1904d271-8db1-e012-ab00-060e418f4c14@linaro.org>
+Date:   Wed, 7 Jun 2023 20:36:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH 9/9] arm64: defconfig: Enable QCOM M31 USB phy driver
+Subject: Re: [PATCH 6/9] phy: qcom: Add qcom,m31 USB phy driver
 Content-Language: en-US
 To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
         andersson@kernel.org, konrad.dybcio@linaro.org, vkoul@kernel.org,
@@ -72,9 +72,9 @@ To:     Varadarajan Narayanan <quic_varada@quicinc.com>, agross@kernel.org,
         linux-usb@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
         linux-clk@vger.kernel.org
 References: <cover.1686126439.git.quic_varada@quicinc.com>
- <55f51785b36b9725fe5283a58230aee4e89b4d6f.1686126439.git.quic_varada@quicinc.com>
+ <353c5affd1d638bdc7e4ed187616a938e8d763a4.1686126439.git.quic_varada@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <55f51785b36b9725fe5283a58230aee4e89b4d6f.1686126439.git.quic_varada@quicinc.com>
+In-Reply-To: <353c5affd1d638bdc7e4ed187616a938e8d763a4.1686126439.git.quic_varada@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -88,10 +88,11 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 07/06/2023 12:56, Varadarajan Narayanan wrote:
-> Enable QCOM M31 USB phy driver present in IPQ5332
+> Include M31 phy driver if CONFIG_PHY_QCOM_M31_USB is enabled
+> 
+> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
 
-What is "QCOM"? If acronym, extend. IPQ5332 - provide full name, so
-"Qualcomm IPQ....".
+That's not a separate commit.
 
 Best regards,
 Krzysztof
