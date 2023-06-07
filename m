@@ -2,80 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 46698725323
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 07:00:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AECB5725351
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 07:27:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234657AbjFGFAv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 01:00:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55154 "EHLO
+        id S233762AbjFGF12 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 01:27:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60410 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234554AbjFGFAr (ORCPT
+        with ESMTP id S233697AbjFGF10 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 01:00:47 -0400
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E06E9173A;
-        Tue,  6 Jun 2023 22:00:43 -0700 (PDT)
-Received: by mail-qv1-xf33.google.com with SMTP id 6a1803df08f44-5ed99ebe076so67875006d6.2;
-        Tue, 06 Jun 2023 22:00:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686114043; x=1688706043;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lKpXbq/o8UuRrRzfkzrH5gxvv1kbuqM5H9JQKpqvD7I=;
-        b=aX8etcyDUFntbPecV6PfYzVTchlTtRlLk365FExEaHvBs6tKJcxW+ZkR03n9K5oiZM
-         IQo1x7mV2vkwackaH2Yyo53hDCDRELawGM41BJil01Ry+b1jp+wabsq4pgbC4DwMltSj
-         axPXcVtyQ/+GuyMVM5AGVdfGoQv3qDLcm2Im0GJUilrqo2SjZbZPM+ST+U76wQ3HM9Dl
-         Ol8qE+Lg7kGiAJtfDliWzPunTzmAmjzCXH1bfkgL9L1+sqhqAnTJUhYysDgBditLwetX
-         LkWElbsP069XMtHy0xS+ajUI1Hc1O/CFrNFiWs0oF6rrnKrMmpn6n6TtApjKefwXdech
-         GhwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686114043; x=1688706043;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lKpXbq/o8UuRrRzfkzrH5gxvv1kbuqM5H9JQKpqvD7I=;
-        b=ILSpZxWz/nxB6f7o1amL/WVTZpSyy6NfYAsyPWYfkZlRyc1y9S5IandbpWVhELrs6t
-         LPIbzGKy/oIhZ0mIL9T0tnJKBWDJiQpdpzjVRdrs2UD2nTr/LvUFFQc5DWkVwmbRsSMZ
-         v0FbwMrjvJanuuaBhcyfV2bVMIWbGTnatLaAiZ0UFdNcKGGRqpHtVgD4dQBMf1VTwY/R
-         ebWwGIqgLt6i+aZZ2Q1Kh5jJ4l9xQz4HNf8ZuUq1P5w1jiK7CsCpqEa00XNgR0QhopWt
-         R3IceBap9cXa3nO51QX2lI991e1+JltKo3vDXO1BmDCVm36jPkpmjDHGdpFfcxP09IzA
-         eeRA==
-X-Gm-Message-State: AC+VfDxMjcSYE+O4YqlGWP21nMtkKFvJFOUiMgCvv1Z6ifhU0fP7uMMS
-        Unuh7bgTGUDlLXkmNXUl8pg=
-X-Google-Smtp-Source: ACHHUZ4Y6t6HSg1zqhxRj82btl6obKDOQZPeg26LrhuuLdslMkw5/5paxnhXm5TSIQqP5143BAMtDw==
-X-Received: by 2002:a05:6214:21c4:b0:629:1659:dcc with SMTP id d4-20020a05621421c400b0062916590dccmr2632656qvh.34.1686114042851;
-        Tue, 06 Jun 2023 22:00:42 -0700 (PDT)
-Received: from Latitude-E6420.mynetworksettings.com ([2600:4040:2007:9800:c358:f4f2:89b6:ca7d])
-        by smtp.gmail.com with ESMTPSA id m1-20020ad44481000000b00621430707f7sm5848980qvt.83.2023.06.06.22.00.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 Jun 2023 22:00:42 -0700 (PDT)
-From:   Rudraksha Gupta <guptarud@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        soc@kernel.org
-Cc:     Rudraksha Gupta <guptarud@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: [PATCH v5 4/4] ARM: dts: qcom: Add Samsung Galaxy Express support
-Date:   Wed,  7 Jun 2023 01:00:23 -0400
-Message-Id: <20230607050025.86636-5-guptarud@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230607050025.86636-1-guptarud@gmail.com>
-References: <20230607050025.86636-1-guptarud@gmail.com>
+        Wed, 7 Jun 2023 01:27:26 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34F951989;
+        Tue,  6 Jun 2023 22:27:25 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3575ARH4007522;
+        Wed, 7 Jun 2023 05:27:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=M8hFxouisdigDbydomP6GvF0Kw4kwhV18hHxxMirckU=;
+ b=VNhi8aw7vGJgb0elroU0YMhbW0EPx21FZjI40oa9Sme1ARyTFM545TDXcXb8GDRUABX4
+ VrJTu2/eGwISmfIv8GxZJNNRXS1JqSYDXy5WpUwlQSq+H9/9B4WljV1DfOgdf4E1SlSk
+ ka2dDO8x70RfyzxsSL3+uKpzBinyawP+c2bLbMjaA+gTaCCNcscDsH4bNloqacwEXrIq
+ XCvZU/Bo1WfjNI/Y/O93ZG0l19ugLFF93GhhLorXBeDXUgj6G2cz9cnKUJzC0+1yXl9Q
+ zmoCR7eh5v0Pz9L1I9eNQI2MQx/ScfMUcpya4314bQlgQcJpZ1vu3t4BeKQiuPhAceNK kQ== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r2a6yrywp-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 07 Jun 2023 05:27:05 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3575R4OA020172
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 7 Jun 2023 05:27:04 GMT
+Received: from [10.50.40.229] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 6 Jun 2023
+ 22:27:00 -0700
+Message-ID: <318e0ebd-0921-06ad-dadc-ceb819a44a12@quicinc.com>
+Date:   Wed, 7 Jun 2023 10:56:57 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH V23 0/3] misc: Add driver support for Data Capture and
+ Compare unit(DCC)
+To:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@ieee.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC:     <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, Sibi Sankar <quic_sibis@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>
+References: <cover.1683265984.git.quic_schowdhu@quicinc.com>
+Content-Language: en-US
+From:   Souradeep Chowdhury <quic_schowdhu@quicinc.com>
+In-Reply-To: <cover.1683265984.git.quic_schowdhu@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: cRSnJgkx9QlxPjgMMTsuI8-ia9Y7cY80
+X-Proofpoint-GUID: cRSnJgkx9QlxPjgMMTsuI8-ia9Y7cY80
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-07_02,2023-06-06_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 clxscore=1011
+ bulkscore=0 priorityscore=1501 mlxlogscore=999 adultscore=0 suspectscore=0
+ phishscore=0 lowpriorityscore=0 mlxscore=0 spamscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306070043
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,365 +88,127 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a very basic device tree file for the Samsung Galaxy Express SGH-I437.
-Currently, the following things work: UART, eMMC, SD Card, and USB.
 
-Signed-off-by: Rudraksha Gupta <guptarud@gmail.com>
----
- arch/arm/boot/dts/Makefile                    |   1 +
- .../dts/qcom-msm8960-samsung-expressatt.dts   | 331 ++++++++++++++++++
- 2 files changed, 332 insertions(+)
- create mode 100644 arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 59829fc90315..12c90f263142 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1081,6 +1081,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
- 	qcom-msm8916-samsung-grandmax.dtb \
- 	qcom-msm8916-samsung-serranove.dtb \
- 	qcom-msm8960-cdp.dtb \
-+	qcom-msm8960-samsung-expressatt.dtb \
- 	qcom-msm8974-lge-nexus5-hammerhead.dtb \
- 	qcom-msm8974-sony-xperia-rhine-amami.dtb \
- 	qcom-msm8974-sony-xperia-rhine-honami.dtb \
-diff --git a/arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts b/arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts
-new file mode 100644
-index 000000000000..13e85c287498
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom-msm8960-samsung-expressatt.dts
-@@ -0,0 +1,331 @@
-+// SPDX-License-Identifier: GPL-2.0
-+#include <dt-bindings/input/input.h>
-+
-+#include "qcom-msm8960.dtsi"
-+#include <dt-bindings/reset/qcom,gcc-msm8960.h>
-+
-+/ {
-+	model = "Samsung Galaxy Express SGH-I437";
-+	compatible = "samsung,expressatt", "qcom,msm8960";
-+	chassis-type = "handset";
-+
-+	aliases {
-+		serial0 = &gsbi5_serial;
-+		mmc0 = &sdcc1; /* SDCC1 eMMC slot */
-+		mmc1 = &sdcc3; /* SDCC3 SD card slot */
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+};
-+
-+&gsbi5 {
-+	qcom,mode = <GSBI_PROT_I2C_UART>;
-+	status = "okay";
-+};
-+
-+&gsbi5_serial {
-+	status = "okay";
-+};
-+
-+&sdcc1 {
-+	vmmc-supply = <&pm8921_l5>;
-+	status = "okay";
-+};
-+
-+&sdcc3 {
-+	vmmc-supply = <&pm8921_l6>;
-+	vqmmc-supply = <&pm8921_l7>;
-+	status = "okay";
-+};
-+
-+&gsbi1 {
-+	qcom,mode = <GSBI_PROT_SPI>;
-+	pinctrl-0 = <&spi1_default>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+};
-+
-+&gsbi1_spi {
-+	status = "okay";
-+};
-+
-+&msmgpio {
-+	spi1_default: spi1-default-state {
-+		mosi-pins {
-+			pins = "gpio6";
-+			function = "gsbi1";
-+			drive-strength = <12>;
-+			bias-disable;
-+		};
-+
-+		miso-pins {
-+			pins = "gpio7";
-+			function = "gsbi1";
-+			drive-strength = <12>;
-+			bias-disable;
-+		};
-+
-+		cs-pins {
-+			pins = "gpio8";
-+			function = "gsbi1";
-+			drive-strength = <12>;
-+			bias-disable;
-+			output-low;
-+		};
-+
-+		clk-pins {
-+			pins = "gpio9";
-+			function = "gsbi1";
-+			drive-strength = <12>;
-+			bias-disable;
-+		};
-+	};
-+};
-+
-+&rpm {
-+	regulators {
-+		compatible = "qcom,rpm-pm8921-regulators";
-+		vin_lvs1_3_6-supply = <&pm8921_s4>;
-+		vin_lvs2-supply = <&pm8921_s4>;
-+		vin_lvs4_5_7-supply = <&pm8921_s4>;
-+		vdd_ncp-supply = <&pm8921_l6>;
-+		vdd_l1_l2_l12_l18-supply = <&pm8921_s4>;
-+		vdd_l21_l23_l29-supply = <&pm8921_s8>;
-+		vdd_l24-supply = <&pm8921_s1>;
-+		vdd_l25-supply = <&pm8921_s1>;
-+		vdd_l27-supply = <&pm8921_s7>;
-+		vdd_l28-supply = <&pm8921_s7>;
-+
-+		/* Buck SMPS */
-+		pm8921_s1: s1 {
-+			regulator-always-on;
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+			qcom,switch-mode-frequency = <3200000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_s2: s2 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1300000>;
-+			qcom,switch-mode-frequency = <1600000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_s3: s3 {
-+			regulator-min-microvolt = <500000>;
-+			regulator-max-microvolt = <1150000>;
-+			qcom,switch-mode-frequency = <4800000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_s4: s4 {
-+			regulator-always-on;
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			qcom,switch-mode-frequency = <1600000>;
-+			bias-pull-down;
-+			qcom,force-mode = <QCOM_RPM_FORCE_MODE_AUTO>;
-+		};
-+
-+		pm8921_s7: s7 {
-+			regulator-min-microvolt = <1150000>;
-+			regulator-max-microvolt = <1150000>;
-+			qcom,switch-mode-frequency = <3200000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_s8: s8 {
-+			regulator-always-on;
-+			regulator-min-microvolt = <2050000>;
-+			regulator-max-microvolt = <2050000>;
-+			qcom,switch-mode-frequency = <1600000>;
-+			bias-pull-down;
-+		};
-+
-+		/* PMOS LDO */
-+		pm8921_l1: l1 {
-+			regulator-always-on;
-+			regulator-min-microvolt = <1050000>;
-+			regulator-max-microvolt = <1050000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l2: l2 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l3: l3 {
-+			regulator-min-microvolt = <3075000>;
-+			regulator-max-microvolt = <3300000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l4: l4 {
-+			regulator-always-on;
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l5: l5 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l6: l6 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l7: l7 {
-+			regulator-always-on;
-+			regulator-min-microvolt = <1850000>;
-+			regulator-max-microvolt = <2950000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l8: l8 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3100000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l9: l9 {
-+			regulator-min-microvolt = <2850000>;
-+			regulator-max-microvolt = <2850000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l10: l10 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3000000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l11: l11 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <3300000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l12: l12 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l14: l14 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l15: l15 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l16: l16 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <3000000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l17: l17 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3300000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l18: l18 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1500000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l21: l21 {
-+			regulator-min-microvolt = <1900000>;
-+			regulator-max-microvolt = <1900000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l22: l22 {
-+			regulator-min-microvolt = <2750000>;
-+			regulator-max-microvolt = <2750000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l23: l23 {
-+			regulator-always-on;
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l24: l24 {
-+			regulator-min-microvolt = <750000>;
-+			regulator-max-microvolt = <1150000>;
-+			bias-pull-down;
-+		};
-+
-+		pm8921_l25: l25 {
-+			regulator-always-on;
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+			bias-pull-down;
-+		};
-+
-+		/* Low Voltage Switch */
-+		pm8921_lvs1: lvs1 {
-+			bias-pull-down;
-+		};
-+
-+		pm8921_lvs2: lvs2 {
-+			bias-pull-down;
-+		};
-+
-+		pm8921_lvs3: lvs3 {
-+			bias-pull-down;
-+		};
-+
-+		pm8921_lvs4: lvs4 {
-+			bias-pull-down;
-+		};
-+
-+		pm8921_lvs5: lvs5 {
-+			bias-pull-down;
-+		};
-+
-+		pm8921_lvs6: lvs6 {
-+			bias-pull-down;
-+		};
-+
-+		pm8921_lvs7: lvs7 {
-+			bias-pull-down;
-+		};
-+
-+		pm8921_ncp: ncp {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			qcom,switch-mode-frequency = <1600000>;
-+		};
-+	};
-+};
-+
-+&usb_hs1_phy {
-+	v3p3-supply = <&pm8921_l3>;
-+	v1p8-supply = <&pm8921_l4>;
-+};
-+
-+&usb1 {
-+	dr_mode = "otg";
-+	status = "okay";
-+};
--- 
-2.34.1
+On 5/5/2023 12:06 PM, Souradeep Chowdhury wrote:
+> DCC(Data Capture and Compare) is a DMA engine designed for debugging purposes.
+> In case of a system crash or manual software triggers by the user the DCC hardware
+> stores the value at the register addresses which can be used for debugging purposes.
+> The DCC driver provides the user with debugfs interface to configure the register
+> addresses. The options that the DCC hardware provides include reading from registers,
+> writing to registers, first reading and then writing to registers and looping
+> through the values of the same register.
+> 
+> In certain cases a register write needs to be executed for accessing the rest of the
+> registers, also the user might want to record the changing values of a register with
+> time for which he has the option to use the loop feature.
+> 
+> The options mentioned above are exposed to the user by debugfs files once the driver
+> is probed. The details and usage of this debugfs files are documented in
+> Documentation/ABI/testing/debugfs-driver-dcc.
+> 
+> As an example let us consider a couple of debug scenarios where DCC has been proved to be
+> effective for debugging purposes:-
+> 
+> i)TimeStamp Related Issue
+> 
+> On SC7180, there was a coresight timestamp issue where it would occasionally be all 0
+> instead of proper timestamp values.
+> 
+> Proper timestamp:
+> Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x13004d8f5b7aa; CC=0x9e
+> 
+> Zero timestamp:
+> Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
+> 
+> Now this is a non-fatal issue and doesn't need a system reset, but still needs
+> to be rootcaused and fixed for those who do care about coresight etm traces.
+> Since this is a timestamp issue, we would be looking for any timestamp related
+> clocks and such.
+> 
+> We get all the clk register details from IP documentation and configure it
+> via DCC config_read debugfs node. Before that we set the current linked list.
+> 
+> /* Program the linked list with the addresses */
+> echo R 0x10c004 > /sys/kernel/debug/qcom-dcc/../3/config
+> echo R 0x10c008 > /sys/kernel/debug/qcom-dcc/../3/config
+> echo R 0x10c00c > /sys/kernel/debug/qcom-dcc/../3/config
+> echo R 0x10c010 > /sys/kernel/debug/qcom-dcc/../3/config
+> ..... and so on for other timestamp related clk registers
+> 
+> /* Other way of specifying is in "addr len" pair, in below case it
+> specifies to capture 4 words starting 0x10C004 */
+> 
+> echo R 0x10C004 4 > /sys/kernel/debug/qcom-dcc/../3/config_read
+> 
+> /* Enable DCC */
+> echo 1 > /sys/kernel/debug/qcom-dcc/../3/enable
+> 
+> /* Run the timestamp test for working case */
+> 
+> /* Send SW trigger */
+> echo 1 > /sys/kernel/debug/qcom-dcc/../trigger
+> 
+> /* Read SRAM */
+> cat /dev/dcc_sram > dcc_sram1.bin
+> 
+> /* Run the timestamp test for non-working case */
+> 
+> /* Send SW trigger */
+> echo 1 > /sys/kernel/debug/qcom-dcc/../trigger
+> 
+> /* Read SRAM */
+> cat /dev/dcc_sram > dcc_sram2.bin
+> 
+> Get the parser from [1] and checkout the latest branch.
+> 
+> /* Parse the SRAM bin */
+> python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
+> python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
+> 
+> Sample parsed output of dcc_sram1.bin:
+> 
+> <hwioDump version="1">
+>           <timestamp>03/14/21</timestamp>
+>               <generator>Linux DCC Parser</generator>
+>                   <chip name="None" version="None">
+>                   <register address="0x0010c004" value="0x80000000" />
+>                   <register address="0x0010c008" value="0x00000008" />
+>                   <register address="0x0010c00c" value="0x80004220" />
+>                   <register address="0x0010c010" value="0x80000000" />
+>               </chip>
+>       <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
+> </hwioDump>
+> 
+> ii)NOC register errors
+> 
+> A particular class of registers called NOC which are functional registers was reporting
+> errors while logging the values.To trace these errors the DCC has been used effectively.
+> The steps followed were similar to the ones mentioned above.
+> In addition to NOC registers a few other dependent registers were configured in DCC to
+> monitor it's values during a crash. A look at the dependent register values revealed that
+> the crash was happening due to a secured access to one of these dependent registers.
+> All these debugging activity and finding the root cause was achieved using DCC.
+> 
+> DCC parser is available at the following open source location
+> 
+> https://git.codelinaro.org/clo/le/platform/vendor/qcom-opensource/tools/-/tree/opensource-tools.lnx.1.0.r176-rel/dcc_parser
+> 
+> Souradeep Chowdhury (3):
+>    dt-bindings: misc: qcom,dcc: Add the dtschema
+>    misc: dcc: Add driver support for Data Capture and Compare unit(DCC)
+>    MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
+>      support
+> 
+>   Documentation/ABI/testing/debugfs-driver-dcc  |   10 +-
+>   .../devicetree/bindings/misc/qcom,dcc.yaml    |   44 +
+>   MAINTAINERS                                   |    8 +
+>   drivers/misc/Kconfig                          |    9 +
+>   drivers/misc/Makefile                         |    1 +
+>   drivers/misc/qcom-dcc.c                       | 1325 +++++++++++++++++
+>   6 files changed, 1392 insertions(+), 5 deletions(-)
+>   create mode 100644 Documentation/devicetree/bindings/misc/qcom,dcc.yaml
+>   create mode 100644 drivers/misc/qcom-dcc.c
+> 
 
+Gentle ping.
