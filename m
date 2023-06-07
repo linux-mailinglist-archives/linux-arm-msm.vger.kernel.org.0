@@ -2,106 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 61F56725CD3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 13:17:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EEED8725B63
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 12:17:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234009AbjFGLRG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 07:17:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52118 "EHLO
+        id S235492AbjFGKRH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 06:17:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239471AbjFGLRF (ORCPT
+        with ESMTP id S235821AbjFGKRF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 07:17:05 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A42641702;
-        Wed,  7 Jun 2023 04:17:04 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 3FB5263DBD;
-        Wed,  7 Jun 2023 11:17:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90665C43442;
-        Wed,  7 Jun 2023 11:17:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686136623;
-        bh=PqT7b3LTt1IrPaGyiAZXtxPqgt4zXro8Gw7CXf+6hyg=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=hcwjIfmEFTIUXuUtcgpBMJ4jzU5AmLI03k+n5e24wAmMp/W1YkBJLXXTTEK2axz/9
-         T5RVxoff/v2jBz79Uir+LB8uZkFWRyks6Q+F30CwBDcQJgIdEyNWW3cIDPa2R4P5RS
-         J6MUJGfI6Q5HqyfmcIrRIak5MNt6+Gi2BtNAXDLaMvzT52dS4jt9jvEjC1v37a5E9e
-         zTdlZJPWBugDtMCH7X3aNaLw8VUD97ukmGLTWHyKuF/02Zq/Zhyl2QX0IQrQjqcdpb
-         euJakyPqO/MwXQV5UurRMzyB6zDzRIo/gm81awExyAXteEMiR11fFc+lkCITXenblb
-         05+boh6s8h1Bg==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan+linaro@kernel.org>)
-        id 1q6rAM-0008LU-Gz; Wed, 07 Jun 2023 13:17:26 +0200
-From:   Johan Hovold <johan+linaro@kernel.org>
-To:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krishna Kurapati <quic_kriskura@quicinc.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Johan Hovold <johan+linaro@kernel.org>, stable@vger.kernel.org,
-        Li Jun <jun.li@nxp.com>,
-        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Subject: [PATCH 2/2] USB: dwc3: fix use-after-free on core driver unbind
-Date:   Wed,  7 Jun 2023 12:05:40 +0200
-Message-Id: <20230607100540.31045-3-johan+linaro@kernel.org>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20230607100540.31045-1-johan+linaro@kernel.org>
-References: <20230607100540.31045-1-johan+linaro@kernel.org>
+        Wed, 7 Jun 2023 06:17:05 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CFA31BF8
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 03:16:59 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-510d6b939bfso1218313a12.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 03:16:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686133018; x=1688725018;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bHtmIDD4uaTq4ABNxhYKW6qHDGlLDL1+HvFDCmmnPDM=;
+        b=aMzYf6YMdsw58k4/wDNtAfJLXXqxovmskhmugL855D5kSCqCJjdRY+o2q8WTho6dy7
+         r9INUS6z3glv3VuHQ+s872OmExPym88zOxwEvr66swh/5vYkAiY0wmzn9BsHFRaGXrzh
+         vb+DSlYUKFwAYBznX2p3t+gpnGYKxtQoakYYUy0FkUHDsJ6MCLoqTK2NgY5sMntJHOn+
+         TImv1OfDcFMGIvEkZ+iLp+bZy7I3Gz0WXSEbefn8Akij7Lhv6wat8MqIUfNGInASKTbj
+         4cyhJjHxqVwQfYg4mjvBWhkGuZI1dWIH/4f/E4JGdBy5nxV2T+Pi6k2mDkG1ws9foy5w
+         9Yqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686133018; x=1688725018;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bHtmIDD4uaTq4ABNxhYKW6qHDGlLDL1+HvFDCmmnPDM=;
+        b=LwDTMWK5dQembuHNojZJPXhkmGdFzOlfy/LRq86bk/qerRrHIDwSbBz+US9/6yLGov
+         62NOebU6ArJIuLd4ac/IT9GrVSDXsHNiulgJpifzqW4lRc5tQNUgu7Fy2AwNRkjmMu7S
+         26md8VizmRBbWrU51xHaFRRtTrgOuHHhsiaggwIFFTrqwJ5sWlMfiiZ4F8hT9n+cQxp1
+         hnfFCy9pL3gfPoTTXHgDAA97a/3mno3NIWMGRU1a2akL3KF54JKULjezElYF6uqH6c3y
+         NubEkWam90CyzeWGN7nF0CaMLLybNi3JNctfPs4pPS4FH09ldlIdMZhfNJ4T6uqqJMw2
+         mFVQ==
+X-Gm-Message-State: AC+VfDzA0iAuAtSLEZwlWtBJCDWTMjn7vJREupktUrpk5vFrYsBRhSQ6
+        q2F9F2jeQBTcb+T9XyvorD9PDw==
+X-Google-Smtp-Source: ACHHUZ4lRRxrWth26CaqnLWO9ge6gORx93AXTbvI8KrjJTI8Zd7pTHxYuR04YqlYa5SlHY4O/9m+EA==
+X-Received: by 2002:aa7:d315:0:b0:510:82b4:844d with SMTP id p21-20020aa7d315000000b0051082b4844dmr3980381edq.2.1686133017905;
+        Wed, 07 Jun 2023 03:16:57 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id w15-20020a056402070f00b00514bb73b8casm6158198edx.57.2023.06.07.03.16.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Jun 2023 03:16:57 -0700 (PDT)
+Message-ID: <55f07600-3fa5-f3c2-eb3e-e87a57244812@linaro.org>
+Date:   Wed, 7 Jun 2023 12:16:55 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH] arm64: dts: qcom: sdm845-db845c: Move LVS regulator nodes
+ up
+Content-Language: en-US
+To:     Amit Pundir <amit.pundir@linaro.org>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        Mark Brown <broonie@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        regressions <regressions@lists.linux.dev>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+References: <20230602161246.1855448-1-amit.pundir@linaro.org>
+ <CAD=FV=U9xwxC4+wDYFMSoLWaj8vaLH_jettZ=nxEZP+1tNk=oA@mail.gmail.com>
+ <d0dfdfba-7a70-7d12-2c30-ad32b3f95bb8@linaro.org>
+ <CAMi1Hd1Upo8zV4MPtdqHgEaMQ72yK0gZgf5Z4uOaqKqhw8Hndg@mail.gmail.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <CAMi1Hd1Upo8zV4MPtdqHgEaMQ72yK0gZgf5Z4uOaqKqhw8Hndg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some dwc3 glue drivers are currently accessing the driver data of the
-child core device directly, which is clearly a bad idea as the child may
-not have probed yet or may have been unbound from its driver.
+On 07/06/2023 11:17, Amit Pundir wrote:
+> On Wed, 7 Jun 2023 at 13:19, Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+>>
+>> On 07/06/2023 01:34, Doug Anderson wrote:
+>>> Hi,
+>>>
+>>> On Fri, Jun 2, 2023 at 9:12 AM Amit Pundir <amit.pundir@linaro.org> wrote:
+>>>>
+>>>> Move lvs1 and lvs2 regulator nodes up in the rpmh-regulators
+>>>> list to workaround a boot regression uncovered by the upstream
+>>>> commit ad44ac082fdf ("regulator: qcom-rpmh: Revert "regulator:
+>>>> qcom-rpmh: Use PROBE_FORCE_SYNCHRONOUS"").
+>>>>
+>>>> Without this fix DB845c fail to boot at times because one of the
+>>>> lvs1 or lvs2 regulators fail to turn ON in time.
+>>>>
+>>>> Link: https://lore.kernel.org/all/CAMi1Hd1avQDcDQf137m2auz2znov4XL8YGrLZsw5edb-NtRJRw@mail.gmail.com/
+>>>> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+>>>> ---
+>>>>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts | 24 +++++++++++-----------
+>>>>  1 file changed, 12 insertions(+), 12 deletions(-)
+>>>>
+>>>> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+>>>> index e14fe9bbb386..df2fde9063dc 100644
+>>>> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+>>>> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+>>>> @@ -301,6 +301,18 @@ regulators-0 {
+>>>>                 vdd-l26-supply = <&vreg_s3a_1p35>;
+>>>>                 vin-lvs-1-2-supply = <&vreg_s4a_1p8>;
+>>>>
+>>>> +               vreg_lvs1a_1p8: lvs1 {
+>>>> +                       regulator-min-microvolt = <1800000>;
+>>>> +                       regulator-max-microvolt = <1800000>;
+>>>> +                       regulator-always-on;
+>>>> +               };
+>>>> +
+>>>> +               vreg_lvs2a_1p8: lvs2 {
+>>>> +                       regulator-min-microvolt = <1800000>;
+>>>> +                       regulator-max-microvolt = <1800000>;
+>>>> +                       regulator-always-on;
+>>>> +               };
+>>>> +
+>>>>                 vreg_s3a_1p35: smps3 {
+>>>>                         regulator-min-microvolt = <1352000>;
+>>>>                         regulator-max-microvolt = <1352000>;
+>>>> @@ -381,18 +393,6 @@ vreg_l26a_1p2: ldo26 {
+>>>>                         regulator-max-microvolt = <1200000>;
+>>>>                         regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+>>>>                 };
+>>>> -
+>>>> -               vreg_lvs1a_1p8: lvs1 {
+>>>> -                       regulator-min-microvolt = <1800000>;
+>>>> -                       regulator-max-microvolt = <1800000>;
+>>>> -                       regulator-always-on;
+>>>> -               };
+>>>> -
+>>>> -               vreg_lvs2a_1p8: lvs2 {
+>>>> -                       regulator-min-microvolt = <1800000>;
+>>>> -                       regulator-max-microvolt = <1800000>;
+>>>> -                       regulator-always-on;
+>>>> -               };
+>>>
+>>> This is a hack, but it at least feels less bad than reverting the
+>>> async probe patch. I'll leave it to Bjorn to decide if he's OK with
+>>> it. Personally, it feels like this would deserve a comment in the dts
+>>> to document that these regulators need to be listed first.
+>>>
+>>> Ideally, we could still work towards a root cause. I added a few more
+>>> ideas to help with root causing in reply to the original thread about
+>>> this.
+>>>
+>>> https://lore.kernel.org/r/CAD=FV=UKyjRNZG-ED2meUAR9aXdco+AbUTHiKixTzjCkaJbjTg@mail.gmail.com/
+>>
+>> We do not shape DTS based on given OS behavior. AOSP needs this, BSD
+>> needs that and Linux needs something else. Next time someone will move
+>> these regulators down because on his system probing is from end of list,
+>> not beginning and he has the same problem.
+>>
+>> No, really, are we going to reshuffle nodes because AOSP needs it?
+> 
+> Hi, other than the fact that I reproduced it on AOSP, there is nothing
+> AOSP specific in this patch. I'm sure there may be another
+> platforms/OS (which load kernel modules from a ramdisk) that may trip
+> on this bug. But I can try reproducing it on an OS of your choice if
+> it helps.
 
-As a workaround until the glue drivers have been fixed, clear the driver
-data pointer before allowing the glue parent device to runtime suspend
-to prevent its driver from accessing data that has been freed during
-unbind.
+I wrote earlier imaginary system where RPM driver loads the regulators
+from the end. It would require re-shuffling to previous order of the
+nodes. Feel free to change the RPM drivers to simulate it and you should
+see that your patch stops helping.
 
-Fixes: 6dd2565989b4 ("usb: dwc3: add imx8mp dwc3 glue layer driver")
-Fixes: 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
-Cc: stable@vger.kernel.org      # 5.12
-Cc: Li Jun <jun.li@nxp.com>
-Cc: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
-Cc: Krishna Kurapati <quic_kriskura@quicinc.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
----
- drivers/usb/dwc3/core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+The problem looks like in missing consumers, missing probe dependencies
+or something in the driver how it handles these.
 
-diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 7b2ce013cc5b..d68958e151a7 100644
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1929,6 +1929,11 @@ static int dwc3_remove(struct platform_device *pdev)
- 	pm_runtime_disable(&pdev->dev);
- 	pm_runtime_dont_use_autosuspend(&pdev->dev);
- 	pm_runtime_put_noidle(&pdev->dev);
-+	/*
-+	 * HACK: Clear the driver data, which is currently accessed by parent
-+	 * glue drivers, before allowing the parent to suspend.
-+	 */
-+	platform_set_drvdata(pdev, NULL);
- 	pm_runtime_set_suspended(&pdev->dev);
- 
- 	dwc3_free_event_buffers(dwc);
--- 
-2.39.3
+DTS should not be used for solving OS related problems.
+
+Best regards,
+Krzysztof
 
