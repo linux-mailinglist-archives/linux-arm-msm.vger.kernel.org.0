@@ -2,128 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E59B726541
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 17:57:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50FF572637C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 16:57:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241053AbjFGP5H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 11:57:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58770 "EHLO
+        id S241243AbjFGO5J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 10:57:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241375AbjFGP5A (ORCPT
+        with ESMTP id S241244AbjFGO45 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 11:57:00 -0400
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B42D91FE5;
-        Wed,  7 Jun 2023 08:56:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1686153416; x=1717689416;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=cZe/eY9WGZFDdbzJxKfNGQkftH/W4BRuRruN4kLXhu0=;
-  b=PFavA8LIwNPmlbm5CY1FbpcE1sbNXmPCOurYPpvimN8CEyD5iZup/I7t
-   KeA5QTIwbH/sg8a9u2R9nzypxMSlQvMWOxY6StoBqK6l4zq9a0YbhqQDn
-   yuOQg1pkV7II3GwM8+nO6crsqiOWYS0ivjK/eqaRyuqLYXHajCbcKO6iU
-   QKk2qKmRgooCPmSJaZ16ubWyeTBPuXRKrqwQJEIhGFo816/MJwakj8V6R
-   SerxgeU4SqYz9eSl7E5+XM6XRzqpwZsa1jr4sXkox16RjNerzQZ/TN7oW
-   AjDX5JwSHyndv9iojwyO9EAXvokt5JLvNVerWG4GERCS6mS1hTbp1SD+5
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10734"; a="360360060"
-X-IronPort-AV: E=Sophos;i="6.00,224,1681196400"; 
-   d="scan'208";a="360360060"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2023 08:56:52 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10734"; a="739335786"
-X-IronPort-AV: E=Sophos;i="6.00,224,1681196400"; 
-   d="scan'208";a="739335786"
-Received: from sorrin-mobl3.amr.corp.intel.com (HELO [10.209.124.63]) ([10.209.124.63])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2023 08:56:50 -0700
-Message-ID: <5f647902-436a-ea1c-412e-30afbc4e71a8@linux.intel.com>
-Date:   Wed, 7 Jun 2023 09:51:44 -0500
+        Wed, 7 Jun 2023 10:56:57 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E4421FEB
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 07:56:43 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id d9443c01a7336-1b04706c85fso69281455ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 07:56:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686149803; x=1688741803;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=/8N0gSaOfJ2+iPgCykIKtJEIBruFOuP2BSekoV+jGac=;
+        b=XPoPdqNAA+maAKafsTiOfSoXt9pZvdj8FOvrnFoztfJuU2HX4+F6LJO8TFgm+5rePd
+         1IXyh0M5zvR71jJUBXxsXeeqrPuGjPDajCHZMFjbJZr17bFPrkxNGTRrx+UYgk7ulG+D
+         8TN63BR5vE9yhwTXiHoth+AIOD2G8v5pX84Wz/B/c7VOEET22YzTwCVWbav4gyGQ0qEU
+         EwnZ6p1qNa+5Ms7vtTUge4c1/UYnRn9brjQJDeri5DZ+SbT2ZEpWPov5EwudTzJEfGiW
+         Fpb4k0KBzZ0yMJxqjvBXdQTxmTkCyedR7GJ0sG5NKprINyRH0cMzEk7MSE17IIPLYnpX
+         6BMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686149803; x=1688741803;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=/8N0gSaOfJ2+iPgCykIKtJEIBruFOuP2BSekoV+jGac=;
+        b=K57nkzGCX3AkP9RL86jFDM/ew9/2qLjwaBcJWJh8nG/Cw8hErGYXsBd+g7hE/6ssqX
+         oIusM+nYBsFatHcpxCVzkzmLphqM9fgPaMDubUWTp+O/w4FVhXJVeyjirB9duqhhpt3Y
+         pjFNXkKkuhRqrkyZ0Muvr+33jds8B2Rz75BZk9LM37qfUCd/NIBNBs7GKkNp3iRQT8ac
+         JOJunU8eKbPwQFqNLfCc6toJj8AIVFG5rAmRiotODFYP5K2SwlJt5BCLBoZ/DkdeYGVq
+         735zLfK+hoAZbk+OO9M6udFOHZmiB+RJILSUFLnbQV8HUVYC6ZiHptLcd4SbUHyoWRch
+         8XQw==
+X-Gm-Message-State: AC+VfDx1BjVNmX7ifKAGrf1pVSPNiXr5ZdeS8IAQHc1LHVlmJbl1nfzK
+        wfWwn9HCb4QT7wEKQU9Lq5XFDKYj78F280HQYw==
+X-Google-Smtp-Source: ACHHUZ5V+hBDwNNGVzLSvr6qyetGCLP1NSULs5tOPW6A/VkRv4ZISCL9y8DAAbyQrdYbu/FxS10I9g==
+X-Received: by 2002:a17:902:ced0:b0:1b0:7739:657c with SMTP id d16-20020a170902ced000b001b07739657cmr6692548plg.55.1686149802732;
+        Wed, 07 Jun 2023 07:56:42 -0700 (PDT)
+Received: from thinkpad ([59.92.97.244])
+        by smtp.gmail.com with ESMTPSA id h8-20020a170902f54800b001ab1d23bf5dsm10543852plf.258.2023.06.07.07.56.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Jun 2023 07:56:42 -0700 (PDT)
+Date:   Wed, 7 Jun 2023 20:26:37 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Andrew Lunn <andrew@lunn.ch>
+Cc:     Jeffrey Hugo <quic_jhugo@quicinc.com>, davem@davemloft.net,
+        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        loic.poulain@linaro.org
+Subject: Re: [PATCH 3/3] net: mhi: Increase the default MTU from 16K to 32K
+Message-ID: <20230607145637.GA103098@thinkpad>
+References: <20230606123119.57499-1-manivannan.sadhasivam@linaro.org>
+ <20230606123119.57499-4-manivannan.sadhasivam@linaro.org>
+ <b8a25a70-8781-8b82-96d8-bc1ecf2d5468@quicinc.com>
+ <20230607065809.GB5025@thinkpad>
+ <f96d4956-6b69-4809-9461-9157e32b3865@lunn.ch>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.11.0
-Subject: Re: [PATCH] soundwire: qcom: fix storing port config out-of-bounds
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bard Liao <yung-chuan.liao@linux.intel.com>,
-        Sanyog Kale <sanyog.r.kale@intel.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
-        kernel test robot <lkp@intel.com>,
-        Dan Carpenter <error27@gmail.com>
-References: <20230601102525.609627-1-krzysztof.kozlowski@linaro.org>
- <ZICBvP33XyOswWFM@matsya> <c39dc157-bd3d-a627-4eb0-a34ff43ab664@linaro.org>
-From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-In-Reply-To: <c39dc157-bd3d-a627-4eb0-a34ff43ab664@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f96d4956-6b69-4809-9461-9157e32b3865@lunn.ch>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/7/23 08:51, Krzysztof Kozlowski wrote:
-> On 07/06/2023 15:10, Vinod Koul wrote:
->> On 01-06-23, 12:25, Krzysztof Kozlowski wrote:
->>> The 'qcom_swrm_ctrl->pconfig' has size of QCOM_SDW_MAX_PORTS (14),
->>> however we index it starting from 1, not 0, to match real port numbers.
->>> This can lead to writing port config past 'pconfig' bounds and
->>> overwriting next member of 'qcom_swrm_ctrl' struct.  Reported also by
->>> smatch:
->>>
->>>   drivers/soundwire/qcom.c:1269 qcom_swrm_get_port_config() error: buffer overflow 'ctrl->pconfig' 14 <= 14
->>>
->>> Fixes: 9916c02ccd74 ("soundwire: qcom: cleanup internal port config indexing")
->>> Cc: <stable@vger.kernel.org>
->>> Reported-by: kernel test robot <lkp@intel.com>
->>> Reported-by: Dan Carpenter <error27@gmail.com>
->>> Link: https://lore.kernel.org/r/202305201301.sCJ8UDKV-lkp@intel.com/
->>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->>> ---
->>>  drivers/soundwire/qcom.c | 3 ++-
->>>  1 file changed, 2 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
->>> index 7cb1b7eba814..88a772075907 100644
->>> --- a/drivers/soundwire/qcom.c
->>> +++ b/drivers/soundwire/qcom.c
->>> @@ -202,7 +202,8 @@ struct qcom_swrm_ctrl {
->>>  	u32 intr_mask;
->>>  	u8 rcmd_id;
->>>  	u8 wcmd_id;
->>> -	struct qcom_swrm_port_config pconfig[QCOM_SDW_MAX_PORTS];
->>> +	/* Port numbers are 1 - 14 */
->>> +	struct qcom_swrm_port_config pconfig[QCOM_SDW_MAX_PORTS + 1];
->>
->> Better use SDW_MAX_PORTS ?
+On Wed, Jun 07, 2023 at 02:25:50PM +0200, Andrew Lunn wrote:
+> On Wed, Jun 07, 2023 at 12:28:09PM +0530, Manivannan Sadhasivam wrote:
+> > On Tue, Jun 06, 2023 at 07:50:23AM -0600, Jeffrey Hugo wrote:
+> > > On 6/6/2023 6:31 AM, Manivannan Sadhasivam wrote:
+> > > > Most of the Qualcomm endpoint devices are supporting 32K MTU for the
+> > > > UL (Uplink) and DL (Downlink) channels. So let's use the same value
+> > > > in the MHI NET driver also. This gives almost 2x increase in the throughput
+> > > > for the UL channel.
 > 
-> That's interesting idea, but except of value, is the meaning actually
-> the same? Driver claims that port 0 is masked and max number of ports is
-> 14. Therefore it uses in all places constant QCOM_SDW_MAX_PORTS. We need
-> here +1, only because we index from 1, not 0, but we still index over
-> QCOM_SDW_MAX_PORTS, not SDW_MAX_PORTS. Wouldn't it be also confusing to
-> use here SDW_MAX_PORTS but then index over something else?
+> You say here 'Most'. What happens on those which do not support 32K?
+> Do the packets get dropped and it turns into a black hole?
+> 
 
-SDW_MAX_PORTS only applies for the peripheral. DP0 is reserved for
-non-audio/Bulk request, DP15 is an alias for "all ports"
+Yeah, and the host has to retransmit. But I checked again with Qcom on the MTU
+size and got a different answer that forced me to change "most" to "few". So
+this patch is not needed for now. I'll drop it.
 
-There's nothing in the spec that restricts the ports on the manager
-side, be it to dedicate Port0 or Port15 to a specific purpose or even
-the number of ports.
+- Mani
 
-I would recommend using a vendor-specific definition rather than
-overloading a peripheral specification requirement.
+>    Andrew
+> 
+
+-- 
+மணிவண்ணன் சதாசிவம்
