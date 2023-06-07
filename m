@@ -2,71 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 161397260FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 15:18:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2145272610D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 15:20:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235572AbjFGNSp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 09:18:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45630 "EHLO
+        id S240521AbjFGNUC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 09:20:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46490 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235378AbjFGNSo (ORCPT
+        with ESMTP id S240627AbjFGNTt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 09:18:44 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DDCF95;
-        Wed,  7 Jun 2023 06:18:44 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 9E9A9636FA;
-        Wed,  7 Jun 2023 13:18:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E97FC433EF;
-        Wed,  7 Jun 2023 13:18:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686143923;
-        bh=WxgZIQptIHBdnIK+DpPdQfEiZujBDHMavZ3LhSAH/2E=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=jhOWWFcTf7P8IX7QxZBfqQccHuh6fNLU5S05ejB0LiB4yF3C/UzSEtc7awEzLKKWT
-         9bJYHonMToJTWiwzzC6D8h0H3ui3qa/914ySoAt4aUCoJbIelqkZwMqS6x8RzrsVGx
-         NwexJdFEr4pX8DcomVdDAIVlQuLjx/XxuYZLVsHU5U+YVYIKKvuUYi4DDKpBBv7NhS
-         MkrsoZPtFIIwwNZHF5bX0ZIUUW6A8xoK7noGXouR7IBAjcRq5hQXocEkqfFFGIDM6P
-         Li6HkjIbQQiBfIjyLxDCHmjwAjQ56ZEWMSTkvmFXbOVYHm8pCZSX5SCBYgdA11fEcA
-         MU/eiBldHhd4Q==
-Date:   Wed, 7 Jun 2023 14:18:37 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Amit Pundir <amit.pundir@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] regulator: qcom-rpmh: Revert "regulator: qcom-rpmh: Use
- PROBE_FORCE_SYNCHRONOUS"
-Message-ID: <bb5c828a-b8c5-40a0-9b67-44e73abcbef0@sirena.org.uk>
-References: <CAMi1Hd05z8uBotO4vs7Ropmt7W2gSA__tTu_=X1t0mze7bXrhg@mail.gmail.com>
- <CAD=FV=VSFDe445WEVTHXxU1WS_HGUV5jR5E8_Vgd4eyhn3rHyA@mail.gmail.com>
- <CAMi1Hd28FJUjB8A-9YF7xpKOzSyNWXX3qung4aDjpLBhOvw_eA@mail.gmail.com>
- <CAD=FV=W13L0H88G1gt8qRnXfpV-_7E9QfHufN_a23_B1bb=aww@mail.gmail.com>
- <CAMi1Hd1WCtNvNaY_kVMx5F8T0nMVHvsjk9LsSETCMWWQyaq_Vw@mail.gmail.com>
- <CAD=FV=W5Y_SHp0y2MEs8d1k255bm_PXdRYEmYei+g79pjnzYuA@mail.gmail.com>
- <CAMi1Hd2OeL940r7jq0=Z_oxE8MYVioy0YnJXQC_5e0vJONd2sQ@mail.gmail.com>
- <1bc79c48-7cba-476d-9a7e-5754a88fcdae@sirena.org.uk>
- <CAMi1Hd2BLB6H3QRLB5svRTkGoXaUeEsakNsmfCOjbDBcCEeqkA@mail.gmail.com>
- <CAD=FV=UKyjRNZG-ED2meUAR9aXdco+AbUTHiKixTzjCkaJbjTg@mail.gmail.com>
+        Wed, 7 Jun 2023 09:19:49 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A717319AE
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 06:19:47 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id ffacd0b85a97d-30aeee7c8a0so491731f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 06:19:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686143986; x=1688735986;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mnNtcdYl7FWB9vVI15co5MeYmaXJVC+s1x+N4tvXfWY=;
+        b=W5rWw52uP2J5P8VZi5+rmvcoUJ5m9ynK8S0KkE5V84ZaqoSK2Crc9krqvZby91MWEr
+         ZSA0moTfIV9aUT84Q0uNcuQGp1sXhG6a/TqQsqZMIoI3NHx8VA7PRXhKOwuwj1S6UHJS
+         lbkHivgTqNR4Nw99i/i5xfXB3essZLeGI66BDmEYEeLcgp+SHNXE3JskESna/3alaMtg
+         tlEnbg2UE5abmA93Gc3HB/T4lHsaX/sTUguiZacyEBMY+tjzo0nkZNulBfOs+HSOiKxg
+         ZqRcxaUyax79NGs3ytKIvKNyR45yzQ8BNjnhJ+XRcJe584z8EV7VnTqK398OY2o6+mSC
+         w02w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686143986; x=1688735986;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mnNtcdYl7FWB9vVI15co5MeYmaXJVC+s1x+N4tvXfWY=;
+        b=C5FNRvrY7ngQVyGfD4e138zDPIga2Up1twClXleTtThbIbnd7ST6yVJhFRTopqdm/X
+         oEBrNmGBcpt2c08Dm5uWWoKnOWgjHcMyDVWPCQLTuXOwwvpvuWhy8DefUiBfmZAkzN29
+         87KyC+xEPcneTli0qQFaiRXCRoIvRWHNY8SIeTE4ABde3wZAlKUZE/ROVKEpMorhT1Xf
+         AST4CS8g1qZfEL0sMU1tA62LpApapr8UM4PHeCbMxK/uh5nYPoVH/7sVTuL4Ro1beFcV
+         vEy68Qo93KIYrl+49CeBGu/wfpIe51cALyJWJyMQfDlZ+B8SmYhcIKVD1Z5VxfX0tuiL
+         /H8Q==
+X-Gm-Message-State: AC+VfDyQOMIQP3utL4do1Hqz2PcIUg+ix4i81WelwQs9vAnAQD3hD0Mc
+        Wl32xuNZrGWeFYdvyIJe4mSR0w==
+X-Google-Smtp-Source: ACHHUZ7ILsrllirxXgRGCNpr+8QXW/gchSLvNycTUayot7lajmlutG7p1RjL23aGnaOssGNvxAWa7w==
+X-Received: by 2002:adf:fec3:0:b0:30a:e8ac:90c1 with SMTP id q3-20020adffec3000000b0030ae8ac90c1mr10941158wrs.19.1686143986059;
+        Wed, 07 Jun 2023 06:19:46 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id b3-20020a5d4d83000000b0030c4d8930b1sm15457081wru.91.2023.06.07.06.19.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Jun 2023 06:19:45 -0700 (PDT)
+Message-ID: <b01ca147-c2bd-1044-22c5-5b54a0f108c0@linaro.org>
+Date:   Wed, 7 Jun 2023 14:19:44 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="kcn5b//ImkBj2WYw"
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=UKyjRNZG-ED2meUAR9aXdco+AbUTHiKixTzjCkaJbjTg@mail.gmail.com>
-X-Cookie: Keep away from edge.
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2 3/6] clk: qcom: Add lpass clock controller driver for
+ SC8280XP
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        andersson@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org
+Cc:     johan+linaro@kernel.org, agross@kernel.org,
+        konrad.dybcio@linaro.org, mturquette@baylibre.com,
+        sboyd@kernel.org, conor+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230525122930.17141-1-srinivas.kandagatla@linaro.org>
+ <20230525122930.17141-4-srinivas.kandagatla@linaro.org>
+ <098883dd-f517-d541-de00-1a7fc0ada017@linaro.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <098883dd-f517-d541-de00-1a7fc0ada017@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -74,49 +84,42 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---kcn5b//ImkBj2WYw
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
 
-On Tue, Jun 06, 2023 at 04:29:29PM -0700, Doug Anderson wrote:
+On 31/05/2023 21:01, Krzysztof Kozlowski wrote:
+> On 25/05/2023 14:29, Srinivas Kandagatla wrote:
+>> Add support for the lpass clock controller found on SC8280XP based devices.
+>> This would allow lpass peripheral loader drivers to control the clocks and
+>> bring the subsystems out of reset.
+>>
+>> Currently this patch only supports resets as the Q6DSP is in control of
+>> LPASS IP which manages most of the clocks via Q6PRM service on GPR rpmsg
+>> channel.
+>>
+>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>> ---
+>>   drivers/clk/qcom/Kconfig            |  8 ++++
+>>   drivers/clk/qcom/Makefile           |  1 +
+>>   drivers/clk/qcom/lpasscc-sc8280xp.c | 63 +++++++++++++++++++++++++++++
+>>   3 files changed, 72 insertions(+)
+>>   create mode 100644 drivers/clk/qcom/lpasscc-sc8280xp.c
+>>
+>> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+>> index 85869e7a9f16..e25993abb519 100644
+>> --- a/drivers/clk/qcom/Kconfig
+>> +++ b/drivers/clk/qcom/Kconfig
+>> @@ -523,6 +523,14 @@ config SC_LPASSCC_7280
+>>   	  Say Y if you want to use the LPASS branch clocks of the LPASS clock
+>>   	  controller to reset the LPASS subsystem.
+>>   
+>> +config SC_LPASSCC_8280XP
+>> +	tristate "SC8280 Low Power Audio Subsystem (LPASS) Clock Controller"
+> 
+> depends on ARM64 || COMPILE_TEST
 
-> 2. Try adding some delays to some of the regulators with
-> "regulator-enable-ramp-delay" and/or "regulator-settling-time-us".
-> Without a scope, it'll be tricky to figure out exactly which
-> regulators might need delays, but you could at least confirm if the
-> "overkill" approach of having all the regulators have some delay
-> helps... I guess you could also try putting a big delay for "ldo26".
-> If that works, you could try moving it up (again using a bisect style
-> approach) to see where the delay matters?
+Thanks, Will do that in v3.
 
-This is information which should be in the datasheets for the part.
-
-> Currently, I guess my mental model of what might be going wrong is
-> that regulators are all turning on / adjusting really quickly. Maybe
-> they aren't switching into "high power mode" quickly enough, maybe
-> they are busy ramping up or down, or maybe there's simply some other
-> issue, but I suppose that something happening could be causing the
-> voltage to droop down (or be too high) and then that's making RPMH
-> upset. Changing the order could be helping avoid this droop, but the
-> more proper fix would be to actually account for it with regulator
-> constraints.
-
-There could potentially be inrush issues, though I'd not expect
-reordering to help much there.
-
---kcn5b//ImkBj2WYw
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmSAg6wACgkQJNaLcl1U
-h9CQHAf/VzWxsU8jJFk5nll4BbFm2/zPEsihLJHPsWxVf8BUdxaVsWLetMpRFV+y
-JCriXoPBaKl+brdPEkvAJ5WuXzKNNKBW8tnIQILHv8LDYAVXVvl9fFoflfzmMoHI
-gFdkA76h9ZcNNj3jjQyTte4RMCRBKmll+uTjPOcmJJBx2fmEqTyhX963yxzxqTlM
-PTTdSaaqBotdP2VKO9188MPPMBpEMlwsKRwaneYbU2FIXNniliyLrcOGkiU7Djfe
-MMKxbUFZgST8MX+o4Pv8upqDvNtiMZDyNNpqrGEG7s/pVYwG6E69iCed4fmWN63V
-4rHhXlm3Mi7lq988USh5UEVaH3D6PQ==
-=YKW8
------END PGP SIGNATURE-----
-
---kcn5b//ImkBj2WYw--
+--srini
+> 
+> Best regards,
+> Krzysztof
+> 
