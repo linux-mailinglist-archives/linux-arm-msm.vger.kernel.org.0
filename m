@@ -2,73 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE5C2725A98
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 11:35:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84810725AB2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 11:37:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240079AbjFGJfp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 05:35:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53222 "EHLO
+        id S239918AbjFGJhK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 05:37:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54644 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240429AbjFGJf3 (ORCPT
+        with ESMTP id S240141AbjFGJhA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 05:35:29 -0400
-Received: from out30-118.freemail.mail.aliyun.com (out30-118.freemail.mail.aliyun.com [115.124.30.118])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 269E31720;
-        Wed,  7 Jun 2023 02:35:18 -0700 (PDT)
-X-Alimail-AntiSpam: AC=PASS;BC=-1|-1;BR=01201311R581e4;CH=green;DM=||false|;DS=||;FP=0|-1|-1|-1|0|-1|-1|-1;HT=ay29a033018046059;MF=yang.lee@linux.alibaba.com;NM=1;PH=DS;RN=11;SR=0;TI=SMTPD_---0Vka6Hhf_1686130515;
-Received: from localhost(mailfrom:yang.lee@linux.alibaba.com fp:SMTPD_---0Vka6Hhf_1686130515)
-          by smtp.aliyun-inc.com;
-          Wed, 07 Jun 2023 17:35:16 +0800
-From:   Yang Li <yang.lee@linux.alibaba.com>
-To:     mani@kernel.org
-Cc:     lpieralisi@kernel.org, kw@linux.com, kishon@kernel.org,
-        bhelgaas@google.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Yang Li <yang.lee@linux.alibaba.com>,
-        Abaci Robot <abaci@linux.alibaba.com>
-Subject: [PATCH -next] PCI: endpoint: Remove redundant dev_err().
-Date:   Wed,  7 Jun 2023 17:35:14 +0800
-Message-Id: <20230607093514.104012-1-yang.lee@linux.alibaba.com>
-X-Mailer: git-send-email 2.20.1.7.g153144c
+        Wed, 7 Jun 2023 05:37:00 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCEBA1FF0
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 02:36:43 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id 5b1f17b1804b1-3f732d37d7bso33139495e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 02:36:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686130602; x=1688722602;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Uusdi9NyZqH+4XykGUPpTlNUQQewoUsasR8qvPU4tuE=;
+        b=yDyHzNuBaw1TucGZ+SQX1GRqIUhxFfugr5lx4DYLakMuAZQIr4dsGh6XFN8lqUZEBV
+         lDPGLCvJFyi5cZJkbu3Ji5PK3xVte+RAp5vlbbNOMEZLVHaBQkCcr9R3lbjTVRxvtsBM
+         W+90Ve1RNJjxyo/vjIZtNY9XQrvkMSNuzXFS5sxn1fA9wmZwh4orWuIpyN4fvgAdFTY+
+         ZbYrzDm/CK+mlQTaD2iOGI5bf6IAOxSRBYrNCoq7UlPhzcGlRyqEgTmz9c7YymxPL9/C
+         Id5Tfy+THCUB1EghpzieWfNjDDAq0SbOkEeBjRP2LcS3b2bNKPTCu/L7ov6qC+/uohKc
+         F+WQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686130602; x=1688722602;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Uusdi9NyZqH+4XykGUPpTlNUQQewoUsasR8qvPU4tuE=;
+        b=QafTq0tl0Gn6f0pqthhggliLDtQgWYooZ/JbSfCv14w9hR+m67wgptvIuehhv3kgMC
+         2RkJWk03QSKQQggdgfHhlEUi++ZOnW1WkOmZuarSJZRTxi2aalbKsus28Y/XMSTNpAko
+         mHWruk1whlWrjCtV4DcGjIn2LIiBeetnGcd4jgHFrUbh+59ei/3fQ+nuwSuZV0X1WAq0
+         1oKC1/tJTuFw9XA0qdCpA1FI5L20qZJRwiL0N3Gw/s0SHVBOy1znf8NIu7sAFI+6CdPq
+         hrOuQYGQL9XAioltMbmJzz8dVE/CVO+4HehiNPmOe/ffxdFGgG2vcOFUbgZ6XYRhr2gK
+         baNg==
+X-Gm-Message-State: AC+VfDye8FTbZ1cYzEYW8wI7fwRuwoQsUeMmP1Ht9P4sl765V0fWf7G2
+        20LEC65jPQyxVoL+aCpOuM6aug==
+X-Google-Smtp-Source: ACHHUZ6P6/DuMu8DxYUDW/YBCvycHYo0qaPj8RiltXuvqGHDvtUQHEwff2rgy4PsUKrAevxyaV0D9w==
+X-Received: by 2002:a05:6000:d1:b0:30e:46c3:a179 with SMTP id q17-20020a05600000d100b0030e46c3a179mr3906921wrx.30.1686130601877;
+        Wed, 07 Jun 2023 02:36:41 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id d8-20020adff848000000b0030ae849c70csm15019251wrq.37.2023.06.07.02.36.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 Jun 2023 02:36:41 -0700 (PDT)
+Message-ID: <5d6bcc6a-151e-ac21-2dd2-f72a91f562d5@linaro.org>
+Date:   Wed, 7 Jun 2023 10:36:40 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-9.9 required=5.0 tests=BAYES_00,
-        ENV_AND_HDR_SPF_MATCH,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE,UNPARSEABLE_RELAY,URIBL_BLOCKED,
-        USER_IN_DEF_SPF_WL autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2 0/4] soundwire: qcom: stablity fixes
+To:     Johan Hovold <johan@kernel.org>
+Cc:     vkoul@kernel.org, andersson@kernel.org,
+        yung-chuan.liao@linux.intel.com,
+        pierre-louis.bossart@linux.intel.com, sanyog.r.kale@intel.com,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        linux-kernel@vger.kernel.org
+References: <20230525133812.30841-1-srinivas.kandagatla@linaro.org>
+ <ZH2l-UbMyLi5Uwph@hovoldconsulting.com>
+Content-Language: en-US
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <ZH2l-UbMyLi5Uwph@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no need to call the dev_err() function directly to print a
-custom message when handling an error from either the platform_get_irq()
-or platform_get_irq_byname() functions as both are going to display an
-appropriate error message in case of a failure.
 
-Eliminate the following warning:
-./drivers/pci/endpoint/functions/pci-epf-mhi.c:362:2-9: line 362 is redundant because platform_get_irq_byname() already prints an error
 
-Reported-by: Abaci Robot <abaci@linux.alibaba.com>
-Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=5449
-Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
----
- drivers/pci/endpoint/functions/pci-epf-mhi.c | 1 -
- 1 file changed, 1 deletion(-)
+On 05/06/2023 10:08, Johan Hovold wrote:
+> On Thu, May 25, 2023 at 02:38:08PM +0100, Srinivas Kandagatla wrote:
+>> During x13s audio testing we hit few corner cases due to issues
+>> in codec drivers and some obvious code bugs.
+>>
+>> Here are the fixes for those issues, mostly the issues are around
+>> devices loosing the sync in between runtime pm suspend resume path.
+>>
+>> With codec fixes along with these fixes, audio on x13s is pretty stable.
+>>
+>> Thanks,
+>> Srini
+>>
+>> Changes since v1:
+>> 	- dropped runtime pm changes patch as unable to reproduced it anymore
+>> 	- fixed clk stop flag as suggested by Pierre
+>> 	- rebased on top of linux-next
+> 
+> I tried to update to this series on my 6.4-rc5 branch for the X13s and
+> the above changes appear to lead to breakages again.
+> 
+These patches are based on linux next, we can not cleanly apply them on 
+rc5 i guess without the depended patches.
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-mhi.c b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-index 1227f059ea12..371d6f80845e 100644
---- a/drivers/pci/endpoint/functions/pci-epf-mhi.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-mhi.c
-@@ -359,7 +359,6 @@ static int pci_epf_mhi_bind(struct pci_epf *epf)
- 
- 	ret = platform_get_irq_byname(pdev, "doorbell");
- 	if (ret < 0) {
--		dev_err(dev, "Failed to get Doorbell IRQ\n");
- 		iounmap(epf_mhi->mmio);
- 		return ret;
- 	}
--- 
-2.20.1.7.g153144c
+I have tried these patches with your rc4 branch along with other 
+depended patches my branch is at: 
+https://git.linaro.org/people/srinivas.kandagatla/linux.git/log/?h=wip/sc8280xp-v6.4-rc4
 
+this works fine for me, not seeing any issues so far.
+tested both speakers and headset.
+
+
+> Specifically, with the updated clk stop flag (simple_clk_stop_capable) I
+> see:
+> 
+> [   14.789533] wcd9380-codec sdw:0:0217:010d:00:3: Slave 1 state check1: UNATTACHED, status was 1
+> [   14.789717] qcom-soundwire 3330000.soundwire-controller: qcom_swrm_irq_handler: SWR bus clsh detected
+> [   14.796164] wcd9380-codec sdw:0:0217:010d:00:3: Slave 1 state check1: UNATTACHED, status was 1
+> 
+
+> and without the runtime pm patch that you dropped in v2 I get
+> intermittent (e.g. twice in five boots):
+> 
+> [   11.527301] snd-sc8280xp sound: ASoC: adding FE link failed
+> [   11.527409] snd-sc8280xp sound: ASoC: topology: could not load header: -517
+Never seen this, looks like some corrupted tplg to me.. I might be wrong.
+
+> [   11.527557] qcom-apm gprsvc:service:2:1: tplg component load failed-517
+> [   11.527640] qcom-apm gprsvc:service:2:1: ASoC: error at snd_soc_component_probe on gprsvc:service:2:1: -22
+> [   11.528079] snd-sc8280xp sound: ASoC: failed to instantiate card -22
+> [   11.533388] snd-sc8280xp: probe of sound failed with error -22
+> 
+> Again, this was with 6.4-rc5, but these problems are likely still there
+> also with linux-next.
+
+Have you tried linux-next?
+
+
+--srini
+> 
+> Johan
