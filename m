@@ -2,120 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 10C2B7266C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 19:08:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E1397266D8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 19:12:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229868AbjFGRIy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 13:08:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46044 "EHLO
+        id S230495AbjFGRMF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 13:12:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229634AbjFGRIx (ORCPT
+        with ESMTP id S229472AbjFGRME (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 13:08:53 -0400
-Received: from smtp.smtpout.orange.fr (smtp-20.smtpout.orange.fr [80.12.242.20])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BEFB1BC2
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 10:08:50 -0700 (PDT)
-Received: from [192.168.1.18] ([86.243.2.178])
-        by smtp.orange.fr with ESMTPA
-        id 6weMqJe3YSNCw6weMqBxss; Wed, 07 Jun 2023 19:08:48 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wanadoo.fr;
-        s=t20230301; t=1686157728;
-        bh=cdPbQRbPDp+0zA8pJiiJF8vCEuIQxafiGUtIS4RjinE=;
-        h=Date:Subject:To:Cc:References:From:In-Reply-To;
-        b=iztr6Ygp2jO295OFc8hcNMYK+NHPUOyX56BTDBuZMDiabs1FaUVcwYl4TQvuerwvp
-         2jFbciRi9xuMH2xGzWgRwWoZxSU4qJQ0uyCDf9SEMobGgYJXXuDDTW6QrJIMz82kBH
-         tWXM81i2kXrcbKIQQbLUBrd5UxtBpO5mzfXxCs6u9HrmsspZWvJ+HRwUg4ZPOqTT4G
-         4PTkHFpAYxw0hMqb1UyVbfaFTxjRlKyaW8Ny8LDBo90zoxBWYjcou85E87gZAPk1sL
-         TC06vcxI474ViC+x9J/3K5kW3DvhjQzZw9CBnD2rkail3ByX+PiS/evzih4Vih/3fJ
-         khEtieUBvijeA==
-X-ME-Helo: [192.168.1.18]
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Wed, 07 Jun 2023 19:08:48 +0200
-X-ME-IP: 86.243.2.178
-Message-ID: <b34b048e-1291-207d-b611-c66d591cbf1b@wanadoo.fr>
-Date:   Wed, 7 Jun 2023 19:08:46 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2 1/2] net: Add MHI Endpoint network driver
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
-        pabeni@redhat.com
-Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        Wed, 7 Jun 2023 13:12:04 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CAF91BC2
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 10:11:59 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id d2e1a72fcca58-662b85f4640so295867b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 10:11:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686157919; x=1688749919;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=rWtY5he6E2U22BGtj3uJgNRgjOP3X6c6EEgHAfVceAA=;
+        b=mXect4J9DJmCaxC7euotMiP2tk7blJ93LE1V553qNvnTmgH2GBDVmDFCW6KtS+vMN7
+         Axb0cX1wJcgTaXm1IdIPtXfvXLDZpE07394pEVTrE2EVF/IZvAIl+cI3LEK+6Ds1SLKT
+         Zts25GUsIdKWoR6Z11646M2mmeheA6oHVWYMwDBK4U5ejNAAmW/uoJI7wnNntiAmwrMC
+         rM4DXU3ImtDRebjK9ONq1qEODm7k4Sw2nHN2ZzXetQcjOZrL0sV2of4OqDDo4SAkdanR
+         FHSjjp2mkYKC7sGhMCpwfoQWDwYad8UwSext4uZZOPzYyjNv2RvxaCkNvhztbXyh7PzX
+         bMpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686157919; x=1688749919;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rWtY5he6E2U22BGtj3uJgNRgjOP3X6c6EEgHAfVceAA=;
+        b=SnJzRpsOU3wJwoCWVEB84a7ISKrX15ag3XuZ6DfDIW/O8d8E6wfjSQmK96178JIw/C
+         nFXhMV4g+T3G3oj90hjwKm4+yho1KoDBPWrV1u/nLTWdHec8VNT4nvCEP+tvSZRD8cWJ
+         eksat4/bNm0jJabRMpXcnHOSgX5qJUODfSxIVHhzz2GBHC6r5nj8APfDbAFlcz1+4JMc
+         k3RwyTN1bqGtfkywqClSdvEoH6qiTXbTsURg9u7K4G0yIFv6C3VzlWEc4jDkxkjSsWMk
+         SAv8t5ADZ7TIavX3XeCk/OGnM3e0cDpJNyfoissL7bapjfV9n8beo8162U3suUvMuSkX
+         o5iQ==
+X-Gm-Message-State: AC+VfDzX9SBcR2NQ8pwh93p2pUQmqNir9IA2O1MBdD1ZOWDeMmUFvMdf
+        MQuNYei/8TE9SsBCgMiBh+CM
+X-Google-Smtp-Source: ACHHUZ5QgjgWoC5EH7Xt7czYHcPm4hEGhW8TrMZglVc/Jysfh+b6M9//znCzHXVkkqT037ZWx2uYdQ==
+X-Received: by 2002:a05:6a20:4425:b0:10e:e218:d3f0 with SMTP id ce37-20020a056a20442500b0010ee218d3f0mr1743242pzb.54.1686157918848;
+        Wed, 07 Jun 2023 10:11:58 -0700 (PDT)
+Received: from thinkpad ([59.92.97.244])
+        by smtp.gmail.com with ESMTPSA id 21-20020a630c55000000b0051b71e8f633sm9228268pgm.92.2023.06.07.10.11.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 07 Jun 2023 10:11:58 -0700 (PDT)
+Date:   Wed, 7 Jun 2023 22:41:53 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
         netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
         loic.poulain@linaro.org
+Subject: Re: [PATCH v2 0/2] Add MHI Endpoint network driver
+Message-ID: <20230607171153.GA109456@thinkpad>
 References: <20230607152427.108607-1-manivannan.sadhasivam@linaro.org>
- <20230607152427.108607-2-manivannan.sadhasivam@linaro.org>
-Content-Language: fr
-From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-In-Reply-To: <20230607152427.108607-2-manivannan.sadhasivam@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <20230607094922.43106896@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H4,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+In-Reply-To: <20230607094922.43106896@kernel.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Le 07/06/2023 à 17:24, Manivannan Sadhasivam a écrit :
-> Add a network driver for the Modem Host Interface (MHI) endpoint devices
-> that provides network interfaces to the PCIe based Qualcomm endpoint
-> devices supporting MHI bus. This driver allows the MHI endpoint devices to
-> establish IP communication with the host machines (x86, ARM64) over MHI
-> bus.
+On Wed, Jun 07, 2023 at 09:49:22AM -0700, Jakub Kicinski wrote:
+> On Wed,  7 Jun 2023 20:54:25 +0530 Manivannan Sadhasivam wrote:
+> > This series adds a network driver for the Modem Host Interface (MHI) endpoint
+> > devices that provides network interfaces to the PCIe based Qualcomm endpoint
+> > devices supporting MHI bus (like Modems). This driver allows the MHI endpoint
+> > devices to establish IP communication with the host machines (x86, ARM64) over
+> > MHI bus.
+> > 
+> > On the host side, the existing mhi_net driver provides the network connectivity
+> > to the host.
 > 
-> The driver currently supports only IP_SW0 MHI channel that can be used
-> to route IP traffic from the endpoint CPU to host machine.
+> Why are you posting the next version before the discussion on the
+> previous one concluded? :|
 > 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> ---
 
-[...]
+Previous discussion doesn't sound any controversial to me, so I thought of
+respinning. Maybe I should've waited...
 
-> +static int mhi_ep_net_newlink(struct mhi_ep_device *mhi_dev, struct net_device *ndev)
-> +{
-> +	struct mhi_ep_net_dev *mhi_ep_netdev;
-> +	int ret;
-> +
-> +	mhi_ep_netdev = netdev_priv(ndev);
-> +
-> +	dev_set_drvdata(&mhi_dev->dev, mhi_ep_netdev);
-> +	mhi_ep_netdev->ndev = ndev;
-> +	mhi_ep_netdev->mdev = mhi_dev;
-> +	mhi_ep_netdev->mru = mhi_dev->mhi_cntrl->mru;
-> +
-> +	skb_queue_head_init(&mhi_ep_netdev->tx_buffers);
-> +	spin_lock_init(&mhi_ep_netdev->tx_lock);
-> +
-> +	u64_stats_init(&mhi_ep_netdev->stats.rx_syncp);
-> +	u64_stats_init(&mhi_ep_netdev->stats.tx_syncp);
-> +
-> +	mhi_ep_netdev->xmit_wq = alloc_workqueue("mhi_ep_net_xmit_wq", 0, WQ_HIGHPRI);
+> In any case, I'm opposed to reuse of the networking stack to talk
+> to firmware. It's a local device. The networking subsystem doesn't
+> have to cater to fake networks. Please carry:
+> 
+> Nacked-by: Jakub Kicinski <kuba@kernel.org>
+> 
+> if there are future submissions.
 
-if (!mhi_ep_netdev->xmit_wq)
-	return -ENOMEM;
+Why shouldn't it be? With this kind of setup one could share the data connectivity
+available in the device with the host over IP tunneling. If the IP source in the
+device (like modem DSP) has no way to be shared with the host, then those IP
+packets could be tunneled through this interface for providing connectivity to
+the host.
 
-> +	INIT_WORK(&mhi_ep_netdev->xmit_work, mhi_ep_net_dev_process_queue_packets);
-> +
-> +	ret = register_netdev(ndev);
-> +	if (ret) {
-> +		destroy_workqueue(mhi_ep_netdev->xmit_wq);
+I believe this is a common usecase among the PCIe based wireless endpoint
+devices.
 
-I don't really think it is needed, but to be consistent with 
-mhi_ep_net_dellink(), maybe:
-	dev_set_drvdata(&mhi_dev->dev, NULL);
+- Mani
 
-CJ
-
-> +		return ret;
-> +	}
-> +
-> +	return 0;
-> +}
-
-[...]
-
+-- 
+மணிவண்ணன் சதாசிவம்
