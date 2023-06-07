@@ -2,221 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 345F6725E3D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 14:13:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AD96725E74
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 14:16:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239618AbjFGMNQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 08:13:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57594 "EHLO
+        id S240166AbjFGMQd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 08:16:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235777AbjFGMNO (ORCPT
+        with ESMTP id S240043AbjFGMQb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 08:13:14 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 647C31BD7
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 05:13:12 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-5149c51fd5bso1303168a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 05:13:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686139990; x=1688731990;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NxeLXXBCAzKSF9EaKSeDGi9QZ7gj28djOqBeKfbqbww=;
-        b=PRLqBcz5NVG99Nufi6ltzVRN5RxfSwKsMxJn5jW+WKz4ba1VxKdUbld4Fh7WvaSKrl
-         GIQfPA6zDkXHT5/dkrqkMge3s4s6+fXRH68XjHOx3sPFkBdYhGKr1OCVBSNjclnWLjKy
-         ZF3kQJlR8cnpzNnQBm51kgUC1POmKuF1QDQ3TEyVeKyZ/sZkd2TCz+OgUSV93Kh72fGv
-         rugYNUfQwNLut4vKgDZ/3GqHn1Iefu1lh+aCHCxhTXCSl4foyZYeSXa/U5VDds2TKRu1
-         BrNT0ea+IsyCJm/liIeRyLwnfBbIO8IiB4e22smE8IUJPY2L7eZ3kM0I2abmzmdSxmEQ
-         srjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686139990; x=1688731990;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NxeLXXBCAzKSF9EaKSeDGi9QZ7gj28djOqBeKfbqbww=;
-        b=CexMA3DOvuSEPTfy3b8MHF8AlKwgiRzYBjoPeeI6eklF4QYjYrSCfIGhpDN8vwwv8s
-         oUkmiV37sK8NJLyR1sSl0CY0o8oJBFQ7/GiRy/56cqe+d08BmvkL08qnzwQ/vGzw0idu
-         6cluDDJn6vinfnjFyt/+LUpOfve7Xc1Js9Avgua3s0INsAma48cmoHbhlD/KXypF/nCr
-         i2FOCNfDY51ZJuejOqFW7TaD9Fq+qtLfo8NuoggRnUF1107kbYU/g3VlANZBZ2MqXRjQ
-         LsVuSfNNCB5eDf2i0UySvLZmpMl2i6LWFAhnpZeOSLTOlLzu87I6v8I7UogK/DvBcdtb
-         LS8w==
-X-Gm-Message-State: AC+VfDz+iyC6Av1n5qV97ABPb+ZPROZnoP1VeDn82P0sgLNb6fdwH3So
-        zxk9DNnY8dyDoYxPS4LYT8259g==
-X-Google-Smtp-Source: ACHHUZ42spwVdZjLjycyHXug82mcqDdkwMeE5tGPXGVrQgoGU66w8PIL/qaCRjSGYRAnzna2OaKakg==
-X-Received: by 2002:a05:6402:50:b0:510:6ccf:84aa with SMTP id f16-20020a056402005000b005106ccf84aamr4549921edu.32.1686139990621;
-        Wed, 07 Jun 2023 05:13:10 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id z19-20020aa7c653000000b005149b6ec1bdsm6072041edr.29.2023.06.07.05.13.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Jun 2023 05:13:09 -0700 (PDT)
-Message-ID: <e45d3d3b-a31d-5ad0-b43f-7193add4ee66@linaro.org>
-Date:   Wed, 7 Jun 2023 14:13:07 +0200
+        Wed, 7 Jun 2023 08:16:31 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B72531FD8;
+        Wed,  7 Jun 2023 05:16:15 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3CCA163E61;
+        Wed,  7 Jun 2023 12:16:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96B98C433D2;
+        Wed,  7 Jun 2023 12:16:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686140174;
+        bh=HlNz6Ado0d6eQj5JSweTVMGGnPL01vC2DAZcoI7FHFI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=DEIITjoGO3GkItGqBWXi+9iVYCuWUzGrd4MGMROGP2tHYbHZGHCSNDYh3F7Ur5iOr
+         arxxLbdZK8FSXny3cFjY4tAuQcRzQ0kLuOVYOaEs5r/QA7KExTtdncgHrK8Vr1EFNv
+         X15TgSZWo7QAXQbzfJe4Hk8fGM/C4clgNTAFswMcURbqYXpupEG1cRYCIS1SfseOkn
+         f92TBG5umrejEA3df+L6E4ADb3a+PEfVauW1bpZnGsDaaPhzCF8NKDW3Ddky9EUDKN
+         /GxBUdefrvvI/c80fzza8se405I51Cjo27cCjqQUY+v0aU6jZ6wm+us7Ol/sB4gddV
+         2C+AvRBC+FLtg==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1q6s5c-0001DA-JW; Wed, 07 Jun 2023 14:16:37 +0200
+Date:   Wed, 7 Jun 2023 14:16:36 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati <quic_kriskura@quicinc.com>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
+        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
+        ahalaney@redhat.com
+Subject: Re: [PATCH v8 6/9] usb: dwc3: qcom: Add multiport controller support
+ for qcom wrapper
+Message-ID: <ZIB1JEmLCw41v_4e@hovoldconsulting.com>
+References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
+ <20230514054917.21318-7-quic_kriskura@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v3 5/5] arm64: dts: qcom: Add SDX75 platform and IDP board
- support
-Content-Language: en-US
-To:     Rohit Agarwal <quic_rohiagar@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, konrad.dybcio@linaro.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        rafael@kernel.org, viresh.kumar@linaro.org, tglx@linutronix.de,
-        maz@kernel.org, mani@kernel.org, robimarko@gmail.com
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-References: <1686138469-1464-1-git-send-email-quic_rohiagar@quicinc.com>
- <1686138469-1464-6-git-send-email-quic_rohiagar@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <1686138469-1464-6-git-send-email-quic_rohiagar@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230514054917.21318-7-quic_kriskura@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/06/2023 13:47, Rohit Agarwal wrote:
-> Add basic devicetree support for SDX75 platform and IDP board from
-> Qualcomm. The SDX75 platform features an ARM Cortex A55 CPU which forms
-> the Application Processor Sub System (APSS) along with standard Qualcomm
-> peripherals like GCC, TLMM, UART, QPIC, and BAM etc... Also, there
-> exists the networking parts such as IPA, MHI, PCIE-EP, EMAC, and Modem
-> etc..
+On Sun, May 14, 2023 at 11:19:14AM +0530, Krishna Kurapati wrote:
+> QCOM SoC SA8295P's tertiary quad port controller supports 2 HS+SS
+> ports and 2 HS only ports. Add support for configuring PWR_EVENT_IRQ's
+> for all the ports during suspend/resume.
 > 
-> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/Makefile      |   1 +
->  arch/arm64/boot/dts/qcom/sdx75-idp.dts |  33 ++
->  arch/arm64/boot/dts/qcom/sdx75.dtsi    | 660 +++++++++++++++++++++++++++++++++
->  3 files changed, 694 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sdx75-idp.dts
->  create mode 100644 arch/arm64/boot/dts/qcom/sdx75.dtsi
+>  drivers/usb/dwc3/dwc3-qcom.c | 28 ++++++++++++++++++++++------
+>  1 file changed, 22 insertions(+), 6 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index d42c595..4fd5a18 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -173,6 +173,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-polaris.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-shift-axolotl.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
-> +dtb-$(CONFIG_ARCH_QCOM)	+= sdx75-idp.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm4250-oneplus-billie2.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm6115p-lenovo-j606f.dtb
->  dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
-> diff --git a/arch/arm64/boot/dts/qcom/sdx75-idp.dts b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
-> new file mode 100644
-> index 0000000..cbe5cdf
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sdx75-idp.dts
-> @@ -0,0 +1,33 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +/dts-v1/;
-> +
-> +#include "sdx75.dtsi"
-> +
-> +/ {
-> +	model = "Qualcomm Technologies, Inc. SDX75 IDP";
-> +	compatible = "qcom,sdx75-idp", "qcom,sdx75";
-> +
-> +	aliases {
-> +		serial0 = &uart1;
-> +	};
+> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+> index 959fc925ca7c..7a9bce66295d 100644
+> --- a/drivers/usb/dwc3/dwc3-qcom.c
+> +++ b/drivers/usb/dwc3/dwc3-qcom.c
+> @@ -37,7 +37,10 @@
+>  #define PIPE3_PHYSTATUS_SW			BIT(3)
+>  #define PIPE_UTMI_CLK_DIS			BIT(8)
+>  
+> -#define PWR_EVNT_IRQ_STAT_REG			0x58
+> +#define PWR_EVNT_IRQ1_STAT_REG			0x58
+> +#define PWR_EVNT_IRQ2_STAT_REG			0x1dc
+> +#define PWR_EVNT_IRQ3_STAT_REG			0x228
+> +#define PWR_EVNT_IRQ4_STAT_REG			0x238
+>  #define PWR_EVNT_LPM_IN_L2_MASK			BIT(4)
+>  #define PWR_EVNT_LPM_OUT_L2_MASK		BIT(5)
+>  
+> @@ -93,6 +96,13 @@ struct dwc3_qcom {
+>  	struct icc_path		*icc_path_apps;
+>  };
+>  
+> +static u32 pwr_evnt_irq_stat_reg_offset[4] = {
+> +			PWR_EVNT_IRQ1_STAT_REG,
+> +			PWR_EVNT_IRQ2_STAT_REG,
+> +			PWR_EVNT_IRQ3_STAT_REG,
+> +			PWR_EVNT_IRQ4_STAT_REG,
 > +};
-> +
-> +&chosen {
-> +	stdout-path = "serial0:115200n8";
-> +};
-> +
-> +&qupv3_id_0 {
-> +	status = "okay";
-> +};
-> +
-> +&tlmm {
-> +	gpio-reserved-ranges = <110 6>;
-> +};
-> +
-> +&uart1 {
-> +	status = "okay";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sdx75.dtsi b/arch/arm64/boot/dts/qcom/sdx75.dtsi
-> new file mode 100644
-> index 0000000..40fa579
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sdx75.dtsi
-> @@ -0,0 +1,660 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * SDX75 SoC device tree source
-> + *
-> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
-> + *
-> + */
-> +
-> +#include <dt-bindings/clock/qcom,rpmh.h>
-> +#include <dt-bindings/clock/qcom,sdx75-gcc.h>
-> +#include <dt-bindings/interrupt-controller/arm-gic.h>
-> +#include <dt-bindings/soc/qcom,rpmh-rsc.h>
-> +
-> +/ {
-> +	#address-cells = <2>;
-> +	#size-cells = <2>;
-> +	interrupt-parent = <&intc>;
-> +
-> +	chosen: chosen { };
-> +
-> +	clocks {
-> +		xo_board: xo-board {
-> +			compatible = "fixed-clock";
-> +			clock-frequency = <76800000>;
-> +			#clock-cells = <0>;
-> +		};
-> +
-> +		sleep_clk: sleep-clk {
-> +			compatible = "fixed-clock";
-> +			clock-frequency = <32000>;
-> +			#clock-cells = <0>;
-> +		};
-> +	};
-> +
-> +	cpus {
-> +		#address-cells = <2>;
-> +		#size-cells = <0>;
-> +
-> +		CPU0: cpu@0 {
-> +			device_type = "cpu";
-> +			compatible = "arm,cortex-a55";
-> +			reg = <0x0 0x0>;
-> +			clocks = <&cpufreq_hw 0>;
-> +			enable-method = "psci";
-> +			power-domains = <&CPU_PD0>;
-> +			power-domain-names = "psci";
-> +			qcom,freq-domain = <&cpufreq_hw 0>;
-> +			capacity-dmips-mhz = <1024>;
-> +			dynamic-power-coefficient = <100>;
-> +			next-level-cache = <&L2_0>;
-> +
-> +			L2_0: l2-cache {
-> +				compatible = "cache";
-> +				next-level-cache = <&L3_0>;
 
-You miss properties like level and unified. Maybye you tested it with
-some old (half year ago) dtschema?
+Indentation is off, as I believe Bjorn pointed out.
 
-It does not look like you tested the DTS against bindings. Please run
-`make dtbs_check` (see
-Documentation/devicetree/bindings/writing-schema.rst for instructions).
+>  static inline void dwc3_qcom_setbits(void __iomem *base, u32 offset, u32 val)
+>  {
+>  	u32 reg;
+> @@ -413,13 +423,16 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom, bool wakeup)
+>  {
+>  	u32 val;
+>  	int i, ret;
+> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+>  
+>  	if (qcom->is_suspended)
+>  		return 0;
+>  
+> -	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
+> -	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
+> -		dev_err(qcom->dev, "HS-PHY not in L2\n");
+> +	for (i = 0; i < dwc->num_usb2_ports; i++) {
+> +		val = readl(qcom->qscratch_base + pwr_evnt_irq_stat_reg_offset[i]);
+> +		if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
+> +			dev_err(qcom->dev, "HS-PHY%d not in L2\n", i);
+> +	}
 
-Best regards,
-Krzysztof
+You need check for NULL dwc as we just discussed and skip the above
+check if core has not probed yet.
 
+When testing this on the X13s I get:
+
+	dwc3-qcom a4f8800.usb: HS-PHY2 not in L2
+
+for the third port, whose status registers always seems to return zero
+(e.g. as if we're checking the wrong register?):
+
+dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 0, pwr_event_stat = 38103c
+dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 1, pwr_event_stat = 38103c
+dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 2, pwr_event_stat = 00
+dwc3-qcom a4f8800.usb: dwc3_qcom_suspend - phy 3, pwr_event_stat = 140030
+
+I verified that everything appears to work as expected on sa8295p-adp.
+
+Do you have any idea of what may be causing this?
+
+Johan
