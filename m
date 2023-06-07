@@ -2,283 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6811A7265C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 18:22:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6391B7265E8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 18:29:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229878AbjFGQWh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 12:22:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46494 "EHLO
+        id S229559AbjFGQ3Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 12:29:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229576AbjFGQWg (ORCPT
+        with ESMTP id S231449AbjFGQ3X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 12:22:36 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFE701BD9;
-        Wed,  7 Jun 2023 09:22:34 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 357FK57G000559;
-        Wed, 7 Jun 2023 16:22:29 GMT
+        Wed, 7 Jun 2023 12:29:23 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 737F42113;
+        Wed,  7 Jun 2023 09:28:49 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 357G7s9M008575;
+        Wed, 7 Jun 2023 16:27:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=O4wVILqdigiF7Al6+HgYOaCC79kMZRRBTl3zPy5Pr7U=;
- b=iH52lVEER3rtXhRjDcyTjRcPucOk7OsuSqgaWjcLEXyanQmMHrJDKxD5HeE5RNQsxxKc
- GoKrKDTWSdUd3oNThA0VX2Mylhn5mzJGf7XP3pUBjGEtJauEfuW9qZQwUHPlCR8m+0DE
- dWGqGG0DuD1k7sI+DNA4Ug/p9S4MOu+2oZhyJUlxAxoqi7bxep97SbkP9cj84JZe4IaY
- 6WCTDfPhH8tUqsW+QU55LyPFPkIeigU1QcDb4z3vAKTT80y2AVOED6lYnpTuFZZTd/Pk
- IObsUNZdMRHPN09FU25PXFBDGQ0mnlCUtLbTg8q+9JaodPAjtSaxBJkzbF6hhMACrCwy Gg== 
+ bh=27+/o+iLEAjAkmX6+2IU2QtYLVlt1oHU4+OW/n9wBSs=;
+ b=kLpP4cetmb1ZBZ6Whxokr0muLzPOGCzUvKbq1QTs8BkCKjCKaQUdbxzgyl9pohyrrHyW
+ yYGlHe61UXFgLmQoAwn8KbNQxB+GXodSdMwQs5Wsm6jVVVzFPd3beMhiQzd2c0BltzsR
+ FN7CbwkxspE7tO4mttU0+5FoHn3KIRuYInlMPjALGIZngMsFQu2eI5QHRpd9k+FPNsLk
+ hUYY4e2EGK/coHcSJpJNZDQXWQSohE9Yd7ajoFZ4mttq2OB3ThpWB/oftHhALLJiNang
+ 2O1bV6sR8J33Rno0rMLRTkkjY8YDoOQvG+qW2pdfYpzhJ1cE4QWTSAPc1KbavhvMO5Nt 9A== 
 Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r2a76aanx-1
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r2w5501gs-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 07 Jun 2023 16:22:29 +0000
+        Wed, 07 Jun 2023 16:27:50 +0000
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 357GMSHx023673
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 357GRn7j029180
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 7 Jun 2023 16:22:28 GMT
-Received: from [10.216.46.213] (10.80.80.8) by nalasex01a.na.qualcomm.com
+        Wed, 7 Jun 2023 16:27:49 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 7 Jun 2023
- 09:22:24 -0700
-Message-ID: <93063313-7462-1b7a-4116-0f613c5470b2@quicinc.com>
-Date:   Wed, 7 Jun 2023 21:52:21 +0530
+ 09:27:48 -0700
+Message-ID: <26a85bae-1a33-dd1f-5e73-0ab6da100abf@quicinc.com>
+Date:   Wed, 7 Jun 2023 10:27:47 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH] PCI: qcom-ep: Add ICC bandwidth voting support
+ Thunderbird/91.6.0
+Subject: Re: [PATCH v2 1/2] net: Add MHI Endpoint network driver
 Content-Language: en-US
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC:     <quic_vbadigan@quicinc.com>, <quic_ramkri@quicinc.com>,
-        "Manivannan Sadhasivam" <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM" 
-        <linux-pci@vger.kernel.org>,
-        "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM" 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-References: <1686030570-5439-1-git-send-email-quic_krichai@quicinc.com>
- <20230606112452.GA51623@thinkpad>
-From:   Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20230606112452.GA51623@thinkpad>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        <davem@davemloft.net>, <edumazet@google.com>, <kuba@kernel.org>,
+        <pabeni@redhat.com>
+CC:     <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <loic.poulain@linaro.org>
+References: <20230607152427.108607-1-manivannan.sadhasivam@linaro.org>
+ <20230607152427.108607-2-manivannan.sadhasivam@linaro.org>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20230607152427.108607-2-manivannan.sadhasivam@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: JQQtoJW_un9y0d6TTpOAmQxpcrdTENsp
-X-Proofpoint-GUID: JQQtoJW_un9y0d6TTpOAmQxpcrdTENsp
+X-Proofpoint-GUID: iIXVLqb25q__aAaVUbTnMdPmk_XgCepD
+X-Proofpoint-ORIG-GUID: iIXVLqb25q__aAaVUbTnMdPmk_XgCepD
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
  definitions=2023-06-07_07,2023-06-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0
- priorityscore=1501 malwarescore=0 lowpriorityscore=0 clxscore=1015
- mlxscore=0 bulkscore=0 adultscore=0 phishscore=0 mlxlogscore=999
- impostorscore=0 suspectscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2306070139
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ lowpriorityscore=0 adultscore=0 spamscore=0 phishscore=0 malwarescore=0
+ mlxscore=0 suspectscore=0 impostorscore=0 clxscore=1015 bulkscore=0
+ mlxlogscore=912 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306070140
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 6/7/2023 9:24 AM, Manivannan Sadhasivam wrote:
+> Add a network driver for the Modem Host Interface (MHI) endpoint devices
+> that provides network interfaces to the PCIe based Qualcomm endpoint
+> devices supporting MHI bus. This driver allows the MHI endpoint devices to
+> establish IP communication with the host machines (x86, ARM64) over MHI
+> bus.
+> 
+> The driver currently supports only IP_SW0 MHI channel that can be used
+> to route IP traffic from the endpoint CPU to host machine.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> ---
+>   drivers/net/Kconfig      |   9 ++
+>   drivers/net/Makefile     |   1 +
+>   drivers/net/mhi_ep_net.c | 331 +++++++++++++++++++++++++++++++++++++++
+>   3 files changed, 341 insertions(+)
+>   create mode 100644 drivers/net/mhi_ep_net.c
+> 
+> diff --git a/drivers/net/Kconfig b/drivers/net/Kconfig
+> index 368c6f5b327e..36b628e2e49f 100644
+> --- a/drivers/net/Kconfig
+> +++ b/drivers/net/Kconfig
+> @@ -452,6 +452,15 @@ config MHI_NET
+>   	  QCOM based WWAN modems for IP or QMAP/rmnet protocol (like SDX55).
+>   	  Say Y or M.
+>   
+> +config MHI_EP_NET
+> +	tristate "MHI Endpoint network driver"
+> +	depends on MHI_BUS_EP
+> +	help
+> +	  This is the network driver for MHI bus implementation in endpoint
+> +	  devices. It is used provide the network interface for QCOM endpoint
+> +	  devices such as SDX55 modems.
+> +	  Say Y or M.
 
-On 6/6/2023 4:54 PM, Manivannan Sadhasivam wrote:
-> On Tue, Jun 06, 2023 at 11:19:29AM +0530, Krishna chaitanya chundru wrote:
->> Add support to vote for ICC bandwidth based up on the link
-> based on
-done
->
->> speed and width.
->>
-> Looks like the code got inspiration from pcie-qcom driver. So it should be
-> mentioned in the commit message.
-done
->> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> Devicetree bindings update should precede this patch.
-done
->> ---
->>   drivers/pci/controller/dwc/pcie-qcom-ep.c | 73 +++++++++++++++++++++++++++++++
->>   1 file changed, 73 insertions(+)
->>
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> index 19b3283..79e7559 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> @@ -17,6 +17,7 @@
->>   #include <linux/phy/pcie.h>
->>   #include <linux/phy/phy.h>
->>   #include <linux/platform_device.h>
->> +#include <linux/interconnect.h>
-> Includes are sorted alphabetically
->
->>   #include <linux/pm_domain.h>
->>   #include <linux/regmap.h>
->>   #include <linux/reset.h>
->> @@ -28,6 +29,7 @@
->>   #define PARF_SYS_CTRL				0x00
->>   #define PARF_DB_CTRL				0x10
->>   #define PARF_PM_CTRL				0x20
->> +#define PARF_PM_STTS				0x24
->>   #define PARF_MHI_CLOCK_RESET_CTRL		0x174
->>   #define PARF_MHI_BASE_ADDR_LOWER		0x178
->>   #define PARF_MHI_BASE_ADDR_UPPER		0x17c
->> @@ -128,6 +130,9 @@
->>   /* DBI register fields */
->>   #define DBI_CON_STATUS_POWER_STATE_MASK		GENMASK(1, 0)
->>   
->> +#define DBI_LINKCTRLSTATUS			0x80
->> +#define DBI_LINKCTRKSTATUS_SHIFT	16
-> Use GENMASK macro
->
->> +
->>   #define XMLH_LINK_UP				0x400
->>   #define CORE_RESET_TIME_US_MIN			1000
->>   #define CORE_RESET_TIME_US_MAX			1005
->> @@ -187,6 +192,8 @@ struct qcom_pcie_ep {
->>   	enum qcom_pcie_ep_link_status link_status;
->>   	int global_irq;
->>   	int perst_irq;
->> +
->> +	struct icc_path *icc;
-> Place this under debugfs entry.
-done
->>   };
->>   
->>   static int qcom_pcie_ep_core_reset(struct qcom_pcie_ep *pcie_ep)
->> @@ -253,9 +260,56 @@ static void qcom_pcie_dw_stop_link(struct dw_pcie *pci)
->>   	disable_irq(pcie_ep->perst_irq);
->>   }
->>   
->> +static void qcom_pcie_icc_update(struct qcom_pcie_ep *pcie_ep)
-> qcom_pcie_ep_icc_update
-done
->> +{
->> +	struct dw_pcie *pci = &pcie_ep->pci;
->> +	u32 val, bw;
->> +	int speed, width;
->> +	int ret;
->> +
-> Follow reverse Xmas tree order for local variables.
->
->> +	if (!pcie_ep->icc)
->> +		return;
->> +
->> +	val = dw_pcie_readl_dbi(pci, DBI_LINKCTRLSTATUS);
->> +	val = val >> DBI_LINKCTRKSTATUS_SHIFT;
->> +
-> Use FIELD_GET macro combined with GENMASK
-I didn't get this logic you are suggesting can you please elaborate
->> +	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, val);
->> +	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, val);
->> +
->> +	/*
->> +	 * ICC needs avg bw in KBps.
-> s/avg bw/BW
-> ...everywhere
-done
->> +	 *
->> +	 * For example for 2Gbps the avg BW = 2x1000x1000x1000/8*1000 = 250000
->> +	 */
->> +	switch (speed) {
->> +	case 1:
->> +		bw = 250000;	/* avg bw for GEN1 per lane: 2Gbps, peak bw: no vote */
-> To align with pcie-qcom driver, specify the value in MBps. Also, use the
-> MBps_to_icc() macro.
-done
->> +		break;
->> +	case 2:
->> +		bw = 500000;	/* avg bw for GEN2 per lane: 4Gbps, peak bw no vote */
->> +		break;
->> +	case 3:
->> +		bw = 1000000;	/* avg bw for GEN3 per lane: 8Gbps, peak bw no vote */
->> +		break;
->> +	default:
->> +		WARN_ON_ONCE(1);
->> +		fallthrough;
->> +	case 4:
->> +		bw = 2000000;	/* avg bw for GEN4 per lane: 16Gbps, peak bw no vote */
->> +		break;
->> +	}
->> +
->> +	ret = icc_set_bw(pcie_ep->icc, width * bw, 0);
-> AFAIU, avg bandwidth should be less than peak bandwidth. So use the vote for
-> peak bandwidth, leaving 0 as avg. Also, the comment above should be adjusted
-> accordingly.
-done
->> +	if (ret) {
->> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
->> +			ret);
->> +	}
->> +}
->> +
->>   static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
->>   {
->>   	int ret;
->> +	struct dw_pcie *pci = &pcie_ep->pci;
->>   
->>   	ret = clk_bulk_prepare_enable(pcie_ep->num_clks, pcie_ep->clks);
->>   	if (ret)
->> @@ -277,6 +331,20 @@ static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
->>   	if (ret)
->>   		goto err_phy_exit;
->>   
->> +	/*
->> +	 * Some Qualcomm platforms require interconnect bandwidth constraints
->> +	 * to be set before enabling interconnect clocks.
->> +	 *
->> +	 * Set an initial average bandwidth corresponding to single-lane Gen 1
->> +	 * for the pcie to mem path.
->> +	 */
->> +	ret = icc_set_bw(pcie_ep->icc, 250000, 0); /* avg bw: 2Gbps, peak bw: no vote */
-> Same as above
-done
->> +	if (ret) {
->> +		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
->> +			ret);
->> +		goto err_phy_exit;
->> +	}
->> +
->>   	return 0;
->>   
->>   err_phy_exit:
->> @@ -550,6 +618,10 @@ static int qcom_pcie_ep_get_resources(struct platform_device *pdev,
->>   	if (IS_ERR(pcie_ep->phy))
->>   		ret = PTR_ERR(pcie_ep->phy);
->>   
->> +	pcie_ep->icc = devm_of_icc_get(dev, "pci");
-> This should specify the icc path like pcie-mem as specified in pcie-qcom driver.
-> This helps in adding other icc paths if required in the future.
->
-> - Mani
+What will the module be called if "m" is selected?
 
-done
+> +
+>   endif # NET_CORE
+>   
+>   config SUNGEM_PHY
+> diff --git a/drivers/net/Makefile b/drivers/net/Makefile
+> index e26f98f897c5..b8e706a4150e 100644
+> --- a/drivers/net/Makefile
+> +++ b/drivers/net/Makefile
+> @@ -40,6 +40,7 @@ obj-$(CONFIG_NLMON) += nlmon.o
+>   obj-$(CONFIG_NET_VRF) += vrf.o
+>   obj-$(CONFIG_VSOCKMON) += vsockmon.o
+>   obj-$(CONFIG_MHI_NET) += mhi_net.o
+> +obj-$(CONFIG_MHI_EP_NET) += mhi_ep_net.o
+>   
+>   #
+>   # Networking Drivers
+> diff --git a/drivers/net/mhi_ep_net.c b/drivers/net/mhi_ep_net.c
+> new file mode 100644
+> index 000000000000..0d7939caefc7
+> --- /dev/null
+> +++ b/drivers/net/mhi_ep_net.c
+> @@ -0,0 +1,331 @@
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +/*
+> + * MHI Endpoint Network driver
+> + *
+> + * Based on drivers/net/mhi_net.c
+> + *
+> + * Copyright (c) 2023, Linaro Ltd.
+> + * Author: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> + */
+> +
+> +#include <linux/if_arp.h>
+> +#include <linux/mhi_ep.h>
+> +#include <linux/mod_devicetable.h>
+> +#include <linux/module.h>
+> +#include <linux/netdevice.h>
+> +#include <linux/skbuff.h>
+> +#include <linux/u64_stats_sync.h>
+> +
+> +#define MHI_NET_MIN_MTU		ETH_MIN_MTU
+> +#define MHI_NET_MAX_MTU		0xffff
+> +
+> +struct mhi_ep_net_stats {
+> +	u64_stats_t rx_packets;
+> +	u64_stats_t rx_bytes;
+> +	u64_stats_t rx_errors;
+> +	u64_stats_t tx_packets;
+> +	u64_stats_t tx_bytes;
+> +	u64_stats_t tx_errors;
+> +	u64_stats_t tx_dropped;
+> +	struct u64_stats_sync tx_syncp;
+> +	struct u64_stats_sync rx_syncp;
+> +};
+> +
+> +struct mhi_ep_net_dev {
+> +	struct mhi_ep_device *mdev;
+> +	struct net_device *ndev;
+> +	struct mhi_ep_net_stats stats;
+> +	struct workqueue_struct *xmit_wq;
+> +	struct work_struct xmit_work;
+> +	struct sk_buff_head tx_buffers;
+> +	spinlock_t tx_lock; /* Lock for protecting tx_buffers */
+> +	u32 mru;
+> +};
+> +
+> +static void mhi_ep_net_dev_process_queue_packets(struct work_struct *work)
+> +{
+> +	struct mhi_ep_net_dev *mhi_ep_netdev = container_of(work,
+> +			struct mhi_ep_net_dev, xmit_work);
 
-Thanks,
+Looks like this can fit all on one line to me.
 
-Krishna chaitanya.
-
->> +	if (IS_ERR(pcie_ep->icc))
->> +		ret = PTR_ERR(pcie_ep->icc);
->> +
->>   	return ret;
->>   }
->>   
->> @@ -572,6 +644,7 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
->>   	} else if (FIELD_GET(PARF_INT_ALL_BME, status)) {
->>   		dev_dbg(dev, "Received BME event. Link is enabled!\n");
->>   		pcie_ep->link_status = QCOM_PCIE_EP_LINK_ENABLED;
->> +		qcom_pcie_icc_update(pcie_ep);
->>   	} else if (FIELD_GET(PARF_INT_ALL_PM_TURNOFF, status)) {
->>   		dev_dbg(dev, "Received PM Turn-off event! Entering L23\n");
->>   		val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
->> -- 
->> 2.7.4
->>
