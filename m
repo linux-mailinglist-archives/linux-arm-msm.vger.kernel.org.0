@@ -2,74 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 50FF572637C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 16:57:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82766726450
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  7 Jun 2023 17:25:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241243AbjFGO5J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 7 Jun 2023 10:57:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45206 "EHLO
+        id S234865AbjFGPZV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 7 Jun 2023 11:25:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34364 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241244AbjFGO45 (ORCPT
+        with ESMTP id S241549AbjFGPZG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 7 Jun 2023 10:56:57 -0400
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E4421FEB
-        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 07:56:43 -0700 (PDT)
-Received: by mail-pl1-x631.google.com with SMTP id d9443c01a7336-1b04706c85fso69281455ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 07:56:43 -0700 (PDT)
+        Wed, 7 Jun 2023 11:25:06 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80D6C2125
+        for <linux-arm-msm@vger.kernel.org>; Wed,  7 Jun 2023 08:24:38 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id d2e1a72fcca58-65055aa4ed7so4431712b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 07 Jun 2023 08:24:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686149803; x=1688741803;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=/8N0gSaOfJ2+iPgCykIKtJEIBruFOuP2BSekoV+jGac=;
-        b=XPoPdqNAA+maAKafsTiOfSoXt9pZvdj8FOvrnFoztfJuU2HX4+F6LJO8TFgm+5rePd
-         1IXyh0M5zvR71jJUBXxsXeeqrPuGjPDajCHZMFjbJZr17bFPrkxNGTRrx+UYgk7ulG+D
-         8TN63BR5vE9yhwTXiHoth+AIOD2G8v5pX84Wz/B/c7VOEET22YzTwCVWbav4gyGQ0qEU
-         EwnZ6p1qNa+5Ms7vtTUge4c1/UYnRn9brjQJDeri5DZ+SbT2ZEpWPov5EwudTzJEfGiW
-         Fpb4k0KBzZ0yMJxqjvBXdQTxmTkCyedR7GJ0sG5NKprINyRH0cMzEk7MSE17IIPLYnpX
-         6BMQ==
+        d=linaro.org; s=google; t=1686151476; x=1688743476;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=skpFX1nvdUsEf5JIjZnFK8alGwuwceGPnoOmzX+YgHU=;
+        b=cDpNvxi9FBzqVAGVY796eJbBguJemD7B5gglGpbBlKjzEMrpCL8MLun/S+UbE1FAwg
+         0YfaMZK6remIZFPeAF3wh2IOQ1HYY9lv4OCzQVXJoC4iGSrBnn4BWJ8kxrwxGyDJ/u0H
+         XQi7nhIzZCeg9BiWQ04ZY3uIg5t9gvyLELfidoRbPA0vWKPeGsjZiSOmaPJkSLtttqJ+
+         mJu51mCuAUc/+WOI4r3nFx+nTAMYV9Y5moUC1TEel+fz+7nMm5Zplio2Z57Km3PSjFsg
+         clvxdq4YKE92/QvDrPpQWDs4HRZvFrbJRol6Rz+0+RgZXGvqWXz+F2KLBeM+VBB+DfCC
+         VeFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686149803; x=1688741803;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/8N0gSaOfJ2+iPgCykIKtJEIBruFOuP2BSekoV+jGac=;
-        b=K57nkzGCX3AkP9RL86jFDM/ew9/2qLjwaBcJWJh8nG/Cw8hErGYXsBd+g7hE/6ssqX
-         oIusM+nYBsFatHcpxCVzkzmLphqM9fgPaMDubUWTp+O/w4FVhXJVeyjirB9duqhhpt3Y
-         pjFNXkKkuhRqrkyZ0Muvr+33jds8B2Rz75BZk9LM37qfUCd/NIBNBs7GKkNp3iRQT8ac
-         JOJunU8eKbPwQFqNLfCc6toJj8AIVFG5rAmRiotODFYP5K2SwlJt5BCLBoZ/DkdeYGVq
-         735zLfK+hoAZbk+OO9M6udFOHZmiB+RJILSUFLnbQV8HUVYC6ZiHptLcd4SbUHyoWRch
-         8XQw==
-X-Gm-Message-State: AC+VfDx1BjVNmX7ifKAGrf1pVSPNiXr5ZdeS8IAQHc1LHVlmJbl1nfzK
-        wfWwn9HCb4QT7wEKQU9Lq5XFDKYj78F280HQYw==
-X-Google-Smtp-Source: ACHHUZ5V+hBDwNNGVzLSvr6qyetGCLP1NSULs5tOPW6A/VkRv4ZISCL9y8DAAbyQrdYbu/FxS10I9g==
-X-Received: by 2002:a17:902:ced0:b0:1b0:7739:657c with SMTP id d16-20020a170902ced000b001b07739657cmr6692548plg.55.1686149802732;
-        Wed, 07 Jun 2023 07:56:42 -0700 (PDT)
-Received: from thinkpad ([59.92.97.244])
-        by smtp.gmail.com with ESMTPSA id h8-20020a170902f54800b001ab1d23bf5dsm10543852plf.258.2023.06.07.07.56.39
+        d=1e100.net; s=20221208; t=1686151476; x=1688743476;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=skpFX1nvdUsEf5JIjZnFK8alGwuwceGPnoOmzX+YgHU=;
+        b=b14zSEQe+YxElI2dvUZGTetxhbpw42yYPZnP6yH+uscxldtIM0mfzWzuzrHPAgwLdB
+         yywkholGMCb3L6yaBtleM3z65C/PJQpr/TfC2RjAyH/tDWLZ0pukT+laow4pvE+QTr0c
+         vKEMYVqIpSAQndiBjhM3r1tDf9gN71DMKinOWP5C7DYi3H98CJ797+E8w237PQJS84yn
+         8hQv4/Kkfnh2UF41Qwugq0tswZEwzi+4m08zul4A+3dO5twtAGHXFKCXY8r6EQfW0+PO
+         HORgl+lXYoolkIfzYAoxbmgqyXVIooe95h4Ux2e8HY9bzCvRwpRYs8sIuY3u5RSmBL9M
+         PpRQ==
+X-Gm-Message-State: AC+VfDzaHzAElWPBTeOjLNxZ726aiCdyQSyufixPm5xOWFLWnhWXS6nO
+        Z1hhMq2C6RDjcZtBsptWPZ57
+X-Google-Smtp-Source: ACHHUZ5zf5rAv1fKEXmFsQebOWqchgQba8hRDIpdEbSVGrI6EbcLNT1CTOXSId6xmx2MKgLO+9fWMw==
+X-Received: by 2002:a17:902:db0e:b0:1ad:fc06:d7c0 with SMTP id m14-20020a170902db0e00b001adfc06d7c0mr2856601plx.1.1686151476521;
+        Wed, 07 Jun 2023 08:24:36 -0700 (PDT)
+Received: from localhost.localdomain ([59.92.97.244])
+        by smtp.gmail.com with ESMTPSA id q5-20020a170902788500b001aaf536b1e3sm10590958pll.123.2023.06.07.08.24.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jun 2023 07:56:42 -0700 (PDT)
-Date:   Wed, 7 Jun 2023 20:26:37 +0530
+        Wed, 07 Jun 2023 08:24:36 -0700 (PDT)
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Andrew Lunn <andrew@lunn.ch>
-Cc:     Jeffrey Hugo <quic_jhugo@quicinc.com>, davem@davemloft.net,
-        edumazet@google.com, kuba@kernel.org, pabeni@redhat.com,
-        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+To:     davem@davemloft.net, edumazet@google.com, kuba@kernel.org,
+        pabeni@redhat.com
+Cc:     mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
         netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org
-Subject: Re: [PATCH 3/3] net: mhi: Increase the default MTU from 16K to 32K
-Message-ID: <20230607145637.GA103098@thinkpad>
-References: <20230606123119.57499-1-manivannan.sadhasivam@linaro.org>
- <20230606123119.57499-4-manivannan.sadhasivam@linaro.org>
- <b8a25a70-8781-8b82-96d8-bc1ecf2d5468@quicinc.com>
- <20230607065809.GB5025@thinkpad>
- <f96d4956-6b69-4809-9461-9157e32b3865@lunn.ch>
+        loic.poulain@linaro.org,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH v2 0/2] Add MHI Endpoint network driver
+Date:   Wed,  7 Jun 2023 20:54:25 +0530
+Message-Id: <20230607152427.108607-1-manivannan.sadhasivam@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <f96d4956-6b69-4809-9461-9157e32b3865@lunn.ch>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -80,27 +72,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 07, 2023 at 02:25:50PM +0200, Andrew Lunn wrote:
-> On Wed, Jun 07, 2023 at 12:28:09PM +0530, Manivannan Sadhasivam wrote:
-> > On Tue, Jun 06, 2023 at 07:50:23AM -0600, Jeffrey Hugo wrote:
-> > > On 6/6/2023 6:31 AM, Manivannan Sadhasivam wrote:
-> > > > Most of the Qualcomm endpoint devices are supporting 32K MTU for the
-> > > > UL (Uplink) and DL (Downlink) channels. So let's use the same value
-> > > > in the MHI NET driver also. This gives almost 2x increase in the throughput
-> > > > for the UL channel.
-> 
-> You say here 'Most'. What happens on those which do not support 32K?
-> Do the packets get dropped and it turns into a black hole?
-> 
+Hi,
 
-Yeah, and the host has to retransmit. But I checked again with Qcom on the MTU
-size and got a different answer that forced me to change "most" to "few". So
-this patch is not needed for now. I'll drop it.
+This series adds a network driver for the Modem Host Interface (MHI) endpoint
+devices that provides network interfaces to the PCIe based Qualcomm endpoint
+devices supporting MHI bus (like Modems). This driver allows the MHI endpoint
+devices to establish IP communication with the host machines (x86, ARM64) over
+MHI bus.
+
+On the host side, the existing mhi_net driver provides the network connectivity
+to the host.
 
 - Mani
 
->    Andrew
-> 
+Changes in v2:
 
+* Fixed kfree(skb) with kfree_skb(skb)
+* Reworded the Kconfig text slightly
+* Dropped the MTU increase patch as it turned out only few devices support 32K
+  MTU
+
+Manivannan Sadhasivam (2):
+  net: Add MHI Endpoint network driver
+  MAINTAINERS: Add entry for MHI networking drivers under MHI bus
+
+ MAINTAINERS              |   1 +
+ drivers/net/Kconfig      |   9 ++
+ drivers/net/Makefile     |   1 +
+ drivers/net/mhi_ep_net.c | 331 +++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 342 insertions(+)
+ create mode 100644 drivers/net/mhi_ep_net.c
+
+
+base-commit: e7214663e023be5e518e8d0d8f2dca6848731652
 -- 
-மணிவண்ணன் சதாசிவம்
+2.25.1
+
