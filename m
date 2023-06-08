@@ -2,179 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0499B72801C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 14:33:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 032D472802C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 14:37:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234047AbjFHMdh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 08:33:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52702 "EHLO
+        id S236136AbjFHMh2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 08:37:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54652 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233440AbjFHMdh (ORCPT
+        with ESMTP id S234372AbjFHMh1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 08:33:37 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 132B3E43;
-        Thu,  8 Jun 2023 05:33:36 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 358BnPG2006117;
-        Thu, 8 Jun 2023 12:33:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=H1FK3RhZTcUhqJjR63H2zmKhnRjDVzFQ1gagnb5dBis=;
- b=pjrNJsJOSzBRtzvcD8CLd87jOj+MFTeaCM/E2/bTPkvRlcB46pkzsHbXJyJiIBRTxFvc
- 45oycvaNKk6sXF+YNZHcmgterr4cvI2HGDYqhEKR3HN1ZXL5NtMXmtW9d7wfNLCPN4bO
- kxHhNrRQpU6GQ6m4HDZcqx7qCRh8pzdaR0P6JEw8uzMlcKW/SC9JU6w3ys1048SB3vE6
- 3nNuZ/9bSik0K8tzIVD5oIzzfcPJFhFdZGTlf9FmlndHxuc/5YWx3tti3YVknWF/5eOV
- jX00/hLjIeH6/FJjdet9xRo17FlB32xKK4JTSyp1nnJhw7HB/Mi7K3vf1YOOtNokyNqw Og== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r31rghdum-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 08 Jun 2023 12:33:28 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 358CXRox020622
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 8 Jun 2023 12:33:27 GMT
-Received: from [10.216.21.154] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 8 Jun 2023
- 05:33:19 -0700
-Message-ID: <05abb4e0-80c8-eb53-2d07-973ac7618aa8@quicinc.com>
-Date:   Thu, 8 Jun 2023 18:03:15 +0530
+        Thu, 8 Jun 2023 08:37:27 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2155326AE
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 05:37:26 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id 98e67ed59e1d1-256797b5664so276045a91.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 05:37:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686227845; x=1688819845;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=vF7BJHmnxG54wdpwiHNjVAE0LjJI9FuEL9uTFxii16I=;
+        b=Aiihaxqbz67spa16+ZNOJjy54FXq89dppdCCz9Lcbhkd1yMhtCvLFtvwjOBywkj95T
+         gZo1sybXE7ojr4Mpm+2zdshpW7LLYICvQXmckN7RsoPdmf+ajw2t3ShsnENqNzpyL0jc
+         n3TUh5i2XOfPD9zSWWou5wq+rd5FQ9VRL/C5w0rT/oHrYuFtHyXO9VEqP600FaiZQNuC
+         wvmkXmP6rYdrESm3zrPXrqjiXGjz+GD/R64YTsoi8kCuMzvm2d6lZHjPGm2UhG/xAV+Q
+         N001B3KB1Yv8ywbvOgjN8qmr29lrg22Q+MsgF2mpA+k/RfVRIPRwxwrcWXqgvDa+MZkx
+         FjOQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686227845; x=1688819845;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vF7BJHmnxG54wdpwiHNjVAE0LjJI9FuEL9uTFxii16I=;
+        b=akvMD5cUPF/sOCjribER4z3mQGUtc3+Ei0I0xdngxDrXGxBZcYPUZixFcy4GWwsOKZ
+         2l6QAeSFBpObtI+Uq6gfaOn6F3jjHKKetf+ft9MVCJCulBp8JZzK4qPBCl/tq08yCOFs
+         MZJYAs6vReLTTONd5I/AQH9kzmtFoUqc+w+QuRmEE/ckVsX3q/lokWLfs1y7L/ML4owS
+         5DVaWS5cTXBwWCPE6rjklkPhT400PFSjsiqaBQ4S5FGs4yZE4CZp95kEaJyR3JWiIzPs
+         fbUJCBfirL5jHlr/KcguwHSFQeFOKz47d1W4p/Kx8/W0kOtQ/ibiEhABLeJHIWYxeG8t
+         4v3Q==
+X-Gm-Message-State: AC+VfDyJ5XHN6i53gNX7Ob/UznaYdOyVNKYaYKsGJeu3jiebvYXGUGoV
+        Icn5/c1F2pUbP6GYtKhtiO9k
+X-Google-Smtp-Source: ACHHUZ6tZyhqvp7cqUQlsZZN44LfD6nkDhNPmbUYwX0UZxMiBiudwS0spmZHcsUdiFOa9lkqBcSCYg==
+X-Received: by 2002:a17:90a:fa42:b0:259:e35f:ab2e with SMTP id dt2-20020a17090afa4200b00259e35fab2emr1853190pjb.4.1686227845577;
+        Thu, 08 Jun 2023 05:37:25 -0700 (PDT)
+Received: from thinkpad ([117.202.186.138])
+        by smtp.gmail.com with ESMTPSA id 22-20020a17090a19d600b0024c1ac09394sm1288861pjj.19.2023.06.08.05.37.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Jun 2023 05:37:25 -0700 (PDT)
+Date:   Thu, 8 Jun 2023 18:07:20 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Jakub Kicinski <kuba@kernel.org>
+Cc:     davem@davemloft.net, edumazet@google.com, pabeni@redhat.com,
+        mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        loic.poulain@linaro.org
+Subject: Re: [PATCH v2 0/2] Add MHI Endpoint network driver
+Message-ID: <20230608123720.GC5672@thinkpad>
+References: <20230607152427.108607-1-manivannan.sadhasivam@linaro.org>
+ <20230607094922.43106896@kernel.org>
+ <20230607171153.GA109456@thinkpad>
+ <20230607104350.03a51711@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH V2 12/13] arm64: dts: qcom: ipq5018: Add RDP432-c1 board
- support
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <jassisinghbrar@gmail.com>, <mathieu.poirier@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <quic_eberman@quicinc.com>, <quic_mojha@quicinc.com>,
-        <kvalo@kernel.org>, <loic.poulain@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_poovendh@quicinc.com>, <quic_varada@quicinc.com>,
-        <quic_devipriy@quicinc.com>
-References: <20230521222852.5740-1-quic_mmanikan@quicinc.com>
- <20230521222852.5740-13-quic_mmanikan@quicinc.com>
- <ea6d31cc-68b2-3b73-ae12-dad122a85857@linaro.org>
-From:   Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-In-Reply-To: <ea6d31cc-68b2-3b73-ae12-dad122a85857@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: FJqy9Y5iVWq4B_KZ9V-Cn-GvLXMCdSoD
-X-Proofpoint-GUID: FJqy9Y5iVWq4B_KZ9V-Cn-GvLXMCdSoD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-08_08,2023-06-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- lowpriorityscore=0 priorityscore=1501 malwarescore=0 adultscore=0
- clxscore=1015 phishscore=0 mlxlogscore=999 mlxscore=0 spamscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306080108
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230607104350.03a51711@kernel.org>
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 5/30/2023 4:36 PM, Krzysztof Kozlowski wrote:
-> On 22/05/2023 00:28, Manikanta Mylavarapu wrote:
->> Add initial device tree support for the RDP432-C1 board.
->>
->> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->> ---
->> Changes in V2:
->> 	- Renamed mp03.5-c1 to RDP432-c1
->> 	- Removed boot-args
->> 	- Resolved dt-binding error's
->>
->>   arch/arm64/boot/dts/qcom/Makefile             |  1 +
->>   .../arm64/boot/dts/qcom/ipq5018-rdp432-c1.dts | 49 +++++++++++++++++++
->>   2 files changed, 50 insertions(+)
->>   create mode 100644 arch/arm64/boot/dts/qcom/ipq5018-rdp432-c1.dts
->>
->> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->> index 259bd57c6064..bb9164de75b0 100644
->> --- a/arch/arm64/boot/dts/qcom/Makefile
->> +++ b/arch/arm64/boot/dts/qcom/Makefile
->> @@ -3,6 +3,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
->> +dtb-$(CONFIG_ARCH_QCOM)	+= ipq5018-rdp432-c1.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq5018-rdp432-c2.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-mi01.2.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp468.dtb
->> diff --git a/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c1.dts b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c1.dts
->> new file mode 100644
->> index 000000000000..7fe28d9859b0
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/ipq5018-rdp432-c1.dts
->> @@ -0,0 +1,49 @@
->> +// SPDX-License-Identifier: GPL-2.0+ OR BSD-3-Clause
->> +/*
->> + * IPQ5018 RDP432-C1 board device tree source
->> + *
->> + * Copyright (c) 2023, The Linux Foundation. All rights reserved.
->> + */
->> +
->> +/dts-v1/;
->> +
->> +#include "ipq5018.dtsi"
->> +
->> +/ {
->> +	model = "Qualcomm Technologies, Inc. IPQ5018/AP-RDP432.1-C1";
->> +	compatible = "qcom,ipq5018-rdp432-c1", "qcom,ipq5018";
->> +
->> +	aliases {
->> +		serial0 = &blsp1_uart1;
->> +	};
->> +
->> +	chosen {
->> +		stdout-path = "serial0:115200n8";
->> +	};
->> +};
->> +
->> +&blsp1_uart1 {
->> +	pinctrl-0 = <&uart1_pins>;
->> +	pinctrl-names = "default";
->> +	status = "okay";
->> +};
->> +
->> +&q6v5_wcss {
->> +	pd-2 {
->> +		firmware-name = "IPQ5018/q6_fw.mdt";
+On Wed, Jun 07, 2023 at 10:43:50AM -0700, Jakub Kicinski wrote:
+> On Wed, 7 Jun 2023 22:41:53 +0530 Manivannan Sadhasivam wrote:
+> > > In any case, I'm opposed to reuse of the networking stack to talk
+> > > to firmware. It's a local device. The networking subsystem doesn't
+> > > have to cater to fake networks. Please carry:
+> > > 
+> > > Nacked-by: Jakub Kicinski <kuba@kernel.org>
+> > > 
+> > > if there are future submissions.  
+> > 
+> > Why shouldn't it be? With this kind of setup one could share the data connectivity
+> > available in the device with the host over IP tunneling. If the IP source in the
+> > device (like modem DSP) has no way to be shared with the host, then those IP
+> > packets could be tunneled through this interface for providing connectivity to
+> > the host.
+> > 
+> > I believe this is a common usecase among the PCIe based wireless endpoint
+> > devices.
 > 
-> Does not look like correct paths. Please open firmware and look there.
-> Or open other DTS files and check example. Missing qcom, lowercase,
-> that's minimum of fixes needed.
-> 
-> Best regards,
-> Krzysztof
-> 
+> We can handwave our way into many scenarios and terrible architectures.
+> I don't see any compelling reason to merge this.
 
-IPQ5018 firmware files are available here
-https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/ath11k/IPQ5018/hw1.0
-I will use 'ath11k/IPQ5018/hw1.0' path.
+These kind of usecases exist in the products out there in the market. Regarding
+your comment on "opposed to reuse of the network stack to talk to firmware", it
+not the just the firmware, it is the device in general that is talking to the
+host over this interface. And I don't see how different it is from the host
+perspective.
 
-Thanks & Regards,
-Manikanta.
+And these kind of scenarios exist with all types of interfaces like usb-gadget,
+virtio etc... So not sure why the rule is different for networking subsystem.
+
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
