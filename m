@@ -2,75 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AC9E5727BAC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 11:43:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F4D0727BB8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 11:44:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234877AbjFHJnf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 05:43:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45274 "EHLO
+        id S234989AbjFHJo1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 05:44:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235807AbjFHJnd (ORCPT
+        with ESMTP id S236040AbjFHJoS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 05:43:33 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3C7B26AF
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 02:43:31 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id 4fb4d7f45d1cf-5149c76f4dbso692537a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 02:43:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686217410; x=1688809410;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SMC88QQAA9RPIa06r4K5M7PIg1TlAytJw9EvMNW3qYI=;
-        b=yqCN5+NybBshfFlfntbvo1wEgfge2vvnNCctUyYvuulYfum5FMNlLSQpKBnx+oWXQ6
-         /EY2X45Oin0tcfAJ1Iv+2tVTalNGcT8YD/Gu9hao6Sm5SRHOO6bdtBE6heu2kzF/dJtC
-         YzyeCIJwVvQccRzaJhIjEj06kw7fPnZVlalRcQ/oXIZsfRkfILEgNljBcj5VRX37YjTZ
-         stnxHx9n7ywK0LUCUz8+I+MknmcaZF9ppkP0jYOR0CrL435zXpDMArnT0xxMYhWhQ1FN
-         tuok7MZmIL5jZq2BJuZfFN43NRL/+egNT7JlSY75tVm6Kmb7mbfUCtc96TERAmamWiEn
-         /+Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686217410; x=1688809410;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SMC88QQAA9RPIa06r4K5M7PIg1TlAytJw9EvMNW3qYI=;
-        b=JFDA6uKyz6HBPx6edZgRNASao33H1bseZKSS4HveBa0sjlSIw8UyK5dPvGbLBL2C7r
-         IJpcBxP7Ws7VMXVitSP1iuiK/GG093cxWVbL4l3ZrIzP9ZKcsCUdmRtON/h9utCmzS5h
-         j7vq/EZAe74+EDTw2FigeT5Sjd2rFtsBoVfOZMM6VYUrSfyYVkjWr60Lg/BoXi4Ui6hM
-         r+J878QQMkgwKFXjTcleUZy+49LQ8Jn5OD44vuBnX5TeXpR1Oi7kAGO0b9uBsmzcwTVP
-         OU4n6Q4czyXZdNvcFHtIYI3VBHzicyjRdhrVdFQWM1B8SHWIsjv76qvSm2BDW2F+Hm+4
-         1F4Q==
-X-Gm-Message-State: AC+VfDwWgvbgDzS4S2BUflBGkcj/sTJlR+cSA+JkPNf1Q5zYzDYkR8ou
-        FEOlVjmfFtvL1FAZnKUGRs9VvA==
-X-Google-Smtp-Source: ACHHUZ4CxH2k8IG+1O5HW0R3ye6vuV0QPdLhMzrY4obxAD9anLnPIB8/gsB1qhBfPBOjpbPypIfcxQ==
-X-Received: by 2002:a17:907:3e21:b0:974:5ce6:f9ff with SMTP id hp33-20020a1709073e2100b009745ce6f9ffmr9475227ejc.32.1686217410148;
-        Thu, 08 Jun 2023 02:43:30 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id v26-20020aa7dbda000000b0050cc4461fc5sm331020edt.92.2023.06.08.02.43.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jun 2023 02:43:29 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Thu, 8 Jun 2023 05:44:18 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AD8526AD;
+        Thu,  8 Jun 2023 02:44:17 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2680E64B77;
+        Thu,  8 Jun 2023 09:44:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62952C433A0;
+        Thu,  8 Jun 2023 09:44:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686217456;
+        bh=W7NMjnc+dhnyCpFKHFIFOZFZb+gFDdZ2hqitOzaHHOk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=lBH/Tmj3yorBORdNglBBZ/bMCSZSK5Fiizq28MFW46kQkRnV7aFFhLC7dr4NO4qmy
+         WteUZnAwJ+d0dBDMKxrgMHwkn2LbKqZoK/xxmTTmmgubNbaTPmGP8bV4Bbb43ijNwv
+         +bcUBa3mjoZwJCZj0I3o9phmkYDziB1geI7hx4Mvk3+8P3X8Ew7l1srMOSVSaxfPU+
+         9M1M+M0Lq3zCOi7lf4ELj7dmHjdz8wznwzNLpUw9pW2anlA/SOTxueAxGUPVYwpS+p
+         TD3JJYqsAgXoWlhEqGNsYqzvlf/qVoZ8WggQmOetbn1gdhDMfbHhUR4nOYcCUcKUMi
+         dXppHBOqJebfQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1q7CC9-0004Ad-Fq; Thu, 08 Jun 2023 11:44:41 +0200
+Date:   Thu, 8 Jun 2023 11:44:41 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8550-mtp: add WSA8845 speakers
-Date:   Thu,  8 Jun 2023 11:43:23 +0200
-Message-Id: <20230608094323.267278-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230608094323.267278-1-krzysztof.kozlowski@linaro.org>
-References: <20230608094323.267278-1-krzysztof.kozlowski@linaro.org>
+        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
+        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
+        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
+        ahalaney@redhat.com
+Subject: Re: [PATCH v8 6/9] usb: dwc3: qcom: Add multiport controller support
+ for qcom wrapper
+Message-ID: <ZIGjCS-D7-kAQCJh@hovoldconsulting.com>
+References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
+ <20230514054917.21318-7-quic_kriskura@quicinc.com>
+ <20230515222730.7snn2i33gkg6ctd2@ripper>
+ <20230526025554.ni527gsr2bqxadl3@ripper>
+ <37fd026e-ecb1-3584-19f3-f8c1e5a9d20a@quicinc.com>
+ <ZIBtnPp0oV6_GFFk@hovoldconsulting.com>
+ <3010d855-86b0-f87a-5eb7-85204be9b4b0@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <3010d855-86b0-f87a-5eb7-85204be9b4b0@quicinc.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -78,84 +76,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add Qualcomm WSA8845 Soundwire smart speaker amplifiers.
+On Thu, Jun 08, 2023 at 01:25:25AM +0530, Krishna Kurapati PSSNV wrote:
+> On 6/7/2023 5:14 PM, Johan Hovold wrote:
+> > On Fri, May 26, 2023 at 08:55:22PM +0530, Krishna Kurapati PSSNV wrote:
+> >> On 5/26/2023 8:25 AM, Bjorn Andersson wrote:
+> > 
+> >>> We need to fix the dwc3 glue design, so that the glue and the core can
+> >>> cooperate - and we have a few other use cases where this is needed (e.g.
+> >>> usb_role_switch propagation to the glue code).
+> > 
+> >>     Thanks for the comments on this patch. I had some suggestions come in
+> >> from the team internally:
+> >>
+> >> 1. To use the notifier call available in drivers/usb/core/notify.c and
+> >> make sure that host mode is enabled. That way we can access dwc or xhci
+> >> without any issue.
+> > 
+> > I don't think this is a good idea and instead the callbacks should be
+> > dedicated for the xhci and dwc3 drivers. A struct with callbacks can be
+> > passed down to the child devices, which call back into the drivers of
+> > their parents for notifications and when they need services from them
+> > (e.g. during suspend or on role changes).
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>    While I agree with you that these notifications are to be used during 
+> role switch or suspend/resume, there is no restriction on using them for 
+> checking whether we are in host mode or not. IMO, it would be cleaner as 
+> we won't be dereferencing dwc driver data at all to check if we are in 
+> host mode or not.
 
----
+I'm not sure I understand what you're saying here. Could you try to
+rephrase it?
 
-Not tested, but based on schematics and downstream DTS, should be the
-same as on QRD8550.
----
- arch/arm64/boot/dts/qcom/sm8550-mtp.dts | 48 +++++++++++++++++++++++++
- 1 file changed, 48 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-index fe6fe97d734e..d1bee3106397 100644
---- a/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8550-mtp.dts
-@@ -419,6 +419,24 @@ vreg_l3g_1p2: ldo3 {
- 	};
- };
- 
-+&lpass_tlmm {
-+	spkr_1_sd_n_active: spkr-1-sd-n-active-state {
-+		pins = "gpio17";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+		output-low;
-+	};
-+
-+	spkr_2_sd_n_active: spkr-2-sd-n-active-state {
-+		pins = "gpio18";
-+		function = "gpio";
-+		drive-strength = <16>;
-+		bias-disable;
-+		output-low;
-+	};
-+};
-+
- &mdss {
- 	status = "okay";
- };
-@@ -553,6 +571,36 @@ &sleep_clk {
- 	clock-frequency = <32000>;
- };
- 
-+&swr0 {
-+	status = "okay";
-+
-+	/* WSA8845 */
-+	left_spkr: speaker@0,0 {
-+		compatible = "sdw20217020400";
-+		reg = <0 0>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&spkr_1_sd_n_active>;
-+		powerdown-gpios = <&lpass_tlmm 17 GPIO_ACTIVE_LOW>;
-+		#sound-dai-cells = <0>;
-+		sound-name-prefix = "SpkrLeft";
-+		vdd-1p8-supply = <&vreg_l15b_1p8>;
-+		vdd-io-supply = <&vreg_l3g_1p2>;
-+	};
-+
-+	/* WSA8845 */
-+	right_spkr: speaker@0,1 {
-+		compatible = "sdw20217020400";
-+		reg = <0 1>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&spkr_2_sd_n_active>;
-+		powerdown-gpios = <&lpass_tlmm 18 GPIO_ACTIVE_LOW>;
-+		#sound-dai-cells = <0>;
-+		sound-name-prefix = "SpkrRight";
-+		vdd-1p8-supply = <&vreg_l15b_1p8>;
-+		vdd-io-supply = <&vreg_l3g_1p2>;
-+	};
-+};
-+
- &swr1 {
- 	status = "okay";
- 
--- 
-2.34.1
-
+Johan
