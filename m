@@ -2,77 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CDB88728940
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 22:16:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5852272898B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 22:34:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236583AbjFHUQJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 16:16:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34920 "EHLO
+        id S235157AbjFHUeN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 16:34:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44460 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231626AbjFHUQG (ORCPT
+        with ESMTP id S229498AbjFHUeK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 16:16:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE54C273D
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 13:15:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1686255321;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=L48RUw9YMqyOqmKmJhsjcW6o+lsA4cxkY+mrl6+2nfQ=;
-        b=PuPsUIiYMLh0iTUkbQntHx8vx77kwtABSkeh4a3R0zXA6gQV4GPeZM8p5NpTMy7jPEpm+N
-        ebKJPswOhf7Y4vP/d46UWMlbtC0sOMoNK/09bIUV3g054ClMhAkC6rbVAQlM5XZZ6rPOpy
-        searjn7ltLz6KCt3jhP+vXxrLkIX4TU=
-Received: from mail-oa1-f70.google.com (mail-oa1-f70.google.com
- [209.85.160.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-329-5VQkUqFLPRG4-AcypGzQQg-1; Thu, 08 Jun 2023 16:15:20 -0400
-X-MC-Unique: 5VQkUqFLPRG4-AcypGzQQg-1
-Received: by mail-oa1-f70.google.com with SMTP id 586e51a60fabf-187e7e6990fso51629fac.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 13:15:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686255320; x=1688847320;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=L48RUw9YMqyOqmKmJhsjcW6o+lsA4cxkY+mrl6+2nfQ=;
-        b=eWGCrgolJxIh/Gsi2vmABC65SyM5PO2xN5q372IpV8X4OORequX0xSJBXjuLoJdQYH
-         dCJ2oNysFeAuB5THBiXqylaNur6dbtqdP4TxXAIOOuTOLkaQki5yELgeH72hYiwWXVAf
-         KBv0aJyF1UfScJFk00uf/CExGwni8FuLO9QPgu4XVPcDw9q4LaQmasFjOh4phIqj+cWc
-         5z33lu9jOlyLTO+DsKO5FphyJQ6YQp3cAYZIDdt4+RyRiPQW6BScSQUNa6edIeyLv7BE
-         JpOcKLPHzTOfYysRrBhtE4hZGJQyre3ICGGjxE+Mfq1YMRKFQwzA8bCvRJtcatQL/PUg
-         xhyg==
-X-Gm-Message-State: AC+VfDwTWBMcYuGBjGPmm/ANWqVxOsfE32nRgDw+PpHBZgRhfGyO85ma
-        TQ3DOXtEEM+VEvmVJ0W3N65vnmpBIAcfeaUbxXmK4Ge1sZDBCWQUy6gZ7anhnGfojzPkZU5a2qs
-        BL8ERRVz+KpWqks0sd/ldhfp8dg==
-X-Received: by 2002:a05:6870:4315:b0:19f:5c37:ab9d with SMTP id w21-20020a056870431500b0019f5c37ab9dmr6615036oah.43.1686255319650;
-        Thu, 08 Jun 2023 13:15:19 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ5kmzEz2a3R2fs33iV8rCMEYImysyVNpw81buOmDc0MgwnMxyKIw9y3vKvsr4l68kGBj9qIJA==
-X-Received: by 2002:a05:6870:4315:b0:19f:5c37:ab9d with SMTP id w21-20020a056870431500b0019f5c37ab9dmr6615020oah.43.1686255319392;
-        Thu, 08 Jun 2023 13:15:19 -0700 (PDT)
-Received: from halaney-x13s.redhat.com ([2600:1700:1ff0:d0e0::22])
-        by smtp.gmail.com with ESMTPSA id r11-20020a4aa8cb000000b0055afc1ef866sm179976oom.15.2023.06.08.13.15.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jun 2023 13:15:19 -0700 (PDT)
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     linux-kernel@vger.kernel.org
-Cc:     devicetree@vger.kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, konrad.dybcio@linaro.org,
-        andersson@kernel.org, agross@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-        richardcochran@gmail.com, bmasney@redhat.com, echanude@redhat.com,
-        Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH] arm64: dts: qcom: sa8540p-ride: Specify ethernet phy OUI
-Date:   Thu,  8 Jun 2023 15:15:13 -0500
-Message-Id: <20230608201513.882950-1-ahalaney@redhat.com>
-X-Mailer: git-send-email 2.40.1
+        Thu, 8 Jun 2023 16:34:10 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60167172E;
+        Thu,  8 Jun 2023 13:34:09 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id E800F61520;
+        Thu,  8 Jun 2023 20:34:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5147AC4339B;
+        Thu,  8 Jun 2023 20:34:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686256448;
+        bh=sDQU8yDhZvEN0YygXlDwwk/pG5OO2+PNN+eimNV1mxQ=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=fgaZ349JLx+w83grh2ZLXulv/+6NJAi3DgUkiDjdPUnEbtk4GQEssHtbOIddqu7NS
+         lPaC6AHuim2fJRANrT5DaAmdXiQpvBm+7mGFYRsrpE+oxJUOyxOcSTn5lKiyDxe1Or
+         n5YgMMfQ4bTaC2QJt/JnTYxj/givMqGUBBz3rUIry4SQD/wz5fgIIRzW+GMrEpzSFi
+         PbfnO38m/nfnN3xuhX7TtG4zZHxJFbZGDmEo4sAIkiZ9b2pSGKKgp/euyIGBlEVoLc
+         GjISgjtw2dBk6OSTF08aIBGYgRcFyZGTf1PvKvLV50bqV6sHmzKcOLVI2G/vh42+xc
+         r1JZZ8BI/NqLw==
+Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-4f624daccd1so1292163e87.0;
+        Thu, 08 Jun 2023 13:34:08 -0700 (PDT)
+X-Gm-Message-State: AC+VfDwOq1BLSa3kYFrjl204xs+74DUnDtlruVNmK1lWDymaPqXV4+8f
+        A/uDDTnEAEt06Flu5XXLisylgiePxXycxtwQbA==
+X-Google-Smtp-Source: ACHHUZ5SCj+1HRHRtKPyWx3l9LJOj9l0nyCPip7lrCiON1VeZXUrpVZAJ73MOZnz04qUR2b59Vv4/CBNUYxpj6dT0Jg=
+X-Received: by 2002:a2e:9cd6:0:b0:2b1:d91b:51c3 with SMTP id
+ g22-20020a2e9cd6000000b002b1d91b51c3mr4481468ljj.30.1686256446472; Thu, 08
+ Jun 2023 13:34:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+References: <20220328000915.15041-1-ansuelsmth@gmail.com> <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
+ <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain> <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
+ <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
+ <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
+ <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com> <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
+ <ZFrPJQdwoxqFpzUO@probook>
+In-Reply-To: <ZFrPJQdwoxqFpzUO@probook>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Thu, 8 Jun 2023 14:33:53 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqLTj_L-V8HR=TzO6+r9Xew=yivaKG1ngCn+NCjgPZwZzw@mail.gmail.com>
+Message-ID: <CAL_JsqLTj_L-V8HR=TzO6+r9Xew=yivaKG1ngCn+NCjgPZwZzw@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
+To:     =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+Cc:     Arnd Bergmann <arnd@arndb.de>, linux-aspeed@lists.ozlabs.org,
+        linux-realtek-soc@lists.infradead.org, linux-arm-kernel@axis.com,
+        linux-stm32@st-md-mailman.stormreply.com,
+        chrome-platform@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
+        openbmc@lists.ozlabs.org, Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-rockchip@lists.infradead.org,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        linux-sunxi@lists.linux.dev, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-actions@lists.infradead.org,
+        linux-unisoc@lists.infradead.org,
+        linux-mediatek@lists.infradead.org,
+        linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org,
+        linux-amlogic@lists.infradead.org,
+        Linux-OMAP <linux-omap@vger.kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        kernel@dh-electronics.com, Olof Johansson <olof@lixom.net>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "linux-oxnas@groups.io" <linux-oxnas@groups.io>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,86 +86,45 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-With wider usage on more boards, there have been reports of the
-following:
+On Tue, May 9, 2023 at 4:55=E2=80=AFPM Jonathan Neusch=C3=A4fer
+<j.neuschaefer@gmx.net> wrote:
+>
+> On Tue, May 02, 2023 at 02:40:19PM -0500, Rob Herring wrote:
+> [...]
+> > I've dusted off my script and made a branch[1] with the result.
+> > There's just a couple of fixes needed after the script is run (see the
+> > top commit). The cross arch includes are all fixed up by the script.
+> > dtbs_install maintains a flat install. I compared the number of .dtbs
+> > before and after to check the script.
+> >
+> > I think the only issue remaining is finalizing the mapping of
+> > platforms to subdirs. What I have currently is a mixture of SoC
+> > families and vendors. The most notable are all the Freescale/NXP
+> > platforms, pxa, socfpga, and stm32. It's not consistent with arm64
+> > either. Once that's finalized, I still need to go update MAINTAINERS.
+> >
+> > Here's the current mapping:
+> >
+> > vendor_map =3D {
+> [...]
+> >     'aspeed' : 'aspeed',
+> >     'ast2' : 'aspeed',
+> >     'facebook' : 'aspeed',
+> >     'ibm' : 'aspeed',
+>
+> >     'openbmc' : 'aspeed',
+>
+> The openbmc flash layouts are currently only used by aspeed devicetrees,
+> but they don't really depend on any aspeed details. It would be possible
+> to reuse them in Nuvoton BMC devicetrees in the future, for example.
+>
+> In that sense, I think putting them in a separate "openbmc" directory
+> would be slightly better.
 
-    [  315.016174] qcom-ethqos 20000.ethernet eth0: no phy at addr -1
-    [  315.016179] qcom-ethqos 20000.ethernet eth0: __stmmac_open: Cannot attach to PHY (error: -19)
+Could be used on arm64 or riscv too at some point. We do some cross
+arch includes, but IMO it would be better to move to
+include/dt-bindings/ or somewhere outside of arch/. Other common
+things I didn't move. I could do that here too. I prefer to that the
+sub-directories are just chip vendors/families.
 
-which has been fairly random and isolated to specific boards.
-Early reports were written off as a hardware issue, but it has been
-prevalent enough on boards that theory seems unlikely.
-
-In bring up of a newer piece of hardware, similar was seen, but this
-time _consistently_. Moving the reset to the mdio bus level (which isn't
-exactly a lie, it is the only device on the bus so one could model it as
-such) fixed things on that platform. Analysis on sa8540p-ride shows that
-the phy's reset is not being handled during the OUI scan if the reset
-lives in the phy node:
-
-    # gpio 752 is the reset, and is active low, first mdio reads are the OUI
-    modprobe-420     [006] .....   154.738544: mdio_access: stmmac-0 read  phy:0x08 reg:0x02 val:0x0141
-    modprobe-420     [007] .....   154.738665: mdio_access: stmmac-0 read  phy:0x08 reg:0x03 val:0x0dd4
-    modprobe-420     [004] .....   154.741357: gpio_value: 752 set 1
-    modprobe-420     [004] .....   154.741358: gpio_direction: 752 out (0)
-    modprobe-420     [004] .....   154.741360: gpio_value: 752 set 0
-    modprobe-420     [006] .....   154.762751: gpio_value: 752 set 1
-    modprobe-420     [007] .....   154.846857: gpio_value: 752 set 1
-    modprobe-420     [004] .....   154.937824: mdio_access: stmmac-0 write phy:0x08 reg:0x0d val:0x0003
-    modprobe-420     [004] .....   154.937932: mdio_access: stmmac-0 write phy:0x08 reg:0x0e val:0x0014
-
-Moving it to the bus level, or specifying the OUI in the phy's
-compatible ensures the reset is handled before any mdio access
-Here is tracing with the OUI approach (which skips scanning the OUI):
-
-    modprobe-549     [007] .....    63.860295: gpio_value: 752 set 1
-    modprobe-549     [007] .....    63.860297: gpio_direction: 752 out (0)
-    modprobe-549     [007] .....    63.860299: gpio_value: 752 set 0
-    modprobe-549     [004] .....    63.882599: gpio_value: 752 set 1
-    modprobe-549     [005] .....    63.962132: gpio_value: 752 set 1
-    modprobe-549     [006] .....    64.049379: mdio_access: stmmac-0 write phy:0x08 reg:0x0d val:0x0003
-    modprobe-549     [006] .....    64.049490: mdio_access: stmmac-0 write phy:0x08 reg:0x0e val:0x0014
-
-The OUI approach is taken given the description matches the situation
-perfectly (taken from ethernet-phy.yaml):
-
-    - pattern: "^ethernet-phy-id[a-f0-9]{4}\\.[a-f0-9]{4}$"
-      description:
-        If the PHY reports an incorrect ID (or none at all) then the
-        compatible list may contain an entry with the correct PHY ID
-        in the above form.
-        The first group of digits is the 16 bit Phy Identifier 1
-        register, this is the chip vendor OUI bits 3:18. The
-        second group of digits is the Phy Identifier 2 register,
-        this is the chip vendor OUI bits 19:24, followed by 10
-        bits of a vendor specific ID.
-
-With this in place the sa8540p-ride's phy is probing consistently, so
-it seems the floating reset during mdio access was the issue. In either
-case, it shouldn't be floating so this improves the situation. The below
-link discusses some of the relationship of mdio, its phys, and points to
-this OUI compatible as a way to opt out of the OUI scan pre-reset
-handling which influenced this decision.
-
-Link: https://lore.kernel.org/all/dca54c57-a3bd-1147-63b2-4631194963f0@gmail.com/
-Fixes: 57827e87be54 ("arm64: dts: qcom: sa8540p-ride: Add ethernet nodes")
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
----
- arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-index 21e9eaf914dd..5a26974dcf8f 100644
---- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
-@@ -171,6 +171,7 @@ mdio {
- 
- 		/* Marvell 88EA1512 */
- 		rgmii_phy: phy@8 {
-+			compatible = "ethernet-phy-id0141.0dd4";
- 			reg = <0x8>;
- 
- 			interrupts-extended = <&tlmm 127 IRQ_TYPE_EDGE_FALLING>;
--- 
-2.40.1
-
+Rob
