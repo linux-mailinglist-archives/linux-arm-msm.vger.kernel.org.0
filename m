@@ -2,68 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C193728428
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 17:51:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B0B2728442
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 17:53:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237038AbjFHPvm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 11:51:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39924 "EHLO
+        id S237389AbjFHPxe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 11:53:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237083AbjFHPvj (ORCPT
+        with ESMTP id S236629AbjFHPxd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 11:51:39 -0400
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94BBA30CB;
-        Thu,  8 Jun 2023 08:51:15 -0700 (PDT)
-Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-33c1e7743b7so2497575ab.1;
-        Thu, 08 Jun 2023 08:51:15 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686239457; x=1688831457;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hRQC4OgZDaTBHSW8m3eG90dzJGexIFtWmfi4L+bdesA=;
-        b=OndB/T3vY9wHSl4/KPR9Kk0ixALCA7vlWGJtKlzgHi4/Zc5+B5k52tgVX14szldufa
-         LYP9tMC6m55W9C9lyNCRpgdvwFINhoIRbwra3Y0lhRUT01plgc46RM0jsrHsUsj3ho/G
-         NFqHRQWxH01vTPxDZ07x2vkkXcc9cUiHZiJP70awTYbz9r5cQEweP5H5VgIYVAritvJv
-         481BhpxwuIBL9Qvnjk3qPwifE/UdxPM6Ez6tXWDkbILFu8Jm650z24rjIwoLp9RKS3Sn
-         iuV7etIbzjEfEln1eZX8tKkjAw43zazjFLrm3uMAD2nJXRN/ggk6w2obe1yLbvBaKI9B
-         k/5w==
-X-Gm-Message-State: AC+VfDxu7bhwgALxJ8NgN3nrF0NlZ+AfiEoYtlC45JesiejPemKzp9qu
-        fZ30LRb2GsV/chRgTOmJLNuos5gA+g==
-X-Google-Smtp-Source: ACHHUZ4KdtP7B0K35g9g2K55S0pWZubuUZObu+/WrGAbX05bjn09RmOtNLrc/mKutrgbMrrY6Pp7VA==
-X-Received: by 2002:a92:d48b:0:b0:32f:80a1:2e44 with SMTP id p11-20020a92d48b000000b0032f80a12e44mr10946917ilg.9.1686239456801;
-        Thu, 08 Jun 2023 08:50:56 -0700 (PDT)
-Received: from robh_at_kernel.org ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id n9-20020a056638120900b0041669a9fb62sm336525jas.131.2023.06.08.08.50.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jun 2023 08:50:56 -0700 (PDT)
-Received: (nullmailer pid 2758255 invoked by uid 1000);
-        Thu, 08 Jun 2023 15:50:53 -0000
-Date:   Thu, 8 Jun 2023 09:50:53 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-kernel@vger.kernel.org,
+        Thu, 8 Jun 2023 11:53:33 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2290130C5;
+        Thu,  8 Jun 2023 08:53:05 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 2B2F863B42;
+        Thu,  8 Jun 2023 15:52:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCE0C433B3;
+        Thu,  8 Jun 2023 15:52:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686239543;
+        bh=pvqAWOidulMrPd+J15Ghz1umBwgZDI2SWqUvZUVOmdU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=QzURvocvwx/FG1djyynryjJj1UjdpQXT8bYFCTpNH6tqSn+W6ROhno1Jd4JAitQC1
+         SNbzfAJZo51jSLF0A/4Hn9+li7qdHrerTT+JbZLy+YZAKbWKKFS83BJqye48TNulez
+         dhL5p8XlFXthcfEbodU7E/9xE08WPLfInRaWUdS67hPlsem8hhBvBoYNjkC7cEewv8
+         8TZuByC8jJcNUHL+AlL9DDrUbJL7EoDP+zZkic6OK7J97Og+Y6TxYayboKaffSKSjr
+         9OI6F3RfoNi33ByxlM9ePoB8muq9FXJKRg1uV9dBlURM4GadYqjbe7up6l+trfEmmL
+         BcGfoJ5SCEsbg==
+Date:   Thu, 8 Jun 2023 21:22:14 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Krishna chaitanya chundru <quic_krichai@quicinc.com>,
+        manivannan.sadhasivam@linaro.org, quic_vbadigan@quicinc.com,
+        quic_ramkri@quicinc.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: Re: [PATCH] dt-bindings: misc: qcom,fastrpc: drop unneeded quotes
-Message-ID: <168623945199.2758191.11717541361019434391.robh@kernel.org>
-References: <20230607184147.420352-1-krzysztof.kozlowski@linaro.org>
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        "open list:ARM/QUALCOMM SUPPORT" <linux-arm-msm@vger.kernel.org>,
+        "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM" 
+        <linux-pci@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2 1/3] dt-bindings: PCI: qcom: ep: Add interconnects path
+Message-ID: <20230608155214.GA8632@thinkpad>
+References: <1686154687-29356-1-git-send-email-quic_krichai@quicinc.com>
+ <1686154687-29356-2-git-send-email-quic_krichai@quicinc.com>
+ <20230608152759.GA2721945-robh@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230607184147.420352-1-krzysztof.kozlowski@linaro.org>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230608152759.GA2721945-robh@kernel.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -71,16 +71,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-On Wed, 07 Jun 2023 20:41:47 +0200, Krzysztof Kozlowski wrote:
-> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
-> checking for this can be enabled in yamllint.
+On Thu, Jun 08, 2023 at 09:27:59AM -0600, Rob Herring wrote:
+> On Wed, Jun 07, 2023 at 09:48:05PM +0530, Krishna chaitanya chundru wrote:
+> > Add the "pcie-mem" interconnect path to the bindings.
+> > 
+> > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > ---
+> >  Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml | 9 +++++++++
+> >  1 file changed, 9 insertions(+)
+> > 
+> > diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> > index b3c22eb..6fc5440 100644
+> > --- a/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> > +++ b/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> > @@ -70,6 +70,13 @@ properties:
+> >      description: GPIO used as WAKE# output signal
+> >      maxItems: 1
+> >  
+> > +  interconnects:
+> > +    maxItems: 1
+> > +
+> > +  interconnect-names:
+> > +    items:
+> > +      - const: pcie-mem
+> > +
+> >    resets:
+> >      maxItems: 1
+> >  
+> > @@ -97,6 +104,8 @@ required:
+> >    - interrupts
+> >    - interrupt-names
+> >    - reset-gpios
+> > +  - interconnects
+> > +  - interconnect-names
 > 
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> ---
->  Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+> You can't add required properties. That's an ABI break. Up to the 
+> platform whether that's acceptible, but you have to explain all this in 
+> the commmit msg.
 > 
 
-Applied, thanks!
+Some platforms may not boot if a device driver doesn't initialize the
+interconnect path. Mostly it is all handled by the bootloader but we have
+starting to see cases where bootloader simply ignores them.
 
+So I'd say that these need to be made required (should've been from the start
+but I take the blame). And yes, this info should be part of the commit message.
+
+- Mani
+
+> >    - resets
+> >    - reset-names
+> >    - power-domains
+> > -- 
+> > 2.7.4
+> > 
+
+-- 
+மணிவண்ணன் சதாசிவம்
