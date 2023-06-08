@@ -2,118 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A35FD727FEB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 14:24:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6CB6728013
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 14:32:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236600AbjFHMYd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 08:24:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46820 "EHLO
+        id S236022AbjFHMcc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 08:32:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51694 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236609AbjFHMY3 (ORCPT
+        with ESMTP id S235761AbjFHMcb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 08:24:29 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0774730E8;
-        Thu,  8 Jun 2023 05:24:05 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 358BpD9v031953;
-        Thu, 8 Jun 2023 12:23:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=5DPn/9UPZMGComgsrXfbd3Mft1SsYrh0RcOlCuwA2sk=;
- b=I+ABsmnu6MCMHoVmmrxyptxl6QL6QNUd2pm+aNGAUfcvCfae/3u70CS83rSoA8kPoKMQ
- OHOoB6G2hpa884wgL1c4Bna59dHkjfkDn19E8O8gZSo/78Jybv3KcVlCWtFA9FQMEx4F
- TyzVxt+bfMMtqk1EsgbY5MOfeymjXFsOB0Xbi24Qn1/iSXhQgQrCdJLMNAK8kFeDwqNU
- q8B9/TofT6PReqSEnpaw5lwCeMcHMnrJXevrH0FNX4i09eyAT8azNsV6+dfkNdsjUlBs
- xOoEa34LzN0D2jijCWWPjGS/Xe/EWe9okg3wRc3cgIN6CUaM7Fhpi7qjgUwM4k1nFQoM 4w== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r38rbrrsv-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 08 Jun 2023 12:23:50 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 358CNnik010046
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 8 Jun 2023 12:23:49 GMT
-Received: from win-platform-upstream01.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 8 Jun 2023 05:23:42 -0700
-From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
-        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
-        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
-        <will@kernel.org>, <p.zabel@pengutronix.de>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <linux-gpio@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <robimarko@gmail.com>,
-        <krzysztof.kozlowski@linaro.org>, <andy.shevchenko@gmail.com>,
-        <quic_srichara@quicinc.com>
-Subject: [v9 8/8] arm64: defconfig: Enable IPQ5018 SoC base configs
-Date:   Thu, 8 Jun 2023 17:51:52 +0530
-Message-ID: <20230608122152.3930377-9-quic_srichara@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20230608122152.3930377-1-quic_srichara@quicinc.com>
-References: <20230608122152.3930377-1-quic_srichara@quicinc.com>
+        Thu, 8 Jun 2023 08:32:31 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B7AAAE43;
+        Thu,  8 Jun 2023 05:32:30 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4A54E61846;
+        Thu,  8 Jun 2023 12:32:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42B0C433D2;
+        Thu,  8 Jun 2023 12:32:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686227549;
+        bh=r/4PkU/68uF7lKPzBCrmdgapCjizIDkg+xcFVkYgySA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=bdFjKVnf5dbKmuzzaVnJeFbvAsXl9DObq6ABi1c57cMksyu32dwik3M6M90T2kncE
+         tavsbDVCuezHRFk0z4j7xUCi633VEdKXpErlip+5IvoyrYcqsqggbeEsdMrfCGrNZQ
+         IDUxuIR3vs6Id91ldSrCfohV/CPHbTyef74JXnDxjAZQeAV8cJBzyzxhI0d1zxylK0
+         gH8M6961qZzW5QmfZm/iy5WQGr0yhaOiLlOMlrCkFi/uaxlY/9MNpZQtgMGNNWAlDL
+         R3CDp3jghBlBF654pxVl2etHgbuFxYIHq9rt7kNa7QmyxoWnOUKQpoTYKT+Q8o6GeJ
+         6vTFRmrwQAKAA==
+Date:   Thu, 8 Jun 2023 18:02:25 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        dmaengine@vger.kernel.org, agross@kernel.org,
+        linux-kernel@vger.kernel.org, linux-crypto@vger.kernel.org,
+        andersson@kernel.org, bhupesh.linux@gmail.com,
+        krzysztof.kozlowski@linaro.org, robh+dt@kernel.org,
+        konrad.dybcio@linaro.org, vladimir.zapolskiy@linaro.org,
+        rfoss@kernel.org, neil.armstrong@linaro.org, djakov@kernel.org,
+        stephan@gerhold.net, Rob Herring <robh@kernel.org>,
+        Anders Roxell <anders.roxell@linaro.org>,
+        Linux Kernel Functional Testing <lkft@linaro.org>
+Subject: Re: [PATCH v8 01/11] dt-bindings: dma: Add support for SM6115 and
+ QCM2290 SoCs
+Message-ID: <ZIHKWYMs1e/rOez0@matsya>
+References: <20230526192210.3146896-1-bhupesh.sharma@linaro.org>
+ <20230526192210.3146896-2-bhupesh.sharma@linaro.org>
+ <CAH=2Ntx+4F+ZP_Y+=e4p9rdTRQV8FHaepJCyqVFtWUPjDehoNg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 1gAPPiGE_5AVHn-rgsPHgo7vBLXjf4Yl
-X-Proofpoint-ORIG-GUID: 1gAPPiGE_5AVHn-rgsPHgo7vBLXjf4Yl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-08_08,2023-06-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 mlxscore=0
- clxscore=1015 mlxlogscore=753 priorityscore=1501 lowpriorityscore=0
- spamscore=0 bulkscore=0 impostorscore=0 adultscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306080107
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAH=2Ntx+4F+ZP_Y+=e4p9rdTRQV8FHaepJCyqVFtWUPjDehoNg@mail.gmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enables clk & pinctrl related configs
+On 29-05-23, 11:43, Bhupesh Sharma wrote:
+> Hi Vinod,
+> 
+> > On Sat, 27 May 2023 at 00:52, Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
+> >
+> > Add new compatible for BAM DMA engine version v1.7.4 which is
+> > found on Qualcomm SM6115 and QCM2290 SoCs. Since its very similar
+> > to v1.7.0 used on SM8150 like SoCs, mark the comptible scheme
+> > accordingly.
+> >
+> > While at it, also update qcom,bam-dma bindings to add comments
+> > which describe the BAM DMA versions used in SM8150 and SM8250 SoCs.
+> > This provides an easy reference for identifying the actual BAM DMA
+> > version available on Qualcomm SoCs.
+> >
+> > Acked-by: Rob Herring <robh@kernel.org>
+> > Tested-by: Anders Roxell <anders.roxell@linaro.org>
+> > Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > ---
+> >  .../devicetree/bindings/dma/qcom,bam-dma.yaml | 20 ++++++++++++-------
+> >  1 file changed, 13 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+> > index f1ddcf672261..c663b6102f50 100644
+> > --- a/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+> > +++ b/Documentation/devicetree/bindings/dma/qcom,bam-dma.yaml
+> > @@ -15,13 +15,19 @@ allOf:
+> >
+> >  properties:
+> >    compatible:
+> > -    enum:
+> > -        # APQ8064, IPQ8064 and MSM8960
+> > -      - qcom,bam-v1.3.0
+> > -        # MSM8974, APQ8074 and APQ8084
+> > -      - qcom,bam-v1.4.0
+> > -        # MSM8916 and SDM845
+> > -      - qcom,bam-v1.7.0
+> > +    oneOf:
+> > +      - enum:
+> > +          # APQ8064, IPQ8064 and MSM8960
+> > +          - qcom,bam-v1.3.0
+> > +          # MSM8974, APQ8074 and APQ8084
+> > +          - qcom,bam-v1.4.0
+> > +          # MSM8916, SDM630
+> > +          - qcom,bam-v1.7.0
+> > +      - items:
+> > +          - enum:
+> > +              # SDM845, SM6115, SM8150, SM8250 and QCM2290
+> > +              - qcom,bam-v1.7.4
+> > +          - const: qcom,bam-v1.7.0
+> >
+> >    clocks:
+> >      maxItems: 1
+> > --
+> > 2.38.1
+> 
+> Bjorn has applied the dts patches from this series to his tree.
+> As suggested by him, can you please pick patches [PATCH 1/11] and
+> [PATCH 2/11] from this series via the 'dmaengine' tree.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
----
- arch/arm64/configs/defconfig | 3 +++
- 1 file changed, 3 insertions(+)
+I dont have this series in my inbox or dmaengine pw
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index e05706d3893d..d6b2667f1baa 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -557,6 +557,7 @@ CONFIG_PINCTRL_IMX8ULP=y
- CONFIG_PINCTRL_IMX93=y
- CONFIG_PINCTRL_MSM=y
- CONFIG_PINCTRL_IPQ8074=y
-+CONFIG_PINCTRL_IPQ5018=y
- CONFIG_PINCTRL_IPQ5332=y
- CONFIG_PINCTRL_IPQ6018=y
- CONFIG_PINCTRL_IPQ9574=y
-@@ -1168,6 +1169,8 @@ CONFIG_QCOM_CLK_SMD_RPM=y
- CONFIG_QCOM_CLK_RPMH=y
- CONFIG_IPQ_APSS_6018=y
- CONFIG_IPQ_GCC_5332=y
-+CONFIG_IPQ_APSS_5018=y
-+CONFIG_IPQ_GCC_5018=y
- CONFIG_IPQ_GCC_6018=y
- CONFIG_IPQ_GCC_8074=y
- CONFIG_IPQ_GCC_9574=y
+> Seems some Cc fields got messed up while sending the patchset, so
+> Cc'ing the dmaengine list again.
+
+not just list but mine too..
+
+Please rebase and resend
+
 -- 
-2.34.1
-
+~Vinod
