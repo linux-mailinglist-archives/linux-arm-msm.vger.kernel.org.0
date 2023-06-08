@@ -2,69 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 30D3F7279E7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 10:27:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76446727A74
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 10:51:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232233AbjFHI1b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 04:27:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33600 "EHLO
+        id S233944AbjFHIvq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 04:51:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43340 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230499AbjFHI1a (ORCPT
+        with ESMTP id S235698AbjFHIvT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 04:27:30 -0400
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0906269E;
-        Thu,  8 Jun 2023 01:27:29 -0700 (PDT)
-Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-33b00ce51caso779175ab.2;
-        Thu, 08 Jun 2023 01:27:29 -0700 (PDT)
+        Thu, 8 Jun 2023 04:51:19 -0400
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 149A52D43
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 01:50:33 -0700 (PDT)
+Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-97668583210so57850166b.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 01:50:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686214231; x=1688806231;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jVm0fhsNyk10WhIekiGem2q5QIQ6o6txtC4ntkrd51Q=;
+        b=ZGzz5r4b575ZzlWyig0XGGzxar6+zK8gw7Jyz0wDHVB9LFFbul3V1P87N+8nYaYXQI
+         MBmcg30HbUj50Lrc0QCi+Nv37lgqcOdyPK9/J4EXa6eXcnNOMkeh84/ofONzkYEG2fRf
+         IPtGqxc4wQJ5h72vACNtcnXEbae9MxmdHiTMfXJmIpomgeY10r01oXFsnjKZAYb8G5LA
+         HAIK8Ur2SF/J3z6Ydqjesotxs4SQLvskd+JlbW+oiVxWTBBrf8UoyH7APR5Q+7HXkY+u
+         ZbVxmplqpBFm1cujdheR8PS17ZPMoJl6gVBcqh0I905CDBGvMXLP6qUolqwMq7L7S8Nq
+         Jk0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686212849; x=1688804849;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=4vk0QrxAJZUCwNeUbkMMvVo1zLXlArkwoqu5OxCPG/U=;
-        b=ejJoQe/iLQ/TWRHmnpQJdmSB1IYftpH3uRDXgkbe4C6LBumHFkX7mM9mfPptyn3tLL
-         JjzkNxG/tDGQgQ/5Bw5fuFElQUYX6MQ5enktxNn4j74qpm0cp9TyobhV80XplBaFbIAl
-         GIFiW02z79tzUBKr72fi8NpupTBPv2B7eJhfkbKgNgVFZVCB1sWXq8zjlFYzpFo7qwB3
-         osm1FYmFZgr3HUQzYTXzahvGjbbDq3P/Nri0YphHo+/9FaMx5Hx0wJ/EqRBipJgN7YSC
-         c6BxinlFcyyzWVf4t0ZKiyfzAkh1GEqHivrXmeVArl1LXIUiH+bvgpmKSpjW9TqG1AOn
-         goLg==
-X-Gm-Message-State: AC+VfDz2JmcxsS8CnqWhpCLibqVYhOH3JAjQMebr3PiPkhGOE/g7m3Z/
-        10V7WdxFXtxI8mKmU+vDzA==
-X-Google-Smtp-Source: ACHHUZ619U2Ip5Lt8XRETTrvzYz6uAXH+LDeKR/g/LcFeC1bXxSA/7mpU+wN8RWZK1WLeyWpRxtq+Q==
-X-Received: by 2002:a92:cc0b:0:b0:33a:9a68:35ff with SMTP id s11-20020a92cc0b000000b0033a9a6835ffmr8400244ilp.26.1686212848800;
-        Thu, 08 Jun 2023 01:27:28 -0700 (PDT)
-Received: from robh_at_kernel.org ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id j3-20020a02cc63000000b0040f91a65669sm152296jaq.21.2023.06.08.01.27.26
+        d=1e100.net; s=20221208; t=1686214231; x=1688806231;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jVm0fhsNyk10WhIekiGem2q5QIQ6o6txtC4ntkrd51Q=;
+        b=XERaGVlVPpgtnxP7IeONFaOGu9hyH+9rxhnFZl25kyvhMcrrQ7+blqHWO1Bx3UN1pZ
+         HTs+V273r4/iwGVZfcD0seOwJp/eOvQVVHRj3v3R2tvDdrhnDWUzrVzH1Ngyl13K8E9s
+         1v4ansUyaeiVGGwp5iOlCXBaLll6VIiHLueacEW7hfwXJiP8vBt8T99NAmDtmmmiOG6f
+         W/VeeEHAB3A/k7Ek1O5kTabACNPlWLcLp/yIjWGirS6W8ksi8ZQHxh1F2Qb9npE8L9uv
+         upAwF5ZChVpFteEi7/f9zyOCaEDT134TII8l+JLGNOxT36Dh9y/8arpMFmnsq9+q940Y
+         ghjg==
+X-Gm-Message-State: AC+VfDxMl4bobaJoLeYuzSs88f0NS28m4K6cx37pLmLccegfv1cxOc+s
+        m8w0dhJgJcTZojTPQgosZuSihQ==
+X-Google-Smtp-Source: ACHHUZ4pnN5cAyFjYUsGInH/tdkVvDcSKcCSn4zKfvrsA6R6pzv5+PGqhAmrFI8c2EPYKNODjDdUQQ==
+X-Received: by 2002:a17:907:d29:b0:973:ea73:b883 with SMTP id gn41-20020a1709070d2900b00973ea73b883mr11133516ejc.66.1686214231091;
+        Thu, 08 Jun 2023 01:50:31 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id gg24-20020a170906e29800b00974638e4a98sm410173ejb.24.2023.06.08.01.50.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jun 2023 01:27:28 -0700 (PDT)
-Received: (nullmailer pid 1409955 invoked by uid 1000);
-        Thu, 08 Jun 2023 08:27:25 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        linux-remoteproc@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Thu, 08 Jun 2023 01:50:30 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
-In-Reply-To: <20230531-rpm-rproc-v2-5-56a4a00c8260@gerhold.net>
-References: <20230531-rpm-rproc-v2-0-56a4a00c8260@gerhold.net>
- <20230531-rpm-rproc-v2-5-56a4a00c8260@gerhold.net>
-Message-Id: <168621284569.1409937.7016655911882350618.robh@kernel.org>
-Subject: Re: [PATCH v2 05/12] dt-bindings: remoteproc: Add Qualcomm RPM
- processor/subsystem
-Date:   Thu, 08 Jun 2023 02:27:25 -0600
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] ASoC: dt-bindings: qcom,wsa8840: Add WSA884x family of speakers
+Date:   Thu,  8 Jun 2023 10:50:22 +0200
+Message-Id: <20230608085023.141745-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -72,68 +81,87 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add binding for WSA8840/WSA8845/WSA8845H smart speaker amplifiers used
+in Qualcomm QRD8550 board with SM8550 SoC.
 
-On Thu, 08 Jun 2023 09:10:25 +0200, Stephan Gerhold wrote:
-> On Qualcomm platforms, most subsystems (e.g. audio/modem DSP) are
-> described as remote processors in the device tree, with a dedicated
-> node where properties and services related to them can be described.
-> 
-> The Resource Power Manager (RPM) is also such a subsystem, with a
-> remote processor that is running a special firmware. Unfortunately,
-> the RPM never got a dedicated node representing it properly in the
-> device tree. Most of the RPM services are described below a top-level
-> /smd or /rpm-glink node.
-> 
-> However, SMD/GLINK is just one of the communication channels to the RPM
-> firmware. For example, the MPM interrupt functionality provided by the
-> RPM does not use SMD/GLINK but writes directly to a special memory
-> region allocated by the RPM firmware in combination with a mailbox.
-> Currently there is no good place in the device tree to describe this
-> functionality. It doesn't belong below SMD/GLINK but it's not an
-> independent top-level device either.
-> 
-> Introduce a new "qcom,rpm-proc" compatible that allows describing the
-> RPM as a remote processor/subsystem like all others. The SMD/GLINK node
-> is moved to a "smd-edge"/"glink-edge" subnode consistent with other
-> existing bindings. Additional subnodes (e.g. interrupt-controller for
-> MPM, rpm-master-stats) can be also added there.
-> 
-> Deprecate using the old top-level /smd node since all SMD edges
-> are now specified as subnodes of the remote processor.
-> 
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> ---
-> This patch is based on qcom/for-next, since it needs the new
-> qcom,rpm-master-stats.yaml schema that is only applied there.
-> ---
->  .../bindings/remoteproc/qcom,rpm-proc.yaml         | 171 +++++++++++++++++++++
->  .../devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml |   6 +-
->  .../devicetree/bindings/soc/qcom/qcom,smd.yaml     |   7 +
->  3 files changed, 181 insertions(+), 3 deletions(-)
-> 
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../bindings/sound/qcom,wsa8840.yaml          | 66 +++++++++++++++++++
+ 1 file changed, 66 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-./Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/soc/qcom/qcom,rpm-master-stats.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230531-rpm-rproc-v2-5-56a4a00c8260@gerhold.net
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+diff --git a/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml b/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml
+new file mode 100644
+index 000000000000..a999f787aa4d
+--- /dev/null
++++ b/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml
+@@ -0,0 +1,66 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/sound/qcom,wsa8840.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm WSA8840/WSA8845/WSA8845H smart speaker amplifier
++
++maintainers:
++  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
++  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
++
++description:
++  WSA884X is a family of Qualcomm Aqstic smart speaker amplifiers using
++  SoundWire digital audio interface.
++
++allOf:
++  - $ref: dai-common.yaml#
++
++properties:
++  compatible:
++    const: sdw10217020400
++
++  reg:
++    maxItems: 1
++
++  powerdown-gpios:
++    description: Powerdown/Shutdown line to use (pin SD_N)
++    maxItems: 1
++
++  '#sound-dai-cells':
++    const: 0
++
++  vdd-1p8-supply: true
++  vdd-io-supply: true
++
++required:
++  - compatible
++  - reg
++  - powerdown-gpios
++  - '#sound-dai-cells'
++  - vdd-1p8-supply
++  - vdd-io-supply
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/gpio/gpio.h>
++
++    soundwire-controller {
++        #address-cells = <2>;
++        #size-cells = <0>;
++
++        speaker@0,1 {
++            compatible = "sdw10217020400";
++            reg = <0 1>;
++            pinctrl-names = "default";
++            pinctrl-0 = <&spkr_2_sd_n_active>;
++            powerdown-gpios = <&lpass_tlmm 18 GPIO_ACTIVE_LOW>;
++            #sound-dai-cells = <0>;
++            sound-name-prefix = "SpkrRight";
++            vdd-1p8-supply = <&vreg_l15b_1p8>;
++            vdd-io-supply = <&vreg_l3g_1p2>;
++        };
++    };
+-- 
+2.34.1
 
