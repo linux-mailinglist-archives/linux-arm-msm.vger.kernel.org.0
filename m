@@ -2,172 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 68A24727D0E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 12:42:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6AC62727D1C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 12:44:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233016AbjFHKm2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 06:42:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51834 "EHLO
+        id S232272AbjFHKog (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 06:44:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53006 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229727AbjFHKm1 (ORCPT
+        with ESMTP id S229802AbjFHKoe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 06:42:27 -0400
-Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3CC21AB;
-        Thu,  8 Jun 2023 03:42:25 -0700 (PDT)
-Received: from pendragon.ideasonboard.com (om126033089000.35.openmobile.ne.jp [126.33.89.0])
-        by perceval.ideasonboard.com (Postfix) with ESMTPSA id 18545480;
-        Thu,  8 Jun 2023 12:41:56 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
-        s=mail; t=1686220917;
-        bh=HpyajXFq3Bn1xOynZKfJ657CvXa2Mt/KDZmQlXLGLBs=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=n4RD0gh/QbIyDCJw62QTaUdUTBgP5VKks+vXeLL9ThBAp+gdlvk3SqC0WnuLYuOFu
-         kwDxjbDfNJhew0OqUoJ4/hWE5AdtvGP6tOc/K9oqjh0dFOn8FzbSh2pDm98NhXxZIJ
-         wFjJd1htwDvwt8L0FKM8KSojiUSEugsNb6e0gVMk=
-Date:   Thu, 8 Jun 2023 13:42:20 +0300
-From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-To:     Tomasz Figa <tfiga@chromium.org>
-Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        Benjamin Gaignard <benjamin.gaignard@collabora.com>,
-        m.szyprowski@samsung.com, mchehab@kernel.org, ming.qian@nxp.com,
-        shijie.qin@nxp.com, eagle.zhou@nxp.com, bin.liu@mediatek.com,
-        matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com,
-        tiffany.lin@mediatek.com, andrew-ct.chen@mediatek.com,
-        yunfei.dong@mediatek.com, stanimir.k.varbanov@gmail.com,
-        quic_vgarodia@quicinc.com, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, ezequiel@vanguardiasur.com.ar,
-        p.zabel@pengutronix.de, daniel.almeida@collabora.com,
-        linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-rockchip@lists.infradead.org, kernel@collabora.com
-Subject: Re: [PATCH v2 3/8] media: videobuf2: Add a module param to limit vb2
- queue buffer storage
-Message-ID: <20230608104220.GP5058@pendragon.ideasonboard.com>
-References: <20230321102855.346732-1-benjamin.gaignard@collabora.com>
- <20230321102855.346732-4-benjamin.gaignard@collabora.com>
- <6c4658fd-3a64-b3f8-67cd-17ed2d7d3567@xs4all.nl>
- <20230531080331.GB6496@pendragon.ideasonboard.com>
- <608ae7d6-3f3b-137d-08d2-d41a240be2c4@xs4all.nl>
- <20230531123945.GF27043@pendragon.ideasonboard.com>
- <CAAFQd5A6sz1BhEjiWyXH6B1TBTLt0ivAc6N0Vd73hebnpc7fKQ@mail.gmail.com>
+        Thu, 8 Jun 2023 06:44:34 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0FCA1AB;
+        Thu,  8 Jun 2023 03:44:33 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3586MvqF027461;
+        Thu, 8 Jun 2023 10:44:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=wUEiIhIjj7g/WIwbHZ11fcWHaz3Z2aJvN7BM7cb+73A=;
+ b=g2n51g7e5JjVdwV4VgjLfUAaFj5MRAL+fFXETWTZ2jQBb1ArEq/qHUX0yqk6wY2YgL8y
+ iSohyEPB9NdFGuhPI9OYVn8XSlPHszpZ26hKt1MI65AccwVm/cxAdb+K/ls7+NU9SQtG
+ rlXF34EbR1w+wNPNP9yJO3ZFCTr8zIazqmAC1Wi7la+Jq6/YIB8hv22xOBWUadxz7rll
+ EMH62CFYxiECY1LNj3NOsHUL456b2m86Vl4nf0WYqKnfbFEQVxR6qBTBgLHXzE9V7y6/
+ C+MId5zDvvR5uKunkOO40pouVsm+XMzOSN0WknULgJ+OC2t4SmzYhNq2oGulS/bJ7L6W MA== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r2rbtjjdk-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 08 Jun 2023 10:44:29 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 358AiSgo031065
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 8 Jun 2023 10:44:28 GMT
+Received: from [10.204.67.150] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 8 Jun 2023
+ 03:44:23 -0700
+Message-ID: <4c27849d-cd34-77ed-7d45-6f366f9fa86a@quicinc.com>
+Date:   Thu, 8 Jun 2023 16:14:20 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAAFQd5A6sz1BhEjiWyXH6B1TBTLt0ivAc6N0Vd73hebnpc7fKQ@mail.gmail.com>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_PASS,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [RESEND PATCH v1 2/2] misc: fastrpc: detect privileged processes
+ based on group ID
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        <srinivas.kandagatla@linaro.org>, <linux-arm-msm@vger.kernel.org>
+CC:     <ekangupt@qti.qualcomm.com>, <gregkh@linuxfoundation.org>,
+        <linux-kernel@vger.kernel.org>,
+        <fastrpc.upstream@qti.qualcomm.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <conor+dt@kernel.org>, <devicetree@vger.kernel.org>
+References: <1686155407-20054-1-git-send-email-quic_ekangupt@quicinc.com>
+ <1686155407-20054-3-git-send-email-quic_ekangupt@quicinc.com>
+ <bdf49a17-bb4c-a00d-0239-ed5d0eef470d@linaro.org>
+From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
+In-Reply-To: <bdf49a17-bb4c-a00d-0239-ed5d0eef470d@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: -KEza8Per70tyz-V6xbFzEdBOKBdBskU
+X-Proofpoint-ORIG-GUID: -KEza8Per70tyz-V6xbFzEdBOKBdBskU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-08_06,2023-06-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 malwarescore=0
+ adultscore=0 mlxlogscore=631 spamscore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 mlxscore=0 clxscore=1015 lowpriorityscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306080091
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Tomasz,
 
-On Thu, Jun 08, 2023 at 07:24:29PM +0900, Tomasz Figa wrote:
-> On Wed, May 31, 2023 at 9:39 PM Laurent Pinchart wrote:
-> > On Wed, May 31, 2023 at 10:30:36AM +0200, Hans Verkuil wrote:
-> > > On 5/31/23 10:03, Laurent Pinchart wrote:
-> > > > On Wed, May 31, 2023 at 08:36:59AM +0200, Hans Verkuil wrote:
-> > > >> On 21/03/2023 11:28, Benjamin Gaignard wrote:
-> > > >>> Add module parameter "max_vb_buffer_per_queue" to be able to limit
-> > > >>> the number of vb2 buffers store in queue.
-> > > >>>
-> > > >>> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> > > >>> ---
-> > > >>>  drivers/media/common/videobuf2/videobuf2-core.c | 15 +++------------
-> > > >>>  include/media/videobuf2-core.h                  | 11 +++++++++--
-> > > >>>  2 files changed, 12 insertions(+), 14 deletions(-)
-> > > >>>
-> > > >>> diff --git a/drivers/media/common/videobuf2/videobuf2-core.c b/drivers/media/common/videobuf2/videobuf2-core.c
-> > > >>> index ae9d72f4d181..f4da917ccf3f 100644
-> > > >>> --- a/drivers/media/common/videobuf2/videobuf2-core.c
-> > > >>> +++ b/drivers/media/common/videobuf2/videobuf2-core.c
-> > > >>> @@ -34,6 +34,8 @@
-> > > >>>  static int debug;
-> > > >>>  module_param(debug, int, 0644);
-> > > >>>
-> > > >>> +module_param(max_vb_buffer_per_queue, ulong, 0644);
-> > > >>
-> > > >> There is no MODULE_PARM_DESC here? Please add. I see it is not there for
-> > > >> the debug param either, it should be added for that as well.
-> > > >
-> > > > Would this be the right time to consider resource accounting in V4L2 for
-> > > > buffers ? Having a module parameter doesn't sound very useful, an
-> > > > application could easily allocate more buffers by using buffer orphaning
-> > > > (allocating buffers, exporting them as dmabuf objects, and freeing them,
-> > > > which leaves the memory allocated). Repeating allocation cycles up to
-> > > > max_vb_buffer_per_queue will allow allocating an unbounded number of
-> > > > buffers, using all the available system memory. I'd rather not add a
-> > > > module argument that only gives the impression of some kind of safety
-> > > > without actually providing any value.
+
+On 6/8/2023 12:17 AM, Krzysztof Kozlowski wrote:
+> On 07/06/2023 18:30, Ekansh Gupta wrote:
+>> Get the information on privileged group IDs during rpmsg probing based
+>> on DT property. Check if the process requesting an offload to remote
+>> subsystem is privileged by comparing it's group ID with privileged
+>> group ID. Initialization process attributes are updated for a
+>> privileged process which is sent to remote process for resource
+>> management.
+>>
 > 
-> Good point. It's even simpler, just keep opening new vim2m instances
-> and requesting max buffers :).
 > 
-> > >
-> > > Does dmabuf itself provide some accounting mechanism? Just wondering.
-> > >
-> > > More specific to V4L2: I'm not so sure about this module parameter either.
-> > > It makes sense to have a check somewhere against ridiculous values (i.e.
-> > > allocating MAXINT buffers), but that can be a define as well. But otherwise
-> > > I am fine with allowing applications to allocate buffers until the memory
-> > > is full.
-> > >
-> > > The question is really: what is this parameter supposed to do? The only
-> > > thing it does is to sanitize unlikely inputs (e.g. allocating MAXINT buffers).
-> > >
-> > > I prefer that as a define, to be honest.
-> > >
-> > > I think it is perfectly fine for users to try to request more buffers than
-> > > memory allows. It will just fail in that case, not a problem.
-> > >
-> > > And if an application is doing silly things like buffer orphaning, then so
-> > > what? Is that any different than allocating memory and not freeing it?
-> > > Eventually it will run out of memory and crash, which is normal.
-> >
-> > Linux provides APIs to account for and limit usage of resources,
-> > including memory. A system administrator can prevent rogue processes
-> > from starving system resources. The memory consumed by vb2 buffer isn't
-> > taken into account, making V4L2 essentially unsafe for untrusted
-> > processes.
 > 
-> I agree that proper accounting would be useful, although I wouldn't
-> really make this patch series depend on it, since it's not introducing
-> the loophole in the first place.
-
-No disagreement here, my concern was about introducing a workaround for
-the lack of proper memory accounting. I'd like to avoid the workaround,
-but it doesn't mean memory accounting has to be implement now.
-
-> We had some discussion about this in ChromeOS long ago and we thought
-> it would be really useful for killing browser tabs with big videos,
-> but otherwise using very little regular memory (e.g. via javascript).
+>> +
+>>   static const struct file_operations fastrpc_fops = {
+>>   	.open = fastrpc_device_open,
+>>   	.release = fastrpc_device_release,
+>> @@ -2277,6 +2396,10 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>>   	if (!data)
+>>   		return -ENOMEM;
+>>   
+>> +	err = fastrpc_init_privileged_gids(rdev, "qcom,fastrpc-gids", &data->gidlist);
+>> +	if (err)
+>> +		dev_err(rdev, "Privileged gids init failed.\n");
+>> +
 > 
-> One challenge with accounting V4L2 allocations is how to count shared
-> DMA-bufs. If one process allocates a V4L2 buffer, exports it to
-> DMA-buf and then sends it to another process that keeps it alive, but
-> frees the V4L2 buffer (and even closes the DMA-buf fd), should that
-> memory be still accounted to it even though it doesn't hold a
-> reference to it anymore?
+> What about error paths? No need for cleanup?
+> 
+All the necessary clean-up is added as part of 
+fastrpc_init_privileged_gids error path. There is no requirement to have 
+any additional handling in error path other that error log. Also there 
+is no intention to fail the probe in case gid information is not 
+properly read.
 
-I've thought about that too. It's an annoying problem, it should
-probably be discussed with memory management developers.
-
-> > Now, to be fair, there are many reasons why allowing access to v4L2
-> > devices to untrusted applications is a bad idea, and memory consumption
-> > is likely not even the worst one. Still, is this something we want to
-> > fix, or do we want to consider V4L2 to be priviledged API only ? Right
-> > now we can't do so, but with many Linux systems moving towards pipewire,
-> > we could possibly have a system daemon isolating untrusted applications
-> > from the rest of the system. We may thus not need to fix this in the
-> > V4L2 API.
-
--- 
-Regards,
-
-Laurent Pinchart
+Thanks,
+Ekansh
+> Best regards,
+> Krzysztof
+> 
