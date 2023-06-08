@@ -2,109 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 63579727A9F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 10:56:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C7F1727B13
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 11:20:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235533AbjFHI4a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 04:56:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49130 "EHLO
+        id S234955AbjFHJU1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 05:20:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59946 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235683AbjFHI4Z (ORCPT
+        with ESMTP id S232272AbjFHJU0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 04:56:25 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1DE71272E;
-        Thu,  8 Jun 2023 01:56:22 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3587h1M0023948;
-        Thu, 8 Jun 2023 08:56:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=bn9KhC8FKFvue6z73xOS+tpNfMXdjDhem7nRo2uOZ5k=;
- b=Tvs7y1Kyj5lcja3tCBS1XH/ICPrAjanwDOJHEyoVQfYTCMV5jj5Fr5yCH5eh+tlNmxLF
- dpIac4HU7Q6NZKnLkT6xWUwdTMr7GblSjXCdec99sYapipPvWOMJ4rPEVIpC1IQNG5+1
- wnAKheSEMsL+HeHT0+bxQgsi9K/lipdVt7PzAG1wmSMsk/sZJN33mLab78ihGpdq6mvH
- lXcS7hrAGpgCSvsr4EV1r7JuQ3O4WxAE9qeLjlcnbeManRhrw1gcvHCJf5QVCpFGXxd2
- MH2zYynEJRXY1OartHkSZW8FRDCkq52ib2h5T8I4eukUSXCPGplf+mc1OvdQi+E41jgR 5Q== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r39ku89kp-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 08 Jun 2023 08:56:19 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3588uIYR026503
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 8 Jun 2023 08:56:18 GMT
-Received: from hu-tnimkar-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Thu, 8 Jun 2023 01:56:15 -0700
-From:   Tushar Nimkar <quic_tnimkar@quicinc.com>
-To:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        Thu, 8 Jun 2023 05:20:26 -0400
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6ACF718F;
+        Thu,  8 Jun 2023 02:20:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1686216025; x=1717752025;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=ImvKob1XLuKksnBkKdSIUMhiZFOJa0LRyXm3owOpFFY=;
+  b=wSerHhqUUwjM2WcctY2xGwEUuasUaqJf95a+HKK7r8y4TpObR+lVuqMs
+   auFPKlYHj4gaf+YDTFKVu/axF2hoZDRerFjMuLVBZ2hAPlEOO2lUbIh2g
+   BtK6GLme3CBJduKIIzLF2T32us/4U+HXLjyG+DJb9y5ruzu/NkvGDOHcf
+   RbPNfsHCwK/ZSznmirYTsJm4NJbfe5pQFhQ0fOTeGJOW7hkrUcNynw5Ve
+   i05UYidO8ZX6zU6spc/0ILzgqT3Fmcj2Lnp8NXBYurUsYI3jg8lbljNF5
+   Uvu9LteoHzzqR5Z164W2nizvXBz25i1s99wOtigWsx7g/SMV9f/bUODV9
+   g==;
+X-IronPort-AV: E=Sophos;i="6.00,226,1681196400"; 
+   d="asc'?scan'208";a="216828071"
+X-Amp-Result: UNKNOWN
+X-Amp-Original-Verdict: FILE UNKNOWN
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+  by esa3.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 08 Jun 2023 02:20:24 -0700
+Received: from chn-vm-ex03.mchp-main.com (10.10.85.151) by
+ chn-vm-ex02.mchp-main.com (10.10.85.144) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.21; Thu, 8 Jun 2023 02:20:24 -0700
+Received: from wendy (10.10.115.15) by chn-vm-ex03.mchp-main.com
+ (10.10.85.151) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21 via Frontend
+ Transport; Thu, 8 Jun 2023 02:20:22 -0700
+Date:   Thu, 8 Jun 2023 10:19:58 +0100
+From:   Conor Dooley <conor.dooley@microchip.com>
+To:     Tushar Nimkar <quic_tnimkar@quicinc.com>
+CC:     "Rafael J . Wysocki" <rafael@kernel.org>,
         Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-CC:     <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
         <linux-kernel@vger.kernel.org>, <quic_lsrao@quicinc.com>,
-        <quic_mkshah@quicinc.com>, Tushar Nimkar <quic_tnimkar@quicinc.com>
-Subject: [PATCH 2/2] cpuidle: dt: Add support to keep idle state disabled
-Date:   Thu, 8 Jun 2023 14:25:44 +0530
-Message-ID: <20230608085544.16211-4-quic_tnimkar@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230608085544.16211-1-quic_tnimkar@quicinc.com>
+        <quic_mkshah@quicinc.com>, <devicetree@vger.kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: arm: idle-states: Add
+ idle-state-disabled property
+Message-ID: <20230608-steadying-idealism-1f8a97db1491@wendy>
 References: <20230608085544.16211-1-quic_tnimkar@quicinc.com>
+ <20230608085544.16211-2-quic_tnimkar@quicinc.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 9C8DWiqLhxnEVGl0Q8LGS2q6QT_vF4e5
-X-Proofpoint-ORIG-GUID: 9C8DWiqLhxnEVGl0Q8LGS2q6QT_vF4e5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-08_05,2023-06-07_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- mlxscore=0 mlxlogscore=895 lowpriorityscore=0 phishscore=0 bulkscore=0
- priorityscore=1501 suspectscore=0 impostorscore=0 adultscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306080076
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="vtCTEnlvLCD5pXov"
+Content-Disposition: inline
+In-Reply-To: <20230608085544.16211-2-quic_tnimkar@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Mark the idle state as disabled using CPUIDLE_FLAG_OFF when
-idle-state-disabled property is present.
+--vtCTEnlvLCD5pXov
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Such idle states stays disabled and can be enabled using below command.
+Hey Tushar,
 
-echo N > /sys/devices/system/cpu/cpuX/cpuidle/stateX/disable
+On Thu, Jun 08, 2023 at 02:25:42PM +0530, Tushar Nimkar wrote:
+> This change adds idle-state-disabled property using which certain or all
+> idle-states can be kept disabled during boot-up. Once boot-up is completed
+> same can be enabled using below command.
+>=20
+> echo N > /sys/devices/system/cpu/cpuX/cpuidle/stateX/disable
+>=20
+> Cc: devicetree@vger.kernel.org
 
-Signed-off-by: Tushar Nimkar <quic_tnimkar@quicinc.com>
----
- drivers/cpuidle/dt_idle_states.c | 3 +++
- 1 file changed, 3 insertions(+)
+Firstly, you should CC the dt-bindings maintainers like
+get_maintainer.pl would tell you.
+Secondly, there are two 1/2 patches in this series.
 
-diff --git a/drivers/cpuidle/dt_idle_states.c b/drivers/cpuidle/dt_idle_states.c
-index 12fec92a85fd..3d50181512a3 100644
---- a/drivers/cpuidle/dt_idle_states.c
-+++ b/drivers/cpuidle/dt_idle_states.c
-@@ -79,6 +79,9 @@ static int init_state_node(struct cpuidle_state *idle_state,
- 	idle_state->flags = CPUIDLE_FLAG_RCU_IDLE;
- 	if (of_property_read_bool(state_node, "local-timer-stop"))
- 		idle_state->flags |= CPUIDLE_FLAG_TIMER_STOP;
-+
-+	if (of_property_read_bool(state_node, "idle-state-disabled"))
-+		idle_state->flags |= CPUIDLE_FLAG_OFF;
- 	/*
- 	 * TODO:
- 	 *	replace with kstrdup and pointer assignment when name
--- 
-2.17.1
+> Signed-off-by: Tushar Nimkar <quic_tnimkar@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/cpu/idle-states.yaml | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>=20
+> diff --git a/Documentation/devicetree/bindings/cpu/idle-states.yaml b/Doc=
+umentation/devicetree/bindings/cpu/idle-states.yaml
+> index b8cc826c9501..f999bc666bbd 100644
+> --- a/Documentation/devicetree/bindings/cpu/idle-states.yaml
+> +++ b/Documentation/devicetree/bindings/cpu/idle-states.yaml
+> @@ -358,6 +358,13 @@ patternProperties:
+>            systems entry-latency-us + exit-latency-us will exceed
+>            wakeup-latency-us by this duration.
+> =20
+> +      idle-state-disabled:
+> +        description: |
+> +          If present the idle state stays disabled.
 
+> It can be enabled back from
+> +          shell using below command.
+> +          echo N > /sys/devices/system/cpu/cpuX/cpuidle/stateX/disable
+
+Thirdly, this is operating system specific behaviour, tied to Linux, and
+has no place in a binding.
+
+Cheers,
+Conor.
+
+> +        type: boolean
+> +
+>        idle-state-name:
+>          $ref: /schemas/types.yaml#/definitions/string
+>          description:
+> @@ -548,6 +555,7 @@ examples:
+>              CPU_SLEEP_0_0: cpu-sleep-0-0 {
+>                  compatible =3D "arm,idle-state";
+>                  local-timer-stop;
+> +                idle-state-disabled;
+>                  arm,psci-suspend-param =3D <0x0010000>;
+>                  entry-latency-us =3D <250>;
+>                  exit-latency-us =3D <500>;
+> --=20
+> 2.17.1
+>=20
+
+--vtCTEnlvLCD5pXov
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZIGdPgAKCRB4tDGHoIJi
+0jYeAQD2vq8CAZyZPfQBYO0XGcZgS5CZfIokwYmVJvMluNX5FgD/VKSusjjBHh15
+cAJDaI7n/Zxpka9ImfjHO1sN2deJHgs=
+=tiyx
+-----END PGP SIGNATURE-----
+
+--vtCTEnlvLCD5pXov--
