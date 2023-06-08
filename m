@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F5F4727ED6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 13:33:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78A9B727EE5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 13:37:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235769AbjFHLd2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 07:33:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49936 "EHLO
+        id S236206AbjFHLg7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 07:36:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52402 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235589AbjFHLd1 (ORCPT
+        with ESMTP id S236054AbjFHLg6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 07:33:27 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18AD2270F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 04:33:25 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-5147f7d045bso718789a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 04:33:25 -0700 (PDT)
+        Thu, 8 Jun 2023 07:36:58 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9604826B9
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 04:36:57 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-973f78329e3so94400066b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 04:36:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686224003; x=1688816003;
+        d=linaro.org; s=google; t=1686224216; x=1688816216;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=IqHeY5G7mIeiooI7ja9w9njq/KqOX5B4nHAoGGVWiBk=;
-        b=y3dQmK7aPMR+m7bDoIYNkOxdVSh4YHDPLQ6ZD/TklPbRUFXC3ugRN4H47WJzBWQZin
-         VI+qaEpaNDYf9R21IHg6Drqcqq5TklxpZNFXf1rjDa0IlFVoNFH01SdPDuJCFAH4y4bi
-         brbYQybxma6THxKe8VbzdNkqPhu+dv9X22rbK5cCu5lHu/eF3yMswWIA8rSfPPMzdlFO
-         2nqO0pfeCqUOFWsZxc2u7NxxDsI+5AgfTJ2j7GZIElSyKC+CWg4U0iMIEUJQodualwNG
-         l7rwotR3e2nWo2eFVeX+IZGEON8e5cppPZCgNdlDpYUXg45qqrlq/R6NzPNmR2UY++yc
-         4YpA==
+        bh=LQWWI054RvloK7dl2oxvJAk/+Nn8DzlFxz+iqkh3yR8=;
+        b=A7bQLvR+IH8m04PQqGNvmbATQJagZzGJQWyyTxFvmE2dpYiuLLXa5jIMPSwChKNVKl
+         J7yMWr1JCMCEOegoTZux5FzmL37PgR+d2ILEAkyBU+bXVjQFNtTWojv+0pMEQNc0c8r4
+         V7EZHtf33JLyD0psYknTGlvz4hTH2F8k94mvHSoZiMix4E/rDb7/uJE9UT3RH8ojQwz5
+         Nqz8xHZ7moDQtbDkonv89wcLll3WeWBuQzuqQb7PR69TAym7cnzsTUyskSSj+H71x/Hv
+         R0PyYHcu/o1kJlycpLW92iL65Py2czUz2AKLLdBMbYF4V/V+WfknJT5AtbsfPcXDKWeB
+         bqnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686224003; x=1688816003;
+        d=1e100.net; s=20221208; t=1686224216; x=1688816216;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IqHeY5G7mIeiooI7ja9w9njq/KqOX5B4nHAoGGVWiBk=;
-        b=RoGRmAGKK8Fwuv0xMnec0EE7+fwBd9XIbVTVGAh2LbPkid00PRfBVkUt1ZgsFgrMNV
-         JvqrHRsFbK2aJDl6DCfn3Q7uhOyK2uyCsGjSriqJ2tYnx6yBw1urhOKPEVr4vPbBevFT
-         teoKqS7aG8Vz4KYYPlVAscC/n0TdN7j02Mgu/DX+o8SA9D65mc20aWi+RzPk0x/892u7
-         RxYri5VI1RLPWHlmCF3262cNLGEgX7pWHNRjC4vwQKsOROxJwV0HbE545X4HElj2XyQm
-         KuEdB7oYLDH3MGltkvHXrStmmuCKmRSQiDCC05ffUEwW2cecojhRCXkwWC+7NrYyMo09
-         pnFQ==
-X-Gm-Message-State: AC+VfDzWhY+GG3IHj8pgj4uCRq4nda/FsLVE1fWy0s7dJ4IUOp77CI1u
-        fnFLue/EalEoiv4DtHndyhEO1A==
-X-Google-Smtp-Source: ACHHUZ6aQyz91+hCmVLZTEti1T1pr0dOoizk+qwE1qd041u3uncqQAvrfQ/LD78OhEvNKifas2zDxA==
-X-Received: by 2002:a17:907:3f13:b0:96a:19d8:f082 with SMTP id hq19-20020a1709073f1300b0096a19d8f082mr11607970ejc.25.1686224003570;
-        Thu, 08 Jun 2023 04:33:23 -0700 (PDT)
+        bh=LQWWI054RvloK7dl2oxvJAk/+Nn8DzlFxz+iqkh3yR8=;
+        b=UkbOwkcAPDzd3Tn01i2Y7BCrs68uSAztvQ7Wwkvfv0woRxP+l5vmt0Tu9H4ojuEc3J
+         dQ12i95owKDIf2CBiO64mK41aWraHmUEpheeYU/ePKVla7IiQ42vRsvXIHN4rV/Av2LR
+         zfOqn27Y9jsYAraDg4AQ+tj494hAQTnqI1U+cpTaodIk+lcrKp76QcibeH1V5FG+bICe
+         wSA//ssG2KSxxyGoJMryjFICnscqRhZcz/bh+72WCHxpBGOBc6tpgY26rq2EuwOcScFK
+         +v9rOSl//cmrJDM+7sCCWZLU8SidLwiJnZ3aJCZa2BxvyTAzmrgrcI3iONopVSDTC8st
+         0hEA==
+X-Gm-Message-State: AC+VfDxAE4qnSIz3uSRWRYxWMDbUe1Dt5+zgZnpWDXtyI7MCfyUHMAKn
+        X2DJ4pXxIHH1LGD4Yh4ppcHdNA==
+X-Google-Smtp-Source: ACHHUZ4elyWGDezUPyDiJiGdSkDoQCsi5pS/58U7qjcTQ7drFCO3RsLFxtDosFEJP4SuTQnzLoHfJw==
+X-Received: by 2002:a17:907:60c9:b0:977:e87c:e633 with SMTP id hv9-20020a17090760c900b00977e87ce633mr11547349ejc.23.1686224216035;
+        Thu, 08 Jun 2023 04:36:56 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id n15-20020a170906b30f00b0096f67b55b0csm585508ejz.115.2023.06.08.04.33.22
+        by smtp.gmail.com with ESMTPSA id gf1-20020a170906e20100b00965b2d3968csm585161ejb.84.2023.06.08.04.36.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Jun 2023 04:33:23 -0700 (PDT)
-Message-ID: <093c23a6-1c0f-6e86-3abb-a8267ebeed52@linaro.org>
-Date:   Thu, 8 Jun 2023 13:33:21 +0200
+        Thu, 08 Jun 2023 04:36:55 -0700 (PDT)
+Message-ID: <077e08c8-f2f7-2fef-9e2c-bc865bc611a6@linaro.org>
+Date:   Thu, 8 Jun 2023 13:36:53 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [RESEND PATCH v1 1/2] dt-bindings: misc: fastrpc: add fastrpc
- group IDs property
+Subject: Re: [RESEND PATCH v1 2/2] misc: fastrpc: detect privileged processes
+ based on group ID
 Content-Language: en-US
 To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
         srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org
@@ -66,16 +66,16 @@ Cc:     ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
         robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
         conor+dt@kernel.org, devicetree@vger.kernel.org
 References: <1686155407-20054-1-git-send-email-quic_ekangupt@quicinc.com>
- <1686155407-20054-2-git-send-email-quic_ekangupt@quicinc.com>
- <44267461-e6f9-b549-a8eb-cba76384660b@linaro.org>
- <ced52be4-d5eb-2dcb-ce8a-f737fbcab1b6@quicinc.com>
+ <1686155407-20054-3-git-send-email-quic_ekangupt@quicinc.com>
+ <bdf49a17-bb4c-a00d-0239-ed5d0eef470d@linaro.org>
+ <4c27849d-cd34-77ed-7d45-6f366f9fa86a@quicinc.com>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <ced52be4-d5eb-2dcb-ce8a-f737fbcab1b6@quicinc.com>
+In-Reply-To: <4c27849d-cd34-77ed-7d45-6f366f9fa86a@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -83,84 +83,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/06/2023 12:36, Ekansh Gupta wrote:
+On 08/06/2023 12:44, Ekansh Gupta wrote:
 > 
 > 
-> On 6/8/2023 12:14 AM, Krzysztof Kozlowski wrote:
+> On 6/8/2023 12:17 AM, Krzysztof Kozlowski wrote:
 >> On 07/06/2023 18:30, Ekansh Gupta wrote:
->>> Add "qcom,fastrpc-gids" property to the list of optional properties.
->>> This property contains the list of privileged group IDs which is
->>> used to offload process to remote subsystem with increased privileges.
->>
->> Why or when anyone would use this property?
->>
-> This property can be used for the use cases which requires prioritized 
-> access to remote subsystem resources.
-
-This does not help me much yet.... Which systems or boards need
-prioritized access?
-
+>>> Get the information on privileged group IDs during rpmsg probing based
+>>> on DT property. Check if the process requesting an offload to remote
+>>> subsystem is privileged by comparing it's group ID with privileged
+>>> group ID. Initialization process attributes are updated for a
+>>> privileged process which is sent to remote process for resource
+>>> management.
 >>>
->>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
->>> ---
->>>   Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml | 6 ++++++
->>>   1 file changed, 6 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
->>> index 1ab9588..2a2124f 100644
->>> --- a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
->>> +++ b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
->>> @@ -57,6 +57,11 @@ properties:
->>>         Virtual machine IDs for remote processor.
->>>       $ref: "/schemas/types.yaml#/definitions/uint32-array"
->>>   
->>> +  qcom,fastrpc-gids:
->>> +    description:
->>> +      Group IDs for fastrpc.
 >>
->> You just pasted here property name. It does not help me to understand
->> what's this. Explain in description.
 >>
-> I'll add more details here when I re-submit the patch.
->>> +    $ref: "/schemas/types.yaml#/definitions/uint32-array"
 >>
->> Drop quotes.
->>
->> missing min/maxItems.
->>
-> I'll update this in v2. Thanks for reviewing.
 >>> +
->>>     "#address-cells":
->>>       const: 1
+>>>   static const struct file_operations fastrpc_fops = {
+>>>   	.open = fastrpc_device_open,
+>>>   	.release = fastrpc_device_release,
+>>> @@ -2277,6 +2396,10 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>>>   	if (!data)
+>>>   		return -ENOMEM;
 >>>   
->>> @@ -120,6 +125,7 @@ examples:
->>>               qcom,glink-channels = "fastrpcglink-apps-dsp";
->>>               label = "sdsp";
->>>               qcom,non-secure-domain;
->>> +            qcom,fastrpc-gids = <2908>
+>>> +	err = fastrpc_init_privileged_gids(rdev, "qcom,fastrpc-gids", &data->gidlist);
+>>> +	if (err)
+>>> +		dev_err(rdev, "Privileged gids init failed.\n");
+>>> +
 >>
->> Eh, what does 2908 stands for? Why not 3012 or 1842? How anyone can
->> figure this out?
+>> What about error paths? No need for cleanup?
 >>
-> There is no hard restriction for this value to be 2908, it can be 
-> anything. Just that the process which needs a privileged offload to any 
-> remote subsystem should have the same gid which is defined here, whether 
-> it is 2908 or anything else.
-> 
-> The intention of having 2908 in example is because this is used in 
-> Android world where any process running with 2908 gid can offload as 
-> privileged process to remote subsystem.
-> Ref: 
-> https://review.lineageos.org/c/LineageOS/android_device_motorola_sm7250-common/+/305612/4/config.fs
-> 
-> But, it can be set to anything just that the process also needs to adapt 
-> to this gid.
+> All the necessary clean-up is added as part of 
+> fastrpc_init_privileged_gids error path. There is no requirement to have 
 
-So this is process ID? Group ID? GID? Why would you ever encode group
-IDs, which change in every installation, or process IDs, which change
-every boot, in DTS common for all devices?
+Where? How that code is called after fastrpc_device_register() failure?
+Or after of_platform_populate() failure?
 
-This is not a DT property.
+Please show me the code flow.
+
+> any additional handling in error path other that error log. Also there 
+> is no intention to fail the probe in case gid information is not 
+> properly read.
+
+This is not related. I don't talk about fastrpc_init_privileged_gids()
+failures. Look where did I leave my comment.
+
+Review comments are placed in proper places, not in unrelated parts of
+code. The placement of review comment is important as this is the
+context of bug in your patch.
 
 Best regards,
 Krzysztof
