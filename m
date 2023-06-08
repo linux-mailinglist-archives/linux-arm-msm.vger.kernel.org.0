@@ -2,158 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8113A727BA3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 11:42:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64C66727BA6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 11:43:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234521AbjFHJmJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 05:42:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44476 "EHLO
+        id S234020AbjFHJnS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 05:43:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234020AbjFHJmH (ORCPT
+        with ESMTP id S232541AbjFHJnR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 05:42:07 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3ECC213C;
-        Thu,  8 Jun 2023 02:42:05 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 68D6964B73;
-        Thu,  8 Jun 2023 09:42:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8720C433EF;
-        Thu,  8 Jun 2023 09:42:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686217324;
-        bh=m8N40M4lIXVobIW+tOavlfsHEn5dzitNcBam5qP1h2k=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=U7yrqaFrL/wQWiYIteDiSB6N77X98ODTHEx2BFKkgYBsHSw3EZixZCnQnxSqJQUMG
-         gRZ/oC/XTcdFTDrvEVoAefB51KMidW+pUdLgC6MmO9CbpH1NvMMFhN6SZaNSsFERvI
-         Ytzu24a4mkPa05AyaDzgkjbzklIMAT6TYDO12TBrLNTN8cPUr2Vu9CD9h+cIxsM9dl
-         PJtvBkIy9BRpnDpa68EQbJ/EW36hXDxhluEi7XeG+nZ/koLCHBXbtUA/vJbgkkH6pF
-         dGzxdsTxqhon4S7wMYU9E8i8uRiJWY0gE7yJ3+eEUc2Dks/kxYSxFC9ET7jooTk4RJ
-         0wLe044d+cMJA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1q7CA1-00049R-5m; Thu, 08 Jun 2023 11:42:29 +0200
-Date:   Thu, 8 Jun 2023 11:42:29 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Krishna Kurapati PSSNV <quic_kriskura@quicinc.com>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, quic_pkondeti@quicinc.com,
-        quic_ppratap@quicinc.com, quic_wcheng@quicinc.com,
-        quic_jackp@quicinc.com, quic_harshq@quicinc.com,
-        ahalaney@redhat.com
-Subject: Re: [PATCH v8 6/9] usb: dwc3: qcom: Add multiport controller support
- for qcom wrapper
-Message-ID: <ZIGihYS5EacISEFm@hovoldconsulting.com>
-References: <20230514054917.21318-1-quic_kriskura@quicinc.com>
- <20230514054917.21318-7-quic_kriskura@quicinc.com>
- <20230515222730.7snn2i33gkg6ctd2@ripper>
- <bc347624-4539-4a3a-9399-9b4e272cdb32@quicinc.com>
- <ZGUCykpDFt9zgeTU@hovoldconsulting.com>
- <82553597-ce0e-48f4-44d4-9eeaaf4cb1c4@quicinc.com>
- <ZIBsDQJtgDZRe7MG@hovoldconsulting.com>
- <99cded6f-6a71-ffce-8479-c7c0726bfb8e@quicinc.com>
+        Thu, 8 Jun 2023 05:43:17 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB0DC213C;
+        Thu,  8 Jun 2023 02:43:16 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3588M1Jk018927;
+        Thu, 8 Jun 2023 09:43:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=a6YwNpylDSqXhyZmsoAsnK1Xy7ALXw9/OB1/zVN9jAc=;
+ b=TuzLMgzZpdEly+HG5vbmGpr2+WE5zUquLZQbQZZ/aQAR4N7cvQJvTjwKwlhaKqm55F8S
+ LAfQcBqgkkJnscFoMrM4tWAikgyalIB91n8nA9rmTNUWOGBVY/s51WWh/aN3Xhan21Cp
+ Cdr23Jd/MWvN5jKgmCBXck9WIZz+4M1snE/pYJMtfD1GP/18mRsSiuV0e/uFnYjdrjG6
+ 6C2S7vc6GiDNC6IXdFqfNG1MGdgJIsxhAzehnosB96osFIyJt2aMJK9ggj3l1lrN8kOc
+ ALl3Gvwe0gpoA9lPWZcbjHr5FaJiv1BG+5vtgms2XgsvpXEjviBRJHhndjgMS5jtGbju pw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r33bvrwwa-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 08 Jun 2023 09:43:12 +0000
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3589hBkN026305
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 8 Jun 2023 09:43:11 GMT
+Received: from [10.204.67.150] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 8 Jun 2023
+ 02:43:07 -0700
+Message-ID: <f83d63ec-a29a-1e08-d645-342b8ee941c2@quicinc.com>
+Date:   Thu, 8 Jun 2023 15:13:03 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <99cded6f-6a71-ffce-8479-c7c0726bfb8e@quicinc.com>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.9.0
+Subject: Re: [RESEND PATCH v1 1/2] dt-bindings: misc: fastrpc: add fastrpc
+ group IDs property
+Content-Language: en-US
+To:     Rob Herring <robh@kernel.org>
+CC:     <linux-kernel@vger.kernel.org>, <konrad.dybcio@linaro.org>,
+        <srinivas.kandagatla@linaro.org>,
+        <fastrpc.upstream@qti.qualcomm.com>, <gregkh@linuxfoundation.org>,
+        <robh+dt@kernel.org>, <devicetree@vger.kernel.org>,
+        <ekangupt@qti.qualcomm.com>, <linux-arm-msm@vger.kernel.org>,
+        <conor+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
+        <andersson@kernel.org>, <agross@kernel.org>
+References: <1686155407-20054-1-git-send-email-quic_ekangupt@quicinc.com>
+ <1686155407-20054-2-git-send-email-quic_ekangupt@quicinc.com>
+ <168615848839.3589502.17296725428809710882.robh@kernel.org>
+From:   Ekansh Gupta <quic_ekangupt@quicinc.com>
+In-Reply-To: <168615848839.3589502.17296725428809710882.robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: rkJrsIvTV_Kj4Hc7u4hGEwPay_gMIq1d
+X-Proofpoint-ORIG-GUID: rkJrsIvTV_Kj4Hc7u4hGEwPay_gMIq1d
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-08_06,2023-06-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
+ mlxscore=0 clxscore=1011 spamscore=0 phishscore=0 mlxlogscore=999
+ impostorscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306080082
+X-Spam-Status: No, score=-1.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SCC_BODY_URI_ONLY,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 08, 2023 at 01:21:02AM +0530, Krishna Kurapati PSSNV wrote:
-> On 6/7/2023 5:07 PM, Johan Hovold wrote:
 
-> > So there at least two issues with this series:
-> > 
-> > 	1. accessing xhci registers from the dwc3 core
-> > 	2. accessing driver data of a child device
-> > 
-> > 1. The first part about accessing xhci registers goes against the clear
-> > separation between glue, core and xhci that Felipe tried to maintain.
-> > 
-> > I'm not entirely against doing this from the core driver before
-> > registering the xhci platform device as the registers are unmapped
-> > afterwards. But if this is to be allowed, then the implementation should
-> > be shared with xhci rather than copied verbatim.
-> > 
-> > The alternative that avoids this issue entirely could indeed be to
-> > simply count the number of PHYs described in DT as Rob initially
-> > suggested. Why would that not work?
-> > 
-> The reason why I didn't want to read the Phy's from DT is explained in 
-> [1]. I felt it makes the code unreadable and its very tricky to read the 
-> phy's properly, so we decided we would initialize phy's for all ports 
-> and if a phy is missing in DT, the corresponding member in 
-> dwc->usbX_generic_phy[] would be NULL and any phy op on it would be a NOP.
 
-That doesn't sound too convincing. Can't you just iterate over the PHYs
-described in DT and determine the maximum port number used for HS and
-SS?
- 
-> Also as per Krzysztof suggestion on [2], we can add a compatible to read 
-> number of phy's / ports present. This avoids accessing xhci members 
-> atleast in driver core. But the layering violations would still be present.
-
-Yes, but if the information is already available in DT it's better to use
-it rather than re-encode it in the driver.
- 
-> > 2. The driver is already accessing driver data of the child device so
-> > arguably your series is not really making things much worse than they
-> > already are.
-> > 
-> > I've just sent a couple of fixes to address some of the symptoms of
-> > this layering violation here:
-> > 
-> > 	https://lore.kernel.org/lkml/20230607100540.31045-1-johan+linaro@kernel.org/
-> >
+On 6/7/2023 10:51 PM, Rob Herring wrote:
 > 
->   As you pointed out offline to me that using xhci event notifiers I 
-> mentioned on [3], if it is not acceptable to use them as notifications 
-> to check whether we are in host mode, I believe the only way would be to 
-> use the patches you pushed in.
-
-I still think we'll end up using callbacks from the xhci/core into the
-glue driver, but dedicated ones rather than using usb_register_notify().
-
-The fixes I posted can work as a stop-gap solution until then.
-
-> > Getting this fixed properly is going to take a bit of work, and
-> > depending on how your multiport wake up implementation is going to look
-> > like, adding support for multiport controllers may not make this much
-> > harder to address.
-> > 
-> > So perhaps we can indeed merge support for multiport and then get back
-> > to cleaning this up.
-> So, you are referring to use the patches you pushed today as a partial 
-> way to cleanup layering violations and merge multiport on top of it ? If 
-> so, I am fine with it. I can rebase my changes on top of them.
-
-Right. A bit depending on how your wakeup implementation looks like, it
-seems we can merge multiport support and then address the layering
-issues which are already present in the driver.
-
-> [1]: 
-> https://lore.kernel.org/all/4eb26a54-148b-942f-01c6-64e66541de8b@quicinc.com/
-> [2]: 
-> https://lore.kernel.org/all/ca729f62-672e-d3de-4069-e2205c97e7d8@linaro.org/
-> [3]: 
-> https://lore.kernel.org/all/37fd026e-ecb1-3584-19f3-f8c1e5a9d20a@quicinc.com/
-
-Johan
+> On Wed, 07 Jun 2023 22:00:06 +0530, Ekansh Gupta wrote:
+>> Add "qcom,fastrpc-gids" property to the list of optional properties.
+>> This property contains the list of privileged group IDs which is
+>> used to offload process to remote subsystem with increased privileges.
+>>
+>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+>> ---
+>>   Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml | 6 ++++++
+>>   1 file changed, 6 insertions(+)
+>>
+> 
+> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+> 
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
+> Error: Documentation/devicetree/bindings/misc/qcom,fastrpc.example.dts:36.17-18 syntax error
+> FATAL ERROR: Unable to parse input tree
+> make[1]: *** [scripts/Makefile.lib:419: Documentation/devicetree/bindings/misc/qcom,fastrpc.example.dtb] Error 1
+> make[1]: *** Waiting for unfinished jobs....
+> make: *** [Makefile:1512: dt_binding_check] Error 2
+> 
+> doc reference errors (make refcheckdocs):
+> 
+> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1686155407-20054-2-git-send-email-quic_ekangupt@quicinc.com
+> 
+> The base for the series is generally the latest rc1. A different dependency
+> should be noted in *this* patch.
+> 
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+> 
+> pip3 install dtschema --upgrade
+> 
+> Please check and re-submit after running the above command yourself. Note
+> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+> your schema. However, it must be unset to test all examples with your schema.
+> 
+Thanks for helping with this information. I'll check and re-submit the 
+patch.
