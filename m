@@ -2,72 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E6EE3727AFA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 11:15:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30D3F7279E7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 10:27:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233699AbjFHJPe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 05:15:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58556 "EHLO
+        id S232233AbjFHI1b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 04:27:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234218AbjFHJPd (ORCPT
+        with ESMTP id S230499AbjFHI1a (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 05:15:33 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F89118F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 02:15:32 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id ffacd0b85a97d-30ae141785bso373228f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 02:15:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686215730; x=1688807730;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3RySa5TKNiSsUD/90w92orRJEIYhEVSGdB85+66FnSA=;
-        b=mpC92LVOdl/5WmkIGe0GW1UkaOKSkWpiVMnE7MxRMUzmduDVvakeDuJbXwzon9xx06
-         h2kszxa6Q/zZCGN1TUcANr5Qo8yjUN66VlWcHG2bh7+swXyZ2dAuYAlJrqXwxLviZ+LQ
-         nfSLtnAn2NBSeB8TNIQevkWKI/w17xILOPWIuB0I3CZVL2PaJZZO6yucWln3LEk9q1JJ
-         xUYDFwhjSHn95HYqNysv1+b/FWgAiQaxikcffL2lgI1B9tCaagdxH/XBX0VOaHHmY5AY
-         Y8RHdm6BjCVBK5TM5zqasqPXrvU7IUJm+sJjy76yOm/UsX5Ih7s2QtRYNDGe42gu9YmV
-         OPQg==
+        Thu, 8 Jun 2023 04:27:30 -0400
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0906269E;
+        Thu,  8 Jun 2023 01:27:29 -0700 (PDT)
+Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-33b00ce51caso779175ab.2;
+        Thu, 08 Jun 2023 01:27:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686215730; x=1688807730;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3RySa5TKNiSsUD/90w92orRJEIYhEVSGdB85+66FnSA=;
-        b=AUYvCxjzO9VvMFilUwONNjv2D5Pn7fM6opNG6nYFGaaEC2ZWx3VsMuRvGOqlDJ4wvB
-         ICk/QPixy7QAmVFvZ7seOiXH+Lpj8amc+Jqwmhsf6Mmpu3vgx/CrXs4rK4cNpz6lszdf
-         EW0zsXr5zVXxGQjwAHG8j0MJ75EDmfziWehSg7NjOtV58hWqllmb3kmrbAkeFVAcQ6tm
-         tgX1AlmIkmrBz/viHdUTBaeTiWFWYT6Sgn1HmZinMCseGzASe3oHNxBMjsvXTTORflMb
-         Zq/fl9kR6y11SPXarLwLB8P2zlFd4jNu6RbKmfh74NKhNyTOhJT4/zoSFNlF69DYPuhq
-         /N0Q==
-X-Gm-Message-State: AC+VfDyxqXcsD4RbZD40n9EY3hypVHXTZSZOuAWX/zfx8XcT3+0RxAuR
-        e/KstMPzI14C2GxNGoaCARoTig==
-X-Google-Smtp-Source: ACHHUZ5sHNLLbkCtJHL6hEVSUHaRtgooC4bpxt6UOn69Qv0TvZpAnODCn/1nIOo+cXufx6q67xuXpg==
-X-Received: by 2002:a5d:4003:0:b0:30a:d747:b357 with SMTP id n3-20020a5d4003000000b0030ad747b357mr6375438wrp.56.1686215730511;
-        Thu, 08 Jun 2023 02:15:30 -0700 (PDT)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id b14-20020adfe30e000000b00307a86a4bcesm974061wrj.35.2023.06.08.02.15.28
+        d=1e100.net; s=20221208; t=1686212849; x=1688804849;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=4vk0QrxAJZUCwNeUbkMMvVo1zLXlArkwoqu5OxCPG/U=;
+        b=ejJoQe/iLQ/TWRHmnpQJdmSB1IYftpH3uRDXgkbe4C6LBumHFkX7mM9mfPptyn3tLL
+         JjzkNxG/tDGQgQ/5Bw5fuFElQUYX6MQ5enktxNn4j74qpm0cp9TyobhV80XplBaFbIAl
+         GIFiW02z79tzUBKr72fi8NpupTBPv2B7eJhfkbKgNgVFZVCB1sWXq8zjlFYzpFo7qwB3
+         osm1FYmFZgr3HUQzYTXzahvGjbbDq3P/Nri0YphHo+/9FaMx5Hx0wJ/EqRBipJgN7YSC
+         c6BxinlFcyyzWVf4t0ZKiyfzAkh1GEqHivrXmeVArl1LXIUiH+bvgpmKSpjW9TqG1AOn
+         goLg==
+X-Gm-Message-State: AC+VfDz2JmcxsS8CnqWhpCLibqVYhOH3JAjQMebr3PiPkhGOE/g7m3Z/
+        10V7WdxFXtxI8mKmU+vDzA==
+X-Google-Smtp-Source: ACHHUZ619U2Ip5Lt8XRETTrvzYz6uAXH+LDeKR/g/LcFeC1bXxSA/7mpU+wN8RWZK1WLeyWpRxtq+Q==
+X-Received: by 2002:a92:cc0b:0:b0:33a:9a68:35ff with SMTP id s11-20020a92cc0b000000b0033a9a6835ffmr8400244ilp.26.1686212848800;
+        Thu, 08 Jun 2023 01:27:28 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id j3-20020a02cc63000000b0040f91a65669sm152296jaq.21.2023.06.08.01.27.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jun 2023 02:15:29 -0700 (PDT)
-Date:   Thu, 8 Jun 2023 11:23:33 +0300
-From:   Dan Carpenter <dan.carpenter@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, kernel-janitors@vger.kernel.org
-Subject: [PATCH v2] drm/msm/dpu: tidy up some error checking
-Message-ID: <907e4b37-b9a2-4e14-bff2-ec2a0aa45965@moroto.mountain>
+        Thu, 08 Jun 2023 01:27:28 -0700 (PDT)
+Received: (nullmailer pid 1409955 invoked by uid 1000);
+        Thu, 08 Jun 2023 08:27:25 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Mailer: git-send-email haha only kidding
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+From:   Rob Herring <robh@kernel.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-remoteproc@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>
+In-Reply-To: <20230531-rpm-rproc-v2-5-56a4a00c8260@gerhold.net>
+References: <20230531-rpm-rproc-v2-0-56a4a00c8260@gerhold.net>
+ <20230531-rpm-rproc-v2-5-56a4a00c8260@gerhold.net>
+Message-Id: <168621284569.1409937.7016655911882350618.robh@kernel.org>
+Subject: Re: [PATCH v2 05/12] dt-bindings: remoteproc: Add Qualcomm RPM
+ processor/subsystem
+Date:   Thu, 08 Jun 2023 02:27:25 -0600
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -75,60 +72,68 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The "vsync_hz" variable is unsigned int so it can't be less
-than zero.  The dpu_kms_get_clk_rate() function used to return a u64
-but I previously changed it to return an unsigned long and zero on
-error so it matches clk_get_rate().
 
-Change the "vsync_hz" type to unsigned long as well and change the
-error checking to check for zero instead of negatives.  This change
-does not affect runtime at all beyond a minor adjustment to the debug
-output.
+On Thu, 08 Jun 2023 09:10:25 +0200, Stephan Gerhold wrote:
+> On Qualcomm platforms, most subsystems (e.g. audio/modem DSP) are
+> described as remote processors in the device tree, with a dedicated
+> node where properties and services related to them can be described.
+> 
+> The Resource Power Manager (RPM) is also such a subsystem, with a
+> remote processor that is running a special firmware. Unfortunately,
+> the RPM never got a dedicated node representing it properly in the
+> device tree. Most of the RPM services are described below a top-level
+> /smd or /rpm-glink node.
+> 
+> However, SMD/GLINK is just one of the communication channels to the RPM
+> firmware. For example, the MPM interrupt functionality provided by the
+> RPM does not use SMD/GLINK but writes directly to a special memory
+> region allocated by the RPM firmware in combination with a mailbox.
+> Currently there is no good place in the device tree to describe this
+> functionality. It doesn't belong below SMD/GLINK but it's not an
+> independent top-level device either.
+> 
+> Introduce a new "qcom,rpm-proc" compatible that allows describing the
+> RPM as a remote processor/subsystem like all others. The SMD/GLINK node
+> is moved to a "smd-edge"/"glink-edge" subnode consistent with other
+> existing bindings. Additional subnodes (e.g. interrupt-controller for
+> MPM, rpm-master-stats) can be also added there.
+> 
+> Deprecate using the old top-level /smd node since all SMD edges
+> are now specified as subnodes of the remote processor.
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+> This patch is based on qcom/for-next, since it needs the new
+> qcom,rpm-master-stats.yaml schema that is only applied there.
+> ---
+>  .../bindings/remoteproc/qcom,rpm-proc.yaml         | 171 +++++++++++++++++++++
+>  .../devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml |   6 +-
+>  .../devicetree/bindings/soc/qcom/qcom,smd.yaml     |   7 +
+>  3 files changed, 181 insertions(+), 3 deletions(-)
+> 
 
-Suggested-by: Marijn Suijten <marijn.suijten@somainline.org>
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
----
-v2: update the debug output
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+yamllint warnings/errors:
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-index 4f8c9187f76d..27a823c72c06 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
-@@ -323,8 +323,8 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
- 		to_dpu_encoder_phys_cmd(phys_enc);
- 	struct dpu_hw_tear_check tc_cfg = { 0 };
- 	struct drm_display_mode *mode;
-+	unsigned long vsync_hz;
- 	bool tc_enable = true;
--	u32 vsync_hz;
- 	struct dpu_kms *dpu_kms;
- 
- 	if (phys_enc->has_intf_te) {
-@@ -359,9 +359,8 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
- 	 * frequency divided by the no. of rows (lines) in the LCDpanel.
- 	 */
- 	vsync_hz = dpu_kms_get_clk_rate(dpu_kms, "vsync");
--	if (vsync_hz <= 0) {
--		DPU_DEBUG_CMDENC(cmd_enc, "invalid - vsync_hz %u\n",
--				 vsync_hz);
-+	if (!vsync_hz) {
-+		DPU_DEBUG_CMDENC(cmd_enc, "no vsync clock\n");
- 		return;
- 	}
- 
-@@ -381,7 +380,7 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
- 	tc_cfg.rd_ptr_irq = mode->vdisplay + 1;
- 
- 	DPU_DEBUG_CMDENC(cmd_enc,
--		"tc vsync_clk_speed_hz %u vtotal %u vrefresh %u\n",
-+		"tc vsync_clk_speed_hz %lu vtotal %u vrefresh %u\n",
- 		vsync_hz, mode->vtotal, drm_mode_vrefresh(mode));
- 	DPU_DEBUG_CMDENC(cmd_enc,
- 		"tc enable %u start_pos %u rd_ptr_irq %u\n",
--- 
-2.39.2
+dtschema/dtc warnings/errors:
+./Documentation/devicetree/bindings/remoteproc/qcom,rpm-proc.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/soc/qcom/qcom,rpm-master-stats.yaml
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20230531-rpm-rproc-v2-5-56a4a00c8260@gerhold.net
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
