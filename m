@@ -2,104 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 1063A728035
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 14:40:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A939728039
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 14:41:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236291AbjFHMkE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 08:40:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56064 "EHLO
+        id S235456AbjFHMlF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 08:41:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56634 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236281AbjFHMjx (ORCPT
+        with ESMTP id S231626AbjFHMlE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 08:39:53 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 61CBCE62;
-        Thu,  8 Jun 2023 05:39:52 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id F2CEF64CEB;
-        Thu,  8 Jun 2023 12:39:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B2CEC433D2;
-        Thu,  8 Jun 2023 12:39:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686227991;
-        bh=HEJCQXhlFU8K5G9MVGjIFc2v8j1rgUCTywnobuzpZVM=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=L4Tmvmx4JVDuDKYU3b8VRkiVQQaqeMOvkQ9h4UBOhnsN8dwHK/mXxsrAaByh4P32S
-         krRam9PmJqtxHU+dmOhx3eC2yHPCEKNX04pJ07DK5o4Tmj2TpzFH1xLGTpmFgBgMDJ
-         ZzskwNwWRAn4x2e+tfliRLbTqB54jXnXtciRXCS/5Esf1GhwOlntLJU1fliIRyfDNR
-         bW8wftX2cTn0Et36gVOIBdmMUA/pc7DtC7BzJbk9UVddevSQl2UXI3smuH8VnOUkUB
-         5r2RM19H8czcGpOywrTEkWIZBKdyJ1fKRYBU3ZmdVrLyx1LuOIDFAhSRP0zWKFO5bt
-         62vNW4yEWWMxA==
-Received: from johan by xi.lan with local (Exim 4.94.2)
-        (envelope-from <johan@kernel.org>)
-        id 1q7Ew4-0006ep-0V; Thu, 08 Jun 2023 14:40:16 +0200
-Date:   Thu, 8 Jun 2023 14:40:16 +0200
-From:   Johan Hovold <johan@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     vkoul@kernel.org, andersson@kernel.org,
-        yung-chuan.liao@linux.intel.com,
-        pierre-louis.bossart@linux.intel.com, sanyog.r.kale@intel.com,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/4] soundwire: qcom: stablity fixes
-Message-ID: <ZIHMMFtuDtvdpFAZ@hovoldconsulting.com>
-References: <20230525133812.30841-1-srinivas.kandagatla@linaro.org>
- <ZH2l-UbMyLi5Uwph@hovoldconsulting.com>
- <5d6bcc6a-151e-ac21-2dd2-f72a91f562d5@linaro.org>
- <ZIGpYPrNYDlkRQIf@hovoldconsulting.com>
+        Thu, 8 Jun 2023 08:41:04 -0400
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B1F626B0
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 05:41:03 -0700 (PDT)
+Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-543a09ee32eso1212370a12.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 05:41:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686228062; x=1688820062;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=o6uvPLwieY5RkBOZk+PD7M8YvflhokrnPtugOrS3QNE=;
+        b=Mx3sJVE2F1ORzjGqe3xy6X7wsCEApK1+VCCgRvjXycaGUApi2Tp0szjSn8M0PPbOrY
+         L6ZT2JbB809hrtAlSMLtJWgI0nHKoi/twmYAH9M+c9GMxpGAo8IGutngAyddmrMKefPf
+         RCBU4mnCL8+y9Yt8bpiSs2ZXdu8RQpYfL+zv2Gdo/ZaxOJSXFBTVqBrjamKKAnk98XpL
+         A7o0ukDCFy0RxCHOvs0/9rVuq8Zu9N2PmEmZ1tpwMEr4hiD84QamxF/SauHaF9MhLS8B
+         H5kQh9NyXsLSH3lUag3Ko/bg3fjlMsun8spM10a3OnrUJn+QiGsJ/VHlyT4g7Qu0l+ww
+         rEGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686228062; x=1688820062;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=o6uvPLwieY5RkBOZk+PD7M8YvflhokrnPtugOrS3QNE=;
+        b=X9DMOGpB0TWPLDlrc17Xiw1m+ymzhT1kVfJhAHXA2AGheDbTZr4ltRnEJsuWjsTNbM
+         TW2kYSC7DMZbufOaA9TZGbFtkEUAV5VPEPcTvtDTJuvo26ptNaRUTDOkR35x1OkbHmOf
+         Nvn0M3m6p+WDDWPUrWxJ2K5oD7zwqB68n4+nbhqkXbeWO9IrUwjpZ2N/uRkVaPu9NpfR
+         Vc5lhkaPn0w5s71e4XNsv8Mkf4rmzUmexqjcX2oC5PzTct2IQgFbk+dxAcpN0vpUlzOJ
+         34uy7BMtCC9r0U1rBm5j3U8AB8RTOv97HPdsQl0VjC+D1n1IU3YYyLs0Q3FToQjHZ3H3
+         G3tw==
+X-Gm-Message-State: AC+VfDwB9jUrMY39gcAn67S58FqsdCaRngnapgp+du4+ZEuAVQqGpWow
+        c2/GfITvPTQHvE5C4xkwBKlS
+X-Google-Smtp-Source: ACHHUZ5poAB/V7RXQ3dOzoAJckBX+G4y1Bj7UJT9KsKdnWi22t9GzGjV2GyemH6S7dwhra7PXiL1qQ==
+X-Received: by 2002:a17:90b:314c:b0:25b:83ca:2b75 with SMTP id ip12-20020a17090b314c00b0025b83ca2b75mr176896pjb.3.1686228062475;
+        Thu, 08 Jun 2023 05:41:02 -0700 (PDT)
+Received: from thinkpad ([117.202.186.138])
+        by smtp.gmail.com with ESMTPSA id 30-20020a17090a01de00b00259a3c99978sm1285622pjd.17.2023.06.08.05.40.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Jun 2023 05:41:02 -0700 (PDT)
+Date:   Thu, 8 Jun 2023 18:10:57 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Andrew Lunn <andrew@lunn.ch>
+Cc:     Jakub Kicinski <kuba@kernel.org>, davem@davemloft.net,
+        edumazet@google.com, pabeni@redhat.com, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, loic.poulain@linaro.org
+Subject: Re: [PATCH v2 0/2] Add MHI Endpoint network driver
+Message-ID: <20230608124057.GD5672@thinkpad>
+References: <20230607152427.108607-1-manivannan.sadhasivam@linaro.org>
+ <20230607094922.43106896@kernel.org>
+ <eb4b45ab-1f51-47e9-a286-a9e26461ebed@lunn.ch>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ZIGpYPrNYDlkRQIf@hovoldconsulting.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <eb4b45ab-1f51-47e9-a286-a9e26461ebed@lunn.ch>
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 08, 2023 at 12:11:45PM +0200, Johan Hovold wrote:
-> On Wed, Jun 07, 2023 at 10:36:40AM +0100, Srinivas Kandagatla wrote:
-
-> No, not yet, but I just triggered the above once more after not having
-> seen with my latest -rc5 branch for a while (e.g. 20 reboots?):
+On Wed, Jun 07, 2023 at 08:13:32PM +0200, Andrew Lunn wrote:
+> On Wed, Jun 07, 2023 at 09:49:22AM -0700, Jakub Kicinski wrote:
+> > On Wed,  7 Jun 2023 20:54:25 +0530 Manivannan Sadhasivam wrote:
+> > > This series adds a network driver for the Modem Host Interface (MHI) endpoint
+> > > devices that provides network interfaces to the PCIe based Qualcomm endpoint
+> > > devices supporting MHI bus (like Modems). This driver allows the MHI endpoint
+> > > devices to establish IP communication with the host machines (x86, ARM64) over
+> > > MHI bus.
+> > > 
+> > > On the host side, the existing mhi_net driver provides the network connectivity
+> > > to the host.
+> > 
+> > Why are you posting the next version before the discussion on the
+> > previous one concluded? :|
+> > 
+> > In any case, I'm opposed to reuse of the networking stack to talk
+> > to firmware. It's a local device. The networking subsystem doesn't
+> > have to cater to fake networks. Please carry:
+> > 
+> > Nacked-by: Jakub Kicinski <kuba@kernel.org>
 > 
-> [   11.430131] qcom-soundwire 3210000.soundwire-controller: Qualcomm Soundwire controller v1.6.0 Registered
-> [   11.431741] wcd938x_codec audio-codec: bound sdw:0:0217:010d:00:4 (ops wcd938x_sdw_component_ops [snd_soc_wcd938x_sdw])
-> [   11.431933] wcd938x_codec audio-codec: bound sdw:0:0217:010d:00:3 (ops wcd938x_sdw_component_ops [snd_soc_wcd938x_sdw])
-> [   11.435406] qcom-soundwire 3330000.soundwire-controller: Qualcomm Soundwire controller v1.6.0 Registered
-> [   11.449286] qcom-soundwire 3250000.soundwire-controller: Qualcomm Soundwire controller v1.6.0 Registered
-> [   11.450632] wsa883x-codec sdw:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
-> [   11.453155] wsa883x-codec sdw:0:0217:0202:00:1: WSA883X Version 1_1, Variant: WSA8835_V2
-> [   11.456511] wsa883x-codec sdw:0:0217:0202:00:2: WSA883X Version 1_1, Variant: WSA8835_V2
-> [   11.562623] q6apm-dai 3000000.remoteproc:glink-edge:gpr:service@1:dais: Adding to iommu group 23
-> [   11.585766] snd-sc8280xp sound: ASoC: adding FE link failed
-> [   11.585872] snd-sc8280xp sound: ASoC: topology: could not load header: -517
-> [   11.586021] qcom-apm gprsvc:service:2:1: tplg component load failed-517
-> [   11.586100] qcom-apm gprsvc:service:2:1: ASoC: error at snd_soc_component_probe on gprsvc:service:2:1: -22
-> [   11.586530] snd-sc8280xp sound: ASoC: failed to instantiate card -22
-> [   11.591831] snd-sc8280xp: probe of sound failed with error -22
+> Remote Processor Messaging (rpmsg) Framework does seem to be what is
+> supposed to be used for these sorts of situations. Not that i know
+> much about it.
 > 
-> I don't think I've ever seen it before dropping the runtime PM patch as
-> you did in v2, and I hit it twice fairly quickly after dropping it. And
-> now again.
-> 
-> I'm not saying that the runtime PM patch is necessarily correct, and
-> perhaps it is just changes in timing that lead to the above, but we
-> definitely have a bug here.
 
-I searched my notes and realised that I have seen this once also with
-the runtime pm patch. So the fact that happened to see it more often
-after dropping it is likely due to changes in timing.
+Rpmsg is another messaging protocol used for talking to the remote processor.
+MHI is somewhat similar in terms of usecase but it is a proprietary protocol
+used by Qcom for their devices.
 
-Looking at the above log it seems like we hit a probe deferral somewhere
-as some resource is not available yet, and this is eventually turned
-into a hard failure that breaks audio as the error is propagated up the
-stack.
+- Mani
 
-Johan
+>      Andrew
+
+-- 
+மணிவண்ணன் சதாசிவம்
