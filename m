@@ -2,109 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 56AEC728B94
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 01:10:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1DC03728BB5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 01:25:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236897AbjFHXKy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 19:10:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40016 "EHLO
+        id S230018AbjFHXY7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 19:24:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235627AbjFHXKu (ORCPT
+        with ESMTP id S229817AbjFHXY6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 19:10:50 -0400
-Received: from mail-yb1-xb30.google.com (mail-yb1-xb30.google.com [IPv6:2607:f8b0:4864:20::b30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 410FF2D7F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 16:10:49 -0700 (PDT)
-Received: by mail-yb1-xb30.google.com with SMTP id 3f1490d57ef6-ba86ea269e0so1209750276.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 16:10:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686265848; x=1688857848;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=tSEQet0GKrnr4pMn8FjH5AOgQ3B0lsZ20KBmXO0sWPo=;
-        b=pnntPWqoyFjiGEPsSDDJOsjSPKnhtAxqJr8hxCAp1oOStZsydaau/YdYtp2YxnXEin
-         57IbGlgMrR8BCsBFwlbsOj8UiQdZ5WVAJmACsn25rKAdFNjJ3M4bhztM5jRZRLT1XAfu
-         KRTbCPky2JTZamkrOJ3D2WqGwSK/KRWCMXW34pFLYPE9fUdCaX4gQy7Mx1IuusYwvv2p
-         W2+ZgfB5K4aaLt4DHAnIDEkx8zFIl2iB99zEqAq9t5AeQ4ErDwdAp2hvTstLNkXQXTiF
-         XWZi1ZF6VC4ezSwoOUZ+ptMGUeRGo0GrcqU+CHeMyceq096STKNZOKeAVdeMLEARWvNf
-         Yj2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686265848; x=1688857848;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tSEQet0GKrnr4pMn8FjH5AOgQ3B0lsZ20KBmXO0sWPo=;
-        b=MVYf69P3MreheBrIlFpRttyo4CsZEAAx7rBHRoHMJ3XPV9SloThdI5yIbiMyXcyVua
-         8cPW2DIprL9cbGY1dGAxes883ZZwZXZ2I4rwfpq4/jJ4lDBevpx8VNP88W6TgkqMxOc9
-         oG5oUDjPZT3DJV3x/83vUukN7EEMheuX8XsQoPrj0WlpWA2Yj009vLw7wcu64ejyF4xG
-         w/KQdvIVJ+IpW0ZeoCR6e9M8E8ZWqtbl3WweMhhFa68MU0rdYUoRMHUCQ83rIqhWgmyg
-         S9/L20Yn1kpJ3vlyrvdzaRerJkE0Jb4hRe2lyBZIfC4VWNRdGzxeZkoAlfpDyJThjEJK
-         3VAw==
-X-Gm-Message-State: AC+VfDwM0r40DLvDrcbOvDkENwlqtHi4WkkOI3oFoH7pIkAOtlmkbjEF
-        TDFOfzZh77Huc7i4228ferOU5FhvMd5/fSwZO82hZA==
-X-Google-Smtp-Source: ACHHUZ5ieHiWUe0+jCkKqPgwkmhjEiQMZfXdZn7EsyrfeetzBu0F5vssZk1uzJeDBX3CkFb7uI2m4RiqK+KMbMEwKbs=
-X-Received: by 2002:a25:b44:0:b0:bac:5d73:7f04 with SMTP id
- 65-20020a250b44000000b00bac5d737f04mr1078129ybl.10.1686265848459; Thu, 08 Jun
- 2023 16:10:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230601111128.19562-1-quic_kbajaj@quicinc.com> <20230601111128.19562-2-quic_kbajaj@quicinc.com>
-In-Reply-To: <20230601111128.19562-2-quic_kbajaj@quicinc.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 9 Jun 2023 01:10:12 +0200
-Message-ID: <CAPDyKFpDKgdZtxtsuRSR7rfQwpXZO9LAL_AtcQ6BuRaA_-S2HQ@mail.gmail.com>
-Subject: Re: [PATCH v5 1/3] dt-bindings: mmc: sdhci-msm: Document the
- QDU1000/QRU1000 compatible
-To:     Komal Bajaj <quic_kbajaj@quicinc.com>
+        Thu, 8 Jun 2023 19:24:58 -0400
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EAE2D30D6;
+        Thu,  8 Jun 2023 16:24:30 -0700 (PDT)
+Received: from mercury (unknown [185.209.196.239])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        (Authenticated sender: sre)
+        by madras.collabora.co.uk (Postfix) with ESMTPSA id 753836606F1D;
+        Fri,  9 Jun 2023 00:24:24 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+        s=mail; t=1686266664;
+        bh=mCFzt9Y8896kdcxmhKQPvHOnPkcXSRatB/HlXjIKGQc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=HcSfKi7LayIU/v34zNkIEAO6QPFs20sykANJIiRceDpKRd4hBFyrlKfBYal9/3iIr
+         5rvtCnsvrR8Ta18JeX7S0pkSdvFl/iJwv+QYkGizxbrD+0dnQQ1vPOTcb7h9uMaZKP
+         N0KFG+JJc0i6PRfIffG8SDw+EROmPehrb56fXbhnxQBFJuSZuCL7S/Xkj6n4edo1Yo
+         +G0ew41QMVPpyrzOs91GRBeMrMKaMa3kB19Q5dnfFJsZ/1ukC7e2ydRG51aqBPeZcd
+         6+VXsmfU4oyTvEQnzvqo5BKme0Nzlcb0o1ZeX7nsg+tfoW/+arro/nm7rJHew23KZp
+         ofFBskKzAUpgA==
+Received: by mercury (Postfix, from userid 1000)
+        id 29AFB1060A24; Fri,  9 Jun 2023 01:24:22 +0200 (CEST)
+Date:   Fri, 9 Jun 2023 01:24:22 +0200
+From:   Sebastian Reichel <sebastian.reichel@collabora.com>
+To:     Caleb Connolly <caleb.connolly@linaro.org>
 Cc:     Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Tom Rix <trix@redhat.com>, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        phone-devel@vger.kernel.org,
+        Joel Selvaraj <joelselvaraj.oss@gmail.com>
+Subject: Re: [PATCH v9 0/2] power: supply: introduce support for the Qualcomm
+ smb2 charger
+Message-ID: <20230608232422.ikckij5m4adwnrap@mercury.elektranox.org>
+References: <20230524-pmi8998-charger-v9-0-cd7f6d03c0ab@linaro.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="cv4aioka2xke3d7y"
+Content-Disposition: inline
+In-Reply-To: <20230524-pmi8998-charger-v9-0-cd7f6d03c0ab@linaro.org>
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 1 Jun 2023 at 13:11, Komal Bajaj <quic_kbajaj@quicinc.com> wrote:
->
-> Document the compatible for SDHCI on QDU1000 and QRU1000 SoCs.
->
-> Acked-by: Conor Dooley <conor.dooley@microchip.com>
-> Reviewed-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
 
-Applied for next, thanks!
+--cv4aioka2xke3d7y
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Kind regards
-Uffe
+Hi,
 
-
+On Fri, May 26, 2023 at 10:44:13PM +0100, Caleb Connolly wrote:
+> Add a driver for the Qualcomm PMI8998/PM660 Switch-Mode Battery Charger.
+> This is the second generation SMB charger, and replaces the previous
+> SMBB hardware found in older PMICs.
+>=20
+> Changes since v8:
+>  * Add charger bindings reference to qcom,spmi-pmic.yaml
+> V8: https://lore.kernel.org/all/20230524-pmi8998-charger-v8-0-b87ffcd9864=
+d@linaro.org/
+>=20
+> Changes since v7:
+>  * Implement fixes suggested by Sebastian
+>  * Fix format warning
+> V7: https://lore.kernel.org/linux-arm-msm/20230127230506.3140297-1-caleb.=
+connolly@linaro.org/
+>=20
+> To: Sebastian Reichel <sre@kernel.org>
+> To: Rob Herring <robh+dt@kernel.org>
+> To: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+> To: Conor Dooley <conor+dt@kernel.org>
+> To: Caleb Connolly <caleb.connolly@linaro.org>
+> To: Andy Gross <agross@kernel.org>
+> To: Bjorn Andersson <andersson@kernel.org>
+> To: Konrad Dybcio <konrad.dybcio@linaro.org>
+> To: Nathan Chancellor <nathan@kernel.org>
+> To: Nick Desaulniers <ndesaulniers@google.com>
+> To: Tom Rix <trix@redhat.com>
 > ---
->  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> index 4f2d9e8127dd..af29d60ff0d6 100644
-> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> @@ -39,6 +39,7 @@ properties:
->                - qcom,ipq9574-sdhci
->                - qcom,qcm2290-sdhci
->                - qcom,qcs404-sdhci
-> +              - qcom,qdu1000-sdhci
->                - qcom,sc7180-sdhci
->                - qcom,sc7280-sdhci
->                - qcom,sdm630-sdhci
-> --
-> 2.17.1
->
+> Caleb Connolly (2):
+>       dt-bindings: power: supply: qcom,pmi8998-charger: add bindings for =
+smb2 driver
+>       power: supply: add Qualcomm PMI8998 SMB2 Charger driver
+>=20
+>  .../devicetree/bindings/mfd/qcom,spmi-pmic.yaml    |    1 +
+>  .../power/supply/qcom,pmi8998-charger.yaml         |   82 ++
+>  drivers/power/supply/Kconfig                       |    9 +
+>  drivers/power/supply/Makefile                      |    1 +
+>  drivers/power/supply/qcom_pmi8998_charger.c        | 1059 ++++++++++++++=
+++++++
+>  5 files changed, 1152 insertions(+)
+> ---
+
+Thanks, queued.
+
+-- Sebastian
+
+--cv4aioka2xke3d7y
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmSCYyEACgkQ2O7X88g7
++ppw6w//Zzu/r/8Xz5uRQd7GSe12Dh9LxYrMQSBlUvnx7kDxgozjcNN+g34yd0aQ
+sRewvvYQy3jh5ssfNhTWI3uNp0TIeEtk+t1kJE2iTSry5wH7QikVOdydzd6+9CT1
+8TEEzUQBywONL3GxSMUeN05Wb72hTKWUeQgoLiSbeogp9G5oBcWKvimG8mEM0jIB
+yEazx6NM1SOdCMkA8LH89KoLo2xgXILpL6f2wFpCO3xYeKAa7n4+ifqweyOyvtjH
+JMK21eCrP1Zp3LHLYOQNrf+I535Geqh8QpSl4joqm3xfBWE3WqMUFVRhRucyQXPa
+k7PNzSwmmuf08w1unEXFImu5zSL1IvYwFRX+9dVPdxle2RmJnPjW3DJpCSyd+Zwk
+6NqL6q+4jU7VwrZHwSGEqXS1EDJXcEfIFdEKyZHTIJ8HaUfREmzeVIihUwOsGu00
+ifTffm90ySSeaZTIcQ0jZmNDryfF+hRTiNx5FgffjEqds/ppGmhackacJ86iefsu
+o6c6fhBbMJPSzc3oHfBrMz8sfQlu6AJw0wDq1PJp8SNpqLoFSOVc3rL6ksJAaXJj
+kmjYzOsfXiI+j5qN0aq+fac6uF875psA0DQFpjJSv4Qq01WhQAyxg4aLLKug2vyO
+blz63/fj3Qmq9fZA8axOy+JJpylYjkqX3WaQsZSvRGYh2Se/vr0=
+=F7Hh
+-----END PGP SIGNATURE-----
+
+--cv4aioka2xke3d7y--
