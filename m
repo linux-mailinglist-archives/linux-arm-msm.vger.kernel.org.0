@@ -2,273 +2,264 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 61466728216
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 16:03:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 613AF728268
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 16:12:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236548AbjFHODK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 10:03:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41340 "EHLO
+        id S236744AbjFHOMu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 10:12:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49950 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234429AbjFHODH (ORCPT
+        with ESMTP id S236602AbjFHOMt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 10:03:07 -0400
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9E1B198C;
-        Thu,  8 Jun 2023 07:03:05 -0700 (PDT)
-X-GND-Sasl: miquel.raynal@bootlin.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-        t=1686232984;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=jnCroNGp1M+uiCnGqikYI4/3yHPp7dCX3+gK/nsGdo4=;
-        b=nqSOFk2jprLAEjTEnhpb8ceq1s4cTV5qOWx+88Y2Vn/72O7rPjsM4hheBZi0/JxbG2luyg
-        i39tWsQkL99tlDnOl8UBMuN5Tn+sY1ttnPjaADKJkSJzuhwKC4vgvIFgoxzVQPpWzmFjoH
-        tN4qpTrjTtUYJgSPikJ0EgOno80gRxufPNVQYs+/0Ilhb56T//Cf/FohEG7kcQSTySXuEn
-        JbUX/K5a8FI6ezkCOu8yWI4W6t6PAj9Z9yeRorB2cJdNgIBuHkfHjCjrkkUG1PJaTXKw9m
-        b/Gu0uwclxezU1Ttb5MlDumZcsdJsNl91v/kv9HQkbTQQTakL3n+iose5SSklg==
-X-GND-Sasl: miquel.raynal@bootlin.com
-X-GND-Sasl: miquel.raynal@bootlin.com
-X-GND-Sasl: miquel.raynal@bootlin.com
-X-GND-Sasl: miquel.raynal@bootlin.com
-X-GND-Sasl: miquel.raynal@bootlin.com
-X-GND-Sasl: miquel.raynal@bootlin.com
-X-GND-Sasl: miquel.raynal@bootlin.com
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 0396DE000B;
-        Thu,  8 Jun 2023 14:03:03 +0000 (UTC)
-Date:   Thu, 8 Jun 2023 16:03:03 +0200
-From:   Miquel Raynal <miquel.raynal@bootlin.com>
-To:     Md Sadre Alam <quic_mdalam@quicinc.com>
-Cc:     mani@kernel.org, richard@nod.at, vigneshr@ti.com,
-        linux-mtd@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_srichara@quicinc.com
-Subject: Re: [PATCH v3 4/5] mtd: rawnand: qcom: Add support for read, write,
- erase exec_ops
-Message-ID: <20230608160303.51ea70a6@xps-13>
-In-Reply-To: <20230531124953.21007-4-quic_mdalam@quicinc.com>
-References: <20230531124953.21007-1-quic_mdalam@quicinc.com>
-        <20230531124953.21007-4-quic_mdalam@quicinc.com>
-Organization: Bootlin
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.33; x86_64-pc-linux-gnu)
+        Thu, 8 Jun 2023 10:12:49 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 05BF92728;
+        Thu,  8 Jun 2023 07:12:48 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 9268B61460;
+        Thu,  8 Jun 2023 14:12:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCA3BC433EF;
+        Thu,  8 Jun 2023 14:12:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686233567;
+        bh=jiC9XwKLIhJp7L/2mf5VkOAerj+XVF2GwszxyJwIce0=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=PdlUNyu6BxgXKeXfUv8gyn2gfLBxInzqG8EY8Erdk53eOUwKsqy8yNDYtag6g1hJo
+         UJXUGEGQXr3cH/f6i9MGEM9afRbriAzkd087t3uOCPo0xooekeecvJipUE3F5momEw
+         WK4xfcgCRx8IwHaLnk/b/HWaRJlNGvW+NCG8w9/0pAsIUXbZw/+SyQL9AOAHnWykBQ
+         cTZsOv8jZZ9iIgECZI2ELlRc9MHvdr1jrLoZ6vgchYgAeSXcy22UKW8n4akgt4TNoJ
+         7ezE6Ob3fKQSDESqhBzY/xzA4iZKxg2vHiDEK2sPHSYLO57rL1l2ViDPpWRgi/G4fq
+         oYTBCdymVpDgQ==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+        (envelope-from <johan@kernel.org>)
+        id 1q7GNz-0001re-U7; Thu, 08 Jun 2023 16:13:12 +0200
+Date:   Thu, 8 Jun 2023 16:13:11 +0200
+From:   Johan Hovold <johan@kernel.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: Adreno devfreq lockdep splat with 6.3-rc2
+Message-ID: <ZIHh95IeOPBTvB00@hovoldconsulting.com>
+References: <ZBGNmXwQoW330Wr8@hovoldconsulting.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
-        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZBGNmXwQoW330Wr8@hovoldconsulting.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Md,
+Hi Rob,
 
-quic_mdalam@quicinc.com wrote on Wed, 31 May 2023 18:19:52 +0530:
+Have you had a chance to look at this regression yet? It prevents us
+from using lockdep on the X13s as it is disabled as soon as we start
+the GPU.
 
-> This change will add exec_ops support for READ, WRITE, and ERASE
-> command.
->=20
-> Co-developed-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
-> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
-> ---
-> Change in [v3]
->=20
-> * Removed chip->cont_read.ongoing flag.
->=20
-> * Removed pre_command from erase_etype_exec_ops.
->=20
-> Change in [v2]
->=20
-> * Missed to post Cover-letter, so posting v2 patch with cover-letter.
->=20
-> Change in [v1]
->=20
-> * Added initial support for exec_ops.
->=20
->  drivers/mtd/nand/raw/qcom_nandc.c | 97 +++++++++++++++++++++++++++++--
->  1 file changed, 93 insertions(+), 4 deletions(-)
->=20
-> diff --git a/drivers/mtd/nand/raw/qcom_nandc.c b/drivers/mtd/nand/raw/qco=
-m_nandc.c
-> index b4823b72fe73..7dc769f9e797 100644
-> --- a/drivers/mtd/nand/raw/qcom_nandc.c
-> +++ b/drivers/mtd/nand/raw/qcom_nandc.c
-> @@ -1546,8 +1546,7 @@ static void pre_command(struct qcom_nand_host *host=
-, int command)
-> =20
->  	clear_read_regs(nandc);
-> =20
-> -	if (command =3D=3D NAND_CMD_ERASE1)
-> -		clear_bam_transaction(nandc);
-> +	clear_bam_transaction(nandc);
->  }
-> =20
->  /*
-> @@ -1764,7 +1763,7 @@ qcom_nandc_read_cw_raw(struct mtd_info *mtd, struct=
- nand_chip *chip,
->  	int ret, reg_off =3D FLASH_BUF_ACC, read_loc =3D 0;
->  	int raw_cw =3D cw;
-> =20
-> -	nand_read_page_op(chip, page, 0, NULL, 0);
-> +	nand_read_page_op(chip, page, 0, data_buf, mtd->writesize);
->  	host->use_ecc =3D false;
-> =20
->  	if (nandc->props->qpic_v2)
-> @@ -2181,14 +2180,23 @@ static void qcom_nandc_codeword_fixup(struct qcom=
-_nand_host *host, int page)
->  static int qcom_nandc_read_page(struct nand_chip *chip, uint8_t *buf,
->  				int oob_required, int page)
->  {
-> +	struct mtd_info *mtd =3D nand_to_mtd(chip);
->  	struct qcom_nand_host *host =3D to_qcom_nand_host(chip);
->  	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> +	struct nand_ecc_ctrl *ecc =3D &chip->ecc;
->  	u8 *data_buf, *oob_buf =3D NULL;
-> =20
->  	if (host->nr_boot_partitions)
->  		qcom_nandc_codeword_fixup(host, page);
-> =20
-> -	nand_read_page_op(chip, page, 0, NULL, 0);
-> +	nand_read_page_op(chip, page, 0, buf, mtd->writesize);
-> +	nandc->buf_count =3D 0;
-> +	nandc->buf_start =3D 0;
-> +	host->use_ecc =3D true;
-> +	clear_read_regs(nandc);
-> +	set_address(host, 0, page);
-> +	update_rw_regs(host, ecc->steps, true, 0);
-> +
->  	data_buf =3D buf;
->  	oob_buf =3D oob_required ? chip->oob_poi : NULL;
-> =20
-> @@ -2258,6 +2266,9 @@ static int qcom_nandc_write_page(struct nand_chip *=
-chip, const uint8_t *buf,
-> =20
->  	nand_prog_page_begin_op(chip, page, 0, NULL, 0);
-> =20
-> +	set_address(host, 0, page);
-> +	nandc->buf_count =3D 0;
-> +	nandc->buf_start =3D 0;
->  	clear_read_regs(nandc);
->  	clear_bam_transaction(nandc);
-> =20
-> @@ -3274,6 +3285,67 @@ static int qcom_param_page_type_exec(struct nand_c=
-hip *chip,  const struct nand_
->  	return ret;
->  }
-> =20
-> +static int qcom_erase_cmd_type_exec(struct nand_chip *chip, const struct=
- nand_subop *subop)
-> +{
-> +	struct qcom_nand_host *host =3D to_qcom_nand_host(chip);
-> +	struct qcom_nand_controller *nandc =3D get_qcom_nand_controller(chip);
-> +	struct qcom_op q_op;
-> +	int ret =3D 0;
-> +
-> +	qcom_parse_instructions(chip, subop, &q_op);
-> +
-> +	q_op.cmd_reg |=3D PAGE_ACC | LAST_PAGE;
-> +
-> +	nandc->buf_count =3D 0;
-> +	nandc->buf_start =3D 0;
-> +	host->use_ecc =3D false;
-> +	clear_read_regs(nandc);
-> +	clear_bam_transaction(nandc);
-> +
-> +	nandc_set_reg(chip, NAND_FLASH_CMD, q_op.cmd_reg);
-> +	nandc_set_reg(chip, NAND_ADDR0, q_op.addr1_reg);
-> +	nandc_set_reg(chip, NAND_ADDR1, q_op.addr2_reg);
-> +	nandc_set_reg(chip, NAND_DEV0_CFG0,
-> +		      host->cfg0_raw & ~(7 << CW_PER_PAGE));
-> +	nandc_set_reg(chip, NAND_DEV0_CFG1, host->cfg1_raw);
-> +	nandc_set_reg(chip, NAND_EXEC_CMD, 1);
-> +
-> +	write_reg_dma(nandc, NAND_FLASH_CMD, 3, NAND_BAM_NEXT_SGL);
-> +	write_reg_dma(nandc, NAND_DEV0_CFG0, 2, NAND_BAM_NEXT_SGL);
-> +	write_reg_dma(nandc, NAND_EXEC_CMD, 1, NAND_BAM_NEXT_SGL);
-> +
-> +	ret =3D submit_descs(nandc);
-> +	if (ret) {
-> +		dev_err(nandc->dev, "failure in sbumitting erase descriptor\n");
+On Wed, Mar 15, 2023 at 10:19:21AM +0100, Johan Hovold wrote:
+> 
+> Since 6.3-rc2 (or possibly -rc1), I'm now seeing the below
+> devfreq-related lockdep splat.
+> 
+> I noticed that you posted a fix for something similar here:
+> 
+> 	https://lore.kernel.org/r/20230312204150.1353517-9-robdclark@gmail.com
+> 
+> but that particular patch makes no difference.
+> 
+> From skimming the calltraces below and qos/devfreq related changes in
+> 6.3-rc1 it seems like this could be related to:
+> 
+> 	fadcc3ab1302 ("drm/msm/gpu: Bypass PM QoS constraint for idle clamp")
 
-                                                :)
+Below is an updated splat from 6.4-rc5.
 
-> +		free_descs(nandc);
-> +		goto err_out;
-> +	}
-> +	free_descs(nandc);
-> +
-> +	ret =3D qcom_wait_rdy_poll(chip, q_op.rdy_timeout_ms);
-> +	if (ret)
-> +		goto err_out;
-> +
-> +err_out:
-> +	return ret;
-> +}
-> +
-> +static int qcom_data_read_type_exec(struct nand_chip *chip, const struct=
- nand_subop *subop)
-> +{
-> +	/* currently read_exec_op() return 0 , and all the read operation handl=
-e in
-> +	 * actual API itself
-> +	 */
-> +	return 0;
+Johan
 
-Mmmh, I don't think this is gonna work. I don't understand what you're
-doing here. What is "actual API itself"? What is "read_exec_op"? I
-doubt I am going to like what all this means. Please don't make any
-assumptions on what could come next. The core asks you to do something,
-just do it. If you can't then the parsing will fail. If the core has a
-fallback it's fine. If the core does not, we can discuss it. But please
-don't do any guesses like that, this is *exactly* why we introduced
-exec_op in the first place: you have access to the whole operation, so
-please handle it correctly.
+[ 2941.931507] ======================================================
+[ 2941.931509] WARNING: possible circular locking dependency detected
+[ 2941.931513] 6.4.0-rc5 #64 Not tainted
+[ 2941.931516] ------------------------------------------------------
+[ 2941.931518] ring0/359 is trying to acquire lock:
+[ 2941.931520] ffff63310e35c078 (&devfreq->lock){+.+.}-{3:3}, at: qos_min_notifier_call+0x28/0x88
+[ 2941.931541] 
+               but task is already holding lock:
+[ 2941.931543] ffff63310e3cace8 (&(c->notifiers)->rwsem){++++}-{3:3}, at: blocking_notifier_call_chain+0x30/0x70
+[ 2941.931553] 
+               which lock already depends on the new lock.
 
-> +}
-> +
-> +static int qcom_data_write_type_exec(struct nand_chip *chip, const struc=
-t nand_subop *subop)
-> +{
-> +	/* currently write_exec_op() return 0, and all the write operation hand=
-le in
-> +	 * actual API itself
-> +	 */
-> +	return 0;
-> +}
-> +
->  static const struct nand_op_parser qcom_op_parser =3D NAND_OP_PARSER(
->  		NAND_OP_PARSER_PATTERN(
->  			qcom_misc_cmd_type_exec,
-> @@ -3294,6 +3366,23 @@ static const struct nand_op_parser qcom_op_parser =
-=3D NAND_OP_PARSER(
->  			NAND_OP_PARSER_PAT_ADDR_ELEM(false, MAX_ADDRESS_CYCLE),
->  			NAND_OP_PARSER_PAT_WAITRDY_ELEM(true),
->  			NAND_OP_PARSER_PAT_DATA_IN_ELEM(false, 512)),
-> +		NAND_OP_PARSER_PATTERN(
-> +			qcom_erase_cmd_type_exec,
-> +			NAND_OP_PARSER_PAT_CMD_ELEM(false),
-> +			NAND_OP_PARSER_PAT_ADDR_ELEM(false, MAX_ADDRESS_CYCLE),
-> +			NAND_OP_PARSER_PAT_CMD_ELEM(false),
-> +			NAND_OP_PARSER_PAT_WAITRDY_ELEM(false)),
-> +		NAND_OP_PARSER_PATTERN(
-> +			qcom_data_read_type_exec,
-> +			NAND_OP_PARSER_PAT_CMD_ELEM(false),
-> +			NAND_OP_PARSER_PAT_ADDR_ELEM(false, MAX_ADDRESS_CYCLE),
-> +			NAND_OP_PARSER_PAT_CMD_ELEM(false),
-> +			NAND_OP_PARSER_PAT_WAITRDY_ELEM(true),
-> +			NAND_OP_PARSER_PAT_DATA_IN_ELEM(false, 2048)),
-> +		NAND_OP_PARSER_PATTERN(
-> +			qcom_data_write_type_exec,
-> +			NAND_OP_PARSER_PAT_CMD_ELEM(true),
-> +			NAND_OP_PARSER_PAT_ADDR_ELEM(true, MAX_ADDRESS_CYCLE)),
->  		);
-> =20
->  static int qcom_check_op(struct nand_chip *chip,
+[ 2941.931555] 
+               the existing dependency chain (in reverse order) is:
+[ 2941.931556] 
+               -> #4 (&(c->notifiers)->rwsem){++++}-{3:3}:
+[ 2941.931562]        down_write+0x50/0x198
+[ 2941.931567]        blocking_notifier_chain_register+0x30/0x8c
+[ 2941.931570]        freq_qos_add_notifier+0x68/0x7c
+[ 2941.931574]        dev_pm_qos_add_notifier+0xa0/0xf8
+[ 2941.931579]        devfreq_add_device.part.0+0x360/0x5a4
+[ 2941.931583]        devm_devfreq_add_device+0x74/0xe0
+[ 2941.931587]        msm_devfreq_init+0xa0/0x154 [msm]
+[ 2941.931624]        msm_gpu_init+0x2fc/0x588 [msm]
+[ 2941.931649]        adreno_gpu_init+0x160/0x2d0 [msm]
+[ 2941.931675]        a6xx_gpu_init+0x2c0/0x74c [msm]
+[ 2941.931699]        adreno_bind+0x180/0x290 [msm]
+[ 2941.931723]        component_bind_all+0x124/0x288
+[ 2941.931728]        msm_drm_bind+0x1d8/0x6cc [msm]
+[ 2941.931752]        try_to_bring_up_aggregate_device+0x1ec/0x2f4
+[ 2941.931755]        __component_add+0xa8/0x194
+[ 2941.931758]        component_add+0x14/0x20
+[ 2941.931761]        dp_display_probe+0x2b4/0x474 [msm]
+[ 2941.931785]        platform_probe+0x68/0xd8
+[ 2941.931789]        really_probe+0x184/0x3c8
+[ 2941.931792]        __driver_probe_device+0x7c/0x16c
+[ 2941.931794]        driver_probe_device+0x3c/0x110
+[ 2941.931797]        __device_attach_driver+0xbc/0x158
+[ 2941.931800]        bus_for_each_drv+0x84/0xe0
+[ 2941.931802]        __device_attach+0xa8/0x1d4
+[ 2941.931805]        device_initial_probe+0x14/0x20
+[ 2941.931807]        bus_probe_device+0xb0/0xb4
+[ 2941.931810]        deferred_probe_work_func+0xa0/0xf4
+[ 2941.931812]        process_one_work+0x288/0x5bc
+[ 2941.931816]        worker_thread+0x74/0x450
+[ 2941.931818]        kthread+0x124/0x128
+[ 2941.931822]        ret_from_fork+0x10/0x20
+[ 2941.931826] 
+               -> #3 (dev_pm_qos_mtx){+.+.}-{3:3}:
+[ 2941.931831]        __mutex_lock+0xa0/0x840
+[ 2941.931833]        mutex_lock_nested+0x24/0x30
+[ 2941.931836]        dev_pm_qos_remove_notifier+0x34/0x140
+[ 2941.931838]        genpd_remove_device+0x3c/0x174
+[ 2941.931841]        genpd_dev_pm_detach+0x78/0x1b4
+[ 2941.931844]        dev_pm_domain_detach+0x24/0x34
+[ 2941.931846]        a6xx_gmu_remove+0x34/0xc4 [msm]
+[ 2941.931869]        a6xx_destroy+0xd0/0x160 [msm]
+[ 2941.931892]        adreno_unbind+0x40/0x64 [msm]
+[ 2941.931916]        component_unbind+0x38/0x6c
+[ 2941.931919]        component_unbind_all+0xc8/0xd4
+[ 2941.931921]        msm_drm_uninit.isra.0+0x150/0x1c4 [msm]
+[ 2941.931945]        msm_drm_bind+0x310/0x6cc [msm]
+[ 2941.931967]        try_to_bring_up_aggregate_device+0x1ec/0x2f4
+[ 2941.931970]        __component_add+0xa8/0x194
+[ 2941.931973]        component_add+0x14/0x20
+[ 2941.931976]        dp_display_probe+0x2b4/0x474 [msm]
+[ 2941.932000]        platform_probe+0x68/0xd8
+[ 2941.932003]        really_probe+0x184/0x3c8
+[ 2941.932005]        __driver_probe_device+0x7c/0x16c
+[ 2941.932008]        driver_probe_device+0x3c/0x110
+[ 2941.932011]        __device_attach_driver+0xbc/0x158
+[ 2941.932014]        bus_for_each_drv+0x84/0xe0
+[ 2941.932016]        __device_attach+0xa8/0x1d4
+[ 2941.932018]        device_initial_probe+0x14/0x20
+[ 2941.932021]        bus_probe_device+0xb0/0xb4
+[ 2941.932023]        deferred_probe_work_func+0xa0/0xf4
+[ 2941.932026]        process_one_work+0x288/0x5bc
+[ 2941.932028]        worker_thread+0x74/0x450
+[ 2941.932031]        kthread+0x124/0x128
+[ 2941.932035]        ret_from_fork+0x10/0x20
+[ 2941.932037] 
+               -> #2 (&gmu->lock){+.+.}-{3:3}:
+[ 2941.932043]        __mutex_lock+0xa0/0x840
+[ 2941.932045]        mutex_lock_nested+0x24/0x30
+[ 2941.932047]        a6xx_gpu_set_freq+0x30/0x5c [msm]
+[ 2941.932071]        msm_devfreq_target+0xb8/0x1a8 [msm]
+[ 2941.932094]        devfreq_set_target+0x84/0x27c
+[ 2941.932098]        devfreq_update_target+0xc4/0xec
+[ 2941.932102]        devfreq_monitor+0x38/0x170
+[ 2941.932105]        process_one_work+0x288/0x5bc
+[ 2941.932108]        worker_thread+0x74/0x450
+[ 2941.932110]        kthread+0x124/0x128
+[ 2941.932113]        ret_from_fork+0x10/0x20
+[ 2941.932116] 
+               -> #1 (&df->lock){+.+.}-{3:3}:
+[ 2941.932121]        __mutex_lock+0xa0/0x840
+[ 2941.932124]        mutex_lock_nested+0x24/0x30
+[ 2941.932126]        msm_devfreq_get_dev_status+0x48/0x134 [msm]
+[ 2941.932149]        devfreq_simple_ondemand_func+0x3c/0x144
+[ 2941.932153]        devfreq_update_target+0x4c/0xec
+[ 2941.932157]        devfreq_monitor+0x38/0x170
+[ 2941.932160]        process_one_work+0x288/0x5bc
+[ 2941.932162]        worker_thread+0x74/0x450
+[ 2941.932165]        kthread+0x124/0x128
+[ 2941.932168]        ret_from_fork+0x10/0x20
+[ 2941.932171] 
+               -> #0 (&devfreq->lock){+.+.}-{3:3}:
+[ 2941.932175]        __lock_acquire+0x13d8/0x2188
+[ 2941.932178]        lock_acquire+0x1e8/0x310
+[ 2941.932180]        __mutex_lock+0xa0/0x840
+[ 2941.932182]        mutex_lock_nested+0x24/0x30
+[ 2941.932184]        qos_min_notifier_call+0x28/0x88
+[ 2941.932188]        notifier_call_chain+0xa0/0x17c
+[ 2941.932190]        blocking_notifier_call_chain+0x48/0x70
+[ 2941.932193]        pm_qos_update_target+0xdc/0x1d0
+[ 2941.932195]        freq_qos_apply+0x68/0x74
+[ 2941.932198]        apply_constraint+0x100/0x148
+[ 2941.932201]        __dev_pm_qos_update_request+0xb8/0x1fc
+[ 2941.932203]        dev_pm_qos_update_request+0x3c/0x64
+[ 2941.932206]        msm_devfreq_active+0xf8/0x194 [msm]
+[ 2941.932227]        msm_gpu_submit+0x18c/0x1a8 [msm]
+[ 2941.932249]        msm_job_run+0x98/0x11c [msm]
+[ 2941.932272]        drm_sched_main+0x1a0/0x444 [gpu_sched]
+[ 2941.932281]        kthread+0x124/0x128
+[ 2941.932284]        ret_from_fork+0x10/0x20
+[ 2941.932287] 
+               other info that might help us debug this:
 
+[ 2941.932289] Chain exists of:
+                 &devfreq->lock --> dev_pm_qos_mtx --> &(c->notifiers)->rwsem
 
-Thanks,
-Miqu=C3=A8l
+[ 2941.932296]  Possible unsafe locking scenario:
+
+[ 2941.932298]        CPU0                    CPU1
+[ 2941.932300]        ----                    ----
+[ 2941.932301]   rlock(&(c->notifiers)->rwsem);
+[ 2941.932304]                                lock(dev_pm_qos_mtx);
+[ 2941.932307]                                lock(&(c->notifiers)->rwsem);
+[ 2941.932309]   lock(&devfreq->lock);
+[ 2941.932312] 
+                *** DEADLOCK ***
+
+[ 2941.932313] 4 locks held by ring0/359:
+[ 2941.932315]  #0: ffff633110966170 (&gpu->lock){+.+.}-{3:3}, at: msm_job_run+0x8c/0x11c [msm]
+[ 2941.932342]  #1: ffff633110966208 (&gpu->active_lock){+.+.}-{3:3}, at: msm_gpu_submit+0xdc/0x1a8 [msm]
+[ 2941.932368]  #2: ffffa40da2f91ed0 (dev_pm_qos_mtx){+.+.}-{3:3}, at: dev_pm_qos_update_request+0x30/0x64
+[ 2941.932374]  #3: ffff63310e3cace8 (&(c->notifiers)->rwsem){++++}-{3:3}, at: blocking_notifier_call_chain+0x30/0x70
+[ 2941.932381] 
+               stack backtrace:
+[ 2941.932383] CPU: 7 PID: 359 Comm: ring0 Not tainted 6.4.0-rc5 #64
+[ 2941.932386] Hardware name: LENOVO 21BYZ9SRUS/21BYZ9SRUS, BIOS N3HET53W (1.25 ) 10/12/2022
+[ 2941.932389] Call trace:
+[ 2941.932391]  dump_backtrace+0x9c/0x11c
+[ 2941.932395]  show_stack+0x18/0x24
+[ 2941.932398]  dump_stack_lvl+0x60/0xac
+[ 2941.932402]  dump_stack+0x18/0x24
+[ 2941.932405]  print_circular_bug+0x26c/0x348
+[ 2941.932407]  check_noncircular+0x134/0x148
+[ 2941.932409]  __lock_acquire+0x13d8/0x2188
+[ 2941.932411]  lock_acquire+0x1e8/0x310
+[ 2941.932414]  __mutex_lock+0xa0/0x840
+[ 2941.932416]  mutex_lock_nested+0x24/0x30
+[ 2941.932418]  qos_min_notifier_call+0x28/0x88
+[ 2941.932421]  notifier_call_chain+0xa0/0x17c
+[ 2941.932424]  blocking_notifier_call_chain+0x48/0x70
+[ 2941.932426]  pm_qos_update_target+0xdc/0x1d0
+[ 2941.932428]  freq_qos_apply+0x68/0x74
+[ 2941.932431]  apply_constraint+0x100/0x148
+[ 2941.932433]  __dev_pm_qos_update_request+0xb8/0x1fc
+[ 2941.932435]  dev_pm_qos_update_request+0x3c/0x64
+[ 2941.932437]  msm_devfreq_active+0xf8/0x194 [msm]
+[ 2941.932460]  msm_gpu_submit+0x18c/0x1a8 [msm]
+[ 2941.932482]  msm_job_run+0x98/0x11c [msm]
+[ 2941.932504]  drm_sched_main+0x1a0/0x444 [gpu_sched]
+[ 2941.932511]  kthread+0x124/0x128
+[ 2941.932514]  ret_from_fork+0x10/0x20
