@@ -2,142 +2,340 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0108F727887
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 09:17:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3A7A72790F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 09:45:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233840AbjFHHRc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 03:17:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54160 "EHLO
+        id S232172AbjFHHpZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 03:45:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233779AbjFHHRb (ORCPT
+        with ESMTP id S230193AbjFHHpX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 03:17:31 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A96CA9E;
-        Thu,  8 Jun 2023 00:17:30 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 466FB60C50;
-        Thu,  8 Jun 2023 07:17:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DEEC433EF;
-        Thu,  8 Jun 2023 07:17:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686208649;
-        bh=DgNy7Z0KKn8MMOgxNGldNvVHSpHtF7LqXA6FiWXacwU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KS66tAZlXQrUKAebbEfqLOkWE5Pz7Q2p9tPKdNpc1SniYL0900czyqPb2TaiYL7Ye
-         DEwwMeIHAFnTj3cuw0BHO6UhjnLImLhIn2eACfmDVwIugq4cLOt2rL4KNLPyATWDs4
-         T241J5sSwtzNEssZf8WdI7orYGadgjn/4DOibGpQoAnMl2tdxT1niTSxkyln1UeY52
-         vRl3eimY0u7D4eKKGd+Sh78Dd1OujFDZsoLARWFlVlw1+PYKmz9FF/UGSEfz5TkjTh
-         bC2AboPTkpyqXTixmVaorks6BN2QLX7MmtpaHyVSW+LV0jcCIpXqR7elwdjGHU6pKz
-         O9NmFP7cxLMTQ==
-Date:   Thu, 8 Jun 2023 09:17:26 +0200
-From:   Maxime Ripard <mripard@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        dri-devel@lists.freedesktop.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-input@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org, hsinyi@google.com,
-        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
-        yangcong5@huaqin.corp-partner.google.com,
-        linux-arm-msm@vger.kernel.org,
-        Chris Morgan <macroalpha82@gmail.com>
-Subject: Re: [PATCH v2 00/10] drm/panel and i2c-hid: Allow panels and
- touchscreens to power sequence together
-Message-ID: <jehxiy3z4aieop5qgzmlon4u76n7gvt3kc6knxhb5yqkiz3rsp@mx27m75sx43r>
-References: <20230607215224.2067679-1-dianders@chromium.org>
+        Thu, 8 Jun 2023 03:45:23 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F2B9C1BF7;
+        Thu,  8 Jun 2023 00:45:20 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3585b6Cf006476;
+        Thu, 8 Jun 2023 07:44:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=rPsADric/4vzkPQa9Wmz9QLZDn4DXFKJVBsRL0CAJrA=;
+ b=CFEVOLQJfkcIj1KIHKxMVTYrLlYf4suMzj7D2rKvutDQSm4TwaO2vuEx7oxjqPKIJ4Kw
+ bVoyU4kUsRhGaLOIVD3Ex+RUrRHgmdJzJ6Flx3vXbAtwsHEAc0Fnh6yP889gUFnp8VbT
+ g5FOOjJniDquMEIeQc5V6Aipmgs55wIOXt0tszDD5Odpb4PKELFMbK35PCsnj/ZEIsFB
+ HAjwI8aBmD1USQih3Qmw6XU5Q5mEv6h/hRXrc4ig8Bdcx58OOXDsx+vCggDdyWadCpF7
+ WdLNrGr079USxsBHcgripiqDKq/SmNJWsGFpv7aIMt779VixtvrcOf6zn4WMyprxo8B6 ug== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r34em0kut-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 08 Jun 2023 07:44:54 +0000
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3587iqSU018169
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Thu, 8 Jun 2023 07:44:52 GMT
+Received: from [10.233.17.245] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 8 Jun 2023
+ 00:44:47 -0700
+Message-ID: <03a53571-8e87-d187-de7e-b8cdb671d771@quicinc.com>
+Date:   Thu, 8 Jun 2023 15:44:44 +0800
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="dfmbtdcuvmsnsbt5"
-Content-Disposition: inline
-In-Reply-To: <20230607215224.2067679-1-dianders@chromium.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v6 1/3] Coresight: Add coresight dummy driver
+Content-Language: en-US
+To:     Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        James Clark <james.clark@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        "Paul Walmsley" <paul.walmsley@sifive.com>,
+        Palmer Dabbelt <palmer@dabbelt.com>,
+        Albert Ou <aou@eecs.berkeley.edu>,
+        Jonathan Corbet <corbet@lwn.net>
+CC:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Jinlong Mao <quic_jinlmao@quicinc.com>,
+        "Yuanfang Zhang" <quic_yuanfang@quicinc.com>,
+        Tao Zhang <quic_taozha@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        "Bjorn Andersson" <andersson@kernel.org>,
+        <linux-doc@vger.kernel.org>
+References: <20230602084149.40031-1-quic_hazha@quicinc.com>
+ <20230602084149.40031-2-quic_hazha@quicinc.com>
+From:   Hao Zhang <quic_hazha@quicinc.com>
+In-Reply-To: <20230602084149.40031-2-quic_hazha@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: CQhQG97_X68PB7Ut7QEYGXNnDzLzOdOj
+X-Proofpoint-GUID: CQhQG97_X68PB7Ut7QEYGXNnDzLzOdOj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-08_04,2023-06-07_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
+ lowpriorityscore=0 suspectscore=0 phishscore=0 mlxscore=0
+ priorityscore=1501 malwarescore=0 impostorscore=0 bulkscore=0
+ mlxlogscore=999 adultscore=0 spamscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306080064
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Reviewers,
 
---dfmbtdcuvmsnsbt5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Could you please help to review this patch?
 
-Hi Douglas,
+Thanks
+Hao
 
-On Wed, Jun 07, 2023 at 02:49:22PM -0700, Douglas Anderson wrote:
->=20
-> The big motivation for this patch series is mostly described in the patch
-> ("drm/panel: Add a way for other devices to follow panel state"), but to
-> quickly summarize here: for touchscreens that are connected to a panel we
-> need the ability to power sequence the two device together. This is not a
-> new need, but so far we've managed to get by through a combination of
-> inefficiency, added costs, or perhaps just a little bit of brokenness.
-> It's time to do better. This patch series allows us to do better.
->=20
-> Assuming that people think this patch series looks OK, we'll have to
-> figure out the right way to land it. The panel patches and i2c-hid
-> patches will go through very different trees and so either we'll need
-> an Ack from one side or the other or someone to create a tag for the
-> other tree to pull in. This will _probably_ require the true drm-misc
-> maintainers to get involved, not a lowly committer. ;-)
->=20
-> Version 2 of this patch series doesn't change too much. At a high level:
-> * I added all the forgotten "static" to functions.
-> * I've hopefully made the bindings better.
-> * I've integrated into fw_devlink.
-> * I cleaned up a few descriptions / comments.
->=20
-> This still needs someone to say that the idea looks OK or to suggest
-> an alternative that solves the problems. ;-)
-
-Thanks for working on this.
-
-I haven't seen in any of your commit messages how the panels were
-actually "packaged" together?
-
-Do a panel model typically come together with the i2c-hid support, or is
-it added at manufacture time?
-
-If it's the latter, it's indeed a fairly loose connection and we need
-your work.
-
-If it's the former though and we don't expect a given panel reference to
-always (or never) come with a touchscreen attached, I guess we can have
-something much simpler with a bunch of helpers that would register a
-i2c-hid device and would be called by the panel driver itself.
-
-And then, since everything is self-contained managing the power state
-becomes easier as well.
-
-Maxime
-
---dfmbtdcuvmsnsbt5
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZIGAhgAKCRDj7w1vZxhR
-xXYWAP9FSFylcQPn7fz6xgDKld7G4GeHoOUOkRIHq74ilGrD7QEA/4Zn/Rzcqgwa
-aYb2ySZimrrn0J5IOURj78PWDxWA7QY=
-=aUVL
------END PGP SIGNATURE-----
-
---dfmbtdcuvmsnsbt5--
+On 6/2/2023 4:41 PM, Hao Zhang wrote:
+> Some Coresight devices that kernel don't have permission to access or
+> configure. For these devices, a dummy driver is needed to register them as
+> Coresight devices. The module may also be used to define components that
+> may not have any programming interfaces, so that paths can be created
+> in the driver. It provides Coresight API for operations on dummy devices,
+> such as enabling and disabling them. It also provides the Coresight dummy
+> sink/source paths for debugging.
+> 
+> Signed-off-by: Hao Zhang <quic_hazha@quicinc.com>
+> ---
+>   drivers/hwtracing/coresight/Kconfig           |  11 ++
+>   drivers/hwtracing/coresight/Makefile          |   1 +
+>   drivers/hwtracing/coresight/coresight-dummy.c | 163 ++++++++++++++++++
+>   include/linux/coresight.h                     |   1 +
+>   4 files changed, 176 insertions(+)
+>   create mode 100644 drivers/hwtracing/coresight/coresight-dummy.c
+> 
+> diff --git a/drivers/hwtracing/coresight/Kconfig b/drivers/hwtracing/coresight/Kconfig
+> index 2b5bbfffbc4f..06f0a7594169 100644
+> --- a/drivers/hwtracing/coresight/Kconfig
+> +++ b/drivers/hwtracing/coresight/Kconfig
+> @@ -236,4 +236,15 @@ config CORESIGHT_TPDA
+>   
+>   	  To compile this driver as a module, choose M here: the module will be
+>   	  called coresight-tpda.
+> +
+> +config CORESIGHT_DUMMY
+> +	tristate "Dummy driver support"
+> +	help
+> +	  Enables support for dummy driver. Dummy driver can be used for
+> +	  CoreSight sources/sinks that are owned and configured by some
+> +	  other subsystem and use Linux drivers to configure rest of trace
+> +	  path.
+> +
+> +	  To compile this driver as a module, choose M here: the module will be
+> +	  called coresight-dummy.
+>   endif
+> diff --git a/drivers/hwtracing/coresight/Makefile b/drivers/hwtracing/coresight/Makefile
+> index 33bcc3f7b8ae..995d3b2c76df 100644
+> --- a/drivers/hwtracing/coresight/Makefile
+> +++ b/drivers/hwtracing/coresight/Makefile
+> @@ -30,3 +30,4 @@ obj-$(CONFIG_CORESIGHT_TPDA) += coresight-tpda.o
+>   coresight-cti-y := coresight-cti-core.o	coresight-cti-platform.o \
+>   		   coresight-cti-sysfs.o
+>   obj-$(CONFIG_ULTRASOC_SMB) += ultrasoc-smb.o
+> +obj-$(CONFIG_CORESIGHT_DUMMY) += coresight-dummy.o
+> diff --git a/drivers/hwtracing/coresight/coresight-dummy.c b/drivers/hwtracing/coresight/coresight-dummy.c
+> new file mode 100644
+> index 000000000000..42125b7a0f39
+> --- /dev/null
+> +++ b/drivers/hwtracing/coresight/coresight-dummy.c
+> @@ -0,0 +1,163 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/coresight.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/of.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/pm_runtime.h>
+> +
+> +#include "coresight-priv.h"
+> +
+> +struct dummy_drvdata {
+> +	struct device			*dev;
+> +	struct coresight_device		*csdev;
+> +};
+> +
+> +DEFINE_CORESIGHT_DEVLIST(source_devs, "dummy_source");
+> +DEFINE_CORESIGHT_DEVLIST(sink_devs, "dummy_sink");
+> +
+> +static int dummy_source_enable(struct coresight_device *csdev,
+> +			       struct perf_event *event, u32 mode)
+> +{
+> +	dev_dbg(csdev->dev.parent, "Dummy source enabled\n");
+> +
+> +	return 0;
+> +}
+> +
+> +static void dummy_source_disable(struct coresight_device *csdev,
+> +				 struct perf_event *event)
+> +{
+> +	dev_dbg(csdev->dev.parent, "Dummy source disabled\n");
+> +}
+> +
+> +static int dummy_sink_enable(struct coresight_device *csdev, u32 mode,
+> +				void *data)
+> +{
+> +	dev_dbg(csdev->dev.parent, "Dummy sink enabled\n");
+> +
+> +	return 0;
+> +}
+> +
+> +static int dummy_sink_disable(struct coresight_device *csdev)
+> +{
+> +	dev_dbg(csdev->dev.parent, "Dummy sink disabled\n");
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct coresight_ops_source dummy_source_ops = {
+> +	.enable	= dummy_source_enable,
+> +	.disable = dummy_source_disable,
+> +};
+> +
+> +static const struct coresight_ops dummy_source_cs_ops = {
+> +	.source_ops = &dummy_source_ops,
+> +};
+> +
+> +static const struct coresight_ops_sink dummy_sink_ops = {
+> +	.enable	= dummy_sink_enable,
+> +	.disable = dummy_sink_disable,
+> +};
+> +
+> +static const struct coresight_ops dummy_sink_cs_ops = {
+> +	.sink_ops = &dummy_sink_ops,
+> +};
+> +
+> +static int dummy_probe(struct platform_device *pdev)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct device_node *node = dev->of_node;
+> +	struct coresight_platform_data *pdata;
+> +	struct dummy_drvdata *drvdata;
+> +	struct coresight_desc desc = { 0 };
+> +
+> +	if (of_device_is_compatible(node, "arm,coresight-dummy-source")) {
+> +
+> +		desc.name = coresight_alloc_device_name(&source_devs, dev);
+> +		if (!desc.name)
+> +			return -ENOMEM;
+> +
+> +		desc.type = CORESIGHT_DEV_TYPE_SOURCE;
+> +		desc.subtype.source_subtype =
+> +					CORESIGHT_DEV_SUBTYPE_SOURCE_OTHERS;
+> +		desc.ops = &dummy_source_cs_ops;
+> +	} else if (of_device_is_compatible(node, "arm,coresight-dummy-sink")) {
+> +		desc.name = coresight_alloc_device_name(&sink_devs, dev);
+> +		if (!desc.name)
+> +			return -ENOMEM;
+> +
+> +		desc.type = CORESIGHT_DEV_TYPE_SINK;
+> +		desc.subtype.sink_subtype = CORESIGHT_DEV_SUBTYPE_SINK_DUMMY;
+> +		desc.ops = &dummy_sink_cs_ops;
+> +	} else {
+> +		dev_err(dev, "Device type not set\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	pdata = coresight_get_platform_data(dev);
+> +	if (IS_ERR(pdata))
+> +		return PTR_ERR(pdata);
+> +	pdev->dev.platform_data = pdata;
+> +
+> +	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
+> +	if (!drvdata)
+> +		return -ENOMEM;
+> +
+> +	drvdata->dev = &pdev->dev;
+> +	platform_set_drvdata(pdev, drvdata);
+> +
+> +	desc.pdata = pdev->dev.platform_data;
+> +	desc.dev = &pdev->dev;
+> +	drvdata->csdev = coresight_register(&desc);
+> +	if (IS_ERR(drvdata->csdev))
+> +		return PTR_ERR(drvdata->csdev);
+> +
+> +	pm_runtime_enable(dev);
+> +	dev_dbg(dev, "Dummy device initialized\n");
+> +
+> +	return 0;
+> +}
+> +
+> +static int dummy_remove(struct platform_device *pdev)
+> +{
+> +	struct dummy_drvdata *drvdata = platform_get_drvdata(pdev);
+> +	struct device *dev = &pdev->dev;
+> +
+> +	pm_runtime_disable(dev);
+> +	coresight_unregister(drvdata->csdev);
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id dummy_match[] = {
+> +	{.compatible = "arm,coresight-dummy-source"},
+> +	{.compatible = "arm,coresight-dummy-sink"},
+> +	{},
+> +};
+> +
+> +static struct platform_driver dummy_driver = {
+> +	.probe	= dummy_probe,
+> +	.remove	= dummy_remove,
+> +	.driver	= {
+> +		.name   = "coresight-dummy",
+> +		.of_match_table = dummy_match,
+> +	},
+> +};
+> +
+> +static int __init dummy_init(void)
+> +{
+> +	return platform_driver_register(&dummy_driver);
+> +}
+> +module_init(dummy_init);
+> +
+> +static void __exit dummy_exit(void)
+> +{
+> +	platform_driver_unregister(&dummy_driver);
+> +}
+> +module_exit(dummy_exit);
+> +
+> +MODULE_LICENSE("GPL");
+> +MODULE_DESCRIPTION("CoreSight dummy driver");
+> diff --git a/include/linux/coresight.h b/include/linux/coresight.h
+> index f19a47b9bb5a..6db4b49751cf 100644
+> --- a/include/linux/coresight.h
+> +++ b/include/linux/coresight.h
+> @@ -45,6 +45,7 @@ enum coresight_dev_type {
+>   };
+>   
+>   enum coresight_dev_subtype_sink {
+> +	CORESIGHT_DEV_SUBTYPE_SINK_DUMMY,
+>   	CORESIGHT_DEV_SUBTYPE_SINK_PORT,
+>   	CORESIGHT_DEV_SUBTYPE_SINK_BUFFER,
+>   	CORESIGHT_DEV_SUBTYPE_SINK_SYSMEM,
