@@ -2,343 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5943D7280C0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 15:00:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D09067280D5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 15:02:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236445AbjFHNAI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 09:00:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40638 "EHLO
+        id S236641AbjFHNC5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 09:02:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42272 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233645AbjFHM7v (ORCPT
+        with ESMTP id S236563AbjFHNCy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 08:59:51 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3DE01FE9;
-        Thu,  8 Jun 2023 05:59:49 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 358CbCVt012832;
-        Thu, 8 Jun 2023 12:59:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=f3h8BzpwGazJwyUWGHdCeGvpHlv6O5UncmboEbGhuCM=;
- b=bluh1gT0LGIGdoJKVfsvoqEoGGQFAL6CHxUT3Xn3SjDUMLxFsahXOhOWyVRUQffa0O0R
- TmVK/zZUqVgfAKfH8vHjsYroDvIxxcdruleGP0c680N9RJs3GUMeRV1Xv8lOYV8wjZk9
- PTwOeYocFjURo6Ar57CbgQOpcyefDRt4vDYPBBeHC/5VbOYREmS12D2G52u5uMyT+cvU
- D3stZivBXwu6VaJ7u+RR6N0T8p/GAs2LEMXiZ51vgPykwshcKWA9hNqTLy3U+hxcQNyq
- oB3mJ0AkmMhv6hvxZxl6zhfXbUySzU5jF8c4qKZkVhiiNYgHKtpdIzJP3mwlEvhWizdu bw== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r33uyh7mj-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 08 Jun 2023 12:59:44 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 358CxH2S019571
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Thu, 8 Jun 2023 12:59:17 GMT
-Received: from [10.216.21.154] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 8 Jun 2023
- 05:59:08 -0700
-Message-ID: <b3c4684c-77e4-861b-9196-48a014c49c18@quicinc.com>
-Date:   Thu, 8 Jun 2023 18:29:05 +0530
+        Thu, 8 Jun 2023 09:02:54 -0400
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE9C02727
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 06:02:52 -0700 (PDT)
+Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-651e298be3fso484013b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 06:02:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686229372; x=1688821372;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=kW5FnoKH7KmkpYlZqwEQzZ4Llthi1qtTvmtw7Q6w08w=;
+        b=cn4MYvLNxKBjLwr4MoPYNSbR33ipLaeNSe1gXAqV8Zp4oJnJKSCIJlkFad0n848TI9
+         Erqj1vrIZT00tlp215b8GpzUO4keUAe+BKUjsBcbJp1Oebx8XEwYHOrEUKLqmg0Og3pA
+         ufsCUJnqlm2WbYx1gCAcYb5CBGZp3u3oIPV3q7DGkxS9JxiTK1L6UwAqzVFqTwk2sP7J
+         CuPL6XcsU6/2ujXb4UJKlCZ5hswNDI2D11LidTg3RMxtwbS5cazDn2uFV6rnndsG+ZYV
+         oa1diprkux7d8iOR+ar7WkPMQeAVMaSGP46xrmcdP4EuIqDkBelwgbRzF9ONz3jcu6I0
+         /hMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686229372; x=1688821372;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=kW5FnoKH7KmkpYlZqwEQzZ4Llthi1qtTvmtw7Q6w08w=;
+        b=EX+JHt0V4d/X4Gz6BYmiKI8M4x1+PNR/znFm2VlplaBMSCRIkMk25bD+KMDkGhJ1TI
+         62FORdstgRc/PKQscSj+VL8kIttOOksS4zF6LTYl7zDcs4V9nADraQ0SoOuncAkuyYjT
+         RH89JJBLJJ3bHoEItPE5Hw2RmsrAFOeKfegFsrlp8iZKkWbc1OEcIe1S/2vWa3fwVc/5
+         oebts6+6hR14hYaJ3X1vHO4fjCaQFxqWaQz4e2ZilxCHKDN5ToDGxjYGvT7yf1xhRgEW
+         PwDO03SKQgBpwhjnfLpBTUwxkbRDrrkwydnWlBneTGLcC5s3m8U2zCTAi7Y/lPAKZq0N
+         UcQQ==
+X-Gm-Message-State: AC+VfDwYDnD74YUbpwnJ5U6pMGfY4qDMTOp5dcTsbt5dBIr/JQ8oHMRx
+        KkOuI9HpP6KdkwWHyWzFhFEd
+X-Google-Smtp-Source: ACHHUZ6/y7oKCY50CIIGwomUoDVxX5cSvlwoKVjD7S+7FZD+2ikjnGdNKQLV4ee6jPPR6diEJfGZ0A==
+X-Received: by 2002:a17:902:f684:b0:1a6:6fe3:df8d with SMTP id l4-20020a170902f68400b001a66fe3df8dmr10831013plg.8.1686229371840;
+        Thu, 08 Jun 2023 06:02:51 -0700 (PDT)
+Received: from thinkpad ([117.202.186.138])
+        by smtp.gmail.com with ESMTPSA id jh11-20020a170903328b00b001b077301a58sm1407428plb.79.2023.06.08.06.02.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Jun 2023 06:02:51 -0700 (PDT)
+Date:   Thu, 8 Jun 2023 18:32:46 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Johan Hovold <johan+linaro@kernel.org>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krishna Kurapati <quic_kriskura@quicinc.com>,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+        Li Jun <jun.li@nxp.com>,
+        Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+Subject: Re: [PATCH 2/2] USB: dwc3: fix use-after-free on core driver unbind
+Message-ID: <20230608130246.GF5672@thinkpad>
+References: <20230607100540.31045-1-johan+linaro@kernel.org>
+ <20230607100540.31045-3-johan+linaro@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH V2 01/13] dt-bindings: remoteproc: qcom: Add support for
- multipd model
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <jassisinghbrar@gmail.com>, <mathieu.poirier@linaro.org>,
-        <mturquette@baylibre.com>, <sboyd@kernel.org>,
-        <quic_eberman@quicinc.com>, <quic_mojha@quicinc.com>,
-        <kvalo@kernel.org>, <loic.poulain@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>
-CC:     <quic_srichara@quicinc.com>, <quic_sjaganat@quicinc.com>,
-        <quic_kathirav@quicinc.com>, <quic_anusha@quicinc.com>,
-        <quic_poovendh@quicinc.com>, <quic_varada@quicinc.com>,
-        <quic_devipriy@quicinc.com>
-References: <20230521222852.5740-1-quic_mmanikan@quicinc.com>
- <20230521222852.5740-2-quic_mmanikan@quicinc.com>
- <7940c743-815f-f864-d015-43d7e916ecfa@linaro.org>
-From:   Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-In-Reply-To: <7940c743-815f-f864-d015-43d7e916ecfa@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: w0B2WFx4cEZNuxXZFDofYTR-Uki5ImYy
-X-Proofpoint-ORIG-GUID: w0B2WFx4cEZNuxXZFDofYTR-Uki5ImYy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-08_09,2023-06-08_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 mlxlogscore=999
- priorityscore=1501 impostorscore=0 mlxscore=0 bulkscore=0 malwarescore=0
- suspectscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0 spamscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306080113
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230607100540.31045-3-johan+linaro@kernel.org>
+X-Spam-Status: No, score=-0.6 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_SORBS_WEB,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, Jun 07, 2023 at 12:05:40PM +0200, Johan Hovold wrote:
+> Some dwc3 glue drivers are currently accessing the driver data of the
+> child core device directly, which is clearly a bad idea as the child may
+> not have probed yet or may have been unbound from its driver.
+> 
+> As a workaround until the glue drivers have been fixed, clear the driver
+> data pointer before allowing the glue parent device to runtime suspend
+> to prevent its driver from accessing data that has been freed during
+> unbind.
+> 
+> Fixes: 6dd2565989b4 ("usb: dwc3: add imx8mp dwc3 glue layer driver")
+> Fixes: 6895ea55c385 ("usb: dwc3: qcom: Configure wakeup interrupts during suspend")
+> Cc: stable@vger.kernel.org      # 5.12
+> Cc: Li Jun <jun.li@nxp.com>
+> Cc: Sandeep Maheswaram <quic_c_sanm@quicinc.com>
+> Cc: Krishna Kurapati <quic_kriskura@quicinc.com>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> ---
+>  drivers/usb/dwc3/core.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> index 7b2ce013cc5b..d68958e151a7 100644
+> --- a/drivers/usb/dwc3/core.c
+> +++ b/drivers/usb/dwc3/core.c
+> @@ -1929,6 +1929,11 @@ static int dwc3_remove(struct platform_device *pdev)
+>  	pm_runtime_disable(&pdev->dev);
+>  	pm_runtime_dont_use_autosuspend(&pdev->dev);
+>  	pm_runtime_put_noidle(&pdev->dev);
+> +	/*
+> +	 * HACK: Clear the driver data, which is currently accessed by parent
+> +	 * glue drivers, before allowing the parent to suspend.
+> +	 */
+> +	platform_set_drvdata(pdev, NULL);
 
+This is required because you have seen the glue driver going to runtime suspend
+once the below pm_runtime_set_suspended() is completed?
 
-On 5/30/2023 4:28 PM, Krzysztof Kozlowski wrote:
-> On 22/05/2023 00:28, Manikanta Mylavarapu wrote:
->> Add new binding document for multipd model remoteproc.
->> IPQ5018, IPQ9574 follows multipd model.
->>
->> Signed-off-by: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
->> ---
->> Changes in V2:
->> 	- Fixed all comments and rebased for TOT.
->> 	- Changed to BSD-3-Clause based on internal open source team
->>            suggestion.
->> 	- Added firmware-name.
->>
->>   .../bindings/remoteproc/qcom,multipd-pil.yaml | 265 ++++++++++++++++++
->>   1 file changed, 265 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
->> new file mode 100644
->> index 000000000000..3257f27dc569
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,multipd-pil.yaml
->> @@ -0,0 +1,265 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-3-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/remoteproc/qcom,multipd-pil.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Multipd Secure Peripheral Image Loader
->> +
->> +maintainers:
->> +  - Bjorn Andersson <andersson@kernel.org>
->> +  - Mathieu Poirier <mathieu.poirier@linaro.org>
->> +
->> +description:
->> +  Multipd Peripheral Image Loader loads firmware and boots Q6 pd, WCSS pd
-> 
-> ... boots Q6 Protection Domain (PD), WCSS PD ...
-> 
->> +  remoteproc's on the Qualcomm IPQ5018, IPQ9574 SoC.
-> 
->> Pd means protection
->> +  domain.
-> 
-> so you can skip this sentence as it is explained already.
-> 
->> It's similar to process in Linux. Here QDSP6 processor runs each
->> +  wifi radio functionality on a separate process. One process can't access
->> +  other process resources, so this is termed as PD i.e protection domain.
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,ipq5018-q6-mpd
->> +      - qcom,ipq9574-q6-mpd
->> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +  firmware-name:
->> +    $ref: /schemas/types.yaml#/definitions/string-array
->> +    description: Firmware name of the Hexagon core
-> 
-> No need for ref and description. Instead maxItems.
-> 
->> +
->> +  interrupts-extended:
->> +    items:
->> +      - description: Watchdog interrupt
->> +      - description: Fatal interrupt
->> +      - description: Ready interrupt
->> +      - description: Handover interrupt
->> +      - description: Stop acknowledge interrupt
->> +
->> +  interrupt-names:
->> +    items:
->> +      - const: wdog
->> +      - const: fatal
->> +      - const: ready
->> +      - const: handover
->> +      - const: stop-ack
->> +
->> +  qcom,smem-states:
->> +    $ref: /schemas/types.yaml#/definitions/phandle-array
->> +    description: States used by the AP to signal the remote processor
->> +    items:
->> +      - description: Shutdown Q6
->> +      - description: Stop Q6
->> +
->> +  qcom,smem-state-names:
->> +    description:
->> +      Names of the states used by the AP to signal the remote processor
->> +    items:
->> +      - const: shutdown
->> +      - const: stop
->> +
->> +  memory-region:
->> +    items:
->> +      - description: Q6 pd reserved region
->> +
->> +  glink-edge:
->> +    $ref: /schemas/remoteproc/qcom,glink-edge.yaml#
->> +    description:
->> +      Qualcomm G-Link subnode which represents communication edge, channels
->> +      and devices related to the Modem.
->> +
->> +patternProperties:
->> +  "^pd-1|pd-2|pd-3":
->> +    type: object
->> +    description:
->> +      In Multipd model, WCSS pd depends on Q6 pd i.e Q6 pd should be up before
->> +      WCSS. It can be achieved by keeping wcss pd node as subnode of Q6
->> +      device node.
-> 
-> That's not enough. Your description does not say what is this, why you
-> have two protection domains for same compatible. What's more, it a bit
-> deviates from hardware description.
-> 
->> +
->> +    properties:
->> +      compatible:
->> +        enum:
->> +          - qcom,ipq5018-wcss-ahb-mpd
->> +          - qcom,ipq9574-wcss-ahb-mpd
->> +          - qcom,ipq5018-wcss-pcie-mpd
-> 
-> Keep rather alphabetical order (so both 5018 together).
-> 
-> I also do not understand these at all. Why adding bus type to
-> compatible? This rarely is allowed (unless it is PCIe controller within
-> soc).
-> 
->> +
->> +      firmware-name:
->> +        $ref: /schemas/types.yaml#/definitions/string-array
->> +        items:
->> +          - description: Firmware name of the Hexagon core
-> 
-> same comments
-> 
->> +
->> +      interrupts-extended:
->> +        items:
->> +          - description: Fatal interrupt
->> +          - description: Ready interrupt
->> +          - description: Spawn acknowledge interrupt
->> +          - description: Stop acknowledge interrupt
-> 
-> ditto
-> 
->> +
->> +      interrupt-names:
->> +        items:
->> +          - const: fatal
->> +          - const: ready
->> +          - const: spawn-ack
->> +          - const: stop-ack
->> +
->> +      qcom,smem-states:
->> +        $ref: /schemas/types.yaml#/definitions/phandle-array
->> +        description: States used by the AP to signal the remote processor
->> +        items:
->> +          - description: Shutdown WCSS pd
->> +          - description: Stop WCSS pd
->> +          - description: Spawn WCSS pd
->> +
->> +      qcom,smem-state-names:
->> +        description:
->> +          Names of the states used by the AP to signal the remote processor
->> +        items:
->> +          - const: shutdown
->> +          - const: stop
->> +          - const: spawn
->> +
->> +    required:
->> +      - compatible
->> +      - firmware-name
->> +      - interrupts-extended
->> +      - interrupt-names
->> +      - qcom,smem-states
->> +      - qcom,smem-state-names
->> +
->> +    unevaluatedProperties: false
->> +
->> +required:
->> +  - compatible
->> +  - firmware-name
->> +  - reg
->> +  - interrupts-extended
->> +  - interrupt-names
->> +  - qcom,smem-states
->> +  - qcom,smem-state-names
->> +  - memory-region
->> +
->> +allOf:
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,ipq5018-q6-mpd
->> +    then:
->> +      properties:
->> +        firmware-name:
->> +          items:
->> +            - const: IPQ5018/q6_fw.mdt
->> +            - const: IPQ5018/m3_fw.mdt
->> +            - const: qcn6122/m3_fw.mdt
-> 
-> No, names are not part of bindings. Also paths do not look correct. Open
-> linux-firmware package and verify these are good...
-> 
-I will remove names from bindings and use firmware path as per
-https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/ath11k/IPQ5018/hw1.0
+- Mani
 
->> +
->> +  - if:
->> +      properties:
->> +        compatible:
->> +          contains:
->> +            enum:
->> +              - qcom,ipq9574-q6-mpd
->> +    then:
->> +      properties:
->> +        firmware-name:
->> +          items:
->> +            - const: IPQ9574/q6_fw.mdt
->> +            - const: IPQ9574/m3_fw.mdt
+>  	pm_runtime_set_suspended(&pdev->dev);
+>  
+>  	dwc3_free_event_buffers(dwc);
+> -- 
+> 2.39.3
 > 
-> Drop.
-> 
-I will drop.
 
-Thanks & Regards,
-Manikanta.
-
->> +
->> +unevaluatedProperties: false
-> 
-> This changed... why?
-> 
-> 
-> Best regards,
-> Krzysztof
-> 
+-- 
+மணிவண்ணன் சதாசிவம்
