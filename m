@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A03F972808C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 14:53:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 96B1A72808F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 14:53:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236616AbjFHMxl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 08:53:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35814 "EHLO
+        id S236609AbjFHMxm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 08:53:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236609AbjFHMxb (ORCPT
+        with ESMTP id S236560AbjFHMxg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 08:53:31 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7656F30D0
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 05:53:23 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3f7378a75c0so3632685e9.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 05:53:23 -0700 (PDT)
+        Thu, 8 Jun 2023 08:53:36 -0400
+Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E48A9270D
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 05:53:24 -0700 (PDT)
+Received: by mail-wm1-x32b.google.com with SMTP id 5b1f17b1804b1-3f6dfc4dffaso3726715e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 05:53:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686228802; x=1688820802;
+        d=linaro.org; s=google; t=1686228803; x=1688820803;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zkiJ1lamn9YAQsXMt6pIlRsr7SwfYoQpGX4MukexgX8=;
-        b=BgicEj6Y6pHyifovoeJYIwtjRyz4IJdqnXuKHyHtL33sDLVoZ69dyXsvzn8UH4UXwg
-         vwu8iLE9Ggg/g4ILZ7CedeK3a89dNaSE/lyBEhwASMXH0/LebsirfFnEabQT3ZB0vTfL
-         Jrms9O3kehKrHbvuNx94J7uXXfRDfnN6r6f8mJZuKhul8hwy3yNmcGmCLgAlDNrjgu8q
-         y+dtMqOotVcfyClTxdCwKQzPnaxSNoJjhrP9CseXPpVwHuIAg8mBnMQBLqxjiGUn7kWj
-         GMUBSJ8I2eYVaHCIK3d4JP31JIskvk8l437ygt95GQqhG2fLv0K1l9SUXnLNRwKKmlhY
-         Bw9A==
+        bh=B+w0DXb+KJnwyugAvGaMzfdLL4Qyi7E6pl/fJpCqVpM=;
+        b=hpkc77bxEv6Nt5TLQ6HrIVk8bXgIwkYJ40v4ip9jWDO+Ht84kuPQJcyZFU+ja88UoL
+         lXSQx5Eekz8lGoF1eedp9LAJA4gijyr6GP4Zg1oaUgIUz134Cf8WbAS2dadv0shZWkuS
+         /ykjjwvdD6UVqEhXYKQEXlIe8nC/cSJPncfMdaosNkm3cPfolPlYzCm9uZj6mkjip7SX
+         Uq/SmzRAq7tTTwGZ1Wzqi8UKiFt289pw3j6V2MSCSrj8LwEuNrxISa6nRnAZ5jSTYMaG
+         Dj7deqBS/ZytWG17D+dyOg3A+asT2P11mIIg+HmsYHIG1V+0z2hpVLDmuguVC6c55JRa
+         rdoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686228802; x=1688820802;
+        d=1e100.net; s=20221208; t=1686228803; x=1688820803;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zkiJ1lamn9YAQsXMt6pIlRsr7SwfYoQpGX4MukexgX8=;
-        b=Nl4H1Ku2zZNlO4/sJQAOFp8VLMxB0ANJL1nbmMZYi49MOIdmDH/VlgvWR1Pjb4d09W
-         Mmk5vO+s+qSXWeGuXQRBAtaiw2rmsoNRW9Z8PATYEkpwPJJgzKsjkEP2TVNnXu8f6+1c
-         IdfQTKOG2W6u9HAM4MX5fqlZD7V6f4C7To2aNrHZYvWhOkItu6EsQ0H07ZIeGa/KSXta
-         3G6H+FwXBI44Z6s/wqP1DZ9MmJs31W2NQURz6kChrEMdmgQjNKc8Zh/05CS/WSVOYyyv
-         kIdwB6twWa4akwV+4PrkGJ8F3/mjqs/caaKKPM4d/TSlVvWK+NhsF7jlb1UwJKdPR4MM
-         azUg==
-X-Gm-Message-State: AC+VfDwZhJnEXctT+N3+84QVm7vlj9RQeYnx0gS9sIfRKVHTs7Z1gHBK
-        u713DYV6shtxny/CyOeORojFGw==
-X-Google-Smtp-Source: ACHHUZ5eKXHzmzk1Fq6aUUpNwytNXJWMfefzfRRRgMtxfFlW9k9gLinsbokDwFGgwO0R5df/7RTtjQ==
-X-Received: by 2002:a7b:c40b:0:b0:3f8:1a:6b9f with SMTP id k11-20020a7bc40b000000b003f8001a6b9fmr272735wmi.2.1686228801988;
-        Thu, 08 Jun 2023 05:53:21 -0700 (PDT)
+        bh=B+w0DXb+KJnwyugAvGaMzfdLL4Qyi7E6pl/fJpCqVpM=;
+        b=cWAfv4WdCYEU/NK33ls0kJD1Zbf6njpzZoWqypdMDNBD2BQb7mPV//L0ha2xyrgNCD
+         PnGIJVNKBze1anJKk4SoiaFXpiXr9+Y2qQ06VQcbCIj3WsxxBxxVW/kArqhFTAsVU92k
+         NTpsvAUWUkFuyjkBJh4ulzCscoJOft382rZXIWrcJsIUvwcPGkD4qTHDu2qbxGIGqNiH
+         Nnst4Dngxx2qyGfarWhrhlSCSmoxJFuwuKbBcFo+eiKtMjVTkZU9j3xuUml/kndp+hO4
+         rSqVOYwJpUWjuc5DylafFUcd6+rCXq5EOWq+1LdFp83OXbvplBxQm5M3h3E1+QQ7hvR9
+         yi7w==
+X-Gm-Message-State: AC+VfDz1JnmruXWobWEjOEI/sKgDiBjHpz2YTR9tpCvssdA15xqIv3P1
+        CFeFKQrsZt1h2pbsbok1cCw1sQ==
+X-Google-Smtp-Source: ACHHUZ4wpFE0EUAqye9xqotGMvLhmDNtxQgVPciIHKq5+W8ucJFxGbhCwGQiHBHnx+hk4/2wS73nvQ==
+X-Received: by 2002:a05:600c:2249:b0:3f6:cfc7:8bc7 with SMTP id a9-20020a05600c224900b003f6cfc78bc7mr1277609wmm.17.1686228803298;
+        Thu, 08 Jun 2023 05:53:23 -0700 (PDT)
 Received: from localhost.localdomain ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id m22-20020a7bce16000000b003f7e4d143cfsm1894032wmc.15.2023.06.08.05.53.20
+        by smtp.gmail.com with ESMTPSA id m22-20020a7bce16000000b003f7e4d143cfsm1894032wmc.15.2023.06.08.05.53.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jun 2023 05:53:21 -0700 (PDT)
+        Thu, 08 Jun 2023 05:53:22 -0700 (PDT)
 From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 To:     andersson@kernel.org, robh+dt@kernel.org,
         krzysztof.kozlowski+dt@linaro.org
@@ -59,9 +59,9 @@ Cc:     johan+linaro@kernel.org, agross@kernel.org,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH v3 2/6] dt-bindings: clock: Add LPASS AUDIOCC and reset controller for SC8280XP
-Date:   Thu,  8 Jun 2023 13:53:11 +0100
-Message-Id: <20230608125315.11454-3-srinivas.kandagatla@linaro.org>
+Subject: [PATCH v3 3/6] clk: qcom: Add lpass clock controller driver for SC8280XP
+Date:   Thu,  8 Jun 2023 13:53:12 +0100
+Message-Id: <20230608125315.11454-4-srinivas.kandagatla@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20230608125315.11454-1-srinivas.kandagatla@linaro.org>
 References: <20230608125315.11454-1-srinivas.kandagatla@linaro.org>
@@ -77,62 +77,125 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The LPASS (Low Power Audio Subsystem) Audio clock controller provides reset
-support when it is under the control of Q6DSP.
+Add support for the lpass clock controller found on SC8280XP based devices.
+This would allow lpass peripheral loader drivers to control the clocks and
+bring the subsystems out of reset.
 
-Add support for those resets and adds IDs for clients to request the reset.
+Currently this patch only supports resets as the Q6DSP is in control of
+LPASS IP which manages most of the clocks via Q6PRM service on GPR rpmsg
+channel.
 
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 ---
- .../bindings/clock/qcom,sc8280xp-lpasscc.yaml          | 10 ++++++++++
- include/dt-bindings/clock/qcom,sc8280xp-lpasscc.h      |  5 +++++
- 2 files changed, 15 insertions(+)
+ drivers/clk/qcom/Kconfig            |  9 ++++
+ drivers/clk/qcom/Makefile           |  1 +
+ drivers/clk/qcom/lpasscc-sc8280xp.c | 64 +++++++++++++++++++++++++++++
+ 3 files changed, 74 insertions(+)
+ create mode 100644 drivers/clk/qcom/lpasscc-sc8280xp.c
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml
-index 047cae91f443..3326dcd6766c 100644
---- a/Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,sc8280xp-lpasscc.yaml
-@@ -19,6 +19,7 @@ description: |
- properties:
-   compatible:
-     enum:
-+      - qcom,sc8280xp-lpassaudiocc
-       - qcom,sc8280xp-lpasscc
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 9cd1f05d436b..263e55d75e3f 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -551,6 +551,15 @@ config SC_LPASSCC_7280
+ 	  Say Y if you want to use the LPASS branch clocks of the LPASS clock
+ 	  controller to reset the LPASS subsystem.
  
-   reg:
-@@ -39,6 +40,15 @@ required:
- additionalProperties: false
- 
- examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,sc8280xp-lpasscc.h>
-+    lpass_audiocc: clock-controller@32a9000 {
-+        compatible = "qcom,sc8280xp-lpassaudiocc";
-+        reg = <0x032a9000 0x1000>;
-+        #clock-cells = <1>;
-+        #reset-cells = <1>;
-+    };
++config SC_LPASSCC_8280XP
++	tristate "SC8280 Low Power Audio Subsystem (LPASS) Clock Controller"
++	depends on ARM64 || COMPILE_TEST
++	select SC_GCC_8280XP
++	help
++	  Support for the LPASS clock controller on SC8280XP devices.
++	  Say Y if you want to use the LPASS branch clocks of the LPASS clock
++	  controller to reset the LPASS subsystem.
 +
-   - |
-     #include <dt-bindings/clock/qcom,sc8280xp-lpasscc.h>
-     lpasscc: clock-controller@33e0000 {
-diff --git a/include/dt-bindings/clock/qcom,sc8280xp-lpasscc.h b/include/dt-bindings/clock/qcom,sc8280xp-lpasscc.h
-index df800ea2741c..d190d57fc81a 100644
---- a/include/dt-bindings/clock/qcom,sc8280xp-lpasscc.h
-+++ b/include/dt-bindings/clock/qcom,sc8280xp-lpasscc.h
-@@ -6,6 +6,11 @@
- #ifndef _DT_BINDINGS_CLK_QCOM_LPASSCC_SC8280XP_H
- #define _DT_BINDINGS_CLK_QCOM_LPASSCC_SC8280XP_H
- 
-+/* LPASS AUDIO CC CSR */
-+#define LPASS_AUDIO_SWR_RX_CGCR				0
-+#define LPASS_AUDIO_SWR_WSA_CGCR			1
-+#define LPASS_AUDIO_SWR_WSA2_CGCR			2
+ config SC_LPASS_CORECC_7180
+ 	tristate "SC7180 LPASS Core Clock Controller"
+ 	depends on ARM64 || COMPILE_TEST
+diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+index 75d035150118..e6e294274c35 100644
+--- a/drivers/clk/qcom/Makefile
++++ b/drivers/clk/qcom/Makefile
+@@ -81,6 +81,7 @@ obj-$(CONFIG_SC_GPUCC_7180) += gpucc-sc7180.o
+ obj-$(CONFIG_SC_GPUCC_7280) += gpucc-sc7280.o
+ obj-$(CONFIG_SC_GPUCC_8280XP) += gpucc-sc8280xp.o
+ obj-$(CONFIG_SC_LPASSCC_7280) += lpasscc-sc7280.o
++obj-$(CONFIG_SC_LPASSCC_8280XP) += lpasscc-sc8280xp.o
+ obj-$(CONFIG_SC_LPASS_CORECC_7180) += lpasscorecc-sc7180.o
+ obj-$(CONFIG_SC_LPASS_CORECC_7280) += lpasscorecc-sc7280.o lpassaudiocc-sc7280.o
+ obj-$(CONFIG_SC_MSS_7180) += mss-sc7180.o
+diff --git a/drivers/clk/qcom/lpasscc-sc8280xp.c b/drivers/clk/qcom/lpasscc-sc8280xp.c
+new file mode 100644
+index 000000000000..4a0470fc6153
+--- /dev/null
++++ b/drivers/clk/qcom/lpasscc-sc8280xp.c
+@@ -0,0 +1,64 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (c) 2022, Linaro Limited
++ */
 +
- /* LPASS TCSR */
- #define LPASS_AUDIO_SWR_TX_CGCR				0
- 
++#include <linux/clk-provider.h>
++#include <linux/err.h>
++#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/of_device.h>
++#include <linux/regmap.h>
++
++#include <dt-bindings/clock/qcom,sc8280xp-lpasscc.h>
++
++#include "common.h"
++#include "reset.h"
++
++static const struct qcom_reset_map lpasscc_sc8280xp_resets[] = {
++	[LPASS_AUDIO_SWR_TX_CGCR] = { 0xc010, 1 },
++};
++
++static struct regmap_config lpasscc_sc8280xp_regmap_config = {
++	.reg_bits = 32,
++	.reg_stride = 4,
++	.val_bits = 32,
++	.name = "lpass-tcsr",
++	.max_register = 0x12000,
++};
++
++static const struct qcom_cc_desc lpasscc_sc8280xp_reset_desc = {
++	.config = &lpasscc_sc8280xp_regmap_config,
++	.resets = lpasscc_sc8280xp_resets,
++	.num_resets = ARRAY_SIZE(lpasscc_sc8280xp_resets),
++};
++
++static const struct of_device_id lpasscc_sc8280xp_match_table[] = {
++	{
++		.compatible = "qcom,sc8280xp-lpasscc",
++		.data = &lpasscc_sc8280xp_reset_desc,
++	},
++	{ }
++};
++MODULE_DEVICE_TABLE(of, lpasscc_sc8280xp_match_table);
++
++static int lpasscc_sc8280xp_probe(struct platform_device *pdev)
++{
++	const struct qcom_cc_desc *desc = of_device_get_match_data(&pdev->dev);
++
++	return qcom_cc_probe_by_index(pdev, 0, desc);
++}
++
++static struct platform_driver lpasscc_sc8280xp_driver = {
++	.probe = lpasscc_sc8280xp_probe,
++	.driver = {
++		.name = "lpasscc-sc8280xp",
++		.of_match_table = lpasscc_sc8280xp_match_table,
++	},
++};
++
++module_platform_driver(lpasscc_sc8280xp_driver);
++
++MODULE_AUTHOR("Srinivas Kandagatla <srinivas.kandagatla@linaro.org>");
++MODULE_DESCRIPTION("QTI LPASSCC SC8280XP Driver");
++MODULE_LICENSE("GPL");
 -- 
 2.25.1
 
