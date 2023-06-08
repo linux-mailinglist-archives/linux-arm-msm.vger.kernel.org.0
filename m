@@ -2,138 +2,172 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 42DC5727697
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 07:18:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63AC0727842
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 09:11:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234305AbjFHFSl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 01:18:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35388 "EHLO
+        id S235303AbjFHHLS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 03:11:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233573AbjFHFSi (ORCPT
+        with ESMTP id S233900AbjFHHLR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 01:18:38 -0400
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D9C526B8;
-        Wed,  7 Jun 2023 22:18:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1686201514; x=1717737514;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=cHXrEY01bYvheOLH7fG7jjiblWcaaSIEo6dV4ZMjUe0=;
-  b=LocKE1V9IsHhQOMmoyx+6Xu8aCJCT/IkxHeS2XhU57zhfTKCKzMh0F6K
-   ABCuJQnaPti6QoMosND/6tIMxAfGI4Yn13SbcAGAGOOxlWODFSHP26bjr
-   klQJuQjwkkMnCJDcy6A/uIkYD8QxlEHcYyIcbLMCXKsD92JbJ/Dzp3coc
-   Y5qifYizJtpJb3hHlV+GJQ8ATxksDpXpk6cH6ha4CwP7IEzt4LDQFlt7j
-   drpdnplxb2dTLH/N/gb7RgQV3jeq0/g+j6xG8BtBE/R7ILouEqzD9sAqZ
-   ZNb9xUqE6UG00LLAY6L5kysA27BIGgBss9NfhhtzsLn7A8x5oFBTqlEaA
-   w==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10734"; a="357213723"
-X-IronPort-AV: E=Sophos;i="6.00,226,1681196400"; 
-   d="scan'208";a="357213723"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2023 22:18:33 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10734"; a="703942649"
-X-IronPort-AV: E=Sophos;i="6.00,226,1681196400"; 
-   d="scan'208";a="703942649"
-Received: from lkp-server01.sh.intel.com (HELO 15ab08e44a81) ([10.239.97.150])
-  by orsmga007.jf.intel.com with ESMTP; 07 Jun 2023 22:18:27 -0700
-Received: from kbuild by 15ab08e44a81 with local (Exim 4.96)
-        (envelope-from <lkp@intel.com>)
-        id 1q782U-0007Ih-2L;
-        Thu, 08 Jun 2023 05:18:26 +0000
-Date:   Thu, 8 Jun 2023 13:18:07 +0800
-From:   kernel test robot <lkp@intel.com>
-To:     Douglas Anderson <dianders@chromium.org>,
-        Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Bjorn Andersson <andersson@kernel.org>,
+        Thu, 8 Jun 2023 03:11:17 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B31E41FDA;
+        Thu,  8 Jun 2023 00:11:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1686208271; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=EyXGzWk5qOg4GSCIAy3lW2UQjI1xBH2mtBGSiS4lAzSs70HXRrgkzrOFuoIki3D83d
+    YDiuh0FKR2xi8o6wGSFKiRGJUOsnDAuPapmnB/Vc2hqOTMOo0cyUEMJceQZYS5vNaghk
+    h9Gh6MDkEH6vOJLlMlrriJbRcrNR1yI1OjVOhq2TsfCrsZOAuNFydsJcxqgAQozLdmuY
+    AYtlaCGXeAnpYg9qxYTJqIRb/7vb7olEiEgaONeXhfCxvDujh4eRqsTQa1WpPODoZukP
+    XtpK2YNe8ClKjoqXEDUnU89pdqDfQc9HcRAGezrOnrE2eEX7kHVK8H2CVRPJrA/4pWpm
+    oFuA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686208271;
+    s=strato-dkim-0002; d=strato.com;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=e94V8Kezz3qtY3xLT9x24/ZhCtGOkVTLukjovOp8Io0=;
+    b=ODlssyIGnyL66sBAo+w/jXpRmaHUtTrPofEfinPuvGX8T2jlAhXOiRG89gAv59D9At
+    F6RWqNNNdkld7jIJIVgXqhKeBGN4+7KljMcU/aVv41l8+Wv7QFBFeYv4he4hDSjZpRO5
+    tr9unK0eIzISlHaCyTrw6nnTefDb9hHoc4iLNeuwo6UcqABkEmASMmKJglb54keWytmJ
+    +m4tH/WervtCk55XT2PlZCFILogmY/mjM345Vgsos+TVZ1hWQgM1gyCwEkPG7BODlvk2
+    rxlV5LJjDRZ5QY7a3hGiHXIoui/wL/1mW4Awee69vKK+ndVod4ft+xuo3DGKtlfvSTef
+    QtKg==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686208271;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=e94V8Kezz3qtY3xLT9x24/ZhCtGOkVTLukjovOp8Io0=;
+    b=o9PYSaDyoBym2xOkZGzTgE5tTfSTI0LWSonNqs8FenqHEjukJPato+qEE/D8FHdcOQ
+    vtGPl2R1kMob6gwsEI9evgnCCJjsTOFUkzYgSg/M8bEeWsFl9CGgroi/qxPJHPiz1Pwx
+    PcnZrBMU17zwL/fe/k8ZksCH9bU5QA/U8xFoNDEIOit6i31Joz2lLqgDJ6LtP4mBLnwp
+    tMfL50LCDcPFWiMl+Dny0nDFLmN+bHQpnqc0XhnejVPwXUqUyqNDuQc3OjWMMUdRFx11
+    f+h1CZ8wzF+DjC2gmIqXFpX03wttEOcMWlarP0LXdqdePxDwuxZIVOqS69in/tYEuaHd
+    UjRw==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686208271;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=Cc:To:Message-Id:Date:Subject:From:Cc:Date:From:Subject:Sender;
+    bh=e94V8Kezz3qtY3xLT9x24/ZhCtGOkVTLukjovOp8Io0=;
+    b=h3+wXnICtH32yfWZObSS2Lj1ds/ix142rEBxSZwxwrVU0kTqtoPhzVeX+AUJBiT/DH
+    qLCL9glieObTZivubxDA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQjVd4CteZ/7jYgS+mLFY+H0JAn8u4ly9TY="
+Received: from [192.168.244.3]
+    by smtp.strato.de (RZmta 49.5.3 DYNA|AUTH)
+    with ESMTPSA id Z82ec2z587BBKHt
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 8 Jun 2023 09:11:11 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH v2 00/12] Add dedicated device tree node for RPM
+ processor/subsystem
+Date:   Thu, 08 Jun 2023 09:10:20 +0200
+Message-Id: <20230531-rpm-rproc-v2-0-56a4a00c8260@gerhold.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANx+gWQC/22NTQ6CMBCFr0JmbU1LAdGV9zAsSjvQJtiSKRIN4
+ e6OrF28xffyfjbISAEz3IoNCNeQQ4oM5akA600cUQTHDKUstay1EjQ/WZSsuNStbqpWX61zwPn
+ eZBQ9mWg9N+JrmticCYfwPg4eHbMPeUn0Of5W9XP/Ta9KSIHS6L5xqAZV3UcknyZ3jrhAt+/7F
+ ylWJ+q5AAAA
+To:     Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     oe-kbuild-all@lists.linux.dev,
-        Douglas Anderson <dianders@chromium.org>,
-        devicetree@vger.kernel.org, cros-qcom-dts-watchers@chromium.org,
-        linux-arm-msm@vger.kernel.org,
-        yangcong5@huaqin.corp-partner.google.com,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        Chris Morgan <macroalpha82@gmail.com>,
-        linux-input@vger.kernel.org, hsinyi@google.com
-Subject: Re: [PATCH v2 08/10] HID: i2c-hid: Support being a panel follower
-Message-ID: <202306081344.M0jNn0Ce-lkp@intel.com>
-References: <20230607144931.v2.8.Ib1a98309c455cd7e26b931c69993d4fba33bbe15@changeid>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230607144931.v2.8.Ib1a98309c455cd7e26b931c69993d4fba33bbe15@changeid>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.2
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Douglas,
+The Resource Power Manager (RPM) currently does not have a dedicated 
+device tree node that represents the remoteproc/subsystem. The 
+functionality exposed through the SMD/GLINK channels is described in 
+top-level nodes of the device tree. This makes it hard to group other 
+functionality provided by the RPM together in the device tree. This 
+series adds a single top-level remoteproc-rpm/rpm-proc device tree node 
+that groups all RPM functionality together.
 
-kernel test robot noticed the following build errors:
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+Changes in v2:
+- Pick up review/test tags from Konrad and Krzysztof
+- Rename "remoteproc-rpm" -> "remoteproc" everywhere (Krzysztof/Konrad)
+- "dt-bindings: remoteproc: Add Qualcomm RPM processor/subsystem"
+  - Squash with other dt-bindings changes to have atomic refactoring (Krzysztof)
+  - Add diagrams from discussion as clarification
+- "soc: qcom: smem: Add qcom_smem_is_available()"
+  - Add return documentation in qcom_smem_is_available() (Konrad)
+- "soc: qcom: Add RPM processor/subsystem driver"
+  - Add missing of_node_put(), fix children (Konrad)
+  - Add depends on RPMSG_QCOM_SMD || RPMSG_QCOM_SMD=n to fix build 
+    error in weird kernel configurations (kernel test robot)
+- Link to v1: https://lore.kernel.org/r/20230531-rpm-rproc-v1-0-e0a3b6de1f14@gerhold.net
 
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on hid/for-next dtor-input/next dtor-input/for-linus]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+---
+Stephan Gerhold (12):
+      dt-bindings soc: qcom: smd-rpm: Fix sort order
+      dt-bindings: soc: qcom: smd-rpm: Add MSM8909 to qcom,smd-channels
+      dt-bindings: soc: qcom: smd-rpm: Add some more compatibles
+      soc: qcom: smd-rpm: Match rpmsg channel instead of compatible
+      dt-bindings: remoteproc: Add Qualcomm RPM processor/subsystem
+      soc: qcom: smem: Add qcom_smem_is_available()
+      rpmsg: qcom_smd: Use qcom_smem_is_available()
+      soc: qcom: Add RPM processor/subsystem driver
+      arm64: dts: qcom: Add rpm-proc node for SMD platforms
+      arm64: dts: qcom: Add rpm-proc node for GLINK gplatforms
+      ARM: dts: qcom: Add rpm-proc node for SMD platforms
+      ARM: dts: qcom: apq8064: Drop redundant /smd node
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Douglas-Anderson/dt-bindings-HID-i2c-hid-Add-panel-property-to-i2c-hid-backed-touchscreens/20230608-055515
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20230607144931.v2.8.Ib1a98309c455cd7e26b931c69993d4fba33bbe15%40changeid
-patch subject: [PATCH v2 08/10] HID: i2c-hid: Support being a panel follower
-config: arc-randconfig-r021-20230607 (https://download.01.org/0day-ci/archive/20230608/202306081344.M0jNn0Ce-lkp@intel.com/config)
-compiler: arceb-elf-gcc (GCC) 12.3.0
-reproduce (this is a W=1 build):
-        mkdir -p ~/bin
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        git remote add robh https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git
-        git fetch robh for-next
-        git checkout robh/for-next
-        b4 shazam https://lore.kernel.org/r/20230607144931.v2.8.Ib1a98309c455cd7e26b931c69993d4fba33bbe15@changeid
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.3.0 ~/bin/make.cross W=1 O=build_dir ARCH=arc olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.3.0 ~/bin/make.cross W=1 O=build_dir ARCH=arc SHELL=/bin/bash
+ .../bindings/remoteproc/qcom,rpm-proc.yaml         | 171 +++++++++++++++++++++
+ .../devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml |  23 ++-
+ .../devicetree/bindings/soc/qcom/qcom,smd.yaml     |   7 +
+ arch/arm/boot/dts/qcom-apq8064.dtsi                |  40 -----
+ arch/arm/boot/dts/qcom-apq8084.dtsi                |   6 +-
+ arch/arm/boot/dts/qcom-msm8226.dtsi                |  38 ++---
+ arch/arm/boot/dts/qcom-msm8974.dtsi                |  44 +++---
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi              |  48 +++---
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi              |  28 ++--
+ arch/arm64/boot/dts/qcom/msm8916.dtsi              |   6 +-
+ arch/arm64/boot/dts/qcom/msm8939.dtsi              | 112 +++++++-------
+ arch/arm64/boot/dts/qcom/msm8953.dtsi              | 136 ++++++++--------
+ arch/arm64/boot/dts/qcom/msm8976.dtsi              | 152 +++++++++---------
+ arch/arm64/boot/dts/qcom/msm8994.dtsi              |  99 ++++++------
+ arch/arm64/boot/dts/qcom/msm8996.dtsi              | 113 +++++++-------
+ arch/arm64/boot/dts/qcom/msm8998.dtsi              |  98 ++++++------
+ arch/arm64/boot/dts/qcom/qcm2290.dtsi              | 126 +++++++--------
+ arch/arm64/boot/dts/qcom/qcs404.dtsi               | 152 +++++++++---------
+ arch/arm64/boot/dts/qcom/sdm630.dtsi               | 132 ++++++++--------
+ arch/arm64/boot/dts/qcom/sm6115.dtsi               | 128 +++++++--------
+ arch/arm64/boot/dts/qcom/sm6125.dtsi               | 140 +++++++++--------
+ arch/arm64/boot/dts/qcom/sm6375.dtsi               | 126 +++++++--------
+ drivers/rpmsg/qcom_smd.c                           |  10 +-
+ drivers/soc/qcom/Kconfig                           |   1 +
+ drivers/soc/qcom/Makefile                          |   2 +-
+ drivers/soc/qcom/rpm-proc.c                        |  77 ++++++++++
+ drivers/soc/qcom/smd-rpm.c                         |  35 ++---
+ drivers/soc/qcom/smem.c                            |  11 ++
+ include/linux/soc/qcom/smem.h                      |   1 +
+ 29 files changed, 1161 insertions(+), 901 deletions(-)
+---
+base-commit: 8d5a57ea6a0b1722725170e32e511701ca7c454c
+change-id: 20230531-rpm-rproc-758364839cdd
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202306081344.M0jNn0Ce-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   `.exit.text' referenced in section `__jump_table' of lib/test_dynamic_debug.o: defined in discarded section `.exit.text' of lib/test_dynamic_debug.o
-   `.exit.text' referenced in section `__jump_table' of lib/test_dynamic_debug.o: defined in discarded section `.exit.text' of lib/test_dynamic_debug.o
-   `.exit.text' referenced in section `__jump_table' of drivers/misc/phantom.o: defined in discarded section `.exit.text' of drivers/misc/phantom.o
-   `.exit.text' referenced in section `__jump_table' of drivers/misc/phantom.o: defined in discarded section `.exit.text' of drivers/misc/phantom.o
-   `.exit.text' referenced in section `__jump_table' of drivers/target/target_core_configfs.o: defined in discarded section `.exit.text' of drivers/target/target_core_configfs.o
-   `.exit.text' referenced in section `__jump_table' of drivers/target/target_core_configfs.o: defined in discarded section `.exit.text' of drivers/target/target_core_configfs.o
-   arceb-elf-ld: drivers/hid/i2c-hid/i2c-hid-core.o: in function `i2c_hid_core_remove':
-   drivers/hid/i2c-hid/i2c-hid-core.c:1218: undefined reference to `drm_panel_remove_follower'
->> arceb-elf-ld: drivers/hid/i2c-hid/i2c-hid-core.c:1218: undefined reference to `drm_panel_remove_follower'
-   arceb-elf-ld: drivers/hid/i2c-hid/i2c-hid-core.o: in function `i2c_hid_core_probe':
-   drivers/hid/i2c-hid/i2c-hid-core.c:1159: undefined reference to `drm_panel_add_follower'
->> arceb-elf-ld: drivers/hid/i2c-hid/i2c-hid-core.c:1159: undefined reference to `drm_panel_add_follower'
-
+Best regards,
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Stephan Gerhold <stephan@gerhold.net>
+
