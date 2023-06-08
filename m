@@ -2,67 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A09B728447
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 17:54:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B19D728470
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 18:01:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237473AbjFHPyK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 11:54:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42634 "EHLO
+        id S236607AbjFHQAn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 12:00:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236732AbjFHPyJ (ORCPT
+        with ESMTP id S237597AbjFHQAX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 11:54:09 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FBBC30F6
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 08:53:44 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id 5614622812f47-3909756b8b1so439272b6e.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 08:53:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686239617; x=1688831617;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=i3MkbyEQhd9XzAzL+T/IkEeTSb88Nr2kPqCfa3UMTGA=;
-        b=irMhvMTvNMqSNRq8QdWr4K3wwDf4Ivwnp4zM+LRHgAvpHsEH/2aaT3wAyLhHctpLcQ
-         Nbzfo5LTIoHTEj0DA/ozKoDsVo7EaddHDS25/FOsqgs2U90RqWigZn8p8CdXfaOvrXPc
-         kAf7iP7L3eLEhCxdOFTvA09dXgAcKRmj/8Cb4DhUSlnfVt5hMc9Gua7f3FoiMaZl/IyV
-         2zJpzMYc/0Yk2V/uo6+VZ6qK1rCf+CRDP0Ufy5yJz1X5yPmVyHykTaO+XD6eDM+vvwZt
-         ShT5mjjMZyOATsZwmhrzjzFD3PAFUwT+7Ieq30Y5QQluSOzT39FsDoBjd5Dbe2xLVYev
-         tVEA==
+        Thu, 8 Jun 2023 12:00:23 -0400
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04BDB30FA;
+        Thu,  8 Jun 2023 08:59:46 -0700 (PDT)
+Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-33c37f62e24so2572545ab.3;
+        Thu, 08 Jun 2023 08:59:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686239617; x=1688831617;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=i3MkbyEQhd9XzAzL+T/IkEeTSb88Nr2kPqCfa3UMTGA=;
-        b=Gk4vp6ddoIHxvcCM+J4d9pLRsYzo/1gOvm1VDp8kgA9ZsGd1HhEhNP5ax5wG/VYoR/
-         b+ZW+lHvem3b+ZX/9nj0uCVdopxKMjBDNcDwWCFR4qGioX8XYlkphkTZyHeo9Pelb2Zw
-         NC2jDiu3IosKdsP1LQqqmtE9V3jzcrU+SvbOPusnEIUy80rDcTGaHQhV2amOTQo1mD81
-         hvqpVWkMxObrfVeEXkJbtcQZqFt6AU4gh2TaskNznRs8ANoGw9RROzRvtAnRmS25erC/
-         5wutFrNrgVOwtzoz9j5MyE/OFJaqzlYn+ouIJ2oOQUF1Ccyo+22pm8+0S7ngrqzZpcvY
-         w0hA==
-X-Gm-Message-State: AC+VfDy/rjFcg5dWpcoJXVUqxcBnMZTOuRxgIjIcDU8c/CuPoAGznAxR
-        5C9E3m4UB8vRYhauR4JFbJOk2GQfD9gAImiXAjkrFg==
-X-Google-Smtp-Source: ACHHUZ67b0A6vEqzzfatB0AWylvHrVFokSygfhaIN9VTYUNCYumwZInyoKyuq2SHD85W7890zFDW3fB3H9QgwVyDaUA=
-X-Received: by 2002:a54:4502:0:b0:398:84:de1c with SMTP id l2-20020a544502000000b003980084de1cmr4934080oil.2.1686239617005;
- Thu, 08 Jun 2023 08:53:37 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230518-msm8916-64bit-v1-1-5694b0f35211@gerhold.net>
-In-Reply-To: <20230518-msm8916-64bit-v1-1-5694b0f35211@gerhold.net>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 8 Jun 2023 17:53:01 +0200
-Message-ID: <CAPDyKFqGdC9y9UAknREfT_TCsJH6pPG7UqL1EXET2_=j9PSCbQ@mail.gmail.com>
-Subject: Re: [PATCH] mmc: sdhci-msm: Disable broken 64-bit DMA on MSM8916
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+        d=1e100.net; s=20221208; t=1686239985; x=1688831985;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5r0/vEh4IS5CMehqDj3ctEUZ6TxjRX/vT01dCyAoI8Y=;
+        b=I0HPpMpnkma2hXICGLoFeShTWJiEgVIUUO2GghL51tjblvcYrni55sbti+bbhZ8KxZ
+         8Wo3W/DFb0vOByeuqeAhithuzdnSlY+n2gfSFweXSkgRcscbWvQCWfRtRAJw/NZRo7+F
+         tnr2iEIgk89Jjoq0c5BJg9mKS6R3uVyxYDSB/hKOAeRruOnKWe5YGCOCrcwrHFUL/ZCz
+         Jwc69H6FqrABfzdOU6YRrvCN0MoZPzdlMIKxH7Bs/7YUoQPPY+GpgmEUBYZuNSqRvkXj
+         pvsEWv11L2+cvOsf2YumyPl/U0MYgGN1ueKhv+q2C1ddRmoTSEcZC3jXf51CDIxhERNF
+         uzmw==
+X-Gm-Message-State: AC+VfDwBtOQWoNjEliXOaz3EzFyHgSe4gZDpa/FPRMtMhynliE1FA9ji
+        olRGpUMgcoPqK3fZUA2d13Ki5vo4+Q==
+X-Google-Smtp-Source: ACHHUZ7yk/NvwHUsPeiu/6vyCXx/dPrCVQq8P60NJEQ0devZOoPizQaTXfmpEHi948NP/F4ArSEhJQ==
+X-Received: by 2002:a92:c710:0:b0:33e:7eb4:8fd3 with SMTP id a16-20020a92c710000000b0033e7eb48fd3mr1569079ilp.10.1686239985202;
+        Thu, 08 Jun 2023 08:59:45 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id p5-20020a92d685000000b00331139b467bsm487093iln.21.2023.06.08.08.59.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Jun 2023 08:59:43 -0700 (PDT)
+Received: (nullmailer pid 2770356 invoked by uid 1000);
+        Thu, 08 Jun 2023 15:59:42 -0000
+Date:   Thu, 8 Jun 2023 09:59:42 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Sebastian Reichel <sre@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Subject: Re: [PATCH v3 1/4] dt-bindings: power: reset: qcom-pon: define
+ pm8941-pon
+Message-ID: <168623998109.2770281.12624541362600655020.robh@kernel.org>
+References: <20230531014248.3824043-1-dmitry.baryshkov@linaro.org>
+ <20230531014248.3824043-2-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230531014248.3824043-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -70,82 +71,17 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 18 May 2023 at 11:39, Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> While SDHCI claims to support 64-bit DMA on MSM8916 it does not seem to
-> be properly functional. It is not immediately obvious because SDHCI is
-> usually used with IOMMU bypassed on this SoC, and all physical memory
-> has 32-bit addresses. But when trying to enable the IOMMU it quickly
-> fails with an error such as the following:
->
->   arm-smmu 1e00000.iommu: Unhandled context fault:
->     fsr=0x402, iova=0xfffff200, fsynr=0xe0000, cbfrsynra=0x140, cb=3
->   mmc1: ADMA error: 0x02000000
->   mmc1: sdhci: ============ SDHCI REGISTER DUMP ===========
->   mmc1: sdhci: Sys addr:  0x00000000 | Version:  0x00002e02
->   mmc1: sdhci: Blk size:  0x00000008 | Blk cnt:  0x00000000
->   mmc1: sdhci: Argument:  0x00000000 | Trn mode: 0x00000013
->   mmc1: sdhci: Present:   0x03f80206 | Host ctl: 0x00000019
->   mmc1: sdhci: Power:     0x0000000f | Blk gap:  0x00000000
->   mmc1: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
->   mmc1: sdhci: Timeout:   0x0000000a | Int stat: 0x00000001
->   mmc1: sdhci: Int enab:  0x03ff900b | Sig enab: 0x03ff100b
->   mmc1: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
->   mmc1: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x00008007
->   mmc1: sdhci: Cmd:       0x0000333a | Max curr: 0x00000000
->   mmc1: sdhci: Resp[0]:   0x00000920 | Resp[1]:  0x5b590000
->   mmc1: sdhci: Resp[2]:   0xe6487f80 | Resp[3]:  0x0a404094
->   mmc1: sdhci: Host ctl2: 0x00000008
->   mmc1: sdhci: ADMA Err:  0x00000001 | ADMA Ptr: 0x0000000ffffff224
->   mmc1: sdhci_msm: ----------- VENDOR REGISTER DUMP -----------
->   mmc1: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:  0x60006400 | DLL cfg2: 0x00000000
->   mmc1: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:  0x00000000 | DDR cfg: 0x00000000
->   mmc1: sdhci_msm: Vndr func: 0x00018a9c | Vndr func2 : 0xf88018a8 Vndr func3: 0x00000000
->   mmc1: sdhci: ============================================
->   mmc1: sdhci: fffffffff200: DMA 0x0000ffffffffe100, LEN 0x0008, Attr=0x21
->   mmc1: sdhci: fffffffff20c: DMA 0x0000000000000000, LEN 0x0000, Attr=0x03
->
-> Looking closely it's obvious that only the 32-bit part of the address
-> (0xfffff200) arrives at the SMMU, the higher 16-bit (0xffff...) get
-> lost somewhere. This might not be a limitation of the SDHCI itself but
-> perhaps the bus/interconnect it is connected to, or even the connection
-> to the SMMU.
->
-> Work around this by setting SDHCI_QUIRK2_BROKEN_64_BIT_DMA to avoid
-> using 64-bit addresses.
->
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 
-Applied for fixes and by adding a stable tag, thanks!
-
-Kind regards
-Uffe
-
-
+On Wed, 31 May 2023 04:42:45 +0300, Dmitry Baryshkov wrote:
+> On PM8941 pon doesn't store the reset reason. However we still need the
+> wrapping node for pwrkey and resin nodes. Add bindings for pm8941-pon
+> device.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/mmc/host/sdhci-msm.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index 8ac81d57a3df..1877d583fe8c 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -2479,6 +2479,9 @@ static inline void sdhci_msm_get_of_property(struct platform_device *pdev,
->                 msm_host->ddr_config = DDR_CONFIG_POR_VAL;
->
->         of_property_read_u32(node, "qcom,dll-config", &msm_host->dll_config);
-> +
-> +       if (of_device_is_compatible(node, "qcom,msm8916-sdhci"))
-> +               host->quirks2 |= SDHCI_QUIRK2_BROKEN_64_BIT_DMA;
->  }
->
->  static int sdhci_msm_gcc_reset(struct device *dev, struct sdhci_host *host)
->
-> ---
-> base-commit: d4ebc9419afbac330e9ec0d2936108742aa4d97a
-> change-id: 20230518-msm8916-64bit-f5bcf6af7679
->
-> Best regards,
-> --
-> Stephan Gerhold <stephan@gerhold.net>
->
+>  .../devicetree/bindings/power/reset/qcom,pon.yaml    | 12 +++++++++++-
+>  1 file changed, 11 insertions(+), 1 deletion(-)
+> 
+
+Acked-by: Rob Herring <robh@kernel.org>
+
