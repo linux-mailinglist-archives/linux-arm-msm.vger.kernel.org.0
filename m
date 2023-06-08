@@ -2,76 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B52F727E8C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 13:14:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8F5F4727ED6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 13:33:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233894AbjFHLOP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 07:14:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41116 "EHLO
+        id S235769AbjFHLd2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 07:33:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49936 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232637AbjFHLOO (ORCPT
+        with ESMTP id S235589AbjFHLd1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 07:14:14 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 73A1D1BD3
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 04:14:11 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3f6d3f83d0cso4040085e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 04:14:11 -0700 (PDT)
+        Thu, 8 Jun 2023 07:33:27 -0400
+Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18AD2270F
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 04:33:25 -0700 (PDT)
+Received: by mail-ed1-x532.google.com with SMTP id 4fb4d7f45d1cf-5147f7d045bso718789a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 04:33:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686222850; x=1688814850;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=y++8eb57xKQGjRxPQt0BHBMYouZ1Xv40QTV3/gF3FiQ=;
-        b=esU7Vh/MUaKl3oy5Ki0cEC9fkOn2Oocdcw9MXRFD9yAUSPTazhIw/9+VE5DaSap8V9
-         28/kghfeYMato8IDNpc1eOamE5JHi/X0oR0t6GTQB+BJvoT7JBMHHQIaHIn+BLTbMzub
-         wc9nyVl70H/VuEJXmhnEoQOZT21bygy6zt+6D/TB7r755HJeAFkoI1DFNGz1Myv0wh+Y
-         1DT6xLn5nDVsjHJEgbwMUULNzcBJCToBs9LVKeRxHz2iU+ne+TufpQXlr3hgq3C3Xky7
-         Zwt7gIBDFqiqwkDg0hcZ4WpqFhg4E1fwzZwCm2E6C47Qhy2wkz0+zzN6Tr9nAs/bLYjZ
-         0GWg==
+        d=linaro.org; s=google; t=1686224003; x=1688816003;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IqHeY5G7mIeiooI7ja9w9njq/KqOX5B4nHAoGGVWiBk=;
+        b=y3dQmK7aPMR+m7bDoIYNkOxdVSh4YHDPLQ6ZD/TklPbRUFXC3ugRN4H47WJzBWQZin
+         VI+qaEpaNDYf9R21IHg6Drqcqq5TklxpZNFXf1rjDa0IlFVoNFH01SdPDuJCFAH4y4bi
+         brbYQybxma6THxKe8VbzdNkqPhu+dv9X22rbK5cCu5lHu/eF3yMswWIA8rSfPPMzdlFO
+         2nqO0pfeCqUOFWsZxc2u7NxxDsI+5AgfTJ2j7GZIElSyKC+CWg4U0iMIEUJQodualwNG
+         l7rwotR3e2nWo2eFVeX+IZGEON8e5cppPZCgNdlDpYUXg45qqrlq/R6NzPNmR2UY++yc
+         4YpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686222850; x=1688814850;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=y++8eb57xKQGjRxPQt0BHBMYouZ1Xv40QTV3/gF3FiQ=;
-        b=kZkTsLQYZxg0EsU+0D2QL1LQwPimdYNn/AE29HvgfPpsI8ADSMjGQL8z4y7jH9/VOb
-         AwRwmlMI/qmMwnJx26m7QoGvRXxuSFbmzmK4Gs3awyU1FCIHyazpGx9vB6CTDNXx9ng4
-         dMetsn0do37t/TtYOHOH0mspmNqhhfKLPzz6B55jHfXUCxweOPP6HSaEHrGlfPEBFc+t
-         NNenowhnzrAE0tgHvqOjM4osvPLpqgyAFGc0wzwece18fhctMl461up/iYGRjCKCoxl9
-         FxSaG3A93i0ORp2Q9ydbUW7ZjtoociyQZYLk+GlJY9/reR/+mMhKNOUWKkQF8qv9zk4o
-         Jy9g==
-X-Gm-Message-State: AC+VfDw6qs+zf/eTvPpxG+7y/LRaOrnekf+65XQwCkqIc3yORr5yWDCt
-        x8B5aFE1Bg1PdrGnyCjzFUpLEA==
-X-Google-Smtp-Source: ACHHUZ4cjdXO5JTxcfyxQqFPmsPBxjeh8SXKmJh6VYrhNwxY63eQEPyo/CpgsMtF0fbFji57EFKWNw==
-X-Received: by 2002:a7b:c38d:0:b0:3f4:16bc:bd19 with SMTP id s13-20020a7bc38d000000b003f416bcbd19mr1287567wmj.23.1686222849841;
-        Thu, 08 Jun 2023 04:14:09 -0700 (PDT)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id h17-20020a05600c28d100b003f727764b10sm1696661wmd.4.2023.06.08.04.14.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jun 2023 04:14:08 -0700 (PDT)
-Date:   Thu, 8 Jun 2023 14:14:04 +0300
-From:   Dan Carpenter <dan.carpenter@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, kernel-janitors@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dpu: tidy up some error checking
-Message-ID: <0a28b64f-e403-46a8-81c9-d1665e8d6948@kadam.mountain>
-References: <ZH7vP2Swu8CYpgUL@moroto>
- <gkeclhi5ouudxiwbd6wds7y2svtdcamyuqcnk42z7hr2js52qh@25ox3nxgeuzp>
- <b27d016b-ff87-435b-8341-45a4369049fa@kadam.mountain>
- <b7762fab-ba49-3929-281d-ca57280e31fc@linaro.org>
+        d=1e100.net; s=20221208; t=1686224003; x=1688816003;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=IqHeY5G7mIeiooI7ja9w9njq/KqOX5B4nHAoGGVWiBk=;
+        b=RoGRmAGKK8Fwuv0xMnec0EE7+fwBd9XIbVTVGAh2LbPkid00PRfBVkUt1ZgsFgrMNV
+         JvqrHRsFbK2aJDl6DCfn3Q7uhOyK2uyCsGjSriqJ2tYnx6yBw1urhOKPEVr4vPbBevFT
+         teoKqS7aG8Vz4KYYPlVAscC/n0TdN7j02Mgu/DX+o8SA9D65mc20aWi+RzPk0x/892u7
+         RxYri5VI1RLPWHlmCF3262cNLGEgX7pWHNRjC4vwQKsOROxJwV0HbE545X4HElj2XyQm
+         KuEdB7oYLDH3MGltkvHXrStmmuCKmRSQiDCC05ffUEwW2cecojhRCXkwWC+7NrYyMo09
+         pnFQ==
+X-Gm-Message-State: AC+VfDzWhY+GG3IHj8pgj4uCRq4nda/FsLVE1fWy0s7dJ4IUOp77CI1u
+        fnFLue/EalEoiv4DtHndyhEO1A==
+X-Google-Smtp-Source: ACHHUZ6aQyz91+hCmVLZTEti1T1pr0dOoizk+qwE1qd041u3uncqQAvrfQ/LD78OhEvNKifas2zDxA==
+X-Received: by 2002:a17:907:3f13:b0:96a:19d8:f082 with SMTP id hq19-20020a1709073f1300b0096a19d8f082mr11607970ejc.25.1686224003570;
+        Thu, 08 Jun 2023 04:33:23 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id n15-20020a170906b30f00b0096f67b55b0csm585508ejz.115.2023.06.08.04.33.22
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 Jun 2023 04:33:23 -0700 (PDT)
+Message-ID: <093c23a6-1c0f-6e86-3abb-a8267ebeed52@linaro.org>
+Date:   Thu, 8 Jun 2023 13:33:21 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b7762fab-ba49-3929-281d-ca57280e31fc@linaro.org>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [RESEND PATCH v1 1/2] dt-bindings: misc: fastrpc: add fastrpc
+ group IDs property
+Content-Language: en-US
+To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
+        srinivas.kandagatla@linaro.org, linux-arm-msm@vger.kernel.org
+Cc:     ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
+        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+        conor+dt@kernel.org, devicetree@vger.kernel.org
+References: <1686155407-20054-1-git-send-email-quic_ekangupt@quicinc.com>
+ <1686155407-20054-2-git-send-email-quic_ekangupt@quicinc.com>
+ <44267461-e6f9-b549-a8eb-cba76384660b@linaro.org>
+ <ced52be4-d5eb-2dcb-ce8a-f737fbcab1b6@quicinc.com>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <ced52be4-d5eb-2dcb-ce8a-f737fbcab1b6@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,29 +83,85 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 08, 2023 at 02:26:14AM +0300, Dmitry Baryshkov wrote:
-> On 07/06/2023 17:42, Dan Carpenter wrote:
-> > On Tue, Jun 06, 2023 at 10:23:46PM +0200, Marijn Suijten wrote:
-> > > > @@ -359,8 +359,8 @@ static void dpu_encoder_phys_cmd_tearcheck_config(
-> > > >   	 * frequency divided by the no. of rows (lines) in the LCDpanel.
-> > > >   	 */
-> > > >   	vsync_hz = dpu_kms_get_clk_rate(dpu_kms, "vsync");
-> > > > -	if (vsync_hz <= 0) {
-> > > > -		DPU_DEBUG_CMDENC(cmd_enc, "invalid - vsync_hz %u\n",
-> > > > +	if (!vsync_hz) {
-> > > > +		DPU_DEBUG_CMDENC(cmd_enc, "invalid - vsync_hz %lu\n",
-> > > >   				 vsync_hz);
-> > > 
-> > > Nit: no need to print the value here, you know it's zero.  Could be
-> > > clarified to just "no vsync clock".
-> > > 
-> > 
-> > Yeah.  That's obviously not useful.  Sorry, I will resend.
+On 08/06/2023 12:36, Ekansh Gupta wrote:
 > 
-> I'll fix while applying. Seems easier.
+> 
+> On 6/8/2023 12:14 AM, Krzysztof Kozlowski wrote:
+>> On 07/06/2023 18:30, Ekansh Gupta wrote:
+>>> Add "qcom,fastrpc-gids" property to the list of optional properties.
+>>> This property contains the list of privileged group IDs which is
+>>> used to offload process to remote subsystem with increased privileges.
+>>
+>> Why or when anyone would use this property?
+>>
+> This property can be used for the use cases which requires prioritized 
+> access to remote subsystem resources.
 
-Thanks!
+This does not help me much yet.... Which systems or boards need
+prioritized access?
 
-regards,
-dan carpenter
+>>>
+>>> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+>>> ---
+>>>   Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml | 6 ++++++
+>>>   1 file changed, 6 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+>>> index 1ab9588..2a2124f 100644
+>>> --- a/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+>>> +++ b/Documentation/devicetree/bindings/misc/qcom,fastrpc.yaml
+>>> @@ -57,6 +57,11 @@ properties:
+>>>         Virtual machine IDs for remote processor.
+>>>       $ref: "/schemas/types.yaml#/definitions/uint32-array"
+>>>   
+>>> +  qcom,fastrpc-gids:
+>>> +    description:
+>>> +      Group IDs for fastrpc.
+>>
+>> You just pasted here property name. It does not help me to understand
+>> what's this. Explain in description.
+>>
+> I'll add more details here when I re-submit the patch.
+>>> +    $ref: "/schemas/types.yaml#/definitions/uint32-array"
+>>
+>> Drop quotes.
+>>
+>> missing min/maxItems.
+>>
+> I'll update this in v2. Thanks for reviewing.
+>>> +
+>>>     "#address-cells":
+>>>       const: 1
+>>>   
+>>> @@ -120,6 +125,7 @@ examples:
+>>>               qcom,glink-channels = "fastrpcglink-apps-dsp";
+>>>               label = "sdsp";
+>>>               qcom,non-secure-domain;
+>>> +            qcom,fastrpc-gids = <2908>
+>>
+>> Eh, what does 2908 stands for? Why not 3012 or 1842? How anyone can
+>> figure this out?
+>>
+> There is no hard restriction for this value to be 2908, it can be 
+> anything. Just that the process which needs a privileged offload to any 
+> remote subsystem should have the same gid which is defined here, whether 
+> it is 2908 or anything else.
+> 
+> The intention of having 2908 in example is because this is used in 
+> Android world where any process running with 2908 gid can offload as 
+> privileged process to remote subsystem.
+> Ref: 
+> https://review.lineageos.org/c/LineageOS/android_device_motorola_sm7250-common/+/305612/4/config.fs
+> 
+> But, it can be set to anything just that the process also needs to adapt 
+> to this gid.
+
+So this is process ID? Group ID? GID? Why would you ever encode group
+IDs, which change in every installation, or process IDs, which change
+every boot, in DTS common for all devices?
+
+This is not a DT property.
+
+Best regards,
+Krzysztof
 
