@@ -2,60 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D715F727CCD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 12:28:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39A8F727CD9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  8 Jun 2023 12:31:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234979AbjFHK2s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 06:28:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45972 "EHLO
+        id S232280AbjFHKbb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 8 Jun 2023 06:31:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234268AbjFHK2r (ORCPT
+        with ESMTP id S231626AbjFHKba (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 06:28:47 -0400
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D58DF1FFE
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 03:28:45 -0700 (PDT)
-Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-9745ba45cd1so72551966b.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 03:28:45 -0700 (PDT)
+        Thu, 8 Jun 2023 06:31:30 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C337F272A
+        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 03:31:28 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-977ed383b8aso83614066b.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 03:31:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686220124; x=1688812124;
+        d=linaro.org; s=google; t=1686220287; x=1688812287;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=c258s4U6/uB0fFK+kkkJP9/66TeoJi5GTHBuhzJ9DxY=;
-        b=yeRMjPSCx+M6+/CSSeYgG+go+Ky6s/WcThZk+Y1bvAxa6PqlRTO96VCVBODsSnb75m
-         5k95xXAZesqYogf8oNWeXAQwda61sbAicCouSGzKQqQLFg46ConF1t/Dm3IfNzy7vG4p
-         ItwBBKt3t55BoXztH8W82fAzInjnII47/XT2yqzTx4jkSiJGFVGtEDHKqu98BMfKG4RQ
-         lRVMyFquEH9/DysH7Zt5A/poaNx3jcRggJVrhgx50HhUXrG/2Hdju7nUFj96/F2cyzLQ
-         R71m6etEvgsyKATt4bWBs58/an6B/OYqNSgSEnHK5z3vZBlQi/8Jle6dOk5dk5QLlvl1
-         jkbA==
+        bh=lzabY7vXSDqTV0zHyDdUt7dcTAnwiZRufWPLQL0ZyLA=;
+        b=n8X5h+Zkf38JIxcmKu62gby5+eiL8pdtiAbRBmu+s09P+cpu1koLaXQqKpAo4pB5bm
+         uLaehMpVXwxW64CwemDjLlQXSmvw8/tHkCKYLPvOw1KV88eOPmGW9dmW1PD0a145lWMC
+         qLPQHjMeusyicTY973jCVWPYgM10Re+3PsUO0mvo8fm3W1xoRZGB6iHt/md87S/ewi2z
+         o96ARDb5NeTtezdjsEgK98yfAd+UYbZQ/gQAek7wFeDIeB/VrTHfo2Pk6Q5icjsySBxe
+         yLX0p31qylEfkMPPVrv+oLXRsLMA7HYZVvoGQSyjSfkvXPvpdjmI3K/m9og5Y0Qfo/B7
+         QN6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686220124; x=1688812124;
+        d=1e100.net; s=20221208; t=1686220287; x=1688812287;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=c258s4U6/uB0fFK+kkkJP9/66TeoJi5GTHBuhzJ9DxY=;
-        b=XkVQwll7gi7ilZ1F8Xd3PxVxQdWvQ63aiV4LhQDh3xVvNl5fN9Cqf2LFuMFrSQ7Wsb
-         uwKmcgPFwwcEnfuRcI8nmak3lAVxYTJcJqH4CIFKOR3f0xEH+ZBJP0UnOXBL7a7rE5kY
-         lrykAGkDaSLC1/YJHbnAtcDBU+tsaCJb2CuVWu1Fg+SgwVOpSDhuFADmN4KTcrGBb1+9
-         qcSqI2WUA11OdnySsMJCt37d6/q7CMC1i6Xr92nLfDwfYtKIJQhZ91gzZAxsFSZkYEaM
-         zEUl2LpvLfCfJi6+ktVaz9VDKlAPgeLcsvhZxsD/LZm0z5zPaKQ0dTt1RRcq0W8Bh3Bl
-         cghQ==
-X-Gm-Message-State: AC+VfDyR/Y/ggriA+EyWwenejNENswfZpaJ38YdHcjtv/BLpmJm2Bvg9
-        MbUY3086WNOKfLTC8+TiEdBbTQ==
-X-Google-Smtp-Source: ACHHUZ51+U11KfrRo1rVILyQaHwbMYnjIsvOkpRmLtsDLsGzzIqtz06R/q88jdLafKTc3hf6zh0cUg==
-X-Received: by 2002:a17:906:6a0e:b0:973:91a5:bff1 with SMTP id qw14-20020a1709066a0e00b0097391a5bff1mr10514963ejc.68.1686220124396;
-        Thu, 08 Jun 2023 03:28:44 -0700 (PDT)
+        bh=lzabY7vXSDqTV0zHyDdUt7dcTAnwiZRufWPLQL0ZyLA=;
+        b=baNyN00P7u+Z7D27i6Nr65Jt0Ks9EBLn+5BXp5862NW/z+pOMOzE/uTMo9MeqfDwYG
+         zUdmKUjeiRA03gHbYp1MVkVys+zHnKaT9gVXQBuV3cE8sXq3/pVxuDKqoc1ikyVsNKQh
+         VcgpgRIGAunEXQG3nzk/FtAaacU/ZQihVVHaxDTFfawDt2Bi57M5gzbsU48fncrJGFwL
+         MNbDANtBdSyKQGzoSmP2wugVwoTrrCP5HxJJkYqo4x9weAN6y4pVxvEN/04n8fcDzJ+8
+         5F0y9lEppJdoMNRXg+sMrGbhTGuVx401qd1sL+XsnSprnmI99uJO79zoAx+C/sD+UWCC
+         PA9A==
+X-Gm-Message-State: AC+VfDwIBCJAqpcbTwls8kksig7clI54jcjpiMvxvih27en/lLNT2ZTP
+        mA9R8WXRUvy26VNFLv8lmVJWbA==
+X-Google-Smtp-Source: ACHHUZ4Z5Myari2DC49ETLkiWHt/WB5AgmQJsJbpnXCk4MO545EImRzgj1FD2bdeeC8tyBExkyLdUw==
+X-Received: by 2002:a17:907:2d14:b0:970:925:6563 with SMTP id gs20-20020a1709072d1400b0097009256563mr10092760ejc.8.1686220287309;
+        Thu, 08 Jun 2023 03:31:27 -0700 (PDT)
 Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id b12-20020a170906660c00b00968242f8c37sm507852ejp.50.2023.06.08.03.28.42
+        by smtp.gmail.com with ESMTPSA id mc17-20020a170906eb5100b00969cbd5718asm511362ejb.48.2023.06.08.03.31.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 08 Jun 2023 03:28:43 -0700 (PDT)
-Message-ID: <a34a7c5e-577b-5d20-c23f-8007b3988bc8@linaro.org>
-Date:   Thu, 8 Jun 2023 12:28:41 +0200
+        Thu, 08 Jun 2023 03:31:26 -0700 (PDT)
+Message-ID: <f0b4b1fb-e9ba-6752-3070-dc70c25a0663@linaro.org>
+Date:   Thu, 8 Jun 2023 12:31:24 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH v2 8/8] arm64: dts: qcom: sm8550-qrd: add pmic glink
+Subject: Re: [PATCH v2 7/8] arm64: dts: qcom: sm8550-mtp: add pmic glink
  port/endpoints
 Content-Language: en-US
 To:     Neil Armstrong <neil.armstrong@linaro.org>,
@@ -71,9 +71,9 @@ Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-usb@vger.kernel.org
 References: <20230601-topic-sm8550-upstream-type-c-v2-0-3bbdf37575c3@linaro.org>
- <20230601-topic-sm8550-upstream-type-c-v2-8-3bbdf37575c3@linaro.org>
+ <20230601-topic-sm8550-upstream-type-c-v2-7-3bbdf37575c3@linaro.org>
 From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230601-topic-sm8550-upstream-type-c-v2-8-3bbdf37575c3@linaro.org>
+In-Reply-To: <20230601-topic-sm8550-upstream-type-c-v2-7-3bbdf37575c3@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -89,27 +89,15 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 07/06/2023 10:05, Neil Armstrong wrote:
 > Add nodes to support Type-C USB/DP functionality.
 > 
-> On this platform, a Type-C redriver is added to the
-> SuperSpeed graph.
-> 
 
-...
+Thank you for your patch. There is something to discuss/improve.
 
-> +			port@1 {
-> +				reg = <1>;
+
 > +
-> +				redriver_ss_in: endpoint {
-> +					data-lanes = <3 2 1 0>;
-> +					remote-endpoint = <&usb_dp_qmpphy_out>;
-> +				};
-> +			};
-> +		};
-> +	};
+> +&i2c_hub_2 {
+> +	status = "okay";
 > +
 > +	fsa4480@42 {
-
-typec-switch? typec-mux?
-
 > +		compatible = "fcs,fsa4480";
 > +		reg = <0x42>;
 > +
@@ -117,10 +105,9 @@ typec-switch? typec-mux?
 > +
 > +		mode-switch;
 > +		orientation-switch;
-> +
+> +		svid = /bits/ 16 <0xff01>;
 
-
-
+I think this property is not documented.
 
 Best regards,
 Krzysztof
