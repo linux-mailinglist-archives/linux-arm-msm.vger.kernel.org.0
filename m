@@ -2,99 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D0E9C7296A7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 12:18:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C240729709
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 12:37:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237624AbjFIKSE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 06:18:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59414 "EHLO
+        id S230379AbjFIKgp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 06:36:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38772 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239932AbjFIKRf (ORCPT
+        with ESMTP id S230506AbjFIKgW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 06:17:35 -0400
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46B564C23
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 03:09:21 -0700 (PDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-977c89c47bdso293534266b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 03:09:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686305360; x=1688897360;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Eqc/GRalmOX/Cpkh1a/xoLsbg/daV5DaountlO/f1vQ=;
-        b=wcaRhO6QN3tlsf2JnM+ZSo4mJKsailFT6iJfYjD1OZQ5iiap5M5MjbJgrvfNZkHecK
-         ZKaulST6j9eHS2TQCqqSRw3DlrfwhrOLJJcOf/cxKzo8WX0EDox2vEmotE3J/sqTGUOX
-         22e85cfTh3qhRQyCeP+5yvECj4CCUWF/gcGMrdeoLRxy+uVIsTuO9Gcx+wYjihA23yqA
-         Y91jofWfATzguUDEDZEjDTYLjihWEiy72KLl0gwn1vh0dBXXNi+P1zyJOYPIlkZvtxrK
-         2ncGFKj1HM18q+ZBovngL/zzClFjsI87iFzpDqNktj00aDMBlRT4XSlHB9vpIkyOVqKr
-         wMMQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686305360; x=1688897360;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Eqc/GRalmOX/Cpkh1a/xoLsbg/daV5DaountlO/f1vQ=;
-        b=lti++VtcmfGHNjdP+7GHB/ufzPVw+Ml9TQmEpMu+4Ac3WwWvsopwpqqr7L0NxS3+a8
-         4vQSLl0KiVHLU8MRWYE1oq4qhRsrJGgnxQNKK8elqmZE9V8XUQPh5Kv/O2gR4cOD78z+
-         ghc0YHtbbfGQWjahulZtVFm7Nhq9HmQJIJU+GbcDP5OYVVCZjuLVD54oIcUOPCG2V80M
-         uiwQiq7/nI8aeFxpp2x7OODrcp1kb51fMHFetYVqA2zHTPS2kKwkbt2AujFAMGGxmXW2
-         /fHN129vdTZOHHBYAYdFeL3+DbbeIbtFJnHCgA3oel2U9X//XA6DUKAeEIKbY1qRT+5/
-         WpAg==
-X-Gm-Message-State: AC+VfDx56zn5i8nlLNJdQ8IJh1aertiDnUdfqyckONaG1v5eQdWN4OQ5
-        qaSxODDpwfcow9Es02yQToeItQ==
-X-Google-Smtp-Source: ACHHUZ5I+iWpj0MgD+gxarDbhhgIyHddx5lvZA28//Cy2f9fowQOYHaXvbmPuMlGFSt4g6l+CusWNQ==
-X-Received: by 2002:a17:907:94ca:b0:973:ad8f:ef9b with SMTP id dn10-20020a17090794ca00b00973ad8fef9bmr1385977ejc.5.1686305359815;
-        Fri, 09 Jun 2023 03:09:19 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id z8-20020a170906240800b0096b1206aa3fsm1096744eja.89.2023.06.09.03.09.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jun 2023 03:09:19 -0700 (PDT)
-Message-ID: <d5bbc7ea-43c2-77fe-3d58-251e2488ad64@linaro.org>
-Date:   Fri, 9 Jun 2023 12:09:17 +0200
+        Fri, 9 Jun 2023 06:36:22 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BAD83184;
+        Fri,  9 Jun 2023 03:34:25 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 359AOKJY018195;
+        Fri, 9 Jun 2023 10:34:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Mi1kipphmx0K8ypVZTGfsiKuZ0H06HTLT6Vy17PLGUU=;
+ b=IeN2oUsuy8qflAQmw4bdv97GZ7zXtnpXzfB/UmekPVuEJEgyizheVXm4Cukvx/PEDjYM
+ U6S1GakQd4bvNlGmTzDd/YjXTQIoZZ4f5xjkhartc6qNMvVfBnpQCyWjHJ6iVV76zhEx
+ RclqU/7DeIf9cc0M/bRXqUe7jeuRhzeQ2FSEuUR7v8bnbizl0NC4uhxxZQ5YQxpfGMph
+ mI1cejmM3zGYmgTt+Q72hTLupPYWig9QYq/Vrzjj3f+eAzG9+H0lxTOTeryvqUJaD1oJ
+ SmjtTvFGHQF+eiDIQ1w5pPyMOlXKdf9c1jHIIs7D6KWc1HAxdlPzy075QLt/tUSHl+rB Vw== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r3dkcagpv-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 09 Jun 2023 10:34:16 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 359AYFXF023193
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 9 Jun 2023 10:34:15 GMT
+Received: from [10.201.2.96] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 9 Jun 2023
+ 03:34:12 -0700
+Message-ID: <59d77595-b0c7-e60d-2c89-691369defab5@quicinc.com>
+Date:   Fri, 9 Jun 2023 16:04:08 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH 1/8] pinctrl: qcom: qdf2xxx: drop ACPI_PTR
-Content-Language: en-US
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.0
+Subject: Re: [PATCH V3 0/3] Minor updates in the IPQ5332 DTS files
+From:   Kathiravan T <quic_kathirav@quicinc.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20230601152026.1182648-1-krzysztof.kozlowski@linaro.org>
- <CACRpkdZaj6FWLszvBid3C9LwVpiwhK=WsuJrcbMgppx80NbgjA@mail.gmail.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <CACRpkdZaj6FWLszvBid3C9LwVpiwhK=WsuJrcbMgppx80NbgjA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230519133844.23512-1-quic_kathirav@quicinc.com>
+ <b85216b3-8e6a-b3ea-4c01-680b1339a623@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <b85216b3-8e6a-b3ea-4c01-680b1339a623@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: T6MsZurOWyip7MPVGi9E5g0qF5LgeDf_
+X-Proofpoint-GUID: T6MsZurOWyip7MPVGi9E5g0qF5LgeDf_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-09_06,2023-06-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 adultscore=0
+ impostorscore=0 malwarescore=0 priorityscore=1501 bulkscore=0
+ mlxlogscore=622 clxscore=1015 spamscore=0 lowpriorityscore=0 mlxscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306090089
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/06/2023 09:12, Linus Walleij wrote:
-> On Thu, Jun 1, 2023 at 5:20 PM Krzysztof Kozlowski
-> <krzysztof.kozlowski@linaro.org> wrote:
-> 
->> Driver can bind only via ACPI matching and acpi_device_id is there
->> unconditionally, so drop useless ACPI_PTR() macro.
+
+On 5/30/2023 7:38 AM, Kathiravan T wrote:
+>
+> On 5/19/2023 7:08 PM, Kathiravan T wrote:
+>> Rename the MI01.2 DTS after Reference Design Platform(RDP) number to 
+>> align
+>> with ipq5332-rdp468.dts, add UART1 node and reserve memory for U-boot
+>> and SBL to avoid losing the RAM contents which will be used in post
+>> morterm analysis.
+>
+>
+> Gentle Reminder...
+
+
+Bjorn, can this series picked up for v6.5? Since this is pending for 
+long time...
+
+
+>
+>
 >>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> 
-> Patches applied!
-> 
-> I had to manually update patch 7/8 to account for the IPQ5018 driver that
-> I just applied, but I think I figured it out, check the result!
-
-Thanks, looks good!
-
-Best regards,
-Krzysztof
-
+>> Kathiravan T (3):
+>>    arm64: dts: qcom: ipq5332: rename mi01.2 dts to rdp441
+>>    arm64: dts: qcom: ipq5332: define UART1
+>>    arm64: dts: qcom: ipq5332: add few more reserved memory region
+>>
+>>   arch/arm64/boot/dts/qcom/Makefile             |  2 +-
+>>   ...{ipq5332-mi01.2.dts => ipq5332-rdp441.dts} |  0
+>>   arch/arm64/boot/dts/qcom/ipq5332.dtsi         | 24 ++++++++++++++++++-
+>>   3 files changed, 24 insertions(+), 2 deletions(-)
+>>   rename arch/arm64/boot/dts/qcom/{ipq5332-mi01.2.dts => 
+>> ipq5332-rdp441.dts} (100%)
+>>
