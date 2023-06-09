@@ -2,109 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AA349729EB8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 17:38:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 26A3B729EC7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 17:40:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240625AbjFIPiK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 11:38:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35934 "EHLO
+        id S232115AbjFIPj6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 11:39:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230092AbjFIPiK (ORCPT
+        with ESMTP id S241835AbjFIPjg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 11:38:10 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FBB930E8
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 08:38:09 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 2BF5B65936
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 15:38:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 051EBC433D2;
-        Fri,  9 Jun 2023 15:38:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686325088;
-        bh=Ub8kgtuLOXlB1lZplho9yrsG0peukzicGmJk6zEpSVc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=T8yt3prnNjCsrGiMvS11FWobI5iNrsGllORRPLqIpwtbpOp8uc4o5ovNcmX+Ipuui
-         Ys3qO9WElHQ4W+/AWoW7Fn93ToDMS1oyt+AtATAmrzD7nQ5EK/TA4cOcJs4XhxhlaM
-         lyd6MDH353FHNPMFGk1DwPBzUMPlA6/0SdF4ikecTmtSnIc5i7XiAVcBV429WzUfMp
-         mn7MP0m137vXrcVipiqyNiBw6qbicPuOsyT6yjome1veFMoe3PuyN/EAoJv7ISvxG7
-         mW2ZkExFx1F5UYeeiwyocMY+A6BiJqcqWRA9UaNVSHpxr8IKPRZ+MovsMO2zLZF2em
-         KShZq5H6uKH6A==
-Date:   Fri, 9 Jun 2023 21:08:00 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Duke =?utf-8?B?WGluKOi+m+WuieaWhyk=?= <duke_xinanwen@163.com>
-Cc:     loic.poulain@linaro.org, slark_xiao@163.com,
-        fabio.porcedda@gmail.com, koen.vandeputte@citymesh.com,
-        song.fc@gmail.com, bhelgaas@google.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, jerry.meng@quectel.com,
-        duke.xin@quectel.com
-Subject: Re: [PATCH v4] bus: mhi: host: pci_generic: Add support for
- quectel's new EM160R-GL product
-Message-ID: <20230609153800.GC6847@thinkpad>
-References: <20230608092927.2893-1-duke_xinanwen@163.com>
+        Fri, 9 Jun 2023 11:39:36 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 5D5A835AC;
+        Fri,  9 Jun 2023 08:39:33 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 88FB6AB6;
+        Fri,  9 Jun 2023 08:40:18 -0700 (PDT)
+Received: from [10.57.85.120] (unknown [10.57.85.120])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 45C7D3F663;
+        Fri,  9 Jun 2023 08:39:30 -0700 (PDT)
+Message-ID: <78995241-826f-bf42-9d4b-9ab7c9c9bf7d@arm.com>
+Date:   Fri, 9 Jun 2023 16:39:29 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20230608092927.2893-1-duke_xinanwen@163.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 0/3] arm64: dts: qcom: sa8775p: Add interconnect to SMMU
+Content-Language: en-GB
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Parikshit Pareek <quic_ppareek@quicinc.com>,
+        Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org,
+        "linux-kernel @ vger . kernel . org Prasanna Kumar" 
+        <quic_kprasan@quicinc.com>,
+        Shazad Hussain <quic_shazhuss@quicinc.com>
+References: <20230609054141.18938-1-quic_ppareek@quicinc.com>
+ <79206b05-674b-1f6c-6eb1-ed45e6bd5637@linaro.org>
+ <20230609125631.GA29252@hu-ppareek-blr.qualcomm.com>
+ <2881f374-70e2-0057-f43e-7be12d32ae22@arm.com>
+ <c3c12574-fc38-84ae-2a94-3c80fb9fb363@linaro.org>
+ <CAA8EJprqfq0ey2hgBXxf9Zg1Y_MwHP_73EQkwg-W-sRYS7VE8w@mail.gmail.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <CAA8EJprqfq0ey2hgBXxf9Zg1Y_MwHP_73EQkwg-W-sRYS7VE8w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 08, 2023 at 02:29:27AM -0700, Duke Xin(辛安文) wrote:
-> The product's would use the same config as previous EM160R-GL
+On 2023-06-09 15:56, Dmitry Baryshkov wrote:
+> On Fri, 9 Jun 2023 at 17:52, Konrad Dybcio <konrad.dybcio@linaro.org> wrote:
+>>
+>>
+>>
+>> On 9.06.2023 16:45, Robin Murphy wrote:
+>>> On 2023-06-09 13:56, Parikshit Pareek wrote:
+>>>> On Fri, Jun 09, 2023 at 10:52:26AM +0200, Konrad Dybcio wrote:
+>>>>>
+>>>>>
+>>>>> On 9.06.2023 07:41, Parikshit Pareek wrote:
+>>>>>> Some qcom SoCs have SMMUs, which need the interconnect bandwidth to be
+>>>>>> This series introduce the due support for associated interconnect, and
+>>>>>> setting of the due interconnect-bandwidth. Setting due interconnect
+>>>>>> bandwidth is needed to avoid the issues like [1], caused by not having
+>>>>>> due clock votes(indirectly dependent upon interconnect bandwidth).
+>>>>>
+>>>>> [1] ???
+>>>>
+>>>> My bad. Intended to mention following:
+>>>> https://lore.kernel.org/linux-arm-msm/20230418165224.vmok75fwcjqdxspe@echanude/
+>>>
+>>> This sounds super-dodgy - do you really have to rely on configuration of the interconnect path from the SMMU's pagetable walker to RAM to keep a completely different interconnect path clocked for the CPU to access SMMU registers? You can't just request the programming interface clock directly like on other SoCs?
+>> On Qualcomm platforms, particularly so with the more recent ones, some
+>> clocks are managed by various remote cores. Half of what the interconnect
+>> infra does on these SoCs is telling one such core to change the internally
+>> managed clock's rate based on the requested bw.
 > 
-> Signed-off-by: Duke Xin(辛安文) <duke_xinanwen@163.com>
+> But enabling PCIe interconnect to keep SMMU working sounds strange to
+> me too. Does the fault come from some outstanding PCIe transaction?
 
-Modified the commit message and subject to reflect the usecase and applied to
-mhi-next!
+The "Injecting instruction/data abort to VM 3" message from the 
+hypervisor implies that it is the access to SMMU_CR0 from 
+arm_smmu_shutdown() that's blown up. I can even believe that the SMMU 
+shares some clocks with the PCIe interconnect, given that its TBU must 
+be *in* that path from PCIe to memory, at least. However I would 
+instinctively expect the abstraction layers above to have some notion of 
+distinct votes for "CPU wants to access SMMU" vs. "SMMU/PCIe wants to 
+access RAM", given that the latter is liable to need to enable more than 
+the former if the clock/power gating is as fine-grained as previous SoCs 
+seem to have been. But maybe my hunch is wrong and this time 
+everything's just in one big clock domain. I don't know. I'm just here 
+to ask questions to establish whether this really is the most correct 
+abstraction or just a lazy bodge to avoid doing the proper thing in some 
+other driver.
 
-- Mani
-
-> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-> ---
-> Changelog
-> 
-> v3 -> v4
-> 
-> * Update commit message to include the changelog and reviewd tag.
-> 
-> v2 -> v3
-> 
-> * Add patch CC to mhi@lists.linux.dev.
-> 
-> v1 -> v2
-> 
-> * Remove Space before */ and "for laptop" description.
-> ---
->  drivers/bus/mhi/host/pci_generic.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/host/pci_generic.c b/drivers/bus/mhi/host/pci_generic.c
-> index 70e37c490150..5f204b819e95 100644
-> --- a/drivers/bus/mhi/host/pci_generic.c
-> +++ b/drivers/bus/mhi/host/pci_generic.c
-> @@ -591,6 +591,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
->  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
->  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
-> +	/* EM160R-GL (sdx24) */
-> +	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x100d),
-> +		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
->  	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x2001), /* EM120R-GL for FCCL (sdx24) */
->  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
->  	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
-> -- 
-> 2.25.1
-> 
-
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks,
+Robin.
