@@ -2,113 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8C135729AC2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 14:55:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D047D729AD8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 14:57:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238701AbjFIMzZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 08:55:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56354 "EHLO
+        id S236150AbjFIM5d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 08:57:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241247AbjFIMzV (ORCPT
+        with ESMTP id S237792AbjFIM50 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 08:55:21 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4C97530C5
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 05:55:04 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f63006b4e3so2239904e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 05:55:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686315264; x=1688907264;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=iWAc8s9mtYq9bvfxWICbMJo3RkYM/eJc1QSBr+x6G8Y=;
-        b=xfyZNLfaD0QTAnUJUAEH8T4GdANS45eqBTdyEnOUe0avgitAwOpNCO2K/wmbsrhWaP
-         MM1h8jbCTsc9hhjOcUkuFZZB1aNee0AuTns+EUVlJm4Syqpfkj605YC4O1ScWL167G0V
-         owsaOPVbtz3IwSpfkN8VuvrWeJZWsLQWmWWMmgoAmKnhBOAxRICBzCThvvkkj2lA5p5m
-         ZqcXfxZh6FDQY0zX4Ikc+nnQPNKv4DZRxhez7aUunmUSJeistB6MDu14OBefv1TpI0gr
-         f4tZ2dKvbRBKiCTfrvoepT68XTXKGzNCkSfF4E1SSIIfVvJdtSOJt+aBEgbIK95Ker13
-         XxgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686315264; x=1688907264;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iWAc8s9mtYq9bvfxWICbMJo3RkYM/eJc1QSBr+x6G8Y=;
-        b=FwuLo9ZV3NboeTggjYy1MFdNroaOcJTuPMTd2veKSY4oVteMHvPtRcWXkuJACiL7DM
-         rTIGVAV0hm8k4GdWa4lEk/BOg0G6rmf+lxyoMhKhQgluRifco+mRhh3GdFtoDrApCXP9
-         gY/zZEbzklrY2AUDxZ2GxeQulWU9PosGuClEL9yhSU0DgVilOCZsIh0fLrDBCfqlATpm
-         nD/p+G5BmkTM78lAlvO/5qEn6isz1658Ik25qXRSVG6LMXP9+6wE1mdcBrc9bNFcjWWM
-         WMASLoPqIx/y6AarFoy5fraBKrotgwrV+WwEFOb/l5WADmDRqc9nnNI5E02tqYmhzidY
-         YxDw==
-X-Gm-Message-State: AC+VfDwC+6ccsCK6zG2W5V16x4jv743e1cpFrjOrA9/qkUaKWTSz4uaV
-        cpk7ARjlrO72uFdCeKKSvdE7dw==
-X-Google-Smtp-Source: ACHHUZ6drSlhoDmee4FQUAtmNA+rg3NZmyqtbBNMYb8qCNApuq5hPUipIG1dmiNUk7AzPMw6LF++Sw==
-X-Received: by 2002:a19:ca59:0:b0:4f4:b05c:dbbc with SMTP id h25-20020a19ca59000000b004f4b05cdbbcmr834341lfj.63.1686315264003;
-        Fri, 09 Jun 2023 05:54:24 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id v4-20020ac25924000000b004f64409eef1sm534202lfi.246.2023.06.09.05.54.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jun 2023 05:54:23 -0700 (PDT)
-Message-ID: <88b41c0f-e515-ce94-e4fd-befbeef53781@linaro.org>
-Date:   Fri, 9 Jun 2023 14:54:22 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH V4 0/4] Add camera clock controller support for SM8550
-Content-Language: en-US
-To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
+        Fri, 9 Jun 2023 08:57:26 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AAD630E3;
+        Fri,  9 Jun 2023 05:57:12 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3598YoIl019492;
+        Fri, 9 Jun 2023 12:56:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=XDap/RLx90TpKRtS3FCfuiDB5INUakMPRohKQfJaizA=;
+ b=AzeBbD79DKXc1phU/BvpLv9LPeMHpS/uEJfAPAIGKU2HqugPrdch0aT+J11g4WKesn4t
+ OsUcnTnCkRtmW5hSA149Kfe4pyyl5evMsROsEfhh1awIcs6XBzfIYUZKMm5vVZfaPvqS
+ cVcJCK2wddjd6FsGGWSo51+bD3+rxl4KQfi/02sMENo5OOFNPbmFqE3vg4B2IKmi8JD4
+ SHkzU6e3Ax3zsZDz+doqJ9npVSNRlhIr303oiw0QPqPogAVDLwnghHmJZbCrHoQzW9cg
+ BTqttEHJt/ToLN0FF2d9yopHFKVTTKxSEwZmORZMKQyT0W4+jnOpHev10AHsiTgImKC1 nw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r3t70h47a-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 09 Jun 2023 12:56:42 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 359CufQA010963
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 9 Jun 2023 12:56:41 GMT
+Received: from hu-ppareek-blr.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 9 Jun 2023 05:56:35 -0700
+Date:   Fri, 9 Jun 2023 18:26:31 +0530
+From:   Parikshit Pareek <quic_ppareek@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        "Joerg Roedel" <joro@8bytes.org>, Rob Herring <robh+dt@kernel.org>,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20230609115058.9059-1-quic_jkona@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230609115058.9059-1-quic_jkona@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Bjorn Andersson <andersson@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+        <devicetree@vger.kernel.org>,
+        "linux-kernel @ vger . kernel . org Prasanna Kumar" 
+        <quic_kprasan@quicinc.com>,
+        Shazad Hussain <quic_shazhuss@quicinc.com>
+Subject: Re: [PATCH 0/3] arm64: dts: qcom: sa8775p: Add interconnect to SMMU
+Message-ID: <20230609125631.GA29252@hu-ppareek-blr.qualcomm.com>
+References: <20230609054141.18938-1-quic_ppareek@quicinc.com>
+ <79206b05-674b-1f6c-6eb1-ed45e6bd5637@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <79206b05-674b-1f6c-6eb1-ed45e6bd5637@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: ZhsxboR9byCRtdwLQRqycz4m3RQZPuhl
+X-Proofpoint-ORIG-GUID: ZhsxboR9byCRtdwLQRqycz4m3RQZPuhl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-09_08,2023-06-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 mlxscore=0 spamscore=0 clxscore=1015 suspectscore=0
+ bulkscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=999 phishscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306090109
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 9.06.2023 13:50, Jagadeesh Kona wrote:
-> Add bindings, driver and devicetree node for camera clock controller on
-> SM8550.
+On Fri, Jun 09, 2023 at 10:52:26AM +0200, Konrad Dybcio wrote:
 > 
-> Jagadeesh Kona (4):
->   dt-bindings: clock: qcom: Add SM8550 camera clock controller
->   clk: qcom: camcc-sm8550: Add camera clock controller driver for SM8550
->   clk: qcom: camcc-sm8550: Add support for qdss, sleep and xo clocks
->   arm64: dts: qcom: sm8550: Add camera clock controller
-What's the final verdict on RINGOSC_L etc.?
+> 
+> On 9.06.2023 07:41, Parikshit Pareek wrote:
+> > Some qcom SoCs have SMMUs, which need the interconnect bandwidth to be
+> > This series introduce the due support for associated interconnect, and
+> > setting of the due interconnect-bandwidth. Setting due interconnect
+> > bandwidth is needed to avoid the issues like [1], caused by not having
+> > due clock votes(indirectly dependent upon interconnect bandwidth).
+> 
+> [1] ???
 
-Konrad
+My bad. Intended to mention following:
+https://lore.kernel.org/linux-arm-msm/20230418165224.vmok75fwcjqdxspe@echanude/
+
+Regards,
+Parikshit Pareek
 > 
->  .../bindings/clock/qcom,sm8450-camcc.yaml     |    8 +-
->  arch/arm64/boot/dts/qcom/sm8550.dtsi          |   15 +
->  drivers/clk/qcom/Kconfig                      |    7 +
->  drivers/clk/qcom/Makefile                     |    1 +
->  drivers/clk/qcom/camcc-sm8550.c               | 3585 +++++++++++++++++
->  include/dt-bindings/clock/qcom,sm8550-camcc.h |  187 +
->  6 files changed, 3801 insertions(+), 2 deletions(-)
->  create mode 100644 drivers/clk/qcom/camcc-sm8550.c
->  create mode 100644 include/dt-bindings/clock/qcom,sm8550-camcc.h
-> 
+> Konrad
+> > 
+> > Parikshit Pareek (3):
+> >   dt-bindings: arm-smmu: Add interconnect for qcom SMMUs
+> >   arm64: dts: qcom: sa8775p: Add interconnect to PCIe SMMU
+> >   iommu/arm-smmu-qcom: Add support for the interconnect
+> > 
+> >  .../devicetree/bindings/iommu/arm,smmu.yaml   | 22 +++++++++++++++++++
+> >  arch/arm64/boot/dts/qcom/sa8775p.dtsi         |  4 ++++
+> >  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c    | 16 ++++++++++++++
+> >  3 files changed, 42 insertions(+)
+> > 
+
