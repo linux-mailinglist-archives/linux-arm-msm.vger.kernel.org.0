@@ -2,88 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D047D729AD8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 14:57:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E1CAD729B30
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 15:13:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236150AbjFIM5d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 08:57:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58762 "EHLO
+        id S239410AbjFINNG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 09:13:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37292 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237792AbjFIM50 (ORCPT
+        with ESMTP id S230305AbjFINNF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 08:57:26 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AAD630E3;
-        Fri,  9 Jun 2023 05:57:12 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3598YoIl019492;
-        Fri, 9 Jun 2023 12:56:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
- cc : subject : message-id : references : mime-version : content-type :
- in-reply-to; s=qcppdkim1; bh=XDap/RLx90TpKRtS3FCfuiDB5INUakMPRohKQfJaizA=;
- b=AzeBbD79DKXc1phU/BvpLv9LPeMHpS/uEJfAPAIGKU2HqugPrdch0aT+J11g4WKesn4t
- OsUcnTnCkRtmW5hSA149Kfe4pyyl5evMsROsEfhh1awIcs6XBzfIYUZKMm5vVZfaPvqS
- cVcJCK2wddjd6FsGGWSo51+bD3+rxl4KQfi/02sMENo5OOFNPbmFqE3vg4B2IKmi8JD4
- SHkzU6e3Ax3zsZDz+doqJ9npVSNRlhIr303oiw0QPqPogAVDLwnghHmJZbCrHoQzW9cg
- BTqttEHJt/ToLN0FF2d9yopHFKVTTKxSEwZmORZMKQyT0W4+jnOpHev10AHsiTgImKC1 nw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r3t70h47a-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 09 Jun 2023 12:56:42 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 359CufQA010963
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 9 Jun 2023 12:56:41 GMT
-Received: from hu-ppareek-blr.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Fri, 9 Jun 2023 05:56:35 -0700
-Date:   Fri, 9 Jun 2023 18:26:31 +0530
-From:   Parikshit Pareek <quic_ppareek@quicinc.com>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-CC:     Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        "Joerg Roedel" <joro@8bytes.org>, Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        "Dmitry Baryshkov" <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Adam Skladowski <a39.skl@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-        <devicetree@vger.kernel.org>,
-        "linux-kernel @ vger . kernel . org Prasanna Kumar" 
-        <quic_kprasan@quicinc.com>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>
-Subject: Re: [PATCH 0/3] arm64: dts: qcom: sa8775p: Add interconnect to SMMU
-Message-ID: <20230609125631.GA29252@hu-ppareek-blr.qualcomm.com>
-References: <20230609054141.18938-1-quic_ppareek@quicinc.com>
- <79206b05-674b-1f6c-6eb1-ed45e6bd5637@linaro.org>
-MIME-Version: 1.0
+        Fri, 9 Jun 2023 09:13:05 -0400
+Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3D7E132;
+        Fri,  9 Jun 2023 06:13:04 -0700 (PDT)
+Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-33be5dbb90cso7462645ab.0;
+        Fri, 09 Jun 2023 06:13:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686316384; x=1688908384;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=M9D35kaOS2C39e0x3xanvuuHggxbq1FnGkrcYzbCLtU=;
+        b=WzG6EWqQUviK0Lgqsexec2C/Fo1Hd59OLpbqa/3tXUBVQQwRctzGR3F8wC1B2hdTwd
+         0+Vfe/vcpS5fgadaTT4xsvIVIqkQUYNtrstjqvZ6oYLdmhheVU9Ou8Kw+QDJZPf+HcJx
+         ynvh9XiY1+k/ZJwvocenrIT6Ii0/5zsGRn6VmjZDd/eD4QIgzcUjzO82MhDqLi7TFg2Y
+         EIN6NuPEZ9Uq7DuigfL32acnzrGIyL1ZHHXX85WSqrqQrDi7jIZRcrWCopIkEC6oyIGN
+         18IuPTsyauQExZlUeLsJBYkhfkY5/1FO/TPh4J5NEz0qTobizh/rpjQTaaFKjxoeyEei
+         j1qw==
+X-Gm-Message-State: AC+VfDw3gK/ZwoDsmitBujmfSku7g0WZeD6yNZc8OoOJ6OnMDRAjo/BO
+        kPnbOK0a2zPZWZNCXQ8t+A==
+X-Google-Smtp-Source: ACHHUZ5j0wP0elCI9OCxxC/oYXvqyZN73d9plY1jTIgztDBrNxHCN2RK5U+QxwWY+4Ul4XsgZoOnag==
+X-Received: by 2002:a92:ddcf:0:b0:335:38b:e734 with SMTP id d15-20020a92ddcf000000b00335038be734mr1479493ilr.28.1686316383875;
+        Fri, 09 Jun 2023 06:13:03 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id z6-20020a92d186000000b0033d2eba1800sm1086619ilz.15.2023.06.09.06.13.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Jun 2023 06:13:02 -0700 (PDT)
+Received: (nullmailer pid 662840 invoked by uid 1000);
+        Fri, 09 Jun 2023 13:13:00 -0000
 Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <79206b05-674b-1f6c-6eb1-ed45e6bd5637@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: ZhsxboR9byCRtdwLQRqycz4m3RQZPuhl
-X-Proofpoint-ORIG-GUID: ZhsxboR9byCRtdwLQRqycz4m3RQZPuhl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-09_08,2023-06-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 mlxscore=0 spamscore=0 clxscore=1015 suspectscore=0
- bulkscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=999 phishscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306090109
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+From:   Rob Herring <robh@kernel.org>
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        manivannan.sadhasivam@linaro.org,
+        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
+        Bjorn Andersson <andersson@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        devicetree@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
+        Andy Gross <agross@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+In-Reply-To: <1686311249-6857-2-git-send-email-quic_krichai@quicinc.com>
+References: <1686311249-6857-1-git-send-email-quic_krichai@quicinc.com>
+ <1686311249-6857-2-git-send-email-quic_krichai@quicinc.com>
+Message-Id: <168631638078.662811.2470035951687478762.robh@kernel.org>
+Subject: Re: [PATCH v3 1/3] dt-bindings: PCI: qcom: ep: Add interconnects
+ path
+Date:   Fri, 09 Jun 2023 07:13:00 -0600
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -91,34 +76,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 09, 2023 at 10:52:26AM +0200, Konrad Dybcio wrote:
-> 
-> 
-> On 9.06.2023 07:41, Parikshit Pareek wrote:
-> > Some qcom SoCs have SMMUs, which need the interconnect bandwidth to be
-> > This series introduce the due support for associated interconnect, and
-> > setting of the due interconnect-bandwidth. Setting due interconnect
-> > bandwidth is needed to avoid the issues like [1], caused by not having
-> > due clock votes(indirectly dependent upon interconnect bandwidth).
-> 
-> [1] ???
 
-My bad. Intended to mention following:
-https://lore.kernel.org/linux-arm-msm/20230418165224.vmok75fwcjqdxspe@echanude/
-
-Regards,
-Parikshit Pareek
+On Fri, 09 Jun 2023 17:17:26 +0530, Krishna chaitanya chundru wrote:
+> Some platforms may not boot if a device driver doesn't initialize
+> the interconnect path. Mostly it is handled by the bootloader but
+> we have starting to see cases where bootloader simply ignores them.
 > 
-> Konrad
-> > 
-> > Parikshit Pareek (3):
-> >   dt-bindings: arm-smmu: Add interconnect for qcom SMMUs
-> >   arm64: dts: qcom: sa8775p: Add interconnect to PCIe SMMU
-> >   iommu/arm-smmu-qcom: Add support for the interconnect
-> > 
-> >  .../devicetree/bindings/iommu/arm,smmu.yaml   | 22 +++++++++++++++++++
-> >  arch/arm64/boot/dts/qcom/sa8775p.dtsi         |  4 ++++
-> >  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c    | 16 ++++++++++++++
-> >  3 files changed, 42 insertions(+)
-> > 
+> Add the "pcie-mem" interconnect path as a required property to the
+> bindings.
+> 
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+> 
+
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+./Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml:206:1: [error] syntax error: found character '\t' that cannot start any token (syntax)
+
+dtschema/dtc warnings/errors:
+make[1]: *** Deleting file 'Documentation/devicetree/bindings/pci/qcom,pcie-ep.example.dts'
+Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml:206:1: found a tab character where an indentation space is expected
+make[1]: *** [Documentation/devicetree/bindings/Makefile:26: Documentation/devicetree/bindings/pci/qcom,pcie-ep.example.dts] Error 1
+make[1]: *** Waiting for unfinished jobs....
+./Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml:206:1: found a tab character where an indentation space is expected
+/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml: ignoring, error parsing file
+make: *** [Makefile:1512: dt_binding_check] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1686311249-6857-2-git-send-email-quic_krichai@quicinc.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
