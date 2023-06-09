@@ -2,60 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A4BB729E43
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 17:24:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 272AF729E6E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 17:27:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240954AbjFIPYz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 11:24:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55080 "EHLO
+        id S240734AbjFIP1S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 11:27:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56260 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232292AbjFIPYy (ORCPT
+        with ESMTP id S241799AbjFIP1B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 11:24:54 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 663353588
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 08:24:53 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f63ea7bfb6so2356106e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 08:24:53 -0700 (PDT)
+        Fri, 9 Jun 2023 11:27:01 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 072002136
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 08:26:54 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f655293a38so2047895e87.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 08:26:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686324291; x=1688916291;
+        d=linaro.org; s=google; t=1686324412; x=1688916412;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=lRuvvrDKcdKgqOVBHNcNpprNH0PudwKN/1RDA8qIH0I=;
-        b=tRdRMg/OoG+dUeftshGoSSoR2PvpxNqcaL9rAt0NWvM22Z+fx5obL0N4/9BwiPjpEw
-         4Av0V2gMK3m7rcLn36X8h+3W9ns8UiJWr3ZCH/PbO+5TaaYh3pWixL1PZlSckYJ+Uzf7
-         b/lEeFAYAzv3nTCpbXkeijaysfOe+L4xxivkSMgtcn2Cifz4zljuS5tHGYAl1kvBQLw5
-         NqHMTSCp9B4DLPF7HiM6vNXFj6ibYobJy/NIbUS86UREHbDVMUQOipLC44zmIktor5Fj
-         dNX6/SzXfLboSIPHhSI8phReQMFcivsAnTEtRYDf0/s1loS5HTpPqDz3Bv561FQ486jn
-         kr1w==
+        bh=Q8h8nvAlYxjt65p34kTEt9z5VacxK7Nqh+ENT3iDotY=;
+        b=r7dwKJjomTzS138lHBt4vXtOJxVTBCplyBMk28R3almKAIEJ2NBkoog+qRIlpwewid
+         RBvo5MJekgxOQrFUqmjy6nwfeT2gGIqljzXGEjZxPEwJuC4rnhF9KFeVWZ/J6LPoB9qM
+         gLSZ0l20sJszC6Obp3MzSsOmf/Y/4l73uklf3B1o448dwmc6XwIQOiFEu6pxfRAb3psK
+         SNzMCm2zo5uOQSbJyFUPdFnHr0hE8jJi1zJEXrnnuUSdiaNeGqndCCYH2sxhnFQX9qy0
+         TIUVnfOM0oBJ/GrdFMq54k+B2plFO7ib5326+Ga8XG2bcUEaB6DenjPTXI4GhDLP16/O
+         E0TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686324291; x=1688916291;
+        d=1e100.net; s=20221208; t=1686324412; x=1688916412;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lRuvvrDKcdKgqOVBHNcNpprNH0PudwKN/1RDA8qIH0I=;
-        b=ecCES1Is7IY23jXzUISzw0v0rw0iDyhBlyaeM06LkbLOXmZivXFYE9D4/q7xX1C3UL
-         Zf7I4mAohkOPEIQi8tFPB9/MvODWqXkKuoiAdWLqkjbXK9KuKfEjeFdVs1RitJXouVql
-         0uvI0qJZ/r6pHaoVcQIT3PgBD2PPuPHA815T1+Ymtx7z2wkr//qDMs2/EXchgva9NUWx
-         giXEDwoYaIVbAcUbD+MZJCdzOlM22qQ8nYzDfchxBlmcPM0hXQVxFY1O0JHE/v65/yJk
-         pl/s1fifTheyZo1dBSyPNpkEk0F9zBDanhFoMtFTDtb2oreIgXh0vITG6JgfrCCrCZFR
-         4tqQ==
-X-Gm-Message-State: AC+VfDxm4Af6fomHpk1fwtajAp7WDEDPwWkl/Cyt/6bnNMbycmNCQsWw
-        M3iWxwbvjuksfEVpTIqw2LYfow==
-X-Google-Smtp-Source: ACHHUZ4QjjRROqZmGBNQkmEIZBM5wLkuRQqtjNyHO0vNSAiAw5Ps1GaX1kOEgREwRgkxOBJuMoeoxA==
-X-Received: by 2002:a05:6512:2f5:b0:4f3:8260:f18c with SMTP id m21-20020a05651202f500b004f38260f18cmr1088488lfq.57.1686324291531;
-        Fri, 09 Jun 2023 08:24:51 -0700 (PDT)
+        bh=Q8h8nvAlYxjt65p34kTEt9z5VacxK7Nqh+ENT3iDotY=;
+        b=KM5o1v6n3lrlpsLiA5K2yfMOCm+Jhvc3R4o1p30I46LaaKV02ICkPG7y92qoo3cLnf
+         m0BIihniLmNuCi/Q50QuUsw88KeO6dn9MsHg7jh/Ve7NVBdswE/n3YeZkZ/Lw8IEF1uI
+         MKqUGU05oJek7tjPo3uS0L2RxTDEN/+hdR6kGlfv4oS67N8dQA5OP7TvCN9WZU8clahL
+         +NTtW2Jo+axvQjG76C4vAkaaF0+oEP5ZQPymLk1EE+D0f/OGa1ucIm9olQz19dEOF7fB
+         60WZ7ilaycEeruYmik+DRJbn4xTZDuZu0oFN2rH3j9VattFKiFmf/6KEhKAW1jIW35DR
+         4vPg==
+X-Gm-Message-State: AC+VfDyQoO1cLT3qlyPZxQmUcluSG5eWUBRdWVGtS/F1pwPA5Tm92f40
+        hKiUwQud/iNUfdYLhjl0dwXcAw==
+X-Google-Smtp-Source: ACHHUZ6nfXS3EdrDJ02t1fgKYoivhiWD/EO9yQWbZsiNC/Qxwhtoz2NveBXHLPaML4z3I42Xi/d64g==
+X-Received: by 2002:a19:e304:0:b0:4f3:d682:7b1c with SMTP id a4-20020a19e304000000b004f3d6827b1cmr1021019lfh.45.1686324412226;
+        Fri, 09 Jun 2023 08:26:52 -0700 (PDT)
 Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id d13-20020ac24c8d000000b004eff10511besm578395lfl.146.2023.06.09.08.24.50
+        by smtp.gmail.com with ESMTPSA id d17-20020ac25ed1000000b004db508326c0sm575310lfq.90.2023.06.09.08.26.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jun 2023 08:24:51 -0700 (PDT)
-Message-ID: <cf296298-f122-a316-b8ed-118990374b71@linaro.org>
-Date:   Fri, 9 Jun 2023 17:24:49 +0200
+        Fri, 09 Jun 2023 08:26:51 -0700 (PDT)
+Message-ID: <0e4b8889-7440-f011-ade2-bc5b415e7b79@linaro.org>
+Date:   Fri, 9 Jun 2023 17:26:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH v2 08/12] soc: qcom: Add RPM processor/subsystem driver
+Subject: Re: [PATCH v2 11/12] ARM: dts: qcom: Add rpm-proc node for SMD
+ platforms
 Content-Language: en-US
 To:     Stephan Gerhold <stephan@gerhold.net>,
         Bjorn Andersson <andersson@kernel.org>
@@ -66,9 +67,9 @@ Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
 References: <20230531-rpm-rproc-v2-0-56a4a00c8260@gerhold.net>
- <20230531-rpm-rproc-v2-8-56a4a00c8260@gerhold.net>
+ <20230531-rpm-rproc-v2-11-56a4a00c8260@gerhold.net>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230531-rpm-rproc-v2-8-56a4a00c8260@gerhold.net>
+In-Reply-To: <20230531-rpm-rproc-v2-11-56a4a00c8260@gerhold.net>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -84,137 +85,158 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 On 8.06.2023 09:10, Stephan Gerhold wrote:
-> Add a simple driver for the qcom,rpm-proc compatible that registers the
-> "smd-edge" and populates other children defined in the device tree.
+> Rather than having the RPM SMD channels as the only child of a dummy
+> SMD node, switch to representing the RPM as remoteproc like all the
+> other remoteprocs (WCNSS, modem DSP).
 > 
-> Note that the DT schema belongs to the remoteproc subsystem while this
-> driver is added inside soc/qcom. I argue that the RPM *is* a remoteproc,
-> but as an implementation detail in Linux it can currently not benefit
-> from anything provided by the remoteproc subsystem. The RPM firmware is
-> usually already loaded and started by earlier components in the boot
-> chain and is not meant to be ever restarted.
-> 
-> To avoid breaking existing kernel configurations the driver is always
-> built when smd-rpm.c is also built. They belong closely together anyway.
-> To avoid build errors CONFIG_RPMSG_QCOM_SMD must be also built-in if
-> rpm-proc is.
+> This allows assigning additional subdevices to it like the MPM
+> interrupt-controller or rpm-master-stats.
 > 
 > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 > ---
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
->  drivers/soc/qcom/Kconfig    |  1 +
->  drivers/soc/qcom/Makefile   |  2 +-
->  drivers/soc/qcom/rpm-proc.c | 77 +++++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 79 insertions(+), 1 deletion(-)
+>  arch/arm/boot/dts/qcom-apq8084.dtsi |  6 ++---
+>  arch/arm/boot/dts/qcom-msm8226.dtsi | 38 ++++++++++++++++----------------
+>  arch/arm/boot/dts/qcom-msm8974.dtsi | 44 ++++++++++++++++++-------------------
+>  3 files changed, 44 insertions(+), 44 deletions(-)
 > 
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index e597799e8121..715348869d04 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -191,6 +191,7 @@ config QCOM_SMD_RPM
->  	tristate "Qualcomm Resource Power Manager (RPM) over SMD"
->  	depends on ARCH_QCOM || COMPILE_TEST
->  	depends on RPMSG
-> +	depends on RPMSG_QCOM_SMD || RPMSG_QCOM_SMD=n
->  	help
->  	  If you say yes to this option, support will be included for the
->  	  Resource Power Manager system found in the Qualcomm 8974 based
-> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-> index 99114c71092b..113b9ff2ad43 100644
-> --- a/drivers/soc/qcom/Makefile
-> +++ b/drivers/soc/qcom/Makefile
-> @@ -18,7 +18,7 @@ obj-$(CONFIG_QCOM_RPM_MASTER_STATS)	+= rpm_master_stats.o
->  obj-$(CONFIG_QCOM_RPMH)		+= qcom_rpmh.o
->  qcom_rpmh-y			+= rpmh-rsc.o
->  qcom_rpmh-y			+= rpmh.o
-> -obj-$(CONFIG_QCOM_SMD_RPM)	+= smd-rpm.o
-> +obj-$(CONFIG_QCOM_SMD_RPM)	+= rpm-proc.o smd-rpm.o
->  obj-$(CONFIG_QCOM_SMEM) +=	smem.o
->  obj-$(CONFIG_QCOM_SMEM_STATE) += smem_state.o
->  obj-$(CONFIG_QCOM_SMP2P)	+= smp2p.o
-> diff --git a/drivers/soc/qcom/rpm-proc.c b/drivers/soc/qcom/rpm-proc.c
-> new file mode 100644
-> index 000000000000..2995d9b90190
-> --- /dev/null
-> +++ b/drivers/soc/qcom/rpm-proc.c
-> @@ -0,0 +1,77 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/* Copyright (c) 2021-2023, Stephan Gerhold <stephan@gerhold.net> */
+> diff --git a/arch/arm/boot/dts/qcom-apq8084.dtsi b/arch/arm/boot/dts/qcom-apq8084.dtsi
+> index 8f178bc87e1d..2b1f9d0fb510 100644
+> --- a/arch/arm/boot/dts/qcom-apq8084.dtsi
+> +++ b/arch/arm/boot/dts/qcom-apq8084.dtsi
+> @@ -784,10 +784,10 @@ spmi_bus: spmi@fc4cf000 {
+>  		};
+>  	};
+>  
+> -	smd {
+> -		compatible = "qcom,smd";
+> +	rpm: remoteproc {
+> +		compatible = "qcom,apq8084-rpm-proc", "qcom,rpm-proc";
+>  
+> -		rpm {
+> +		smd-edge {
+>  			interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
+>  			qcom,ipc = <&apcs 8 0>;
+>  			qcom,smd-edge = <15>;
+> diff --git a/arch/arm/boot/dts/qcom-msm8226.dtsi b/arch/arm/boot/dts/qcom-msm8226.dtsi
+> index a3a9162e9c28..a3e8d023d0e6 100644
+> --- a/arch/arm/boot/dts/qcom-msm8226.dtsi
+> +++ b/arch/arm/boot/dts/qcom-msm8226.dtsi
+> @@ -53,26 +53,10 @@ pmu {
+>  					 IRQ_TYPE_LEVEL_HIGH)>;
+>  	};
+>  
+> -	reserved-memory {
+> -		#address-cells = <1>;
+> -		#size-cells = <1>;
+> -		ranges;
+> -
+> -		smem_region: smem@3000000 {
+> -			reg = <0x3000000 0x100000>;
+> -			no-map;
+> -		};
+> -
+> -		adsp_region: adsp@dc00000 {
+> -			reg = <0x0dc00000 0x1900000>;
+> -			no-map;
+> -		};
+> -	};
+> -
+> -	smd {
+> -		compatible = "qcom,smd";
+> +	rpm: remoteproc {
+> +		compatible = "qcom,msm8226-rpm-proc", "qcom,rpm-proc";
+>  
+> -		rpm {
+> +		smd-edge {
+>  			interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
+>  			qcom,ipc = <&apcs 8 0>;
+>  			qcom,smd-edge = <15>;
+> @@ -120,6 +104,22 @@ rpmpd_opp_super_turbo: opp6 {
+>  		};
+>  	};
+>  
+> +	reserved-memory {
+> +		#address-cells = <1>;
+> +		#size-cells = <1>;
+> +		ranges;
 > +
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/of_platform.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/rpmsg/qcom_smd.h>
+> +		smem_region: smem@3000000 {
+> +			reg = <0x3000000 0x100000>;
+> +			no-map;
+> +		};
 > +
-> +static int rpm_proc_probe(struct platform_device *pdev)
-> +{
-> +	struct qcom_smd_edge *edge = NULL;
-> +	struct device *dev = &pdev->dev;
-> +	struct device_node *edge_node;
-> +	int ret;
+> +		adsp_region: adsp@dc00000 {
+> +			reg = <0x0dc00000 0x1900000>;
+> +			no-map;
+> +		};
+> +	};
 > +
-> +	edge_node = of_get_child_by_name(dev->of_node, "smd-edge");
-> +	if (edge_node) {
-> +		edge = qcom_smd_register_edge(dev, edge_node);
-> +		of_node_put(edge_node);
-> +		if (IS_ERR(edge))
-> +			return dev_err_probe(dev, PTR_ERR(edge),
-> +					     "Failed to register smd-edge\n");
-> +	}
+>  	smem {
+>  		compatible = "qcom,smem";
+>  
+> diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+> index 58e144957c5d..0a5b5ecb5dfa 100644
+> --- a/arch/arm/boot/dts/qcom-msm8974.dtsi
+> +++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+> @@ -113,6 +113,28 @@ pmu {
+>  		interrupts = <GIC_PPI 7 0xf04>;
+>  	};
+>  
+> +	rpm: remoteproc {
+> +		compatible = "qcom,msm8974-rpm-proc", "qcom,rpm-proc";
 > +
-> +	ret = devm_of_platform_populate(dev);
-> +	if (ret) {
-> +		dev_err(dev, "Failed to populate child devices: %d\n", ret);
-> +		goto err;
-> +	}
+> +		smd-edge {
+> +			interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
+> +			qcom,ipc = <&apcs 8 0>;
+> +			qcom,smd-edge = <15>;
 > +
-> +	platform_set_drvdata(pdev, edge);
-> +	return 0;
-> +err:
-> +	if (edge)
-> +		qcom_smd_unregister_edge(edge);
-> +	return ret;
-> +}
+> +			rpm_requests: rpm-requests {
+> +				compatible = "qcom,rpm-msm8974";
+> +				qcom,smd-channels = "rpm_requests";
 > +
-> +static void rpm_proc_remove(struct platform_device *pdev)
-> +{
-> +	struct qcom_smd_edge *edge = platform_get_drvdata(pdev);
+> +				rpmcc: clock-controller {
+> +					compatible = "qcom,rpmcc-msm8974", "qcom,rpmcc";
+> +					#clock-cells = <1>;
+> +					clocks = <&xo_board>;
+> +					clock-names = "xo";
+> +				};
+> +			};
+> +		};
+> +	};
 > +
-> +	if (edge)
-> +		qcom_smd_unregister_edge(edge);
-> +}
-> +
-> +static const struct of_device_id rpm_proc_of_match[] = {
-> +	{ .compatible = "qcom,rpm-proc", },
-> +	{ /* sentinel */ }
-> +};
-> +MODULE_DEVICE_TABLE(of, rpm_proc_of_match);
-> +
-> +static struct platform_driver rpm_proc_driver = {
-> +	.probe = rpm_proc_probe,
-> +	.remove_new = rpm_proc_remove,
-> +	.driver = {
-> +		.name = "qcom-rpm-proc",
-> +		.of_match_table = rpm_proc_of_match,
-> +	},
-> +};
-> +
-> +static int __init rpm_proc_init(void)
-> +{
-> +	return platform_driver_register(&rpm_proc_driver);
-> +}
-> +arch_initcall(rpm_proc_init);
-> +
-> +static void __exit rpm_proc_exit(void)
-> +{
-> +	platform_driver_unregister(&rpm_proc_driver);
-> +}
-> +module_exit(rpm_proc_exit);
-> +
-> +MODULE_DESCRIPTION("Qualcomm RPM processor/subsystem driver");
-> +MODULE_AUTHOR("Stephan Gerhold <stephan@gerhold.net>");
-> +MODULE_LICENSE("GPL");
+>  	reserved-memory {
+>  		#address-cells = <1>;
+>  		#size-cells = <1>;
+> @@ -293,28 +315,6 @@ wcnss_smsm: wcnss@7 {
+>  		};
+>  	};
+>  
+> -	smd {
+> -		compatible = "qcom,smd";
+> -
+> -		rpm {
+> -			interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
+> -			qcom,ipc = <&apcs 8 0>;
+> -			qcom,smd-edge = <15>;
+> -
+> -			rpm_requests: rpm-requests {
+> -				compatible = "qcom,rpm-msm8974";
+> -				qcom,smd-channels = "rpm_requests";
+> -
+> -				rpmcc: clock-controller {
+> -					compatible = "qcom,rpmcc-msm8974", "qcom,rpmcc";
+> -					#clock-cells = <1>;
+> -					clocks = <&xo_board>;
+> -					clock-names = "xo";
+> -				};
+> -			};
+> -		};
+> -	};
+> -
+>  	soc: soc {
+>  		#address-cells = <1>;
+>  		#size-cells = <1>;
 > 
