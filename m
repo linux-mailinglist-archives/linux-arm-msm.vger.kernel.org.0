@@ -2,131 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D392B729D89
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 16:57:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C9C63729DAF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 17:01:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241358AbjFIO5d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 10:57:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39830 "EHLO
+        id S241122AbjFIPBr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 11:01:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43492 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241534AbjFIO5R (ORCPT
+        with ESMTP id S238987AbjFIPBo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 10:57:17 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 702584237
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 07:56:52 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id 5614622812f47-39caf0082f3so64534b6e.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 07:56:52 -0700 (PDT)
+        Fri, 9 Jun 2023 11:01:44 -0400
+Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7826AE50
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 08:01:43 -0700 (PDT)
+Received: by mail-il1-x136.google.com with SMTP id e9e14a558f8ab-33e4e59da95so8141575ab.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 08:01:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686322611; x=1688914611;
+        d=chromium.org; s=google; t=1686322902; x=1688914902;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5P30yTVObjCNWePFrPZlTAmy25U125Eu2KEScJ+3Q+g=;
-        b=DiS+tAYV8rfbWIbHRCpGArV53sDOTNWWuaxxiYJkEDzhscawVJagxGAHwzNWLaqwgc
-         YGozAa1IoPB+RSWtvhCwgM3Zs3NkLYepHEaDIaKQbmHWQTuIHlEwA1YUzjPK2L4Ma3wS
-         MVA3ehcOIOGbJNbt9Lg4CMuG+vHbUTmwpqsQFRSjDX8vzp/bTOQh3J39klectF02yxfF
-         gCSraKM82LukA3+xXvX2N8pd41a4kdevnusmT5DZxAk8KOQIHnsHISOy52Upt+ZngN2F
-         4VV5ZTxgZ+Utt2hhv7XJBhjVPYq71c1p31B3EiF5rVkENTYx0/UD8XKjZjdvDAFV/Cps
-         PdFQ==
+        bh=BmJ5zFCWUL2O8tDvqWovVw/cx5VcmioXKAOPxd/sjek=;
+        b=C2SwX1NeM1j0qXNfi7vJd5SVp8FHhDQ05KMmIS+Jz18xiXYbEzAFvLJ5Ap7FRTRShk
+         jsX64QiXlS8xyB6hs5N72EPTBAPEVP8g5gt3VNCwFPYa0Wgj7kHL6wbE8Ol97E8DppT7
+         49+NszyfhtEUjBMD559+HpUCAZl/RwiM9uiBU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686322611; x=1688914611;
+        d=1e100.net; s=20221208; t=1686322902; x=1688914902;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5P30yTVObjCNWePFrPZlTAmy25U125Eu2KEScJ+3Q+g=;
-        b=VSFw7hcwcqlk+eQcdWLFFFfjHWDuRZt+5NFfROw/dSDVkHOEghGQCaSXtJIy+yaJPj
-         kiuCt7+/S1Fw89mMH/X1WDZm0oQHSqyFLXcLB7xJVjOjqy8aehFfnwGN6zqdsxiytzxW
-         6KXwz8yeVF9vZyjT3gSyVp9t74BMnXf0+mXsIiUHz7aXvKyNr27Mn6QT/nvWtlCHG4LC
-         cGlvx1oYaebwjYQ3e89UU7uF9BLeUd5Lsbgk5bLbH75BOm83rM9M93K8wxq6SJL07xqr
-         jVzV7WeZYc0rnBSI0WJpEfYmk4ZlwF5ccYTVzAVWbXFar8IjUjGSHrNPg9m/PM29vdkt
-         9DaA==
-X-Gm-Message-State: AC+VfDwoH4brW79jhWm2B9cChTnH+jUbVs8m9ZeQ61rL580Wcx/HIOWY
-        aDSLDf4dNMm4OSjqP23dDDKoKq2tFagCbxf7OTuOJN7VduiWNHNw
-X-Google-Smtp-Source: ACHHUZ4nFpTpj3lsBdccjwaqtlsCznyPJ13GRyEpdzMAWcin+xTZz2n7mc55BitUQ9Mi+bJLBYRdi7BCReqlTQKBHw8=
-X-Received: by 2002:a05:6358:bb92:b0:129:c3fc:ff5c with SMTP id
- df18-20020a056358bb9200b00129c3fcff5cmr1385785rwb.24.1686322610069; Fri, 09
- Jun 2023 07:56:50 -0700 (PDT)
+        bh=BmJ5zFCWUL2O8tDvqWovVw/cx5VcmioXKAOPxd/sjek=;
+        b=VdMns2H90LrGyx6xiIUP8ppPuzUdgiX81ncdb8ljazUH7FQNgRa1FOd+YYMo2GDOPz
+         1fpmmmTl0lkNltUvF3oGf+bwJiNGX6ZAtLHN6htXIXRM91IIIkav1uCGgPrWmMcQEsek
+         Eo6Mo9b5HHPcJhwS+IJ+yroXPYYzkJyFurYoQGmglyULkyI7eVE+fIzGEL1y+dkBgqGI
+         hlv8ioK+xYw+axIB3T9R2WSqRPPZsn6+lX06BFU+zQou5nWfqKEG2Omoq+DjgQy7xhVA
+         YeSll/SBV10JRh3jbS/tJ/GQjp1X5L+Q6xLT2nZw80xRchlsTNwB9mme2Obf9HfpLZe6
+         uJZw==
+X-Gm-Message-State: AC+VfDyGt+Qjpz9ZLdYYUuvGvVfMZ1dkjch95N3Q+v5Tgysy+aS/5R98
+        bRMgszWq6kDijL1Q9t8c9kASRaT3bdwdfhXUEfU=
+X-Google-Smtp-Source: ACHHUZ7XRbMXSCtdIxZ8xlQUVbDqDCF/DYYxzINB5TXFpICx/Vmpfrpf3vUad18T0gUPgumyU7HTUw==
+X-Received: by 2002:a92:c8d2:0:b0:331:69c0:8e1f with SMTP id c18-20020a92c8d2000000b0033169c08e1fmr1764514ilq.27.1686322902120;
+        Fri, 09 Jun 2023 08:01:42 -0700 (PDT)
+Received: from mail-il1-f179.google.com (mail-il1-f179.google.com. [209.85.166.179])
+        by smtp.gmail.com with ESMTPSA id y9-20020a926409000000b0033a9ba8747dsm1129699ilb.30.2023.06.09.08.01.41
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Jun 2023 08:01:41 -0700 (PDT)
+Received: by mail-il1-f179.google.com with SMTP id e9e14a558f8ab-33bf12b5fb5so250345ab.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 08:01:41 -0700 (PDT)
+X-Received: by 2002:a05:6e02:1d02:b0:33d:cd39:c1cd with SMTP id
+ i2-20020a056e021d0200b0033dcd39c1cdmr397198ila.14.1686322880679; Fri, 09 Jun
+ 2023 08:01:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230609054141.18938-1-quic_ppareek@quicinc.com>
- <79206b05-674b-1f6c-6eb1-ed45e6bd5637@linaro.org> <20230609125631.GA29252@hu-ppareek-blr.qualcomm.com>
- <2881f374-70e2-0057-f43e-7be12d32ae22@arm.com> <c3c12574-fc38-84ae-2a94-3c80fb9fb363@linaro.org>
-In-Reply-To: <c3c12574-fc38-84ae-2a94-3c80fb9fb363@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 9 Jun 2023 17:56:39 +0300
-Message-ID: <CAA8EJprqfq0ey2hgBXxf9Zg1Y_MwHP_73EQkwg-W-sRYS7VE8w@mail.gmail.com>
-Subject: Re: [PATCH 0/3] arm64: dts: qcom: sa8775p: Add interconnect to SMMU
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Parikshit Pareek <quic_ppareek@quicinc.com>,
-        Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+References: <20230607215224.2067679-1-dianders@chromium.org>
+ <20230607144931.v2.8.Ib1a98309c455cd7e26b931c69993d4fba33bbe15@changeid>
+ <y3l4x3kv7jgog3miexati5wbveaynnryzqvj6sc4ul6625f2if@w7nqgojfavfw>
+ <CAD=FV=W-fXpm4JCczrNgAS2M9u2VLd2jAkJvE9XJgQpvoE5rjA@mail.gmail.com> <CAO-hwJ+3M1iYgaAFEtf-63U20ccGfdiRoi3197YoZmyvMYsGzQ@mail.gmail.com>
+In-Reply-To: <CAO-hwJ+3M1iYgaAFEtf-63U20ccGfdiRoi3197YoZmyvMYsGzQ@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 9 Jun 2023 08:01:08 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=X4aYuLC-8xgSD1VkCGnKEm4oRdYkHSajx7pL8aGu6YqA@mail.gmail.com>
+Message-ID: <CAD=FV=X4aYuLC-8xgSD1VkCGnKEm4oRdYkHSajx7pL8aGu6YqA@mail.gmail.com>
+Subject: Re: [PATCH v2 08/10] HID: i2c-hid: Support being a panel follower
+To:     Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Cc:     Jiri Kosina <jikos@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Adam Skladowski <a39.skl@gmail.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        dri-devel@lists.freedesktop.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-input@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org, hsinyi@google.com,
+        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
+        yangcong5@huaqin.corp-partner.google.com,
         linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
-        devicetree@vger.kernel.org,
-        "linux-kernel @ vger . kernel . org Prasanna Kumar" 
-        <quic_kprasan@quicinc.com>,
-        Shazad Hussain <quic_shazhuss@quicinc.com>
+        Chris Morgan <macroalpha82@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 9 Jun 2023 at 17:52, Konrad Dybcio <konrad.dybcio@linaro.org> wrote=
-:
+Hi,
+
+On Fri, Jun 9, 2023 at 2:27=E2=80=AFAM Benjamin Tissoires
+<benjamin.tissoires@redhat.com> wrote:
 >
->
->
-> On 9.06.2023 16:45, Robin Murphy wrote:
-> > On 2023-06-09 13:56, Parikshit Pareek wrote:
-> >> On Fri, Jun 09, 2023 at 10:52:26AM +0200, Konrad Dybcio wrote:
-> >>>
-> >>>
-> >>> On 9.06.2023 07:41, Parikshit Pareek wrote:
-> >>>> Some qcom SoCs have SMMUs, which need the interconnect bandwidth to =
-be
-> >>>> This series introduce the due support for associated interconnect, a=
-nd
-> >>>> setting of the due interconnect-bandwidth. Setting due interconnect
-> >>>> bandwidth is needed to avoid the issues like [1], caused by not havi=
-ng
-> >>>> due clock votes(indirectly dependent upon interconnect bandwidth).
-> >>>
-> >>> [1] ???
-> >>
-> >> My bad. Intended to mention following:
-> >> https://lore.kernel.org/linux-arm-msm/20230418165224.vmok75fwcjqdxspe@=
-echanude/
+> > I suspect that it's not worth it, but I'll do this if you feel
+> > strongly about it.
 > >
-> > This sounds super-dodgy - do you really have to rely on configuration o=
-f the interconnect path from the SMMU's pagetable walker to RAM to keep a c=
-ompletely different interconnect path clocked for the CPU to access SMMU re=
-gisters? You can't just request the programming interface clock directly li=
-ke on other SoCs?
-> On Qualcomm platforms, particularly so with the more recent ones, some
-> clocks are managed by various remote cores. Half of what the interconnect
-> infra does on these SoCs is telling one such core to change the internall=
-y
-> managed clock's rate based on the requested bw.
+> > I guess the simplest way I can think of to move this to its own file
+> > would be to put the whole private data structure (struct i2c_hid) in a
+> > private header file and then add prototypes for i2c_hid_core_resume()
+> > and i2c_hid_core_suspend() there. Then I could add something like
+> > i2c_hid_core_handle_panel_follower() that would have all the
+> > registration logic. I'd still need special cases in the core
+> > suspend/resume/remove code unless I add a level of abstraction. While
+> > the level of abstraction is more "pure", it also would make the code
+> > harder to follow.
+> >
+> > Unless I hear a strong opinion (or if this series changes
+> > significantly), I'll plan to keep things in the same file and just use
+> > a Kconfig.
+> >
+>
+> Right, a separate file might not be the best then :(
+>
+> Do you envision this to be used on the ACPI side of i2c-hid? Because
+> if this is OF only, then maybe it would be interesting to put it there
+> (in i2c-hid-of.c), instead of having it in the core. IIRC i2c-hid-of
+> also has ways to set up/down regulators, so maybe it'll be better
+> there?
 
-But enabling PCIe interconnect to keep SMMU working sounds strange to
-me too. Does the fault come from some outstanding PCIe transaction?
+There is no reason why this problem would be limited to devices using
+devicetree. Even if ACPI could somehow magically power sequence the
+touchscreen and panel together, doing it behind the back of the kernel
+driver would be a bad idea anyway so folks using ACPI would need the
+same code. I don't have tons of experience with ACPI nor how to hook
+this up there, but I purposely made the API for registering the panel
+follower such that the client doesn't pass anything devicetree
+specific. If someone could figure out how to detect a link between a
+panel and a touchscreen for ACPI and add this code to
+drm_panel_add_follower() then it would automatically work for the ACPI
+case as well.
 
-
---=20
-With best wishes
-Dmitry
+-Doug
