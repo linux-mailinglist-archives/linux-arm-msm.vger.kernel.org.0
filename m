@@ -2,132 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C3B6729DD0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 17:07:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5AC5729DD2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 17:07:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241062AbjFIPHM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 11:07:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47014 "EHLO
+        id S240127AbjFIPH1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 11:07:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47070 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238725AbjFIPHI (ORCPT
+        with ESMTP id S241290AbjFIPHT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 11:07:08 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E82031988
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 08:07:05 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f660e57123so285234e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 08:07:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686323224; x=1688915224;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+HRF2b1CvR2hajy1IOanokuAFQMVHjoB8ThV/p26Mgo=;
-        b=f1PxIDpuX/zlqFfWw+blXBSi9DeKzHcZsnncbPmp9adn2niqylXij/tJltEQSZatdt
-         Lsl7s4HX/edkwJrU2V14/47oNsmDYTIx7JGn/AYXNsXsrQScpuLRLlcl8zJS2Hocs40C
-         VDMzuZ1YBYGfXVQz9rtcVLe6CEl7DE099a5fhu9VVW2OcVCrNIc5AakezLanqhoZENv8
-         9MRvR9QD8LwCxHSZFg8qP+L7pKYntsUZy30z6bu+uQ2e0zrJ8bYOLRXUGgzaXy0H+0bD
-         WnwFreMG69jOZojwbQ6ZipGcGxZZtNE2wEzzbFTJRYbOnv1yV+DitQxj//8v4SYvMFGc
-         sDmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686323224; x=1688915224;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+HRF2b1CvR2hajy1IOanokuAFQMVHjoB8ThV/p26Mgo=;
-        b=EPIezUFuagKcqNAqtUO/EunqqOSBs+lpLHvNtH3Z53BetnOBC1oCg05BodT7fMA9vh
-         M1C7XFd4divzFGpeYE40/gR9AjMdRNpcrsNQzD22qq3tldBHPotBUFNb52HIQsqhZmPr
-         BKis4SpuRWTvj7NSfGyM4ImqJcRq7G5ZujPvnZ4waXMY3whwzVBpeUwBQk3ktYvAEYK7
-         YatPy6vsl6+70kiih2sa1j0Hi8eME2j4vfuO4o8g6x4xFTFIaJMfVb0yVtx+RKnRHYwX
-         CN5GRDYQM6cot2Qfa/pJM5n48z0/J7v7VB2r0Xmd3rPugU5K62mqGGBI58B/mEJ+pb2Z
-         ESdA==
-X-Gm-Message-State: AC+VfDy6kMKYArJlI9EUkJoX+O08uRdeUttAEQKlP9W9m/L15t/2OM9o
-        AdyTjmFx/sXXbsyElR8Q2/dnN3vA9tLRkB6wqyY=
-X-Google-Smtp-Source: ACHHUZ7SHhOs7l2r+XB9S3ahIrZZvIAkME/tcLdio2OOfNuWXJq5cfITXW3St68pwNFU5EN8sFje/g==
-X-Received: by 2002:ac2:4643:0:b0:4f4:af2c:97e with SMTP id s3-20020ac24643000000b004f4af2c097emr1110419lfo.11.1686323224152;
-        Fri, 09 Jun 2023 08:07:04 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id y8-20020a197508000000b004f3b4a9a60esm581582lfe.106.2023.06.09.08.07.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jun 2023 08:07:03 -0700 (PDT)
-Message-ID: <6b55b3f6-6424-4d7c-4782-d2de41df1f85@linaro.org>
-Date:   Fri, 9 Jun 2023 17:07:02 +0200
+        Fri, 9 Jun 2023 11:07:19 -0400
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id 38FE1359A;
+        Fri,  9 Jun 2023 08:07:17 -0700 (PDT)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 0A043AB6;
+        Fri,  9 Jun 2023 08:08:03 -0700 (PDT)
+Received: from [10.57.85.120] (unknown [10.57.85.120])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D5D833F663;
+        Fri,  9 Jun 2023 08:07:14 -0700 (PDT)
+Message-ID: <54da68f0-9f9d-cea4-13fb-5e10b8171746@arm.com>
+Date:   Fri, 9 Jun 2023 16:07:10 +0100
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v2 07/12] rpmsg: qcom_smd: Use qcom_smem_is_available()
-Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH 0/3] arm64: dts: qcom: sa8775p: Add interconnect to SMMU
+Content-Language: en-GB
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Parikshit Pareek <quic_ppareek@quicinc.com>
+Cc:     Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-remoteproc@vger.kernel.org
-References: <20230531-rpm-rproc-v2-0-56a4a00c8260@gerhold.net>
- <20230531-rpm-rproc-v2-7-56a4a00c8260@gerhold.net>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230531-rpm-rproc-v2-7-56a4a00c8260@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Adam Skladowski <a39.skl@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org,
+        "linux-kernel @ vger . kernel . org Prasanna Kumar" 
+        <quic_kprasan@quicinc.com>,
+        Shazad Hussain <quic_shazhuss@quicinc.com>
+References: <20230609054141.18938-1-quic_ppareek@quicinc.com>
+ <79206b05-674b-1f6c-6eb1-ed45e6bd5637@linaro.org>
+ <20230609125631.GA29252@hu-ppareek-blr.qualcomm.com>
+ <2881f374-70e2-0057-f43e-7be12d32ae22@arm.com>
+ <c3c12574-fc38-84ae-2a94-3c80fb9fb363@linaro.org>
+From:   Robin Murphy <robin.murphy@arm.com>
+In-Reply-To: <c3c12574-fc38-84ae-2a94-3c80fb9fb363@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-4.3 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2023-06-09 15:52, Konrad Dybcio wrote:
+> 
+> 
+> On 9.06.2023 16:45, Robin Murphy wrote:
+>> On 2023-06-09 13:56, Parikshit Pareek wrote:
+>>> On Fri, Jun 09, 2023 at 10:52:26AM +0200, Konrad Dybcio wrote:
+>>>>
+>>>>
+>>>> On 9.06.2023 07:41, Parikshit Pareek wrote:
+>>>>> Some qcom SoCs have SMMUs, which need the interconnect bandwidth to be
+>>>>> This series introduce the due support for associated interconnect, and
+>>>>> setting of the due interconnect-bandwidth. Setting due interconnect
+>>>>> bandwidth is needed to avoid the issues like [1], caused by not having
+>>>>> due clock votes(indirectly dependent upon interconnect bandwidth).
+>>>>
+>>>> [1] ???
+>>>
+>>> My bad. Intended to mention following:
+>>> https://lore.kernel.org/linux-arm-msm/20230418165224.vmok75fwcjqdxspe@echanude/
+>>
+>> This sounds super-dodgy - do you really have to rely on configuration of the interconnect path from the SMMU's pagetable walker to RAM to keep a completely different interconnect path clocked for the CPU to access SMMU registers? You can't just request the programming interface clock directly like on other SoCs?
+> On Qualcomm platforms, particularly so with the more recent ones, some
+> clocks are managed by various remote cores. Half of what the interconnect
+> infra does on these SoCs is telling one such core to change the internally
+> managed clock's rate based on the requested bw.
 
+That much I get, it just seems like an arse-backwards design decision if 
+it's really necessary to pretend the SMMU needs to access memory in 
+order for the CPU to be able to access the SMMU. The respective SMMU 
+interfaces are functionally independent of each other - even if it is 
+the case in the integration that both interfaces and/or the internal TCU 
+clock do happen to be driven synchronously from the same parent clock - 
+and in any sane interconnect the CPU->SMMU and SMMU->RAM routes would be 
+completely different and not intersect at all.
 
-On 8.06.2023 09:10, Stephan Gerhold wrote:
-> Rather than looking up a dummy item from SMEM, use the new
-> qcom_smem_is_available() function to make the code more clear
-> (and reduce the overhead slightly).
-> 
-> Add the same check to qcom_smd_register_edge() as well to ensure that
-> it only succeeds if SMEM is already available - if a driver calls the
-> function and SMEM is not available yet then the initial state will be
-> read incorrectly and the RPMSG devices might never become available.
-> 
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-Konrad
->  drivers/rpmsg/qcom_smd.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/rpmsg/qcom_smd.c b/drivers/rpmsg/qcom_smd.c
-> index 7b9c298aa491..43f601c84b4f 100644
-> --- a/drivers/rpmsg/qcom_smd.c
-> +++ b/drivers/rpmsg/qcom_smd.c
-> @@ -1479,6 +1479,9 @@ struct qcom_smd_edge *qcom_smd_register_edge(struct device *parent,
->  	struct qcom_smd_edge *edge;
->  	int ret;
->  
-> +	if (!qcom_smem_is_available())
-> +		return ERR_PTR(-EPROBE_DEFER);
-> +
->  	edge = kzalloc(sizeof(*edge), GFP_KERNEL);
->  	if (!edge)
->  		return ERR_PTR(-ENOMEM);
-> @@ -1553,12 +1556,9 @@ EXPORT_SYMBOL(qcom_smd_unregister_edge);
->  static int qcom_smd_probe(struct platform_device *pdev)
->  {
->  	struct device_node *node;
-> -	void *p;
->  
-> -	/* Wait for smem */
-> -	p = qcom_smem_get(QCOM_SMEM_HOST_ANY, smem_items[0].alloc_tbl_id, NULL);
-> -	if (PTR_ERR(p) == -EPROBE_DEFER)
-> -		return PTR_ERR(p);
-> +	if (!qcom_smem_is_available())
-> +		return -EPROBE_DEFER;
->  
->  	for_each_available_child_of_node(pdev->dev.of_node, node)
->  		qcom_smd_register_edge(&pdev->dev, node);
-> 
+Thanks,
+Robin.
