@@ -2,87 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 84FA072A0C4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 18:58:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3531572A11E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 19:20:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229709AbjFIQ6a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 12:58:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56002 "EHLO
+        id S230391AbjFIRUL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 13:20:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37002 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229573AbjFIQ6a (ORCPT
+        with ESMTP id S230392AbjFIRUK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 12:58:30 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6657C3A97;
-        Fri,  9 Jun 2023 09:58:29 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 02C7561B83;
-        Fri,  9 Jun 2023 16:58:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26FDFC433D2;
-        Fri,  9 Jun 2023 16:58:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686329908;
-        bh=pjgfKaWVMdeYyIMbBJD5Sg5A3ohhPxW0Ef13dCshItk=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=XkkmdBfZIksnouDINNBR5DFTz+0ZxdelPRUY8ugmfCzWI9Nwhi8gDqycIXeRQN+sh
-         ATOoTwDhBPpwlQ7/H1WDLoaTe/OusGTzdDPKv1i3vBs+SS9qY8QWCRNuKAAJdmOS4y
-         T5e+Exwirlj3rZLHELNMgPuNq4hM/MDyiRywXvAkSrk2HMur+ZmGXWUDDsesJAqmL6
-         dYdnBRTFNALe7Pd8ekA798iIIrZ3pS/9jWhCK3bbItBiA6Ku4LZjo3wzp6etVX7wKa
-         VUnEGpJjYx/SzUJb0ApVA6RDkPSWdvKbWgeBkS6NP/gFpmquO5p0MhCvt0eicXGd3I
-         jqbJAMVxxESNA==
-Date:   Fri, 9 Jun 2023 11:58:26 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-Cc:     manivannan.sadhasivam@linaro.org, quic_vbadigan@quicinc.com,
-        quic_ramkri@quicinc.com, Manivannan Sadhasivam <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM" 
-        <linux-pci@vger.kernel.org>,
-        "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM" 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v2 3/3] PCI: qcom-ep: Add ICC bandwidth voting support
-Message-ID: <20230609165826.GA1251610@bhelgaas>
+        Fri, 9 Jun 2023 13:20:10 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2775A30DD;
+        Fri,  9 Jun 2023 10:20:09 -0700 (PDT)
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 359Dtbm1014796;
+        Fri, 9 Jun 2023 17:20:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=Ul82jzY2RSnizNofA8g6g0DXvs09Bv5nfY+uPJv55D8=;
+ b=VXnD2X/ims9ciYr28Kwl6B0Cv2MvYdkLePA4lIYnpsRYMVQXB3BRSBvnlySwxjl6CuWu
+ 2LZagrAhv+tK3kFbM7IrqeJ7nMFtyMXq1aMH7EJ/c8lpfmnnr/Fgd4tdq1c3iKbt8F5j
+ BCtdxQczzK9wiCj9oYJiaTTrwe9jT2ZSOo6/QuHALioQkv+ooxB1/eG5loVfHPFnn3Qv
+ biN1kjH+A/xXtHAixSLKz8HSpgKbjLuCaUHMGOdtbPQBSEVh5q/wjJa9+A7ffJqDJQRn
+ C00gTUW0x5hb8DFf77zoF234rPBA+lrtIBRmsPb9wgabGL0lhkLSPRzRkIVRcvrhu/SE WA== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r3tyxsm4d-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 09 Jun 2023 17:20:03 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 359HK35e012590
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 9 Jun 2023 17:20:03 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 9 Jun 2023
+ 10:20:02 -0700
+Message-ID: <0b525cc2-81d0-329f-3be2-7f577bf7cadf@quicinc.com>
+Date:   Fri, 9 Jun 2023 11:20:01 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <33098c17-ea24-f26c-2d37-707f13ce9716@quicinc.com>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH 0/2] accel/qaic fixes for 6.4 part 2
+Content-Language: en-US
+To:     <dri-devel@lists.freedesktop.org>
+CC:     <ogabbay@kernel.org>, <jacek.lawrynowicz@linux.intel.com>,
+        <stanislaw.gruszka@linux.intel.com>, <quic_carlv@quicinc.com>,
+        <quic_ajitpals@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20230602210440.8411-1-quic_jhugo@quicinc.com>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <20230602210440.8411-1-quic_jhugo@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: evEUdpA6-0LBNH5w63NfkJYM5WNrq_NM
+X-Proofpoint-ORIG-GUID: evEUdpA6-0LBNH5w63NfkJYM5WNrq_NM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-09_12,2023-06-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 mlxlogscore=704 mlxscore=0 malwarescore=0 phishscore=0
+ impostorscore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ spamscore=0 adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306090145
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 09, 2023 at 05:22:00PM +0530, Krishna Chaitanya Chundru wrote:
-> On 6/7/2023 10:13 PM, Bjorn Helgaas wrote:
-> > On Wed, Jun 07, 2023 at 09:48:07PM +0530, Krishna chaitanya chundru wrote:
-> > > Add support to vote for ICC bandwidth based on the link
-> > > speed and width.
-
-> > This plus the pcie_ep->icc init below is basically identical to
-> > qcom_pcie_icc_init() in pcie_qcom.c.  Why not use the same structure
-> > here, with a qcom_pcie_icc_init() function?  It's better to be the
-> > same than different (when possible, of course).
+On 6/2/2023 3:04 PM, Jeffrey Hugo wrote:
+> Two additional fixes for corner cases found during development when
+> buggy userspace or firmware ends up subjecting the KMD to error
+> scenarios.
 > 
-> In pcie_qcom.c driver the resources will be turned on the probe itself.
+> Carl Vanderlip (1):
+>    accel/qaic: Free user handle on interrupted mutex
 > 
-> But in pcie-qcom-ep.c driver will wait for the host to toggle the perst to
-> enable all the resources
+> Jeffrey Hugo (1):
+>    accel/qaic: Fix NULL pointer deref in qaic_destroy_drm_device()
 > 
-> that is reason it is different here.
+>   drivers/accel/qaic/qaic_drv.c | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
 
-Understood, differences like this do make sense.  It's not always
-possible, but when it is, it's helpful to use similar structure and
-function names because it makes it easier to understand and easier to
-see opportunities for refactoring.
-
-Bjorn
+Pushed to drm-misc-fixes
