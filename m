@@ -2,237 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BC1372A025
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 18:26:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B484F72A0A5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 18:52:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232399AbjFIQ0g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 12:26:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39844 "EHLO
+        id S230012AbjFIQw5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 12:52:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53800 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242123AbjFIQ0f (ORCPT
+        with ESMTP id S229518AbjFIQw4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 12:26:35 -0400
-Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5F053A95
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 09:26:32 -0700 (PDT)
-Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-565cdb77b01so17254117b3.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 09:26:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686327992; x=1688919992;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=kqmhgD0hzidkR7C4FG6ZaFcEzUFu8WFVvYV0gu30B4c=;
-        b=TpWGhj1go0f01Ili2y+lD2+R5W+Ad0HWc0ntIU994go70wqgsYE0Nbjoy5+25gjpdJ
-         HJWknYHWr5y/y7G73iIQZJ269NJ5e+84rcAcqX1VcSRYzXElE4lla3v4fDh90QKT5KL0
-         RrQs/yyErk3CZk0hVzl5gQhjpIwcbhGkMHipsQD9Qv7u4s36a8Zia4FXm+2aT74BFrP2
-         2V9mJrNVml0Kx+4g9wvMLhOjEJ+l9M2EGg/kgjmhGyFGZrPgCYYlxTODB/LfD1TRBVjp
-         R7QBMcLmvwCTJKQ/n3nzOjV9xqAWK8W+/Z4AgCUrGslkw7rOK6gp2v8PR7N90DjzBUiq
-         f3rg==
+        Fri, 9 Jun 2023 12:52:56 -0400
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E0981993;
+        Fri,  9 Jun 2023 09:52:54 -0700 (PDT)
+Received: by mail-io1-f54.google.com with SMTP id ca18e2360f4ac-777a6ebb542so82946039f.0;
+        Fri, 09 Jun 2023 09:52:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686327992; x=1688919992;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kqmhgD0hzidkR7C4FG6ZaFcEzUFu8WFVvYV0gu30B4c=;
-        b=fNrXy/0em8ZRfQHyl6A0AFmcBpryPfMOYGxhULk2N9c0i1pkuCVk2E698WtCSUOovd
-         uyl2pbBWnts3eFZhHI38h2E1IfV+Il+PtWp1P7CDGYmLHYM9iXfYDz8ceGa0aTm4jLfB
-         GtKMsY5gC0S6CQ24SkFwYBa8hcbyOQWrKbLa95TjjKfXmOdTOxGbXK7I1YnK8NB26SwS
-         BU2hc7XL1BGExSiOVawQGFKs9lPxm7kloCyhW7ogy3lAUfNSAo+qVvYoE9I9RaIM80Ci
-         p7+6xPRQcb0BM2SJi6wWgqIfSO/D6kSuLfHJVFU6x0yr6kp1uvomYe3sd9Na+aZ8vQWl
-         AmeA==
-X-Gm-Message-State: AC+VfDyXSs6QELJiPiGJIOwqkhQL/ES8tYRUM3K4DmODswS8g4xZ8I8y
-        PiiNA8QXS5cV4mcUGuZjjdGSt5lfMKhUyZTpURE2qw==
-X-Google-Smtp-Source: ACHHUZ7lgaJdipRWewn4T/8Urmy4/1Lpe4YcOBI9261oG/aAVvlcVZ2sljI+94p6NxKfmsTVf8Wn8Euzot46J05NHs4=
-X-Received: by 2002:a81:838c:0:b0:561:c9c1:ce with SMTP id t134-20020a81838c000000b00561c9c100cemr1775388ywf.8.1686327991956;
- Fri, 09 Jun 2023 09:26:31 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686329573; x=1688921573;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Eujn8JUGHI0bBmgrTXDm/BLkyXowc0kt/C2sds+BNXQ=;
+        b=iPU0N01EfzqpjtP1WyrIQIHASkBXtdSJ59OUQUEX+qG1j67PPukrfAatgVB+oENiLD
+         4OOjY1H4FZHB31cqipRL9FzBJsiSGP8NDOSLWMdUrx48Cs6rryETb1sO7UuVPg3in4UY
+         +NMN0onbpo3kyD6gxqpBW4ny8tuvd5Xtg7qD00LQ6i7KZPrPjoUl/SxBK+hT+MHC66cn
+         wPi0Tmed4Qjup5AhZBOS+iEq/u2QXfyrZkv0rTWJcbHruqjY4I6OUGUGGCi+44/rh/+U
+         OegMtXxI8PbPvh4LQLRGpYHdvG2xWrXEQLuITL9pRNenTR1bww8PJvmdNYXtl9A8qim+
+         y2Xg==
+X-Gm-Message-State: AC+VfDzW5j77LqumHtS1+Jro+X6dmJ4Whz5aTLFt0d3x2QqtqRTM+4Iq
+        m0d+e7qiGeX7gW69GAU8sPUS5AIvhA==
+X-Google-Smtp-Source: ACHHUZ5W5KHyotltYhmI+LU0LABrhutXkkEdJQOh4ifI18m6JBhrPVQsDgMYEamdr04ba47axOw5+A==
+X-Received: by 2002:a5e:8612:0:b0:77a:c54c:1e51 with SMTP id z18-20020a5e8612000000b0077ac54c1e51mr2120674ioj.9.1686329573613;
+        Fri, 09 Jun 2023 09:52:53 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id y10-20020a5ec80a000000b0076c70f8c4d1sm1174734iol.45.2023.06.09.09.52.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Jun 2023 09:52:52 -0700 (PDT)
+Received: (nullmailer pid 1263494 invoked by uid 1000);
+        Fri, 09 Jun 2023 16:52:50 -0000
+Date:   Fri, 9 Jun 2023 10:52:50 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>
+Subject: Re: [PATCH v4 1/4] dt-bindings: power: reset: qcom-pon: define
+ pm8941-pon
+Message-ID: <168632956664.1263392.15400080254479022707.robh@kernel.org>
+References: <20230609022553.1775844-1-dmitry.baryshkov@linaro.org>
+ <20230609022553.1775844-2-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-References: <1686311249-6857-1-git-send-email-quic_krichai@quicinc.com> <1686311249-6857-4-git-send-email-quic_krichai@quicinc.com>
-In-Reply-To: <1686311249-6857-4-git-send-email-quic_krichai@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 9 Jun 2023 19:26:21 +0300
-Message-ID: <CAA8EJppPt8utWbF83dqMD4y2Of2ufwcpSPvdTyoDndkrbnZm3Q@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] PCI: qcom-ep: Add ICC bandwidth voting support
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     manivannan.sadhasivam@linaro.org, quic_vbadigan@quicinc.com,
-        quic_ramkri@quicinc.com, linux-arm-msm@vger.kernel.org,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM" 
-        <linux-pci@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230609022553.1775844-2-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 9 Jun 2023 at 14:47, Krishna chaitanya chundru
-<quic_krichai@quicinc.com> wrote:
->
-> Add support to vote for ICC bandwidth based on the link speed and width.
->
-> This patch is inspired from pcie-qcom driver to add basic interconnect
-> support.
->
-> Link: https://lore.kernel.org/all/20221102090705.23634-1-johan+linaro@kernel.org/
 
-This link should be a part of the cover letter, not the commit msg. If
-you want to refer to the previous commits, please use the standard
-reference: commit abcdefabc ("PCI: qcom: Make foo and bar").
-
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+On Fri, 09 Jun 2023 05:25:50 +0300, Dmitry Baryshkov wrote:
+> On PM8941 pon doesn't store the reset reason. However we still need the
+> wrapping node for pwrkey and resin nodes. Add bindings for pm8941-pon
+> device.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  drivers/pci/controller/dwc/pcie-qcom-ep.c | 68 +++++++++++++++++++++++++++++++
->  1 file changed, 68 insertions(+)
->
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> index 19b3283..baf831f 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-> @@ -13,6 +13,7 @@
->  #include <linux/debugfs.h>
->  #include <linux/delay.h>
->  #include <linux/gpio/consumer.h>
-> +#include <linux/interconnect.h>
->  #include <linux/mfd/syscon.h>
->  #include <linux/phy/pcie.h>
->  #include <linux/phy/phy.h>
-> @@ -28,6 +29,7 @@
->  #define PARF_SYS_CTRL                          0x00
->  #define PARF_DB_CTRL                           0x10
->  #define PARF_PM_CTRL                           0x20
-> +#define PARF_PM_STTS                           0x24
->  #define PARF_MHI_CLOCK_RESET_CTRL              0x174
->  #define PARF_MHI_BASE_ADDR_LOWER               0x178
->  #define PARF_MHI_BASE_ADDR_UPPER               0x17c
-> @@ -128,6 +130,9 @@
->  /* DBI register fields */
->  #define DBI_CON_STATUS_POWER_STATE_MASK                GENMASK(1, 0)
->
-> +#define DBI_LINKCTRLSTATUS                     0x80
-> +#define DBI_LINKCTRLSTATUS_SHIFT               16
-> +
->  #define XMLH_LINK_UP                           0x400
->  #define CORE_RESET_TIME_US_MIN                 1000
->  #define CORE_RESET_TIME_US_MAX                 1005
-> @@ -178,6 +183,8 @@ struct qcom_pcie_ep {
->         struct phy *phy;
->         struct dentry *debugfs;
->
-> +       struct icc_path *icc_mem;
-> +
->         struct clk_bulk_data *clks;
->         int num_clks;
->
-> @@ -253,9 +260,51 @@ static void qcom_pcie_dw_stop_link(struct dw_pcie *pci)
->         disable_irq(pcie_ep->perst_irq);
->  }
->
-> +static void qcom_pcie_ep_icc_update(struct qcom_pcie_ep *pcie_ep)
-> +{
-> +       struct dw_pcie *pci = &pcie_ep->pci;
-> +       u32 offset, status, bw;
-> +       int speed, width;
-> +       int ret;
-> +
-> +       if (!pcie_ep->icc_mem)
-> +               return;
-> +
-> +       offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-> +       status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
-> +
-> +       speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
-> +       width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
-> +
-> +       switch (speed) {
-> +       case 1:
-> +               bw = MBps_to_icc(250);  /* BW for GEN1 per lane: 250MBps */
+>  .../bindings/power/reset/qcom,pon.yaml           | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+> 
 
-Please extract these constants to the defines. This would save you
-from duplicating 250 below.
+Acked-by: Rob Herring <robh@kernel.org>
 
-> +               break;
-> +       case 2:
-> +               bw = MBps_to_icc(500);  /* BW for GEN2 per lane: 500MBps */
-> +               break;
-> +       case 3:
-> +               bw = MBps_to_icc(985);  /* BW for GEN3 per lane: 985MBps */
-> +               break;
-> +       default:
-> +               WARN_ON_ONCE(1);
-> +               fallthrough;
-> +       case 4:
-> +               bw = MBps_to_icc(1969); /* BW for GEN4 per lane:1969MBps */
-> +               break;
-> +       }
-> +
-> +       ret = icc_set_bw(pcie_ep->icc_mem, 0, width * bw);
-> +       if (ret) {
-> +               dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
-> +                       ret);
-> +       }
-> +}
-> +
->  static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
->  {
->         int ret;
-> +       struct dw_pcie *pci = &pcie_ep->pci;
->
->         ret = clk_bulk_prepare_enable(pcie_ep->num_clks, pcie_ep->clks);
->         if (ret)
-> @@ -277,6 +326,20 @@ static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
->         if (ret)
->                 goto err_phy_exit;
->
-> +       /*
-> +        * Some Qualcomm platforms require interconnect bandwidth constraints
-> +        * to be set before enabling interconnect clocks.
-> +        *
-> +        * Set an initial average bandwidth corresponding to GEN1x1(250 MBps)
-> +        * for the pcie to mem path.
-> +        */
-> +       ret = icc_set_bw(pcie_ep->icc_mem, 0, MBps_to_icc(250));
-> +       if (ret) {
-> +               dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
-> +                       ret);
-> +               goto err_phy_exit;
-> +       }
-> +
->         return 0;
->
->  err_phy_exit:
-> @@ -550,6 +613,10 @@ static int qcom_pcie_ep_get_resources(struct platform_device *pdev,
->         if (IS_ERR(pcie_ep->phy))
->                 ret = PTR_ERR(pcie_ep->phy);
->
-> +       pcie_ep->icc_mem = devm_of_icc_get(dev, "pcie-mem");
-> +       if (IS_ERR(pcie_ep->icc_mem))
-> +               ret = PTR_ERR(pcie_ep->icc_mem);
-> +
->         return ret;
->  }
->
-> @@ -572,6 +639,7 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
->         } else if (FIELD_GET(PARF_INT_ALL_BME, status)) {
->                 dev_dbg(dev, "Received BME event. Link is enabled!\n");
->                 pcie_ep->link_status = QCOM_PCIE_EP_LINK_ENABLED;
-> +               qcom_pcie_ep_icc_update(pcie_ep);
->         } else if (FIELD_GET(PARF_INT_ALL_PM_TURNOFF, status)) {
->                 dev_dbg(dev, "Received PM Turn-off event! Entering L23\n");
->                 val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
-> --
-> 2.7.4
->
-
-
--- 
-With best wishes
-Dmitry
