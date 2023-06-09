@@ -2,264 +2,318 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E78072A366
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 21:50:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B67FD72A3B9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 21:56:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231985AbjFITuV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 15:50:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48142 "EHLO
+        id S231916AbjFIT4i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 15:56:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51640 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231896AbjFITuT (ORCPT
+        with ESMTP id S232148AbjFIT4d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 15:50:19 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE4BD1FEC;
-        Fri,  9 Jun 2023 12:50:15 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 359JmZSR027255;
-        Fri, 9 Jun 2023 19:50:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=wJ9YsL7W5/uRql9g9hLhUuvRfqvi5U2DpIzDMRyuY24=;
- b=bpdhHglfmOl+rUc3Bh1rHXvvRS0RYoiWlPagMs3tJO36HKRwwDYlGjzchA0IRqEL6Ytu
- mAKREe1enrdhVx41bV7+wy2MNYzB4BBY8kS9HthglrAVE+bfH5XJ44SbtD5ROCFY8DOs
- v5t+uuGccUk1cewM8zSCXonUUFd/aI/W/M8KoLVHbWR0lb/LYHdnWxcf4AMhQfSwEdNT
- D8p9O3BnpwoaIhU9PaTB/GpgyHoGY5xTEgYikgXDCq/E8wRIA7AYkDSCanV3RP0z1D09
- 2aJ7xEruOv6z2vWaGspvSXhkNro6Yd4cY5h7l8UsXjXVn5vje0ZzHstlAjSvv0+RmLAi tQ== 
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r3vu4hsbc-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 09 Jun 2023 19:49:59 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 359JnwPC005250
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 9 Jun 2023 19:49:58 GMT
-Received: from [10.134.65.165] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 9 Jun 2023
- 12:49:57 -0700
-Message-ID: <c625a138-d27e-bbcb-8056-25abefb75152@quicinc.com>
-Date:   Fri, 9 Jun 2023 12:49:57 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v13 17/24] gunyah: vm_mgr: Add framework for VM Functions
-Content-Language: en-US
-To:     Alex Elder <elder@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>
-CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Fri, 9 Jun 2023 15:56:33 -0400
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2043.outbound.protection.outlook.com [40.107.243.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 225FC2720;
+        Fri,  9 Jun 2023 12:56:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=djXjuhXFgMVKlm3zBiPNM/IiaargOImBS7AS4kCB1+1KYLN8Fm0Hj+tXnjFtoid+7KkwldxUM8j2pCETv/KphilYUktiUcGRoo5GQqcsNKtYjDcDA6muGyPsLRorRjhD/k9gozKJpZHcXn/NiuUJQgkyl52YkIpzjvfx4AJ3siHDn/LbYeNNuu8VOD+RmqJMND+6zRj4Th9xVAAAgCYFHob7IROwCaAUhGvwL3Yj2ra5mPHLBJOtqgo1oEWlRwWpuKB6nVJhoZp/6t+3PXGlgUJW9ajXD2aRkDCHwDdR35s5bEq79c6f0nHEGpIhwzR9DtcwXdHq6Ht00bujlR7AGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=tVBRMJorZVWVwH1iiXJNhZX5c9rwj6aTVJimBlNtVR8=;
+ b=gZ80wi9DAuGQe4TwxARpEZHUXji2opI/91b9IedEKAa1sD7Xc1BiSTBLWykNob5S+EzPY19nBqitosFjzU8Q24MfwlEc5uGfgnP4Wxs4n3TisNshAMzfzN3gDkPaV9C7jDId26B4FtUNrlhjWvMs4WLUS/b3Un1OG0TKQdc4H4T3Qokd6BK78v03gckq0LFkg699M6p7ColHav7BqPE/FKkRoy2QgFCcgpuexQ6Fwkn3sbjvfI8gSBAQ1kDkIarTkqY/hUomsJUmzhjZOyhDawBw7GHGH3GL93K+8ZuAK2Yas6ER09hfSNpozPwhTFib6iNf4GI/MG0zaN6r1ddBVg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=tVBRMJorZVWVwH1iiXJNhZX5c9rwj6aTVJimBlNtVR8=;
+ b=GgNESbXdUEOk+uYroZknSkvOCBfoc9Pkcs8JLBJguAf1nwwsml1M4qkIQM5t+ACOg1Xa5Wrihdm3SLd1VB/gbjm17oKQF7Av0x4tthtULtumYgOYL9xeF5K6Zw0IVD+xyHaz2BKqlpY3k/jC1wH1oH6aF/Vpi1h/0hwUgOnQZ0IhxNYFDkTf7hfGCpmJIJ+AaIr4KEUJ9RgRxP8M/6qYpiT9Y1O+DXJl/pt7raB+uuwH0+PXiZKPheGzh+7R/0HdImdaMsLBOdBMNUBcd0aQEpAHpcMGWvW6AhNg3maDNDl4hU0fNc9cyZMwFLCTLyQ4cfXBm4H6kp+sGC+OYg0nFw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
+ by MN0PR12MB5785.namprd12.prod.outlook.com (2603:10b6:208:374::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6455.36; Fri, 9 Jun
+ 2023 19:56:23 +0000
+Received: from LV2PR12MB5869.namprd12.prod.outlook.com
+ ([fe80::f7a7:a561:87e9:5fab]) by LV2PR12MB5869.namprd12.prod.outlook.com
+ ([fe80::f7a7:a561:87e9:5fab%6]) with mapi id 15.20.6455.030; Fri, 9 Jun 2023
+ 19:56:23 +0000
+From:   Jason Gunthorpe <jgg@nvidia.com>
+To:     Andy Gross <agross@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>
-References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
- <20230509204801.2824351-18-quic_eberman@quicinc.com>
- <3dd82ec0-2a9a-3401-5385-965c624f9f32@linaro.org>
-From:   Elliot Berman <quic_eberman@quicinc.com>
-In-Reply-To: <3dd82ec0-2a9a-3401-5385-965c624f9f32@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>,
+        Baolin Wang <baolin.wang@linux.alibaba.com>,
+        Christophe Leroy <christophe.leroy@csgroup.eu>,
+        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Kevin Tian <kevin.tian@intel.com>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
+        linuxppc-dev@lists.ozlabs.org,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Nicholas Piggin <npiggin@gmail.com>,
+        Orson Zhai <orsonzhai@gmail.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
+        Yong Wu <yong.wu@mediatek.com>,
+        Chunyan Zhang <zhang.lyra@gmail.com>
+Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Nicolin Chen <nicolinc@nvidia.com>,
+        Niklas Schnelle <schnelle@linux.ibm.com>,
+        Steven Price <steven.price@arm.com>,
+        Thierry Reding <treding@nvidia.com>
+Subject: [PATCH v3 00/25] iommu: Make default_domain's mandatory
+Date:   Fri,  9 Jun 2023 16:55:48 -0300
+Message-Id: <0-v3-89830a6c7841+43d-iommu_all_defdom_jgg@nvidia.com>
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: n9i9EZLoAwf-p1UluZlSCL4RXYHZG_Ok
-X-Proofpoint-ORIG-GUID: n9i9EZLoAwf-p1UluZlSCL4RXYHZG_Ok
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-09_14,2023-06-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=999
- lowpriorityscore=0 phishscore=0 priorityscore=1501 clxscore=1015
- suspectscore=0 spamscore=0 mlxscore=0 adultscore=0 malwarescore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306090165
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain
+X-ClientProxiedBy: SJ0PR03CA0383.namprd03.prod.outlook.com
+ (2603:10b6:a03:3a1::28) To LV2PR12MB5869.namprd12.prod.outlook.com
+ (2603:10b6:408:176::16)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|MN0PR12MB5785:EE_
+X-MS-Office365-Filtering-Correlation-Id: 202ad62d-1743-4829-b59d-08db69239841
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: taYEzt2Bwu2dFAlvpekVpEVgq4noiGyHtS+ecz5vPkW2Fvrx9CxZ+VuVMLvE+D8hhLvCW8tJ3OJKnKHP25j0GSWUWV5Vte/xa3Hf2PUHHjXFMiB01KY1fRj6AIDhT7+EIwNsoklAvc2jWdXkYOdDmXrmTAIRRE+QykcrFFs4XOqq+XwK/3hvwhUkUV0Zb5b9eVouHJor5Artmob3ECL8kapRwF3bIa2IeWkCk02UEsGXD1OtNHipnja7drb4f5SguUnfBn4j7bmmQI/kPbp3MXMb4VzoY+XRRusr6dG4lZNkCQqdbnWbV2l/z6ANGHTLzXn5sxj0REUV4jPvAMELxdurdpTbcbxOiMI/J7butqYkQl5OlT6KncLrHkbR/cDqavvFBlVM/dsyjF2kP4hR2tad9oLCOyt+NjNGWMM8MlOYmCv3Ti+GTrPl/NzmX6XCC/+3QIY3Wta3KSuTRvvN+Pf0U1P/9wMpIOxpQUlcbGKMPNE1ZF6h1/kn+knKKaXjeu9uikZxOMvoJ5cHrLwh0YPBH0d6W7KOnsgQ5xZJhjnceWtUiPBtOHwLkdSqG+KWAHmYFbMrOp2u+KAEt5YZTby8j0+lzfCqKb9FkNz3HdmBzUw6VnOBiGKQVWtqKsdDjGHwxAqlA6WU4ZGsQJE1VcSIueZQHBXpJp6btuSzhR+fpKkvjEu/2rC+w/VEv6EFLeDAEo8WTyMLVFQws3v7Xw==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(136003)(39860400002)(346002)(366004)(376002)(451199021)(83380400001)(7416002)(966005)(7406005)(110136005)(478600001)(8676002)(8936002)(4326008)(86362001)(66476007)(66946007)(921005)(66556008)(5660300002)(38100700002)(41300700001)(316002)(6666004)(6486002)(36756003)(2906002)(54906003)(6512007)(107886003)(186003)(26005)(6506007)(2616005)(4216001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?/oAYf8q0S/V49uIJQ/1AG+/YPcYkuq83RNZvDb0Q5jajgBKNcGqWH1tQ/9Bg?=
+ =?us-ascii?Q?jKAfIxpd6+pAbWot/o59jWb9tV2hFrCmR0czj7mg8t2IhmZ6nSIXYWbXZZ/t?=
+ =?us-ascii?Q?W6faIjmbIG7C+dnhegmM/KhKY1WRljEJ3fRz8aXdSZi+0V76MDP3jiXrT1Lr?=
+ =?us-ascii?Q?xxXrXdk9c1IJZ4MdSxigsTh/tluErjnfH9/S6wE5ikhtvctu8h5ghkPHMZxE?=
+ =?us-ascii?Q?L0uzBjAZnyPbzhvUu8+80D6QtBxEhTit9MPvtZS5BBUKUgkRcT6UWLifENAM?=
+ =?us-ascii?Q?XSlDyKy3AYc+W0BFRs/aa4QRkSXZqLejv/uUtgUN6XfB4Fx8v0xpdocsOfV9?=
+ =?us-ascii?Q?4L5PFyEWcQ1dq55CePLkBdcKMHIrKIBsgR0dCkyFCIilFrSDk6iqhU8+5hTY?=
+ =?us-ascii?Q?IQTr9xANykkwINO6cm+vZZThzSakUZAGN+lNbOuVSmvkD8PYJRywhaiODmSu?=
+ =?us-ascii?Q?Zlh5j8ITLJi3RvpSxQqCeN1vfl3x53U42lldPXHHR02wiQB0PfN44MhZcdiM?=
+ =?us-ascii?Q?wOqW6lGdEesqBhErsCvdERdDRCWcGwBjN894D6NDSkdxv7RMbFPN14N3cvsf?=
+ =?us-ascii?Q?vTAAa9qcTloH/cf5pxi7rZpU5fiEVHzrPYJdkvDdfVMUIJQDz5ZRpFtv8Kys?=
+ =?us-ascii?Q?lMVjAXB+/QCet5XnquY1yokK7i+6vwL8h4jXkJRIKecZeMI1xMRzHGyqujiM?=
+ =?us-ascii?Q?vY0Z1zjyE1iIkdwsPgJmD5pijwMHrPNr4epQGr2X4T6ZnVipRCBaSH28mCxP?=
+ =?us-ascii?Q?yxpxezAak0lgJyIA2ECpIHv2yB2JOreRZPsZI4OzUrvQOdPqZJ5BoghNN3TG?=
+ =?us-ascii?Q?IFEgVVN0q+XmsAPX+b8SmvUWkBLVFn7wAYshQ4zEPF2vwCcNaZ/o5efz1PWZ?=
+ =?us-ascii?Q?dY8XeZ0NOsqhB78wVKsXli0j9GX3YfLg8g80QtGvm7hYnjQf2APLPIQrddNQ?=
+ =?us-ascii?Q?aUuSU4Q9W5lWt4uYMxITEXtojYMQHDFhJHoXhTftDQrCyCB9sMcl7bx582fx?=
+ =?us-ascii?Q?QCcevOr14smBvSXTGSrjDKhCay5n+N7nAQoKRELF/Uv5Ha9UPO0GNQSGnfRF?=
+ =?us-ascii?Q?yGehOnZSXwgjG7mxOqAnPdz9amlYBYgZhcbibFaHX1HYPg0CnRcp8pQut7DW?=
+ =?us-ascii?Q?Nvw88ZtBZ2iTiG0a/rmyO9FDy1StWgMuaRUFIDvkJVC1tMWjNsivVY7Tn+w2?=
+ =?us-ascii?Q?h35c/hZkoryMzxJEtTkAHQOBWm4sSiELc9grl8sky5Xj+3GeUeYoZL3W7jFF?=
+ =?us-ascii?Q?JWk43EuWxfO0+qwKmJTuDJBB+AhsF7GRwVdVwrV5ekItO4xIDRzAGKwiBv0u?=
+ =?us-ascii?Q?akY+ep961mY9ijp0MysP7TsPNBZz4Tb2PDzsFFRxEH4AuLqAQ/CvT1odl1NL?=
+ =?us-ascii?Q?DauW11euoxarp7U4nMo6Rz4f3VlCZN/YPyQ4mH4yyhnflfSVfb0R1vSAXTt+?=
+ =?us-ascii?Q?UejRwLjF2VHHU0s8Z34iWUTudbrSJOvyQGrIWbEO6QEmd8sLN6/SXSmVVaV0?=
+ =?us-ascii?Q?IgwjBhP5KB/8FZMvDjLFKPM8NKieyqtJmPP97jZzbvErrWIgGq4RY9Oufz9v?=
+ =?us-ascii?Q?LOuqYnlA4iXS3q6vTZMYSHjMGw2k5LHO+H3mBLSD?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 202ad62d-1743-4829-b59d-08db69239841
+X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jun 2023 19:56:20.5172
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 76jhs7tnal2MbjEaaTCPK2Fkk0h7Kkan0racSRVJYrt2+b/yC9f/rlU/3Jc/64xm
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB5785
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+[ It would be good to get this in linux-next, we have some good test
+coverage on the ARM side already, thanks! ]
+
+It has been a long time coming, this series completes the default_domain
+transition and makes it so that the core IOMMU code will always have a
+non-NULL default_domain for every driver on every
+platform. set_platform_dma_ops() turned out to be a bad idea, and so
+completely remove it.
+
+This is achieved by changing each driver to either:
+
+1 - Convert the existing (or deleted) ops->detach_dev() into an
+    op->attach_dev() of an IDENTITY domain.
+
+    This is based on the theory that the ARM32 HW is able to function when
+    the iommu is turned off as so the turned off state is an IDENTITY
+    translation.
+
+2 - Use a new PLATFORM domain type. This is a hack to accommodate drivers
+    that we don't really know WTF they do. S390 is legitimately using this
+    to switch to it's platform dma_ops implementation, which is where the
+    name comes from.
+
+3 - Do #1 and force the default domain to be IDENTITY, this corrects
+    the tegra-smmu case where even an ARM64 system would have a NULL
+    default_domain.
+
+Using this we can apply the rules:
+
+a) ARM_DMA_USE_IOMMU mode always uses either the driver's
+   ops->default_domain, ops->def_domain_type(), or an IDENTITY domain.
+   All ARM32 drivers provide one of these three options.
+
+b) dma-iommu.c mode uses either the driver's ops->default_domain,
+   ops->def_domain_type or the usual DMA API policy logic based on the
+   command line/etc to pick IDENTITY/DMA domain types
+
+c) All other arch's (PPC/S390) use ops->default_domain always.
+
+See the patch "Require a default_domain for all iommu drivers" for a
+per-driver breakdown.
+
+The conversion broadly teaches a bunch of ARM32 drivers that they can do
+IDENTITY domains. There is some educated guessing involved that these are
+actual IDENTITY domains. If this turns out to be wrong the driver can be
+trivially changed to use a BLOCKING domain type instead. Further, the
+domain type only matters for drivers using ARM64's dma-iommu.c mode as it
+will select IDENTITY based on the command line and expect IDENTITY to
+work. For ARM32 and other arch cases it is purely documentation.
+
+Finally, based on all the analysis in this series, we can purge
+IOMMU_DOMAIN_UNMANAGED/DMA constants from most of the drivers. This
+greatly simplifies understanding the driver contract to the core
+code. IOMMU drivers should not be involved in policy for how the DMA API
+works, that should be a core core decision.
+
+The main gain from this work is to remove alot of ARM_DMA_USE_IOMMU
+specific code and behaviors from drivers. All that remains in iommu
+drivers after this series is the calls to arm_iommu_create_mapping().
+
+This is a step toward removing ARM_DMA_USE_IOMMU.
+
+The IDENTITY domains added to the ARM64 supporting drivers can be tested
+by booting in ARM64 mode and enabling CONFIG_IOMMU_DEFAULT_PASSTHROUGH. If
+the system still boots then most likely the implementation is an IDENTITY
+domain. If not we can trivially change it to BLOCKING or at worst PLATFORM
+if there is no detail what is going on in the HW.
+
+I think this is pretty safe for the ARM32 drivers as they don't really
+change, the code that was in detach_dev continues to be called in the same
+places it was called before.
+
+This is on github: https://github.com/jgunthorpe/linux/commits/iommu_all_defdom
+
+v3:
+ - FSL is back to a PLATFORM domain, with some fixing so it attach only
+   does something when leaving an UNMANAGED domain like it always was
+ - Rebase on Joerg's tree, adjust for "alloc_type" change
+ - Change the ARM32 untrusted check to a WARN_ON since no ARM32 system
+   can currently set trusted
+v2: https://lore.kernel.org/r/0-v2-8d1dc464eac9+10f-iommu_all_defdom_jgg@nvidia.com
+ - FSL is an IDENTITY domain
+ - Delete terga-gart instead of trying to carry it
+ - Use the policy determination from iommu_get_default_domain_type() to
+   drive the arm_iommu mode
+ - Reorganize and introduce new patches to do the above:
+    * Split the ops->identity_domain to an independent earlier patch
+    * Remove the UNMANAGED return from def_domain_type in mtk_v1 earlier
+      so the new iommu_get_default_domain_type() can work
+    * Make the driver's def_domain_type have higher policy priority than
+      untrusted
+    * Merge the set_platfom_dma_ops hunk from mtk_v1 along with rockchip
+      into the patch that forced IDENTITY on ARM32
+ - Revise sun50i to be cleaner and have a non-NULL internal domain
+ - Reword logging in exynos
+ - Remove the gdev from the group alloc path, instead add a new
+   function __iommu_group_domain_alloc() that takes in the group
+   and uses the first device. Split this to its own patch
+ - New patch to make iommufd's mock selftest into a real driver
+ - New patch to fix power's partial iommu driver
+v1: https://lore.kernel.org/r/0-v1-21cc72fcfb22+a7a-iommu_all_defdom_jgg@nvidia.com
+
+Jason Gunthorpe (25):
+  iommu: Add iommu_ops->identity_domain
+  iommu: Add IOMMU_DOMAIN_PLATFORM
+  powerpc/iommu: Setup a default domain and remove set_platform_dma_ops
+  iommu: Add IOMMU_DOMAIN_PLATFORM for S390
+  iommu/fsl_pamu: Implement a PLATFORM domain
+  iommu/tegra-gart: Remove tegra-gart
+  iommu/mtk_iommu_v1: Implement an IDENTITY domain
+  iommu: Reorganize iommu_get_default_domain_type() to respect
+    def_domain_type()
+  iommu: Allow an IDENTITY domain as the default_domain in ARM32
+  iommu/exynos: Implement an IDENTITY domain
+  iommu/tegra-smmu: Implement an IDENTITY domain
+  iommu/tegra-smmu: Support DMA domains in tegra
+  iommu/omap: Implement an IDENTITY domain
+  iommu/msm: Implement an IDENTITY domain
+  iommufd/selftest: Make the mock iommu driver into a real driver
+  iommu: Remove ops->set_platform_dma_ops()
+  iommu/qcom_iommu: Add an IOMMU_IDENTITIY_DOMAIN
+  iommu/ipmmu: Add an IOMMU_IDENTITIY_DOMAIN
+  iommu/mtk_iommu: Add an IOMMU_IDENTITIY_DOMAIN
+  iommu/sun50i: Add an IOMMU_IDENTITIY_DOMAIN
+  iommu: Require a default_domain for all iommu drivers
+  iommu: Add __iommu_group_domain_alloc()
+  iommu: Add ops->domain_alloc_paging()
+  iommu: Convert simple drivers with DOMAIN_DMA to domain_alloc_paging()
+  iommu: Convert remaining simple drivers to domain_alloc_paging()
+
+ arch/arm/configs/multi_v7_defconfig     |   1 -
+ arch/arm/configs/tegra_defconfig        |   1 -
+ arch/powerpc/kernel/iommu.c             |  38 ++-
+ drivers/iommu/Kconfig                   |  11 -
+ drivers/iommu/Makefile                  |   1 -
+ drivers/iommu/arm/arm-smmu/qcom_iommu.c |  45 ++-
+ drivers/iommu/exynos-iommu.c            |  73 +++--
+ drivers/iommu/fsl_pamu_domain.c         |  41 ++-
+ drivers/iommu/iommu-priv.h              |  16 +
+ drivers/iommu/iommu.c                   | 248 ++++++++++------
+ drivers/iommu/iommufd/iommufd_private.h |   5 +-
+ drivers/iommu/iommufd/main.c            |   8 +-
+ drivers/iommu/iommufd/selftest.c        | 141 ++++-----
+ drivers/iommu/ipmmu-vmsa.c              |  50 +++-
+ drivers/iommu/msm_iommu.c               |  30 +-
+ drivers/iommu/mtk_iommu.c               |  30 +-
+ drivers/iommu/mtk_iommu_v1.c            |  28 +-
+ drivers/iommu/omap-iommu.c              |  28 +-
+ drivers/iommu/rockchip-iommu.c          |  26 +-
+ drivers/iommu/s390-iommu.c              |  28 +-
+ drivers/iommu/sprd-iommu.c              |   7 +-
+ drivers/iommu/sun50i-iommu.c            |  35 ++-
+ drivers/iommu/tegra-gart.c              | 371 ------------------------
+ drivers/iommu/tegra-smmu.c              |  50 +++-
+ drivers/memory/tegra/mc.c               |  34 ---
+ drivers/memory/tegra/tegra20.c          |  28 --
+ include/linux/iommu.h                   |  16 +-
+ include/soc/tegra/mc.h                  |  26 --
+ 28 files changed, 614 insertions(+), 802 deletions(-)
+ create mode 100644 drivers/iommu/iommu-priv.h
+ delete mode 100644 drivers/iommu/tegra-gart.c
 
 
-On 6/5/2023 12:49 PM, Alex Elder wrote:
-> On 5/9/23 3:47 PM, Elliot Berman wrote:
->> Introduce a framework for Gunyah userspace to install VM functions. VM
->> functions are optional interfaces to the virtual machine. vCPUs,
->> ioeventfs, and irqfds are examples of such VM functions and are
-> 
-> s/ioventfs/ioventfds/
-> 
-> Also, these aren't just examples of VM functions, they *are* the
-> VM functions implemented.
-> 
->> implemented in subsequent patches.
->>
->> A generic framework is implemented instead of individual ioctls to
->> create vCPUs, irqfds, etc., in order to simplify the VM manager core
->> implementation and allow dynamic loading of VM function modules.
-> 
-> This also allows the set of VM functions to be extended without
-> updating the API (like it or not).
-> 
->>
->> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
-> 
-> I have a few more comments, but this looks pretty good.
-> 
-> Reviewed-by: Alex Elder <elder@linaro.org>
-> 
->> ---
->>   Documentation/virt/gunyah/vm-manager.rst |  18 ++
->>   drivers/virt/gunyah/vm_mgr.c             | 216 ++++++++++++++++++++++-
->>   drivers/virt/gunyah/vm_mgr.h             |   4 +
->>   include/linux/gunyah_vm_mgr.h            |  87 +++++++++
->>   include/uapi/linux/gunyah.h              |  18 ++
->>   5 files changed, 340 insertions(+), 3 deletions(-)
->>   create mode 100644 include/linux/gunyah_vm_mgr.h
->>
->> diff --git a/Documentation/virt/gunyah/vm-manager.rst 
->> b/Documentation/virt/gunyah/vm-manager.rst
->> index 50d8ae7fabcd..3b51bab9d793 100644
->> --- a/Documentation/virt/gunyah/vm-manager.rst
->> +++ b/Documentation/virt/gunyah/vm-manager.rst
->> @@ -17,6 +17,24 @@ sharing userspace memory with a VM is done via the 
->> `GH_VM_SET_USER_MEM_REGION`_
->>   ioctl. The VM itself is configured to use the memory region via the
->>   devicetree.
->> +Gunyah Functions
->> +================
->> +
->> +Components of a Gunyah VM's configuration that need kernel 
->> configuration are
->> +called "functions" and are built on top of a framework. Functions are 
->> identified
->> +by a string and have some argument(s) to configure them. They are 
->> typically
->> +created by the `GH_VM_ADD_FUNCTION`_ ioctl.
-> 
-> Is a function *type* (e.g., VCPU or ioeventfd) identified by a string?
-> Or a function *instance* (e.g. four VCPUs)?  Or both?
-> 
+base-commit: d11370bf64c57a3f50c68e2ee55e202ebdd396a2
+-- 
+2.40.1
 
-Ah, this should be:
-
-Function types are identified by an enum and have some argument(s)...
-
->> +
->> +Functions typically will always do at least one of these operations:
-> 
-> Typically, or always?
-> 
-
-Hmm, I didn't want to use a more absolute term like "always" since it 
-implies to me that the framework forces this somehow. A VM function 
-wouldn't do much interesting if it weren't interacting with the VM and 
-resource tickets/IO handlers are the ways for functions to interact with 
-VMs.
-
-I'll tweak the wording here.
-
->> +
->> +1. Create resource ticket(s). Resource tickets allow a function to 
->> register
->> +   itself as the client for a Gunyah resource (e.g. doorbell or vCPU) 
->> and
->> +   the function is given the pointer to the &struct gh_resource when the
->> +   VM is starting.
->> +
-> 
-> What I think this means is that tickets are used to allow functions
-> to be defined *before* the VM is actually started.  So once it starts,
-> the functions get added.  (I might have this slightly wrong, but in
-> any case I'm not sure the above sentence is very clear.)
-> 
-
-I'm going to remove the "and the function is given the pointer to..." 
-since I agree it is a bit confusing. I think it'll be clearer for me to 
-put it in the resource ticket kerneldoc where there's context of the 
-populate() callback in the resource ticket. I'll mention there that the 
-populate() callback may not be made until the VM is started which could 
-be a while.
-
->> +2. Register IO handler(s). IO handlers allow a function to handle 
->> stage-2 faults
->> +   from the virtual machine.
->> +
->>   Sample Userspace VMM
->>   ====================
->> diff --git a/drivers/virt/gunyah/vm_mgr.c b/drivers/virt/gunyah/vm_mgr.c
->> index a800061f56bf..56464451b262 100644
->> --- a/drivers/virt/gunyah/vm_mgr.c
->> +++ b/drivers/virt/gunyah/vm_mgr.c
->> @@ -6,10 +6,13 @@
->>   #define pr_fmt(fmt) "gh_vm_mgr: " fmt
->>   #include <linux/anon_inodes.h>
->> +#include <linux/compat.h>
->>   #include <linux/file.h>
->>   #include <linux/gunyah_rsc_mgr.h>
->> +#include <linux/gunyah_vm_mgr.h>
->>   #include <linux/miscdevice.h>
->>   #include <linux/module.h>
->> +#include <linux/xarray.h>
->>   #include <uapi/linux/gunyah.h>
->> @@ -17,6 +20,172 @@
->>   static void gh_vm_free(struct work_struct *work);
->> +static DEFINE_XARRAY(gh_vm_functions);
->> +
->> +static void gh_vm_put_function(struct gh_vm_function *fn)
->> +{
->> +    module_put(fn->mod);
->> +}
->> +
->> +static struct gh_vm_function *gh_vm_get_function(u32 type)
->> +{
->> +    struct gh_vm_function *fn;
->> +    int r;
->> +
->> +    fn = xa_load(&gh_vm_functions, type);
->> +    if (!fn) {
->> +        r = request_module("ghfunc:%d", type);
->> +        if (r)
->> +            return ERR_PTR(r > 0 ? -r : r);
-> 
-> Almost all callers of request_module() simply ignore the
-> return value.  What positive values are you expecting to
-> see here (and are you sure they're positive errno values)?
-> 
-
-I can ignore the return value here, too, to follow the convention.
-
-I had observed request_module can return modprobe's exit code.
-
->> +
->> +        fn = xa_load(&gh_vm_functions, type);
->> +    }
->> +
->> +    if (!fn || !try_module_get(fn->mod))
->> +        fn = ERR_PTR(-ENOENT);
->> +
->> +    return fn;
->> +}
-> 
-> . . .
