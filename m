@@ -2,74 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AE12372A01C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 18:22:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BC1372A025
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 18:26:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242174AbjFIQW5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 12:22:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38138 "EHLO
+        id S232399AbjFIQ0g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 12:26:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242123AbjFIQW4 (ORCPT
+        with ESMTP id S242123AbjFIQ0f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 12:22:56 -0400
-Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC7043C19
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 09:22:41 -0700 (PDT)
-Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-565d354b59fso19236817b3.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 09:22:41 -0700 (PDT)
+        Fri, 9 Jun 2023 12:26:35 -0400
+Received: from mail-yw1-x1132.google.com (mail-yw1-x1132.google.com [IPv6:2607:f8b0:4864:20::1132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5F053A95
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 09:26:32 -0700 (PDT)
+Received: by mail-yw1-x1132.google.com with SMTP id 00721157ae682-565cdb77b01so17254117b3.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 09:26:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686327761; x=1688919761;
+        d=linaro.org; s=google; t=1686327992; x=1688919992;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=mwQzu1mHmg5s3RKGFVLiYioIdNZ9wrhFOjBtuF+UR3o=;
-        b=OeqWZw34Y6D3kTo5yYID2yBZzJAAQtqpAjCwfyz2PBcyKOWEGB/dLXjUD+499rrI0n
-         1J3XHsBf/izlVlQK1sRykEQSKROn6Hl4Xq7+rh5QHQpNSLNnEIsG37BPydK+BpsRhPsR
-         tf6k2z1MQkyTXtU2A8vHyifUVpFv1ssnBx1+CS6lXoi5wSvMUbhhodAWfTqjQGmecKGQ
-         b05Wq1s6maRCr1AuqWMKXOQY23dOW3wv21iL9cWzvhnFhnYqLYK9wkLtOThpaXsKHXad
-         7LG0W3fFsODO6cW+MHJ1MMF3KQ1xuEn7ouIW7S8Pz8Zdx/4rcUAuqb85jmwP8gdGcu3E
-         WBtg==
+        bh=kqmhgD0hzidkR7C4FG6ZaFcEzUFu8WFVvYV0gu30B4c=;
+        b=TpWGhj1go0f01Ili2y+lD2+R5W+Ad0HWc0ntIU994go70wqgsYE0Nbjoy5+25gjpdJ
+         HJWknYHWr5y/y7G73iIQZJ269NJ5e+84rcAcqX1VcSRYzXElE4lla3v4fDh90QKT5KL0
+         RrQs/yyErk3CZk0hVzl5gQhjpIwcbhGkMHipsQD9Qv7u4s36a8Zia4FXm+2aT74BFrP2
+         2V9mJrNVml0Kx+4g9wvMLhOjEJ+l9M2EGg/kgjmhGyFGZrPgCYYlxTODB/LfD1TRBVjp
+         R7QBMcLmvwCTJKQ/n3nzOjV9xqAWK8W+/Z4AgCUrGslkw7rOK6gp2v8PR7N90DjzBUiq
+         f3rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686327761; x=1688919761;
+        d=1e100.net; s=20221208; t=1686327992; x=1688919992;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=mwQzu1mHmg5s3RKGFVLiYioIdNZ9wrhFOjBtuF+UR3o=;
-        b=IsRC1mG2uJuUe8lcArMfZcFLVzEuCzDjcLuBOe4hg61BsSHfwcfdCJwQHwTWOFQlpM
-         AW8tuA9ziYH6rifCwL62uBffTMEVKmuTvELF3/kYaX6VtfNup60yR9nL3ZO2DQdmYIlM
-         RiAKlw/Wdd+s6oVvbxQaxyvfLJj0dofWYIdbkclotzd0JEMPpg/4fuPrJ7+i7bTZQOeG
-         MEen4RqCiagK915aYfP85MBitc+8jcJPWeUMrOh5Jhrp3Yl+CUh5+dBMUsVDAn9i/uXX
-         89BPNEpybKPdROARxyG6NxO51FQ5u+l36itXndJjwZ0MgQLV7uLs6n6xs5UYEoldobKa
-         PNFQ==
-X-Gm-Message-State: AC+VfDw31Gci5PBpndxXK7UaLRdmUtQUCV/SgY/3jUDrXB+t/NngrtD9
-        X1s91wu1sHvmQfQ32ptkVeU9SjicJBFi/yiNNairsg==
-X-Google-Smtp-Source: ACHHUZ7DcgGfw00xFeO5tg+xstcf0mM87ob4gA9UhI4JskArhrXvT7uOKL98JgUrv1OrQJ5y7tNmkHSsuMQI+Z6RFrg=
-X-Received: by 2002:a81:4744:0:b0:565:e48d:32cf with SMTP id
- u65-20020a814744000000b00565e48d32cfmr1431353ywa.7.1686327760864; Fri, 09 Jun
- 2023 09:22:40 -0700 (PDT)
+        bh=kqmhgD0hzidkR7C4FG6ZaFcEzUFu8WFVvYV0gu30B4c=;
+        b=fNrXy/0em8ZRfQHyl6A0AFmcBpryPfMOYGxhULk2N9c0i1pkuCVk2E698WtCSUOovd
+         uyl2pbBWnts3eFZhHI38h2E1IfV+Il+PtWp1P7CDGYmLHYM9iXfYDz8ceGa0aTm4jLfB
+         GtKMsY5gC0S6CQ24SkFwYBa8hcbyOQWrKbLa95TjjKfXmOdTOxGbXK7I1YnK8NB26SwS
+         BU2hc7XL1BGExSiOVawQGFKs9lPxm7kloCyhW7ogy3lAUfNSAo+qVvYoE9I9RaIM80Ci
+         p7+6xPRQcb0BM2SJi6wWgqIfSO/D6kSuLfHJVFU6x0yr6kp1uvomYe3sd9Na+aZ8vQWl
+         AmeA==
+X-Gm-Message-State: AC+VfDyXSs6QELJiPiGJIOwqkhQL/ES8tYRUM3K4DmODswS8g4xZ8I8y
+        PiiNA8QXS5cV4mcUGuZjjdGSt5lfMKhUyZTpURE2qw==
+X-Google-Smtp-Source: ACHHUZ7lgaJdipRWewn4T/8Urmy4/1Lpe4YcOBI9261oG/aAVvlcVZ2sljI+94p6NxKfmsTVf8Wn8Euzot46J05NHs4=
+X-Received: by 2002:a81:838c:0:b0:561:c9c1:ce with SMTP id t134-20020a81838c000000b00561c9c100cemr1775388ywf.8.1686327991956;
+ Fri, 09 Jun 2023 09:26:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230609115058.9059-1-quic_jkona@quicinc.com> <20230609115058.9059-3-quic_jkona@quicinc.com>
-In-Reply-To: <20230609115058.9059-3-quic_jkona@quicinc.com>
+References: <1686311249-6857-1-git-send-email-quic_krichai@quicinc.com> <1686311249-6857-4-git-send-email-quic_krichai@quicinc.com>
+In-Reply-To: <1686311249-6857-4-git-send-email-quic_krichai@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 9 Jun 2023 19:22:29 +0300
-Message-ID: <CAA8EJpr-iKMzYP7HVQV8pzXbxzLvBaq38aovJ5Ffny18yXvJZg@mail.gmail.com>
-Subject: Re: [PATCH V4 2/4] clk: qcom: camcc-sm8550: Add camera clock
- controller driver for SM8550
-To:     Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
+Date:   Fri, 9 Jun 2023 19:26:21 +0300
+Message-ID: <CAA8EJppPt8utWbF83dqMD4y2Of2ufwcpSPvdTyoDndkrbnZm3Q@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] PCI: qcom-ep: Add ICC bandwidth voting support
+To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Cc:     manivannan.sadhasivam@linaro.org, quic_vbadigan@quicinc.com,
+        quic_ramkri@quicinc.com, linux-arm-msm@vger.kernel.org,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
+        Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        "open list:PCIE ENDPOINT DRIVER FOR QUALCOMM" 
+        <linux-pci@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
@@ -81,173 +74,162 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 9 Jun 2023 at 14:52, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
+On Fri, 9 Jun 2023 at 14:47, Krishna chaitanya chundru
+<quic_krichai@quicinc.com> wrote:
 >
-> Add support for the camera clock controller for camera clients to be
-> able to request for camcc clocks on SM8550 platform.
+> Add support to vote for ICC bandwidth based on the link speed and width.
 >
-> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
-> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+> This patch is inspired from pcie-qcom driver to add basic interconnect
+> support.
+>
+> Link: https://lore.kernel.org/all/20221102090705.23634-1-johan+linaro@kernel.org/
+
+This link should be a part of the cover letter, not the commit msg. If
+you want to refer to the previous commits, please use the standard
+reference: commit abcdefabc ("PCI: qcom: Make foo and bar").
+
+> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
 > ---
-> Changes since V3:
->  - No changes
-> Changes since V2:
->  - No changes
-> Changes since V1:
->  - Sorted the PLL names in proper order
->  - Updated all PLL configurations to lower case hex
->  - Reused evo ops instead of adding new ops for ole pll
->  - Moved few clocks to separate patch to fix patch too long error
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c | 68 +++++++++++++++++++++++++++++++
+>  1 file changed, 68 insertions(+)
 >
->  drivers/clk/qcom/Kconfig        |    7 +
->  drivers/clk/qcom/Makefile       |    1 +
->  drivers/clk/qcom/camcc-sm8550.c | 3405 +++++++++++++++++++++++++++++++
->  3 files changed, 3413 insertions(+)
->  create mode 100644 drivers/clk/qcom/camcc-sm8550.c
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> index 19b3283..baf831f 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+> @@ -13,6 +13,7 @@
+>  #include <linux/debugfs.h>
+>  #include <linux/delay.h>
+>  #include <linux/gpio/consumer.h>
+> +#include <linux/interconnect.h>
+>  #include <linux/mfd/syscon.h>
+>  #include <linux/phy/pcie.h>
+>  #include <linux/phy/phy.h>
+> @@ -28,6 +29,7 @@
+>  #define PARF_SYS_CTRL                          0x00
+>  #define PARF_DB_CTRL                           0x10
+>  #define PARF_PM_CTRL                           0x20
+> +#define PARF_PM_STTS                           0x24
+>  #define PARF_MHI_CLOCK_RESET_CTRL              0x174
+>  #define PARF_MHI_BASE_ADDR_LOWER               0x178
+>  #define PARF_MHI_BASE_ADDR_UPPER               0x17c
+> @@ -128,6 +130,9 @@
+>  /* DBI register fields */
+>  #define DBI_CON_STATUS_POWER_STATE_MASK                GENMASK(1, 0)
 >
-> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-> index 9cd1f05d436b..85efed78dc9a 100644
-> --- a/drivers/clk/qcom/Kconfig
-> +++ b/drivers/clk/qcom/Kconfig
-> @@ -756,6 +756,13 @@ config SM_CAMCC_8450
->           Support for the camera clock controller on SM8450 devices.
->           Say Y if you want to support camera devices and camera functionality.
+> +#define DBI_LINKCTRLSTATUS                     0x80
+> +#define DBI_LINKCTRLSTATUS_SHIFT               16
+> +
+>  #define XMLH_LINK_UP                           0x400
+>  #define CORE_RESET_TIME_US_MIN                 1000
+>  #define CORE_RESET_TIME_US_MAX                 1005
+> @@ -178,6 +183,8 @@ struct qcom_pcie_ep {
+>         struct phy *phy;
+>         struct dentry *debugfs;
 >
-> +config SM_CAMCC_8550
-> +       tristate "SM8550 Camera Clock Controller"
-> +       select SM_GCC_8550
-> +       help
-> +         Support for the camera clock controller on SM8550 devices.
-> +         Say Y if you want to support camera devices and camera functionality.
+> +       struct icc_path *icc_mem;
 > +
->  config SM_DISPCC_6115
->         tristate "SM6115 Display Clock Controller"
->         depends on ARM64 || COMPILE_TEST
-> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
-> index 75d035150118..97c8cefc2fd0 100644
-> --- a/drivers/clk/qcom/Makefile
-> +++ b/drivers/clk/qcom/Makefile
-> @@ -101,6 +101,7 @@ obj-$(CONFIG_SDX_GCC_75) += gcc-sdx75.o
->  obj-$(CONFIG_SM_CAMCC_6350) += camcc-sm6350.o
->  obj-$(CONFIG_SM_CAMCC_8250) += camcc-sm8250.o
->  obj-$(CONFIG_SM_CAMCC_8450) += camcc-sm8450.o
-> +obj-$(CONFIG_SM_CAMCC_8550) += camcc-sm8550.o
->  obj-$(CONFIG_SM_DISPCC_6115) += dispcc-sm6115.o
->  obj-$(CONFIG_SM_DISPCC_6125) += dispcc-sm6125.o
->  obj-$(CONFIG_SM_DISPCC_6350) += dispcc-sm6350.o
-> diff --git a/drivers/clk/qcom/camcc-sm8550.c b/drivers/clk/qcom/camcc-sm8550.c
-> new file mode 100644
-> index 000000000000..85f0c1e09b2b
-> --- /dev/null
-> +++ b/drivers/clk/qcom/camcc-sm8550.c
-> @@ -0,0 +1,3405 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +#include <linux/clk-provider.h>
-> +#include <linux/module.h>
-> +#include <linux/of_device.h>
-> +#include <linux/pm_runtime.h>
-> +#include <linux/regmap.h>
-> +
-> +#include <dt-bindings/clock/qcom,sm8550-camcc.h>
-> +
-> +#include "clk-alpha-pll.h"
-> +#include "clk-branch.h"
-> +#include "clk-rcg.h"
-> +#include "clk-regmap.h"
-> +#include "common.h"
-> +#include "gdsc.h"
-> +#include "reset.h"
-> +
-> +enum {
-> +       DT_IFACE,
-> +       DT_BI_TCXO,
-> +};
-> +
-> +enum {
-> +       P_BI_TCXO,
-> +       P_CAM_CC_PLL0_OUT_EVEN,
-> +       P_CAM_CC_PLL0_OUT_MAIN,
-> +       P_CAM_CC_PLL0_OUT_ODD,
-> +       P_CAM_CC_PLL1_OUT_EVEN,
-> +       P_CAM_CC_PLL2_OUT_EVEN,
-> +       P_CAM_CC_PLL2_OUT_MAIN,
-> +       P_CAM_CC_PLL3_OUT_EVEN,
-> +       P_CAM_CC_PLL4_OUT_EVEN,
-> +       P_CAM_CC_PLL5_OUT_EVEN,
-> +       P_CAM_CC_PLL6_OUT_EVEN,
-> +       P_CAM_CC_PLL7_OUT_EVEN,
-> +       P_CAM_CC_PLL8_OUT_EVEN,
-> +       P_CAM_CC_PLL9_OUT_EVEN,
-> +       P_CAM_CC_PLL9_OUT_ODD,
-> +       P_CAM_CC_PLL10_OUT_EVEN,
-> +       P_CAM_CC_PLL11_OUT_EVEN,
-> +       P_CAM_CC_PLL12_OUT_EVEN,
-> +};
-> +
-> +static const struct pll_vco lucid_ole_vco[] = {
-> +       { 249600000, 2300000000, 0 },
-> +};
-> +
-> +static const struct pll_vco rivian_ole_vco[] = {
-> +       { 777000000, 1285000000, 0 },
-> +};
-> +
-> +static const struct alpha_pll_config cam_cc_pll0_config = {
-> +       /* .l includes RINGOSC_CAL_L_VAL, CAL_L_VAL, L_VAL fields */
-> +       .l = 0x4444003e,
-
-I'd still insist on not touching the config.l field semantics.
-
-> +       .alpha = 0x8000,
-> +       .config_ctl_val = 0x20485699,
-> +       .config_ctl_hi_val = 0x00182261,
-> +       .config_ctl_hi1_val = 0x82aa299c,
-> +       .test_ctl_val = 0x00000000,
-> +       .test_ctl_hi_val = 0x00000003,
-> +       .test_ctl_hi1_val = 0x00009000,
-> +       .test_ctl_hi2_val = 0x00000034,
-> +       .user_ctl_val = 0x00008400,
-> +       .user_ctl_hi_val = 0x00000005,
-> +};
-> +
-
-[skipped the rest, LGTM]
-
-> +
-> +static struct platform_driver cam_cc_sm8550_driver = {
-> +       .probe = cam_cc_sm8550_probe,
-> +       .driver = {
-> +               .name = "cam_cc-sm8550",
-> +               .of_match_table = cam_cc_sm8550_match_table,
-> +       },
-> +};
-> +
-> +static int __init cam_cc_sm8550_init(void)
+>         struct clk_bulk_data *clks;
+>         int num_clks;
+>
+> @@ -253,9 +260,51 @@ static void qcom_pcie_dw_stop_link(struct dw_pcie *pci)
+>         disable_irq(pcie_ep->perst_irq);
+>  }
+>
+> +static void qcom_pcie_ep_icc_update(struct qcom_pcie_ep *pcie_ep)
 > +{
-> +       return platform_driver_register(&cam_cc_sm8550_driver);
-> +}
-> +subsys_initcall(cam_cc_sm8550_init);
-
-As it was pointed out, this driver is built as a module by default.
-Please perform the tesing and cleanup before sending the driver and
-use module_platform_driver.
-
+> +       struct dw_pcie *pci = &pcie_ep->pci;
+> +       u32 offset, status, bw;
+> +       int speed, width;
+> +       int ret;
 > +
-> +static void __exit cam_cc_sm8550_exit(void)
-> +{
-> +       platform_driver_unregister(&cam_cc_sm8550_driver);
-> +}
-> +module_exit(cam_cc_sm8550_exit);
+> +       if (!pcie_ep->icc_mem)
+> +               return;
 > +
-> +MODULE_DESCRIPTION("QTI CAMCC SM8550 Driver");
-> +MODULE_LICENSE("GPL");
+> +       offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> +       status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
+> +
+> +       speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
+> +       width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
+> +
+> +       switch (speed) {
+> +       case 1:
+> +               bw = MBps_to_icc(250);  /* BW for GEN1 per lane: 250MBps */
+
+Please extract these constants to the defines. This would save you
+from duplicating 250 below.
+
+> +               break;
+> +       case 2:
+> +               bw = MBps_to_icc(500);  /* BW for GEN2 per lane: 500MBps */
+> +               break;
+> +       case 3:
+> +               bw = MBps_to_icc(985);  /* BW for GEN3 per lane: 985MBps */
+> +               break;
+> +       default:
+> +               WARN_ON_ONCE(1);
+> +               fallthrough;
+> +       case 4:
+> +               bw = MBps_to_icc(1969); /* BW for GEN4 per lane:1969MBps */
+> +               break;
+> +       }
+> +
+> +       ret = icc_set_bw(pcie_ep->icc_mem, 0, width * bw);
+> +       if (ret) {
+> +               dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> +                       ret);
+> +       }
+> +}
+> +
+>  static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
+>  {
+>         int ret;
+> +       struct dw_pcie *pci = &pcie_ep->pci;
+>
+>         ret = clk_bulk_prepare_enable(pcie_ep->num_clks, pcie_ep->clks);
+>         if (ret)
+> @@ -277,6 +326,20 @@ static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
+>         if (ret)
+>                 goto err_phy_exit;
+>
+> +       /*
+> +        * Some Qualcomm platforms require interconnect bandwidth constraints
+> +        * to be set before enabling interconnect clocks.
+> +        *
+> +        * Set an initial average bandwidth corresponding to GEN1x1(250 MBps)
+> +        * for the pcie to mem path.
+> +        */
+> +       ret = icc_set_bw(pcie_ep->icc_mem, 0, MBps_to_icc(250));
+> +       if (ret) {
+> +               dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
+> +                       ret);
+> +               goto err_phy_exit;
+> +       }
+> +
+>         return 0;
+>
+>  err_phy_exit:
+> @@ -550,6 +613,10 @@ static int qcom_pcie_ep_get_resources(struct platform_device *pdev,
+>         if (IS_ERR(pcie_ep->phy))
+>                 ret = PTR_ERR(pcie_ep->phy);
+>
+> +       pcie_ep->icc_mem = devm_of_icc_get(dev, "pcie-mem");
+> +       if (IS_ERR(pcie_ep->icc_mem))
+> +               ret = PTR_ERR(pcie_ep->icc_mem);
+> +
+>         return ret;
+>  }
+>
+> @@ -572,6 +639,7 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
+>         } else if (FIELD_GET(PARF_INT_ALL_BME, status)) {
+>                 dev_dbg(dev, "Received BME event. Link is enabled!\n");
+>                 pcie_ep->link_status = QCOM_PCIE_EP_LINK_ENABLED;
+> +               qcom_pcie_ep_icc_update(pcie_ep);
+>         } else if (FIELD_GET(PARF_INT_ALL_PM_TURNOFF, status)) {
+>                 dev_dbg(dev, "Received PM Turn-off event! Entering L23\n");
+>                 val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
 > --
-> 2.40.1
+> 2.7.4
 >
 
 
