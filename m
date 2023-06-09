@@ -2,124 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E1CAD729B30
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 15:13:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 230F7729B35
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 15:14:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239410AbjFINNG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 09:13:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37292 "EHLO
+        id S232137AbjFINOS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 09:14:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230305AbjFINNF (ORCPT
+        with ESMTP id S240847AbjFINOR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 09:13:05 -0400
-Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3D7E132;
-        Fri,  9 Jun 2023 06:13:04 -0700 (PDT)
-Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-33be5dbb90cso7462645ab.0;
-        Fri, 09 Jun 2023 06:13:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686316384; x=1688908384;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=M9D35kaOS2C39e0x3xanvuuHggxbq1FnGkrcYzbCLtU=;
-        b=WzG6EWqQUviK0Lgqsexec2C/Fo1Hd59OLpbqa/3tXUBVQQwRctzGR3F8wC1B2hdTwd
-         0+Vfe/vcpS5fgadaTT4xsvIVIqkQUYNtrstjqvZ6oYLdmhheVU9Ou8Kw+QDJZPf+HcJx
-         ynvh9XiY1+k/ZJwvocenrIT6Ii0/5zsGRn6VmjZDd/eD4QIgzcUjzO82MhDqLi7TFg2Y
-         EIN6NuPEZ9Uq7DuigfL32acnzrGIyL1ZHHXX85WSqrqQrDi7jIZRcrWCopIkEC6oyIGN
-         18IuPTsyauQExZlUeLsJBYkhfkY5/1FO/TPh4J5NEz0qTobizh/rpjQTaaFKjxoeyEei
-         j1qw==
-X-Gm-Message-State: AC+VfDw3gK/ZwoDsmitBujmfSku7g0WZeD6yNZc8OoOJ6OnMDRAjo/BO
-        kPnbOK0a2zPZWZNCXQ8t+A==
-X-Google-Smtp-Source: ACHHUZ5j0wP0elCI9OCxxC/oYXvqyZN73d9plY1jTIgztDBrNxHCN2RK5U+QxwWY+4Ul4XsgZoOnag==
-X-Received: by 2002:a92:ddcf:0:b0:335:38b:e734 with SMTP id d15-20020a92ddcf000000b00335038be734mr1479493ilr.28.1686316383875;
-        Fri, 09 Jun 2023 06:13:03 -0700 (PDT)
-Received: from robh_at_kernel.org ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id z6-20020a92d186000000b0033d2eba1800sm1086619ilz.15.2023.06.09.06.13.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jun 2023 06:13:02 -0700 (PDT)
-Received: (nullmailer pid 662840 invoked by uid 1000);
-        Fri, 09 Jun 2023 13:13:00 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        Fri, 9 Jun 2023 09:14:17 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81BA2E43;
+        Fri,  9 Jun 2023 06:14:16 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BA238614D1;
+        Fri,  9 Jun 2023 13:14:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 501EDC433D2;
+        Fri,  9 Jun 2023 13:14:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686316455;
+        bh=qgIw3ZmXGorDQYkQ1E+r3SCp4BCBY6HOYRFQ0E9qhj8=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=eM1TpsLXyvb5hqFPZtL+HvhboO5hsh4NRQd8mHIEvZS1Zx81GPjJD0ltvcq+PSQSi
+         BD4etuaw0grWBkCR1tF6WWWTVOH9xLg88NcJiIEEO9OuH241BGKd4KSUHXXU/nXGHj
+         qeundAAb/1uEOt4TCddwRZukAd89nT+GLDhvbvLkkQqFUn0P7MBZBNXAXFKJKODWKL
+         sM62G66SI2TPgxbnLrAonM1Y4+TzVxPyagrsP836dcAd7J1RB+qiLwsqLRr5Qbcm7S
+         aJaw6k4+FpGnzfzh/ysVyXt+y4vK9OMZNAQG7+hI138uZc+L/ZYW81YMA8GRGe/div
+         xeRTIJwNIOwUg==
+Message-ID: <9ae34dcc-0022-8097-7c86-8b11811ac2e1@kernel.org>
+Date:   Fri, 9 Jun 2023 15:14:07 +0200
 MIME-Version: 1.0
-From:   Rob Herring <robh@kernel.org>
-To:     Krishna chaitanya chundru <quic_krichai@quicinc.com>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        manivannan.sadhasivam@linaro.org,
-        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kw@linux.com>,
-        quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
-        Bjorn Andersson <andersson@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        devicetree@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
-        Andy Gross <agross@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-In-Reply-To: <1686311249-6857-2-git-send-email-quic_krichai@quicinc.com>
-References: <1686311249-6857-1-git-send-email-quic_krichai@quicinc.com>
- <1686311249-6857-2-git-send-email-quic_krichai@quicinc.com>
-Message-Id: <168631638078.662811.2470035951687478762.robh@kernel.org>
-Subject: Re: [PATCH v3 1/3] dt-bindings: PCI: qcom: ep: Add interconnects
- path
-Date:   Fri, 09 Jun 2023 07:13:00 -0600
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH 1/2] dt-bindings: arm: idle-states: Add
+ idle-state-disabled property
+Content-Language: en-US
+To:     Tushar Nimkar <quic_tnimkar@quicinc.com>,
+        "Rafael J . Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, quic_lsrao@quicinc.com,
+        quic_mkshah@quicinc.com, devicetree@vger.kernel.org
+References: <20230608085544.16211-1-quic_tnimkar@quicinc.com>
+ <20230608085544.16211-2-quic_tnimkar@quicinc.com>
+From:   Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <20230608085544.16211-2-quic_tnimkar@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 08/06/2023 10:55, Tushar Nimkar wrote:
+> This change adds idle-state-disabled property using which certain or all
 
-On Fri, 09 Jun 2023 17:17:26 +0530, Krishna chaitanya chundru wrote:
-> Some platforms may not boot if a device driver doesn't initialize
-> the interconnect path. Mostly it is handled by the bootloader but
-> we have starting to see cases where bootloader simply ignores them.
+Please do not use "This commit/patch", but imperative mood. See longer
+explanation here:
+https://elixir.bootlin.com/linux/v5.17.1/source/Documentation/process/submitting-patches.rst#L95
+
+> idle-states can be kept disabled during boot-up. Once boot-up is completed
+> same can be enabled using below command.
 > 
-> Add the "pcie-mem" interconnect path as a required property to the
-> bindings.
+
+I don't understand and you did not explain here, why this is useful and
+why this is needed.
+
+> echo N > /sys/devices/system/cpu/cpuX/cpuidle/stateX/disable
+
+
 > 
-> Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> Cc: devicetree@vger.kernel.org
+> Signed-off-by: Tushar Nimkar <quic_tnimkar@quicinc.com>
+
+Please use scripts/get_maintainers.pl to get a list of necessary people
+and lists to CC.  It might happen, that command when run on an older
+kernel, gives you outdated entries.  Therefore please be sure you base
+your patches on recent Linux kernel.
+
 > ---
->  Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml | 11 +++++++++++
->  1 file changed, 11 insertions(+)
+>  Documentation/devicetree/bindings/cpu/idle-states.yaml | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/cpu/idle-states.yaml b/Documentation/devicetree/bindings/cpu/idle-states.yaml
+> index b8cc826c9501..f999bc666bbd 100644
+> --- a/Documentation/devicetree/bindings/cpu/idle-states.yaml
+> +++ b/Documentation/devicetree/bindings/cpu/idle-states.yaml
+> @@ -358,6 +358,13 @@ patternProperties:
+>            systems entry-latency-us + exit-latency-us will exceed
+>            wakeup-latency-us by this duration.
+>  
+> +      idle-state-disabled:
+> +        description: |
+> +          If present the idle state stays disabled. It can be enabled back from
+> +          shell using below command.
+> +          echo N > /sys/devices/system/cpu/cpuX/cpuidle/stateX/disable
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+This is Linux specific command, so does not fit the bindings.
 
-yamllint warnings/errors:
-./Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml:206:1: [error] syntax error: found character '\t' that cannot start any token (syntax)
-
-dtschema/dtc warnings/errors:
-make[1]: *** Deleting file 'Documentation/devicetree/bindings/pci/qcom,pcie-ep.example.dts'
-Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml:206:1: found a tab character where an indentation space is expected
-make[1]: *** [Documentation/devicetree/bindings/Makefile:26: Documentation/devicetree/bindings/pci/qcom,pcie-ep.example.dts] Error 1
-make[1]: *** Waiting for unfinished jobs....
-./Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml:206:1: found a tab character where an indentation space is expected
-/builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml: ignoring, error parsing file
-make: *** [Makefile:1512: dt_binding_check] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/1686311249-6857-2-git-send-email-quic_krichai@quicinc.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+Best regards,
+Krzysztof
 
