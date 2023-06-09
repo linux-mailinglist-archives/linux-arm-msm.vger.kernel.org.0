@@ -2,293 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B75D72A3D1
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 21:56:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91A0772A3F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 22:00:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231244AbjFIT4p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 15:56:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51704 "EHLO
+        id S229586AbjFIUAd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 16:00:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229596AbjFIT4h (ORCPT
+        with ESMTP id S229541AbjFIUAd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 15:56:37 -0400
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2043.outbound.protection.outlook.com [40.107.243.43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04DE22712;
-        Fri,  9 Jun 2023 12:56:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=kZK7UyHETw4LTiy/mFpEzooMhGPZzvCwp7RsGf0p0BUkPjTkUg0zDfRUA/5n8HW/7eSmkTz4UNbve/2ciOOvQe2ah7QOKKzVin2l70p/sL4k9gInUTVkjaO8dpxJ0wXQPe5xQwb7noEFDyYSPWTPJWtiN9widhmNYyGn6Yn+3kKn944CQ0wBZiogdmBdUdcWLdry/ce+DaK6eAxmGLBIdfV1sBfdfcfQDynYR3700ugSYq9BUsFD/cwS+L54zr7TPGmiY7o1zO9dr5cwW9npmOIZmVK643NhNPj+r/wui3FwxIrLgJOiRbI8uZCvdkK+B1wvGRpdgwbNBnQhXZgSDA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QWCGzrTaqbrXMG5crzEf4pxvfNiTwQ928/5BOZsI094=;
- b=bG3WP+XCv/jVDFZ60nK2O7WqmhrXmTqwf/iZm5EWk19sN3HewN25ws+jo0ed1dL69sAUJA3WxooZuR8c6fe3fQZJo5xahuzz2C/ynQPJ6eBhHu4wUBNhhQznBroBDgdpxAvLfyh+tg3EDGzWGF5BmH7ZFtpcTccRI6B9h8OhyNM9u7mrvOWJ+rg24EazxmTns9LUwpGZvmNVGrbCvT0OufmzPH3iv7ieCyBEKd3SSmnzYGlN/S6NKxFbPXt5MQerkimHVHbzTRzERYO/TgAUgpLmM0qn4beddYgnTUgdcCsG7t/PIIf6u1Ko2dSuvzDKBilqBZ2uyd6nJ8+RXESxDQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QWCGzrTaqbrXMG5crzEf4pxvfNiTwQ928/5BOZsI094=;
- b=lp53xtX3Ka/W0Cs3cfyG1UQB0X1Zj2AWPgdUmCwFf4DC6LkemTK2acGpyGFK7oXbRJnQrB+Ixdq1x3I3wNcRQoIZ/ZVTMJdhSVCnO3BIWi/+swQWYpbgOwfdqtJcvoYcwch/MhzE1NYq4WZmulpZ2RCSB8QZfUYYWoEIRVpWiVVUYBi1vxhXM9Ov2YBLW2D+qR6Q98HYiN3sE6f3GDxo8x9iLTBVFn4SZ7ZnlikGWAgZOZhradO5MXVMavx2p6zIzdAjQjhndBiAZQVsvi61FZzbRuQeT87J9x4xSKOmEnsdURCcOjxG0D7RrmDqdiM8xyZVaPTZYkYppvmVfTHfrQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com (2603:10b6:408:176::16)
- by MN0PR12MB5785.namprd12.prod.outlook.com (2603:10b6:208:374::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6455.36; Fri, 9 Jun
- 2023 19:56:25 +0000
-Received: from LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::f7a7:a561:87e9:5fab]) by LV2PR12MB5869.namprd12.prod.outlook.com
- ([fe80::f7a7:a561:87e9:5fab%6]) with mapi id 15.20.6455.030; Fri, 9 Jun 2023
- 19:56:25 +0000
-From:   Jason Gunthorpe <jgg@nvidia.com>
-To:     Andy Gross <agross@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>,
-        Baolin Wang <baolin.wang@linux.alibaba.com>,
-        Christophe Leroy <christophe.leroy@csgroup.eu>,
-        Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
-        Heiko Stuebner <heiko@sntech.de>, iommu@lists.linux.dev,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Kevin Tian <kevin.tian@intel.com>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
-        linux-samsung-soc@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, Russell King <linux@armlinux.org.uk>,
-        linuxppc-dev@lists.ozlabs.org,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Matthew Rosato <mjrosato@linux.ibm.com>,
-        Michael Ellerman <mpe@ellerman.id.au>,
-        Nicholas Piggin <npiggin@gmail.com>,
-        Orson Zhai <orsonzhai@gmail.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Chen-Yu Tsai <wens@csie.org>, Will Deacon <will@kernel.org>,
-        Yong Wu <yong.wu@mediatek.com>,
-        Chunyan Zhang <zhang.lyra@gmail.com>
-Cc:     Lu Baolu <baolu.lu@linux.intel.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Nicolin Chen <nicolinc@nvidia.com>,
-        Niklas Schnelle <schnelle@linux.ibm.com>,
-        Steven Price <steven.price@arm.com>,
-        Thierry Reding <treding@nvidia.com>
-Subject: [PATCH v3 25/25] iommu: Convert remaining simple drivers to domain_alloc_paging()
-Date:   Fri,  9 Jun 2023 16:56:13 -0300
-Message-Id: <25-v3-89830a6c7841+43d-iommu_all_defdom_jgg@nvidia.com>
-In-Reply-To: <0-v3-89830a6c7841+43d-iommu_all_defdom_jgg@nvidia.com>
-References: 
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SJ0PR05CA0103.namprd05.prod.outlook.com
- (2603:10b6:a03:334::18) To LV2PR12MB5869.namprd12.prod.outlook.com
- (2603:10b6:408:176::16)
+        Fri, 9 Jun 2023 16:00:33 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEA44210D;
+        Fri,  9 Jun 2023 13:00:31 -0700 (PDT)
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 359JXQDX023055;
+        Fri, 9 Jun 2023 20:00:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=hNSFKWryMT4l8OSN2viRKRuPpy4F59qui6oi84nwnZc=;
+ b=hocPd0owKosziZRgIVGQxfUiVGYcXC6of1dJfsZlC2pQ6apE8NpgSbQs7qCkp83+DC1U
+ 0aKFDpCNrP2bdplAOCy87PAmtLaV/mw89V7a1LrzDRtD2O4i/TCxFx3CTZoR4ikGR/r2
+ IIx2teYx1jNEYGfPWcV3KUiGp2H8oGYKq2UIYupOqwjs9XKq0bsP/E1YByO21atZW1qu
+ rrgJcAxTdVr+RCNSM4i+E48ffL3EDqLABzutGIKBXSJn0aFEPEE9o2kqFgOZfMDDN6/+
+ pEeohxxG8DlH38JDoxK8QvgGlPInFJUukWQdVEi2WS5QMRfwwze75cjxly1XnC4TNb7g Bg== 
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r3vu4hstr-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 09 Jun 2023 20:00:18 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 359K0Hql030988
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 9 Jun 2023 20:00:17 GMT
+Received: from [10.134.65.165] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 9 Jun 2023
+ 13:00:16 -0700
+Message-ID: <5a026df6-05d2-42ef-21dd-e0f70071fc90@quicinc.com>
+Date:   Fri, 9 Jun 2023 13:00:16 -0700
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV2PR12MB5869:EE_|MN0PR12MB5785:EE_
-X-MS-Office365-Filtering-Correlation-Id: 51210419-31cf-4f3f-8054-08db692399a2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: zFqiRtjepOw4GcWpL365SsmiGWKuunZ/T2XR4+NmcnOcyzSqBRG9PTGtHl+nWPGfYxFnw1XlkE8+OxZmP8gID3hVIVpag6lNyp7Tz33lcTroEJJzCos85P1517SgwobBJJ2ys3LPM1urGsXMwwWiwZL2k0PnriemeOgCZZkjCN+QNzxprBUMDWpSFF8JSAoJxs7e+4rlSkGn+EJhCl+WQW3U5VSA0f0+p+a5pb4UE16sv32BEAciQWDy14eVYsOeRtzRUpzKn3yC+YkX41OeTYUCbDQB92wp9i4NUjhSMXu5VRz8MYo+Cl17/SQ/6fUGiqMV4gqRXiUavqNfxrgqsB67gB+EYXN0gshQ3vbYDyBO07YTP0yxL+tVBpZXaszuC+09bQ3ZIvgbbkUUnXet9PN0Z/TgktPAK3XOA6yhxvqqcsrT6xC0Gr+lu5ymhCp/v/MTCVr/6rGS6ZphnAvAa8dAkIuxPm/wBbcwP6GeBi9L9i1+0Mh3BfKszAiEMbCDW0Ho6YDToPwDybREnT2IrxLa6qTZiIfnjpAaltQuH9lvXCCInPG+mClPviIW8qnKHVgx2QBJ2NwfuJl1rCf3dntAASf8uJfl7Z2sf0Iqupk=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB5869.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(136003)(39860400002)(346002)(366004)(376002)(451199021)(83380400001)(7416002)(7406005)(110136005)(478600001)(8676002)(8936002)(4326008)(86362001)(66476007)(66946007)(921005)(66556008)(5660300002)(38100700002)(41300700001)(316002)(6666004)(6486002)(36756003)(2906002)(54906003)(6512007)(107886003)(186003)(26005)(6506007)(2616005);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?q8wcomeM/KwK7hC85HbFyLdEsps27eZj7E6e4ZmS3ymhrkTfqg5d8+p7zTBe?=
- =?us-ascii?Q?HeZZl39kAr2oaH74+vu09XdXPVvlnM0QuE2nb8yVWEZNxwFWU0pz0T6FXeU3?=
- =?us-ascii?Q?U465jMqoEihcQHVC83rBuCH9+qO/p7N+KhKIY/oS8TfPKhFiNPb1+evvkqng?=
- =?us-ascii?Q?BK9RWk/8eyfi5oMWJYWEZNdIj/UYgQDsfZ9rSH2Du4UZcuU3cHXIat/zHwDW?=
- =?us-ascii?Q?KTY50BT2V3MnR0gmdX1JGkdWcYv3q9Vt5N1G966ODJBRo4r09glSxR5IgFDd?=
- =?us-ascii?Q?AZhBZsJ1AILSwT8qjDix8iz71jL9cH8HzAhd8/A5U55TJdBUNq6dVxBWU1xI?=
- =?us-ascii?Q?NQ95OfyD2ITazD6xc052Ihm55gS4xxRfF+OlhqqkG9QNwyiE3fWDCkGwCDKm?=
- =?us-ascii?Q?bo81o7Q/kQwr63dRoQEs0ojUEr5znOS2H+VRlk8sl+HN5h36Hei2avpje4m0?=
- =?us-ascii?Q?0tZxA/BUPtGZvCexB8gMvb1136Fk/9OrnU5eE/SrPdYxr1yBfOf2S+9bQ7OS?=
- =?us-ascii?Q?U2Yfu3tz4bZ4c5Qb2/BE6ALlFIGn81wAgKBYycXtkYNeFUzmPt1eZ9xnO7n1?=
- =?us-ascii?Q?2CvSXH48RXwT1lNfjP3nL1OoibQ3zcllLag1Sr6swRGNtvyROyCGltzXPMqa?=
- =?us-ascii?Q?BKje8LgeZVpDt9Hvv/lmpb4A4ZCrS9DfuzAJXROPqpzA5FzOqGAj8X11bs4A?=
- =?us-ascii?Q?1+htpEChwpb1TOoYzFBmj81h27vgdgDUhyXEKBpQBbAKtSvj+iXNaDg8fJrE?=
- =?us-ascii?Q?KO5xP4AxGIV/RTZa0+4BOYMr9heDUJD22iK8M9DBw83mhJxTXi+imQFj6xPD?=
- =?us-ascii?Q?bCeMinyruMfWxUCWXGCCEM6kUiq/eY8CaD95QC8m7PrThFh48bmXc9EiyUvr?=
- =?us-ascii?Q?rw71EevtBDZ7qLLnK8Ebm+/BQd9nhvIcCSTVW7KKdvjxQq4HQeCmrMJypVae?=
- =?us-ascii?Q?jLW2EgeOrNb0WcMzK0ySj5psjHecfcSRu6QFKP+/Ut8Tbp+7BsTpkEs8Dcsf?=
- =?us-ascii?Q?i1gB37xux6ivBkkbUg9quV2hIFe1klMFhkAR3n29ukC2hlOyyPCzpOARD1Q6?=
- =?us-ascii?Q?s7EXD0XWc3J9S02U6eHDkj/Y6Sz0kNmaXE5S8RQCw23msUfMWglJYyISLe2e?=
- =?us-ascii?Q?T38z9g0x118AlBmPAbeUZCB6osQyUJp6sufsENLo9LFTDRB2HF73M/WbaXxq?=
- =?us-ascii?Q?zlhx6aIjsUY3piS5hnuKxiKtk8VOguXlqo5YTyfGzPsejmVcZTMQlR2ZUNBg?=
- =?us-ascii?Q?y2kcDZvRgtqQKB9hJIt+Q7Jd5jS/+HmKHrupiF1bSoNVzmpCU2FwhQ/3PHi9?=
- =?us-ascii?Q?2FEbVz1zjiOIVAoA3t9IvKfcKAwl9E5MQli4hAgUOfaAl8+bWAt0/nBRU39X?=
- =?us-ascii?Q?VQykRCM/od6j0ok9nXiKX/fHeZyj+Ik2IylzHu0zCvTW2O3ROZeQQEHjLbXT?=
- =?us-ascii?Q?QGcQZ8QHs0Ph9wU4QZq3KVE9Le3VN095htP+o1itR35y/yMYriONtmzNisIx?=
- =?us-ascii?Q?byDSX2N3thRGjkpUfaPknJsMW9b2cHESxjg9O8INn2uy/gEI2wktwqMl7dOF?=
- =?us-ascii?Q?VdQhlR4wqF+vDej6gr8TVbJFiPF6pw8nX5I2hPh+?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 51210419-31cf-4f3f-8054-08db692399a2
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB5869.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jun 2023 19:56:22.6770
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: YqfON9kIl/tgaZSpdEZLGzNkxw55TIqnVXDewrj3xb7VVQiUJYTdFox1mZ4NbCDa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB5785
-X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v13 16/24] virt: gunyah: Translate gh_rm_hyp_resource into
+ gunyah_resource
+Content-Language: en-US
+To:     Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
+ <20230509204801.2824351-17-quic_eberman@quicinc.com>
+ <91d52a40-98c5-3d79-79af-7a21b41acfc4@linaro.org>
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <91d52a40-98c5-3d79-79af-7a21b41acfc4@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: -Fe6BvKa1-udwQSoo5shOSKtZwc-7S-E
+X-Proofpoint-ORIG-GUID: -Fe6BvKa1-udwQSoo5shOSKtZwc-7S-E
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-09_14,2023-06-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=978
+ lowpriorityscore=0 phishscore=0 priorityscore=1501 clxscore=1015
+ suspectscore=0 spamscore=0 mlxscore=0 adultscore=0 malwarescore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306090167
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-These drivers don't support IOMMU_DOMAIN_DMA, so this commit effectively
-allows them to support that mode.
 
-The prior work to require default_domains makes this safe because every
-one of these drivers is either compilation incompatible with dma-iommu.c,
-or already establishing a default_domain. In both cases alloc_domain()
-will never be called with IOMMU_DOMAIN_DMA for these drivers so it is safe
-to drop the test.
 
-Removing these tests clarifies that the domain allocation path is only
-about the functionality of a paging domain and has nothing to do with
-policy of how the paging domain is used for UNMANAGED/DMA/DMA_FQ.
+On 6/5/2023 12:49 PM, Alex Elder wrote:
+> On 5/9/23 3:47 PM, Elliot Berman wrote:
+>> When booting a Gunyah virtual machine, the host VM may gain capabilities
+>> to interact with resources for the guest virtual machine. Examples of
+>> such resources are vCPUs or message queues. To use those resources, we
+>> need to translate the RM response into a gunyah_resource structure which
+>> are useful to Linux drivers. Presently, Linux drivers need only to know
+>> the type of resource, the capability ID, and an interrupt.
+>>
+>> On ARM64 systems, the interrupt reported by Gunyah is the GIC interrupt
+>> ID number and always a SPI.
+>>
+>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
+> 
+> Please zero the automatic variable in the place I suggest it.
+> I have two other comments/questions.  Otherwise, this looks good.
+> 
+> Reviewed-by: Alex Elder <elder@linaro.org>
+> 
+>> ---
 
-Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Tested-by: Steven Price <steven.price@arm.com>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Tested-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/iommu/msm_iommu.c    | 7 ++-----
- drivers/iommu/mtk_iommu_v1.c | 7 ++-----
- drivers/iommu/omap-iommu.c   | 7 ++-----
- drivers/iommu/s390-iommu.c   | 7 ++-----
- 4 files changed, 8 insertions(+), 20 deletions(-)
+...
 
-diff --git a/drivers/iommu/msm_iommu.c b/drivers/iommu/msm_iommu.c
-index 26ed81cfeee897..a163cee0b7242d 100644
---- a/drivers/iommu/msm_iommu.c
-+++ b/drivers/iommu/msm_iommu.c
-@@ -302,13 +302,10 @@ static void __program_context(void __iomem *base, int ctx,
- 	SET_M(base, ctx, 1);
- }
- 
--static struct iommu_domain *msm_iommu_domain_alloc(unsigned type)
-+static struct iommu_domain *msm_iommu_domain_alloc_paging(struct device *dev)
- {
- 	struct msm_priv *priv;
- 
--	if (type != IOMMU_DOMAIN_UNMANAGED)
--		return NULL;
--
- 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
- 	if (!priv)
- 		goto fail_nomem;
-@@ -691,7 +688,7 @@ irqreturn_t msm_iommu_fault_handler(int irq, void *dev_id)
- 
- static struct iommu_ops msm_iommu_ops = {
- 	.identity_domain = &msm_iommu_identity_domain,
--	.domain_alloc = msm_iommu_domain_alloc,
-+	.domain_alloc_paging = msm_iommu_domain_alloc_paging,
- 	.probe_device = msm_iommu_probe_device,
- 	.device_group = generic_device_group,
- 	.pgsize_bitmap = MSM_IOMMU_PGSIZES,
-diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
-index 7c0c1d50df5f75..67e044c1a7d93b 100644
---- a/drivers/iommu/mtk_iommu_v1.c
-+++ b/drivers/iommu/mtk_iommu_v1.c
-@@ -270,13 +270,10 @@ static int mtk_iommu_v1_domain_finalise(struct mtk_iommu_v1_data *data)
- 	return 0;
- }
- 
--static struct iommu_domain *mtk_iommu_v1_domain_alloc(unsigned type)
-+static struct iommu_domain *mtk_iommu_v1_domain_alloc_paging(struct device *dev)
- {
- 	struct mtk_iommu_v1_domain *dom;
- 
--	if (type != IOMMU_DOMAIN_UNMANAGED)
--		return NULL;
--
- 	dom = kzalloc(sizeof(*dom), GFP_KERNEL);
- 	if (!dom)
- 		return NULL;
-@@ -585,7 +582,7 @@ static int mtk_iommu_v1_hw_init(const struct mtk_iommu_v1_data *data)
- 
- static const struct iommu_ops mtk_iommu_v1_ops = {
- 	.identity_domain = &mtk_iommu_v1_identity_domain,
--	.domain_alloc	= mtk_iommu_v1_domain_alloc,
-+	.domain_alloc_paging = mtk_iommu_v1_domain_alloc_paging,
- 	.probe_device	= mtk_iommu_v1_probe_device,
- 	.probe_finalize = mtk_iommu_v1_probe_finalize,
- 	.release_device	= mtk_iommu_v1_release_device,
-diff --git a/drivers/iommu/omap-iommu.c b/drivers/iommu/omap-iommu.c
-index 34340ef15241bc..fcf99bd195b32e 100644
---- a/drivers/iommu/omap-iommu.c
-+++ b/drivers/iommu/omap-iommu.c
-@@ -1580,13 +1580,10 @@ static struct iommu_domain omap_iommu_identity_domain = {
- 	.ops = &omap_iommu_identity_ops,
- };
- 
--static struct iommu_domain *omap_iommu_domain_alloc(unsigned type)
-+static struct iommu_domain *omap_iommu_domain_alloc_paging(struct device *dev)
- {
- 	struct omap_iommu_domain *omap_domain;
- 
--	if (type != IOMMU_DOMAIN_UNMANAGED)
--		return NULL;
--
- 	omap_domain = kzalloc(sizeof(*omap_domain), GFP_KERNEL);
- 	if (!omap_domain)
- 		return NULL;
-@@ -1748,7 +1745,7 @@ static struct iommu_group *omap_iommu_device_group(struct device *dev)
- 
- static const struct iommu_ops omap_iommu_ops = {
- 	.identity_domain = &omap_iommu_identity_domain,
--	.domain_alloc	= omap_iommu_domain_alloc,
-+	.domain_alloc_paging = omap_iommu_domain_alloc_paging,
- 	.probe_device	= omap_iommu_probe_device,
- 	.release_device	= omap_iommu_release_device,
- 	.device_group	= omap_iommu_device_group,
-diff --git a/drivers/iommu/s390-iommu.c b/drivers/iommu/s390-iommu.c
-index f0c867c57a5b9b..5695ad71d60e24 100644
---- a/drivers/iommu/s390-iommu.c
-+++ b/drivers/iommu/s390-iommu.c
-@@ -39,13 +39,10 @@ static bool s390_iommu_capable(struct device *dev, enum iommu_cap cap)
- 	}
- }
- 
--static struct iommu_domain *s390_domain_alloc(unsigned domain_type)
-+static struct iommu_domain *s390_domain_alloc_paging(struct device *dev)
- {
- 	struct s390_domain *s390_domain;
- 
--	if (domain_type != IOMMU_DOMAIN_UNMANAGED)
--		return NULL;
--
- 	s390_domain = kzalloc(sizeof(*s390_domain), GFP_KERNEL);
- 	if (!s390_domain)
- 		return NULL;
-@@ -447,7 +444,7 @@ void zpci_destroy_iommu(struct zpci_dev *zdev)
- static const struct iommu_ops s390_iommu_ops = {
- 	.default_domain = &s390_iommu_platform_domain,
- 	.capable = s390_iommu_capable,
--	.domain_alloc = s390_domain_alloc,
-+	.domain_alloc_paging = s390_domain_alloc_paging,
- 	.probe_device = s390_iommu_probe_device,
- 	.release_device = s390_iommu_release_device,
- 	.device_group = generic_device_group,
--- 
-2.40.1
+>> +struct gh_resource *gh_rm_alloc_resource(struct gh_rm *rm, struct 
+>> gh_rm_hyp_resource *hyp_resource)
+>> +{
+>> +    struct gh_resource *ghrsc;
+>> +    int ret;
+>> +
+>> +    ghrsc = kzalloc(sizeof(*ghrsc), GFP_KERNEL);
+>> +    if (!ghrsc)
+>> +        return NULL;
+>> +
+>> +    ghrsc->type = hyp_resource->type;
+>> +    ghrsc->capid = le64_to_cpu(hyp_resource->cap_id);
+>> +    ghrsc->irq = IRQ_NOTCONNECTED;
+>> +    ghrsc->rm_label = le32_to_cpu(hyp_resource->resource_label);
+>> +    if (hyp_resource->virq) {
+>> +        struct gh_irq_chip_data irq_data = {
+>> +            .gh_virq = le32_to_cpu(hyp_resource->virq),
+>> +        };
+>> +
+>> +        ret = irq_domain_alloc_irqs(rm->irq_domain, 1, NUMA_NO_NODE, 
+>> &irq_data);
+>> +        if (ret < 0) {
+>> +            dev_err(rm->dev,
+>> +                "Failed to allocate interrupt for resource %d label: 
+>> %d: %d\n",
+>> +                ghrsc->type, ghrsc->rm_label, ghrsc->irq);
+> 
+> Is it reasonable to return in this case without indicating to the
+> caller that something is wrong?
+> 
 
+I wasn't sure what to do here since this is unexpected edge case. Not 
+returning would cause a client's "request_irq" to fail down the line if 
+the client was interested in the irq. I had picked not to return since 
+this error doesn't put us in an unrecoverable state. No one currently 
+wants to try to recover from that error, so I'm really just deferring 
+the real error handling until later.
+
+I can return ret here.
+
+>> +        } else {
+>> +            ghrsc->irq = ret;
+>> +        }
+>> +    }
+>> +
+>> +    return ghrsc;
+
+...
