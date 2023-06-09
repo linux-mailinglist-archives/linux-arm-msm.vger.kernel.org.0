@@ -2,117 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 535C0728FBE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 08:17:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B878728FE0
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 08:22:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237379AbjFIGRs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 02:17:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40060 "EHLO
+        id S237960AbjFIGVc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 02:21:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237745AbjFIGR2 (ORCPT
+        with ESMTP id S237833AbjFIGVT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 02:17:28 -0400
+        Fri, 9 Jun 2023 02:21:19 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2808A3580;
-        Thu,  8 Jun 2023 23:17:15 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98A6630F0;
+        Thu,  8 Jun 2023 23:21:18 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id C1F5F616C9;
-        Fri,  9 Jun 2023 06:17:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2845CC433EF;
-        Fri,  9 Jun 2023 06:17:14 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 29561653D6;
+        Fri,  9 Jun 2023 06:21:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A52C433D2;
+        Fri,  9 Jun 2023 06:21:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686291434;
-        bh=B6+cEXU+VzPhKn+kA8svZbpcpafwICKvJPZUpHR+zho=;
+        s=k20201202; t=1686291677;
+        bh=pjcIRBp4TxDCF1VbEyrm0rP6g/GjTwNBBru1sxq77qU=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=WEogXCkWo/1eteonPbvslPLmwh7f55SvhXOwmOCm9WKWcy5eTEFw/QaMD/0JXOn28
-         KnP9y1lI9alflEFPTRb6CQ29Fr02ynwnlvXbpjezaFzuuRTYVHMl5+ZzzK4CUVp/4T
-         Q0r8/70eaxtnmsWg8c9005jbDGbm3OolvxiDhbnFiADE/Vbvhup13EztHwvQlMQ/cP
-         nSYC2SHYs9kDbuIN1dxi/0OynRW5QMtRiF+3fL+8SggYtruE+TKk5BLVr5zzCZusdr
-         WG7taaUi2BmoD/wBoA5UmXtlDPHas6sRxHxjNAw7+NMupsJtrUPEJLFtF7RMITQNle
-         qI4I3IEfPO6Mg==
+        b=c14UQ8gX72mslbloG2zO5Sf4bloRxlz7ZzupEA7l5PAPXvl6t3gIst/Cj3HFRfFiA
+         BIXoBfxutzLzu1mlwEhPPAwsAGxuNDbJqzGGPm+M0CXASp+oSvuRbqxf6DORhkvBMK
+         1BdJBYgTKOAKB6g1zvsSkk4ZJmCrtiyi/hNhGr5ev7Pki6luj22P0huJNSpbWG4fA5
+         xKo8VHz7rDLof33wOXRTxPhV2X++bPyPkg0CFOMtFavtn1uIES4OQOfYp03ZRrlm+C
+         R9+lywgWpTai3fvdzDlVWo/vHFSeXG7/w4CP29cRSKbxlPU1giR2ADJesftiBp7Lpv
+         xaTw8d0AN16SQ==
 Received: from johan by xi.lan with local (Exim 4.94.2)
         (envelope-from <johan@kernel.org>)
-        id 1q7VRM-0005C5-SA; Fri, 09 Jun 2023 08:17:41 +0200
-Date:   Fri, 9 Jun 2023 08:17:40 +0200
+        id 1q7VVJ-0005E4-4A; Fri, 09 Jun 2023 08:21:45 +0200
+Date:   Fri, 9 Jun 2023 08:21:45 +0200
 From:   Johan Hovold <johan@kernel.org>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: Adreno devfreq lockdep splat with 6.3-rc2
-Message-ID: <ZILEBPQgqr1HomUQ@hovoldconsulting.com>
-References: <ZBGNmXwQoW330Wr8@hovoldconsulting.com>
- <ZIHh95IeOPBTvB00@hovoldconsulting.com>
- <CAF6AEGv3y3C6nAq7nrkgbv5-9-tVgj+BtY1yU+fXXFFm_N7fcQ@mail.gmail.com>
+To:     Lee Jones <lee@kernel.org>
+Cc:     Johan Hovold <johan+linaro@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        stable@vger.kernel.org
+Subject: Re: [PATCH 1/2] mfd: pm8008: fix module autoloading
+Message-ID: <ZILE-Yy8TYaicACV@hovoldconsulting.com>
+References: <20230526091646.17318-1-johan+linaro@kernel.org>
+ <20230526091646.17318-2-johan+linaro@kernel.org>
+ <20230608154503.GO1930705@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF6AEGv3y3C6nAq7nrkgbv5-9-tVgj+BtY1yU+fXXFFm_N7fcQ@mail.gmail.com>
+In-Reply-To: <20230608154503.GO1930705@google.com>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 08, 2023 at 02:17:45PM -0700, Rob Clark wrote:
-> On Thu, Jun 8, 2023 at 7:12 AM Johan Hovold <johan@kernel.org> wrote:
-
-> > Have you had a chance to look at this regression yet? It prevents us
-> > from using lockdep on the X13s as it is disabled as soon as we start
-> > the GPU.
+On Thu, Jun 08, 2023 at 04:45:03PM +0100, Lee Jones wrote:
+> On Fri, 26 May 2023, Johan Hovold wrote:
 > 
-> Hmm, curious what is different between x13s and sc7180/sc7280 things?
-
-It seems like lockdep needs to hit the tear down path in order to
-detect the circular lock dependency. Perhaps you don't hit that on your
-sc7180/sc7280? 
-
-It is due to the fact that the panel is looked up way too late so that
-bind fails unless the panel driver is already loaded when the msm drm
-driver probes.
-
-Manually loading the panel driver before msm makes the splat go away.
-
-> Or did lockdep recently get more clever (or more annotation)?
-
-I think this is indeed a new problem related to some of the devfreq work
-you did in 6.3-rc1 (e.g. fadcc3ab1302 ("drm/msm/gpu: Bypass PM QoS
-constraint for idle clamp")).
-
-> I did spend some time a while back trying to bring some sense to
-> devfreq/pm-qos/icc locking:
-> https://patchwork.freedesktop.org/series/115028/
+> > Add the missing module device table alias to that the driver can be
+> > autoloaded when built as a module.
+> > 
+> > Fixes: 6b149f3310a4 ("mfd: pm8008: Add driver for QCOM PM8008 PMIC")
+> > Cc: stable@vger.kernel.org      # 5.14
+> > Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> > ---
+> >  drivers/mfd/qcom-pm8008.c | 1 +
+> >  1 file changed, 1 insertion(+)
 > 
-> but haven't had time to revisit that for a while
+> Applied, thanks
 
-That's the series I link to below, but IIRC it did not look directly
-applicable to the splat I see on X13s (e.g. does not involve
-fs_reclaim).
-
-> > On Wed, Mar 15, 2023 at 10:19:21AM +0100, Johan Hovold wrote:
-> > >
-> > > Since 6.3-rc2 (or possibly -rc1), I'm now seeing the below
-> > > devfreq-related lockdep splat.
-> > >
-> > > I noticed that you posted a fix for something similar here:
-> > >
-> > >       https://lore.kernel.org/r/20230312204150.1353517-9-robdclark@gmail.com
-> > >
-> > > but that particular patch makes no difference.
-> > >
-> > > From skimming the calltraces below and qos/devfreq related changes in
-> > > 6.3-rc1 it seems like this could be related to:
-> > >
-> > >       fadcc3ab1302 ("drm/msm/gpu: Bypass PM QoS constraint for idle clamp")
+Thanks, Lee. Did you forget to push these out? I was gonna see if you
+merged them for 6.4 or 6.5, but I can't seem to find them in your mfd
+repo.
 
 Johan
