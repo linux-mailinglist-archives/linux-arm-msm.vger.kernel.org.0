@@ -2,82 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E3A7B72A693
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jun 2023 01:10:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 086DA72A6C0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jun 2023 01:34:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229470AbjFIXKB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 19:10:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56812 "EHLO
+        id S233413AbjFIXeK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 19:34:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229586AbjFIXKA (ORCPT
+        with ESMTP id S233180AbjFIXc6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 19:10:00 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 410EA2733;
-        Fri,  9 Jun 2023 16:10:00 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 359N8f2m004459;
-        Fri, 9 Jun 2023 23:09:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=oxD64ZORj42ZLnKDYPAYLW910OzPuE4NF7Nhxdomvlg=;
- b=f6lMtB7JgZEwPGBqrZEz+rRU9sry89ETXGyEhxX3/TtXTqIl0IC7NolCLxJvE+KNBeB5
- TzVJT1+wNZ5fxIw/Vgn+9UHJtRMRsaaDAntzyeGHh3ZfFS2YlSZbmIB8stguoL+9py1K
- YFaM3eCB/LFiYbe9t2ND5p9aCrTBFFrOOsB31k28t6Oo7QPX5FSDAne+GQf9B39frJBh
- 5Hssfa4/nW+De/+pNLrKYnFJ7MUk6gu/eM9LwES3qAdnglseAv7HMqSdLLiNg66FhSOF
- KenPCe6OW3c0+AlrR7ljghl6OhTyzDm4xUmA32uR39c54vuPLcdgJKuI23PpNgZQvYIf dQ== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r41r0sged-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 09 Jun 2023 23:09:53 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 359N9r5J023244
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 9 Jun 2023 23:09:53 GMT
-Received: from [10.110.51.236] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 9 Jun 2023
- 16:09:50 -0700
-Message-ID: <185da4bf-6e87-a157-7709-0af911ba8c43@quicinc.com>
-Date:   Fri, 9 Jun 2023 16:09:48 -0700
+        Fri, 9 Jun 2023 19:32:58 -0400
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98B9449DA
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 16:30:06 -0700 (PDT)
+Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-97668583210so344288466b.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 16:30:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686353405; x=1688945405;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=sRJNZvhPfChugpU45dpKbNHROAGD/XkdSPesxkM64W4=;
+        b=IRxj3bpySsOIcF59fi+Nm+OI/h4Tj5Ohn5xMWOmsKZNb6xyAtkunphLLlOrJZ8mV0x
+         iBtUkCAVE1FT3vNkjGzLG44k2kLNSaASFLPjNe58vFPzEW9LfRdNumXw28VmCpdJ5TsP
+         v0p4iU+XwwznP4A8f9SrGOvGttYPMyYMXEIFYXy+p7Z2bWQGqYZC/T7OqSATyNRDrseJ
+         WbT69Rrgjd8VpchDe4U4/QB2GtfmnhFdQ3TKKNzA0aF+55SZ2JXWk3KABij6IMqOijF+
+         yrAN1tcyn9Qm8Qg288rZCiNtUe29PpgUR3uIcGfKFS3auDHzR8/uYmm0/5dNaOgRS4dj
+         ouaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686353405; x=1688945405;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=sRJNZvhPfChugpU45dpKbNHROAGD/XkdSPesxkM64W4=;
+        b=fj1FudquRFlyA367W4D35RmPXh831vcUV47YBvNUWD27n2Em4ntWgmLRXA8O464DCm
+         KlGLclJEFPHSsVGEXmRKOMOD+U7xxWL5eMnPpPaOro/DVKIX+hMQe0Dh8BKjGgka8nGD
+         SrrSWznTYaVJutI2ZPsQKcBM4rLp2/Cpxo4SNIxZ7qxLOc28LFtrgor0t0hepZO0zD0b
+         WycFZ4ZF60hMMprAJ6qb8f9YUxunSKsDFyQegJ9WZOXPTGJo1YsdDq0YzyDpoXeAeXpq
+         K5sJB5HZSxNNPgovKBfHDV1mCxppduKmDWe64NCr7j6XhOsG3RSbW63bSRhUBvW2oanF
+         ZStQ==
+X-Gm-Message-State: AC+VfDykXY9KWCPEFPIb3CWNU2UGJehbUkYdMyyo5lOfFVkS+UbeDvRp
+        lmY0ys2WQroIQjP6wDsRWXgarA==
+X-Google-Smtp-Source: ACHHUZ44eca7J/0+Y92PN9Lr2lBwob3EwuyN/85XFHhyDKMBwJtN3Ss2aXY1/jCZDO078fJIjAfhkg==
+X-Received: by 2002:a17:906:dc8d:b0:96f:bc31:5e1c with SMTP id cs13-20020a170906dc8d00b0096fbc315e1cmr3079045ejc.47.1686353404945;
+        Fri, 09 Jun 2023 16:30:04 -0700 (PDT)
+Received: from [10.10.15.130] ([192.130.178.91])
+        by smtp.gmail.com with ESMTPSA id o7-20020a170906358700b00969cbd5718asm1825596ejb.48.2023.06.09.16.30.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Jun 2023 16:30:04 -0700 (PDT)
+Message-ID: <5de320ad-4b95-38ee-7a71-ba76de1a7cf5@linaro.org>
+Date:   Sat, 10 Jun 2023 02:30:03 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v6 2/6] drm/msm/dsi: Reduce pclk rate for compression
-Content-Language: en-US
+Subject: Re: [PATCH v6 6/6] drm/msm/dsi: Document DSC related pclk_rate and
+ hdisplay calculations
+Content-Language: en-GB
 To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
         Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        "Sean Paul" <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
         Daniel Vetter <daniel@ffwll.ch>,
         Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 References: <20230405-add-dsc-support-v6-0-95eab864d1b6@quicinc.com>
- <20230405-add-dsc-support-v6-2-95eab864d1b6@quicinc.com>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <20230405-add-dsc-support-v6-2-95eab864d1b6@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+ <20230405-add-dsc-support-v6-6-95eab864d1b6@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230405-add-dsc-support-v6-6-95eab864d1b6@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: Ak00ergT-WsQxxeK2NNTxPMvlajU2KH6
-X-Proofpoint-ORIG-GUID: Ak00ergT-WsQxxeK2NNTxPMvlajU2KH6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-09_17,2023-06-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=657
- clxscore=1015 suspectscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
- phishscore=0 impostorscore=0 malwarescore=0 priorityscore=1501 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306090196
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,14 +83,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/9/2023 3:57 PM, Jessica Zhang wrote:
-> Adjust the pclk rate to divide hdisplay by the compression ratio when DSC
-> is enabled.
+On 10/06/2023 01:57, Jessica Zhang wrote:
+> Add documentation comments explaining the pclk_rate and hdisplay math
+> related to DSC.
 > 
 > Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 > ---
+>   drivers/gpu/drm/msm/dsi/dsi_host.c | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index fb1d3a25765f..aeaadc18bc7b 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -564,6 +564,13 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
+>   static unsigned long dsi_adjust_pclk_for_compression(const struct drm_display_mode *mode,
+>   		const struct drm_dsc_config *dsc)
+>   {
+> +	/*
+> +	 * Adjust the pclk rate by calculating a new hdisplay proportional to
+> +	 * the compression ratio such that:
+> +	 *     new_hdisplay = old_hdisplay * target_bpp / source_bpp
 
+I'd say `* compressed_bpp / uncompressed_bpp'. This is easier to follow 
+than source and target.
 
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> +	 *
+> +	 * Porches need not be adjusted during compression.
+> +	 */
+>   	int new_hdisplay = DIV_ROUND_UP(mode->hdisplay * drm_dsc_get_bpp_int(dsc),
+>   			dsc->bits_per_component * 3);
+>   
+> @@ -961,6 +968,9 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>   
+>   		/* Divide the display by 3 but keep back/font porch and
+>   		 * pulse width same
+> +		 *
+> +		 * hdisplay will be divided by 3 here to account for the fact
+> +		 * that DPU sends 3 bytes per pclk cycle to DSI.
+>   		 */
+>   		h_total -= hdisplay;
+>   		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
+> 
+
+-- 
+With best wishes
+Dmitry
+
