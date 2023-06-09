@@ -2,262 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BDA20729559
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 11:34:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 653AA729565
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 11:36:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241673AbjFIJe3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 05:34:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57708 "EHLO
+        id S241681AbjFIJfn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 05:35:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57572 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239878AbjFIJeB (ORCPT
+        with ESMTP id S241912AbjFIJfV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 05:34:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D276359E0
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 02:27:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1686302862;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         content-transfer-encoding:content-transfer-encoding:
-         in-reply-to:in-reply-to:references:references;
-        bh=pmcy3J55zT63aAIMqIuRpUjqhj86xl68Bl2D1HlN7pE=;
-        b=gMTt3HgYuwSb1tOx/BlS5VAeSyxnYtl++D/GW3BOwVZWg9qeWd8ZmbaW5zSTSRPtn2ymmc
-        iKB2EljDHIvbfl7Q5qGad+cUjUfpFzlUx8cI6v7A2zGO7L0MlMOruX6F/1HrfMif6ZdsoB
-        tV3nTX3jruABFYcy/jaFA29rtECRCFY=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-36-eek9amaLOyKQ60b8hi9vpw-1; Fri, 09 Jun 2023 05:27:40 -0400
-X-MC-Unique: eek9amaLOyKQ60b8hi9vpw-1
-Received: by mail-yw1-f200.google.com with SMTP id 00721157ae682-56561689700so22775277b3.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 02:27:40 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686302859; x=1688894859;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pmcy3J55zT63aAIMqIuRpUjqhj86xl68Bl2D1HlN7pE=;
-        b=N8U9y1RDQ0LCywcJ+4aMH9FgIYpaw2SLTRyl5SCansgAu6B9d6TITcq/p4H9sU1loR
-         XdE5/IpOTVbLwJ8sk8W5QKSFiM4eOIUwpSzgM2o9pI4JPJn8FkXSk3ppX8IHLpa+QQWM
-         KIIcwtXeVXNKGwVW5N7PZSGfY9m8chRAEfnyCIX/EpCLk/qsWBGdS2Lt6GKlFB8hyhL0
-         hXr1Iq01jfxPg2UOrlb+6zYGSAjqME5XbNw9FnCrrlbSrifATUbDMgwr7NTB0wmoWVVU
-         tBywin90o70i0baH2gY29D3CqBqbcDHogGdSE0N7EHPZ8v0++RDz54siJiWHj8tvQuiQ
-         VtbA==
-X-Gm-Message-State: AC+VfDxr4TILN4aoQNkqVIN5cvBGuUzzm3nUuNQeBNasjwYmoQge8LG4
-        DQMiSPaOmB9TY3uK/C2FkNCUwgVaDq5VhVPlKfBaRKf2hn2vzBDQ4o7S+fSV7PSximwWvTgmS+m
-        E7jbnvpKi2ruIG0im5R27NQ2b53lKi4avZJ9lPh/Nfw==
-X-Received: by 2002:a81:8397:0:b0:561:8fef:13ce with SMTP id t145-20020a818397000000b005618fef13cemr723943ywf.37.1686302859565;
-        Fri, 09 Jun 2023 02:27:39 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ4QBet5uUGDZzHtkvGQ4KbpSa5IpEdM6hVVs73Fec1WoTv6J/MyP1ycHtEm9hSo9hbresvIJlkjf42Viv0F/aQ=
-X-Received: by 2002:a81:8397:0:b0:561:8fef:13ce with SMTP id
- t145-20020a818397000000b005618fef13cemr723918ywf.37.1686302859245; Fri, 09
- Jun 2023 02:27:39 -0700 (PDT)
+        Fri, 9 Jun 2023 05:35:21 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 336F74C07;
+        Fri,  9 Jun 2023 02:30:17 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3598YZJT010667;
+        Fri, 9 Jun 2023 09:29:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=date : from : to :
+ cc : subject : message-id : references : mime-version : content-type :
+ in-reply-to; s=qcppdkim1; bh=hdCdBzVVwM/1xNMeSkgsNCfYfjLjbhdJKTfVZF0ScwE=;
+ b=IGVmdPYGroC+9DUFq/zNMeTOOIqxSIe0FubBcnjztNSFcU9iMIj6nDaXYvxnOp2rGxZ3
+ DhqZlGto8sFGR5R+44KzI9MlTcxfRr7AC06cuG7p+jqYy+tpvXacrPjS9HNzssCTcoWx
+ EscsyNj1NpTppJJvg+VLyHAk9GflVKbnTaLKVjLYpZwjVf92QrzZwdfNA9+qRI2FU5Sj
+ aq3b0lCjcGdNeqwb44F3i3u6VJ0KUdyQ6k4tRf6BjZSva+EkhPgT/V7SzkAFL0h914zK
+ 7hios4OrW+jjlQvfvKMHvGKZocxarF/mARt8wDr32cAXkFgSW3xfWurpEuaNyaCH5ng6 6A== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r3wykgcyb-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 09 Jun 2023 09:29:34 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3599TJ3l026361
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 9 Jun 2023 09:29:19 GMT
+Received: from hu-pkondeti-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Fri, 9 Jun 2023 02:29:14 -0700
+Date:   Fri, 9 Jun 2023 14:59:10 +0530
+From:   Pavan Kondeti <quic_pkondeti@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+CC:     Pavan Kondeti <quic_pkondeti@quicinc.com>,
+        Rohit Agarwal <quic_rohiagar@quicinc.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
+        <rafael@kernel.org>, <viresh.kumar@linaro.org>,
+        <tglx@linutronix.de>, <maz@kernel.org>, <mani@kernel.org>,
+        <robimarko@gmail.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH v3 4/5] dt-bindings: cpufreq: cpufreq-qcom-hw: Add SDX75
+ compatible
+Message-ID: <20230609092910.GA558673@hu-pkondeti-hyd.qualcomm.com>
+References: <1686138469-1464-1-git-send-email-quic_rohiagar@quicinc.com>
+ <1686138469-1464-5-git-send-email-quic_rohiagar@quicinc.com>
+ <20230609050052.GA472607@hu-pkondeti-hyd.qualcomm.com>
+ <f44293c7-fce9-e7a3-2a02-7ad5f7980e81@linaro.org>
 MIME-Version: 1.0
-References: <20230607215224.2067679-1-dianders@chromium.org>
- <20230607144931.v2.8.Ib1a98309c455cd7e26b931c69993d4fba33bbe15@changeid>
- <y3l4x3kv7jgog3miexati5wbveaynnryzqvj6sc4ul6625f2if@w7nqgojfavfw> <CAD=FV=W-fXpm4JCczrNgAS2M9u2VLd2jAkJvE9XJgQpvoE5rjA@mail.gmail.com>
-In-Reply-To: <CAD=FV=W-fXpm4JCczrNgAS2M9u2VLd2jAkJvE9XJgQpvoE5rjA@mail.gmail.com>
-From:   Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Date:   Fri, 9 Jun 2023 11:27:27 +0200
-Message-ID: <CAO-hwJ+3M1iYgaAFEtf-63U20ccGfdiRoi3197YoZmyvMYsGzQ@mail.gmail.com>
-Subject: Re: [PATCH v2 08/10] HID: i2c-hid: Support being a panel follower
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Jiri Kosina <jikos@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        dri-devel@lists.freedesktop.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-input@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org, hsinyi@google.com,
-        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
-        yangcong5@huaqin.corp-partner.google.com,
-        linux-arm-msm@vger.kernel.org,
-        Chris Morgan <macroalpha82@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <f44293c7-fce9-e7a3-2a02-7ad5f7980e81@linaro.org>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: k6WSzfNCW1BVZXXpYe3YFe1eXrxFhw3M
+X-Proofpoint-GUID: k6WSzfNCW1BVZXXpYe3YFe1eXrxFhw3M
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-09_06,2023-06-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 suspectscore=0
+ mlxscore=0 adultscore=0 mlxlogscore=999 lowpriorityscore=0 impostorscore=0
+ spamscore=0 phishscore=0 malwarescore=0 priorityscore=1501 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306090081
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 8, 2023 at 6:43=E2=80=AFPM Doug Anderson <dianders@chromium.org=
-> wrote:
->
-> Hi,
->
-> On Thu, Jun 8, 2023 at 8:37=E2=80=AFAM Benjamin Tissoires
-> <benjamin.tissoires@redhat.com> wrote:
-> >
-> >
-> > On Jun 07 2023, Douglas Anderson wrote:
-> > >
-> > > As talked about in the patch ("drm/panel: Add a way for other devices
-> > > to follow panel state"), we really want to keep the power states of a
-> > > touchscreen and the panel it's attached to in sync with each other. I=
-n
-> > > that spirit, add support to i2c-hid to be a panel follower. This will
-> > > let the i2c-hid driver get informed when the panel is powered on and
-> > > off. From there we can match the i2c-hid device's power state to that
-> > > of the panel.
-> > >
-> > > NOTE: this patch specifically _doesn't_ use pm_runtime to keep track
-> > > of / manage the power state of the i2c-hid device, even though my
-> > > first instinct said that would be the way to go. Specific problems
-> > > with using pm_runtime():
-> > > * The initial power up couldn't happen in a runtime resume function
-> > >   since it create sub-devices and, apparently, that's not good to do
-> > >   in your resume function.
-> > > * Managing our power state with pm_runtime meant fighting to make the
-> > >   right thing happen at system suspend to prevent the system from
-> > >   trying to resume us only to suspend us again. While this might be
-> > >   able to be solved, it added complexity.
-> > > Overall the code without pm_runtime() ended up being smaller and
-> > > easier to understand.
-> >
-> > Generally speaking, I'm not that happy when we need to coordinate with
-> > other subsystems for bringing up resources...
->
-> Yeah, I'd agree that it's not amazingly elegant. Unfortunately, I
-> couldn't find any existing clean frameworks that would do what was
-> needed, which is (presumably) why this problem hasn't been solved
-> before. I could try to come up with a grand abstraction / new
-> framework, but that doesn't seem like a great choice either unless we
-> expect more users...
->
->
-> > Anyway, a remark inlined (at least):
-> >
-> > >
-> > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > > ---
-> > >
-> > > Changes in v2:
-> > > - i2c_hid_core_panel_prepared() and ..._unpreparing() are now static.
-> > >
-> > >  drivers/hid/i2c-hid/i2c-hid-core.c | 82 ++++++++++++++++++++++++++++=
-+-
-> > >  1 file changed, 81 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid=
-/i2c-hid-core.c
-> > > index fa8a1ca43d7f..368db3ae612f 100644
-> > > --- a/drivers/hid/i2c-hid/i2c-hid-core.c
-> > > +++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-> > > @@ -38,6 +38,8 @@
-> > >  #include <linux/mutex.h>
-> > >  #include <asm/unaligned.h>
-> > >
-> > > +#include <drm/drm_panel.h>
-> > > +
-> > >  #include "../hid-ids.h"
-> > >  #include "i2c-hid.h"
-> > >
-> > > @@ -107,6 +109,8 @@ struct i2c_hid {
-> > >       struct mutex            reset_lock;
-> > >
-> > >       struct i2chid_ops       *ops;
-> > > +     struct drm_panel_follower panel_follower;
-> > > +     bool                    is_panel_follower;
-> > >  };
-> > >
-> > >  static const struct i2c_hid_quirks {
-> > > @@ -1058,6 +1062,34 @@ static int i2c_hid_core_initial_power_up(struc=
-t i2c_hid *ihid)
-> > >       return ret;
-> > >  }
-> > >
-> > > +static int i2c_hid_core_panel_prepared(struct drm_panel_follower *fo=
-llower)
-> > > +{
-> > > +     struct i2c_hid *ihid =3D container_of(follower, struct i2c_hid,=
- panel_follower);
-> > > +     struct hid_device *hid =3D ihid->hid;
-> > > +
-> > > +     /*
-> > > +      * hid->version is set on the first power up. If it's still zer=
-o then
-> > > +      * this is the first power on so we should perform initial powe=
-r up
-> > > +      * steps.
-> > > +      */
-> > > +     if (!hid->version)
-> > > +             return i2c_hid_core_initial_power_up(ihid);
-> > > +
-> > > +     return i2c_hid_core_resume(ihid);
-> > > +}
-> > > +
-> > > +static int i2c_hid_core_panel_unpreparing(struct drm_panel_follower =
-*follower)
-> > > +{
-> > > +     struct i2c_hid *ihid =3D container_of(follower, struct i2c_hid,=
- panel_follower);
-> > > +
-> > > +     return i2c_hid_core_suspend(ihid);
-> > > +}
-> > > +
-> > > +static const struct drm_panel_follower_funcs i2c_hid_core_panel_foll=
-ower_funcs =3D {
-> > > +     .panel_prepared =3D i2c_hid_core_panel_prepared,
-> > > +     .panel_unpreparing =3D i2c_hid_core_panel_unpreparing,
-> > > +};
-> >
-> > Can we make that above block at least behind a Kconfig?
-> >
-> > i2c-hid is often used for touchpads, and the notion of drm panel has
-> > nothing to do with them. So I'd be more confident if we could disable
-> > that code if not required.
->
-> Happy to put it behind a Kconfig. I'll plan on that for v3. I'll stub
-> the functions out if there is no Kconfig, but plan to still leave
-> structure members just to avoid uglifying the sources too much.
->
->
-> > Actually, I'd be even more happier if it were in a different compilatio=
-n
-> > unit. Not necessary a different module, but at least a different file.
->
-> I suspect that it's not worth it, but I'll do this if you feel
-> strongly about it.
->
-> I guess the simplest way I can think of to move this to its own file
-> would be to put the whole private data structure (struct i2c_hid) in a
-> private header file and then add prototypes for i2c_hid_core_resume()
-> and i2c_hid_core_suspend() there. Then I could add something like
-> i2c_hid_core_handle_panel_follower() that would have all the
-> registration logic. I'd still need special cases in the core
-> suspend/resume/remove code unless I add a level of abstraction. While
-> the level of abstraction is more "pure", it also would make the code
-> harder to follow.
->
-> Unless I hear a strong opinion (or if this series changes
-> significantly), I'll plan to keep things in the same file and just use
-> a Kconfig.
->
+On Fri, Jun 09, 2023 at 11:17:08AM +0200, Konrad Dybcio wrote:
+> 
+> 
+> On 9.06.2023 07:00, Pavan Kondeti wrote:
+> > On Wed, Jun 07, 2023 at 05:17:48PM +0530, Rohit Agarwal wrote:
+> >> Add compatible for EPSS CPUFREQ-HW on SDX75.
+> >>
+> >> Signed-off-by: Rohit Agarwal <quic_rohiagar@quicinc.com>
+> >> Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+> >> ---
+> >>  Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml | 1 +
+> >>  1 file changed, 1 insertion(+)
+> >>
+> >> diff --git a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+> >> index a6b3bb8..866ed2d 100644
+> >> --- a/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+> >> +++ b/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+> >> @@ -36,6 +36,7 @@ properties:
+> >>                - qcom,sa8775p-cpufreq-epss
+> >>                - qcom,sc7280-cpufreq-epss
+> >>                - qcom,sc8280xp-cpufreq-epss
+> >> +              - qcom,sdx75-cpufreq-epss
+> >>                - qcom,sm6375-cpufreq-epss
+> >>                - qcom,sm8250-cpufreq-epss
+> >>                - qcom,sm8350-cpufreq-epss
+> > 
+> > This is a very basic question, not completely related to this patch.
+> > Apologies in advance.
+> > 
+> > What is the rationale for adding a new soc string under compatible and
+> > using it in the new soc device tree? Is it meant for documentation purpose?
+> > i.e one know what all SoCs / boards supported by this device node.
+> It's two-fold:
+> 
+> 1. The device tree describes the hardware, and for lack of better terms (e.g.
+>    an SoC-specific version number of the block that is identical to all other
+>    implementations of that revision on all SoCs that use it), we tend to
+>    associate it with the SoC it's been (first) found on.
+> 
+> 2. In case we ever needed to introduce a SoC-specific quirk, we can just add
+>    an of_is_compatible-sorta check to the driver and not have to update the
+>    device trees. This is very important for keeping backwards compatibility,
+>    as it's assumed that not everybody may be running the latest one. This
+>    means we have to avoid ABI breaks (unless we have *very* good reasons, like
+>    "this would have never worked anyway" or "it was not described properly
+>    and worked on this occasion by pure luck")
+> 
 
-Right, a separate file might not be the best then :(
+Thanks Konrad for the explanation. The #2 is a clear winner here. It
+makes complete sense. In devices like USB, we have PID/VID through which
+quirks can be implemented later. So I guess the same analogy applies here.
+Like you said in (1), the devices are identified with SoC compatible
+string.
 
-Do you envision this to be used on the ACPI side of i2c-hid? Because
-if this is OF only, then maybe it would be interesting to put it there
-(in i2c-hid-of.c), instead of having it in the core. IIRC i2c-hid-of
-also has ways to set up/down regulators, so maybe it'll be better
-there?
-
-Cheers,
-Benjamin
-
+Thanks,
+Pavan
