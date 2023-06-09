@@ -2,364 +2,253 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AC17729FE8
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 18:17:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE12372A01C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 18:22:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241654AbjFIQR5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 12:17:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33266 "EHLO
+        id S242174AbjFIQW5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 12:22:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241674AbjFIQRz (ORCPT
+        with ESMTP id S242123AbjFIQW4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 12:17:55 -0400
-Received: from mail-yw1-x112b.google.com (mail-yw1-x112b.google.com [IPv6:2607:f8b0:4864:20::112b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 948A03A88
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 09:17:52 -0700 (PDT)
-Received: by mail-yw1-x112b.google.com with SMTP id 00721157ae682-565aa2cc428so18612837b3.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 09:17:52 -0700 (PDT)
+        Fri, 9 Jun 2023 12:22:56 -0400
+Received: from mail-yw1-x1135.google.com (mail-yw1-x1135.google.com [IPv6:2607:f8b0:4864:20::1135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC7043C19
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 09:22:41 -0700 (PDT)
+Received: by mail-yw1-x1135.google.com with SMTP id 00721157ae682-565d354b59fso19236817b3.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 09:22:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686327471; x=1688919471;
+        d=linaro.org; s=google; t=1686327761; x=1688919761;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=HaK3jHgjjvHOPoVEVuupZJiztvXXLSyyIlSfF23IeHk=;
-        b=q5OS9vHMO3yjf+AdF9zllBB4wuVx6UBVs1FWOJVXUqYvXOidnAfNBXd6FAwRRu72Of
-         BxQza/zBqwZYXFJBuLyLcsaGE4ATaB93Q4bRn6wJhDvKMzK8aP7Fqwl+vWsyMWOgo/Lb
-         M8Jcd4K+5YlYNHIK6PCE73x49H4+sioXXUSY0G49i4rTdkmxqChhHsudkKZOl11Ayz42
-         /ZIhPilfSIdLnaKwp41Nx9cwUSj6E9XRl9ay1q+ewlbQDEG7QeaIvyyR83lhOmtslm+c
-         1aE3KEqblhVMQZvKXxqugWAkwda2soRAsc/I0pp94qGPYSHoHkikmB+dROmJkwKfzkg4
-         XJMA==
+        bh=mwQzu1mHmg5s3RKGFVLiYioIdNZ9wrhFOjBtuF+UR3o=;
+        b=OeqWZw34Y6D3kTo5yYID2yBZzJAAQtqpAjCwfyz2PBcyKOWEGB/dLXjUD+499rrI0n
+         1J3XHsBf/izlVlQK1sRykEQSKROn6Hl4Xq7+rh5QHQpNSLNnEIsG37BPydK+BpsRhPsR
+         tf6k2z1MQkyTXtU2A8vHyifUVpFv1ssnBx1+CS6lXoi5wSvMUbhhodAWfTqjQGmecKGQ
+         b05Wq1s6maRCr1AuqWMKXOQY23dOW3wv21iL9cWzvhnFhnYqLYK9wkLtOThpaXsKHXad
+         7LG0W3fFsODO6cW+MHJ1MMF3KQ1xuEn7ouIW7S8Pz8Zdx/4rcUAuqb85jmwP8gdGcu3E
+         WBtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686327471; x=1688919471;
+        d=1e100.net; s=20221208; t=1686327761; x=1688919761;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=HaK3jHgjjvHOPoVEVuupZJiztvXXLSyyIlSfF23IeHk=;
-        b=JeMwiHD7SPfWW9WCix5G7MFXPVF3x/2/NYZ+kYbAh/hu0pPgt6l/NdvuHU0AUjfRK6
-         JDT8CgmQz5gzriI77WRfVu/EDWG/MjkyKl1tWjwNJFcAhppsjA0uVZdNco1uRzCKvDxe
-         KvbZ/4J1eQvLGGodVoRVJgNS+mNsezY/S6zn85g5fagGgb4t8GG8xYrzTH2cf6xSNSxH
-         dcbYEWTaumv2S6HjiFvBtc1iSAiHSDLs59tl91DQPq5Hc82QKSw9xjOsCVPri0LpgxBj
-         b1tU4eBXFxmSeB/xlskP5szB2aM5EW3B6+PoF1vFC21RGAzVVZeMQzVeDRJDHkBqDttC
-         7aIw==
-X-Gm-Message-State: AC+VfDwsbFIY+dKDE8zTM5RGN9/yPnmEOsijcbkcV23o0E+WrOnJcu26
-        zW6Hz7W9BeSloGHuUCCCV/oDdBpE2uHlfG6VYMnKyA==
-X-Google-Smtp-Source: ACHHUZ66ErkRLP9B/ib3iikXgtnzGi/fZYvbhvrzwTfMgA4M9QSaIkoYPkREZte84W8aiG4WTvuUXwHlaw4uqdmiO9g=
-X-Received: by 2002:a81:6d0a:0:b0:569:1904:f3b7 with SMTP id
- i10-20020a816d0a000000b005691904f3b7mr1777009ywc.24.1686327471523; Fri, 09
- Jun 2023 09:17:51 -0700 (PDT)
+        bh=mwQzu1mHmg5s3RKGFVLiYioIdNZ9wrhFOjBtuF+UR3o=;
+        b=IsRC1mG2uJuUe8lcArMfZcFLVzEuCzDjcLuBOe4hg61BsSHfwcfdCJwQHwTWOFQlpM
+         AW8tuA9ziYH6rifCwL62uBffTMEVKmuTvELF3/kYaX6VtfNup60yR9nL3ZO2DQdmYIlM
+         RiAKlw/Wdd+s6oVvbxQaxyvfLJj0dofWYIdbkclotzd0JEMPpg/4fuPrJ7+i7bTZQOeG
+         MEen4RqCiagK915aYfP85MBitc+8jcJPWeUMrOh5Jhrp3Yl+CUh5+dBMUsVDAn9i/uXX
+         89BPNEpybKPdROARxyG6NxO51FQ5u+l36itXndJjwZ0MgQLV7uLs6n6xs5UYEoldobKa
+         PNFQ==
+X-Gm-Message-State: AC+VfDw31Gci5PBpndxXK7UaLRdmUtQUCV/SgY/3jUDrXB+t/NngrtD9
+        X1s91wu1sHvmQfQ32ptkVeU9SjicJBFi/yiNNairsg==
+X-Google-Smtp-Source: ACHHUZ7DcgGfw00xFeO5tg+xstcf0mM87ob4gA9UhI4JskArhrXvT7uOKL98JgUrv1OrQJ5y7tNmkHSsuMQI+Z6RFrg=
+X-Received: by 2002:a81:4744:0:b0:565:e48d:32cf with SMTP id
+ u65-20020a814744000000b00565e48d32cfmr1431353ywa.7.1686327760864; Fri, 09 Jun
+ 2023 09:22:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230530165807.642084-1-robimarko@gmail.com> <20230530165807.642084-2-robimarko@gmail.com>
- <3f1bfaf9-35ff-59ae-6756-84fc8900ed92@linaro.org> <647708e2.050a0220.514c7.feab@mx.google.com>
- <517f8b82-1230-985a-811a-2100f0dd339e@linaro.org> <6483353e.7b0a0220.65698.0e15@mx.google.com>
- <CAA8EJpqCiWFxVSbMLViJaVvAqVVu9Tx6SAUovDH9GraeTYH4HA@mail.gmail.com> <64833f16.050a0220.5c39c.20ce@mx.google.com>
-In-Reply-To: <64833f16.050a0220.5c39c.20ce@mx.google.com>
+References: <20230609115058.9059-1-quic_jkona@quicinc.com> <20230609115058.9059-3-quic_jkona@quicinc.com>
+In-Reply-To: <20230609115058.9059-3-quic_jkona@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 9 Jun 2023 19:17:40 +0300
-Message-ID: <CAA8EJppJuZ0RFXxznjYxOCkfSCjFVS6O4C8Oq9mCbtQ-K0tc4g@mail.gmail.com>
-Subject: Re: [RESEND PATCH v2 2/2] cpufreq: qcom-nvmem: add support for IPQ8064
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Robert Marko <robimarko@gmail.com>, rafael@kernel.org,
-        viresh.kumar@linaro.org, agross@kernel.org, andersson@kernel.org,
-        konrad.dybcio@linaro.org, ilia.lin@kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
+Date:   Fri, 9 Jun 2023 19:22:29 +0300
+Message-ID: <CAA8EJpr-iKMzYP7HVQV8pzXbxzLvBaq38aovJ5Ffny18yXvJZg@mail.gmail.com>
+Subject: Re: [PATCH V4 2/4] clk: qcom: camcc-sm8550: Add camera clock
+ controller driver for SM8550
+To:     Jagadeesh Kona <quic_jkona@quicinc.com>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 9 Jun 2023 at 18:02, Christian Marangi <ansuelsmth@gmail.com> wrote:
+On Fri, 9 Jun 2023 at 14:52, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
 >
-> On Fri, Jun 09, 2023 at 05:53:40PM +0300, Dmitry Baryshkov wrote:
-> > On Fri, 9 Jun 2023 at 17:21, Christian Marangi <ansuelsmth@gmail.com> wrote:
-> > >
-> > > On Thu, Jun 01, 2023 at 06:07:17PM +0300, Dmitry Baryshkov wrote:
-> > > > On 31/05/2023 04:36, Christian Marangi wrote:
-> > > > > On Wed, May 31, 2023 at 05:03:01AM +0300, Dmitry Baryshkov wrote:
-> > > > > > On 30/05/2023 19:58, Robert Marko wrote:
-> > > > > > > From: Christian Marangi <ansuelsmth@gmail.com>
-> > > > > > >
-> > > > > > > IPQ8064 comes in 3 families:
-> > > > > > > * IPQ8062 up to 1.0GHz
-> > > > > > > * IPQ8064/IPQ8066/IPQ8068 up to 1.4GHz
-> > > > > > > * IPQ8065/IPQ8069 up to 1.7Ghz
-> > > > > > >
-> > > > > > > So, in order to be able to share one OPP table, add support for
-> > > > > > > IPQ8064 family based of SMEM SoC ID-s as speedbin fuse is always 0 on
-> > > > > > > IPQ8064.
-> > > > > > >
-> > > > > > > Bit are set with the following logic:
-> > > > > > > * IPQ8062 BIT 0
-> > > > > > > * IPQ8064/IPQ8066/IPQ8068 BIT 1
-> > > > > > > * IPQ8065/IPQ8069 BIT 2
-> > > > > > >
-> > > > > > > speed is never fused, only psv values are fused.
-> > > > > > > Set speed to the versions to permit a unified opp table following
-> > > > > > > this named opp:
-> > > > > > >
-> > > > > > > opp-microvolt-speed<SPEED_VALUE>-pvs<PSV_VALUE>-v0
-> > > > > > >
-> > > > > > > Example:
-> > > > > > > - for ipq8062 psv2
-> > > > > > >     opp-microvolt-speed0-pvs2-v0 = < 925000 878750 971250>
-> > > > > > > - for ipq8064 psv2
-> > > > > > >     opp-microvolt-speed2-pvs2-v0 = <925000 878750 971250>;
-> > > > > > > - for ipq8065 psv2
-> > > > > > >     opp-microvolt-speed4-pvs2-v0 = <950000 902500 997500>;
-> > > > > > >
-> > > > > > > Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-> > > > > > > Signed-off-by: Robert Marko <robimarko@gmail.com>
-> > > > > > > ---
-> > > > > > >    drivers/cpufreq/qcom-cpufreq-nvmem.c | 73 +++++++++++++++++++++++++++-
-> > > > > > >    1 file changed, 72 insertions(+), 1 deletion(-)
-> > > > > > >
-> > > > > > > diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> > > > > > > index ce444b5962f2..c644138680ba 100644
-> > > > > > > --- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> > > > > > > +++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-> > > > > > > @@ -34,6 +34,10 @@
-> > > > > > >    #define IPQ8074_HAWKEYE_VERSION              BIT(0)
-> > > > > > >    #define IPQ8074_ACORN_VERSION                BIT(1)
-> > > > > > > +#define IPQ8062_VERSION                BIT(0)
-> > > > > > > +#define IPQ8064_VERSION                BIT(1)
-> > > > > > > +#define IPQ8065_VERSION                BIT(2)
-> > > > > >
-> > > > > > I think it would be more logical to change these defines to consecutive enum
-> > > > > > instead of BIT(n) values. Another (and better in my opinion) option is to
-> > > > > > drop versions completely (and remove speedN from the opp names) and to have
-> > > > > > per-SoC tables in per-SoC dtsi files. There are already separate
-> > > > > > ipq8064.dtsi, ipq8062.dtsi and ipq8065.dtsi files. It makes little sense to
-> > > > > > overcomplicate the OPP tables.
-> > > > > >
-> > > > >
-> > > > > That is what was used downstream but it was also wrong and against the
-> > > > > normal implementation of this driver itself.
-> > > > >
-> > > > > OPP have opp-supported-hw just for the task with the principle of
-> > > > > declaring a single table in dtsi and automatically select the right one.
-> > > > >
-> > > > > Using the implementation downstream (opp table in each dtsi) is actually
-> > > > > worse as ipq8065 have 1.4ghz and not 1.2ghz and that can correctly be
-> > > > > handled with opp-supported-hw (and this change) or using delete-property
-> > > > > in dtsi (that I don't really like and it's ugly)
-> > > > >
-> > > > > Also this implementation would match what is currently secribed for the
-> > > > > use of OPP in the documentation.
-> > > > >
-> > > > > Hope you can understand the reason of this change, the intention is to
-> > > > > clear and trying to use standard OPP stuff instead of hacks in the DTS.
-> > > >
-> > > > I'm fine with the opp-supported-hw part (I forgot that it is used by default
-> > > > with the help of drv->versions). I do not like the idea of encoding the same
-> > > > value into the -speedN part. If it is not needed, it's better be dropped
-> > > > than using a semi-dummy value there.
-> > > >
-> > > > So, I'd suggest to define an enum, use BIT(enum_value) for drv->versions and
-> > > > drop the speed%d part.
-> > > >
-> > > > Also, while we are at it, could you please define a schema for your opp
-> > > > extensions? An example would make it easier to understand the bindings (and
-> > > > will also provide a reference for possible other implementers).
-> > > >
-> > >
-> > > Sorry for the delay in answering this.
-> > >
-> > > The speed part is still needed... since the voltage for each voltage
-> > > change on the different SoC.
-> > >
-> > > Let me give you an example for one freq.
-> > >
-> > >                 opp-384000000 {
-> > >                         opp-hz = /bits/ 64 <384000000>;
-> > >                         opp-microvolt-speed0-pvs0-v0 = <1000000 950000 1050000>;
-> > >                         opp-microvolt-speed0-pvs1-v0 = <925000 878750 971250>;
-> > >                         opp-microvolt-speed0-pvs2-v0 = <875000 831250 918750>;
-> > >                         opp-microvolt-speed0-pvs3-v0 = <800000 760000 840000>;
-> > >                         opp-microvolt-speed2-pvs0-v0 = <1000000 950000 1050000>;
-> > >                         opp-microvolt-speed2-pvs1-v0 = <925000 878750 971250>;
-> > >                         opp-microvolt-speed2-pvs2-v0 = <875000 831250 918750>;
-> > >                         opp-microvolt-speed2-pvs3-v0 = <800000 760000 840000>;
-> > >                         opp-microvolt-speed4-pvs0-v0 = <975000 926250 1023750>;
-> > >                         opp-microvolt-speed4-pvs1-v0 = <950000 902500 997500>;
-> > >                         opp-microvolt-speed4-pvs2-v0 = <925000 878750 971250>;
-> > >                         opp-microvolt-speed4-pvs3-v0 = <900000 855000 945000>;
-> > >                         opp-microvolt-speed4-pvs4-v0 = <875000 831250 918750>;
-> > >                         opp-microvolt-speed4-pvs5-v0 = <825000 783750 866250>;
-> > >                         opp-microvolt-speed4-pvs6-v0 = <775000 736250 813750>;
-> > >                         opp-supported-hw = <0x7>;
-> > >                         clock-latency-ns = <100000>;
-> > >                 };
-> >
-> > What about (it will require changes to opp-v2-base.yaml):
-> >
-> > opp-384000000-0 {
-> >     opp-hz = /bits/ 64 <384000000>;
-> >     opp-microvolt-pvs0-v0 = <1000000 950000 1050000>;
-> >     opp-microvolt-pvs1-v0 = <925000 878750 971250>;
-> >     opp-microvolt-pvs2-v0 = <875000 831250 918750>;
-> >     opp-microvolt-pvs3-v0 = <800000 760000 840000>;
-> >     opp-supported-hw = <0x1>;
-> >     clock-latency-ns = <100000>;
-> > };
-> >
-> > opp-384000000-1 {
-> >     opp-hz = /bits/ 64 <384000000>;
-> >     opp-microvolt-pvs0-v0 = <1000000 950000 1050000>;
-> >     opp-microvolt-pvs1-v0 = <925000 878750 971250>;
-> >     opp-microvolt-pvs2-v0 = <875000 831250 918750>;
-> >     opp-microvolt-pvs3-v0 = <800000 760000 840000>;
-> >    opp-supported-hw = <0x2>;
-> >     clock-latency-ns = <100000>;
-> > };
-> >
-> > opp-384000000-2 {
-> >     opp-hz = /bits/ 64 <384000000>;
-> >     opp-microvolt-pvs0-v0 = <975000 926250 1023750>;
-> >     opp-microvolt-pvs1-v0 = <950000 902500 997500>;
-> >     opp-microvolt-pvs2-v0 = <925000 878750 971250>;
-> >     opp-microvolt-pvs3-v0 = <900000 855000 945000>;
-> >     opp-microvolt-pvs4-v0 = <875000 831250 918750>;
-> >     opp-microvolt-pvs5-v0 = <825000 783750 866250>;
-> >     opp-microvolt-pvs6-v0 = <775000 736250 813750>;
-> >     opp-supported-hw = <0x4>;
-> >     clock-latency-ns = <100000>;
-> > };
-> >
-> >
+> Add support for the camera clock controller for camera clients to be
+> able to request for camcc clocks on SM8550 platform.
 >
-> Mhhhhhh is it really worth it? Would also require to modify the pattern
-> currently used in the qcom-cpufreq-nvmem that is speedXX-pvsXX-vXX.
+> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+> ---
+> Changes since V3:
+>  - No changes
+> Changes since V2:
+>  - No changes
+> Changes since V1:
+>  - Sorted the PLL names in proper order
+>  - Updated all PLL configurations to lower case hex
+>  - Reused evo ops instead of adding new ops for ole pll
+>  - Moved few clocks to separate patch to fix patch too long error
 >
-> ipq806x is really krait cpu not correctly fused. I expect downstream the
-> same pattern to be used widely with other krait based systems so the
-> idea was to not reinvent the wheel. (introducing a different pattern
-> also means additional condition in the schema)
+>  drivers/clk/qcom/Kconfig        |    7 +
+>  drivers/clk/qcom/Makefile       |    1 +
+>  drivers/clk/qcom/camcc-sm8550.c | 3405 +++++++++++++++++++++++++++++++
+>  3 files changed, 3413 insertions(+)
+>  create mode 100644 drivers/clk/qcom/camcc-sm8550.c
 >
-> If we really don't want to have big opp table in one dtsi I can consider
-> redefining the same opp table in the different dtsi. (the
-> opp-supported-hw was really needed for the 1.2ghz problem, if asked I
-> can still split the table in the related dtsi but I don't really like
-> it)
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index 9cd1f05d436b..85efed78dc9a 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -756,6 +756,13 @@ config SM_CAMCC_8450
+>           Support for the camera clock controller on SM8450 devices.
+>           Say Y if you want to support camera devices and camera functionality.
 >
-> Anyway I'm open to both solution.
-> If it's ok to change the pattern I would change it directly to something
-> like opp-microvolt-pvs since even pvs version is always 0.
->
-> I'm honestly against the idea of defining multiple opp-table for the
-> same freq (and also change the base schema) since we can do the same
-> thing by just overwriting the table in the other dtsi.
+> +config SM_CAMCC_8550
+> +       tristate "SM8550 Camera Clock Controller"
+> +       select SM_GCC_8550
+> +       help
+> +         Support for the camera clock controller on SM8550 devices.
+> +         Say Y if you want to support camera devices and camera functionality.
+> +
+>  config SM_DISPCC_6115
+>         tristate "SM6115 Display Clock Controller"
+>         depends on ARM64 || COMPILE_TEST
+> diff --git a/drivers/clk/qcom/Makefile b/drivers/clk/qcom/Makefile
+> index 75d035150118..97c8cefc2fd0 100644
+> --- a/drivers/clk/qcom/Makefile
+> +++ b/drivers/clk/qcom/Makefile
+> @@ -101,6 +101,7 @@ obj-$(CONFIG_SDX_GCC_75) += gcc-sdx75.o
+>  obj-$(CONFIG_SM_CAMCC_6350) += camcc-sm6350.o
+>  obj-$(CONFIG_SM_CAMCC_8250) += camcc-sm8250.o
+>  obj-$(CONFIG_SM_CAMCC_8450) += camcc-sm8450.o
+> +obj-$(CONFIG_SM_CAMCC_8550) += camcc-sm8550.o
+>  obj-$(CONFIG_SM_DISPCC_6115) += dispcc-sm6115.o
+>  obj-$(CONFIG_SM_DISPCC_6125) += dispcc-sm6125.o
+>  obj-$(CONFIG_SM_DISPCC_6350) += dispcc-sm6350.o
+> diff --git a/drivers/clk/qcom/camcc-sm8550.c b/drivers/clk/qcom/camcc-sm8550.c
+> new file mode 100644
+> index 000000000000..85f0c1e09b2b
+> --- /dev/null
+> +++ b/drivers/clk/qcom/camcc-sm8550.c
+> @@ -0,0 +1,3405 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +#include <linux/clk-provider.h>
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/pm_runtime.h>
+> +#include <linux/regmap.h>
+> +
+> +#include <dt-bindings/clock/qcom,sm8550-camcc.h>
+> +
+> +#include "clk-alpha-pll.h"
+> +#include "clk-branch.h"
+> +#include "clk-rcg.h"
+> +#include "clk-regmap.h"
+> +#include "common.h"
+> +#include "gdsc.h"
+> +#include "reset.h"
+> +
+> +enum {
+> +       DT_IFACE,
+> +       DT_BI_TCXO,
+> +};
+> +
+> +enum {
+> +       P_BI_TCXO,
+> +       P_CAM_CC_PLL0_OUT_EVEN,
+> +       P_CAM_CC_PLL0_OUT_MAIN,
+> +       P_CAM_CC_PLL0_OUT_ODD,
+> +       P_CAM_CC_PLL1_OUT_EVEN,
+> +       P_CAM_CC_PLL2_OUT_EVEN,
+> +       P_CAM_CC_PLL2_OUT_MAIN,
+> +       P_CAM_CC_PLL3_OUT_EVEN,
+> +       P_CAM_CC_PLL4_OUT_EVEN,
+> +       P_CAM_CC_PLL5_OUT_EVEN,
+> +       P_CAM_CC_PLL6_OUT_EVEN,
+> +       P_CAM_CC_PLL7_OUT_EVEN,
+> +       P_CAM_CC_PLL8_OUT_EVEN,
+> +       P_CAM_CC_PLL9_OUT_EVEN,
+> +       P_CAM_CC_PLL9_OUT_ODD,
+> +       P_CAM_CC_PLL10_OUT_EVEN,
+> +       P_CAM_CC_PLL11_OUT_EVEN,
+> +       P_CAM_CC_PLL12_OUT_EVEN,
+> +};
+> +
+> +static const struct pll_vco lucid_ole_vco[] = {
+> +       { 249600000, 2300000000, 0 },
+> +};
+> +
+> +static const struct pll_vco rivian_ole_vco[] = {
+> +       { 777000000, 1285000000, 0 },
+> +};
+> +
+> +static const struct alpha_pll_config cam_cc_pll0_config = {
+> +       /* .l includes RINGOSC_CAL_L_VAL, CAL_L_VAL, L_VAL fields */
+> +       .l = 0x4444003e,
 
-The experience with msm8996 / msm8996ro showed that sharing the OPP
-table  between different SoCs brings more trouble than benefits. I
-think it is easier to split the opp tables into per-SoC dtsi (and you
-already have separate dtsi files).
-Speed should be left to the speed bins of the same SoC.
+I'd still insist on not touching the config.l field semantics.
 
-Regarding speed and pvs version. I checked other platforms,
-pvs_version exists only for msm8974/apq8084, while 8064 Kraits have
-just speed and pvs. I'd suggest to follow the hardware/fuses and drop
-the -vN for 8064 generations of the Krait.
-With the opp tables being split to several DT files, I have nothing
-against speed0-, it would match the apq8064 (if we ever finish the
-cpufreq there).
+> +       .alpha = 0x8000,
+> +       .config_ctl_val = 0x20485699,
+> +       .config_ctl_hi_val = 0x00182261,
+> +       .config_ctl_hi1_val = 0x82aa299c,
+> +       .test_ctl_val = 0x00000000,
+> +       .test_ctl_hi_val = 0x00000003,
+> +       .test_ctl_hi1_val = 0x00009000,
+> +       .test_ctl_hi2_val = 0x00000034,
+> +       .user_ctl_val = 0x00008400,
+> +       .user_ctl_hi_val = 0x00000005,
+> +};
+> +
 
->
-> > > As you can see we use the speed value to match the different SoC and
-> > > apply the correct voltage.
-> > >
-> > > Yes I will add the missing info in the schema.
-> > >
-> > > > >
-> > > > > > > +
-> > > > > > >    struct qcom_cpufreq_drv;
-> > > > > > >    struct qcom_cpufreq_match_data {
-> > > > > > > @@ -207,6 +211,69 @@ static int qcom_cpufreq_krait_name_version(struct device *cpu_dev,
-> > > > > > >         return ret;
-> > > > > > >    }
-> > > > > > > +static int qcom_cpufreq_ipq8064_name_version(struct device *cpu_dev,
-> > > > > > > +                                            struct nvmem_cell *speedbin_nvmem,
-> > > > > > > +                                            char **pvs_name,
-> > > > > > > +                                            struct qcom_cpufreq_drv *drv)
-> > > > > > > +{
-> > > > > > > +       int speed = 0, pvs = 0, pvs_ver = 0;
-> > > > > > > +       int msm_id, ret = 0;
-> > > > > > > +       u8 *speedbin;
-> > > > > > > +       size_t len;
-> > > > > > > +
-> > > > > > > +       speedbin = nvmem_cell_read(speedbin_nvmem, &len);
-> > > > > > > +
-> > > > > > > +       if (IS_ERR(speedbin))
-> > > > > > > +               return PTR_ERR(speedbin);
-> > > > > > > +
-> > > > > > > +       switch (len) {
-> > > > > > > +       case 4:
-> > > > > > > +               get_krait_bin_format_a(cpu_dev, &speed, &pvs, &pvs_ver,
-> > > > > > > +                                      speedbin);
+[skipped the rest, LGTM]
 
-I think it was mentioned before, let's hardcode format_a for 8064 and
-format_b for 8974/8084.
+> +
+> +static struct platform_driver cam_cc_sm8550_driver = {
+> +       .probe = cam_cc_sm8550_probe,
+> +       .driver = {
+> +               .name = "cam_cc-sm8550",
+> +               .of_match_table = cam_cc_sm8550_match_table,
+> +       },
+> +};
+> +
+> +static int __init cam_cc_sm8550_init(void)
+> +{
+> +       return platform_driver_register(&cam_cc_sm8550_driver);
+> +}
+> +subsys_initcall(cam_cc_sm8550_init);
 
-> > > > > > > +               break;
-> > > > > > > +       default:
-> > > > > > > +               dev_err(cpu_dev, "Unable to read nvmem data. Defaulting to 0!\n");
-> > > > > > > +               ret = -ENODEV;
-> > > > > > > +               goto len_error;
-> > > > > > > +       }
-> > > > > > > +
-> > > > > > > +       ret = qcom_smem_get_soc_id(&msm_id);
-> > > > > > > +       if (ret)
-> > > > > > > +               return ret;
-> > > > > > > +
-> > > > > > > +       switch (msm_id) {
-> > > > > > > +       case QCOM_ID_IPQ8062:
-> > > > > > > +               drv->versions = IPQ8062_VERSION;
-> > > > > > > +               break;
-> > > > > > > +       case QCOM_ID_IPQ8064:
-> > > > > > > +       case QCOM_ID_IPQ8066:
-> > > > > > > +       case QCOM_ID_IPQ8068:
-> > > > > > > +               drv->versions = IPQ8064_VERSION;
-> > > > > > > +               break;
-> > > > > > > +       case QCOM_ID_IPQ8065:
-> > > > > > > +       case QCOM_ID_IPQ8069:
-> > > > > > > +               drv->versions = IPQ8065_VERSION;
-> > > > > > > +               break;
-> > > > > > > +       default:
-> > > > > > > +               dev_err(cpu_dev,
-> > > > > > > +                       "SoC ID %u is not part of IPQ8064 family, limiting to 1.0GHz!\n",
-> > > > > > > +                       msm_id);
-> > > > > > > +               drv->versions = IPQ8062_VERSION;
-> > > > > > > +               break;
-> > > > > > > +       }
-> > > > > > > +
-> > > > > > > +       /*
-> > > > > > > +        * IPQ8064 speed is never fused. Only psv values are fused.
-> > > > > > > +        * Set speed to the versions to permit a unified opp table.
-> > > > > > > +        */
-> > > > > > > +       snprintf(*pvs_name, sizeof("speedXX-pvsXX-vXX"), "speed%d-pvs%d-v%d",
-> > > > > > > +                drv->versions, pvs, pvs_ver);
-> > > > > > > +
-> > > > > > > +len_error:
-> > > > > > > +       kfree(speedbin);
-> > > > > > > +       return ret;
-> > > > > > > +}
-> > > > > > > +
-> > > > > > >    static int qcom_cpufreq_ipq8074_name_version(struct device *cpu_dev,
-> > > > > > >                                              struct nvmem_cell *speedbin_nvmem,
-> > > > > > >                                              char **pvs_name,
-> >
-> >
-> > --
-> > With best wishes
-> > Dmitry
->
+As it was pointed out, this driver is built as a module by default.
+Please perform the tesing and cleanup before sending the driver and
+use module_platform_driver.
+
+> +
+> +static void __exit cam_cc_sm8550_exit(void)
+> +{
+> +       platform_driver_unregister(&cam_cc_sm8550_driver);
+> +}
+> +module_exit(cam_cc_sm8550_exit);
+> +
+> +MODULE_DESCRIPTION("QTI CAMCC SM8550 Driver");
+> +MODULE_LICENSE("GPL");
 > --
->         Ansuel
-
+> 2.40.1
+>
 
 
 -- 
