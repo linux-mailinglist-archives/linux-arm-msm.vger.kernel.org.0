@@ -2,86 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D9A5F729CE6
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 16:30:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EF6D729D07
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 16:38:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241446AbjFIOaL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 10:30:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52464 "EHLO
+        id S241359AbjFIOiR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 10:38:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241082AbjFIOaJ (ORCPT
+        with ESMTP id S231552AbjFIOiQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 10:30:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1F748273A
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 07:29:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1686320963;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=SeFjQ+AIqSoCw9oUu0kheJJ6w4RLgwEZPguDnMov+Ro=;
-        b=WG8aUFrYrRswjtZTBFv0d5g43ELRF/Zt7rgwvwjRQvACy6zSH9KJP21KIrLVHPCiglDsFV
-        G60divA2YXkXs7SLNnaz8GuZb4H1Gs/aRHsp1jfDqpPrr3kkzaXo6iq1vvk2DAkUg4CYV/
-        TnxdImTKnxOskJnBjngHDMMwIErvM/Y=
-Received: from mail-yb1-f199.google.com (mail-yb1-f199.google.com
- [209.85.219.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-257-4Y9p7oyeOma4iWgdiYHWsw-1; Fri, 09 Jun 2023 10:29:20 -0400
-X-MC-Unique: 4Y9p7oyeOma4iWgdiYHWsw-1
-Received: by mail-yb1-f199.google.com with SMTP id 3f1490d57ef6-bb05f0e6ef9so2587072276.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 07:29:20 -0700 (PDT)
+        Fri, 9 Jun 2023 10:38:16 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A52671BFF
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 07:38:14 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b1af9ef7a9so20583201fa.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 07:38:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686321493; x=1688913493;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=oHDHmxkGz/lI3u3ur4hiLPnCzium3o5kvrOi4S/iPfk=;
+        b=Y0cjCsZMoWMWGg+SMHVOza0excOs0NGIGevbqqqkDkfl7wvnvOhxNXeFqxgw1C1EdV
+         dZD9rjz5whlGUDfRk1epIhSNtcxidIr7wwlKjMOYuVLlnZByToKFZbvDkYLVNa7/pPpZ
+         0UCxxTJqvJm80yWohS1HzpFKOEnranUDgi+eUMuQ476bBUv5OXVq0qsPwkKJ5PQHJSO8
+         O6SR86YOuVk07sKGTxcFutjileg7gx3AtqE8LHXijmIeGmtvgoks/yN1B83qT43yBfGu
+         BRoVm0CbFxD8kqvha/Sg9c7r+z7Sua/X3goazlMyRZk6//Uy+7bXN7lAW38yvqgDYqDo
+         V5Rg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686320960; x=1688912960;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SeFjQ+AIqSoCw9oUu0kheJJ6w4RLgwEZPguDnMov+Ro=;
-        b=GQC3MKTr2GdX/r4kMRGWn+ZeYxobhKmIbZWEjMYDLjbIlpUTgLn6O2SqSAKWiY3neW
-         lCC2b7D8+gaxExwk/aOmd5FVYt0NLZx/FYBhYRQELFl2E1m/uqRTaIMH3uOxxAF1d19B
-         u+meabJ2eAU/RY8Fy+q0aJULwrosR7/u/+NNzC+B7fosr384WLudO+Cw14zxKrO/wCtK
-         AvMwLmEx1yHHGbOHJC/hiL1nrEzYf36BHC9iBMf5i7sTar+ivXHj9lQELjKBeff6KZZI
-         Q5WDg/xeKNp/CNcMBFXxjCrqM2LKAqN/+isUzhoxtqZ/YSfHuweybpL3ilKU2yzGIWXg
-         FAgA==
-X-Gm-Message-State: AC+VfDyQjqCQoWSGtBkXXGKkjud9EdJhDxaFks0QuyqGVBgbsLuR2mrj
-        ELbhO5O8JL+MNLYAufPPyYTNTUN0Hr1j7iVWbN3nbWTfLNzfMF+Fb6TEXiKnvCq94tQVkgiLaF0
-        b4PLzN/R8J47AnYNmDqZMVF9iqw==
-X-Received: by 2002:a25:f50f:0:b0:ba8:66fb:dd84 with SMTP id a15-20020a25f50f000000b00ba866fbdd84mr1101345ybe.20.1686320960005;
-        Fri, 09 Jun 2023 07:29:20 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ4TEL5O7n3UfPsYTiUfzgwgsZext91z/RVtBWG4mbDyI3+V4ZyAbGaL21xcL2PV/gyhI4oc1Q==
-X-Received: by 2002:a25:f50f:0:b0:ba8:66fb:dd84 with SMTP id a15-20020a25f50f000000b00ba866fbdd84mr1101326ybe.20.1686320959702;
-        Fri, 09 Jun 2023 07:29:19 -0700 (PDT)
-Received: from brian-x1 (c-73-214-169-22.hsd1.pa.comcast.net. [73.214.169.22])
-        by smtp.gmail.com with ESMTPSA id c5-20020a5b0145000000b00bb144da7d68sm905217ybp.13.2023.06.09.07.29.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jun 2023 07:29:18 -0700 (PDT)
-Date:   Fri, 9 Jun 2023 10:29:16 -0400
-From:   Brian Masney <bmasney@redhat.com>
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        konrad.dybcio@linaro.org, andersson@kernel.org, agross@kernel.org,
-        robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-        conor+dt@kernel.org, richardcochran@gmail.com, echanude@redhat.com
-Subject: Re: [PATCH] arm64: dts: qcom: sa8540p-ride: Specify ethernet phy OUI
-Message-ID: <ZIM3PPXi+ed3CJ2J@brian-x1>
-References: <20230608201513.882950-1-ahalaney@redhat.com>
+        d=1e100.net; s=20221208; t=1686321493; x=1688913493;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=oHDHmxkGz/lI3u3ur4hiLPnCzium3o5kvrOi4S/iPfk=;
+        b=VBhX477ZtRExEOlpE96DgPbpkqXmdYAwaT0fbawkLHkTtgf9GfmhnJ80XIjJPp1Vnw
+         ilL9cbfyxQKwkmFxX5T74vyHKhxPycyErE9ehSvgiU4HVYP3El1OKl1oLuEaDXO0eLoo
+         db2ZrOclqPTw4vMOFoMJecs2xwpKriCCh4b+gjZ//7LhzWwkeQ+eT+UGeaLmtiys1xTs
+         M5an7QhlnV3T3w7cwEPTBgQXD3eo1YBU/5K7hh/GWt83RzyUAHMscNGbFDZNQGnJ3U/l
+         u1c6w9GE3AK5DjJXXCiXrWS34yA8y7ByBye1hH429iWoi+ED9l/zKAN8BqSYTOAlUHng
+         1MNw==
+X-Gm-Message-State: AC+VfDz1tbjvrj9Waeonv2SDd0ck+Gn1ZUlbO4AnYvjqFbknZhaA1NE2
+        QLLmT8bKREidNPdpRlsWh9+mwg==
+X-Google-Smtp-Source: ACHHUZ6rHOHjZwsR/NQbYQvCWcp01awhykTlGNHQgtFG0m+Bn7RXS9iwMN5OaI5vfYbefU7keMTF+g==
+X-Received: by 2002:a2e:b1c9:0:b0:2b1:b0d2:5f03 with SMTP id e9-20020a2eb1c9000000b002b1b0d25f03mr1256932lja.15.1686321492843;
+        Fri, 09 Jun 2023 07:38:12 -0700 (PDT)
+Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id h18-20020a2ea212000000b002a7853b9339sm408315ljm.119.2023.06.09.07.38.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Jun 2023 07:38:12 -0700 (PDT)
+Message-ID: <56d170e9-bcde-094c-615f-636e2a8ccb13@linaro.org>
+Date:   Fri, 9 Jun 2023 16:38:11 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH] arm64: dts: qcom: sa8540p-ride: Specify ethernet phy OUI
+Content-Language: en-US
+To:     Andrew Halaney <ahalaney@redhat.com>, linux-kernel@vger.kernel.org
+Cc:     devicetree@vger.kernel.org, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, andersson@kernel.org,
+        agross@kernel.org, robh+dt@kernel.org,
+        krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
+        richardcochran@gmail.com, bmasney@redhat.com, echanude@redhat.com
+References: <20230608201513.882950-1-ahalaney@redhat.com>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
 In-Reply-To: <20230608201513.882950-1-ahalaney@redhat.com>
-User-Agent: Mutt/2.2.9 (2022-11-12)
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jun 08, 2023 at 03:15:13PM -0500, Andrew Halaney wrote:
+
+
+On 8.06.2023 22:15, Andrew Halaney wrote:
 > With wider usage on more boards, there have been reports of the
 > following:
 > 
@@ -146,6 +145,22 @@ On Thu, Jun 08, 2023 at 03:15:13PM -0500, Andrew Halaney wrote:
 > Link: https://lore.kernel.org/all/dca54c57-a3bd-1147-63b2-4631194963f0@gmail.com/
 > Fixes: 57827e87be54 ("arm64: dts: qcom: sa8540p-ride: Add ethernet nodes")
 > Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+> ---
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-
+Konrad
+>  arch/arm64/boot/dts/qcom/sa8540p-ride.dts | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> index 21e9eaf914dd..5a26974dcf8f 100644
+> --- a/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> +++ b/arch/arm64/boot/dts/qcom/sa8540p-ride.dts
+> @@ -171,6 +171,7 @@ mdio {
+>  
+>  		/* Marvell 88EA1512 */
+>  		rgmii_phy: phy@8 {
+> +			compatible = "ethernet-phy-id0141.0dd4";
+>  			reg = <0x8>;
+>  
+>  			interrupts-extended = <&tlmm 127 IRQ_TYPE_EDGE_FALLING>;
