@@ -2,104 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C2BD729EA2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 17:35:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A70F729EAE
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 17:37:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241588AbjFIPfG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 11:35:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34160 "EHLO
+        id S240881AbjFIPhi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 11:37:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241663AbjFIPem (ORCPT
+        with ESMTP id S241659AbjFIPhg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 11:34:42 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E05830FD
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 08:34:40 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-510d6b939bfso3353159a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 08:34:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686324879; x=1688916879;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GRwD3J1+C5LwwDdPQYTJ/JoGjdYn2DGh0TgdzpJsHaM=;
-        b=vXJYPdW5z58WK2EdlQdtlvc/qLG4MLAvsf4USWwT0eko8Vub71g5XxQMuho25zRiGo
-         o8pTYr4dYUAV9+ijoZtmeijzPrBWU4Ca11Ie38onEDSz62+JyvkhDGFAnzHbCARdjiCQ
-         0CMnFpxwlKEfDtj9coKGflB0tqC33A/8wEsc0v3OXBgi7STUvZ04Ut+5+yf3uwQoPuIj
-         ymbEzOXPsdPAPWqP6OgIygZyglR5lthSLEcpGyuZqPgGRh2QhnGz7rfjcrXm80ClMrzA
-         ejLSC/3iUlxfECDdXOAmaCueHaXvexbyDLDMN3lrV1gmhZPW0VoK3W0aK6HYaAVa4Yff
-         Flnw==
+        Fri, 9 Jun 2023 11:37:36 -0400
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C39930FA;
+        Fri,  9 Jun 2023 08:37:35 -0700 (PDT)
+Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-76c64da0e46so81840139f.0;
+        Fri, 09 Jun 2023 08:37:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686324879; x=1688916879;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GRwD3J1+C5LwwDdPQYTJ/JoGjdYn2DGh0TgdzpJsHaM=;
-        b=Q+K4RghA8W68zq3ODCKS1Q+80OSx5Hf9BXWf3DtYWwRbmyYY/LLdv+nVp8TX+hxfIP
-         NMpydGvOKJuMS+c5V7dAtYZ8UN58Xxxziv4RzMyC3I0TI+FKAvGBybAV6rPR2+KYXhEe
-         FXTTwU0DnRSJj5HmCIAhTzPQMv6X2AW2c4WwspceS6MGjsK1gAxVWWXNED0mcsZDxHJ8
-         ZAFa04cizGsd4nr8nLVs1hyxlbs0nrkT+hwJ2Nu/huXo4XyFtXa1YoYdso2YQ1c4V7a6
-         eQYulu6rdmqht1rnUPSOMAGIVeIU5Hdcka12pFtum5XmQtXc87JxQlmDMUJd+i4tjp6w
-         uYCQ==
-X-Gm-Message-State: AC+VfDxHp9TyqijGH1ZXhkh2ApB2uq+vdHajx+qFeqhkmbfCISmIj9NM
-        MbiiVHMBEuI/eJGIDk9foPc3bA==
-X-Google-Smtp-Source: ACHHUZ6lEMuya5eSScRvVOaLR6k+8wlGACtuzPtKR8zyz36o/4vQVEl2ds0LP+EDY7AqQnXd9cIpgQ==
-X-Received: by 2002:aa7:c155:0:b0:514:ab84:b72e with SMTP id r21-20020aa7c155000000b00514ab84b72emr1587908edp.18.1686324878771;
-        Fri, 09 Jun 2023 08:34:38 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id o13-20020aa7d3cd000000b005083bc605f9sm1903851edr.72.2023.06.09.08.34.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jun 2023 08:34:38 -0700 (PDT)
-Message-ID: <166c0f84-9ce0-ec15-9176-4227820c3977@linaro.org>
-Date:   Fri, 9 Jun 2023 17:34:34 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v2 1/3] dt-bindings: PCI: qcom: ep: Add interconnects path
-Content-Language: en-US
-To:     Krishna Chaitanya Chundru <quic_krichai@quicinc.com>,
-        Rob Herring <robh@kernel.org>
-Cc:     quic_vbadigan@quicinc.com,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        quic_ramkri@quicinc.com, Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        =?UTF-8?Q?Krzysztof_Wilczy=c5=84ski?= <kw@linux.com>,
-        linux-pci@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
-        linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        manivannan.sadhasivam@linaro.org,
+        d=1e100.net; s=20221208; t=1686325054; x=1688917054;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6oTjKIZ7azTHgw2pBNs7zKCt3g58q7A8ytPzbYsnX9c=;
+        b=PSTbbanRUyRpN4N5vUsPWGpS/ilf/wk9SCscM2XzIDb5lY9SR1EbzrlZ+4S9u7SuW9
+         0D6FxF2tO8cPaIlhkLmlfSb96jUeMs9aYZAyPry7DvV3QQHz21dYagGXN0qdjj1+wJsq
+         HN5ZOZY6mrvt0d49xQDdulJBAB2N7Fl+v1w678XxL6f9zC3KArtJZHtbGo0m0kpJPWb0
+         waZndZarpzB6dZWDovH6PnZGk7IqZt5pNQEep+VdXeflAu+HpQvGJlQjPfgLmCdVZbeW
+         fC4tLS0JWhMl9iMbsvMXUH/nbFCZGLDWLEVPcySXl5FCBdEF5pcXepoo417GmEjkio/t
+         aX0g==
+X-Gm-Message-State: AC+VfDyVkgz3dGL2hiGHHWg3FziRASKlC5jNevjzFpj0RhcOheh3y5dL
+        mKcA8JKDPxxLyRBgFm4oxQ==
+X-Google-Smtp-Source: ACHHUZ7sQGgjnwd79XuSKsjkhH3R+CX/AXWDT5rsE/7aYgV6ugwqWjYzOSDIVHLCmJcdsuPA2SU50w==
+X-Received: by 2002:a6b:6119:0:b0:76f:f54d:36ff with SMTP id v25-20020a6b6119000000b0076ff54d36ffmr1935105iob.11.1686325054238;
+        Fri, 09 Jun 2023 08:37:34 -0700 (PDT)
+Received: from robh_at_kernel.org ([64.188.179.250])
+        by smtp.gmail.com with ESMTPSA id h20-20020a056638063400b0041f57eeedc2sm1056437jar.16.2023.06.09.08.37.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 Jun 2023 08:37:33 -0700 (PDT)
+Received: (nullmailer pid 1104746 invoked by uid 1000);
+        Fri, 09 Jun 2023 15:37:31 -0000
+Date:   Fri, 9 Jun 2023 09:37:31 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Philipp Zabel <p.zabel@pengutronix.de>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Andy Gross <agross@kernel.org>
-References: <1686154687-29356-1-git-send-email-quic_krichai@quicinc.com>
- <1686154687-29356-2-git-send-email-quic_krichai@quicinc.com>
- <168615848698.3589455.9774241463877355430.robh@kernel.org>
- <25107dc2-fab3-2091-200d-7ed83dabecdf@quicinc.com>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <25107dc2-fab3-2091-200d-7ed83dabecdf@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-phy@lists.infradead.org,
+        Bjorn Andersson <andersson@kernel.org>
+Subject: Re: [PATCH v3 4/5] dt-bindings: phy: qcom,msm8996-qmp-usb3-phy: drop
+ legacy bindings
+Message-ID: <168632505100.1104691.4662082864689299098.robh@kernel.org>
+References: <20230531023415.1209301-1-dmitry.baryshkov@linaro.org>
+ <20230531023415.1209301-5-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230531023415.1209301-5-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
+        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/06/2023 13:55, Krishna Chaitanya Chundru wrote:
->>
->> Please check and re-submit after running the above command yourself. Note
->> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
->> your schema. However, it must be unset to test all examples with your schema.
->>
-> Fixed the errors.
 
-Then please test it before sending.
+On Wed, 31 May 2023 05:34:14 +0300, Dmitry Baryshkov wrote:
+> The qcom,msm8996-qmp-usb3-phy.yaml defines bindings for several PHYs
+> which predate USB -> USB+DP migration. Now as sm8150 has been migrated,
+> drop the legacy bindings completely. No device trees use them anymore.
+> Newer USB+DP bindings should use combo bindings from the beginning.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  .../phy/qcom,msm8996-qmp-usb3-phy.yaml        | 80 -------------------
+>  1 file changed, 80 deletions(-)
+> 
 
-Best regards,
-Krzysztof
+Acked-by: Rob Herring <robh@kernel.org>
 
