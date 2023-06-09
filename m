@@ -2,107 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id CE23F728DDC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 04:26:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8E10728F02
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 06:39:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237771AbjFIC0J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 8 Jun 2023 22:26:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42778 "EHLO
+        id S238034AbjFIEjj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 00:39:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46398 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237668AbjFIC0G (ORCPT
+        with ESMTP id S238051AbjFIEjg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 8 Jun 2023 22:26:06 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 841F33583
-        for <linux-arm-msm@vger.kernel.org>; Thu,  8 Jun 2023 19:25:59 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f62b552751so1539497e87.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 08 Jun 2023 19:25:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686277558; x=1688869558;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Zx8vlVFOYPoBRf3/7QVPvJM9NkCsM7ZSm+3sIzim6r0=;
-        b=OzqK4bRFx5xgl3jC8ZPEud/vcTiMIGNnjTfZW++y3Pk1VBMleSTBaL5YF+Mh5Kt4FO
-         dJRNMA2bmp2uGj4Yk9y8lbUYFtjkGjaiLW6C+ms4v6uOK6Z2Kog7rr5XMb3WOZ7jGEGa
-         UUSKq32plaQ/u7oSzfsLIWSLiaIlCyXukI+IOGENm2gwnZFO1LlPm6HfLzTclLM5oKRO
-         Zc7Ih+ooLcz/YDewWz2kMJU9B8RMO/t0DW+XAppZFeyAfm1VjYitAx7lYAoJ+HgTjATb
-         xchbPff2sQ3defShS51uJlGgrcShjiCa+8LcFK3iaaNLwj+OGsRUp1dSAXYCT9qi7UDY
-         RRLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686277558; x=1688869558;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Zx8vlVFOYPoBRf3/7QVPvJM9NkCsM7ZSm+3sIzim6r0=;
-        b=cnMtnIFI0055Fug/ay8FKMi5MCb7tvapJiZkh7o8FW42Ue4OcTrjalbFAmRVfyuuH8
-         bWV+g479iYzmo7uQir85uXfXq4yhrmjEx6fVrY3qSztUsBs2nzmqFia83akWtr8+aJPo
-         Ihi6XjGc4Q9g5a1XkVol+k3tSlbWcTsEqBtv9gkSjvxzBKDaGqknXXY1soF5ATz3P5S1
-         0yISYymCt6nO5/z5fPbo8EITs6BTVSz0Yu+pKwh1rvmiVlIr5sA/LAc/XrjhKPY74pvR
-         ZDgC4jXy6o0rmUi2Deql6dxUTnKiOwXJV9dirp/gwsegTVlliDfSyGWiMcNePOHyx2Lz
-         7wjQ==
-X-Gm-Message-State: AC+VfDzDTXTXzUN3rhH7i1EwjDchEMeS+G4U1zPoEaOG39Nsa9CFa6VY
-        HR6KgxHQcn9m2OqZft0+t6sxwQ==
-X-Google-Smtp-Source: ACHHUZ6zikMFOOH6trhKWp1UILouE9b5IDWqCaPz1YHNv44N5d0uokEFyYvyPU0adE/+LDhw5QX+/g==
-X-Received: by 2002:a05:651c:20c:b0:2b1:fdcc:14e7 with SMTP id y12-20020a05651c020c00b002b1fdcc14e7mr130689ljn.35.1686277557845;
-        Thu, 08 Jun 2023 19:25:57 -0700 (PDT)
-Received: from lothlorien.lan (dzdqv0yyyyyyyyyyybm5y-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::ab2])
-        by smtp.gmail.com with ESMTPSA id x20-20020a2e9dd4000000b002b21089f747sm167429ljj.89.2023.06.08.19.25.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Jun 2023 19:25:57 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Sebastian Reichel <sre@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v4 4/4] ARM: dts: qcom: apq8074-dragonboard: add resin
-Date:   Fri,  9 Jun 2023 05:25:53 +0300
-Message-Id: <20230609022553.1775844-5-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230609022553.1775844-1-dmitry.baryshkov@linaro.org>
-References: <20230609022553.1775844-1-dmitry.baryshkov@linaro.org>
+        Fri, 9 Jun 2023 00:39:36 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2C1230F1;
+        Thu,  8 Jun 2023 21:39:35 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 3594JVM3025898;
+        Fri, 9 Jun 2023 04:39:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=AdSf+nxOWU8wHe///6FcmZs/IpVxpxCPCP6es/Dvi1s=;
+ b=CeYakn1JYqqFu+ge2bylCXj2PWPF4MPUqCsahlBLVzB12mgBE8bhO7h57mqJ0WaPaxV9
+ eYl/Ubc+gInqNl186Z3FuNnOn84ztZkYeHoTHT7EEuqmP6tiVqlUkUTbwRfKqRsuV8bd
+ 98pmgUHbvTNM0abCJJTccRBis8AkkOe261IgnyEuYLWXNkWubjWuzfhznYokv0jhqUsI
+ XeurOtecTpE+pICuLCxhkcF46Hr0NLhSjjOMgP0xidgXa5jefJyqE7+512Qb0mtd/2eZ
+ jh4UTWKMkRuXDDM0+JVV81ITeMSx4OofDQYLghvwMbtYKQ+DFzx5AnOPl1R5H4jF/nZ6 Lw== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r39kuae4n-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 09 Jun 2023 04:39:31 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 3594dUL9032544
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 9 Jun 2023 04:39:30 GMT
+Received: from [10.216.3.169] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Thu, 8 Jun 2023
+ 21:39:27 -0700
+Message-ID: <b95652b2-c93d-34b3-1d52-340f7590b857@quicinc.com>
+Date:   Fri, 9 Jun 2023 10:09:24 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH 1/2] dt-bindings: arm: idle-states: Add
+ idle-state-disabled property
+Content-Language: en-US
+To:     Conor Dooley <conor.dooley@microchip.com>
+CC:     "Rafael J . Wysocki" <rafael@kernel.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_lsrao@quicinc.com>,
+        <quic_mkshah@quicinc.com>, <devicetree@vger.kernel.org>
+References: <20230608085544.16211-1-quic_tnimkar@quicinc.com>
+ <20230608085544.16211-2-quic_tnimkar@quicinc.com>
+ <20230608-steadying-idealism-1f8a97db1491@wendy>
+From:   Tushar Nimkar <quic_tnimkar@quicinc.com>
+In-Reply-To: <20230608-steadying-idealism-1f8a97db1491@wendy>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 1pNJGaNN2yWtidvUjT0AUrC2_kIVTxfR
+X-Proofpoint-ORIG-GUID: 1pNJGaNN2yWtidvUjT0AUrC2_kIVTxfR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-09_02,2023-06-08_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
+ mlxscore=0 mlxlogscore=517 lowpriorityscore=0 phishscore=0 bulkscore=0
+ priorityscore=1501 suspectscore=0 impostorscore=0 adultscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306090040
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device nodes for resin (reset, volume-down) device node.
+Thanks Conor for reviewing.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm/boot/dts/qcom-apq8074-dragonboard.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+On 6/8/2023 2:49 PM, Conor Dooley wrote:
+> Hey Tushar,
+> 
+> On Thu, Jun 08, 2023 at 02:25:42PM +0530, Tushar Nimkar wrote:
 
-diff --git a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-index 72f7e09a5bbf..34258cf84a23 100644
---- a/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-+++ b/arch/arm/boot/dts/qcom-apq8074-dragonboard.dts
-@@ -90,6 +90,11 @@ &mdss {
- 	status = "okay";
- };
- 
-+&pm8941_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
- &pm8941_wled {
- 	qcom,cs-out;
- 	qcom,switching-freq = <3200>;
--- 
-2.39.2
+> 
+> Firstly, you should CC the dt-bindings maintainers like
+> get_maintainer.pl would tell you.
+> Secondly, there are two 1/2 patches in this series.
+> 
+1. Sure, I will include dt maintainer in next version.
+2. Yes, one of the Patch 1/2 sent by mistake.
+I will remove in next version.
 
+> 
+> Thirdly, this is operating system specific behaviour, tied to Linux, and
+> has no place in a binding.
+> 
+3. I will remove [echo N > 
+/sys/devices/system/cpu/cpuX/cpuidle/stateX/disable] command from 
+bindings document.
+
+> Cheers,
+> Conor.
+> 
+
+Thanks,
+Tushar
