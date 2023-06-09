@@ -2,82 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EF3C9729E85
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 17:30:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B46C9729E8E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 17:32:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241526AbjFIPar (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 11:30:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59788 "EHLO
+        id S241436AbjFIPcN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 11:32:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241482AbjFIPaq (ORCPT
+        with ESMTP id S232292AbjFIPcM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 11:30:46 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D677819B
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 08:30:43 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f619c2ba18so2373826e87.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 08:30:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686324642; x=1688916642;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WFQfo69Pet1quymYmf84/Tz1pp0P+2CICEayY7olS2s=;
-        b=dXAAzl90V9nBXqb3K1vecfZY/mOGJn1TdCAEVY97clI1D+oMhpSq0s6xW9NjV/wzT4
-         qIIaQgqC4XUHgD6ppGH7dunIRF6Hs+idAejFcr48STlMmV0hqkO9lKmiW0ZWzQWHK8fb
-         J2V3+3Fn9z/vhkSlzdtFkF7PYrZdOxw9JYqcWWxsLNqcf5ww92zR/YmPANwIBVehFY5A
-         ZxbmXD1DWa/hpKBSlcKgqMCTT53BraiD2xWZljN/nUsIt39PyKtofiGWiAACOrKSCRep
-         slCwKifjX8rJIlEtbfxV3JHVJAVnZ15YMHwgQ4kFLtLQF1kipOinliSH4hN8JmbDuYG3
-         Tm9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686324642; x=1688916642;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WFQfo69Pet1quymYmf84/Tz1pp0P+2CICEayY7olS2s=;
-        b=PGuP3Az1r6D3d7HYtmxHfEKhC9sepR27iHabjdun+3xW42OZmMzkEb6Pr9rFoW40c4
-         FiL1URJFUBgj07b389FTNxV4H+j92s9CQS1H/qXbkR5jPTuBXtTDSXkljnW4KZOz1Wlx
-         at9VhBa+4CDIEqN23lVwD5k2yA2oVVX+Y3kMs0hw98VSsn/XyXj/tJtd+B0RsR245d5t
-         Y6aEY16KRDuaOpwdEiWyEgRivosRoRMMXJYRnDdOp7UuQIsowB1orN77GcEVrUgjd6TQ
-         QKejyLrBPxl2T6I2HQhunPqotzGnRgmmPJRRfMQOU5ZbyUOczbQhSfsGrfhBIYFGZCbb
-         XQRw==
-X-Gm-Message-State: AC+VfDxBQO9PzPfJmeeTAzxQfJo6bt7KRVUFsddJy+61wGEfR0n+7wCi
-        dERn8SqKCXnZuegYb4bF3PRK/A==
-X-Google-Smtp-Source: ACHHUZ7o63ztL6atvK9kyaDt0u0b2tn7A3z+3nQqPBsgQf5PGAgMoDxfQuSVGlYYa3YrV4oq2WzzwQ==
-X-Received: by 2002:a19:5f54:0:b0:4f3:89da:c374 with SMTP id a20-20020a195f54000000b004f389dac374mr1260977lfj.1.1686324642075;
-        Fri, 09 Jun 2023 08:30:42 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id d9-20020ac244c9000000b004f6461ab366sm574434lfm.150.2023.06.09.08.30.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jun 2023 08:30:41 -0700 (PDT)
-Message-ID: <bd964f69-107a-fbdd-40e4-92ab376b5b75@linaro.org>
-Date:   Fri, 9 Jun 2023 17:30:40 +0200
+        Fri, 9 Jun 2023 11:32:12 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B419419B
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 08:32:11 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 4C89A65920
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 15:32:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC05C433EF;
+        Fri,  9 Jun 2023 15:32:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686324730;
+        bh=DDKlZt/t4+fZJTmcZJEowioerzbMSScPFXXwtDJOEiI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jJ/XBK38ZeUyblXIfx1CrLCpMGFm9rFq9oFzfky25ZryudFLurH6rnEA7unwLqOUh
+         aT392idplglh7W4nq4IPHKk9UKBFJaK980D+Ax1MrPJkXuUNtuQGuSgaPL9k9VT3hR
+         8nsVv24FZcYDNqnRzApppMfVaa9SXPEYqSeCzv0mRiCjIdRUXQBHm0HNsTzB16YPYo
+         n6wKnX744ar0nz9ZEVAOGPUmdndSGdYD4WpRZwQMgVn3lAKqTc3/8Kx+XFaSREMe8L
+         aB6hjsVfbwGFSKeLbrRaGMqBmH0Tx7dVvAzBSI2bPwHU3rlNuKRYE9RqL6zxIEzqOv
+         5b5DG6nTeNWEw==
+Date:   Fri, 9 Jun 2023 21:02:01 +0530
+From:   Manivannan Sadhasivam <mani@kernel.org>
+To:     Duke =?utf-8?B?WGluKOi+m+WuieaWhyk=?= <duke.xin@quectel.com>
+Cc:     Duke =?utf-8?B?WGluKOi+m+WuieaWhyk=?= <duke_xinanwen@163.com>,
+        "loic.poulain@linaro.org" <loic.poulain@linaro.org>,
+        "slark_xiao@163.com" <slark_xiao@163.com>,
+        "fabio.porcedda@gmail.com" <fabio.porcedda@gmail.com>,
+        "koen.vandeputte@citymesh.com" <koen.vandeputte@citymesh.com>,
+        "song.fc@gmail.com" <song.fc@gmail.com>,
+        "bhelgaas@google.com" <bhelgaas@google.com>,
+        "mhi@lists.linux.dev" <mhi@lists.linux.dev>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        Jerry =?utf-8?B?TWVuZyjokpnmnbAp?= <jerry.meng@quectel.com>
+Subject: Re: =?utf-8?B?5Zue5aSNOiBbUEFUQ0ggdjRdIGJ1?=
+ =?utf-8?Q?s=3A_mhi=3A_host=3A_pci=5Fgeneric?= =?utf-8?Q?=3A?= Add support
+ for quectel's new EM160R-GL product
+Message-ID: <20230609153201.GB6847@thinkpad>
+References: <ac814d016b03c3164dbd8cd7c94f8b4f9-6-23kernel.org@g.corp-email.com>
+ <20230608160530.GC8632@thinkpad>
+ <SEZPR06MB6087F7C2AAE5B5FB0F5AFF7E8451A@SEZPR06MB6087.apcprd06.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v2 1/2] phy: qcom-snps-femto-v2: properly enable ref clock
-Content-Language: en-US
-To:     Adrien Thierry <athierry@redhat.com>,
-        Andrew Halaney <ahalaney@redhat.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        Philipp Zabel <pza@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-References: <20230605184455.34832-1-athierry@redhat.com>
- <20230605184455.34832-2-athierry@redhat.com>
- <fe51f704-3d24-d184-0251-39dc64a25598@linaro.org>
- <20230606135516.beujjl2oyvt6gaig@halaney-x13s> <ZH9EJfkeQN7c5KHU@fedora>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZH9EJfkeQN7c5KHU@fedora>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <SEZPR06MB6087F7C2AAE5B5FB0F5AFF7E8451A@SEZPR06MB6087.apcprd06.prod.outlook.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -86,159 +67,89 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri, Jun 09, 2023 at 01:21:02AM +0000, Duke Xin(辛安文) wrote:
+> Hi Mani
+> 
+> EM160R-GL is exactly the same name as the old modem with same chipset. What is the difference between these two?
+> >> From my point of view, there are only two EM160R-GL products with different PCIe ids, and the HW and SW of the module are the same. 
+>    The new EM160R-GL product is designed to fit the customer's new laptop.
 
+Ok. Previously I used to see same modules having two different IDs because they
+share different baseline (from qcom). I will amend the commit message
+accordingly.
 
-On 6.06.2023 16:35, Adrien Thierry wrote:
-> Thanks for your feedback Konrad and Andrew!
-> 
-> On Tue, Jun 06, 2023 at 08:55:16AM -0500, Andrew Halaney wrote:
->> On Tue, Jun 06, 2023 at 01:14:00AM +0200, Konrad Dybcio wrote:
->>>
->>>
->>> On 5.06.2023 20:44, Adrien Thierry wrote:
->>>> The driver is not enabling the ref clock, which thus gets disabled by
->>>> the clk_disable_unused initcall. This leads to the dwc3 controller
->>>> failing to initialize if probed after clk_disable_unused is called, for
->>>> instance when the driver is built as a module.
->>>>
->>>> To fix this, switch to the clk_bulk API to handle both cfg_ahb and ref
->>>> clocks at the proper places.
->>>>
->>>> Note that the cfg_ahb clock is currently not used by any device tree
->>>> instantiation of the PHY. Work needs to be done separately to fix this.
->>>>
->>>> Link: https://lore.kernel.org/linux-arm-msm/ZEqvy+khHeTkC2hf@fedora/
->>>> Fixes: 51e8114f80d0 ("phy: qcom-snps: Add SNPS USB PHY driver for QCOM based SOCs")
->>>> Signed-off-by: Adrien Thierry <athierry@redhat.com>
->>>> ---
->>>>  drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 67 ++++++++++++++-----
->>>>  1 file changed, 49 insertions(+), 18 deletions(-)
->>>>
->>>> diff --git a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
->>>> index 6c237f3cc66d..ce1d2f8b568a 100644
->>>> --- a/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
->>>> +++ b/drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c
->>>> @@ -110,11 +110,13 @@ struct phy_override_seq {
->>>>  /**
->>>>   * struct qcom_snps_hsphy - snps hs phy attributes
->>>>   *
->>>> + * @dev: device structure
->>>> + *
->>>>   * @phy: generic phy
->>>>   * @base: iomapped memory space for snps hs phy
->>>>   *
->>>> - * @cfg_ahb_clk: AHB2PHY interface clock
->>>> - * @ref_clk: phy reference clock
->>>> + * @num_clks: number of clocks
->>>> + * @clks: array of clocks
->>>>   * @phy_reset: phy reset control
->>>>   * @vregs: regulator supplies bulk data
->>>>   * @phy_initialized: if PHY has been initialized correctly
->>>> @@ -122,11 +124,13 @@ struct phy_override_seq {
->>>>   * @update_seq_cfg: tuning parameters for phy init
->>>>   */
->>>>  struct qcom_snps_hsphy {
->>>> +	struct device *dev;
->>>> +
->>>>  	struct phy *phy;
->>>>  	void __iomem *base;
->>>>  
->>>> -	struct clk *cfg_ahb_clk;
->>>> -	struct clk *ref_clk;
->>>> +	int num_clks;
->>>> +	struct clk_bulk_data *clks;
->>>>  	struct reset_control *phy_reset;
->>>>  	struct regulator_bulk_data vregs[SNPS_HS_NUM_VREGS];
->>>>  
->>>> @@ -135,6 +139,32 @@ struct qcom_snps_hsphy {
->>>>  	struct phy_override_seq update_seq_cfg[NUM_HSPHY_TUNING_PARAMS];
->>>>  };
->>>>  
->>>> +static int qcom_snps_hsphy_clk_init(struct qcom_snps_hsphy *hsphy)
->>>> +{
->>>> +	struct device *dev = hsphy->dev;
->>>> +
->>>> +	hsphy->num_clks = 2;
->>>> +	hsphy->clks = devm_kcalloc(dev, hsphy->num_clks, sizeof(*hsphy->clks), GFP_KERNEL);
->>>> +	if (!hsphy->clks)
->>>> +		return -ENOMEM;
->>>> +
->>>> +	/*
->>>> +	 * HACK: For cfg_ahb clock, use devm_clk_get_optional() because currently no device
->>>> +	 * tree instantiation of the PHY is using the clock. This needs to be fixed in order
->>>> +	 * for this code to be able to use devm_clk_bulk_get().
->>>> +	 */
->>>> +	hsphy->clks[0].id = "cfg_ahb";
->>>> +	hsphy->clks[0].clk = devm_clk_get_optional(dev, "cfg_ahb");
->>> Hm, maybe you could first check if we can get this clock
->>> properly (!IS_ERR_OR_NULL) and then allocate the second
->>> slot..
->>>
->>
->> The bulk clk api handles NULL clks without issue if I am reading right,
->> so personally if we're going to use the bulk api I say we carry the extra
->> slot unconditionally. No expert on this stuff but that seems more
->> straightforward. Honestly I wouldn't mind using the bulk optional API,
->> then checking the "non optional ref clock" manually. That's closer to
->> the ideal flow to me. Super opinionated though, don't take my word as
->> right.
->>
-> 
-> Agree with Andrew. Since cfg_ahb is always NULL, I'm certainly "wasting"
-> an array cell here but I think it also better highlights the fact that
-> it's a hack and that cfg_ahb needs to be properly wired in the DTs. As for
-> using the bulk optional API, I'm fine with both!
-Hm right, let's keep it as-is so that the other clock which is
-actually necessary never gets skipped accidentally..
+For future patches, please include these info in the commit message.
 
-Konrad
+- Mani
+
 > 
->>>> +
->>>> +	hsphy->clks[1].id = "ref";
->>>> +	hsphy->clks[1].clk = devm_clk_get(dev, "ref");
->>>> +	if (IS_ERR(hsphy->clks[1].clk))
->>>> +		return dev_err_probe(dev, PTR_ERR(hsphy->clks[1].clk),
->>>> +				     "failed to get ref clk\n");
->>>> +
->>>> +	return 0;
->>>> +}
->>>> +
->>>>  static inline void qcom_snps_hsphy_write_mask(void __iomem *base, u32 offset,
->>>>  						u32 mask, u32 val)
->>>>  {
->>>> @@ -165,7 +195,7 @@ static int qcom_snps_hsphy_suspend(struct qcom_snps_hsphy *hsphy)
->>>>  					   0, USB2_AUTO_RESUME);
->>>>  	}
->>>>  
->>>> -	clk_disable_unprepare(hsphy->cfg_ahb_clk);
->>>> +	clk_bulk_disable_unprepare(hsphy->num_clks, hsphy->clks);
->>>>  	return 0;
->>>>  }
->>>>  
->>>> @@ -175,9 +205,9 @@ static int qcom_snps_hsphy_resume(struct qcom_snps_hsphy *hsphy)
->>>>  
->>>>  	dev_dbg(&hsphy->phy->dev, "Resume QCOM SNPS PHY, mode\n");
->>>>  
->>>> -	ret = clk_prepare_enable(hsphy->cfg_ahb_clk);
->>>> +	ret = clk_bulk_prepare_enable(hsphy->num_clks, hsphy->clks);
->>> Aren't you dereferencing NULL if the optional clock is absent?
->>>
->>
->> Similar to above, the bulk api seems to handle NULL clks gracefully.
->>
 > 
-> devm_clk_get_optional() will return NULL for cfg_ahb, but AFAIU NULL
-> serves as a dummy clock [1] with which the clock API deals gracefully. The
-> various functions like clk_prepare(), clk_enable() check if the clock is
-> NULL and return 0 immediately if that's the case (see for instance [2]).
+> 辛安文  Duke Xin | Software Department IX Engineer | Quectel Wireless Solutions Co., Ltd. 
+>             
+> Mobile: +86-15375456183 | Email : Duke.xin@quectel.com  | Tel: +86-0551-65869386-8632
+> Website: www.quectel.com  | QQ: 602659072 | Wechat: 15375456183
 > 
-> [1] https://elixir.bootlin.com/linux/v6.4-rc5/source/include/linux/clk.h#L514
-> [2] https://elixir.bootlin.com/linux/v6.4-rc5/source/drivers/clk/clk.c#L1045
+> Building 1-C, China Speech Valley Area A, 3335 Xiyou Road, High-tech Zone, Hefei, Anhui 230088, China    
+> 安徽省合肥市高新区习友路3335号中国（合肥）国际智能语音产业园A区1号中试楼 230088
+> HQ: Building 5, Shanghai Business Park Phase III (Area B), No.1016 Tianlin Road, Minhang District, Shanghai 200233, China
+> 总部：上海市闵行区田林路1016号科技绿洲3期（B区）5号楼  200233
 > 
-> Best,
-> Adrien
+> -----邮件原件-----
+> 发件人: Manivannan Sadhasivam <mani@kernel.org> 
+> 发送时间: 2023年6月9日 0:06
+> 收件人: Duke Xin(辛安文) <duke_xinanwen@163.com>
+> 抄送: loic.poulain@linaro.org; slark_xiao@163.com; fabio.porcedda@gmail.com; koen.vandeputte@citymesh.com; song.fc@gmail.com; bhelgaas@google.com; mhi@lists.linux.dev; linux-arm-msm@vger.kernel.org; Jerry Meng(蒙杰) <jerry.meng@quectel.com>; Duke Xin(辛安文) <duke.xin@quectel.com>
+> 主题: Re: [PATCH v4] bus: mhi: host: pci_generic: Add support for quectel's new EM160R-GL product
 > 
->> Thanks,
->> Andrew
->>
+> On Thu, Jun 08, 2023 at 02:29:27AM -0700, Duke Xin(辛安文) wrote:
+> > The product's would use the same config as previous EM160R-GL
+> > 
+> > Signed-off-by: Duke Xin(辛安文) <duke_xinanwen@163.com>
+> > Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+> > ---
+> > Changelog
+> > 
+> > v3 -> v4
+> > 
+> > * Update commit message to include the changelog and reviewd tag.
+> > 
+> > v2 -> v3
+> > 
+> > * Add patch CC to mhi@lists.linux.dev.
+> > 
+> > v1 -> v2
+> > 
+> > * Remove Space before */ and "for laptop" description.
+> > ---
+> >  drivers/bus/mhi/host/pci_generic.c | 3 +++
+> >  1 file changed, 3 insertions(+)
+> > 
+> > diff --git a/drivers/bus/mhi/host/pci_generic.c 
+> > b/drivers/bus/mhi/host/pci_generic.c
+> > index 70e37c490150..5f204b819e95 100644
+> > --- a/drivers/bus/mhi/host/pci_generic.c
+> > +++ b/drivers/bus/mhi/host/pci_generic.c
+> > @@ -591,6 +591,9 @@ static const struct pci_device_id mhi_pci_id_table[] = {
+> >  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+> >  	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x1002), /* EM160R-GL (sdx24) */
+> >  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+> > +	/* EM160R-GL (sdx24) */
+> > +	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x100d),
+> > +		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
 > 
+> EM160R-GL is exactly the same name as the old modem with same chipset. What is the difference between these two?
+> 
+> - Mani
+> 
+> >  	{ PCI_DEVICE(PCI_VENDOR_ID_QUECTEL, 0x2001), /* EM120R-GL for FCCL (sdx24) */
+> >  		.driver_data = (kernel_ulong_t) &mhi_quectel_em1xx_info },
+> >  	/* T99W175 (sdx55), Both for eSIM and Non-eSIM */
+> > --
+> > 2.25.1
+> > 
+> 
+> -- 
+> மணிவண்ணன் சதாசிவம்
+
+-- 
+மணிவண்ணன் சதாசிவம்
