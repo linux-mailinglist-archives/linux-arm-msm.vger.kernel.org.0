@@ -2,61 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E79D1729A35
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 14:44:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E36F0729A42
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 14:45:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238438AbjFIMoJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 08:44:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48810 "EHLO
+        id S240397AbjFIMpt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 08:45:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231350AbjFIMoI (ORCPT
+        with ESMTP id S231135AbjFIMps (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 08:44:08 -0400
-Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 782242720
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 05:44:06 -0700 (PDT)
-Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b1a66e71f9so18603941fa.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 05:44:06 -0700 (PDT)
+        Fri, 9 Jun 2023 08:45:48 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C918A2712
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 05:45:46 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f619c2ba18so2105310e87.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 05:45:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686314645; x=1688906645;
+        d=linaro.org; s=google; t=1686314745; x=1688906745;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=NSxaUXxA3v6MfdCS97GJnnnNUnfVhHSbVUVcWDve3k8=;
-        b=vy2vU1HTzFwFufF7h/CIoAsybtmqfBgDGxdQ9Mpwws5NBsO+6dMmuBGTvouGE8rpKC
-         ISzjhZ7eS7qXEaypOi1SO4/oKIWG175WT4oVZoXloUPnRXY57aUh0CnGzUnKvmr/CYhA
-         xzztK6uDYtYKS71FFI2Q326ZNxFBdyOMh+gvlGeJYACI1k4PWe0LdscAYlXAQt+fm0+d
-         wmjHwjw3S+nWZ6eOaU+LlkfmIiPBLqhXmz/ZG3YQZd+e4IAWjp9ZBOJI/Oieki4PrUBA
-         pYH7DbW0Ep07l+oJ1nSuAuNKfk/5KsP4hFATSwHBo3/CTE4ER1YQtIXQe1FddBvF1mmn
-         p2cA==
+        bh=mqzhrN9pZnLZEEaMP6DZ4D7gUVGJg2soYgokq2ZQmXY=;
+        b=U2hoJl7bvWeuQNlcYG60WzzxhzukFA4kk8DzerHk+MH/nRm+n0jEtgdGlGBpOdpUrI
+         lIHB8vnpMpRA0d0ysNQnmeAbbniSe3iRIifZ3hfJ+67ouEdq/JWiE6L11EIbrzIM6YMB
+         rzVJH4vGT5UH5eAa8usCcXLTpTNnM5cH3gVYXOgaYERCpWCMlf8hc8B/FCrlTYM2MJgR
+         V13S5gevk4cukMKAMX+SSd0ado0nfDoL4cu0sjE8RbzkkqaNgiekfpnsn0mG1beghC5k
+         vfpO5tF75UyMl/7yOAKc+XVx/KVOvpilygpWHiG4pCJAMdBuOAV8EPikWMNeXKfFNucv
+         5/jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686314645; x=1688906645;
+        d=1e100.net; s=20221208; t=1686314745; x=1688906745;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NSxaUXxA3v6MfdCS97GJnnnNUnfVhHSbVUVcWDve3k8=;
-        b=GZwQgegev6KqK5rBqK9bgFCteIypFn6R0YkEnjNJ/LzkqzO4oQZ3ye7E+wXQZDZOee
-         B6WiGFFP+lMGIpJf3gXrB6TJEjp5fwLT2OZFCi2MGAXGQmJGzintaiVdTlXECkNAfARr
-         Rh8S11eQVwrEnhcknYG70xZYcnaLiOJJ4sGeZhQz9lPIBsm+i6p0Op9JrV2RzCz/k88Q
-         JSG3/3PnvdmZ+4SX43N/AxTbA8ZXuBYLTt6QnyLsbPiKINNfwc7lOOWOlsLHPAmWXgbP
-         XtvfwJXlLwPkk7k3r1nc+8jHhUvDs/H2bonzuE3jrAgkHJZ4YuE61BIvsx4vijHn2nau
-         x9Gw==
-X-Gm-Message-State: AC+VfDwiXAy87DcQgfDvxGYhVJ+juWsM+Ab09I/QqMep91BHTvCMOqGV
-        w6DrpRFlT+34xlyG5uXOYo8M2Q==
-X-Google-Smtp-Source: ACHHUZ5r9nHEVEUyM8k1U2LrMpaQODEgErzJkwTgFw4Q8Gxu08FLt2WMKm0+f5gvel+hQdGiS9wz7g==
-X-Received: by 2002:a2e:7217:0:b0:2b1:b095:c5cd with SMTP id n23-20020a2e7217000000b002b1b095c5cdmr1017784ljc.0.1686314644659;
-        Fri, 09 Jun 2023 05:44:04 -0700 (PDT)
+        bh=mqzhrN9pZnLZEEaMP6DZ4D7gUVGJg2soYgokq2ZQmXY=;
+        b=BX5n7xAzn3QatR0i5dztqi7GY93LuLl5P/K1A1dQz0MDxNik0NGW09LNPK/x/nsYMi
+         EmVdgLB9hBIRayDiuFqM3v0s6nqkUZlkheiihYhjk8nqUuWrLCHLndMevf8amv2njoDA
+         KyKliEK2GQrqmMtQUQ14juRYQiFg2sRkf3uJaZfqFz25PGow97kJpVYIytbF84W+mvoJ
+         U78aBYh7IOaJ2Wz4tmntoARsz+LNGwiJP4eQx7xm47yXr61NbCAthZyagBI3WNiJO9T1
+         /AiiVJpFEOo3HtDotubayDWjBfhoxDLqcahOumfTttq9g4/SV8m8u/Mu2k2xMIlTWBB4
+         xA1w==
+X-Gm-Message-State: AC+VfDyp70gQoXYT1tO/VGmTBQkRMUUiUwn0HARa7QK4XHU+cArh64fz
+        y00cFbnSYcR3LyAb7DbJf/T2rQ==
+X-Google-Smtp-Source: ACHHUZ73qhFRlQjkdfcodVR00YCWIcOSrAUusZhwn92tcL5LUIQPLXadeg94Aa1h5SWcz2YTOaoXIg==
+X-Received: by 2002:a19:4312:0:b0:4f4:b28f:6b9c with SMTP id q18-20020a194312000000b004f4b28f6b9cmr779377lfa.29.1686314744958;
+        Fri, 09 Jun 2023 05:45:44 -0700 (PDT)
 Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id d21-20020a2eb055000000b002aeee2a093csm381661ljl.59.2023.06.09.05.44.03
+        by smtp.gmail.com with ESMTPSA id 7-20020ac24847000000b004f4cabba7desm528961lfy.74.2023.06.09.05.45.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jun 2023 05:44:04 -0700 (PDT)
-Message-ID: <6d99ffb5-a72a-168f-858f-8fa01f7593f3@linaro.org>
-Date:   Fri, 9 Jun 2023 14:44:02 +0200
+        Fri, 09 Jun 2023 05:45:44 -0700 (PDT)
+Message-ID: <e075f78a-5eac-8200-853b-db73c3d5025c@linaro.org>
+Date:   Fri, 9 Jun 2023 14:45:43 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH V3 3/5] clk: qcom: camcc-sm8550: Add camera clock
- controller driver for SM8550
+Subject: Re: [PATCH V3 4/5] clk: qcom: camcc-sm8550: Add support for qdss,
+ sleep and xo clocks
 Content-Language: en-US
 To:     Jagadeesh Kona <quic_jkona@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
@@ -75,11 +75,11 @@ Cc:     Bjorn Andersson <andersson@kernel.org>,
         Imran Shaik <quic_imrashai@quicinc.com>,
         Ajit Pandey <quic_ajipan@quicinc.com>
 References: <20230601143430.5595-1-quic_jkona@quicinc.com>
- <20230601143430.5595-4-quic_jkona@quicinc.com>
- <95bd4c66-08c6-15f3-db6c-97f820fe5517@linaro.org>
- <cf60ea04-057b-7856-3a30-775051cefa26@quicinc.com>
+ <20230601143430.5595-5-quic_jkona@quicinc.com>
+ <ee48f7fd-35f1-288f-2133-1c473e8804ab@linaro.org>
+ <a818de04-ca30-f4fb-4c69-fd172b96f816@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <cf60ea04-057b-7856-3a30-775051cefa26@quicinc.com>
+In-Reply-To: <a818de04-ca30-f4fb-4c69-fd172b96f816@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -94,70 +94,40 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 9.06.2023 13:49, Jagadeesh Kona wrote:
+On 9.06.2023 13:50, Jagadeesh Kona wrote:
 > Hi Dmitry,
 > 
 > Thanks for your review!
-> 
-> On 6/1/2023 8:21 PM, Dmitry Baryshkov wrote:
->> On 01/06/2023 17:34, Jagadeesh Kona wrote:
->>> Add support for the camera clock controller for camera clients to be
->>> able to request for camcc clocks on SM8550 platform.
->>>
->>> Co-developed-by: Taniya Das <quic_tdas@quicinc.com>
->>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
->>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
->>> ---
->>> Changes since V2:
->>>   - No changes
->>> Changes since V1:
->>>   - Sorted the PLL names in proper order
->>>   - Updated all PLL configurations to lower case hex
->>>   - Reused evo ops instead of adding new ops for ole pll
->>>   - Moved few clocks to separate patch to fix patch too long error
->>>
->>>   drivers/clk/qcom/Kconfig        |    7 +
->>>   drivers/clk/qcom/Makefile       |    1 +
->>>   drivers/clk/qcom/camcc-sm8550.c | 3405 +++++++++++++++++++++++++++++++
->>>   3 files changed, 3413 insertions(+)
->>>   create mode 100644 drivers/clk/qcom/camcc-sm8550.c
->>>
->>
->> [skipped]
->>
->>> +
->>> +static struct platform_driver cam_cc_sm8550_driver = {
->>> +    .probe = cam_cc_sm8550_probe,
->>> +    .driver = {
->>> +        .name = "cam_cc-sm8550",
->>> +        .of_match_table = cam_cc_sm8550_match_table,
->>> +    },
->>> +};
->>> +
->>> +static int __init cam_cc_sm8550_init(void)
->>> +{
->>> +    return platform_driver_register(&cam_cc_sm8550_driver);
->>> +}
->>> +subsys_initcall(cam_cc_sm8550_init);
->>> +
->>> +static void __exit cam_cc_sm8550_exit(void)
->>> +{
->>> +    platform_driver_unregister(&cam_cc_sm8550_driver);
->>> +}
->>> +module_exit(cam_cc_sm8550_exit);
->>
->> Please convert this to use module_platform_driver
->>
-> 
-> We still have to evaluate if module_platform_driver() works for us in all scenarios. We will post a cleanup patch once we conclude on module_platform_driver().
-With the arm64 defconfig, CCI and CAMSS are compiled in as modules. Since
-they are not boot-critical components, this will likely not change.
+I've noticed that many QUIC contributors seem to add this to the beginning
+of their emails.. Top-posting is generally discouraged on LKML
+
+You can find gregkh's reasoning for this e.g. here:
+
+https://lkml.org/lkml/2021/4/21/143
 
 Konrad
 > 
->>> +
->>> +MODULE_DESCRIPTION("QTI CAMCC SM8550 Driver");
->>> +MODULE_LICENSE("GPL");
+> On 6/1/2023 8:23 PM, Dmitry Baryshkov wrote:
+>> On 01/06/2023 17:34, Jagadeesh Kona wrote:
+>>> Add support for camera qdss, sleep and xo clocks.
+>>>
+>>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+>>
+>> You probably missed the Co-developed-by tag.
+>>
+> 
+> Yes, will add in the next series.
+> 
+>>> ---
+>>> Changes since V2:
+>>>   - No changes.
+>>> Changes since V1:
+>>>   - Newly added.
+>>>
+>>>   drivers/clk/qcom/camcc-sm8550.c | 180 ++++++++++++++++++++++++++++++++
+>>>   1 file changed, 180 insertions(+)
+>>
 >>
 > 
 > Thanks & Regards,
