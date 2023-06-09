@@ -2,219 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2ACCC72A4AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 22:21:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F45272A567
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 23:34:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232850AbjFIUVn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 16:21:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60634 "EHLO
+        id S232462AbjFIVec (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 17:34:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59082 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232541AbjFIUVM (ORCPT
+        with ESMTP id S232488AbjFIVeb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 16:21:12 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA5D64215
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 13:20:17 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f62b552751so2733482e87.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 13:20:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686341984; x=1688933984;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gseMZqiQentYyRaHcHEHjEO4uvoAd0TikjxuZU3oPHc=;
-        b=lOsTID+U5Hfbj3U97uR6HDXz5WxN0aXxTydWG0SfmWCDY4hRs9MC3OOD05luTpoFwA
-         Lx6mTr881vNwuhAfjuYKenvHFshoUXNmRWx0b43/oK/ffqzmIm4KXBza4hCZhqu5uN1Z
-         T87/6a93Y40OqulKH8nCWcAJ0ruSsf/4GwXDus5oklG1hTYKX6AOTbrfte2EwVJKCZCy
-         BANzpZuEpApNrgxMPZ3rD2cSlt4oZrI4RnejbiMRk/ybZbeiJ8syS61bTYtNADLOcnE0
-         lk6/dUFriCAYPerG1KuPHKQWD9yrmzrmndAKzIkKqUXuY46luIgPi+NDON6HLXPxc8lm
-         myRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686341984; x=1688933984;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gseMZqiQentYyRaHcHEHjEO4uvoAd0TikjxuZU3oPHc=;
-        b=S03CZqKZklIppntPge0hE0ePFQP1lKbIqfhDxzoWMuPJM0t457jKijjKwkaBMeFi+V
-         cCW9bJnYvkIWYXr92QXFfJDPdBdqCg1878jHNgj23Kx0/j3mWN/sQLHZ/tS2dSD2iLVz
-         czhLs9lGVYMlOyV8LvOxQ9dyKhsHR8h5AfeqLkU8Nto3x64EkloIpFqU4nffSC2ZlUK1
-         bIEMBaNc3OdK1TFdnPUwMIkbWc8IrAIm//EHvH2Aqi2ys0JoHNnGFj0d2DKmwWC7/v1u
-         IogMPdxX5gHCG2+Wb5CAyyaI02YKBgEJyJm8rQt8Pb0trnMhN9ruLH2MydK1HBG8B2QD
-         J9aA==
-X-Gm-Message-State: AC+VfDxs4SIoMqn7X3ZYgTL2xZCmih+ooj5XzZUCsmiFhM5M8SNGrekS
-        k9VJ1D3uzVTnzzonHZepbaWd+Q==
-X-Google-Smtp-Source: ACHHUZ4tVmuUiVo+jQcB8cq/Jdhj6B3J+7IdTt4y3MXNwGWde9Oz0MqtxrBavvqqQTElst0GQDPVQw==
-X-Received: by 2002:a19:9115:0:b0:4f6:10e9:c507 with SMTP id t21-20020a199115000000b004f610e9c507mr1445654lfd.23.1686341984248;
-        Fri, 09 Jun 2023 13:19:44 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id b18-20020ac25632000000b004f628eb7884sm641349lff.232.2023.06.09.13.19.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jun 2023 13:19:43 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Fri, 09 Jun 2023 22:19:27 +0200
-Subject: [PATCH v2 22/22] interconnect: qcom: icc-rpm: Fix bandwidth
- calculations
+        Fri, 9 Jun 2023 17:34:31 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AACA03A82;
+        Fri,  9 Jun 2023 14:34:26 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 3DDF661152;
+        Fri,  9 Jun 2023 21:34:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB97C433EF;
+        Fri,  9 Jun 2023 21:34:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686346465;
+        bh=wvXsR8YYzupk8QUsKM9+U5BzFl/Mjd2yhSrjz7bgQiY=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=ZtEGLpd0MdzhXbqB+JPymo/6uJHdLjNcnqgs8Iznb2MQtONrGx3vo+N9ubCPrCuql
+         tPrnFetQfSVGdIkOuAo+4FIxcfpA00VqzyFCKCRz1SzvmZP5wVca8ZZvJqaJlNAyDu
+         xma4qYH4ZPY5gbNvY1v0PgAejAu3+b1ijOsHGdeh3GXH6kE1zkYK3LnRdM9KzYG+P3
+         W2xbKDNIWdtOtjq3AfzOX2uW/6WHqf4cvtTUGd9gafhnLB/ZTYVOYwAo7hgT/UhuZX
+         nfETW8N6N+HHB8ivgVFYWnuhfddV9ij1Vlwxc0MKMvUyBGW97fsXbITJPZNGSAiMA+
+         eKuPQKh2qqXqA==
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-2b219ed9915so24917361fa.3;
+        Fri, 09 Jun 2023 14:34:25 -0700 (PDT)
+X-Gm-Message-State: AC+VfDzrwPa+3J8Tt7wxSX+qCQfJwW1Kv42xwKekWfuBDzvvc/i+7a6H
+        SGtUon9/SXKxA4syE3NJIeVIGrxcB2oW76q4dQ==
+X-Google-Smtp-Source: ACHHUZ7/YFvr2vQobTtmfQT0oSRk3YiQczXyx7x0ELd+xNr3yIUtzF53BXzTULyGxFje82VegTxIYmK9TO41ea233kE=
+X-Received: by 2002:a2e:b0cc:0:b0:2ac:8262:322a with SMTP id
+ g12-20020a2eb0cc000000b002ac8262322amr20945ljl.13.1686346463631; Fri, 09 Jun
+ 2023 14:34:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230526-topic-smd_icc-v2-22-e5934b07d813@linaro.org>
-References: <20230526-topic-smd_icc-v2-0-e5934b07d813@linaro.org>
-In-Reply-To: <20230526-topic-smd_icc-v2-0-e5934b07d813@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Leo Yan <leo.yan@linaro.org>, Evan Green <evgreen@chromium.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
+References: <20230418150606.1528107-1-robh@kernel.org> <9543f619-88fa-8e54-6e9a-4334750e51b4@linaro.org>
+ <CAL_Jsq+ZVAZc1nYJVLPQt=KM1qOZrZCrRC4q_o8XQjDdo_NuKA@mail.gmail.com>
+In-Reply-To: <CAL_Jsq+ZVAZc1nYJVLPQt=KM1qOZrZCrRC4q_o8XQjDdo_NuKA@mail.gmail.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Fri, 9 Jun 2023 15:34:11 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJMpjW6a4Q6xUX6TEZ+vyLJJn5bDtwEdf_-E=BeA-Z_tA@mail.gmail.com>
+Message-ID: <CAL_JsqJMpjW6a4Q6xUX6TEZ+vyLJJn5bDtwEdf_-E=BeA-Z_tA@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,pmic-mpp: Fix schema for "qcom,paired"
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1686341954; l=4975;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=T/6tws0nrW+rpOcnKnwLBuObiHFQRWQ5v+dHRcZBGwI=;
- b=vc+ZslG3iL81K4cl4YIvChfumOGREIWbFrTNU35OBSyYpVixdi0d53TBbCYxVphUGLTezSqTH
- cqNBeV7/oqvDiWxvPjVlEMUcVl+6ozJg4C3uc4ngJXEFgPfOm2QfhWt
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Up until now, we've been aggregating the bandwidth values and only
-dividing them by the bus width of the source node. This was completely
-wrong, as different nodes on a given path may (and usually do) have
-varying bus widths.  That in turn, resulted in the calculated clock rates
-being completely bogus - usually they ended up being much higher, as
-NoC_A<->NoC_B links are very wide.
+On Fri, Apr 21, 2023 at 1:48=E2=80=AFPM Rob Herring <robh@kernel.org> wrote=
+:
+>
+> On Wed, Apr 19, 2023 at 2:56=E2=80=AFPM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+> >
+> > On 18/04/2023 17:06, Rob Herring wrote:
+> > > The "qcom,paired" schema is all wrong. First, it's a list rather than=
+ an
+> > > object(dictionary). Second, it is missing a required type. The meta-s=
+chema
+> > > normally catches this, but schemas under "$defs" was not getting chec=
+ked.
+> > > A fix for that is pending.
+> > >
+> > > Signed-off-by: Rob Herring <robh@kernel.org>
+> > > ---
+> > >  Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml | 5 +++=
+--
+> > >  1 file changed, 3 insertions(+), 2 deletions(-)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.=
+yaml b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
+> > > index 9412b9362328..4c3e9ff82105 100644
+> > > --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
+> > > +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
+> > > @@ -144,8 +144,9 @@ $defs:
+> > >          enum: [0, 1, 2, 3, 4, 5, 6, 7]
+> > >
+> > >        qcom,paired:
+> > > -        - description:
+> > > -            Indicates that the pin should be operating in paired mod=
+e.
+> > > +        type: boolean
+> > > +        description:
+> > > +          Indicates that the pin should be operating in paired mode.
+> >
+> > Current Linux implementation uses it as a generic pinconf param
+> > pinconf_generic_params which is parsed by:
+> >
+> > pinconf_generic_parse_dt_config() -> parse_dt_cfg() ->
+> > of_property_read_u32()
+> >
+> >
+> > The pinctrl-spmi-mpp.c driver, using this schema, treat it as a bool,
+> > but I still wonder how the code will parse bool with
+> > of_property_read_u32(). Maybe it should be uint32 with value of 0 and 1=
+?
+>
+> That should be an error because the length is too short so it should
+> go with some default from the code.
+>
+> Looks like there is no user, though no property could mean keep the
+> default/bootloader setting. Can you sort out which type is really
+> desired here and hopefully we can get rid of the other type. It's not
+> the first case of pinctrl properties with multiple types, but we don't
+> really need more.
 
-Since we're not using the aggregate bandwidth value for anything other
-than clock rate calculations, remodel qcom_icc_bus_aggregate() to
-calculate the per-context clock rate for a given provider, taking into
-account the bus width of every individual node.
+Still an issue here. Please sort out what functionality QCom wants here.
 
-Fixes: 30c8fa3ec61a ("interconnect: qcom: Add MSM8916 interconnect provider driver")
-Reported-by: Stephan Gerhold <stephan@gerhold.net>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/interconnect/qcom/icc-rpm.c | 59 ++++++++++++-------------------------
- 1 file changed, 19 insertions(+), 40 deletions(-)
+dtschema (main br) will now throw a warning on it.
 
-diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
-index 1508233632f6..d177a76abe2a 100644
---- a/drivers/interconnect/qcom/icc-rpm.c
-+++ b/drivers/interconnect/qcom/icc-rpm.c
-@@ -293,58 +293,44 @@ static int qcom_icc_bw_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
- }
- 
- /**
-- * qcom_icc_bus_aggregate - aggregate bandwidth by traversing all nodes
-+ * qcom_icc_bus_aggregate - calculate bus clock rates by traversing all nodes
-  * @provider: generic interconnect provider
-- * @agg_avg: an array for aggregated average bandwidth of buckets
-- * @agg_peak: an array for aggregated peak bandwidth of buckets
-- * @max_agg_avg: pointer to max value of aggregated average bandwidth
-+ * @agg_clk_rate: array containing the aggregated clock rates in kHz
-  */
--static void qcom_icc_bus_aggregate(struct icc_provider *provider,
--				   u64 *agg_avg, u64 *agg_peak,
--				   u64 *max_agg_avg)
-+static void qcom_icc_bus_aggregate(struct icc_provider *provider, u64 *agg_clk_rate)
- {
--	struct icc_node *node;
-+	u64 agg_avg_rate, agg_rate;
- 	struct qcom_icc_node *qn;
--	u64 sum_avg[QCOM_SMD_RPM_STATE_NUM];
-+	struct icc_node *node;
- 	int i;
- 
--	/* Initialise aggregate values */
--	for (i = 0; i < QCOM_SMD_RPM_STATE_NUM; i++) {
--		agg_avg[i] = 0;
--		agg_peak[i] = 0;
--	}
--
--	*max_agg_avg = 0;
--
- 	/*
--	 * Iterate nodes on the interconnect and aggregate bandwidth
--	 * requests for every bucket.
-+	 * Iterate nodes on the provider, aggregate bandwidth requests for
-+	 * every bucket and convert them into bus clock rates.
- 	 */
- 	list_for_each_entry(node, &provider->nodes, node_list) {
- 		qn = node->data;
- 		for (i = 0; i < QCOM_SMD_RPM_STATE_NUM; i++) {
- 			if (qn->channels)
--				sum_avg[i] = div_u64(qn->sum_avg[i], qn->channels);
-+				agg_avg_rate = div_u64(qn->sum_avg[i], qn->channels);
- 			else
--				sum_avg[i] = qn->sum_avg[i];
--			agg_avg[i] += sum_avg[i];
--			agg_peak[i] = max_t(u64, agg_peak[i], qn->max_peak[i]);
-+				agg_avg_rate = qn->sum_avg[i];
-+
-+			agg_rate = max_t(u64, agg_avg_rate, qn->max_peak[i]);
-+			do_div(agg_rate, qn->buswidth);
-+
-+			agg_clk_rate[i] = max_t(u64, agg_clk_rate[i], agg_rate);
- 		}
- 	}
--
--	/* Find maximum values across all buckets */
--	for (i = 0; i < QCOM_SMD_RPM_STATE_NUM; i++)
--		*max_agg_avg = max_t(u64, *max_agg_avg, agg_avg[i]);
- }
- 
- static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- {
--	struct qcom_icc_provider *qp;
- 	struct qcom_icc_node *src_qn = NULL, *dst_qn = NULL;
-+	u64 agg_clk_rate[QCOM_SMD_RPM_STATE_NUM] = { 0 };
- 	struct icc_provider *provider;
-+	struct qcom_icc_provider *qp;
- 	u64 active_rate, sleep_rate;
--	u64 agg_avg[QCOM_SMD_RPM_STATE_NUM], agg_peak[QCOM_SMD_RPM_STATE_NUM];
--	u64 max_agg_avg;
- 	int ret;
- 
- 	src_qn = src->data;
-@@ -353,7 +339,9 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- 	provider = src->provider;
- 	qp = to_qcom_provider(provider);
- 
--	qcom_icc_bus_aggregate(provider, agg_avg, agg_peak, &max_agg_avg);
-+	qcom_icc_bus_aggregate(provider, agg_clk_rate);
-+	active_rate = agg_clk_rate[QCOM_SMD_RPM_ACTIVE_STATE];
-+	sleep_rate = agg_clk_rate[QCOM_SMD_RPM_SLEEP_STATE];
- 
- 	ret = qcom_icc_rpm_set(src_qn, src_qn->sum_avg);
- 	if (ret)
-@@ -369,15 +357,6 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- 	if (!qp->bus_clk_desc && !qp->bus_clk)
- 		return 0;
- 
--	/* Intentionally keep the rates in kHz as that's what RPM accepts */
--	active_rate = max(agg_avg[QCOM_SMD_RPM_ACTIVE_STATE],
--			  agg_peak[QCOM_SMD_RPM_ACTIVE_STATE]);
--	do_div(active_rate, src_qn->buswidth);
--
--	sleep_rate = max(agg_avg[QCOM_SMD_RPM_SLEEP_STATE],
--			 agg_peak[QCOM_SMD_RPM_SLEEP_STATE]);
--	do_div(sleep_rate, src_qn->buswidth);
--
- 	/*
- 	 * Downstream checks whether the requested rate is zero, but it makes little sense
- 	 * to vote for a value that's below the lower threshold, so let's not do so.
-
--- 
-2.41.0
-
+Rob
