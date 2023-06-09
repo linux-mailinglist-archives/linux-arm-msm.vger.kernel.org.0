@@ -2,232 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B99DE729866
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 13:47:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B22BB729878
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 13:49:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238834AbjFILru (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 07:47:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40174 "EHLO
+        id S230523AbjFILti (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 07:49:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231948AbjFILrt (ORCPT
+        with ESMTP id S229703AbjFILth (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 07:47:49 -0400
+        Fri, 9 Jun 2023 07:49:37 -0400
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DCC8A30F4;
-        Fri,  9 Jun 2023 04:47:47 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 359BOciO015712;
-        Fri, 9 Jun 2023 11:47:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references; s=qcppdkim1;
- bh=9/ainGayCdPAE4+sq8HTKS9z+O5Jb6+LG8PSJqaze2k=;
- b=okD8Xuj4ay90BloO9ICDnEZWKf18fa9T35jNLcy+0oacTzQRo4k/qcZkp1tUVuu2gTpY
- MMqLJSQxbfWf0NKbaDEEhbWykw6kZ83vHACfVaFp4MahPwYRXSc1fdm3xsWx0ix7yIDG
- t0DFfqd5YnkXid121mnKh/33yub9pfrAu2K6QHyHzlo8vyUjv0u7rUhYLGTGSYPEtK1T
- T3bFXWP3cU0bGs466um27YTlQuPBPibSDa0JIZfjwHIvHNm3n2/cK60k8mZ+nDDaw8p/
- KBWok2FD8SRWCW0Tyc7WD9hPdiMwUkHh66LlmzBtbEJSv11Dudv8qlwkz4dJEROA+uqp pw== 
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r41r0r6n8-1
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 190651A2;
+        Fri,  9 Jun 2023 04:49:36 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 359B76Hr007692;
+        Fri, 9 Jun 2023 11:49:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=9iNEzxZcA2n7WfjPAMtIQuGjmo7X+UhXwONmGLbWsWo=;
+ b=htTeTUFkKE04vFXgYrcK23c0FP7bhGOm9a5ZtZZao+aPVbJ492nuHBMSZzP1hCf4/obJ
+ 70RTQ4cBoi1QyO/0C5SdK02xUK++p5WcT3gON9vACBIVk/LxIqWw1zWt7MLoKqiAUrCp
+ BW1bUciH1VKLpstTho0xEYDyVNtdBZFM1/oe40AXtNHWhUNrmzSroTZ5O48brZeBk1HT
+ nPw07obTI4dPG42vqOaDziqB77nvO/eP0HU7FxOuiAezpkiLZhe1xoEUSARtbC04ytV/
+ gxbnuyX9nieFDRMuLMwPzeTa7/5fIcGuVHE6F+45EMJbrFaheTxJQOHSY3yWaI5tZGxU Vw== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r3t70h0en-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 09 Jun 2023 11:47:41 +0000
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTP id 359BlcKt004168;
-        Fri, 9 Jun 2023 11:47:38 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 3qyxkmeq3d-1;
-        Fri, 09 Jun 2023 11:47:38 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-        by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 359Blckh004147;
-        Fri, 9 Jun 2023 11:47:38 GMT
-Received: from hu-sgudaval-hyd.qualcomm.com (hu-krichai-hyd.qualcomm.com [10.213.110.112])
-        by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 359Blb16004134;
-        Fri, 09 Jun 2023 11:47:38 +0000
-Received: by hu-sgudaval-hyd.qualcomm.com (Postfix, from userid 4058933)
-        id 68DAA33B8; Fri,  9 Jun 2023 17:17:37 +0530 (+0530)
-From:   Krishna chaitanya chundru <quic_krichai@quicinc.com>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     quic_vbadigan@quicinc.com, quic_ramkri@quicinc.com,
-        linux-arm-msm@vger.kernel.org,
-        Krishna chaitanya chundru <quic_krichai@quicinc.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Rob Herring <robh@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        linux-pci@vger.kernel.org (open list:PCIE ENDPOINT DRIVER FOR QUALCOMM),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v3 3/3] PCI: qcom-ep: Add ICC bandwidth voting support
-Date:   Fri,  9 Jun 2023 17:17:28 +0530
-Message-Id: <1686311249-6857-4-git-send-email-quic_krichai@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1686311249-6857-1-git-send-email-quic_krichai@quicinc.com>
-References: <1686311249-6857-1-git-send-email-quic_krichai@quicinc.com>
-X-QCInternal: smtphost
+        Fri, 09 Jun 2023 11:49:30 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 359BnTM1002529
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Fri, 9 Jun 2023 11:49:29 GMT
+Received: from [10.218.22.90] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 9 Jun 2023
+ 04:49:23 -0700
+Message-ID: <e9781cda-8eb4-99e0-8ed7-09c2534638e0@quicinc.com>
+Date:   Fri, 9 Jun 2023 17:19:19 +0530
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.1
+Subject: Re: [PATCH V3 2/5] clk: qcom: Remove support to set CAL_L field in
+ lucid evo pll configure
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "Michael Turquette" <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "Rob Herring" <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+CC:     Bjorn Andersson <andersson@kernel.org>,
+        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
+        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Ajit Pandey <quic_ajipan@quicinc.com>
+References: <20230601143430.5595-1-quic_jkona@quicinc.com>
+ <20230601143430.5595-3-quic_jkona@quicinc.com>
+ <1d29bc3f-12db-a676-56f8-b8c1a09063dc@linaro.org>
+From:   Jagadeesh Kona <quic_jkona@quicinc.com>
+In-Reply-To: <1d29bc3f-12db-a676-56f8-b8c1a09063dc@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: IIcrqBnYhLDAlkHO9bZ-XczuCBnriWKg
-X-Proofpoint-ORIG-GUID: IIcrqBnYhLDAlkHO9bZ-XczuCBnriWKg
+X-Proofpoint-GUID: njf2o6aYKAmo_2LT01s3Nfo0-MesG3mh
+X-Proofpoint-ORIG-GUID: njf2o6aYKAmo_2LT01s3Nfo0-MesG3mh
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
  definitions=2023-06-09_08,2023-06-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxlogscore=999
- clxscore=1015 suspectscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
- phishscore=0 impostorscore=0 malwarescore=0 priorityscore=1501 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
- definitions=main-2306090099
-X-Spam-Status: No, score=-2.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,HEADER_FROM_DIFFERENT_DOMAINS,
-        RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 mlxscore=0 spamscore=0 clxscore=1015 suspectscore=0
+ bulkscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=999 phishscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306090100
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support to vote for ICC bandwidth based on the link speed and width.
+Hi Dmitry,
 
-This patch is inspired from pcie-qcom driver to add basic interconnect
-support.
+Thanks for your review!
 
-Link: https://lore.kernel.org/all/20221102090705.23634-1-johan+linaro@kernel.org/
-Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
----
- drivers/pci/controller/dwc/pcie-qcom-ep.c | 68 +++++++++++++++++++++++++++++++
- 1 file changed, 68 insertions(+)
+On 6/1/2023 8:16 PM, Dmitry Baryshkov wrote:
+> On 01/06/2023 17:34, Jagadeesh Kona wrote:
+>> For lucid evo and ole pll's the CAL_L, RINGOSC_CAL_L and L_VAL are
+>> part of the same register, hence update the l configuration value
+>> to include these fields across all the chipsets.
+>>
+>> Since the l configuration value now includes both L and CAL_L fields,
+>> there is no need to explicitly set CAL_L field again in lucid evo pll
+>> configure, Hence remove support to explicity set CAL_L field for evo pll.
+>>
+>> Fixes: 260e36606a03 ("clk: qcom: clk-alpha-pll: add Lucid EVO PLL 
+>> configuration interfaces")
+>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
+>> ---
+>> Changes since V2:
+>>   - Squashed update L val and remove explicit cal_l configuration to 
+>> single patch
+>>   - Updated L configuration for gpucc-sm8450 as well which was merged 
+>> recently
+>> Changes since V1:
+>>   - Newly added.
+>>
+>>   drivers/clk/qcom/camcc-sm8450.c  | 24 ++++++++++++++++--------
+>>   drivers/clk/qcom/clk-alpha-pll.c |  6 +-----
+>>   drivers/clk/qcom/dispcc-sm8450.c |  6 ++++--
+>>   drivers/clk/qcom/dispcc-sm8550.c |  6 ++++--
+>>   drivers/clk/qcom/gpucc-sa8775p.c |  6 ++++--
+>>   drivers/clk/qcom/gpucc-sm8450.c  |  6 ++++--
+>>   6 files changed, 33 insertions(+), 21 deletions(-)
+> 
+> I'd say, this is still not a correct solution from my point of view. A 
+> correct solution would be to follow the existing code and use constants 
+> for the constant values (of CAL_L, and RINGOSC_CAL_L).
+> 
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-index 19b3283..baf831f 100644
---- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
-@@ -13,6 +13,7 @@
- #include <linux/debugfs.h>
- #include <linux/delay.h>
- #include <linux/gpio/consumer.h>
-+#include <linux/interconnect.h>
- #include <linux/mfd/syscon.h>
- #include <linux/phy/pcie.h>
- #include <linux/phy/phy.h>
-@@ -28,6 +29,7 @@
- #define PARF_SYS_CTRL				0x00
- #define PARF_DB_CTRL				0x10
- #define PARF_PM_CTRL				0x20
-+#define PARF_PM_STTS				0x24
- #define PARF_MHI_CLOCK_RESET_CTRL		0x174
- #define PARF_MHI_BASE_ADDR_LOWER		0x178
- #define PARF_MHI_BASE_ADDR_UPPER		0x17c
-@@ -128,6 +130,9 @@
- /* DBI register fields */
- #define DBI_CON_STATUS_POWER_STATE_MASK		GENMASK(1, 0)
- 
-+#define DBI_LINKCTRLSTATUS			0x80
-+#define DBI_LINKCTRLSTATUS_SHIFT		16
-+
- #define XMLH_LINK_UP				0x400
- #define CORE_RESET_TIME_US_MIN			1000
- #define CORE_RESET_TIME_US_MAX			1005
-@@ -178,6 +183,8 @@ struct qcom_pcie_ep {
- 	struct phy *phy;
- 	struct dentry *debugfs;
- 
-+	struct icc_path *icc_mem;
-+
- 	struct clk_bulk_data *clks;
- 	int num_clks;
- 
-@@ -253,9 +260,51 @@ static void qcom_pcie_dw_stop_link(struct dw_pcie *pci)
- 	disable_irq(pcie_ep->perst_irq);
- }
- 
-+static void qcom_pcie_ep_icc_update(struct qcom_pcie_ep *pcie_ep)
-+{
-+	struct dw_pcie *pci = &pcie_ep->pci;
-+	u32 offset, status, bw;
-+	int speed, width;
-+	int ret;
-+
-+	if (!pcie_ep->icc_mem)
-+		return;
-+
-+	offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
-+	status = readw(pci->dbi_base + offset + PCI_EXP_LNKSTA);
-+
-+	speed = FIELD_GET(PCI_EXP_LNKSTA_CLS, status);
-+	width = FIELD_GET(PCI_EXP_LNKSTA_NLW, status);
-+
-+	switch (speed) {
-+	case 1:
-+		bw = MBps_to_icc(250);	/* BW for GEN1 per lane: 250MBps */
-+		break;
-+	case 2:
-+		bw = MBps_to_icc(500);	/* BW for GEN2 per lane: 500MBps */
-+		break;
-+	case 3:
-+		bw = MBps_to_icc(985);	/* BW for GEN3 per lane: 985MBps */
-+		break;
-+	default:
-+		WARN_ON_ONCE(1);
-+		fallthrough;
-+	case 4:
-+		bw = MBps_to_icc(1969);	/* BW for GEN4 per lane:1969MBps */
-+		break;
-+	}
-+
-+	ret = icc_set_bw(pcie_ep->icc_mem, 0, width * bw);
-+	if (ret) {
-+		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
-+			ret);
-+	}
-+}
-+
- static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
- {
- 	int ret;
-+	struct dw_pcie *pci = &pcie_ep->pci;
- 
- 	ret = clk_bulk_prepare_enable(pcie_ep->num_clks, pcie_ep->clks);
- 	if (ret)
-@@ -277,6 +326,20 @@ static int qcom_pcie_enable_resources(struct qcom_pcie_ep *pcie_ep)
- 	if (ret)
- 		goto err_phy_exit;
- 
-+	/*
-+	 * Some Qualcomm platforms require interconnect bandwidth constraints
-+	 * to be set before enabling interconnect clocks.
-+	 *
-+	 * Set an initial average bandwidth corresponding to GEN1x1(250 MBps)
-+	 * for the pcie to mem path.
-+	 */
-+	ret = icc_set_bw(pcie_ep->icc_mem, 0, MBps_to_icc(250));
-+	if (ret) {
-+		dev_err(pci->dev, "failed to set interconnect bandwidth: %d\n",
-+			ret);
-+		goto err_phy_exit;
-+	}
-+
- 	return 0;
- 
- err_phy_exit:
-@@ -550,6 +613,10 @@ static int qcom_pcie_ep_get_resources(struct platform_device *pdev,
- 	if (IS_ERR(pcie_ep->phy))
- 		ret = PTR_ERR(pcie_ep->phy);
- 
-+	pcie_ep->icc_mem = devm_of_icc_get(dev, "pcie-mem");
-+	if (IS_ERR(pcie_ep->icc_mem))
-+		ret = PTR_ERR(pcie_ep->icc_mem);
-+
- 	return ret;
- }
- 
-@@ -572,6 +639,7 @@ static irqreturn_t qcom_pcie_ep_global_irq_thread(int irq, void *data)
- 	} else if (FIELD_GET(PARF_INT_ALL_BME, status)) {
- 		dev_dbg(dev, "Received BME event. Link is enabled!\n");
- 		pcie_ep->link_status = QCOM_PCIE_EP_LINK_ENABLED;
-+		qcom_pcie_ep_icc_update(pcie_ep);
- 	} else if (FIELD_GET(PARF_INT_ALL_PM_TURNOFF, status)) {
- 		dev_dbg(dev, "Received PM Turn-off event! Entering L23\n");
- 		val = readl_relaxed(pcie_ep->parf + PARF_PM_CTRL);
--- 
-2.7.4
+Sure, will keep the existing code as is and will remove this patch in 
+the next series.
 
+>>
+>> diff --git a/drivers/clk/qcom/camcc-sm8450.c 
+>> b/drivers/clk/qcom/camcc-sm8450.c
+>> index 51338a2884d2..6a5a08f88598 100644
+>> --- a/drivers/clk/qcom/camcc-sm8450.c
+>> +++ b/drivers/clk/qcom/camcc-sm8450.c
+>> @@ -57,7 +57,8 @@ static const struct pll_vco rivian_evo_vco[] = {
+>>   static const struct clk_parent_data pll_parent_data_tcxo = { .index 
+>> = DT_BI_TCXO };
+>>   static const struct alpha_pll_config cam_cc_pll0_config = {
+>> -    .l = 0x3e,
+>> +    /* .l includes CAL_L_VAL, L_VAL fields */
+>> +    .l = 0x0044003e,
+>>       .alpha = 0x8000,
+>>       .config_ctl_val = 0x20485699,
+>>       .config_ctl_hi_val = 0x00182261,
+>> @@ -128,7 +129,8 @@ static struct clk_alpha_pll_postdiv 
+>> cam_cc_pll0_out_odd = {
+>>   };
+
+[skipped]
+
+Thanks & Regards,
+Jagadeesh
