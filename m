@@ -2,65 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F307772A12A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 19:24:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13B0B72A14D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jun 2023 19:34:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229599AbjFIRYj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 13:24:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39572 "EHLO
+        id S230366AbjFIReL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 13:34:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43468 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229595AbjFIRYh (ORCPT
+        with ESMTP id S230373AbjFIReK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 13:24:37 -0400
+        Fri, 9 Jun 2023 13:34:10 -0400
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71A3BC1;
-        Fri,  9 Jun 2023 10:24:36 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83968E4E;
+        Fri,  9 Jun 2023 10:34:07 -0700 (PDT)
 Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 359EBq3n024991;
-        Fri, 9 Jun 2023 17:24:29 GMT
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 359Dj1Td002667;
+        Fri, 9 Jun 2023 17:33:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
  mime-version : subject : to : cc : references : from : in-reply-to :
  content-type : content-transfer-encoding; s=qcppdkim1;
- bh=1b7hEhV9ZR3ErYyrh6dtfaDiEFYsrQqoxaoxl0F9tUw=;
- b=VN5rhGQ+B0W082XDVn0f+r7oKgbpgtHY0P5jI2cpfWMfWPNCpFnF/YuQO3hmWJ1CyxdG
- ydh3gsqOduhzdME6K8wDKULdnGOi9I4+a6juJno6TFKWHfBjOrOjdabALT7kiBY2Lw1C
- 5LJqKBzFJO0AuQqTc3qM+ZBRLx4E6dmlzXCiCo5hohQxo7Br9E96g2eRhpRYVGJhCsjD
- E6bJ3OgKAioNAM/aTDHhYlRosiL3yA+MCU99FS82xUSM81PQNJKYmM7nW76kr+8CBywB
- BWPq8n5CsNWHCigdTp0v4bD448GJUWsI3buNqRwn31tyPNxraBARlP451bc8NEeWgor0 bA== 
-Received: from nasanppmta04.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r3nwet3kc-1
+ bh=y6PSJ/a4efM6fP1I3t21ItHgFrgYNVQ8HnAxTEOR8C0=;
+ b=XhIa5+axDvH54JGeH6Mhj9+02iHlW09N6s2TA77PX35JSJP64Jbs1paOBOqvCsrXNzdm
+ 9d++yp7XcQEib52JZPMBK9HOY5VWUzL44VKXn2K1rDAsdSmH6u5IpW1AmufWrU1kot/k
+ k/IH/DV1g/bOfSXpjGb2CGgAmxtLIsds/xqdhLQfjOjM1HGHBmC2bQ6n9abD0adgMniu
+ 5iWSrRc1TtpOiJpcKXxTh5bCBovLcyfBdnY4XMZUcmrPnmwvsrRCRDmJaVkV0o9TvRBp
+ dE+DBcWO4Qn9tjpjpmYFk3rSIRPnUxWu9arKYe+c4iUdoIQtCP4ApYmwJYap3+MnVc3q pQ== 
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r3nwet4h9-1
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 09 Jun 2023 17:24:29 +0000
+        Fri, 09 Jun 2023 17:33:27 +0000
 Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 359HOSMj007649
+        by NASANPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 359HXQLk021351
         (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Fri, 9 Jun 2023 17:24:28 GMT
-Received: from [10.71.110.193] (10.80.80.8) by nasanex01b.na.qualcomm.com
+        Fri, 9 Jun 2023 17:33:26 GMT
+Received: from [10.134.65.165] (10.80.80.8) by nasanex01b.na.qualcomm.com
  (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 9 Jun 2023
- 10:24:27 -0700
-Message-ID: <f49db16a-e470-aeb5-f161-be354b5817f5@quicinc.com>
-Date:   Fri, 9 Jun 2023 10:24:27 -0700
+ 10:33:25 -0700
+Message-ID: <2f60fc9f-a8b2-fe8c-183a-5ee9b276b02d@quicinc.com>
+Date:   Fri, 9 Jun 2023 10:33:25 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v5 2/5] drm/msm/dsi: Adjust pclk rate for compression
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v13 23/24] virt: gunyah: Add ioeventfd
 Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-References: <20230405-add-dsc-support-v5-0-028c10850491@quicinc.com>
- <20230405-add-dsc-support-v5-2-028c10850491@quicinc.com>
- <js3mcglahq53mcyxa6deltjlu4xpc2pnafwz2rbk3dl4ovws2o@5xw2wzvfaj2v>
- <f34a03ce-6295-b5d1-bf42-a43cfb382ea3@linaro.org>
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-In-Reply-To: <f34a03ce-6295-b5d1-bf42-a43cfb382ea3@linaro.org>
+To:     Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Jonathan Corbet <corbet@lwn.net>
+CC:     Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
+ <20230509204801.2824351-24-quic_eberman@quicinc.com>
+ <85e7c3ae-0991-0ca9-909c-f38773f63894@linaro.org>
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <85e7c3ae-0991-0ca9-909c-f38773f63894@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Originating-IP: [10.80.80.8]
@@ -68,8 +80,8 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: s_3pfLppHfL3CrfFLx7JYXA5pA8Rwcin
-X-Proofpoint-ORIG-GUID: s_3pfLppHfL3CrfFLx7JYXA5pA8Rwcin
+X-Proofpoint-GUID: ollpdWv-vbhs78Ds3TYrpqiVb4IgVe7L
+X-Proofpoint-ORIG-GUID: ollpdWv-vbhs78Ds3TYrpqiVb4IgVe7L
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
  definitions=2023-06-09_12,2023-06-09_01,2023-05-22_02
@@ -90,186 +102,280 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 6/9/2023 9:58 AM, Dmitry Baryshkov wrote:
-> On 08/06/2023 23:36, Marijn Suijten wrote:
->> Same title suggestion as earlier: s/adjust/reduce
+On 6/5/2023 12:50 PM, Alex Elder wrote:
+> On 5/9/23 3:48 PM, Elliot Berman wrote:
+>> Allow userspace to attach an ioeventfd to an mmio address within the 
+>> guest.
 >>
->> On 2023-05-22 18:08:56, Jessica Zhang wrote:
->>> Adjust the pclk rate to divide hdisplay by the compression ratio when 
->>> DSC
->>> is enabled.
->>>
->>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>> ---
->>>   drivers/gpu/drm/msm/dsi/dsi_host.c | 21 ++++++++++++++++++---
->>>   1 file changed, 18 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c 
->>> b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>> index a448931af804..88f370dd2ea1 100644
->>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->>> @@ -561,7 +561,18 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host 
->>> *msm_host)
->>>       clk_disable_unprepare(msm_host->byte_clk);
->>>   }
->>> -static unsigned long dsi_get_pclk_rate(const struct drm_display_mode 
->>> *mode, bool is_bonded_dsi)
->>> +static unsigned long dsi_adjust_compressed_pclk(const struct 
->>> drm_display_mode *mode,
->>
->> Nit: adjust_pclk_for_compression
->>
->> As discussed before we realized that this change is more-or-less a hack,
->> since downstream calculates pclk quite differently - at least for
->> command-mode panels.  Do you still intend to land this patch this way,
->> or go the proper route by introducing the right math from the get-go?
->> Or is the math at least correct for video-mode panels?
+>> Co-developed-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+>> Signed-off-by: Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>
+>> Signed-off-by: Elliot Berman <quic_eberman@quicinc.com>
 > 
-> Can we please postpone the cmd-vs-video discussion? Otherwise I will 
-> reserve myself a right to push a patch dropping CMD mode support until 
-> somebody comes with a proper way to handle CMD clock calculation.
+> Looks good.  One question below.
 > 
+> Reviewed-by: Alex Elder <elder@linaro.org>
 > 
-> It is off-topic for the sake of DSC 1.2 support. Yes, all CMD panel 
-> timings are a kind of a hack and should be improved. No, we can not do 
-> this as a part of this series. I think everybody agrees that with the 
-> current way of calculating CMD panel timings, this function does some 
-> kind of a trick.
-> 
->>
->> This function requires a documentation comment to explain that all.
->>
->>> +        const struct drm_dsc_config *dsc)
->>> +{
->>> +    int new_hdisplay = DIV_ROUND_UP(mode->hdisplay * 
->>> drm_dsc_get_bpp_int(dsc),
->>
->> This sounds like a prime candidate for msm_dsc_get_bytes_per_line(), if
->> bits_per_component==8 is assumed.  In fact, it then becomes identical
->> to the following line in dsi_host.c which you added previously:
->>
->>     hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 
->> 3);
-> 
-> This would imply a simple /3, but as far as I understand it is not 
-> correct here.
-> 
->>
->> If not, what is the difference between these two calculations?  Maybe
->> they both need to be in a properly-named helper.
->>
->>> +            dsc->bits_per_component * 3);
-> 
-> I hope to see a documentation patch to be posted, telling that this 
-> scales hdisplay and thus pclk by the factor of compressed_bpp / 
-> uncompressed_bpp.
-> 
-> This is not how it is usually done, but I would accept a separate 
-> documentation patch going over the calculation here and in 
-> dsi_timing_setup (and maybe other unobvious cases, if there is anything 
-> left).
-> 
->>
->> As we established in the drm/msm issue [2] there is currently a
->> confusion whether this /3 (and the /3 in dsi_timing_setup) come from the
->> ratio between dsi_get_bpp() and dsc->bpp or something else.  Can you
->> clarify that with constants and comments?
->>
->> [2]: https://gitlab.freedesktop.org/drm/msm/-/issues/24
->>
->>> +
->>> +    return (new_hdisplay + (mode->htotal - mode->hdisplay))
->>> +            * mode->vtotal * drm_mode_vrefresh(mode);
->>
->> As clarified in [1] I was not necessarily suggesting to move this math
->> to a separate helper, but to also use a few more properly-named
->> intermediate variables to not have multi-line math and self-documenting
->> code.  These lines could be split to be much more clear.
-> 
-> I think it's fine more or less. One pair of parenthesis is unnecessary, 
-> but that's mostly it. Maybe `new_htotal' variable would make some sense.
-> 
-> Also, please excuse me if this was discussed somewhere. This calculation 
-> means that only the displayed data is compressed, but porches are not 
-> touched. Correct?
 
-Hi Dmitry,
+Thanks!
 
-Correct, we will apply the compression ratio to only the hdisplay but 
-keep the porches as is.
-
+>> ---
+>>   Documentation/virt/gunyah/vm-manager.rst |   2 +-
+>>   drivers/virt/gunyah/Kconfig              |   9 ++
+>>   drivers/virt/gunyah/Makefile             |   1 +
+>>   drivers/virt/gunyah/gunyah_ioeventfd.c   | 130 +++++++++++++++++++++++
+>>   include/uapi/linux/gunyah.h              |  37 +++++++
+>>   5 files changed, 178 insertions(+), 1 deletion(-)
+>>   create mode 100644 drivers/virt/gunyah/gunyah_ioeventfd.c
+>>
+>> diff --git a/Documentation/virt/gunyah/vm-manager.rst 
+>> b/Documentation/virt/gunyah/vm-manager.rst
+>> index c4960948c779..87838c5b5945 100644
+>> --- a/Documentation/virt/gunyah/vm-manager.rst
+>> +++ b/Documentation/virt/gunyah/vm-manager.rst
+>> @@ -115,7 +115,7 @@ the VM *before* the VM starts.
+>>   The argument types are documented below:
+>>   .. kernel-doc:: include/uapi/linux/gunyah.h
+>> -   :identifiers: gh_fn_vcpu_arg gh_fn_irqfd_arg gh_irqfd_flags
+>> +   :identifiers: gh_fn_vcpu_arg gh_fn_irqfd_arg gh_irqfd_flags 
+>> gh_fn_ioeventfd_arg gh_ioeventfd_flags
+>>   Gunyah VCPU API Descriptions
+>>   ----------------------------
+>> diff --git a/drivers/virt/gunyah/Kconfig b/drivers/virt/gunyah/Kconfig
+>> index bc2c46d9df94..63bebc5b9f82 100644
+>> --- a/drivers/virt/gunyah/Kconfig
+>> +++ b/drivers/virt/gunyah/Kconfig
+>> @@ -48,3 +48,12 @@ config GUNYAH_IRQFD
+>>         on Gunyah virtual machine.
+>>         Say Y/M here if unsure and you want to support Gunyah VMMs.
+>> +
+>> +config GUNYAH_IOEVENTFD
+>> +    tristate "Gunyah ioeventfd interface"
+>> +    depends on GUNYAH
+>> +    help
+>> +      Enable kernel support for creating ioeventfds which can alert 
+>> userspace
+>> +      when a Gunyah virtual machine accesses a memory address.
+>> +
+>> +      Say Y/M here if unsure and you want to support Gunyah VMMs.
+>> diff --git a/drivers/virt/gunyah/Makefile b/drivers/virt/gunyah/Makefile
+>> index ad212a1cf967..63ca11e74796 100644
+>> --- a/drivers/virt/gunyah/Makefile
+>> +++ b/drivers/virt/gunyah/Makefile
+>> @@ -8,3 +8,4 @@ obj-$(CONFIG_GUNYAH) += gunyah.o
+>>   obj-$(CONFIG_GUNYAH_VCPU) += gunyah_vcpu.o
+>>   obj-$(CONFIG_GUNYAH_IRQFD) += gunyah_irqfd.o
+>> +obj-$(CONFIG_GUNYAH_IOEVENTFD) += gunyah_ioeventfd.o
+>> diff --git a/drivers/virt/gunyah/gunyah_ioeventfd.c 
+>> b/drivers/virt/gunyah/gunyah_ioeventfd.c
+>> new file mode 100644
+>> index 000000000000..5b1b9fd9ac3a
+>> --- /dev/null
+>> +++ b/drivers/virt/gunyah/gunyah_ioeventfd.c
+>> @@ -0,0 +1,130 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2022-2023 Qualcomm Innovation Center, Inc. All 
+>> rights reserved.
+>> + */
+>> +
+>> +#include <linux/eventfd.h>
+>> +#include <linux/file.h>
+>> +#include <linux/fs.h>
+>> +#include <linux/gunyah.h>
+>> +#include <linux/gunyah_vm_mgr.h>
+>> +#include <linux/module.h>
+>> +#include <linux/printk.h>
+>> +
+>> +#include <uapi/linux/gunyah.h>
+>> +
+>> +struct gh_ioeventfd {
+>> +    struct gh_vm_function_instance *f;
+>> +    struct gh_vm_io_handler io_handler;
+>> +
+>> +    struct eventfd_ctx *ctx;
+>> +};
+>> +
+>> +static int gh_write_ioeventfd(struct gh_vm_io_handler *io_dev, u64 
+>> addr, u32 len, u64 data)
+>> +{
+>> +    struct gh_ioeventfd *iofd = container_of(io_dev, struct 
+>> gh_ioeventfd, io_handler);
 > 
->>
->> [1]: 
->> https://lore.kernel.org/linux-arm-msm/u4x2vldkzsokfcpbkz3dtwcllbdk4ljcz6kzuaxt5frx6g76o5@uku6abewvye7/
->>
->>> +}
->>> +
->>> +static unsigned long dsi_get_pclk_rate(const struct drm_display_mode 
->>> *mode,
->>> +        const struct drm_dsc_config *dsc, bool is_bonded_dsi)
->>>   {
->>>       unsigned long pclk_rate;
->>> @@ -576,6 +587,10 @@ static unsigned long dsi_get_pclk_rate(const 
->>> struct drm_display_mode *mode, bool
->>>       if (is_bonded_dsi)
->>>           pclk_rate /= 2;
->>> +    /* If DSC is enabled, divide hdisplay by compression ratio */
->>> +    if (dsc)
->>> +        pclk_rate = dsi_adjust_compressed_pclk(mode, dsc);
+> Does a write of 0 bytes still signal an event?
 > 
-> Looking for the perfection, I'd also move the pclk adjustment to come 
-> before the is_bonded_dsi check.
 
-Acked.
+ From gunyah_ioeventfd perspective, yes. I don't think a write of 0 
+bytes is possible, but maybe you are thinking of scenario I'm not?
 
-Thanks,
-
-Jessica Zhang
-
-> 
->>
->> The confusion with this comment (and the reason the aforementioned
->> discussion [2] carried on so long) stems from the fact a division makes
->> sense for a bit/byte clock, but not for a pixel clock: we still intend
->> to send the same number of pixels, just spending less bytes on them.  So
->> as you clarify the /3 above, can you also clarify that here or drop this
->> comment completely when the function is correctly documented instead?
->>
->> - Marijn
->>
->>> +
->>>       return pclk_rate;
->>>   }
->>> @@ -585,7 +600,7 @@ unsigned long dsi_byte_clk_get_rate(struct 
->>> mipi_dsi_host *host, bool is_bonded_d
->>>       struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
->>>       u8 lanes = msm_host->lanes;
->>>       u32 bpp = dsi_get_bpp(msm_host->format);
->>> -    unsigned long pclk_rate = dsi_get_pclk_rate(mode, is_bonded_dsi);
->>> +    unsigned long pclk_rate = dsi_get_pclk_rate(mode, msm_host->dsc, 
->>> is_bonded_dsi);
->>>       unsigned long pclk_bpp;
->>>       if (lanes == 0) {
->>> @@ -604,7 +619,7 @@ unsigned long dsi_byte_clk_get_rate(struct 
->>> mipi_dsi_host *host, bool is_bonded_d
->>>   static void dsi_calc_pclk(struct msm_dsi_host *msm_host, bool 
->>> is_bonded_dsi)
->>>   {
->>> -    msm_host->pixel_clk_rate = dsi_get_pclk_rate(msm_host->mode, 
->>> is_bonded_dsi);
->>> +    msm_host->pixel_clk_rate = dsi_get_pclk_rate(msm_host->mode, 
->>> msm_host->dsc, is_bonded_dsi);
->>>       msm_host->byte_clk_rate = 
->>> dsi_byte_clk_get_rate(&msm_host->base, is_bonded_dsi,
->>>                               msm_host->mode);
->>>
->>> -- 
->>> 2.40.1
->>>
-> 
-> -- 
-> With best wishes
-> Dmitry
+>> +
+>> +    eventfd_signal(iofd->ctx, 1);
+>> +    return 0;
+>> +}
+>> +
+>> +static struct gh_vm_io_handler_ops io_ops = {
+>> +    .write = gh_write_ioeventfd,
+>> +};
+>> +
+>> +static long gh_ioeventfd_bind(struct gh_vm_function_instance *f)
+>> +{
+>> +    const struct gh_fn_ioeventfd_arg *args = f->argp;
+>> +    struct gh_ioeventfd *iofd;
+>> +    struct eventfd_ctx *ctx;
+>> +    int ret;
+>> +
+>> +    if (f->arg_size != sizeof(*args))
+>> +        return -EINVAL;
+>> +
+>> +    /* All other flag bits are reserved for future use */
+>> +    if (args->flags & ~GH_IOEVENTFD_FLAGS_DATAMATCH)
+>> +        return -EINVAL;
+>> +
+>> +    /* must be natural-word sized, or 0 to ignore length */
+>> +    switch (args->len) {
+>> +    case 0:
+>> +    case 1:
+>> +    case 2:
+>> +    case 4:
+>> +    case 8:
+>> +        break;
+>> +    default:
+>> +        return -EINVAL;
+>> +    }
+>> +
+>> +    /* check for range overflow */
+>> +    if (overflows_type(args->addr + args->len, u64))
+>> +        return -EINVAL;
+>> +
+>> +    /* ioeventfd with no length can't be combined with DATAMATCH */
+>> +    if (!args->len && (args->flags & GH_IOEVENTFD_FLAGS_DATAMATCH))
+>> +        return -EINVAL;
+>> +
+>> +    ctx = eventfd_ctx_fdget(args->fd);
+>> +    if (IS_ERR(ctx))
+>> +        return PTR_ERR(ctx);
+>> +
+>> +    iofd = kzalloc(sizeof(*iofd), GFP_KERNEL);
+>> +    if (!iofd) {
+>> +        ret = -ENOMEM;
+>> +        goto err_eventfd;
+>> +    }
+>> +
+>> +    f->data = iofd;
+>> +    iofd->f = f;
+>> +
+>> +    iofd->ctx = ctx;
+>> +
+>> +    if (args->flags & GH_IOEVENTFD_FLAGS_DATAMATCH) {
+>> +        iofd->io_handler.datamatch = true;
+>> +        iofd->io_handler.len = args->len;
+>> +        iofd->io_handler.data = args->datamatch;
+>> +    }
+>> +    iofd->io_handler.addr = args->addr;
+>> +    iofd->io_handler.ops = &io_ops;
+>> +
+>> +    ret = gh_vm_add_io_handler(f->ghvm, &iofd->io_handler);
+>> +    if (ret)
+>> +        goto err_io_dev_add;
+>> +
+>> +    return 0;
+>> +
+>> +err_io_dev_add:
+>> +    kfree(iofd);
+>> +err_eventfd:
+>> +    eventfd_ctx_put(ctx);
+>> +    return ret;
+>> +}
+>> +
+>> +static void gh_ioevent_unbind(struct gh_vm_function_instance *f)
+>> +{
+>> +    struct gh_ioeventfd *iofd = f->data;
+>> +
+>> +    eventfd_ctx_put(iofd->ctx);
+>> +    gh_vm_remove_io_handler(iofd->f->ghvm, &iofd->io_handler);
+>> +    kfree(iofd);
+>> +}
+>> +
+>> +static bool gh_ioevent_compare(const struct gh_vm_function_instance *f,
+>> +                const void *arg, size_t size)
+>> +{
+>> +    const struct gh_fn_ioeventfd_arg *instance = f->argp,
+>> +                     *other = arg;
+>> +
+>> +    if (sizeof(*other) != size)
+>> +        return false;
+>> +
+>> +    return instance->addr == other->addr;
+>> +}
+>> +
+>> +DECLARE_GH_VM_FUNCTION_INIT(ioeventfd, GH_FN_IOEVENTFD, 3,
+>> +                gh_ioeventfd_bind, gh_ioevent_unbind,
+>> +                gh_ioevent_compare);
+>> +MODULE_DESCRIPTION("Gunyah ioeventfd VM Function");
+>> +MODULE_LICENSE("GPL");
+>> diff --git a/include/uapi/linux/gunyah.h b/include/uapi/linux/gunyah.h
+>> index 0c480c622686..fa1cae7419d2 100644
+>> --- a/include/uapi/linux/gunyah.h
+>> +++ b/include/uapi/linux/gunyah.h
+>> @@ -79,10 +79,13 @@ struct gh_vm_dtb_config {
+>>    *              Return: file descriptor to manipulate the vcpu.
+>>    * @GH_FN_IRQFD: register eventfd to assert a Gunyah doorbell
+>>    *               &struct gh_fn_desc.arg is a pointer to &struct 
+>> gh_fn_irqfd_arg
+>> + * @GH_FN_IOEVENTFD: register ioeventfd to trigger when VM faults on 
+>> parameter
+>> + *                   &struct gh_fn_desc.arg is a pointer to &struct 
+>> gh_fn_ioeventfd_arg
+>>    */
+>>   enum gh_fn_type {
+>>       GH_FN_VCPU = 1,
+>>       GH_FN_IRQFD,
+>> +    GH_FN_IOEVENTFD,
+>>   };
+>>   #define GH_FN_MAX_ARG_SIZE        256
+>> @@ -134,6 +137,40 @@ struct gh_fn_irqfd_arg {
+>>       __u32 padding;
+>>   };
+>> +/**
+>> + * enum gh_ioeventfd_flags - flags for use in gh_fn_ioeventfd_arg
+>> + * @GH_IOEVENTFD_FLAGS_DATAMATCH: the event will be signaled only if the
+>> + *                                written value to the registered 
+>> address is
+>> + *                                equal to &struct 
+>> gh_fn_ioeventfd_arg.datamatch
+>> + */
+>> +enum gh_ioeventfd_flags {
+>> +    GH_IOEVENTFD_FLAGS_DATAMATCH    = 1UL << 0,
+>> +};
+>> +
+>> +/**
+>> + * struct gh_fn_ioeventfd_arg - Arguments to create an ioeventfd 
+>> function
+>> + * @datamatch: data used when GH_IOEVENTFD_DATAMATCH is set
+>> + * @addr: Address in guest memory
+>> + * @len: Length of access
+>> + * @fd: When ioeventfd is matched, this eventfd is written
+>> + * @flags: See &enum gh_ioeventfd_flags
+>> + * @padding: padding bytes
+>> + *
+>> + * Create this function with &GH_VM_ADD_FUNCTION using type 
+>> &GH_FN_IOEVENTFD.
+>> + *
+>> + * Attaches an ioeventfd to a legal mmio address within the guest. A 
+>> guest write
+>> + * in the registered address will signal the provided event instead 
+>> of triggering
+>> + * an exit on the GH_VCPU_RUN ioctl.
+>> + */
+>> +struct gh_fn_ioeventfd_arg {
+>> +    __u64 datamatch;
+>> +    __u64 addr;        /* legal mmio address */
+>> +    __u32 len;         /* 1, 2, 4, or 8 bytes; or 0 to ignore length */
+>> +    __s32 fd;
+>> +    __u32 flags;
+>> +    __u32 padding;
+>> +};
+>> +
+>>   /**
+>>    * struct gh_fn_desc - Arguments to create a VM function
+>>    * @type: Type of the function. See &enum gh_fn_type.
 > 
