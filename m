@@ -2,68 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B28272AA7F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jun 2023 11:13:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A4E4772AAE2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jun 2023 12:27:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231221AbjFJJNF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Jun 2023 05:13:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33060 "EHLO
+        id S233717AbjFJK1N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Jun 2023 06:27:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230167AbjFJJNF (ORCPT
+        with ESMTP id S230308AbjFJK1M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Jun 2023 05:13:05 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A7293AA6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jun 2023 02:13:03 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-9768fd99c0cso772415566b.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jun 2023 02:13:03 -0700 (PDT)
+        Sat, 10 Jun 2023 06:27:12 -0400
+Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8406035BC
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jun 2023 03:27:10 -0700 (PDT)
+Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-565e6beb7aaso24755777b3.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jun 2023 03:27:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686388382; x=1688980382;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=el5t90CX0KZg71r46Aq58k54+iI17+shn/UMUNopsqg=;
-        b=vyZHYGkzfoQFiksS2nO9MCLsI4oWI8oIDoMCiYbDQBfFmuFFn4A6OtLOy+DaTw8W6K
-         /jQURkeJNjvHhzUzaF+4Mntf/OsbwSdLEqt6U5alv05OJxgvqZRQbMliqb2NUF2/nRpo
-         qq36oSJhzCuqd2byp4w4TEFqx/5nsR+fQVsmMYPo2MijngwnxtwCdoCYSFIrCpMXhwe4
-         nStfU0z/j4rcTy/J61LeJxtBgoHFUR2TWIaAQkLxMevFdBgDj7bKv9DA7MLmxwyfr2UQ
-         TpC97pYtzE39afHUviXBsKzPB9vg+w88NrX7ecG1RCs9j4o9uE+S/DA9yP17ADNcwj32
-         7pGA==
+        d=linaro.org; s=google; t=1686392829; x=1688984829;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=to8oZ7L4fC+T49c7O2RXAbP8nJvmZRdwodJiT0ePUgs=;
+        b=VtfoIIBi2gjH8mp/MVxkQnvYC58lGIrKyL1oN9HdMV2QIktHsfiMb7nG1eK+hsPfAn
+         c96AHXJCFWm4BYoTbUUw+s0mrnbCF0m4V1D4E1TAAUEdHPVBdztK+sR/B53Aeu3DA2WF
+         bR5lRfV0MrgBcPEMC3yfPypP3eQswXm2ZNAfBVQg/Recb+MgBGw8THISDUfL3IROQF/h
+         zi6pMuJO66v17QGaf9n6xOa6kIb5OkjVHwJODl23BlrrbGcSedvUm8WyAatcB5Qvfsp1
+         DiGywfyCvuey04+bMIQJZYw3HaIpFrJmLVUafIO6QhGwZUv50Relfvjfkbo0XLyywpbY
+         9CdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686388382; x=1688980382;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1686392829; x=1688984829;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=el5t90CX0KZg71r46Aq58k54+iI17+shn/UMUNopsqg=;
-        b=HSMTnO3k/vngfpLtYrrY5qii3b8zc9gPoxCa8xT3LS4iaB9d7otcY9WSbXzNrgjlzt
-         IV35smUDHevEpFqlv0JtjqpCXzL34iNGrcCSryE0wHo66DfLWw56TCMC5v4mqHsqLzZC
-         mcbecM0aA+D/N5by2DaymskpG5eJEZtDdIYgrFu5hIcbhcR2wlGiYYAVhyZJBvFTgRe2
-         aGcCMWWX4AEcDmN8SpaNQHMS0uPdSFNZdXmCjoioxsNyf5SrHFDEiBvi3cKq1RtF3Wn8
-         ncjFacnon0rSw8pCZ4dOteX+ng81n3Dp9j3msdLL+IHBfl9elPkPXL3+XJcrUT52OZl7
-         lozg==
-X-Gm-Message-State: AC+VfDxR3PcGCJwx0tXP0+2sMDmJsYnS/MZLzDmTURNyjyfyJKRN+XXJ
-        EcgTR+DRCsY+JgD2oz8hO2GKQw==
-X-Google-Smtp-Source: ACHHUZ4Dv2xzIY5s4ZpE8GvaEA/T+zxaJeqRlsL+nIBhW18zrjRMuyKw4lwlg0Drr7r2jioTo7bLpg==
-X-Received: by 2002:a17:907:7202:b0:970:28c:f960 with SMTP id dr2-20020a170907720200b00970028cf960mr4219760ejc.17.1686388381629;
-        Sat, 10 Jun 2023 02:13:01 -0700 (PDT)
-Received: from krzk-bin.. ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id b7-20020a170906038700b009787b18c253sm2347012eja.181.2023.06.10.02.13.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jun 2023 02:13:01 -0700 (PDT)
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
-Subject: [GIT PULL] pinctrl: dt-bindings: qcom: for v6.5
-Date:   Sat, 10 Jun 2023 11:12:58 +0200
-Message-Id: <20230610091258.4903-1-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.34.1
+        bh=to8oZ7L4fC+T49c7O2RXAbP8nJvmZRdwodJiT0ePUgs=;
+        b=czfGRp1A34ppORsaT2BIC3ZLQUR5932rbQF/cIY3+wjivFRcG3U4FNw9xlXu59zrQU
+         jPlAaSM3r1e8sWmNM5VD6EQLmYasE7obNJgvNLwKUMmVS9l1myGKboPfgHU1m7JB4sEc
+         Jufdbb8GzRufKeo5+0VUjjKAPDvAEX0UfJbP8tK9F17Sr3qkg35fKK6Cd7BC9WIIDhPn
+         RprqBhZFGxIMOSfDERzTtnFjHDCFE4rtrTSBJaobB/pXxHWakrRe7mhOYVnyTCeJtL7m
+         z0TVcx5WcVGpuMOHwPme3KDngdbgubTbDrnamNJmxEjo59LL8br721iriMASGZDibw2n
+         x8kw==
+X-Gm-Message-State: AC+VfDwQqcodzieTEnjsO4h6XPwNg66HNf1EvePLZcrVZhDu+DofTSQK
+        3cW6/r5KwNyd2Pw+tsg7SRUdTmGv0vASM21MV4Jy9A==
+X-Google-Smtp-Source: ACHHUZ6OSKyE7M/AKX5RnhMGNLiUXry/Ecu8iTy734i4jNpdrWoupgCkvkkVY50NCYi04PH1Fm8GCv9SFC9Tcqs5ltM=
+X-Received: by 2002:a81:8841:0:b0:565:9a3d:a3f9 with SMTP id
+ y62-20020a818841000000b005659a3da3f9mr3920231ywf.9.1686392829544; Sat, 10 Jun
+ 2023 03:27:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1676286704-818-1-git-send-email-quic_kalyant@quicinc.com>
+ <1676286704-818-3-git-send-email-quic_kalyant@quicinc.com> <20230301082403.vm4ejqod3ba5wkzp@SoMainline.org>
+In-Reply-To: <20230301082403.vm4ejqod3ba5wkzp@SoMainline.org>
+From:   Yongqin Liu <yongqin.liu@linaro.org>
+Date:   Sat, 10 Jun 2023 18:26:58 +0800
+Message-ID: <CAMSo37VmhB1-PUp1qu8gaxOXtu98eEYmWd71FOai+cwLb-JvSg@mail.gmail.com>
+Subject: Re: [PATCH v4 2/4] drm/msm/dpu: add DSPPs into reservation upon a CTM request
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Kalyan Thota <quic_kalyant@quicinc.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@chromium.org,
+        dianders@chromium.org, swboyd@chromium.org,
+        quic_vpolimer@quicinc.com, dmitry.baryshkov@linaro.org,
+        quic_abhinavk@quicinc.com, Amit Pundir <amit.pundir@linaro.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        John Stultz <jstultz@google.com>
+Content-Type: text/plain; charset="UTF-8"
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -74,33 +75,117 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit ac9a78681b921877518763ba0e89202254349d1b:
+Hi, Kalyan Thota
 
-  Linux 6.4-rc1 (2023-05-07 13:34:35 -0700)
+It seems this change caused some drm problems with the Android build.
+I tested with one Android build that based on the ACK android-mainline
+kernel[1], and there are the message printed like
+    01-01 06:51:50.541   504   504 E         :
+[drm:_dpu_rm_check_lm_and_get_connected_blks] [dpu error]failed to get
+dspp on lm 0
+    01-01 06:51:50.551   504   504 E         :
+[drm:_dpu_rm_check_lm_and_get_connected_blks] [dpu error]failed to get
+dspp on lm 0
+    01-01 06:51:50.560   504   504 E         :
+[drm:_dpu_rm_check_lm_and_get_connected_blks] [dpu error]failed to get
+dspp on lm 0
+    01-01 06:51:50.570   504   504 E         :
+[drm:_dpu_rm_check_lm_and_get_connected_blks] [dpu error]failed to get
+dspp on lm 0
+    01-01 06:51:50.579   504   504 E         :
+[drm:_dpu_rm_make_reservation] [dpu error]unable to find appropriate
+mixers
+    01-01 06:51:50.588   504   504 E         : [drm:dpu_rm_reserve]
+[dpu error]failed to reserve hw resources: -119
+For details, please check the link here: https://termbin.com/31lc
 
-are available in the Git repository at:
+If I revert this commit, then the problem will be gone.
+Could you please help check if there is any problem with this commit?
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/krzk/linux-dt.git tags/qcom-pinctrl-6.5
+[1]: https://android.googlesource.com/kernel/common/+/refs/heads/android-mainline
 
-for you to fetch changes up to 647c16ac7b15fc8fe6ab679690ac2ffe7c53abd3:
+Thanks,
+Yongqin Liu
 
-  dt-bindings: pinctrl: qcom,sm7150-tlmm: simplify with unevaluatedProperties (2023-05-12 18:23:51 +0200)
+On Wed, 1 Mar 2023 at 16:24, Marijn Suijten
+<marijn.suijten@somainline.org> wrote:
+>
+> On 2023-02-13 03:11:42, Kalyan Thota wrote:
+> > Add DSPP blocks into the topology for reservation, if there
+> > is a CTM request for that composition.
+> >
+> > Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+>
+> > ---
+> > Changes in v1:
+> > - Minor nits (Dmitry)
+> >
+> > Changes in v2:
+> > - Populate DSPPs into the reservation only if CTM is requested (Dmitry)
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 15 ++++++---------
+> >  1 file changed, 6 insertions(+), 9 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > index 9c6817b..46d2a5c 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> > @@ -545,7 +545,8 @@ bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
+> >  static struct msm_display_topology dpu_encoder_get_topology(
+> >                       struct dpu_encoder_virt *dpu_enc,
+> >                       struct dpu_kms *dpu_kms,
+> > -                     struct drm_display_mode *mode)
+> > +                     struct drm_display_mode *mode,
+> > +                     struct drm_crtc_state *crtc_state)
+> >  {
+> >       struct msm_display_topology topology = {0};
+> >       int i, intf_count = 0;
+> > @@ -563,8 +564,7 @@ static struct msm_display_topology dpu_encoder_get_topology(
+> >        * 1 LM, 1 INTF
+> >        * 2 LM, 1 INTF (stream merge to support high resolution interfaces)
+> >        *
+> > -      * Adding color blocks only to primary interface if available in
+> > -      * sufficient number
+> > +      * Add dspps to the reservation requirements if ctm is requested
+> >        */
+> >       if (intf_count == 2)
+> >               topology.num_lm = 2;
+> > @@ -573,11 +573,8 @@ static struct msm_display_topology dpu_encoder_get_topology(
+> >       else
+> >               topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
+> >
+> > -     if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
+> > -             if (dpu_kms->catalog->dspp &&
+> > -                     (dpu_kms->catalog->dspp_count >= topology.num_lm))
+> > -                     topology.num_dspp = topology.num_lm;
+> > -     }
+> > +     if (crtc_state->ctm)
+> > +             topology.num_dspp = topology.num_lm;
+> >
+> >       topology.num_enc = 0;
+> >       topology.num_intf = intf_count;
+> > @@ -643,7 +640,7 @@ static int dpu_encoder_virt_atomic_check(
+> >               }
+> >       }
+> >
+> > -     topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
+> > +     topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state);
+> >
+> >       /* Reserve dynamic resources now. */
+> >       if (!ret) {
+> > --
+> > 2.7.4
+> >
 
-----------------------------------------------------------------
-Qualcomm pinctrl Devicetree bindings changes for v6.5
 
-Simplify remaining bindings with usage of unevaluatedProperties.  This
-will have the same functional effect with less code.
 
-----------------------------------------------------------------
-Krzysztof Kozlowski (4):
-      dt-bindings: pinctrl: qcom,ipq9574-tlmm: simplify with unevaluatedProperties
-      dt-bindings: pinctrl: qcom,sc8280xp-tlmm: simplify with unevaluatedProperties
-      dt-bindings: pinctrl: qcom,qcm2290-tlmm: simplify with unevaluatedProperties
-      dt-bindings: pinctrl: qcom,sm7150-tlmm: simplify with unevaluatedProperties
-
- .../devicetree/bindings/pinctrl/qcom,ipq9574-tlmm.yaml       | 11 +----------
- .../devicetree/bindings/pinctrl/qcom,qcm2290-tlmm.yaml       | 11 +----------
- .../devicetree/bindings/pinctrl/qcom,sc8280xp-tlmm.yaml      | 12 +-----------
- .../devicetree/bindings/pinctrl/qcom,sm7150-tlmm.yaml        | 11 +----------
- 4 files changed, 4 insertions(+), 41 deletions(-)
+-- 
+Best Regards,
+Yongqin Liu
+---------------------------------------------------------------
+#mailing list
+linaro-android@lists.linaro.org
+http://lists.linaro.org/mailman/listinfo/linaro-android
