@@ -2,79 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 086DA72A6C0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jun 2023 01:34:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3E2D72A6ED
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jun 2023 02:00:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233413AbjFIXeK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 19:34:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35690 "EHLO
+        id S229854AbjFJAAZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 20:00:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43380 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233180AbjFIXc6 (ORCPT
+        with ESMTP id S229470AbjFJAAY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 19:32:58 -0400
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98B9449DA
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 16:30:06 -0700 (PDT)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-97668583210so344288466b.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jun 2023 16:30:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686353405; x=1688945405;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sRJNZvhPfChugpU45dpKbNHROAGD/XkdSPesxkM64W4=;
-        b=IRxj3bpySsOIcF59fi+Nm+OI/h4Tj5Ohn5xMWOmsKZNb6xyAtkunphLLlOrJZ8mV0x
-         iBtUkCAVE1FT3vNkjGzLG44k2kLNSaASFLPjNe58vFPzEW9LfRdNumXw28VmCpdJ5TsP
-         v0p4iU+XwwznP4A8f9SrGOvGttYPMyYMXEIFYXy+p7Z2bWQGqYZC/T7OqSATyNRDrseJ
-         WbT69Rrgjd8VpchDe4U4/QB2GtfmnhFdQ3TKKNzA0aF+55SZ2JXWk3KABij6IMqOijF+
-         yrAN1tcyn9Qm8Qg288rZCiNtUe29PpgUR3uIcGfKFS3auDHzR8/uYmm0/5dNaOgRS4dj
-         ouaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686353405; x=1688945405;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sRJNZvhPfChugpU45dpKbNHROAGD/XkdSPesxkM64W4=;
-        b=fj1FudquRFlyA367W4D35RmPXh831vcUV47YBvNUWD27n2Em4ntWgmLRXA8O464DCm
-         KlGLclJEFPHSsVGEXmRKOMOD+U7xxWL5eMnPpPaOro/DVKIX+hMQe0Dh8BKjGgka8nGD
-         SrrSWznTYaVJutI2ZPsQKcBM4rLp2/Cpxo4SNIxZ7qxLOc28LFtrgor0t0hepZO0zD0b
-         WycFZ4ZF60hMMprAJ6qb8f9YUxunSKsDFyQegJ9WZOXPTGJo1YsdDq0YzyDpoXeAeXpq
-         K5sJB5HZSxNNPgovKBfHDV1mCxppduKmDWe64NCr7j6XhOsG3RSbW63bSRhUBvW2oanF
-         ZStQ==
-X-Gm-Message-State: AC+VfDykXY9KWCPEFPIb3CWNU2UGJehbUkYdMyyo5lOfFVkS+UbeDvRp
-        lmY0ys2WQroIQjP6wDsRWXgarA==
-X-Google-Smtp-Source: ACHHUZ44eca7J/0+Y92PN9Lr2lBwob3EwuyN/85XFHhyDKMBwJtN3Ss2aXY1/jCZDO078fJIjAfhkg==
-X-Received: by 2002:a17:906:dc8d:b0:96f:bc31:5e1c with SMTP id cs13-20020a170906dc8d00b0096fbc315e1cmr3079045ejc.47.1686353404945;
-        Fri, 09 Jun 2023 16:30:04 -0700 (PDT)
-Received: from [10.10.15.130] ([192.130.178.91])
-        by smtp.gmail.com with ESMTPSA id o7-20020a170906358700b00969cbd5718asm1825596ejb.48.2023.06.09.16.30.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jun 2023 16:30:04 -0700 (PDT)
-Message-ID: <5de320ad-4b95-38ee-7a71-ba76de1a7cf5@linaro.org>
-Date:   Sat, 10 Jun 2023 02:30:03 +0300
+        Fri, 9 Jun 2023 20:00:24 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC177CE
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 17:00:22 -0700 (PDT)
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 359NhYIT028385;
+        Sat, 10 Jun 2023 00:00:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : from : to : cc : references : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=G+t0EXnw41DiMmjm25D5UjowmOGfVudWiv2L1IIEZ2c=;
+ b=DWI0MKZyQYQz2XdHDV1yoKcsMNpBKzfU+RX6IfgVOcKx2d8r9ZFc8SIH1FWCC5fORhOq
+ nKSF0MnKSHLD52AT1QGhu88cXQLUzlnrcAtRUNRuyLx1b+OcPvX6Ww2I3EOaGyvogT4N
+ 6/ob/c5xX3+Hzbfol3hKmV0BkTbGhUmBdwi1D/CU44EOf1+gWT2f6FQ0n+N/vYwTIvZB
+ 7vPfGhAZtL4FPpeZOjo8gnUEakNaO+5ga+0h7diLb/+2xJ82MHGHAqX00Z/bw+xmSrT4
+ wvma70ohOa+idSVfrjrvLGHJWgO9gO1/BTcqk3iGLMNV7vS7eNcOsiRQsHiTxtu6mx24 ag== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r3t70jccu-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 10 Jun 2023 00:00:14 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35A00DhY009993
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sat, 10 Jun 2023 00:00:13 GMT
+Received: from [10.110.51.236] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 9 Jun 2023
+ 17:00:11 -0700
+Message-ID: <a144f18a-bffb-d9ed-dd2e-12977404d71e@quicinc.com>
+Date:   Fri, 9 Jun 2023 17:00:08 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v6 6/6] drm/msm/dsi: Document DSC related pclk_rate and
- hdisplay calculations
-Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230405-add-dsc-support-v6-0-95eab864d1b6@quicinc.com>
- <20230405-add-dsc-support-v6-6-95eab864d1b6@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230405-add-dsc-support-v6-6-95eab864d1b6@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+Subject: Re: [RFC PATCH v2 12/13] drm/msm/dpu: add support for virtual planes
+Content-Language: en-US
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        Stephen Boyd <swboyd@chromium.org>
+References: <20230321011821.635977-1-dmitry.baryshkov@linaro.org>
+ <20230321011821.635977-13-dmitry.baryshkov@linaro.org>
+ <78594a9a-f834-f2d2-1d8a-3e13e18c5477@quicinc.com>
+ <43a856be-e6a4-b9ff-eb38-d1e9ff857754@linaro.org>
+ <7d8372ff-6cb3-5bcb-ff9f-386937bff218@quicinc.com>
+In-Reply-To: <7d8372ff-6cb3-5bcb-ff9f-386937bff218@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: eruSdcBDXdnIlcMEMjC9PKCvSJo2C-jE
+X-Proofpoint-ORIG-GUID: eruSdcBDXdnIlcMEMjC9PKCvSJo2C-jE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-09_17,2023-06-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ lowpriorityscore=0 mlxscore=0 spamscore=0 clxscore=1015 suspectscore=0
+ bulkscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=999 phishscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306090202
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -83,50 +86,187 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/06/2023 01:57, Jessica Zhang wrote:
-> Add documentation comments explaining the pclk_rate and hdisplay math
-> related to DSC.
-> 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/dsi/dsi_host.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index fb1d3a25765f..aeaadc18bc7b 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -564,6 +564,13 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
->   static unsigned long dsi_adjust_pclk_for_compression(const struct drm_display_mode *mode,
->   		const struct drm_dsc_config *dsc)
->   {
-> +	/*
-> +	 * Adjust the pclk rate by calculating a new hdisplay proportional to
-> +	 * the compression ratio such that:
-> +	 *     new_hdisplay = old_hdisplay * target_bpp / source_bpp
 
-I'd say `* compressed_bpp / uncompressed_bpp'. This is easier to follow 
-than source and target.
 
-> +	 *
-> +	 * Porches need not be adjusted during compression.
-> +	 */
->   	int new_hdisplay = DIV_ROUND_UP(mode->hdisplay * drm_dsc_get_bpp_int(dsc),
->   			dsc->bits_per_component * 3);
->   
-> @@ -961,6 +968,9 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->   
->   		/* Divide the display by 3 but keep back/font porch and
->   		 * pulse width same
-> +		 *
-> +		 * hdisplay will be divided by 3 here to account for the fact
-> +		 * that DPU sends 3 bytes per pclk cycle to DSI.
->   		 */
->   		h_total -= hdisplay;
->   		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
+On 6/8/2023 12:51 PM, Abhinav Kumar wrote:
 > 
+> 
+> On 6/7/2023 2:56 PM, Dmitry Baryshkov wrote:
+>> On 08/06/2023 00:05, Abhinav Kumar wrote:
+>>>
+>>>
+>>> On 3/20/2023 6:18 PM, Dmitry Baryshkov wrote:
+>>>> Only several SSPP blocks support such features as YUV output or 
+>>>> scaling,
+>>>> thus different DRM planes have different features.  Properly utilizing
+>>>> all planes requires the attention of the compositor, who should
+>>>> prefer simpler planes to YUV-supporting ones. Otherwise it is very easy
+>>>> to end up in a situation when all featureful planes are already
+>>>> allocated for simple windows, leaving no spare plane for YUV playback.
+>>>>
+>>>> To solve this problem make all planes virtual. Each plane is registered
+>>>> as if it supports all possible features, but then at the runtime during
+>>>> the atomic_check phase the driver selects backing SSPP block for each
+>>>> plane.
+>>>>
+>>>> Note, this does not provide support for using two different SSPP blocks
+>>>> for a single plane or using two rectangles of an SSPP to drive two
+>>>> planes. Each plane still gets its own SSPP and can utilize either a 
+>>>> solo
+>>>> rectangle or both multirect rectangles depending on the resolution.
+>>>>
+>>>> Note #2: By default support for virtual planes is turned off and the
+>>>> driver still uses old code path with preallocated SSPP block for each
+>>>> plane. To enable virtual planes, pass 'msm.dpu_use_virtual_planes=1'
+>>>> kernel parameter.
+>>>>
+>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>> ---
+>>>
+>>> There will be some rebase needed to switch back to encoder based 
+>>> allocation so I am not going to comment on those parts and will let 
+>>> you handle that when you post v3.
+>>>
+>>> But my questions/comments below are for other things.
+>>>
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  59 +++++--
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c   | 120 ++++++++++----
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h   |   4 +
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 187 
+>>>> ++++++++++++++++++----
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |  24 ++-
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c    |  65 ++++++++
+>>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h    |  24 +++
+>>>>   7 files changed, 413 insertions(+), 70 deletions(-)
+>>>>
+>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c 
+>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>> index 8ef191fd002d..cdece21b81c9 100644
+>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>>>> @@ -1273,6 +1273,29 @@ static int dpu_crtc_assign_resources(struct 
+>>>> drm_crtc *crtc, struct drm_crtc_stat
+>>>>       return 0;
+>>>>   }
+>>>> +static int dpu_crtc_assign_plane_resources(struct drm_crtc *crtc, 
+>>>> struct drm_crtc_state *crtc_state)
+>>>> +{
+>>>> +    struct dpu_global_state *global_state;
+>>>> +    struct drm_plane *plane;
+>>>> +    int rc;
+>>>> +
+>>>> +    global_state = dpu_kms_get_global_state(crtc_state->state);
+>>>> +    if (IS_ERR(global_state))
+>>>> +        return PTR_ERR(global_state);
+>>>> +
+>>>> +    dpu_rm_release_all_sspp(global_state, crtc);
+>>>> +
+>>>> +    drm_atomic_crtc_state_for_each_plane(plane, crtc_state) {
+>>>> +        rc = dpu_plane_virtual_assign_resources(plane, crtc,
+>>>> +                            global_state,
+>>>> +                            crtc_state->state);
+>>>> +        if (rc)
+>>>> +            return rc;
+>>>> +    }
+>>>> +
+>>>> +    return 0;
+>>>> +}
+>>>> +
+>>>>   static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
+>>>>           struct drm_atomic_state *state)
+>>>>   {
+>>>> @@ -1281,7 +1304,6 @@ static int dpu_crtc_atomic_check(struct 
+>>>> drm_crtc *crtc,
+>>>>       struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
+>>>>       struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc_state);
+>>>> -    const struct drm_plane_state *pstate;
+>>>>       struct drm_plane *plane;
+>>>>       int rc = 0;
+>>>> @@ -1294,6 +1316,13 @@ static int dpu_crtc_atomic_check(struct 
+>>>> drm_crtc *crtc,
+>>>>               return rc;
+>>>>       }
+>>>> +    if (dpu_use_virtual_planes &&
+>>>> +        crtc_state->planes_changed) {
+>>>> +        rc = dpu_crtc_assign_plane_resources(crtc, crtc_state);
+>>>> +        if (rc < 0)
+>>>> +            return rc;
+>>>> +    }
+>>>
+>>> Can you please explain a bit more about the planes_changed condition?
+>>>
+>>> 1) Are we doing this because the plane's atomic check happens before 
+>>> the CRTC atomic check?
+>>
+>> Yes. Another alternative would be to stop using 
+>> drm_atomic_helper_check() and implement our own code instead, 
+>> inverting the plane / CRTC check order.
+>>
+> 
+> I am fine with that too but as you noted in (3), if planes_changed will 
+> be set by those functions and you can drop explicit assignment of it in 
+> this patch, that will be the best option for me.
+> 
+>>>
+>>> 2) So the DRM core sets this to true already when plane is switching 
+>>> CRTCs or being connected to a CRTC for the first time, we need to 
+>>> handle the conditions additional to that right?
+>>
+>> Nit: it is not possible to switch CRTCs. Plane first has to be 
+>> disconnected and then to be connected to another CRTC.
+>>
+>>>
+>>> 3) If (2) is correct, arent there other conditions then to be handled 
+>>> for setting planes_changed to true?
+>>>
+>>> Some examples include, switching from a scaling to non-scaling 
+>>> scenario, needing rotation vs not needing etc.
+>>
+>> Setting the plane_changed is not required. Both 
+>> drm_atomic_helper_disable_plane() and drm_atomic_helper_update_plane() 
+>> will add the plane to the state. Then drm_atomic_helper_check_planes() 
+>> will call drm_atomic_helper_plane_changed(), setting 
+>> {old_,new_}crtc_state->planes_changed.
+>>
+>> I should check if the format check below is required or not. It looks 
+>> like I can drop that clause too.
+>>
+> 
+> Yes, please do. From the above explanation, it seems like we dont need 
+> to explicity set it again ourselves for format change.
+> 
+>>
 
--- 
-With best wishes
-Dmitry
+I have a basic doubt about the split between dpu_plane_atomic_check Vs 
+dpu_crtc_atomic_check() because the next patch is also relying heavily 
+on the fact that plane's atomic check comes first and then crtc.
+
+Please help me understand this better.
+
+-> dpu_plane_virtual_atomic_check() is called and today that doesnt seem 
+to do much :
+
+	- marks visible as false if there is no fb
+	(wouldnt the DRM core already do this?)
+	- caches the format
+	(this part is used in the dpu_crtc_atomic_check())
+
+-> dpu_crtc_atomic_check() gets called which calls 
+dpu_crtc_assign_plane_resources() which finally reserves the SSPPs to 
+back the planes
+
+-> perform dpu_plane_atomic_check() on each of the planes on the CRTC by 
+checking the planes attached to CRTC state
+
+1) What would be wrong to continue using dpu_plane_atomic_check() 
+instead of the newly created dpu_plane_virtual_atomic_check() to get the 
+backing SSPPs because it seems we need to maintain lot of information in 
+the dpu_plane_state to manage co-ordination between the two atomic 
+checks? A big portion of even the next patch does that.
+
+2) Even dpu_plane_atomic_check() /  dpu_plane_virtual_atomic_check() is 
+called only for each plane in the CRTC state, so why all the movement to 
+crtc's atomic_check()? I am missing the link here. Was it done only to 
+move all resource allocation to CRTC ID?
+
 
