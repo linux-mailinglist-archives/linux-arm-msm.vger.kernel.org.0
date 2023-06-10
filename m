@@ -2,271 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E3E2D72A6ED
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jun 2023 02:00:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2F1772A6F6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jun 2023 02:14:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229854AbjFJAAZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jun 2023 20:00:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43380 "EHLO
+        id S230414AbjFJAOv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jun 2023 20:14:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46040 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229470AbjFJAAY (ORCPT
+        with ESMTP id S230027AbjFJAOt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jun 2023 20:00:24 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC177CE
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jun 2023 17:00:22 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 359NhYIT028385;
-        Sat, 10 Jun 2023 00:00:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=G+t0EXnw41DiMmjm25D5UjowmOGfVudWiv2L1IIEZ2c=;
- b=DWI0MKZyQYQz2XdHDV1yoKcsMNpBKzfU+RX6IfgVOcKx2d8r9ZFc8SIH1FWCC5fORhOq
- nKSF0MnKSHLD52AT1QGhu88cXQLUzlnrcAtRUNRuyLx1b+OcPvX6Ww2I3EOaGyvogT4N
- 6/ob/c5xX3+Hzbfol3hKmV0BkTbGhUmBdwi1D/CU44EOf1+gWT2f6FQ0n+N/vYwTIvZB
- 7vPfGhAZtL4FPpeZOjo8gnUEakNaO+5ga+0h7diLb/+2xJ82MHGHAqX00Z/bw+xmSrT4
- wvma70ohOa+idSVfrjrvLGHJWgO9gO1/BTcqk3iGLMNV7vS7eNcOsiRQsHiTxtu6mx24 ag== 
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r3t70jccu-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 10 Jun 2023 00:00:14 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35A00DhY009993
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Sat, 10 Jun 2023 00:00:13 GMT
-Received: from [10.110.51.236] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Fri, 9 Jun 2023
- 17:00:11 -0700
-Message-ID: <a144f18a-bffb-d9ed-dd2e-12977404d71e@quicinc.com>
-Date:   Fri, 9 Jun 2023 17:00:08 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [RFC PATCH v2 12/13] drm/msm/dpu: add support for virtual planes
-Content-Language: en-US
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+        Fri, 9 Jun 2023 20:14:49 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C2D335BE;
+        Fri,  9 Jun 2023 17:14:48 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 157FC6424C;
+        Sat, 10 Jun 2023 00:14:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B54C433EF;
+        Sat, 10 Jun 2023 00:14:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686356087;
+        bh=KrcLbB7SmNUxRy8U/TG329U42wcgeQxwfCDRJvUdGZQ=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=haDeLcPr+E8CC4ALAD5S2uv95JaoCGIqMbin6vpwdRsLnceynLBVRZ4LvvyenTn2u
+         CugzsmgfBi9UmIdWjfINm0TwQVNQrRgr7xaqNflvBYkVl2SaoLpo5/1ZuD49HB5rPS
+         p6VysZs0gT06hXaMDusxt3QSqPBCcZNOmB/hoepYVYvMLqLdmrVUoUdxzcKiE/iMIR
+         E9yC/qGeT2C3iz/j/ESjiQd4HOJgEH6KCf69QBOfFEegYj2NDSBSCKV+0Z03HPqZIY
+         dE2PcT5nhT7Yd9J6dAeso8YRH9+yJiCneH8pKJO8qxbKrvagHIac9Ah9VDJsd7PRrU
+         EaKCaWljvKG3A==
+Date:   Fri, 9 Jun 2023 17:18:15 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-CC:     <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        Stephen Boyd <swboyd@chromium.org>
-References: <20230321011821.635977-1-dmitry.baryshkov@linaro.org>
- <20230321011821.635977-13-dmitry.baryshkov@linaro.org>
- <78594a9a-f834-f2d2-1d8a-3e13e18c5477@quicinc.com>
- <43a856be-e6a4-b9ff-eb38-d1e9ff857754@linaro.org>
- <7d8372ff-6cb3-5bcb-ff9f-386937bff218@quicinc.com>
-In-Reply-To: <7d8372ff-6cb3-5bcb-ff9f-386937bff218@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: eruSdcBDXdnIlcMEMjC9PKCvSJo2C-jE
-X-Proofpoint-ORIG-GUID: eruSdcBDXdnIlcMEMjC9PKCvSJo2C-jE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-09_17,2023-06-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- lowpriorityscore=0 mlxscore=0 spamscore=0 clxscore=1015 suspectscore=0
- bulkscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=999 phishscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306090202
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        Georgi Djakov <djakov@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Taniya Das <quic_tdas@quicinc.com>, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH v6 3/4] clk: qcom: cbf-msm8996: scale CBF clock according
+ to the CPUfreq
+Message-ID: <20230610001815.zgo23zlwo3z6e3y6@ripper>
+References: <20230512001334.2983048-1-dmitry.baryshkov@linaro.org>
+ <20230512001334.2983048-4-dmitry.baryshkov@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230512001334.2983048-4-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/8/2023 12:51 PM, Abhinav Kumar wrote:
+On Fri, May 12, 2023 at 03:13:33AM +0300, Dmitry Baryshkov wrote:
+> Turn CBF into the interconnect provider. Scale CBF frequency (bandwidth)
+> according to CPU frequencies.
 > 
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Georgi,
+
+Dmitry tells me that you picked up the interconnect patches, I don't see
+an immutable branch in your tree with them, but this patch has a build
+time dependency on them. Could you please pick this through your tree as
+well?
+
+Acked-by: Bjorn Andersson <andersson@kernel.org>
+
+Regards,
+Bjorn
+
+> ---
+>  drivers/clk/qcom/Kconfig        |  1 +
+>  drivers/clk/qcom/clk-cbf-8996.c | 60 ++++++++++++++++++++++++++++++++-
+>  2 files changed, 60 insertions(+), 1 deletion(-)
 > 
-> On 6/7/2023 2:56 PM, Dmitry Baryshkov wrote:
->> On 08/06/2023 00:05, Abhinav Kumar wrote:
->>>
->>>
->>> On 3/20/2023 6:18 PM, Dmitry Baryshkov wrote:
->>>> Only several SSPP blocks support such features as YUV output or 
->>>> scaling,
->>>> thus different DRM planes have different features.  Properly utilizing
->>>> all planes requires the attention of the compositor, who should
->>>> prefer simpler planes to YUV-supporting ones. Otherwise it is very easy
->>>> to end up in a situation when all featureful planes are already
->>>> allocated for simple windows, leaving no spare plane for YUV playback.
->>>>
->>>> To solve this problem make all planes virtual. Each plane is registered
->>>> as if it supports all possible features, but then at the runtime during
->>>> the atomic_check phase the driver selects backing SSPP block for each
->>>> plane.
->>>>
->>>> Note, this does not provide support for using two different SSPP blocks
->>>> for a single plane or using two rectangles of an SSPP to drive two
->>>> planes. Each plane still gets its own SSPP and can utilize either a 
->>>> solo
->>>> rectangle or both multirect rectangles depending on the resolution.
->>>>
->>>> Note #2: By default support for virtual planes is turned off and the
->>>> driver still uses old code path with preallocated SSPP block for each
->>>> plane. To enable virtual planes, pass 'msm.dpu_use_virtual_planes=1'
->>>> kernel parameter.
->>>>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> ---
->>>
->>> There will be some rebase needed to switch back to encoder based 
->>> allocation so I am not going to comment on those parts and will let 
->>> you handle that when you post v3.
->>>
->>> But my questions/comments below are for other things.
->>>
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  59 +++++--
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c   | 120 ++++++++++----
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h   |   4 +
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 187 
->>>> ++++++++++++++++++----
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |  24 ++-
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c    |  65 ++++++++
->>>>   drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h    |  24 +++
->>>>   7 files changed, 413 insertions(+), 70 deletions(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c 
->>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->>>> index 8ef191fd002d..cdece21b81c9 100644
->>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->>>> @@ -1273,6 +1273,29 @@ static int dpu_crtc_assign_resources(struct 
->>>> drm_crtc *crtc, struct drm_crtc_stat
->>>>       return 0;
->>>>   }
->>>> +static int dpu_crtc_assign_plane_resources(struct drm_crtc *crtc, 
->>>> struct drm_crtc_state *crtc_state)
->>>> +{
->>>> +    struct dpu_global_state *global_state;
->>>> +    struct drm_plane *plane;
->>>> +    int rc;
->>>> +
->>>> +    global_state = dpu_kms_get_global_state(crtc_state->state);
->>>> +    if (IS_ERR(global_state))
->>>> +        return PTR_ERR(global_state);
->>>> +
->>>> +    dpu_rm_release_all_sspp(global_state, crtc);
->>>> +
->>>> +    drm_atomic_crtc_state_for_each_plane(plane, crtc_state) {
->>>> +        rc = dpu_plane_virtual_assign_resources(plane, crtc,
->>>> +                            global_state,
->>>> +                            crtc_state->state);
->>>> +        if (rc)
->>>> +            return rc;
->>>> +    }
->>>> +
->>>> +    return 0;
->>>> +}
->>>> +
->>>>   static int dpu_crtc_atomic_check(struct drm_crtc *crtc,
->>>>           struct drm_atomic_state *state)
->>>>   {
->>>> @@ -1281,7 +1304,6 @@ static int dpu_crtc_atomic_check(struct 
->>>> drm_crtc *crtc,
->>>>       struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
->>>>       struct dpu_crtc_state *cstate = to_dpu_crtc_state(crtc_state);
->>>> -    const struct drm_plane_state *pstate;
->>>>       struct drm_plane *plane;
->>>>       int rc = 0;
->>>> @@ -1294,6 +1316,13 @@ static int dpu_crtc_atomic_check(struct 
->>>> drm_crtc *crtc,
->>>>               return rc;
->>>>       }
->>>> +    if (dpu_use_virtual_planes &&
->>>> +        crtc_state->planes_changed) {
->>>> +        rc = dpu_crtc_assign_plane_resources(crtc, crtc_state);
->>>> +        if (rc < 0)
->>>> +            return rc;
->>>> +    }
->>>
->>> Can you please explain a bit more about the planes_changed condition?
->>>
->>> 1) Are we doing this because the plane's atomic check happens before 
->>> the CRTC atomic check?
->>
->> Yes. Another alternative would be to stop using 
->> drm_atomic_helper_check() and implement our own code instead, 
->> inverting the plane / CRTC check order.
->>
+> diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+> index 12be3e2371b3..85869e7a9f16 100644
+> --- a/drivers/clk/qcom/Kconfig
+> +++ b/drivers/clk/qcom/Kconfig
+> @@ -48,6 +48,7 @@ config QCOM_CLK_APCS_MSM8916
+>  config QCOM_CLK_APCC_MSM8996
+>  	tristate "MSM8996 CPU Clock Controller"
+>  	select QCOM_KRYO_L2_ACCESSORS
+> +	select INTERCONNECT_CLK if INTERCONNECT
+>  	depends on ARM64
+>  	help
+>  	  Support for the CPU clock controller on msm8996 devices.
+> diff --git a/drivers/clk/qcom/clk-cbf-8996.c b/drivers/clk/qcom/clk-cbf-8996.c
+> index cfd567636f4e..1e23b734abb3 100644
+> --- a/drivers/clk/qcom/clk-cbf-8996.c
+> +++ b/drivers/clk/qcom/clk-cbf-8996.c
+> @@ -5,11 +5,15 @@
+>  #include <linux/bitfield.h>
+>  #include <linux/clk.h>
+>  #include <linux/clk-provider.h>
+> +#include <linux/interconnect-clk.h>
+> +#include <linux/interconnect-provider.h>
+>  #include <linux/of.h>
+>  #include <linux/module.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/regmap.h>
+>  
+> +#include <dt-bindings/interconnect/qcom,msm8996-cbf.h>
+> +
+>  #include "clk-alpha-pll.h"
+>  #include "clk-regmap.h"
+>  
+> @@ -223,6 +227,49 @@ static const struct regmap_config cbf_msm8996_regmap_config = {
+>  	.val_format_endian	= REGMAP_ENDIAN_LITTLE,
+>  };
+>  
+> +#ifdef CONFIG_INTERCONNECT
+> +
+> +/* Random ID that doesn't clash with main qnoc and OSM */
+> +#define CBF_MASTER_NODE 2000
+> +
+> +static int qcom_msm8996_cbf_icc_register(struct platform_device *pdev, struct clk_hw *cbf_hw)
+> +{
+> +	struct device *dev = &pdev->dev;
+> +	struct clk *clk = devm_clk_hw_get_clk(dev, cbf_hw, "cbf");
+> +	const struct icc_clk_data data[] = {
+> +		{ .clk = clk, .name = "cbf", },
+> +	};
+> +	struct icc_provider *provider;
+> +
+> +	provider = icc_clk_register(dev, CBF_MASTER_NODE, ARRAY_SIZE(data), data);
+> +	if (IS_ERR(provider))
+> +		return PTR_ERR(provider);
+> +
+> +	platform_set_drvdata(pdev, provider);
+> +
+> +	return 0;
+> +}
+> +
+> +static int qcom_msm8996_cbf_icc_remove(struct platform_device *pdev)
+> +{
+> +	struct icc_provider *provider = platform_get_drvdata(pdev);
+> +
+> +	icc_clk_unregister(provider);
+> +
+> +	return 0;
+> +}
+> +#define qcom_msm8996_cbf_icc_sync_state icc_sync_state
+> +#else
+> +static int qcom_msm8996_cbf_icc_register(struct platform_device *pdev,  struct clk_hw *cbf_hw)
+> +{
+> +	dev_warn(&pdev->dev, "CONFIG_INTERCONNECT is disabled, CBF clock is fixed\n");
+> +
+> +	return 0;
+> +}
+> +#define qcom_msm8996_cbf_icc_remove(pdev) (0)
+> +#define qcom_msm8996_cbf_icc_sync_state NULL
+> +#endif
+> +
+>  static int qcom_msm8996_cbf_probe(struct platform_device *pdev)
+>  {
+>  	void __iomem *base;
+> @@ -281,7 +328,16 @@ static int qcom_msm8996_cbf_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		return ret;
+>  
+> -	return devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, &cbf_mux.clkr.hw);
+> +	ret = devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, &cbf_mux.clkr.hw);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return qcom_msm8996_cbf_icc_register(pdev, &cbf_mux.clkr.hw);
+> +}
+> +
+> +static int qcom_msm8996_cbf_remove(struct platform_device *pdev)
+> +{
+> +	return qcom_msm8996_cbf_icc_remove(pdev);
+>  }
+>  
+>  static const struct of_device_id qcom_msm8996_cbf_match_table[] = {
+> @@ -292,9 +348,11 @@ MODULE_DEVICE_TABLE(of, qcom_msm8996_cbf_match_table);
+>  
+>  static struct platform_driver qcom_msm8996_cbf_driver = {
+>  	.probe = qcom_msm8996_cbf_probe,
+> +	.remove = qcom_msm8996_cbf_remove,
+>  	.driver = {
+>  		.name = "qcom-msm8996-cbf",
+>  		.of_match_table = qcom_msm8996_cbf_match_table,
+> +		.sync_state = qcom_msm8996_cbf_icc_sync_state,
+>  	},
+>  };
+>  
+> -- 
+> 2.39.2
 > 
-> I am fine with that too but as you noted in (3), if planes_changed will 
-> be set by those functions and you can drop explicit assignment of it in 
-> this patch, that will be the best option for me.
-> 
->>>
->>> 2) So the DRM core sets this to true already when plane is switching 
->>> CRTCs or being connected to a CRTC for the first time, we need to 
->>> handle the conditions additional to that right?
->>
->> Nit: it is not possible to switch CRTCs. Plane first has to be 
->> disconnected and then to be connected to another CRTC.
->>
->>>
->>> 3) If (2) is correct, arent there other conditions then to be handled 
->>> for setting planes_changed to true?
->>>
->>> Some examples include, switching from a scaling to non-scaling 
->>> scenario, needing rotation vs not needing etc.
->>
->> Setting the plane_changed is not required. Both 
->> drm_atomic_helper_disable_plane() and drm_atomic_helper_update_plane() 
->> will add the plane to the state. Then drm_atomic_helper_check_planes() 
->> will call drm_atomic_helper_plane_changed(), setting 
->> {old_,new_}crtc_state->planes_changed.
->>
->> I should check if the format check below is required or not. It looks 
->> like I can drop that clause too.
->>
-> 
-> Yes, please do. From the above explanation, it seems like we dont need 
-> to explicity set it again ourselves for format change.
-> 
->>
-
-I have a basic doubt about the split between dpu_plane_atomic_check Vs 
-dpu_crtc_atomic_check() because the next patch is also relying heavily 
-on the fact that plane's atomic check comes first and then crtc.
-
-Please help me understand this better.
-
--> dpu_plane_virtual_atomic_check() is called and today that doesnt seem 
-to do much :
-
-	- marks visible as false if there is no fb
-	(wouldnt the DRM core already do this?)
-	- caches the format
-	(this part is used in the dpu_crtc_atomic_check())
-
--> dpu_crtc_atomic_check() gets called which calls 
-dpu_crtc_assign_plane_resources() which finally reserves the SSPPs to 
-back the planes
-
--> perform dpu_plane_atomic_check() on each of the planes on the CRTC by 
-checking the planes attached to CRTC state
-
-1) What would be wrong to continue using dpu_plane_atomic_check() 
-instead of the newly created dpu_plane_virtual_atomic_check() to get the 
-backing SSPPs because it seems we need to maintain lot of information in 
-the dpu_plane_state to manage co-ordination between the two atomic 
-checks? A big portion of even the next patch does that.
-
-2) Even dpu_plane_atomic_check() /  dpu_plane_virtual_atomic_check() is 
-called only for each plane in the CRTC state, so why all the movement to 
-crtc's atomic_check()? I am missing the link here. Was it done only to 
-move all resource allocation to CRTC ID?
-
-
