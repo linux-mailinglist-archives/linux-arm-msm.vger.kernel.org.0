@@ -2,76 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 16A1A72ADC1
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jun 2023 19:32:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B06A072ADDA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jun 2023 19:46:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229533AbjFJRcq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Jun 2023 13:32:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35618 "EHLO
+        id S230147AbjFJRqe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Jun 2023 13:46:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229513AbjFJRcp (ORCPT
+        with ESMTP id S229735AbjFJRqd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Jun 2023 13:32:45 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 32E21358E
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jun 2023 10:32:43 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f61d79b0f2so3564616e87.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jun 2023 10:32:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686418361; x=1689010361;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JQu74s25ls9POighIl7gZ03lsKq9gsf4hCEdE8861u4=;
-        b=nZAoJPlghX8fHGZ2URg9nVNifyfbCmnejJNvLSdSBllT21r4GR1OSYI2YQGasHTY7x
-         nA5MwxciKOdezEW9mpu2GSrpednLSVGFa5JlZKCY62fGLCkbSYllK2RzZYla0etllMzw
-         F4O1kuuIYgdBOSp5P+kjgT1F2IAAOvYFiLRPVKLvs/b6WxT7K2SXDmRjwM0efcsGK7QY
-         o0XFTiJmEQEHXhjQWhAR4TOyigszh3W9klvcYZDh1PoEci/dlPKYnLoL3r7l7nasD/f7
-         9TEZTpaVO8/ykxWWh6LmfwbUP3bmCBzboxuG4ZxkVVvWrCQsCs+j/spaYjF7J3trJc2R
-         gAuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686418361; x=1689010361;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JQu74s25ls9POighIl7gZ03lsKq9gsf4hCEdE8861u4=;
-        b=XMur+p+I5cl6B5vqd07DeeK+/MvgTDVyXuah61o8o0U6xC16JsdvgjEPg9fokYw0AE
-         rWGe2nryyAyd9+IaQJNommr6GNODSraVUnsuYDDlEZlfPzLSBKtObOpkE8gG+NuZ7qNN
-         KUJY83lRNASMngZRvxthJSAdUmgmeNNVUi1N98grW9wKbkNG6xCK019SkJKwgr/EG28m
-         ZE+sdyF4hLkWaDFI6VgMGjz3IcokISj+AXm8x6yKdzkxbWJrX8wg0MkZpGHQrDj2LWwT
-         Wikaqrc/xeGg0UxvtZshPtb4n+jk1sEW2A+wP0vax8i4qfADHFy1axXIxICtbqD4HTKX
-         wCpw==
-X-Gm-Message-State: AC+VfDz712cuOIAcO87g3SPo4TNNtYdqBJRV3BUOcTueqSgpS6ufO/tT
-        sQj6hbTjEhawTqi3qNmym/OL4g==
-X-Google-Smtp-Source: ACHHUZ7PaJwtk9smGoBBSgqKJRBS2J08L8u2bZpNESImgXR/YzVX0FobRP4HHzOkjavRye3LxXGbzw==
-X-Received: by 2002:a19:ab12:0:b0:4f3:bbfe:db4e with SMTP id u18-20020a19ab12000000b004f3bbfedb4emr2228022lfe.56.1686418361393;
-        Sat, 10 Jun 2023 10:32:41 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id k12-20020ac2456c000000b004f37c22b410sm905925lfm.67.2023.06.10.10.32.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 10 Jun 2023 10:32:41 -0700 (PDT)
-Message-ID: <af9364df-df56-f267-0369-83395d620c0f@linaro.org>
-Date:   Sat, 10 Jun 2023 19:32:39 +0200
+        Sat, 10 Jun 2023 13:46:33 -0400
+Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.80])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B39C23592;
+        Sat, 10 Jun 2023 10:46:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1686419187; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=fUeeLWR7YnRTKnToU7natYqSH5ieWF82K2mSOSnL8fjXZELFDMkOSKiJ4s3n49SyG6
+    1SS7eoStzQqStrHwvmONYJWxrPn1lU1uv2GmhID27XaCcs52jqJvbdRUpMdCMqNDg4CQ
+    pBgE365xVAdpGYk+j3y4UhquddgR2XuREs+4hIICohPe9FJfZfu7fTZkfAbFonZbu59V
+    +pTVHMHP61F8tkZx+qLwi+EJtrxbiMeql5vt30uz9Veb5qRBw1A4eG1ZK/ZBhEgytrN4
+    SlGC8wkNLfegvUzVNempFXXStCy5kn7hx3NbQ8Kkl34hwhPDOfnr9Wi8+QdghIQu234S
+    iCvw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686419187;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=oH0BizfUqIgRQXEwNc0Sz7uUUantI/rz95IfbtW4CCY=;
+    b=UIwEkX4rbnQ5XOMvX0lnTQL/b3Q5pqNx2rD/SirWP1DImDNkCSq/Tv3h48dFoqDhpZ
+    josn0KbeJmYkTvzzyBXu5VoG1w+H2Yp0jvxFiceUopx6Gz74Z9R+GC20OpQUEmNYMQUi
+    NgUqAK7+hRGnWCETi4DlPlUUryaJIY+3M1AsbRVJLrByKwLPVJWpR7ZzfESrWHGNXVs+
+    QEMzX7U9QZKvR2r6uDSHtCO+DGg1of5ugRSZ+q6/u1qDb1fPAS5rdOgNmboK1U1uclIp
+    vBXjvhUPO4pg01fDyBBIwlZ4ftxM7a6gnKrgRO/rnjtLwSg1bkcLCaOrmn6RoajKpXfs
+    pphA==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo02
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686419187;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=oH0BizfUqIgRQXEwNc0Sz7uUUantI/rz95IfbtW4CCY=;
+    b=D2oa5zsiirWQyzRZHTEJFTfn1CqEbaDAPCT5K08CJUl8TOjpaTOoQbDPjFePBtyiVt
+    4lWZZcrB5XNZNM+RsC+R41IyeNEcjJ9BVuiTEiz+6cjEFmKx/V9nhX3bFerhj3br64oy
+    +o+UMFWHwmX/l5X3kjv3XwnWWB+ab6wJA4Q5in3rcZaeyTZ0UoyD5gF0Wf7hfTnXaL1V
+    Ty3jNFYmC6m8xvpA7LTUyEjqQifxkEcOb3CmiJfOUq8DYY+wNMwi/cJnhqmNAH3plwbv
+    P7dlqFtz5IazG+1hsED/n8kcQ3BXmkY/8ZvaYVqyusUDhSWbuUgKvr3gYSg/AyoQDOCu
+    u5UA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686419187;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=oH0BizfUqIgRQXEwNc0Sz7uUUantI/rz95IfbtW4CCY=;
+    b=PoK9ULrn+np78Qiop0zEDKZxLPrXA9MXDJt2WZU4q51xlOU64hOd0Vs2a8745WEfc4
+    D7uLdwko/+ontrwAYjCg==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA9J/h"
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.5.3 DYNA|AUTH)
+    with ESMTPSA id Z82ec2z5AHkRQaE
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Sat, 10 Jun 2023 19:46:27 +0200 (CEST)
+Date:   Sat, 10 Jun 2023 19:46:25 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Evan Green <evgreen@chromium.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v2 19/22] interconnect: qcom: icc-rpm: Fix bucket number
+Message-ID: <ZIS28eN1JEuXV2AT@gerhold.net>
+References: <20230526-topic-smd_icc-v2-0-e5934b07d813@linaro.org>
+ <20230526-topic-smd_icc-v2-19-e5934b07d813@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH RFC] soc: qcom: icc-bwmon: Set default thresholds
- dynamically
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230610-topic-bwmon_opp-v1-1-65125d7493fc@linaro.org>
- <22aa4744-7167-11fe-b21e-0b0af07f51c3@linaro.org>
-In-Reply-To: <22aa4744-7167-11fe-b21e-0b0af07f51c3@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230526-topic-smd_icc-v2-19-e5934b07d813@linaro.org>
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,134 +96,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 10.06.2023 14:02, Konrad Dybcio wrote:
+On Fri, Jun 09, 2023 at 10:19:24PM +0200, Konrad Dybcio wrote:
+> SMD RPM only provides two buckets, one each for the active-only and
+> active-sleep RPM contexts. Use the correct constant to allocate and
+> operate on them.
 > 
+> Fixes: dcbce7b0a79c ("interconnect: qcom: icc-rpm: Support multiple buckets")
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> ---
+>  drivers/interconnect/qcom/icc-rpm.c | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
 > 
-> On 10.06.2023 14:01, Konrad Dybcio wrote:
->> Currently we use predefined threshold values. This works, but does not
->> really scale well, as they may differ between SoCs due to LPDDR generation
->> and/or DDR controller setup. All of the data we need for that is already
->> provided in the device tree, anyway.
->>
->> Change that to:
->> * 0 for low (as we've been doing up until now)
->> * BW_MIN/4 for mid
->> * BW_MIN for high
->>
->> The mid value is chosen for a "low enough" bw to nudge bwmon into
->> slowing down if the bw starts too high from the bootloader.
->>
->> The high value corresponds to the upper barrier which - when crossed -
->> raises an interrupt in the third zone, signaling a need for upping
->> the bw.
->>
->> This only changes the values programmed at probe time, as high and med
->> thresholds are updated at interrupt, based on the OPP table from DT.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
-> I think I hit a b4 bug and it didn't send this notice..:
-> 
-> Depends on: https://lore.kernel.org/linux-arm-msm/d403e841-7a86-1f07-c634-1990902826f1@linaro.org/
-> 
-> Konrad
->>  drivers/soc/qcom/icc-bwmon.c | 28 +++++++---------------------
->>  1 file changed, 7 insertions(+), 21 deletions(-)
->>
->> diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
->> index 40068a285913..99cbdb3cf531 100644
->> --- a/drivers/soc/qcom/icc-bwmon.c
->> +++ b/drivers/soc/qcom/icc-bwmon.c
->> @@ -165,9 +165,6 @@ enum bwmon_fields {
->>  struct icc_bwmon_data {
->>  	unsigned int sample_ms;
->>  	unsigned int count_unit_kb; /* kbytes */
->> -	unsigned int default_highbw_kbps;
->> -	unsigned int default_medbw_kbps;
->> -	unsigned int default_lowbw_kbps;
->>  	u8 zone1_thres_count;
->>  	u8 zone3_thres_count;
->>  	unsigned int quirks;
->> @@ -564,20 +561,21 @@ static void bwmon_set_threshold(struct icc_bwmon *bwmon,
->>  static void bwmon_start(struct icc_bwmon *bwmon)
->>  {
->>  	const struct icc_bwmon_data *data = bwmon->data;
->> +	u32 bw_low = 0;
->>  	int window;
->>  
->> +	/* No need to check for errors, as this must have succeeded before. */
->> +	dev_pm_opp_find_bw_ceil(bwmon->dev, &bw_low, 0);
->> +
->>  	bwmon_clear_counters(bwmon, true);
->>  
->>  	window = mult_frac(bwmon->data->sample_ms, HW_TIMER_HZ, MSEC_PER_SEC);
->>  	/* Maximum sampling window: 0xffffff for v4 and 0xfffff for v5 */
->>  	regmap_field_write(bwmon->regs[F_SAMPLE_WINDOW], window);
->>  
->> -	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_HIGH],
->> -			    data->default_highbw_kbps);
->> -	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_MED],
->> -			    data->default_medbw_kbps);
->> -	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_LOW],
->> -			    data->default_lowbw_kbps);
->> +	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_HIGH], bw_low);
->> +	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_MED], div_u64(bw_low, 4));
-Giving it a spin on more platforms, div4 seems to be.. too harsh for some?
+> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
+> index 6d40815c5401..3ac47b818afe 100644
+> --- a/drivers/interconnect/qcom/icc-rpm.c
+> +++ b/drivers/interconnect/qcom/icc-rpm.c
+> [...]
+> @@ -275,7 +275,7 @@ static int qcom_icc_bw_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+>  	if (!tag)
+>  		tag = QCOM_ICC_TAG_ALWAYS;
+>  
+> -	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
+> +	for (i = 0; i < QCOM_SMD_RPM_STATE_NUM; i++) {
+>  		if (tag & BIT(i)) {
 
-MSM8998 boots fine if I divide it by 2, but crashes when I divide by 4..
+Hm, I think QCOM_ICC_NUM_BUCKETS is actually intentional here. There is
+a hint about this in the description of the commit in your Fixes line:
 
-Note sure what to make out of it..
+> This patch studies the implementation from interconnect rpmh driver to
+> support multiple buckets.  The rpmh driver provides three buckets for
+> AMC, WAKE, and SLEEP; this driver only needs to use WAKE and SLEEP
+> buckets, but we keep the same way with rpmh driver, this can allow us
+> to reuse the DT binding and avoid to define duplicated data structures.
 
-Konrad
->> +	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_LOW], 0);
->>  
->>  	regmap_field_write(bwmon->regs[F_THRESHOLD_COUNT_ZONE0],
->>  			   BWMON_THRESHOLD_COUNT_ZONE0_DEFAULT);
->> @@ -807,9 +805,6 @@ static int bwmon_remove(struct platform_device *pdev)
->>  static const struct icc_bwmon_data msm8998_bwmon_data = {
->>  	.sample_ms = 4,
->>  	.count_unit_kb = 1024,
->> -	.default_highbw_kbps = 4800 * 1024, /* 4.8 GBps */
->> -	.default_medbw_kbps = 512 * 1024, /* 512 MBps */
->> -	.default_lowbw_kbps = 0,
->>  	.zone1_thres_count = 16,
->>  	.zone3_thres_count = 1,
->>  	.quirks = BWMON_HAS_GLOBAL_IRQ,
->> @@ -822,9 +817,6 @@ static const struct icc_bwmon_data msm8998_bwmon_data = {
->>  static const struct icc_bwmon_data sdm845_cpu_bwmon_data = {
->>  	.sample_ms = 4,
->>  	.count_unit_kb = 64,
->> -	.default_highbw_kbps = 4800 * 1024, /* 4.8 GBps */
->> -	.default_medbw_kbps = 512 * 1024, /* 512 MBps */
->> -	.default_lowbw_kbps = 0,
->>  	.zone1_thres_count = 16,
->>  	.zone3_thres_count = 1,
->>  	.quirks = BWMON_HAS_GLOBAL_IRQ,
->> @@ -835,9 +827,6 @@ static const struct icc_bwmon_data sdm845_cpu_bwmon_data = {
->>  static const struct icc_bwmon_data sdm845_llcc_bwmon_data = {
->>  	.sample_ms = 4,
->>  	.count_unit_kb = 1024,
->> -	.default_highbw_kbps = 800 * 1024, /* 800 MBps */
->> -	.default_medbw_kbps = 256 * 1024, /* 256 MBps */
->> -	.default_lowbw_kbps = 0,
->>  	.zone1_thres_count = 16,
->>  	.zone3_thres_count = 1,
->>  	.regmap_fields = sdm845_llcc_bwmon_reg_fields,
->> @@ -847,9 +836,6 @@ static const struct icc_bwmon_data sdm845_llcc_bwmon_data = {
->>  static const struct icc_bwmon_data sc7280_llcc_bwmon_data = {
->>  	.sample_ms = 4,
->>  	.count_unit_kb = 64,
->> -	.default_highbw_kbps = 800 * 1024, /* 800 MBps */
->> -	.default_medbw_kbps = 256 * 1024, /* 256 MBps */
->> -	.default_lowbw_kbps = 0,
->>  	.zone1_thres_count = 16,
->>  	.zone3_thres_count = 1,
->>  	.quirks = BWMON_NEEDS_FORCE_CLEAR,
->>
->> ---
->> base-commit: 49dd846128d56199db2e3bcfca42d87fbc82b212
->> change-id: 20230610-topic-bwmon_opp-f995bbdd18bd
->>
->> Best regards,
+As far as I understand, the idea was to reuse the definitions in
+qcom,icc.h and just ignore the AMC bucket for now. AFAIU AMC (or rather
+the lack thereof) is basically caching: Sending requests without AMC bit
+set is delayed until the next rpmh_flush() call that happens when
+entering a deep idle state. It requires some work but I guess
+theoretically one could implement exactly the same for RPM.
+
+What you're actually doing here is not fixing the commit but changing
+the bindings. On MSM8909 I defined the ICC path for CPU<->RAM like this:
+
+	interconnects = <&bimc MAS_APPS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+			 &bimc SLV_EBI QCOM_ICC_TAG_ACTIVE_ONLY>;
+
+Per definition in qcom,icc.h:
+
+	QCOM_ICC_TAG_ACTIVE_ONLY = (AMC | WAKE) = (BIT(0) | BIT(1))
+
+Without your patch series this behaves correctly. It results in an
+active-only vote.
+
+The change of behavior is in PATCH 17/22 "interconnect: qcom: icc-rpm:
+Control bus rpmcc from icc". It silently switches from
+QCOM_ICC_BUCKET_WAKE (1) and QCOM_ICC_BUCKET_SLEEP (2) to
+QCOM_SMD_RPM_ACTIVE_STATE (0) and QCOM_SMD_RPM_SLEEP_STATE (1).
+
+In other words, QCOM_ICC_TAG_ACTIVE_ONLY (BIT(0) | BIT(1)) now results
+in an active+sleep vote, not an active-only one. :)
+
+There doesn't seem to be an upstream user of the ICC tags/buckets for
+icc-rpm yet so personally I would be fine with changing it. However,
+then qcom,icc.h should get a clear comment that it's rpmh-only and we
+should define a new qcom,icc-rpm.h.
+
+Or perhaps we should just drop this patch and continue using
+QCOM_ICC_BUCKET_WAKE and QCOM_ICC_BUCKET_SLEEP as before?
+
+Thanks,
+Stephan
