@@ -2,152 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BF1A672AAFA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jun 2023 12:54:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09B9872AB24
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jun 2023 13:36:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230284AbjFJKyk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Jun 2023 06:54:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50832 "EHLO
+        id S229645AbjFJLgJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Jun 2023 07:36:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229639AbjFJKyj (ORCPT
+        with ESMTP id S229483AbjFJLgI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Jun 2023 06:54:39 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC92C35B6;
-        Sat, 10 Jun 2023 03:54:38 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6A486612AE;
-        Sat, 10 Jun 2023 10:54:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335A7C4339B;
-        Sat, 10 Jun 2023 10:54:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686394477;
-        bh=0QL4JPqiS9rPR/J8636yim1R6Z9Esq9EoitzY1XDxRY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Ql2HMHMwRW4FUFZI1lVKn6agtm3I+pGHDGGoUT9Jy2J71zVZZpoLXUB4/LG/iPEXr
-         PB1NrjDQYFH9BJvGngMHo47PZaSfUteZ9wAaQPW+S6bvNEbdC+Aed7VpWYHtcAEHvf
-         2uzwuDdTG/JzxcMRlKe+us9BJvah5caX3Phmlt20tSZU96m6wueb2/p8rF94SdNM7w
-         Nf5lzTuXtuTznqqIF9Eu7luEXj1uNhnj1aqqPyuP/7UFfT1y/mwC73lqNBcPbJ1K/e
-         u9jjpfC504UdF0J+9LgTlJLcQAeMTZ0Biy925ds7H9lNc+AT9YhBRH7Wc0gsXMwhNk
-         i35yGz06OB9wQ==
-Date:   Sat, 10 Jun 2023 12:54:34 +0200
-From:   Andi Shyti <andi.shyti@kernel.org>
-To:     Shuai Jiang <d202180596@hust.edu.cn>
+        Sat, 10 Jun 2023 07:36:08 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 736FA35AC;
+        Sat, 10 Jun 2023 04:36:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1686396961; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=Wlh6Fee3sleiKNPPl5zqaNVVPre2TvHTs4ulzWrkUfYpq6GR/09PHgVW9h2bE7D6sA
+    pBti7ImnxKU+KgQdf/Rr4zIlN7rCGEZgAjnJS4NaH1uAjW4vBgLj1j4eLC4PqoekTWbL
+    iFtDuqrAURMFWig79t7tUNz2VizWFxFvINzRg7SY6/UmrMJeGI7bNPgNW/XMEBVI4cFE
+    WUwAMj6qA4NA7tcIZTitxx3lDZwJ/jsiu/f0QWofLF5C3jvHaAS66wmt+XRD9Zr9sVbk
+    hv8SGc2r+IJCUfvhWJKVivVNlQV312LTG1+SmgJKMwtan81RUbONo7UVXGK9CXKYMByk
+    cgoQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686396961;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=nDB1y1N2WopiUplThbjpnQ4XX807sJsuOewXiYz174Q=;
+    b=oU6g+HVTNvROF4pExWuoDEN7F2g4LQmmQy7DLg6Fk7XaP0943EmweCqGkDqADHcs/A
+    fMBGJ2ufxVwIm6LAKVsZEq06g5sS95n4tgfUJSpFYa6r4NryJwyKED/8BlXC8LSIECeT
+    b8N32s5H72mcpg/WvMe34pVkMZr4Ca5ePEkvVsL3hkj+3Aye+H3DySR/4Qp8EhWamLGx
+    jDKoT7R0YvVjO7TllobSQsXjvuPHYelLC3NQ8hBOa089Avw5fJJInZ6NH7REfbwadqS9
+    zrg2enI31JvDX0uy1FIFNi+VtgEUumjUpEElOEXLzsYkLZM34kDdrqfLgklbWCcKs663
+    W1hQ==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686396961;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=nDB1y1N2WopiUplThbjpnQ4XX807sJsuOewXiYz174Q=;
+    b=JQvk7RKorL08eGpU/0isyk7VkFSD/OU7lpRDMA8lkZ6G0QG+U36EUkoUfp9J3raPMN
+    5hWHCEPHny4nbxYpqvtXaCVSw9A1I3qYhyL2npsSUrdJvZ6MvLKodoNVT9XnHHmvjdpx
+    YX0i337vEeFs73jfYuafunphMsvJUg0wGQXk3DZo6SLNwX+wSn2eGCilg13kFLURJY61
+    4JN/Lm4QZrkxACrBaWKUwZwAI8adnk1L2A5KaWW/ZzSUFJyrf/wB1UZlSdTVaQqIgnuS
+    gz2jgCB7ldyzop/JIiTRSRqVDuNlDdu80xIzkx70E1zC2Nxiezsrss3iwh+NU7uSBCqX
+    eoXg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686396961;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=nDB1y1N2WopiUplThbjpnQ4XX807sJsuOewXiYz174Q=;
+    b=ozn3ARWpBUhJ+35pqEJmtGPaX5+bMeDC+BO/SY6Um1Lq847qVcFgQ1n/3hjZxHzOEX
+    qCKuFq4znFW3QnRqVgDA==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA9J/h"
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.5.3 DYNA|AUTH)
+    with ESMTPSA id Z82ec2z5ABa0QEI
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Sat, 10 Jun 2023 13:36:00 +0200 (CEST)
+Date:   Sat, 10 Jun 2023 13:35:53 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Wolfram Sang <wsa@kernel.org>,
-        "Ivan T. Ivanov" <iivanov@mm-sol.com>,
-        Sricharan R <sricharan@codeaurora.org>,
-        Naveen Kaje <nkaje@codeaurora.org>,
-        Austin Christ <austinwc@codeaurora.org>,
-        hust-os-kernel-patches@googlegroups.com,
-        Andy Gross <agross@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] i2c: qup: Add missing unwind goto in qup_i2c_probe()
-Message-ID: <20230610105434.3jbo6svcct37pn3q@intel.intel>
-References: <20230418135612.598-1-d202180596@hust.edu.cn>
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Evan Green <evgreen@chromium.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v2 04/22] clk: qcom: smd-rpm: Export clock scaling
+ availability
+Message-ID: <ZIRgGXwKD6mcgTRY@gerhold.net>
+References: <20230526-topic-smd_icc-v2-0-e5934b07d813@linaro.org>
+ <20230526-topic-smd_icc-v2-4-e5934b07d813@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230418135612.598-1-d202180596@hust.edu.cn>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230526-topic-smd_icc-v2-4-e5934b07d813@linaro.org>
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Apr 18, 2023 at 09:56:12PM +0800, Shuai Jiang wrote:
-> Smatch Warns:
-> 	drivers/i2c/busses/i2c-qup.c:1784 qup_i2c_probe()
-> 	warn: missing unwind goto?
+On Fri, Jun 09, 2023 at 10:19:09PM +0200, Konrad Dybcio wrote:
+> Before we issue a call to RPM through clk_smd_rpm_enable_scaling() the
+> clock rate requests will not be commited in hardware. This poses a
+> race threat since we're accessing the bus clocks directly from within
+> the interconnect framework.
 > 
-> The goto label "fail_runtime" and "fail" will disable qup->pclk, 
-> but here qup->pclk failed to obtain, in order to be consistent, 
-> change the direct return to goto label "fail_dma".
+> Add a marker to indicate that we're good to go with sending new requests
+> and export it so that it can be referenced from icc.
 > 
-> Fixes: 10c5a8425968 ("i2c: qup: New bus driver for the Qualcomm QUP I2C controller")
-> Fixes: 515da746983b ("i2c: qup: add ACPI support")
-
-These are not the correct Fixes, the correct fix is:
-
-Fixes: 9cedf3b2f099 ("i2c: qup: Add bam dma capabilities")
-
-> Signed-off-by: Shuai Jiang <d202180596@hust.edu.cn>
-> Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
-
-and
-
-Cc: <stable@vger.kernel.org> # v4.6+
-
-Patch looks good:
-
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org> 
-
-Andi
-
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > ---
-> The issue is found by static analysis and remains untested.
-> ---
->  drivers/i2c/busses/i2c-qup.c | 21 ++++++++++++++-------
->  1 file changed, 14 insertions(+), 7 deletions(-)
+>  drivers/clk/qcom/clk-smd-rpm.c   | 9 +++++++++
+>  include/linux/soc/qcom/smd-rpm.h | 2 ++
+>  2 files changed, 11 insertions(+)
 > 
-> diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
-> index 2e153f2f71b6..78682388e02e 100644
-> --- a/drivers/i2c/busses/i2c-qup.c
-> +++ b/drivers/i2c/busses/i2c-qup.c
-> @@ -1752,16 +1752,21 @@ static int qup_i2c_probe(struct platform_device *pdev)
->  	if (!clk_freq || clk_freq > I2C_MAX_FAST_MODE_PLUS_FREQ) {
->  		dev_err(qup->dev, "clock frequency not supported %d\n",
->  			clk_freq);
-> -		return -EINVAL;
-> +		ret = -EINVAL;
-> +		goto fail_dma;
+> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+> index 937cb1515968..482fe30ee6f0 100644
+> --- a/drivers/clk/qcom/clk-smd-rpm.c
+> +++ b/drivers/clk/qcom/clk-smd-rpm.c
+> @@ -151,6 +151,7 @@
+>  #define to_clk_smd_rpm(_hw) container_of(_hw, struct clk_smd_rpm, hw)
+>  
+>  static struct qcom_smd_rpm *rpmcc_smd_rpm;
+> +static bool smd_rpm_clk_scaling;
+>  
+>  struct clk_smd_rpm {
+>  	const int rpm_res_type;
+> @@ -385,6 +386,12 @@ static unsigned long clk_smd_rpm_recalc_rate(struct clk_hw *hw,
+>  	return r->rate;
+>  }
+>  
+> +bool qcom_smd_rpm_scaling_available(void)
+> +{
+> +	return smd_rpm_clk_scaling;
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_smd_rpm_scaling_available);
+> +
+>  static int clk_smd_rpm_enable_scaling(void)
+>  {
+>  	int ret;
+> @@ -410,6 +417,8 @@ static int clk_smd_rpm_enable_scaling(void)
+>  		return ret;
 >  	}
 >  
->  	qup->base = devm_platform_ioremap_resource(pdev, 0);
-> -	if (IS_ERR(qup->base))
-> -		return PTR_ERR(qup->base);
-> +	if (IS_ERR(qup->base)) {
-> +		ret = PTR_ERR(qup->base);
-> +		goto fail_dma;
-> +	}
->  
->  	qup->irq = platform_get_irq(pdev, 0);
-> -	if (qup->irq < 0)
-> -		return qup->irq;
-> +	if (qup->irq < 0) {
-> +		ret = qup->irq;
-> +		goto fail_dma;
-> +	}
->  
->  	if (has_acpi_companion(qup->dev)) {
->  		ret = device_property_read_u32(qup->dev,
-> @@ -1775,13 +1780,15 @@ static int qup_i2c_probe(struct platform_device *pdev)
->  		qup->clk = devm_clk_get(qup->dev, "core");
->  		if (IS_ERR(qup->clk)) {
->  			dev_err(qup->dev, "Could not get core clock\n");
-> -			return PTR_ERR(qup->clk);
-> +			ret = PTR_ERR(qup->clk);
-> +			goto fail_dma;
->  		}
->  
->  		qup->pclk = devm_clk_get(qup->dev, "iface");
->  		if (IS_ERR(qup->pclk)) {
->  			dev_err(qup->dev, "Could not get iface clock\n");
-> -			return PTR_ERR(qup->pclk);
-> +			ret = PTR_ERR(qup->pclk);
-> +			goto fail_dma;
->  		}
->  		qup_i2c_enable_clocks(qup);
->  		src_clk_freq = clk_get_rate(qup->clk);
-> -- 
-> 2.25.1
-> 
+> +	smd_rpm_clk_scaling = true;
+> +
+
+If you move the platform_device_register_data(&rpdev->dev,
+"icc_smd_rpm", ...) from drivers/soc/qcom/smd-rpm.c to here you can
+avoid the race completely and drop this API. I think that would be
+cleaner. And it will likely probe much faster because probe deferral
+is slow. :)
+
+Thanks,
+Stephan
