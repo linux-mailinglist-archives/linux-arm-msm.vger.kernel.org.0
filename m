@@ -2,190 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A4E4772AAE2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jun 2023 12:27:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF1A672AAFA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jun 2023 12:54:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233717AbjFJK1N (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Jun 2023 06:27:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45994 "EHLO
+        id S230284AbjFJKyk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Jun 2023 06:54:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50832 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230308AbjFJK1M (ORCPT
+        with ESMTP id S229639AbjFJKyj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Jun 2023 06:27:12 -0400
-Received: from mail-yw1-x112c.google.com (mail-yw1-x112c.google.com [IPv6:2607:f8b0:4864:20::112c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8406035BC
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jun 2023 03:27:10 -0700 (PDT)
-Received: by mail-yw1-x112c.google.com with SMTP id 00721157ae682-565e6beb7aaso24755777b3.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jun 2023 03:27:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686392829; x=1688984829;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=to8oZ7L4fC+T49c7O2RXAbP8nJvmZRdwodJiT0ePUgs=;
-        b=VtfoIIBi2gjH8mp/MVxkQnvYC58lGIrKyL1oN9HdMV2QIktHsfiMb7nG1eK+hsPfAn
-         c96AHXJCFWm4BYoTbUUw+s0mrnbCF0m4V1D4E1TAAUEdHPVBdztK+sR/B53Aeu3DA2WF
-         bR5lRfV0MrgBcPEMC3yfPypP3eQswXm2ZNAfBVQg/Recb+MgBGw8THISDUfL3IROQF/h
-         zi6pMuJO66v17QGaf9n6xOa6kIb5OkjVHwJODl23BlrrbGcSedvUm8WyAatcB5Qvfsp1
-         DiGywfyCvuey04+bMIQJZYw3HaIpFrJmLVUafIO6QhGwZUv50Relfvjfkbo0XLyywpbY
-         9CdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686392829; x=1688984829;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=to8oZ7L4fC+T49c7O2RXAbP8nJvmZRdwodJiT0ePUgs=;
-        b=czfGRp1A34ppORsaT2BIC3ZLQUR5932rbQF/cIY3+wjivFRcG3U4FNw9xlXu59zrQU
-         jPlAaSM3r1e8sWmNM5VD6EQLmYasE7obNJgvNLwKUMmVS9l1myGKboPfgHU1m7JB4sEc
-         Jufdbb8GzRufKeo5+0VUjjKAPDvAEX0UfJbP8tK9F17Sr3qkg35fKK6Cd7BC9WIIDhPn
-         RprqBhZFGxIMOSfDERzTtnFjHDCFE4rtrTSBJaobB/pXxHWakrRe7mhOYVnyTCeJtL7m
-         z0TVcx5WcVGpuMOHwPme3KDngdbgubTbDrnamNJmxEjo59LL8br721iriMASGZDibw2n
-         x8kw==
-X-Gm-Message-State: AC+VfDwQqcodzieTEnjsO4h6XPwNg66HNf1EvePLZcrVZhDu+DofTSQK
-        3cW6/r5KwNyd2Pw+tsg7SRUdTmGv0vASM21MV4Jy9A==
-X-Google-Smtp-Source: ACHHUZ6OSKyE7M/AKX5RnhMGNLiUXry/Ecu8iTy734i4jNpdrWoupgCkvkkVY50NCYi04PH1Fm8GCv9SFC9Tcqs5ltM=
-X-Received: by 2002:a81:8841:0:b0:565:9a3d:a3f9 with SMTP id
- y62-20020a818841000000b005659a3da3f9mr3920231ywf.9.1686392829544; Sat, 10 Jun
- 2023 03:27:09 -0700 (PDT)
+        Sat, 10 Jun 2023 06:54:39 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC92C35B6;
+        Sat, 10 Jun 2023 03:54:38 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6A486612AE;
+        Sat, 10 Jun 2023 10:54:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 335A7C4339B;
+        Sat, 10 Jun 2023 10:54:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686394477;
+        bh=0QL4JPqiS9rPR/J8636yim1R6Z9Esq9EoitzY1XDxRY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Ql2HMHMwRW4FUFZI1lVKn6agtm3I+pGHDGGoUT9Jy2J71zVZZpoLXUB4/LG/iPEXr
+         PB1NrjDQYFH9BJvGngMHo47PZaSfUteZ9wAaQPW+S6bvNEbdC+Aed7VpWYHtcAEHvf
+         2uzwuDdTG/JzxcMRlKe+us9BJvah5caX3Phmlt20tSZU96m6wueb2/p8rF94SdNM7w
+         Nf5lzTuXtuTznqqIF9Eu7luEXj1uNhnj1aqqPyuP/7UFfT1y/mwC73lqNBcPbJ1K/e
+         u9jjpfC504UdF0J+9LgTlJLcQAeMTZ0Biy925ds7H9lNc+AT9YhBRH7Wc0gsXMwhNk
+         i35yGz06OB9wQ==
+Date:   Sat, 10 Jun 2023 12:54:34 +0200
+From:   Andi Shyti <andi.shyti@kernel.org>
+To:     Shuai Jiang <d202180596@hust.edu.cn>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Wolfram Sang <wsa@kernel.org>,
+        "Ivan T. Ivanov" <iivanov@mm-sol.com>,
+        Sricharan R <sricharan@codeaurora.org>,
+        Naveen Kaje <nkaje@codeaurora.org>,
+        Austin Christ <austinwc@codeaurora.org>,
+        hust-os-kernel-patches@googlegroups.com,
+        Andy Gross <agross@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] i2c: qup: Add missing unwind goto in qup_i2c_probe()
+Message-ID: <20230610105434.3jbo6svcct37pn3q@intel.intel>
+References: <20230418135612.598-1-d202180596@hust.edu.cn>
 MIME-Version: 1.0
-References: <1676286704-818-1-git-send-email-quic_kalyant@quicinc.com>
- <1676286704-818-3-git-send-email-quic_kalyant@quicinc.com> <20230301082403.vm4ejqod3ba5wkzp@SoMainline.org>
-In-Reply-To: <20230301082403.vm4ejqod3ba5wkzp@SoMainline.org>
-From:   Yongqin Liu <yongqin.liu@linaro.org>
-Date:   Sat, 10 Jun 2023 18:26:58 +0800
-Message-ID: <CAMSo37VmhB1-PUp1qu8gaxOXtu98eEYmWd71FOai+cwLb-JvSg@mail.gmail.com>
-Subject: Re: [PATCH v4 2/4] drm/msm/dpu: add DSPPs into reservation upon a CTM request
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Kalyan Thota <quic_kalyant@quicinc.com>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robdclark@chromium.org,
-        dianders@chromium.org, swboyd@chromium.org,
-        quic_vpolimer@quicinc.com, dmitry.baryshkov@linaro.org,
-        quic_abhinavk@quicinc.com, Amit Pundir <amit.pundir@linaro.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        John Stultz <jstultz@google.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230418135612.598-1-d202180596@hust.edu.cn>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi, Kalyan Thota
+On Tue, Apr 18, 2023 at 09:56:12PM +0800, Shuai Jiang wrote:
+> Smatch Warns:
+> 	drivers/i2c/busses/i2c-qup.c:1784 qup_i2c_probe()
+> 	warn: missing unwind goto?
+> 
+> The goto label "fail_runtime" and "fail" will disable qup->pclk, 
+> but here qup->pclk failed to obtain, in order to be consistent, 
+> change the direct return to goto label "fail_dma".
+> 
+> Fixes: 10c5a8425968 ("i2c: qup: New bus driver for the Qualcomm QUP I2C controller")
+> Fixes: 515da746983b ("i2c: qup: add ACPI support")
 
-It seems this change caused some drm problems with the Android build.
-I tested with one Android build that based on the ACK android-mainline
-kernel[1], and there are the message printed like
-    01-01 06:51:50.541   504   504 E         :
-[drm:_dpu_rm_check_lm_and_get_connected_blks] [dpu error]failed to get
-dspp on lm 0
-    01-01 06:51:50.551   504   504 E         :
-[drm:_dpu_rm_check_lm_and_get_connected_blks] [dpu error]failed to get
-dspp on lm 0
-    01-01 06:51:50.560   504   504 E         :
-[drm:_dpu_rm_check_lm_and_get_connected_blks] [dpu error]failed to get
-dspp on lm 0
-    01-01 06:51:50.570   504   504 E         :
-[drm:_dpu_rm_check_lm_and_get_connected_blks] [dpu error]failed to get
-dspp on lm 0
-    01-01 06:51:50.579   504   504 E         :
-[drm:_dpu_rm_make_reservation] [dpu error]unable to find appropriate
-mixers
-    01-01 06:51:50.588   504   504 E         : [drm:dpu_rm_reserve]
-[dpu error]failed to reserve hw resources: -119
-For details, please check the link here: https://termbin.com/31lc
+These are not the correct Fixes, the correct fix is:
 
-If I revert this commit, then the problem will be gone.
-Could you please help check if there is any problem with this commit?
+Fixes: 9cedf3b2f099 ("i2c: qup: Add bam dma capabilities")
 
-[1]: https://android.googlesource.com/kernel/common/+/refs/heads/android-mainline
+> Signed-off-by: Shuai Jiang <d202180596@hust.edu.cn>
+> Reviewed-by: Dongliang Mu <dzm91@hust.edu.cn>
 
-Thanks,
-Yongqin Liu
+and
 
-On Wed, 1 Mar 2023 at 16:24, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
->
-> On 2023-02-13 03:11:42, Kalyan Thota wrote:
-> > Add DSPP blocks into the topology for reservation, if there
-> > is a CTM request for that composition.
-> >
-> > Signed-off-by: Kalyan Thota <quic_kalyant@quicinc.com>
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
->
-> > ---
-> > Changes in v1:
-> > - Minor nits (Dmitry)
-> >
-> > Changes in v2:
-> > - Populate DSPPs into the reservation only if CTM is requested (Dmitry)
-> > ---
-> >  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 15 ++++++---------
-> >  1 file changed, 6 insertions(+), 9 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > index 9c6817b..46d2a5c 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > @@ -545,7 +545,8 @@ bool dpu_encoder_use_dsc_merge(struct drm_encoder *drm_enc)
-> >  static struct msm_display_topology dpu_encoder_get_topology(
-> >                       struct dpu_encoder_virt *dpu_enc,
-> >                       struct dpu_kms *dpu_kms,
-> > -                     struct drm_display_mode *mode)
-> > +                     struct drm_display_mode *mode,
-> > +                     struct drm_crtc_state *crtc_state)
-> >  {
-> >       struct msm_display_topology topology = {0};
-> >       int i, intf_count = 0;
-> > @@ -563,8 +564,7 @@ static struct msm_display_topology dpu_encoder_get_topology(
-> >        * 1 LM, 1 INTF
-> >        * 2 LM, 1 INTF (stream merge to support high resolution interfaces)
-> >        *
-> > -      * Adding color blocks only to primary interface if available in
-> > -      * sufficient number
-> > +      * Add dspps to the reservation requirements if ctm is requested
-> >        */
-> >       if (intf_count == 2)
-> >               topology.num_lm = 2;
-> > @@ -573,11 +573,8 @@ static struct msm_display_topology dpu_encoder_get_topology(
-> >       else
-> >               topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
-> >
-> > -     if (dpu_enc->disp_info.intf_type == DRM_MODE_ENCODER_DSI) {
-> > -             if (dpu_kms->catalog->dspp &&
-> > -                     (dpu_kms->catalog->dspp_count >= topology.num_lm))
-> > -                     topology.num_dspp = topology.num_lm;
-> > -     }
-> > +     if (crtc_state->ctm)
-> > +             topology.num_dspp = topology.num_lm;
-> >
-> >       topology.num_enc = 0;
-> >       topology.num_intf = intf_count;
-> > @@ -643,7 +640,7 @@ static int dpu_encoder_virt_atomic_check(
-> >               }
-> >       }
-> >
-> > -     topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode);
-> > +     topology = dpu_encoder_get_topology(dpu_enc, dpu_kms, adj_mode, crtc_state);
-> >
-> >       /* Reserve dynamic resources now. */
-> >       if (!ret) {
-> > --
-> > 2.7.4
-> >
+Cc: <stable@vger.kernel.org> # v4.6+
 
+Patch looks good:
 
+Reviewed-by: Andi Shyti <andi.shyti@kernel.org> 
 
--- 
-Best Regards,
-Yongqin Liu
----------------------------------------------------------------
-#mailing list
-linaro-android@lists.linaro.org
-http://lists.linaro.org/mailman/listinfo/linaro-android
+Andi
+
+> ---
+> The issue is found by static analysis and remains untested.
+> ---
+>  drivers/i2c/busses/i2c-qup.c | 21 ++++++++++++++-------
+>  1 file changed, 14 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/i2c/busses/i2c-qup.c b/drivers/i2c/busses/i2c-qup.c
+> index 2e153f2f71b6..78682388e02e 100644
+> --- a/drivers/i2c/busses/i2c-qup.c
+> +++ b/drivers/i2c/busses/i2c-qup.c
+> @@ -1752,16 +1752,21 @@ static int qup_i2c_probe(struct platform_device *pdev)
+>  	if (!clk_freq || clk_freq > I2C_MAX_FAST_MODE_PLUS_FREQ) {
+>  		dev_err(qup->dev, "clock frequency not supported %d\n",
+>  			clk_freq);
+> -		return -EINVAL;
+> +		ret = -EINVAL;
+> +		goto fail_dma;
+>  	}
+>  
+>  	qup->base = devm_platform_ioremap_resource(pdev, 0);
+> -	if (IS_ERR(qup->base))
+> -		return PTR_ERR(qup->base);
+> +	if (IS_ERR(qup->base)) {
+> +		ret = PTR_ERR(qup->base);
+> +		goto fail_dma;
+> +	}
+>  
+>  	qup->irq = platform_get_irq(pdev, 0);
+> -	if (qup->irq < 0)
+> -		return qup->irq;
+> +	if (qup->irq < 0) {
+> +		ret = qup->irq;
+> +		goto fail_dma;
+> +	}
+>  
+>  	if (has_acpi_companion(qup->dev)) {
+>  		ret = device_property_read_u32(qup->dev,
+> @@ -1775,13 +1780,15 @@ static int qup_i2c_probe(struct platform_device *pdev)
+>  		qup->clk = devm_clk_get(qup->dev, "core");
+>  		if (IS_ERR(qup->clk)) {
+>  			dev_err(qup->dev, "Could not get core clock\n");
+> -			return PTR_ERR(qup->clk);
+> +			ret = PTR_ERR(qup->clk);
+> +			goto fail_dma;
+>  		}
+>  
+>  		qup->pclk = devm_clk_get(qup->dev, "iface");
+>  		if (IS_ERR(qup->pclk)) {
+>  			dev_err(qup->dev, "Could not get iface clock\n");
+> -			return PTR_ERR(qup->pclk);
+> +			ret = PTR_ERR(qup->pclk);
+> +			goto fail_dma;
+>  		}
+>  		qup_i2c_enable_clocks(qup);
+>  		src_clk_freq = clk_get_rate(qup->clk);
+> -- 
+> 2.25.1
+> 
