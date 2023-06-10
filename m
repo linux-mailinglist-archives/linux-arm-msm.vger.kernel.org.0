@@ -2,83 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 86ECD72AE2F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jun 2023 20:53:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2806872AE37
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jun 2023 21:00:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229477AbjFJSxM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Jun 2023 14:53:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53200 "EHLO
+        id S230125AbjFJTAx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Jun 2023 15:00:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231178AbjFJSxL (ORCPT
+        with ESMTP id S229622AbjFJTAw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Jun 2023 14:53:11 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A442430F4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jun 2023 11:53:09 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f6170b1486so3617487e87.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jun 2023 11:53:09 -0700 (PDT)
+        Sat, 10 Jun 2023 15:00:52 -0400
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A52A23580
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jun 2023 12:00:50 -0700 (PDT)
+Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-bc492cb6475so427989276.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jun 2023 12:00:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686423187; x=1689015187;
-        h=content-transfer-encoding:in-reply-to:subject:references:cc:to:from
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4W3qXQBYLfvcOcHPwLf5dnUaJ1dWHnwvnx/YrwlI4M4=;
-        b=iIXy+xM1Ri4iImRDYsrKmb7D4h8wFMuXYnw1T9OLhXI7ik6L7zBKci/6+NlEnL5I6B
-         UpL5KVEAfCO8BRMHLC378WQHoMekUBNYtshZzhSpr4OsogNlpcxCSZGAvarENdg6Sn0z
-         kWS2ZeyTQEoYMSRbv87efvP3PE1quMaWrbEwOGmIpWubHdMEUfNOEIPFX/UNN/9h2pS9
-         7ojUyN4CNder2JVTn6gxgLSWE69AeWSXAfyAmOqdmPCyP3iViQwfNRl2zASK7WOu34TW
-         1SJqZtIXCt+yrUa3MXEZtWwCg/8LRh8lqpp5ZpfDjYPkZdXvBRi1pBbIpiVLdRxojJ+l
-         YDCg==
+        d=linaro.org; s=google; t=1686423650; x=1689015650;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Y8/E9wX+miAxIjX7VGiK9XYMKNABxMlE+uzNmSY8rLg=;
+        b=UjnyItXQr6UJwHms6PzMXZa5EY2o0Ki8lWb1C8IkH3z3K45v5XHaKwBQdftREgZhdP
+         /LaV0YmSVFfcsZzchJfNeT8442hVBbnX04wrveAmuOQZm6gAHemT7BRv3DnpO3K9wRvt
+         hXLx0PKbHnqd3BMRsyMLxigpgiYk9oWZ9D+mzd+DlbfOarSat7gMyPwlb1YUavfQiBtu
+         GHmDKroJ0pOZk4mh3ZPqpyIBNT52TFnVFw9LJNHr43jWHXWLjv6j5CXpQ4mHQgYQ57lm
+         /5PAtJhYdgcrPsozoQUPiUOmrY9JZPvrmFXEDQ+/zCbpC8UQBm8jW1YmKwTv3UN7GSc2
+         gqPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686423187; x=1689015187;
-        h=content-transfer-encoding:in-reply-to:subject:references:cc:to:from
-         :content-language:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4W3qXQBYLfvcOcHPwLf5dnUaJ1dWHnwvnx/YrwlI4M4=;
-        b=h4XPll0KO9MzWKjRUX0dbNVKD/xjoXqVUZcoVfVf4y3U4hFQB+1x1aEW42XOvMaz+C
-         tz5jW5xnQ6ASCETrirvln0OWZCToTZDJ94b4b8b37v4QZX8L0oWvKEhy0s1LKvQpIBIH
-         60FrP0vAZ2EYUBxOp9ceD3IJIVgylVUbyigsVb0Jdl2cOVuT3NHBcLH0Y/wwqTAbuqpI
-         +e6tFSqL/Kzxunyh3HY//FRKxvDuYfWhXqhNIa0PIsXlLaI/Qbzp7fD9lkqZGnfP8QBC
-         xZqp0O92WQHJZc3wbbjs/rBtUcY0tceCBr+HedSbqD5RCw1GDHkqGSh2OUEbwERn2aic
-         q7Iw==
-X-Gm-Message-State: AC+VfDzrTF1tTQ2FAO43wX/flV/0csjcHS+r/MziHf0UBt7fwQBC8Jrb
-        T0uNaIGIS3K2syzoPmdyUj9o4A==
-X-Google-Smtp-Source: ACHHUZ7mKB7lGRSqxZ50JKFb5GXFXrGSchRahf1U72h4atAMla4ilUk9lrxPcVX7Jxz/Yg7uzHAAWA==
-X-Received: by 2002:a19:9202:0:b0:4f3:b242:aa98 with SMTP id u2-20020a199202000000b004f3b242aa98mr1746402lfd.30.1686423187420;
-        Sat, 10 Jun 2023 11:53:07 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id d17-20020ac25ed1000000b004db508326c0sm919441lfq.90.2023.06.10.11.53.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 10 Jun 2023 11:53:07 -0700 (PDT)
-Message-ID: <b7b1d19c-b87d-b3fd-36aa-374065a45ede@linaro.org>
-Date:   Sat, 10 Jun 2023 20:53:05 +0200
+        d=1e100.net; s=20221208; t=1686423650; x=1689015650;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Y8/E9wX+miAxIjX7VGiK9XYMKNABxMlE+uzNmSY8rLg=;
+        b=k1Rwbfvu9R3S9P96hqxLLzXKFA3N7zEP31WDVkkD5vaN2bjdH60GuN6TLXRqAoKSdY
+         C4RBgkuNfz4TQO4HoR3Vk/IcVJ16lLBhnJdjf/hLoJK0y7qFOkXKZ5N5+5dwrZnui7sy
+         HRtQi7o1Q0JTd871nHcHzJRiVq4teHvZk03IwqadHzIhEjwis7/U/3dnBnzS9tdfm2FA
+         i/B3CN3OrnJI5gNsIozyCLvg9p28Vgmu57HtP572XC1BWWKex4yen7Rr4S6OkXvfbfyh
+         +N5oozrVidTHAorVX1KNbUMNxsT9NWSSvplEMGvpa/yGKv1DvYRSJzzMnfBAQGKuP4dJ
+         VniA==
+X-Gm-Message-State: AC+VfDzrHSdfPUcb6e4ZX1xF0YISgtnygXqoSu3Hdc8ujI78dg4+A0mI
+        DC5bnkhjvMw+kWdAlACAAJm9J/5GlFoH1NIh4hYE3g==
+X-Google-Smtp-Source: ACHHUZ4blQAMon2QjkEmaNH0vRhxjA+IH405hPV/oYq0UYG78kLVvnUO4a+2Aah6jH/yAkYOrjNtcLHlTCvlKvGr6Cc=
+X-Received: by 2002:a81:6dcc:0:b0:561:dd6a:b84 with SMTP id
+ i195-20020a816dcc000000b00561dd6a0b84mr4621483ywc.26.1686423649748; Sat, 10
+ Jun 2023 12:00:49 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
+References: <20230610091258.4903-1-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230610091258.4903-1-krzysztof.kozlowski@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Sat, 10 Jun 2023 21:00:37 +0200
+Message-ID: <CACRpkdZz_PasrWJAMfA9pf_OzyCFmKrk3i9K_CctTPwHSVsCLg@mail.gmail.com>
+Subject: Re: [GIT PULL] pinctrl: dt-bindings: qcom: for v6.5
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org
-References: <20230526-topic-smd_icc-v2-0-e5934b07d813@linaro.org>
- <20230526-topic-smd_icc-v2-4-e5934b07d813@linaro.org>
- <ZIRgGXwKD6mcgTRY@gerhold.net>
- <40f937bb-0d7e-a237-1672-5905983622ce@linaro.org>
-Subject: Re: [PATCH v2 04/22] clk: qcom: smd-rpm: Export clock scaling
- availability
-In-Reply-To: <40f937bb-0d7e-a237-1672-5905983622ce@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -87,90 +73,18 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sat, Jun 10, 2023 at 11:13=E2=80=AFAM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 
+> The following changes since commit ac9a78681b921877518763ba0e89202254349d=
+1b:
+(...)
+> for you to fetch changes up to 647c16ac7b15fc8fe6ab679690ac2ffe7c53abd3:
+>
+>   dt-bindings: pinctrl: qcom,sm7150-tlmm: simplify with unevaluatedProper=
+ties (2023-05-12 18:23:51 +0200)
 
-On 10.06.2023 14:15, Konrad Dybcio wrote:
-> 
-> 
-> On 10.06.2023 13:35, Stephan Gerhold wrote:
->> On Fri, Jun 09, 2023 at 10:19:09PM +0200, Konrad Dybcio wrote:
->>> Before we issue a call to RPM through clk_smd_rpm_enable_scaling() the
->>> clock rate requests will not be commited in hardware. This poses a
->>> race threat since we're accessing the bus clocks directly from within
->>> the interconnect framework.
->>>
->>> Add a marker to indicate that we're good to go with sending new requests
->>> and export it so that it can be referenced from icc.
->>>
->>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->>> ---
->>>  drivers/clk/qcom/clk-smd-rpm.c   | 9 +++++++++
->>>  include/linux/soc/qcom/smd-rpm.h | 2 ++
->>>  2 files changed, 11 insertions(+)
->>>
->>> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
->>> index 937cb1515968..482fe30ee6f0 100644
->>> --- a/drivers/clk/qcom/clk-smd-rpm.c
->>> +++ b/drivers/clk/qcom/clk-smd-rpm.c
->>> @@ -151,6 +151,7 @@
->>>  #define to_clk_smd_rpm(_hw) container_of(_hw, struct clk_smd_rpm, hw)
->>>  
->>>  static struct qcom_smd_rpm *rpmcc_smd_rpm;
->>> +static bool smd_rpm_clk_scaling;
->>>  
->>>  struct clk_smd_rpm {
->>>  	const int rpm_res_type;
->>> @@ -385,6 +386,12 @@ static unsigned long clk_smd_rpm_recalc_rate(struct clk_hw *hw,
->>>  	return r->rate;
->>>  }
->>>  
->>> +bool qcom_smd_rpm_scaling_available(void)
->>> +{
->>> +	return smd_rpm_clk_scaling;
->>> +}
->>> +EXPORT_SYMBOL_GPL(qcom_smd_rpm_scaling_available);
->>> +
->>>  static int clk_smd_rpm_enable_scaling(void)
->>>  {
->>>  	int ret;
->>> @@ -410,6 +417,8 @@ static int clk_smd_rpm_enable_scaling(void)
->>>  		return ret;
->>>  	}
->>>  
->>> +	smd_rpm_clk_scaling = true;
->>> +
->>
->> If you move the platform_device_register_data(&rpdev->dev,
->> "icc_smd_rpm", ...) from drivers/soc/qcom/smd-rpm.c to here you can
->> avoid the race completely and drop this API. I think that would be
->> cleaner. And it will likely probe much faster because probe deferral
->> is slow. :)
-> Sounds like an idea.. especially since it's pretty much the only
-> dependency other than SMDRPM itself!
-It sounds great, but to not break bisecting one has to:
+Pulled in, thanks! Great work as usual.
 
-1. change the registration in soc/smd-rpm to store rpm ptr in driver
-   data, in addition to parent driver data
-
-2. change icc/smd-rpm to use the device and not parent data
-
-3. add a platform_device_register_data call in clk-smd-rpm that will
-   always fail because the device is always registered
-
-4. remove the registration from soc/smd-rpm
-
-
-I know you'd love to see me break my [PATCH xx/42] record, but I'd say
-that deserves its own series and *this* patch could be a good transition
-middleground :P
-
-Hopefully Stephen, Bjorn and Georgi won't send a hitman after me for
-abusing atomic cross-subsystem merges..
-
-Konrad
-
-> 
-> Konrad
->>
->> Thanks,
->> Stephan
+Yours,
+Linus Walleij
