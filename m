@@ -2,53 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 446EE72AFF0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jun 2023 03:42:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 51E6972B044
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jun 2023 06:50:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229579AbjFKBmC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Jun 2023 21:42:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55662 "EHLO
+        id S230233AbjFKEuo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Jun 2023 00:50:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229483AbjFKBmB (ORCPT
+        with ESMTP id S229500AbjFKEun (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 10 Jun 2023 21:42:01 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C51F9;
-        Sat, 10 Jun 2023 18:42:00 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7ACA060C64;
-        Sun, 11 Jun 2023 01:42:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F60DC433EF;
-        Sun, 11 Jun 2023 01:41:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686447719;
-        bh=yBR0w/7klBnAZNSh3fgyCef+xkrLcYecwAJ698mVcZo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tWJhaU6BqowAugNqJBIlaD92oSLJXs/6tS/3XlGdl7/rqsiWYkwq080nNEsKyqwod
-         UkA2Zjq+6kuYZh+xiEULfSM55GnkdTH0c4RnGZsoznFLBHHlDL5RFsi7L2jFq1EP4C
-         KMrzNt0hq7H8ZBSgTbuXh1rr0725pTPn19gmyxjZVTbI+ydTRocQST+Nr2M42XXhQj
-         0yQTtGNjCtVsK/EJqVTqib7qBUpr25OolxdqaLAPwZVjW65Qg88OxnNwT5X9Ctcjca
-         OeayPH2itrzd2g4C2Q35n3bn3QQzhaW6id6W9nqRe5bctJW7Cympwmd7lMZohAqUcc
-         SisGaYZAmyG0w==
-Date:   Sat, 10 Jun 2023 18:45:27 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC] soc: qcom: icc-bwmon: Set default thresholds
- dynamically
-Message-ID: <20230611014527.ezkgvtac5akrprdg@ripper>
-References: <20230610-topic-bwmon_opp-v1-1-65125d7493fc@linaro.org>
+        Sun, 11 Jun 2023 00:50:43 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 980A426AD;
+        Sat, 10 Jun 2023 21:50:40 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35B4h4KM009524;
+        Sun, 11 Jun 2023 04:50:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=0CNloHrquHQMvmc+4hDQ+f1JhsN0G1wIV9bJDTOOqQs=;
+ b=HayVU8gJor39utzAXsJYRHY1iPVlDbuo3ddgqxLXYYCX3Ql8cWmPedcoltOFDhptXlg+
+ vjuqREoCk23Rs7gPdMcJWfkj4O2ZTpdYoMvfsza2c7Ahu2bW6jKGbdNr+gLIuT+E2dGi
+ eGAZJdh4rWEnokwDidi8mgGUctGux1B8UDdO8f7yoHnru8uZjgUzmgSNQ1x2Dx2IyWOM
+ B5XkoGk0BMEGgCvoK1fiYB9yXvI4iyr9muPJopZHT7U5+MJ8OA/6Dkp8XgLWGUORPohL
+ DqtIxeBeW4+yhH84sJO4Zqv/N7UhDpwnfFbiw0leOQDcn8D7Ef2fquRbFWuKpX+VhB+4 bQ== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r4hxns6mw-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 11 Jun 2023 04:50:07 +0000
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35B4o6OJ005158
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Sun, 11 Jun 2023 04:50:06 GMT
+Received: from [10.216.24.161] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Sat, 10 Jun
+ 2023 21:49:59 -0700
+Message-ID: <d073f2de-559e-7e76-2c38-114cda2d9948@quicinc.com>
+Date:   Sun, 11 Jun 2023 10:19:56 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230610-topic-bwmon_opp-v1-1-65125d7493fc@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [v9 2/8] clk: qcom: Add Global Clock controller (GCC) driver for
+ IPQ5018
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>, <agross@kernel.org>,
+        <andersson@kernel.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <mturquette@baylibre.com>,
+        <sboyd@kernel.org>, <ulf.hansson@linaro.org>,
+        <linus.walleij@linaro.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>, <p.zabel@pengutronix.de>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>, <robimarko@gmail.com>,
+        <krzysztof.kozlowski@linaro.org>, <andy.shevchenko@gmail.com>
+References: <20230608122152.3930377-1-quic_srichara@quicinc.com>
+ <20230608122152.3930377-3-quic_srichara@quicinc.com>
+ <7e915a4b-d2e8-c162-2e45-d08aced5a5d1@linaro.org>
+From:   Sricharan Ramabadhran <quic_srichara@quicinc.com>
+In-Reply-To: <7e915a4b-d2e8-c162-2e45-d08aced5a5d1@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: SFyXHq_2eFwcKahelHTQytglkQvjhxIw
+X-Proofpoint-GUID: SFyXHq_2eFwcKahelHTQytglkQvjhxIw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-11_02,2023-06-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
+ malwarescore=0 adultscore=0 suspectscore=0 mlxscore=0 bulkscore=0
+ mlxlogscore=455 priorityscore=1501 spamscore=0 clxscore=1015
+ lowpriorityscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2305260000 definitions=main-2306110044
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -57,139 +90,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jun 10, 2023 at 02:01:53PM +0200, Konrad Dybcio wrote:
-> Currently we use predefined threshold values. This works, but does not
-> really scale well, as they may differ between SoCs due to LPDDR generation
-> and/or DDR controller setup. All of the data we need for that is already
-> provided in the device tree, anyway.
-> 
 
-Per your own argument, the replaced values are just initial values and
-you should fairly quickly get some interrupt to start moving the
-threshold up or down. I don't think your argumentation expresses
-adequately why this "does not really scale well" and why your new values
-happens to work better.
 
-> Change that to:
-> * 0 for low (as we've been doing up until now)
-> * BW_MIN/4 for mid
-> * BW_MIN for high
+On 6/9/2023 7:22 PM, Konrad Dybcio wrote:
 > 
-> The mid value is chosen for a "low enough" bw to nudge bwmon into
-> slowing down if the bw starts too high from the bootloader.
 > 
+> On 8.06.2023 14:21, Sricharan Ramabadhran wrote:
+>> Add support for the global clock controller found on IPQ5018
+>> based devices.
+>>
+>> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
+>> Co-developed-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+>> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
+>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
+>> ---
+>> [v9]       Sorted the headers and cleaned the unwanted ones
+>>             Added trailing comma for .parent_hws member
+>>             Removed the hunk touching ipq5332 kconfig  (unintentionally)
+>>
+> You did not address the comments I made in v4.
+> 
+> https://lore.kernel.org/linux-arm-msm/21a5642c-e6e5-9323-7db1-383a18616ac0@linaro.org/
 
-As soon as we get the first interrupt, these values would be adjusted to
-the bandwidth of the surrounding opp pair. So why is the /4 needed in
-this initial state?
-
-> The high value corresponds to the upper barrier which - when crossed -
-> raises an interrupt in the third zone, signaling a need for upping
-> the bw.
-> 
-> This only changes the values programmed at probe time, as high and med
-> thresholds are updated at interrupt, based on the OPP table from DT.
-> 
-
-Your underlying reasoning, to remove the hard coded initial values,
-sounds very reasonable to me.
+  oops, sorry, i guess, missed it, will send with fixed.
 
 Regards,
-Bjorn
-
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-> ---
->  drivers/soc/qcom/icc-bwmon.c | 28 +++++++---------------------
->  1 file changed, 7 insertions(+), 21 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
-> index 40068a285913..99cbdb3cf531 100644
-> --- a/drivers/soc/qcom/icc-bwmon.c
-> +++ b/drivers/soc/qcom/icc-bwmon.c
-> @@ -165,9 +165,6 @@ enum bwmon_fields {
->  struct icc_bwmon_data {
->  	unsigned int sample_ms;
->  	unsigned int count_unit_kb; /* kbytes */
-> -	unsigned int default_highbw_kbps;
-> -	unsigned int default_medbw_kbps;
-> -	unsigned int default_lowbw_kbps;
->  	u8 zone1_thres_count;
->  	u8 zone3_thres_count;
->  	unsigned int quirks;
-> @@ -564,20 +561,21 @@ static void bwmon_set_threshold(struct icc_bwmon *bwmon,
->  static void bwmon_start(struct icc_bwmon *bwmon)
->  {
->  	const struct icc_bwmon_data *data = bwmon->data;
-> +	u32 bw_low = 0;
->  	int window;
->  
-> +	/* No need to check for errors, as this must have succeeded before. */
-> +	dev_pm_opp_find_bw_ceil(bwmon->dev, &bw_low, 0);
-> +
->  	bwmon_clear_counters(bwmon, true);
->  
->  	window = mult_frac(bwmon->data->sample_ms, HW_TIMER_HZ, MSEC_PER_SEC);
->  	/* Maximum sampling window: 0xffffff for v4 and 0xfffff for v5 */
->  	regmap_field_write(bwmon->regs[F_SAMPLE_WINDOW], window);
->  
-> -	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_HIGH],
-> -			    data->default_highbw_kbps);
-> -	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_MED],
-> -			    data->default_medbw_kbps);
-> -	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_LOW],
-> -			    data->default_lowbw_kbps);
-> +	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_HIGH], bw_low);
-> +	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_MED], div_u64(bw_low, 4));
-> +	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_LOW], 0);
->  
->  	regmap_field_write(bwmon->regs[F_THRESHOLD_COUNT_ZONE0],
->  			   BWMON_THRESHOLD_COUNT_ZONE0_DEFAULT);
-> @@ -807,9 +805,6 @@ static int bwmon_remove(struct platform_device *pdev)
->  static const struct icc_bwmon_data msm8998_bwmon_data = {
->  	.sample_ms = 4,
->  	.count_unit_kb = 1024,
-> -	.default_highbw_kbps = 4800 * 1024, /* 4.8 GBps */
-> -	.default_medbw_kbps = 512 * 1024, /* 512 MBps */
-> -	.default_lowbw_kbps = 0,
->  	.zone1_thres_count = 16,
->  	.zone3_thres_count = 1,
->  	.quirks = BWMON_HAS_GLOBAL_IRQ,
-> @@ -822,9 +817,6 @@ static const struct icc_bwmon_data msm8998_bwmon_data = {
->  static const struct icc_bwmon_data sdm845_cpu_bwmon_data = {
->  	.sample_ms = 4,
->  	.count_unit_kb = 64,
-> -	.default_highbw_kbps = 4800 * 1024, /* 4.8 GBps */
-> -	.default_medbw_kbps = 512 * 1024, /* 512 MBps */
-> -	.default_lowbw_kbps = 0,
->  	.zone1_thres_count = 16,
->  	.zone3_thres_count = 1,
->  	.quirks = BWMON_HAS_GLOBAL_IRQ,
-> @@ -835,9 +827,6 @@ static const struct icc_bwmon_data sdm845_cpu_bwmon_data = {
->  static const struct icc_bwmon_data sdm845_llcc_bwmon_data = {
->  	.sample_ms = 4,
->  	.count_unit_kb = 1024,
-> -	.default_highbw_kbps = 800 * 1024, /* 800 MBps */
-> -	.default_medbw_kbps = 256 * 1024, /* 256 MBps */
-> -	.default_lowbw_kbps = 0,
->  	.zone1_thres_count = 16,
->  	.zone3_thres_count = 1,
->  	.regmap_fields = sdm845_llcc_bwmon_reg_fields,
-> @@ -847,9 +836,6 @@ static const struct icc_bwmon_data sdm845_llcc_bwmon_data = {
->  static const struct icc_bwmon_data sc7280_llcc_bwmon_data = {
->  	.sample_ms = 4,
->  	.count_unit_kb = 64,
-> -	.default_highbw_kbps = 800 * 1024, /* 800 MBps */
-> -	.default_medbw_kbps = 256 * 1024, /* 256 MBps */
-> -	.default_lowbw_kbps = 0,
->  	.zone1_thres_count = 16,
->  	.zone3_thres_count = 1,
->  	.quirks = BWMON_NEEDS_FORCE_CLEAR,
-> 
-> ---
-> base-commit: 49dd846128d56199db2e3bcfca42d87fbc82b212
-> change-id: 20230610-topic-bwmon_opp-f995bbdd18bd
-> 
-> Best regards,
-> -- 
-> Konrad Dybcio <konrad.dybcio@linaro.org>
-> 
+  Sricharan
