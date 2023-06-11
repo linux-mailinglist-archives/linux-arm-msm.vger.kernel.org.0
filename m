@@ -2,63 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F8DB72B1C1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jun 2023 13:57:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E6E072B20C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jun 2023 15:24:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231655AbjFKL5U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Jun 2023 07:57:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42618 "EHLO
+        id S229630AbjFKNYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Jun 2023 09:24:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbjFKL5T (ORCPT
+        with ESMTP id S229455AbjFKNY3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Jun 2023 07:57:19 -0400
+        Sun, 11 Jun 2023 09:24:29 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF239FD;
-        Sun, 11 Jun 2023 04:57:18 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D8A7BC;
+        Sun, 11 Jun 2023 06:24:28 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 7696460C55;
-        Sun, 11 Jun 2023 11:57:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF48EC433EF;
-        Sun, 11 Jun 2023 11:57:13 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A6FAC6125D;
+        Sun, 11 Jun 2023 13:24:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D4A6C433D2;
+        Sun, 11 Jun 2023 13:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686484637;
-        bh=Ud6DijTGw2KIKTv6kjmgnirT63T3fx5KrKvK33LlULk=;
+        s=k20201202; t=1686489866;
+        bh=g9njtkoojqRfUI49HT2MGfWzoAKuf1DOFdEq/kUvHsA=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=h/vQAFibCaPW0yRJvgsnM2JG0UujIwtsVSVTqGJvQPFv+H42fiCbfhAawJnAF6nTo
-         fZetCVS+Pu6JP6v9aOys2k9+l7KcJMD5R7QWdx4K7frnMQoMRWkdccTjaUv/yudaEK
-         W0sbQVSE/VVB3UvCEPtx7hza7hhwGN/p3rdfj0AwkJ8u+9BOzNvKdalZdugvB4d9b1
-         lO/kO7f/QsfY9zKH+abWn1s+FV9kbTNlUIAOTcVF80y5TnKzsLEQ54KTRPlsMkg5ri
-         cX3jRtVWHcOrAbinuHgLZg/Wm7mWrkk6EOdHaZaxxXPmc+kUYtSN4NhT3CIJyWtzjd
-         WUONGCEj39sHg==
-Date:   Sun, 11 Jun 2023 12:57:10 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Patrick Lai <quic_plai@quicinc.com>
-Subject: Re: [PATCH v2 2/2] ASoC: codecs: wsa884x: Add WSA884x family of
- speakers
-Message-ID: <191859d3-42e3-4ef2-87ff-dd56864103f9@sirena.org.uk>
-References: <20230611102657.74714-1-krzysztof.kozlowski@linaro.org>
- <20230611102657.74714-2-krzysztof.kozlowski@linaro.org>
+        b=DGC5PWnLkcdaGgKC8g7aXKlp+cTXW37FdG3MVsm8EY5hOfYkx9wU/GrdAySg2Oi3E
+         dOVMl4KJhdYBu2De+eoiciAURQiPsCqJ9ietIqhfXZzIiJ/qHaNTEP+6cbbfGxU3OF
+         S1V2x+n0xz8qtn3BiYOFuIupPFOSQz5yy55SQRQJKpTgLcEvlJGss24Pfra8lHGfqX
+         flOVS0h/DWl7SNIHBe4o1Tckr5hlYu9wiNquAWD9glhB7l1BDGN6MfJfYQi4jaXF/p
+         CbfeGdAXGcgQoXEiIlRZ2gExfM0ZoxVnZVNTIqcbZJpWvcddhXHRqZboEHi89XhF++
+         jIjqIIdIQw+Hg==
+Received: by pali.im (Postfix)
+        id D08BB7FD; Sun, 11 Jun 2023 15:24:23 +0200 (CEST)
+Date:   Sun, 11 Jun 2023 15:24:23 +0200
+From:   Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Joyce Ooi <joyce.ooi@intel.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Jim Quinlan <jim2101024@gmail.com>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Tom Joseph <tjoseph@cadence.com>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Rahul Tanwar <rtanwar@maxlinear.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Vidya Sagar <vidyas@nvidia.com>,
+        Jisheng Zhang <jszhang@kernel.org>,
+        Miaoqian Lin <linmq006@gmail.com>, Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Ryder Lee <ryder.lee@mediatek.com>,
+        Jianjun Wang <jianjun.wang@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+        Shawn Lin <shawn.lin@rock-chips.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Toan Le <toan@os.amperecomputing.com>,
+        Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        linux-rpi-kernel@lists.infradead.org, kernel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Subject: Re: [PATCH 00/15] PCI: Convert to platform remove callback returning
+ void
+Message-ID: <20230611132423.milnj2pnvjqzwino@pali>
+References: <20230530140742.ebbrxmpieuphbmz3@pengutronix.de>
+ <ZHphHkNLO4tEJIm/@bhelgaas>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="2UHYA9utW3zi5EMo"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230611102657.74714-2-krzysztof.kozlowski@linaro.org>
-X-Cookie: List was current at time of printing.
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <ZHphHkNLO4tEJIm/@bhelgaas>
+User-Agent: NeoMutt/20180716
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -69,124 +97,54 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Friday 02 June 2023 16:37:34 Bjorn Helgaas wrote:
+> On Tue, May 30, 2023 at 04:07:42PM +0200, Uwe Kleine-König wrote:
+> > Hello Bjorn,
+> > 
+> > On Tue, Mar 21, 2023 at 08:31:53PM +0100, Uwe Kleine-König wrote:
+> > > this series adapts the platform drivers below drivers/pci to use the
+> > > .remove_new() callback. Compared to the traditional .remove() callback
+> > > .remove_new() returns no value. This is a good thing because the driver core
+> > > doesn't (and cannot) cope for errors during remove. The only effect of a
+> > > non-zero return value in .remove() is that the driver core emits a warning. The
+> > > device is removed anyhow and an early return from .remove() usually yields a
+> > > resource leak.
+> > > 
+> > > By changing the remove callback to return void driver authors cannot
+> > > reasonably assume any more that there is some kind of cleanup later.
+> > > 
+> > > All drivers were easy to convert as they all returned zero in their
+> > > remove callback. Only for iproc the conversion wasn't trivial, the other
+> > > were converted using coccinelle.
+> > > 
+> > > There are no interdependencies between these patches. So even if there
+> > > are some concerns for individual patches, I ask you to apply the
+> > > remaining set. Then I only have to care for the review feedback of the
+> > > refused patches. (Having said that I don't expect any serious objection,
+> > > just things like squashing or separating patches, or maybe I picked a
+> > > wrong subject prefix.)
+> > 
+> > These patches wait for application for quite some time now. They apply
+> > just fine to v6.4-rc1 and next/master. Would be great to get them in
+> > during the next merge window and ideally give them some time in next
+> > before.
+> 
+> Thanks, these seem fine to me, and Lorenzo normally takes care of
+> drivers/pci/controller/.  Lorenzo, if it's easier to have me apply
+> them, that's fine, too, just let me know.
+> 
+> The only tweaks I would make would be:
+> 
+>   PCI: j721e: Convert to platform remove callback returning void
+>   PCI: dwc: Convert to platform remove callback returning void
+> 
+> to match the git history.
 
---2UHYA9utW3zi5EMo
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Hello Bjorn, it should be expected that other changes for PCIe drivers
+sent by other people which were sent to the list before this patch
+series and are still waiting for the review (because are without
+comments), would be processed before and patches sent later.
 
-On Sun, Jun 11, 2023 at 12:26:57PM +0200, Krzysztof Kozlowski wrote:
-
-> +static struct reg_default wsa884x_defaults[] = {
-
-> +	{ WSA884X_CHIP_ID0,			0x00 },
-> +	{ WSA884X_CHIP_ID1,			0x00 },
-> +	{ WSA884X_CHIP_ID2,			0x04 },
-> +	{ WSA884X_CHIP_ID3,			0x02 },
-> +	{ WSA884X_BUS_ID,			0x00 },
-
-It is generally bad practice to provide defaults for ID registers since
-it rather defeats the point of having them.
-
-> +	{ WSA884X_INTR_STATUS0,			0x00 },
-> +	{ WSA884X_INTR_STATUS1,			0x00 },
-
-Interrupt status registers will be volatile and therefore should not
-have defaults.
-
-> +	{ WSA884X_OTP_REG_0,			0x05 },
-> +	{ WSA884X_OTP_REG_1,			0x49 },
-> +	{ WSA884X_OTP_REG_2,			0x80 },
-> +	{ WSA884X_OTP_REG_3,			0xc9 },
-> +	{ WSA884X_OTP_REG_4,			0x40 },
-> +	{ WSA884X_OTP_REG_5,			0xff },
-> +	{ WSA884X_OTP_REG_6,			0xff },
-> +	{ WSA884X_OTP_REG_7,			0xff },
-> +	{ WSA884X_OTP_REG_8,			0xff },
-> +	{ WSA884X_OTP_REG_9,			0xff },
-> +	{ WSA884X_OTP_REG_10,			0xff },
-> +	{ WSA884X_OTP_REG_11,			0xff },
-> +	{ WSA884X_OTP_REG_12,			0xff },
-> +	{ WSA884X_OTP_REG_13,			0xff },
-> +	{ WSA884X_OTP_REG_14,			0xff },
-> +	{ WSA884X_OTP_REG_15,			0xff },
-> +	{ WSA884X_OTP_REG_16,			0xff },
-> +	{ WSA884X_OTP_REG_17,			0xff },
-> +	{ WSA884X_OTP_REG_18,			0xff },
-> +	{ WSA884X_OTP_REG_19,			0xff },
-> +	{ WSA884X_OTP_REG_20,			0xff },
-> +	{ WSA884X_OTP_REG_21,			0xff },
-> +	{ WSA884X_OTP_REG_22,			0xff },
-> +	{ WSA884X_OTP_REG_23,			0xff },
-> +	{ WSA884X_OTP_REG_24,			0x00 },
-> +	{ WSA884X_OTP_REG_25,			0x22 },
-> +	{ WSA884X_OTP_REG_26,			0x03 },
-> +	{ WSA884X_OTP_REG_27,			0x00 },
-> +	{ WSA884X_OTP_REG_28,			0x00 },
-> +	{ WSA884X_OTP_REG_29,			0x00 },
-> +	{ WSA884X_OTP_REG_30,			0x00 },
-> +	{ WSA884X_OTP_REG_31,			0x8f },
-> +	{ WSA884X_OTP_REG_32,			0x00 },
-> +	{ WSA884X_OTP_REG_33,			0xff },
-> +	{ WSA884X_OTP_REG_34,			0x0f },
-> +	{ WSA884X_OTP_REG_35,			0x12 },
-> +	{ WSA884X_OTP_REG_36,			0x08 },
-> +	{ WSA884X_OTP_REG_37,			0x1f },
-> +	{ WSA884X_OTP_REG_38,			0x0b },
-> +	{ WSA884X_OTP_REG_39,			0x00 },
-> +	{ WSA884X_OTP_REG_40,			0x00 },
-> +	{ WSA884X_OTP_REG_41,			0x00 },
-> +	{ WSA884X_OTP_REG_63,			0x40 },
-
-These appear to be OTP data which suggests that they shouldn't have
-defaults either since they can be programmed.
-
-> +static bool wsa884x_readonly_register(struct device *dev, unsigned int reg)
-> +{
-> +	switch (reg) {
-
-In general the read only registers probably shouldn't have defaults...
-
-> +static bool wsa884x_volatile_register(struct device *dev, unsigned int reg)
-> +{
-> +	switch (reg) {
-> +	case WSA884X_ANA_WO_CTL_0:
-> +	case WSA884X_ANA_WO_CTL_1:
-> +		return true;
-> +	}
-> +	return wsa884x_readonly_register(dev, reg);
-> +}
-
-...and the volatile regiseters definitely not, the default values will
-never be used and just waste space.
-
-> +static struct regmap_config wsa884x_regmap_config = {
-> +	.reg_bits = 32,
-> +	.val_bits = 8,
-> +	.cache_type = REGCACHE_RBTREE,
-
-Please use REGCACHE_MAPLE for new devices.
-
-> +	/* Speaker mode by default */
-> +	{ WSA884X_DRE_CTL_0, 0x7 << WSA884X_DRE_CTL_0_PROG_DELAY_SHIFT },
-> +	{ WSA884X_CLSH_CTL_0, (0x37 & ~WSA884X_CLSH_CTL_0_DLY_CODE_MASK) |
-> +			      (0x6 << WSA884X_CLSH_CTL_0_DLY_CODE_SHIFT) },
-> +	{ WSA884X_CLSH_SOFT_MAX, 0xff },
-
-Why not just leave as the chip default?
-
---2UHYA9utW3zi5EMo
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmSFtpUACgkQJNaLcl1U
-h9Bc2wf+MW3w20yWsADZfhfgAfmIMBYWCXDCv8gztK+ATSXpMqDU22Z+cNIX5V9h
-hEegPQLq4qhuoNGundoTJkCccxhSZwvET/NlYtfxuxqhKFuI0qILC2VmVttTApX/
-bP/D8kQxSNu0tmi06qzuqoJ9mb2RXV0dgfLZAesNqhqryCSnq9HdX9dX/zevFdlH
-moxCU+WyoRFVvCwpJkHmrZXNkntoa58SkA73zFVpCX7DoZGOtbxRdlKRaNpuR8Ge
-/Zf95c5xmwiNYFxToTUQm+YLIRySIrn5hRZGjkW18mj/gw8BWHSGyIY/llDsJ3i7
-cdYyJANPFun6BAoRDMoG1p3zlzliOw==
-=5kvz
------END PGP SIGNATURE-----
-
---2UHYA9utW3zi5EMo--
+Also I would like to point out that in past I have sent fixes for PCIe
+mvebu driver, which is currently in the broken state. And this is also
+on waiting on the list.
