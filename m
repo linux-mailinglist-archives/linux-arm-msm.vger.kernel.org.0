@@ -2,149 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 4E6E072B20C
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jun 2023 15:24:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D43072BB63
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 10:56:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229630AbjFKNYa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Jun 2023 09:24:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56696 "EHLO
+        id S233740AbjFLIzo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 04:55:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbjFKNY3 (ORCPT
+        with ESMTP id S234640AbjFLIyp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Jun 2023 09:24:29 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D8A7BC;
-        Sun, 11 Jun 2023 06:24:28 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A6FAC6125D;
-        Sun, 11 Jun 2023 13:24:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D4A6C433D2;
-        Sun, 11 Jun 2023 13:24:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686489866;
-        bh=g9njtkoojqRfUI49HT2MGfWzoAKuf1DOFdEq/kUvHsA=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=DGC5PWnLkcdaGgKC8g7aXKlp+cTXW37FdG3MVsm8EY5hOfYkx9wU/GrdAySg2Oi3E
-         dOVMl4KJhdYBu2De+eoiciAURQiPsCqJ9ietIqhfXZzIiJ/qHaNTEP+6cbbfGxU3OF
-         S1V2x+n0xz8qtn3BiYOFuIupPFOSQz5yy55SQRQJKpTgLcEvlJGss24Pfra8lHGfqX
-         flOVS0h/DWl7SNIHBe4o1Tckr5hlYu9wiNquAWD9glhB7l1BDGN6MfJfYQi4jaXF/p
-         CbfeGdAXGcgQoXEiIlRZ2gExfM0ZoxVnZVNTIqcbZJpWvcddhXHRqZboEHi89XhF++
-         jIjqIIdIQw+Hg==
-Received: by pali.im (Postfix)
-        id D08BB7FD; Sun, 11 Jun 2023 15:24:23 +0200 (CEST)
-Date:   Sun, 11 Jun 2023 15:24:23 +0200
-From:   Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
-        Joyce Ooi <joyce.ooi@intel.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Jim Quinlan <jim2101024@gmail.com>,
-        Nicolas Saenz Julienne <nsaenz@kernel.org>,
-        Vignesh Raghavendra <vigneshr@ti.com>,
-        Tom Joseph <tjoseph@cadence.com>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Rahul Tanwar <rtanwar@maxlinear.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Vidya Sagar <vidyas@nvidia.com>,
-        Jisheng Zhang <jszhang@kernel.org>,
-        Miaoqian Lin <linmq006@gmail.com>, Ray Jui <rjui@broadcom.com>,
-        Scott Branden <sbranden@broadcom.com>,
-        Ryder Lee <ryder.lee@mediatek.com>,
-        Jianjun Wang <jianjun.wang@mediatek.com>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-        Shawn Lin <shawn.lin@rock-chips.com>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Toan Le <toan@os.amperecomputing.com>,
-        Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
-        linux-rockchip@lists.infradead.org,
-        Broadcom internal kernel review list 
-        <bcm-kernel-feedback-list@broadcom.com>,
-        linux-rpi-kernel@lists.infradead.org, kernel@pengutronix.de,
-        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
-        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@collabora.com>
-Subject: Re: [PATCH 00/15] PCI: Convert to platform remove callback returning
- void
-Message-ID: <20230611132423.milnj2pnvjqzwino@pali>
-References: <20230530140742.ebbrxmpieuphbmz3@pengutronix.de>
- <ZHphHkNLO4tEJIm/@bhelgaas>
+        Mon, 12 Jun 2023 04:54:45 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E72741711;
+        Mon, 12 Jun 2023 01:53:09 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-30aebe2602fso2590363f8f.3;
+        Mon, 12 Jun 2023 01:53:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1686559984; x=1689151984;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=aS9YsrNAcOn+NlKyUNyoFu7MvoAIEEYn2rw1UEKfcUg=;
+        b=dKjArm/xhT6edX4xaOmPXGu4g5jfK0NVxHxgtp+8qwLi0r4ZwcbMwnJElg3YMxWjb/
+         4+Oo39SV8Xi8f7hS7tg1LODUTpZh+vLmgw7LUO+F+TtVu/hnh00brmd65WQ2gticoWrM
+         NjZeguUUaYjBPL2jeUr9NsoIdQjNeBxXLkmrP0fU0ZdXUrqQUnlTwUJiMrgkze4sMdKr
+         F6lq7e+ZDFTiF4VFIvY74ZsZJeXsD82yiB7NzRi5sUUDQbENL7Gt54O0XwzqGhxVSm5c
+         JBK8lA/0ptgWGnh9JGGd9fYjTr6DCyG3uLGMa1Dk7jOSFoayjDNCdSZsetYddiWV264F
+         j7aA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686559984; x=1689151984;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aS9YsrNAcOn+NlKyUNyoFu7MvoAIEEYn2rw1UEKfcUg=;
+        b=jWEKw1XfJsHbhhdGr5ntczAwdbIntG9lnQFEaG4Un7iw1OBMhP0gaKPcy9JgvrG1dY
+         C0qFaKmmtmteIQ6e8oRoMJU9MGX8z06YvEX06rdmy6YOk+ypVrRl9tpMnNqu+TvSrx2V
+         Jom+eryflvm8MwCxJ8QJtzKD6MF4yi1jnNNxm7phIlorehndTqRADxmzELawIbUgUT5Y
+         iX0vgcHsaFjesHqoFoc+nKeKYwXpICPGxobaB414QUGpmyZT64men52oSassAp/CF/vl
+         3BEJz8LW0yN23GjPKTLBDU+LJ6PZfptLYS/HeC2ee5QwGY0rBG0j9GQPT54GVFu8SSS7
+         tokg==
+X-Gm-Message-State: AC+VfDxN3kEQc8SKNqrTCqvPWrpfzc4WOAxYgK/ux9rUdTIC8mwoZ9p+
+        p67aLk9Pzi0XQcibZw/2lZ8=
+X-Google-Smtp-Source: ACHHUZ6OCXAHFB7ym2sqsJaX2aXW1mpqMoedSF5d27PM8ZVqy+wqMdokykjds2qq2trJkyITWxNVrw==
+X-Received: by 2002:adf:f10c:0:b0:30f:bb83:e6f6 with SMTP id r12-20020adff10c000000b0030fbb83e6f6mr2965454wro.0.1686559983908;
+        Mon, 12 Jun 2023 01:53:03 -0700 (PDT)
+Received: from Ansuel-xps. (93-34-93-173.ip49.fastwebnet.it. [93.34.93.173])
+        by smtp.gmail.com with ESMTPSA id a3-20020a056000050300b003068f5cca8csm11758463wrf.94.2023.06.12.01.53.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jun 2023 01:53:03 -0700 (PDT)
+Message-ID: <6486dcef.050a0220.4c054.4c59@mx.google.com>
+X-Google-Original-Message-ID: <ZIX12RbMtonZb+yM@Ansuel-xps.>
+Date:   Sun, 11 Jun 2023 18:27:05 +0200
+From:   Christian Marangi <ansuelsmth@gmail.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH 00/18] ARM: qcom: apq8064: support CPU frequency scaling
+References: <20230612053922.3284394-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZHphHkNLO4tEJIm/@bhelgaas>
-User-Agent: NeoMutt/20180716
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230612053922.3284394-1-dmitry.baryshkov@linaro.org>
+X-Spam-Status: No, score=-1.1 required=5.0 tests=BAYES_00,DATE_IN_PAST_12_24,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Friday 02 June 2023 16:37:34 Bjorn Helgaas wrote:
-> On Tue, May 30, 2023 at 04:07:42PM +0200, Uwe Kleine-König wrote:
-> > Hello Bjorn,
-> > 
-> > On Tue, Mar 21, 2023 at 08:31:53PM +0100, Uwe Kleine-König wrote:
-> > > this series adapts the platform drivers below drivers/pci to use the
-> > > .remove_new() callback. Compared to the traditional .remove() callback
-> > > .remove_new() returns no value. This is a good thing because the driver core
-> > > doesn't (and cannot) cope for errors during remove. The only effect of a
-> > > non-zero return value in .remove() is that the driver core emits a warning. The
-> > > device is removed anyhow and an early return from .remove() usually yields a
-> > > resource leak.
-> > > 
-> > > By changing the remove callback to return void driver authors cannot
-> > > reasonably assume any more that there is some kind of cleanup later.
-> > > 
-> > > All drivers were easy to convert as they all returned zero in their
-> > > remove callback. Only for iproc the conversion wasn't trivial, the other
-> > > were converted using coccinelle.
-> > > 
-> > > There are no interdependencies between these patches. So even if there
-> > > are some concerns for individual patches, I ask you to apply the
-> > > remaining set. Then I only have to care for the review feedback of the
-> > > refused patches. (Having said that I don't expect any serious objection,
-> > > just things like squashing or separating patches, or maybe I picked a
-> > > wrong subject prefix.)
-> > 
-> > These patches wait for application for quite some time now. They apply
-> > just fine to v6.4-rc1 and next/master. Would be great to get them in
-> > during the next merge window and ideally give them some time in next
-> > before.
-> 
-> Thanks, these seem fine to me, and Lorenzo normally takes care of
-> drivers/pci/controller/.  Lorenzo, if it's easier to have me apply
-> them, that's fine, too, just let me know.
-> 
-> The only tweaks I would make would be:
-> 
->   PCI: j721e: Convert to platform remove callback returning void
->   PCI: dwc: Convert to platform remove callback returning void
-> 
-> to match the git history.
+On Mon, Jun 12, 2023 at 08:39:04AM +0300, Dmitry Baryshkov wrote:
+> Implement CPUFreq support for one of the oldest supported Qualcomm
+> platforms, APQ8064. Each core has independent power and frequency
+> control. Additionally the L2 cache is scaled to follow the CPU
+> frequencies (failure to do so results in strange semi-random crashes).
 
-Hello Bjorn, it should be expected that other changes for PCIe drivers
-sent by other people which were sent to the list before this patch
-series and are still waiting for the review (because are without
-comments), would be processed before and patches sent later.
+Hi, can we talk, maybe in private about this interconnect-cpu thing?
 
-Also I would like to point out that in past I have sent fixes for PCIe
-mvebu driver, which is currently in the broken state. And this is also
-on waiting on the list.
+I see you follow the original implementation of the msm_bus where in
+practice with the use of the kbps the correct clock and voltage was set.
+(and this was also used to set the fabric clock from nominal to fast)
+
+On ipq806x and I assume other SoC there isn't always a 1:1 map of CPU
+freq and L2 freq. For example on ipq8064 we have max CPU freq of 1.4GHz
+and L2 freq of 1.2GHz, on ipq8065 we have CPU 1.7GHz and L2 of 1.4GHz.
+(and even that is curious since I used the debug regs and the cxo
+crystal to measure the clock by hardware (yes i ported the very ancient
+clk-debug to modern kernel and it works and discovered all sort of
+things) the L2 (I assume due to climitation of the hfpll) actually can't
+never reach that frequency (1.4GHz in reality results to something like
+1.2GHz from what I notice a stable clock is there only with frequency of
+max 1GHz))
+
+So my idea was to introduce a simple devfreq driver and use the PASSIVE
+governor where it was added the possibility to link to a CPU frequency
+and with interpolation select the L2 frequency (and voltage)
+
+From some old comments in ancient qsdk code it was pointed out that due
+to a hw limitation the secondary cpu can't stay at a high clock if L2
+was at the idle clock. (no idea if this is specific to IPQ806x) So this
+might be a cause of your crash? (I also have random crash with L2
+scaling and we are planning to just force the L2 at max frequency)
+
+But sorry for all of this (maybe) useless info. I checked the other
+patch and I didn't understand how the different L2 frequency are
+declared and even the voltage. Is this something that will come later?
+I'm very interested in this implementation.
+
+> 
+> Core voltage is controlled through the SAW2 devices, one for each core.
+> The L2 has two regulators, vdd-mem and vdd-dig.
+> 
+> Depenency: [1] for interconnect-clk implementation
+> 
+> https://lore.kernel.org/linux-arm-msm/20230512001334.2983048-3-dmitry.baryshkov@linaro.org/
+> 
+
+-- 
+	Ansuel
