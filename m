@@ -2,76 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 22AE572B5FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 05:18:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0AEB72B5FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 05:18:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234688AbjFLDSZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Jun 2023 23:18:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51532 "EHLO
+        id S234535AbjFLDSj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Jun 2023 23:18:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229597AbjFLDRv (ORCPT
+        with ESMTP id S234759AbjFLDSG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Jun 2023 23:17:51 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 738BC184
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jun 2023 20:16:26 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f61735676fso4474184e87.2
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jun 2023 20:16:26 -0700 (PDT)
+        Sun, 11 Jun 2023 23:18:06 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 011D435B1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jun 2023 20:16:38 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b1a3fa2cd2so42564471fa.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jun 2023 20:16:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686539778; x=1689131778;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=OAmGA4CGrc2mip02rFkO4Zx0BoHPmjJnhKCFRcvi1qk=;
-        b=i1Hr6spoFkG/27w/7KVvHCjWfZfx5W58XOzkaRLQTy4MuXverDKit/JoUvTg0TVzqY
-         QArSJzbRQ58idwbexI8sdnKskDMV1LFEhXZ2iDI2DPInC0PHtQBwsW6KuDzoTQWk17OY
-         IaX+rXbZXiOBP390Kicus3KJ8Dkk4vLJeoZqF8yEQJwNGJk2DX/OCWnk+E3ny/rgNQtP
-         E5zLixYas2YRAjK/GMe3lIXtvlDi00KvMxrlyOw2nW6sUGq2OtQRY4uR0Md4EpajdbpI
-         xyxNuRqF7h6M8/ERbbA/eVTAtyB2QYNCc3izke62E2Bq7gSAJosZP4Q7JX7KxyZAvQIJ
-         3OLg==
+        d=linaro.org; s=google; t=1686539785; x=1689131785;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=i8bbUw1QYsNj4ZuF741sMEm9dNSqu8lftaNCRxtP03g=;
+        b=Ty4GkavvoCkw1OR6pEPSh0h1rS1tL/IZ3JrBR9IZRX9r4OKqs/QVVZX6adPnzoSaYG
+         M6rLDEgB9o3j0ExVlbSfUFwrkJuxl6ECKiwNH2YQCrvd4hgxRiTUUzH1UXr33YDA6TVa
+         Xei3zzffwDNfNa4bHT0htNslei8IPrBMpyYEtjBUG/+P2TL10AdSqUYZm+ar0/B+Ls8I
+         H+erCOTMSHz02V0f6LDcZpDMsfdioT27VBpQg8S3ASt3p72OZMDzV4Dby/s8qd4fyj3/
+         Zcm/MoDnLZvk81d9lhdcb1abWlL4FwEtA6RMQYAzs94+CPgmJh5F+hBZCB6S4JoXMg2d
+         rflA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686539778; x=1689131778;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=OAmGA4CGrc2mip02rFkO4Zx0BoHPmjJnhKCFRcvi1qk=;
-        b=DLdew+C1fA+4eEC2rO6ffiMRFI+gJNjQFAgCMrRXE8uieVVyptow6pF+JI4OWu/2n7
-         n7DK+A7dprjfySsXY3bmhoWYXUkNLyBuv4GRubyS1IOWZcMaadk2HfNNT1sDQjTPfOOQ
-         Pd+QrctrHXDKFbWeNNGbZUmpKNif9V0RqOrTa9hw8AgEoq07uUooYF3T1v8c4VLgaiop
-         2H99m7GU3MGmh4qnP25guY2oPTzWIFgfZYY5syQ/04qg2FfQ2qfO+liiSr+dT3pmZK3T
-         kBSZlLAKLX4KIX8ccDsQf2JDrGwfDuwrEO1RfnGPAf0PykFPCdb+DYy5eevEC8cenbMd
-         ARjg==
-X-Gm-Message-State: AC+VfDxrnGnF4/3SEewsvb0FvjiDZ/xPQ4SliAv0dyTv1Bg6BEW8Eo8B
-        VKiXnRluGJQuCXFbjCaoS3LkAQ==
-X-Google-Smtp-Source: ACHHUZ5ebUVXFqaQVfNpyMR0OjRILdzgCwRKvjDWlBLRqQhCTbm9SliC8tbYuL16gqK4u2/3LcOCPA==
-X-Received: by 2002:a19:7104:0:b0:4f2:4df1:f071 with SMTP id m4-20020a197104000000b004f24df1f071mr2592817lfc.51.1686539778351;
-        Sun, 11 Jun 2023 20:16:18 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686539785; x=1689131785;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=i8bbUw1QYsNj4ZuF741sMEm9dNSqu8lftaNCRxtP03g=;
+        b=AWg1cKstSlfJ5R5lqmgMVNJtOic7V3qhfOke+ROd2luhgYrwa4xHi1qlJRwpzbpAUO
+         c9Hm4fRh54k9CTypoIRN0LFh9QH2XZ/uDB/k1x15PAyu4R5OjzQzZ90OkRslIParvD1u
+         UsTIo0552qcCz/Rt0IKzDsA2CDzOydfALj3vL0RmqAi5eGfbGc7oCZygFTYES0Pp8n7N
+         DRrttPxecIii54wKlKmAtS8odBkwMBsd/QT85XQ1x+z+RV+y+y119r87mXTO2giaOUES
+         Au6TN74sHBqvkTQULIa5kIZziYWEB0aeC1IL6dETQcfxZMZWUYQpQ933Lg29XLVJTtg6
+         s0Ew==
+X-Gm-Message-State: AC+VfDwuakfXUnNxOo315WwpuoRQ9vAOWFK64fOI4OnsTQkEg0dF1n9c
+        4xBkqZ45gAkQoA+8NU7DmhtaFw==
+X-Google-Smtp-Source: ACHHUZ633YwU7nj4H37EMlrzk6y1s4B13oddDZfwTAu0IYWjbvj8IB+kHVD0VUVOYv1zNtaZXTLNAg==
+X-Received: by 2002:a2e:b046:0:b0:2b1:eca3:4e8d with SMTP id d6-20020a2eb046000000b002b1eca34e8dmr2122945ljl.12.1686539784753;
+        Sun, 11 Jun 2023 20:16:24 -0700 (PDT)
 Received: from lothlorien.lan (dzdqv0yyyyyyyyyyybm5y-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::ab2])
-        by smtp.gmail.com with ESMTPSA id g12-20020a19ee0c000000b004f27471e0aesm1295901lfb.79.2023.06.11.20.16.17
+        by smtp.gmail.com with ESMTPSA id b8-20020a2e8488000000b002b32f9b6bd3sm120937ljh.62.2023.06.11.20.16.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Jun 2023 20:16:17 -0700 (PDT)
+        Sun, 11 Jun 2023 20:16:24 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         Degdag Mohamed <degdagmohamed@gmail.com>
-Subject: [PATCH 2/2] drm/msm/dsi: don't allow enabling 7nm VCO with unprogrammed rate
-Date:   Mon, 12 Jun 2023 06:16:16 +0300
-Message-Id: <20230612031616.3620134-2-dmitry.baryshkov@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: sm8150: use proper DSI PHY compatible
+Date:   Mon, 12 Jun 2023 06:16:23 +0300
+Message-Id: <20230612031623.3620155-1-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org>
-References: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -79,38 +74,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-CCF can try enabling VCO before the rate has been programmed. This can
-cause clock lockups and/or other boot issues. Program the VCO to the
-minimal PLL rate if the read rate is 0 Hz.
+The DSI PHY on the Qualcomm SM8150 platform requires platform-specific
+handling. Use the proper SoC-specific compatible string for the DSI
+PHYs.
 
 Reported-by: Degdag Mohamed <degdagmohamed@gmail.com>
-Fixes: 1ef7c99d145c ("drm/msm/dsi: add support for 7nm DSI PHY/PLL")
+Fixes: 2ef3bb17c45c ("arm64: dts: qcom: sm8150: Add DISPCC node")
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index 3b1ed02f644d..6979d35eb7c3 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -395,11 +395,16 @@ static void dsi_pll_phy_dig_reset(struct dsi_pll_7nm *pll)
- 	wmb(); /* Ensure that the reset is deasserted */
- }
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 197c016aaeba..95d361443dff 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -3832,7 +3832,7 @@ opp-358000000 {
+ 			};
  
-+static unsigned long dsi_pll_7nm_vco_recalc_rate(struct clk_hw *hw,
-+						  unsigned long parent_rate);
- static int dsi_pll_7nm_vco_prepare(struct clk_hw *hw)
- {
- 	struct dsi_pll_7nm *pll_7nm = to_pll_7nm(hw);
- 	int rc;
+ 			mdss_dsi0_phy: phy@ae94400 {
+-				compatible = "qcom,dsi-phy-7nm";
++				compatible = "qcom,dsi-phy-7nm-8150";
+ 				reg = <0 0x0ae94400 0 0x200>,
+ 				      <0 0x0ae94600 0 0x280>,
+ 				      <0 0x0ae94900 0 0x260>;
+@@ -3906,7 +3906,7 @@ mdss_dsi1_out: endpoint {
+ 			};
  
-+	if (dsi_pll_7nm_vco_recalc_rate(hw, VCO_REF_CLK_RATE) == 0)
-+		dsi_pll_7nm_vco_set_rate(hw, pll_7nm->phy->cfg->min_pll_rate, VCO_REF_CLK_RATE);
-+
- 	dsi_pll_enable_pll_bias(pll_7nm);
- 	if (pll_7nm->slave)
- 		dsi_pll_enable_pll_bias(pll_7nm->slave);
+ 			mdss_dsi1_phy: phy@ae96400 {
+-				compatible = "qcom,dsi-phy-7nm";
++				compatible = "qcom,dsi-phy-7nm-8150";
+ 				reg = <0 0x0ae96400 0 0x200>,
+ 				      <0 0x0ae96600 0 0x280>,
+ 				      <0 0x0ae96900 0 0x260>;
 -- 
 2.39.2
 
