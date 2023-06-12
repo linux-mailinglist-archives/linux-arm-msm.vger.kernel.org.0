@@ -2,51 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A07172CE1A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 20:26:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D19E172CE19
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 20:26:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232987AbjFLS00 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 14:26:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45640 "EHLO
+        id S238485AbjFLS0Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 14:26:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237813AbjFLSZj (ORCPT
+        with ESMTP id S237883AbjFLSZt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 14:25:39 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2DD6DE7B
+        Mon, 12 Jun 2023 14:25:49 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC2DB113
         for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 11:25:37 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f62b552751so5452638e87.3
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f624daccd1so5291747e87.0
         for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 11:25:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686594335; x=1689186335;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=mmlZ3LfPcxfpnDiDYgpCM3PVTuzAQsiG4BBuQYBs540=;
-        b=xk7wZx06nIV5fczb9HNWO2lfpb+vzO93udN9wM3kfHOXMowEZOC80TUxYnveb/KalX
-         KoS3X3HpKoSmFVc9gzLMA/k9q2K7WoDj4mwBBn43OHGAj+fE+75Ig/K25hZmG2aGfa9Z
-         Ax8VqQ3owduub4dHAZdyDBv/m934BwEaiKCwDJWLzZlXHinqKYCWMMvWVCQEshIKBJzz
-         EC3HIb4HmQ0bHfwx4v7CxTXFDi2aDkSlc0TE4XxRUlJfMwZhComSJcHzW8a4A/2PJv0Z
-         E9gliyWrXUikwKXglXIJA0HPE04Itlz4gU+CGuqwrnpqWiBt5KpUGL+JYjb9kXcJNZBL
-         vvCg==
+        d=linaro.org; s=google; t=1686594336; x=1689186336;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I9Wojx8CKa0fNsj3PWh9HoNqa1CUIodoAFt77duCrjQ=;
+        b=nFgAZCUI/1tlMnEtguQZ4L2eUtklwJLryWFg4VXcDBpX1AieZuKajcF5QBL3D/HEBk
+         tNB6rZaOAlO/wKSqoa7m+FJI/m2asfcl23y2xYuQLuLskk0nnn5L3UyW2OHt/IvdnW5S
+         7K8JAoiq8tKDzsaBaxlxGuFSh6S984x2qVFHokyforSiSPos1YlYPCBWg1Ux9V4/qlvZ
+         c6T/LB72ftaiAadxE5eD32wo51kyGW0H/EkSA/necv9SS9GPh+Iprfls5Xtj7mYmzsb7
+         1A5GY9x3Cs2ABCu9B4NSzJmUT6aL0U3zUax6IEkwOjsNnhoY6NGGc1q5a8Sn/U4A2aMf
+         ov9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686594335; x=1689186335;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=mmlZ3LfPcxfpnDiDYgpCM3PVTuzAQsiG4BBuQYBs540=;
-        b=H8H0gxrq4KQbf1ZP0PCdD0LtpKTz7+GsIItUj8DlIOZF3P9U4r7HzWvUpoYcxq5JfK
-         yFn99qU2TFiAaxH/2B9XmEmjLmiJvxFTPU0ma2dDTs1ymL5vA6N9hfKA8E0RXcU84z+Z
-         05Fwq2PikWxBm+p/epPJLdqA81qc1o7XpUAAtmgSI+LqmZJXQs/ihJu3qvexFEXI73zd
-         5FrIjKjIdq3iRVqjknRKgduY2JU9gytNs1RLmna+R34HmlvjA3kDY8WVwBhAV260Eqic
-         DopMnY4EZBLAlyZWSq2flSM5k67JDXdOIK3k242Oo4vXMJa2VBbgzw/b3A4tNJ+AUnkD
-         l3wg==
-X-Gm-Message-State: AC+VfDw+5q/E6EgF9r8IkDAshAThYUcgjR/W2cl0H/iPQZixCv/zERJx
-        k6PMU1U9g4Km7xLjM2vk4cHN1A==
-X-Google-Smtp-Source: ACHHUZ4XZxIQ/c4uNWvhPciEQKRbkt895So16/iuJ0rYLPeiNyMovPgByOeciUoH8a2eiCz7jqAs/w==
-X-Received: by 2002:a19:f207:0:b0:4f6:3677:54e with SMTP id q7-20020a19f207000000b004f63677054emr4082354lfh.36.1686594335462;
-        Mon, 12 Jun 2023 11:25:35 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686594336; x=1689186336;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=I9Wojx8CKa0fNsj3PWh9HoNqa1CUIodoAFt77duCrjQ=;
+        b=Kv5Yg6xk8LKRL6mIqXIPyS7ASClXomhdgxS0E5VzQHgltvXCXgzVgH+qckLn+VuWRO
+         kzm3PJyE3CagLgZioniED0+RaQBEP8t21QPHBWwx79x/wouS2ZuJJVF2JkIHS8bvUGHt
+         S23/WHb6m7b7Ubn92iCShyRRlXKNVt/JBcF3PKW6/rnaIZI8Jb0PbZQBQNnD+lOgNF3j
+         NGK/Ck++07FXx7SzPzUb9h33JwRdABP2+OVwaeRquTj2FOsGDRtuCJH+GiXLiGYx13B3
+         IFtu42JWKyLpJRFUIBCVtqZY1/WKqcpY24eux5d0LddUbyty1c+Loq/ws4dzJQKFx7Dp
+         EBlA==
+X-Gm-Message-State: AC+VfDxxCF9LFiGNt3Rfe3D25RGc7/BrO9tZhWmgNynQaMpLMl1tUzXR
+        Hvpb0B17S68H/R1yDt1+eJg2dQ==
+X-Google-Smtp-Source: ACHHUZ6578JElAAJEDCsUrnC1f/XMi/IpFjcTFO30GFGBTTaAAIYCSZWM5flDs14jhM0MPgfoXrnRg==
+X-Received: by 2002:a05:6512:44b:b0:4f2:6817:2379 with SMTP id y11-20020a056512044b00b004f268172379mr3843186lfk.23.1686594336223;
+        Mon, 12 Jun 2023 11:25:36 -0700 (PDT)
 Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id v16-20020ac25930000000b004f63dd1dab0sm1503396lfi.98.2023.06.12.11.25.34
+        by smtp.gmail.com with ESMTPSA id v16-20020ac25930000000b004f63dd1dab0sm1503396lfi.98.2023.06.12.11.25.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 12 Jun 2023 11:25:35 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -58,12 +59,13 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Yongqin Liu <yongqin.liu@linaro.org>
-Subject: [PATCH 1/2] drm/msm/dpu: do not enable color-management if DSPPs are not available
-Date:   Mon, 12 Jun 2023 21:25:33 +0300
-Message-Id: <20230612182534.3345805-1-dmitry.baryshkov@linaro.org>
+        freedreno@lists.freedesktop.org
+Subject: [PATCH 2/2] drm/msm/dpu/catalog: define DSPP blocks found on sdm845
+Date:   Mon, 12 Jun 2023 21:25:34 +0300
+Message-Id: <20230612182534.3345805-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230612182534.3345805-1-dmitry.baryshkov@linaro.org>
+References: <20230612182534.3345805-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -76,40 +78,62 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We can not support color management without DSPP blocks being provided
-in the HW catalog. Do not enable color management for CRTCs if num_dspps
-is 0.
+Add definitions of DSPP blocks present on the sdm845 platform. This
+should enable color-management on sdm845-bassed devices.
 
-Fixes: 4259ff7ae509 ("drm/msm/dpu: add support for pcc color block in dpu driver")
-Reported-by: Yongqin Liu <yongqin.liu@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ .../msm/disp/dpu1/catalog/dpu_4_0_sdm845.h    | 21 +++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index 6e684a7b49a1..1edf2b6b0a26 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -1463,6 +1463,8 @@ static const struct drm_crtc_helper_funcs dpu_crtc_helper_funcs = {
- struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
- 				struct drm_plane *cursor)
- {
-+	struct msm_drm_private *priv = dev->dev_private;
-+	struct dpu_kms *dpu_kms = to_dpu_kms(priv->kms);
- 	struct drm_crtc *crtc = NULL;
- 	struct dpu_crtc *dpu_crtc = NULL;
- 	int i, ret;
-@@ -1494,7 +1496,8 @@ struct drm_crtc *dpu_crtc_init(struct drm_device *dev, struct drm_plane *plane,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+index 36ea1af10894..b6098141bb9b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_4_0_sdm845.h
+@@ -96,19 +96,30 @@ static const struct dpu_sspp_cfg sdm845_sspp[] = {
  
- 	drm_crtc_helper_add(crtc, &dpu_crtc_helper_funcs);
+ static const struct dpu_lm_cfg sdm845_lm[] = {
+ 	LM_BLK("lm_0", LM_0, 0x44000, MIXER_SDM845_MASK,
+-		&sdm845_lm_sblk, PINGPONG_0, LM_1, 0),
++		&sdm845_lm_sblk, PINGPONG_0, LM_1, DSPP_0),
+ 	LM_BLK("lm_1", LM_1, 0x45000, MIXER_SDM845_MASK,
+-		&sdm845_lm_sblk, PINGPONG_1, LM_0, 0),
++		&sdm845_lm_sblk, PINGPONG_1, LM_0, DSPP_1),
+ 	LM_BLK("lm_2", LM_2, 0x46000, MIXER_SDM845_MASK,
+-		&sdm845_lm_sblk, PINGPONG_2, LM_5, 0),
++		&sdm845_lm_sblk, PINGPONG_2, LM_5, DSPP_2),
+ 	LM_BLK("lm_3", LM_3, 0x0, MIXER_SDM845_MASK,
+-		&sdm845_lm_sblk, PINGPONG_NONE, 0, 0),
++		&sdm845_lm_sblk, PINGPONG_NONE, 0, DSPP_3),
+ 	LM_BLK("lm_4", LM_4, 0x0, MIXER_SDM845_MASK,
+ 		&sdm845_lm_sblk, PINGPONG_NONE, 0, 0),
+ 	LM_BLK("lm_5", LM_5, 0x49000, MIXER_SDM845_MASK,
+ 		&sdm845_lm_sblk, PINGPONG_3, LM_2, 0),
+ };
  
--	drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
-+	if (dpu_kms->catalog->dspp_count)
-+		drm_crtc_enable_color_mgmt(crtc, 0, true, 0);
- 
- 	/* save user friendly CRTC name for later */
- 	snprintf(dpu_crtc->name, DPU_CRTC_NAME_SIZE, "crtc%u", crtc->base.id);
++static const struct dpu_dspp_cfg sdm845_dspp[] = {
++	DSPP_BLK("dspp_0", DSPP_0, 0x54000, DSPP_SC7180_MASK,
++		 &sm8150_dspp_sblk),
++	DSPP_BLK("dspp_1", DSPP_1, 0x56000, DSPP_SC7180_MASK,
++		 &sm8150_dspp_sblk),
++	DSPP_BLK("dspp_2", DSPP_2, 0x58000, DSPP_SC7180_MASK,
++		 &sm8150_dspp_sblk),
++	DSPP_BLK("dspp_3", DSPP_3, 0x5a000, DSPP_SC7180_MASK,
++		 &sm8150_dspp_sblk),
++};
++
+ static const struct dpu_pingpong_cfg sdm845_pp[] = {
+ 	PP_BLK("pingpong_0", PINGPONG_0, 0x70000, PINGPONG_SDM845_TE2_MASK, 0, sdm845_pp_sblk_te,
+ 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 8),
+@@ -193,6 +204,8 @@ const struct dpu_mdss_cfg dpu_sdm845_cfg = {
+ 	.sspp = sdm845_sspp,
+ 	.mixer_count = ARRAY_SIZE(sdm845_lm),
+ 	.mixer = sdm845_lm,
++	.dspp_count = ARRAY_SIZE(sdm845_dspp),
++	.dspp = sdm845_dspp,
+ 	.pingpong_count = ARRAY_SIZE(sdm845_pp),
+ 	.pingpong = sdm845_pp,
+ 	.dsc_count = ARRAY_SIZE(sdm845_dsc),
 -- 
 2.39.2
 
