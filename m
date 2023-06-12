@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A637772BC89
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 11:31:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D2FD472BC8D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 11:31:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234230AbjFLJbS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 05:31:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48806 "EHLO
+        id S230262AbjFLJbY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 05:31:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234922AbjFLJ3w (ORCPT
+        with ESMTP id S231318AbjFLJaD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 05:29:52 -0400
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9DD7210C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:24:41 -0700 (PDT)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-3f7378a74faso29363125e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:24:41 -0700 (PDT)
+        Mon, 12 Jun 2023 05:30:03 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3F412D4A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:24:43 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f6e4554453so29316195e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:24:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1686561880; x=1689153880;
+        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1686561882; x=1689153882;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=x6Qql4lmrRc6orjCzbHdO+X/jI0p6UbXCT7w4xaPn70=;
-        b=r3C+LN0I7FtVIMevczG2G4gXnrbL8tV0VWh6EO722HqR8GSaE0sIdbfNRfxVxFLZ5B
-         KBIgDCk8KbY3A1fU3rbQm5hg/qG9fiu/Qh5osa9r5C1dsQA0Xew8j5mZNyLKuBNimXuJ
-         6e0x0WmGekpMepRjwxkoNwMoSWLpFysA/e7TXwQ9HxvqKKEmDAkTMxo6WGY5DU3VlT33
-         NHaWsB9EL8reOpnI+0F5kohXV0fYBfz9i83cHE6asArFI1iLJgt+h16f1Yd5ENreccvG
-         guXlbNPG/FuHocWDWvE5pg2eRqhyFAu+oxb9QULwsW/TV/ONDHrPilSk3mWzsETb+yPC
-         RCfQ==
+        bh=zNG+hKxvwpveqfTw49rcUFiC9HYNGdqxVXCMwf/CgoQ=;
+        b=Sjg97FxEsWi1+NhQKvwlVEh51XvKpb7L8qjO3eSPmnCp+RHYjPs6m0g4elcX7e4Gmk
+         q3U1vLjkmrqHZnROyBs/n7xJkk00XMII9dTC69A/BMsdgUAKh6CQ1iVENWho3ieFJxOn
+         kpyrUeEyJN+JmDe79C2O+6cXxwvHb2t7vltcUEEX9l5t3wSl7DONd9L87ujMUkqnmc3f
+         QLazLkrv1GDOV/9vOl0n3uQDl7CvHNk+dcol5Iwbbh8SCOOuXpQsG0n4CHEkKYj0lKtl
+         KjhlWUbdcnrDvJneJ/NH/roITps7vNV+XakPuvBg42ntql0DPxtDl5zempMyWZOl9HON
+         Bzzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686561880; x=1689153880;
+        d=1e100.net; s=20221208; t=1686561882; x=1689153882;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=x6Qql4lmrRc6orjCzbHdO+X/jI0p6UbXCT7w4xaPn70=;
-        b=A5Sgiq8sGtSei+b4ieeuS+4mbZkPPirGuIP3kJIYD9xABghoW7X6R5M1XA7tke6/09
-         gJ+jjcgX9gjkgNwbfFJGT5nsGk2SCQ9lnAc2uHsmpBzvIgwjPeQq7qAsTDGjNZmO+CFu
-         pQKRiUHWhPGKn0oIK2oPdySowoOMBuJqKn0DT85z+7irrnuFWLbKAnxgkLX8zM4NWsa0
-         32dft2mz1U31TBUFIMiC4qqVfcfJwNYNDk4K/T6AZfKLhFx7yNGkObXom/+q4mVupj7o
-         6dhknMtMLvGjlc3v6YkQ1mHKvyjdoQIVIRGDATsINYYXaFyZUaOCRbOdL54XqbdB3Ov1
-         JWDA==
-X-Gm-Message-State: AC+VfDxLOnatWSfIUT6JAZA1/MQFrUtyBKSy9owG4KdT0MvHWNox+d3z
-        ALhtlTYPyX+TOMe3TcGrR6HO6w==
-X-Google-Smtp-Source: ACHHUZ4pVmMwHGX7bNbtVfB97Jl65MLcpOZps2ubdvFDgRPuGgLyhLlZQF10mQYnesEmUQW2Dqf8YA==
-X-Received: by 2002:a1c:7c19:0:b0:3f5:ff24:27de with SMTP id x25-20020a1c7c19000000b003f5ff2427demr5380405wmc.32.1686561880266;
-        Mon, 12 Jun 2023 02:24:40 -0700 (PDT)
+        bh=zNG+hKxvwpveqfTw49rcUFiC9HYNGdqxVXCMwf/CgoQ=;
+        b=dEh0XIqr7lI/vMXTFDv2FlI+gDvfeZHSAUG3puO7Lx0Tm3cHEkmSvbPkkgCzIqb+rP
+         fC9HcdAioeffZaHi4R++y8fpq16XWly57fD5eI2Gn7ambbLwxOYSimAnSNlPRwn9gTwj
+         78Hxc17bjuZleSa39d4MKDBs5Jo26fP87Nc+v9nm6ooepQrexB5EHoR194vMf51wLXYI
+         GNsTw7H7qFQUUPPyDHxJwLQT8UkkLScxXQx1/FW++RkjO/5S+pS9zsTxiuc5OuqxpbOu
+         zWWdyYA5poCCSMtf1mez/izK64LS2UfR85nttStofPe7gpaMErm4G3eoGnwWrxUAmCK8
+         7PYQ==
+X-Gm-Message-State: AC+VfDz70M8jOSx75xryDv/KvjMcjhArhTTAVhRZ/kKUc7tNfxwAk1fG
+        YXvx1tj6cnFwi/b447AddWJCcA==
+X-Google-Smtp-Source: ACHHUZ7VSDx8D3GXZ4VcJcb/TSs+3b96OTltaJznbz319l8jyj/BU/MtAxrNF5k8MF/YomUni4Onnw==
+X-Received: by 2002:a1c:4c0c:0:b0:3f7:3699:c294 with SMTP id z12-20020a1c4c0c000000b003f73699c294mr5458505wmf.29.1686561882035;
+        Mon, 12 Jun 2023 02:24:42 -0700 (PDT)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:a222:bbe9:c688:33ae])
-        by smtp.gmail.com with ESMTPSA id p14-20020a7bcc8e000000b003f727764b10sm10892044wma.4.2023.06.12.02.24.39
+        by smtp.gmail.com with ESMTPSA id p14-20020a7bcc8e000000b003f727764b10sm10892044wma.4.2023.06.12.02.24.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jun 2023 02:24:39 -0700 (PDT)
+        Mon, 12 Jun 2023 02:24:41 -0700 (PDT)
 From:   Bartosz Golaszewski <brgl@bgdev.pl>
 To:     Vinod Koul <vkoul@kernel.org>,
         Bhupesh Sharma <bhupesh.sharma@linaro.org>,
@@ -73,9 +73,9 @@ Cc:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
         linux-stm32@st-md-mailman.stormreply.com,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 10/26] net: stmmac: dwmac-qcom-ethqos: add a newline between headers
-Date:   Mon, 12 Jun 2023 11:23:39 +0200
-Message-Id: <20230612092355.87937-11-brgl@bgdev.pl>
+Subject: [PATCH 11/26] net: stmmac: dwmac-qcom-ethqos: remove stray space
+Date:   Mon, 12 Jun 2023 11:23:40 +0200
+Message-Id: <20230612092355.87937-12-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230612092355.87937-1-brgl@bgdev.pl>
 References: <20230612092355.87937-1-brgl@bgdev.pl>
@@ -93,26 +93,26 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Typically we use a newline between global and local headers so add it
-here as well.
+There's an unnecessary space in the rgmii_updatel() function, remove it.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index ecb94e5388c7..5b56abacbf6b 100644
+index 5b56abacbf6b..8ed05f29fe8b 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -7,6 +7,7 @@
- #include <linux/platform_device.h>
- #include <linux/phy.h>
- #include <linux/property.h>
-+
- #include "stmmac.h"
- #include "stmmac_platform.h"
+@@ -117,7 +117,7 @@ static void rgmii_updatel(struct qcom_ethqos *ethqos,
+ {
+ 	unsigned int temp;
  
+-	temp =  rgmii_readl(ethqos, offset);
++	temp = rgmii_readl(ethqos, offset);
+ 	temp = (temp & ~(mask)) | val;
+ 	rgmii_writel(ethqos, temp, offset);
+ }
 -- 
 2.39.2
 
