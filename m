@@ -2,200 +2,189 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB54A72CC7C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 19:27:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD75E72CD06
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 19:38:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231724AbjFLR1K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 13:27:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37518 "EHLO
+        id S237076AbjFLRi4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 13:38:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236866AbjFLR06 (ORCPT
+        with ESMTP id S235126AbjFLRig (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 13:26:58 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0824E12C;
-        Mon, 12 Jun 2023 10:26:51 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35CGtBGW019445;
-        Mon, 12 Jun 2023 17:26:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=OHfuioKkw0sSpQtX9200zS3CjcWSpGjjyhgTtDXGPmM=;
- b=iproMTiiq2fmZRyz4/qPhZhdMDQHP6+3hw21rySefMHqodZjQzkZ4ythgEKN3z7EjZB5
- /aDvsUE5h05zCj4CJbkCrVNIFrMNAxLROlNp8RZB0hLUTF4tZblYaxx5F3hWLfbREdcq
- QsoxaaT4AM4JsFG5kAqAtlc7r/cbqKY77J6bvNQiThwwZd0rt02a8kStkU8BntMkWNlZ
- M0C+95mewJKzG0bnPEtD9qYRTf9xl78GVwhvEcH9418Ur1Be3wfHcaMDTpYVQbm8/tkX
- xdUV/FL0YWjOk1sQINwbFMRP6zkmuu0y11NkKfSwNFmu1smH6B/Wp5XCQOwdIOc6mr4J Bw== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r4ehtv4w3-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Jun 2023 17:26:44 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35CHQhBJ030448
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Jun 2023 17:26:43 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 12 Jun
- 2023 10:26:41 -0700
-Message-ID: <ffdaddd0-4f2b-7846-322b-8efeadf7ed0c@quicinc.com>
-Date:   Mon, 12 Jun 2023 10:26:39 -0700
+        Mon, 12 Jun 2023 13:38:36 -0400
+Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 286921BC1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 10:38:06 -0700 (PDT)
+Received: by mail-ed1-x533.google.com with SMTP id 4fb4d7f45d1cf-5186d5508afso329019a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 10:38:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686591484; x=1689183484;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Pohf3jyshJu2JxNqYLlPYLTjUPMpfwEBoQx4CTKe4VQ=;
+        b=BhLuodm/lum9Jdxd5Vdrr/qAKrU8z/w4faTouoLjz+Al8yCOr/yXxgpJrx+1bwL721
+         YXr7Fw/wsrQw5NHtsknWiefmTYLvMDi/SjpRWSc9Z0/K8D7ObEfG16wwwhg7UziT1Ft9
+         DwBMO+bXlQQjg24+/8y3laS12ROV7Bn57MX4kfzS7HTpuubkjrM8gJg2K4yjpapmmUV7
+         GUHrnQm5RNeFtp+vGfejS4ZQrOak/r1Lglegh0/TgyJPgJyHMewaLY7tf0H7MaT126o9
+         FS9eujy7WVci7zo9HLnJYFwTL3qsvEQ1NquJPcHaNJeuxEAlsVTvfDhb4EeK/iiMLN2q
+         9W5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686591484; x=1689183484;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Pohf3jyshJu2JxNqYLlPYLTjUPMpfwEBoQx4CTKe4VQ=;
+        b=Rw1mhj1KWR6Hcd834dVLR9W82qP/RkYE5tWosNkM5XYeQIRDXzEMADTOLtYBtZzRPF
+         vJ9QRQonPEsGFiDXfTG7rX7hORkZo17NxfKPdpBVB2LXae+hp2fpkr5iNQ6Ur898OM7u
+         Lt8s5XVx45oqfZfxYUljpyB0dRJTXc28X59xtCNiorT701u28fuSpiU60IbPhsRxLVNn
+         X3vD6ePUCP4/UsQHDbvOPUvseY80kER4gxfItZQB8Pz+a4Jjt+pQK7Gv/aYOBclgsiPy
+         1raAeoCS+Vmhn4DYC/+zWkOUkacCjFN+Vv6ruXlJv/EG7MurbOlAGzz0SxAaZIh09o3Y
+         OhLg==
+X-Gm-Message-State: AC+VfDxIqsTyy+TqP5nozUK1DBj78wx2FbQBBPxwzMoTIlesyBETKKoU
+        q2dy72NY5gQe8Yd/DYgFehfrnQ==
+X-Google-Smtp-Source: ACHHUZ6JWvl/AkjQ33tK0nixWSlGSO7S/vl/vIehMLQSilEeWBqqSfiW/boXj+mcbx3y6ZJ675nsrw==
+X-Received: by 2002:a17:907:9342:b0:973:91f7:508a with SMTP id bv2-20020a170907934200b0097391f7508amr9370903ejc.4.1686591484611;
+        Mon, 12 Jun 2023 10:38:04 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id ks27-20020a170906f85b00b00977eec5bb2csm5454093ejb.156.2023.06.12.10.38.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jun 2023 10:38:04 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] arm64: dts: qcom: sm8550-qrd: add sound card
+Date:   Mon, 12 Jun 2023 19:37:57 +0200
+Message-Id: <20230612173758.286411-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [Freedreno] [PATCH v6 6/6] drm/msm/dsi: Document DSC related
- pclk_rate and hdisplay calculations
-Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-CC:     <freedreno@lists.freedesktop.org>, Sean Paul <sean@poorly.run>,
-        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        "Daniel Vetter" <daniel@ffwll.ch>, <linux-arm-msm@vger.kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>
-References: <20230405-add-dsc-support-v6-0-95eab864d1b6@quicinc.com>
- <20230405-add-dsc-support-v6-6-95eab864d1b6@quicinc.com>
- <6uiyqgggt2a3gkcihtyzr4rvq5igbe3ojpeiqnji22663bhh2l@3jifgk7bw4u5>
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-In-Reply-To: <6uiyqgggt2a3gkcihtyzr4rvq5igbe3ojpeiqnji22663bhh2l@3jifgk7bw4u5>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: e_XxNZDwJDINU3TH43jITT2yedyJgZ8k
-X-Proofpoint-ORIG-GUID: e_XxNZDwJDINU3TH43jITT2yedyJgZ8k
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-12_12,2023-06-12_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- priorityscore=1501 mlxscore=0 bulkscore=0 impostorscore=0
- lowpriorityscore=0 malwarescore=0 spamscore=0 mlxlogscore=999 adultscore=0
- suspectscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2306120150
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add the sound card node with tested playback over WSA8845 speakers and
+WCD9385 headset over USB Type-C.  The recording links were not tested,
+but should be similar to previous platforms.
 
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-On 6/11/2023 3:03 PM, Marijn Suijten wrote:
-> On 2023-06-09 15:57:18, Jessica Zhang wrote:
->> Add documentation comments explaining the pclk_rate and hdisplay math
->> related to DSC.
->>
->> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->> ---
->>   drivers/gpu/drm/msm/dsi/dsi_host.c | 10 ++++++++++
->>   1 file changed, 10 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> index fb1d3a25765f..aeaadc18bc7b 100644
->> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
->> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
->> @@ -564,6 +564,13 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
->>   static unsigned long dsi_adjust_pclk_for_compression(const struct drm_display_mode *mode,
->>   		const struct drm_dsc_config *dsc)
->>   {
->> +	/*
->> +	 * Adjust the pclk rate by calculating a new hdisplay proportional to
->> +	 * the compression ratio such that:
->> +	 *     new_hdisplay = old_hdisplay * target_bpp / source_bpp
->> +	 *
->> +	 * Porches need not be adjusted during compression.
->> +	 */
->>   	int new_hdisplay = DIV_ROUND_UP(mode->hdisplay * drm_dsc_get_bpp_int(dsc),
->>   			dsc->bits_per_component * 3);
-> 
-> I won't reiterate my original troubles with this logic and the comment
-> as that has well been described in v5 replies.
-> 
-> Just want to ask why this comment couldn't be added in patch 5/6
-> immediately when the logic is introduced?  Now readers won't have a clue
-> what is going on until they skip one patch ahead.
-> 
+---
 
-Both myself and Dmitry discussed that in this particular case, we will 
-add the documentation as a follow-up patch and merge it together. Not 
-usually the process, but in this case, just decided to do it this way. 
-The series will still be merged as one.
+Bindings for the sound card were not sent to LKML. Work-in-progress is
+available here:
+https://github.com/krzk/linux/tree/n/audio-wsa884x-on-top-of-wip-sm8450-audio-on-next
 
-> Furthermore it is lacking any explanation that this is a workaround for
-> cmd-mode, and that porches are currently used to represent "transfer
-> time" until those calculations are implemented.  At that point there is
-> no concept of "not adjusting porches for compressed signals" anymore.
-> 
+Depends on my previous patch adding WSA8845 speakers:
+https://lore.kernel.org/linux-arm-msm/20230608094323.267278-1-krzysztof.kozlowski@linaro.org/T/#t
+---
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 81 +++++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
 
-This is a much bigger topic and goes out of scope of this patch and 
-series and I dont want to explain all that in this documentation patch.
+diff --git a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+index 7ef7079dd640..cb0369fbbc81 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
++++ b/arch/arm64/boot/dts/qcom/sm8550-qrd.dts
+@@ -97,6 +97,87 @@ pmic_glink_sbu: endpoint {
+ 		};
+ 	};
+ 
++	sound {
++		compatible = "qcom,sm8550-sndcard", "qcom,sm8450-sndcard";
++		model = "SM8550-QRD";
++		audio-routing = "SpkrLeft IN", "WSA_SPK1 OUT",
++				"SpkrRight IN", "WSA_SPK2 OUT",
++				"IN1_HPHL", "HPHL_OUT",
++				"IN2_HPHR", "HPHR_OUT",
++				"AMIC2", "MIC BIAS2",
++				"VA DMIC0", "MIC BIAS1",
++				"VA DMIC1", "MIC BIAS1",
++				"VA DMIC2", "MIC BIAS3",
++				"TX DMIC0", "MIC BIAS1",
++				"TX DMIC1", "MIC BIAS2",
++				"TX DMIC2", "MIC BIAS3",
++				"TX SWR_ADC1", "ADC2_OUTPUT";
++
++		wcd-playback-dai-link {
++			link-name = "WCD Playback";
++
++			cpu {
++				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
++			};
++
++			codec {
++				sound-dai = <&wcd938x 0>, <&swr1 0>, <&lpass_rxmacro 0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		wcd-capture-dai-link {
++			link-name = "WCD Capture";
++
++			cpu {
++				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
++			};
++
++			codec {
++				sound-dai = <&wcd938x 1>, <&swr2 0>, <&lpass_txmacro 0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		wsa-dai-link {
++			link-name = "WSA Playback";
++
++			cpu {
++				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
++			};
++
++			codec {
++				sound-dai = <&north_spkr>, <&south_spkr>, <&swr0 0>, <&lpass_wsamacro 0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		va-dai-link {
++			link-name = "VA Capture";
++
++			cpu {
++				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
++			};
++
++			codec {
++				sound-dai = <&lpass_vamacro 0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++	};
++
+ 	vph_pwr: vph-pwr-regulator {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vph_pwr";
+-- 
+2.34.1
 
-If we explain that this is specific to command mode, what would the 
-panel drivers fill out for porches . Obviously they cannot fill out a 0.
-
-Coming to transfer time. Even if current panel drivers use 0 porches, 
-the clock you get should still be sufficient for 60fps or a transfer 
-time of 16.66ms.
-
-Transfer time was a concept introduced for some specific command mode 
-panels where we needed to finish transferring the frame even faster than 
-16.66ms like 12ms or 13ms.
-
-Yes, without that, upstream and downstream math doesnt match. But that 
-doesnt mean its going to break the panels or that upstream math is 
-wrong. If you think command mode porches should be 0, then this will 
-give you the clk for 60fps. If you add some random porches, it will just 
-give a faster clock.
-
-Porches can be used instead of transfer time till we add that math but 
-again, thats only needed for panels which need a faster transfer time 
-than 16.66ms.
-
-So we dont need to call this a workaround in my opinion at all (and hack 
-as you called in v5 is totally out of proportion).
-
-One could even argue that if the panel needs a transfer time faster than 
-16.66ms, then the mode->clock should also be bumped up. Panels dont do 
-that today either.
-
-Hence, I am going to consider transfer time as an enhancement and not 
-going to take that up in this series so I am not for adding that comment 
-here.
-
-And as I have explained, this patch is not a workaround either. Its just 
-calculating the clock based on what we have today in the panel drivers.
-
-
-
->>   
->> @@ -961,6 +968,9 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->>   
->>   		/* Divide the display by 3 but keep back/font porch and
->>   		 * pulse width same
->> +		 *
->> +		 * hdisplay will be divided by 3 here to account for the fact
->> +		 * that DPU sends 3 bytes per pclk cycle to DSI.
->>   		 */
->>   		h_total -= hdisplay;
->>   		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
-> 
-> Still very glad to have this, thank you for adding it.  Note that it
-> only further undermines the pclk adjustments, as I just explained in v5
-> review.
-> 
-> - Marijn
-> 
->>
->> -- 
->> 2.40.1
->>
