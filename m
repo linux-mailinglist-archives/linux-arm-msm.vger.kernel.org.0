@@ -2,125 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DA9B072CC4C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 19:21:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB54A72CC7C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 19:27:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233757AbjFLRVh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 13:21:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33002 "EHLO
+        id S231724AbjFLR1K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 13:27:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232963AbjFLRVg (ORCPT
+        with ESMTP id S236866AbjFLR06 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 13:21:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B2CF7188
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 10:20:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-        s=mimecast20190719; t=1686590442;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=7qlKft7mE4b2kNS3x9A8djvNWYAtiYtMSSZe9V4o7Ek=;
-        b=fdEYm5ePBJz8/sLLgUVBm+R801+8LnD8NjUGHFbjdaf27oyWXenG6Z3ZUtVNGn5uvySK78
-        B+Osf9UhBiADVQH0iH08VioSP5Jl7ZV/lF6l1B9+FAMENolBKIZoRjRAKHGcmqluj2us/r
-        IAZNz1smwBpSZ6pB4EzfEgUQEJJRgDs=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-617-w4ZQ4KNTOFqPFGtAeT_vgQ-1; Mon, 12 Jun 2023 13:20:41 -0400
-X-MC-Unique: w4ZQ4KNTOFqPFGtAeT_vgQ-1
-Received: by mail-yw1-f198.google.com with SMTP id 00721157ae682-56938733c13so65630927b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 10:20:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686590440; x=1689182440;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7qlKft7mE4b2kNS3x9A8djvNWYAtiYtMSSZe9V4o7Ek=;
-        b=lOZGQN6nSLN5TnM4Z0LAk1Y7ex5CuO+UezvfZtyTNDgj4+94UMrf5kn2/IJ/M1N2wk
-         fI8P2sJX6X+mzxWkJvSnfk7GQm094Fjl8uzFmR8pf2erL7bmihuafWVIKq9OLEZ0COcA
-         rO6kAaJZNfLbNohkz6CSioM+xM0Ud83uZt6EijCt/PUDAH3r+WB8XycP0FR8Eu2pUvEX
-         gseXXC8/Domy5L8L9legQ0sR6ee4Lt0aSqPx4vxdNPX9r8zQXK5MAvyoYMhVZ8KJ4IXc
-         oK8isOPirSQxjPSxPnANQ+3BUprgXjCwvsXSg5Wek4CIYGtlBG5sXhQGhiFfewPHIg4z
-         7qfQ==
-X-Gm-Message-State: AC+VfDxF5A7JvixJU4OS0PSaLa0XcaWK0oqqyJ2BF82aU44PNxCzno6l
-        BMgWTjRuhiNKQczf9xfrsiB79C++sYeEfVg/av/guFdOcP8mC2KNVBRmSvAe+AliEGxfNaobLBp
-        9zWq36xAzhqyRW2r0lJSOfpIL1qtA/mI3Ng==
-X-Received: by 2002:a81:8047:0:b0:565:c888:1d09 with SMTP id q68-20020a818047000000b00565c8881d09mr11436058ywf.30.1686590440572;
-        Mon, 12 Jun 2023 10:20:40 -0700 (PDT)
-X-Google-Smtp-Source: ACHHUZ6pK0EspHiEwXLJwZSnTgF0PmnWrSSsx5/e6T7JNdTcNpiEDXWG/J7snMtSub/jvW4XBEs/gg==
-X-Received: by 2002:a81:8047:0:b0:565:c888:1d09 with SMTP id q68-20020a818047000000b00565c8881d09mr11436028ywf.30.1686590440315;
-        Mon, 12 Jun 2023 10:20:40 -0700 (PDT)
-Received: from halaney-x13s ([2600:1700:1ff0:d0e0::45])
-        by smtp.gmail.com with ESMTPSA id t7-20020a815f07000000b0054f9e7fed7asm2622065ywb.137.2023.06.12.10.20.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jun 2023 10:20:39 -0700 (PDT)
-Date:   Mon, 12 Jun 2023 12:20:36 -0500
-From:   Andrew Halaney <ahalaney@redhat.com>
-To:     Bartosz Golaszewski <brgl@bgdev.pl>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: Re: [PATCH 01/26] phy: qualcomm: fix indentation in Makefile
-Message-ID: <20230612172036.ztvjdzblh6bvmxp2@halaney-x13s>
-References: <20230612092355.87937-1-brgl@bgdev.pl>
- <20230612092355.87937-2-brgl@bgdev.pl>
+        Mon, 12 Jun 2023 13:26:58 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0824E12C;
+        Mon, 12 Jun 2023 10:26:51 -0700 (PDT)
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35CGtBGW019445;
+        Mon, 12 Jun 2023 17:26:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=OHfuioKkw0sSpQtX9200zS3CjcWSpGjjyhgTtDXGPmM=;
+ b=iproMTiiq2fmZRyz4/qPhZhdMDQHP6+3hw21rySefMHqodZjQzkZ4ythgEKN3z7EjZB5
+ /aDvsUE5h05zCj4CJbkCrVNIFrMNAxLROlNp8RZB0hLUTF4tZblYaxx5F3hWLfbREdcq
+ QsoxaaT4AM4JsFG5kAqAtlc7r/cbqKY77J6bvNQiThwwZd0rt02a8kStkU8BntMkWNlZ
+ M0C+95mewJKzG0bnPEtD9qYRTf9xl78GVwhvEcH9418Ur1Be3wfHcaMDTpYVQbm8/tkX
+ xdUV/FL0YWjOk1sQINwbFMRP6zkmuu0y11NkKfSwNFmu1smH6B/Wp5XCQOwdIOc6mr4J Bw== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r4ehtv4w3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 12 Jun 2023 17:26:44 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35CHQhBJ030448
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 12 Jun 2023 17:26:43 GMT
+Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 12 Jun
+ 2023 10:26:41 -0700
+Message-ID: <ffdaddd0-4f2b-7846-322b-8efeadf7ed0c@quicinc.com>
+Date:   Mon, 12 Jun 2023 10:26:39 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230612092355.87937-2-brgl@bgdev.pl>
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [Freedreno] [PATCH v6 6/6] drm/msm/dsi: Document DSC related
+ pclk_rate and hdisplay calculations
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>
+CC:     <freedreno@lists.freedesktop.org>, Sean Paul <sean@poorly.run>,
+        <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        "Konrad Dybcio" <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        "Daniel Vetter" <daniel@ffwll.ch>, <linux-arm-msm@vger.kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        David Airlie <airlied@gmail.com>
+References: <20230405-add-dsc-support-v6-0-95eab864d1b6@quicinc.com>
+ <20230405-add-dsc-support-v6-6-95eab864d1b6@quicinc.com>
+ <6uiyqgggt2a3gkcihtyzr4rvq5igbe3ojpeiqnji22663bhh2l@3jifgk7bw4u5>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <6uiyqgggt2a3gkcihtyzr4rvq5igbe3ojpeiqnji22663bhh2l@3jifgk7bw4u5>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: e_XxNZDwJDINU3TH43jITT2yedyJgZ8k
+X-Proofpoint-ORIG-GUID: e_XxNZDwJDINU3TH43jITT2yedyJgZ8k
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-12_12,2023-06-12_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ priorityscore=1501 mlxscore=0 bulkscore=0 impostorscore=0
+ lowpriorityscore=0 malwarescore=0 spamscore=0 mlxlogscore=999 adultscore=0
+ suspectscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2305260000 definitions=main-2306120150
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 12, 2023 at 11:23:30AM +0200, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> 
-> Align all entries in Makefile.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 
-> ---
->  drivers/phy/qualcomm/Makefile | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+On 6/11/2023 3:03 PM, Marijn Suijten wrote:
+> On 2023-06-09 15:57:18, Jessica Zhang wrote:
+>> Add documentation comments explaining the pclk_rate and hdisplay math
+>> related to DSC.
+>>
+>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+>> ---
+>>   drivers/gpu/drm/msm/dsi/dsi_host.c | 10 ++++++++++
+>>   1 file changed, 10 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> index fb1d3a25765f..aeaadc18bc7b 100644
+>> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+>> @@ -564,6 +564,13 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
+>>   static unsigned long dsi_adjust_pclk_for_compression(const struct drm_display_mode *mode,
+>>   		const struct drm_dsc_config *dsc)
+>>   {
+>> +	/*
+>> +	 * Adjust the pclk rate by calculating a new hdisplay proportional to
+>> +	 * the compression ratio such that:
+>> +	 *     new_hdisplay = old_hdisplay * target_bpp / source_bpp
+>> +	 *
+>> +	 * Porches need not be adjusted during compression.
+>> +	 */
+>>   	int new_hdisplay = DIV_ROUND_UP(mode->hdisplay * drm_dsc_get_bpp_int(dsc),
+>>   			dsc->bits_per_component * 3);
 > 
-> diff --git a/drivers/phy/qualcomm/Makefile b/drivers/phy/qualcomm/Makefile
-> index de3dc9ccf067..5fb33628566b 100644
-> --- a/drivers/phy/qualcomm/Makefile
-> +++ b/drivers/phy/qualcomm/Makefile
-> @@ -20,4 +20,4 @@ obj-$(CONFIG_PHY_QCOM_USB_HSIC) 	+= phy-qcom-usb-hsic.o
->  obj-$(CONFIG_PHY_QCOM_USB_HS_28NM)	+= phy-qcom-usb-hs-28nm.o
->  obj-$(CONFIG_PHY_QCOM_USB_SS)		+= phy-qcom-usb-ss.o
->  obj-$(CONFIG_PHY_QCOM_USB_SNPS_FEMTO_V2)+= phy-qcom-snps-femto-v2.o
-> -obj-$(CONFIG_PHY_QCOM_IPQ806X_USB)		+= phy-qcom-ipq806x-usb.o
-> +obj-$(CONFIG_PHY_QCOM_IPQ806X_USB)	+= phy-qcom-ipq806x-usb.o
-> -- 
-> 2.39.2
+> I won't reiterate my original troubles with this logic and the comment
+> as that has well been described in v5 replies.
+> 
+> Just want to ask why this comment couldn't be added in patch 5/6
+> immediately when the logic is introduced?  Now readers won't have a clue
+> what is going on until they skip one patch ahead.
 > 
 
+Both myself and Dmitry discussed that in this particular case, we will 
+add the documentation as a follow-up patch and merge it together. Not 
+usually the process, but in this case, just decided to do it this way. 
+The series will still be merged as one.
+
+> Furthermore it is lacking any explanation that this is a workaround for
+> cmd-mode, and that porches are currently used to represent "transfer
+> time" until those calculations are implemented.  At that point there is
+> no concept of "not adjusting porches for compressed signals" anymore.
+> 
+
+This is a much bigger topic and goes out of scope of this patch and 
+series and I dont want to explain all that in this documentation patch.
+
+If we explain that this is specific to command mode, what would the 
+panel drivers fill out for porches . Obviously they cannot fill out a 0.
+
+Coming to transfer time. Even if current panel drivers use 0 porches, 
+the clock you get should still be sufficient for 60fps or a transfer 
+time of 16.66ms.
+
+Transfer time was a concept introduced for some specific command mode 
+panels where we needed to finish transferring the frame even faster than 
+16.66ms like 12ms or 13ms.
+
+Yes, without that, upstream and downstream math doesnt match. But that 
+doesnt mean its going to break the panels or that upstream math is 
+wrong. If you think command mode porches should be 0, then this will 
+give you the clk for 60fps. If you add some random porches, it will just 
+give a faster clock.
+
+Porches can be used instead of transfer time till we add that math but 
+again, thats only needed for panels which need a faster transfer time 
+than 16.66ms.
+
+So we dont need to call this a workaround in my opinion at all (and hack 
+as you called in v5 is totally out of proportion).
+
+One could even argue that if the panel needs a transfer time faster than 
+16.66ms, then the mode->clock should also be bumped up. Panels dont do 
+that today either.
+
+Hence, I am going to consider transfer time as an enhancement and not 
+going to take that up in this series so I am not for adding that comment 
+here.
+
+And as I have explained, this patch is not a workaround either. Its just 
+calculating the clock based on what we have today in the panel drivers.
+
+
+
+>>   
+>> @@ -961,6 +968,9 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>>   
+>>   		/* Divide the display by 3 but keep back/font porch and
+>>   		 * pulse width same
+>> +		 *
+>> +		 * hdisplay will be divided by 3 here to account for the fact
+>> +		 * that DPU sends 3 bytes per pclk cycle to DSI.
+>>   		 */
+>>   		h_total -= hdisplay;
+>>   		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
+> 
+> Still very glad to have this, thank you for adding it.  Note that it
+> only further undermines the pclk adjustments, as I just explained in v5
+> review.
+> 
+> - Marijn
+> 
+>>
+>> -- 
+>> 2.40.1
+>>
