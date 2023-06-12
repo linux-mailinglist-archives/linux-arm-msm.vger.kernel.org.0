@@ -2,186 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ECD2572C823
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 16:22:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E64BF72C964
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 17:10:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238052AbjFLOWw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 10:22:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33124 "EHLO
+        id S239750AbjFLPKR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 11:10:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238211AbjFLOWe (ORCPT
+        with ESMTP id S239467AbjFLPJy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 10:22:34 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 853371BCB
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 07:20:23 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f6170b1486so5356442e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 07:20:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686579604; x=1689171604;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NSvlsm1vEOWf78ZaJaA6a10BH4JNNfXIER+h17rt9CM=;
-        b=JPIwRskU6oZ71zvly+9F3vYs8JoENWrSqHRTTyFm0TLCvlS//DjLmq5PHfnCh09yvM
-         n0B6KUxDZ95gPCPdPl95F4/hdKyLHfEPKd7MVmKs5JU4pFWKkrbsWYJPC7ZtxvCcW8cn
-         ceZtgdLJfT74N38ZAEjuZmJU7dtyciQrZPUDx2NEyOQlkd2VvaqcNtFFaT4FYERV0sL5
-         GDDBQquW14e85U4jlcs763ktIjPlL69Zo838FEiudcnqw6RtEwDSifPsNiX7WQdISYFM
-         oG9sJpl4O69ArtmlZgGSEBfGamrimNnDwxpPkpdp+tVYL0yOVKsCLayY2D+NYfmOVxa0
-         GRNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686579604; x=1689171604;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NSvlsm1vEOWf78ZaJaA6a10BH4JNNfXIER+h17rt9CM=;
-        b=R809VLMGgRaeHawEHH5TzhlGHy3CR2WldqgUt8O9yk9381UI5vYDYENG1DY0CIk460
-         6FHG0R503JuWiLfRTBmlEc/RS/VL0SR+QZ6DLJvmief2Gr36rVHOvD3S6e9a5nZGe5Ax
-         LEfftrb+myNN16SAuAGb/WtgSKMaVnvJR7EAKHhY93pGq5lHAOQ4nBsoiCmVK6E7QNXd
-         uLdZVGPgKiGS2jIdhRolaK1vaVZVA45aHzI4HjfYM5he8QnG1K8O1qizX4q+p61Ba9Yj
-         mFYUz0vxXJYZ7fyoqvUR6HBhp+UPxxNBoFyVh3PJt2uUdFt/TNWix2ZwqunCX803XjpK
-         v7FQ==
-X-Gm-Message-State: AC+VfDxZcDrqi1GwRyQsl8blP3tRZsROT/MwudAo35790hNwff1LoXpE
-        kA78YUf8DWtzdaFL6bgxxixP7Q==
-X-Google-Smtp-Source: ACHHUZ4fTsFvE37eGGctgd/kBdjCtwzEKl+BMhrZpZQL+PsW0znUnxYR3vsTgnR+WC43YUkDa5zmhA==
-X-Received: by 2002:a05:6512:2305:b0:4f3:822d:bcf7 with SMTP id o5-20020a056512230500b004f3822dbcf7mr2923641lfu.21.1686579604135;
-        Mon, 12 Jun 2023 07:20:04 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id a11-20020a2e980b000000b002b1c0a663fbsm1785366ljj.77.2023.06.12.07.20.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jun 2023 07:20:03 -0700 (PDT)
-Message-ID: <99a68056-a4c9-d475-9245-e0802ffe4c89@linaro.org>
-Date:   Mon, 12 Jun 2023 17:20:02 +0300
+        Mon, 12 Jun 2023 11:09:54 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FD6AE41;
+        Mon, 12 Jun 2023 08:09:52 -0700 (PDT)
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35CDrdde003212;
+        Mon, 12 Jun 2023 15:09:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=We40rKMLG+MEC25B0HGY2atMNWzmRl6ol9yjTjBbbfY=;
+ b=NntYswhdnF3o7j1hOEJqs6tPZKC/ueV3kPVbn26ZQ2xd7UZWsyMJxtdOUYjqNlQz/R5f
+ boTx7AyP9HNQDQey/BscZcwWcv+hLMcH5DbIQBlQMnANGMWU3lYiVjI0y6eFaPUH2Lgu
+ PmNF1LZlYDQx8tHa+vq86SWu6o0Pbm/gbSq9VFlc66JxPDvmUqV7lOTOQefisSsOTD99
+ gNiTBozUOcRfviZ10rKtkcec45Hx7wjbRu3bHwTRM+AYUtqGFyenx5paFa1reIGHzw/p
+ tCB3jKTosJSVWfDEZKjMLfJcRDdNl4LEX5eC2sbhYoL41R+mxKzzBRB7z1ro5AVJDEMc 6Q== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r4ggr3pdy-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 12 Jun 2023 15:09:41 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35CF9ekQ003169
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 12 Jun 2023 15:09:40 GMT
+Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 12 Jun
+ 2023 08:09:40 -0700
+Message-ID: <b5e5c141-b5df-e24d-8fa4-94297d561cec@quicinc.com>
+Date:   Mon, 12 Jun 2023 09:09:39 -0600
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 00/18] ARM: qcom: apq8064: support CPU frequency scaling
-Content-Language: en-GB
-To:     Christian Marangi <ansuelsmth@gmail.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org
-References: <20230612053922.3284394-1-dmitry.baryshkov@linaro.org>
- <6486dcef.050a0220.4c054.4c59@mx.google.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <6486dcef.050a0220.4c054.4c59@mx.google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.0
+Subject: Re: [PATCH] accel/qaic: Fix dereferencing freed memory
+Content-Language: en-US
+To:     =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        "Pranjal Ramajor Asha Kanojiya" <quic_pkanojiy@quicinc.com>,
+        Sukrut Bellary <sukrut.bellary@linux.com>,
+        Oded Gabbay <ogabbay@kernel.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <kernel-janitors@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <linaro-mm-sig@lists.linaro.org>, <linux-media@vger.kernel.org>
+References: <20230610021200.377452-1-sukrut.bellary@linux.com>
+ <fc979a4e-c30a-2606-9eec-afbba4fdd774@amd.com>
+ <e3a867a8-284b-7250-b1b2-1956f533f6b0@quicinc.com>
+ <ff196b04-e8c5-52d9-852b-9a9cc7eecdd0@amd.com>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+In-Reply-To: <ff196b04-e8c5-52d9-852b-9a9cc7eecdd0@amd.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 6P2l9VzzfQul7Cq_a4b7dSQKLSzsvKAl
+X-Proofpoint-ORIG-GUID: 6P2l9VzzfQul7Cq_a4b7dSQKLSzsvKAl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-12_06,2023-06-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 impostorscore=0
+ mlxscore=0 mlxlogscore=999 malwarescore=0 phishscore=0 clxscore=1011
+ priorityscore=1501 spamscore=0 bulkscore=0 suspectscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306120130
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11/06/2023 19:27, Christian Marangi wrote:
-> On Mon, Jun 12, 2023 at 08:39:04AM +0300, Dmitry Baryshkov wrote:
->> Implement CPUFreq support for one of the oldest supported Qualcomm
->> platforms, APQ8064. Each core has independent power and frequency
->> control. Additionally the L2 cache is scaled to follow the CPU
->> frequencies (failure to do so results in strange semi-random crashes).
-> 
-> Hi, can we talk, maybe in private about this interconnect-cpu thing?
-
-Hi, sure. Feel free to ping me on IRC (lumag) or via email. Or we can 
-just continue our discussion here, as it might be interesting to other 
-people too.
-
-> I see you follow the original implementation of the msm_bus where in
-> practice with the use of the kbps the correct clock and voltage was set.
-> (and this was also used to set the fabric clock from nominal to fast)
-> 
-> On ipq806x and I assume other SoC there isn't always a 1:1 map of CPU
-> freq and L2 freq. For example on ipq8064 we have max CPU freq of 1.4GHz
-> and L2 freq of 1.2GHz, on ipq8065 we have CPU 1.7GHz and L2 of 1.4GHz.
-
-This is also the case for apq8064. The vendor kernel defines 15 
-frequencies for L2 cache clock, but then for some reasons all PVS tables 
-use just 3 entries from these 15.
-
-> (and even that is curious since I used the debug regs and the cxo
-> crystal to measure the clock by hardware (yes i ported the very ancient
-> clk-debug to modern kernel and it works and discovered all sort of
-> things) the L2 (I assume due to climitation of the hfpll) actually can't
-> never reach that frequency (1.4GHz in reality results to something like
-> 1.2GHz from what I notice a stable clock is there only with frequency of
-> max 1GHz))
-
-I would like to point you to https://github.com/andersson/debugcc/, 
-which is a userspace reimplementation of clk-debug. We'd appreciate your 
-patches there.
-
-> So my idea was to introduce a simple devfreq driver and use the PASSIVE
-> governor where it was added the possibility to link to a CPU frequency
-> and with interpolation select the L2 frequency (and voltage)
-
-I stumbled upon this idea, when I was working on the msm8996 and it's 
-CBF clock (CBF = interconnect between two core clusters). While it 
-should be possible to use DEVFREQ in simple cases (e.g. L2 clock >= 
-max(CPU clock), if possible). However real configurations are slightly 
-harder.
-E.g. for the purpose of this patchset, the relationship for apq8064 is 
-the following (in MHz):
-
-  CPU    L2
-  384    384
-  486    648
-  594    648
-  702    648
-....    ...
-1026    648
-1134   1134
-....   ....
-1512   1134
-....   ....
-
-It should be noted that msm8960 also used just three values for the L2 
-cache frequencies. From what I can see, only msm8x60 made L2 freq 
-tightly follow the CPU frequency.
-
->  From some old comments in ancient qsdk code it was pointed out that due
-> to a hw limitation the secondary cpu can't stay at a high clock if L2
-> was at the idle clock. (no idea if this is specific to IPQ806x) So this
-> might be a cause of your crash? (I also have random crash with L2
-> scaling and we are planning to just force the L2 at max frequency)
-
-It might be related. It was more or less the same story with msm8996, 
-which was either 'maxcpus=2' or scaling the CBF clock.
-
-> But sorry for all of this (maybe) useless info. I checked the other
-> patch and I didn't understand how the different L2 frequency are
-> declared and even the voltage. Is this something that will come later?
-> I'm very interested in this implementation.
-
-The L2 frequency (<&kraitcc 4>) is converted into bandwidth vote, which 
-then goes into the OPP tables. But please also see the discussion 
-started at the patch 15.
-
-> 
+On 6/12/2023 7:21 AM, Christian König wrote:
+> Am 12.06.23 um 15:03 schrieb Pranjal Ramajor Asha Kanojiya:
 >>
->> Core voltage is controlled through the SAW2 devices, one for each core.
->> The L2 has two regulators, vdd-mem and vdd-dig.
 >>
->> Depenency: [1] for interconnect-clk implementation
+>> On 6/12/2023 4:52 PM, Christian König wrote:
+>>>
+>>>
+>>> Am 10.06.23 um 04:12 schrieb Sukrut Bellary:
+>>>> smatch warning:
+>>>>     drivers/accel/qaic/qaic_data.c:620 qaic_free_object() error:
+>>>>         dereferencing freed memory 'obj->import_attach'
+>>>>
+>>>> obj->import_attach is detached and freed using dma_buf_detach().
+>>>> But used after free to decrease the dmabuf ref count using
+>>>> dma_buf_put().
+>>>>
+>>>> Fixes: ff13be830333 ("accel/qaic: Add datapath")
+>>>> Signed-off-by: Sukrut Bellary <sukrut.bellary@linux.com>
+>>>> ---
+>>>>   drivers/accel/qaic/qaic_data.c | 4 +++-
+>>>>   1 file changed, 3 insertions(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/drivers/accel/qaic/qaic_data.c 
+>>>> b/drivers/accel/qaic/qaic_data.c
+>>>> index e42c1f9ffff8..7cba4d680ea8 100644
+>>>> --- a/drivers/accel/qaic/qaic_data.c
+>>>> +++ b/drivers/accel/qaic/qaic_data.c
+>>>> @@ -613,11 +613,13 @@ static int qaic_gem_object_mmap(struct 
+>>>> drm_gem_object *obj, struct vm_area_struc
+>>>>   static void qaic_free_object(struct drm_gem_object *obj)
+>>>>   {
+>>>>       struct qaic_bo *bo = to_qaic_bo(obj);
+>>>> +    struct dma_buf *dmabuf;
+>>>
+>>> Maybe move that variable into the if.
+>>>
+>>>>       if (obj->import_attach) {
+>>>>           /* DMABUF/PRIME Path */
+>>>> +        dmabuf = obj->import_attach->dmabuf;
+>>>>           dma_buf_detach(obj->import_attach->dmabuf, 
+>>>> obj->import_attach);
+>>>> -        dma_buf_put(obj->import_attach->dmabuf);
+>>>> +        dma_buf_put(dmabuf);
+>>>
+>>> I strongly assume you are not using the GEM prime helpers for this?
+>>>
+>>> Christian.
 >>
->> https://lore.kernel.org/linux-arm-msm/20230512001334.2983048-3-dmitry.baryshkov@linaro.org/
->>
+>> Driver uses drm_gem_prime_fd_to_handle() helper function but it also 
+>> registers for ->gem_prime_import() which is internally called by 
+>> drm_gem_prime_fd_to_handle(). All the operations done in 
+>> gem_prime_import() are undone here.
 > 
+> Then why don't you use drm_prime_gem_destroy() which is the cleanup 
+> helper for imports created by ->gem_prime_import() ?
+> 
+> That looks pretty much identical to what you do here manually.
 
--- 
-With best wishes
-Dmitry
+I think destroy() wasn't used because we are new to DRM and sometimes 
+confused by the multitude of options.  I appreciate the suggestion and 
+will follow up to see if destroy() will work here, or identify what 
+would prevent the use of it.
 
+-Jeff
