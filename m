@@ -2,70 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 35DFD72CAEA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 18:03:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B71172CB56
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 18:20:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231563AbjFLQDQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 12:03:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47170 "EHLO
+        id S233129AbjFLQUT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 12:20:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57680 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229480AbjFLQDP (ORCPT
+        with ESMTP id S235814AbjFLQTn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 12:03:15 -0400
+        Mon, 12 Jun 2023 12:19:43 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8C9CBB;
-        Mon, 12 Jun 2023 09:03:13 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92ABB1728;
+        Mon, 12 Jun 2023 09:19:30 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6DE0561920;
-        Mon, 12 Jun 2023 16:03:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50136C433EF;
-        Mon, 12 Jun 2023 16:03:12 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 26D4561DF5;
+        Mon, 12 Jun 2023 16:19:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 369B1C4339B;
+        Mon, 12 Jun 2023 16:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686585792;
-        bh=DVoozoXwr1+By1EY6gaWGvC8bmLqsVOluvH8fNoDeKw=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=LDGk2nOmyZzVqZ9gQ04NkGPR0QJjU//3S4bP2TgZz6txbPuwaiRVKXXPw4upmGYFW
-         0YdjjFx5WzjcDS1lypOsoqV91/fKUethof1Hp6zieJUxAQCt0jzqkus6lo0zMaWMA0
-         O0B9XH7UConfXGEpvMS6yW5f4Kt62ryu308G9aU7VOj+435CCWaj/IMVnCWgw47zlI
-         1VMT+S+fbYxlWkHHiXx/B1ht5oneBecK3hizmrCkz90a6GV55qLLKbIl/SUUdkvSy3
-         r5bXq4peMwUOpHciaTFAizz6sPMABNPlJfBcscqVI5yXuBt14A3NTh8H+4Sz9HkYsR
-         x3RtN9klrrZsA==
-Date:   Mon, 12 Jun 2023 18:03:09 +0200
-From:   Maxime Ripard <mripard@kernel.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Jiri Kosina <jikos@kernel.org>,
-        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        dri-devel@lists.freedesktop.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        linux-input@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
-        linux-kernel@vger.kernel.org, hsinyi@google.com,
-        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
-        yangcong5@huaqin.corp-partner.google.com,
-        linux-arm-msm@vger.kernel.org,
-        Chris Morgan <macroalpha82@gmail.com>
-Subject: Re: [PATCH v2 00/10] drm/panel and i2c-hid: Allow panels and
- touchscreens to power sequence together
-Message-ID: <z7wi4z4lxpkhvooqhihlkpubyvueb37gvrpmwk6v7xwj2lm6jn@b7rwyr5ic5x5>
-References: <20230607215224.2067679-1-dianders@chromium.org>
- <jehxiy3z4aieop5qgzmlon4u76n7gvt3kc6knxhb5yqkiz3rsp@mx27m75sx43r>
- <CAD=FV=Wr7Xatw1LsofiZ5Xx7WBvAuMMdq4D5Po1yJUC1VdtZdg@mail.gmail.com>
+        s=k20201202; t=1686586769;
+        bh=OTJAkzUB/kHEz+zDpGNc9vDTw+iMQ7TJ/wo3kRt6WNE=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=CCG/J7Hk7a7Pqayi8Dhv4V5Lo1gKzDd2gONXFYj9dZ3ZlZsjrC3VfeL99tkG8oXFv
+         xWdp4qVMK0MopWl4sfLAXlJg2OrAm/XFsPasvOIh6LQCGt7aa7bQd7zpD1TFNkbIU9
+         L1jxyebl9sLVd2W9lZZTRnLyhkOJYK3XZGm6jEO0rnjypc3oze2wFCaSBtLsKc83Gs
+         PboYwpcQKg6IbNC1xzF3lx3VIfAVL0Aa9/tP4w7+I/dUsDNefxPJmfYtREE5tTIKk7
+         Jn1iBRGaC/y9DoMdE+4K1As0RtgR13AwOkAC0v2pyyRAfvbyFCrNiHrhaE2JHkncKF
+         OwBnmjtJoxSCQ==
+Date:   Mon, 12 Jun 2023 11:19:27 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>
+Cc:     Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Joyce Ooi <joyce.ooi@intel.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Jim Quinlan <jim2101024@gmail.com>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Tom Joseph <tjoseph@cadence.com>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Rahul Tanwar <rtanwar@maxlinear.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Vidya Sagar <vidyas@nvidia.com>,
+        Jisheng Zhang <jszhang@kernel.org>,
+        Miaoqian Lin <linmq006@gmail.com>, Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Ryder Lee <ryder.lee@mediatek.com>,
+        Jianjun Wang <jianjun.wang@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+        Shawn Lin <shawn.lin@rock-chips.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Toan Le <toan@os.amperecomputing.com>,
+        Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        linux-rpi-kernel@lists.infradead.org, kernel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Subject: Re: [PATCH 00/15] PCI: Convert to platform remove callback returning
+ void
+Message-ID: <20230612161927.GA1335109@bhelgaas>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="wihzk64u23zlxjhl"
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CAD=FV=Wr7Xatw1LsofiZ5Xx7WBvAuMMdq4D5Po1yJUC1VdtZdg@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230611132423.milnj2pnvjqzwino@pali>
 X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -76,162 +92,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Sun, Jun 11, 2023 at 03:24:23PM +0200, Pali Rohár wrote:
+> On Friday 02 June 2023 16:37:34 Bjorn Helgaas wrote:
+> > On Tue, May 30, 2023 at 04:07:42PM +0200, Uwe Kleine-König wrote:
+> > > On Tue, Mar 21, 2023 at 08:31:53PM +0100, Uwe Kleine-König wrote:
+> > > > this series adapts the platform drivers below drivers/pci to
+> > > > use the .remove_new() callback. Compared to the traditional
+> > > > .remove() callback .remove_new() returns no value. This is a
+> > > > good thing because the driver core doesn't (and cannot) cope
+> > > > for errors during remove. The only effect of a non-zero return
+> > > > value in .remove() is that the driver core emits a warning.
+> > > > The device is removed anyhow and an early return from
+> > > > .remove() usually yields a resource leak.
+> ...
 
---wihzk64u23zlxjhl
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Hello Bjorn, it should be expected that other changes for PCIe drivers
+> sent by other people which were sent to the list before this patch
+> series and are still waiting for the review (because are without
+> comments), would be processed before and patches sent later.
 
-Hi Doug,
+I don't think it's necessary to delay simple, easily-reviewed changes
+behind more complicated ones.
 
-On Thu, Jun 08, 2023 at 07:38:58AM -0700, Doug Anderson wrote:
-> On Thu, Jun 8, 2023 at 12:17=E2=80=AFAM Maxime Ripard <mripard@kernel.org=
-> wrote:
-> >
-> > Hi Douglas,
-> >
-> > On Wed, Jun 07, 2023 at 02:49:22PM -0700, Douglas Anderson wrote:
-> > >
-> > > The big motivation for this patch series is mostly described in the p=
-atch
-> > > ("drm/panel: Add a way for other devices to follow panel state"), but=
- to
-> > > quickly summarize here: for touchscreens that are connected to a pane=
-l we
-> > > need the ability to power sequence the two device together. This is n=
-ot a
-> > > new need, but so far we've managed to get by through a combination of
-> > > inefficiency, added costs, or perhaps just a little bit of brokenness.
-> > > It's time to do better. This patch series allows us to do better.
-> > >
-> > > Assuming that people think this patch series looks OK, we'll have to
-> > > figure out the right way to land it. The panel patches and i2c-hid
-> > > patches will go through very different trees and so either we'll need
-> > > an Ack from one side or the other or someone to create a tag for the
-> > > other tree to pull in. This will _probably_ require the true drm-misc
-> > > maintainers to get involved, not a lowly committer. ;-)
-> > >
-> > > Version 2 of this patch series doesn't change too much. At a high lev=
-el:
-> > > * I added all the forgotten "static" to functions.
-> > > * I've hopefully made the bindings better.
-> > > * I've integrated into fw_devlink.
-> > > * I cleaned up a few descriptions / comments.
-> > >
-> > > This still needs someone to say that the idea looks OK or to suggest
-> > > an alternative that solves the problems. ;-)
-> >
-> > Thanks for working on this.
-> >
-> > I haven't seen in any of your commit messages how the panels were
-> > actually "packaged" together?
-> >
-> > Do a panel model typically come together with the i2c-hid support, or is
-> > it added at manufacture time?
-> >
-> > If it's the latter, it's indeed a fairly loose connection and we need
-> > your work.
-> >
-> > If it's the former though and we don't expect a given panel reference to
-> > always (or never) come with a touchscreen attached,
->=20
-> Thanks for your reply. Let me see what I can do to bring clarity.
->=20
-> In at least some of the cases, I believe that the panel and the
-> touchscreen _are_ logically distinct components, even if they've been
-> glued together at some stage in manufacturing. Even on one of the
-> "poster child" boards that I talk about in patch #3, the early
-> versions of "homestar", I believe this to be the case. However, even
-> if the panel and touchscreen are separate components then they still
-> could be connected to the main board in a way that they share power
-> and/or reset signals. In my experience, in every case where they do
-> the EEs expect that the panel is power sequenced first and then the
-> touchscreen is power sequenced second. The EEs look at the power
-> sequencing requirements of the panel and touchscreen, see that there
-> is a valid power sequence protocol where they can share rails, and
-> design the board that way. Even if the touchscreen and panel are
-> logically separate, the moment the board designers hook them up to the
-> same power rails and/or reset signals they become tied. This is well
-> supported by my patch series.
->=20
-> The case that really motivated my patch series, though, is the case
-> that Cong Yang recently has been working on. I think most of the
-> discussion is in his original patch series [1]. Cong Yang's patch
-> series is largely focused on supporting the "ILI9882T" chip and some
-> panels that it's used with. I found a datasheet for that, and the
-> title from the first page is illustrative: "In-cell IC Integrates TFT
-> LCD Driver and Capacitive Touch Controller into a Two Chip Cascade".
-> This is an integrated solution that's designed to handle both the LCD
-> and the touchscreen.
->
-> [1] https://lore.kernel.org/lkml/20230519032316.3464732-1-yangcong5@huaqi=
-n.corp-partner.google.com/
+> Also I would like to point out that in past I have sent fixes for PCIe
+> mvebu driver, which is currently in the broken state. And this is also
+> on waiting on the list.
 
-Ok, I think we're on the same page at the hardware level then :)
+Thanks for this reminder.  Would you mind reposting them?  I poked
+around in patchwork and I must be doing something wrong because I
+can't find *any* patches from you, though obviously there are many.
 
-> > I guess we can have
-> > something much simpler with a bunch of helpers that would register a
-> > i2c-hid device and would be called by the panel driver itself.
-> >
-> > And then, since everything is self-contained managing the power state
-> > becomes easier as well.
->=20
-> Can you give me more details about how you think this would work?
->=20
-> When you say that the panel would register an i2c-hid device itself,
-> do you mean that we'd do something like give a phandle to the i2c bus
-> to the panel and then the panel would manually instantiate the i2c-hid
-> device on it? ...and I guess it would need to be a "subclass" of
-> i2c-hid that knew about the connection to the panel code? This
-> subclass and the panel code would communicate with each other about
-> power sequencing needs through some private API (like MFD devices
-> usually do?). Assuming I'm understanding correctly, I think that could
-> work.
+If you repost them at least we'll know unambiguously what is on the
+table.
 
-I guess what I had in mind is to do something similar to what we're
-doing with hdmi-codec already for example.
-
-We have several logical components already, in separate drivers, that
-still need some cooperation.
-
-If the panel and touchscreen are on the same i2c bus, I think we could
-even just get a reference to the panel i2c adapter, get a reference, and
-pass that to i2c-hid (with a nice layer of helpers).
-
-What I'm trying to say is: could we just make it work by passing a bunch
-of platform_data, 2-3 callbacks and a device registration from the panel
-driver directly?
-
-> Is it cleaner than my current approach, though?
-
-"cleaner" is subjective, really, but it's a more "mainstream" approach
-that one can follow more easily through function calls.
-
-> I guess, alternatively, we could put the "panel" directly under the
-> i2c bus in this case. That would probably work for Cong Yang's current
-> needs, but we'd end up in trouble if we ever had a similar situation
-> with an eDP panel since eDP panels need to be under the DP-AUX bus.
-
-I don't know DP-AUX very well, what is the issue that you're mentioning?
-
-> I guess overall, though, while I think this approach could solve Cong
-> Yang's needs, I still feel like it's worth solving the case where
-> board designers have made panel and touchscreens "coupled" by having
-> them rely on the same power rails and/or reset signals.
-
-Sure, I definitely want that too :)
-
-Maxime
-
---wihzk64u23zlxjhl
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZIdBvQAKCRDj7w1vZxhR
-xUWbAQDoKHxkNsFJzRnUavFQyfjOPvUIBZBQCZ+q/L9YUH2x+AD/c+cVLzsnSBQR
-XCR4Te6QoM5Xqv6kSOVA66MXQ4py0wc=
-=vl21
------END PGP SIGNATURE-----
-
---wihzk64u23zlxjhl--
+Bjorn
