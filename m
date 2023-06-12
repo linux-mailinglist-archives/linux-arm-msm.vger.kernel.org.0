@@ -2,78 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DC7A472C284
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 13:09:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77D6072C28A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 13:09:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238590AbjFLLJD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 07:09:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43726 "EHLO
+        id S238410AbjFLLJf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 07:09:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237809AbjFLLIr (ORCPT
+        with ESMTP id S237968AbjFLLJF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 07:08:47 -0400
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A860E3C0E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 03:57:31 -0700 (PDT)
-Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f70fc4682aso28697485e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 03:57:31 -0700 (PDT)
+        Mon, 12 Jun 2023 07:09:05 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71C026A48
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 03:58:04 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-30c55d2b9f3so2669864f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 03:58:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686567450; x=1689159450;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=W3kmvUAfNo3YbORL99wyB9d/VkxQG+CDQISNkS7AYFY=;
-        b=LbtlzcSpmCCuP4cm7gDwerVL1WTk9KNh06oHq9A0mwZTE4G+ZpxLqhwilrdo/3hoo3
-         QsUrFkAy/k/STcQupiaxgaWtgyIMwXENuCeVNBBnp+k+W5tGENmphRRzKVgZx7C3okm5
-         T4EfzBjd40y5kX4ueOq4j1qRqqJmz+tKshdmXy1KaYIfecHsq9EpUpIUj7HKheeRngPw
-         sdMu/QClAIkcDd6hzSAdtFk3MLofcdiUtQvVd47tgEuRU8z2vbyyKm21EleT/OEidl64
-         Yxdi9vCi7wltWFQfSolkQYjGOmeqxT1OoCStSey2VhEsxB2fyZu7F6cmjSe2fvngWv0K
-         5Oag==
+        d=linaro.org; s=google; t=1686567483; x=1689159483;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hdIRBmqETceRv4AXIkJcnCbFdaBYDslyf8hvML1Uo5o=;
+        b=aTIIz1uzhIwDHYGznxgCwif3g/gpSmRsWRe3aQHDwzfG54//GJMJv8hNz4NAaMFxVV
+         n0yqgzFld3JRgEs82PztAmYIapE/4rpdgiv4g1Oz57vzs/iWbeyGmlWNQ95ccMevBs4P
+         B6PPWnKNrq0oIGCdl6H/OZqR1fSnnwlvXjoNABKD+f7Epz8Cc47QABJnFiJU1Nv+uJt1
+         ZFZvqdfla9Lf/EWaBqDhyPMHKvnWwsM+NQw1/H9i3dm631W4CzekXfecCtR7rUuBHVYp
+         /QRd2BFEspRoAaLe+XqgN6XXgxKfDnohAwq9xEWGaImyTFcXbAzr3VpdpdQrHXWy1BdD
+         3Kqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686567450; x=1689159450;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W3kmvUAfNo3YbORL99wyB9d/VkxQG+CDQISNkS7AYFY=;
-        b=QuDbW4+WeLSCeUy4hHca0FEHLWp2kd7z6SKngFCsRUdmPYUgf0OyOeEQKoB055xhBC
-         sJT15H1sQiLxWcR2T3rxuT1uC+LPCBFeQ33k8r5UgFdS2b3WgxHOmsM/CzGl6UZWS7jo
-         XrX9dYMVTzki3ntvMwhn8N2aOU9rKOZhdKf6lHdnJe5ocJxF6Sz7UcgMEPXSaiOmJ8dk
-         C6qA+W1cgNTzAsyWi3tPDnDH8PFPP0OfU2wDlVBIdF3sdnQ78jZBHrnOCJJ86ztGpLkN
-         7nanUDTLg4U23xxD0drZmCJjxnK74ZS9aWdgQ77gJlor+VwTrD0m6g9Ytg8dfVXKJ6wZ
-         z6jw==
-X-Gm-Message-State: AC+VfDzQXHCUqtBKT5EkHZNce2Nc6voLccPAq9JW7Nk0Jz8NUyWfw4Nk
-        ebMljFbH/mzY4St0b2Fll39iYg==
-X-Google-Smtp-Source: ACHHUZ66P2FM5CekuhNr41io1xfJ2KVdwDqa0FLk9jJsHmsoS/bE3S3iqKRvLRp1yuUtDYfNOlpO/g==
-X-Received: by 2002:a1c:f718:0:b0:3f7:3526:d96f with SMTP id v24-20020a1cf718000000b003f73526d96fmr5775811wmh.27.1686567450090;
-        Mon, 12 Jun 2023 03:57:30 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686567483; x=1689159483;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hdIRBmqETceRv4AXIkJcnCbFdaBYDslyf8hvML1Uo5o=;
+        b=A+Qq1EasbZQVPr10boOHt8WeIu+kM1CuEPh3vG2CZgxmk+y/fj+Lyo6KEpBLprj4iL
+         F6gWiOsrM/W6avrQEkvaQmH5dNBW/N0EkO2NxSyYCc4fUviHt6Lo0A8+9zJVwTjTfey3
+         M3vKMv8uC9YKGAQ9vbK784ffo3X+6IZLz8eXmbbLIz51H4QxKLQs41/FNQ+kSTLhxzlX
+         +QGTP0hT0lByC2Ynunfg1D5ZhWD60SXuw+0jq7FPOJmM30G+knlfUXj4sqAhN3jtIC9S
+         gndCOxz88AP0weZ13Py0FKyDW34WLqtdx506AN2o4xt1Gh9zh4umUZebQYX4H2d05nOO
+         3zXg==
+X-Gm-Message-State: AC+VfDyDPXerObxCdi6omiyat9IlpRmNecOS32WqshpWeACJazwX0VuR
+        G5cL0EXWF3Ia/ncyfuJrVYVOUg==
+X-Google-Smtp-Source: ACHHUZ5X3XNo0Qd1vpLxPAQAD5H7Owr80BMJaeu6uIlU+e0Y4zUKu443qPjFPAn8aLU4e2x6tGZBAg==
+X-Received: by 2002:adf:cd12:0:b0:306:3352:5ba3 with SMTP id w18-20020adfcd12000000b0030633525ba3mr4312427wrm.25.1686567483031;
+        Mon, 12 Jun 2023 03:58:03 -0700 (PDT)
 Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id gy15-20020a05600c880f00b003f7f475c3bcsm14697856wmb.1.2023.06.12.03.57.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jun 2023 03:57:29 -0700 (PDT)
-Message-ID: <b65f4d0b-cc2a-f4d6-5d9d-a14e6a9cc444@linaro.org>
-Date:   Mon, 12 Jun 2023 11:57:28 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v2] misc: fastrpc: Fix double free of 'buf' in error path
-Content-Language: en-US
-To:     Sukrut Bellary <sukrut.bellary@linux.com>,
-        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        by smtp.gmail.com with ESMTPSA id i4-20020a5d5584000000b0030fc576633dsm1489449wrv.16.2023.06.12.03.58.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jun 2023 03:58:02 -0700 (PDT)
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+To:     Amol Maheshwari <amahesh@qti.qualcomm.com>,
         Arnd Bergmann <arnd@arndb.de>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Dan Carpenter <dan.carpenter@linaro.org>,
-        Abel Vesa <abel.vesa@linaro.org>
+        Abel Vesa <abel.vesa@linaro.org>,
+        Sukrut Bellary <sukrut.bellary@linux.com>
 Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         kernel-janitors@vger.kernel.org,
         Shuah Khan <skhan@linuxfoundation.org>
-References: <20230602113602.1271695-1-sukrut.bellary@linux.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 In-Reply-To: <20230602113602.1271695-1-sukrut.bellary@linux.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+References: <20230602113602.1271695-1-sukrut.bellary@linux.com>
+Subject: Re: [PATCH v2] misc: fastrpc: Fix double free of 'buf' in error
+ path
+Message-Id: <168656748193.162074.17313550564907901438.b4-ty@linaro.org>
+Date:   Mon, 12 Jun 2023 11:58:01 +0100
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+X-Mailer: b4 0.12.2
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -82,8 +81,7 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-
-On 02/06/2023 12:36, Sukrut Bellary wrote:
+On Fri, 02 Jun 2023 04:36:02 -0700, Sukrut Bellary wrote:
 > smatch warning:
 > drivers/misc/fastrpc.c:1926 fastrpc_req_mmap() error: double free of 'buf'
 > 
@@ -93,51 +91,14 @@ On 02/06/2023 12:36, Sukrut Bellary wrote:
 > But in the end, there is an unconditional call to fastrpc_buf_free().
 > So the above case triggers the double free of fastrpc buf.
 > 
-> Fixes: 72fa6f7820c4 ("misc: fastrpc: Rework fastrpc_req_munmap")
-> Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
-> Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-> Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Not sure how was this reviewed-by picked up on this patch.
+> [...]
 
-Suggested-by will be a right choice here.
+Applied, thanks!
 
-Will manually edit before applying it.
+[1/1] misc: fastrpc: Fix double free of 'buf' in error path
+      commit: 5b3006fffce89706a12741d7f657869ca2be1640
 
---srini
+Best regards,
+-- 
+Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 
-> Signed-off-by: Sukrut Bellary <sukrut.bellary@linux.com>
-> ---
-> This is based on static analysis. Compilation tested.
-> ---
-> Changes in v2:
-> - Fixed the commit message.
-> - Addressed the review comment about deleting buf from the list
->    before freeing.
-> - Link to v1: https://lore.kernel.org/all/20230518100829.515143-1-sukrut.bellary@linux.com/
-> ---
->   drivers/misc/fastrpc.c | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index f48466960f1b..b3b520fcfb75 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -1882,7 +1882,8 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
->   				      &args[0]);
->   	if (err) {
->   		dev_err(dev, "mmap error (len 0x%08llx)\n", buf->size);
-> -		goto err_invoke;
-> +		fastrpc_buf_free(buf);
-> +		return err;
->   	}
->   
->   	/* update the buffer to be able to deallocate the memory on the DSP */
-> @@ -1922,8 +1923,6 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
->   
->   err_assign:
->   	fastrpc_req_munmap_impl(fl, buf);
-> -err_invoke:
-> -	fastrpc_buf_free(buf);
->   
->   	return err;
->   }
