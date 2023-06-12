@@ -2,51 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E84D672CF47
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 21:24:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7948D72CF7C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 21:29:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233283AbjFLTYl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 15:24:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50924 "EHLO
+        id S238244AbjFLT3R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 15:29:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232673AbjFLTYl (ORCPT
+        with ESMTP id S238132AbjFLT3F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 15:24:41 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [5.144.164.165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5153710C2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 12:24:39 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 267CD1FA7F;
-        Mon, 12 Jun 2023 21:24:37 +0200 (CEST)
-Date:   Mon, 12 Jun 2023 21:24:35 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Mon, 12 Jun 2023 15:29:05 -0400
+Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26B131730
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 12:28:53 -0700 (PDT)
+Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-3f738f579ceso35809825e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 12:28:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686598131; x=1689190131;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nJZJSaEZDg70TXbshUH3X07m1qzGMFDczgD0hVDQgVw=;
+        b=cp7o0HoGkxtGnWAvfPLUcigk1NXL22/mysLv2Xtu+BWI9J/YI7aKTBLHbf+4S4De4b
+         IJ3Qtv7wM6Mp4sN/lKa+Fo/8ldPIx23PT7wxeeBbZdZ+LJx8ULV8nTuWoKAiq3aGtWtB
+         cU5KBL+/AIJrdiRDrHJDK2+uHxSx/QePtYDhRp76VSJ/XozzWlcYGOkk5JahdeJRXLgD
+         RAdHnAFdjI4UjLTBzCLQqrbZzWasP271gPYWjPH35aaZ84rXWbqFi8RtsYKlAos/VRLl
+         yFN+YFWqZvuwtb/hvdK6GH/hNSHC6SrR/3Wn32b1FK10iZDlyfHUZljdNjgegR9bT+6S
+         HdoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686598131; x=1689190131;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nJZJSaEZDg70TXbshUH3X07m1qzGMFDczgD0hVDQgVw=;
+        b=Wfhhhwwvmkao6A5mOasXYS3et58uZiUvRpOL35tIQSfbFVmXBncqUmJqve7xtuVrxl
+         zrhtaG5qGe9Vi9bzr74FAR+8QEWDI5ezKvT2pax5jo67DfavmRiXMk424zE+UfV8DZcq
+         w7RFFwvEXnUOapaylEP9jxufIaziKBekjct3Y6L8hTwRnc1Ar5QQ/VEJ3shCGRw9E3Im
+         X6gc1VpBOZOLuVZVg3IZ1SEHAntc6JG/NMI9PGGU5mpPSj9TiQho9YYr19CnZ5Dws18Z
+         qHkhe5iK8vi7EXmskaDXKbV96AtUGfdDeH+2FgF0EhUI1MTiAfRWYHvzrZUNvGbiX4Qh
+         9gSA==
+X-Gm-Message-State: AC+VfDwj99NJv7ZFkeApaygo/+LPyId/2T6fX7LrAusTb2OnXYTtrQYb
+        10WZ4SQlHApuWKjeBtM6FN6Krw==
+X-Google-Smtp-Source: ACHHUZ5OzKiW3U57XN0Htaa50N2NhdLd5CFniE1NlCW4kDpPPcqYy2HPZOQKXayyvEEZJhY+ya0Wwg==
+X-Received: by 2002:a05:600c:2190:b0:3f7:395e:46a2 with SMTP id e16-20020a05600c219000b003f7395e46a2mr6389324wme.16.1686598131498;
+        Mon, 12 Jun 2023 12:28:51 -0700 (PDT)
+Received: from hackbox.lan ([86.121.163.20])
+        by smtp.gmail.com with ESMTPSA id a7-20020a05600c224700b003f60a9ccd34sm12286861wmm.37.2023.06.12.12.28.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jun 2023 12:28:50 -0700 (PDT)
+From:   Abel Vesa <abel.vesa@linaro.org>
+To:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Degdag Mohamed <degdagmohamed@gmail.com>
-Subject: Re: [PATCH 2/2] drm/msm/dsi: don't allow enabling 7nm VCO with
- unprogrammed rate
-Message-ID: <m4qsohhaikbxr7jegtzebjtgxukgfpnzhu4zkhknzusgrt7nf3@3n64aahsiuen>
-References: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org>
- <20230612031616.3620134-2-dmitry.baryshkov@linaro.org>
- <g4ogg7ecraduqbvcxsost2lm26fr6rswdm4tgba5ae23b5jjvg@6mzv2u7bmw7u>
- <yyjkikzxsggwlnxcexho62zkapw5xrkogvoclsu6af7t5xcp3a@jdssfb3hz7px>
- <a8b72f2a-d5b2-723e-405a-e7c304ddeed4@linaro.org>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        Avri Altman <avri.altman@wdc.com>,
+        Bart Van Assche <bvanassche@acm.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        "James E . J . Bottomley" <jejb@linux.ibm.com>,
+        "Martin K . Petersen" <martin.petersen@oracle.com>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Biggers <ebiggers@kernel.org>
+Cc:     linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
+        linux-scsi@vger.kernel.org
+Subject: [RESEND v7 0/3] Add dedicated Qcom ICE driver
+Date:   Mon, 12 Jun 2023 22:28:44 +0300
+Message-Id: <20230612192847.1599416-1-abel.vesa@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a8b72f2a-d5b2-723e-405a-e7c304ddeed4@linaro.org>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -54,182 +86,49 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-12 21:30:05, Dmitry Baryshkov wrote:
-> On 12/06/2023 12:21, Marijn Suijten wrote:
-> > On 2023-06-12 11:15:53, Marijn Suijten wrote:
-> >> On 2023-06-12 06:16:16, Dmitry Baryshkov wrote:
-> >>> CCF can try enabling VCO before the rate has been programmed. This can
-> >>> cause clock lockups and/or other boot issues. Program the VCO to the
-> >>> minimal PLL rate if the read rate is 0 Hz.
-> >>>
-> >>> Reported-by: Degdag Mohamed <degdagmohamed@gmail.com>
-> >>> Fixes: 1ef7c99d145c ("drm/msm/dsi: add support for 7nm DSI PHY/PLL")
-> >>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >>
-> >> This unfortunately regresses my Xperia 5 (sofef01 panel driver that's
-> >> on the lists) to now run at 30~33Hz instead of 60Hz.  I can provide
-> >> debugging and clk trees later, if needed.
+As both SDCC and UFS drivers use the ICE with duplicated implementation,
+while none of the currently supported platforms make use concomitantly
+of the same ICE IP block instance, the new SM8550 allows both UFS and
+SDCC to do so. In order to support such scenario, there is a need for
+a unified implementation and a devicetree node to be shared between
+both types of storage devices. So lets drop the duplicate implementation
+of the ICE from both SDCC and UFS and make it a dedicated (soc) driver.
 
-The clktree before and after this patch remains identical (Xperia 5):
+The v7 is here:
+https://lore.kernel.org/all/20230408214041.533749-1-abel.vesa@linaro.org/
 
-    bi_tcxo                          11       11        0    19200000          0     0  50000         Y
-       dsi0vco_clk                    1        1        0  1132181982          0     0  50000         Y
-          dsi0_pll_out_div_clk        1        1        0  1132181982          0     0  50000         Y
-             dsi0_pll_post_out_div_clk       0        0        0   283045495          0     0  50000         Y
-             dsi0_pll_bit_clk         2        2        0  1132181982          0     0  50000         Y
-                dsi0_pclk_mux         1        1        0  1132181982          0     0  50000         Y
-                   dsi0_phy_pll_out_dsiclk       1        1        0   188696997          0     0  50000         Y
-                      disp_cc_mdss_pclk0_clk_src       1        1        0   188696997          0     0  50000         Y
-                         disp_cc_mdss_pclk0_clk       1        1        0   188696997          0     0  50000         Y
-                dsi0_pll_by_2_bit_clk       0        0        0   566090991          0     0  50000         Y
-                dsi0_phy_pll_out_byteclk       1        1        0   141522747          0     0  50000         Y
-                   disp_cc_mdss_byte0_clk_src       2        2        0   141522747          0     0  50000         Y
-                      disp_cc_mdss_byte0_div_clk_src       1        1        0    70761374          0     0  50000         Y
-                         disp_cc_mdss_byte0_intf_clk       1        1        0    70761374          0     0  50000         Y
-                      disp_cc_mdss_byte0_clk       1        1        0   141522747          0     0  50000         Y
+Changes since v7:
+ * rebased on next-20230609
 
-But the word-diff from `debugcc -p sm8150 -b disp -a` pre and post shows
-that the clocks were at first ticking exactly how Linux expects them
-to (accurate on kHz it seems), but significantly lower after this patch:
+Changes since v6:
+ * Dropped the patches 1, 3 and 6 as they are already in Bjorn's tree.
+ * Dropped the minItems for both the qcom,ice and the reg in the
+   qcom,ice compatile subschema, in the ufs schema file,
+   like Krzysztof suggested
 
-    diff --git a/bahamut_pre_debugcc b/bahamut_post_debugcc
-    index be8269ef34ae5..395048a9f37fe 100644
-    --- a/bahamut_pre_debugcc
-    +++ b/bahamut_post_debugcc
-    @@ -1,6 +1,6 @@
-                                  disp_cc_mdss_ahb_clk: 19.199412MHz (19199412Hz)
-                                disp_cc_mdss_byte0_clk: [-141.522568MHz (141522568Hz)-]{+124.998840MHz (124998840Hz)+}
-                           disp_cc_mdss_byte0_intf_clk: [-70.761796MHz (70761796Hz)-]{+62.500812MHz (62500812Hz)+}
-                                disp_cc_mdss_byte1_clk: off
-                           disp_cc_mdss_byte1_intf_clk: off
-                              disp_cc_mdss_dp_aux1_clk: off
-    @@ -19,15 +19,15 @@
-                             disp_cc_mdss_edp_link_clk: off
-                        disp_cc_mdss_edp_link_intf_clk: off
-                            disp_cc_mdss_edp_pixel_clk: off
-                                 disp_cc_mdss_esc0_clk: [-19.200000MHz (19200000Hz)-]{+19.199412MHz (19199412Hz)+}
-                                 disp_cc_mdss_esc1_clk: off
-                                  disp_cc_mdss_mdp_clk: [-200.000692MHz (200000692Hz)-]{+200.001280MHz (200001280Hz)+}
-                              disp_cc_mdss_mdp_lut_clk: [-200.000108MHz (200000108Hz)-]{+200.001280MHz (200001280Hz)+}
-                         disp_cc_mdss_non_gdsc_ahb_clk: [-19.199412MHz (19199412Hz)-]{+19.199704MHz (19199704Hz)+}
-                                disp_cc_mdss_pclk0_clk: [-188.697976MHz (188697976Hz)-]{+166.668196MHz (166668196Hz)+}
-                                disp_cc_mdss_pclk1_clk: off
-                                  disp_cc_mdss_rot_clk: 19.200000MHz (19200000Hz)
-                             disp_cc_mdss_rscc_ahb_clk: 19.200000MHz (19200000Hz)
-                           disp_cc_mdss_rscc_vsync_clk:[-19.200000MHz (19200000Hz)-]
-    [-                            disp_cc_mdss_vsync_clk:-] 19.199704MHz (19199704Hz)
-                                {+disp_cc_mdss_vsync_clk: 19.200292MHz (19200292Hz)+}
-                                        disp_cc_xo_clk: [-19.199704MHz (19199704Hz)-]{+19.200000MHz (19200000Hz)+}
+Changes since v5:
+ * See each individual patch for changelogs.
 
-> > I'll also retest the Xperia 1 with this, which has a 4k DSC panel.
+Changes since v4:
+ * dropped the SDHCI dt-bindings patch as it will be added along
+   with the first use of qcom,ice property from an SDHCI DT node
 
-On the Xperia 1 modetest also reports 30 instead of 60Hz now (4k mode,
-not the 2.5k mode, if you've kept up with my panel series) but it
-remains black.
-(Note that this panel uses DSC, so the byte and pixel clock for this
- 1644x3840 panel are ticking slower than for a 1080x2520 one :) )
+Abel Vesa (3):
+  dt-bindings: ufs: qcom: Add ICE phandle
+  scsi: ufs: ufs-qcom: Switch to the new ICE API
+  mmc: sdhci-msm: Switch to the new ICE API
 
-Same story for the clk tree here, it is the same before and after this
-patch:
+ .../devicetree/bindings/ufs/qcom,ufs.yaml     |  24 ++
+ drivers/mmc/host/Kconfig                      |   2 +-
+ drivers/mmc/host/sdhci-msm.c                  | 223 ++++------------
+ drivers/ufs/host/Kconfig                      |   2 +-
+ drivers/ufs/host/Makefile                     |   4 +-
+ drivers/ufs/host/ufs-qcom-ice.c               | 244 ------------------
+ drivers/ufs/host/ufs-qcom.c                   |  99 ++++++-
+ drivers/ufs/host/ufs-qcom.h                   |  32 +--
+ 8 files changed, 176 insertions(+), 454 deletions(-)
+ delete mode 100644 drivers/ufs/host/ufs-qcom-ice.c
 
-    bi_tcxo                          11       11        0    19200000          0     0  50000         Y
-       dsi0vco_clk                    1        1        0  1736017822          0     0  50000         Y
-          dsi0_pll_out_div_clk        1        1        0   868008911          0     0  50000         Y
-             dsi0_pll_post_out_div_clk       0        0        0   217002227          0     0  50000         Y
-             dsi0_pll_bit_clk         2        2        0   868008911          0     0  50000         Y
-                dsi0_pclk_mux         1        1        0   868008911          0     0  50000         Y
-                   dsi0_phy_pll_out_dsiclk       1        1        0   144668152          0     0  50000         Y
-                      disp_cc_mdss_pclk0_clk_src       1        1        0   144668152          0     0  50000         Y
-                         disp_cc_mdss_pclk0_clk       1        1        0   144668152          0     0  50000         Y
-                dsi0_pll_by_2_bit_clk       0        0        0   434004455          0     0  50000         Y
-                dsi0_phy_pll_out_byteclk       1        1        0   108501113          0     0  50000         Y
-                   disp_cc_mdss_byte0_clk_src       2        2        0   108501113          0     0  50000         Y
-                      disp_cc_mdss_byte0_div_clk_src       1        1        0    54250557          0     0  50000         Y
-                         disp_cc_mdss_byte0_intf_clk       1        1        0    54250557          0     0  50000         Y
-                      disp_cc_mdss_byte0_clk       1        1        0   108501113          0     0  50000         Y
+-- 
+2.34.1
 
-The measured clocks are now about half of what they're supposed to be:
-
-    diff --git a/griffin_pre_debugcc b/griffin_post_debugcc
-    index a5987e1671d3b..8c8618e60ad1c 100644
-    --- a/griffin_pre_debugcc
-    +++ b/griffin_post_debugcc
-    @@ -1,6 +1,6 @@
-                                  disp_cc_mdss_ahb_clk: [-19.200000MHz (19200000Hz)-]{+19.199704MHz (19199704Hz)+}
-                                disp_cc_mdss_byte0_clk: [-108.502356MHz (108502356Hz)-]{+62.499932MHz (62499932Hz)+}
-                           disp_cc_mdss_byte0_intf_clk: [-54.250372MHz (54250372Hz)-]{+31.250040MHz (31250040Hz)+}
-                                disp_cc_mdss_byte1_clk: off
-                           disp_cc_mdss_byte1_intf_clk: off
-                              disp_cc_mdss_dp_aux1_clk: off
-    @@ -21,13 +21,13 @@
-                            disp_cc_mdss_edp_pixel_clk: off
-                                 disp_cc_mdss_esc0_clk: 19.200000MHz (19200000Hz)
-                                 disp_cc_mdss_esc1_clk: off
-                                  disp_cc_mdss_mdp_clk: [-460.001848MHz (460001848Hz)-]{+460.000384MHz (460000384Hz)+}
-                              disp_cc_mdss_mdp_lut_clk: [-460.001556MHz (460001556Hz)-]{+459.996280MHz (459996280Hz)+}
-                         disp_cc_mdss_non_gdsc_ahb_clk: 19.200000MHz (19200000Hz)
-                                disp_cc_mdss_pclk0_clk: [-144.668004MHz (144668004Hz)-]{+83.333584MHz (83333584Hz)+}
-                                disp_cc_mdss_pclk1_clk: off
-                                  disp_cc_mdss_rot_clk: [-19.199704MHz (19199704Hz)-]{+19.200000MHz (19200000Hz)+}
-                             disp_cc_mdss_rscc_ahb_clk: [-19.200292MHz (19200292Hz)-]{+19.200000MHz (19200000Hz)+}
-                           disp_cc_mdss_rscc_vsync_clk:[-19.199412MHz (19199412Hz)-]
-    [-                            disp_cc_mdss_vsync_clk:-] 19.200000MHz (19200000Hz)
-                                {+disp_cc_mdss_vsync_clk: 19.199412MHz (19199412Hz)+}
-                                        disp_cc_xo_clk: 19.199704MHz (19199704Hz)
-
-> > Is this intended to get rid of:
-> > 
-> >      msm_dsi_phy ae94400.phy: [drm:dsi_pll_7nm_vco_prepare] *ERROR* DSI PLL(0) lock failed, status=0x00000000: -110
-> >      PLL(0) lock failed
-> > 
-> > ... at startup (and relevant rcg2 update_config failures, unbalanced
-> > disables etc)?  It locks after a couple tries but it's still
-> > unnecessarily spammy.
-> 
-> Yes.
-
-It is still occuring twice, with the unbalanced disable/unprepare
-warnings for dsi0_phy_pll_out_{bytes,dsi}clk.
-
-- Marijn
-
-> 
-> > 
-> > - Marijn
-> > 
-> >>
-> >> - Marijn
-> >>
-> >>> ---
-> >>>   drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 5 +++++
-> >>>   1 file changed, 5 insertions(+)
-> >>>
-> >>> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> >>> index 3b1ed02f644d..6979d35eb7c3 100644
-> >>> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> >>> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> >>> @@ -395,11 +395,16 @@ static void dsi_pll_phy_dig_reset(struct dsi_pll_7nm *pll)
-> >>>   	wmb(); /* Ensure that the reset is deasserted */
-> >>>   }
-> >>>   
-> >>> +static unsigned long dsi_pll_7nm_vco_recalc_rate(struct clk_hw *hw,
-> >>> +						  unsigned long parent_rate);
-> >>>   static int dsi_pll_7nm_vco_prepare(struct clk_hw *hw)
-> >>>   {
-> >>>   	struct dsi_pll_7nm *pll_7nm = to_pll_7nm(hw);
-> >>>   	int rc;
-> >>>   
-> >>> +	if (dsi_pll_7nm_vco_recalc_rate(hw, VCO_REF_CLK_RATE) == 0)
-> >>> +		dsi_pll_7nm_vco_set_rate(hw, pll_7nm->phy->cfg->min_pll_rate, VCO_REF_CLK_RATE);
-> >>> +
-> >>>   	dsi_pll_enable_pll_bias(pll_7nm);
-> >>>   	if (pll_7nm->slave)
-> >>>   		dsi_pll_enable_pll_bias(pll_7nm->slave);
-> >>> -- 
-> >>> 2.39.2
-> >>>
-> 
-> -- 
-> With best wishes
-> Dmitry
-> 
