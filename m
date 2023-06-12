@@ -2,86 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 62E9972CA97
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 17:47:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35DFD72CAEA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 18:03:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237903AbjFLPr0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 11:47:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39764 "EHLO
+        id S231563AbjFLQDQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 12:03:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236659AbjFLPrZ (ORCPT
+        with ESMTP id S229480AbjFLQDP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 11:47:25 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C20710CC;
-        Mon, 12 Jun 2023 08:47:24 -0700 (PDT)
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35CE01lY011062;
-        Mon, 12 Jun 2023 15:47:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=c87XOzdDuRMdz3dpGgxfIYZgND1DCuLkfZzv0++v1uQ=;
- b=Bw1VU3NyyUzzZXgDPJtYb1QzyRI5ndvSOaVuUfYZFjHJOMivGYq8BZ+XRqvL5KFa+hob
- lZ/R2XYH/gZzyBU8TG2jGZHGhqY0vAcbJMGpcCOscxSpRn5WHYs0QTfFR9jMXrvrvd5U
- Fzx+ZzOaz7idvR9IizWyRBvN0lCICSt6b5cZoZZyRRvHk9gOgdTBHBYIjxRNRVNGDODW
- EJkUU/siqw4FRtjNY6t8zUnzofNrwT2FuHFGs9ExJ+9NbYQe8v6EpGeL7GZg9m9YRSTT
- 8l8jrhdw8x31STuJ3hV2Re0mJGfHX2veWxaFXi1+FjzZYMTcIpfxqMTOpIXs+3zOotAs eQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r4ehtux5f-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Jun 2023 15:47:14 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35CFlD68015398
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Jun 2023 15:47:13 GMT
-Received: from [10.50.14.38] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 12 Jun
- 2023 08:47:09 -0700
-Message-ID: <d4476c3b-9923-dde2-8338-9f67ebfc729f@quicinc.com>
-Date:   Mon, 12 Jun 2023 21:17:07 +0530
+        Mon, 12 Jun 2023 12:03:15 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8C9CBB;
+        Mon, 12 Jun 2023 09:03:13 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 6DE0561920;
+        Mon, 12 Jun 2023 16:03:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50136C433EF;
+        Mon, 12 Jun 2023 16:03:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686585792;
+        bh=DVoozoXwr1+By1EY6gaWGvC8bmLqsVOluvH8fNoDeKw=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=LDGk2nOmyZzVqZ9gQ04NkGPR0QJjU//3S4bP2TgZz6txbPuwaiRVKXXPw4upmGYFW
+         0YdjjFx5WzjcDS1lypOsoqV91/fKUethof1Hp6zieJUxAQCt0jzqkus6lo0zMaWMA0
+         O0B9XH7UConfXGEpvMS6yW5f4Kt62ryu308G9aU7VOj+435CCWaj/IMVnCWgw47zlI
+         1VMT+S+fbYxlWkHHiXx/B1ht5oneBecK3hizmrCkz90a6GV55qLLKbIl/SUUdkvSy3
+         r5bXq4peMwUOpHciaTFAizz6sPMABNPlJfBcscqVI5yXuBt14A3NTh8H+4Sz9HkYsR
+         x3RtN9klrrZsA==
+Date:   Mon, 12 Jun 2023 18:03:09 +0200
+From:   Maxime Ripard <mripard@kernel.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Jiri Kosina <jikos@kernel.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        dri-devel@lists.freedesktop.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-input@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org, hsinyi@google.com,
+        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
+        yangcong5@huaqin.corp-partner.google.com,
+        linux-arm-msm@vger.kernel.org,
+        Chris Morgan <macroalpha82@gmail.com>
+Subject: Re: [PATCH v2 00/10] drm/panel and i2c-hid: Allow panels and
+ touchscreens to power sequence together
+Message-ID: <z7wi4z4lxpkhvooqhihlkpubyvueb37gvrpmwk6v7xwj2lm6jn@b7rwyr5ic5x5>
+References: <20230607215224.2067679-1-dianders@chromium.org>
+ <jehxiy3z4aieop5qgzmlon4u76n7gvt3kc6knxhb5yqkiz3rsp@mx27m75sx43r>
+ <CAD=FV=Wr7Xatw1LsofiZ5Xx7WBvAuMMdq4D5Po1yJUC1VdtZdg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH] accel/qaic: Fix dereferencing freed memory
-Content-Language: en-US
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        Sukrut Bellary <sukrut.bellary@linux.com>,
-        "Oded Gabbay" <ogabbay@kernel.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <kernel-janitors@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <linaro-mm-sig@lists.linaro.org>, <linux-media@vger.kernel.org>
-References: <20230610021200.377452-1-sukrut.bellary@linux.com>
- <fc979a4e-c30a-2606-9eec-afbba4fdd774@amd.com>
- <e3a867a8-284b-7250-b1b2-1956f533f6b0@quicinc.com>
- <ff196b04-e8c5-52d9-852b-9a9cc7eecdd0@amd.com>
- <b5e5c141-b5df-e24d-8fa4-94297d561cec@quicinc.com>
-From:   Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-In-Reply-To: <b5e5c141-b5df-e24d-8fa4-94297d561cec@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: H6edwVznO1IQawd9XFNZmgfKwTUAO_qQ
-X-Proofpoint-ORIG-GUID: H6edwVznO1IQawd9XFNZmgfKwTUAO_qQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-12_06,2023-06-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
- priorityscore=1501 mlxscore=0 bulkscore=0 impostorscore=0
- lowpriorityscore=0 malwarescore=0 spamscore=0 mlxlogscore=999 adultscore=0
- suspectscore=0 clxscore=1015 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2306120136
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="wihzk64u23zlxjhl"
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=Wr7Xatw1LsofiZ5Xx7WBvAuMMdq4D5Po1yJUC1VdtZdg@mail.gmail.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -89,72 +77,161 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--wihzk64u23zlxjhl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 6/12/2023 8:39 PM, Jeffrey Hugo wrote:
-> On 6/12/2023 7:21 AM, Christian König wrote:
->> Am 12.06.23 um 15:03 schrieb Pranjal Ramajor Asha Kanojiya:
->>>
->>>
->>> On 6/12/2023 4:52 PM, Christian König wrote:
->>>>
->>>>
->>>> Am 10.06.23 um 04:12 schrieb Sukrut Bellary:
->>>>> smatch warning:
->>>>>     drivers/accel/qaic/qaic_data.c:620 qaic_free_object() error:
->>>>>         dereferencing freed memory 'obj->import_attach'
->>>>>
->>>>> obj->import_attach is detached and freed using dma_buf_detach().
->>>>> But used after free to decrease the dmabuf ref count using
->>>>> dma_buf_put().
->>>>>
->>>>> Fixes: ff13be830333 ("accel/qaic: Add datapath")
->>>>> Signed-off-by: Sukrut Bellary <sukrut.bellary@linux.com>
->>>>> ---
->>>>>   drivers/accel/qaic/qaic_data.c | 4 +++-
->>>>>   1 file changed, 3 insertions(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/drivers/accel/qaic/qaic_data.c 
->>>>> b/drivers/accel/qaic/qaic_data.c
->>>>> index e42c1f9ffff8..7cba4d680ea8 100644
->>>>> --- a/drivers/accel/qaic/qaic_data.c
->>>>> +++ b/drivers/accel/qaic/qaic_data.c
->>>>> @@ -613,11 +613,13 @@ static int qaic_gem_object_mmap(struct 
->>>>> drm_gem_object *obj, struct vm_area_struc
->>>>>   static void qaic_free_object(struct drm_gem_object *obj)
->>>>>   {
->>>>>       struct qaic_bo *bo = to_qaic_bo(obj);
->>>>> +    struct dma_buf *dmabuf;
->>>>
->>>> Maybe move that variable into the if.
->>>>
->>>>>       if (obj->import_attach) {
->>>>>           /* DMABUF/PRIME Path */
->>>>> +        dmabuf = obj->import_attach->dmabuf;
->>>>>           dma_buf_detach(obj->import_attach->dmabuf, 
->>>>> obj->import_attach);
->>>>> -        dma_buf_put(obj->import_attach->dmabuf);
->>>>> +        dma_buf_put(dmabuf);
->>>>
->>>> I strongly assume you are not using the GEM prime helpers for this?
->>>>
->>>> Christian.
->>>
->>> Driver uses drm_gem_prime_fd_to_handle() helper function but it also 
->>> registers for ->gem_prime_import() which is internally called by 
->>> drm_gem_prime_fd_to_handle(). All the operations done in 
->>> gem_prime_import() are undone here.
->>
->> Then why don't you use drm_prime_gem_destroy() which is the cleanup 
->> helper for imports created by ->gem_prime_import() ?
->>
->> That looks pretty much identical to what you do here manually.
-> 
-> I think destroy() wasn't used because we are new to DRM and sometimes 
-> confused by the multitude of options.  I appreciate the suggestion and 
-> will follow up to see if destroy() will work here, or identify what 
-> would prevent the use of it.
-> 
-> -Jeff
+Hi Doug,
 
-Thank you Christian for your suggestion. I agree with you driver can use 
-  drm_prime_gem_destroy() here.
+On Thu, Jun 08, 2023 at 07:38:58AM -0700, Doug Anderson wrote:
+> On Thu, Jun 8, 2023 at 12:17=E2=80=AFAM Maxime Ripard <mripard@kernel.org=
+> wrote:
+> >
+> > Hi Douglas,
+> >
+> > On Wed, Jun 07, 2023 at 02:49:22PM -0700, Douglas Anderson wrote:
+> > >
+> > > The big motivation for this patch series is mostly described in the p=
+atch
+> > > ("drm/panel: Add a way for other devices to follow panel state"), but=
+ to
+> > > quickly summarize here: for touchscreens that are connected to a pane=
+l we
+> > > need the ability to power sequence the two device together. This is n=
+ot a
+> > > new need, but so far we've managed to get by through a combination of
+> > > inefficiency, added costs, or perhaps just a little bit of brokenness.
+> > > It's time to do better. This patch series allows us to do better.
+> > >
+> > > Assuming that people think this patch series looks OK, we'll have to
+> > > figure out the right way to land it. The panel patches and i2c-hid
+> > > patches will go through very different trees and so either we'll need
+> > > an Ack from one side or the other or someone to create a tag for the
+> > > other tree to pull in. This will _probably_ require the true drm-misc
+> > > maintainers to get involved, not a lowly committer. ;-)
+> > >
+> > > Version 2 of this patch series doesn't change too much. At a high lev=
+el:
+> > > * I added all the forgotten "static" to functions.
+> > > * I've hopefully made the bindings better.
+> > > * I've integrated into fw_devlink.
+> > > * I cleaned up a few descriptions / comments.
+> > >
+> > > This still needs someone to say that the idea looks OK or to suggest
+> > > an alternative that solves the problems. ;-)
+> >
+> > Thanks for working on this.
+> >
+> > I haven't seen in any of your commit messages how the panels were
+> > actually "packaged" together?
+> >
+> > Do a panel model typically come together with the i2c-hid support, or is
+> > it added at manufacture time?
+> >
+> > If it's the latter, it's indeed a fairly loose connection and we need
+> > your work.
+> >
+> > If it's the former though and we don't expect a given panel reference to
+> > always (or never) come with a touchscreen attached,
+>=20
+> Thanks for your reply. Let me see what I can do to bring clarity.
+>=20
+> In at least some of the cases, I believe that the panel and the
+> touchscreen _are_ logically distinct components, even if they've been
+> glued together at some stage in manufacturing. Even on one of the
+> "poster child" boards that I talk about in patch #3, the early
+> versions of "homestar", I believe this to be the case. However, even
+> if the panel and touchscreen are separate components then they still
+> could be connected to the main board in a way that they share power
+> and/or reset signals. In my experience, in every case where they do
+> the EEs expect that the panel is power sequenced first and then the
+> touchscreen is power sequenced second. The EEs look at the power
+> sequencing requirements of the panel and touchscreen, see that there
+> is a valid power sequence protocol where they can share rails, and
+> design the board that way. Even if the touchscreen and panel are
+> logically separate, the moment the board designers hook them up to the
+> same power rails and/or reset signals they become tied. This is well
+> supported by my patch series.
+>=20
+> The case that really motivated my patch series, though, is the case
+> that Cong Yang recently has been working on. I think most of the
+> discussion is in his original patch series [1]. Cong Yang's patch
+> series is largely focused on supporting the "ILI9882T" chip and some
+> panels that it's used with. I found a datasheet for that, and the
+> title from the first page is illustrative: "In-cell IC Integrates TFT
+> LCD Driver and Capacitive Touch Controller into a Two Chip Cascade".
+> This is an integrated solution that's designed to handle both the LCD
+> and the touchscreen.
+>
+> [1] https://lore.kernel.org/lkml/20230519032316.3464732-1-yangcong5@huaqi=
+n.corp-partner.google.com/
+
+Ok, I think we're on the same page at the hardware level then :)
+
+> > I guess we can have
+> > something much simpler with a bunch of helpers that would register a
+> > i2c-hid device and would be called by the panel driver itself.
+> >
+> > And then, since everything is self-contained managing the power state
+> > becomes easier as well.
+>=20
+> Can you give me more details about how you think this would work?
+>=20
+> When you say that the panel would register an i2c-hid device itself,
+> do you mean that we'd do something like give a phandle to the i2c bus
+> to the panel and then the panel would manually instantiate the i2c-hid
+> device on it? ...and I guess it would need to be a "subclass" of
+> i2c-hid that knew about the connection to the panel code? This
+> subclass and the panel code would communicate with each other about
+> power sequencing needs through some private API (like MFD devices
+> usually do?). Assuming I'm understanding correctly, I think that could
+> work.
+
+I guess what I had in mind is to do something similar to what we're
+doing with hdmi-codec already for example.
+
+We have several logical components already, in separate drivers, that
+still need some cooperation.
+
+If the panel and touchscreen are on the same i2c bus, I think we could
+even just get a reference to the panel i2c adapter, get a reference, and
+pass that to i2c-hid (with a nice layer of helpers).
+
+What I'm trying to say is: could we just make it work by passing a bunch
+of platform_data, 2-3 callbacks and a device registration from the panel
+driver directly?
+
+> Is it cleaner than my current approach, though?
+
+"cleaner" is subjective, really, but it's a more "mainstream" approach
+that one can follow more easily through function calls.
+
+> I guess, alternatively, we could put the "panel" directly under the
+> i2c bus in this case. That would probably work for Cong Yang's current
+> needs, but we'd end up in trouble if we ever had a similar situation
+> with an eDP panel since eDP panels need to be under the DP-AUX bus.
+
+I don't know DP-AUX very well, what is the issue that you're mentioning?
+
+> I guess overall, though, while I think this approach could solve Cong
+> Yang's needs, I still feel like it's worth solving the case where
+> board designers have made panel and touchscreens "coupled" by having
+> them rely on the same power rails and/or reset signals.
+
+Sure, I definitely want that too :)
+
+Maxime
+
+--wihzk64u23zlxjhl
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZIdBvQAKCRDj7w1vZxhR
+xUWbAQDoKHxkNsFJzRnUavFQyfjOPvUIBZBQCZ+q/L9YUH2x+AD/c+cVLzsnSBQR
+XCR4Te6QoM5Xqv6kSOVA66MXQ4py0wc=
+=vl21
+-----END PGP SIGNATURE-----
+
+--wihzk64u23zlxjhl--
