@@ -2,272 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6734C72B968
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 09:59:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 836A072B8BC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 09:38:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231342AbjFLH7P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 03:59:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34216 "EHLO
+        id S232392AbjFLHif (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 03:38:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229639AbjFLH6t (ORCPT
+        with ESMTP id S233298AbjFLHie (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 03:58:49 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90E10E7B;
-        Mon, 12 Jun 2023 00:57:59 -0700 (PDT)
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35C5PJlG017081;
-        Mon, 12 Jun 2023 07:09:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=Ygdpq5pE7M/kC6W2l6guKKRQ9h7KDDoYJZzbvOUWF+c=;
- b=DJRRYQ/kvxDUbyGEj999ELWOcMbO2Ofj6gH0x1w0zsaDSwZE10C1b8+Vp8c3iRomoFyZ
- ki/U4NLphDnV1AcWEcl9A92w27pz9NQ4bQj6+TMiLo1IjIq0wzOLLnQWneKQSEru/15m
- chk3xWFrBq2Jl+PcitxugXsB4Zk609pNCin+IwM3ng2MuoauSS7FOAfvPdpZdq6Vw+BX
- Kf+5oRDEEILW34moFOJhsb1yUWmtESTFnOu8YFkKllZxcs0ThZVBRS17/cODAgKihfce
- 8pOgWOjHeZopZvmmHAJek3pcpoMtLmi1PSEi+rw+V4D0dxdxJE5geZcqv1HZCWv3DPb+ wQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r4evmas01-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Jun 2023 07:09:26 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35C79NDq021574
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Jun 2023 07:09:23 GMT
-Received: from taozha-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Mon, 12 Jun 2023 00:09:17 -0700
-From:   Tao Zhang <quic_taozha@quicinc.com>
-To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Konrad Dybcio <konradybcio@gmail.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-CC:     Tao Zhang <quic_taozha@quicinc.com>,
-        Jinlong Mao <quic_jinlmao@quicinc.com>,
-        Leo Yan <leo.yan@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        <coresight@lists.linaro.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        Tingwei Zhang <quic_tingweiz@quicinc.com>,
-        Yuanfang Zhang <quic_yuanfang@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Hao Zhang <quic_hazha@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <andersson@kernel.org>
-Subject: [PATCH v5 13/13] coresight-tpdm: Add nodes for dsb msr support
-Date:   Mon, 12 Jun 2023 15:07:46 +0800
-Message-ID: <1686553666-5811-14-git-send-email-quic_taozha@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1686553666-5811-1-git-send-email-quic_taozha@quicinc.com>
-References: <1686553666-5811-1-git-send-email-quic_taozha@quicinc.com>
+        Mon, 12 Jun 2023 03:38:34 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B00FB10FF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 00:37:46 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f004cc54f4so4617060e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 00:37:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686555249; x=1689147249;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=q1/iA2KTeym2owa+RBl7xQJdLjQ/0GLTI4ghL8o+6f4=;
+        b=v9VKGbi+o3opfHDTAWJSzgxszoDEWfnsWpHKIU5vOknGUg+RUX+JBNMNbqXS2iX5/3
+         3jyiOTHFnY9Vhe2owKcnnNoGAX6sk2ISuc8BijANkddDhTtfE2AdUI0hH6Uk88pAlpN3
+         8AeKauBNiaH2MuQurt1svZP4RhycIkqAfTY/rGl2NZV2ojDeSy6SYLJFzzkv0BlNiwpv
+         HxrL1chG0MtiRnmB+UjEwGa38gSKdPdaYykV3PHh8BKtMxDMx+eH4321l/BhfmbbwVbV
+         VUspSHBxIxZJMYLuhWvPf3gg2pbs5R/wuZWCbRNWmzll22Yb4v+F0T3+fTdd6YmiC9EL
+         WT6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686555249; x=1689147249;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=q1/iA2KTeym2owa+RBl7xQJdLjQ/0GLTI4ghL8o+6f4=;
+        b=ExCOnRrDmDYjiDy1YHOEWOlD9Zt/wQpi7j9Qval5BaoJ4gii0Cat+LNdYss3nbd+tb
+         8/fSxx557eyH7iX/t3flFgB9Q8JUj3qJQucdSFe+izocyj1uvzAh1VNVpJH4vPSedCQp
+         6pmG+zSmrVM4oV/fNmtZ3K3vTNCbUNNrEmSOxXIOTcHAqWJgjLt506n9lbaY4burfTn0
+         ErZTuDcmCEt+77jmna4NZghSDcS0KXb9tCEJrtJix+uiw8qme7Uc12PL7DeBkcNtdIVH
+         xLEDVoPTURh/u5fJbLdGo+tRoFDtBfGSPlxOI4D7SJtqCUZnz9QiunWP89IK38A3xtIF
+         wrWg==
+X-Gm-Message-State: AC+VfDxmnNQgGpV3NEgBtGcq3pfINzqJrz0Cdiq40zmfUXnMIHSX8T9H
+        cJdNvBwYy29L3utHYuQyXkb488RMUT6UBnuer5c=
+X-Google-Smtp-Source: ACHHUZ7DpcJxKlnnA6faPmN7jkMDpIN8+d1Ug1h4AEiqeOaJqh5Aerat92skVsX2xye2L3p+Xe35/Q==
+X-Received: by 2002:aa7:d785:0:b0:514:9c77:50b7 with SMTP id s5-20020aa7d785000000b005149c7750b7mr4791408edq.25.1686554747114;
+        Mon, 12 Jun 2023 00:25:47 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id v26-20020aa7dbda000000b0050cc4461fc5sm4649433edt.92.2023.06.12.00.25.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Jun 2023 00:25:46 -0700 (PDT)
+Message-ID: <421ddd6d-3938-027c-2099-57248a111831@linaro.org>
+Date:   Mon, 12 Jun 2023 09:25:44 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: o549iGzIhE3rO3dIi4GJKFbtny0BWsFH
-X-Proofpoint-ORIG-GUID: o549iGzIhE3rO3dIi4GJKFbtny0BWsFH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-12_04,2023-06-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- spamscore=0 impostorscore=0 suspectscore=0 bulkscore=0 mlxscore=0
- mlxlogscore=999 priorityscore=1501 phishscore=0 clxscore=1015 adultscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306120061
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH v2 2/2] ASoC: codecs: wsa884x: Add WSA884x family of
+ speakers
+Content-Language: en-US
+To:     Mark Brown <broonie@kernel.org>
+Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Patrick Lai <quic_plai@quicinc.com>
+References: <20230611102657.74714-1-krzysztof.kozlowski@linaro.org>
+ <20230611102657.74714-2-krzysztof.kozlowski@linaro.org>
+ <191859d3-42e3-4ef2-87ff-dd56864103f9@sirena.org.uk>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <191859d3-42e3-4ef2-87ff-dd56864103f9@sirena.org.uk>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the nodes for DSB subunit MSR(mux select register) support.
-The TPDM MSR (mux select register) interface is an optional
-interface and associated bank of registers per TPDM subunit.
-The intent of mux select registers is to control muxing structures
-driving the TPDM’s’ various subunit interfaces.
+On 11/06/2023 13:57, Mark Brown wrote:
+> On Sun, Jun 11, 2023 at 12:26:57PM +0200, Krzysztof Kozlowski wrote:
+> 
+>> +static struct reg_default wsa884x_defaults[] = {
+> 
+>> +	{ WSA884X_CHIP_ID0,			0x00 },
+>> +	{ WSA884X_CHIP_ID1,			0x00 },
+>> +	{ WSA884X_CHIP_ID2,			0x04 },
+>> +	{ WSA884X_CHIP_ID3,			0x02 },
+>> +	{ WSA884X_BUS_ID,			0x00 },
+> 
+> It is generally bad practice to provide defaults for ID registers since
+> it rather defeats the point of having them.
+> 
+>> +	{ WSA884X_INTR_STATUS0,			0x00 },
+>> +	{ WSA884X_INTR_STATUS1,			0x00 },
+> 
+> Interrupt status registers will be volatile and therefore should not
+> have defaults.
 
-Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
----
- .../ABI/testing/sysfs-bus-coresight-devices-tpdm   | 14 +++++
- drivers/hwtracing/coresight/coresight-tpdm.c       | 71 ++++++++++++++++++++++
- drivers/hwtracing/coresight/coresight-tpdm.h       |  5 ++
- 3 files changed, 90 insertions(+)
+Sure, makes sense, I'll drop all of the above.
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-index 6e1b246..aaf02a6 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpdm
-@@ -166,3 +166,17 @@ Description:
- 		Accepts only one of the 2 values -  0 or 1.
- 		0 : Set the DSB pattern type to value.
- 		1 : Set the DSB pattern type to toggle.
-+
-+What:		/sys/bus/coresight/devices/<tpdm-name>/dsb_msr
-+Date:		March 2023
-+KernelVersion	6.5
-+Contact:	Jinlong Mao (QUIC) <quic_jinlmao@quicinc.com>, Tao Zhang (QUIC) <quic_taozha@quicinc.com>
-+Description:
-+		(Write) Set the MSR(mux select register) of DSB tpdm. Read
-+		the MSR(mux select register) of DSB tpdm.
-+
-+		Expected format is the following:
-+		<integer1> <integer2>
-+
-+		Where:
-+		<integer1> : Index number of MSR register, the range is 0 to 31
-diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-index 1aff244..9c5782f 100644
---- a/drivers/hwtracing/coresight/coresight-tpdm.c
-+++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-@@ -90,6 +90,18 @@ static void set_dsb_tier(struct tpdm_drvdata *drvdata, u32 *val)
- 
- }
- 
-+static void set_dsb_msr(struct tpdm_drvdata *drvdata)
-+{
-+	int i;
-+
-+	if (drvdata->dsb->msr_num == 0)
-+		return;
-+
-+	for (i = 0; i < drvdata->dsb->msr_num; i++)
-+		writel_relaxed(drvdata->dsb->msr[i],
-+			   drvdata->base + TPDM_DSB_MSR(i));
-+}
-+
- static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
- {
- 	u32 val, i;
-@@ -116,6 +128,8 @@ static void tpdm_enable_dsb(struct tpdm_drvdata *drvdata)
- 	set_dsb_tier(drvdata, &val);
- 	writel_relaxed(val, drvdata->base + TPDM_DSB_TIER);
- 
-+	set_dsb_msr(drvdata);
-+
- 	val = readl_relaxed(drvdata->base + TPDM_DSB_CR);
- 	/* Set the test accurate mode */
- 	set_dsb_test_mode(drvdata, &val);
-@@ -234,6 +248,14 @@ static int tpdm_datasets_setup(struct tpdm_drvdata *drvdata)
- 			if (!drvdata->dsb)
- 				return -ENOMEM;
- 		}
-+		if (!of_property_read_u32(drvdata->dev->of_node,
-+			   "qcom,dsb_msr_num", &drvdata->dsb->msr_num)) {
-+			drvdata->dsb->msr = devm_kzalloc(drvdata->dev,
-+				   (drvdata->dsb->msr_num * sizeof(*drvdata->dsb->msr)),
-+				   GFP_KERNEL);
-+			if (!drvdata->dsb->msr)
-+				return -ENOMEM;
-+		}
- 	}
- 
- 	return 0;
-@@ -775,6 +797,54 @@ static ssize_t dsb_trig_ts_store(struct device *dev,
- }
- static DEVICE_ATTR_RW(dsb_trig_ts);
- 
-+static ssize_t dsb_msr_show(struct device *dev,
-+				 struct device_attribute *attr,
-+				 char *buf)
-+{
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	unsigned int i;
-+	unsigned long bytes;
-+	ssize_t size = 0;
-+
-+	if (drvdata->dsb->msr_num == 0)
-+		return -EINVAL;
-+
-+	spin_lock(&drvdata->spinlock);
-+	for (i = 0; i < drvdata->dsb->msr_num; i++) {
-+		bytes = sysfs_emit_at(buf, size,
-+				  "%u 0x%x\n", i, drvdata->dsb->msr[i]);
-+		if (bytes <= 0)
-+			break;
-+		size += bytes;
-+	}
-+	spin_unlock(&drvdata->spinlock);
-+
-+	return size;
-+}
-+
-+static ssize_t dsb_msr_store(struct device *dev,
-+				  struct device_attribute *attr,
-+				  const char *buf,
-+				  size_t size)
-+{
-+	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	unsigned int num, val;
-+	int nval;
-+
-+	if (drvdata->dsb->msr_num == 0)
-+		return -EINVAL;
-+
-+	nval = sscanf(buf, "%u %x", &num, &val);
-+	if ((nval != 2) || (num >= drvdata->dsb->msr_num))
-+		return -EINVAL;
-+
-+	spin_lock(&drvdata->spinlock);
-+	drvdata->dsb->msr[num] = val;
-+	spin_unlock(&drvdata->spinlock);
-+	return size;
-+}
-+static DEVICE_ATTR_RW(dsb_msr);
-+
- static struct attribute *tpdm_dsb_attrs[] = {
- 	&dev_attr_dsb_mode.attr,
- 	&dev_attr_dsb_edge_ctrl.attr,
-@@ -787,6 +857,7 @@ static struct attribute *tpdm_dsb_attrs[] = {
- 	&dev_attr_dsb_trig_patt_mask.attr,
- 	&dev_attr_dsb_trig_ts.attr,
- 	&dev_attr_dsb_trig_type.attr,
-+	&dev_attr_dsb_msr.attr,
- 	NULL,
- };
- 
-diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
-index 3169fb5..5372093 100644
---- a/drivers/hwtracing/coresight/coresight-tpdm.h
-+++ b/drivers/hwtracing/coresight/coresight-tpdm.h
-@@ -18,6 +18,7 @@
- #define TPDM_DSB_XPMR(n)	(0x7E8 + (n * 4))
- #define TPDM_DSB_EDCR(n)	(0x808 + (n * 4))
- #define TPDM_DSB_EDCMR(n)	(0x848 + (n * 4))
-+#define TPDM_DSB_MSR(n)		(0x980 + (n * 4))
- 
- /* Enable bit for DSB subunit */
- #define TPDM_DSB_CR_ENA		BIT(0)
-@@ -97,6 +98,8 @@
-  * @patt_mask:        Save value for pattern mask
-  * @trig_patt_val:    Save value for trigger pattern
-  * @trig_patt_mask:   Save value for trigger pattern mask
-+ * @msr_num           Number of MSR supported by DSB TPDM
-+ * @msr               Save value for MSR
-  * @patt_ts:          Enable/Disable pattern timestamp
-  * @patt_type:        Set pattern type
-  * @trig_ts:          Enable/Disable trigger timestamp.
-@@ -110,6 +113,8 @@ struct dsb_dataset {
- 	u32				patt_mask[TPDM_DSB_MAX_PATT];
- 	u32				trig_patt_val[TPDM_DSB_MAX_PATT];
- 	u32				trig_patt_mask[TPDM_DSB_MAX_PATT];
-+	u32				msr_num;
-+	u32				*msr;
- 	bool			patt_ts;
- 	bool			patt_type;
- 	bool			trig_ts;
--- 
-2.7.4
+> 
+>> +	{ WSA884X_OTP_REG_0,			0x05 },
+>> +	{ WSA884X_OTP_REG_1,			0x49 },
+>> +	{ WSA884X_OTP_REG_2,			0x80 },
+>> +	{ WSA884X_OTP_REG_3,			0xc9 },
+>> +	{ WSA884X_OTP_REG_4,			0x40 },
+>> +	{ WSA884X_OTP_REG_5,			0xff },
+>> +	{ WSA884X_OTP_REG_6,			0xff },
+>> +	{ WSA884X_OTP_REG_7,			0xff },
+>> +	{ WSA884X_OTP_REG_8,			0xff },
+>> +	{ WSA884X_OTP_REG_9,			0xff },
+>> +	{ WSA884X_OTP_REG_10,			0xff },
+>> +	{ WSA884X_OTP_REG_11,			0xff },
+>> +	{ WSA884X_OTP_REG_12,			0xff },
+>> +	{ WSA884X_OTP_REG_13,			0xff },
+>> +	{ WSA884X_OTP_REG_14,			0xff },
+>> +	{ WSA884X_OTP_REG_15,			0xff },
+>> +	{ WSA884X_OTP_REG_16,			0xff },
+>> +	{ WSA884X_OTP_REG_17,			0xff },
+>> +	{ WSA884X_OTP_REG_18,			0xff },
+>> +	{ WSA884X_OTP_REG_19,			0xff },
+>> +	{ WSA884X_OTP_REG_20,			0xff },
+>> +	{ WSA884X_OTP_REG_21,			0xff },
+>> +	{ WSA884X_OTP_REG_22,			0xff },
+>> +	{ WSA884X_OTP_REG_23,			0xff },
+>> +	{ WSA884X_OTP_REG_24,			0x00 },
+>> +	{ WSA884X_OTP_REG_25,			0x22 },
+>> +	{ WSA884X_OTP_REG_26,			0x03 },
+>> +	{ WSA884X_OTP_REG_27,			0x00 },
+>> +	{ WSA884X_OTP_REG_28,			0x00 },
+>> +	{ WSA884X_OTP_REG_29,			0x00 },
+>> +	{ WSA884X_OTP_REG_30,			0x00 },
+>> +	{ WSA884X_OTP_REG_31,			0x8f },
+>> +	{ WSA884X_OTP_REG_32,			0x00 },
+>> +	{ WSA884X_OTP_REG_33,			0xff },
+>> +	{ WSA884X_OTP_REG_34,			0x0f },
+>> +	{ WSA884X_OTP_REG_35,			0x12 },
+>> +	{ WSA884X_OTP_REG_36,			0x08 },
+>> +	{ WSA884X_OTP_REG_37,			0x1f },
+>> +	{ WSA884X_OTP_REG_38,			0x0b },
+>> +	{ WSA884X_OTP_REG_39,			0x00 },
+>> +	{ WSA884X_OTP_REG_40,			0x00 },
+>> +	{ WSA884X_OTP_REG_41,			0x00 },
+>> +	{ WSA884X_OTP_REG_63,			0x40 },
+> 
+> These appear to be OTP data which suggests that they shouldn't have
+> defaults either since they can be programmed.
+
+Just to be clear - I don't have access to datasheet so I don't know what
+are these. The downstream driver actually initializes (writes to) two
+OTP registers - 38 and 40.
+
+> 
+>> +static bool wsa884x_readonly_register(struct device *dev, unsigned int reg)
+>> +{
+>> +	switch (reg) {
+> 
+> In general the read only registers probably shouldn't have defaults...
+
+For the case when regmap is being read before device enumerates (thus
+synced)?
+
+> 
+>> +static bool wsa884x_volatile_register(struct device *dev, unsigned int reg)
+>> +{
+>> +	switch (reg) {
+>> +	case WSA884X_ANA_WO_CTL_0:
+>> +	case WSA884X_ANA_WO_CTL_1:
+>> +		return true;
+>> +	}
+>> +	return wsa884x_readonly_register(dev, reg);
+>> +}
+> 
+> ...and the volatile regiseters definitely not, the default values will
+> never be used and just waste space.
+
+Right.
+
+> 
+>> +static struct regmap_config wsa884x_regmap_config = {
+>> +	.reg_bits = 32,
+>> +	.val_bits = 8,
+>> +	.cache_type = REGCACHE_RBTREE,
+> 
+> Please use REGCACHE_MAPLE for new devices.
+
+Ack
+
+> 
+>> +	/* Speaker mode by default */
+>> +	{ WSA884X_DRE_CTL_0, 0x7 << WSA884X_DRE_CTL_0_PROG_DELAY_SHIFT },
+>> +	{ WSA884X_CLSH_CTL_0, (0x37 & ~WSA884X_CLSH_CTL_0_DLY_CODE_MASK) |
+>> +			      (0x6 << WSA884X_CLSH_CTL_0_DLY_CODE_SHIFT) },
+>> +	{ WSA884X_CLSH_SOFT_MAX, 0xff },
+> 
+> Why not just leave as the chip default?
+
+Sincerely, I don't know. Without any documentation, I am relying
+entirely on downstream driver which has some code like this. I don't
+know whether some parts here make sense only for downstream case or
+shall be applicable also for upstream.
+
+Best regards,
+Krzysztof
 
