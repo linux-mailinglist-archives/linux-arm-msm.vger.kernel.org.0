@@ -2,71 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 82EAE72C4DD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 14:49:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 368D372C4F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 14:51:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229937AbjFLMtQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 08:49:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36894 "EHLO
+        id S235525AbjFLMvV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 08:51:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229639AbjFLMtO (ORCPT
+        with ESMTP id S235386AbjFLMvT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 08:49:14 -0400
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 469E6E4C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 05:49:13 -0700 (PDT)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f7ff69824dso27421805e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 05:49:13 -0700 (PDT)
+        Mon, 12 Jun 2023 08:51:19 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B9F8E6F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 05:51:17 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f624daccd1so4767367e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 05:51:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686574152; x=1689166152;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=W77hc+vW/SLtEALpj6kM4e0EwWOEhnh6lTso6VOBO0k=;
-        b=vXzbrrV98MN9XtCTKAz1653dVPRsjGbh1cVRwhPJg2ecgdMoMe2KmxibigbsN1WtR2
-         6IAQ0Hp5nsMGAphdfMP06HjdEisW0hx/W1MWD22wX8ow/HCsu0y5msJhK+eTHypFeGYc
-         C+MF99VGD504oPh/1QYrmlP3+L0OAGZ/rFqGh+DD/8jdVG1Lz0M5TcSVd1wBCGFPK5li
-         QVwt90bnUoiDpqn947SvmmAncCdiO3fllcGfSADkGSuYEkLxbmphB3zF/NH4uzlTQjbk
-         DRKCqXzcGY26W9hNoUBn0wDOI9RTV6pp0yiPcchFyb07kjZGGCTAKfSS33Dpa0QoQwth
-         yrjw==
+        d=linaro.org; s=google; t=1686574276; x=1689166276;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zgwZC/fxj61d9KTBgFP5Kn5ATX0ChBWpqER31ij5MWs=;
+        b=iKkMVv1gMGAM4M647rTVushhgFRLCOWK0KKXHS/OiM+lyUNxctDtJcexd397dLnHKq
+         lH94LVZUgAsw3oTpddRbOfgCXmVKW821Ol76UVrhGrzCr07yc6Iyb+ATBN8u9aAMYI/t
+         Mz6hgETo0r2hzAEv0O3zZVTGoTm1zb2mG5itZLlsmQrL/UDhXl5Z31y5FiNveyn6giKN
+         8MwD7Gjhly94rfiOnsn7k8ZQ2jbWByyPdNRCDrik5/3SaKO23SUjxhSGghQCHUFCMIRh
+         03iAhx59I4vV3BUwzJZZx/EX4C0qbkoT9AK80VPsIzZE8TV0JV7bchMWBBUAepsgDqXM
+         XJGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686574152; x=1689166152;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1686574276; x=1689166276;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W77hc+vW/SLtEALpj6kM4e0EwWOEhnh6lTso6VOBO0k=;
-        b=Y8BzpB5snTKTO3cR6Jf/x7WGGlqySGNQgIkcC6h9jaOayAwZuEjZosiYh94A7wgR3y
-         5xEorQf97KtovfMNKX20uQyQyISmHMuiCgNXxa4eXsKnQunlQQ9lp+xXJGiW6Nt1u1FF
-         5YfYdV3hx76pYo/eFVyJ9rW3ZaQYR/0fNUEC7XcAEG4A6AIATtfSw9NjAPO3tPlhmTHn
-         ifRdEUpImVVIpobL9UuXgmP0m/BnM/jTpin3aHGn/Ve7qi5nZ29sAHQr6WmfLt4Vd84x
-         +mt+kfobZW8EMqmogDa8PDB+qP3ZCf0R94zx2YvOqLZvc+GhZzG6WvMrfcFHb3nneK/T
-         mHNg==
-X-Gm-Message-State: AC+VfDyKsicZT2QtlxVLlf4L3O8E3CxVEqRhxWKXjAROlqTGTFSz5Rvo
-        EOebtFNfDhK41bnjAS4uY9Zp8w==
-X-Google-Smtp-Source: ACHHUZ6t8inJ47Ew7FRMA6iUbadvwDEvu88VCo/2rv3xQvWZzWYsO4YvB8WOG2ttcLBSv1E1n9gXzQ==
-X-Received: by 2002:adf:f0c9:0:b0:307:95c9:c010 with SMTP id x9-20020adff0c9000000b0030795c9c010mr4802811wro.34.1686574151657;
-        Mon, 12 Jun 2023 05:49:11 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id r17-20020a5d52d1000000b002c71b4d476asm12358871wrv.106.2023.06.12.05.49.10
+        bh=zgwZC/fxj61d9KTBgFP5Kn5ATX0ChBWpqER31ij5MWs=;
+        b=KwYB4tw7NPryV0Szalo3Mo7bCuAKyaZSEhBhxrXvYn8l0ZWUXtuLV9rEYzIOc3nCpn
+         GbBgkLotfQa84Jcz6PSxRWJOfLkvEy+tHO/QiFRo+QUzs8+B14Hn5a43x/LV4Wr/HEKt
+         xN3DOdKr4utZxdB7I8W4tWOQAovveT2VUwPqYBwzLqWU7ab4yKUsWTeObsPwVojzz19U
+         cuUW4rlRY2Z9DJYpn7K3WEBSFuFmKz4XlCPDG3tQVRbPxdr3wP7kgAQwJYpD6pH45EZ/
+         1+5iaETwBZHVmKYgWM7KR+zNfSLLReGC4EZvM9IgXArM1qDbFK49+GWNwmA62dd6v3nb
+         dwSQ==
+X-Gm-Message-State: AC+VfDyxJYrGu2BH51zjhSEsMF1+TFwHLDM0qU+Ha0gLecFrRVLexDN9
+        wHLLiJM34cnAQo1B4BJSq7CeMg==
+X-Google-Smtp-Source: ACHHUZ4wtBMALjIQGGhGnVpzvKtRatNMeWKK/mFRat5tb6NMydba02+WNqzcPJHf21TB5rWzKql3xg==
+X-Received: by 2002:ac2:465b:0:b0:4f6:4f9a:706e with SMTP id s27-20020ac2465b000000b004f64f9a706emr4471143lfo.15.1686574275777;
+        Mon, 12 Jun 2023 05:51:15 -0700 (PDT)
+Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id d18-20020ac25452000000b004f4ce1d4df6sm1443390lfn.47.2023.06.12.05.51.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jun 2023 05:49:10 -0700 (PDT)
-Message-ID: <fa2b4ed5-64b5-b05b-0eee-6f61c7ba4baa@linaro.org>
-Date:   Mon, 12 Jun 2023 13:49:10 +0100
+        Mon, 12 Jun 2023 05:51:15 -0700 (PDT)
+Message-ID: <b700b444-0b14-7cee-4edc-d2f1183c66bb@linaro.org>
+Date:   Mon, 12 Jun 2023 14:51:14 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v1 2/2] misc: fastrpc: detect privileged processes based
- on group ID
+ Thunderbird/102.11.2
 Content-Language: en-US
-To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
-References: <1686138864-17136-1-git-send-email-quic_ekangupt@quicinc.com>
- <1686138864-17136-3-git-send-email-quic_ekangupt@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <1686138864-17136-3-git-send-email-quic_ekangupt@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Evan Green <evgreen@chromium.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20230526-topic-smd_icc-v2-0-e5934b07d813@linaro.org>
+ <20230526-topic-smd_icc-v2-4-e5934b07d813@linaro.org>
+ <ZIRgGXwKD6mcgTRY@gerhold.net>
+ <40f937bb-0d7e-a237-1672-5905983622ce@linaro.org>
+ <b7b1d19c-b87d-b3fd-36aa-374065a45ede@linaro.org>
+ <ZITOR3Y25Bv4msdm@gerhold.net>
+ <c52f0311-a8a0-79af-2a08-51a8564a8b25@linaro.org>
+ <ZIWR7uVHJ-eJWhHw@gerhold.net>
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: Re: [PATCH v2 04/22] clk: qcom: smd-rpm: Export clock scaling
+ availability
+In-Reply-To: <ZIWR7uVHJ-eJWhHw@gerhold.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -78,242 +91,238 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Ekansh,
-thankyou for your email.
-
-On 07/06/2023 12:54, Ekansh Gupta wrote:
-> Get the information on privileged group IDs during rpmsg probing based
-> on DT property. Check if the process requesting an offload to remote
-> subsystem is privileged by comparing it's group ID with privileged
-
-policy management should be dealt in the user-space not in the kernel.
-
-The patch is not correct approach!
-
-In this particular case the fastrpc library can take the right call 
-based on the group id of the process along with system policy and set 
-attr with correct flags while sending a invoke request.
-
---srini
-
-> group ID. Initialization process attributes are updated for a
-> privileged process which is sent to remote process for resource
-> management.
+On 11.06.2023 11:20, Stephan Gerhold wrote:
+> On Sat, Jun 10, 2023 at 09:39:00PM +0200, Konrad Dybcio wrote:
+>> On 10.06.2023 21:25, Stephan Gerhold wrote:
+>>> On Sat, Jun 10, 2023 at 08:53:05PM +0200, Konrad Dybcio wrote:
+>>>> On 10.06.2023 14:15, Konrad Dybcio wrote:
+>>>>> On 10.06.2023 13:35, Stephan Gerhold wrote:
+>>>>>> On Fri, Jun 09, 2023 at 10:19:09PM +0200, Konrad Dybcio wrote:
+>>>>>>> Before we issue a call to RPM through clk_smd_rpm_enable_scaling() the
+>>>>>>> clock rate requests will not be commited in hardware. This poses a
+>>>>>>> race threat since we're accessing the bus clocks directly from within
+>>>>>>> the interconnect framework.
+>>>>>>>
+>>>>>>> Add a marker to indicate that we're good to go with sending new requests
+>>>>>>> and export it so that it can be referenced from icc.
+>>>>>>>
+>>>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+>>>>>>> ---
+>>>>>>>  drivers/clk/qcom/clk-smd-rpm.c   | 9 +++++++++
+>>>>>>>  include/linux/soc/qcom/smd-rpm.h | 2 ++
+>>>>>>>  2 files changed, 11 insertions(+)
+>>>>>>>
+>>>>>>> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+>>>>>>> index 937cb1515968..482fe30ee6f0 100644
+>>>>>>> --- a/drivers/clk/qcom/clk-smd-rpm.c
+>>>>>>> +++ b/drivers/clk/qcom/clk-smd-rpm.c
+>>>>>>> @@ -151,6 +151,7 @@
+>>>>>>>  #define to_clk_smd_rpm(_hw) container_of(_hw, struct clk_smd_rpm, hw)
+>>>>>>>  
+>>>>>>>  static struct qcom_smd_rpm *rpmcc_smd_rpm;
+>>>>>>> +static bool smd_rpm_clk_scaling;
+>>>>>>>  
+>>>>>>>  struct clk_smd_rpm {
+>>>>>>>  	const int rpm_res_type;
+>>>>>>> @@ -385,6 +386,12 @@ static unsigned long clk_smd_rpm_recalc_rate(struct clk_hw *hw,
+>>>>>>>  	return r->rate;
+>>>>>>>  }
+>>>>>>>  
+>>>>>>> +bool qcom_smd_rpm_scaling_available(void)
+>>>>>>> +{
+>>>>>>> +	return smd_rpm_clk_scaling;
+>>>>>>> +}
+>>>>>>> +EXPORT_SYMBOL_GPL(qcom_smd_rpm_scaling_available);
+>>>>>>> +
+>>>>>>>  static int clk_smd_rpm_enable_scaling(void)
+>>>>>>>  {
+>>>>>>>  	int ret;
+>>>>>>> @@ -410,6 +417,8 @@ static int clk_smd_rpm_enable_scaling(void)
+>>>>>>>  		return ret;
+>>>>>>>  	}
+>>>>>>>  
+>>>>>>> +	smd_rpm_clk_scaling = true;
+>>>>>>> +
+>>>>>>
+>>>>>> If you move the platform_device_register_data(&rpdev->dev,
+>>>>>> "icc_smd_rpm", ...) from drivers/soc/qcom/smd-rpm.c to here you can
+>>>>>> avoid the race completely and drop this API. I think that would be
+>>>>>> cleaner. And it will likely probe much faster because probe deferral
+>>>>>> is slow. :)
+>>>>> Sounds like an idea.. especially since it's pretty much the only
+>>>>> dependency other than SMDRPM itself!
+>>>> It sounds great, but to not break bisecting one has to:
+>>>>
+>>>> 1. change the registration in soc/smd-rpm to store rpm ptr in driver
+>>>>    data, in addition to parent driver data
+>>>>
+>>>> 2. change icc/smd-rpm to use the device and not parent data
+>>>>
+>>>> 3. add a platform_device_register_data call in clk-smd-rpm that will
+>>>>    always fail because the device is always registered
+>>>>
+>>>> 4. remove the registration from soc/smd-rpm
+>>>>
+>>>
+>>> Logically the icc_smd_rpm device still fits better as child of
+>>> smd-rpm and not clk-smd-rpm. So I would probably just continue
+>>> registering it on the parent device from clk-smd-rpm.
+>>> Then there are no changes necessary in icc_smd_rpm.
+>>>
+>>> You could use this. Both touched files are Bjorn-maintained so should be
+>>> manageable to have it in one commit. (note: compile-tested only)
+>>>
+>>> Thanks,
+>>> Stephan
+>>>
+>>> From a2610adb2551b01e76b9de8e4cbcc89853814a8f Mon Sep 17 00:00:00 2001
+>>> From: Stephan Gerhold <stephan@gerhold.net>
+>>> Date: Sat, 10 Jun 2023 21:19:48 +0200
+>>> Subject: [PATCH] soc: qcom: smd-rpm: Move icc_smd_rpm registration to
+>>>  clk-smd-rpm
+>>>
+>>> icc_smd_rpm will do bus clock votes itself rather than taking the
+>>> unnecessary detour through the clock subsystem. However, it can only
+>>> do that after the clocks have been handed off and scaling has been
+>>> enabled in the RPM in clk-smd-rpm.
+>>>
+>>> Move the icc_smd_rpm registration from smd-rpm.c to clk-smd-rpm.c
+>>> to avoid any possible races. icc_smd_rpm gets the driver data from
+>>> the smd-rpm device, so still register the platform device on the
+>>> smd-rpm parent device.
+>>>
+>>> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+>>> ---
+>> Generally it looks good.. I'll give it a spin next week. One
+>> thing below.
+>>
+>>>  drivers/clk/qcom/clk-smd-rpm.c | 21 +++++++++++++++++++++
+>>>  drivers/soc/qcom/smd-rpm.c     | 23 +----------------------
+>>>  2 files changed, 22 insertions(+), 22 deletions(-)
+>>>
+>>> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+>>> index e4de74b68797..91adb16889b3 100644
+>>> --- a/drivers/clk/qcom/clk-smd-rpm.c
+>>> +++ b/drivers/clk/qcom/clk-smd-rpm.c
+>>> @@ -1302,12 +1302,20 @@ static struct clk_hw *qcom_smdrpm_clk_hw_get(struct of_phandle_args *clkspec,
+>>>  	return desc->clks[idx] ? &desc->clks[idx]->hw : ERR_PTR(-ENOENT);
+>>>  }
+>>>  
+>>> +static void rpm_smd_unregister_icc(void *data)
+>>> +{
+>>> +	struct platform_device *icc_pdev = data;
+>>> +
+>>> +	platform_device_unregister(icc_pdev);
+>>> +}
+>>> +
+>>>  static int rpm_smd_clk_probe(struct platform_device *pdev)
+>>>  {
+>>>  	int ret;
+>>>  	size_t num_clks, i;
+>>>  	struct clk_smd_rpm **rpm_smd_clks;
+>>>  	const struct rpm_smd_clk_desc *desc;
+>>> +	struct platform_device *icc_pdev;
+>>>  
+>>>  	rpmcc_smd_rpm = dev_get_drvdata(pdev->dev.parent);
+>>>  	if (!rpmcc_smd_rpm) {
+>>> @@ -1357,6 +1365,19 @@ static int rpm_smd_clk_probe(struct platform_device *pdev)
+>>>  	if (ret)
+>>>  		goto err;
+>>>  
+>>> +	icc_pdev = platform_device_register_data(pdev->dev.parent,
+>>> +						 "icc_smd_rpm", -1, NULL, 0);
+>>> +	if (IS_ERR(icc_pdev)) {
+>>> +		dev_err(&pdev->dev, "Failed to register icc_smd_rpm device: %pE\n",
+>>> +			icc_pdev);
+>>> +		/* No need to unregister clocks because of this */
+>>> +	} else {
+>>> +		ret = devm_add_action_or_reset(&pdev->dev, rpm_smd_unregister_icc,
+>>> +					       icc_pdev);
+>>> +		if (ret)
+>>> +			goto err;
+>>> +	}
+>>> +
+>>>  	return 0;
+>>>  err:
+>>>  	dev_err(&pdev->dev, "Error registering SMD clock driver (%d)\n", ret);
+>>> diff --git a/drivers/soc/qcom/smd-rpm.c b/drivers/soc/qcom/smd-rpm.c
+>>> index 0c1aa809cc4e..427dd5392b82 100644
+>>> --- a/drivers/soc/qcom/smd-rpm.c
+>>> +++ b/drivers/soc/qcom/smd-rpm.c
+>>> @@ -19,7 +19,6 @@
+>>>  /**
+>>>   * struct qcom_smd_rpm - state of the rpm device driver
+>>>   * @rpm_channel:	reference to the smd channel
+>>> - * @icc:		interconnect proxy device
+>>>   * @dev:		rpm device
+>>>   * @ack:		completion for acks
+>>>   * @lock:		mutual exclusion around the send/complete pair
+>>> @@ -27,7 +26,6 @@
+>>>   */
+>>>  struct qcom_smd_rpm {
+>>>  	struct rpmsg_endpoint *rpm_channel;
+>>> -	struct platform_device *icc;
+>>>  	struct device *dev;
+>>>  
+>>>  	struct completion ack;
+>>> @@ -197,7 +195,6 @@ static int qcom_smd_rpm_callback(struct rpmsg_device *rpdev,
+>>>  static int qcom_smd_rpm_probe(struct rpmsg_device *rpdev)
+>>>  {
+>>>  	struct qcom_smd_rpm *rpm;
+>>> -	int ret;
+>>>  
+>>>  	rpm = devm_kzalloc(&rpdev->dev, sizeof(*rpm), GFP_KERNEL);
+>>>  	if (!rpm)
+>>> @@ -210,24 +207,7 @@ static int qcom_smd_rpm_probe(struct rpmsg_device *rpdev)
+>>>  	rpm->rpm_channel = rpdev->ept;
+>>>  	dev_set_drvdata(&rpdev->dev, rpm);
+>>>  
+>>> -	rpm->icc = platform_device_register_data(&rpdev->dev, "icc_smd_rpm", -1,
+>>> -						 NULL, 0);
+>>> -	if (IS_ERR(rpm->icc))
+>>> -		return PTR_ERR(rpm->icc);
+>>> -
+>>> -	ret = of_platform_populate(rpdev->dev.of_node, NULL, NULL, &rpdev->dev);
+>>> -	if (ret)
+>>> -		platform_device_unregister(rpm->icc);
+>>> -
+>>> -	return ret;
+>>> -}
+>>> -
+>>> -static void qcom_smd_rpm_remove(struct rpmsg_device *rpdev)
+>>> -{
+>>> -	struct qcom_smd_rpm *rpm = dev_get_drvdata(&rpdev->dev);
+>>> -
+>>> -	platform_device_unregister(rpm->icc);
+>>> -	of_platform_depopulate(&rpdev->dev);
+>>> +	return devm_of_platform_populate(&rpdev->dev);
+>>>  }
+>>>  
+>>>  static const struct of_device_id qcom_smd_rpm_of_match[] = {
+>>> @@ -256,7 +236,6 @@ MODULE_DEVICE_TABLE(of, qcom_smd_rpm_of_match);
+>>>  
+>>>  static struct rpmsg_driver qcom_smd_rpm_driver = {
+>>>  	.probe = qcom_smd_rpm_probe,
+>>> -	.remove = qcom_smd_rpm_remove,
+>> This reaches over the removal of the icc registration, the depopulate
+>> call should stay.
+>>
 > 
-> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> ---
->   drivers/misc/fastrpc.c | 124 +++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 124 insertions(+)
+> I switched the of_platform_populate() to devm_of_platform_populate(),
+> that's why the remove callback is no longer necessary. It's a bit
+> hidden, perhaps it would be enough to add to the commit message:
 > 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 30d4d04..6c7db0b 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -21,6 +21,7 @@
->   #include <linux/firmware/qcom/qcom_scm.h>
->   #include <uapi/misc/fastrpc.h>
->   #include <linux/of_reserved_mem.h>
-> +#include <linux/cred.h>
->   
->   #define ADSP_DOMAIN_ID (0)
->   #define MDSP_DOMAIN_ID (1)
-> @@ -166,6 +167,11 @@ struct fastrpc_mem_unmap_req_msg {
->   	u64 len;
->   };
->   
-> +struct gid_list {
-> +	u32 *gids;
-> +	u32 gidcount;
-> +};
-> +
->   struct fastrpc_msg {
->   	int pid;		/* process group id */
->   	int tid;		/* thread id */
-> @@ -277,6 +283,7 @@ struct fastrpc_channel_ctx {
->   	struct fastrpc_device *fdevice;
->   	struct fastrpc_buf *remote_heap;
->   	struct list_head invoke_interrupted_mmaps;
-> +	struct gid_list gidlist;
->   	bool secure;
->   	bool unsigned_support;
->   	u64 dma_mask;
-> @@ -305,6 +312,7 @@ struct fastrpc_user {
->   	spinlock_t lock;
->   	/* lock for allocations */
->   	struct mutex mutex;
-> +	struct gid_list gidlist;
->   };
->   
->   static void fastrpc_free_map(struct kref *ref)
-> @@ -522,6 +530,31 @@ static void fastrpc_context_put_wq(struct work_struct *work)
->   }
->   
->   #define CMP(aa, bb) ((aa) == (bb) ? 0 : (aa) < (bb) ? -1 : 1)
-> +
-> +static u32 sorted_lists_intersection(u32 *listA,
-> +		u32 lenA, u32 *listB, u32 lenB)
-> +{
-> +	u32 i = 0, j = 0;
-> +
-> +	while (i < lenA && j < lenB) {
-> +		if (listA[i] < listB[j])
-> +			i++;
-> +		else if (listA[i] > listB[j])
-> +			j++;
-> +		else
-> +			return listA[i];
-> +	}
-> +	return 0;
-> +}
-> +
-> +static int uint_cmp_func(const void *p1, const void *p2)
-> +{
-> +	u32 a1 = *((u32 *)p1);
-> +	u32 a2 = *((u32 *)p2);
-> +
-> +	return CMP(a1, a2);
-> +}
-> +
->   static int olaps_cmp(const void *a, const void *b)
->   {
->   	struct fastrpc_buf_overlap *pa = (struct fastrpc_buf_overlap *)a;
-> @@ -1230,6 +1263,50 @@ static bool is_session_rejected(struct fastrpc_user *fl, bool unsigned_pd_reques
->   	return false;
->   }
->   
-> +static int fastrpc_get_process_gids(struct gid_list *gidlist)
-> +{
-> +	struct group_info *group_info = get_current_groups();
-> +	int i, num_gids;
-> +	u32 *gids = NULL;
-> +
-> +	if (!group_info)
-> +		return -EFAULT;
-> +
-> +	num_gids = group_info->ngroups + 1;
-> +	gids = kcalloc(num_gids, sizeof(u32), GFP_KERNEL);
-> +	if (!gids)
-> +		return -ENOMEM;
-> +
-> +	/* Get the real GID */
-> +	gids[0] = __kgid_val(current_gid());
-> +
-> +	/* Get the supplemental GIDs */
-> +	for (i = 1; i < num_gids; i++)
-> +		gids[i] = __kgid_val(group_info->gid[i - 1]);
-> +
-> +	sort(gids, num_gids, sizeof(*gids), uint_cmp_func, NULL);
-> +	gidlist->gids = gids;
-> +	gidlist->gidcount = num_gids;
-> +
-> +	return 0;
-> +}
-> +
-> +static void fastrpc_check_privileged_process(struct fastrpc_user *fl,
-> +				struct fastrpc_init_create *init)
-> +{
-> +	u32 gid = sorted_lists_intersection(fl->gidlist.gids,
-> +			fl->gidlist.gidcount, fl->cctx->gidlist.gids,
-> +			fl->cctx->gidlist.gidcount);
-> +
-> +	/* disregard any privilege bits from userspace */
-> +	init->attrs &= (~FASTRPC_MODE_PRIVILEGED);
-> +	if (gid) {
-> +		dev_info(&fl->cctx->rpdev->dev, "%s: %s (PID %d, GID %u) is a privileged process\n",
-> +				__func__, current->comm, fl->tgid, gid);
-> +		init->attrs |= FASTRPC_MODE_PRIVILEGED;
-> +	}
-> +}
-> +
->   static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->   					      char __user *argp)
->   {
-> @@ -1386,6 +1463,8 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
->   		goto err;
->   	}
->   
-> +	fastrpc_get_process_gids(&fl->gidlist);
-> +
->   	inbuf.pgid = fl->tgid;
->   	inbuf.namelen = strlen(current->comm) + 1;
->   	inbuf.filelen = init.filelen;
-> @@ -1400,6 +1479,8 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
->   			goto err;
->   	}
->   
-> +	fastrpc_check_privileged_process(fl, &init);
-> +
->   	memlen = ALIGN(max(INIT_FILELEN_MAX, (int)init.filelen * 4),
->   		       1024 * 1024);
->   	err = fastrpc_buf_alloc(fl, fl->sctx->dev, memlen,
-> @@ -1519,6 +1600,7 @@ static int fastrpc_device_release(struct inode *inode, struct file *file)
->   	spin_lock_irqsave(&cctx->lock, flags);
->   	list_del(&fl->user);
->   	spin_unlock_irqrestore(&cctx->lock, flags);
-> +	kfree(fl->gidlist.gids);
->   
->   	if (fl->init_mem)
->   		fastrpc_buf_free(fl->init_mem);
-> @@ -2118,6 +2200,43 @@ static long fastrpc_device_ioctl(struct file *file, unsigned int cmd,
->   	return err;
->   }
->   
-> +static int fastrpc_init_privileged_gids(struct device *dev, char *prop_name,
-> +						struct gid_list *gidlist)
-> +{
-> +	int err = 0;
-> +	u32 len = 0, i;
-> +	u32 *gids = NULL;
-> +
-> +	if (!of_find_property(dev->of_node, prop_name, &len))
-> +		return 0;
-> +	if (len == 0)
-> +		return 0;
-> +
-> +	len /= sizeof(u32);
-> +	gids = kcalloc(len, sizeof(u32), GFP_KERNEL);
-> +	if (!gids)
-> +		return -ENOMEM;
-> +
-> +	for (i = 0; i < len; i++) {
-> +		err = of_property_read_u32_index(dev->of_node, prop_name,
-> +								i, &gids[i]);
-> +		if (err) {
-> +			dev_err(dev, "%s: failed to read GID %u\n",
-> +					__func__, i);
-> +			goto read_error;
-> +		}
-> +		dev_info(dev, "adsprpc: %s: privileged GID: %u\n", __func__, gids[i]);
-> +	}
-> +	sort(gids, len, sizeof(*gids), uint_cmp_func, NULL);
-> +	gidlist->gids = gids;
-> +	gidlist->gidcount = len;
-> +
-> +	return 0;
-> +read_error:
-> +	kfree(gids);
-> +	return err;
-> +}
-> +
->   static const struct file_operations fastrpc_fops = {
->   	.open = fastrpc_device_open,
->   	.release = fastrpc_device_release,
-> @@ -2277,6 +2396,10 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->   	if (!data)
->   		return -ENOMEM;
->   
-> +	err = fastrpc_init_privileged_gids(rdev, "qcom,fastrpc-gids", &data->gidlist);
-> +	if (err)
-> +		dev_err(rdev, "Privileged gids init failed.\n");
-> +
->   	if (vmcount) {
->   		data->vmcount = vmcount;
->   		data->perms = BIT(QCOM_SCM_VMID_HLOS);
-> @@ -2382,6 +2505,7 @@ static void fastrpc_rpmsg_remove(struct rpmsg_device *rpdev)
->   	if (cctx->remote_heap)
->   		fastrpc_buf_free(cctx->remote_heap);
->   
-> +	kfree(cctx->gidlist.gids);
->   	of_platform_depopulate(&rpdev->dev);
->   
->   	fastrpc_channel_ctx_put(cctx);
+> "While at it, switch the remaining of_platform_populate() call to the
+>  devm variant and remove the remove callback."
+> 
+> Or maybe it should be split into two patches.
+Gave it a spin, I think it ends up being worse if an IPA rpm clock is
+consumed by one of the icc providers, and that's sadly the case
+for almost all platforms (or supposed to be).. :/ Only qcm2290 doesn't
+seem to care if we poke the network interface units with half the soc
+off :P
+
+Konrad
+> 
+> Thanks,
+> Stephan
