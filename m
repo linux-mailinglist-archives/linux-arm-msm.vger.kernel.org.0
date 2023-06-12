@@ -2,200 +2,247 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 545C672C5BF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 15:22:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EAEBE72C605
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 15:33:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235719AbjFLNWK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 09:22:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52610 "EHLO
+        id S235611AbjFLNdP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 09:33:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229781AbjFLNWJ (ORCPT
+        with ESMTP id S232660AbjFLNdP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 09:22:09 -0400
-Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02on2078.outbound.protection.outlook.com [40.107.95.78])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 41937AC;
-        Mon, 12 Jun 2023 06:22:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=PSOGLaIT1W07/QXcfByUgnGyr8dC7b4WHH+MVqNCSq3sP2EHjGI0Ix9QWiudycYHUeRhvopf+3qzM7seIqxM2Kk/3vWisBaG1GKSj7v51xzW1+jRjyF90+NF8Cg0ouHbIij3Eg6JEgu3hPNymUzZq2o3Wuns3H6gsJDpP04ojDaKuGftmjS+1B7CJSVa7ctGZvk3Ez7bkCof3Jk/k8YwybOYqpnxzfI9r5i7zuVZXTswjQsJV0S0UKd+sn2rd9eecb9hle+m1D1Pe6YaKSA/gyg5xpaY3Bpto7eFL6Vevw5/EpAr1rXFVFze5Eu4Gc6x33zZ3p801jVncQDiq1Jl3w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=s5mge1eShA5IQnwzWxQFDZ+08BVbyNHBjCPhmUwEXEk=;
- b=ByNIZbpZD0J43IGmhWvUBcF2YkjOUv9mukt+eXQaobAKjbNz/QIbMy+3xhFup3Vsi8N8jBHixK+8gsb2lt2llKdNfkeqHbVF46PQVEVeMnHSOpzS4R3dMNqfn44zcU5ZERBBhSppVOqnueHrPPUYth1PkrJDvD3f4XI8PISsIMO5D3Ci+HILP4dblYNjvXaKnbjuEVDLaBIrB0X46egdS6sPlZ/iIYipjmwRp+s5J0yNF+fz4BUwtqwMsMsAZa8J3vsHcVSzCsJuxa/z1BC2x274rjXTAkxqdSasozmFoiVlnj12gaC52512rJwL1mpkmg7S+gIiYmTf7jrltD4tJw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=s5mge1eShA5IQnwzWxQFDZ+08BVbyNHBjCPhmUwEXEk=;
- b=nSet+gvIGpLERmYxjQdEB6obqd0uSNgobY1wcCvpA3ZmG/3cZJ+Y4oSvAUbUMs1SJxF13FId6Jn6VIiUZcIUL20Cl8W+AEFW2mLYlQAMtJaNiLgpUPFUJoeqpaOLSD2Oou10XyuBa+zUOzvSmUV85XA5bQzSaR8H+ZpKDKPUYT4=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from BYAPR12MB3589.namprd12.prod.outlook.com (2603:10b6:a03:df::29)
- by CH3PR12MB8306.namprd12.prod.outlook.com (2603:10b6:610:12c::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6455.44; Mon, 12 Jun
- 2023 13:22:05 +0000
-Received: from BYAPR12MB3589.namprd12.prod.outlook.com
- ([fe80::401e:2e7f:7c2b:6bff]) by BYAPR12MB3589.namprd12.prod.outlook.com
- ([fe80::401e:2e7f:7c2b:6bff%4]) with mapi id 15.20.6455.024; Mon, 12 Jun 2023
- 13:22:05 +0000
-Message-ID: <ff196b04-e8c5-52d9-852b-9a9cc7eecdd0@amd.com>
-Date:   Mon, 12 Jun 2023 15:21:58 +0200
+        Mon, 12 Jun 2023 09:33:15 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 408CAF9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 06:33:13 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f6170b1486so5289864e87.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 06:33:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686576791; x=1689168791;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=j0BtWef05P50AZolUyxN0L22aqNjqMA9iLYT2Vrx8+Y=;
+        b=IuDOVYUWJTrtVM24OGVA8/rlFHy+y1Y6hkL5PK0wbxK3vLwgD3SY3BX8HrNBULnbvU
+         gfNdk07aqfXijq5d8ip4FtvWlxoka0locpI4e59IX5WIYNqW2EyxOI87BE7YwVv0wnOk
+         AY8ecLHBiTdSgm7lkJgVnDazQW+6OUzSYqA7Wpag0cRx9OgE0H0u1ziWfkv6FjEPGDqU
+         4Qbw7lXx+PyMevgo/81gjp9TXSYLc3KXDQiOaMd8RY7+ogRxPnKIzedqhbAEf+wWekci
+         Fa/Xh6dFkgng/yZtkfpWCdT2yY12GvQxK2CSmiqg/ZBygxULYpC2BrtukEnZKSDQAp78
+         vizA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686576791; x=1689168791;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=j0BtWef05P50AZolUyxN0L22aqNjqMA9iLYT2Vrx8+Y=;
+        b=iHp4SizTHjT8uG60Eh/yijnJfswdvRAHInqSsDIwsHBGUMMYxl+T4Z2oI2H1UhumP0
+         XVT0VDClMtaTYs0AV3VFJNFIl62HVNObvR22ZjWtdldMIVXwusa34CgQRJPxmA3spx/u
+         GWSRVZJqS/GB7Hri25h7vX6IkiBZ+NAQjLZuxB+q/JZ7DrXkp4y2MRCINGxkvPNQtDTE
+         eicj6UC7LmsJbN60fGtIfTgCi+JHwzx4FhfI7v4ezqss42jt35guYvWAuaQ8dn4C3DFw
+         UMATY+K9vk2NxrqxTTj/6e92uK+BaYDi68VUDtLVyMGWHC64AIdqg/UWSbJlyU7fY8b6
+         7scA==
+X-Gm-Message-State: AC+VfDxIP3rjs4ygmNs+6SyIFOSetRDW7vrMib9rfSjTo1Z/I3JKnFHz
+        5l3qX+raRYYUiZy2hW+bQNMqEg==
+X-Google-Smtp-Source: ACHHUZ5jg8U5re+laJc3UhaUZ6VSMxMxuIF+CKl/Y9e6iJ4ubnZWGquHHnHTu+8mWEPO+Pk1PZqv3A==
+X-Received: by 2002:a05:6512:1ca:b0:4f4:2717:7e6f with SMTP id f10-20020a05651201ca00b004f427177e6fmr3166286lfp.23.1686576791391;
+        Mon, 12 Jun 2023 06:33:11 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id x3-20020ac259c3000000b004f39bb71ed2sm1440105lfn.138.2023.06.12.06.33.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Jun 2023 06:33:10 -0700 (PDT)
+Message-ID: <8c1085fd-8a73-d192-6624-d4f35728e68a@linaro.org>
+Date:   Mon, 12 Jun 2023 16:33:09 +0300
+MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH] accel/qaic: Fix dereferencing freed memory
-Content-Language: en-US
-To:     Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>,
-        Sukrut Bellary <sukrut.bellary@linux.com>,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Oded Gabbay <ogabbay@kernel.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, kernel-janitors@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linaro-mm-sig@lists.linaro.org, linux-media@vger.kernel.org
-References: <20230610021200.377452-1-sukrut.bellary@linux.com>
- <fc979a4e-c30a-2606-9eec-afbba4fdd774@amd.com>
- <e3a867a8-284b-7250-b1b2-1956f533f6b0@quicinc.com>
-From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
-In-Reply-To: <e3a867a8-284b-7250-b1b2-1956f533f6b0@quicinc.com>
+Subject: Re: [PATCH 15/18] ARM: dts: qcom: apq8064: provide voltage scaling
+ tables
+Content-Language: en-GB
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>
+References: <20230612053922.3284394-1-dmitry.baryshkov@linaro.org>
+ <20230612053922.3284394-16-dmitry.baryshkov@linaro.org>
+ <ZIbez4RA0OoVfHzt@gerhold.net>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <ZIbez4RA0OoVfHzt@gerhold.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR0P281CA0091.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:a9::11) To BYAPR12MB3589.namprd12.prod.outlook.com
- (2603:10b6:a03:df::29)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BYAPR12MB3589:EE_|CH3PR12MB8306:EE_
-X-MS-Office365-Filtering-Correlation-Id: 699f6d86-3e13-44a1-1c69-08db6b48040a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: Co8flGdHn8XVC80FRFvZyQpBSzvvtP3YS+sjbsf02YD1JJ05Bfxs2QeoQfPE6c0NNrwiTJSDxzjCvfE2WuAdfVjuprX8MFFLQpcLEjlrK9XKlFB8HKxlVuvUSt6rPerA3ErGyXaDimJS5JtvJm9fJxLNgMX10B9y6mvS6NqBCmbjq4/y9Y5jyCSmF/ckrOaBuPK5xjlfBk3/6Mq/CCN9nLnbunot9PP3Cgyk0UjvaagHnLyMTN/JY7X002gBgVNt6N/Sr2lmEX5KueQK1NBQWDCxOX/hOwC2m1EhZhbrP/fmyaZx2lvIGeRlrg6cN++nPI3EAxdxWsdQ1sbqhiF0gRaV5bmPOyZ5PIhFJWUK1kX9x2J8KkaR5DTIpVj+QnzmYo227vNsrF6C3+9/zfos/ZGN0EFcmcV4DxLgTjbJE1saeomTtumLBOOMPeJfLJII5GMCPpBY8ie46m7hcT93BHlSWXVJ0tXmrtAyy6AwjhcXFhaNr6WmwuM7I4dqiyQtrfcLxVvyjI4kAqOQaoMs034EmqP8xsmNkzSgFEXWVxSzVGnw6wL4xRnbMe4Ewql4/S44KP+Jb1QsFBYnyNRsEDcGHuaVJoALq4H89BGvCjGOqLyT+ki4h1su6UOiNNMKBXgAMchYDPvUzTdort3fjA==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR12MB3589.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(136003)(39860400002)(346002)(376002)(366004)(451199021)(6666004)(6486002)(478600001)(66574015)(6512007)(6506007)(53546011)(83380400001)(186003)(36756003)(38100700002)(31696002)(86362001)(2616005)(31686004)(5660300002)(8936002)(8676002)(316002)(41300700001)(2906002)(4326008)(66556008)(66476007)(66946007)(7416002)(110136005)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZnQyK1l5Y2FkNG8ycmthZlRoWWtVTCtpelBvb1kvRVZDYlMxQVhNaWYrQ2Mr?=
- =?utf-8?B?UUU0RUNNUjV0ZnRQbVF5dnlLNFhicWhubXo3VGdSaWltWk5GZVM2VzJZd0lu?=
- =?utf-8?B?VVM3cTJobWFpekJxL1hKeEVSNHNsTmZNODhuZGpEeHNCbWpmbkY5dHcvWG13?=
- =?utf-8?B?N1RRVnYyd25QMnZhMFVSUTljWmpzb1BXaENpYmF4dkp3QlRPOWhidkVqbElL?=
- =?utf-8?B?UVhSYkVWNGRSdDJYOTI1dU02eUwxY1phdHJ5dTUzcDZwZ3ovUFIrWkd0bDBp?=
- =?utf-8?B?akk4anlxcFZ1VThiT1RPVjkwLy9qRDdHVWFOVkozY2hBWmhPeHhENUFneXQ1?=
- =?utf-8?B?S1M2eERVUjNWM0QzajRXYWFGa2hVUVJHa0FVUkhKNVN1UldVTlJlS0JxSWlo?=
- =?utf-8?B?UDd2bENmc0RlMFBoMm1TWXdLRFlWZlRJb1FaWnVtNDZlM1ZaRzFuaXQ0ejlj?=
- =?utf-8?B?cnpNSlVTWlJtK2dYNEF6NG1yVFVqaTNLa0lTdU9vOXduQm5VSkpYMHUxMlhw?=
- =?utf-8?B?SHZGZ0RyYTdGS2lQQzV1YWZXejdyd2NHUW5sdkFDbWhFbGovaUN5MTYxMncv?=
- =?utf-8?B?VEM2VnZmRGRIVUZ6U0hhZFVkTUdiYVpnb0tFVitneHRLUWRuL21JMGVrMVo5?=
- =?utf-8?B?WWlOR0dMME5WMWNHR1hsMTVHZmZCQWZZdUJXT2xtMUtDRDFMcG04MSsvWDBB?=
- =?utf-8?B?YS9vVS9XcDgwOW5oUXZOcit4OE9tUjk2Nk5BMDZzRkpyS2pKeVBkWTdzK3BE?=
- =?utf-8?B?alhHTmp2bVdlelU0Q2YxR1hlVi91RERINmluN3N6VXRaYTZIM1o0cmhxYTlK?=
- =?utf-8?B?UHc2aEM5bXBzcmtWY3JuMTBhdFJYbnhzZGVEZG1ad2RhaU5rUk5wdEs0cm93?=
- =?utf-8?B?alNiYWgybDVpbW0xamg4QjZQcWVMa0NlZlJLUnZCbTVuL3Z2aStkNGlxSEtT?=
- =?utf-8?B?YWxjblAwR0FINmMvaEp0ZVdnZXN2QjdtTHl0QkR6eU9KV2tmMGFObXJENkZ4?=
- =?utf-8?B?ZGxIdUFjUXkyeHdHVms3dnZkN29EWWtBdHFKcWNvZFVRL2FiaGJlbkd0RGdp?=
- =?utf-8?B?bW5PZFZVTGxDeWxxWTVnbjZBTnN1SFg2UER6WmtPZVlwNmtTRkpoRTZPUDN6?=
- =?utf-8?B?RURBSS93NXhXNmtvY01renVZbmRiY2xVWnhjZU54RFRUWVYyNGdsQ0syV0Ns?=
- =?utf-8?B?eFByU05Fc3lKN1l5Rmt6TEVJMVB6SlVpRlVxTWJla0NaaG5nd2JWL1B0WThF?=
- =?utf-8?B?VEdxNVg3cUlNRU9kd0l6THk5MHQ5TFRXMkdneldOY01oNnNCcDNoMWJ0RGpI?=
- =?utf-8?B?NmxWOVh3emVMWVNwcXMyMldXWndNRXkra0VVQ1hqb1AvQzgzRW9CMjRhckJG?=
- =?utf-8?B?UFpicUpTL0V0QjhqVjREYSszM1lmWldTa3k1bm04cHpaTVlFK1hHaGtBcWhZ?=
- =?utf-8?B?YUE5dmpXQWhzazNxRnVaTGhSZlNtN0YwNmFMcFJHeit1K1ozbUk4MndRU1FX?=
- =?utf-8?B?Q0xtQmFjVFVick1LU0pKN2JhcklCTGp5U1BIUC91VjVUNWczT2srQlcrRG9N?=
- =?utf-8?B?cVpFenhvTVdFSURNb0ovZ2haZXR5KzdTQ21mYkhCM2JzZjlMVDUyS0kwb2lQ?=
- =?utf-8?B?ai9hdDZQZ3A2aEx2N3ZkM3M4blBqSjJ5cHhsR1BqbEJvbzFteXR6WVFOVTJ6?=
- =?utf-8?B?SzZpME92YVdoaEtyNU9pVkx5NWNsZDNLQ1RETnVaR0VJL1o2UFFWVGRZR2xN?=
- =?utf-8?B?Q0x0Tkw3aWlSckpHV1BXenRqTHA1SUplQldWQktYdHdUOWxvcXg4WE8rMDNp?=
- =?utf-8?B?azM1SmtpL2tyZEkzZ3V1OGh5bEExalNucTBpSHZPbGdmbnZLYUdUR1lWcWtt?=
- =?utf-8?B?MTNGMkhXYzhkSFVNMDgzMmY0RjZEMkE0VW0rbVEreGVoZC90dVFhR3FuMkIy?=
- =?utf-8?B?eHdjNmdTaytHSnJuTU1OdnRNZGNWUTR0U1hFY2ZsSXM4ZytnVmh2V0FTOEU3?=
- =?utf-8?B?UW5wRnN1WklqWjVUbUt2R3JmYkVqVXRtRE8zcTBOOGpISTdWWUlSSjVOL1NN?=
- =?utf-8?B?ZExmS3dtbktuamJGbmgyYjRJQXozeDRBZG84WDNiMG9TOXNJSWxRaWt1c0Qy?=
- =?utf-8?B?bkpIU3F2RFU5S1VtNDBGT1AxdTcxN0FoNy94QzBnMHEzUmRqWHE5OTZWUStD?=
- =?utf-8?Q?rR9fX8K02smsVb4vHn+isorPfCyXzARQ0SyR98iDH8xv?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 699f6d86-3e13-44a1-1c69-08db6b48040a
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR12MB3589.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2023 13:22:05.6306
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /ItTkRIaOYHj/VASe/4SEn7/ZEvT4ssXgpTA8f4f739v9Pa2jrTnzDj7+JDhdSU9
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8306
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,NICE_REPLY_A,
-        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 12.06.23 um 15:03 schrieb Pranjal Ramajor Asha Kanojiya:
->
->
-> On 6/12/2023 4:52 PM, Christian König wrote:
+On 12/06/2023 12:01, Stephan Gerhold wrote:
+> On Mon, Jun 12, 2023 at 08:39:19AM +0300, Dmitry Baryshkov wrote:
+>> APQ8064 has 4 speed bins, each of them having from 4 to 6 categorization
+>> kinds. Provide tables necessary to handle voltage scaling on this SoC.
 >>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   arch/arm/boot/dts/qcom-apq8064.dtsi | 1017 +++++++++++++++++++++++++++
+>>   1 file changed, 1017 insertions(+)
 >>
->> Am 10.06.23 um 04:12 schrieb Sukrut Bellary:
->>> smatch warning:
->>>     drivers/accel/qaic/qaic_data.c:620 qaic_free_object() error:
->>>         dereferencing freed memory 'obj->import_attach'
->>>
->>> obj->import_attach is detached and freed using dma_buf_detach().
->>> But used after free to decrease the dmabuf ref count using
->>> dma_buf_put().
->>>
->>> Fixes: ff13be830333 ("accel/qaic: Add datapath")
->>> Signed-off-by: Sukrut Bellary <sukrut.bellary@linux.com>
->>> ---
->>>   drivers/accel/qaic/qaic_data.c | 4 +++-
->>>   1 file changed, 3 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/drivers/accel/qaic/qaic_data.c 
->>> b/drivers/accel/qaic/qaic_data.c
->>> index e42c1f9ffff8..7cba4d680ea8 100644
->>> --- a/drivers/accel/qaic/qaic_data.c
->>> +++ b/drivers/accel/qaic/qaic_data.c
->>> @@ -613,11 +613,13 @@ static int qaic_gem_object_mmap(struct 
->>> drm_gem_object *obj, struct vm_area_struc
->>>   static void qaic_free_object(struct drm_gem_object *obj)
->>>   {
->>>       struct qaic_bo *bo = to_qaic_bo(obj);
->>> +    struct dma_buf *dmabuf;
->>
->> Maybe move that variable into the if.
->>
->>>       if (obj->import_attach) {
->>>           /* DMABUF/PRIME Path */
->>> +        dmabuf = obj->import_attach->dmabuf;
->>>           dma_buf_detach(obj->import_attach->dmabuf, 
->>> obj->import_attach);
->>> -        dma_buf_put(obj->import_attach->dmabuf);
->>> +        dma_buf_put(dmabuf);
->>
->> I strongly assume you are not using the GEM prime helpers for this?
->>
->> Christian.
->
-> Driver uses drm_gem_prime_fd_to_handle() helper function but it also 
-> registers for ->gem_prime_import() which is internally called by 
-> drm_gem_prime_fd_to_handle(). All the operations done in 
-> gem_prime_import() are undone here.
+>> diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
+>> index 4ef13f3d702b..f35853b59544 100644
+>> --- a/arch/arm/boot/dts/qcom-apq8064.dtsi
+>> +++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
+>> @@ -49,6 +49,9 @@ CPU0: cpu@0 {
+>>   			clocks = <&kraitcc KRAIT_CPU_0>;
+>>   			clock-names = "cpu";
+>>   			clock-latency = <100000>;
+>> +			vdd-mem-supply = <&pm8921_l24>;
+>> +			vdd-dig-supply = <&pm8921_s3>;
+>> +			vdd-core-supply = <&saw0_vreg>;
+>>   			interconnects = <&kraitcc MASTER_KRAIT_L2 &kraitcc SLAVE_KRAIT_L2>;
+>>   			operating-points-v2 = <&cpu_opp_table>;
+>>   			#cooling-cells = <2>;
+>> @@ -66,6 +69,9 @@ CPU1: cpu@1 {
+>>   			clocks = <&kraitcc KRAIT_CPU_1>;
+>>   			clock-names = "cpu";
+>>   			clock-latency = <100000>;
+>> +			vdd-mem-supply = <&pm8921_l24>;
+>> +			vdd-dig-supply = <&pm8921_s3>;
+>> +			vdd-core-supply = <&saw1_vreg>;
+>>   			interconnects = <&kraitcc MASTER_KRAIT_L2 &kraitcc SLAVE_KRAIT_L2>;
+>>   			operating-points-v2 = <&cpu_opp_table>;
+>>   			#cooling-cells = <2>;
+>> @@ -83,6 +89,9 @@ CPU2: cpu@2 {
+>>   			clocks = <&kraitcc KRAIT_CPU_2>;
+>>   			clock-names = "cpu";
+>>   			clock-latency = <100000>;
+>> +			vdd-mem-supply = <&pm8921_l24>;
+>> +			vdd-dig-supply = <&pm8921_s3>;
+>> +			vdd-core-supply = <&saw2_vreg>;
+>>   			interconnects = <&kraitcc MASTER_KRAIT_L2 &kraitcc SLAVE_KRAIT_L2>;
+>>   			operating-points-v2 = <&cpu_opp_table>;
+>>   			#cooling-cells = <2>;
+>> @@ -100,6 +109,9 @@ CPU3: cpu@3 {
+>>   			clocks = <&kraitcc KRAIT_CPU_3>;
+>>   			clock-names = "cpu";
+>>   			clock-latency = <100000>;
+>> +			vdd-mem-supply = <&pm8921_l24>;
+>> +			vdd-dig-supply = <&pm8921_s3>;
+>> +			vdd-core-supply = <&saw3_vreg>;
+>>   			interconnects = <&kraitcc MASTER_KRAIT_L2 &kraitcc SLAVE_KRAIT_L2>;
+>>   			operating-points-v2 = <&cpu_opp_table>;
+>>   			#cooling-cells = <2>;
+>> @@ -132,6 +144,81 @@ cpu_opp_table: opp-table-cpu {
+>>   		opp-384000000 {
+>>   			opp-hz = /bits/ 64 <384000000>;
+>>   			opp-peak-kBps = <384000>;
+>> +			opp-microvolt-speed0-pvs0 = <1050000 1050000 1150000>,
+>> +						    <950000 950000 1150000>,
+>> +						    <950000 950000 975000>;
+> 
+> I think this won't result in the correct switch order without making
+> some changes to the OPP core. In _set_opp() the OPP core does
+> 
+> 	/* Scaling up? Configure required OPPs before frequency */
+> 	if (!scaling_down) {
+> 		_set_required_opps();
+> 		_set_opp_bw();
+> 		opp_table->config_regulators();
+> 	}
+> 
+> 	opp_table->config_clks();
+> 
+> 	/* Scaling down? Configure required OPPs after frequency */
+> 	if (scaling_down) {
+> 		opp_table->config_regulators();
+> 		_set_opp_bw();
+> 		_set_required_opps();
+> 	}
+> 
+> Since the "bandwidth" for the L2 cache is set before the regulators
+> there is a short window where the L2 clock is running at a high
+> frequency with too low voltage, which could potentially cause
+> instability. On downstream this seems to be done in the proper order [1].
+> 
+> I'm not sure if the order in the OPP core is on purpose. If not, you
+> could propose moving the config_regulators() first (for scaling up)
+> and last (for scaling down). This would resolve the problem.
 
-Then why don't you use drm_prime_gem_destroy() which is the cleanup 
-helper for imports created by ->gem_prime_import() ?
+Nice catch, I missed this ordering point.
 
-That looks pretty much identical to what you do here manually.
+> 
+> The alternative that I've already argued for on IRC in #linux-msm a
+> couple of days ago would be to give the L2 cache (here: "interconnect")
+> an own OPP table where it can describe its voltage requirements,
+> independent from the CPU. That way the icc_set_bw() would be guaranteed
+> to apply the correct voltage before adjusting the L2 cache clock. It
+> looks like the "l2_level" voltages for vdd_dig and vdd_mem are not
+> speedbin/PVS-specific [2] so this would also significantly reduce the DT
+> size, since you wouldn't need to repeat the same vdd_dig/vdd_mem
+> voltages for all of them.
 
-Regards,
-Christian.
+Yes. I fact our discussion triggered me to do this patchset.
 
->
->>
->>>       } else {
->>>           /* Private buffer allocation path */
->>>           qaic_free_sgt(bo->sgt);
->>
+So, another option would be to have something like the following 
+snippet. Do you know if we are allowed to squish additional data into 
+the L2 cache DT node?
+
+CPU0: cpu@0 {
+     vdd-core-supply = <&saw0_vreg>;
+     interconnects = <&L2 MASTER_KRAIT_L2 &L2 SLAVE_KRAIT_L2>;
+     operating-points-v2 = <&cpu_opp_table>;
+};
+
+L2: l2-cache {
+     compatible = "qcom,apq8064-l2-cache", "cache";
+
+     clocks = <&kraitcc KRAIT_L2>;
+     vdd-mem-supply = <&pm8921_l24>;
+     vdd-dig-supply = <&pm8921_s3>;
+     operating-points-v2 = <&l2_opp_table>;
+
+     l2_opp_table {
+         compatible = "operating-points-v2";
+         opp-384000000 {
+             opp-hz = /bits/ 64 <384000000>;
+             opp-microvolt = <1050000 1050000 1150000>,
+                             <950000 950000 1150000>;
+         };
+
+         opp-648000000 {
+             opp-hz = /bits/ 64 <648000000>;
+             opp-microvolt = <1050000 1050000 1150000>,
+                             <1050000 1050000 1150000>;
+         };
+
+         opp-1134000000 {
+             opp-hz = /bits/ 64 <1134000000>;
+             opp-microvolt = <1150000 1150000 1150000>,
+                             <1150000 1150000 1150000>;
+         };
+     };
+};
+
+> 
+> Thanks,
+> Stephan
+> 
+> [1]: https://git.codelinaro.org/clo/la/kernel/msm/-/blob/LA.AF.1.2.1-08410-8064.0/arch/arm/mach-msm/acpuclock-krait.c#L529-588
+> [2]: https://git.codelinaro.org/clo/la/kernel/msm/-/blob/LA.AF.1.2.1-08410-8064.0/arch/arm/mach-msm/acpuclock-8064.c#L118-135
+
+-- 
+With best wishes
+Dmitry
 
