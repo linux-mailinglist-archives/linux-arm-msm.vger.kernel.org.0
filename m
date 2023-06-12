@@ -2,76 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D619B72B95F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 09:57:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59F1A72BA32
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 10:21:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233724AbjFLH5u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 03:57:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35636 "EHLO
+        id S231609AbjFLIVY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 04:21:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230044AbjFLH5P (ORCPT
+        with ESMTP id S230478AbjFLIVT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 03:57:15 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23B143C00
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 00:56:18 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f64fb05a8aso4668000e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 00:56:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686556576; x=1689148576;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Kquzc3qlTRCZjZApwmqUBkPBfjK2pUVfDwW5bPUj/0c=;
-        b=W9cAuKDu1LPjU7PkgM5dFgQehbrTQLCHVqxK+IwBhs5T5Pyq6vWt58Z/LKjlQVoCeI
-         gSX80E0CqpsRlq06jFWpXz7D1YZo2rhXO/WpC9ZsvJQegAMjcwOuVFn6Ta8CO7IO0m9H
-         7wGoViod2i+isz26eVJAWsb+OgmXqcj5uml+8GJiKf3nmlwkR3GchW8ddoczAodneEVd
-         4pouQ0CayRTZE6kQW1Ja7u9zHanCntvvxqmsYPHvcghGWudQRVTCQkgBmid4Dnsu2SeC
-         Np9KlbslY5UzTwAtYJ5F36hYRXuhpwBDY1AmzhwKgmRj0krOqhTKyWNkcDZqgtbZG3Hu
-         1Fig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686556576; x=1689148576;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Kquzc3qlTRCZjZApwmqUBkPBfjK2pUVfDwW5bPUj/0c=;
-        b=Rua6/8sPGtOsMPks1UHQNbWUqyR2YDeO9CUSWPFQR1KEwAPCn7ylaxCSDqhuDoST4S
-         P05YdPwiEEXb0hA9ZYv78UOkntsUxDyRURH8/yNPOiOG6hoZ1xdQix1iy2FwKGhPl5i1
-         zSEw7pb/Se8IPpudp5ffu4P3RKNGRS/6g9Ve8OjrOwJiiBytzzsLbF6gj+wSgsY5XkkV
-         H/bkQWGRSzu8pQK3lGqEMxTJ6B621RUwR7R37Tpt/CEUvFRtO8i8c1y/DA9CmVOzcbUo
-         kqj+RewzP8nSfmYcUGD0JAZdgA68OZp5WKlPab0ZnbVx7OcQKXgo82B/bR/v+7nong+O
-         CErQ==
-X-Gm-Message-State: AC+VfDxwBs/gsENboIsbeXkJ7CuRPO9W92bpoF302bo7NMRf9Ptp6oxr
-        vX8LbHOpTbOIOA1yCNMwHnDsQg==
-X-Google-Smtp-Source: ACHHUZ4LajqgjCVykBXWLrpuF1sWTtf/Q6zXc8EiQ34mVNavWWRdpwJRbI3MD4JI4nRpWnjuSGnv0w==
-X-Received: by 2002:ac2:4ad9:0:b0:4e9:a3b7:2360 with SMTP id m25-20020ac24ad9000000b004e9a3b72360mr3726384lfp.8.1686556575827;
-        Mon, 12 Jun 2023 00:56:15 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id m16-20020ac24250000000b004f62c178d47sm1378581lfl.201.2023.06.12.00.56.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jun 2023 00:56:15 -0700 (PDT)
-Message-ID: <83330f1a-f116-2a2c-f5ce-75f32c4bb5f3@linaro.org>
-Date:   Mon, 12 Jun 2023 09:56:13 +0200
+        Mon, 12 Jun 2023 04:21:19 -0400
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23D96E5F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 01:21:04 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id BFD8220485;
+        Mon, 12 Jun 2023 08:21:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1686558062; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=TdrLAeVWKZ2K0i2OdY6lfA1U8z91GiIRW8KI/0jbzEQ=;
+        b=URT05bxd5wSnxMcNCZlhAnfywdSu1GwKCiR/7/CLEPUmPgY1fNFJ99FaUrzAGvxkmRLvsc
+        z2ODEBCUfm1Of72hOHZ3h2poUzyLK9MyJ690Ho+jVefzukom18BHFxi/w3BQ9EMOcIIhtC
+        uBZg7jO9AJk3A2HOD5VQL+R2sdXAF3w=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1686558062;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=TdrLAeVWKZ2K0i2OdY6lfA1U8z91GiIRW8KI/0jbzEQ=;
+        b=LUvqS52dxiRn1PPAlNbYqF+uXoArk3ZO/B2SemiXIqtPjsPXDtgeUTTZN0ihEKRX+Xg3/X
+        0tk7+hCSf4hK+RBQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 8938B138EC;
+        Mon, 12 Jun 2023 08:21:02 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id oUoOIG7VhmSXdAAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Mon, 12 Jun 2023 08:21:02 +0000
+Message-ID: <53a2cbc6-321d-704c-d6cc-f2fcc249f321@suse.de>
+Date:   Mon, 12 Jun 2023 10:21:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH] arm64: dts: qcom: sm8150: use proper DSI PHY compatible
+Subject: Re: [PATCH 1/2] drm/msm: provide fb_dirty implemenation
 Content-Language: en-US
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     freedreno@lists.freedesktop.org,
+        Degdag Mohamed <degdagmohamed@gmail.com>,
+        linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Degdag Mohamed <degdagmohamed@gmail.com>
-References: <20230612031623.3620155-1-dmitry.baryshkov@linaro.org>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230612031623.3620155-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        dri-devel@lists.freedesktop.org, Stephen Boyd <swboyd@chromium.org>
+References: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+In-Reply-To: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------QsfmT5zpIdD9p0zDkjiIWB9j"
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -80,43 +79,92 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------QsfmT5zpIdD9p0zDkjiIWB9j
+Content-Type: multipart/mixed; boundary="------------uvUPj6n46VChPGzrHi85pBIh";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+ Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>,
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: freedreno@lists.freedesktop.org, Degdag Mohamed
+ <degdagmohamed@gmail.com>, linux-arm-msm@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>, dri-devel@lists.freedesktop.org,
+ Stephen Boyd <swboyd@chromium.org>
+Message-ID: <53a2cbc6-321d-704c-d6cc-f2fcc249f321@suse.de>
+Subject: Re: [PATCH 1/2] drm/msm: provide fb_dirty implemenation
+References: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org>
 
+--------------uvUPj6n46VChPGzrHi85pBIh
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-On 12.06.2023 05:16, Dmitry Baryshkov wrote:
-> The DSI PHY on the Qualcomm SM8150 platform requires platform-specific
-> handling. Use the proper SoC-specific compatible string for the DSI
-> PHYs.
-> 
-> Reported-by: Degdag Mohamed <degdagmohamed@gmail.com>
-> Fixes: 2ef3bb17c45c ("arm64: dts: qcom: sm8150: Add DISPCC node")
-> Cc: Konrad Dybcio <konrad.dybcio@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+SGkNCg0KQW0gMTIuMDYuMjMgdW0gMDU6MTYgc2NocmllYiBEbWl0cnkgQmFyeXNoa292Og0K
+PiBTaW5jZSBjb21taXQgOTNlODFlMzhlMTk3ICgiZHJtL2ZiX2hlbHBlcjogTWluaW1pemUg
+ZGFtYWdlLWhlbHBlcg0KPiBvdmVyaGVhZCIpIHRoZSBkcm1fZmJfaGVscGVyX2Z1bmNzOjpm
+Yl9kaXJ0eSBoZWxwZXIgaXMgcmVxdWlyZWQgZm9yDQo+IHByb3BlciBkaXJ0eS9kYW1hZ2Ug
+cHJvY2Vzc2luZy4gVGhlIGRybS9tc20gZHJpdmVyIHJlcXVpcmVzIHRoYXQgdG8NCj4gZnVu
+Y3Rpb24gdG8gbGV0IENNRCBwYW5lbHMgdG8gd29yay4gVXNlIHNpbXBsaWZpZWQgdmVyc2lv
+biBvZg0KPiBkcm1fZmJkZXZfZ2VuZXJpY19oZWxwZXJfZmJfZGlydHkoKSB0byBmaXggc3Vw
+cG9ydCBmb3IgQ01EIG1vZGUgcGFuZWxzLg0KPiANCj4gUmVwb3J0ZWQtYnk6IERlZ2RhZyBN
+b2hhbWVkIDxkZWdkYWdtb2hhbWVkQGdtYWlsLmNvbT4NCj4gRml4ZXM6IDkzZTgxZTM4ZTE5
+NyAoImRybS9mYl9oZWxwZXI6IE1pbmltaXplIGRhbWFnZS1oZWxwZXIgb3ZlcmhlYWQiKQ0K
+PiBDYzogVGhvbWFzIFppbW1lcm1hbm4gPHR6aW1tZXJtYW5uQHN1c2UuZGU+DQo+IFNpZ25l
+ZC1vZmYtYnk6IERtaXRyeSBCYXJ5c2hrb3YgPGRtaXRyeS5iYXJ5c2hrb3ZAbGluYXJvLm9y
+Zz4NCg0KUmV2aWV3ZWQtYnk6IFRob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNl
+LmRlPg0KDQpUbyBtYWtlIG1tYXAgd29yayBjb3JyZWN0bHksIHlvdSdsbCBhbHNvIG5lZWQg
+ZGVmZXJyZWQgSS9PIGluIHRoZSBmYmRldiANCmNvZGUuIEFGQUlDVCB0aGUgZHJpdmVyIG5l
+dmVyIHN1cHBvcnRlZCB0aGF0Lg0KDQpCZXN0IHJlZ2FyZHMNClRob21hcw0KDQo+IC0tLQ0K
+PiAgIGRyaXZlcnMvZ3B1L2RybS9tc20vbXNtX2ZiZGV2LmMgfCAyMCArKysrKysrKysrKysr
+KysrKysrKw0KPiAgIDEgZmlsZSBjaGFuZ2VkLCAyMCBpbnNlcnRpb25zKCspDQo+IA0KPiBk
+aWZmIC0tZ2l0IGEvZHJpdmVycy9ncHUvZHJtL21zbS9tc21fZmJkZXYuYyBiL2RyaXZlcnMv
+Z3B1L2RybS9tc20vbXNtX2ZiZGV2LmMNCj4gaW5kZXggZmE5YzFjYmZmYWUzLi5iOTMzYTg1
+NDIwZjYgMTAwNjQ0DQo+IC0tLSBhL2RyaXZlcnMvZ3B1L2RybS9tc20vbXNtX2ZiZGV2LmMN
+Cj4gKysrIGIvZHJpdmVycy9ncHUvZHJtL21zbS9tc21fZmJkZXYuYw0KPiBAQCAtMTM5LDgg
+KzEzOSwyOCBAQCBzdGF0aWMgaW50IG1zbV9mYmRldl9jcmVhdGUoc3RydWN0IGRybV9mYl9o
+ZWxwZXIgKmhlbHBlciwNCj4gICAJcmV0dXJuIHJldDsNCj4gICB9DQo+ICAgDQo+ICtzdGF0
+aWMgaW50IG1zbV9mYmRldl9mYl9kaXJ0eShzdHJ1Y3QgZHJtX2ZiX2hlbHBlciAqaGVscGVy
+LA0KPiArCQkJICAgICAgc3RydWN0IGRybV9jbGlwX3JlY3QgKmNsaXApDQo+ICt7DQo+ICsJ
+c3RydWN0IGRybV9kZXZpY2UgKmRldiA9IGhlbHBlci0+ZGV2Ow0KPiArCWludCByZXQ7DQo+
+ICsNCj4gKwkvKiBDYWxsIGRhbWFnZSBoYW5kbGVycyBvbmx5IGlmIG5lY2Vzc2FyeSAqLw0K
+PiArCWlmICghKGNsaXAtPngxIDwgY2xpcC0+eDIgJiYgY2xpcC0+eTEgPCBjbGlwLT55Mikp
+DQo+ICsJCXJldHVybiAwOw0KPiArDQo+ICsJaWYgKGhlbHBlci0+ZmItPmZ1bmNzLT5kaXJ0
+eSkgew0KPiArCQlyZXQgPSBoZWxwZXItPmZiLT5mdW5jcy0+ZGlydHkoaGVscGVyLT5mYiwg
+TlVMTCwgMCwgMCwgY2xpcCwgMSk7DQo+ICsJCWlmIChkcm1fV0FSTl9PTkNFKGRldiwgcmV0
+LCAiRGlydHkgaGVscGVyIGZhaWxlZDogcmV0PSVkXG4iLCByZXQpKQ0KPiArCQkJcmV0dXJu
+IHJldDsNCj4gKwl9DQo+ICsNCj4gKwlyZXR1cm4gMDsNCj4gK30NCj4gKw0KPiAgIHN0YXRp
+YyBjb25zdCBzdHJ1Y3QgZHJtX2ZiX2hlbHBlcl9mdW5jcyBtc21fZmJfaGVscGVyX2Z1bmNz
+ID0gew0KPiAgIAkuZmJfcHJvYmUgPSBtc21fZmJkZXZfY3JlYXRlLA0KPiArCS5mYl9kaXJ0
+eSA9IG1zbV9mYmRldl9mYl9kaXJ0eSwNCj4gICB9Ow0KPiAgIA0KPiAgIC8qDQoNCi0tIA0K
+VGhvbWFzIFppbW1lcm1hbm4NCkdyYXBoaWNzIERyaXZlciBEZXZlbG9wZXINClNVU0UgU29m
+dHdhcmUgU29sdXRpb25zIEdlcm1hbnkgR21iSA0KRnJhbmtlbnN0cmFzc2UgMTQ2LCA5MDQ2
+MSBOdWVybmJlcmcsIEdlcm1hbnkNCkdGOiBJdm8gVG90ZXYsIEFuZHJldyBNeWVycywgQW5k
+cmV3IE1jRG9uYWxkLCBCb3VkaWVuIE1vZXJtYW4NCkhSQiAzNjgwOSAoQUcgTnVlcm5iZXJn
+KQ0K
 
-Konrad
->  arch/arm64/boot/dts/qcom/sm8150.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> index 197c016aaeba..95d361443dff 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-> @@ -3832,7 +3832,7 @@ opp-358000000 {
->  			};
->  
->  			mdss_dsi0_phy: phy@ae94400 {
-> -				compatible = "qcom,dsi-phy-7nm";
-> +				compatible = "qcom,dsi-phy-7nm-8150";
->  				reg = <0 0x0ae94400 0 0x200>,
->  				      <0 0x0ae94600 0 0x280>,
->  				      <0 0x0ae94900 0 0x260>;
-> @@ -3906,7 +3906,7 @@ mdss_dsi1_out: endpoint {
->  			};
->  
->  			mdss_dsi1_phy: phy@ae96400 {
-> -				compatible = "qcom,dsi-phy-7nm";
-> +				compatible = "qcom,dsi-phy-7nm-8150";
->  				reg = <0 0x0ae96400 0 0x200>,
->  				      <0 0x0ae96600 0 0x280>,
->  				      <0 0x0ae96900 0 0x260>;
+--------------uvUPj6n46VChPGzrHi85pBIh--
+
+--------------QsfmT5zpIdD9p0zDkjiIWB9j
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmSG1W0FAwAAAAAACgkQlh/E3EQov+Cu
+dRAAjjohV8KNsT2jGu9QpXgQcFIkJS9M+YFycY7iCUPHjHn8jKFeowDG8uYwxsrgdPyCfiE+w7fz
+Z7HPgg5FgXRq1/V+bnb+IP/H2KB1sVFUW3TgfACNd9Ya86A5szrFRR12tHM+gw8bRSsfZkSNEjRN
+WlCfXLamDqUnbNFY6ZWoNMLNfg7zGPtnIb3JqfAqIOjKB1sfMt9J/u8sYaosZdFPJ8lVoHKNpHEI
+gNOv3P3XXul7/47FLIyFYtLheIR5sp+UiuC3n7oMqtjGQF8iMl/EnEQ5Lf84tOoyj0X2L/n9AyGN
+d0sZ8bNc5lDoYsP37mIfUngTwRUyjwv6XR0dq8KIREBvFE3MVACkSGICEz+DFNUOi4TCPEkZEPRd
+i4D4YWcyNnlpmVtvq+rhWKvLW543XT+TEtuazgnTxdwfOKy6mWE5WEqUcsO3A9gclzEglOZEhEFG
+HSEZ8YaKnVPDNvUoAMKAzB3zbr90ioHYBKj+VIxTJ2GKum1NhSpktkVjmjKDEw/4b4xFqUwAMQkS
+7GCAYL2lX6H8sDqMLfzoIIxFuc/czDpwV0daoieipXacOPlniiKyf7Kkd+qkQHqr9Xd41mbEQY92
+9/CBZX5V3UZBFqFtfWQf7+gF+Cngpk/zs2oT+8tJwhrpdsgKPDTMJ2l9c4FvJ6ZIWr4QKZbOnGqB
+fKk=
+=MQsR
+-----END PGP SIGNATURE-----
+
+--------------QsfmT5zpIdD9p0zDkjiIWB9j--
