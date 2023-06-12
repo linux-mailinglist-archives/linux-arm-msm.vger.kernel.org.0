@@ -2,231 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 815F372BE91
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 12:15:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 458FB72BEE4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 12:26:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231896AbjFLKPR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 06:15:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52982 "EHLO
+        id S229450AbjFLK0v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 06:26:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33712 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234507AbjFLKOG (ORCPT
+        with ESMTP id S231716AbjFLKYl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 06:14:06 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A3E9A5FD2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:55:40 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f6170b1486so5029932e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:55:40 -0700 (PDT)
+        Mon, 12 Jun 2023 06:24:41 -0400
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAA8C2ECD6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 03:03:30 -0700 (PDT)
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-977c72b116fso627641366b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 03:03:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686563739; x=1689155739;
-        h=content-transfer-encoding:in-reply-to:subject:from:content-language
-         :references:cc:to:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UmXLNho23BSdPPEBQ4NrVTpZ2PrauMiCmKSCW3KEPJA=;
-        b=q0CzFcHCql8LXeB7pImmmJvsZ2SmsaJJEGeME04ndnoizaqQoAnCd3t8CZGd6EINcT
-         TGsyfGEApJMg8EX4bliWrDpPxxN9p7ofq72nQsQMaS2y/bql09jzH1UXuV+n+kKO+vMH
-         mv1S23Yu1YZnFRzKAHpKA8abqdGH/K2iWRbRWtbcN5CXWlC6A1+I96CUO5BNTue+087c
-         9+9+VjQN3iDId0KMXNvvzFN30owZnNPHuEhGIP0Ami2ka2qhnHihLhGybmvywMfjFa2B
-         qXIGGzPyygu0wH8ZAKYV0R2cbdiTTAPnKRj5WnDMz9YO9PnzJVl9jCQZhEhflPYhAyxY
-         T9UQ==
+        d=linaro.org; s=google; t=1686563842; x=1689155842;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PJzV8k8PINg1fP+cCISdw3LZJs7BP96rMaIUJI+fFlI=;
+        b=pRDueYu/tRrKVqAPFSh1p62giJ9RVa7Yo9TLHpe2QX9ej46v2Wogo2mbh8849n8ogB
+         dPaaUGzBADFJyl2t/WTZoC9MXCBEcexqjVbxR6vrW6EIOjo7OcwcMmGnoeQHS9tsuP3V
+         +SV3tFKnreUnzF5WizOcX6cgvGNUFx7u/HP4ksaOqhr9Y/xKjqqHkronwZocWhANGLnQ
+         u7uGuobDV9pirCr16hxp4/FuXchXADQaY/oUHuBvvblot3QCIG/e399R+nOEQkAxRb79
+         28F3DN+VoBrvYWoaQVzB68j0CNl6cshrt9LPh3QcFnNB9W7cQ9bra0Iff70wbfJu698t
+         M1pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686563739; x=1689155739;
-        h=content-transfer-encoding:in-reply-to:subject:from:content-language
-         :references:cc:to:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UmXLNho23BSdPPEBQ4NrVTpZ2PrauMiCmKSCW3KEPJA=;
-        b=ZShBqOK6CfRpdED1gegxSHfUazxcTicrKd8KtfGQlujJOVnTc5/gv+N5xbquYAGujr
-         cXuQJeSW8R41oBhdoZMrLTbLyHSjoR7hUg3/o/vDA/fmd4kEefm9QH9kiADJBw4kHfRq
-         QLh0yKlgEuEMGsv2Y5JPy8lg98pVFyLsitVbynNqtAbo3j0Bp+lWGgAzze4z6WOuO/Pk
-         iPD6u/u8Vzh6rpGNHjPrqBovAq9KpzbJdgWY/DiAcCb31hs0I29M+kn3ajzYs3PDO5Rx
-         l1e3GkqvOOhACI6txtqNmZgnI/yRI2ZVE6VClAQXVD0ZclCLNJnRricQAnlISGR3ADFA
-         mG5A==
-X-Gm-Message-State: AC+VfDwvi9x2LMAAlb3ygusT0dL+JwxAMay/ka2saJkFC3v0vrwsgC6g
-        MhT+4A32yOrYR29Ax5lAwxfZ1w==
-X-Google-Smtp-Source: ACHHUZ7RmcJVp++i96A2jXiJNf87eZCqRgT6AY/Jc5xfZRphPnXw9ZoloI2QsCRvcxqRXUboViM4SA==
-X-Received: by 2002:a05:6512:3111:b0:4f3:b18a:6494 with SMTP id n17-20020a056512311100b004f3b18a6494mr2764102lfb.22.1686563738823;
-        Mon, 12 Jun 2023 02:55:38 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id i6-20020ac25226000000b004f62e388394sm1387807lfl.242.2023.06.12.02.55.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jun 2023 02:55:38 -0700 (PDT)
-Message-ID: <884bc3a8-8845-5659-943c-5c5638947e46@linaro.org>
-Date:   Mon, 12 Jun 2023 11:55:37 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-To:     Bjorn Andersson <andersson@kernel.org>
+        d=1e100.net; s=20221208; t=1686563842; x=1689155842;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PJzV8k8PINg1fP+cCISdw3LZJs7BP96rMaIUJI+fFlI=;
+        b=UjbB2YzG0zNFq1g6Og27GjKzOqWgZaO3V0Sx+4PTP9GWmBNaDa7jw9Cr+T4C9ro950
+         JbJcFA9TSzGjl5G3w0bqzAooupf8Z8srGnXBMvkpKfgzWb2aMrrL2YTxhSDqh7/UBuE2
+         sy1IfsWZhla7WADvT6gDAKYNBvxZL9zevvqBpSqogzyNlFcYNzLCuRra0pnPzYSrcphE
+         XHD57Tdrflo40YenJzapgNgAU2jlUni5WGNvXv9FiPuqq44xiaeuPf/MDBVFAoqXqjsT
+         r/KOarIlHt5Z8iwelbqKzLxvsIGk4NnS/6UaC9+95qBKiGRUO0ONX4z0AXQkriMs3kiz
+         LOfQ==
+X-Gm-Message-State: AC+VfDwetpkZe2iXeyJV7kU4Qs3129ny61yYt3oko9lOZ3CsTDGqbzQy
+        CgA9d0x27tZg1nbCr1cm6F+TQw==
+X-Google-Smtp-Source: ACHHUZ6pRYxendYgoWbyLTl7w4hnUEIQzwT9hEIK8twkyXzDMp6cMGP7pSNdEbVfvpmiucwLWMNLKQ==
+X-Received: by 2002:a17:907:3182:b0:974:1eb9:f74f with SMTP id xe2-20020a170907318200b009741eb9f74fmr7847298ejb.15.1686563842037;
+        Mon, 12 Jun 2023 02:57:22 -0700 (PDT)
+Received: from krzk-bin.. ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id u1-20020a170906780100b00977cad140a8sm4949175ejm.218.2023.06.12.02.57.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jun 2023 02:57:21 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Banajit Goswami <bgoswami@quicinc.com>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20230610-topic-bwmon_opp-v1-1-65125d7493fc@linaro.org>
- <20230611014527.ezkgvtac5akrprdg@ripper>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH RFC] soc: qcom: icc-bwmon: Set default thresholds
- dynamically
-In-Reply-To: <20230611014527.ezkgvtac5akrprdg@ripper>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        Patrick Lai <quic_plai@quicinc.com>
+Subject: [PATCH v3 1/2] ASoC: dt-bindings: qcom,wsa8840: Add WSA884x family of speakers
+Date:   Mon, 12 Jun 2023 11:57:15 +0200
+Message-Id: <20230612095716.118631-1-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add binding for WSA8840/WSA8845/WSA8845H smart speaker amplifiers used
+in Qualcomm QRD8550 board with SM8550 SoC.
 
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-On 11.06.2023 03:45, Bjorn Andersson wrote:
-> On Sat, Jun 10, 2023 at 02:01:53PM +0200, Konrad Dybcio wrote:
->> Currently we use predefined threshold values. This works, but does not
->> really scale well, as they may differ between SoCs due to LPDDR generation
->> and/or DDR controller setup. All of the data we need for that is already
->> provided in the device tree, anyway.
->>
-> 
-> Per your own argument, the replaced values are just initial values and
-> you should fairly quickly get some interrupt to start moving the
-> threshold up or down. I don't think your argumentation expresses
-> adequately why this "does not really scale well" and why your new values
-> happens to work better.
-E.g. the CPU bwmons have a default high threshold set to 4.8 Gbps, which
-is very easy to achieve on LLCC<->DDR, but on older SoC where the bwmon
-monitors CPU<->DDR, this is often near half of the max throughput.
+---
 
-> 
->> Change that to:
->> * 0 for low (as we've been doing up until now)
->> * BW_MIN/4 for mid
->> * BW_MIN for high
->>
->> The mid value is chosen for a "low enough" bw to nudge bwmon into
->> slowing down if the bw starts too high from the bootloader.
->>
-> 
-> As soon as we get the first interrupt, these values would be adjusted to
-> the bandwidth of the surrounding opp pair. So why is the /4 needed in
-> this initial state?
-Hm, considering that just booting the kernel should be enough to trigger
-an interrupt to go above FMIN, perhaps setting the mid value equal to
-the high value could work as well? We're gonna receive an interrupt
-in zones 2 and 3, but only the latter one will be considered.
+Changes in v3:
+1. None.
 
-Quick test on 8998 shows this could work!
+Changes in v2:
+1. Correct compatible (sdw version 1 -> 2).
 
-Konrad
-> 
->> The high value corresponds to the upper barrier which - when crossed -
->> raises an interrupt in the third zone, signaling a need for upping
->> the bw.
->>
->> This only changes the values programmed at probe time, as high and med
->> thresholds are updated at interrupt, based on the OPP table from DT.
->>
-> 
-> Your underlying reasoning, to remove the hard coded initial values,
-> sounds very reasonable to me.
-> 
-> Regards,
-> Bjorn
-> 
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  drivers/soc/qcom/icc-bwmon.c | 28 +++++++---------------------
->>  1 file changed, 7 insertions(+), 21 deletions(-)
->>
->> diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
->> index 40068a285913..99cbdb3cf531 100644
->> --- a/drivers/soc/qcom/icc-bwmon.c
->> +++ b/drivers/soc/qcom/icc-bwmon.c
->> @@ -165,9 +165,6 @@ enum bwmon_fields {
->>  struct icc_bwmon_data {
->>  	unsigned int sample_ms;
->>  	unsigned int count_unit_kb; /* kbytes */
->> -	unsigned int default_highbw_kbps;
->> -	unsigned int default_medbw_kbps;
->> -	unsigned int default_lowbw_kbps;
->>  	u8 zone1_thres_count;
->>  	u8 zone3_thres_count;
->>  	unsigned int quirks;
->> @@ -564,20 +561,21 @@ static void bwmon_set_threshold(struct icc_bwmon *bwmon,
->>  static void bwmon_start(struct icc_bwmon *bwmon)
->>  {
->>  	const struct icc_bwmon_data *data = bwmon->data;
->> +	u32 bw_low = 0;
->>  	int window;
->>  
->> +	/* No need to check for errors, as this must have succeeded before. */
->> +	dev_pm_opp_find_bw_ceil(bwmon->dev, &bw_low, 0);
->> +
->>  	bwmon_clear_counters(bwmon, true);
->>  
->>  	window = mult_frac(bwmon->data->sample_ms, HW_TIMER_HZ, MSEC_PER_SEC);
->>  	/* Maximum sampling window: 0xffffff for v4 and 0xfffff for v5 */
->>  	regmap_field_write(bwmon->regs[F_SAMPLE_WINDOW], window);
->>  
->> -	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_HIGH],
->> -			    data->default_highbw_kbps);
->> -	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_MED],
->> -			    data->default_medbw_kbps);
->> -	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_LOW],
->> -			    data->default_lowbw_kbps);
->> +	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_HIGH], bw_low);
->> +	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_MED], div_u64(bw_low, 4));
->> +	bwmon_set_threshold(bwmon, bwmon->regs[F_THRESHOLD_LOW], 0);
->>  
->>  	regmap_field_write(bwmon->regs[F_THRESHOLD_COUNT_ZONE0],
->>  			   BWMON_THRESHOLD_COUNT_ZONE0_DEFAULT);
->> @@ -807,9 +805,6 @@ static int bwmon_remove(struct platform_device *pdev)
->>  static const struct icc_bwmon_data msm8998_bwmon_data = {
->>  	.sample_ms = 4,
->>  	.count_unit_kb = 1024,
->> -	.default_highbw_kbps = 4800 * 1024, /* 4.8 GBps */
->> -	.default_medbw_kbps = 512 * 1024, /* 512 MBps */
->> -	.default_lowbw_kbps = 0,
->>  	.zone1_thres_count = 16,
->>  	.zone3_thres_count = 1,
->>  	.quirks = BWMON_HAS_GLOBAL_IRQ,
->> @@ -822,9 +817,6 @@ static const struct icc_bwmon_data msm8998_bwmon_data = {
->>  static const struct icc_bwmon_data sdm845_cpu_bwmon_data = {
->>  	.sample_ms = 4,
->>  	.count_unit_kb = 64,
->> -	.default_highbw_kbps = 4800 * 1024, /* 4.8 GBps */
->> -	.default_medbw_kbps = 512 * 1024, /* 512 MBps */
->> -	.default_lowbw_kbps = 0,
->>  	.zone1_thres_count = 16,
->>  	.zone3_thres_count = 1,
->>  	.quirks = BWMON_HAS_GLOBAL_IRQ,
->> @@ -835,9 +827,6 @@ static const struct icc_bwmon_data sdm845_cpu_bwmon_data = {
->>  static const struct icc_bwmon_data sdm845_llcc_bwmon_data = {
->>  	.sample_ms = 4,
->>  	.count_unit_kb = 1024,
->> -	.default_highbw_kbps = 800 * 1024, /* 800 MBps */
->> -	.default_medbw_kbps = 256 * 1024, /* 256 MBps */
->> -	.default_lowbw_kbps = 0,
->>  	.zone1_thres_count = 16,
->>  	.zone3_thres_count = 1,
->>  	.regmap_fields = sdm845_llcc_bwmon_reg_fields,
->> @@ -847,9 +836,6 @@ static const struct icc_bwmon_data sdm845_llcc_bwmon_data = {
->>  static const struct icc_bwmon_data sc7280_llcc_bwmon_data = {
->>  	.sample_ms = 4,
->>  	.count_unit_kb = 64,
->> -	.default_highbw_kbps = 800 * 1024, /* 800 MBps */
->> -	.default_medbw_kbps = 256 * 1024, /* 256 MBps */
->> -	.default_lowbw_kbps = 0,
->>  	.zone1_thres_count = 16,
->>  	.zone3_thres_count = 1,
->>  	.quirks = BWMON_NEEDS_FORCE_CLEAR,
->>
->> ---
->> base-commit: 49dd846128d56199db2e3bcfca42d87fbc82b212
->> change-id: 20230610-topic-bwmon_opp-f995bbdd18bd
->>
->> Best regards,
->> -- 
->> Konrad Dybcio <konrad.dybcio@linaro.org>
->>
+Cc: Patrick Lai <quic_plai@quicinc.com>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+---
+ .../bindings/sound/qcom,wsa8840.yaml          | 66 +++++++++++++++++++
+ 1 file changed, 66 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml
+
+diff --git a/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml b/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml
+new file mode 100644
+index 000000000000..e6723c9e312a
+--- /dev/null
++++ b/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml
+@@ -0,0 +1,66 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/sound/qcom,wsa8840.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm WSA8840/WSA8845/WSA8845H smart speaker amplifier
++
++maintainers:
++  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
++  - Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
++
++description:
++  WSA884X is a family of Qualcomm Aqstic smart speaker amplifiers using
++  SoundWire digital audio interface.
++
++allOf:
++  - $ref: dai-common.yaml#
++
++properties:
++  compatible:
++    const: sdw20217020400
++
++  reg:
++    maxItems: 1
++
++  powerdown-gpios:
++    description: Powerdown/Shutdown line to use (pin SD_N)
++    maxItems: 1
++
++  '#sound-dai-cells':
++    const: 0
++
++  vdd-1p8-supply: true
++  vdd-io-supply: true
++
++required:
++  - compatible
++  - reg
++  - powerdown-gpios
++  - '#sound-dai-cells'
++  - vdd-1p8-supply
++  - vdd-io-supply
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/gpio/gpio.h>
++
++    soundwire-controller {
++        #address-cells = <2>;
++        #size-cells = <0>;
++
++        speaker@0,1 {
++            compatible = "sdw20217020400";
++            reg = <0 1>;
++            pinctrl-names = "default";
++            pinctrl-0 = <&spkr_2_sd_n_active>;
++            powerdown-gpios = <&lpass_tlmm 18 GPIO_ACTIVE_LOW>;
++            #sound-dai-cells = <0>;
++            sound-name-prefix = "SpkrRight";
++            vdd-1p8-supply = <&vreg_l15b_1p8>;
++            vdd-io-supply = <&vreg_l3g_1p2>;
++        };
++    };
+-- 
+2.34.1
+
