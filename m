@@ -2,166 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7981972C2D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 13:34:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EE3472C307
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 13:38:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234212AbjFLLeH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 07:34:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52660 "EHLO
+        id S236212AbjFLLiW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 07:38:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52764 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234615AbjFLLd4 (ORCPT
+        with ESMTP id S232666AbjFLLiC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 07:33:56 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7BF5D8227
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 04:10:35 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f654d713c0so4424793e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 04:10:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686568234; x=1689160234;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wD+biu0ZIn2TjFvFNPymCrPjn0dWNSM6m/3jx0dQi+c=;
-        b=dOAEbhc6ckpLkhFKYR0jUipojb2aoSBd48zFmz978c11p8Ae3R0+5MbI5SM5LubK1M
-         BkDuewK3cKhzhm7RTjTn8aAudAU5++XoRuo5t7bujPJCCGwSRNENtGjOc9mdovD/XLPy
-         ONtHghwu/jXmgsNiNFzJSvCtUd5kSvJS8soJTycLJJF+rRNJATTHgyfJjJMD0UaN/PCm
-         i4jb3d16+zo2BrJMYEW+jnZ6A4zPwsBWxJ35jQAUjkED2gJTjAAtljLESJbj2EZe6iMl
-         rABn7K0E1LJ7JXfQL9MjzlvWlSjSCYRGt2rVpAUQvBU1ZDa5I0sadmxwKZekAisQIS6R
-         OwUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686568234; x=1689160234;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wD+biu0ZIn2TjFvFNPymCrPjn0dWNSM6m/3jx0dQi+c=;
-        b=jLuxOhwsUZGehThjKYcwMlWiZZfABPcQU71kIEL5aQgc3gYYFakYFX5QA7Rdwh4+fs
-         8dhOdh/Z7O+AtORttNlTAXXN9gRWOmAtONBbAYjx8vcGweJBq8ULMTu6t0TFxL9okced
-         ybgWwnGt1kskOT+oZOEkgF6N0YmshQQDcISbLRk69wwcyE5/IxCiuyluFmw+6W3IWrnJ
-         bLVAzSKvKBFkKVFIJRx7FaxW/HrTc3CdlQbQRHEwej9xE5jGaGzPYjOPjgQEI9nb6HjC
-         doTd0DAkWZkJPGghJFbiiz2cZr7CT+5/xKNwV+CCPr5MJ6KR+oKz+wbF0eKZMEYppkVx
-         3AoA==
-X-Gm-Message-State: AC+VfDxQPCu83AN0AWKwAZXldl1l6jC+aESQygWKtEALV3lK/+mmC+Ve
-        ahsS1VyISvflnpmC9Lc8BL0iUw==
-X-Google-Smtp-Source: ACHHUZ4s0Jzo/H5twPl2OCe+G81QZxwH1pFYWS1cMpaZ76zkhGyTtMgwP3YcEQnNXaw0GvgMgmhfRQ==
-X-Received: by 2002:a19:6518:0:b0:4e8:c81b:1a11 with SMTP id z24-20020a196518000000b004e8c81b1a11mr4413822lfb.49.1686568233526;
-        Mon, 12 Jun 2023 04:10:33 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id m19-20020a7bcb93000000b003f7f4b7f286sm11131846wmi.12.2023.06.12.04.10.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jun 2023 04:10:33 -0700 (PDT)
-Message-ID: <16d255fc-7186-11a9-58b5-2d3787f69d59@linaro.org>
-Date:   Mon, 12 Jun 2023 12:10:32 +0100
-MIME-Version: 1.0
+        Mon, 12 Jun 2023 07:38:02 -0400
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02on2050.outbound.protection.outlook.com [40.107.95.50])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C6C0B7DA9;
+        Mon, 12 Jun 2023 04:22:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=ZXpY5NnUwF+sWuxWNqHEs+WfhOUDpox+pWnaV/6d80lfV1ms3KUBVE+8ekqzb7IXJX21nqiihO+vSUMqphIAZVY/1VPWGhr4G9mo9nrfPhvSf+U+4BQhTH+pmhqtxdOVZUMTl9Ig0l78CLg4jipqf4JrGzREm/j0T27bwIecKHzDGh9nomt/800PHPcAXjxKd8RM93Z4829KhPOXKaihEzI/x/z/DcnYrLE5pl6rsC00qIFDMKQWIzzqAXm4adWS3ZbKNFmZqgdojLA5xtXHd0GvLZ44/f9/j2sekKQl1u5qixL7diZfXO7VJ7J81opsHJsfMjGWqOkVMBUL4oeO2g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GLnMStLtrWncnm5zSYGs6xqhC6fI/PDojUN45dxVH0M=;
+ b=P95jUf5awNHbfI9k5ThM7WcxdpqPQT2dVamUvuVZlX6gxCkKePzK96YVjYAA1ApvWL5zMn+Zl7s0rBWz1Tsc+gJkUH2I0tjLPmLeIWs2PVQcnxwyXWZt8DPrUn6+JBNfaEyv4YmpiX1qwVmngJOaB9lFaMeLA2OlyGGZCwqZ1X+G+cplvOcOD4M/3EHetlKS7CbtK9CNOnvlH6UbvURqffyas54PG5lXLJ7TiGuCg7rCzWqYMzmw/WDUcTEYFjbcbmPIj9eotxCHn9USd5AOU/qKKgxhVykAdJNj4m2PC+plNKoqQk5mFaxjveZDv4GKGJ3RlPGV25fFBqMmwhtSPg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GLnMStLtrWncnm5zSYGs6xqhC6fI/PDojUN45dxVH0M=;
+ b=DaHfWHaWPi38dFaN/arCZy+WzaxOIa7olXpKPoK5uNfUUzdTE6vU1H04qpVyTqMvbWJ3aFFWvnhAhRbVutqmXVR90Su4FuqIn5YlXSxQKfmZKyDLsuBlYxQq9gluunnObx0CoHU/5rODJex+fGh9s8Df31+dHi1kpYXkzSHobHk=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from BYAPR12MB3589.namprd12.prod.outlook.com (2603:10b6:a03:df::29)
+ by DS0PR12MB7533.namprd12.prod.outlook.com (2603:10b6:8:132::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6455.36; Mon, 12 Jun
+ 2023 11:22:51 +0000
+Received: from BYAPR12MB3589.namprd12.prod.outlook.com
+ ([fe80::401e:2e7f:7c2b:6bff]) by BYAPR12MB3589.namprd12.prod.outlook.com
+ ([fe80::401e:2e7f:7c2b:6bff%4]) with mapi id 15.20.6455.024; Mon, 12 Jun 2023
+ 11:22:51 +0000
+Message-ID: <fc979a4e-c30a-2606-9eec-afbba4fdd774@amd.com>
+Date:   Mon, 12 Jun 2023 13:22:43 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v1] misc: fastrpc: Pass proper scm arguments for static
- process init
+Subject: Re: [PATCH] accel/qaic: Fix dereferencing freed memory
 Content-Language: en-US
-To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, bkumar@qti.qualcomm.com,
-        fastrpc.upstream@qti.qualcomm.com, stable <stable@kernel.org>
-References: <1685972918-30371-1-git-send-email-quic_ekangupt@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <1685972918-30371-1-git-send-email-quic_ekangupt@quicinc.com>
+To:     Sukrut Bellary <sukrut.bellary@linux.com>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Oded Gabbay <ogabbay@kernel.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linaro-mm-sig@lists.linaro.org, linux-media@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel-janitors@vger.kernel.org
+References: <20230610021200.377452-1-sukrut.bellary@linux.com>
+From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
+In-Reply-To: <20230610021200.377452-1-sukrut.bellary@linux.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-ClientProxiedBy: FR2P281CA0074.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:9a::16) To BYAPR12MB3589.namprd12.prod.outlook.com
+ (2603:10b6:a03:df::29)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BYAPR12MB3589:EE_|DS0PR12MB7533:EE_
+X-MS-Office365-Filtering-Correlation-Id: 401ef1df-6a0b-4fc6-6913-08db6b375b97
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 1gq9mm558ulT1Thk0y9RTmFJWtv8XKJ31Dkr6EBnf4UQRT5INIWOEtAzqgkxmM8XuPin/Kul+ZJBdffinBm4KUJWwIrw2vctNh/UjMRvm+RTW81FCxHkCgcjV9CyXQwtpV6neijC3n5vmoUof6pCNLXVxq4oZuYI+9e9k8GWKJCneUhwJ9JnVyqSPr+hZ78JwjZpyo28p6REWjv1LfHa52dFLHs/uFqKLVfHN9Xj2R9rbHESH+w5gY2NDXHBV7EAJekShsu29Gt+y1IyJ+OZxyRWr2NMT/TYE92X20w2Ra0n4DPFjRgViCQEfiVvTcIA+LveRvm8kKSwenRZafO8l86DCwayeAP54UePAiH2znUKoGDQ+rnvjwVV4wWVKH8tbpWhLAfHmcpI7rs6PsKliHoRKJjW6/QUD3USUlLeMTZdNIILAmUsCrNkcd8HzzN3xu0xwPW/Gm7Bb7NJw6Zqjq9r4dmZqB7OIQEsjIL3vwtZHTERhY7lY5d3qiuncPY5JBra/67fxQqGgTs8juhX1k+uoliLReE3z+7VodqC6HaNZ3l+OJGUEknRhXEQJkvXkQ+MEKCOElmujxcac8jqD830wha0FJu4bIT/KUo8RWLILPB+jXsc6OXLbnWZxrgv8ggpAzPxLBDGY8uvgGm5yQ==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR12MB3589.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(346002)(396003)(366004)(376002)(39860400002)(136003)(451199021)(83380400001)(7416002)(36756003)(478600001)(8936002)(8676002)(4326008)(66476007)(66946007)(41300700001)(66556008)(316002)(31696002)(5660300002)(38100700002)(86362001)(6666004)(6486002)(2906002)(110136005)(186003)(6506007)(2616005)(31686004)(6512007)(43740500002)(45980500001);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dW1hY0l0TmRGV29ydjFSZExMVFpGNDFqR20xYitOTXdDZDQ4dFQwa1V2eStO?=
+ =?utf-8?B?K25Od2l1QTNZaDgreDhYQnNzK0pDcXJxS1RTd29sV29OamNXTHVodHZienRp?=
+ =?utf-8?B?bmZqaHByNFBQejlXRHIyOCtHOFF4M2tDajV0WTc5M0tuZWZnaFl6VTBXZ1dV?=
+ =?utf-8?B?c0JQNUhsbFBucE9HQm9hQ3FMRWgxWTBZZkQybnJiWXpneFUvMGd5WUNpdmRT?=
+ =?utf-8?B?dWVhUnU1cVY3eGJzcHpwd1RZcW5JOVd1U0lvQVg1UzhlYURiK013ODlDNkVQ?=
+ =?utf-8?B?bmNJbDJFMVYyRisvZ2ttcERZTmdhSjV1M3NMOUxTVysxbUhFRk9Vd0FzN0Rx?=
+ =?utf-8?B?VDVzUStKRGJGTjFVSTJoNjNaUFZ2TnhHdXZ3cmIxTzBBRXFiUFV0RTZBR25o?=
+ =?utf-8?B?RW9ROE1yajltQWxhMjlSWDBmTWUwYXg1YkFFbmpkcFYwVkpMK2xYZnAva3NE?=
+ =?utf-8?B?anNmbzhaVU5ZMUY4V2w1RHVSTzY3YkFpWE95cjdoSDhJTUx3c0czeWpzZEQ4?=
+ =?utf-8?B?d1VvUWFqMUxYaERFeDVwNGVLM0pWeTFKVFloZ0hZdnMvdGkxQ3Awczk0MFRi?=
+ =?utf-8?B?eGpxdzBpbG94enFsV2lydS81SitaNTR0Vm94MkoyVk1Qd2xiWE50aTRrNDR1?=
+ =?utf-8?B?UEFTZG5ZQUxIaytkblhoVng2NDMrTUkrc1RGY0cyR2ZSSFlvY08zanljYWhF?=
+ =?utf-8?B?eVZ6Y1pXNytTZUNNVUtUajBBVmRSZlZUQzRWekVEK2NzdzRsb3V2QzZwOTA2?=
+ =?utf-8?B?cGZ0VXBJbVZnMnhoUTUyWVhFQndtTkk0MldNVG12VzdEd0NhV2ZhRWFoaDFF?=
+ =?utf-8?B?VjYzeEpta3JxVTFiY3ZZcmozblloUnVlT3M2eDJzbkZicGJWQlZDLytqTlVi?=
+ =?utf-8?B?VUdPUlhwcVExY2VXNlpxSjZWQnppZFdjQ3Rzbm02ejNoYnhQWThETThXc0NB?=
+ =?utf-8?B?bUIzUFJvR1VJeWg3d3JQQVNtNkEyMHo4d0cxYlpoNVZ3dy9lM3hsT1I4SVpU?=
+ =?utf-8?B?cFZCRm9nYmVrdnVUcytMNE52YU0wWUw1UW45UmZDQ1lxOHY2TGloL3llTnFM?=
+ =?utf-8?B?SGZ6M3V3MythMllJV1VjZXlHL0RZTFp3UG5rZEIzNEJhOFFQcnl6bmN3a0ZI?=
+ =?utf-8?B?TjVlSnhESmpjWnlERXVpUk80TWdBT0xaYVFjUVdmTmJ1MVNwR2h6R2NHUDdP?=
+ =?utf-8?B?SXhRQUQ4MDB2emUwTDhJeXpCZEg5c0VPOXBhM0FDU3NNdHNVMXpiMStJcWZQ?=
+ =?utf-8?B?SXJvMnZvK01pVW5wM2RvVndPa2dQUG5JdkMrMm9hd1EydDAzcVQwdTh6eXNC?=
+ =?utf-8?B?dHlkWWwrNStoMWRWRlVMT05oTFhyODM5MVNnZHMrRzZ0M3AzZHdDcTcyZnF0?=
+ =?utf-8?B?RWZzbFR2WUFrUDdTN21ZTUFleVZnMW1iOE9TMVFxeHk1Um5LRHVJazc2WFl6?=
+ =?utf-8?B?K0FXZGhaZVZoUEhBOU9wTSs0bTNxRXAyb25SU0taTE55UWpYOUtPVnJqV21N?=
+ =?utf-8?B?SGJ1cHdPdmVGYThjZ3BHYmVZYjRBVldQQkV6UmlwejV6MUJSSHI0MkNHQkY2?=
+ =?utf-8?B?ZlcwNUdMOGZMV1NrejZCczJ4R3FVblVUaHEzenRKcWZuUlIrd3ErdngxTmMx?=
+ =?utf-8?B?UzRieDdFWFN0KzFCV3B0WUtPZjVER21UVlB6MXZrWW9ZTmV5UmdCVjI4WWo1?=
+ =?utf-8?B?eXhRbkFnLzE0VzhNOWhsSmtBSitJVjZrNUZicEkwTForUjB1OVhCR0krY3ZQ?=
+ =?utf-8?B?UjBNemx6TkNQZzRseDZqUkd1cnZWbDFkYkY2QmRUWnJsVUh1ems5VEhvdURj?=
+ =?utf-8?B?S2dFdzBjYloyUnNDYloyNGlKaGhmanhRZVhNS2ZiR1Mzb3NUNnNRR29wR1Va?=
+ =?utf-8?B?TWF5MmhIbHBlRWgrYTRRRk1nTXdtVjJiNEpiRzg3dlE4Zi90YzNhbmtVWVZh?=
+ =?utf-8?B?clNYbHppRkJ6T0R2bGpQenpYZEhXZVFEZjg5L3lVeDdkaFRWZ1M3dW5kS2xm?=
+ =?utf-8?B?RnlNQ3lBY0p4MW1OdmpNL0NrWm1Fbk01aDFIc1J3U0NEc3pxY1FRQXlPb1du?=
+ =?utf-8?B?Y3U0ZmlIWFNPUVAzK1ExZ0RTQzc1SWRmYzRob0JXSjdKT2ZiK04yeWZPUTZB?=
+ =?utf-8?B?ZndYdVRhYlY3bnAyak00UGJuUmxYRTR4Nk9Rb2o2TVArdm9zUmlrNTZVVm5q?=
+ =?utf-8?Q?DD2E+i7wFEvkEb04SvcJU6um0QBWSRrktVz953WrWNbW?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 401ef1df-6a0b-4fc6-6913-08db6b375b97
+X-MS-Exchange-CrossTenant-AuthSource: BYAPR12MB3589.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2023 11:22:50.9840
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: sFlERHHz0dTWSILZTYD8j55PRx7AhmC8Cc/n6mz5sU46MrOZx32x7S4gqFRsCU2v
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7533
+X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FORGED_SPF_HELO,NICE_REPLY_A,
+        RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=no autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks Ekansh for the patch.
 
 
-On 05/06/2023 14:48, Ekansh Gupta wrote:
-> Memory is allocated for dynamic loading when audio daemon is trying
-> to attach to audioPD on DSP side. This memory is allocated from
-> reserved CMA memory region and needs ownership assignment to
-> new VMID in order to use it from audioPD.
-> 
-> In the current implementation, arguments are not correctly passed
-> to the scm call which might result in failure of dynamic loading
-> on audioPD. Added changes to pass correct arguments during daemon
-> attach request.
-> 
-> Fixes: 	0871561055e6 ("misc: fastrpc: Add support for audiopd")
-> Cc: stable <stable@kernel.org>
-> Tested-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
+Am 10.06.23 um 04:12 schrieb Sukrut Bellary:
+> smatch warning:
+> 	drivers/accel/qaic/qaic_data.c:620 qaic_free_object() error:
+> 		dereferencing freed memory 'obj->import_attach'
+>
+> obj->import_attach is detached and freed using dma_buf_detach().
+> But used after free to decrease the dmabuf ref count using
+> dma_buf_put().
+>
+> Fixes: ff13be830333 ("accel/qaic: Add datapath")
+> Signed-off-by: Sukrut Bellary <sukrut.bellary@linux.com>
 > ---
->   drivers/misc/fastrpc.c | 31 +++++++++++++++++++++++++------
->   1 file changed, 25 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 30d4d04..b7335dd 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -1278,10 +1278,23 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
+>   drivers/accel/qaic/qaic_data.c | 4 +++-
+>   1 file changed, 3 insertions(+), 1 deletion(-)
+>
+> diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+> index e42c1f9ffff8..7cba4d680ea8 100644
+> --- a/drivers/accel/qaic/qaic_data.c
+> +++ b/drivers/accel/qaic/qaic_data.c
+> @@ -613,11 +613,13 @@ static int qaic_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struc
+>   static void qaic_free_object(struct drm_gem_object *obj)
+>   {
+>   	struct qaic_bo *bo = to_qaic_bo(obj);
+> +	struct dma_buf *dmabuf;
+
+Maybe move that variable into the if.
+
 >   
->   		/* Map if we have any heap VMIDs associated with this ADSP Static Process. */
->   		if (fl->cctx->vmcount) {
-> +			u64 src_perms = BIT(QCOM_SCM_VMID_HLOS);
+>   	if (obj->import_attach) {
+>   		/* DMABUF/PRIME Path */
+> +		dmabuf = obj->import_attach->dmabuf;
+>   		dma_buf_detach(obj->import_attach->dmabuf, obj->import_attach);
+> -		dma_buf_put(obj->import_attach->dmabuf);
+> +		dma_buf_put(dmabuf);
 
-This is redundant too, we already have cctx->perms initialized to 
-exactly same bit map.
+I strongly assume you are not using the GEM prime helpers for this?
 
-> +			struct qcom_scm_vmperm *dst_perms;
-> +			u32 i;
-> +
-> +			dst_perms = kcalloc(fl->cctx->vmcount,
-> +							sizeof(struct qcom_scm_vmperm), GFP_KERNEL);
-> +			if (!dst_perms)
-> +				return -ENOMEM;
-> +			for (i = 0; i < fl->cctx->vmcount; i++) {
-> +				dst_perms[i].vmid = fl->cctx->vmperms[i].vmid;
-> +				dst_perms[i].perm = fl->cctx->vmperms[i].perm;
+Christian.
 
-why do we need to copy this to another struct when we already have this 
-information in fl->cctx->vmperms ?
+>   	} else {
+>   		/* Private buffer allocation path */
+>   		qaic_free_sgt(bo->sgt);
 
-> +			}
-> +
->   			err = qcom_scm_assign_mem(fl->cctx->remote_heap->phys,
->   							(u64)fl->cctx->remote_heap->size,
-> -							&fl->cctx->perms,
-> -							fl->cctx->vmperms, fl->cctx->vmcount);
-> +							&src_perms, dst_perms, fl->cctx->vmcount);
-
-
-> +			kfree(dst_perms);
->   			if (err) {
->   				dev_err(fl->sctx->dev, "Failed to assign memory with phys 0x%llx size 0x%llx err %d",
->   					fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
-> @@ -1322,13 +1335,19 @@ static int fastrpc_init_create_static_process(struct fastrpc_user *fl,
->   	return 0;
->   err_invoke:
->   	if (fl->cctx->vmcount) {
-> -		struct qcom_scm_vmperm perm;
-> +		u64 src_perms = 0;
-> +		struct qcom_scm_vmperm dst_perms;
-> +		u32 i;
->   
-> -		perm.vmid = QCOM_SCM_VMID_HLOS;
-> -		perm.perm = QCOM_SCM_PERM_RWX;
-> +		for (i = 0; i < fl->cctx->vmcount; i++) {
-> +			src_perms |= BIT(fl->cctx->vmperms[i].vmid);
-> +		}
-no need for brackets here.
-> +
-> +		dst_perms.vmid = QCOM_SCM_VMID_HLOS;
-> +		dst_perms.perm = QCOM_SCM_PERM_RWX;
->   		err = qcom_scm_assign_mem(fl->cctx->remote_heap->phys,
->   						(u64)fl->cctx->remote_heap->size,
-> -						&fl->cctx->perms, &perm, 1);
-> +						&src_perms, &dst_perms, 1);
->   		if (err)
->   			dev_err(fl->sctx->dev, "Failed to assign memory phys 0x%llx size 0x%llx err %d",
->   				fl->cctx->remote_heap->phys, fl->cctx->remote_heap->size, err);
