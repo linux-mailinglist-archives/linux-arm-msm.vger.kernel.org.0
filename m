@@ -2,77 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E02072D468
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 00:31:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 340AB72D473
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 00:34:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229674AbjFLWbq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 18:31:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45806 "EHLO
+        id S229604AbjFLWdv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 18:33:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46908 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233111AbjFLWbp (ORCPT
+        with ESMTP id S238840AbjFLWd3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 18:31:45 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A147E171D
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 15:31:43 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f640e48bc3so5820812e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 15:31:43 -0700 (PDT)
+        Mon, 12 Jun 2023 18:33:29 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04B61172A
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 15:33:24 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-4f654d713c0so5376770e87.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 15:33:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686609102; x=1689201102;
+        d=linaro.org; s=google; t=1686609202; x=1689201202;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=cIiNh3EsWQh5XFXsht2Yjz2CVfu27o+IFNlM+KPIy54=;
-        b=g8lwnvRs1s/lifFGdcnVYfHgD8dR4It0rPDdiT76piGnm7URYmtrLpJFPG9agC1MSB
-         DNQra6wTgxZdfRt0zcMC/PqzuQfEFcvgahNOMMNYmdAyyH/4yE0ojQc9OPFPqGzJbsGI
-         Unm9eCcSB8tNXEqrDDuJeyFinfi2jDcO65slFHeO/4Is1GSoONYYNILGom0zVk5L6Js/
-         HTlmAygETSmeQ0IERV5QyaMG3hwK3Q8FHFzmTxgZXNr86cjfA5Sk86gRj2oQ7bZGFk1g
-         QPhh/2d13ItUZiDQ+U9lxMwY7mczrxP+RTwY84fIKne/iBI6RAMjsVoVYw5FXRgsKY9r
-         I8ww==
+        bh=z2PCQlqi+TJ2WVpN7Fh1DlRfKq46s3e2YzGc0w2L6Sk=;
+        b=nf1giaoWplwjY5MO/QSs/1pX0tnFfd+BoEJg/RGh5e6sX+GRenezX1jPtQG7k38XCH
+         u6PdzX9Bu43OlmQHQCQmqjGAm+B2xRDRcJlu3W+QbB0N3VBNxTRJZ696sIrWRPRyFQUi
+         HphMvsdOJAhWSyAXZJXIJbB2NgEDYIBG4uIuad7BCf3I9ng/KemzGx3RB7t+enHqLcm2
+         6WQtrq9ap5tvsnXc24dmk2dpYnCCN5RhEeJaeCTgNpV5YV7Y7gYr+4cZdcPK7sOyVsco
+         9QtbiGQ91V3cQakrpzHylx08jNygI+mVCqGtQDFgvQJOZIvnBo5lURy2ITBYxb6eX/v7
+         W8Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686609102; x=1689201102;
+        d=1e100.net; s=20221208; t=1686609202; x=1689201202;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cIiNh3EsWQh5XFXsht2Yjz2CVfu27o+IFNlM+KPIy54=;
-        b=Y4lpH6e87vOZpNz2o9F+SBJR8fDfRlD+f0+GadMMy1upV2jLK6tdpTG6RLd5Cn+meG
-         7e48LTkOYbIvI2scPw0ojz9zE2G1M7oNeXxhVMeZufkcSOcVZ6VneHbNrZfT5ZylYWAy
-         XoKKGqFlsnmt4pS1Gn/m1KiD5/r/9icHFKTUIp9Q4XEw9VwbSiwfGg8SB1gciHLmHXDY
-         29RzLfkKE4pWwFgJunOsuUZs9HTv/DQbc4wxed8BOvJS+Hy0nr9ZbVVCyZdhH66cXiE7
-         AnY6R0V0tz/8VQcD6rcZulW3RIbrQdTxpghWYE6Lg2nv+mZaV2zZbqSSNKsUySaQICzK
-         iyUg==
-X-Gm-Message-State: AC+VfDzqcJe8shj907B+IVZrN3tZWL8dfWOX0tfpDFni5kON8iMgKDM4
-        hx0zgrO4DZvFx+m4yOO0ffuJgw==
-X-Google-Smtp-Source: ACHHUZ55E2+88mAUkatf4uaHOVoJ/NCneD3K+X7+RJMzABDCbRTSeU3pb0MoQp3GxjQclQGbbv+n4A==
-X-Received: by 2002:a2e:8603:0:b0:2aa:40dd:7a55 with SMTP id a3-20020a2e8603000000b002aa40dd7a55mr3428308lji.8.1686609101832;
-        Mon, 12 Jun 2023 15:31:41 -0700 (PDT)
+        bh=z2PCQlqi+TJ2WVpN7Fh1DlRfKq46s3e2YzGc0w2L6Sk=;
+        b=bg4spGbYOY4xYSRp4S4R3ZYZzPjRoEmvtNo+9a+UWlTAOH9Wz3ayY0wYHeN96rVK65
+         bCOmhSMdbRYmfmorgC/6Ms4S3hfReGCl0YmxOPxmD2lfzjDUFF3qRVFx1pEj/losmGTQ
+         /Vrbt9bm2onXkgFLjGTVR2apidJtthnCq9dZg+5phwxTNNc3h5F/ZsVgJ0vq1Wj6OpHs
+         zwQuYgq4ZrVDbmElwAoCQNwy3YZaFErYC16F+F4+NDjauBtKap6ceIbCiAzX/nOcXiXy
+         9rlfPlvkUqqLvJWW66e/AfGrM5HG7E/RP42xEoclUGe9ocT3q3ExLoLNsPAsEKRMaQ5f
+         pxIg==
+X-Gm-Message-State: AC+VfDxGbniDd9eHLcUQs4o8yeBomqE9BHwp8y/h3vWcWxYQR6GNNtWe
+        4lzSJmaQLVQcxP+39u/Q9rCp/Q==
+X-Google-Smtp-Source: ACHHUZ7U7Hoi+1lM8Jrkn2aS7B25EYqSSYPuXx6aJFLUhRIAJjYlEQjk0xoy41+u6FLSO2lvmUGNAA==
+X-Received: by 2002:a05:6512:3284:b0:4f3:b49b:e246 with SMTP id p4-20020a056512328400b004f3b49be246mr5115803lfe.5.1686609202171;
+        Mon, 12 Jun 2023 15:33:22 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id t9-20020a2e9d09000000b002a9ee18e9c7sm1860132lji.69.2023.06.12.15.31.40
+        by smtp.gmail.com with ESMTPSA id m1-20020ac24ac1000000b004f37bd02a89sm1559234lfp.287.2023.06.12.15.33.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jun 2023 15:31:41 -0700 (PDT)
-Message-ID: <435dd068-fbf2-10cf-4f78-377e689abb2c@linaro.org>
-Date:   Tue, 13 Jun 2023 01:31:40 +0300
+        Mon, 12 Jun 2023 15:33:21 -0700 (PDT)
+Message-ID: <7662638a-cfcc-647d-6b93-e2b2cc05d84e@linaro.org>
+Date:   Tue, 13 Jun 2023 01:33:20 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH] drm/msm/dpu: Configure DP INTF/PHY selector
+Subject: Re: [PATCH 04/18] dt-bindings: clock: qcom,krait-cc: Krait core clock
+ controller
 Content-Language: en-GB
-To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20230612221047.1886709-1-quic_bjorande@quicinc.com>
+To:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Nishanth Menon <nm@ti.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>
+References: <20230612053922.3284394-1-dmitry.baryshkov@linaro.org>
+ <20230612053922.3284394-5-dmitry.baryshkov@linaro.org>
+ <3ce1bd9b0cb23e4e60b093327e705d69.sboyd@kernel.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230612221047.1886709-1-quic_bjorande@quicinc.com>
+In-Reply-To: <3ce1bd9b0cb23e4e60b093327e705d69.sboyd@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -80,184 +89,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/06/2023 01:10, Bjorn Andersson wrote:
-> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+On 13/06/2023 00:26, Stephen Boyd wrote:
+> Quoting Dmitry Baryshkov (2023-06-11 22:39:08)
+>> Define bindings for the Qualcomm Krait CPU and L2 clock controller. This
+>> device is used on old Qualcomm SoCs (APQ8064, MSM8960) and supports up
+>> to 4 core clocks and a separate L2 clock. Furthermore, L2 clock is
+>> represented as the interconnect to facilitate L2 frequency scaling
+>> together with scaling the CPU frequencies.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   include/dt-bindings/clock/qcom,krait-cc.h | 20 ++++++++++++++++++++
+>>   1 file changed, 20 insertions(+)
+>>   create mode 100644 include/dt-bindings/clock/qcom,krait-cc.h
+>>
+>> diff --git a/include/dt-bindings/clock/qcom,krait-cc.h b/include/dt-bindings/clock/qcom,krait-cc.h
+>> new file mode 100644
+>> index 000000000000..c3542b6d73e2
+>> --- /dev/null
+>> +++ b/include/dt-bindings/clock/qcom,krait-cc.h
+>> @@ -0,0 +1,20 @@
+>> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+>> +/*
+>> + * Copyright (C) 2023 Linaro Ltd. All rights reserved.
+>> + */
+>> +
+>> +#ifndef __DT_BINDINGS_INTERCONNECT_QCOM_KRAIT_CC_H
 > 
-> Some platforms provides a mechanism for configuring the mapping between
-> (one or two) DisplayPort intfs and their PHYs.
+> Should there be INTERCONNECT here?
+
+Of course, no. I'll fix it for v2 if this part stays intact
+
 > 
-> In particular SC8180X provides this functionality, without a default
-> configuration, resulting in no connection between its two external
-> DisplayPort controllers and any PHYs.
-> 
-> The change implements the logic for optionally configuring which phy
-> each of the intfs should be connected to, provides a new entry in the
-> DPU catalog for specifying how many intfs to configure and marks the
-> SC8180X DPU to program 2 entries.
-> 
-> For now the request is simply to program the mapping 1:1, any support
-> for alternative mappings is left until the use case arrise.
-> 
-> Note that e.g. msm-4.14 unconditionally maps intf 0 to phy 0 on all
-> rlatforms, so perhaps this is needed in order to get DisplayPort working
-> on some other platforms as well.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> ---
->   .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  1 +
->   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  2 ++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c    | 23 +++++++++++++++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h    |  8 +++++++
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h      |  1 +
->   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 10 ++++++++
->   6 files changed, 45 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> index 8ed2b263c5ea..9da952692a69 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> @@ -19,6 +19,7 @@ static const struct dpu_caps sc8180x_dpu_caps = {
->   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
->   	.max_hdeci_exp = MAX_HORZ_DECIMATION,
->   	.max_vdeci_exp = MAX_VERT_DECIMATION,
-> +	.num_dp_intf_sel = 2,
->   };
->   
->   static const struct dpu_ubwc_cfg sc8180x_ubwc_cfg = {
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> index ac4a9e73705c..4cb8d096d8ec 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> @@ -357,6 +357,7 @@ struct dpu_rotation_cfg {
->    * @pixel_ram_size     size of latency hiding and de-tiling buffer in bytes
->    * @max_hdeci_exp      max horizontal decimation supported (max is 2^value)
->    * @max_vdeci_exp      max vertical decimation supported (max is 2^value)
-> + * @num_dp_intf_sel    number of DP intfs to configure PHY selection for
->    */
->   struct dpu_caps {
->   	u32 max_mixer_width;
-> @@ -371,6 +372,7 @@ struct dpu_caps {
->   	u32 pixel_ram_size;
->   	u32 max_hdeci_exp;
->   	u32 max_vdeci_exp;
-> +	u32 num_dp_intf_sel;
->   };
->   
->   /**
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> index 963bdb5e0252..5afa99cb148c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> @@ -250,6 +250,27 @@ static void dpu_hw_intf_audio_select(struct dpu_hw_mdp *mdp)
->   	DPU_REG_WRITE(c, HDMI_DP_CORE_SELECT, 0x1);
->   }
->   
-> +static void dpu_hw_dp_phy_intf_sel(struct dpu_hw_mdp *mdp, unsigned int *phys,
-> +				   unsigned int num_intfs)
-> +{
-> +	struct dpu_hw_blk_reg_map *c = &mdp->hw;
-> +	unsigned int intf;
-> +	u32 sel = 0;
-> +
-> +	if (!num_intfs)
-> +		return;
-> +
-> +	for (intf = 0; intf < num_intfs; intf++) {
-> +		/* Specify the PHY (1-indexed) for @intf */
-> +		sel |= (phys[intf] + 1) << (intf * 3);
-> +
-> +		/* Specify the @intf (1-indexed) of targeted PHY */
-> +		sel |= (intf + 1) << (6 + phys[intf] * 3);
-
- From what I can see, phys[intf] is const. What about defining indexed 
-masks instead?
-
-> +	}
-> +
-> +	DPU_REG_WRITE(c, DP_PHY_INTF_SEL, sel);
-> +}
-> +
->   static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
->   		unsigned long cap)
->   {
-> @@ -264,6 +285,8 @@ static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
->   
->   	ops->get_safe_status = dpu_hw_get_safe_status;
->   
-> +	ops->dp_phy_intf_sel = dpu_hw_dp_phy_intf_sel;
-
-Should this be gated for DPU < 4.0? Or 5.0?
-
-> +
->   	if (cap & BIT(DPU_MDP_AUDIO_SELECT))
->   		ops->intf_audio_select = dpu_hw_intf_audio_select;
->   }
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-> index a1a9e44bed36..8446d74d59b0 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-> @@ -125,6 +125,14 @@ struct dpu_hw_mdp_ops {
->   	void (*get_safe_status)(struct dpu_hw_mdp *mdp,
->   			struct dpu_danger_safe_status *status);
->   
-> +	/**
-> +	 * dp_phy_intf_sel - configure intf to phy mapping
-> +	 * @mdp: mdp top context driver
-> +	 * @phys: list of phys the @num_intfs intfs should be connected to
-> +	 * @num_intfs: number of intfs to configure
-> +	 */
-> +	void (*dp_phy_intf_sel)(struct dpu_hw_mdp *mdp, unsigned int *phys,
-> +			        unsigned int num_intfs);
->   	/**
->   	 * intf_audio_select - select the external interface for audio
->   	 * @mdp: mdp top context driver
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
-> index 5acd5683d25a..6d31bdc7269c 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
-> @@ -59,6 +59,7 @@
->   #define MDP_WD_TIMER_4_CTL2             0x444
->   #define MDP_WD_TIMER_4_LOAD_VALUE       0x448
->   #define DCE_SEL                         0x450
-> +#define DP_PHY_INTF_SEL                 0x460
-
-MDP_DP_PHY_INTF_SEL, if you don't mind.
-
->   
->   #define MDP_PERIPH_TOP0			MDP_WD_TIMER_0_CTL
->   #define MDP_PERIPH_TOP0_END		CLK_CTRL3
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index aa8499de1b9f..5dbe5d164c01 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -1011,6 +1011,14 @@ unsigned long dpu_kms_get_clk_rate(struct dpu_kms *dpu_kms, char *clock_name)
->   	return clk_get_rate(clk);
->   }
->   
-> +static void dpu_kms_dp_phy_intf_sel(struct dpu_kms *dpu_kms)
-> +{
-> +	const unsigned int num_intfs = dpu_kms->catalog->caps->num_dp_intf_sel;
-> +	static unsigned int phy_map[] = {0, 1, 2};
-
-Please move this to dp_phy_intf_sel() and make it const.
-
-> +
-> +	dpu_kms->hw_mdp->ops.dp_phy_intf_sel(dpu_kms->hw_mdp, phy_map, num_intfs);
-> +}
-> +
->   static int dpu_kms_hw_init(struct msm_kms *kms)
->   {
->   	struct dpu_kms *dpu_kms;
-> @@ -1122,6 +1130,8 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
->   		goto perf_err;
->   	}
->   
-> +	dpu_kms_dp_phy_intf_sel(dpu_kms);
-> +
->   	dpu_kms->hw_intr = dpu_hw_intr_init(dpu_kms->mmio, dpu_kms->catalog);
->   	if (IS_ERR_OR_NULL(dpu_kms->hw_intr)) {
->   		rc = PTR_ERR(dpu_kms->hw_intr);
+>> +#define __DT_BINDINGS_INTERCONNECT_QCOM_KRAIT_CC_H
+>> +
 
 -- 
 With best wishes
