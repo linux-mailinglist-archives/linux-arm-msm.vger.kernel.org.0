@@ -2,134 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 27E0F72BC5B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 11:29:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB88372BC67
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 11:30:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234784AbjFLJ3G (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 05:29:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43848 "EHLO
+        id S232632AbjFLJaS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 05:30:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44382 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231296AbjFLJ21 (ORCPT
+        with ESMTP id S233101AbjFLJ3f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 05:28:27 -0400
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com [IPv6:2a00:1450:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9192C4C19
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:22:53 -0700 (PDT)
-Received: by mail-lj1-x22e.google.com with SMTP id 38308e7fff4ca-2b1ba018d94so46946551fa.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:22:53 -0700 (PDT)
+        Mon, 12 Jun 2023 05:29:35 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE54E19B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:24:26 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3f78a32266bso41286925e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:24:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686561772; x=1689153772;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=wF7kJNEVNClZhr22GJ39Mf3qOuL6Q0VFjYnT8ReRfhE=;
-        b=TQFyRQ9dCAAjzWOD1qlKjLIaGuoxP8JtMlaRrMdhIDuLRK4jGXpvd9VWW5vx2qTjIS
-         IgZLOVYLfGkuntkIxDONGBdGyukhQOKTQmYYsLh6KJvYOtOMEaC0oDUQ4TeQllmB9DSM
-         1TzEhCcbitB1S1jqEYzXDhZK370PA2R3KJV++NAO93DIWdcAszS+iaCEEAxw1tcDm7H7
-         mJ3naSjr4iUs1S/w7yidyLrpmVQyer7mjnZsSGAneL767HuG0AOWbx6jTgPk1QCfDYUv
-         NV/wwsgN7wXiJhI9YdNMImRO+Q7nHpXyWashbxmUNzs1qz2q4TAHosQq1BUxtgizWvKX
-         HqVA==
+        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1686561865; x=1689153865;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FtFss3/4BWnZx7BK6rTdWa1DuApsa4mA3kKtcIcOXC4=;
+        b=qLJytdt6Jb/yVXsOZ6i6XGX8DjxK7ccMzfD1qS6kYgg8kta38u9WMlXXUab9tHe+YF
+         K/ACwxglRzoF8jM6P1rF9+Ps5zpHWb4gIAiIB8L0DD7wQucMjDngSXyODnCyQ/XuJnxZ
+         nDSIkg03r3lFVp/DfGV7PlLS6/gdgMWHdBwV9xrKYmPp4Ix5ADWRxT1D9s+DSFlU0BF+
+         XCGfRDHbr8rlCR3wCnBtDqpED95AsNwmBjVAcdYwcKLoCDQZ7UzlvYNVfZ2xFhNAoZf6
+         QigJ1LWe9B8J+1NmzCzmWHPrW9M+lR0OnYMO5XzU7BetZ902d+e18mzW32Tjru6XU2pp
+         4u2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686561772; x=1689153772;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wF7kJNEVNClZhr22GJ39Mf3qOuL6Q0VFjYnT8ReRfhE=;
-        b=SFp9A5k/msVaXn+pqO70O/tFvurJqb/CtCTjTK21mmfz2GQSV1JGzac/MrKPfvIP8Z
-         rpv0rpdL5bmMgVRSjvwqzfZTAP4QxaUtxwT6skAWuVkJB/qeWWeKR26ioJ4tALCHhjNG
-         6oLl9VAfHuRx3Ad+VYAdV72aX1eCAagyyvzCuvz4PKzeOMGVB9cI/PZHsnui0CAHCbsO
-         Hjtgt9jwP0zE0LibKEAxWr691wzB5pPgJ6q1a36tN5can8jgjmjd7tx8sxSbZJtrLo+H
-         Xi0sBA8knScpmJtFhzdmrvwslU0p4J63/L4A4JXNMv4dL9Qt3myiqIMDO8UIHUrzRz4d
-         grtA==
-X-Gm-Message-State: AC+VfDwdGkqGWHxyYSJ5/sPbOxXTl5tdfRKcIne/nu1FAEsc91NTWkUJ
-        QPqjtv5SbaFT367cpcraHdooSA==
-X-Google-Smtp-Source: ACHHUZ7RbAzssVMBcdrvdXlaVgKlkWxS5u0gD99JnUeFDv45MtVzgcIujsTbpXWa2jpkgJNModhPWA==
-X-Received: by 2002:a2e:8719:0:b0:2b1:e65a:a1d3 with SMTP id m25-20020a2e8719000000b002b1e65aa1d3mr2200583lji.40.1686561771994;
-        Mon, 12 Jun 2023 02:22:51 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id o20-20020a2e7314000000b002adc2fe3fc8sm1681722ljc.4.2023.06.12.02.22.51
+        d=1e100.net; s=20221208; t=1686561865; x=1689153865;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FtFss3/4BWnZx7BK6rTdWa1DuApsa4mA3kKtcIcOXC4=;
+        b=Nqqtmm2JW4tv+QFfVdb2cAcq5xGnKapPZYQ8AnzrmZpNdiYCkpekVIA9v+ngg4umAq
+         FKdI0hODuGZcyH6ajhGzuy+MJ/Z1aTbtOOMiJjspS4GJsMtvojPz4C7yN9WGzHeiRAOw
+         INQU+pE26SCz/nOvcIi6dk5bmA7EOPj+iPH+Xrgs7G4lIvM7fDvG1Urog+Efn9zSxcrC
+         kITI3yJp6+PEaldS1DKiWwP49lGW78DqIVLfgknNnqyMgOO7NTUO1LdiJzU4NphTAmdr
+         RAyUNqpsGEyEcroUbvBAjQyIeTXBcOR6p5M3BcafAD0vIgWfsUDw+wh8S5DShuXsvQkV
+         BYxg==
+X-Gm-Message-State: AC+VfDx2O+46a2eiIhJi4upAcPdG1KmWhFRsUp4vhGg6tZQJf8nqId34
+        TwfYrxz0wEJbucMi1zdPXxn91w==
+X-Google-Smtp-Source: ACHHUZ7jVY7WsrzBMbHCfUmR81pNeDeuO6Gb3yzNkzIgysAxxoKNzVSDsJJSKjHa4n/KMAp302GrIQ==
+X-Received: by 2002:a7b:cd8a:0:b0:3f4:1cd8:3e99 with SMTP id y10-20020a7bcd8a000000b003f41cd83e99mr6686652wmj.28.1686561865141;
+        Mon, 12 Jun 2023 02:24:25 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:a222:bbe9:c688:33ae])
+        by smtp.gmail.com with ESMTPSA id p14-20020a7bcc8e000000b003f727764b10sm10892044wma.4.2023.06.12.02.24.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jun 2023 02:22:51 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Mon, 12 Jun 2023 11:22:48 +0200
-Subject: [PATCH 2/2] clk: qcom: gcc-msm8996: Use read-only RCG ops for RPM
- bus clocks
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230612-topic-rcg2_ro-v1-2-e7d824aeb628@linaro.org>
-References: <20230612-topic-rcg2_ro-v1-0-e7d824aeb628@linaro.org>
-In-Reply-To: <20230612-topic-rcg2_ro-v1-0-e7d824aeb628@linaro.org>
-To:     Bjorn Andersson <andersson@kernel.org>,
+        Mon, 12 Jun 2023 02:24:24 -0700 (PDT)
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+To:     Vinod Koul <vkoul@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1686561768; l=1415;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=ciUM7VVqmyaHUus+1v7jieLBfQZSXfrd5Ukd9qFyQXo=;
- b=34ZFn6hCgCgNYS/VVRxB/dsQm8stj9nIrROWY7b0B1M6RqHvB/A+SpcLbyv4XA5qQ4vbLebmW
- giUvvTAi9p0BcxEhM4uBTY9UCEv86kBgUMnYvr0BMrglAgg99c9oOtL
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
-        autolearn_force=no version=3.4.6
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>
+Cc:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: [PATCH 00/26] arm64: qcom: sa8775p-ride: enable the first ethernet port
+Date:   Mon, 12 Jun 2023 11:23:29 +0200
+Message-Id: <20230612092355.87937-1-brgl@bgdev.pl>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The config/periph/system NoC clocks are wholly controlled by the
-RPM firmware and Linux should never ever alter their configuration.
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Switch them over to read-only ops to avoid that.
+There are three ethernet ports on sa8775p-ride. This series contains changes
+required to enable one of the two 1Gb ports (the third one is 10Gb). We need
+to add a new driver for the internal SerDes PHY, introduce several extensions
+to the MAC driver (while at it: tweak coding style a bit etc.) and finally
+add the relevant DT nodes.
 
-Fixes: b1e010c0730a ("clk: qcom: Add MSM8996 Global Clock Control (GCC) driver")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- drivers/clk/qcom/gcc-msm8996.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Bartosz Golaszewski (26):
+  phy: qualcomm: fix indentation in Makefile
+  dt-bindings: phy: describe the Qualcomm SGMII PHY
+  phy: qcom: add the SGMII SerDes PHY driver
+  arm64: defconfig: enable the SerDes PHY for Qualcomm DWMAC
+  net: stmmac: dwmac-qcom-ethqos: shrink clock code with devres
+  net: stmmac: dwmac-qcom-ethqos: rename a label in probe()
+  net: stmmac: dwmac-qcom-ethqos: tweak the order of local variables
+  net: stmmac: dwmac-qcom-ethqos: use a helper variable for &pdev->dev
+  net: stmmac: dwmac-qcom-ethqos: add missing include
+  net: stmmac: dwmac-qcom-ethqos: add a newline between headers
+  net: stmmac: dwmac-qcom-ethqos: remove stray space
+  net: stmmac: dwmac-qcom-ethqos: add support for the optional serdes
+    phy
+  net: stmmac: dwmac-qcom-ethqos: make the rgmii clock optional
+  net: stmmac: dwmac-qcom-ethqos: add optional phyaux clock
+  net: stmmac: dwmac-qcom-ethqos: add support for the optional
+    phy-supply
+  net: stmmac: dwmac-qcom-ethqos: prepare the driver for more PHY modes
+  net: stmmac: dwmac-qcom-ethqos: add support for SGMII
+  net: stmmac: add new switch to struct plat_stmmacenet_data
+  dt-bindings: net: snps,dwmac: add compatible for sa8775p ethqos
+  dt-bindings: net: qcom,ethqos: add description for sa8775p
+  net: stmmac: dwmac-qcom-ethqos: add support for emac4 on sa8775p
+    platforms
+  arm64: dts: qcom: sa8775p-ride: add the SGMII PHY node
+  arm64: dts: qcom: sa8775p: add the first 1Gb ethernet interface
+  arm64: dts: qcom: sa8775p-ride: enable the SerDes PHY
+  arm64: dts: qcom: sa8775p-ride: add pin functions for ethernet0
+  arm64: dts: qcom: sa8775p-ride: enable ethernet0
 
-diff --git a/drivers/clk/qcom/gcc-msm8996.c b/drivers/clk/qcom/gcc-msm8996.c
-index 5e44d1bcca9e..588e3b67657a 100644
---- a/drivers/clk/qcom/gcc-msm8996.c
-+++ b/drivers/clk/qcom/gcc-msm8996.c
-@@ -264,7 +264,7 @@ static struct clk_rcg2 system_noc_clk_src = {
- 		.name = "system_noc_clk_src",
- 		.parent_data = gcc_xo_gpll0_gpll0_early_div,
- 		.num_parents = ARRAY_SIZE(gcc_xo_gpll0_gpll0_early_div),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_ro_ops,
- 	},
- };
- 
-@@ -284,7 +284,7 @@ static struct clk_rcg2 config_noc_clk_src = {
- 		.name = "config_noc_clk_src",
- 		.parent_data = gcc_xo_gpll0,
- 		.num_parents = ARRAY_SIZE(gcc_xo_gpll0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_ro_ops,
- 	},
- };
- 
-@@ -306,7 +306,7 @@ static struct clk_rcg2 periph_noc_clk_src = {
- 		.name = "periph_noc_clk_src",
- 		.parent_data = gcc_xo_gpll0,
- 		.num_parents = ARRAY_SIZE(gcc_xo_gpll0),
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_ro_ops,
- 	},
- };
- 
+ .../devicetree/bindings/net/qcom,ethqos.yaml  |  14 +-
+ .../devicetree/bindings/net/snps,dwmac.yaml   |   3 +
+ .../phy/qcom,sa8775p-dwmac-sgmii-phy.yaml     |  52 ++
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dts     | 109 +++++
+ arch/arm64/boot/dts/qcom/sa8775p.dtsi         |  39 ++
+ arch/arm64/configs/defconfig                  |   1 +
+ .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 273 ++++++++---
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c |   2 +-
+ drivers/phy/qualcomm/Kconfig                  |   9 +
+ drivers/phy/qualcomm/Makefile                 |   3 +-
+ drivers/phy/qualcomm/phy-qcom-sgmii-eth.c     | 446 ++++++++++++++++++
+ include/linux/stmmac.h                        |   1 +
+ 12 files changed, 890 insertions(+), 62 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/phy/qcom,sa8775p-dwmac-sgmii-phy.yaml
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-sgmii-eth.c
 
 -- 
-2.41.0
+2.39.2
 
