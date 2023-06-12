@@ -2,81 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 71EC372CE74
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 20:32:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3278F72CE7F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 20:34:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237380AbjFLSc2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 14:32:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50656 "EHLO
+        id S236030AbjFLSef (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 14:34:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53296 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237925AbjFLScN (ORCPT
+        with ESMTP id S237360AbjFLSeb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 14:32:13 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1EDE9E73
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 11:31:46 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f658a17aa4so4658212e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 11:31:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686594690; x=1689186690;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XScVbvMK8naiq0WTQIyZPP97RsyuNHqZwVMoGP97o5I=;
-        b=UL8wGAiHFpspgFWVPIC0nU0QpvUaEHcg+2Ygbs7vNWxZ9Zf3d5+FQoO+Z5cHekGUHy
-         98FUx/OgyUk2/m9VYQDEEfBuEhraR9o4VBzptOi+BHY7itqX2NIMwCbj34K7QCPMLVol
-         wkAqVWLdT0fZlYAZXyUwoTiN2jFeS5WRJY4XhJVws26Nc3pwNH7Dt7PXM0+UwyuW82Nt
-         3VS2gZyriZ5HWgqBohkvultVQAGsC/WFNLFbAzOmWsDnPFdMMdNRSYv2sn1qLbBKXfHI
-         733k8S0uuHDVmu6+mxburjR13jbtyshpV5+Uqh84OJoqJkIHolm6adstRDJOg5AUTHg6
-         Xfug==
+        Mon, 12 Jun 2023 14:34:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8467F1991
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 11:33:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1686594769;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=qSuO83O2GJF69D20JvszqVCusWGni7xZeOtz58f06pw=;
+        b=P1Gzm0BvCPN7KWcYUorr5D3fvJVkAGDa9p/j/PG+2h5kIVuKTNofQyGirvEUugLLMBzIMD
+        dKh5l5KPdtRspWNPJcuP/Lw6dP5PLsH+bj8a72EN8z6l+yTayTnkbnh7L2whfUeMxLP5Fd
+        BJOSzaB7QMsxJJpg7uuyEZEfS6GH2bY=
+Received: from mail-ot1-f70.google.com (mail-ot1-f70.google.com
+ [209.85.210.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-665-dkDx_vBYMR-Adzxta0cBuA-1; Mon, 12 Jun 2023 14:32:47 -0400
+X-MC-Unique: dkDx_vBYMR-Adzxta0cBuA-1
+Received: by mail-ot1-f70.google.com with SMTP id 46e09a7af769-6b29bbec42aso2283469a34.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 11:32:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686594690; x=1689186690;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XScVbvMK8naiq0WTQIyZPP97RsyuNHqZwVMoGP97o5I=;
-        b=fBtVZA6Sc5owRVUMHZoCbFX53EiZtBXsJXdYprNUKMC0IKCHMpN7bxoTV+u7O5V4D6
-         3wPhUyg8aRESHBVUdmc66VBIP/xOdTqfB9Ksbg5jFF8mYiRHbUewSA+Nr1+ILufZwd++
-         M14+qalWvbnUxjbUJWOuWgVi0VJ7zOwUbZgk1WKQLtwMAoTV3PmfAUjFyiMmvS12vawa
-         vdpEW/W+b49ybpEmKjCdjAOrTdQ1zyJXIXJcwhf/DVmQuYJpYxVz228NMG0LjT9+EBy/
-         ZwguwahlKM6wruD9Ny4AkY19AysoJIyI/lZdpbJoawFSqPSX9HQwpJATrrb/iooUeMWn
-         mrgg==
-X-Gm-Message-State: AC+VfDzdXiwC9k1LcTq76Es7op/99HtPEQXQ5VaTnYnbXXRz2tqGB7X5
-        uWgNqoBI3mNX2YoSX0uICNiUjA==
-X-Google-Smtp-Source: ACHHUZ4b1RUTPh0Ggn4dXQBeKT4VaRmUAQXrBywLquAONrI0hsDwjVR9+5xRYBXEbaibQOUmrg4u/A==
-X-Received: by 2002:a05:6512:61c:b0:4f3:b242:aa90 with SMTP id b28-20020a056512061c00b004f3b242aa90mr4987547lfe.35.1686594690582;
-        Mon, 12 Jun 2023 11:31:30 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id w26-20020a19c51a000000b004edb8fac1cesm1496335lfe.215.2023.06.12.11.31.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jun 2023 11:31:30 -0700 (PDT)
-Message-ID: <14662d77-8a3b-b3c6-2250-5909608b8a37@linaro.org>
-Date:   Mon, 12 Jun 2023 21:31:29 +0300
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 1/2] drm/msm: provide fb_dirty implemenation
-Content-Language: en-GB
-To:     Thomas Zimmermann <tzimmermann@suse.de>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     freedreno@lists.freedesktop.org,
-        Degdag Mohamed <degdagmohamed@gmail.com>,
-        Sean Paul <sean@poorly.run>,
+        d=1e100.net; s=20221208; t=1686594767; x=1689186767;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qSuO83O2GJF69D20JvszqVCusWGni7xZeOtz58f06pw=;
+        b=OHDMvP+mQcryCD6a+xM6xdrnNbkYGf8e6KUDkIMSs1K/6y2pIJwraSTn99HrjB1sWq
+         MwOaD94cC/w4gcbc1JmXVrzS+rZwJfB/CnG6SY0ltAqjQ+N8+UVwfON+rSFCSMwdZsGn
+         n4kX/N4ptgWIWIPo3sG1ZJH0/TSSLnEb1HjRBN/okZ+4NKaQ0WI0tZbwych0DFdgEOsK
+         sncIbwZyIqMUUgLTPlFq0/EvpyD994o18LHdSirGd6yT4LqbFG5lzTVsJp/+jo3bx3Ne
+         w8qukeyZ4EdkHJRoRJXjJSqvOsBFGrtvJakbvmpcmci6Du2smA8H54dsVR6N55o4PgVT
+         lVzA==
+X-Gm-Message-State: AC+VfDxJMyPwWYNUfk7YJu241TLfGrGgusmLRCSbVZIXhswjjiXJGwQh
+        2rVynE1TqI4yJ+VWB0IPHM7Sm8g0ItE6VwrgJFPW1k8+envGIeTzdFf0wRspOvi0Z7fP+1WB+T/
+        zpSkEblkSSOXE4B3i98PCzBdleQ==
+X-Received: by 2002:a05:6830:92:b0:6a5:dd70:38cd with SMTP id a18-20020a056830009200b006a5dd7038cdmr6651281oto.2.1686594767177;
+        Mon, 12 Jun 2023 11:32:47 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ5HntANaGm+HkD+UPQVxKZBUJkVk1zEqMvLrahjA8N+vIH05i26ddN13SkrcVSLU5flZVuT2A==
+X-Received: by 2002:a05:6830:92:b0:6a5:dd70:38cd with SMTP id a18-20020a056830009200b006a5dd7038cdmr6651260oto.2.1686594766931;
+        Mon, 12 Jun 2023 11:32:46 -0700 (PDT)
+Received: from halaney-x13s ([2600:1700:1ff0:d0e0::45])
+        by smtp.gmail.com with ESMTPSA id w14-20020a056830060e00b006af9d8af435sm4138880oti.50.2023.06.12.11.32.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jun 2023 11:32:46 -0700 (PDT)
+Date:   Mon, 12 Jun 2023 13:32:43 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org
-References: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org>
- <aenzh4vscayeqvyjpbxifog7l3yuxv5lh5cizcie7dk7awx5z7@nuajlsildlw6>
- <1aaf5a23-541b-527d-25c3-55c94452390e@suse.de>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <1aaf5a23-541b-527d-25c3-55c94452390e@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH 06/26] net: stmmac: dwmac-qcom-ethqos: rename a label in
+ probe()
+Message-ID: <20230612183243.5rkphsaqofi42bgc@halaney-x13s>
+References: <20230612092355.87937-1-brgl@bgdev.pl>
+ <20230612092355.87937-7-brgl@bgdev.pl>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230612092355.87937-7-brgl@bgdev.pl>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -84,93 +98,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/06/2023 13:48, Thomas Zimmermann wrote:
-> Hi
+On Mon, Jun 12, 2023 at 11:23:35AM +0200, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Am 12.06.23 um 11:14 schrieb Marijn Suijten:
->> On 2023-06-12 06:16:15, Dmitry Baryshkov wrote:
->>> Since commit 93e81e38e197 ("drm/fb_helper: Minimize damage-helper
->>> overhead") the drm_fb_helper_funcs::fb_dirty helper is required for
->>> proper dirty/damage processing. The drm/msm driver requires that to
->>> function to let CMD panels to work. Use simplified version of
->>> drm_fbdev_generic_helper_fb_dirty() to fix support for CMD mode panels.
->>>
->>> Reported-by: Degdag Mohamed <degdagmohamed@gmail.com>
->>> Fixes: 93e81e38e197 ("drm/fb_helper: Minimize damage-helper overhead")
->>> Cc: Thomas Zimmermann <tzimmermann@suse.de>
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>
->> Thanks, this solves the following warning:
->>
->>      msm_dpu ae01000.display-controller: 
->> drm_WARN_ON_ONCE(!helper->funcs->fb_dirty)
->>      WARNING: CPU: 0 PID: 9 at drivers/gpu/drm/drm_fb_helper.c:381 
->> drm_fb_helper_damage_work+0x1c0/0x20c
->>
->> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
->>
->> Note that drm_fb_helper_funcs documents this as "This callback is
->> optional": is it no longer optional, or are we enabling a damage feature
->> that makes it not-optional?
+> The err_mem label's name is unclear. It actually should be reached on
+> any error after stmmac_probe_config_dt() succeeds. Name it after the
+> cleanup action that needs to be called before exiting.
 > 
-> It is optional in the sense that most hardware and drivers don't require 
-> damage handling. Those that do, also require this callback.
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Can we please get this documented? I think it was really optional 
-beforehand.
+Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
 
+> ---
+>  .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
 > 
-> Best regards
-> Thomas
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> index 2da0738eed24..16e856861558 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> @@ -615,14 +615,14 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+>  	ethqos = devm_kzalloc(&pdev->dev, sizeof(*ethqos), GFP_KERNEL);
+>  	if (!ethqos) {
+>  		ret = -ENOMEM;
+> -		goto err_mem;
+> +		goto out_config_dt;
+>  	}
+>  
+>  	ethqos->pdev = pdev;
+>  	ethqos->rgmii_base = devm_platform_ioremap_resource_byname(pdev, "rgmii");
+>  	if (IS_ERR(ethqos->rgmii_base)) {
+>  		ret = PTR_ERR(ethqos->rgmii_base);
+> -		goto err_mem;
+> +		goto out_config_dt;
+>  	}
+>  
+>  	data = of_device_get_match_data(&pdev->dev);
+> @@ -634,16 +634,16 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+>  	ethqos->rgmii_clk = devm_clk_get(&pdev->dev, "rgmii");
+>  	if (IS_ERR(ethqos->rgmii_clk)) {
+>  		ret = PTR_ERR(ethqos->rgmii_clk);
+> -		goto err_mem;
+> +		goto out_config_dt;
+>  	}
+>  
+>  	ret = ethqos_clks_config(ethqos, true);
+>  	if (ret)
+> -		goto err_mem;
+> +		goto out_config_dt;
+>  
+>  	ret = devm_add_action_or_reset(&pdev->dev, ethqos_clks_disable, ethqos);
+>  	if (ret)
+> -		goto err_mem;
+> +		goto out_config_dt;
+>  
+>  	ethqos->speed = SPEED_1000;
+>  	ethqos_update_rgmii_clk(ethqos, SPEED_1000);
+> @@ -662,11 +662,11 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+>  
+>  	ret = stmmac_dvr_probe(&pdev->dev, plat_dat, &stmmac_res);
+>  	if (ret)
+> -		goto err_mem;
+> +		goto out_config_dt;
+>  
+>  	return ret;
+>  
+> -err_mem:
+> +out_config_dt:
+>  	stmmac_remove_config_dt(pdev, plat_dat);
+>  
+>  	return ret;
+> -- 
+> 2.39.2
 > 
->>
->> - Marijn
->>
->>> ---
->>>   drivers/gpu/drm/msm/msm_fbdev.c | 20 ++++++++++++++++++++
->>>   1 file changed, 20 insertions(+)
->>>
->>> diff --git a/drivers/gpu/drm/msm/msm_fbdev.c 
->>> b/drivers/gpu/drm/msm/msm_fbdev.c
->>> index fa9c1cbffae3..b933a85420f6 100644
->>> --- a/drivers/gpu/drm/msm/msm_fbdev.c
->>> +++ b/drivers/gpu/drm/msm/msm_fbdev.c
->>> @@ -139,8 +139,28 @@ static int msm_fbdev_create(struct drm_fb_helper 
->>> *helper,
->>>       return ret;
->>>   }
->>> +static int msm_fbdev_fb_dirty(struct drm_fb_helper *helper,
->>> +                  struct drm_clip_rect *clip)
->>> +{
->>> +    struct drm_device *dev = helper->dev;
->>> +    int ret;
->>> +
->>> +    /* Call damage handlers only if necessary */
->>> +    if (!(clip->x1 < clip->x2 && clip->y1 < clip->y2))
->>> +        return 0;
->>> +
->>> +    if (helper->fb->funcs->dirty) {
->>> +        ret = helper->fb->funcs->dirty(helper->fb, NULL, 0, 0, clip, 
->>> 1);
->>> +        if (drm_WARN_ONCE(dev, ret, "Dirty helper failed: ret=%d\n", 
->>> ret))
->>> +            return ret;
->>> +    }
->>> +
->>> +    return 0;
->>> +}
->>> +
->>>   static const struct drm_fb_helper_funcs msm_fb_helper_funcs = {
->>>       .fb_probe = msm_fbdev_create,
->>> +    .fb_dirty = msm_fbdev_fb_dirty,
->>>   };
->>>   /*
->>> -- 
->>> 2.39.2
->>>
-> 
-
--- 
-With best wishes
-Dmitry
 
