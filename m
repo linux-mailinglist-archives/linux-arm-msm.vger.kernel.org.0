@@ -2,164 +2,219 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C9AD172D072
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 22:27:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39FA372D086
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 22:33:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230295AbjFLU1e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 16:27:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52008 "EHLO
+        id S236807AbjFLUdu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 16:33:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53688 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229604AbjFLU1d (ORCPT
+        with ESMTP id S234509AbjFLUdt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 16:27:33 -0400
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.52])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB8D210CE;
-        Mon, 12 Jun 2023 13:27:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1686601648; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=dKK6kjE1B9fmBToDUA2Af/B1GpTk1veKlKpNTto1m4ynYjY0yFQkpmHseD//1KTuF0
-    r9qt1IUJAcvkx3nA/5EGZ3SmYITvXQbIXrcaL7N5wqeC30HL/FVhRzuJokBzfaxCMGWP
-    c8kZUWccP13DlGPpuTS7ldPeTYMgZZvs7oJWqJe/yKAHsdcAfTlcCyjv9s8YW9os4Jh5
-    tv8jLWaKSKoXgT6RO4NGZ95xU1SmE6PfxuNdrJg4plWx2aLiXF3Hsi3bpdjHLFJ9Q062
-    rLV3jPIs4H7gDeyus5aWcsi23ytqDr+pC50GJElzaXu+sXE3HuUn6mp3pYFIp8FXHVfP
-    Mf5A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686601648;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=+/8pzuF1RImyxQe66AcePgrM+A8lzFkbVzl6+XoBoOY=;
-    b=kBjyXkWOpnWADPjnl4OFtW/eMTVANOKXEuhK1gc/nXZQ5cVEZYRH0tsUGI9m8N9aWx
-    V4P0y3LA9CyRmA0AW5KOOkjZtFZIk4HNW7erxJLUf5nQ2774hTe9z6SC5BkBZYyawgKR
-    XtxZjm/bEBb1X8DeRpo9zVar6RudAuthqurfNbnNERFr3evKiyrJQf8I5btVI8mIJday
-    ofYbQAFxBnexKG5K1E9lU2SlITqNxTDPKrohO2laybB7Y4VEEhfBrUAAkpnogvUKK7I7
-    Aqd/5pwv/qh/YHwsC37LwQxbBU1YgTAQezoCvnjh3JPyuDF/6XI1M+ch49eKcbLQVPZz
-    cvdQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686601648;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=+/8pzuF1RImyxQe66AcePgrM+A8lzFkbVzl6+XoBoOY=;
-    b=pKjldxal4PRRIJ+9ul9M6EeretRV+TYTtRw3kcITbSUonTvsSUVZLxC4W/ZFAG92A/
-    x+7AnDxKqmo2EfKPVSQ/5shuGvkorvViLkn9ZSI0E2GWiP61n0YkBYfxdR7I+4BgC1NL
-    yVCEE0KmNJX6LKGHOkfRO0ZkiUTGLt0gpdnMg1TF0WFpL1QiYNGfWUGL2mGoytf+JAGx
-    YPbugP++A1FXH5rpWzjEHmGpWccK31gf2QTyBXJn45kuOmdqeoI9xGgfW/3rpcv+pasb
-    eQp3fuNnz+ut1tz3aggEg+2ysNCtiM+i1cFENZi9BvfbNOqMGVw1gQBtzhKfSgL6p7M8
-    wi3A==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686601648;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=+/8pzuF1RImyxQe66AcePgrM+A8lzFkbVzl6+XoBoOY=;
-    b=PL8zx/bkOEbcc6BWEnW8D/sGpkdcfIjr/oBX8siNMwvdaso5zth69I7c1G6y1EaSya
-    HrQou0LEwrGk7Ha5NmBQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8peN1A=="
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.5.3 DYNA|AUTH)
-    with ESMTPSA id Z82ec2z5CKRSVyQ
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 12 Jun 2023 22:27:28 +0200 (CEST)
-Date:   Mon, 12 Jun 2023 22:27:20 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Mon, 12 Jun 2023 16:33:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDA7CE54
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 13:33:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1686601981;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=43J77l2MjvOeufIj2deKwRG8u6kAZJyfknPdAW9w59s=;
+        b=eBMuakVeMcC3eJgG5Srv803mdjUq+MiQNbICVR9CFATsN7bs5PiH8N9HBpWsW5Ptfjk0kU
+        diXw7VK5JvY3PSuNcv2DYlAeYvLsr1QleXvhcPPE1UwUnJ2bD90YJaXiNx7nYE8HpbVUJH
+        UG+ptB9jN0lWuhlsMfebI61vZusdmpc=
+Received: from mail-oo1-f69.google.com (mail-oo1-f69.google.com
+ [209.85.161.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-372-Yz-qtVpKO668Q6CD96F0uw-1; Mon, 12 Jun 2023 16:33:00 -0400
+X-MC-Unique: Yz-qtVpKO668Q6CD96F0uw-1
+Received: by mail-oo1-f69.google.com with SMTP id 006d021491bc7-5554cb61452so2557402eaf.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 13:32:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686601979; x=1689193979;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=43J77l2MjvOeufIj2deKwRG8u6kAZJyfknPdAW9w59s=;
+        b=EeGxQt37LC+NoFYjCWWf4CIHeo9VBX7xIQrhJabkTMp72jO0JLXwWmCA/n7HZaJupF
+         RSxNo/BIVSc99VXea94LbRtMam2YoAqEkVwAc4k1LjHS5niGcMHaLywt0GaKcLg+i62Q
+         y1Mwx9xepav84UIfEYhQZl72l2m0r8BiU286eYppVBoXmBjE5jX4EbY8uX3erVpo+E2G
+         /SqNwFvXeg3wordZqEjuf28RswkG+RQ3DwMDcGdYa393T2VIxE4TSyfyel6xl/HmPJXB
+         ckmY5Z1KxvZ67+0AyxLvdhXgwTMaY3pw73V2WvMkM3yeGgZotbW/Wq2/nnUkqm0gd0xe
+         ty5A==
+X-Gm-Message-State: AC+VfDwUKgGyj6HEaEBPD2bKBCO9wYCMaPs5vWX9epxYt10+uoWkmtBP
+        vjvC23Fh7ZevZmdUEmyS5myqLteZnj45wknclUqoIGvPVJNzXdocH6H2en+qEV6P09R7iIiR/RL
+        TETjThNGdTmM+52C8956mZ+wDow==
+X-Received: by 2002:a4a:eac3:0:b0:558:b3f1:1081 with SMTP id s3-20020a4aeac3000000b00558b3f11081mr5365968ooh.9.1686601979257;
+        Mon, 12 Jun 2023 13:32:59 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ4vKyZqmPyAlZrIvh+fzGMNtvVVMAbuUA5odR16L7SaZeByU3UDtpAZGSfSXxbwRc/TkU6rpw==
+X-Received: by 2002:a4a:eac3:0:b0:558:b3f1:1081 with SMTP id s3-20020a4aeac3000000b00558b3f11081mr5365934ooh.9.1686601978975;
+        Mon, 12 Jun 2023 13:32:58 -0700 (PDT)
+Received: from halaney-x13s ([2600:1700:1ff0:d0e0::45])
+        by smtp.gmail.com with ESMTPSA id o4-20020a4aa804000000b0055affd1ca3csm3556530oom.1.2023.06.12.13.32.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jun 2023 13:32:58 -0700 (PDT)
+Date:   Mon, 12 Jun 2023 15:32:55 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 07/23] interconnect: qcom: icc-rpm: Allow negative QoS
- offset
-Message-ID: <ZId_qIAL8dvJOwai@gerhold.net>
-References: <20230526-topic-smd_icc-v3-0-5fb7d39b874f@linaro.org>
- <20230526-topic-smd_icc-v3-7-5fb7d39b874f@linaro.org>
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH 12/26] net: stmmac: dwmac-qcom-ethqos: add support for
+ the optional serdes phy
+Message-ID: <20230612203255.72t52ucry7zzq3em@halaney-x13s>
+References: <20230612092355.87937-1-brgl@bgdev.pl>
+ <20230612092355.87937-13-brgl@bgdev.pl>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230526-topic-smd_icc-v3-7-5fb7d39b874f@linaro.org>
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <20230612092355.87937-13-brgl@bgdev.pl>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        RCVD_IN_MSPIKE_H5,RCVD_IN_MSPIKE_WL,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 12, 2023 at 08:24:24PM +0200, Konrad Dybcio wrote:
-> In some very very very very unfortunate cases, the correct offset of
-> the QoS registers will be.. negative. One such case is MSM8998, where
-> The DDR BWMON occupies what-would-be-the-BIMC-base which we usually
-> take into account with the register calculation, making the actual
-> BIMC node start at what-would-be-the-BIMC-base+0x300.
+On Mon, Jun 12, 2023 at 11:23:41AM +0200, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> In order to keep the calculation code sane, the simplest - however
-> ugly it may be - solution is to allow the offset to be negative.
+> On sa8775p platforms, there's a SGMII SerDes PHY between the MAC and
+> external PHY that we need to enable and configure.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
-I'm a bit confused why this patch is part of this series. It doesn't
-seem to be directly related.
-
-Can you send it as part of the series that adds the MSM8998 interconnect
-driver?
-
-Thanks,
-Stephan
-
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
->  drivers/interconnect/qcom/icc-rpm.h | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+>  .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 37 +++++++++++++++++++
+>  1 file changed, 37 insertions(+)
 > 
-> diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
-> index d2c04c400cad..ba840a436cc0 100644
-> --- a/drivers/interconnect/qcom/icc-rpm.h
-> +++ b/drivers/interconnect/qcom/icc-rpm.h
-> @@ -29,10 +29,10 @@ enum qcom_icc_type {
->   * @num_intf_clks: the total number of intf_clks clk_bulk_data entries
->   * @type: the ICC provider type
->   * @regmap: regmap for QoS registers read/write access
-> - * @qos_offset: offset to QoS registers
->   * @bus_clk_rate: bus clock rate in Hz
->   * @bus_clks: the clk_bulk_data table of bus clocks
->   * @intf_clks: a clk_bulk_data array of interface clocks
-> + * @qos_offset: offset to QoS registers
->   * @keep_alive: whether to always keep a minimum vote on the bus clocks
->   * @is_on: whether the bus is powered on
->   */
-> @@ -42,7 +42,7 @@ struct qcom_icc_provider {
->  	int num_intf_clks;
->  	enum qcom_icc_type type;
->  	struct regmap *regmap;
-> -	unsigned int qos_offset;
-> +	int qos_offset;
->  	u64 bus_clk_rate[NUM_BUS_CLKS];
->  	struct clk_bulk_data bus_clks[NUM_BUS_CLKS];
->  	struct clk_bulk_data *intf_clks;
-> @@ -108,7 +108,7 @@ struct qcom_icc_desc {
->  	bool no_clk_scaling;
->  	enum qcom_icc_type type;
->  	const struct regmap_config *regmap_cfg;
-> -	unsigned int qos_offset;
-> +	int qos_offset;
->  };
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> index 8ed05f29fe8b..3438b6229351 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> @@ -6,6 +6,7 @@
+>  #include <linux/of_device.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/phy.h>
+> +#include <linux/phy/phy.h>
+>  #include <linux/property.h>
 >  
->  /* Valid for all bus types */
-> 
+>  #include "stmmac.h"
+> @@ -93,6 +94,7 @@ struct qcom_ethqos {
+>  
+>  	unsigned int rgmii_clk_rate;
+>  	struct clk *rgmii_clk;
+> +	struct phy *serdes_phy;
+>  	unsigned int speed;
+>  
+>  	const struct ethqos_emac_por *por;
+> @@ -566,6 +568,30 @@ static void ethqos_fix_mac_speed(void *priv, unsigned int speed)
+>  	ethqos_configure(ethqos);
+>  }
+>  
+> +static int qcom_ethqos_serdes_powerup(struct net_device *ndev, void *priv)
+> +{
+> +	struct qcom_ethqos *ethqos = priv;
+> +	int ret;
+> +
+> +	ret = phy_set_speed(ethqos->serdes_phy, ethqos->speed);
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = phy_init(ethqos->serdes_phy);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return phy_power_on(ethqos->serdes_phy);
+
+The docs say (phy.rst):
+
+    The general order of calls should be::
+
+        [devm_][of_]phy_get()
+        phy_init()
+        phy_power_on()
+        [phy_set_mode[_ext]()]
+        ...
+        phy_power_off()
+        phy_exit()
+        [[of_]phy_put()]
+
+    Some PHY drivers may not implement :c:func:`phy_init` or :c:func:`phy_power_on`,
+    but controllers should always call these functions to be compatible with other
+    PHYs. Some PHYs may require :c:func:`phy_set_mode <phy_set_mode_ext>`, while
+    others may use a default mode (typically configured via devicetree or other
+    firmware). For compatibility, you should always call this function if you know
+    what mode you will be using. Generally, this function should be called after
+    :c:func:`phy_power_on`, although some PHY drivers may allow it at any time.
+
+Not really dictating you need to do that order, but if possible I think
+calling phy_set_speed after init + power_on is more generic. Not sure if
+that plays nice with the phy driver in this series or not.
+
+Otherwise, I think this looks good.
+
+> +}
+> +
+> +static void qcom_ethqos_serdes_powerdown(struct net_device *ndev, void *priv)
+> +{
+> +	struct qcom_ethqos *ethqos = priv;
+> +
+> +	phy_power_off(ethqos->serdes_phy);
+> +	phy_exit(ethqos->serdes_phy);
+> +}
+> +
+>  static int ethqos_clks_config(void *priv, bool enabled)
+>  {
+>  	struct qcom_ethqos *ethqos = priv;
+> @@ -651,6 +677,12 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+>  	if (ret)
+>  		goto out_config_dt;
+>  
+> +	ethqos->serdes_phy = devm_phy_optional_get(dev, "serdes");
+> +	if (IS_ERR(ethqos->serdes_phy)) {
+> +		ret = PTR_ERR(ethqos->serdes_phy);
+> +		goto out_config_dt;
+> +	}
+> +
+>  	ethqos->speed = SPEED_1000;
+>  	ethqos_update_rgmii_clk(ethqos, SPEED_1000);
+>  	ethqos_set_func_clk_en(ethqos);
+> @@ -666,6 +698,11 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+>  	if (of_device_is_compatible(np, "qcom,qcs404-ethqos"))
+>  		plat_dat->rx_clk_runs_in_lpi = 1;
+>  
+> +	if (ethqos->serdes_phy) {
+> +		plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
+> +		plat_dat->serdes_powerdown  = qcom_ethqos_serdes_powerdown;
+> +	}
+> +
+>  	ret = stmmac_dvr_probe(dev, plat_dat, &stmmac_res);
+>  	if (ret)
+>  		goto out_config_dt;
 > -- 
-> 2.41.0
+> 2.39.2
 > 
+
