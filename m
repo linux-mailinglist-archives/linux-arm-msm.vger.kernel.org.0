@@ -2,130 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 89BDD72B72A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 07:06:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99A5072B76B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 07:39:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231936AbjFLFEV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 01:04:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60676 "EHLO
+        id S232246AbjFLFj3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 01:39:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40114 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231428AbjFLFET (ORCPT
+        with ESMTP id S232249AbjFLFj1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 01:04:19 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E2FB94
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jun 2023 22:04:18 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id 5614622812f47-39caf0082f3so1441591b6e.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jun 2023 22:04:18 -0700 (PDT)
+        Mon, 12 Jun 2023 01:39:27 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B19F9E5F
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jun 2023 22:39:25 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f63ab1ac4aso4437851e87.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jun 2023 22:39:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686546258; x=1689138258;
-        h=cc:to:subject:message-id:date:from:references:in-reply-to
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=yXejNWihH1cSvRvqLdsiZooKU8TxJgF5T4F4Xvbxnsk=;
-        b=MuHiDOyfBffaPSQrCja2twO0/NpQMD6m6Z8x/Ba1rzTBGIGHZWsrFsxDWlwErvBkSB
-         /j3/mtQ2nuAw7yuv0apHEy8gtBvpmZbrPiIg3hXjlJfYKSuUrAFBBHw44H2KDRwgBR7I
-         VCtpRThYe5ZtaX4AqV4MCV/XqkO8jM3m766yB9mqZJ9TBhBIAJILTIf9LRDUc7I9UNYc
-         0uHZOFxOwsGa9K4kPQ2nkNhZefz1ipF/FAS/DKFfNMP63m3wx0omxMK9yRLSaHDSPmrN
-         3s1/qd8jsBulhIrenylmMkmwgeuGqKHS0f7TsI5QWvGGVKZ5YESZAs3JSNx51RmdVulo
-         GjiQ==
+        d=linaro.org; s=google; t=1686548364; x=1689140364;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EHz2Z30tdvTqewGRLECO+NJy+cg3ayTbdySyYZr/5UI=;
+        b=t5ZwCfhAOWC8wyPB2ZlDMdiTPngHUZ7nZ67kwnm/Dr2UbttazmKj8zlhUsLQR3Nuwj
+         sfgqBP5oTIR9ghn3OnfIeQYlA7lzPDb3uGGdvf4KFY/DKAJFt9d1+ybNNYuMeltV53gp
+         GHykpbnZ3mc6xK/YNr54xghuoB4Y12dK444kxCDtSdO2qTus7IpqbPF3DPTKUUvHxJdh
+         iVhwWNkFOOCtUAMIoFrBeRIXYovBournrXZWLlhdNg+ocGw4uyRRocNNY/X/B4apQ5N0
+         3Pyn4woxc0otUDwXNV6TjAtS19C0NosBSXBykyzUMONyXhvTi8FLYMWbT+8HtmHFCp9Q
+         aFaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686546258; x=1689138258;
-        h=cc:to:subject:message-id:date:from:references:in-reply-to
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1686548364; x=1689140364;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yXejNWihH1cSvRvqLdsiZooKU8TxJgF5T4F4Xvbxnsk=;
-        b=gT4qTofRQSEJCmfUgdVgT30IpKSo4QpCFYhhqX0g+x1CCn6cYgim6E7uXq1Ay5LF5G
-         GjiEfwzxf6WfZqKuBiKSU+9mMRrpFlDTsV4vDP4xqKJd9KH4lQ5Ohh52F8JyXeYXV+Rp
-         iiFyoCHE17PnCYscch9BLlosPL69qMj5kMRjuY1p0PWCxwKya2Q/wa8v2jRe0iAhVlGV
-         7V604+9A/G4easd58EKCGeDwcW2n9dR36MI/Wc9aol85VxfAnRKeyoVzuhrh+kVF/en1
-         ZWhAXdnTDS2aWjpjIGOK6ny7Aujw0yOzwFGaIX83MGtwSuxhGh0m1hVUup5wIIIb/L29
-         8mWw==
-X-Gm-Message-State: AC+VfDx7bcCOL2204N0HlIp3voqDIYQmg7U+BWpvTwgM7bbGckuStlCD
-        AbuoPBmpKoJ8dmjnlAchOv020oFJfxS0ub6TMzCzfCn/2CI/hA==
-X-Google-Smtp-Source: ACHHUZ6gx3tRtW3o5Eha/7tuZII/koptiVHdNUE7RCzzbT1tTbgQvBQPdIxZXaDEDxM9aFQ6gRCiV+nytoi2RYsmg7s=
-X-Received: by 2002:a05:6808:2a4c:b0:396:1bf6:d781 with SMTP id
- fa12-20020a0568082a4c00b003961bf6d781mr3025099oib.6.1686546257862; Sun, 11
- Jun 2023 22:04:17 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:a05:7010:7d4d:b0:35e:bd26:c91f with HTTP; Sun, 11 Jun 2023
- 22:04:17 -0700 (PDT)
-In-Reply-To: <20230612031616.3620134-2-dmitry.baryshkov@linaro.org>
-References: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org> <20230612031616.3620134-2-dmitry.baryshkov@linaro.org>
-From:   Degdag Mohamed <degdagmohamed@gmail.com>
-Date:   Mon, 12 Jun 2023 06:04:17 +0100
-Message-ID: <CAEhjvduE+iMzzyC2Bex9C5=ueXE8NSZ6oGywRtAJv7gzyvbukw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] drm/msm/dsi: don't allow enabling 7nm VCO with
- unprogrammed rate
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        bh=EHz2Z30tdvTqewGRLECO+NJy+cg3ayTbdySyYZr/5UI=;
+        b=TZclCs6NKv0GvEvglRKSxO/syEvlq3KLf+MxkqwWqPQGa+orWhv4HLFxyDXzjTSno+
+         6slBgOcKLow8PsAb+8PSJy10Te+TXJYQqJuU3omuglvYZ2bEH+EP2IJF/owgQNgS5H8n
+         vySdOGsu3ta95C7iinh8osY/yKc4cgIqb3fwR4xTmdtI4d9qU+M3GNe283Rd4T/7+OaT
+         +O6E1D/1cHkU+OG20QQRcfftoLP2b+PFieisptdob4fs2nl014mvbPlVaHJ1QXguozYK
+         A74rwcetS694rES1ULof8sBgnxZpE5H/4ZWYoU4n726qPFn+SzVRXsFh+Z8Lmf0/u9Ti
+         Lbug==
+X-Gm-Message-State: AC+VfDw00qLFAmRK9VPf7DvZNceqXJlivfl0pLrtE4LyvyeQFzUwnw03
+        QO3YZMOlqce49wfvsaT5WznxWQ==
+X-Google-Smtp-Source: ACHHUZ7TiqLKPzDu6AYEp6emATujNOYmnTZgqrXZO3dHGPkZgxy28WkN209PjWMbBoSf8p81CeYTMA==
+X-Received: by 2002:a19:6418:0:b0:4f3:c7f8:d40c with SMTP id y24-20020a196418000000b004f3c7f8d40cmr3325848lfb.29.1686548363705;
+        Sun, 11 Jun 2023 22:39:23 -0700 (PDT)
+Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id n6-20020a195506000000b004f38260f196sm1324125lfe.218.2023.06.11.22.39.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Jun 2023 22:39:22 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>
+Subject: [PATCH 00/18] ARM: qcom: apq8064: support CPU frequency scaling
+Date:   Mon, 12 Jun 2023 08:39:04 +0300
+Message-Id: <20230612053922.3284394-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
-        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
-        autolearn=ham autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[Dmitry Baryshkov],
+Implement CPUFreq support for one of the oldest supported Qualcomm
+platforms, APQ8064. Each core has independent power and frequency
+control. Additionally the L2 cache is scaled to follow the CPU
+frequencies (failure to do so results in strange semi-random crashes).
 
-Thank you for sharing the patches. I have reviewed and tested all
-three patches, and they seem to be working correctly.
+Core voltage is controlled through the SAW2 devices, one for each core.
+The L2 has two regulators, vdd-mem and vdd-dig.
 
-Tested-by: Degdag Mohamed degdagmohamed@gmail.com
+Depenency: [1] for interconnect-clk implementation
 
-Please let me know if you need any further information or assistance.
+https://lore.kernel.org/linux-arm-msm/20230512001334.2983048-3-dmitry.baryshkov@linaro.org/
 
-Best regards,
-Degdag Mohamed
+Dmitry Baryshkov (18):
+  dt-bindings: opp: opp-v2-kryo-cpu: support Qualcomm Krait SoCs
+  dt-bindings: soc: qcom: merge qcom,saw2.txt into qcom,spm.yaml
+  dt-bindings: soc: qcom: qcom,saw2: define optional regulator node
+  dt-bindings: clock: qcom,krait-cc: Krait core clock controller
+  clk: qcom: krait-cc: rewrite driver to use clk_hw instead of clk
+  clk: qcom: krait-cc: export L2 clock as an interconnect
+  soc: qcom: spm: add support for voltage regulator
+  cpufreq: qcom-nvmem: also accept operating-points-v2-krait-cpu
+  cpufreq: qcom-nvmem: Add support for voltage scaling
+  cpufreq: qcom-nvmem: drop pvs_ver for format a fuses
+  cpufreq: qcom-nvmem: provide separate configuration data for apq8064
+  ARM: dts: qcom: apq8064: rename SAW nodes to power-manager
+  ARM: dts: qcom: apq8064: declare SAW2 regulators
+  ARM: dts: qcom: apq8064: add simple CPUFreq support
+  ARM: dts: qcom: apq8064: provide voltage scaling tables
+  ARM: dts: qcom: apq8064: enable passive CPU cooling
+  ARM: dts: qcom: apq8064-asus-nexus7-flo: constraint cpufreq regulators
+  ARM: dts: qcom: apq8064-ifc6410: constraint cpufreq regulators
 
-On 6/12/23, Dmitry Baryshkov <dmitry.baryshkov@linaro.org> wrote:
-> CCF can try enabling VCO before the rate has been programmed. This can
-> cause clock lockups and/or other boot issues. Program the VCO to the
-> minimal PLL rate if the read rate is 0 Hz.
->
-> Reported-by: Degdag Mohamed <degdagmohamed@gmail.com>
-> Fixes: 1ef7c99d145c ("drm/msm/dsi: add support for 7nm DSI PHY/PLL")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 5 +++++
->  1 file changed, 5 insertions(+)
->
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> index 3b1ed02f644d..6979d35eb7c3 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> @@ -395,11 +395,16 @@ static void dsi_pll_phy_dig_reset(struct dsi_pll_7nm
-> *pll)
->  	wmb(); /* Ensure that the reset is deasserted */
->  }
->
-> +static unsigned long dsi_pll_7nm_vco_recalc_rate(struct clk_hw *hw,
-> +						  unsigned long parent_rate);
->  static int dsi_pll_7nm_vco_prepare(struct clk_hw *hw)
->  {
->  	struct dsi_pll_7nm *pll_7nm = to_pll_7nm(hw);
->  	int rc;
->
-> +	if (dsi_pll_7nm_vco_recalc_rate(hw, VCO_REF_CLK_RATE) == 0)
-> +		dsi_pll_7nm_vco_set_rate(hw, pll_7nm->phy->cfg->min_pll_rate,
-> VCO_REF_CLK_RATE);
-> +
->  	dsi_pll_enable_pll_bias(pll_7nm);
->  	if (pll_7nm->slave)
->  		dsi_pll_enable_pll_bias(pll_7nm->slave);
-> --
-> 2.39.2
->
->
+ .../devicetree/bindings/arm/msm/qcom,saw2.txt |   58 -
+ .../bindings/opp/opp-v2-kryo-cpu.yaml         |   11 +-
+ .../qcom/{qcom,spm.yaml => qcom,saw2.yaml}    |   39 +-
+ .../boot/dts/qcom-apq8064-asus-nexus7-flo.dts |   14 +-
+ arch/arm/boot/dts/qcom-apq8064-ifc6410.dts    |   18 +-
+ arch/arm/boot/dts/qcom-apq8064.dtsi           | 1247 ++++++++++++++++-
+ drivers/clk/qcom/Kconfig                      |    1 +
+ drivers/clk/qcom/krait-cc.c                   |  185 +--
+ drivers/cpufreq/qcom-cpufreq-nvmem.c          |  164 ++-
+ drivers/soc/qcom/spm.c                        |  205 ++-
+ include/dt-bindings/clock/qcom,krait-cc.h     |   20 +
+ include/soc/qcom/spm.h                        |    9 +
+ 12 files changed, 1806 insertions(+), 165 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,saw2.txt
+ rename Documentation/devicetree/bindings/soc/qcom/{qcom,spm.yaml => qcom,saw2.yaml} (58%)
+ create mode 100644 include/dt-bindings/clock/qcom,krait-cc.h
+
+-- 
+2.39.2
+
