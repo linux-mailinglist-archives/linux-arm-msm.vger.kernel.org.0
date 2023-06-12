@@ -2,61 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B0CDB72BD15
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 11:51:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41B2F72BE4E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 12:04:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232693AbjFLJvn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 05:51:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32896 "EHLO
+        id S236484AbjFLKDw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 06:03:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42130 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232840AbjFLJvI (ORCPT
+        with ESMTP id S236449AbjFLKCH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 05:51:08 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52D648F7F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:35:57 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f62b512fe2so4921291e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:35:57 -0700 (PDT)
+        Mon, 12 Jun 2023 06:02:07 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4680198D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:45:45 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id 38308e7fff4ca-2b1fcda0f92so47988981fa.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:45:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686562555; x=1689154555;
+        d=linaro.org; s=google; t=1686563144; x=1689155144;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=EVRsoBw2mYIKseG/0Qd8GC6oHBJlAAcz7DAhIfqh+7s=;
-        b=Rwr9kl19lrfXZO0AeqyotRMwrSFgHnX2AoP9H6w4oq+N6tErLHtVV+lzHKFYdeULvb
-         0pmtApmxu/AUW/D4E+4XdehvlfPdV8hcOHKPHv6o37u4RTUzH7lrEQO6A6RrJA4LYSTe
-         cuerQiT4YbiV5uOghU2r35CX6IQAn0XlgVO84KYd+2mU1hLnzNIEtKPudu4D2NKk9DOC
-         tXKGnDD35U+C60x+tSU/qUHuRH9UI3YphmR8XP8r0xRKbFH1o2Fo+8syvQtxj8Tqp66k
-         vW8fcMPyDnIddHxQ8A7AVPkk+qmP55MTnznHaLlLWG7lpCu53xpBBjSugjQFeU9dB4jH
-         7Apw==
+        bh=DWwcG8B478jMSpAgeoJrfgqQXgVZW1IwS0fWhOn6gk0=;
+        b=upBU3IKs93WTyz/V/gEN+RLEp9WIg19EH3y6zBS6ow1ie08c4Ipr7gH1W7uhqwZOZI
+         lHfKdssyJ2ly3Fgt/rckwxO3zaArORYq2ZFx8c17CQHCAsSfdrg7KsckJGSP0yKEU0Le
+         DR/5IZGAvGTxCdtwx/N/S9z7bWRqufplkmUQ9wk2OEmy9ZahyBakPrxs4eboJOwYkPQE
+         anV+zG3p1ay1p4RJxaaMU3uW1z1NCTEFyK2SO42tFuiFuAZu/d0MOqBNMizvH07LrfLg
+         VKKf9/6i55Jqj6kFbbj0TPbZhChRYgMDsqpcRE9tkFansq7SNLw3JHSdfqJE6ugpNGZD
+         Gt/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686562555; x=1689154555;
+        d=1e100.net; s=20221208; t=1686563144; x=1689155144;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EVRsoBw2mYIKseG/0Qd8GC6oHBJlAAcz7DAhIfqh+7s=;
-        b=l5x7n62dnDDZ2ePSz0WwHl9bidExv2IrL/Es+C4cFO8iIVbIEhZ9mG0suhe6E2b6a6
-         liEfCoho+gzEOYVL3z8BNp/oGc//MVV6T22YJsjipPUlxNpxmL/qjbQaBqXNbXnC8Dkx
-         2kjJAoAQjYoY+lmrEKQk5GyjVCX3oQDpf3Tdvw9IQO0mpPM59euFzvfIqO1zlxyy2cv4
-         NHhfsV/rU1G4j5piSVklqyLt/1kMH/QRunmjMR7ihCNksO39wiUf7W/YW3bsl2hgNc94
-         vWkh63FP68yBUDfea+9a9/xGHl4cDOGjXIu8Cn9+9IP0e1f2HstKlAgnsJKw1jh2iVmb
-         JMOw==
-X-Gm-Message-State: AC+VfDyfsxmRicBLMpHFjw6cZqKdLNUSHcC3imqSraQCVAZGiJQnG1mb
-        fRz7g9Jt+o4AEr0DM7c0xKXKVQ==
-X-Google-Smtp-Source: ACHHUZ4XIHc31aI7Yz7vxkZ7gA16gu5nwoiLxWZswPLz9iLHvgp3AlnZy1KH+hfVh/JFNYj+qnFqdw==
-X-Received: by 2002:a05:6512:1ce:b0:4f6:1154:deba with SMTP id f14-20020a05651201ce00b004f61154debamr4261756lfp.65.1686562554980;
-        Mon, 12 Jun 2023 02:35:54 -0700 (PDT)
+        bh=DWwcG8B478jMSpAgeoJrfgqQXgVZW1IwS0fWhOn6gk0=;
+        b=hQlfybsffTzv1UvX0SMUhMchBAtqhigtImoUJ4RQEaFqguOz+S9Zx3IZOzVyBb1oLd
+         ihGd6ZUnX1OVSFwZDEoilqSDpQecE6r+zNBJqb3kvqNzo4LG2l78Jj67/KskzMw5kpXk
+         nsNeFXgktG1Zx8/5TN8ZTu0XxGzG/hS3xlAuYsKoRzeOHSp5zLlC3ENmxNeQR5wURaLf
+         AvFDEFTvkuwqO8/E07O6zwXZrAl4sl+d4EDCJNTrZibwCJ0XZjLZi9ppUKycPvvQzvjc
+         1/AmqwJXe0j7r2/ilIzYb4gbyykZEx6eOafrqB/AajDG5Vt4DjhkD/VUJqjI59Dp9UUl
+         yALw==
+X-Gm-Message-State: AC+VfDxEj/hF2TBefzhaoL3trcbRIVlLExnKJB/h+w9gpKLe9qXbAdDU
+        N1aeilBbctm1YgoSjMMwjqPxVuaN4pRGUUrd7Uk=
+X-Google-Smtp-Source: ACHHUZ43/gi+znYlYQvf2z3Zeqhx6w4RHoSruCkErpQAm+KwwannknuxHnOqh55jxAdULPv7Gxv4YA==
+X-Received: by 2002:a2e:908f:0:b0:2b1:e943:8abe with SMTP id l15-20020a2e908f000000b002b1e9438abemr2380153ljg.47.1686563144165;
+        Mon, 12 Jun 2023 02:45:44 -0700 (PDT)
 Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id i9-20020ac25229000000b004f2b6a203aasm1386474lfl.224.2023.06.12.02.35.53
+        by smtp.gmail.com with ESMTPSA id n23-20020a2e86d7000000b002ac78893a9csm1672079ljj.72.2023.06.12.02.45.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jun 2023 02:35:54 -0700 (PDT)
-Message-ID: <9562db04-ef2e-b32e-9fd6-1396798f28e5@linaro.org>
-Date:   Mon, 12 Jun 2023 11:35:52 +0200
+        Mon, 12 Jun 2023 02:45:43 -0700 (PDT)
+Message-ID: <7fe7078e-404d-28e5-0dd1-53b7f9cd7626@linaro.org>
+Date:   Mon, 12 Jun 2023 11:45:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH 22/26] arm64: dts: qcom: sa8775p-ride: add the SGMII PHY
- node
+Subject: Re: [PATCH 03/26] phy: qcom: add the SGMII SerDes PHY driver
 Content-Language: en-US
 To:     Bartosz Golaszewski <brgl@bgdev.pl>, Vinod Koul <vkoul@kernel.org>,
         Bhupesh Sharma <bhupesh.sharma@linaro.org>,
@@ -80,9 +79,9 @@ Cc:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-stm32@st-md-mailman.stormreply.com,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 References: <20230612092355.87937-1-brgl@bgdev.pl>
- <20230612092355.87937-23-brgl@bgdev.pl>
+ <20230612092355.87937-4-brgl@bgdev.pl>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230612092355.87937-23-brgl@bgdev.pl>
+In-Reply-To: <20230612092355.87937-4-brgl@bgdev.pl>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -100,33 +99,77 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On 12.06.2023 11:23, Bartosz Golaszewski wrote:
 > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > 
-> Add the internal SGMII/SerDes PHY node for sa8775p platforms.
+> Implement support for the SGMII/SerDes PHY present on various Qualcomm
+> platforms.
 > 
 > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/sa8775p.dtsi | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> index b130136acffe..0e59000a0c82 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-> @@ -1837,6 +1837,15 @@ adreno_smmu: iommu@3da0000 {
->  				     <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>;
->  		};
->  
-> +		serdes_phy: phy@8901000 {
-> +			compatible = "qcom,sa8775p-dwmac-sgmii-phy";
-> +			reg = <0 0x08901000 0 0xe10>;
-The usage of 0 is inconsistent with 0x0 everywhere else
+> +static const struct regmap_config qcom_dwmac_sgmii_phy_regmap_cfg = {
+> +	.reg_bits		= 32,
+> +	.val_bits		= 32,
+> +	.reg_stride		= 4,
+> +	.use_relaxed_mmio	= true,
+> +	.disable_locking	= true,
+The last two are rather brave, no?
 
 Konrad
-> +			clocks = <&gcc GCC_SGMI_CLKREF_EN>;
-> +			clock-names = "sgmi_ref";
-> +			#phy-cells = <0>;
-> +			status = "disabled";
-> +		};
+> +};
 > +
->  		pdc: interrupt-controller@b220000 {
->  			compatible = "qcom,sa8775p-pdc", "qcom,pdc";
->  			reg = <0x0 0x0b220000 0x0 0x30000>,
+> +static int qcom_dwmac_sgmii_phy_probe(struct platform_device *pdev)
+> +{
+> +	struct qcom_dwmac_sgmii_phy_data *data;
+> +	struct device *dev = &pdev->dev;
+> +	struct phy_provider *provider;
+> +	struct clk *refclk;
+> +	void __iomem *base;
+> +	struct phy *phy;
+> +
+> +	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+> +	if (!data)
+> +		return -ENOMEM;
+> +
+> +	base = devm_platform_ioremap_resource(pdev, 0);
+> +	if (IS_ERR(base))
+> +		return PTR_ERR(base);
+> +
+> +	data->regmap = devm_regmap_init_mmio(dev, base,
+> +					     &qcom_dwmac_sgmii_phy_regmap_cfg);
+> +	if (IS_ERR(data->regmap))
+> +		return PTR_ERR(data->regmap);
+> +
+> +	phy = devm_phy_create(dev, NULL, &qcom_dwmac_sgmii_phy_ops);
+> +	if (IS_ERR(phy))
+> +		return PTR_ERR(phy);
+> +
+> +	refclk = devm_clk_get_enabled(dev, "sgmi_ref");
+> +	if (IS_ERR(refclk))
+> +		return PTR_ERR(refclk);
+> +
+> +	provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
+> +	if (IS_ERR(provider))
+> +		return PTR_ERR(provider);
+> +
+> +	phy_set_drvdata(phy, data);
+> +	platform_set_drvdata(pdev, data);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id qcom_dwmac_sgmii_phy_of_match[] = {
+> +	{ .compatible = "qcom,sa8775p-dwmac-sgmii-phy" },
+> +	{ },
+> +};
+> +MODULE_DEVICE_TABLE(of, qcom_dwmac_sgmii_phy_of_match);
+> +
+> +static struct platform_driver qcom_dwmac_sgmii_phy_driver = {
+> +	.probe	= qcom_dwmac_sgmii_phy_probe,
+> +	.driver = {
+> +		.name	= "qcom-dwmac-sgmii-phy",
+> +		.of_match_table	= qcom_dwmac_sgmii_phy_of_match,
+> +	}
+> +};
+> +
+> +module_platform_driver(qcom_dwmac_sgmii_phy_driver);
+> +
+> +MODULE_DESCRIPTION("Qualcomm DWMAC SGMII PHY driver");
+> +MODULE_LICENSE("GPL");
