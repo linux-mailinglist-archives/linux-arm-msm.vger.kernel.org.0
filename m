@@ -2,54 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id B539872BCB9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 11:32:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B584072BCBD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 11:33:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235206AbjFLJcn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 05:32:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48822 "EHLO
+        id S235274AbjFLJc7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 05:32:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232536AbjFLJbT (ORCPT
+        with ESMTP id S229454AbjFLJbW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 05:31:19 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 309844ECD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:25:02 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f730c1253fso29567005e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:25:02 -0700 (PDT)
+        Mon, 12 Jun 2023 05:31:22 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADFA0198D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:25:04 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-30e56fc9fd2so3909067f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 02:25:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1686561901; x=1689153901;
+        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1686561903; x=1689153903;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CLaMx9+e4iuA9k0HKzXztUaaZBEZ9bpdRm0ATPtxSFs=;
-        b=Z0vGtlAOr73GZC/Gj6eNFC/9k2Sm7GthQ5ThOHdTEND/fWcqoz9SHGZU7g4Oejo0+B
-         RaV6BZ/igQvP2b+/IrEGbCH17+t+nX1v97JhXRnct3KrN+NH+rKKSmNU5mCdV4b8VRdx
-         LxPR1YJ1FiMBcCV/4psL9l/br0kTlIiTM9S2TXH8Yt5k/l/Yji6lXbMjA3yDLYaN1t5F
-         yTkATjmoZYcy0mVncUpNLUH8UkjQNLy9HERgoOXFhfpbFPFdkrhehA7+aktL68oKI3fc
-         VfoghKsM37C8k9q6fKStc7pJd2JFqcOuHZ/fiUcQndVgIGO+EMPW0QhTOi40Ae765TFr
-         GNLg==
+        bh=R5Kztbbt+Lx+Q6hVK4LvKEHOry/qYQ8OvL9Z8ei/Rso=;
+        b=P/Jhfjzh0ruh8aQrw/lvBEWcmDeyZDzd+KU0wuDZSn9r92Pbi5G0y48qPXJTHn5RC4
+         kIzNj52wkDwMA68v/kq9zzP3zPaQKZim/cG9i+vNjAzcAMo1M4AcuVkSgWsHGt2DU2LU
+         PFrSXKzl06uMIUf7pVrJo4DjNQp8LvcL0gIpifSO0LwHiJsrWKXsQGTWDhllY4QeBTNF
+         CNaL9VHRXacLDGSae9qdh7Z++fN1rP4KZe9SPL0P3QQeakYkXnojA+fEt/yIZB3h/PPT
+         QNUg7068ipJqt+O5/0maFA8OJzwE+Ya05qCeGA7lNrXRD1vNSDOG0Hl6TSakoutgdRgf
+         VzLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686561901; x=1689153901;
+        d=1e100.net; s=20221208; t=1686561903; x=1689153903;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CLaMx9+e4iuA9k0HKzXztUaaZBEZ9bpdRm0ATPtxSFs=;
-        b=VI5reqRlYnYOgxJ+kiRl6P8gHkIfXf1JFAeZCw7BDPLXA5vg26o9tlUyTaJIRYPNKt
-         sed0DrAXjeVeL9ACGrrJ8hEtkGEBpy2hdoYXx4/gjyBmrh9kULYtcgsKs5/Whbtaajr0
-         JB7IY2tH01qqa8VywA+jjcFHu1omLGIgemTctN6mWgUd26sbB/AwUuUoizf1nope3LO0
-         lv7C8ogFksaXpZtNXipwVRef/Ai2yAEen5Qvf7vxrlp/8YJc9s5st/jMN+A8GqF5P0xA
-         cXRC2AQA9CNrHHodalqReTnhjyu61A18I0cx0act+zjGN+oYcV5WshrtyqymqZRTXRHQ
-         /aRQ==
-X-Gm-Message-State: AC+VfDwg+13CWdgBreQxxywWD+pjhFo6jYJHuYgkuy74rLytVU0j2qtd
-        a3tibeCIWxGPZ6laARuwrMO0zomwiWGFHhBetUE=
-X-Google-Smtp-Source: ACHHUZ7qP7/SyTOU8/DDIX68G7BFQneP8olbAA34G/JnNTqmm2c9ABxgMYXONRfwTSOTiB3F/nspiw==
-X-Received: by 2002:a05:600c:284a:b0:3f7:e818:1eb with SMTP id r10-20020a05600c284a00b003f7e81801ebmr5507867wmb.40.1686561901784;
-        Mon, 12 Jun 2023 02:25:01 -0700 (PDT)
+        bh=R5Kztbbt+Lx+Q6hVK4LvKEHOry/qYQ8OvL9Z8ei/Rso=;
+        b=BbzQy8FyEn78hv4MH9PBTB35i8YKmfJsu2MUw9tM27ZJFqOZ0LH7rGLoQgaDGCkawL
+         pN7rqZ4U6C1NTzhPb98xcFryviDs6QtzQuGGSXw5F75RGQJJQXclPPsWW6SZpGi9xxHL
+         4FZOwlqTkG6GtTTE6KvK4h/GZAwaqr6c5iRhbZ5nzKUdf5cq3OajIfzhAf2YYpaa8zQ0
+         kPD+b7BCs3a1V3MhaGkFtncaxVzMWR/Y36GhrdO9YoqjrSWe+ECgK9GY8EaISqTjfNAv
+         /fpKShgDVp6Bc7vGxxJ35OZy44/Z+2RksR/JyXEnTStkmsSp8Co1boMA5AqJKqMl2SHk
+         gozg==
+X-Gm-Message-State: AC+VfDxnWdBCFuaH5ud4Yb8XQm0RYfgqPzmSgps9JsgQ35RWSQMdZH+E
+        Q6FAZzg9xjmoXn8apfTJLPTZvg==
+X-Google-Smtp-Source: ACHHUZ6kJTKSQMRxQnmZHKgDHv+8GM+Ey+dfH5KXUQrQ58aTzmadnxCcaM+NOxPdk4JKh+HKGp5Seg==
+X-Received: by 2002:a5d:6403:0:b0:307:7e64:4b52 with SMTP id z3-20020a5d6403000000b003077e644b52mr4735283wru.36.1686561903258;
+        Mon, 12 Jun 2023 02:25:03 -0700 (PDT)
 Received: from brgl-uxlite.home ([2a01:cb1d:334:ac00:a222:bbe9:c688:33ae])
-        by smtp.gmail.com with ESMTPSA id p14-20020a7bcc8e000000b003f727764b10sm10892044wma.4.2023.06.12.02.25.00
+        by smtp.gmail.com with ESMTPSA id p14-20020a7bcc8e000000b003f727764b10sm10892044wma.4.2023.06.12.02.25.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 Jun 2023 02:25:01 -0700 (PDT)
+        Mon, 12 Jun 2023 02:25:02 -0700 (PDT)
 From:   Bartosz Golaszewski <brgl@bgdev.pl>
 To:     Vinod Koul <vkoul@kernel.org>,
         Bhupesh Sharma <bhupesh.sharma@linaro.org>,
@@ -73,9 +73,9 @@ Cc:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
         linux-stm32@st-md-mailman.stormreply.com,
         Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Subject: [PATCH 25/26] arm64: dts: qcom: sa8775p-ride: add pin functions for ethernet0
-Date:   Mon, 12 Jun 2023 11:23:54 +0200
-Message-Id: <20230612092355.87937-26-brgl@bgdev.pl>
+Subject: [PATCH 26/26] arm64: dts: qcom: sa8775p-ride: enable ethernet0
+Date:   Mon, 12 Jun 2023 11:23:55 +0200
+Message-Id: <20230612092355.87937-27-brgl@bgdev.pl>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230612092355.87937-1-brgl@bgdev.pl>
 References: <20230612092355.87937-1-brgl@bgdev.pl>
@@ -93,40 +93,113 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Add the MDC and MDIO pin functions for ethernet0 on sa8775p-ride.
+Enable the first 1Gb ethernet port on sa8775p-ride development board.
 
 Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 89 +++++++++++++++++++++++
+ 1 file changed, 89 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-index 7754788ea775..dbd9553aa5c7 100644
+index dbd9553aa5c7..13508271bca8 100644
 --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
 +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-@@ -370,6 +370,22 @@ &spi16 {
+@@ -261,6 +261,95 @@ vreg_l8e: ldo8 {
+ 	};
  };
  
- &tlmm {
-+	ethernet0_default: ethernet0-default-state {
-+		ethernet0_mdc: ethernet0-mdc-pins {
-+			pins = "gpio8";
-+			function = "emac0_mdc";
-+			drive-strength = <16>;
-+			bias-pull-up;
-+		};
++&ethernet0 {
++	phy-mode = "sgmii";
++	phy-handle = <&sgmii_phy>;
++	phy-supply = <&vreg_l5a>;
 +
-+		ethernet0_mdio: ethernet0-mdio-pins {
-+			pins = "gpio9";
-+			function = "emac0_mdio";
-+			drive-strength = <16>;
-+			bias-pull-up;
++	pinctrl-0 = <&ethernet0_default>;
++	pinctrl-names = "default";
++
++	snps,mtl-rx-config = <&mtl_rx_setup>;
++	snps,mtl-tx-config = <&mtl_tx_setup>;
++	snps,ps-speed = <1000>;
++
++	status = "okay";
++
++	mdio {
++		compatible = "snps,dwmac-mdio";
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
++		reset-delay-us = <11000>;
++		reset-post-delay-us = <70000>;
++
++		sgmii_phy: phy@8 {
++			reg = <0x8>;
++			device_type = "ethernet-phy";
 +		};
 +	};
 +
- 	qup_uart10_default: qup-uart10-state {
- 		pins = "gpio46", "gpio47";
- 		function = "qup1_se3";
++	mtl_rx_setup: rx-queues-config {
++		snps,rx-queues-to-use = <4>;
++		snps,rx-sched-sp;
++
++		queue0 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x0>;
++			snps,route-up;
++			snps,priority = <0x1>;
++		};
++
++		queue1 {
++			snps,dcb-algorithm;
++			snps,map-to-dma-channel = <0x1>;
++			snps,route-ptp;
++		};
++
++		queue2 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x2>;
++			snps,route-avcp;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,map-to-dma-channel = <0x3>;
++			snps,priority = <0xc>;
++		};
++	};
++
++	mtl_tx_setup: tx-queues-config {
++		snps,tx-queues-to-use = <4>;
++		snps,tx-sched-sp;
++
++		queue0 {
++			snps,dcb-algorithm;
++		};
++
++		queue1 {
++			snps,dcb-algorithm;
++		};
++
++		queue2 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++
++		queue3 {
++			snps,avb-algorithm;
++			snps,send_slope = <0x1000>;
++			snps,idle_slope = <0x1000>;
++			snps,high_credit = <0x3e800>;
++			snps,low_credit = <0xffc18000>;
++		};
++	};
++};
++
+ &i2c11 {
+ 	clock-frequency = <400000>;
+ 	pinctrl-0 = <&qup_i2c11_default>;
 -- 
 2.39.2
 
