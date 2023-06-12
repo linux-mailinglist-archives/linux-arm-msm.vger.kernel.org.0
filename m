@@ -2,156 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DA9772CEA1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 20:41:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42D4E72CEA5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 20:42:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233213AbjFLSlS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 14:41:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58408 "EHLO
+        id S231734AbjFLSmf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 14:42:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58828 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231734AbjFLSlR (ORCPT
+        with ESMTP id S229742AbjFLSme (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 14:41:17 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3E05419F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 11:41:16 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4f619c2ba18so5310226e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 11:41:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686595274; x=1689187274;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/QUMNftoK3zzaTeLshLJbjaR8+HWscZAYJqyMJcB1so=;
-        b=ujHZxnRHYLMz614l58h+lcmX+0b+Ex9iJp5CJqxKe+GiE3M1s5TslY27F/OLmSCJag
-         lhmhWeXKrtKXum1UPsnS4SDvFZmfDi5dT17HNrXAQc0fV1iSkzBN4jdV586PAtalD+r1
-         sSVzD6ly+M6sjoa80LwoQotpzw3MDu9KeZXWIBVuEbzE+7puwqAJ6QtWj1bizIMlJpb+
-         4o1celqoMhiP8FZ++ckfEuwwMSrmewFIgDXg/cIf6L6A+O/de8MQcPdRokoi3jOyanw7
-         Hd/JYgYxeKVa8mPbSPDBZBMmT8x0YQT1tMbOW7P+/jHhi2ryfPaq2fk7C5sD1Cqxb3MR
-         XD1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686595274; x=1689187274;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/QUMNftoK3zzaTeLshLJbjaR8+HWscZAYJqyMJcB1so=;
-        b=VD4cvtHpIHgIzfAg0YuvzYdXZ11V6YGDG3Hy/dbKtBTorkECreUbXM1Q+IGENbsVDD
-         X5c3IVN6iqszR/3w/ItM8TdimkR0AYGw4bLLzSuDWgxcP+akZ+cFwnwz+ovc5iHikghQ
-         MRY7NrpRU8aogJxB7aixwKZfJnf03+DcoWgnvL3V3viSm/hLvoJqVXHIcGwKQYD02JCm
-         aFPGuoVXacdaA1YBaRdunUX9DI5O4vzuRKc8Bq8z5I6UPqj9+e6XXriW2R/2SnhH9Rwi
-         YlIQDePqSkWhxclY8WAVBW9JkoIsyWlBREe3stnQ/HwKw+v7khRt4XMjzyEc5MqFGLOJ
-         fH6w==
-X-Gm-Message-State: AC+VfDw4nle2F4D2e6y1BnXBZxP32lOWbrTb7qZYSBarbka8p8fZ5ElD
-        hXjUKfQU7TJLnqt7uwk9Jepgrw==
-X-Google-Smtp-Source: ACHHUZ7tWgzTEFY3Q42kv0aFQRMHPRkCflx+J1vl3G7efBQ0wZQ5REm5K764+9dqKgg9U/7AR5qzoQ==
-X-Received: by 2002:ac2:5b4d:0:b0:4f4:b0a5:b583 with SMTP id i13-20020ac25b4d000000b004f4b0a5b583mr4872769lfp.44.1686595274514;
-        Mon, 12 Jun 2023 11:41:14 -0700 (PDT)
-Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id k12-20020ac2456c000000b004f37c22b410sm1509056lfm.67.2023.06.12.11.41.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jun 2023 11:41:14 -0700 (PDT)
-Message-ID: <250b3eb3-90ea-b5ea-ff58-47b924d88b74@linaro.org>
-Date:   Mon, 12 Jun 2023 21:41:13 +0300
+        Mon, 12 Jun 2023 14:42:34 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1E4F184
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 11:42:33 -0700 (PDT)
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35CBSUGu019113;
+        Mon, 12 Jun 2023 18:42:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=kY0Xfg9jXaRg/g2hTXAebVhXfULox+giNkIqcQEfuQ4=;
+ b=da0HmoBoccyWvXXUTBiWwBf8a+329TWEDXteGYnzR2ci9jxxAu3/nwG5GrjoFrto0ssz
+ 6/IfYUnwazHC5Vgih/ADyQyAmwO59FFG4iufS2SyMyDlKiZXCBBebGNLQPUsoN6YGdUM
+ /fooEr7t3svZE6wMaC3X6rYVru1tiielD9SaEkQhaR3BMu/FLSdPtnT8iVK95RQvHNhq
+ nLnrR6yeJQW+Cr8KVFmxpfnkDYXERbAnnVaDDfOf3yaNK6y+RL6RgEj/NHhhj+dYvlA1
+ H2nj5iEqOiD1IBLEVoxOqn2mURZeGKed3uowpcY54pMMJW5D6iDBcMrzdSLuzvz5ONE9 Ng== 
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r4g6ec584-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 12 Jun 2023 18:42:23 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35CIgMdM007744
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 12 Jun 2023 18:42:22 GMT
+Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 12 Jun
+ 2023 11:42:19 -0700
+Message-ID: <7723b34b-b55b-5bcc-beb5-645ccf54d216@quicinc.com>
+Date:   Mon, 12 Jun 2023 11:42:18 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH 1/2] drm/msm: provide fb_dirty implemenation
-Content-Language: en-GB
-To:     Thomas Zimmermann <tzimmermann@suse.de>,
+Subject: Re: [PATCH 1/2] drm/msm/dpu: do not enable color-management if DSPPs
+ are not available
+Content-Language: en-US
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     freedreno@lists.freedesktop.org,
-        Degdag Mohamed <degdagmohamed@gmail.com>,
-        linux-arm-msm@vger.kernel.org,
+CC:     Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Bjorn Andersson <andersson@kernel.org>,
-        dri-devel@lists.freedesktop.org, Stephen Boyd <swboyd@chromium.org>
-References: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org>
- <53a2cbc6-321d-704c-d6cc-f2fcc249f321@suse.de>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <53a2cbc6-321d-704c-d6cc-f2fcc249f321@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>,
+        Yongqin Liu <yongqin.liu@linaro.org>
+References: <20230612182534.3345805-1-dmitry.baryshkov@linaro.org>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <20230612182534.3345805-1-dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: goLvgH_ztT06Nxgc9DzHalYfCnLo94Da
+X-Proofpoint-GUID: goLvgH_ztT06Nxgc9DzHalYfCnLo94Da
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-12_14,2023-06-12_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 spamscore=0 suspectscore=0 impostorscore=0 mlxlogscore=792
+ adultscore=0 mlxscore=0 clxscore=1011 bulkscore=0 malwarescore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306120162
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/06/2023 11:21, Thomas Zimmermann wrote:
-> Hi
-> 
-> Am 12.06.23 um 05:16 schrieb Dmitry Baryshkov:
->> Since commit 93e81e38e197 ("drm/fb_helper: Minimize damage-helper
->> overhead") the drm_fb_helper_funcs::fb_dirty helper is required for
->> proper dirty/damage processing. The drm/msm driver requires that to
->> function to let CMD panels to work. Use simplified version of
->> drm_fbdev_generic_helper_fb_dirty() to fix support for CMD mode panels.
->>
->> Reported-by: Degdag Mohamed <degdagmohamed@gmail.com>
->> Fixes: 93e81e38e197 ("drm/fb_helper: Minimize damage-helper overhead")
->> Cc: Thomas Zimmermann <tzimmermann@suse.de>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-> 
-> To make mmap work correctly, you'll also need deferred I/O in the fbdev 
-> code. AFAICT the driver never supported that.
 
-We do not use the deferred I/O. The damage/dirty tracking is used to 
-check whether we should ping the CMD panel or not. See [1]
 
-[1] https://lore.kernel.org/all/20220223191118.881321-1-robdclark@gmail.com/
-
+On 6/12/2023 11:25 AM, Dmitry Baryshkov wrote:
+> We can not support color management without DSPP blocks being provided
+> in the HW catalog. Do not enable color management for CRTCs if num_dspps
+> is 0.
 > 
-> Best regards
-> Thomas
-> 
->> ---
->>   drivers/gpu/drm/msm/msm_fbdev.c | 20 ++++++++++++++++++++
->>   1 file changed, 20 insertions(+)
->>
->> diff --git a/drivers/gpu/drm/msm/msm_fbdev.c 
->> b/drivers/gpu/drm/msm/msm_fbdev.c
->> index fa9c1cbffae3..b933a85420f6 100644
->> --- a/drivers/gpu/drm/msm/msm_fbdev.c
->> +++ b/drivers/gpu/drm/msm/msm_fbdev.c
->> @@ -139,8 +139,28 @@ static int msm_fbdev_create(struct drm_fb_helper 
->> *helper,
->>       return ret;
->>   }
->> +static int msm_fbdev_fb_dirty(struct drm_fb_helper *helper,
->> +                  struct drm_clip_rect *clip)
->> +{
->> +    struct drm_device *dev = helper->dev;
->> +    int ret;
->> +
->> +    /* Call damage handlers only if necessary */
->> +    if (!(clip->x1 < clip->x2 && clip->y1 < clip->y2))
->> +        return 0;
->> +
->> +    if (helper->fb->funcs->dirty) {
->> +        ret = helper->fb->funcs->dirty(helper->fb, NULL, 0, 0, clip, 1);
->> +        if (drm_WARN_ONCE(dev, ret, "Dirty helper failed: ret=%d\n", 
->> ret))
->> +            return ret;
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->>   static const struct drm_fb_helper_funcs msm_fb_helper_funcs = {
->>       .fb_probe = msm_fbdev_create,
->> +    .fb_dirty = msm_fbdev_fb_dirty,
->>   };
->>   /*
+> Fixes: 4259ff7ae509 ("drm/msm/dpu: add support for pcc color block in dpu driver")
+> Reported-by: Yongqin Liu <yongqin.liu@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
 > 
 
--- 
-With best wishes
-Dmitry
+LGTM,
 
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
