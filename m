@@ -2,77 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3840A72C1EB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 13:01:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC7A472C284
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 13:09:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237066AbjFLLB1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 07:01:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36692 "EHLO
+        id S238590AbjFLLJD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 07:09:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237087AbjFLLBE (ORCPT
+        with ESMTP id S237809AbjFLLIr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 07:01:04 -0400
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26392E77
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 03:48:11 -0700 (PDT)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id D956E2032C;
-        Mon, 12 Jun 2023 10:48:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1686566889; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=FCu663PTlSNkarxlW2wY1sOHN+ZqnR9ZrvySsxDsNDw=;
-        b=c6N4nHtr4BYpv6vypswiPQ2TEq/EKmF1bB7gSwwW9zze6DxPdpQ26evKbsslOO9stMU8Hq
-        EaqOs0O9avKdoHy8LOKsmJxxrGuivdjTcym4vtDM+npa7Hb37z7h6Wd9z1bIaMb8udfDcV
-        5mk9ZKdpRde+xAYQF4toYxhKNatOddk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1686566889;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=FCu663PTlSNkarxlW2wY1sOHN+ZqnR9ZrvySsxDsNDw=;
-        b=dlvgroL1tdwrcEfR8N9caFJEJx/+Mks1skTJXg/sHuYMV1Fus1kzH+4jylyc1ghvgnwib1
-        YqzWElDOqA+CmLCQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id A6E73138EC;
-        Mon, 12 Jun 2023 10:48:09 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id /SHVJ+n3hmSVNAAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Mon, 12 Jun 2023 10:48:09 +0000
-Message-ID: <1aaf5a23-541b-527d-25c3-55c94452390e@suse.de>
-Date:   Mon, 12 Jun 2023 12:48:08 +0200
+        Mon, 12 Jun 2023 07:08:47 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A860E3C0E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 03:57:31 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f70fc4682aso28697485e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 03:57:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686567450; x=1689159450;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=W3kmvUAfNo3YbORL99wyB9d/VkxQG+CDQISNkS7AYFY=;
+        b=LbtlzcSpmCCuP4cm7gDwerVL1WTk9KNh06oHq9A0mwZTE4G+ZpxLqhwilrdo/3hoo3
+         QsUrFkAy/k/STcQupiaxgaWtgyIMwXENuCeVNBBnp+k+W5tGENmphRRzKVgZx7C3okm5
+         T4EfzBjd40y5kX4ueOq4j1qRqqJmz+tKshdmXy1KaYIfecHsq9EpUpIUj7HKheeRngPw
+         sdMu/QClAIkcDd6hzSAdtFk3MLofcdiUtQvVd47tgEuRU8z2vbyyKm21EleT/OEidl64
+         Yxdi9vCi7wltWFQfSolkQYjGOmeqxT1OoCStSey2VhEsxB2fyZu7F6cmjSe2fvngWv0K
+         5Oag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686567450; x=1689159450;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=W3kmvUAfNo3YbORL99wyB9d/VkxQG+CDQISNkS7AYFY=;
+        b=QuDbW4+WeLSCeUy4hHca0FEHLWp2kd7z6SKngFCsRUdmPYUgf0OyOeEQKoB055xhBC
+         sJT15H1sQiLxWcR2T3rxuT1uC+LPCBFeQ33k8r5UgFdS2b3WgxHOmsM/CzGl6UZWS7jo
+         XrX9dYMVTzki3ntvMwhn8N2aOU9rKOZhdKf6lHdnJe5ocJxF6Sz7UcgMEPXSaiOmJ8dk
+         C6qA+W1cgNTzAsyWi3tPDnDH8PFPP0OfU2wDlVBIdF3sdnQ78jZBHrnOCJJ86ztGpLkN
+         7nanUDTLg4U23xxD0drZmCJjxnK74ZS9aWdgQ77gJlor+VwTrD0m6g9Ytg8dfVXKJ6wZ
+         z6jw==
+X-Gm-Message-State: AC+VfDzQXHCUqtBKT5EkHZNce2Nc6voLccPAq9JW7Nk0Jz8NUyWfw4Nk
+        ebMljFbH/mzY4St0b2Fll39iYg==
+X-Google-Smtp-Source: ACHHUZ66P2FM5CekuhNr41io1xfJ2KVdwDqa0FLk9jJsHmsoS/bE3S3iqKRvLRp1yuUtDYfNOlpO/g==
+X-Received: by 2002:a1c:f718:0:b0:3f7:3526:d96f with SMTP id v24-20020a1cf718000000b003f73526d96fmr5775811wmh.27.1686567450090;
+        Mon, 12 Jun 2023 03:57:30 -0700 (PDT)
+Received: from [192.168.1.195] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id gy15-20020a05600c880f00b003f7f475c3bcsm14697856wmb.1.2023.06.12.03.57.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Jun 2023 03:57:29 -0700 (PDT)
+Message-ID: <b65f4d0b-cc2a-f4d6-5d9d-a14e6a9cc444@linaro.org>
+Date:   Mon, 12 Jun 2023 11:57:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH 1/2] drm/msm: provide fb_dirty implemenation
+ Thunderbird/102.11.0
+Subject: Re: [PATCH v2] misc: fastrpc: Fix double free of 'buf' in error path
 Content-Language: en-US
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     freedreno@lists.freedesktop.org,
-        Degdag Mohamed <degdagmohamed@gmail.com>,
-        Sean Paul <sean@poorly.run>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        dri-devel@lists.freedesktop.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org
-References: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org>
- <aenzh4vscayeqvyjpbxifog7l3yuxv5lh5cizcie7dk7awx5z7@nuajlsildlw6>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-In-Reply-To: <aenzh4vscayeqvyjpbxifog7l3yuxv5lh5cizcie7dk7awx5z7@nuajlsildlw6>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------h50Diuz4wHRKWuFPd1suWAbq"
-X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
+To:     Sukrut Bellary <sukrut.bellary@linux.com>,
+        Amol Maheshwari <amahesh@qti.qualcomm.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Dan Carpenter <dan.carpenter@linaro.org>,
+        Abel Vesa <abel.vesa@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        kernel-janitors@vger.kernel.org,
+        Shuah Khan <skhan@linuxfoundation.org>
+References: <20230602113602.1271695-1-sukrut.bellary@linux.com>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+In-Reply-To: <20230602113602.1271695-1-sukrut.bellary@linux.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -81,103 +81,63 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------h50Diuz4wHRKWuFPd1suWAbq
-Content-Type: multipart/mixed; boundary="------------xWMVhzm8eIvZf8hieMRm6Pfw";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Marijn Suijten <marijn.suijten@somainline.org>,
- Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: freedreno@lists.freedesktop.org, Degdag Mohamed
- <degdagmohamed@gmail.com>, Sean Paul <sean@poorly.run>,
- Bjorn Andersson <andersson@kernel.org>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>, dri-devel@lists.freedesktop.org,
- Stephen Boyd <swboyd@chromium.org>, linux-arm-msm@vger.kernel.org
-Message-ID: <1aaf5a23-541b-527d-25c3-55c94452390e@suse.de>
-Subject: Re: [PATCH 1/2] drm/msm: provide fb_dirty implemenation
-References: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org>
- <aenzh4vscayeqvyjpbxifog7l3yuxv5lh5cizcie7dk7awx5z7@nuajlsildlw6>
-In-Reply-To: <aenzh4vscayeqvyjpbxifog7l3yuxv5lh5cizcie7dk7awx5z7@nuajlsildlw6>
 
---------------xWMVhzm8eIvZf8hieMRm6Pfw
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
 
-SGkNCg0KQW0gMTIuMDYuMjMgdW0gMTE6MTQgc2NocmllYiBNYXJpam4gU3VpanRlbjoNCj4g
-T24gMjAyMy0wNi0xMiAwNjoxNjoxNSwgRG1pdHJ5IEJhcnlzaGtvdiB3cm90ZToNCj4+IFNp
-bmNlIGNvbW1pdCA5M2U4MWUzOGUxOTcgKCJkcm0vZmJfaGVscGVyOiBNaW5pbWl6ZSBkYW1h
-Z2UtaGVscGVyDQo+PiBvdmVyaGVhZCIpIHRoZSBkcm1fZmJfaGVscGVyX2Z1bmNzOjpmYl9k
-aXJ0eSBoZWxwZXIgaXMgcmVxdWlyZWQgZm9yDQo+PiBwcm9wZXIgZGlydHkvZGFtYWdlIHBy
-b2Nlc3NpbmcuIFRoZSBkcm0vbXNtIGRyaXZlciByZXF1aXJlcyB0aGF0IHRvDQo+PiBmdW5j
-dGlvbiB0byBsZXQgQ01EIHBhbmVscyB0byB3b3JrLiBVc2Ugc2ltcGxpZmllZCB2ZXJzaW9u
-IG9mDQo+PiBkcm1fZmJkZXZfZ2VuZXJpY19oZWxwZXJfZmJfZGlydHkoKSB0byBmaXggc3Vw
-cG9ydCBmb3IgQ01EIG1vZGUgcGFuZWxzLg0KPj4NCj4+IFJlcG9ydGVkLWJ5OiBEZWdkYWcg
-TW9oYW1lZCA8ZGVnZGFnbW9oYW1lZEBnbWFpbC5jb20+DQo+PiBGaXhlczogOTNlODFlMzhl
-MTk3ICgiZHJtL2ZiX2hlbHBlcjogTWluaW1pemUgZGFtYWdlLWhlbHBlciBvdmVyaGVhZCIp
-DQo+PiBDYzogVGhvbWFzIFppbW1lcm1hbm4gPHR6aW1tZXJtYW5uQHN1c2UuZGU+DQo+PiBT
-aWduZWQtb2ZmLWJ5OiBEbWl0cnkgQmFyeXNoa292IDxkbWl0cnkuYmFyeXNoa292QGxpbmFy
-by5vcmc+DQo+IA0KPiBUaGFua3MsIHRoaXMgc29sdmVzIHRoZSBmb2xsb3dpbmcgd2Fybmlu
-ZzoNCj4gDQo+ICAgICAgbXNtX2RwdSBhZTAxMDAwLmRpc3BsYXktY29udHJvbGxlcjogZHJt
-X1dBUk5fT05fT05DRSghaGVscGVyLT5mdW5jcy0+ZmJfZGlydHkpDQo+ICAgICAgV0FSTklO
-RzogQ1BVOiAwIFBJRDogOSBhdCBkcml2ZXJzL2dwdS9kcm0vZHJtX2ZiX2hlbHBlci5jOjM4
-MSBkcm1fZmJfaGVscGVyX2RhbWFnZV93b3JrKzB4MWMwLzB4MjBjDQo+IA0KPiBSZXZpZXdl
-ZC1ieTogTWFyaWpuIFN1aWp0ZW4gPG1hcmlqbi5zdWlqdGVuQHNvbWFpbmxpbmUub3JnPg0K
-PiANCj4gTm90ZSB0aGF0IGRybV9mYl9oZWxwZXJfZnVuY3MgZG9jdW1lbnRzIHRoaXMgYXMg
-IlRoaXMgY2FsbGJhY2sgaXMNCj4gb3B0aW9uYWwiOiBpcyBpdCBubyBsb25nZXIgb3B0aW9u
-YWwsIG9yIGFyZSB3ZSBlbmFibGluZyBhIGRhbWFnZSBmZWF0dXJlDQo+IHRoYXQgbWFrZXMg
-aXQgbm90LW9wdGlvbmFsPw0KDQpJdCBpcyBvcHRpb25hbCBpbiB0aGUgc2Vuc2UgdGhhdCBt
-b3N0IGhhcmR3YXJlIGFuZCBkcml2ZXJzIGRvbid0IHJlcXVpcmUgDQpkYW1hZ2UgaGFuZGxp
-bmcuIFRob3NlIHRoYXQgZG8sIGFsc28gcmVxdWlyZSB0aGlzIGNhbGxiYWNrLg0KDQpCZXN0
-IHJlZ2FyZHMNClRob21hcw0KDQo+IA0KPiAtIE1hcmlqbg0KPiANCj4+IC0tLQ0KPj4gICBk
-cml2ZXJzL2dwdS9kcm0vbXNtL21zbV9mYmRldi5jIHwgMjAgKysrKysrKysrKysrKysrKysr
-KysNCj4+ICAgMSBmaWxlIGNoYW5nZWQsIDIwIGluc2VydGlvbnMoKykNCj4+DQo+PiBkaWZm
-IC0tZ2l0IGEvZHJpdmVycy9ncHUvZHJtL21zbS9tc21fZmJkZXYuYyBiL2RyaXZlcnMvZ3B1
-L2RybS9tc20vbXNtX2ZiZGV2LmMNCj4+IGluZGV4IGZhOWMxY2JmZmFlMy4uYjkzM2E4NTQy
-MGY2IDEwMDY0NA0KPj4gLS0tIGEvZHJpdmVycy9ncHUvZHJtL21zbS9tc21fZmJkZXYuYw0K
-Pj4gKysrIGIvZHJpdmVycy9ncHUvZHJtL21zbS9tc21fZmJkZXYuYw0KPj4gQEAgLTEzOSw4
-ICsxMzksMjggQEAgc3RhdGljIGludCBtc21fZmJkZXZfY3JlYXRlKHN0cnVjdCBkcm1fZmJf
-aGVscGVyICpoZWxwZXIsDQo+PiAgIAlyZXR1cm4gcmV0Ow0KPj4gICB9DQo+PiAgIA0KPj4g
-K3N0YXRpYyBpbnQgbXNtX2ZiZGV2X2ZiX2RpcnR5KHN0cnVjdCBkcm1fZmJfaGVscGVyICpo
-ZWxwZXIsDQo+PiArCQkJICAgICAgc3RydWN0IGRybV9jbGlwX3JlY3QgKmNsaXApDQo+PiAr
-ew0KPj4gKwlzdHJ1Y3QgZHJtX2RldmljZSAqZGV2ID0gaGVscGVyLT5kZXY7DQo+PiArCWlu
-dCByZXQ7DQo+PiArDQo+PiArCS8qIENhbGwgZGFtYWdlIGhhbmRsZXJzIG9ubHkgaWYgbmVj
-ZXNzYXJ5ICovDQo+PiArCWlmICghKGNsaXAtPngxIDwgY2xpcC0+eDIgJiYgY2xpcC0+eTEg
-PCBjbGlwLT55MikpDQo+PiArCQlyZXR1cm4gMDsNCj4+ICsNCj4+ICsJaWYgKGhlbHBlci0+
-ZmItPmZ1bmNzLT5kaXJ0eSkgew0KPj4gKwkJcmV0ID0gaGVscGVyLT5mYi0+ZnVuY3MtPmRp
-cnR5KGhlbHBlci0+ZmIsIE5VTEwsIDAsIDAsIGNsaXAsIDEpOw0KPj4gKwkJaWYgKGRybV9X
-QVJOX09OQ0UoZGV2LCByZXQsICJEaXJ0eSBoZWxwZXIgZmFpbGVkOiByZXQ9JWRcbiIsIHJl
-dCkpDQo+PiArCQkJcmV0dXJuIHJldDsNCj4+ICsJfQ0KPj4gKw0KPj4gKwlyZXR1cm4gMDsN
-Cj4+ICt9DQo+PiArDQo+PiAgIHN0YXRpYyBjb25zdCBzdHJ1Y3QgZHJtX2ZiX2hlbHBlcl9m
-dW5jcyBtc21fZmJfaGVscGVyX2Z1bmNzID0gew0KPj4gICAJLmZiX3Byb2JlID0gbXNtX2Zi
-ZGV2X2NyZWF0ZSwNCj4+ICsJLmZiX2RpcnR5ID0gbXNtX2ZiZGV2X2ZiX2RpcnR5LA0KPj4g
-ICB9Ow0KPj4gICANCj4+ICAgLyoNCj4+IC0tIA0KPj4gMi4zOS4yDQo+Pg0KDQotLSANClRo
-b21hcyBaaW1tZXJtYW5uDQpHcmFwaGljcyBEcml2ZXIgRGV2ZWxvcGVyDQpTVVNFIFNvZnR3
-YXJlIFNvbHV0aW9ucyBHZXJtYW55IEdtYkgNCkZyYW5rZW5zdHJhc3NlIDE0NiwgOTA0NjEg
-TnVlcm5iZXJnLCBHZXJtYW55DQpHRjogSXZvIFRvdGV2LCBBbmRyZXcgTXllcnMsIEFuZHJl
-dyBNY0RvbmFsZCwgQm91ZGllbiBNb2VybWFuDQpIUkIgMzY4MDkgKEFHIE51ZXJuYmVyZykN
-Cg==
+On 02/06/2023 12:36, Sukrut Bellary wrote:
+> smatch warning:
+> drivers/misc/fastrpc.c:1926 fastrpc_req_mmap() error: double free of 'buf'
+> 
+> In fastrpc_req_mmap() error path, the fastrpc buffer is freed in
+> fastrpc_req_munmap_impl() if unmap is successful.
+> 
+> But in the end, there is an unconditional call to fastrpc_buf_free().
+> So the above case triggers the double free of fastrpc buf.
+> 
+> Fixes: 72fa6f7820c4 ("misc: fastrpc: Rework fastrpc_req_munmap")
+> Reviewed-by: Shuah Khan <skhan@linuxfoundation.org>
+> Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+> Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Not sure how was this reviewed-by picked up on this patch.
 
---------------xWMVhzm8eIvZf8hieMRm6Pfw--
+Suggested-by will be a right choice here.
 
---------------h50Diuz4wHRKWuFPd1suWAbq
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
+Will manually edit before applying it.
 
------BEGIN PGP SIGNATURE-----
+--srini
 
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmSG9+gFAwAAAAAACgkQlh/E3EQov+Bq
-XRAAyewe+swtnjV3LrQT6b+db+AgXlmF59zmCm1ZRfRgMgsTh8bXYHR5psdnrJn1PxBtjFqVY9Ro
-Sjsyk4nbZ+RLGHN1nPbBxwjOd89Dfm273hPHr21MmWkaVlGJZCHzTBU0kpnCD03Fgro0iYVxyqGL
-VXLlYimCvSYTSi5b1w/ihrcvNcvHIM0SNkNF8B2uP5TzDWr3xdeYehZetiGf2WqL6Rz546ypHLnO
-yiBzKSmBpXIQbR5bCH5cfYUiK/zCB2vVNvWKuWLIPanhQiklGmhoNk3liL8pU/1YoXOsEQ3QPXKr
-ibq1KUYpCYwdU5KlTA1ihSRwj+8FzJ5sydSJ5l/6VU23Kn043teU5IJ8CcPOY37qdJm+2avSFaEY
-MZLva9UQSYsqUtIy0amsYLn+oNSml9IWNKWxtsH6LGX0DgW9crzci/7Kf2DWAZpGK2Ueq+xB7U+j
-zdjX+dKvDQF9RJFEfCfXvqLlDyALKBHAZ7fbBdhAu8VFZFTgGeT6A6skIkO02G7RylBDMRaewe35
-vK81rfnWyEd13OpIbif80khSVgy/thzkuCLkSuHiBmyBmssMs+53G6dY4joo+mghrc11aDVmXJ5c
-WC8y8dHj48nUmeXfMobNpAKlElBw5Nye0FCgnbY+UaZ94SpLg1lcvJfyWJxlp0xgfbDCc3Dr+K3S
-LSg=
-=mEr3
------END PGP SIGNATURE-----
-
---------------h50Diuz4wHRKWuFPd1suWAbq--
+> Signed-off-by: Sukrut Bellary <sukrut.bellary@linux.com>
+> ---
+> This is based on static analysis. Compilation tested.
+> ---
+> Changes in v2:
+> - Fixed the commit message.
+> - Addressed the review comment about deleting buf from the list
+>    before freeing.
+> - Link to v1: https://lore.kernel.org/all/20230518100829.515143-1-sukrut.bellary@linux.com/
+> ---
+>   drivers/misc/fastrpc.c | 5 ++---
+>   1 file changed, 2 insertions(+), 3 deletions(-)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index f48466960f1b..b3b520fcfb75 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -1882,7 +1882,8 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+>   				      &args[0]);
+>   	if (err) {
+>   		dev_err(dev, "mmap error (len 0x%08llx)\n", buf->size);
+> -		goto err_invoke;
+> +		fastrpc_buf_free(buf);
+> +		return err;
+>   	}
+>   
+>   	/* update the buffer to be able to deallocate the memory on the DSP */
+> @@ -1922,8 +1923,6 @@ static int fastrpc_req_mmap(struct fastrpc_user *fl, char __user *argp)
+>   
+>   err_assign:
+>   	fastrpc_req_munmap_impl(fl, buf);
+> -err_invoke:
+> -	fastrpc_buf_free(buf);
+>   
+>   	return err;
+>   }
