@@ -2,152 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E64BF72C964
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 17:10:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A5EA72C9CC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 17:23:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239750AbjFLPKR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 11:10:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41030 "EHLO
+        id S237981AbjFLPXB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 11:23:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239467AbjFLPJy (ORCPT
+        with ESMTP id S230108AbjFLPXA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 11:09:54 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8FD6AE41;
-        Mon, 12 Jun 2023 08:09:52 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35CDrdde003212;
-        Mon, 12 Jun 2023 15:09:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=We40rKMLG+MEC25B0HGY2atMNWzmRl6ol9yjTjBbbfY=;
- b=NntYswhdnF3o7j1hOEJqs6tPZKC/ueV3kPVbn26ZQ2xd7UZWsyMJxtdOUYjqNlQz/R5f
- boTx7AyP9HNQDQey/BscZcwWcv+hLMcH5DbIQBlQMnANGMWU3lYiVjI0y6eFaPUH2Lgu
- PmNF1LZlYDQx8tHa+vq86SWu6o0Pbm/gbSq9VFlc66JxPDvmUqV7lOTOQefisSsOTD99
- gNiTBozUOcRfviZ10rKtkcec45Hx7wjbRu3bHwTRM+AYUtqGFyenx5paFa1reIGHzw/p
- tCB3jKTosJSVWfDEZKjMLfJcRDdNl4LEX5eC2sbhYoL41R+mxKzzBRB7z1ro5AVJDEMc 6Q== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r4ggr3pdy-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Jun 2023 15:09:41 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35CF9ekQ003169
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Jun 2023 15:09:40 GMT
-Received: from [10.226.59.182] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 12 Jun
- 2023 08:09:40 -0700
-Message-ID: <b5e5c141-b5df-e24d-8fa4-94297d561cec@quicinc.com>
-Date:   Mon, 12 Jun 2023 09:09:39 -0600
+        Mon, 12 Jun 2023 11:23:00 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C17C019B
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 08:22:58 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-3f6da07ff00so46371515e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 08:22:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686583377; x=1689175377;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Uuj0XULtFaQvAuryQsrKeMY0XLRwJecu37s7Jri30GU=;
+        b=rxeKG198QHG4ADhFMnEXxJct6s32p5YodueNk1XzgcqP4fNL6Ypdnze7OBnOnJaG8j
+         VZW81nFHAEny4x35s0LouP5OTg+nE6Plg/jOyFFcbi+4wGr3sN2UH5zDWNw9dJQgkEHg
+         qF5rnmeZwaOtEP08AnTrW8blcCSC320YZUQhXQpHMZg4mNylSdWmjeq01QAtHCg/btDR
+         JQp2SbstKco5erVgrf6aVrWEL65gvEO3mWGmCz/OQ7+0/3KJS7JNEUeUtcfIvAb//O1A
+         WT81C2dXfxZHUrKI8Od8DnOroQZXA8miSgkBEtMRlsJ/Kp7VOne00hBzNQgV0QXpGCew
+         0+iQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686583377; x=1689175377;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Uuj0XULtFaQvAuryQsrKeMY0XLRwJecu37s7Jri30GU=;
+        b=a059iiX0iexA0wog5gnHb/YM08M3s6LEC3OOxmmfxn5Ud4M+tReElsY+0VafCnupJa
+         rL9+bw6G+53MMp0zZrXqMQXyLlllTHwD7JhvT596wcwPvYVvS/KQZIaD8JTQVqlXIdDa
+         bxG9z6LLsYmMy/kaYFM9hDO4s5rTPPcn2iTa3wuHOgENSh1R3vsrUMv666Q0CqIA9Ull
+         TJ6gVQvPsAhq5MBYXg1feykNtT6kfpkyxW1vsdFZ5JKlMVKVUpvu1NFpsjLnWCtA0OgB
+         3wPNCOUDt4XGwK90uQzdX7cHXL/BmDeQFnqGYVPAGt+QEGBwXLGmUl6Z/0SfogwFM4xF
+         kYCg==
+X-Gm-Message-State: AC+VfDwAm7OwXQIKuS1Sn/fC6f3q5wZ6kvIx1cb4Oz5JyZeFn8iOcRgh
+        eLp5V0e6XZyyklyXTxivzoTWqw==
+X-Google-Smtp-Source: ACHHUZ4+8Wc/LhkGQI5K7JEa4ang2eelkn6xRDnu4fOn7Eq0LoQO/Vi5kALxMojL4fgHB8Xo7vKGow==
+X-Received: by 2002:a05:600c:255:b0:3f6:53a:6665 with SMTP id 21-20020a05600c025500b003f6053a6665mr8009562wmj.19.1686583377055;
+        Mon, 12 Jun 2023 08:22:57 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:52eb:f6ff:feb3:451a])
+        by smtp.gmail.com with ESMTPSA id l7-20020a7bc347000000b003f4248dcfcbsm11876512wmj.30.2023.06.12.08.22.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jun 2023 08:22:56 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v4 0/4] arm64: qcom: sm8550: enable PMIC devices
+Date:   Mon, 12 Jun 2023 17:22:48 +0200
+Message-Id: <20230525-topic-sm8550-upstream-pm8550-lpg-dt-v4-0-a288f24af81b@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: [PATCH] accel/qaic: Fix dereferencing freed memory
-Content-Language: en-US
-To:     =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        "Pranjal Ramajor Asha Kanojiya" <quic_pkanojiy@quicinc.com>,
-        Sukrut Bellary <sukrut.bellary@linux.com>,
-        Oded Gabbay <ogabbay@kernel.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <kernel-janitors@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <linaro-mm-sig@lists.linaro.org>, <linux-media@vger.kernel.org>
-References: <20230610021200.377452-1-sukrut.bellary@linux.com>
- <fc979a4e-c30a-2606-9eec-afbba4fdd774@amd.com>
- <e3a867a8-284b-7250-b1b2-1956f533f6b0@quicinc.com>
- <ff196b04-e8c5-52d9-852b-9a9cc7eecdd0@amd.com>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-In-Reply-To: <ff196b04-e8c5-52d9-852b-9a9cc7eecdd0@amd.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 6P2l9VzzfQul7Cq_a4b7dSQKLSzsvKAl
-X-Proofpoint-ORIG-GUID: 6P2l9VzzfQul7Cq_a4b7dSQKLSzsvKAl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-12_06,2023-06-09_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 impostorscore=0
- mlxscore=0 mlxlogscore=999 malwarescore=0 phishscore=0 clxscore=1011
- priorityscore=1501 spamscore=0 bulkscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306120130
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEg4h2QC/53PQW7DIBAF0KtErDsVngEHZ9V7VFlgwDaSAwgcK
+ 1Xkuxenm1ZdJcs/i/f/3Flx2bvCToc7y271xcdQg3g7MDPpMDrwtmaGHIlLlLDE5A2Ui5KSwzW
+ VJTt9gfST5zSCXcBQI6S0iAO2rEq9Lg76rIOZqhWu81yPKbvB3x7Vn+eaJ1+WmL8eS9Zmvz5Xu
+ jbAoZdKkD1K3SJ9zD7oHN9jHvcRz2PCSntsef2i47+xfe2KLyzEimrqVcdbLozo/qH0AkoVVQr
+ JOUEDDeYPum3bN9HeT0LjAQAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1559;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=Xg44Q0NEL8frWaOLXdk+yFgGi/1YYP5AYukfj8+ycW8=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkhzhMZdPDEnFjLZ5hp8RgXNs+zeoS+++3yMCAKcpN
+ EC4QyQmJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZIc4TAAKCRB33NvayMhJ0eB6EA
+ C8LcR6rK3VkoylF4vMMSMIHmFd0poQCe8xecbJTHo4il9cKVaB8CT3fqU7AxPyCtHCt3BlGGMVZO7Y
+ hNaQOb1eJl+6PARDErfaPyRN1Gt1cn0UhVZg4xtEofk6Hsz9hg48O4SFLwXXRfqoD+TjH6gYU18ySd
+ u3jUdrsz8qOTmp59QgrPQ8O0xWd/tzFsFvi0f4oUtu9Ms1+aY9xlt1vMxHkF+f2AmC/1xGMQgtIikC
+ YTgDIQSE4v3wH1QajOQ3sfCDuXsXtN4Dc1dOBftfiAdJVJ7HeXRQnyRDaIBIPOlGgabgGJY/wZxqvh
+ Xeh6x1fYddgkPLAxwtXS3ns9kzMB5hS9umlebRY32nve1Y2Fhdyxm4vxvRaM0CzGE1e/utALDHTo+7
+ u6kdzglctd0ncQMFW47AlI7eYQecapMoLD/LojUCERzBEbaoXbQ8LvWa36KKku/oYzj56F4JVga396
+ gJgVrnTl4NKQRvp9X/GWR3NY19HzssCQfsolMq1p3ZUvEFUyTp196ICmgydoPW13A/rsoC8oi/SCqt
+ vGprrujZSDu0oS4yBCwsDqGh81nO8bdaTLSHanimb6hqzxsaz5yERq8R6VvvxbsgnfoMflN4CYoqu1
+ gK9WgF3jcPYKXqlBjXfOsH4oV9qI2wcE/viC4jyZIcet8UrN4mfAzHV8vcgQ==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/12/2023 7:21 AM, Christian König wrote:
-> Am 12.06.23 um 15:03 schrieb Pranjal Ramajor Asha Kanojiya:
->>
->>
->> On 6/12/2023 4:52 PM, Christian König wrote:
->>>
->>>
->>> Am 10.06.23 um 04:12 schrieb Sukrut Bellary:
->>>> smatch warning:
->>>>     drivers/accel/qaic/qaic_data.c:620 qaic_free_object() error:
->>>>         dereferencing freed memory 'obj->import_attach'
->>>>
->>>> obj->import_attach is detached and freed using dma_buf_detach().
->>>> But used after free to decrease the dmabuf ref count using
->>>> dma_buf_put().
->>>>
->>>> Fixes: ff13be830333 ("accel/qaic: Add datapath")
->>>> Signed-off-by: Sukrut Bellary <sukrut.bellary@linux.com>
->>>> ---
->>>>   drivers/accel/qaic/qaic_data.c | 4 +++-
->>>>   1 file changed, 3 insertions(+), 1 deletion(-)
->>>>
->>>> diff --git a/drivers/accel/qaic/qaic_data.c 
->>>> b/drivers/accel/qaic/qaic_data.c
->>>> index e42c1f9ffff8..7cba4d680ea8 100644
->>>> --- a/drivers/accel/qaic/qaic_data.c
->>>> +++ b/drivers/accel/qaic/qaic_data.c
->>>> @@ -613,11 +613,13 @@ static int qaic_gem_object_mmap(struct 
->>>> drm_gem_object *obj, struct vm_area_struc
->>>>   static void qaic_free_object(struct drm_gem_object *obj)
->>>>   {
->>>>       struct qaic_bo *bo = to_qaic_bo(obj);
->>>> +    struct dma_buf *dmabuf;
->>>
->>> Maybe move that variable into the if.
->>>
->>>>       if (obj->import_attach) {
->>>>           /* DMABUF/PRIME Path */
->>>> +        dmabuf = obj->import_attach->dmabuf;
->>>>           dma_buf_detach(obj->import_attach->dmabuf, 
->>>> obj->import_attach);
->>>> -        dma_buf_put(obj->import_attach->dmabuf);
->>>> +        dma_buf_put(dmabuf);
->>>
->>> I strongly assume you are not using the GEM prime helpers for this?
->>>
->>> Christian.
->>
->> Driver uses drm_gem_prime_fd_to_handle() helper function but it also 
->> registers for ->gem_prime_import() which is internally called by 
->> drm_gem_prime_fd_to_handle(). All the operations done in 
->> gem_prime_import() are undone here.
-> 
-> Then why don't you use drm_prime_gem_destroy() which is the cleanup 
-> helper for imports created by ->gem_prime_import() ?
-> 
-> That looks pretty much identical to what you do here manually.
+This enables the following PMIC devices:
+- PWM RGB LED
+- RTC
+- Volume and Power buttons
 
-I think destroy() wasn't used because we are new to DRM and sometimes 
-confused by the multitude of options.  I appreciate the suggestion and 
-will follow up to see if destroy() will work here, or identify what 
-would prevent the use of it.
+on the SM8550 boards.
 
--Jeff
+No dependencies when applied on next-20230609
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v4:
+- rebased on next-20230609
+- Link to v3: https://lore.kernel.org/r/20230525-topic-sm8550-upstream-pm8550-lpg-dt-v3-0-8823ee43f3fc@linaro.org
+
+Changes in v3:
+- Added all review tags
+- Fixed pinctrl-names/-0 order in last patch
+- Link to v2: https://lore.kernel.org/r/20230525-topic-sm8550-upstream-pm8550-lpg-dt-v2-0-a3b890604c49@linaro.org
+
+Changes in v2:
+- Always enable RTC in a new patch
+- Drop patch enabling RTC on boards
+- Move PON names to meet alphabetical order
+- Link to v1: https://lore.kernel.org/r/20230525-topic-sm8550-upstream-pm8550-lpg-dt-v1-0-4d5d7602f290@linaro.org
+
+---
+Neil Armstrong (4):
+      arm64: dts: qcom: pm8550: add PWM controller
+      arm64: dts: qcom: sm8550-qrd: add notification RGB LED
+      arm64: dts: qcom: pmk8550: always enable RTC PMIC device
+      arm64: dts: qcom: sm8550-qrd: enable PMIC Volume and Power buttons
+
+ arch/arm64/boot/dts/qcom/pm8550.dtsi    | 10 ++++++
+ arch/arm64/boot/dts/qcom/pmk8550.dtsi   |  1 -
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts | 63 +++++++++++++++++++++++++++++++++
+ 3 files changed, 73 insertions(+), 1 deletion(-)
+---
+base-commit: 53ab6975c12d1ad86c599a8927e8c698b144d669
+change-id: 20230525-topic-sm8550-upstream-pm8550-lpg-dt-c31455d22f26
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
