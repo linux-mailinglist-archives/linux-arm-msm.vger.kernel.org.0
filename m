@@ -2,70 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9243A72C1CE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 13:00:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3840A72C1EB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 13:01:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237497AbjFLLAv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 07:00:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36712 "EHLO
+        id S237066AbjFLLB1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 07:01:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36692 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237194AbjFLLA0 (ORCPT
+        with ESMTP id S237087AbjFLLBE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 07:00:26 -0400
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4DAE7A7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 03:47:15 -0700 (PDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-bc5a3075e92so2142980276.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 03:47:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686566834; x=1689158834;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=zK+5/FNj+k4ZWi43EQASjOkAHsMeL62PdJmxEoQuvdw=;
-        b=Fsk6RWO9CMPW7FjB4nUCPNAWgR+seXUZUAMvPpSvNFJGojQyEf/Hm4Wx1154Hl5UDI
-         UB2vYZLwjxghyCIoL+h5RTlVTXC2sF7IqxoFc42xayxgHdbjkHkfrL5Y7kHYjvIXf+Q0
-         4p2Fnz8sNKAjbsxMNGOATxYr7yeRKMQoR0aBp1rxcEzsI1r1myHTdTi0VbJMuapBA+Z/
-         LlJ2jCXgAJqcO2RFsxi7T5vMGGrdRIyf6VJBn6wWxowqb3RlkwFIbeX9t3n/jy+Y46fJ
-         RtyASTqTFzyM4Et8Ky30meP05Rfnz72xlrdQFAcXUGuxrd4Nppt40K27YtRsVioKiAwV
-         hVCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686566834; x=1689158834;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zK+5/FNj+k4ZWi43EQASjOkAHsMeL62PdJmxEoQuvdw=;
-        b=YGF+dBXCV6y1on/jdg3STeIi9kdVSusTE6ukaEMPgMLO0oGGdXOD1eRNqdgRyQInM0
-         cm+siXhuf6HKxnPDDRDhxFr9E6iWbMtLUnN/ub0VSdK5dVoI/lfjpZ6EBM2sqUTxKt3K
-         a08ODWPu0TFaXNVNaw+NBu/I7UTTFGDDNoyH492XrZiSKVDJcZrm/cql5AzCCnf7AMca
-         pNlTk4F+4eLl1EsGPPPTDrZAMuj6cDS9iU+uLZejIpsbydhIx1xKIz+BoulwMap9Dka7
-         XalUiXLAB/JWCKE4cL60V9vRzYQVBIJXmTSHa1lCAO4XzGggujJFX3jWvB72Gkp2Au+p
-         qXSw==
-X-Gm-Message-State: AC+VfDwsVrk3JNJVqBnpHQMhLgORcZQC6JGUeO3w40slX1c/99Qhj42G
-        a5wgoPSvjua4vaYQpj8WIoznk3ZyJLC0vk0uRad9HQ==
-X-Google-Smtp-Source: ACHHUZ6B/OrlRtGQbF7+ZlmWNRQP3wH8yAKtLDhv0Y2cz/pnTQ56MIjj3LtTMrgBz1H2qPBaU5jC32UVg3A0NPJGElc=
-X-Received: by 2002:a5b:d06:0:b0:bc7:47a:9861 with SMTP id y6-20020a5b0d06000000b00bc7047a9861mr4650391ybp.51.1686566834491;
- Mon, 12 Jun 2023 03:47:14 -0700 (PDT)
+        Mon, 12 Jun 2023 07:01:04 -0400
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26392E77
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 03:48:11 -0700 (PDT)
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id D956E2032C;
+        Mon, 12 Jun 2023 10:48:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1686566889; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=FCu663PTlSNkarxlW2wY1sOHN+ZqnR9ZrvySsxDsNDw=;
+        b=c6N4nHtr4BYpv6vypswiPQ2TEq/EKmF1bB7gSwwW9zze6DxPdpQ26evKbsslOO9stMU8Hq
+        EaqOs0O9avKdoHy8LOKsmJxxrGuivdjTcym4vtDM+npa7Hb37z7h6Wd9z1bIaMb8udfDcV
+        5mk9ZKdpRde+xAYQF4toYxhKNatOddk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1686566889;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=FCu663PTlSNkarxlW2wY1sOHN+ZqnR9ZrvySsxDsNDw=;
+        b=dlvgroL1tdwrcEfR8N9caFJEJx/+Mks1skTJXg/sHuYMV1Fus1kzH+4jylyc1ghvgnwib1
+        YqzWElDOqA+CmLCQ==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id A6E73138EC;
+        Mon, 12 Jun 2023 10:48:09 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id /SHVJ+n3hmSVNAAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Mon, 12 Jun 2023 10:48:09 +0000
+Message-ID: <1aaf5a23-541b-527d-25c3-55c94452390e@suse.de>
+Date:   Mon, 12 Jun 2023 12:48:08 +0200
 MIME-Version: 1.0
-References: <20230424110933.3908-1-quic_mkshah@quicinc.com>
- <CAPDyKFqSY9HJgKwuOqJPU5aA=wcAtDp91s0hkQye+dm=Wk=YDQ@mail.gmail.com>
- <20230525024546.ug6nbrmkgx2alerc@ripper> <CAPDyKFrzHHz+c_y787TVKLGizA3vVfKvnu+uJ1JC+itgryfdSQ@mail.gmail.com>
- <20230529160848.ujthfuuj3zblkq4b@ripper> <CAPDyKFo1rsm5gk_eKESa_WMFn6bSicH1UV1vJ7CU_64jZ5Uj-Q@mail.gmail.com>
-In-Reply-To: <CAPDyKFo1rsm5gk_eKESa_WMFn6bSicH1UV1vJ7CU_64jZ5Uj-Q@mail.gmail.com>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 12 Jun 2023 12:46:38 +0200
-Message-ID: <CAPDyKFp0wHxMZYACX4TFzDr+vM=fT6dNGQooCGOip82w+3A28Q@mail.gmail.com>
-Subject: Re: [PATCH v4 0/3] Use PSCI OS initiated mode for sc7280
-To:     Bjorn Andersson <andersson@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     Maulik Shah <quic_mkshah@quicinc.com>, dianders@chromium.org,
-        swboyd@chromium.org, wingers@google.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, sudeep.holla@arm.com,
-        jwerner@chromium.org, quic_lsrao@quicinc.com,
-        quic_rjendra@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+Subject: Re: [PATCH 1/2] drm/msm: provide fb_dirty implemenation
+Content-Language: en-US
+To:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     freedreno@lists.freedesktop.org,
+        Degdag Mohamed <degdagmohamed@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        dri-devel@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org
+References: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org>
+ <aenzh4vscayeqvyjpbxifog7l3yuxv5lh5cizcie7dk7awx5z7@nuajlsildlw6>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+In-Reply-To: <aenzh4vscayeqvyjpbxifog7l3yuxv5lh5cizcie7dk7awx5z7@nuajlsildlw6>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------h50Diuz4wHRKWuFPd1suWAbq"
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -74,59 +81,103 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[...]
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------h50Diuz4wHRKWuFPd1suWAbq
+Content-Type: multipart/mixed; boundary="------------xWMVhzm8eIvZf8hieMRm6Pfw";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: Marijn Suijten <marijn.suijten@somainline.org>,
+ Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: freedreno@lists.freedesktop.org, Degdag Mohamed
+ <degdagmohamed@gmail.com>, Sean Paul <sean@poorly.run>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, dri-devel@lists.freedesktop.org,
+ Stephen Boyd <swboyd@chromium.org>, linux-arm-msm@vger.kernel.org
+Message-ID: <1aaf5a23-541b-527d-25c3-55c94452390e@suse.de>
+Subject: Re: [PATCH 1/2] drm/msm: provide fb_dirty implemenation
+References: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org>
+ <aenzh4vscayeqvyjpbxifog7l3yuxv5lh5cizcie7dk7awx5z7@nuajlsildlw6>
+In-Reply-To: <aenzh4vscayeqvyjpbxifog7l3yuxv5lh5cizcie7dk7awx5z7@nuajlsildlw6>
 
-> > > > >
-> > > > > Looks like this series has not been queued up yet. Note that patch1
-> > > > > and patch2 are needed for stable kernels too. Moreover, patch3 (Qcom
-> > > > > DTS change) is dependent on patch 1 and patch2.
-> > > > >
-> > > > > Therefore I suggest Bjorn to pick this up via the Qcom SoC tree.
-> > > > > Bjorn, is that okay for you?
-> > > > >
-> > > >
-> > > > Sorry, this fell between the chairs after you pointed me to it...
-> > > >
-> > > > I can certainly pick the 3 patches through my tree, but are they fixing
-> > > > any current regressions, or is it just that we need the first two
-> > > > patches to land before the 3rd patch?
-> > >
-> > > I am not aware of any current regressions.
-> > >
-> >
-> > Okay, that confirms my understanding. So not -rc material.
-> >
-> > > >
-> > > > I also presume the 3rd patch is only needed when paired with the new
-> > > > ATF?
-> > >
-> > > Patch3 is beneficial to use with a new TF-A, but works with an old
-> > > TF-A too. Anyway, forget what I said about patch3 earlier, as that was
-> > > just not the complete information.
-> > >
-> > > The problem is that we can't be using a new TF-A (supporting both PSCI
-> > > OSI and PC mode) without patch1 and patch2, unless we are using
-> > > patch3.
-> > >
-> > > Thus, I strongly suggest we tag patch1 and patch2 for stable kernels,
-> > > to avoid any potential conflicts of TF-A versions that may be used.
-> > >
-> >
-> > So you're suggesting that I pick them for v6.5 and add a Cc: stable?
-> >
-> > An alternative would be that you take the cpuidle patches for v6.4-rc
-> > and I pick the dt for v6.5 - given that the cpuidle patches actually
-> > resolves a problem, while the dts just introduces "new functionality".
->
-> Right, that's probably the best option. Although I don't have a tree
-> to take these patches through, let's ask Rafael if he can help with
-> this.
->
-> Rafael, can you pick patch 1 and patch 2 from $subject series for
-> v6.4-rc and tag them for stable? Then Bjorn can pick patch3 for v6.5.
+--------------xWMVhzm8eIvZf8hieMRm6Pfw
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-Rafael, Bjorn, sorry for nagging about this series. Can you please
-help to pick it up?
+SGkNCg0KQW0gMTIuMDYuMjMgdW0gMTE6MTQgc2NocmllYiBNYXJpam4gU3VpanRlbjoNCj4g
+T24gMjAyMy0wNi0xMiAwNjoxNjoxNSwgRG1pdHJ5IEJhcnlzaGtvdiB3cm90ZToNCj4+IFNp
+bmNlIGNvbW1pdCA5M2U4MWUzOGUxOTcgKCJkcm0vZmJfaGVscGVyOiBNaW5pbWl6ZSBkYW1h
+Z2UtaGVscGVyDQo+PiBvdmVyaGVhZCIpIHRoZSBkcm1fZmJfaGVscGVyX2Z1bmNzOjpmYl9k
+aXJ0eSBoZWxwZXIgaXMgcmVxdWlyZWQgZm9yDQo+PiBwcm9wZXIgZGlydHkvZGFtYWdlIHBy
+b2Nlc3NpbmcuIFRoZSBkcm0vbXNtIGRyaXZlciByZXF1aXJlcyB0aGF0IHRvDQo+PiBmdW5j
+dGlvbiB0byBsZXQgQ01EIHBhbmVscyB0byB3b3JrLiBVc2Ugc2ltcGxpZmllZCB2ZXJzaW9u
+IG9mDQo+PiBkcm1fZmJkZXZfZ2VuZXJpY19oZWxwZXJfZmJfZGlydHkoKSB0byBmaXggc3Vw
+cG9ydCBmb3IgQ01EIG1vZGUgcGFuZWxzLg0KPj4NCj4+IFJlcG9ydGVkLWJ5OiBEZWdkYWcg
+TW9oYW1lZCA8ZGVnZGFnbW9oYW1lZEBnbWFpbC5jb20+DQo+PiBGaXhlczogOTNlODFlMzhl
+MTk3ICgiZHJtL2ZiX2hlbHBlcjogTWluaW1pemUgZGFtYWdlLWhlbHBlciBvdmVyaGVhZCIp
+DQo+PiBDYzogVGhvbWFzIFppbW1lcm1hbm4gPHR6aW1tZXJtYW5uQHN1c2UuZGU+DQo+PiBT
+aWduZWQtb2ZmLWJ5OiBEbWl0cnkgQmFyeXNoa292IDxkbWl0cnkuYmFyeXNoa292QGxpbmFy
+by5vcmc+DQo+IA0KPiBUaGFua3MsIHRoaXMgc29sdmVzIHRoZSBmb2xsb3dpbmcgd2Fybmlu
+ZzoNCj4gDQo+ICAgICAgbXNtX2RwdSBhZTAxMDAwLmRpc3BsYXktY29udHJvbGxlcjogZHJt
+X1dBUk5fT05fT05DRSghaGVscGVyLT5mdW5jcy0+ZmJfZGlydHkpDQo+ICAgICAgV0FSTklO
+RzogQ1BVOiAwIFBJRDogOSBhdCBkcml2ZXJzL2dwdS9kcm0vZHJtX2ZiX2hlbHBlci5jOjM4
+MSBkcm1fZmJfaGVscGVyX2RhbWFnZV93b3JrKzB4MWMwLzB4MjBjDQo+IA0KPiBSZXZpZXdl
+ZC1ieTogTWFyaWpuIFN1aWp0ZW4gPG1hcmlqbi5zdWlqdGVuQHNvbWFpbmxpbmUub3JnPg0K
+PiANCj4gTm90ZSB0aGF0IGRybV9mYl9oZWxwZXJfZnVuY3MgZG9jdW1lbnRzIHRoaXMgYXMg
+IlRoaXMgY2FsbGJhY2sgaXMNCj4gb3B0aW9uYWwiOiBpcyBpdCBubyBsb25nZXIgb3B0aW9u
+YWwsIG9yIGFyZSB3ZSBlbmFibGluZyBhIGRhbWFnZSBmZWF0dXJlDQo+IHRoYXQgbWFrZXMg
+aXQgbm90LW9wdGlvbmFsPw0KDQpJdCBpcyBvcHRpb25hbCBpbiB0aGUgc2Vuc2UgdGhhdCBt
+b3N0IGhhcmR3YXJlIGFuZCBkcml2ZXJzIGRvbid0IHJlcXVpcmUgDQpkYW1hZ2UgaGFuZGxp
+bmcuIFRob3NlIHRoYXQgZG8sIGFsc28gcmVxdWlyZSB0aGlzIGNhbGxiYWNrLg0KDQpCZXN0
+IHJlZ2FyZHMNClRob21hcw0KDQo+IA0KPiAtIE1hcmlqbg0KPiANCj4+IC0tLQ0KPj4gICBk
+cml2ZXJzL2dwdS9kcm0vbXNtL21zbV9mYmRldi5jIHwgMjAgKysrKysrKysrKysrKysrKysr
+KysNCj4+ICAgMSBmaWxlIGNoYW5nZWQsIDIwIGluc2VydGlvbnMoKykNCj4+DQo+PiBkaWZm
+IC0tZ2l0IGEvZHJpdmVycy9ncHUvZHJtL21zbS9tc21fZmJkZXYuYyBiL2RyaXZlcnMvZ3B1
+L2RybS9tc20vbXNtX2ZiZGV2LmMNCj4+IGluZGV4IGZhOWMxY2JmZmFlMy4uYjkzM2E4NTQy
+MGY2IDEwMDY0NA0KPj4gLS0tIGEvZHJpdmVycy9ncHUvZHJtL21zbS9tc21fZmJkZXYuYw0K
+Pj4gKysrIGIvZHJpdmVycy9ncHUvZHJtL21zbS9tc21fZmJkZXYuYw0KPj4gQEAgLTEzOSw4
+ICsxMzksMjggQEAgc3RhdGljIGludCBtc21fZmJkZXZfY3JlYXRlKHN0cnVjdCBkcm1fZmJf
+aGVscGVyICpoZWxwZXIsDQo+PiAgIAlyZXR1cm4gcmV0Ow0KPj4gICB9DQo+PiAgIA0KPj4g
+K3N0YXRpYyBpbnQgbXNtX2ZiZGV2X2ZiX2RpcnR5KHN0cnVjdCBkcm1fZmJfaGVscGVyICpo
+ZWxwZXIsDQo+PiArCQkJICAgICAgc3RydWN0IGRybV9jbGlwX3JlY3QgKmNsaXApDQo+PiAr
+ew0KPj4gKwlzdHJ1Y3QgZHJtX2RldmljZSAqZGV2ID0gaGVscGVyLT5kZXY7DQo+PiArCWlu
+dCByZXQ7DQo+PiArDQo+PiArCS8qIENhbGwgZGFtYWdlIGhhbmRsZXJzIG9ubHkgaWYgbmVj
+ZXNzYXJ5ICovDQo+PiArCWlmICghKGNsaXAtPngxIDwgY2xpcC0+eDIgJiYgY2xpcC0+eTEg
+PCBjbGlwLT55MikpDQo+PiArCQlyZXR1cm4gMDsNCj4+ICsNCj4+ICsJaWYgKGhlbHBlci0+
+ZmItPmZ1bmNzLT5kaXJ0eSkgew0KPj4gKwkJcmV0ID0gaGVscGVyLT5mYi0+ZnVuY3MtPmRp
+cnR5KGhlbHBlci0+ZmIsIE5VTEwsIDAsIDAsIGNsaXAsIDEpOw0KPj4gKwkJaWYgKGRybV9X
+QVJOX09OQ0UoZGV2LCByZXQsICJEaXJ0eSBoZWxwZXIgZmFpbGVkOiByZXQ9JWRcbiIsIHJl
+dCkpDQo+PiArCQkJcmV0dXJuIHJldDsNCj4+ICsJfQ0KPj4gKw0KPj4gKwlyZXR1cm4gMDsN
+Cj4+ICt9DQo+PiArDQo+PiAgIHN0YXRpYyBjb25zdCBzdHJ1Y3QgZHJtX2ZiX2hlbHBlcl9m
+dW5jcyBtc21fZmJfaGVscGVyX2Z1bmNzID0gew0KPj4gICAJLmZiX3Byb2JlID0gbXNtX2Zi
+ZGV2X2NyZWF0ZSwNCj4+ICsJLmZiX2RpcnR5ID0gbXNtX2ZiZGV2X2ZiX2RpcnR5LA0KPj4g
+ICB9Ow0KPj4gICANCj4+ICAgLyoNCj4+IC0tIA0KPj4gMi4zOS4yDQo+Pg0KDQotLSANClRo
+b21hcyBaaW1tZXJtYW5uDQpHcmFwaGljcyBEcml2ZXIgRGV2ZWxvcGVyDQpTVVNFIFNvZnR3
+YXJlIFNvbHV0aW9ucyBHZXJtYW55IEdtYkgNCkZyYW5rZW5zdHJhc3NlIDE0NiwgOTA0NjEg
+TnVlcm5iZXJnLCBHZXJtYW55DQpHRjogSXZvIFRvdGV2LCBBbmRyZXcgTXllcnMsIEFuZHJl
+dyBNY0RvbmFsZCwgQm91ZGllbiBNb2VybWFuDQpIUkIgMzY4MDkgKEFHIE51ZXJuYmVyZykN
+Cg==
 
-Kind regards
-Uffe
+--------------xWMVhzm8eIvZf8hieMRm6Pfw--
+
+--------------h50Diuz4wHRKWuFPd1suWAbq
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmSG9+gFAwAAAAAACgkQlh/E3EQov+Bq
+XRAAyewe+swtnjV3LrQT6b+db+AgXlmF59zmCm1ZRfRgMgsTh8bXYHR5psdnrJn1PxBtjFqVY9Ro
+Sjsyk4nbZ+RLGHN1nPbBxwjOd89Dfm273hPHr21MmWkaVlGJZCHzTBU0kpnCD03Fgro0iYVxyqGL
+VXLlYimCvSYTSi5b1w/ihrcvNcvHIM0SNkNF8B2uP5TzDWr3xdeYehZetiGf2WqL6Rz546ypHLnO
+yiBzKSmBpXIQbR5bCH5cfYUiK/zCB2vVNvWKuWLIPanhQiklGmhoNk3liL8pU/1YoXOsEQ3QPXKr
+ibq1KUYpCYwdU5KlTA1ihSRwj+8FzJ5sydSJ5l/6VU23Kn043teU5IJ8CcPOY37qdJm+2avSFaEY
+MZLva9UQSYsqUtIy0amsYLn+oNSml9IWNKWxtsH6LGX0DgW9crzci/7Kf2DWAZpGK2Ueq+xB7U+j
+zdjX+dKvDQF9RJFEfCfXvqLlDyALKBHAZ7fbBdhAu8VFZFTgGeT6A6skIkO02G7RylBDMRaewe35
+vK81rfnWyEd13OpIbif80khSVgy/thzkuCLkSuHiBmyBmssMs+53G6dY4joo+mghrc11aDVmXJ5c
+WC8y8dHj48nUmeXfMobNpAKlElBw5Nye0FCgnbY+UaZ94SpLg1lcvJfyWJxlp0xgfbDCc3Dr+K3S
+LSg=
+=mEr3
+-----END PGP SIGNATURE-----
+
+--------------h50Diuz4wHRKWuFPd1suWAbq--
