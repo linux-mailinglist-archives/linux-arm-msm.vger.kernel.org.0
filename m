@@ -2,346 +2,264 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E80972D43E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 00:15:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E02072D468
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 00:31:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238818AbjFLWPM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 18:15:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39662 "EHLO
+        id S229674AbjFLWbq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 18:31:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45806 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238339AbjFLWPJ (ORCPT
+        with ESMTP id S233111AbjFLWbp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 18:15:09 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 047BC10F2;
-        Mon, 12 Jun 2023 15:15:07 -0700 (PDT)
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35CJrWqn018957;
-        Mon, 12 Jun 2023 22:15:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding : content-type; s=qcppdkim1;
- bh=pGyvwgOlbTLUo+V/Y9nEOaXJa/euEuK6f+dzmjv3IZ8=;
- b=Pp94PJcnhy3iWHX0XFwvsvm7xLHUnN6/KpEcl2Sqmr7uEO5U8BBwDWRKFl6Emiv+d5z4
- 2JFYq0uQ5CygKCFpW9KsEnpgXWJxq6r1ZRQ7lRkWtFRzBsPlYd3HWnQP/iCDvwC8dmB6
- D+rLoK/l8QUjEAtDJ5D6hLelfkQqV/U3ZvjGEZbrWCQ8VywO2V47i+hLBVUHRzdpUITa
- P+a8ZxlZoOw5ZjJpbJcYJLw4W1M2qLYFXk5qpppESD+DSuvNRmKRHi/9YcYSHbUakZUQ
- SdZawfccgLwQn1QR7Wt0y15Ih1t3boAbZmW+PxpZ7/W01+14w/pNor9eeyL5R5pq3Ldb DQ== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r60pesfk4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Jun 2023 22:15:04 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35CMF3pY022238
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Mon, 12 Jun 2023 22:15:03 GMT
-Received: from hu-bjorande-lv.qualcomm.com (10.49.16.6) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Mon, 12 Jun 2023 15:15:02 -0700
-From:   Bjorn Andersson <quic_bjorande@quicinc.com>
-To:     Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>
-CC:     Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: sc8180x-flex5g: Wire up USB Type-C
-Date:   Mon, 12 Jun 2023 15:14:56 -0700
-Message-ID: <20230612221456.1887533-4-quic_bjorande@quicinc.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230612221456.1887533-1-quic_bjorande@quicinc.com>
-References: <20230612221456.1887533-1-quic_bjorande@quicinc.com>
+        Mon, 12 Jun 2023 18:31:45 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A147E171D
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 15:31:43 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f640e48bc3so5820812e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 15:31:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686609102; x=1689201102;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cIiNh3EsWQh5XFXsht2Yjz2CVfu27o+IFNlM+KPIy54=;
+        b=g8lwnvRs1s/lifFGdcnVYfHgD8dR4It0rPDdiT76piGnm7URYmtrLpJFPG9agC1MSB
+         DNQra6wTgxZdfRt0zcMC/PqzuQfEFcvgahNOMMNYmdAyyH/4yE0ojQc9OPFPqGzJbsGI
+         Unm9eCcSB8tNXEqrDDuJeyFinfi2jDcO65slFHeO/4Is1GSoONYYNILGom0zVk5L6Js/
+         HTlmAygETSmeQ0IERV5QyaMG3hwK3Q8FHFzmTxgZXNr86cjfA5Sk86gRj2oQ7bZGFk1g
+         QPhh/2d13ItUZiDQ+U9lxMwY7mczrxP+RTwY84fIKne/iBI6RAMjsVoVYw5FXRgsKY9r
+         I8ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686609102; x=1689201102;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cIiNh3EsWQh5XFXsht2Yjz2CVfu27o+IFNlM+KPIy54=;
+        b=Y4lpH6e87vOZpNz2o9F+SBJR8fDfRlD+f0+GadMMy1upV2jLK6tdpTG6RLd5Cn+meG
+         7e48LTkOYbIvI2scPw0ojz9zE2G1M7oNeXxhVMeZufkcSOcVZ6VneHbNrZfT5ZylYWAy
+         XoKKGqFlsnmt4pS1Gn/m1KiD5/r/9icHFKTUIp9Q4XEw9VwbSiwfGg8SB1gciHLmHXDY
+         29RzLfkKE4pWwFgJunOsuUZs9HTv/DQbc4wxed8BOvJS+Hy0nr9ZbVVCyZdhH66cXiE7
+         AnY6R0V0tz/8VQcD6rcZulW3RIbrQdTxpghWYE6Lg2nv+mZaV2zZbqSSNKsUySaQICzK
+         iyUg==
+X-Gm-Message-State: AC+VfDzqcJe8shj907B+IVZrN3tZWL8dfWOX0tfpDFni5kON8iMgKDM4
+        hx0zgrO4DZvFx+m4yOO0ffuJgw==
+X-Google-Smtp-Source: ACHHUZ55E2+88mAUkatf4uaHOVoJ/NCneD3K+X7+RJMzABDCbRTSeU3pb0MoQp3GxjQclQGbbv+n4A==
+X-Received: by 2002:a2e:8603:0:b0:2aa:40dd:7a55 with SMTP id a3-20020a2e8603000000b002aa40dd7a55mr3428308lji.8.1686609101832;
+        Mon, 12 Jun 2023 15:31:41 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id t9-20020a2e9d09000000b002a9ee18e9c7sm1860132lji.69.2023.06.12.15.31.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 12 Jun 2023 15:31:41 -0700 (PDT)
+Message-ID: <435dd068-fbf2-10cf-4f78-377e689abb2c@linaro.org>
+Date:   Tue, 13 Jun 2023 01:31:40 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.49.16.6]
-X-ClientProxiedBy: nalasex01c.na.qualcomm.com (10.47.97.35) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: CqIVJeCj7HUS553nE3pthGnz8pCp_Y3h
-X-Proofpoint-ORIG-GUID: CqIVJeCj7HUS553nE3pthGnz8pCp_Y3h
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-12_16,2023-06-12_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 spamscore=0
- adultscore=0 suspectscore=0 mlxlogscore=999 impostorscore=0 mlxscore=0
- phishscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2306120191
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,SPF_HELO_NONE,SPF_PASS,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] drm/msm/dpu: Configure DP INTF/PHY selector
+Content-Language: en-GB
+To:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20230612221047.1886709-1-quic_bjorande@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230612221047.1886709-1-quic_bjorande@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Following the SC8180X Primus reference design, add pmic_glink and USB
-Type-C wiring for battery manager, external display and orientation
-switching.
+On 13/06/2023 01:10, Bjorn Andersson wrote:
+> From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> 
+> Some platforms provides a mechanism for configuring the mapping between
+> (one or two) DisplayPort intfs and their PHYs.
+> 
+> In particular SC8180X provides this functionality, without a default
+> configuration, resulting in no connection between its two external
+> DisplayPort controllers and any PHYs.
+> 
+> The change implements the logic for optionally configuring which phy
+> each of the intfs should be connected to, provides a new entry in the
+> DPU catalog for specifying how many intfs to configure and marks the
+> SC8180X DPU to program 2 entries.
+> 
+> For now the request is simply to program the mapping 1:1, any support
+> for alternative mappings is left until the use case arrise.
+> 
+> Note that e.g. msm-4.14 unconditionally maps intf 0 to phy 0 on all
+> rlatforms, so perhaps this is needed in order to get DisplayPort working
+> on some other platforms as well.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> ---
+>   .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  1 +
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  2 ++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c    | 23 +++++++++++++++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h    |  8 +++++++
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h      |  1 +
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 10 ++++++++
+>   6 files changed, 45 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> index 8ed2b263c5ea..9da952692a69 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> @@ -19,6 +19,7 @@ static const struct dpu_caps sc8180x_dpu_caps = {
+>   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+>   	.max_hdeci_exp = MAX_HORZ_DECIMATION,
+>   	.max_vdeci_exp = MAX_VERT_DECIMATION,
+> +	.num_dp_intf_sel = 2,
+>   };
+>   
+>   static const struct dpu_ubwc_cfg sc8180x_ubwc_cfg = {
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index ac4a9e73705c..4cb8d096d8ec 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -357,6 +357,7 @@ struct dpu_rotation_cfg {
+>    * @pixel_ram_size     size of latency hiding and de-tiling buffer in bytes
+>    * @max_hdeci_exp      max horizontal decimation supported (max is 2^value)
+>    * @max_vdeci_exp      max vertical decimation supported (max is 2^value)
+> + * @num_dp_intf_sel    number of DP intfs to configure PHY selection for
+>    */
+>   struct dpu_caps {
+>   	u32 max_mixer_width;
+> @@ -371,6 +372,7 @@ struct dpu_caps {
+>   	u32 pixel_ram_size;
+>   	u32 max_hdeci_exp;
+>   	u32 max_vdeci_exp;
+> +	u32 num_dp_intf_sel;
+>   };
+>   
+>   /**
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> index 963bdb5e0252..5afa99cb148c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> @@ -250,6 +250,27 @@ static void dpu_hw_intf_audio_select(struct dpu_hw_mdp *mdp)
+>   	DPU_REG_WRITE(c, HDMI_DP_CORE_SELECT, 0x1);
+>   }
+>   
+> +static void dpu_hw_dp_phy_intf_sel(struct dpu_hw_mdp *mdp, unsigned int *phys,
+> +				   unsigned int num_intfs)
+> +{
+> +	struct dpu_hw_blk_reg_map *c = &mdp->hw;
+> +	unsigned int intf;
+> +	u32 sel = 0;
+> +
+> +	if (!num_intfs)
+> +		return;
+> +
+> +	for (intf = 0; intf < num_intfs; intf++) {
+> +		/* Specify the PHY (1-indexed) for @intf */
+> +		sel |= (phys[intf] + 1) << (intf * 3);
+> +
+> +		/* Specify the @intf (1-indexed) of targeted PHY */
+> +		sel |= (intf + 1) << (6 + phys[intf] * 3);
 
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
----
- .../boot/dts/qcom/sc8180x-lenovo-flex-5g.dts  | 196 ++++++++++++++++++
- 1 file changed, 196 insertions(+)
+ From what I can see, phys[intf] is const. What about defining indexed 
+masks instead?
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts b/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
-index fe3b366e1435..677cb255fad2 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8180x-lenovo-flex-5g.dts
-@@ -45,6 +45,84 @@ lid {
- 		};
- 	};
- 
-+	pmic-glink {
-+		compatible = "qcom,sc8180x-pmic-glink", "qcom,pmic-glink";
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		connector@0 {
-+			compatible = "usb-c-connector";
-+			reg = <0>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+
-+				port@0 {
-+					reg = <0>;
-+
-+					pmic_glink_con0_hs: endpoint {
-+						remote-endpoint = <&usb_prim_role_switch>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					pmic_glink_con0_ss: endpoint {
-+						remote-endpoint = <&usb_prim_qmpphy_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_con0_sbu: endpoint {
-+						remote-endpoint = <&usbprim_sbu_mux>;
-+					};
-+				};
-+			};
-+		};
-+
-+		connector@1 {
-+			compatible = "usb-c-connector";
-+			reg = <1>;
-+			power-role = "dual";
-+			data-role = "dual";
-+
-+			ports {
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+				port@0 {
-+					reg = <0>;
-+
-+					pmic_glink_con1_hs: endpoint {
-+						remote-endpoint = <&usb_sec_role_switch>;
-+					};
-+				};
-+
-+				port@1 {
-+					reg = <1>;
-+
-+					pmic_glink_con1_ss: endpoint {
-+						remote-endpoint = <&usb_sec_qmpphy_out>;
-+					};
-+				};
-+
-+				port@2 {
-+					reg = <2>;
-+
-+					pmic_glink_con1_sbu: endpoint {
-+						remote-endpoint = <&usbsec_sbu_mux>;
-+					};
-+				};
-+			};
-+		};
-+	};
-+
- 	reserved-memory {
- 		rmtfs_mem: rmtfs-region@85500000 {
- 			compatible = "qcom,rmtfs-mem";
-@@ -100,6 +178,44 @@ vreg_s4a_1p8: pm8150-s4-regulator {
- 
- 		vin-supply = <&vph_pwr>;
- 	};
-+
-+	usbprim-sbu-mux {
-+		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
-+
-+		enable-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>;
-+		select-gpios = <&tlmm 100 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&usbprim_sbu_default>;
-+
-+		mode-switch;
-+		orientation-switch;
-+
-+		port {
-+			usbprim_sbu_mux: endpoint {
-+				remote-endpoint = <&pmic_glink_con0_sbu>;
-+			};
-+		};
-+	};
-+
-+	usbsec-sbu-mux {
-+		compatible = "pericom,pi3usb102", "gpio-sbu-mux";
-+
-+		enable-gpios = <&tlmm 188 GPIO_ACTIVE_LOW>;
-+		select-gpios = <&tlmm 187 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&usbsec_sbu_default>;
-+
-+		mode-switch;
-+		orientation-switch;
-+
-+		port {
-+			usbsec_sbu_mux: endpoint {
-+				remote-endpoint = <&pmic_glink_con1_sbu>;
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-@@ -283,6 +399,24 @@ &mdss {
- 	status = "okay";
- };
- 
-+&mdss_dp0 {
-+	status = "okay";
-+};
-+
-+&mdss_dp0_out {
-+	data-lanes = <0 1>;
-+	remote-endpoint = <&usb_prim_qmpphy_dp_in>;
-+};
-+
-+&mdss_dp1 {
-+	status = "okay";
-+};
-+
-+&mdss_dp1_out {
-+	data-lanes = <0 1>;
-+	remote-endpoint = <&usb_sec_qmpphy_dp_in>;
-+};
-+
- &mdss_edp {
- 	data-lanes = <0 1 2 3>;
- 
-@@ -419,6 +553,8 @@ &usb_prim_qmpphy {
- 	vdda-phy-supply = <&vreg_l3c_1p2>;
- 	vdda-pll-supply = <&vreg_l5e_0p88>;
- 
-+	orientation-switch;
-+
- 	status = "okay";
- };
- 
-@@ -430,6 +566,18 @@ &usb_prim_dwc3 {
- 	dr_mode = "host";
- };
- 
-+&usb_prim_qmpphy_dp_in {
-+	remote-endpoint = <&mdss_dp0_out>;
-+};
-+
-+&usb_prim_qmpphy_out {
-+	remote-endpoint = <&pmic_glink_con0_ss>;
-+};
-+
-+&usb_prim_role_switch {
-+	remote-endpoint = <&pmic_glink_con0_hs>;
-+};
-+
- &usb_sec_hsphy {
- 	vdda-pll-supply = <&vreg_l5e_0p88>;
- 	vdda18-supply = <&vreg_l12a_1p8>;
-@@ -442,9 +590,23 @@ &usb_sec_qmpphy {
- 	vdda-phy-supply = <&vreg_l3c_1p2>;
- 	vdda-pll-supply = <&vreg_l5e_0p88>;
- 
-+	orientation-switch;
-+
- 	status = "okay";
- };
- 
-+&usb_sec_qmpphy_dp_in {
-+	remote-endpoint = <&mdss_dp1_out>;
-+};
-+
-+&usb_sec_qmpphy_out {
-+	remote-endpoint = <&pmic_glink_con1_ss>;
-+};
-+
-+&usb_sec_role_switch {
-+	remote-endpoint = <&pmic_glink_con1_hs>;
-+};
-+
- &usb_sec {
- 	status = "okay";
- };
-@@ -560,6 +722,40 @@ wake-n-pins {
- 		};
- 	};
- 
-+	usbprim_sbu_default: usbprim-sbu-state {
-+		oe-n-pins {
-+			pins = "gpio152";
-+			function = "gpio";
-+			bias-disable;
-+			drive-strength = <16>;
-+			output-high;
-+		};
-+
-+		sel-pins {
-+			pins = "gpio100";
-+			function = "gpio";
-+			bias-disable;
-+			drive-strength = <16>;
-+		};
-+	};
-+
-+	usbsec_sbu_default: usbsec-sbu-state {
-+		oe-n-pins {
-+			pins = "gpio188";
-+			function = "gpio";
-+			bias-disable;
-+			drive-strength = <16>;
-+			output-high;
-+		};
-+
-+		sel-pins {
-+			pins = "gpio187";
-+			function = "gpio";
-+			bias-disable;
-+			drive-strength = <16>;
-+		};
-+	};
-+
- 	uart13_state: uart13-state {
- 		cts-pins {
- 			pins = "gpio43";
+> +	}
+> +
+> +	DPU_REG_WRITE(c, DP_PHY_INTF_SEL, sel);
+> +}
+> +
+>   static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
+>   		unsigned long cap)
+>   {
+> @@ -264,6 +285,8 @@ static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
+>   
+>   	ops->get_safe_status = dpu_hw_get_safe_status;
+>   
+> +	ops->dp_phy_intf_sel = dpu_hw_dp_phy_intf_sel;
+
+Should this be gated for DPU < 4.0? Or 5.0?
+
+> +
+>   	if (cap & BIT(DPU_MDP_AUDIO_SELECT))
+>   		ops->intf_audio_select = dpu_hw_intf_audio_select;
+>   }
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
+> index a1a9e44bed36..8446d74d59b0 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
+> @@ -125,6 +125,14 @@ struct dpu_hw_mdp_ops {
+>   	void (*get_safe_status)(struct dpu_hw_mdp *mdp,
+>   			struct dpu_danger_safe_status *status);
+>   
+> +	/**
+> +	 * dp_phy_intf_sel - configure intf to phy mapping
+> +	 * @mdp: mdp top context driver
+> +	 * @phys: list of phys the @num_intfs intfs should be connected to
+> +	 * @num_intfs: number of intfs to configure
+> +	 */
+> +	void (*dp_phy_intf_sel)(struct dpu_hw_mdp *mdp, unsigned int *phys,
+> +			        unsigned int num_intfs);
+>   	/**
+>   	 * intf_audio_select - select the external interface for audio
+>   	 * @mdp: mdp top context driver
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
+> index 5acd5683d25a..6d31bdc7269c 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
+> @@ -59,6 +59,7 @@
+>   #define MDP_WD_TIMER_4_CTL2             0x444
+>   #define MDP_WD_TIMER_4_LOAD_VALUE       0x448
+>   #define DCE_SEL                         0x450
+> +#define DP_PHY_INTF_SEL                 0x460
+
+MDP_DP_PHY_INTF_SEL, if you don't mind.
+
+>   
+>   #define MDP_PERIPH_TOP0			MDP_WD_TIMER_0_CTL
+>   #define MDP_PERIPH_TOP0_END		CLK_CTRL3
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index aa8499de1b9f..5dbe5d164c01 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -1011,6 +1011,14 @@ unsigned long dpu_kms_get_clk_rate(struct dpu_kms *dpu_kms, char *clock_name)
+>   	return clk_get_rate(clk);
+>   }
+>   
+> +static void dpu_kms_dp_phy_intf_sel(struct dpu_kms *dpu_kms)
+> +{
+> +	const unsigned int num_intfs = dpu_kms->catalog->caps->num_dp_intf_sel;
+> +	static unsigned int phy_map[] = {0, 1, 2};
+
+Please move this to dp_phy_intf_sel() and make it const.
+
+> +
+> +	dpu_kms->hw_mdp->ops.dp_phy_intf_sel(dpu_kms->hw_mdp, phy_map, num_intfs);
+> +}
+> +
+>   static int dpu_kms_hw_init(struct msm_kms *kms)
+>   {
+>   	struct dpu_kms *dpu_kms;
+> @@ -1122,6 +1130,8 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+>   		goto perf_err;
+>   	}
+>   
+> +	dpu_kms_dp_phy_intf_sel(dpu_kms);
+> +
+>   	dpu_kms->hw_intr = dpu_hw_intr_init(dpu_kms->mmio, dpu_kms->catalog);
+>   	if (IS_ERR_OR_NULL(dpu_kms->hw_intr)) {
+>   		rc = PTR_ERR(dpu_kms->hw_intr);
+
 -- 
-2.25.1
+With best wishes
+Dmitry
 
