@@ -2,208 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BBEB272CD73
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 20:04:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB5D572CDB4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 20:17:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237041AbjFLSEf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 14:04:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33576 "EHLO
+        id S232547AbjFLSRc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 14:17:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235749AbjFLSEe (ORCPT
+        with ESMTP id S229742AbjFLSRc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 14:04:34 -0400
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01E59E65
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 11:04:31 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        Mon, 12 Jun 2023 14:17:32 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10D8693;
+        Mon, 12 Jun 2023 11:17:31 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 3A92520071;
-        Mon, 12 Jun 2023 20:04:28 +0200 (CEST)
-Date:   Mon, 12 Jun 2023 20:04:26 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        freedreno@lists.freedesktop.org, Sean Paul <sean@poorly.run>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        David Airlie <airlied@gmail.com>
-Subject: Re: [Freedreno] [PATCH v6 6/6] drm/msm/dsi: Document DSC related
- pclk_rate and hdisplay calculations
-Message-ID: <ufirohxuhba32znw74pxvyhsvgfr7sejrreh4unhj6chmneood@aszgvd7xrr6l>
-References: <20230405-add-dsc-support-v6-0-95eab864d1b6@quicinc.com>
- <20230405-add-dsc-support-v6-6-95eab864d1b6@quicinc.com>
- <6uiyqgggt2a3gkcihtyzr4rvq5igbe3ojpeiqnji22663bhh2l@3jifgk7bw4u5>
- <ffdaddd0-4f2b-7846-322b-8efeadf7ed0c@quicinc.com>
+        by dfw.source.kernel.org (Postfix) with ESMTPS id A1F2662CAE;
+        Mon, 12 Jun 2023 18:17:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08B2C433EF;
+        Mon, 12 Jun 2023 18:17:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686593850;
+        bh=aIVis3zgOCngnfMmwgBuVeG+/iKrmnOowlmIUV+paHI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=n5n/9orbod8cmo3ZlSZq+q3v9s1JEnf2Sa4uJLUMrgOII1qaquSOhuepHl3fIUF2n
+         +dncfZDS6aLE7N8e/fDxJJes4MFT7sS240EjejOXi0oHxsUrf8fhC1jiWKkOPIjQbW
+         newqIPRW6XIZzq8JySqv1eMuk1ZeGSksIt+JaOAbFd2NJ+vHD9K4BQR1vcHQjvyOFY
+         yojO9w2pWRuJXETvSoPOoKqIYvGSs3gAnEmbky9i+u83nxU9v8UtiLImEDmvnb31Ue
+         Io4TaH78Rz41ZMfnyO1IAijddSeTN0ZEvAZjX/feIO4kwYYP+zSxf7KmDUznHkciU+
+         MeB6+M43iQovA==
+Received: by pali.im (Postfix)
+        id A820E7EB; Mon, 12 Jun 2023 20:17:26 +0200 (CEST)
+Date:   Mon, 12 Jun 2023 20:17:26 +0200
+From:   Pali =?utf-8?B?Um9ow6Fy?= <pali@kernel.org>
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        Joyce Ooi <joyce.ooi@intel.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Jim Quinlan <jim2101024@gmail.com>,
+        Nicolas Saenz Julienne <nsaenz@kernel.org>,
+        Vignesh Raghavendra <vigneshr@ti.com>,
+        Tom Joseph <tjoseph@cadence.com>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Rahul Tanwar <rtanwar@maxlinear.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+        Vidya Sagar <vidyas@nvidia.com>,
+        Jisheng Zhang <jszhang@kernel.org>,
+        Miaoqian Lin <linmq006@gmail.com>, Ray Jui <rjui@broadcom.com>,
+        Scott Branden <sbranden@broadcom.com>,
+        Ryder Lee <ryder.lee@mediatek.com>,
+        Jianjun Wang <jianjun.wang@mediatek.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Sergio Paracuellos <sergio.paracuellos@gmail.com>,
+        Shawn Lin <shawn.lin@rock-chips.com>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Toan Le <toan@os.amperecomputing.com>,
+        Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
+        linux-rockchip@lists.infradead.org,
+        Broadcom internal kernel review list 
+        <bcm-kernel-feedback-list@broadcom.com>,
+        linux-rpi-kernel@lists.infradead.org, kernel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@collabora.com>
+Subject: Re: [PATCH 00/15] PCI: Convert to platform remove callback returning
+ void
+Message-ID: <20230612181726.itcctpkq57tfmdmo@pali>
+References: <20230611132423.milnj2pnvjqzwino@pali>
+ <20230612161927.GA1335109@bhelgaas>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <ffdaddd0-4f2b-7846-322b-8efeadf7ed0c@quicinc.com>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
-        version=3.4.6
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230612161927.GA1335109@bhelgaas>
+User-Agent: NeoMutt/20180716
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023-06-12 10:26:39, Abhinav Kumar wrote:
+On Monday 12 June 2023 11:19:27 Bjorn Helgaas wrote:
+> On Sun, Jun 11, 2023 at 03:24:23PM +0200, Pali Rohár wrote:
+> > On Friday 02 June 2023 16:37:34 Bjorn Helgaas wrote:
+> > > On Tue, May 30, 2023 at 04:07:42PM +0200, Uwe Kleine-König wrote:
+> > > > On Tue, Mar 21, 2023 at 08:31:53PM +0100, Uwe Kleine-König wrote:
+> > > > > this series adapts the platform drivers below drivers/pci to
+> > > > > use the .remove_new() callback. Compared to the traditional
+> > > > > .remove() callback .remove_new() returns no value. This is a
+> > > > > good thing because the driver core doesn't (and cannot) cope
+> > > > > for errors during remove. The only effect of a non-zero return
+> > > > > value in .remove() is that the driver core emits a warning.
+> > > > > The device is removed anyhow and an early return from
+> > > > > .remove() usually yields a resource leak.
+> > ...
 > 
+> > Hello Bjorn, it should be expected that other changes for PCIe drivers
+> > sent by other people which were sent to the list before this patch
+> > series and are still waiting for the review (because are without
+> > comments), would be processed before and patches sent later.
 > 
-> On 6/11/2023 3:03 PM, Marijn Suijten wrote:
-> > On 2023-06-09 15:57:18, Jessica Zhang wrote:
-> >> Add documentation comments explaining the pclk_rate and hdisplay math
-> >> related to DSC.
-> >>
-> >> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> >> ---
-> >>   drivers/gpu/drm/msm/dsi/dsi_host.c | 10 ++++++++++
-> >>   1 file changed, 10 insertions(+)
-> >>
-> >> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> >> index fb1d3a25765f..aeaadc18bc7b 100644
-> >> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> >> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> >> @@ -564,6 +564,13 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
-> >>   static unsigned long dsi_adjust_pclk_for_compression(const struct drm_display_mode *mode,
-> >>   		const struct drm_dsc_config *dsc)
-> >>   {
-> >> +	/*
-> >> +	 * Adjust the pclk rate by calculating a new hdisplay proportional to
-> >> +	 * the compression ratio such that:
-> >> +	 *     new_hdisplay = old_hdisplay * target_bpp / source_bpp
-> >> +	 *
-> >> +	 * Porches need not be adjusted during compression.
-> >> +	 */
-> >>   	int new_hdisplay = DIV_ROUND_UP(mode->hdisplay * drm_dsc_get_bpp_int(dsc),
-> >>   			dsc->bits_per_component * 3);
-> > 
-> > I won't reiterate my original troubles with this logic and the comment
-> > as that has well been described in v5 replies.
-> > 
-> > Just want to ask why this comment couldn't be added in patch 5/6
-> > immediately when the logic is introduced?  Now readers won't have a clue
-> > what is going on until they skip one patch ahead.
-> > 
+> I don't think it's necessary to delay simple, easily-reviewed changes
+> behind more complicated ones.
 > 
-> Both myself and Dmitry discussed that in this particular case, we will 
-> add the documentation as a follow-up patch and merge it together. Not 
-> usually the process, but in this case, just decided to do it this way. 
-> The series will still be merged as one.
-
-Just saying that it doesn't make much sense from a "reading the patches
-after they've been merged" point of view, maybe there was a
-misunderstanding here that Dmitry would have been okay with a followup
-patch if the pclk patch got merged... But since it didn't, I would at
-least prefer that to be squashed (but I am not the maintainer, so you'll
-obviously take that with a grain of salt).
-
-> > Furthermore it is lacking any explanation that this is a workaround for
-> > cmd-mode, and that porches are currently used to represent "transfer
-> > time" until those calculations are implemented.  At that point there is
-> > no concept of "not adjusting porches for compressed signals" anymore.
-> > 
+> > Also I would like to point out that in past I have sent fixes for PCIe
+> > mvebu driver, which is currently in the broken state. And this is also
+> > on waiting on the list.
 > 
-> This is a much bigger topic and goes out of scope of this patch and 
-> series and I dont want to explain all that in this documentation patch.
+> Thanks for this reminder.  Would you mind reposting them?  I poked
+> around in patchwork and I must be doing something wrong because I
+> can't find *any* patches from you, though obviously there are many.
 > 
-> If we explain that this is specific to command mode, what would the 
-> panel drivers fill out for porches . Obviously they cannot fill out a 0.
+> If you repost them at least we'll know unambiguously what is on the
+> table.
 > 
-> Coming to transfer time. Even if current panel drivers use 0 porches, 
-> the clock you get should still be sufficient for 60fps or a transfer 
-> time of 16.66ms.
-> 
-> Transfer time was a concept introduced for some specific command mode 
-> panels where we needed to finish transferring the frame even faster than 
-> 16.66ms like 12ms or 13ms.
+> Bjorn
 
-That probably explains why, for the same sofef01 Driver-IC for example,
-but with slight variations in panels (and SoC...), I was able to achieve
-60Hz on the Xperia 10 II with 0-porches, yet the Xperia 5 (and 10 III?)
-require quite a bit more "pclk" to reach 60Hz.
-
-(I don't think 10 III ever achieved 60Hz, but the clocktree and/or panel
- cmds might be wrong)
-
-> Yes, without that, upstream and downstream math doesnt match. But that 
-> doesnt mean its going to break the panels or that upstream math is 
-> wrong. If you think command mode porches should be 0, then this will 
-> give you the clk for 60fps. If you add some random porches, it will just 
-> give a faster clock.
-
-And exactly this little bit of text is what I'd like to see in a comment
-:)
-
-> Porches can be used instead of transfer time till we add that math but 
-> again, thats only needed for panels which need a faster transfer time 
-> than 16.66ms.
-
-Same here, why can't we have this in a code comment?
-
-> So we dont need to call this a workaround in my opinion at all (and hack 
-> as you called in v5 is totally out of proportion).
-
-Don't get me wrong, it is still a hack to only scale the hdisplay
-portion without ever explaining in any comment why the porches are not
-taken into account (the explanation you gave above is perfect!), instead
-of calculating the right pclk from the get-go and ignoring the DRM mode
-clock altogether.
-
-> One could even argue that if the panel needs a transfer time faster than 
-> 16.66ms, then the mode->clock should also be bumped up. Panels dont do 
-> that today either.
-
-But we cannot easily bump the `clock` member as that'd break the value
-returned by drm_mode_vrefresh(), unless we also come up with a fake
-porch in htotal or vtotal as that is what it will be divided by.
-
-This ties into a recent discussion where "someone" mentioned that DRM
-isn't really designed with CMD mode panels, in mind... and perhaps my
-observations here are just scratching the surface?
-
-> Hence, I am going to consider transfer time as an enhancement and not 
-> going to take that up in this series so I am not for adding that comment 
-> here.
-
-No need to add a TODO stating that it needs to be added, but it'd be
-good to at the very least explain ***why*** only the hdisplay portion is
-scaled and not everything else?
-
-> And as I have explained, this patch is not a workaround either. Its just 
-> calculating the clock based on what we have today in the panel drivers.
-
-Agree to disagree?  Beyond sending my take on these two patches as an
-RFC, I don't think there's a point discussing this much furter as we
-seem to disagree and misunderstand eachother on a fundamental level.
-And we haven't even gotten into the "src_bpp / target_bpp" versus "24
-bits per pclk" details yet.
-
-- Marijn
-
-> >> @@ -961,6 +968,9 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
-> >>   
-> >>   		/* Divide the display by 3 but keep back/font porch and
-> >>   		 * pulse width same
-> >> +		 *
-> >> +		 * hdisplay will be divided by 3 here to account for the fact
-> >> +		 * that DPU sends 3 bytes per pclk cycle to DSI.
-> >>   		 */
-> >>   		h_total -= hdisplay;
-> >>   		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
-> > 
-> > Still very glad to have this, thank you for adding it.  Note that it
-> > only further undermines the pclk adjustments, as I just explained in v5
-> > review.
-> > 
-> > - Marijn
-> > 
-> >>
-> >> -- 
-> >> 2.40.1
-> >>
+Well, my patches I reposted more times. And some were also reposted by
+other people. I do not know if they are in patchwork, but they are in
+email archive. For example last repost of aardvark patches are here:
+https://lore.kernel.org/linux-pci/20220927141926.8895-1-kabel@kernel.org/
+And some other aardvark are also here:
+https://lore.kernel.org/linux-pci/20220711120626.11492-1-pali@kernel.org/
