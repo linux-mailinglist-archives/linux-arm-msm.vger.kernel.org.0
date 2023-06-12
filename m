@@ -2,67 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EE98972C61E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 15:36:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6122A72C62F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 15:40:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231370AbjFLNgq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 09:36:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60556 "EHLO
+        id S233804AbjFLNkS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 09:40:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34356 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236502AbjFLNgn (ORCPT
+        with ESMTP id S236792AbjFLNkD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 09:36:43 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E60E21A1;
-        Mon, 12 Jun 2023 06:36:40 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 6BBD4616FD;
-        Mon, 12 Jun 2023 13:36:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 754D0C4339C;
-        Mon, 12 Jun 2023 13:36:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686576999;
-        bh=6t8SLEGkV+2LuUffPXlHIp83vOrBIwLaJMF1fy6qrmo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=to/QjNsRYu8mIPyhEBttCfHICSEZ1ZCL7V9KhsJIIk1PmYlxawzN6TRhxdgHCuNRS
-         IaJ9dbbVGsiT5zRDYoFlSOu1gEYEA2pWauiQTsZl63cO6aiejasai/piMfGX/zU87Y
-         +mkSpVhhA/4a5oq9JYP/VWvt+eM/QwGxhAWlGtdVRpTiNrn3fB3/NAzLDGlsGARf8J
-         RiZcOLamRWgw54EVGUNqaJkykkbgEgqrzJusreiKQtd7NMbRJ41KWhKPzEHKgL8TIQ
-         SZrGMEFaOSn2iQwbMZGjENGbl2XLZ6V+GIFEw3ZIxG7ALqU2PjELYWbBdCJZg3854P
-         55/IpyjwitbQw==
-Date:   Mon, 12 Jun 2023 14:36:33 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Banajit Goswami <bgoswami@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>, alsa-devel@alsa-project.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Patrick Lai <quic_plai@quicinc.com>
-Subject: Re: [PATCH v2 2/2] ASoC: codecs: wsa884x: Add WSA884x family of
- speakers
-Message-ID: <bf81773c-8d9d-46bc-b9ba-db7b86600e3d@sirena.org.uk>
-References: <20230611102657.74714-1-krzysztof.kozlowski@linaro.org>
- <20230611102657.74714-2-krzysztof.kozlowski@linaro.org>
- <191859d3-42e3-4ef2-87ff-dd56864103f9@sirena.org.uk>
- <421ddd6d-3938-027c-2099-57248a111831@linaro.org>
+        Mon, 12 Jun 2023 09:40:03 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C5C8F9;
+        Mon, 12 Jun 2023 06:40:02 -0700 (PDT)
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35CBTGKk016177;
+        Mon, 12 Jun 2023 13:39:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=dTh/cPZmvz7n2CRHX7vIMDQfnSsCXzDIiq1YM27NImI=;
+ b=PdXDCv8jhS/2MpfekdQUYKYIrArqusHS/IBOd5c76lr6scYho/n2fscpxrPj0Mbpth6w
+ 84aQToHVSCEhWMIyL5zB+qBWGgXV/sp+PbP4A2jAVN/dYmY631k9qhvRrgPtUd61F+Fz
+ vMJzPK2W8MZb7JlJaVtM13UR6HJEou7zoWyz0tI8lVNLMeAGCxaQyKo+SrBROphDJHjg
+ oH2zZOxQX6t/2zu5IrUd6UlKmeZuzRAr8pdVUR7SONJck1B0lKtgZqZYXTQdOh4agAQi
+ Y5+Qt2+5lpQpZaqQfBc3Qm4Ej0iON6uO2OJNRc6Kgs7x/1Xi2rRPXmOpwr+jVDelSK7s Ww== 
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r4jfe3e16-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 12 Jun 2023 13:39:58 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35CDdwxs024526
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 12 Jun 2023 13:39:58 GMT
+Received: from [10.217.219.131] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 12 Jun
+ 2023 06:39:55 -0700
+Message-ID: <af4c131a-b97d-a8e8-957d-77c31d3c816a@quicinc.com>
+Date:   Mon, 12 Jun 2023 19:09:52 +0530
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="4W2AYxZZZ8GOZJ6I"
-Content-Disposition: inline
-In-Reply-To: <421ddd6d-3938-027c-2099-57248a111831@linaro.org>
-X-Cookie: If it heals good, say it.
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH] soc: qcom: geni-se: Do not bother about enable/disable of
+ interrupts in secondary sequencer for non-uart modes
+Content-Language: en-CA
+To:     Doug Anderson <dianders@chromium.org>
+CC:     <agross@kernel.org>, <andersson@kernel.org>,
+        <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_msavaliy@quicinc.com>,
+        <mka@chromium.org>, <swboyd@chromium.org>,
+        <quic_vtanuku@quicinc.com>
+References: <1685729609-26871-1-git-send-email-quic_vnivarth@quicinc.com>
+ <CAD=FV=Uy=ELwg2jhtFSrpndw-GxUO=0NTKotNymi3sqwG=ggnQ@mail.gmail.com>
+From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+In-Reply-To: <CAD=FV=Uy=ELwg2jhtFSrpndw-GxUO=0NTKotNymi3sqwG=ggnQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: oaa35-xyGBgWOsKsYED45dn4O7BwJkvL
+X-Proofpoint-GUID: oaa35-xyGBgWOsKsYED45dn4O7BwJkvL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-12_06,2023-06-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=28 impostorscore=0
+ priorityscore=1501 malwarescore=0 adultscore=0 lowpriorityscore=0
+ phishscore=0 spamscore=28 clxscore=1015 bulkscore=0 mlxlogscore=41
+ suspectscore=0 mlxscore=28 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306120117
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -71,70 +84,50 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
---4W2AYxZZZ8GOZJ6I
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Thank you very much for the review...
 
-On Mon, Jun 12, 2023 at 09:25:44AM +0200, Krzysztof Kozlowski wrote:
-> On 11/06/2023 13:57, Mark Brown wrote:
-> > On Sun, Jun 11, 2023 at 12:26:57PM +0200, Krzysztof Kozlowski wrote:
 
-> >> +	{ WSA884X_OTP_REG_40,			0x00 },
-> >> +	{ WSA884X_OTP_REG_41,			0x00 },
-> >> +	{ WSA884X_OTP_REG_63,			0x40 },
+On 6/7/2023 9:41 PM, Doug Anderson wrote:
+> Hi,
+>
+> On Fri, Jun 2, 2023 at 11:13 AM Vijaya Krishna Nivarthi
+> <quic_vnivarth@quicinc.com> wrote:
+>> The select_fifo/dma_mode() functions in geni driver enable/disable
+>> interrupts (secondary included) conditionally for non-uart modes, while
+>> uart is supposed to manage this internally.
+>> However, only uart uses secondary IRQs while spi, i2c do not care about
+>> these at all making their enablement (or disablement) totally unnecessary
+>> for these protos.
+>>
+>> Drop enabling/disabling secondary IRQs for non-uart modes.
+>> This doesn't solve any observed problem but only gets rid of code pieces
+>> that are not required.
+>>
+>> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
+>> ---
+>>   drivers/soc/qcom/qcom-geni-se.c | 24 ++++--------------------
+>>   1 file changed, 4 insertions(+), 20 deletions(-)
+> This seems like a nice cleanup to me. It's still odd that the general
+> code has a special case for UART, but I guess the alternative is to
+> duplicate the exact same logic for both the i2c and SPI drivers. I
+> won't insist on that, though I wouldn't be opposed to it either.
+>
+> I guess one comment, though: should we also remove the code that
+> messes with "SE_GENI_S_IRQ_EN" in geni_se_select_gpi_mode()?
 
-> > These appear to be OTP data which suggests that they shouldn't have
-> > defaults either since they can be programmed.
 
-> Just to be clear - I don't have access to datasheet so I don't know what
-> are these. The downstream driver actually initializes (writes to) two
-> OTP registers - 38 and 40.
+Right now we have gpi-dma mode support for i2c and spi but not for uart.
 
-That's...  counterintuitive given the naming.
+Even when gpi-dma support is added, uart driver's interrupt handler 
+would not be invoked so I believe it would be safe to drop that code 
+from geni_se_select_gpi_mode() too.
 
-> >> +static bool wsa884x_readonly_register(struct device *dev, unsigned int reg)
-> >> +{
-> >> +	switch (reg) {
+I will post v2 dropping same after some more lookup.
 
-> > In general the read only registers probably shouldn't have defaults...
+-Vijay/
 
-> For the case when regmap is being read before device enumerates (thus
-> synced)?
 
-If you're reading read only registers from the cache defaults like that
-you may as well cut out the middle man and not bother parsing the
-register at all - the value is just hard coded.  Either power up the
-device to find out what the values are or use the values directly.
-
-> >> +	/* Speaker mode by default */
-> >> +	{ WSA884X_DRE_CTL_0, 0x7 << WSA884X_DRE_CTL_0_PROG_DELAY_SHIFT },
-> >> +	{ WSA884X_CLSH_CTL_0, (0x37 & ~WSA884X_CLSH_CTL_0_DLY_CODE_MASK) |
-> >> +			      (0x6 << WSA884X_CLSH_CTL_0_DLY_CODE_SHIFT) },
-> >> +	{ WSA884X_CLSH_SOFT_MAX, 0xff },
-
-> > Why not just leave as the chip default?
-
-> Sincerely, I don't know. Without any documentation, I am relying
-> entirely on downstream driver which has some code like this. I don't
-> know whether some parts here make sense only for downstream case or
-> shall be applicable also for upstream.
-
-This sounds like someone hard coding their use case TBH.
-
---4W2AYxZZZ8GOZJ6I
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmSHH2AACgkQJNaLcl1U
-h9CaPwf/aX9WQEFcA6zXSh74pvL2X9EgjCIw0+zTNqo4m9a4OWMHcrlXGqKsi7pm
-b/kdJ53Asst3GGbTO+2V6+P3WctJRkxgrZRIswHYUfJVuZRwol07nq2v1T+2qu4l
-zPPqa9TNf7WOFJpm4xTEAD12CZsGeNUo8WSCoCR7qotMmqwUA2ZIqp7HsOzHfr2N
-C/zvaFTnotbGn73s+oZE6wqtQWF8GGXCu5wMcqGvGMHoxgU6MXcwwRFT3xXz0TkD
-j4fy8QoU7907ARX0cy6fMJEQtiZjrg41DJxkIY3GPGDJAS7YUdnI85/44YHga9EC
-ePr9Kxof5jGBxa7rDk0NVSwFtNFbyA==
-=AnsO
------END PGP SIGNATURE-----
-
---4W2AYxZZZ8GOZJ6I--
+>
+> -Doug
