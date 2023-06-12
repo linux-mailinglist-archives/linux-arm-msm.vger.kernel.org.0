@@ -2,94 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 01F2072C53C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 14:57:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 030F272C55E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 15:03:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235495AbjFLM5u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 08:57:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41030 "EHLO
+        id S235796AbjFLNDY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 09:03:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46134 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232029AbjFLM5m (ORCPT
+        with ESMTP id S229604AbjFLNDX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 08:57:42 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB76EE51
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 05:57:39 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id ca18e2360f4ac-77af8476cd4so90172739f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 05:57:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686574659; x=1689166659;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mcs/mzLIm1WsqdeHjzGZbuX7KtKU1yS6rQCOIH1J8I0=;
-        b=xqC6MKpngECoQvoYMSW33//Z/IKlUMIllTI83I+x158liBOcOl7RCaT7RULcYvp7Ph
-         m+2/w5j/2GbjBdORnBj2KHO+dN9IJXC3j1upgDuHEpXaGEYJCI4ibKda0jN0ubmaa0Fq
-         rxiLTZ6SUZsGYZ4H91fpDNokyCdWkS0gBl436W3T9kxDSOAea7eovYflrFEakmL/qkg2
-         alAwlke7UkgcmKzfQZOgkbETVsxnSKwq3bnCrNm8NbwUJzJgWvUl//zSJnKzcnA9Jx8j
-         rUoEgmIEphfcjVDijdVjk8/Tnky7TXrFqLA1ZG3kDtaBrB9RaBxvPYZdEmFIiJ2UwmKx
-         6/cA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686574659; x=1689166659;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mcs/mzLIm1WsqdeHjzGZbuX7KtKU1yS6rQCOIH1J8I0=;
-        b=ZRg9sFgywA74/9t8tF8teD2itvsuWACVW7mBOhSnL6Uas56YpnTA43foX6cN3RF8g2
-         mCIcjvXbUV/iPd1LIXBGEIUlPkjDRAe9Evtef/ASJBWPdHMZG6JGKNBccGKVOlkiwG3F
-         OlPAOd4nIX3ei7HtQRWbbw5oj7+0PYW+o/byDmojVEh7kBpu0MC6nSXu9Wl7hRHEaRJy
-         6JWm2Fq3xLA/OYmKu07eyf6xo1jq+i3U25wj8NnaqKy5X3/eqlLotQyRZvaKzOn3lmpr
-         h3zPY0BKOVxBLYFkD757JyiHjz7itc6jIgEBMEl8xJss0q9BT308ZaFCgDcDIMcAPXed
-         Mn7g==
-X-Gm-Message-State: AC+VfDyHXjIhyPQlFF2C+rm5T2qtGR0LDxJKSxDAulfEMgS8uY5qyO1K
-        2l8Ul+icFW6R8zc5bUCG6uNd1A==
-X-Google-Smtp-Source: ACHHUZ4154bImSu2u2zX5xxEjDVt2RyADN5K86hrxC1hYjrP9agk1PMGoXyFm23au2IshSS0kJicBw==
-X-Received: by 2002:a05:6602:1851:b0:76c:6c78:5144 with SMTP id d17-20020a056602185100b0076c6c785144mr8089910ioi.17.1686574659284;
-        Mon, 12 Jun 2023 05:57:39 -0700 (PDT)
-Received: from [172.22.22.28] ([98.61.227.136])
-        by smtp.gmail.com with ESMTPSA id w1-20020a02cf81000000b0041675393f68sm2690066jar.6.2023.06.12.05.57.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jun 2023 05:57:38 -0700 (PDT)
-Message-ID: <31b88290-5e2b-5c13-338c-3a08ad1e02fb@linaro.org>
-Date:   Mon, 12 Jun 2023 07:57:37 -0500
+        Mon, 12 Jun 2023 09:03:23 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB7D619D;
+        Mon, 12 Jun 2023 06:03:22 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35CCUVEL030059;
+        Mon, 12 Jun 2023 13:03:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=vwUQ1F8I7JI/UaeWgCAqXrFbc20JHeM5AvHArrbGZns=;
+ b=G6ua1Gn9MbO7FPY+XSeGpjItS1FFYvAY0JwZYk1Uiz/KAgD+xkH4m7U8pwqrdL37oyex
+ 7TZdggKYfXNzWeA2MDyCWykL95+zxUR89pNu4OGnk4jVnVK+nH9rjJUmj55OTHOcphJT
+ dOPFqY/Pp8hRXz4zgbOqQA+oAHP4bjcttkDOmNrE+CAkfUCPh4AOsXe9E65w2LopWTTf
+ YqQzadC33GUZF6tsXq37njVCMe6Hyj+hBeY5EmDlt29zKG27sdlJQyUZp/tlnTYuzxgd
+ T+gQCi9Y69hRp7ndog5L4cG+9oKWIWmV6HgTHHHNlMgyS3PWvivDVnLdbP5NDyKh0Wd9 xQ== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r4hd8bcah-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 12 Jun 2023 13:03:11 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35CD3ArR004276
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Mon, 12 Jun 2023 13:03:10 GMT
+Received: from [10.50.37.200] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Mon, 12 Jun
+ 2023 06:03:07 -0700
+Message-ID: <e3a867a8-284b-7250-b1b2-1956f533f6b0@quicinc.com>
+Date:   Mon, 12 Jun 2023 18:33:04 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH v13 17/24] gunyah: vm_mgr: Add framework for VM Functions
+Subject: Re: [PATCH] accel/qaic: Fix dereferencing freed memory
 Content-Language: en-US
-To:     Elliot Berman <quic_eberman@quicinc.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
-        Jonathan Corbet <corbet@lwn.net>
-Cc:     Murali Nalajala <quic_mnalajal@quicinc.com>,
-        Trilok Soni <quic_tsoni@quicinc.com>,
-        Srivatsa Vaddagiri <quic_svaddagi@quicinc.com>,
-        Carl van Schaik <quic_cvanscha@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Bagas Sanjaya <bagasdotme@gmail.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
- <20230509204801.2824351-18-quic_eberman@quicinc.com>
- <3dd82ec0-2a9a-3401-5385-965c624f9f32@linaro.org>
- <c625a138-d27e-bbcb-8056-25abefb75152@quicinc.com>
-From:   Alex Elder <elder@linaro.org>
-In-Reply-To: <c625a138-d27e-bbcb-8056-25abefb75152@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To:     =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
+        "Sukrut Bellary" <sukrut.bellary@linux.com>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Oded Gabbay <ogabbay@kernel.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <kernel-janitors@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <linaro-mm-sig@lists.linaro.org>, <linux-media@vger.kernel.org>
+References: <20230610021200.377452-1-sukrut.bellary@linux.com>
+ <fc979a4e-c30a-2606-9eec-afbba4fdd774@amd.com>
+From:   Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+In-Reply-To: <fc979a4e-c30a-2606-9eec-afbba4fdd774@amd.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: SeHIjpfi9M7u3H3WwjT4NY5sa6NN1EoZ
+X-Proofpoint-GUID: SeHIjpfi9M7u3H3WwjT4NY5sa6NN1EoZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-12_06,2023-06-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ impostorscore=0 clxscore=1015 lowpriorityscore=0 priorityscore=1501
+ phishscore=0 adultscore=0 bulkscore=0 mlxscore=0 spamscore=0
+ suspectscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2305260000 definitions=main-2306120112
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -97,38 +85,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 6/9/23 2:49 PM, Elliot Berman wrote:
->>> +static struct gh_vm_function *gh_vm_get_function(u32 type)
->>> +{
->>> +    struct gh_vm_function *fn;
->>> +    int r;
->>> +
->>> +    fn = xa_load(&gh_vm_functions, type);
->>> +    if (!fn) {
->>> +        r = request_module("ghfunc:%d", type);
->>> +        if (r)
->>> +            return ERR_PTR(r > 0 ? -r : r);
->>
->> Almost all callers of request_module() simply ignore the
->> return value.  What positive values are you expecting to
->> see here (and are you sure they're positive errno values)?
->>
+
+
+On 6/12/2023 4:52 PM, Christian König wrote:
 > 
-> I can ignore the return value here, too, to follow the convention.
 > 
-> I had observed request_module can return modprobe's exit code.
+> Am 10.06.23 um 04:12 schrieb Sukrut Bellary:
+>> smatch warning:
+>>     drivers/accel/qaic/qaic_data.c:620 qaic_free_object() error:
+>>         dereferencing freed memory 'obj->import_attach'
+>>
+>> obj->import_attach is detached and freed using dma_buf_detach().
+>> But used after free to decrease the dmabuf ref count using
+>> dma_buf_put().
+>>
+>> Fixes: ff13be830333 ("accel/qaic: Add datapath")
+>> Signed-off-by: Sukrut Bellary <sukrut.bellary@linux.com>
+>> ---
+>>   drivers/accel/qaic/qaic_data.c | 4 +++-
+>>   1 file changed, 3 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/accel/qaic/qaic_data.c 
+>> b/drivers/accel/qaic/qaic_data.c
+>> index e42c1f9ffff8..7cba4d680ea8 100644
+>> --- a/drivers/accel/qaic/qaic_data.c
+>> +++ b/drivers/accel/qaic/qaic_data.c
+>> @@ -613,11 +613,13 @@ static int qaic_gem_object_mmap(struct 
+>> drm_gem_object *obj, struct vm_area_struc
+>>   static void qaic_free_object(struct drm_gem_object *obj)
+>>   {
+>>       struct qaic_bo *bo = to_qaic_bo(obj);
+>> +    struct dma_buf *dmabuf;
+> 
+> Maybe move that variable into the if.
+> 
+>>       if (obj->import_attach) {
+>>           /* DMABUF/PRIME Path */
+>> +        dmabuf = obj->import_attach->dmabuf;
+>>           dma_buf_detach(obj->import_attach->dmabuf, obj->import_attach);
+>> -        dma_buf_put(obj->import_attach->dmabuf);
+>> +        dma_buf_put(dmabuf);
+> 
+> I strongly assume you are not using the GEM prime helpers for this?
+> 
+> Christian.
 
-I actually like checking the return value, but if a positive one comes
-back it's not clear at all that it should be interpreted as an errno.
+Driver uses drm_gem_prime_fd_to_handle() helper function but it also 
+registers for ->gem_prime_import() which is internally called by 
+drm_gem_prime_fd_to_handle(). All the operations done in 
+gem_prime_import() are undone here.
 
-Given that almost everybody ignores the return value, maybe the
-called function should change, but blk_request_module() and
-cpufreq_parse_governor() (for two examples) actually use the
-return value to affect behavior.
-
-If you check its return, and it's positive, I would return a
-known negative errno rather than just negating it--and perhaps
-issue a warning.  But it's OK with me if you just ignore it
-like most other callers.
-
-					-Alex
+> 
+>>       } else {
+>>           /* Private buffer allocation path */
+>>           qaic_free_sgt(bo->sgt);
+> 
