@@ -2,48 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 0542C72CE90
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 20:37:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC3A472CE9A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 20:39:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230331AbjFLShI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 14:37:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56642 "EHLO
+        id S235319AbjFLSjn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 14:39:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57232 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233690AbjFLShI (ORCPT
+        with ESMTP id S229464AbjFLSjl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 14:37:08 -0400
-Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [5.144.164.169])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFCD4E77
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 11:37:05 -0700 (PDT)
-Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 63F413F586;
-        Mon, 12 Jun 2023 20:37:03 +0200 (CEST)
-Date:   Mon, 12 Jun 2023 20:37:01 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        Mon, 12 Jun 2023 14:39:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2C00B187
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 11:38:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1686595131;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=PDNy4tlrStiRvaxnMXQiYuj7Ms4xtJijYK3hHSTiCgM=;
+        b=H7qFbt2G/1zA73N8VaJp9BsN+Epzea+/mngAVCVxQtg0eLs7uU+UMfDKhxzzQEto5sEk+K
+        rnpk7My/iNBFXuxbcEjgmhp8coSZhe7nPmEQULO3vkrWRtS8qXZWWGkLWGzltbpBYiI6IS
+        t/SbjcM4qeUMi2jN5allx7QJWNysifw=
+Received: from mail-oi1-f199.google.com (mail-oi1-f199.google.com
+ [209.85.167.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-435-xBVWvryeMeyKJFD6ji0_HQ-1; Mon, 12 Jun 2023 14:38:50 -0400
+X-MC-Unique: xBVWvryeMeyKJFD6ji0_HQ-1
+Received: by mail-oi1-f199.google.com with SMTP id 5614622812f47-397f97f7966so3114346b6e.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 11:38:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686595129; x=1689187129;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PDNy4tlrStiRvaxnMXQiYuj7Ms4xtJijYK3hHSTiCgM=;
+        b=WxSnqqgnpC6FiGzTrYRSPw1L3xfMZhlNowUimteTjbJuzpVjPUT7PMp/fVMN7S5S6v
+         CRdcPvDNpf7Xk1fAQz4h/T0ZCLqwnuI53c0r0BBZ+oHYUTKUbx42kTyOr46nACadMlIv
+         9u93ENx4ZcmjNb0V/oc+wh/+2Wj+f+o9GgTZCEqhpVUTNIzD1ARHHYcFrNZbDIWt4JfB
+         8zoc5GQwoE4FQ08IwQOf/A09qFj8Sd/0s/RMYS2O38OjpBBmuKQsQ2FkV7LTWiEQrHj3
+         uuen2eNyaFRgMatr/CbIL92lLV9Zhwjhtz+EvtR3nYYiy5PQak7yq69JB126TfjLiV/O
+         cC3g==
+X-Gm-Message-State: AC+VfDzQ8snek8i6FER1Qlz7muqpqzPTnvbhUpF5mEiRiUG5rzycyDmg
+        A2ygvkhun1Ng84iGtypcZW2vstogKdVyucj6Y2nm4dJtnOko0ebbXL122d9gXd/xLv/ZrXfHtqZ
+        ECT8Yviv56parVWFvLkouxM2qyw==
+X-Received: by 2002:a05:6808:2090:b0:398:e4c:d5c2 with SMTP id s16-20020a056808209000b003980e4cd5c2mr6244349oiw.9.1686595129322;
+        Mon, 12 Jun 2023 11:38:49 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ658SXpBYoZENXQUCSYrl2GfGIsHYqLLYyBLRDeoekAAyN1j6b2/N1aFPTIPKR17gwesdJaxg==
+X-Received: by 2002:a05:6808:2090:b0:398:e4c:d5c2 with SMTP id s16-20020a056808209000b003980e4cd5c2mr6244337oiw.9.1686595129080;
+        Mon, 12 Jun 2023 11:38:49 -0700 (PDT)
+Received: from halaney-x13s ([2600:1700:1ff0:d0e0::45])
+        by smtp.gmail.com with ESMTPSA id t7-20020a815f07000000b0054f9e7fed7asm2663490ywb.137.2023.06.12.11.38.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jun 2023 11:38:48 -0700 (PDT)
+Date:   Mon, 12 Jun 2023 13:38:39 -0500
+From:   Andrew Halaney <ahalaney@redhat.com>
+To:     Bartosz Golaszewski <brgl@bgdev.pl>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        Degdag Mohamed <degdagmohamed@gmail.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>
-Subject: Re: [PATCH 1/2] drm/msm: provide fb_dirty implemenation
-Message-ID: <p4sozllzwn2abtp5ylec3ma2e7au4n2d22qeshbhlp3ykob2vl@e5c5nofxv6jh>
-References: <20230612031616.3620134-1-dmitry.baryshkov@linaro.org>
- <aenzh4vscayeqvyjpbxifog7l3yuxv5lh5cizcie7dk7awx5z7@nuajlsildlw6>
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH 08/26] net: stmmac: dwmac-qcom-ethqos: use a helper
+ variable for &pdev->dev
+Message-ID: <20230612183839.zcn5glnhptptmbt4@halaney-x13s>
+References: <20230612092355.87937-1-brgl@bgdev.pl>
+ <20230612092355.87937-9-brgl@bgdev.pl>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aenzh4vscayeqvyjpbxifog7l3yuxv5lh5cizcie7dk7awx5z7@nuajlsildlw6>
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+In-Reply-To: <20230612092355.87937-9-brgl@bgdev.pl>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=unavailable
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -51,7 +98,110 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Title typo that I missed: implemenation -> implemen*T*ation :)
+On Mon, Jun 12, 2023 at 11:23:37AM +0200, Bartosz Golaszewski wrote:
+> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> 
+> Shrink code and avoid line breaks by using a helper variable for
+> &pdev->dev.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+>  .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 48 ++++++++++---------
+>  1 file changed, 26 insertions(+), 22 deletions(-)
+> 
+> diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> index 28d2514a8795..e19d142630d3 100644
+> --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> @@ -123,25 +123,26 @@ static void rgmii_updatel(struct qcom_ethqos *ethqos,
+>  static void rgmii_dump(void *priv)
+>  {
+>  	struct qcom_ethqos *ethqos = priv;
+> +	struct device *dev = &ethqos->pdev->dev;
+>  
+> -	dev_dbg(&ethqos->pdev->dev, "Rgmii register dump\n");
+> -	dev_dbg(&ethqos->pdev->dev, "RGMII_IO_MACRO_CONFIG: %x\n",
+> +	dev_dbg(dev, "Rgmii register dump\n");
+> +	dev_dbg(dev, "RGMII_IO_MACRO_CONFIG: %x\n",
+>  		rgmii_readl(ethqos, RGMII_IO_MACRO_CONFIG));
+> -	dev_dbg(&ethqos->pdev->dev, "SDCC_HC_REG_DLL_CONFIG: %x\n",
+> +	dev_dbg(dev, "SDCC_HC_REG_DLL_CONFIG: %x\n",
+>  		rgmii_readl(ethqos, SDCC_HC_REG_DLL_CONFIG));
+> -	dev_dbg(&ethqos->pdev->dev, "SDCC_HC_REG_DDR_CONFIG: %x\n",
+> +	dev_dbg(dev, "SDCC_HC_REG_DDR_CONFIG: %x\n",
+>  		rgmii_readl(ethqos, SDCC_HC_REG_DDR_CONFIG));
+> -	dev_dbg(&ethqos->pdev->dev, "SDCC_HC_REG_DLL_CONFIG2: %x\n",
+> +	dev_dbg(dev, "SDCC_HC_REG_DLL_CONFIG2: %x\n",
+>  		rgmii_readl(ethqos, SDCC_HC_REG_DLL_CONFIG2));
+> -	dev_dbg(&ethqos->pdev->dev, "SDC4_STATUS: %x\n",
+> +	dev_dbg(dev, "SDC4_STATUS: %x\n",
+>  		rgmii_readl(ethqos, SDC4_STATUS));
+> -	dev_dbg(&ethqos->pdev->dev, "SDCC_USR_CTL: %x\n",
+> +	dev_dbg(dev, "SDCC_USR_CTL: %x\n",
+>  		rgmii_readl(ethqos, SDCC_USR_CTL));
+> -	dev_dbg(&ethqos->pdev->dev, "RGMII_IO_MACRO_CONFIG2: %x\n",
+> +	dev_dbg(dev, "RGMII_IO_MACRO_CONFIG2: %x\n",
+>  		rgmii_readl(ethqos, RGMII_IO_MACRO_CONFIG2));
+> -	dev_dbg(&ethqos->pdev->dev, "RGMII_IO_MACRO_DEBUG1: %x\n",
+> +	dev_dbg(dev, "RGMII_IO_MACRO_DEBUG1: %x\n",
+>  		rgmii_readl(ethqos, RGMII_IO_MACRO_DEBUG1));
+> -	dev_dbg(&ethqos->pdev->dev, "EMAC_SYSTEM_LOW_POWER_DEBUG: %x\n",
+> +	dev_dbg(dev, "EMAC_SYSTEM_LOW_POWER_DEBUG: %x\n",
+>  		rgmii_readl(ethqos, EMAC_SYSTEM_LOW_POWER_DEBUG));
+>  }
+>  
+> @@ -242,6 +243,7 @@ static const struct ethqos_emac_driver_data emac_v3_0_0_data = {
+>  
+>  static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
+>  {
+> +	struct device *dev = &ethqos->pdev->dev;
+>  	unsigned int val;
+>  	int retry = 1000;
+>  
+> @@ -279,7 +281,7 @@ static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
+>  		retry--;
+>  	} while (retry > 0);
+>  	if (!retry)
+> -		dev_err(&ethqos->pdev->dev, "Clear CK_OUT_EN timedout\n");
+> +		dev_err(dev, "Clear CK_OUT_EN timedout\n");
+>  
+>  	/* Set CK_OUT_EN */
+>  	rgmii_updatel(ethqos, SDCC_DLL_CONFIG_CK_OUT_EN,
+> @@ -296,7 +298,7 @@ static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
+>  		retry--;
+>  	} while (retry > 0);
+>  	if (!retry)
+> -		dev_err(&ethqos->pdev->dev, "Set CK_OUT_EN timedout\n");
+> +		dev_err(dev, "Set CK_OUT_EN timedout\n");
+>  
+>  	/* Set DDR_CAL_EN */
+>  	rgmii_updatel(ethqos, SDCC_DLL_CONFIG2_DDR_CAL_EN,
+> @@ -322,12 +324,13 @@ static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
+>  
+>  static int ethqos_rgmii_macro_init(struct qcom_ethqos *ethqos)
+>  {
+> +	struct device *dev = &ethqos->pdev->dev;
+>  	int phase_shift;
+>  	int phy_mode;
+>  	int loopback;
+>  
+>  	/* Determine if the PHY adds a 2 ns TX delay or the MAC handles it */
+> -	phy_mode = device_get_phy_mode(&ethqos->pdev->dev);
+> +	phy_mode = device_get_phy_mode(dev);
+>  	if (phy_mode == PHY_INTERFACE_MODE_RGMII_ID ||
+>  	    phy_mode == PHY_INTERFACE_MODE_RGMII_TXID)
+>  		phase_shift = 0;
+> @@ -468,7 +471,7 @@ static int ethqos_rgmii_macro_init(struct qcom_ethqos *ethqos)
+>  			      loopback, RGMII_IO_MACRO_CONFIG);
+>  		break;
+>  	default:
+> -		dev_err(&ethqos->pdev->dev,
+> +		dev_err(dev,
+>  			"Invalid speed %d\n", ethqos->speed);
 
-On 2023-06-12 11:14:41, Marijn Suijten wrote:
-<snip>
+nit: You could put this on the prior line now
+
+With that in place, feel free to add:
+
+    Reviewed-by: Andrew Halaney <ahalaney@redhat.com>
+
