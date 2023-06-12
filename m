@@ -2,244 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id AB69B72C3A8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 14:07:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAE9372C3EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jun 2023 14:23:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231204AbjFLMHL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jun 2023 08:07:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45958 "EHLO
+        id S232000AbjFLMXu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jun 2023 08:23:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232343AbjFLMHJ (ORCPT
+        with ESMTP id S229541AbjFLMXs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jun 2023 08:07:09 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21771C7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 05:07:08 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-4f74cda5f1dso506215e87.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jun 2023 05:07:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686571626; x=1689163626;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HmfHMfm/QZbaLCmlMQ4zvEcNR/SiU66kdau8E/a1GJk=;
-        b=aZLGPwcK+PmzDbxtslqxfBhuVo/a8rJkhT4/binDK8Yab3fjaQmqez4VG3S3escKhi
-         YnOpxYG7f5DyJ3NKmwywcWnisExoWHckaicT2heAacYlDoo597JQsubHgldXvrReUMP+
-         LuKahVJtHLmIjYokfYzIq+djbEi8XR9w/NgkNhl2Brx6xjzu7j0cCYJWKj5IPeDlB0Vl
-         nDtKlD5q5Cms0mhNM6nLbS3dukOJJI9CKF9aY2WoewXHI4ouQ6xH2M6zLCuA1dbNhMMX
-         hkZk+c4B2zWTuTjxoetRxJLFd/MLCe8tck8thTxFCsEmOTGgzd7ORu0uN+/7gJXrISQs
-         jL0A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686571626; x=1689163626;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HmfHMfm/QZbaLCmlMQ4zvEcNR/SiU66kdau8E/a1GJk=;
-        b=GZ9qDdFAWdKgNcOF/dCRb7a2zTWvPgk3DMq8eV86FL1uS9rFTbzi7H8TSS72mKBzMp
-         EuvUc3JIwX1SjKFZs2wextO1iImas20I9BN6IFaopglzfiTORhz2D+sFaiQDrt2Gv4gr
-         aWVEDWWqwqloIHXs7nsC6Y7gvnu9+zx306vSLhwT7LAVaZKB0dwiP02wmek0Eq0RFu0m
-         MSP9eDm9TWN48GnT7dD6sC+jPR5sHQpSXBMFQprhNpXFscDcuYfjE5ah5GBv/zjd+ZIT
-         3HTNJZgf7k5NDWjBNcCraiUFjqrfGOVc3z2aXKlyRYjerL31XZ1qX8XF7kQe8U7ySaqs
-         4Bbg==
-X-Gm-Message-State: AC+VfDy/mACNNC89e0IKBBwXhnVOXka8Wt2ObGW4sR4JmEUubXg0HXc4
-        97UCD3sKyagURzdxY+8C55R/JQ==
-X-Google-Smtp-Source: ACHHUZ4dsXqJxPR7N+XXrWVJdsnFa7kd6Dfnt8y1ebrPc5TW+mnhPQ69RNxDbK2MQJlqNMyFI8yn+A==
-X-Received: by 2002:ac2:4d9b:0:b0:4f3:a61d:19d2 with SMTP id g27-20020ac24d9b000000b004f3a61d19d2mr3711812lfe.36.1686571626179;
-        Mon, 12 Jun 2023 05:07:06 -0700 (PDT)
-Received: from [192.168.1.195] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id x25-20020a05600c21d900b003f60faa4612sm11264878wmj.22.2023.06.12.05.07.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Jun 2023 05:07:05 -0700 (PDT)
-Message-ID: <c9ec63d0-7b41-1757-b8d0-47d07cb50d1f@linaro.org>
-Date:   Mon, 12 Jun 2023 13:07:04 +0100
+        Mon, 12 Jun 2023 08:23:48 -0400
+Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [81.169.146.165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 414568F;
+        Mon, 12 Jun 2023 05:23:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1686572625; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=KraH3vMubcmrj0C2LD6TbL1LwuPdGFzlSs1CP1s/MVK0/sR/7t1/HhJ9P6HvifIUBq
+    4CpyLAop5mZokq4xG/Oqne0mUVoriENfN368pnrKYkap9PX4Jjd6Ye1wRX7egqH7BDyv
+    dkkBZSaewfJpC6VWhJtgcyjThLHpPlEyUn/2AJIt3ef9pShdQMOZ5u5uIU6Zhlq8qbcQ
+    3NwDBi16UA6tR4TiI6JIj/hctmemlcgdtKDm0xLkf/fT+aAnPmUmlocFhsQG4rYB1kBM
+    CNLVWuca6UbLVAetiC7CjCm8lTItfNb1ivpW3eP8vlTpjUbTC4bgUQlGEZpOU+8c0Ggy
+    Z6gQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686572625;
+    s=strato-dkim-0002; d=strato.com;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=uwXBG3E5s7DWlWXmcS9AKhqA3Zu6XaqcG4rf7Fj3hkI=;
+    b=BMv7CfX6d82rYMFlmfzPvcVMBA/Jxb8aiqwzyrAmUv+VdFVhp3YgvJAOabyL6CPvka
+    2NLDLLsKyWBDlF5JwuxZ2HDRRpLruAglq77K65ClqQBu/63TlxK7G95f4CBnaFuhFCLG
+    nDDOd7Cf58FpE05/ChY41n62XlfLSc+TA9glIjQwRXSagNpHuPQwaJTKQ+QNN4za5ko+
+    Rnw0mqnZpcIreNcbs2Spd3OQP2eKswQbUIAzzAGEXdBloK77FjltCmiPy294YmKF7jws
+    rF1G98SulIyHbrNjIyYoJd//MDlYdBRC0J+pN+wPss71FRXuNyeMcLMXo/Z1krBAhxR6
+    DSew==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo01
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686572625;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=uwXBG3E5s7DWlWXmcS9AKhqA3Zu6XaqcG4rf7Fj3hkI=;
+    b=izeyL70k/zgCOp8FrY/UKT2wBY9C+byoAzviCeTtDJCEOHC/LyY1x9Hk7NLr9b+Qt/
+    kYx8YBEm0aOp8gvt0dfZBUHEzJY8bcYMXnUoS5kF2qEZl9ewp5N4SV6Xba4OrWC9SP9D
+    M9qSnWcnHJ7Ee4ZwcPdyO8vqQsCExfkc6+es+rcCuwy40ZfuDFrm4LL1BdY7fe7pAoPm
+    3kpf9noM41hDMXpeKfkVKDiGROXNOvnFVuDir/gPs7GGDWM48yBvU+yyHknI1ueoyfsM
+    wj1BiYFfm6Pv7XGTu0EOZw/l5pQ4y6NSQ+tsXUOeokUKDVA4OhFtW0A4HQo2BbGnMv0o
+    I+jA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686572625;
+    s=strato-dkim-0003; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=uwXBG3E5s7DWlWXmcS9AKhqA3Zu6XaqcG4rf7Fj3hkI=;
+    b=2M/8jbyDvm2/Nyphv4KnQQsPFw2rbODQRZLPwms608pFPhfYIXkG3p9vHL23ps+ORe
+    lAKzELcNHPPYLKNsZWAQ==
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8peN1A=="
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 49.5.3 DYNA|AUTH)
+    with ESMTPSA id Z82ec2z5CCNjUhs
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 12 Jun 2023 14:23:45 +0200 (CEST)
+Date:   Mon, 12 Jun 2023 14:23:39 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Bjorn Andersson <andersson@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] clk: qcom: gcc-msm8996: Use read-only RCG ops for
+ RPM bus clocks
+Message-ID: <ZIcOS2o0l72R3lbt@gerhold.net>
+References: <20230612-topic-rcg2_ro-v1-0-e7d824aeb628@linaro.org>
+ <20230612-topic-rcg2_ro-v1-2-e7d824aeb628@linaro.org>
+ <ZIbw0dEdFNFcC0Hr@gerhold.net>
+ <8196144d-6cf1-897c-2520-3686e6414abb@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH v1] misc: fastrpc: Collect driver-remote processor
- transaction logs
-Content-Language: en-US
-To:     Ekansh Gupta <quic_ekangupt@quicinc.com>,
-        linux-arm-msm@vger.kernel.org
-Cc:     ekangupt@qti.qualcomm.com, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, bkumar@qti.qualcomm.com,
-        fastrpc.upstream@qti.qualcomm.com
-References: <1686070555-11154-1-git-send-email-quic_ekangupt@quicinc.com>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-In-Reply-To: <1686070555-11154-1-git-send-email-quic_ekangupt@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <8196144d-6cf1-897c-2520-3686e6414abb@linaro.org>
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,
+        RCVD_IN_MSPIKE_H3,RCVD_IN_MSPIKE_WL,SPF_HELO_PASS,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 06/06/2023 17:55, Ekansh Gupta wrote:
-> Add changes to collect driver-remote processor rpmsg transaction
-> logs. These logs will carry payload information for the rpmsg message
-> instance. These logs are channel specific and are collected in
-> channel context structure.
+On Mon, Jun 12, 2023 at 01:46:26PM +0200, Konrad Dybcio wrote:
+> On 12.06.2023 12:17, Stephan Gerhold wrote:
+> > On Mon, Jun 12, 2023 at 11:22:48AM +0200, Konrad Dybcio wrote:
+> >> The config/periph/system NoC clocks are wholly controlled by the
+> >> RPM firmware and Linux should never ever alter their configuration.
+> >>
+> >> Switch them over to read-only ops to avoid that.
+> >>
+> >> Fixes: b1e010c0730a ("clk: qcom: Add MSM8996 Global Clock Control (GCC) driver")
+> >> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+> >> ---
+> >>  drivers/clk/qcom/gcc-msm8996.c | 6 +++---
+> >>  1 file changed, 3 insertions(+), 3 deletions(-)
+> >>
+> >> diff --git a/drivers/clk/qcom/gcc-msm8996.c b/drivers/clk/qcom/gcc-msm8996.c
+> >> index 5e44d1bcca9e..588e3b67657a 100644
+> >> --- a/drivers/clk/qcom/gcc-msm8996.c
+> >> +++ b/drivers/clk/qcom/gcc-msm8996.c
+> >> @@ -264,7 +264,7 @@ static struct clk_rcg2 system_noc_clk_src = {
+> >>  		.name = "system_noc_clk_src",
+> >>  		.parent_data = gcc_xo_gpll0_gpll0_early_div,
+> >>  		.num_parents = ARRAY_SIZE(gcc_xo_gpll0_gpll0_early_div),
+> >> -		.ops = &clk_rcg2_ops,
+> >> +		.ops = &clk_rcg2_ro_ops,
+> >>  	},
+> >>  };
+> >>  
+> >> @@ -284,7 +284,7 @@ static struct clk_rcg2 config_noc_clk_src = {
+> >>  		.name = "config_noc_clk_src",
+> >>  		.parent_data = gcc_xo_gpll0,
+> >>  		.num_parents = ARRAY_SIZE(gcc_xo_gpll0),
+> >> -		.ops = &clk_rcg2_ops,
+> >> +		.ops = &clk_rcg2_ro_ops,
+> >>  	},
+> >>  };
+> >>  
+> >> @@ -306,7 +306,7 @@ static struct clk_rcg2 periph_noc_clk_src = {
+> >>  		.name = "periph_noc_clk_src",
+> >>  		.parent_data = gcc_xo_gpll0,
+> >>  		.num_parents = ARRAY_SIZE(gcc_xo_gpll0),
+> >> -		.ops = &clk_rcg2_ops,
+> >> +		.ops = &clk_rcg2_ro_ops,
+> >>  	},
+> >>  };
+> >>  
+> > 
+> > If the rcg is read-only then it shouldn't need a .freq_tbl (the
+> > .recalc_rate() works without it). These clocks have one for some reason.
+> .get_parent needs it
 > 
 
-Can you provide details on who is the actual consumer of this?
+Hm? .get_parent uses the ->parent_map but not the ->freq_tbl as far as I
+can see. :)
 
-Are you planning to dump this data via devcoredumps?
-
---srini
-
-> These rpmsg transaction logs can help in improving debugability as
-> all requests from processes are getting captured in channel context
-> structure.
-> 
-> Signed-off-by: Ekansh Gupta <quic_ekangupt@quicinc.com>
-> ---
->   drivers/misc/fastrpc.c | 88 ++++++++++++++++++++++++++++++++++++++++++++++++++
->   1 file changed, 88 insertions(+)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index 30d4d04..6447cee 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -104,6 +104,9 @@
->   
->   #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
->   
-> +/* Length of glink transaction history to store */
-> +#define GLINK_MSG_HISTORY_LEN	(128)
-> +
->   static const char *domains[FASTRPC_DEV_MAX] = { "adsp", "mdsp",
->   						"sdsp", "cdsp"};
->   struct fastrpc_phy_page {
-> @@ -181,6 +184,28 @@ struct fastrpc_invoke_rsp {
->   	int retval;		/* invoke return value */
->   };
->   
-> +struct fastrpc_tx_msg {
-> +	struct fastrpc_msg msg;	/* Msg sent to remote subsystem */
-> +	int rpmsg_send_err;	/* rpmsg error */
-> +	s64 ns;			/* Timestamp (in ns) of msg */
-> +};
-> +
-> +struct fastrpc_rx_msg {
-> +	struct fastrpc_invoke_rsp rsp;	/* Response from remote subsystem */
-> +	s64 ns;		/* Timestamp (in ns) of response */
-> +};
-> +
-> +struct fastrpc_rpmsg_log {
-> +	u32 tx_index;	/* Current index of 'tx_msgs' array */
-> +	u32 rx_index;	/* Current index of 'rx_msgs' array */
-> +	/* Rolling history of messages sent to remote subsystem */
-> +	struct fastrpc_tx_msg tx_msgs[GLINK_MSG_HISTORY_LEN];
-> +	/* Rolling history of responses from remote subsystem */
-> +	struct fastrpc_rx_msg rx_msgs[GLINK_MSG_HISTORY_LEN];
-> +	spinlock_t tx_lock;
-> +	spinlock_t rx_lock;
-> +};
-> +
->   struct fastrpc_buf_overlap {
->   	u64 start;
->   	u64 end;
-> @@ -277,6 +302,7 @@ struct fastrpc_channel_ctx {
->   	struct fastrpc_device *fdevice;
->   	struct fastrpc_buf *remote_heap;
->   	struct list_head invoke_interrupted_mmaps;
-> +	struct fastrpc_rpmsg_log gmsg_log[FASTRPC_DEV_MAX];
->   	bool secure;
->   	bool unsigned_support;
->   	u64 dma_mask;
-> @@ -1097,6 +1123,64 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
->   	return 0;
->   }
->   
-> +static s64 get_timestamp_in_ns(void)
-> +{
-> +	s64 ns = 0;
-> +	struct timespec64 ts;
-> +
-> +	ktime_get_real_ts64(&ts);
-> +	ns = timespec64_to_ns(&ts);
-> +	return ns;
-> +}
-> +
-> +static void fastrpc_update_txmsg_buf(struct fastrpc_channel_ctx *chan,
-> +				struct fastrpc_msg *msg, int rpmsg_send_err, s64 ns)
-> +{
-> +	unsigned long flags = 0;
-> +	u32 tx_index = 0;
-> +	struct fastrpc_tx_msg *tx_msg = NULL;
-> +
-> +	spin_lock_irqsave(&(chan->gmsg_log[chan->domain_id].tx_lock), flags);
-> +
-> +	tx_index = chan->gmsg_log[chan->domain_id].tx_index;
-> +	tx_msg = &(chan->gmsg_log[chan->domain_id].tx_msgs[tx_index]);
-> +
-> +	memcpy(&tx_msg->msg, msg, sizeof(struct fastrpc_msg));
-> +	tx_msg->rpmsg_send_err = rpmsg_send_err;
-> +	tx_msg->ns = ns;
-> +
-> +	tx_index++;
-> +	chan->gmsg_log[chan->domain_id].tx_index =
-> +		(tx_index > (GLINK_MSG_HISTORY_LEN - 1)) ? 0 : tx_index;
-> +
-> +	spin_unlock_irqrestore(&(chan->gmsg_log[chan->domain_id].tx_lock), flags);
-> +}
-> +
-> +static void fastrpc_update_rxmsg_buf(struct fastrpc_channel_ctx *chan,
-> +							u64 ctx, int retval, s64 ns)
-> +{
-> +	unsigned long flags = 0;
-> +	u32 rx_index = 0;
-> +	struct fastrpc_rx_msg *rx_msg = NULL;
-> +	struct fastrpc_invoke_rsp *rsp = NULL;
-> +
-> +	spin_lock_irqsave(&(chan->gmsg_log[chan->domain_id].rx_lock), flags);
-> +
-> +	rx_index = chan->gmsg_log[chan->domain_id].rx_index;
-> +	rx_msg = &(chan->gmsg_log[chan->domain_id].rx_msgs[rx_index]);
-> +	rsp = &rx_msg->rsp;
-> +
-> +	rsp->ctx = ctx;
-> +	rsp->retval = retval;
-> +	rx_msg->ns = ns;
-> +
-> +	rx_index++;
-> +	chan->gmsg_log[chan->domain_id].rx_index =
-> +		(rx_index > (GLINK_MSG_HISTORY_LEN - 1)) ? 0 : rx_index;
-> +
-> +	spin_unlock_irqrestore(&(chan->gmsg_log[chan->domain_id].rx_lock), flags);
-> +}
-> +
->   static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
->   			       struct fastrpc_invoke_ctx *ctx,
->   			       u32 kernel, uint32_t handle)
-> @@ -1124,6 +1208,7 @@ static int fastrpc_invoke_send(struct fastrpc_session_ctx *sctx,
->   
->   	if (ret)
->   		fastrpc_context_put(ctx);
-> +	fastrpc_update_txmsg_buf(cctx, msg, ret, get_timestamp_in_ns());
->   
->   	return ret;
->   
-> @@ -2323,6 +2408,8 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->   	INIT_LIST_HEAD(&data->users);
->   	INIT_LIST_HEAD(&data->invoke_interrupted_mmaps);
->   	spin_lock_init(&data->lock);
-> +	spin_lock_init(&(data->gmsg_log[data->domain_id].tx_lock));
-> +	spin_lock_init(&(data->gmsg_log[data->domain_id].rx_lock));
->   	idr_init(&data->ctx_idr);
->   	data->domain_id = domain_id;
->   	data->rpdev = rpdev;
-> @@ -2398,6 +2485,7 @@ static int fastrpc_rpmsg_callback(struct rpmsg_device *rpdev, void *data,
->   
->   	if (len < sizeof(*rsp))
->   		return -EINVAL;
-> +	fastrpc_update_rxmsg_buf(cctx, rsp->ctx, rsp->retval, get_timestamp_in_ns());
->   
->   	ctxid = ((rsp->ctx & FASTRPC_CTXID_MASK) >> 4);
->   
+Stephan
