@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id C70EE72DBAD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 09:56:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C7E8B72DBB0
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 09:56:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240534AbjFMH4h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 03:56:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50106 "EHLO
+        id S240695AbjFMH4i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 03:56:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50076 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240111AbjFMH4X (ORCPT
+        with ESMTP id S240499AbjFMH4X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 13 Jun 2023 03:56:23 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E4901709
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:56:11 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f6283d0d84so6289902e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:56:11 -0700 (PDT)
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 660B71720
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:56:12 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id 5b1f17b1804b1-3f738f579ceso38516235e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:56:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686642969; x=1689234969;
+        d=linaro.org; s=google; t=1686642971; x=1689234971;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=MtzYn96ig+lorMysgzvmIhs2jjpLBGL4+9ZV/9hvBQI=;
-        b=k8TIUsB/iXI0lC5SdboEOO2KB3he+vQ7GEmCF8FiuPxg1nBZWhgQ3xzMKPDzsVTBZy
-         u+9l2bmxoScub9n8Fz4RRxHqTCzMrCDtmQxiVRlTIYpEx8+z8Rcmg1x0EB0u/+IHaaOv
-         dL/dIcJF4RRhMNFz8xsMYWH2KdTWHpfF8ObjYeW6/mnfGmZhistErnqxGWhhM/8sCSHA
-         JU34YEb0SNnshzhqLaUsoUkxTUuNKnlrI+z6WFwkE0H9hiGPJCTcPt/KsXEOXTqNNWEL
-         BHanTz3qm1VN+nc70Jf0gO1d6Bjb7hjs9Ed8shtEw8UAfeqgrFbSu7g6LIh+V6iNr+tm
-         mdNw==
+        bh=8W4DDI67tlbAaFkIpRMuH4m4GXyLOYQLIt7UXn6qsRg=;
+        b=IZ+56ICQhYAEP3JTkTvPnGa7/R8yALyGiTC1BJAjbOxSDdcZFB49umC5gMOFd4Fxud
+         dl3LsNaIIswLxLPdCHLXOPg0Rn4juifFwrFXM2WS1jfAkwbSIfh1a56dKxZzFwATK2UR
+         ft3E1w8Bmwf+0N99ANn3HMOiuNA8b2VECeKTnRQtQ87FCnwMhPF2DR6UpMzOfTX9p4xo
+         DQEE6+LW/gF4s/8rNGM1OvQsbrGnIGqplipHyBIMKX/iMQxwdOPrpbvXDgWFxeOhT9Bb
+         +FpCYz709Iy7z/NINjV71BfSfoAmYBDRoNEYdr0M5szSk+8It2Q1usxveOXTK6Xxxu57
+         sQcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686642969; x=1689234969;
+        d=1e100.net; s=20221208; t=1686642971; x=1689234971;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MtzYn96ig+lorMysgzvmIhs2jjpLBGL4+9ZV/9hvBQI=;
-        b=hAkyOwv6oN0ap/wXdPc0ZJbsGytg0eZlkXCBTt2FNt4Ubn7OlGZqD3mpbiUihzW+yY
-         eq4l+OAdtBCsI8uWZqwu6cG6bu6BAOTBeA3slKCFqHTWx4Ley0credY9XBe9pmMw4eiJ
-         rXgnhJzSv5GpvLVtHmoOMxo6Hsn2bQZxkt/YeFm0pZN2FZA8FMKs+bxq69T3va43bA2K
-         Da2sTa7kYBEsgFMly5R6RZTVT/ewV8h/wroYA4weAyxhPbhZ22SjUg5oMYrA50PqgJ/J
-         pxSBpKbmpY6T437hthfX5OY/w8zEHyUq17q22uFXMrs+G7fYhN0WgVKmVh+O1kRrA3AH
-         BquA==
-X-Gm-Message-State: AC+VfDwDzD/JTPfv0txZPNseKySqbDieugYCpj5qcyUwLTjspgFnBa1V
-        aOFYj02Wxe/IRzFVqUyo5hgO6w==
-X-Google-Smtp-Source: ACHHUZ66ta5ooumpF/Z1eXdJbdZ/nGCsK+Bzeb5GVy76Dl8WBDN/8bFOIIwNbYj0YhWaHMg9bM94Zw==
-X-Received: by 2002:a19:4f44:0:b0:4f3:802c:7725 with SMTP id a4-20020a194f44000000b004f3802c7725mr4646102lfk.30.1686642969626;
-        Tue, 13 Jun 2023 00:56:09 -0700 (PDT)
+        bh=8W4DDI67tlbAaFkIpRMuH4m4GXyLOYQLIt7UXn6qsRg=;
+        b=LXF2Uk4A0EQgVbUe2AK8dr9lr5+cUotwjv8ZzpABKZH3SrrSSQqxsZTa14eeoYQIpH
+         CXoEXHstQHVrr7vrgoCNjb+w+C1OVcVT14IvpmJ7W7k/WaSHqmVMSK2st95lrMNZik+z
+         Q8WmCciBqRdN1oSqbmflLo0YTQC1Rey/Ht1eQjbQq8ex1//xstFhvEQIOPx0SaKos5Hb
+         5iScH3Sw7VJktHVGE7bQ5qXr1bhFCeNTqTeevqS+Luc7hw3W3+LPSVnYS/Ref3WxZp1Q
+         VHsXKX/PJAWez9CfBKQDeGZSUAbhjaPIZp6oexWEVYedVikePogg6uxlRZXuDQ8wfU7F
+         qPnQ==
+X-Gm-Message-State: AC+VfDxecVoejiOYrSi7DJ15WrgEjLHNqq9iu/1RxOqvLz/oWndzbsK1
+        sMzSvMIVSuLTbleMCqj1imXWgA==
+X-Google-Smtp-Source: ACHHUZ4jjQQ6fkfq5aHsPGYujSfRUBHzEFHJGX5LgUATnUm5UPaqMaBsAE1bQR+87OJcUGqlOOtPGw==
+X-Received: by 2002:a1c:7203:0:b0:3f6:580:b082 with SMTP id n3-20020a1c7203000000b003f60580b082mr7225804wmc.0.1686642970618;
+        Tue, 13 Jun 2023 00:56:10 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id k20-20020a05600c0b5400b003f4266965fbsm13662316wmr.5.2023.06.13.00.56.08
+        by smtp.gmail.com with ESMTPSA id k20-20020a05600c0b5400b003f4266965fbsm13662316wmr.5.2023.06.13.00.56.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jun 2023 00:56:09 -0700 (PDT)
+        Tue, 13 Jun 2023 00:56:10 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Tue, 13 Jun 2023 09:55:56 +0200
-Subject: [PATCH v3 3/8] usb: ucsi: glink: use the connector orientation
- GPIO to provide switch events
+Date:   Tue, 13 Jun 2023 09:55:57 +0200
+Subject: [PATCH v3 4/8] qcom: pmic_glink_altmode: add retimer-switch
+ support
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230601-topic-sm8550-upstream-type-c-v3-3-22c9973012b6@linaro.org>
+Message-Id: <20230601-topic-sm8550-upstream-type-c-v3-4-22c9973012b6@linaro.org>
 References: <20230601-topic-sm8550-upstream-type-c-v3-0-22c9973012b6@linaro.org>
 In-Reply-To: <20230601-topic-sm8550-upstream-type-c-v3-0-22c9973012b6@linaro.org>
 To:     Rob Herring <robh+dt@kernel.org>,
@@ -73,20 +73,20 @@ Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
         linux-usb@vger.kernel.org,
         Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3632;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3944;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=dJsk94W4hJQWsF7UZ7NHEWxATRmNKuU8IakNNu3DGzw=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkiCES35zFxYcGDLdJLU638f1Y+Lvby72mcOP4IAUS
- 45gwBFSJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZIghEgAKCRB33NvayMhJ0UbkD/
- wItZqCtSB/V4zzpWsPDA22v9WYMqYrVjwANTDvfUZkRGupbL/CbqOCFiq8usU0LX5h+BnAF5pLPygU
- qyB+VEQwgO2xhq8pqA3SOcaZsFV6GJ0UqAvQ9w3IEy0odji7lod2PJIYy4K+fLZHXh4cSi7j/l7jz+
- VqxvQue6Sd1JjDFYGVhKh71Xh6ppUVQwN6MCOhwtiZe3OgL6h1i01wuL/CTJk8jl1Uc/7/aOrNGXW2
- Kjesx+0N9oKB985iLcQ/fdBJTtoj1/xYbzRiCClzlERLUBaDWMZrEmRvstI+HWS+ssOBRMHQb6ME4b
- Ie6rvgolbNtDDDn7VEvw0dAEwtocN5GFy2O1cVpjEmO4US/73A1i96S5qZY7FvrqXIQywJYI+nF2Lc
- 90c83t94Vn7OaHiQ20davjBfSQ9jU8jqpXQS4dvbdVB0WKT0NTpoHrKQC5rFQ3fAswAOv0NsJgLQOl
- SeniWLvYTAOiMEn3PemCRAkrnywN1Di0Z7cFStw2UDinWFF+5gY+vqRuSNLupp49sy5s7Ki4SkZPWI
- iihX6YbSCgIWjfhQneITzi9hziBCPYHt3+PnIt2kI9WCMjR0+IwaP2K2JHsdGDOc4dn5CkwJLuS6c0
- gfFozIKv/yfDdjz2o5V1InYAmJKMWLmBFwdvCqRQjFkf/lyXCBQksNsAEZCA==
+ bh=fCvaaaAL0Gx7Xnks6/BexPRt3VhZDwY4J3jOffW33Do=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkiCESpq85KSFlDFjrIEDli6bXlDoTgLhC6wiEt1lZ
+ 1tY4NqKJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZIghEgAKCRB33NvayMhJ0S5EEA
+ CEjEOZQKJ4lBBRM1BcRNQYpWofQtcXxe+o09Exwq8JrghqkpAacYu4hKxJHoMQ1VOarYySYHchfmRw
+ sxc6/gxiG4s06vkj3oVJn/yr/Ka1v5Lndj29GmsGb+NsRsU6AY9V3yr6Igepq21IcTlSVuwXWWen22
+ qGTG1CWZFwgA0z5oGhNRy+HmCFww/uDWFYqLGCR9IjhIsOtQCScEVQAhAXclv/x6eWsw1CLp+mrVpY
+ JV1dEOIn71kGbmt21a5PVHECj1Tj2ie6G2xUzOuasI805MKlTHlVNcVxPYlI4qx0fNQnMzQPOwUYY1
+ QkCt2RcTXaspVWRVoEFC911P0+7JgoZEU7Ozcxj8C/xhqqhO6EvsYBqWkpzNP8H7jF/VcPLShTHoKg
+ kjzkBU34qjvaser05a1+eRMq0Ovqme45MPhT34A9E7iWJ38sHgPGTEgHykxQ1nZii/Bv409syFi0sT
+ +Q3CriIWoKxe+kB0o6j4ROCp0iWkSC52ZvouLfOuzpUZ4TT8hypGudFt9ZPrncB6qzzpJGcJHIp+lc
+ AFl7/LFHEHh54NQVmh3KH1teoWwXxKanZVAAkJG/q2abVJoFL7IM9qyCve3EpDU58dWPFIzgV0YipK
+ 8dJDT0bre1GiRTvX9bAamkRGDUoOtiv42Q4TK7K/ophojXHI5z5rlqAfAGWw==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -99,116 +99,114 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On SM8550, the non-altmode orientation is not given anymore within
-altmode events, even with USB SVIDs events.
+Some boards have a retimer/redriver between the SuperSpeed
+PHY and the USB-C connector to compensates signal integrity
+losses mainly due to PCB & transmission cables.
 
-On the other side, the Type-C connector orientation is correctly
-reported by a signal from the PMIC.
+Add support for an optional retimer-switch in the USB-C
+connector graph.
 
-Take this gpio signal when we detect some Type-C port activity
-to notify any Type-C switches tied to the Type-C port connectors.
-
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/usb/typec/ucsi/ucsi_glink.c | 52 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 51 insertions(+), 1 deletion(-)
+ drivers/soc/qcom/pmic_glink_altmode.c | 43 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-index 1fe9cb5b6bd9..88491dbff7e3 100644
---- a/drivers/usb/typec/ucsi/ucsi_glink.c
-+++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-@@ -9,9 +9,13 @@
- #include <linux/mutex.h>
- #include <linux/property.h>
- #include <linux/soc/qcom/pdr.h>
-+#include <linux/usb/typec_mux.h>
-+#include <linux/gpio/consumer.h>
+diff --git a/drivers/soc/qcom/pmic_glink_altmode.c b/drivers/soc/qcom/pmic_glink_altmode.c
+index 007d308e2f15..41d732f5b647 100644
+--- a/drivers/soc/qcom/pmic_glink_altmode.c
++++ b/drivers/soc/qcom/pmic_glink_altmode.c
+@@ -15,6 +15,7 @@
+ #include <linux/usb/typec_altmode.h>
+ #include <linux/usb/typec_dp.h>
+ #include <linux/usb/typec_mux.h>
++#include <linux/usb/typec_retimer.h>
+ 
  #include <linux/soc/qcom/pmic_glink.h>
- #include "ucsi.h"
  
-+#define PMIC_GLINK_MAX_PORTS	2
+@@ -68,6 +69,8 @@ struct pmic_glink_altmode_port {
+ 	struct typec_switch *typec_switch;
+ 	struct typec_mux *typec_mux;
+ 	struct typec_mux_state state;
++	struct typec_retimer *typec_retimer;
++	struct typec_retimer_state retimer_state;
+ 	struct typec_altmode dp_alt;
+ 
+ 	struct work_struct work;
+@@ -157,6 +160,14 @@ static void pmic_glink_altmode_enable_dp(struct pmic_glink_altmode *altmode,
+ 	ret = typec_mux_set(port->typec_mux, &port->state);
+ 	if (ret)
+ 		dev_err(altmode->dev, "failed to switch mux to DP\n");
 +
- #define UCSI_BUF_SIZE                   48
- 
- #define MSG_TYPE_REQ_RESP               1
-@@ -53,6 +57,9 @@ struct ucsi_notify_ind_msg {
- struct pmic_glink_ucsi {
- 	struct device *dev;
- 
-+	struct gpio_desc *port_orientation[PMIC_GLINK_MAX_PORTS];
-+	struct typec_switch *port_switch[PMIC_GLINK_MAX_PORTS];
++	port->retimer_state.alt = &port->dp_alt;
++	port->retimer_state.data = &dp_data;
++	port->retimer_state.mode = TYPEC_MODAL_STATE(mode);
 +
- 	struct pmic_glink_client *client;
++	ret = typec_retimer_set(port->typec_retimer, &port->retimer_state);
++	if (ret)
++		dev_err(altmode->dev, "failed to setup retimer to DP\n");
+ }
  
- 	struct ucsi *ucsi;
-@@ -221,8 +228,20 @@ static void pmic_glink_ucsi_notify(struct work_struct *work)
- 	}
- 
- 	con_num = UCSI_CCI_CONNECTOR(cci);
--	if (con_num)
-+	if (con_num) {
-+		if (con_num < PMIC_GLINK_MAX_PORTS &&
-+		    ucsi->port_orientation[con_num - 1]) {
-+			int orientation = gpiod_get_value(ucsi->port_orientation[con_num - 1]);
+ static void pmic_glink_altmode_enable_usb(struct pmic_glink_altmode *altmode,
+@@ -171,6 +182,14 @@ static void pmic_glink_altmode_enable_usb(struct pmic_glink_altmode *altmode,
+ 	ret = typec_mux_set(port->typec_mux, &port->state);
+ 	if (ret)
+ 		dev_err(altmode->dev, "failed to switch mux to USB\n");
 +
-+			if (orientation >= 0) {
-+				typec_switch_set(ucsi->port_switch[con_num - 1],
-+						 orientation ? TYPEC_ORIENTATION_REVERSE
-+							     : TYPEC_ORIENTATION_NORMAL);
-+			}
-+		}
++	port->retimer_state.alt = NULL;
++	port->retimer_state.data = NULL;
++	port->retimer_state.mode = TYPEC_STATE_USB;
 +
- 		ucsi_connector_change(ucsi->ucsi, con_num);
-+	}
++	ret = typec_retimer_set(port->typec_retimer, &port->retimer_state);
++	if (ret)
++		dev_err(altmode->dev, "failed to setup retimer to USB\n");
+ }
  
- 	if (ucsi->sync_pending && cci & UCSI_CCI_BUSY) {
- 		ucsi->sync_val = -EBUSY;
-@@ -283,6 +302,7 @@ static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
+ static void pmic_glink_altmode_safe(struct pmic_glink_altmode *altmode,
+@@ -185,6 +204,14 @@ static void pmic_glink_altmode_safe(struct pmic_glink_altmode *altmode,
+ 	ret = typec_mux_set(port->typec_mux, &port->state);
+ 	if (ret)
+ 		dev_err(altmode->dev, "failed to switch mux to safe mode\n");
++
++	port->retimer_state.alt = NULL;
++	port->retimer_state.data = NULL;
++	port->retimer_state.mode = TYPEC_STATE_SAFE;
++
++	ret = typec_retimer_set(port->typec_retimer, &port->retimer_state);
++	if (ret)
++		dev_err(altmode->dev, "failed to setup retimer to USB\n");
+ }
+ 
+ static void pmic_glink_altmode_worker(struct work_struct *work)
+@@ -347,6 +374,11 @@ static const struct drm_bridge_funcs pmic_glink_altmode_bridge_funcs = {
+ 	.attach = pmic_glink_altmode_attach,
+ };
+ 
++static void pmic_glink_altmode_put_retimer(void *data)
++{
++	typec_retimer_put(data);
++}
++
+ static void pmic_glink_altmode_put_mux(void *data)
  {
- 	struct pmic_glink_ucsi *ucsi;
- 	struct device *dev = &adev->dev;
-+	struct fwnode_handle *fwnode;
- 	int ret;
+ 	typec_mux_put(data);
+@@ -453,6 +485,17 @@ static int pmic_glink_altmode_probe(struct auxiliary_device *adev,
+ 		if (ret)
+ 			return ret;
  
- 	ucsi = devm_kzalloc(dev, sizeof(*ucsi), GFP_KERNEL);
-@@ -310,6 +330,36 @@ static int pmic_glink_ucsi_probe(struct auxiliary_device *adev,
- 
- 	ucsi_set_drvdata(ucsi->ucsi, ucsi);
- 
-+	device_for_each_child_node(dev, fwnode) {
-+		u32 port;
++		alt_port->typec_retimer = fwnode_typec_retimer_get(fwnode);
++		if (IS_ERR(alt_port->typec_retimer))
++			return dev_err_probe(dev, PTR_ERR(alt_port->typec_retimer),
++					     "failed to acquire retimer-switch for port: %d\n",
++					     port);
 +
-+		ret = fwnode_property_read_u32(fwnode, "reg", &port);
-+		if (ret < 0) {
-+			dev_err(dev, "missing reg property of %pOFn\n", fwnode);
++		ret = devm_add_action_or_reset(dev, pmic_glink_altmode_put_retimer,
++					       alt_port->typec_retimer);
++		if (ret)
 +			return ret;
-+		}
 +
-+		if (port >= PMIC_GLINK_MAX_PORTS) {
-+			dev_warn(dev, "invalid connector number, ignoring\n");
-+			continue;
-+		}
-+
-+		ucsi->port_orientation[port] = devm_fwnode_gpiod_get(&adev->dev, fwnode,
-+								     "orientation",
-+								     GPIOD_IN, NULL);
-+		if (IS_ERR(ucsi->port_orientation[port]))
-+			return dev_err_probe(dev, PTR_ERR(ucsi->port_orientation[port]),
-+					     "unable to acquire orientation gpio\n");
-+
-+		if (!ucsi->port_orientation[port])
-+			continue;
-+
-+		ucsi->port_switch[port] = fwnode_typec_switch_get(fwnode);
-+		if (IS_ERR(ucsi->port_switch[port]))
-+			return dev_err_probe(dev, PTR_ERR(ucsi->port_switch[port]),
-+					"failed to acquire orientation-switch\n");
-+	}
-+
- 	ucsi->client = devm_pmic_glink_register_client(dev,
- 						       PMIC_GLINK_OWNER_USBC,
- 						       pmic_glink_ucsi_callback,
+ 		alt_port->typec_switch = fwnode_typec_switch_get(fwnode);
+ 		if (IS_ERR(alt_port->typec_switch))
+ 			return dev_err_probe(dev, PTR_ERR(alt_port->typec_switch),
 
 -- 
 2.34.1
