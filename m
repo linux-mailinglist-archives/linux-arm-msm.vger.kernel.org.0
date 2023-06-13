@@ -2,165 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DCFB372EA8A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 20:09:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBDED72EAA2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 20:16:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231401AbjFMSJJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 14:09:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50566 "EHLO
+        id S232569AbjFMSQK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 14:16:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230295AbjFMSJJ (ORCPT
+        with ESMTP id S232056AbjFMSQJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 14:09:09 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9767A19B1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 11:09:07 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f762b3227dso280663e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 11:09:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686679746; x=1689271746;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=lEVb9IU/qLN25isZtE62j5+X+b1dacmJcTX7I3nYwwo=;
-        b=jMYpcRoe2VA1OzbxShNcKcjRqDuFHxYqSWYKbv0bQUgDmAvOIeQcVsq7xrDOW7sWYz
-         4Kn39Czmrx5xvHyOSOLDINxyKGy/2P80piuCDUkfx4tzfWku4ULcCQvEdZFTMzjvzJx2
-         XbxKXrVbtPVSTtTRaIr/fEhYaresDQQZ/y1CijE8D1OK8PpJiqNlHS316vi5sSNSIDNv
-         nX669Qkp3h67TNGI0a0OCO8pqLRXdhGeULu2lxxg1m3JrFzFrPX//8Y0q0o45KqHUnX7
-         dferSCjen1bXnndvLANifVpew8Ul1eK2UrRPQ1fsgt2vTZl1IGA06p6yQNojtqFYPX1v
-         tOIw==
+        Tue, 13 Jun 2023 14:16:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E5B71B2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 11:15:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1686680120;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=VMh4CxAaufkupFiXeG/ZZJofgO1Xkx5kTIdymBHMvlM=;
+        b=Dx26mdI7/HwqhbIoaX8DoVHra1vjvq07VIPXmdV+YyUR51AGKaoyr10Z8BCQoJ/moZFLNx
+        AepQnRjdx+7l7SiTEVD/od9uV+PWslPgHqoX6tCifB/a93xd3HIi1NCisjGvJe+hPO37Di
+        bcUToM7D/GD2Txgq01nc4LlwgEm8bIY=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-117-l80tiNxOOl2FkCbieHxbOw-1; Tue, 13 Jun 2023 14:15:17 -0400
+X-MC-Unique: l80tiNxOOl2FkCbieHxbOw-1
+Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-75d53bab5a9so181675385a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 11:15:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686679746; x=1689271746;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lEVb9IU/qLN25isZtE62j5+X+b1dacmJcTX7I3nYwwo=;
-        b=D2L4U1/RBCwPEm+v65w7wAyYuZ0V8h/COJxnfOyOTWV2wOyDfahFomfYeRbCaHIUUL
-         /3vV1cVr7jpxF2lX6+Knz3xUS6s2DXa9yHqMAkPBZHCZYhri6XpXWuvRN7Pv/QiRGIUQ
-         b6HAOI+gIclrqaQM2Sy9t16+mn/30stCGyHAT6Gzt9c+gTpqd23X5q/JRUCS5JQ7UuOp
-         t3taUBIwpl0ur7ud4Y/318M6h5mwV/G1OOrUmp8+NZ6ck3NDusMsH4XG6VpMtLeCh9zX
-         /3Sn1HssP13ThjOyWT5APlYYEUFMBQADYALoOmIdvU2aU2y7YSqinWvPUH5tXjU7rxYs
-         c4vA==
-X-Gm-Message-State: AC+VfDxuIppdMnPsiBK7hrUtZiN9NtjHS3LDVbbjPvMWuhdYSY4dusfj
-        bYVA9pKuxw1YEbbS2cXa7BSRhg==
-X-Google-Smtp-Source: ACHHUZ4Txu8rmkV8rAox0K2Jc9y2jvZqt1cpxRVy8Q++mlVFHUoK9t8ymQBvu5/3rvE/UoNnd6FGHA==
-X-Received: by 2002:a19:770e:0:b0:4eb:e8e:4139 with SMTP id s14-20020a19770e000000b004eb0e8e4139mr4117966lfc.2.1686679745827;
-        Tue, 13 Jun 2023 11:09:05 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id x12-20020a19f60c000000b004efe8991806sm1842899lfe.6.2023.06.13.11.09.04
+        d=1e100.net; s=20221208; t=1686680112; x=1689272112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VMh4CxAaufkupFiXeG/ZZJofgO1Xkx5kTIdymBHMvlM=;
+        b=O5RBZgLP9nxYMoCutYf5+4g08mh1HvcwVzyHEVofAiEM910RcWCB7ZVaU0FTNvE7am
+         Yqjky4SZ98sSYfuj519Qlv6OPBGxUI2okY5K5hueQK95viG/f1mSfaAf+NrtEemnAFDE
+         GjMwl9WZwf5FkehYwE1sGFKWc1Hx+ixFDVMoAfNKjaz56IdBe030quB8yDnkx0j913EC
+         IxciGLex69xO0bjhxGss/Gn/cjbCbH/ICB1NP5iz7lc0hkXJLZ5VZsRCR1KcfOlAv2WU
+         +nbo9harwrvklOdouuafYz2OgPyQauU9iqY/gT/w97QVdKB/s3zjNuwAgXM1dxlSwSHM
+         eTfA==
+X-Gm-Message-State: AC+VfDx1nJxfRMGMUWeYBNBTwzWmZLXzSq8UiqN5WfHe9JFOp1Xgtz+D
+        RkKImHccmZ1JJ530AzP3xYHhY6zLpY3scxx0nU0UU56676w+Y1SZ3MXKeiq3mAzcNc3fuXCr8nr
+        RzAkJP1ymc3b2YnrhvY74IlOZZA==
+X-Received: by 2002:a05:620a:2791:b0:75d:5321:fa40 with SMTP id g17-20020a05620a279100b0075d5321fa40mr13049276qkp.51.1686680111981;
+        Tue, 13 Jun 2023 11:15:11 -0700 (PDT)
+X-Google-Smtp-Source: ACHHUZ5FXQa4iGHaVb03aNKzDgMsYAUueUgnaSI5oJJ062Y4f4KWKzeuDuU7svTdTOE4LRqmwuYETA==
+X-Received: by 2002:a05:620a:2791:b0:75d:5321:fa40 with SMTP id g17-20020a05620a279100b0075d5321fa40mr13049260qkp.51.1686680111740;
+        Tue, 13 Jun 2023 11:15:11 -0700 (PDT)
+Received: from fedora ([107.171.218.122])
+        by smtp.gmail.com with ESMTPSA id w10-20020ae9e50a000000b0075941df3365sm3726463qkf.52.2023.06.13.11.15.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jun 2023 11:09:05 -0700 (PDT)
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Date:   Tue, 13 Jun 2023 20:09:00 +0200
-Subject: [PATCH] arm64: dts: qcom: qrb4210-rb2: Enable on-board buttons
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230613-topic-rb2_-v1-1-696cd7dbda28@linaro.org>
-X-B4-Tracking: v=1; b=H4sIALuwiGQC/x2N0QqDMAwAf0XyvIBt1Yf9yhijjdkMSJV0ilD8d
- 4OPd3BchcIqXODZVFDepciSDdyjAZpi/jHKaAy+9aEdXMD/sgqhJv/BfiR2PQWXugEsSLEwJo2
- ZJkvyNs8mV+WvHPfh9T7PC1dpEGxxAAAA
+        Tue, 13 Jun 2023 11:15:11 -0700 (PDT)
+Date:   Tue, 13 Jun 2023 14:15:09 -0400
+From:   Adrien Thierry <athierry@redhat.com>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1686679744; l=1716;
- i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
- bh=/X0tAGEydFCfBkn2TuDyVWHG8ilu9psIXgXCnXJLL14=;
- b=hhTmXGpcfJqAOkPldbPkbIpOLeq3jmpYU8AhaQpOrw279OvsgxGLUaetpPkrUGMpapw11Oj6o
- 1v8esRZNCusCUE5YfBakoUvRleHt/2TWYuLjGWRVBQdlOkOQBqFsT5z
-X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
- pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        Philipp Zabel <pza@pengutronix.de>,
+        Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Wesley Cheng <wcheng@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v2 0/2] Clock fixes for qcom-snps-femto-v2 PHY driver
+Message-ID: <ZIiyLffCbVklU7YV@fedora>
+References: <20230605184455.34832-1-athierry@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230605184455.34832-1-athierry@redhat.com>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable the PMIC GPIO- and RESIN-connected buttons on the board.
+On Mon, Jun 05, 2023 at 02:44:52PM -0400, Adrien Thierry wrote:
+> This series contains a few clock fixes for the qcom-snps-femto-v2 driver:
+> - make sure ref_clk is properly enabled
+> - add system sleep PM ops to disable the clocks on system suspend
+> 
+> v1 -> v2
+> - keep cfg_ahb clock and use clk_bulk API to handle both cfg_ahb and ref
+>   clocks (Bjorn Andersson)
+> - add system sleep PM callbacks (Bjorn Andersson)
+> - add Link: and Fixes: tag (Andrew Halaney)
+> 
+> Adrien Thierry (2):
+>   phy: qcom-snps-femto-v2: properly enable ref clock
+>   phy: qcom-snps-femto-v2: add system sleep PM ops
+> 
+>  drivers/phy/qualcomm/phy-qcom-snps-femto-v2.c | 85 +++++++++++++------
+>  1 file changed, 59 insertions(+), 26 deletions(-)
+> 
+> -- 
+> 2.40.1
+>
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 37 ++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+Gentle ping Bjorn, is there anything you'd like me to change in a next
+revision?
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-index 39597277343c..e23a0406eacc 100644
---- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -7,6 +7,7 @@
- 
- #include <dt-bindings/leds/common.h>
- #include "sm4250.dtsi"
-+#include "pm6125.dtsi"
- 
- / {
- 	model = "Qualcomm Technologies, Inc. QRB4210 RB2";
-@@ -28,6 +29,23 @@ clk40M: can-clk {
- 		};
- 	};
- 
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		label = "gpio-keys";
-+
-+		pinctrl-0 = <&kypd_vol_up_n>;
-+		pinctrl-names = "default";
-+
-+		key-volume-up {
-+			label = "Volume Up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&pm6125_gpios 5 GPIO_ACTIVE_LOW>;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+			wakeup-source;
-+		};
-+	};
-+
- 	hdmi-connector {
- 		compatible = "hdmi-connector";
- 		type = "a";
-@@ -219,6 +237,25 @@ &mdss_dsi0_phy {
- 	status = "okay";
- };
- 
-+&pm6125_gpios {
-+	kypd_vol_up_n: kypd-vol-up-n-state {
-+		pins = "gpio5";
-+		function = "normal";
-+		power-source = <0>;
-+		bias-pull-up;
-+		input-enable;
-+	};
-+};
-+
-+&pon_pwrkey {
-+	status = "okay";
-+};
-+
-+&pon_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-
----
-base-commit: 1f6ce8392d6ff486af5ca96df9ded5882c4b6977
-change-id: 20230613-topic-rb2_-5dce15c31b46
-
-Best regards,
--- 
-Konrad Dybcio <konrad.dybcio@linaro.org>
+Best,
+Adrien
 
