@@ -2,83 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E531D72DD46
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 11:06:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 951BF72DD96
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 11:25:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240695AbjFMJGw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 05:06:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36806 "EHLO
+        id S242010AbjFMJZ1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 05:25:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241243AbjFMJGu (ORCPT
+        with ESMTP id S240682AbjFMJYv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 05:06:50 -0400
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A549137
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 02:06:47 -0700 (PDT)
-Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2b1bf74e080so64494591fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 02:06:47 -0700 (PDT)
+        Tue, 13 Jun 2023 05:24:51 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4E76E4A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 02:24:45 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id ffacd0b85a97d-30fca48b473so902824f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 02:24:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686647205; x=1689239205;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=k24Lafsnyyipy4bbdfe0wwTh9zApI1J6ii/T/AgJk2Q=;
-        b=yTGx/fLt7Qp+oiLbviwb5H1L4TejgbG24LlseJOOnCI2aStf8k0cLLLpVtodVKwS0T
-         9FQLyrjzjaVZYZk5LI2d89M23GMQKO7LVe3zUYzTOCpkhkYHsHKAJHTAYREU0vFUljE6
-         h4YVyAhT6S+q50CEbnhQ9M5n5Rsx2zK7PjOJlcp5ZdgkHhwDBu0M8/C3pctIHKJRo3Dl
-         ql/8HnWA+ShqpJdHXS7BbXFPjBYvSXsmaLphcMLCOKaDz8kcbtgQZj5OCSM9OgB7RvoO
-         PB6MA5ztb82/vtjXFwYiUR8VSs0UTz5NbV+G9VE0iTqPkDUldQS4qwA2Iygv5w0DIh2H
-         jMzw==
+        d=linaro.org; s=google; t=1686648284; x=1689240284;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=pXZ4aijj1pbGg+3aoennLfPzwPG0hMvQp5jgoTVxVm8=;
+        b=GZA9yI5bwW4oCmT4IZAkYKgpuay7dbOmcoOpQ7W/6x4Y5hg97080ZzsiYso50gGdds
+         RZVnCyTiL62fr18WkB3y2+DYnLJuuKvblwA0wczGmYyboB3AHOHYXB5FnB+MSxKhbT13
+         iuvvq0cYySFYrLTDn5jnNSMntKeNNRkW9tJV3f+xQrPDBUfbCm1K19QHSlDUTHdEYZrJ
+         Ncqdt5nwZZlQZFOZb3IvmM2ArE+r3GSK2RrjnUddUO+mNeCMeJkA5mNmzUaOxolhXkx3
+         wb1WlbZIuzusH9H6oZEwwRyQFdYOp1lp9jpv1h9RGzXXLrII5l6qLCZx0dbFul+vx9Va
+         /zuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686647205; x=1689239205;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=k24Lafsnyyipy4bbdfe0wwTh9zApI1J6ii/T/AgJk2Q=;
-        b=Z73JC+slQXBQZSjKicl6t6SxtmdXT/o5qysijWPZJwsAiQqwqbVI/4RI5NNrYVaeVJ
-         Ngqbj7Yk3HLUleuHzYhGGKFwgk+ttAKBZW8Ofd0B/h/zHZ/ofBSicYslEaydkr7bPKXA
-         HRV5ZbBA+anOvszLYfkkRBk2O2+hprZu5s+DJNNA4W0l3s3bLmjPokkkrUnUlMfqtkrF
-         AnMkWpLS1f+XGVRp+jOotN91Xo+iC08CZbUi1svppydPMosCp96ZWlmyKvhoaHD0RhZn
-         Q5M4N7Xq24KseL1hCjTn1157aUvIHKmSjTIlQ28KVYJJ3nEOvCdHNziE1Z32m8WkIAqj
-         hniA==
-X-Gm-Message-State: AC+VfDxz37HFpePb0Wv7jSiFbwgAGjo1qym0rwkj2/XSrwRRcvlv+uAo
-        Km0VPtPvVNkyEMMk6MVtKtoGZA==
-X-Google-Smtp-Source: ACHHUZ4kGtn5iyYh44KfD7k/afWcN7Di/N0xVMwtASdAptlWTKfnyJmL3XYi3+US9VxHmcWPg9rrFA==
-X-Received: by 2002:a2e:81ca:0:b0:295:d7a8:559b with SMTP id s10-20020a2e81ca000000b00295d7a8559bmr3237895ljg.10.1686647205174;
-        Tue, 13 Jun 2023 02:06:45 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id r10-20020a2e94ca000000b002b0488ef239sm2067426ljh.93.2023.06.13.02.06.43
+        d=1e100.net; s=20221208; t=1686648284; x=1689240284;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pXZ4aijj1pbGg+3aoennLfPzwPG0hMvQp5jgoTVxVm8=;
+        b=BZGrgD5XRXsxpWaqCJuL2XdvDlsAfXiTPeVbDfWNlgIwD8W6yH/l2iWE4R1Us57r8i
+         rGPmtIl6/2gh/JqRl2fmheGiwwBqI7gFOFvwZCCaG3I3Co47jbik0ifd+KI3sbgH4XV6
+         jyzubSxwf1csaWSZJaRC3R5WMWpS8+XTzMZkYqwb2MGpKwXo+7PlrhzssUkpvZgfNbLx
+         0Pwwz2IBVTur81e5D0D9OTu+bFhxMeMNCnha/hNpzQw7OOjO9Z1hBVE/AR9XUNfaoAgC
+         hnMl09yNEgY0yc5uM/cfQQkshwOoegjyqLbGTuzLbzchiTSQ1icy8+JGrywQE3/968qb
+         V/kA==
+X-Gm-Message-State: AC+VfDwdM0prxKax/lKYxAaHlTdYpOu+jIghSQZNj1TidrbMk7gTi8Gn
+        DtwbnFTq768INXuL3m7BW5Ym2rJ9xJiYly0yFWTpLQ==
+X-Google-Smtp-Source: ACHHUZ7PO/tsm9IXmJ7pb3uNDlot07rQqXgOCkR7DPpvfhLhNFDPFPOxgXcEUTv86r3jFpDeqkvMPg==
+X-Received: by 2002:a5d:614b:0:b0:30d:f75c:4a68 with SMTP id y11-20020a5d614b000000b0030df75c4a68mr6243782wrt.34.1686648284132;
+        Tue, 13 Jun 2023 02:24:44 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:48b:b939:c60e:e1ba? ([2a01:e0a:982:cbb0:48b:b939:c60e:e1ba])
+        by smtp.gmail.com with ESMTPSA id t18-20020adfeb92000000b003093a412310sm14770863wrn.92.2023.06.13.02.24.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jun 2023 02:06:44 -0700 (PDT)
-Message-ID: <d90b350f-0068-4ce1-014d-0c35f26abe54@linaro.org>
-Date:   Tue, 13 Jun 2023 11:06:43 +0200
+        Tue, 13 Jun 2023 02:24:43 -0700 (PDT)
+Message-ID: <f708a6d3-321e-c425-8048-1c0d2ac7a6f0@linaro.org>
+Date:   Tue, 13 Jun 2023 11:24:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH v3 20/23] interconnect: qcom: icc-rpm: Fix bucket number
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
+From:   neil.armstrong@linaro.org
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 1/8] dt-bindings: connector: usb-connector: add a gpio
+ used to determine the Type-C port plug orientation
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-References: <20230526-topic-smd_icc-v3-0-5fb7d39b874f@linaro.org>
- <20230526-topic-smd_icc-v3-20-5fb7d39b874f@linaro.org>
- <ZIeGrCj2bk2nVvIc@gerhold.net>
-Content-Language: en-US
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZIeGrCj2bk2nVvIc@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org
+References: <20230601-topic-sm8550-upstream-type-c-v3-0-22c9973012b6@linaro.org>
+ <20230601-topic-sm8550-upstream-type-c-v3-1-22c9973012b6@linaro.org>
+ <e26878e5-fedc-b2fb-2213-5afd8479de4f@linaro.org>
+ <cfa788c3-be57-5109-73df-b82099dd17a0@linaro.org>
+ <9abec6ec-1995-8e20-8926-f57969341932@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <9abec6ec-1995-8e20-8926-f57969341932@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -90,52 +92,40 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 12.06.2023 22:57, Stephan Gerhold wrote:
-> On Mon, Jun 12, 2023 at 08:24:37PM +0200, Konrad Dybcio wrote:
->> SMD RPM only provides two buckets, one each for the active-only and
->> active-sleep RPM contexts. Use the correct constant to allocate and
->> operate on them.
+On 13/06/2023 11:02, Krzysztof Kozlowski wrote:
+> On 13/06/2023 10:54, Neil Armstrong wrote:
+>> On 13/06/2023 10:13, Krzysztof Kozlowski wrote:
+>>> On 13/06/2023 09:55, Neil Armstrong wrote:
+>>>> On some platforms, the Type-C plug orientation is given on a GPIO line.
+>>>>
+>>>> Document this optional Type-C connector property, and take the
+>>>> assumption an active level represents an inverted/flipped orientation.
+>>>>
+>>>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>>
+>>> Rob had here objections as these are bindings for the connector, not
+>>> PMIC glink/altmode. I still doubt that Qualcomm USB Type-C connectors
+>>> have such pin exposed. If you open the schematics, the GPIO is actually
+>>> coming out from PMIC and is nowhere around the connector. Please drop my
+>>> Ack.
+>>>
+>>> This however could be a pin of the PMIC because it clearly is on the
+>>> schematics.
 >>
->> This will make the qcom,icc.h header no longer work with this driver,
->> mostly because.. it was never meant to! The commit that introduced
->> bucket support to SMD RPM was trying to shove a square into a round
->> hole and it did not work out very well. That said, there are no
->> active users of SMD RPM ICC + qcom,icc.h, so that doesn't hurt.
->>
->> Fixes: dcbce7b0a79c ("interconnect: qcom: icc-rpm: Support multiple buckets")
->> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  drivers/interconnect/qcom/icc-rpm.c | 14 +++++++-------
->>  drivers/interconnect/qcom/icc-rpm.h |  4 ++--
->>  2 files changed, 9 insertions(+), 9 deletions(-)
->>
->> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
->> index 5ffcf5ca8914..54a9999fe55d 100644
->> --- a/drivers/interconnect/qcom/icc-rpm.c
->> +++ b/drivers/interconnect/qcom/icc-rpm.c
->> @@ -249,7 +249,7 @@ static void qcom_icc_pre_bw_aggregate(struct icc_node *node)
->>  	size_t i;
->>  
->>  	qn = node->data;
->> -	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
->> +	for (i = 0; i < QCOM_SMD_RPM_STATE_NUM; i++) {
->>  		qn->sum_avg[i] = 0;
->>  		qn->max_peak[i] = 0;
->>  	}
->> @@ -275,7 +275,7 @@ static int qcom_icc_bw_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
->>  	if (!tag)
->>  		tag = QCOM_ICC_TAG_ALWAYS;
+>> Yes it comes from the PMIC, but this part of the PMIC is handled by
+>> the PMIC_GLINK firmware service, so the logical place would be into
+>> the pmic_glink node with a gpio array in order to handle multi-ports.
 > 
-> We should replace this with the RPM variant. Also, can you check which
-> header/file still includes qcom,icc.h? Don't think we should have it
-> included at all for RPM so that referencing the wrong things cannot
-> happen.
-Nice catch
+> I think all PMICs have only one CC_OUT pin, so this would be now
+> maxItems: 1, but there will be no problem in growing this later.
 
-Konrad
+Yep, I'll only allow for sm8550-pmic-glink and set maxItems: 1 for now
+since it's the first occurence.
+
+Neil
+
 > 
-> Thanks,
-> Stephan
+> Best regards,
+> Krzysztof
+> 
+
