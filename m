@@ -2,231 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id E930972DAE8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 09:30:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EDD6A72DB49
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 09:43:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235053AbjFMHad (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 03:30:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60772 "EHLO
+        id S239246AbjFMHn1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 03:43:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41408 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235035AbjFMHaa (ORCPT
+        with ESMTP id S240556AbjFMHnG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 03:30:30 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 848F11709
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:30:24 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id ffacd0b85a97d-30fceb009faso120183f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:30:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686641423; x=1689233423;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=LWxp0A9f2AiWgsptaHzRYn+xtrjX1untDQt897ukbeo=;
-        b=f19c6qI3lfqYskS1oo0aUUXqQy5cJaJClkZqEF/XNQ7ScZmawpqjb0mOYqQjncm0zs
-         QdqJdT92wjt7ZtTTGS8D3RkQVfj/Passv9I+zeMuBF3T9Osb3GUoO9lElXkILQRQV68w
-         Rw0hGhEhSqdzgTW7yj52jFPgKEYTcWhL70VH1n6rRGm1rzbiEuIr0zyNXUjcswj25JBi
-         PPo6Z0FJrfrpL0g/Wvyav+KOpgbiuFxIfB6T84t8YaKlGO7eZyIQYqcr/m7m3znzpbrs
-         Y3mOBoFYuoEXBTFAvRDtHRlsBdCjDBCJKy0SAuu/u2lVevq7I5GpGTdnbF3cc97g134D
-         h/tA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686641423; x=1689233423;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LWxp0A9f2AiWgsptaHzRYn+xtrjX1untDQt897ukbeo=;
-        b=TuTF8WbMuJ/0CM12CIgYB3rCjVFR6hdUPNCUHIkul9lrMnvnNpOJpT3W/1xBLRLz4W
-         DrYJTzixX+4jRi9sJr1cTt8SpIkPPNT+h5BIkwE6PcCy1FFxH4cH+wtYFqMVSu7Mxka1
-         YTdBDn82eimV94Xn8R/V6KwtxQ5Zd0f6E6dp6KzLh/X9tk2AJ2+b+Mg/Ck+KtJZ2yKoj
-         Mah8WcRtI0SXR/Z7mZBgganG14pd8hOcKmK/Q3r5uVoQtocDV2yspjhfvb0/DsjfKygi
-         qKfemdQ7LmYPDGpny1N6y5PGS91TehOVoSJhB3WUnuwfjz7VKdDm7cmDNtL0MoZBR7CI
-         SUFg==
-X-Gm-Message-State: AC+VfDx9P+ywYdw3o2tu1T1T3x7CUWN9fX3fYDL4LdF0SzAnbpfFobDU
-        56KEGc1ytkTt89IFDiP2a4YLjQ==
-X-Google-Smtp-Source: ACHHUZ4sH2HytnNf1ZE8FXoYFFHV0OtkPgsKw1H/3G+aVs/hsTaHUgWLMR67qmKBu8muaPzlndiNMQ==
-X-Received: by 2002:a5d:594b:0:b0:30a:f60a:dc3c with SMTP id e11-20020a5d594b000000b0030af60adc3cmr6417764wri.24.1686641423039;
-        Tue, 13 Jun 2023 00:30:23 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id q25-20020a7bce99000000b003f17848673fsm13474453wmj.27.2023.06.13.00.30.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jun 2023 00:30:22 -0700 (PDT)
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Date:   Tue, 13 Jun 2023 09:30:13 +0200
-Subject: [PATCH v4 2/2] arm64: dts: qcom: sm8550: add display port nodes
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230601-topic-sm8550-upstream-dp-v4-2-ac2c6899d22c@linaro.org>
-References: <20230601-topic-sm8550-upstream-dp-v4-0-ac2c6899d22c@linaro.org>
-In-Reply-To: <20230601-topic-sm8550-upstream-dp-v4-0-ac2c6899d22c@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
+        Tue, 13 Jun 2023 03:43:06 -0400
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8C0D171A;
+        Tue, 13 Jun 2023 00:42:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1686642165; x=1718178165;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=3Ak4/m1xzWc3DziD0sz6Zov4RGEsJQMuHazVQwECIsQ=;
+  b=WRkI+BI0s7PgSqBJAoLA+ypko5V+OURoFyjpquhD7nIGfV/bGP0CaJZq
+   nHQYYGC/Sx0yjvHCWxioyC1RVHq8sg0PzSs/9ldbIL6cC1B3Z8KBW337c
+   +S4tsI1AqfO33M2grzTq6/LF+JWbaE/u3eBzXUzXQwMBSe8e9R6oGwUzm
+   dKNjlie+ikeyqdYYJQ0JfXoBBA5njzTxKxoLIiCvpkJmcTmRKJnHKHP11
+   UiIv+CPFoeDVj1XzXlbSyiuycq18u2YHUbFdiIJaaPX68z/n1jJyPb2tB
+   8GJRvSCj/rNfjkw7TOA4BFONrm04FDYq7Jg8+cP6vZaMai09qvK5AIJn9
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10739"; a="338614737"
+X-IronPort-AV: E=Sophos;i="6.00,239,1681196400"; 
+   d="scan'208";a="338614737"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Jun 2023 00:42:45 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10739"; a="781552009"
+X-IronPort-AV: E=Sophos;i="6.00,239,1681196400"; 
+   d="scan'208";a="781552009"
+Received: from lkp-server01.sh.intel.com (HELO 211f47bdb1cb) ([10.239.97.150])
+  by fmsmga004.fm.intel.com with ESMTP; 13 Jun 2023 00:42:42 -0700
+Received: from kbuild by 211f47bdb1cb with local (Exim 4.96)
+        (envelope-from <lkp@intel.com>)
+        id 1q8yfp-00016c-14;
+        Tue, 13 Jun 2023 07:42:41 +0000
+Date:   Tue, 13 Jun 2023 15:42:01 +0800
+From:   kernel test robot <lkp@intel.com>
+To:     Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-trace-kernel@vger.kernel.org
+Cc:     oe-kbuild-all@lists.linux.dev, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.12.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3472;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=OT9fRI9abb+RycwRAR3WBnAhUBfEPjR/71I2pAue+x4=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkiBsL2NWmkEWos0mQfZTxgT6q6aNllKnzeoj8boi9
- SHFErjWJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZIgbCwAKCRB33NvayMhJ0dplEA
- CWVNMiu82x/7M3/290CDaDUh+iBtv+SewsRaQ5glE9uJOWQVEWP/em7LbV1D6YViPalahrA6A+IDa9
- BG2I4YAmW2Cto+jDoWW4CEWbJ/j6oCmZ6TLRh3YdqO2bO9VgvhLYsrIYzBtwstCyJX+BYzi+M1iqAx
- oFmME85h1cncLT3ZQLUEwAgD9QJQCk9odLYFF2LsF09cV/4U+emfoz+3L5AzdjJKYCS/zYG7H6zaVv
- CntbtJeyDbV+/8eSqQbeaReV8/BX0rezkyS8d6lgRW1FLexfUIUEOy0+IFdv40XrF/i4D56DIxg8v5
- uSk1W3v4tzAFZZHMmE75KpfWTMPATWmYt5lEjBWbibrkMfsIYI3PWjoY/OYsy9jHetSCATVBsrh3dD
- 1417NLUBCzaEm3Mgsmh+Uyks85lOZYNxFICLA16hWwIvBut20x2MIfqOlmSgByaiFAgYdBGVkrl3Ji
- goNORVbwZK7gNJh0lWkdBMZLgl8v7oMflnPJ8y775JWjrPpZdPLmiHRfJNabZXxE2ReWCN+ZFO2cU/
- kfbo31+7Qn+wu94auszhCL1x7TXzbTtoyQy9JIoELLS6uoEd0Hh6Yrh7Ht1VWlpN28z5iBylHUVlIh
- OrFDj73B3rOZp4LqttOapadmO9bhQ1wXSjgDND79bctQia3h+4f4JN6iC6/Q==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-kernel@vger.kernel.org, Trilok Soni <quic_tsoni@quicinc.com>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>,
+        Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+Subject: Re: [PATCH v5 2/2] remoteproc: qcom: Add remoteproc tracing
+Message-ID: <202306131523.EwZZ3cVl-lkp@intel.com>
+References: <12b533c73b8c6b039e90f20afef1c8dcd30b80de.1686606835.git.quic_gokukris@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <12b533c73b8c6b039e90f20afef1c8dcd30b80de.1686606835.git.quic_gokukris@quicinc.com>
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
+        SPF_HELO_NONE,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the Display Port controller subnode to the MDSS node.
+Hi Gokul,
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 89 +++++++++++++++++++++++++++++++++++-
- 1 file changed, 87 insertions(+), 2 deletions(-)
+kernel test robot noticed the following build errors:
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 972df1ef86ee..b41b3981b3ce 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -2495,6 +2495,13 @@ dpu_intf2_out: endpoint {
- 							remote-endpoint = <&mdss_dsi1_in>;
- 						};
- 					};
-+
-+					port@2 {
-+						reg = <2>;
-+						dpu_intf0_out: endpoint {
-+							remote-endpoint = <&mdss_dp0_in>;
-+						};
-+					};
- 				};
- 
- 				mdp_opp_table: opp-table {
-@@ -2522,6 +2529,84 @@ opp-514000000 {
- 				};
- 			};
- 
-+			mdss_dp0: displayport-controller@ae90000 {
-+				compatible = "qcom,sm8550-dp", "qcom,sm8350-dp";
-+				reg = <0 0xae90000 0 0x200>,
-+				      <0 0xae90200 0 0x200>,
-+				      <0 0xae90400 0 0xc00>,
-+				      <0 0xae91000 0 0x400>,
-+				      <0 0xae91400 0 0x400>;
-+				interrupt-parent = <&mdss>;
-+				interrupts = <12>;
-+				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DPTX0_AUX_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_INTF_CLK>,
-+					 <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK>;
-+				clock-names = "core_iface",
-+					      "core_aux",
-+					      "ctrl_link",
-+					      "ctrl_link_iface",
-+					      "stream_pixel";
-+
-+				assigned-clocks = <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK_SRC>,
-+						  <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC>;
-+				assigned-clock-parents = <&usb_dp_qmpphy QMP_USB43DP_DP_LINK_CLK>,
-+							 <&usb_dp_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
-+
-+				phys = <&usb_dp_qmpphy QMP_USB43DP_DP_PHY>;
-+				phy-names = "dp";
-+
-+				#sound-dai-cells = <0>;
-+
-+				operating-points-v2 = <&dp_opp_table>;
-+				power-domains = <&rpmhpd SM8550_MMCX>;
-+
-+				status = "disabled";
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						mdss_dp0_in: endpoint {
-+							remote-endpoint = <&dpu_intf0_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						mdss_dp0_out: endpoint {
-+						};
-+					};
-+				};
-+
-+				dp_opp_table: opp-table {
-+					compatible = "operating-points-v2";
-+
-+					opp-162000000 {
-+						opp-hz = /bits/ 64 <162000000>;
-+						required-opps = <&rpmhpd_opp_low_svs_d1>;
-+					};
-+
-+					opp-270000000 {
-+						opp-hz = /bits/ 64 <270000000>;
-+						required-opps = <&rpmhpd_opp_low_svs>;
-+					};
-+
-+					opp-540000000 {
-+						opp-hz = /bits/ 64 <540000000>;
-+						required-opps = <&rpmhpd_opp_svs_l1>;
-+					};
-+
-+					opp-810000000 {
-+						opp-hz = /bits/ 64 <810000000>;
-+						required-opps = <&rpmhpd_opp_nom>;
-+					};
-+				};
-+			};
-+
- 			mdss_dsi0: dsi@ae94000 {
- 				compatible = "qcom,sm8550-dsi-ctrl", "qcom,mdss-dsi-ctrl";
- 				reg = <0 0x0ae94000 0 0x400>;
-@@ -2705,8 +2790,8 @@ dispcc: clock-controller@af00000 {
- 				 <&mdss_dsi0_phy 1>,
- 				 <&mdss_dsi1_phy 0>,
- 				 <&mdss_dsi1_phy 1>,
--				 <0>, /* dp0 */
--				 <0>,
-+				 <&usb_dp_qmpphy QMP_USB43DP_DP_LINK_CLK>,
-+				 <&usb_dp_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>,
- 				 <0>, /* dp1 */
- 				 <0>,
- 				 <0>, /* dp2 */
+[auto build test ERROR on 1ca04f21b204e99dd704146231adfb79ea2fb366]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Gokul-krishna-Krishnakumar/remoteproc-Introduce-traces-for-remoteproc-events/20230613-060527
+base:   1ca04f21b204e99dd704146231adfb79ea2fb366
+patch link:    https://lore.kernel.org/r/12b533c73b8c6b039e90f20afef1c8dcd30b80de.1686606835.git.quic_gokukris%40quicinc.com
+patch subject: [PATCH v5 2/2] remoteproc: qcom: Add remoteproc tracing
+config: microblaze-randconfig-r003-20230612 (https://download.01.org/0day-ci/archive/20230613/202306131523.EwZZ3cVl-lkp@intel.com/config)
+compiler: microblaze-linux-gcc (GCC) 12.3.0
+reproduce (this is a W=1 build):
+        mkdir -p ~/bin
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        git checkout 1ca04f21b204e99dd704146231adfb79ea2fb366
+        b4 shazam https://lore.kernel.org/r/12b533c73b8c6b039e90f20afef1c8dcd30b80de.1686606835.git.quic_gokukris@quicinc.com
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.3.0 ~/bin/make.cross W=1 O=build_dir ARCH=microblaze olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.3.0 ~/bin/make.cross W=1 O=build_dir ARCH=microblaze SHELL=/bin/bash
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202306131523.EwZZ3cVl-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   microblaze-linux-ld: drivers/remoteproc/remoteproc_core.o: in function `rproc_stop':
+>> .tmp_gl_remoteproc_core.o:(.text+0xe1c): undefined reference to `__tracepoint_rproc_stop_event'
+>> microblaze-linux-ld: .tmp_gl_remoteproc_core.o:(.text+0xe94): undefined reference to `__traceiter_rproc_stop_event'
+   microblaze-linux-ld: drivers/remoteproc/remoteproc_core.o: in function `rproc_start':
+>> .tmp_gl_remoteproc_core.o:(.text.unlikely+0x664): undefined reference to `__tracepoint_rproc_load_segment_event'
+>> microblaze-linux-ld: .tmp_gl_remoteproc_core.o:(.text.unlikely+0x6dc): undefined reference to `__traceiter_rproc_load_segment_event'
+   microblaze-linux-ld: drivers/remoteproc/remoteproc_core.o: in function `trace_rproc_start_event':
+>> .tmp_gl_remoteproc_core.o:(.text.unlikely+0x8c8): undefined reference to `__tracepoint_rproc_start_event'
+>> microblaze-linux-ld: .tmp_gl_remoteproc_core.o:(.text.unlikely+0x948): undefined reference to `__traceiter_rproc_start_event'
 
 -- 
-2.34.1
-
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
