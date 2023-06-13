@@ -2,225 +2,144 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id F3BD872DA38
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 08:53:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E53272DAD5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 09:29:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240096AbjFMGxr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 02:53:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45314 "EHLO
+        id S235134AbjFMH3o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 03:29:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239948AbjFMGxp (ORCPT
+        with ESMTP id S235086AbjFMH3n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 02:53:45 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0B41310D4;
-        Mon, 12 Jun 2023 23:53:44 -0700 (PDT)
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35D5G74b031441;
-        Tue, 13 Jun 2023 06:53:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type; s=qcppdkim1;
- bh=M5ORJmDBD01+phKpvTye3wLYZ78bgO5S1dR9qNTB8kE=;
- b=KxjfqXiSjEBdGkNstHHh5bt5ER6rMee/r/3kM2EaGxjV4Hmg4FpljsNUafJVQDBs8kE6
- 6/liUZp1KcciOAuGrmnqHZpWxxbMDZ3pWEU3SAUNdRpOERjXxn5JxNrvJUlMIp5N35cl
- j+Iyghov6rbf0ZRQZQoGcuWE62iC7QLzGqv05sp14H/QHVaJ1ts9qS74TsJLgOvfdmCV
- ulXJv6sN2iTtAOU6S01hru2xxJ+7UvvkclG54CKI29UpTr4gWhueMzA8iOP8RCALiasF
- NKE2pHT78Y/n9H9PjC2Lh4BfA//3ojpTvFjLqFAAhdGetzPzBZuUQO/vRSJo9TxZN24D ng== 
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r61q221t4-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Jun 2023 06:53:42 +0000
-Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
-        by NALASPPMTA05.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35D6rf0a028476
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Jun 2023 06:53:41 GMT
-Received: from hu-ptalari-hyd.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Mon, 12 Jun 2023 23:53:37 -0700
-From:   Praveen Talari <quic_ptalari@quicinc.com>
-To:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <broonie@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-CC:     <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>,
-        <quic_vnivarth@quicinc.com>, <quic_arandive@quicinc.com>,
-        Praveen Talari <quic_ptalari@quicinc.com>
-Subject: [PATCH 2/2] spi: spi-geni-qcom: Add SPI SLAVE mode support for GENI based QuPv3
-Date:   Tue, 13 Jun 2023 12:22:29 +0530
-Message-ID: <20230613065229.5619-3-quic_ptalari@quicinc.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230613065229.5619-1-quic_ptalari@quicinc.com>
-References: <20230613065229.5619-1-quic_ptalari@quicinc.com>
+        Tue, 13 Jun 2023 03:29:43 -0400
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 032E810D7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:29:41 -0700 (PDT)
+Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-30fcde6a73cso111232f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:29:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686641379; x=1689233379;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=SWcv2KbrVkYfhLRQFgFKlaFWH34hYYx6W1r/9LcWNfU=;
+        b=QmKKD4LMjD9i+Quf/rolLMOd4eqr0DS/nQA2gx5UzbHAwy89+M7DsAeiYF0aB8nPWq
+         Rz2TpEEEyooJBlrmYwbifewPMFmSXCo1O/czW4AYUG3V3OzM2ZA7Io2ACgcsdVRk2hhW
+         jWK7bV5zeLMRIazLGvBouWMWMfeFilvhdE0gps+G6UzAGlk7PqR+Sv68stYcDXwbIjJS
+         BMGnVuYB+TJTj8inkXdSpxLbVJCN5Cg59hKLUQKgLBY8Fe1Dco9OLTB31a+vAoyPWGMh
+         8eFoOWK6HXaCc8F7JxR5xkTbVeUMfSrG6pp4JlEUOW7yXfEPtkqHamfCWJ7YfU3ME5RN
+         LlXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686641379; x=1689233379;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=SWcv2KbrVkYfhLRQFgFKlaFWH34hYYx6W1r/9LcWNfU=;
+        b=QHq918KfqnyJbNpJgwQlwh3hpVvdLFft56+GVRmxZ2mTwdwxDFq1FHN5TqAXHntoSk
+         FaOmrr39OB2FiQw74CqB/MTNRylKzZkp9uAr/JMaE1R0WJ4McxNkV1PLsZ74G0CaF5Ee
+         oeYWiFquhikxWl+WM27QhTfsKsCk2hxjEcGrKy1tw2NGEDHth6HmcMBYiGA8f0xSad9Z
+         u+2EG6SzNEoBk+l7OUJuBfrXeMcL9w+QMT2VcliSDTU0HQGjWzrlZ6HQ+D+uCfaFRtK5
+         bM5BeW9NYF2VhRZCMrycCXSl/q36ZYSpUID0ZsYnmsgZzEQOLfrp6OYAwIylfC8IGOfZ
+         lS3A==
+X-Gm-Message-State: AC+VfDxzD/rxqb6F6pF+MhbQOY6xni1njGXLfJI+493Z/ujxEKt4jWUH
+        7RxdunDPDAdP35hcC8tY1spLdg==
+X-Google-Smtp-Source: ACHHUZ4llERySH8FvtsxtkPBf3YLvy/r2xMKHTUzrkPF382Oj3Rb5ZncCciA46/buotoosZubkrCGg==
+X-Received: by 2002:adf:e3c5:0:b0:30f:bbd6:1efe with SMTP id k5-20020adfe3c5000000b0030fbbd61efemr4099802wrm.57.1686641379388;
+        Tue, 13 Jun 2023 00:29:39 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:48b:b939:c60e:e1ba? ([2a01:e0a:982:cbb0:48b:b939:c60e:e1ba])
+        by smtp.gmail.com with ESMTPSA id h14-20020adff4ce000000b0030c40e2cf42sm14367826wrp.116.2023.06.13.00.29.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Jun 2023 00:29:38 -0700 (PDT)
+Message-ID: <1b3e86a7-352c-de2f-aaa0-51fe878b8462@linaro.org>
+Date:   Tue, 13 Jun 2023 09:29:37 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: v616H9JmYqFNuroyrfPp8zhx2_pkXCC5
-X-Proofpoint-ORIG-GUID: v616H9JmYqFNuroyrfPp8zhx2_pkXCC5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-13_03,2023-06-12_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 mlxscore=0
- clxscore=1015 suspectscore=0 adultscore=0 bulkscore=0 mlxlogscore=999
- malwarescore=0 impostorscore=0 priorityscore=1501 phishscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306130061
-X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: sm8550: fix low_svs RPMhPD
+ labels
+Content-Language: en-US
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20230601-topic-sm8550-upstream-dp-v3-0-5f9ffdcb8369@linaro.org>
+ <20230601-topic-sm8550-upstream-dp-v3-1-5f9ffdcb8369@linaro.org>
+ <ce7c4402-b58e-b5df-c864-9f1a959132d0@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <ce7c4402-b58e-b5df-c864-9f1a959132d0@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add SPI SLAVE mode support for GENI based QuPv3.
+On 12/06/2023 18:50, Konrad Dybcio wrote:
+> 
+> 
+> On 12.06.2023 17:26, Neil Armstrong wrote:
+>> "low" was written "lov", fix this.
+>>
+>> Fixes: 99d33ee61cb0 ("arm64: dts: qcom: sm8550: Add missing RPMhPD OPP levels")
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+> https://lore.kernel.org/linux-arm-msm/1d3c05f5-c1bd-6844-1788-8df0b863a02e@linaro.org/
+> 
+> somebody forgot to run `b4 trailers -u` :P
 
-Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
----
- drivers/spi/spi-geni-qcom.c | 55 +++++++++++++++++++++++++++++++++----
- 1 file changed, 49 insertions(+), 6 deletions(-)
+Damn, resending a v4 now :-)
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index 206cc04bb1ed..2e3ae29e79e0 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -12,6 +12,7 @@
- #include <linux/platform_device.h>
- #include <linux/pm_opp.h>
- #include <linux/pm_runtime.h>
-+#include <linux/property.h>
- #include <linux/soc/qcom/geni-se.h>
- #include <linux/spi/spi.h>
- #include <linux/spinlock.h>
-@@ -52,6 +53,9 @@
- #define SPI_CS_CLK_DELAY_MSK		GENMASK(19, 10)
- #define SPI_CS_CLK_DELAY_SHFT		10
- 
-+#define SE_SPI_SLAVE_EN				(0x2BC)
-+#define SPI_SLAVE_EN				BIT(0)
-+
- /* M_CMD OP codes for SPI */
- #define SPI_TX_ONLY		1
- #define SPI_RX_ONLY		2
-@@ -99,6 +103,24 @@ struct spi_geni_master {
- 	int cur_xfer_mode;
- };
- 
-+static struct spi_master *get_spi_master(struct device *dev)
-+{
-+	struct platform_device *pdev = to_platform_device(dev);
-+	struct spi_master *spi = platform_get_drvdata(pdev);
-+
-+	return spi;
-+}
-+
-+static void spi_slv_setup(struct spi_geni_master *mas)
-+{
-+	struct geni_se *se = &mas->se;
-+
-+	writel(SPI_SLAVE_EN, se->base + SE_SPI_SLAVE_EN);
-+	writel(GENI_IO_MUX_0_EN, se->base + GENI_OUTPUT_CTRL);
-+	writel(START_TRIGGER, se->base + SE_GENI_CFG_SEQ_START);
-+	dev_info(mas->dev, "spi slave setup done\n");
-+}
-+
- static int get_spi_clk_cfg(unsigned int speed_hz,
- 			struct spi_geni_master *mas,
- 			unsigned int *clk_idx,
-@@ -140,12 +162,18 @@ static void handle_se_timeout(struct spi_master *spi,
- 	const struct spi_transfer *xfer;
- 
- 	spin_lock_irq(&mas->lock);
--	reinit_completion(&mas->cancel_done);
- 	if (mas->cur_xfer_mode == GENI_SE_FIFO)
- 		writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
- 
- 	xfer = mas->cur_xfer;
- 	mas->cur_xfer = NULL;
-+
-+	if (spi->slave) {
-+		spin_unlock_irq(&mas->lock);
-+		goto unmap_if_dma;
-+	}
-+
-+	reinit_completion(&mas->cancel_done);
- 	geni_se_cancel_m_cmd(se);
- 	spin_unlock_irq(&mas->lock);
- 
-@@ -541,6 +569,8 @@ static bool geni_can_dma(struct spi_controller *ctlr,
- 
- 	if (mas->cur_xfer_mode == GENI_GPI_DMA)
- 		return true;
-+	if (ctlr->slave)
-+		return true;
- 
- 	len = get_xfer_len_in_words(xfer, mas);
- 	fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
-@@ -619,6 +649,7 @@ static void spi_geni_release_dma_chan(struct spi_geni_master *mas)
- 
- static int spi_geni_init(struct spi_geni_master *mas)
- {
-+	struct spi_master *spi = get_spi_master(mas->dev);
- 	struct geni_se *se = &mas->se;
- 	unsigned int proto, major, minor, ver;
- 	u32 spi_tx_cfg, fifo_disable;
-@@ -627,7 +658,14 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 	pm_runtime_get_sync(mas->dev);
- 
- 	proto = geni_se_read_proto(se);
--	if (proto != GENI_SE_SPI) {
-+
-+	if (spi->slave) {
-+		if (proto != GENI_SE_SPI_SLAVE) {
-+			dev_err(mas->dev, "Invalid proto %d\n", proto);
-+			goto out_pm;
-+		}
-+		spi_slv_setup(mas);
-+	} else if (proto != GENI_SE_SPI) {
- 		dev_err(mas->dev, "Invalid proto %d\n", proto);
- 		goto out_pm;
- 	}
-@@ -677,9 +715,11 @@ static int spi_geni_init(struct spi_geni_master *mas)
- 	}
- 
- 	/* We always control CS manually */
--	spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
--	spi_tx_cfg &= ~CS_TOGGLE;
--	writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
-+	if (!spi->slave) {
-+		spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
-+		spi_tx_cfg &= ~CS_TOGGLE;
-+		writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
-+	}
- 
- out_pm:
- 	pm_runtime_put(mas->dev);
-@@ -1072,6 +1112,9 @@ static int spi_geni_probe(struct platform_device *pdev)
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, 250);
- 	pm_runtime_enable(dev);
- 
-+	if (device_property_read_bool(&pdev->dev, "qcom,slv-ctrl"))
-+		spi->slave = true;
-+
- 	ret = geni_icc_get(&mas->se, NULL);
- 	if (ret)
- 		goto spi_geni_probe_runtime_disable;
-@@ -1092,7 +1135,7 @@ static int spi_geni_probe(struct platform_device *pdev)
- 	 * for dma (gsi) mode, the gsi will set cs based on params passed in
- 	 * TRE
- 	 */
--	if (mas->cur_xfer_mode == GENI_SE_FIFO)
-+	if (!spi->slave && mas->cur_xfer_mode == GENI_SE_FIFO)
- 		spi->set_cs = spi_geni_set_cs;
- 
- 	ret = request_irq(mas->irq, geni_spi_isr, 0, dev_name(dev), spi);
--- 
-2.17.1
+Thanks,
+Neil
+
+> 
+> Konrad
+>>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 6 +++---
+>>   1 file changed, 3 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>> index 75cd374943eb..972df1ef86ee 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+>> @@ -3649,15 +3649,15 @@ rpmhpd_opp_min_svs: opp-48 {
+>>   						opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
+>>   					};
+>>   
+>> -					rpmhpd_opp_lov_svs_d2: opp-52 {
+>> +					rpmhpd_opp_low_svs_d2: opp-52 {
+>>   						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D2>;
+>>   					};
+>>   
+>> -					rpmhpd_opp_lov_svs_d1: opp-56 {
+>> +					rpmhpd_opp_low_svs_d1: opp-56 {
+>>   						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
+>>   					};
+>>   
+>> -					rpmhpd_opp_lov_svs_d0: opp-60 {
+>> +					rpmhpd_opp_low_svs_d0: opp-60 {
+>>   						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D0>;
+>>   					};
+>>   
+>>
 
