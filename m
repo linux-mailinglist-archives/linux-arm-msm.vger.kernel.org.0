@@ -2,78 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F98772E2EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 14:28:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5050172E369
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 14:56:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242477AbjFMM2M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 08:28:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35874 "EHLO
+        id S239579AbjFMM4e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 08:56:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242430AbjFMM15 (ORCPT
+        with ESMTP id S239139AbjFMM4c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 08:27:57 -0400
-Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02CCE19BA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 05:27:05 -0700 (PDT)
-Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b1b084620dso67800141fa.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 05:27:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686659224; x=1689251224;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EnIHsMOer6yxwn2k9SpYfq75p+EkWRLUz3RHm/gg720=;
-        b=b18DruWzsZolYaqZznZdkfTu68KIPQsuP2GNFxglUtDVf5AVQfkl09rD/TCiiAPvdj
-         4/y7kZfN11uk9XdRfRX65J6bwFCf28k9EtcDIKXKAzhCP4uzN/PcZ52goPSI58Pamupu
-         H0wil4DyGC02brKQeBq38RWnC4p4vHELAGn4LqTkzw+sU6TuobpfDdlh/fpHe3GUJrGy
-         lss4ZFPB9VFviDZaAsPlERxHlVGNG9BvBjZ/TdKPb8Gn80a1RmiAQcZNnZIiZTwWlBw2
-         O1tnCDt7sMg2udiKqgpXVyINwL3GFr1FHyAG7gtxyzKZ9tDzxuzoiHC+CDHZ1NscV+qg
-         Cdkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686659224; x=1689251224;
-        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
-         :content-language:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EnIHsMOer6yxwn2k9SpYfq75p+EkWRLUz3RHm/gg720=;
-        b=YNHVgDV993wUIC6qWeOUWnXyDu7ViSICYRU0h6myDNx2NBttXOgfd4mmUH2h9xsKfE
-         OrcHgJBjG2xYfRhlaQeUVz2HmPOYBg//ir4cWykt9znYoxTjNbWFNokiI8niLvpt6ZrY
-         INSCqqrO9lT+7qdnMgg+VBIw6SuDIOIuaq6wB71+ku6EtfpqowpK5vIzwdXZh1iSBVHz
-         5fWsovd5N0XOuofYf5IaW2rSvYVIWvoWAIG5dNXl3WPRheTMM+Nt4GTHW5jrUiqY+otI
-         do6GQrL0NV8yoRhsCeJ0I3lAVji+7xyIzBt7XexPrqgXCHjf+yfSBHYN8NcajB/6CYRN
-         LzFQ==
-X-Gm-Message-State: AC+VfDxEbWBtNg/8rCtH46M3re9swdvrOgLqFnxdWz20Q1Y406lYkTXk
-        KGk4sFTGhaswZZBtm8u4Dzb4Lw==
-X-Google-Smtp-Source: ACHHUZ5yPxfMBP2bj0B5CauySCl/eaKnaBhn1CKtZiZFvx2XOhZvmtfPlz255MpUQtywzrWG/w9zyw==
-X-Received: by 2002:a05:651c:22a:b0:2b1:a874:34c9 with SMTP id z10-20020a05651c022a00b002b1a87434c9mr5328357ljn.22.1686659224045;
-        Tue, 13 Jun 2023 05:27:04 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id p26-20020a2ea41a000000b002adbedc9962sm2144582ljn.46.2023.06.13.05.27.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jun 2023 05:27:03 -0700 (PDT)
-Message-ID: <d39df510-c0d0-97c2-4a35-e28829ddd761@linaro.org>
-Date:   Tue, 13 Jun 2023 14:27:02 +0200
+        Tue, 13 Jun 2023 08:56:32 -0400
+Received: from lelv0142.ext.ti.com (lelv0142.ext.ti.com [198.47.23.249])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 135EF1734;
+        Tue, 13 Jun 2023 05:56:30 -0700 (PDT)
+Received: from fllv0035.itg.ti.com ([10.64.41.0])
+        by lelv0142.ext.ti.com (8.15.2/8.15.2) with ESMTP id 35DCtlqE086407;
+        Tue, 13 Jun 2023 07:55:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1686660947;
+        bh=m3aWRYVccVyv3TBm3CQBhQSLQ8Afh0rwU1mPnybKOSM=;
+        h=Date:Subject:To:CC:References:From:In-Reply-To;
+        b=YbXTTZrIY+UGenKDmM/cnVARAJ7p9b2bkDm1ar7gDhRT7bIkCvpkwibosjYvgjLae
+         63bZObWKZFTzLmbfN45ZlZJrDJ8wPl/j5e2se5bX19Uned4epzQ4Vb8vWd/pz3VDRN
+         bBdHMeZYl0QWiJWF/oAMLaC8k8N6YWMk5xGFlFcU=
+Received: from DFLE115.ent.ti.com (dfle115.ent.ti.com [10.64.6.36])
+        by fllv0035.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 35DCtlO3121434
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Tue, 13 Jun 2023 07:55:47 -0500
+Received: from DFLE113.ent.ti.com (10.64.6.34) by DFLE115.ent.ti.com
+ (10.64.6.36) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23; Tue, 13
+ Jun 2023 07:55:47 -0500
+Received: from lelv0327.itg.ti.com (10.180.67.183) by DFLE113.ent.ti.com
+ (10.64.6.34) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.23 via
+ Frontend Transport; Tue, 13 Jun 2023 07:55:47 -0500
+Received: from [10.250.64.104] (ileaxei01-snat2.itg.ti.com [10.180.69.6])
+        by lelv0327.itg.ti.com (8.15.2/8.15.2) with ESMTP id 35DCtZPm112555;
+        Tue, 13 Jun 2023 07:55:36 -0500
+Message-ID: <4ee9c4dc-7dfc-3cb8-089d-c1535ab2531c@ti.com>
+Date:   Tue, 13 Jun 2023 18:25:34 +0530
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
+Subject: Re: [PATCH v3 08/12] thermal/drivers/ti-soc: remove redundant msg in
+ ti_thermal_expose_sensor()
+To:     Yangtao Li <frank.li@vivo.com>, <glaroque@baylibre.com>,
+        <rafael@kernel.org>, <daniel.lezcano@linaro.org>,
+        <amitk@kernel.org>, <rui.zhang@intel.com>, <shawnguo@kernel.org>,
+        <s.hauer@pengutronix.de>, <kernel@pengutronix.de>,
+        <festevam@gmail.com>, <linux-imx@nxp.com>,
+        <thara.gopinath@gmail.com>, <agross@kernel.org>,
+        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
+        <anarsoul@gmail.com>, <tiny.windzz@gmail.com>, <wens@csie.org>,
+        <jernej.skrabec@gmail.com>, <samuel@sholland.org>,
+        <thierry.reding@gmail.com>, <jonathanh@nvidia.com>,
+        <edubezval@gmail.com>, <matthias.bgg@gmail.com>,
+        <angelogioacchino.delregno@collabora.com>, <bchihi@baylibre.com>,
+        <niklas.soderlund+renesas@ragnatech.se>, <wenst@chromium.org>
+CC:     <linux-pm@vger.kernel.org>, <linux-amlogic@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-sunxi@lists.linux.dev>,
+        <linux-tegra@vger.kernel.org>, <linux-omap@vger.kernel.org>,
+        <linux-mediatek@lists.infradead.org>
+References: <20230613114904.15749-1-frank.li@vivo.com>
+ <20230613114904.15749-8-frank.li@vivo.com>
 Content-Language: en-US
-To:     Praveen Talari <quic_ptalari@quicinc.com>, agross@kernel.org,
-        andersson@kernel.org, broonie@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
-        quic_vnivarth@quicinc.com, quic_arandive@quicinc.com
-References: <20230613065229.5619-1-quic_ptalari@quicinc.com>
- <20230613065229.5619-3-quic_ptalari@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-Subject: Re: [PATCH 2/2] spi: spi-geni-qcom: Add SPI SLAVE mode support for
- GENI based QuPv3
-In-Reply-To: <20230613065229.5619-3-quic_ptalari@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+From:   "J, KEERTHY" <j-keerthy@ti.com>
+In-Reply-To: <20230613114904.15749-8-frank.li@vivo.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+X-Spam-Status: No, score=-4.5 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,
+        RCVD_IN_DNSWL_MED,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,
+        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -82,159 +86,28 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 13.06.2023 08:52, Praveen Talari wrote:
-> Add SPI SLAVE mode support for GENI based QuPv3.
-> 
-Copying the commit title in the commit message is a bit lackluster for
-adding new functionality.
+On 6/13/2023 5:19 PM, Yangtao Li wrote:
+> The upper-layer devm_thermal_add_hwmon_sysfs() function can directly
+> print error information.
 
-> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
+Acked-by: Keerthy <j-keerthy@ti.com>
+
+> 
+> Signed-off-by: Yangtao Li <frank.li@vivo.com>
 > ---
->  drivers/spi/spi-geni-qcom.c | 55 +++++++++++++++++++++++++++++++++----
->  1 file changed, 49 insertions(+), 6 deletions(-)
+>   drivers/thermal/ti-soc-thermal/ti-thermal-common.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
 > 
-> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-> index 206cc04bb1ed..2e3ae29e79e0 100644
-> --- a/drivers/spi/spi-geni-qcom.c
-> +++ b/drivers/spi/spi-geni-qcom.c
-> @@ -12,6 +12,7 @@
->  #include <linux/platform_device.h>
->  #include <linux/pm_opp.h>
->  #include <linux/pm_runtime.h>
-> +#include <linux/property.h>
->  #include <linux/soc/qcom/geni-se.h>
->  #include <linux/spi/spi.h>
->  #include <linux/spinlock.h>
-> @@ -52,6 +53,9 @@
->  #define SPI_CS_CLK_DELAY_MSK		GENMASK(19, 10)
->  #define SPI_CS_CLK_DELAY_SHFT		10
->  
-> +#define SE_SPI_SLAVE_EN				(0x2BC)
-> +#define SPI_SLAVE_EN				BIT(0)
-> +
->  /* M_CMD OP codes for SPI */
->  #define SPI_TX_ONLY		1
->  #define SPI_RX_ONLY		2
-> @@ -99,6 +103,24 @@ struct spi_geni_master {
->  	int cur_xfer_mode;
->  };
->  
-> +static struct spi_master *get_spi_master(struct device *dev)
-> +{
-> +	struct platform_device *pdev = to_platform_device(dev);
-> +	struct spi_master *spi = platform_get_drvdata(pdev);
-> +
-> +	return spi;
-> +}
-> +
-> +static void spi_slv_setup(struct spi_geni_master *mas)
-> +{
-> +	struct geni_se *se = &mas->se;
-> +
-> +	writel(SPI_SLAVE_EN, se->base + SE_SPI_SLAVE_EN);
-> +	writel(GENI_IO_MUX_0_EN, se->base + GENI_OUTPUT_CTRL);
-> +	writel(START_TRIGGER, se->base + SE_GENI_CFG_SEQ_START);
-> +	dev_info(mas->dev, "spi slave setup done\n");
-dev_dbg
-
-> +}
-> +
->  static int get_spi_clk_cfg(unsigned int speed_hz,
->  			struct spi_geni_master *mas,
->  			unsigned int *clk_idx,
-> @@ -140,12 +162,18 @@ static void handle_se_timeout(struct spi_master *spi,
->  	const struct spi_transfer *xfer;
->  
->  	spin_lock_irq(&mas->lock);
-> -	reinit_completion(&mas->cancel_done);
->  	if (mas->cur_xfer_mode == GENI_SE_FIFO)
->  		writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
->  
->  	xfer = mas->cur_xfer;
->  	mas->cur_xfer = NULL;
-> +
-> +	if (spi->slave) {
-> +		spin_unlock_irq(&mas->lock);
-> +		goto unmap_if_dma;
-> +	}
-> +
-> +	reinit_completion(&mas->cancel_done);
-Moving reiniting cancel_done after possibly writing the register
-for both mas/slv cases sounds like a separate change - is it
-necessary?
-
->  	geni_se_cancel_m_cmd(se);
->  	spin_unlock_irq(&mas->lock);
->  
-> @@ -541,6 +569,8 @@ static bool geni_can_dma(struct spi_controller *ctlr,
->  
->  	if (mas->cur_xfer_mode == GENI_GPI_DMA)
->  		return true;
-> +	if (ctlr->slave)
-> +		return true;
-Regardless of the xfer mode?
-
->  
->  	len = get_xfer_len_in_words(xfer, mas);
->  	fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
-> @@ -619,6 +649,7 @@ static void spi_geni_release_dma_chan(struct spi_geni_master *mas)
->  
->  static int spi_geni_init(struct spi_geni_master *mas)
->  {
-> +	struct spi_master *spi = get_spi_master(mas->dev);
->  	struct geni_se *se = &mas->se;
->  	unsigned int proto, major, minor, ver;
->  	u32 spi_tx_cfg, fifo_disable;
-> @@ -627,7 +658,14 @@ static int spi_geni_init(struct spi_geni_master *mas)
->  	pm_runtime_get_sync(mas->dev);
->  
->  	proto = geni_se_read_proto(se);
-> -	if (proto != GENI_SE_SPI) {
-> +
-> +	if (spi->slave) {
-> +		if (proto != GENI_SE_SPI_SLAVE) {
-> +			dev_err(mas->dev, "Invalid proto %d\n", proto);
-> +			goto out_pm;
-> +		}
-> +		spi_slv_setup(mas);
-> +	} else if (proto != GENI_SE_SPI) {
->  		dev_err(mas->dev, "Invalid proto %d\n", proto);
->  		goto out_pm;
->  	}
-> @@ -677,9 +715,11 @@ static int spi_geni_init(struct spi_geni_master *mas)
->  	}
->  
->  	/* We always control CS manually */
-> -	spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
-> -	spi_tx_cfg &= ~CS_TOGGLE;
-> -	writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
-> +	if (!spi->slave) {
-> +		spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
-> +		spi_tx_cfg &= ~CS_TOGGLE;
-> +		writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
-> +	}
->  
->  out_pm:
->  	pm_runtime_put(mas->dev);
-> @@ -1072,6 +1112,9 @@ static int spi_geni_probe(struct platform_device *pdev)
->  	pm_runtime_set_autosuspend_delay(&pdev->dev, 250);
->  	pm_runtime_enable(dev);
->  
-> +	if (device_property_read_bool(&pdev->dev, "qcom,slv-ctrl"))
-> +		spi->slave = true;
-Missing dt-bindings
-
-Konrad
-> +
->  	ret = geni_icc_get(&mas->se, NULL);
->  	if (ret)
->  		goto spi_geni_probe_runtime_disable;
-> @@ -1092,7 +1135,7 @@ static int spi_geni_probe(struct platform_device *pdev)
->  	 * for dma (gsi) mode, the gsi will set cs based on params passed in
->  	 * TRE
->  	 */
-> -	if (mas->cur_xfer_mode == GENI_SE_FIFO)
-> +	if (!spi->slave && mas->cur_xfer_mode == GENI_SE_FIFO)`
->  		spi->set_cs = spi_geni_set_cs;
->  
->  	ret = request_irq(mas->irq, geni_spi_isr, 0, dev_name(dev), spi);
+> diff --git a/drivers/thermal/ti-soc-thermal/ti-thermal-common.c b/drivers/thermal/ti-soc-thermal/ti-thermal-common.c
+> index 6a5335931f4d..d414a4b7a94a 100644
+> --- a/drivers/thermal/ti-soc-thermal/ti-thermal-common.c
+> +++ b/drivers/thermal/ti-soc-thermal/ti-thermal-common.c
+> @@ -182,8 +182,7 @@ int ti_thermal_expose_sensor(struct ti_bandgap *bgp, int id,
+>   	ti_bandgap_write_update_interval(bgp, data->sensor_id,
+>   					 TI_BANDGAP_UPDATE_INTERVAL_MS);
+>   
+> -	if (devm_thermal_add_hwmon_sysfs(bgp->dev, data->ti_thermal))
+> -		dev_warn(bgp->dev, "failed to add hwmon sysfs attributes\n");
+> +	devm_thermal_add_hwmon_sysfs(bgp->dev, data->ti_thermal); >
+>   	return 0;
+>   }
