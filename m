@@ -2,254 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id BE69172E7C8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 18:05:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A56E72E846
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 18:20:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240364AbjFMQEM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 12:04:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37928 "EHLO
+        id S243009AbjFMQUD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 12:20:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243010AbjFMQEB (ORCPT
+        with ESMTP id S243157AbjFMQTx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 12:04:01 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE0EF172A;
-        Tue, 13 Jun 2023 09:03:59 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id BE07B63805;
-        Tue, 13 Jun 2023 16:03:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6505EC4AF5C;
-        Tue, 13 Jun 2023 16:03:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686672237;
-        bh=hRs/09I3nVePGyq7+ZAJUlWdpGWIbMI1XEr6/Yow+u8=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=tVbpwH2fLHIWbej7jYshdnJlpjWYAHpIevTgNAUXsmMojFrbopyryR+rfDUL8xCv1
-         /X96DIpLwGVYwA9TQPDXiz5IWgsOEPpoHu9Qb7yYylwZyRSU2GXXbqK4P6BSZ4uwv1
-         qVGi9XqLxwx35wynCx2Qvsnm3jgctojsLBxG/O+7c8FnkGePCFlMH27pUGGAHjo9y9
-         zR+HJHoMVB1dd4NOoHwvZ5E0EAvHUR9Fwf76b/ER8ZhpuSz8miIPlaMasDVR5sTZPI
-         cWGnxa0BQnrC1BULZIN4vUjbBFGUN9oKFlTk6O0llidTzw5w5qgMWGpQuAAMI9UqxY
-         62P++rDdTFT+A==
-Date:   Tue, 13 Jun 2023 09:07:20 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
+        Tue, 13 Jun 2023 12:19:53 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1A0C92;
+        Tue, 13 Jun 2023 09:19:51 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 5b1f17b1804b1-3f8d258f203so6378085e9.1;
+        Tue, 13 Jun 2023 09:19:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1686673190; x=1689265190;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=G5XtHbUOFnSndKzIwlOTnUJluTBGdp3FK7IhsGYnnMU=;
+        b=ipIGPCXHvxK+vy2hv3GHnTeYBFM2CYeQpZ6xvydjhD+vP57AT9GmbQ6jeMbaOCRSKX
+         Og9Z/AvktaWT9pa9VvcT8cceJbWvNzttxD5vvasOcS92xh6c1sT2DL1ZRpHV9DZdMhA2
+         4E4+CLYIkZq8/XVV/uRqK6gTuyYODf88KARma7NeHKnXqBSoFQ/5jhmDjBDkkYMzNrqX
+         huUHas1llPu169RODp74EDy89jhy2OMytq+8g8ehzwAFkcZAVZ/bBKTd41oUP/c/qbw3
+         6RSWWCkaLtrEuMbyrksBK+WYhWWR8g8QXT3BxZHkmYqqOhyhTMMGjFKtdOj3n4tMesBI
+         8uQA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686673190; x=1689265190;
+        h=in-reply-to:content-disposition:mime-version:references:subject:cc
+         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=G5XtHbUOFnSndKzIwlOTnUJluTBGdp3FK7IhsGYnnMU=;
+        b=O1G//FPvUGy4gIjSs+M1ju2FIT9tQ6KLuaXg5NB4pjXzkTZGnT+pZAmzuzzPB2kBDO
+         6HKz3IxF+jjQNPftfuKmlCJnpNUDFIaiiGTTZ864pXRBMiR6/vP09gsZvYU08WkCtYS/
+         FsChAod0485igqt7FQ7tXPXBNBqXE4Wruw8woj617aihJoxCX/O2j0QYLS4FqiRBjK+c
+         yumxgb6G/X/7G+ktNgKhSPWnGy4xasAr2i3R3QghS6E0FSeKsrACf1k21k2cMhvjLmc6
+         iChpyuni0r06e0E58BFrZiWWSCirOBn63K+6s1eofU/MKUrRkts/aYBKSLUQyQDLXiH/
+         ZClQ==
+X-Gm-Message-State: AC+VfDwTiR+oF1YNjOv8tKSeuemu8gfYKrgsz6jE2zqLmqqSAgYXAfqG
+        GwHq1UlTcvNXkViZL+71Gmg=
+X-Google-Smtp-Source: ACHHUZ7xruECPZ92fCI0M68RCn1Xs8LlKYnjkYt2Flr4gM04otike18nlbYR4c4WFBE1tNhtwZUkIw==
+X-Received: by 2002:a7b:c38b:0:b0:3f6:7e6:44ea with SMTP id s11-20020a7bc38b000000b003f607e644eamr7969928wmj.18.1686673189633;
+        Tue, 13 Jun 2023 09:19:49 -0700 (PDT)
+Received: from Ansuel-xps. (93-34-93-173.ip49.fastwebnet.it. [93.34.93.173])
+        by smtp.gmail.com with ESMTPSA id l6-20020a5d4bc6000000b003047ae72b14sm15845460wrt.82.2023.06.13.09.19.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jun 2023 09:19:49 -0700 (PDT)
+Message-ID: <64889725.5d0a0220.9f037.0597@mx.google.com>
+X-Google-Original-Message-ID: <ZIiXIhMijioZr3zX@Ansuel-xps.>
+Date:   Tue, 13 Jun 2023 18:19:46 +0200
+From:   Christian Marangi <ansuelsmth@gmail.com>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dpu: Configure DP INTF/PHY selector
-Message-ID: <20230613160720.2a6ouut5qn3cewqd@ripper>
-References: <20230612221047.1886709-1-quic_bjorande@quicinc.com>
- <435dd068-fbf2-10cf-4f78-377e689abb2c@linaro.org>
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org
+Subject: Re: [PATCH 00/18] ARM: qcom: apq8064: support CPU frequency scaling
+References: <20230612053922.3284394-1-dmitry.baryshkov@linaro.org>
+ <6486dcef.050a0220.4c054.4c59@mx.google.com>
+ <99a68056-a4c9-d475-9245-e0802ffe4c89@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <435dd068-fbf2-10cf-4f78-377e689abb2c@linaro.org>
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
-        autolearn_force=no version=3.4.6
+In-Reply-To: <99a68056-a4c9-d475-9245-e0802ffe4c89@linaro.org>
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM,
+        RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 13, 2023 at 01:31:40AM +0300, Dmitry Baryshkov wrote:
-> On 13/06/2023 01:10, Bjorn Andersson wrote:
-> > From: Bjorn Andersson <bjorn.andersson@linaro.org>
+On Mon, Jun 12, 2023 at 05:20:02PM +0300, Dmitry Baryshkov wrote:
+> On 11/06/2023 19:27, Christian Marangi wrote:
+> > On Mon, Jun 12, 2023 at 08:39:04AM +0300, Dmitry Baryshkov wrote:
+> > > Implement CPUFreq support for one of the oldest supported Qualcomm
+> > > platforms, APQ8064. Each core has independent power and frequency
+> > > control. Additionally the L2 cache is scaled to follow the CPU
+> > > frequencies (failure to do so results in strange semi-random crashes).
 > > 
-> > Some platforms provides a mechanism for configuring the mapping between
-> > (one or two) DisplayPort intfs and their PHYs.
+> > Hi, can we talk, maybe in private about this interconnect-cpu thing?
+> 
+> Hi, sure. Feel free to ping me on IRC (lumag) or via email. Or we can just
+> continue our discussion here, as it might be interesting to other people
+> too.
+>
+
+Don't know if here is the right place to discuss my concern and problem
+with L2 scaling on ipq8064...
+
+> > I see you follow the original implementation of the msm_bus where in
+> > practice with the use of the kbps the correct clock and voltage was set.
+> > (and this was also used to set the fabric clock from nominal to fast)
 > > 
-> > In particular SC8180X provides this functionality, without a default
-> > configuration, resulting in no connection between its two external
-> > DisplayPort controllers and any PHYs.
+> > On ipq806x and I assume other SoC there isn't always a 1:1 map of CPU
+> > freq and L2 freq. For example on ipq8064 we have max CPU freq of 1.4GHz
+> > and L2 freq of 1.2GHz, on ipq8065 we have CPU 1.7GHz and L2 of 1.4GHz.
+> 
+> This is also the case for apq8064. The vendor kernel defines 15 frequencies
+> for L2 cache clock, but then for some reasons all PVS tables use just 3
+> entries from these 15.
+> 
+
+Eh who knows why they did this... Probably the hfpll was limited or they
+notice no temp/power benefits were present with scaling with that much
+of steps?
+
+> > (and even that is curious since I used the debug regs and the cxo
+> > crystal to measure the clock by hardware (yes i ported the very ancient
+> > clk-debug to modern kernel and it works and discovered all sort of
+> > things) the L2 (I assume due to climitation of the hfpll) actually can't
+> > never reach that frequency (1.4GHz in reality results to something like
+> > 1.2GHz from what I notice a stable clock is there only with frequency of
+> > max 1GHz))
+> 
+> I would like to point you to https://github.com/andersson/debugcc/, which is
+> a userspace reimplementation of clk-debug. We'd appreciate your patches
+> there.
+> 
+
+Hi, I wasted some good time on the implementation but manage to make it
+work and proposed a pr! I assume the thing can be reused for apq8064 if
+someone ever wants to have fun with that.
+
+> > So my idea was to introduce a simple devfreq driver and use the PASSIVE
+> > governor where it was added the possibility to link to a CPU frequency
+> > and with interpolation select the L2 frequency (and voltage)
+> 
+> I stumbled upon this idea, when I was working on the msm8996 and it's CBF
+> clock (CBF = interconnect between two core clusters). While it should be
+> possible to use DEVFREQ in simple cases (e.g. L2 clock >= max(CPU clock), if
+> possible). However real configurations are slightly harder.
+> E.g. for the purpose of this patchset, the relationship for apq8064 is the
+> following (in MHz):
+> 
+>  CPU    L2
+>  384    384
+>  486    648
+>  594    648
+>  702    648
+> ....    ...
+> 1026    648
+> 1134   1134
+> ....   ....
+> 1512   1134
+> ....   ....
+> 
+> It should be noted that msm8960 also used just three values for the L2 cache
+> frequencies. From what I can see, only msm8x60 made L2 freq tightly follow
+> the CPU frequency.
+> 
+
+Happy to test and found a common path... With the merge of the cpu opp
+and nvmem work, I was just about to send the L2 devfreq driver... And
+also the fabric devfreq driver. But I wonder if I can use this
+interconnect thing for the 2 task.
+
+> >  From some old comments in ancient qsdk code it was pointed out that due
+> > to a hw limitation the secondary cpu can't stay at a high clock if L2
+> > was at the idle clock. (no idea if this is specific to IPQ806x) So this
+> > might be a cause of your crash? (I also have random crash with L2
+> > scaling and we are planning to just force the L2 at max frequency)
+> 
+> It might be related. It was more or less the same story with msm8996, which
+> was either 'maxcpus=2' or scaling the CBF clock.
+> 
+
+Might be a krait defect... and this is pretty bad...
+
+> > But sorry for all of this (maybe) useless info. I checked the other
+> > patch and I didn't understand how the different L2 frequency are
+> > declared and even the voltage. Is this something that will come later?
+> > I'm very interested in this implementation.
+> 
+> The L2 frequency (<&kraitcc 4>) is converted into bandwidth vote, which then
+> goes into the OPP tables. But please also see the discussion started at the
+> patch 15.
+> 
+
+I didn't notice you were defining multiple supply, scaling the voltage
+under the hood with that trick. It's not a bad idea but as pointed out
+it might be problematic, since is seems krait is very sensible with L2
+frequency and voltage so we should simulate the original implementation
+as close as possible...
+
 > > 
-> > The change implements the logic for optionally configuring which phy
-> > each of the intfs should be connected to, provides a new entry in the
-> > DPU catalog for specifying how many intfs to configure and marks the
-> > SC8180X DPU to program 2 entries.
+> > > 
+> > > Core voltage is controlled through the SAW2 devices, one for each core.
+> > > The L2 has two regulators, vdd-mem and vdd-dig.
+> > > 
+> > > Depenency: [1] for interconnect-clk implementation
+> > > 
+> > > https://lore.kernel.org/linux-arm-msm/20230512001334.2983048-3-dmitry.baryshkov@linaro.org/
+> > > 
 > > 
-> > For now the request is simply to program the mapping 1:1, any support
-> > for alternative mappings is left until the use case arrise.
-> > 
-> > Note that e.g. msm-4.14 unconditionally maps intf 0 to phy 0 on all
-> > rlatforms, so perhaps this is needed in order to get DisplayPort working
-> > on some other platforms as well.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-> > ---
-> >   .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  1 +
-> >   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  2 ++
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c    | 23 +++++++++++++++++++
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h    |  8 +++++++
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h      |  1 +
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 10 ++++++++
-> >   6 files changed, 45 insertions(+)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> > index 8ed2b263c5ea..9da952692a69 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
-> > @@ -19,6 +19,7 @@ static const struct dpu_caps sc8180x_dpu_caps = {
-> >   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
-> >   	.max_hdeci_exp = MAX_HORZ_DECIMATION,
-> >   	.max_vdeci_exp = MAX_VERT_DECIMATION,
-> > +	.num_dp_intf_sel = 2,
-> >   };
-> >   static const struct dpu_ubwc_cfg sc8180x_ubwc_cfg = {
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> > index ac4a9e73705c..4cb8d096d8ec 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-> > @@ -357,6 +357,7 @@ struct dpu_rotation_cfg {
-> >    * @pixel_ram_size     size of latency hiding and de-tiling buffer in bytes
-> >    * @max_hdeci_exp      max horizontal decimation supported (max is 2^value)
-> >    * @max_vdeci_exp      max vertical decimation supported (max is 2^value)
-> > + * @num_dp_intf_sel    number of DP intfs to configure PHY selection for
-> >    */
-> >   struct dpu_caps {
-> >   	u32 max_mixer_width;
-> > @@ -371,6 +372,7 @@ struct dpu_caps {
-> >   	u32 pixel_ram_size;
-> >   	u32 max_hdeci_exp;
-> >   	u32 max_vdeci_exp;
-> > +	u32 num_dp_intf_sel;
-> >   };
-> >   /**
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> > index 963bdb5e0252..5afa99cb148c 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
-> > @@ -250,6 +250,27 @@ static void dpu_hw_intf_audio_select(struct dpu_hw_mdp *mdp)
-> >   	DPU_REG_WRITE(c, HDMI_DP_CORE_SELECT, 0x1);
-> >   }
-> > +static void dpu_hw_dp_phy_intf_sel(struct dpu_hw_mdp *mdp, unsigned int *phys,
-> > +				   unsigned int num_intfs)
-> > +{
-> > +	struct dpu_hw_blk_reg_map *c = &mdp->hw;
-> > +	unsigned int intf;
-> > +	u32 sel = 0;
-> > +
-> > +	if (!num_intfs)
-> > +		return;
-> > +
-> > +	for (intf = 0; intf < num_intfs; intf++) {
-> > +		/* Specify the PHY (1-indexed) for @intf */
-> > +		sel |= (phys[intf] + 1) << (intf * 3);
-> > +
-> > +		/* Specify the @intf (1-indexed) of targeted PHY */
-> > +		sel |= (intf + 1) << (6 + phys[intf] * 3);
-> 
-> From what I can see, phys[intf] is const. What about defining indexed masks
-> instead?
-> 
-
-intf is the loop variable. What am I missing?
-
-> > +	}
-> > +
-> > +	DPU_REG_WRITE(c, DP_PHY_INTF_SEL, sel);
-> > +}
-> > +
-> >   static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
-> >   		unsigned long cap)
-> >   {
-> > @@ -264,6 +285,8 @@ static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
-> >   	ops->get_safe_status = dpu_hw_get_safe_status;
-> > +	ops->dp_phy_intf_sel = dpu_hw_dp_phy_intf_sel;
-> 
-> Should this be gated for DPU < 4.0? Or 5.0?
-> 
-> > +
-> >   	if (cap & BIT(DPU_MDP_AUDIO_SELECT))
-> >   		ops->intf_audio_select = dpu_hw_intf_audio_select;
-> >   }
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-> > index a1a9e44bed36..8446d74d59b0 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
-> > @@ -125,6 +125,14 @@ struct dpu_hw_mdp_ops {
-> >   	void (*get_safe_status)(struct dpu_hw_mdp *mdp,
-> >   			struct dpu_danger_safe_status *status);
-> > +	/**
-> > +	 * dp_phy_intf_sel - configure intf to phy mapping
-> > +	 * @mdp: mdp top context driver
-> > +	 * @phys: list of phys the @num_intfs intfs should be connected to
-> > +	 * @num_intfs: number of intfs to configure
-> > +	 */
-> > +	void (*dp_phy_intf_sel)(struct dpu_hw_mdp *mdp, unsigned int *phys,
-> > +			        unsigned int num_intfs);
-> >   	/**
-> >   	 * intf_audio_select - select the external interface for audio
-> >   	 * @mdp: mdp top context driver
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
-> > index 5acd5683d25a..6d31bdc7269c 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
-> > @@ -59,6 +59,7 @@
-> >   #define MDP_WD_TIMER_4_CTL2             0x444
-> >   #define MDP_WD_TIMER_4_LOAD_VALUE       0x448
-> >   #define DCE_SEL                         0x450
-> > +#define DP_PHY_INTF_SEL                 0x460
-> 
-> MDP_DP_PHY_INTF_SEL, if you don't mind.
-> 
-
-I don't mind.
-
-> >   #define MDP_PERIPH_TOP0			MDP_WD_TIMER_0_CTL
-> >   #define MDP_PERIPH_TOP0_END		CLK_CTRL3
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > index aa8499de1b9f..5dbe5d164c01 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> > @@ -1011,6 +1011,14 @@ unsigned long dpu_kms_get_clk_rate(struct dpu_kms *dpu_kms, char *clock_name)
-> >   	return clk_get_rate(clk);
-> >   }
-> > +static void dpu_kms_dp_phy_intf_sel(struct dpu_kms *dpu_kms)
-> > +{
-> > +	const unsigned int num_intfs = dpu_kms->catalog->caps->num_dp_intf_sel;
-> > +	static unsigned int phy_map[] = {0, 1, 2};
-> 
-> Please move this to dp_phy_intf_sel() and make it const.
-> 
-
-There's a possible use case for passing a phy_map of {0, 2} or {2, 1} on
-SC8180X. While this is left to someone in the future to have that use
-case, as split dp_phy_intf_sel() would handle such variations.
-
-That said, per the layout of the DP_PHY_INTF_SEL, num_intfs can not be
-more than 2, so this list shouldn't have 3 elements.
-
-Regards,
-Bjorn
-
-> > +
-> > +	dpu_kms->hw_mdp->ops.dp_phy_intf_sel(dpu_kms->hw_mdp, phy_map, num_intfs);
-> > +}
-> > +
-> >   static int dpu_kms_hw_init(struct msm_kms *kms)
-> >   {
-> >   	struct dpu_kms *dpu_kms;
-> > @@ -1122,6 +1130,8 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
-> >   		goto perf_err;
-> >   	}
-> > +	dpu_kms_dp_phy_intf_sel(dpu_kms);
-> > +
-> >   	dpu_kms->hw_intr = dpu_hw_intr_init(dpu_kms->mmio, dpu_kms->catalog);
-> >   	if (IS_ERR_OR_NULL(dpu_kms->hw_intr)) {
-> >   		rc = PTR_ERR(dpu_kms->hw_intr);
 > 
 > -- 
 > With best wishes
 > Dmitry
 > 
+
+-- 
+	Ansuel
