@@ -2,135 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 98B5272E70C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 17:23:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 967A272E733
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 17:30:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239102AbjFMPXj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 11:23:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44178 "EHLO
+        id S242818AbjFMP2x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 11:28:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47858 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240261AbjFMPXi (ORCPT
+        with ESMTP id S242809AbjFMP2w (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 11:23:38 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 000B11BCD
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 08:23:13 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f6195d2b3fso7122003e87.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 08:23:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686669792; x=1689261792;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZObq3QdQreREeU4NfsEue/+eYyb1HX3Nq35VP0wnSHk=;
-        b=O5I1KTQM9ahis2CVWCWapMP4B1w+V782LooA28aPXu+f8RIsABsAEG6HoMaXraby7g
-         HdDN1qziUtNinucVrcJwTyTcagUZEjEtlexo+8OnfziVbDulrBUnbj57VWTQ4d+L5ock
-         oQWQTGvpQ45Mo6I0heqUBJee7CgGQKuWJcd21ToX04OGSr3pIsy5fFoJsrGIL4GlVH6B
-         jDKNaixXYaNX/BSg+6fNh0NUDzkhC5NRZ7mbGe+fZxJPb5JkvWT/wArUzro3LFWPjgeu
-         RRUrLjCF6+45XGPMzKXCQ0Who0jYHmOH0H5ZC6BRaoe0ZG4Spgrr53phfK1cSjPWEzAQ
-         JhIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686669792; x=1689261792;
-        h=content-transfer-encoding:in-reply-to:from:references:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZObq3QdQreREeU4NfsEue/+eYyb1HX3Nq35VP0wnSHk=;
-        b=XttlflMxYjW+HHSdP7xqjzP09y75uxEt8Lz3LuDxXFk9pwNXXlC3BxhnM/Wl9v3nz/
-         CQl0dtoPofpiYp038Q56NnQ1dQUOvBpDNyw1MW89qaj0XETWgpQK/npE6WzHA3RoNzDU
-         NSK3a5KhvHz65VqotKYsZlqkocf9gNOHdPUw0uo2CfsZ1UcWCSz+ZMDStuhYnp4ibOih
-         jXP4M95Nv6muwcnOX20dwbKlWrwjU4w4+UItDMA45batMGSuXE28QhavCn7JLo0wmzWf
-         njgxCtU54F6qqWy8QnRC1LsAjFuoP9hH/K5P6kA7EZY4i8PkHQqL1Df9fMNXfTWfDmJ4
-         ZQiA==
-X-Gm-Message-State: AC+VfDxzHIp+JPgOEwmWwonOyCIHrf1bZ4IIo/obGVwss3W2cA/W27oC
-        owWgwtPs/41r+0E8Cmgum1sEWuN+jGW1b3/3BDQ=
-X-Google-Smtp-Source: ACHHUZ5MGoSPdfOcevVLsn6Xp9mNELJ81EH8SncxQ2LkVo3Gx9bg3gEgGWSOLoOA3+r4muPayrH13w==
-X-Received: by 2002:a19:6601:0:b0:4f6:5bf2:63bc with SMTP id a1-20020a196601000000b004f65bf263bcmr5593106lfc.3.1686669792155;
-        Tue, 13 Jun 2023 08:23:12 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id 7-20020ac24847000000b004f60be0c685sm1809673lfy.123.2023.06.13.08.23.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jun 2023 08:23:11 -0700 (PDT)
-Message-ID: <1631b3cd-dc24-0024-5291-fa9bdacc82bc@linaro.org>
-Date:   Tue, 13 Jun 2023 17:23:06 +0200
+        Tue, 13 Jun 2023 11:28:52 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4FA9210E9;
+        Tue, 13 Jun 2023 08:28:50 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 554D1637B9;
+        Tue, 13 Jun 2023 15:28:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9A7C433F0;
+        Tue, 13 Jun 2023 15:28:47 +0000 (UTC)
+Date:   Tue, 13 Jun 2023 11:28:45 -0400
+From:   Steven Rostedt <rostedt@goodmis.org>
+To:     Gokul krishna Krishnakumar <quic_gokukris@quicinc.com>
+Cc:     <linux-arm-msm@vger.kernel.org>,
+        <linux-remoteproc@vger.kernel.org>,
+        <linux-trace-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        <linux-kernel@vger.kernel.org>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        Satya Durga Srinivasu Prabhala <quic_satyap@quicinc.com>,
+        Rajendra Nayak <quic_rjendra@quicinc.com>,
+        "Elliot Berman" <quic_eberman@quicinc.com>,
+        Guru Das Srinagesh <quic_gurus@quicinc.com>,
+        Sibi Sankar <quic_sibis@quicinc.com>,
+        Melody Olvera <quic_molvera@quicinc.com>
+Subject: Re: [PATCH v5 2/2] remoteproc: qcom: Add remoteproc tracing
+Message-ID: <20230613112845.626670df@gandalf.local.home>
+In-Reply-To: <12b533c73b8c6b039e90f20afef1c8dcd30b80de.1686606835.git.quic_gokukris@quicinc.com>
+References: <cover.1686606835.git.quic_gokukris@quicinc.com>
+        <12b533c73b8c6b039e90f20afef1c8dcd30b80de.1686606835.git.quic_gokukris@quicinc.com>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v4 2/8] clk: qcom: Add Global Clock controller (GCC)
- driver for IPQ5018
-Content-Language: en-US
-To:     Sricharan Ramabadhran <quic_srichara@quicinc.com>,
-        agross@kernel.org, andersson@kernel.org, robh+dt@kernel.org,
-        krzysztof.kozlowski+dt@linaro.org, mturquette@baylibre.com,
-        sboyd@kernel.org, ulf.hansson@linaro.org, linus.walleij@linaro.org,
-        catalin.marinas@arm.com, will@kernel.org, p.zabel@pengutronix.de,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-References: <20230510134121.1232286-1-quic_srichara@quicinc.com>
- <20230510134121.1232286-3-quic_srichara@quicinc.com>
- <21a5642c-e6e5-9323-7db1-383a18616ac0@linaro.org>
- <410b0991-30b6-c87d-9b25-5f51f6c08671@quicinc.com>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <410b0991-30b6-c87d-9b25-5f51f6c08671@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-6.7 required=5.0 tests=BAYES_00,
+        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS,
+        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, 12 Jun 2023 15:03:26 -0700
+Gokul krishna Krishnakumar <quic_gokukris@quicinc.com> wrote:
 
+> diff --git a/drivers/remoteproc/remoteproc_internal.h b/drivers/remoteproc/remoteproc_internal.h
+> index d4dbb8d1d80c..f7cb31b94a60 100644
+> --- a/drivers/remoteproc/remoteproc_internal.h
+> +++ b/drivers/remoteproc/remoteproc_internal.h
+> @@ -14,6 +14,7 @@
+>  
+>  #include <linux/irqreturn.h>
+>  #include <linux/firmware.h>
+> +#include <trace/events/remoteproc_tracepoints.h>
+>  
+>  struct rproc;
+>  
+> @@ -171,8 +172,13 @@ u64 rproc_get_boot_addr(struct rproc *rproc, const struct firmware *fw)
+>  static inline
+>  int rproc_load_segments(struct rproc *rproc, const struct firmware *fw)
+>  {
+> -	if (rproc->ops->load)
+> -		return rproc->ops->load(rproc, fw);
+> +	if (rproc->ops->load) {
+> +		int ret;
+> +
+> +		ret = rproc->ops->load(rproc, fw);
+> +		trace_rproc_load_segment_event(rproc, ret);
+> +		return ret;
+> +	}
+>  
+>  	return -EINVAL;
+>  }
 
-On 13.06.2023 15:16, Sricharan Ramabadhran wrote:
-> Hi Konrad,
-> 
-> On 5/27/2023 12:47 AM, Konrad Dybcio wrote:
->>
->>
->> On 10.05.2023 15:41, Sricharan Ramabadhran wrote:
->>> Add support for the global clock controller found on IPQ5018
->>> based devices.
->>>
->>> Co-developed-by: Varadarajan Narayanan <quic_varada@quicinc.com>
->>> Signed-off-by: Varadarajan Narayanan <quic_varada@quicinc.com>
->>> Co-developed-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
->>> Signed-off-by: Gokul Sriram Palanisamy <quic_gokulsri@quicinc.com>
->>> Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
->>> ---
->>>   [v4] Fixed to use ARRAY_SIZE() wherever parent_data was used
->>>        Changed GPL v2 to GPL as per comments
->>>
->>>   drivers/clk/qcom/Kconfig       |   10 +-
->>>   drivers/clk/qcom/Makefile      |    1 +
->>>   drivers/clk/qcom/gcc-ipq5018.c | 3731 ++++++++++++++++++++++++++++++++
->>>   3 files changed, 3740 insertions(+), 2 deletions(-)
->>>   create mode 100644 drivers/clk/qcom/gcc-ipq5018.c
->>>
->> [...]
->>
->>> +struct clk_rcg2 lpass_axim_clk_src = {
->>> +    .cmd_rcgr = 0x2E028,
->> Please use lowercase hex for non-macro-defines, all throughout the file.
->>
-> 
->  ok. Will fix this in V10.
-> 
->> [...]
->>
->>> +static struct clk_rcg2 system_noc_bfdcd_clk_src = {
->> Drop clocks that are managed in RPM, they will conflict.
->>
-> 
->   IPQ5018 does not have RPM.
-Oh that's new. I suppose you'll be interested in clk-interconnect for
-voting on bus resources then.
+So, tracepoints in header files tend to cause problems due to the way they
+are created. See the comment in include/linux/tracepoint-defs.h.
 
-Konrad
-> 
-> Regards,
->  Sricharan
+What you need to do is:
+
+#include <linux/tracepoint-defs.h>
+
+DECLARE_TRACEPOINT(rproc_load_segment_event);
+
+extern void call_trace_rproc_load_segment_event(struct rproc *rproc, int ret);
+
+static inline void test_trace_rproc_load_segment_event(struct rproc *rproc, int ret)
+{
+	if (trace_rproc_load_segment_event_enabled())
+		call_trace_rproc_load_segment_event(rproc, ret);
+}
+
+After adding the above in the header. In the C file, add:
+
+void call_trace_rproc_load_segment_event(struct rproc *rproc, int ret)
+{
+	trace_rproc_load_segment_event(rproc, ret);
+}
+
+-- Steve
