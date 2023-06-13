@@ -2,236 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6530172DB48
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 09:43:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7837372DB98
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 09:54:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237969AbjFMHn0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 03:43:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41522 "EHLO
+        id S240551AbjFMHxI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 03:53:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48262 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240584AbjFMHnG (ORCPT
+        with ESMTP id S239614AbjFMHxH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 03:43:06 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 262911730;
-        Tue, 13 Jun 2023 00:42:47 -0700 (PDT)
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35D7IDpk020275;
-        Tue, 13 Jun 2023 07:42:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=/jnThA7BHjWqYdWXMcGO9sxX8nn+HT9Gb4SdhNturuU=;
- b=TsbYOphiPt3wtCCqsnUU9Zdd6AC2PAawFcmOynrWFSw+1bqwY3O38OdOqJWj3X3HKmSM
- xWX+UEB68gqLseHBgfo57pIxHEHxfPS7llhIaK7rsiCJHJSPmOHcwgp1IUTamwARwCQL
- AkCAooCrQFs/qtkAddte3n+PQH+YUAeXU7ICKfyBWEWPPSDRkw9IvG//q2Urlc3hgUGD
- dPbR5Fms/Ez771eV1f4/grd6XSCboYebpZRx7Gh3xR0KztmUfxyl1Z8PJjdg2gpdabmh
- sA4oyxn16XXTaULqh0+4ilV/L/d4/fPLJ7KJxJ/3L5VHh5/2MDTQdaEWrh/xLRC5Kz0b rw== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r6km402jn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Jun 2023 07:42:37 +0000
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35D7ganZ027543
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Jun 2023 07:42:36 GMT
-Received: from [10.218.20.114] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 13 Jun
- 2023 00:42:32 -0700
-Message-ID: <886b1665-cbb9-e302-eb2d-b7ff9fd242a8@quicinc.com>
-Date:   Tue, 13 Jun 2023 13:12:15 +0530
+        Tue, 13 Jun 2023 03:53:07 -0400
+Received: from mail-vk1-xa2a.google.com (mail-vk1-xa2a.google.com [IPv6:2607:f8b0:4864:20::a2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A78910CE
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:53:05 -0700 (PDT)
+Received: by mail-vk1-xa2a.google.com with SMTP id 71dfb90a1353d-46288dcacb5so1692123e0c.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:53:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1686642784; x=1689234784;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ksmnYzaAZG4SFOtuZwLT0Gj07ow0mCiA7tlTY9FP1/Y=;
+        b=d/XOUvzXq7CkULBNjOF5cPQ9T8PQ4GUN2VTUb4tV5GYUOU/bcCMFJER5wRcTiOAxaO
+         VEqeTPG5/GSimPhYdVoDC/uqRBqssvbhFmMqZ2UPpATKuDu0zcPmCBugjzLiimaHg+0O
+         9wZ1rW7T5SAVt/6r/SykeSUB1kSjjeu1v/QF9yZNVYeWYL/CqPipZS2RqbveG9GDYWQl
+         3yZcujcboW/sNqe2RjBd/XPxGCpKyPsA5S0Wt8H20ztGP/P8e2a+LHAM1iWQz7y5UEUU
+         byzRaCp7blF315uAiXD/wO22ggP+a/pLSa4fq9EoyeAoPW6lXUTFE4Oe4EeVpTJurQyN
+         Z0bw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686642784; x=1689234784;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ksmnYzaAZG4SFOtuZwLT0Gj07ow0mCiA7tlTY9FP1/Y=;
+        b=hx6PfVODgPqAYgtHQpkTI6urmlLEcbMofm8c0xbvFFA9cBa+mMe21QNCaLLnWuOc9i
+         22vYa1lsd0fIHnkb9OtsMVRynNoNXfUF3jchaGTgp58+UjhgFD9zy822kwBzxrmAsE4b
+         eRJfPBiKr34DA8/sF6/KQ6mzoTk/QqqfdppBevAvB+yS2DJ2OlBfMj9RdqzUVYWl99Hh
+         xmNz7Gm9HBUb0iuEBKtA8KDsEQCJRpEsVfOvwE9pUTSx8Qpb0EabEvEoOQYJsjVOFUpF
+         mTBaLY6wYJH/H7b4y7gPCj8MlI4IPam23/GN+CTKeKrUQtgkan01BrAYv7XxEBIRRPf7
+         lGhQ==
+X-Gm-Message-State: AC+VfDwf9X9p/x5fSKR9ziMixTkORR9EWIiTwnLiVSiIU19IfCBrJdmb
+        nOIKIsHDDP9muIxWukiAu/raA8gp7IILbIqnlrXUYQ==
+X-Google-Smtp-Source: ACHHUZ7i+EBDY2WITwEIRgKogtaSChdc3S4PwWz2Qp9PZP5xCpoeIGDCpD2gClqT3kwLonr4MotjvY3YKsBM2PtVtCk=
+X-Received: by 2002:a1f:bd58:0:b0:46d:fd21:76fb with SMTP id
+ n85-20020a1fbd58000000b0046dfd2176fbmr580943vkf.10.1686642784529; Tue, 13 Jun
+ 2023 00:53:04 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.0
-Subject: Re: [PATCH 2/2] spi: spi-geni-qcom: Add SPI SLAVE mode support for
- GENI based QuPv3
-To:     Praveen Talari <quic_ptalari@quicinc.com>, <agross@kernel.org>,
-        <andersson@kernel.org>, <konrad.dybcio@linaro.org>,
-        <broonie@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-spi@vger.kernel.org>, <linux-kernel@vger.kernel.org>
-CC:     <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>,
-        <quic_vnivarth@quicinc.com>, <quic_arandive@quicinc.com>
-References: <20230613065229.5619-1-quic_ptalari@quicinc.com>
- <20230613065229.5619-3-quic_ptalari@quicinc.com>
-Content-Language: en-US
-From:   Shazad Hussain <quic_shazhuss@quicinc.com>
-In-Reply-To: <20230613065229.5619-3-quic_ptalari@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: fvhy8oDZ0A3JjwHWvHFMYubGKVUR2URt
-X-Proofpoint-GUID: fvhy8oDZ0A3JjwHWvHFMYubGKVUR2URt
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-13_04,2023-06-12_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011
- lowpriorityscore=0 malwarescore=0 priorityscore=1501 spamscore=0
- impostorscore=0 phishscore=0 mlxscore=0 suspectscore=0 bulkscore=0
- mlxlogscore=999 adultscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2306130067
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+References: <20230612092355.87937-1-brgl@bgdev.pl> <20230612092355.87937-13-brgl@bgdev.pl>
+ <20230612203255.72t52ucry7zzq3em@halaney-x13s>
+In-Reply-To: <20230612203255.72t52ucry7zzq3em@halaney-x13s>
+From:   Bartosz Golaszewski <brgl@bgdev.pl>
+Date:   Tue, 13 Jun 2023 09:52:53 +0200
+Message-ID: <CAMRc=MfmzWDZuXpb4ySxi0Xu6EWVuEZ4ReaEYbo4KCMme-+G4A@mail.gmail.com>
+Subject: Re: [PATCH 12/26] net: stmmac: dwmac-qcom-ethqos: add support for the
+ optional serdes phy
+To:     Andrew Halaney <ahalaney@redhat.com>
+Cc:     Vinod Koul <vkoul@kernel.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        "David S . Miller" <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
+        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Jun 12, 2023 at 10:33=E2=80=AFPM Andrew Halaney <ahalaney@redhat.co=
+m> wrote:
+>
+> On Mon, Jun 12, 2023 at 11:23:41AM +0200, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > On sa8775p platforms, there's a SGMII SerDes PHY between the MAC and
+> > external PHY that we need to enable and configure.
+> >
+> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> > ---
+> >  .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 37 +++++++++++++++++++
+> >  1 file changed, 37 insertions(+)
+> >
+> > diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/=
+drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> > index 8ed05f29fe8b..3438b6229351 100644
+> > --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> > +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+> > @@ -6,6 +6,7 @@
+> >  #include <linux/of_device.h>
+> >  #include <linux/platform_device.h>
+> >  #include <linux/phy.h>
+> > +#include <linux/phy/phy.h>
+> >  #include <linux/property.h>
+> >
+> >  #include "stmmac.h"
+> > @@ -93,6 +94,7 @@ struct qcom_ethqos {
+> >
+> >       unsigned int rgmii_clk_rate;
+> >       struct clk *rgmii_clk;
+> > +     struct phy *serdes_phy;
+> >       unsigned int speed;
+> >
+> >       const struct ethqos_emac_por *por;
+> > @@ -566,6 +568,30 @@ static void ethqos_fix_mac_speed(void *priv, unsig=
+ned int speed)
+> >       ethqos_configure(ethqos);
+> >  }
+> >
+> > +static int qcom_ethqos_serdes_powerup(struct net_device *ndev, void *p=
+riv)
+> > +{
+> > +     struct qcom_ethqos *ethqos =3D priv;
+> > +     int ret;
+> > +
+> > +     ret =3D phy_set_speed(ethqos->serdes_phy, ethqos->speed);
+> > +     if (ret)
+> > +             return ret;
+> > +
+> > +     ret =3D phy_init(ethqos->serdes_phy);
+> > +     if (ret)
+> > +             return ret;
+> > +
+> > +     return phy_power_on(ethqos->serdes_phy);
+>
+> The docs say (phy.rst):
+>
+>     The general order of calls should be::
+>
+>         [devm_][of_]phy_get()
+>         phy_init()
+>         phy_power_on()
+>         [phy_set_mode[_ext]()]
+>         ...
+>         phy_power_off()
+>         phy_exit()
+>         [[of_]phy_put()]
+>
+>     Some PHY drivers may not implement :c:func:`phy_init` or :c:func:`phy=
+_power_on`,
+>     but controllers should always call these functions to be compatible w=
+ith other
+>     PHYs. Some PHYs may require :c:func:`phy_set_mode <phy_set_mode_ext>`=
+, while
+>     others may use a default mode (typically configured via devicetree or=
+ other
+>     firmware). For compatibility, you should always call this function if=
+ you know
+>     what mode you will be using. Generally, this function should be calle=
+d after
+>     :c:func:`phy_power_on`, although some PHY drivers may allow it at any=
+ time.
+>
+> Not really dictating you need to do that order, but if possible I think
+> calling phy_set_speed after init + power_on is more generic. Not sure if
+> that plays nice with the phy driver in this series or not.
+>
+> Otherwise, I think this looks good.
+>
 
+I had to rework the PHY driver code a bit for this order to work but
+it'll be good now in v2.
 
-On 6/13/2023 12:22 PM, Praveen Talari wrote:
-> Add SPI SLAVE mode support for GENI based QuPv3.
-> 
-> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
-> ---
->   drivers/spi/spi-geni-qcom.c | 55 +++++++++++++++++++++++++++++++++----
->   1 file changed, 49 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-> index 206cc04bb1ed..2e3ae29e79e0 100644
-> --- a/drivers/spi/spi-geni-qcom.c
-> +++ b/drivers/spi/spi-geni-qcom.c
-> @@ -12,6 +12,7 @@
->   #include <linux/platform_device.h>
->   #include <linux/pm_opp.h>
->   #include <linux/pm_runtime.h>
-> +#include <linux/property.h>
->   #include <linux/soc/qcom/geni-se.h>
->   #include <linux/spi/spi.h>
->   #include <linux/spinlock.h>
-> @@ -52,6 +53,9 @@
->   #define SPI_CS_CLK_DELAY_MSK		GENMASK(19, 10)
->   #define SPI_CS_CLK_DELAY_SHFT		10
->   
-> +#define SE_SPI_SLAVE_EN				(0x2BC)
-> +#define SPI_SLAVE_EN				BIT(0)
-> +
->   /* M_CMD OP codes for SPI */
->   #define SPI_TX_ONLY		1
->   #define SPI_RX_ONLY		2
-> @@ -99,6 +103,24 @@ struct spi_geni_master {
->   	int cur_xfer_mode;
->   };
->   
-> +static struct spi_master *get_spi_master(struct device *dev)
-> +{
-> +	struct platform_device *pdev = to_platform_device(dev);
-> +	struct spi_master *spi = platform_get_drvdata(pdev);
-> +
-> +	return spi;
-> +}
-> +
-> +static void spi_slv_setup(struct spi_geni_master *mas)
-> +{
-> +	struct geni_se *se = &mas->se;
-> +
-> +	writel(SPI_SLAVE_EN, se->base + SE_SPI_SLAVE_EN);
-> +	writel(GENI_IO_MUX_0_EN, se->base + GENI_OUTPUT_CTRL);
-> +	writel(START_TRIGGER, se->base + SE_GENI_CFG_SEQ_START);
-> +	dev_info(mas->dev, "spi slave setup done\n");
-> +}
-> +
->   static int get_spi_clk_cfg(unsigned int speed_hz,
->   			struct spi_geni_master *mas,
->   			unsigned int *clk_idx,
-> @@ -140,12 +162,18 @@ static void handle_se_timeout(struct spi_master *spi,
->   	const struct spi_transfer *xfer;
->   
->   	spin_lock_irq(&mas->lock);
-> -	reinit_completion(&mas->cancel_done);
->   	if (mas->cur_xfer_mode == GENI_SE_FIFO)
->   		writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
->   
->   	xfer = mas->cur_xfer;
->   	mas->cur_xfer = NULL;
-> +
-> +	if (spi->slave) {
-> +		spin_unlock_irq(&mas->lock);
-> +		goto unmap_if_dma;
-> +	}
-> +
-> +	reinit_completion(&mas->cancel_done);
->   	geni_se_cancel_m_cmd(se);
->   	spin_unlock_irq(&mas->lock);
->   
-> @@ -541,6 +569,8 @@ static bool geni_can_dma(struct spi_controller *ctlr,
->   
->   	if (mas->cur_xfer_mode == GENI_GPI_DMA)
->   		return true;
-> +	if (ctlr->slave)
-> +		return true;
->   
->   	len = get_xfer_len_in_words(xfer, mas);
->   	fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
-> @@ -619,6 +649,7 @@ static void spi_geni_release_dma_chan(struct spi_geni_master *mas)
->   
->   static int spi_geni_init(struct spi_geni_master *mas)
->   {
-> +	struct spi_master *spi = get_spi_master(mas->dev);
->   	struct geni_se *se = &mas->se;
->   	unsigned int proto, major, minor, ver;
->   	u32 spi_tx_cfg, fifo_disable;
-> @@ -627,7 +658,14 @@ static int spi_geni_init(struct spi_geni_master *mas)
->   	pm_runtime_get_sync(mas->dev);
->   
->   	proto = geni_se_read_proto(se);
-> -	if (proto != GENI_SE_SPI) {
-> +
-> +	if (spi->slave) {
-> +		if (proto != GENI_SE_SPI_SLAVE) {
-> +			dev_err(mas->dev, "Invalid proto %d\n", proto);
-> +			goto out_pm;
-> +		}
-> +		spi_slv_setup(mas);
-> +	} else if (proto != GENI_SE_SPI) {
->   		dev_err(mas->dev, "Invalid proto %d\n", proto);
->   		goto out_pm;
->   	}
-> @@ -677,9 +715,11 @@ static int spi_geni_init(struct spi_geni_master *mas)
->   	}
->   
->   	/* We always control CS manually */
-> -	spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
-> -	spi_tx_cfg &= ~CS_TOGGLE;
-> -	writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
-> +	if (!spi->slave) {
-> +		spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
-> +		spi_tx_cfg &= ~CS_TOGGLE;
-> +		writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
-> +	}
->   
->   out_pm:
->   	pm_runtime_put(mas->dev);
-> @@ -1072,6 +1112,9 @@ static int spi_geni_probe(struct platform_device *pdev)
->   	pm_runtime_set_autosuspend_delay(&pdev->dev, 250);
->   	pm_runtime_enable(dev);
->   
-> +	if (device_property_read_bool(&pdev->dev, "qcom,slv-ctrl"))
+Thanks!
+Bart
 
-Should we update this property "qcom,slv-ctrl" in device tree bindings
-as well !!
-
-
-> +		spi->slave = true;
-> +
->   	ret = geni_icc_get(&mas->se, NULL);
->   	if (ret)
->   		goto spi_geni_probe_runtime_disable;
-> @@ -1092,7 +1135,7 @@ static int spi_geni_probe(struct platform_device *pdev)
->   	 * for dma (gsi) mode, the gsi will set cs based on params passed in
->   	 * TRE
->   	 */
-> -	if (mas->cur_xfer_mode == GENI_SE_FIFO)
-> +	if (!spi->slave && mas->cur_xfer_mode == GENI_SE_FIFO)
->   		spi->set_cs = spi_geni_set_cs;
->   
->   	ret = request_irq(mas->irq, geni_spi_isr, 0, dev_name(dev), spi);
-
--Shazad
+> > +}
+> > +
+> > +static void qcom_ethqos_serdes_powerdown(struct net_device *ndev, void=
+ *priv)
+> > +{
+> > +     struct qcom_ethqos *ethqos =3D priv;
+> > +
+> > +     phy_power_off(ethqos->serdes_phy);
+> > +     phy_exit(ethqos->serdes_phy);
+> > +}
+> > +
+> >  static int ethqos_clks_config(void *priv, bool enabled)
+> >  {
+> >       struct qcom_ethqos *ethqos =3D priv;
+> > @@ -651,6 +677,12 @@ static int qcom_ethqos_probe(struct platform_devic=
+e *pdev)
+> >       if (ret)
+> >               goto out_config_dt;
+> >
+> > +     ethqos->serdes_phy =3D devm_phy_optional_get(dev, "serdes");
+> > +     if (IS_ERR(ethqos->serdes_phy)) {
+> > +             ret =3D PTR_ERR(ethqos->serdes_phy);
+> > +             goto out_config_dt;
+> > +     }
+> > +
+> >       ethqos->speed =3D SPEED_1000;
+> >       ethqos_update_rgmii_clk(ethqos, SPEED_1000);
+> >       ethqos_set_func_clk_en(ethqos);
+> > @@ -666,6 +698,11 @@ static int qcom_ethqos_probe(struct platform_devic=
+e *pdev)
+> >       if (of_device_is_compatible(np, "qcom,qcs404-ethqos"))
+> >               plat_dat->rx_clk_runs_in_lpi =3D 1;
+> >
+> > +     if (ethqos->serdes_phy) {
+> > +             plat_dat->serdes_powerup =3D qcom_ethqos_serdes_powerup;
+> > +             plat_dat->serdes_powerdown  =3D qcom_ethqos_serdes_powerd=
+own;
+> > +     }
+> > +
+> >       ret =3D stmmac_dvr_probe(dev, plat_dat, &stmmac_res);
+> >       if (ret)
+> >               goto out_config_dt;
+> > --
+> > 2.39.2
+> >
+>
