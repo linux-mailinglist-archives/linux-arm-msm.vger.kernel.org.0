@@ -2,61 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 200C872EEED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 00:12:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35D6572EF14
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 00:19:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229738AbjFMWMQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 18:12:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56112 "EHLO
+        id S233540AbjFMWTh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 18:19:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58206 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229529AbjFMWMP (ORCPT
+        with ESMTP id S229947AbjFMWTg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 18:12:15 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A3A010E9;
-        Tue, 13 Jun 2023 15:12:15 -0700 (PDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id A622F61F35;
-        Tue, 13 Jun 2023 22:12:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2937CC433C0;
-        Tue, 13 Jun 2023 22:12:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686694334;
-        bh=sKrQ7hdq4mSomL4LDC24g6oc1MHOuvi2wLr6vE0lxhU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=cLiwMUlahN9DTyi23DbZ6NqIxjOb6N1knEUWKRKVTtnPtDYzzbQraEF4t0foek5ve
-         GTEEBrrxCnfBK4XplQfmh1XS6Yxf3vk72uqDxfWOg1Ozi7GbSnSOzSBvFMkkQ0n+0n
-         KD15Qsm5oJ6bBZQuPiMZ7EvIM/zYLyRbbd92TLZ7kI8YWvtxT+efgDI7AdQH54SmDP
-         anH1OdDexSZ1PqSmnOgLApBCoN0JdLZdOkRvaC1MUIwiNSSzRoYzBKHPndwfI5ml0P
-         eiXrm7VnPP3ZZBpIOmElsQ3jMp0pD2xLV9QD+n4TJno/EAJyfPLADZVFNb7swRHNfC
-         i5KMJ7S4VGU2g==
-Date:   Tue, 13 Jun 2023 15:15:36 -0700
-From:   Bjorn Andersson <andersson@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 02/11] phy: qcom-qmp-ufs: populate offsets
- configuration
-Message-ID: <20230613221536.6tikam262jjvzcfx@ripper>
-References: <20230523140622.265692-1-dmitry.baryshkov@linaro.org>
- <20230523140622.265692-3-dmitry.baryshkov@linaro.org>
+        Tue, 13 Jun 2023 18:19:36 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9AB4919A;
+        Tue, 13 Jun 2023 15:19:33 -0700 (PDT)
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35DJoLxE017479;
+        Tue, 13 Jun 2023 22:19:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type; s=qcppdkim1;
+ bh=K0qNhIIXKK45Ts/N5IbalZI9W7UKiRSCw61qaqks+Nk=;
+ b=UpV4xpdowtGziZTyYi13w6OVRxVKR7wl02OP0S1Ud6qdnDs2e2yKzk6Oce4vTtvhABq5
+ K9piJOEpwUikhrkrTNQxGqcVCGjGoNlOfbNE9pGHMLU/OWzkxkYRfhOREVW4LqHBGnt3
+ noHLc4ybyZ94F9D2PjGt5DN6DotvHJyA7+s237RREXh3eB0Z1r0uadardSKr+RZ2asEH
+ aJc7xAQJ5I9bxOPawdRCSqwEJPBihXKHNzke2OjkJ76Op8QP8cep0fzGA2Fw0xSo4XFU
+ 08Um54pFQlvmIgyN7ikP4KoAUea3R3XP5AVWbh2jvsoxEzkhFYkHWVy70hvS7ZdYxGxD Mg== 
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r6q4r1fgk-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 13 Jun 2023 22:19:23 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35DMJBaW010330
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 13 Jun 2023 22:19:11 GMT
+Received: from khsieh-linux1.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Tue, 13 Jun 2023 15:19:10 -0700
+From:   Kuogee Hsieh <quic_khsieh@quicinc.com>
+To:     <dri-devel@lists.freedesktop.org>, <robdclark@gmail.com>,
+        <sean@poorly.run>, <swboyd@chromium.org>, <dianders@chromium.org>,
+        <vkoul@kernel.org>, <daniel@ffwll.ch>, <airlied@gmail.com>,
+        <agross@kernel.org>, <dmitry.baryshkov@linaro.org>,
+        <andersson@kernel.org>
+CC:     Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        <quic_abhinavk@quicinc.com>, <quic_jesszhan@quicinc.com>,
+        <quic_sbillaka@quicinc.com>, <marijn.suijten@somainline.org>,
+        <freedreno@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+Subject: [PATCH v3 0/2] retrieve DSI DSC through priv-dsi[0]
+Date:   Tue, 13 Jun 2023 15:19:00 -0700
+Message-ID: <1686694742-20862-1-git-send-email-quic_khsieh@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230523140622.265692-3-dmitry.baryshkov@linaro.org>
-X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: C5bLhjiTzgaxPOO9kVp_kXOBYMopu24a
+X-Proofpoint-ORIG-GUID: C5bLhjiTzgaxPOO9kVp_kXOBYMopu24a
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-13_22,2023-06-12_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 phishscore=0
+ spamscore=0 mlxscore=0 mlxlogscore=925 clxscore=1015 priorityscore=1501
+ adultscore=0 bulkscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306130196
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -64,70 +80,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, May 23, 2023 at 05:06:13PM +0300, Dmitry Baryshkov wrote:
-> Populate offsets configuration for the rest of UFS PHYs to make it
-> possible to switch them to the new (single-node) bindings style.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+moving retrieving struct drm_dsc_cofnig from setup_display to
+atomic_enable() and delete struct drm_dsc_config from
+struct msm_display_info.
 
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Kuogee Hsieh (2):
+  drm/msm/dpu: retrieve DSI DSC struct through priv->dsi[0]
+  drm/msm/dpu: remove struct drm_dsc_config from struct msm_display_info
 
-Regards,
-Bjorn
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 44 ++++++++++++++++++++---------
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h |  2 --
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c     |  2 --
+ 3 files changed, 30 insertions(+), 18 deletions(-)
 
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 10 ++++++++++
->  1 file changed, 10 insertions(+)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> index 8c877b668bb9..d99dc1043f74 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> @@ -833,6 +833,8 @@ static const struct qmp_ufs_offsets qmp_ufs_offsets_v6 = {
->  static const struct qmp_phy_cfg msm8996_ufsphy_cfg = {
->  	.lanes			= 1,
->  
-> +	.offsets		= &qmp_ufs_offsets,
-> +
->  	.tbls = {
->  		.serdes		= msm8996_ufsphy_serdes,
->  		.serdes_num	= ARRAY_SIZE(msm8996_ufsphy_serdes),
-> @@ -924,6 +926,8 @@ static const struct qmp_phy_cfg sc8280xp_ufsphy_cfg = {
->  static const struct qmp_phy_cfg sdm845_ufsphy_cfg = {
->  	.lanes			= 2,
->  
-> +	.offsets		= &qmp_ufs_offsets,
-> +
->  	.tbls = {
->  		.serdes		= sdm845_ufsphy_serdes,
->  		.serdes_num	= ARRAY_SIZE(sdm845_ufsphy_serdes),
-> @@ -1038,6 +1042,8 @@ static const struct qmp_phy_cfg sm8150_ufsphy_cfg = {
->  static const struct qmp_phy_cfg sm8250_ufsphy_cfg = {
->  	.lanes			= 2,
->  
-> +	.offsets		= &qmp_ufs_offsets,
-> +
->  	.tbls = {
->  		.serdes		= sm8150_ufsphy_serdes,
->  		.serdes_num	= ARRAY_SIZE(sm8150_ufsphy_serdes),
-> @@ -1070,6 +1076,8 @@ static const struct qmp_phy_cfg sm8250_ufsphy_cfg = {
->  static const struct qmp_phy_cfg sm8350_ufsphy_cfg = {
->  	.lanes			= 2,
->  
-> +	.offsets		= &qmp_ufs_offsets,
-> +
->  	.tbls = {
->  		.serdes		= sm8350_ufsphy_serdes,
->  		.serdes_num	= ARRAY_SIZE(sm8350_ufsphy_serdes),
-> @@ -1102,6 +1110,8 @@ static const struct qmp_phy_cfg sm8350_ufsphy_cfg = {
->  static const struct qmp_phy_cfg sm8450_ufsphy_cfg = {
->  	.lanes			= 2,
->  
-> +	.offsets		= &qmp_ufs_offsets,
-> +
->  	.tbls = {
->  		.serdes		= sm8350_ufsphy_serdes,
->  		.serdes_num	= ARRAY_SIZE(sm8350_ufsphy_serdes),
-> -- 
-> 2.39.2
-> 
+-- 
+2.7.4
+
