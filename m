@@ -2,67 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E53272DAD5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 09:29:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 060AD72DAE5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 09:30:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235134AbjFMH3o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 03:29:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60516 "EHLO
+        id S238289AbjFMHab (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 03:30:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235086AbjFMH3n (ORCPT
+        with ESMTP id S240224AbjFMHaX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 03:29:43 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 032E810D7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:29:41 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-30fcde6a73cso111232f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:29:40 -0700 (PDT)
+        Tue, 13 Jun 2023 03:30:23 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34264E7C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:30:22 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f8c5d0b19dso6456465e9.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:30:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686641379; x=1689233379;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=SWcv2KbrVkYfhLRQFgFKlaFWH34hYYx6W1r/9LcWNfU=;
-        b=QmKKD4LMjD9i+Quf/rolLMOd4eqr0DS/nQA2gx5UzbHAwy89+M7DsAeiYF0aB8nPWq
-         Rz2TpEEEyooJBlrmYwbifewPMFmSXCo1O/czW4AYUG3V3OzM2ZA7Io2ACgcsdVRk2hhW
-         jWK7bV5zeLMRIazLGvBouWMWMfeFilvhdE0gps+G6UzAGlk7PqR+Sv68stYcDXwbIjJS
-         BMGnVuYB+TJTj8inkXdSpxLbVJCN5Cg59hKLUQKgLBY8Fe1Dco9OLTB31a+vAoyPWGMh
-         8eFoOWK6HXaCc8F7JxR5xkTbVeUMfSrG6pp4JlEUOW7yXfEPtkqHamfCWJ7YfU3ME5RN
-         LlXg==
+        d=linaro.org; s=google; t=1686641420; x=1689233420;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PBDkCj6IzOprmvk0wsDqFhkKf1Z88p1shaiXxO1NVss=;
+        b=g/f6Nuxm5umr8221WLg2gB6WuAwwRdelfM9cp7jbHsFroUbgvCny5Hin0PWP1NCWqN
+         KmSQRXoc6iNaLWPW9F05YFj05Ze4Rn8yrKbiV1qLJ6PQgX/BGVLN2orFyf5kXoNcQiGM
+         wJagHXFxVbAyj9LvhM7/C/AI7+p6h9/eaD2lbPclK34C1kF/Nqn+ZOh6Qqu2rfVnAjU+
+         2Pk9P6HMInUEl1/snHf0J+y3YsGu7lYTVHufP5dMYcXGf32N/xCNptna+ugKoOVBFWte
+         aXDbRDgjnA1uZLWfIZ/YrPWm1QFvtE5kqtoctvorUMIaRTy8yhiY5ceKD7PbfGpx7X5D
+         nbpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686641379; x=1689233379;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20221208; t=1686641420; x=1689233420;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=SWcv2KbrVkYfhLRQFgFKlaFWH34hYYx6W1r/9LcWNfU=;
-        b=QHq918KfqnyJbNpJgwQlwh3hpVvdLFft56+GVRmxZ2mTwdwxDFq1FHN5TqAXHntoSk
-         FaOmrr39OB2FiQw74CqB/MTNRylKzZkp9uAr/JMaE1R0WJ4McxNkV1PLsZ74G0CaF5Ee
-         oeYWiFquhikxWl+WM27QhTfsKsCk2hxjEcGrKy1tw2NGEDHth6HmcMBYiGA8f0xSad9Z
-         u+2EG6SzNEoBk+l7OUJuBfrXeMcL9w+QMT2VcliSDTU0HQGjWzrlZ6HQ+D+uCfaFRtK5
-         bM5BeW9NYF2VhRZCMrycCXSl/q36ZYSpUID0ZsYnmsgZzEQOLfrp6OYAwIylfC8IGOfZ
-         lS3A==
-X-Gm-Message-State: AC+VfDxzD/rxqb6F6pF+MhbQOY6xni1njGXLfJI+493Z/ujxEKt4jWUH
-        7RxdunDPDAdP35hcC8tY1spLdg==
-X-Google-Smtp-Source: ACHHUZ4llERySH8FvtsxtkPBf3YLvy/r2xMKHTUzrkPF382Oj3Rb5ZncCciA46/buotoosZubkrCGg==
-X-Received: by 2002:adf:e3c5:0:b0:30f:bbd6:1efe with SMTP id k5-20020adfe3c5000000b0030fbbd61efemr4099802wrm.57.1686641379388;
-        Tue, 13 Jun 2023 00:29:39 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:48b:b939:c60e:e1ba? ([2a01:e0a:982:cbb0:48b:b939:c60e:e1ba])
-        by smtp.gmail.com with ESMTPSA id h14-20020adff4ce000000b0030c40e2cf42sm14367826wrp.116.2023.06.13.00.29.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jun 2023 00:29:38 -0700 (PDT)
-Message-ID: <1b3e86a7-352c-de2f-aaa0-51fe878b8462@linaro.org>
-Date:   Tue, 13 Jun 2023 09:29:37 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
+        bh=PBDkCj6IzOprmvk0wsDqFhkKf1Z88p1shaiXxO1NVss=;
+        b=jvucihzw5cZAPivjJkG6wUbyFT+mXesFS0auFcfYBoRA/AZmHgXOx76Dnl64fQ/8su
+         2uXUW9j4gCL/7sYXK0eNriqSFAxYIgWk/5shLfVyOn/J17Kwa/sj8x0R9toOgfLCOyZg
+         kMNaS//yTQn5OrqHWb593aL6rYk4FrieLxP0/Occ0OFUxNLsYvH8QoUTZ9whtvwUI0fM
+         5QXIZc34prCB3dkIfojHPUH+YdrtD6ERNN9kMfrxoWBxuzmxfeXu9VOi06DR7q6g3VR7
+         AMR4cE2kUbjYh3iDs6CbkiNPsCZyevbXJJA/fZQJN+XyYBIwkT2qOud34uZeQ8o+/Jo0
+         Q0YA==
+X-Gm-Message-State: AC+VfDyw1sm6Ki0FRne4fMCuXVhj0elYIqpukAQftvlOeYCpCYrukO+0
+        lK9X1CdGmmebO6RIEONU1IQfbg==
+X-Google-Smtp-Source: ACHHUZ6GhVpOh89E7wzRUZl8GRroyUGL8JF6b5FpJb/rSQKDuOUL+eUZZiMjzNbPPBGSLWTlVjOZ/g==
+X-Received: by 2002:a7b:cb88:0:b0:3f7:e4fe:1dd7 with SMTP id m8-20020a7bcb88000000b003f7e4fe1dd7mr9485430wmi.13.1686641420564;
+        Tue, 13 Jun 2023 00:30:20 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id q25-20020a7bce99000000b003f17848673fsm13474453wmj.27.2023.06.13.00.30.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jun 2023 00:30:20 -0700 (PDT)
 From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 1/2] arm64: dts: qcom: sm8550: fix low_svs RPMhPD
- labels
-Content-Language: en-US
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
+Subject: [PATCH v4 0/2] arm64: dts: qcom: add DP Controller to SM8550 DTS
+Date:   Tue, 13 Jun 2023 09:30:11 +0200
+Message-Id: <20230601-topic-sm8550-upstream-dp-v4-0-ac2c6899d22c@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAMbiGQC/43NTW7DIBQE4KtErPsqfoKBrnqPKAvADxvJAQscK
+ 1Hku4d4V3Xj5Yw037xIxRKxkp/TixRcY405tXD+OhE/2jQgxL5lwikXtKMMljxHD/WmpaRwn+t
+ S0N6gn8EpJpzlSvbKkzZ3tiK4YpMfG5Du09TKuWCIj/3vcm15jHXJ5bnfr+zTHnhaGVDgBgPyT
+ hspxe8Uky35O5eBfNSVH5V4k1ArpRk1Xkn1TxJHJdEkGUwIvXdadOaPtG3bGyb9a5lqAQAA
+To:     Rob Clark <robdclark@gmail.com>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Sean Paul <sean@poorly.run>,
@@ -74,72 +72,69 @@ To:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
         Kuogee Hsieh <quic_khsieh@quicinc.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20230601-topic-sm8550-upstream-dp-v3-0-5f9ffdcb8369@linaro.org>
- <20230601-topic-sm8550-upstream-dp-v3-1-5f9ffdcb8369@linaro.org>
- <ce7c4402-b58e-b5df-c864-9f1a959132d0@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <ce7c4402-b58e-b5df-c864-9f1a959132d0@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
-X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
-        lindbergh.monkeyblade.net
+        linux-kernel@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1315;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=8DvxRryXQQQ0y8Oh2tMAV/xSohwX06++G2+ngE4ucu4=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkiBsKTJOKtHi2EI9K2dRfEfI1j0+AEfmWgTRgqqGl
+ BTBUvuuJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZIgbCgAKCRB33NvayMhJ0ZjJEA
+ DJm9dMBNEkuCdJ3V0k54VYU3+fm2YHKjKvaokmK9lT0WHXfQ5ABko38xxGcM30yozhSFcOYLn+O1Oa
+ +PpY183grbzvysTLCfD0/uhAm8euXU/AFQAB5Qzpsm+v7gMSqQP96eXVSV498GA2EDB+ZRa3wlDitc
+ 5zUXSD9+nw9dxySsePDHZzWt+7GdCBSMUTBDnaXpp+VS5tFgk/UbVdNpUZ4B1a3eyHjbv7blKFyYs9
+ eOmjYmNGYuMVd3mab/17OvihVinkileSwI+hbyDhRPV2aLsFOXnOptoSTcPOx2HGZUxuGf5Bhfobt9
+ Ec4PgiVgwsU2gDd0YsMF1EbPgpBDcpdanesTjae7ews7tC9yU5PquZTGeZnaEtf5Jd/bErbEYvTviM
+ Y/hesIorIfPnONdmQIkutTQqqEvIHsp7hJLJV7bBcTUM+6xTYzbQeC0RaPNocET/5XJm/rFWaN6dVv
+ yMdqkdWVcLnMdx8bCJGw+Ss67mA9WgwpVis55V7A2WL8SlkMC4GV96ine9E2RD3iSmUuJ/CbrtvSUd
+ oDvLsL06kOeaL7rJwxWVLGI+kxTJ6dMKXm6pPP0ricTmTytaxDCabGH8Z8Mzyc57XK1JvaLNFeQBMR
+ aSYtPpsKhbqJt/wJyGZIRN7zPIiEfPNLdfa3C9ccoEzaZZAhWCq1JNR0wDrg==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/06/2023 18:50, Konrad Dybcio wrote:
-> 
-> 
-> On 12.06.2023 17:26, Neil Armstrong wrote:
->> "low" was written "lov", fix this.
->>
->> Fixes: 99d33ee61cb0 ("arm64: dts: qcom: sm8550: Add missing RPMhPD OPP levels")
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
-> https://lore.kernel.org/linux-arm-msm/1d3c05f5-c1bd-6844-1788-8df0b863a02e@linaro.org/
-> 
-> somebody forgot to run `b4 trailers -u` :P
+The DP output is shared with the USB3 SuperSpeed lanes and is
+usually connected to an USB-C port which Altmode is controlled
+by the PMIC Glink infrastructure.
 
-Damn, resending a v4 now :-)
+DT changes tying the DP controller to the USB-C port on the QRD
+board will be sent later.
 
-Thanks,
-Neil
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v4:
+- Added review tags from v2
+- Link to v3: https://lore.kernel.org/r/20230601-topic-sm8550-upstream-dp-v3-0-5f9ffdcb8369@linaro.org
 
-> 
-> Konrad
->>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 6 +++---
->>   1 file changed, 3 insertions(+), 3 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
->> index 75cd374943eb..972df1ef86ee 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
->> @@ -3649,15 +3649,15 @@ rpmhpd_opp_min_svs: opp-48 {
->>   						opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
->>   					};
->>   
->> -					rpmhpd_opp_lov_svs_d2: opp-52 {
->> +					rpmhpd_opp_low_svs_d2: opp-52 {
->>   						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D2>;
->>   					};
->>   
->> -					rpmhpd_opp_lov_svs_d1: opp-56 {
->> +					rpmhpd_opp_low_svs_d1: opp-56 {
->>   						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D1>;
->>   					};
->>   
->> -					rpmhpd_opp_lov_svs_d0: opp-60 {
->> +					rpmhpd_opp_low_svs_d0: opp-60 {
->>   						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS_D0>;
->>   					};
->>   
->>
+Changes in v3:
+- Rebased on next-20230609
+- Dropped applied bindings
+- Link to v2: https://lore.kernel.org/r/20230601-topic-sm8550-upstream-dp-v2-0-e8778109c757@linaro.org
+
+Changes in v2:
+- Added review tags
+- s/lov_svs/low_svs/
+- Applied fixes suggested from Konrad
+- Link to v1: https://lore.kernel.org/r/20230601-topic-sm8550-upstream-dp-v1-0-29efe2689553@linaro.org
+
+---
+Neil Armstrong (2):
+      arm64: dts: qcom: sm8550: fix low_svs RPMhPD labels
+      arm64: dts: qcom: sm8550: add display port nodes
+
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 95 ++++++++++++++++++++++++++++++++++--
+ 1 file changed, 90 insertions(+), 5 deletions(-)
+---
+base-commit: 53ab6975c12d1ad86c599a8927e8c698b144d669
+change-id: 20230601-topic-sm8550-upstream-dp-b713ba275d7c
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
 
