@@ -2,65 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 231C172EF24
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 00:27:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 158D772EF2A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 00:27:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232258AbjFMW1Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S232305AbjFMW1Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 13 Jun 2023 18:27:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60580 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60582 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231429AbjFMW1P (ORCPT
+        with ESMTP id S231903AbjFMW1P (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 13 Jun 2023 18:27:15 -0400
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA2FA19B1;
-        Tue, 13 Jun 2023 15:27:13 -0700 (PDT)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2612A19B5;
+        Tue, 13 Jun 2023 15:27:14 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id AE03463B91;
+        by dfw.source.kernel.org (Postfix) with ESMTPS id AEED063B9B;
+        Tue, 13 Jun 2023 22:27:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53801C433C0;
         Tue, 13 Jun 2023 22:27:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C3AEC433CC;
-        Tue, 13 Jun 2023 22:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686695232;
-        bh=tRJQBbwZtaJ6NQT1/dC04nb57z6Mm49syrgZQgiFZKQ=;
+        s=k20201202; t=1686695233;
+        bh=51MoJppV34T/CIXXW72UybEsYB7huHSljYK9dyWqjj0=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=X0pHg8OA3PIfY7MEpiGS4CnR5QMTkebIhMLdLJmHcRcpVHwREOR1oYpB7Wggf+kZw
-         avODGCtlWEgJ4Y1b5LG31rvjyNps2PmPgKHclDT8EBRJ4K0TWlVvrrfYeAP4bfTuKS
-         Wmq8In4o92ccnRshzFA4bCKgC/If8ceFCzCEWzWr7jKG4g025woNc7wDw5ZZUABIho
-         awV0MmSL5+NGCve9LrduhLoQDS4DK1uQf19VDD4NIP7xk3uBuw23WSecOHoD+UIkiT
-         /ju2/cYcamhhlwUk7qqik25+aRhWlb87XNJgR7in1HU0DUuq+ogDvZWIIMy2qGRbE9
-         rrtnTp2wxtdlQ==
+        b=iwnZ8oM/X/p8elVum9f4NDSVAcR24Ppxyl62PUfKvqR4PJuOlHQkJ0KeMEROQ3JTO
+         pdJn+Z9I6nXvdN7r1aek6Sjv4fUZWi+VilAozJE1rsop+wKIQem/U9GhiubFyBTbX/
+         X5ze5wsuC3STUBMP7pBwXzgDrrAAovRIDP7gzIHUlM1rzr9kaW6SNWHs9E/D1vVEb8
+         aKoqr1iXNI7hPiJcwXjU+Er7bT1FhKIgYAzEIccp3weESY3Ia4PFu7et0sguG7dw7P
+         FWk5ZYTx+/P8sZ5Kbx1ppYvCG0G+cNkqg6v7ALDCEjkAdM1EpIl8F7UYADhth5C/UD
+         I8xMVExZhll+Q==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Artur Weber <aweber.kernel@gmail.com>, Lee Jones <lee@kernel.org>,
+To:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Jingoo Han <jingoohan1@gmail.com>, linux-tegra@vger.kernel.org,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        linux-arm-msm@vger.kernel.org, linux-fbdev@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-pwm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, linux-leds@vger.kernel.org,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Pavel Machek <pavel@ucw.cz>,
-        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Helge Deller <deller@gmx.de>,
-        linux-kernel@vger.kernel.org, Luca Weiss <luca@z3ntu.xyz>,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org
-Subject: Re: (subset) [PATCH v2 0/4] video: backlight: lp855x: modernize bindings
-Date:   Tue, 13 Jun 2023 15:30:10 -0700
-Message-Id: <168669542896.1315701.6764382551599027707.b4-ty@kernel.org>
+        Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Joel Selvaraj <joelselvaraj.oss@gmail.com>,
+        phone-devel@vger.kernel.org
+Subject: Re: [PATCH v2 0/5] Enable PMI8998 charger on supported devices
+Date:   Tue, 13 Jun 2023 15:30:11 -0700
+Message-Id: <168669542896.1315701.3149628489535828081.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230519180728.2281-1-aweber.kernel@gmail.com>
-References: <20230519180728.2281-1-aweber.kernel@gmail.com>
+In-Reply-To: <20230524-pmi8998-charger-dts-v2-0-2a5c77d2ff0c@linaro.org>
+References: <20230524-pmi8998-charger-dts-v2-0-2a5c77d2ff0c@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+X-Spam-Status: No, score=-4.4 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_MED,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
@@ -69,20 +61,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 19 May 2023 20:07:24 +0200, Artur Weber wrote:
-> Convert TI LP855X backlight controller bindings from TXT to YAML and,
-> while we're at it, rework some of the code related to PWM handling.
-> Also correct existing DTS files to avoid introducing new dtb_check
-> errors.
+On Fri, 26 May 2023 22:50:19 +0100, Caleb Connolly wrote:
+> These devices have been fairly heavily validated with the driver and are
+> known to not explode. Add the pmi8998_charger node to pmi8998 and enable
+> the charger for the OnePlus 6(T), PocoPhone F1 and SHIFT6mq.
 > 
-> Signed-off-by: Artur Weber <aweber.kernel@gmail.com>
+> The charger depends on the RRADC for the input voltage and current. The
+> RRADC was originally disabled by default, but there isn't really a need
+> for this as it's used by all devices. Let's take the opportunity to
+> enable it by default.
 > 
 > [...]
 
 Applied, thanks!
 
-[4/4] arm64: dts: adapt to LP855X bindings changes
-      commit: ebdcfc8c42c2b9d5ca1b27d8ee558eefb3e904d8
+[1/5] arm64: dts: qcom: pmi8998: enable rradc by default
+      commit: 4e6b053768020f2117caf27b5e062d1e0a06de0c
+[2/5] arm64: dts: qcom: pmi8998: add charger node
+      commit: 7711c35fd67c762d65fa802d06411e7bdbd3f748
+[3/5] arm64: dts: qcom: sdm845-oneplus: enable pmi8998 charger
+      commit: 23cf50b13e0686cd9929f54f89580d7b22cbeb71
+[4/5] arm64: dts: qcom: sdm845-shift-axolotl: enable pmi8998 charger
+      commit: e5d83d4d5cb9e00befb497fe8a64001ac1cce157
+[5/5] arm64: dts: qcom: sdm845-xiaomi-beryllium: enable pmi8998 charger
+      commit: e58cf964157bb2f875155a2dcf68f3a8db0da2e3
 
 Best regards,
 -- 
