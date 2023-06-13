@@ -2,188 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 775C872E432
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 15:35:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45D8772E47E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 15:45:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242423AbjFMNd7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 09:33:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41110 "EHLO
+        id S242505AbjFMNnb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 09:43:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242553AbjFMNd6 (ORCPT
+        with ESMTP id S242480AbjFMNna (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 09:33:58 -0400
-Received: from mail-io1-f50.google.com (mail-io1-f50.google.com [209.85.166.50])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42BCBE5;
-        Tue, 13 Jun 2023 06:33:57 -0700 (PDT)
-Received: by mail-io1-f50.google.com with SMTP id ca18e2360f4ac-77ac2eb07a3so221461139f.2;
-        Tue, 13 Jun 2023 06:33:57 -0700 (PDT)
+        Tue, 13 Jun 2023 09:43:30 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1F01171C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 06:43:25 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-30ae95c4e75so5473300f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 06:43:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686663804; x=1689255804;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=GzQXlDHLRtYFXz6SgNSRR4StIWNnj8KrmIpcoKcJ1zQ=;
+        b=oIv8P/hYeEA2OYCa0ZnKRFcNVjJ09UrvD8kE3ZGaxmR7VnCXYAwRDcwYF4xjuljD5e
+         hJ0awvvtwmd4bl97i0/nplfyZs4BZaQV61W9iQAG3qg2K7zF9Pr/Inm02/FZsPqBQ5aG
+         TqzKpVHbxHqTcAEQY0+TOY8Q2H0FYWGgGlUbflSUNDJhYziIU2dhoN3D/yw+EFhDMqGE
+         V/IljPUl9YmVvyXd52ajDzZ92OJhgLV4cxkRWnIfbmhwFfQTMb3mnAXu4vxgvp6H+FjL
+         cWY5GStQwNlwp3kO0Zpn21nGdWH7NwNhQjsUbYknImowdJKksK8u+4PpVVIHiPWS/t24
+         Kydw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686663236; x=1689255236;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gVMF0cNkOvWOotSiCVqWjAUYo2pClvF2wLwm2zYOVjQ=;
-        b=Dx7RV1suQsxbD6ol5j32WwQTVz3aUe/fB8o0liMZTcpBn1uX52/C2EJHohs/ZU0fYV
-         oa2F8UiQ0U0TuHGkVzvYfWsALTrDH4+aqHHjWR1pVksQOD4269YoER9bznyPnz5M5Xfb
-         61SWV+2thDXUgczy/XgPoAY6IlKDQVswkAQYiCdielzbN80JFKPDzJ5bYJrNgkTuRKYJ
-         rZ9DtT5dGRudBBzEHXLMzGvb/UJxOBw8L4KPoba2t1GNqfU1lOPIFV/NzQYMF+rF8gpf
-         FPDbbKQyG4WomTkGklF6kZ9cGAwhRaIK80RTuegY25x6nxjJJNDsvIPz8CgZHHdxXU8v
-         TLWg==
-X-Gm-Message-State: AC+VfDwd2SKvTYv8FgZmhA78ZYLhYxXJNfEiVivHkAScTB/EirVLjhVK
-        xFDTi3m2DvnN+7/fclWJUHuns5H4DA==
-X-Google-Smtp-Source: ACHHUZ49q1Oh89Wc+426zGavzltcBtj6qS6mPvOOgEpcvRcr08SDV8e1ae7C3q137hDz1vfIgIb1Kw==
-X-Received: by 2002:a05:6602:1d6:b0:774:8d9f:e3e2 with SMTP id w22-20020a05660201d600b007748d9fe3e2mr9832851iot.17.1686663236369;
-        Tue, 13 Jun 2023 06:33:56 -0700 (PDT)
-Received: from robh_at_kernel.org ([64.188.179.250])
-        by smtp.gmail.com with ESMTPSA id g21-20020a02b715000000b00422bf19bccdsm892919jam.121.2023.06.13.06.33.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jun 2023 06:33:55 -0700 (PDT)
-Received: (nullmailer pid 1766960 invoked by uid 1000);
-        Tue, 13 Jun 2023 13:33:54 -0000
-Date:   Tue, 13 Jun 2023 07:33:54 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        d=1e100.net; s=20221208; t=1686663804; x=1689255804;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GzQXlDHLRtYFXz6SgNSRR4StIWNnj8KrmIpcoKcJ1zQ=;
+        b=jAbC9U08Yue4WKOWYgdMsUcN6HnlLHOpUW4EMvCa0dLkm9awMoIZofmZr/GTcQYulm
+         5CYgr8zv3LA7uv7e36rNjWcqhyaEni3YFtLukaRUcrPaTAJZE6oiNpe86T7m7GQ3gxX3
+         jjbZxbo71aU1c+dzby6rHNWc+jYJTHzWLoue14xgOB1JFqUN1S27ZZ0M1TVe5zIQee7N
+         jQZqUenzAxxdc1cI6Q+lB6IqOqzYy+qjzZuXJZ+3/AP82PtohfRz4AiPLx5nSCNwvOqB
+         STwWvew2O2YeET1Vt0DFm2dgAngCBqhYwC68T8RpnK5JGcLamKlpgcfThiD1ofrGV3XV
+         yEvw==
+X-Gm-Message-State: AC+VfDxHIqXA11FXtPbWSuAEFkFhMukRlljem2qsJvyl+ErWUj/xXjz0
+        Q+0Vnp2uiSevm36Fp/gc1ufK+Q==
+X-Google-Smtp-Source: ACHHUZ7H2fb9GHz/G51cRdvfLQ6nxUPvVSuWF46e3FT1GPqNUTe4bl7FcKJ9MD6OZGFdEqIitR+Qtw==
+X-Received: by 2002:a05:6000:196e:b0:30e:5729:b5a5 with SMTP id da14-20020a056000196e00b0030e5729b5a5mr7324551wrb.38.1686663804450;
+        Tue, 13 Jun 2023 06:43:24 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:48b:b939:c60e:e1ba? ([2a01:e0a:982:cbb0:48b:b939:c60e:e1ba])
+        by smtp.gmail.com with ESMTPSA id t15-20020a1c770f000000b003f8d0308604sm1560415wmi.9.2023.06.13.06.43.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Jun 2023 06:43:23 -0700 (PDT)
+Message-ID: <8f9c549a-e37b-2877-be74-f25304a476fd@linaro.org>
+Date:   Tue, 13 Jun 2023 15:43:22 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.2
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 5/8] qcom: pmic_glink: enable altmode for SM8550
+Content-Language: en-US
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        devicetree@vger.kernel.org, devicetree-spec@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/5] dt-bindings: reserved-memory: Add
- alloc-{bottom-up,top-down}
-Message-ID: <20230613133354.GA1750589-robh@kernel.org>
-References: <20230510-dt-resv-bottom-up-v1-0-3bf68873dbed@gerhold.net>
- <20230510-dt-resv-bottom-up-v1-1-3bf68873dbed@gerhold.net>
- <20230608140256.GA2478894-robh@kernel.org>
- <ZILt0X0uyIyUdxqH@gerhold.net>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZILt0X0uyIyUdxqH@gerhold.net>
-X-Spam-Status: No, score=-1.2 required=5.0 tests=BAYES_00,
-        FREEMAIL_ENVFROM_END_DIGIT,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
-        HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_NONE,RCVD_IN_MSPIKE_H2,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=no
-        autolearn_force=no version=3.4.6
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org
+References: <20230601-topic-sm8550-upstream-type-c-v3-0-22c9973012b6@linaro.org>
+ <20230601-topic-sm8550-upstream-type-c-v3-5-22c9973012b6@linaro.org>
+ <5851627e-2972-f860-e965-dc8e73b01225@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <5851627e-2972-f860-e965-dc8e73b01225@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 09, 2023 at 11:16:01AM +0200, Stephan Gerhold wrote:
-> Hi Rob,
+On 13/06/2023 13:54, Krzysztof Kozlowski wrote:
+> On 13/06/2023 09:55, Neil Armstrong wrote:
+>> Altmode is also supported for SM8550, allow it.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   drivers/soc/qcom/pmic_glink.c | 6 +-----
+>>   1 file changed, 1 insertion(+), 5 deletions(-)
+>>
+>> diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
+>> index c87056769ebd..8af06bdc6f5a 100644
+>> --- a/drivers/soc/qcom/pmic_glink.c
+>> +++ b/drivers/soc/qcom/pmic_glink.c
+>> @@ -342,13 +342,9 @@ static const unsigned long pmic_glink_sm8450_client_mask = BIT(PMIC_GLINK_CLIENT
+>>   							   BIT(PMIC_GLINK_CLIENT_ALTMODE) |
+>>   							   BIT(PMIC_GLINK_CLIENT_UCSI);
+>>   
+>> -/* Do not handle altmode for now on those platforms */
+>> -static const unsigned long pmic_glink_sm8550_client_mask = BIT(PMIC_GLINK_CLIENT_BATT) |
+>> -							   BIT(PMIC_GLINK_CLIENT_UCSI);
+>> -
+>>   static const struct of_device_id pmic_glink_of_match[] = {
+>>   	{ .compatible = "qcom,sm8450-pmic-glink", .data = &pmic_glink_sm8450_client_mask },
 > 
-> Thanks for your suggestions!
-> 
-> On Thu, Jun 08, 2023 at 08:02:56AM -0600, Rob Herring wrote:
-> > On Mon, May 15, 2023 at 12:12:16PM +0200, Stephan Gerhold wrote:
-> > > Right now the allocation behavior for dynamic reserved memory is
-> > > implementation-defined. On Linux it is dependent on the architecture.
-> > > This is usually fine if the address is completely arbitrary.
-> > > 
-> > > However, when using "alloc-ranges" it is helpful to allow controlling
-> > > this. That way you can make sure that the reservations are placed next
-> > > to other (static) allocations to keep the free memory contiguous if
-> > > possible.
-> > 
-> > That should already be possible with all the information you 
-> > already have. IOW, you are looking at all the region and "alloc-ranges" 
-> > addresses to decide top-down or bottom-up. Why can't the kernel do that.
-> > 
-> 
-> Would you accept a patch implementing such a behavior?
+> Orientation and maybe all of the USB-related properties do not look like
+> sm8450 specific, but PM8350B. That's where CC_OUT pin is. I don't think
+> we represented this correctly, but rather copy-pasted downstream solution...
 
-Yes.
- 
-> There are obviously infinitely complicated algorithms possible for the
-> allocation. A fairly simple one would be to check if the "alloc-ranges"
-> overlap or are adjacent to an already existing reservation, i.e.
-> 
->   1. If the "alloc-range" starts at the end or inside an existing
->      reservation, use bottom-up.
->   2. If the "alloc-range" ends at the start or inside an existing
->      reservation, use top-down.
->   3. If both or none is the case, keep current (implementation-defined)
->      behavior.
-> 
-> For reference, here are some examples how it behaves. |...| is the
-> unallocated memory, RRR existing allocations, and each RRR--- line
-> below a requested alloc-range (and where it was allocated):
-> 
-> Bottom-up (rule 1):
->   |.....RRRR................RRRRRRRRR...........|
->             RRR----
->          ---RRR-------
-> 
-> Top-down (rule 2):
->   |.....RRRR................RRRRRRRRR...........|
->                      ----RRR
->                 ---------RRR------
-> 
-> Otherwise rule 3 just behaves as currently where either bottom-up
-> or top-down is used depending on the implementation/architecture:
->   |.....RRRR................RRRRRRRRR...........|
->                -----RRR
->      or        RRR-----
->           ---------------RRR----
->      or   --RRR-----------------
-> 
-> There are plenty of edge cases where it doesn't produce the optimal
-> result, but it just results in exactly the same behavior as currently
-> so it's not any worse (with rule 3):
-> 
->   |.....RRRR................RRRRRRRRR...........|
->                           -----------RRR-----
->                  or       ----------------RRR
->                      ---------------------RRR  (no way to handle this
->                  or  RRR---------------------   with top-down/bottom-up)
-> 
-> > Alternatively, if you really care about the allocation locations, don't 
-> > use dynamic regions.
-> > 
-> 
-> Yes, this is the option used at the moment. As outlined in detail in the
-> examples of RFC PATCH 4/5 and 5/5 I would like a solution inbetween. The
-> exact address doesn't matter but the way (direction) the region is
-> filled should preferably stay the same.
-> 
-> > > 
-> > > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> > > ---
-> > >  .../bindings/reserved-memory/reserved-memory.yaml  | 39 ++++++++++++++++++++++
-> > >  1 file changed, 39 insertions(+)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/reserved-memory/reserved-memory.yaml b/Documentation/devicetree/bindings/reserved-memory/reserved-memory.yaml
-> > > index c680e397cfd2..56f4bc6137e7 100644
-> > > --- a/Documentation/devicetree/bindings/reserved-memory/reserved-memory.yaml
-> > > +++ b/Documentation/devicetree/bindings/reserved-memory/reserved-memory.yaml
-> > > @@ -52,6 +52,18 @@ properties:
-> > >        Address and Length pairs. Specifies regions of memory that are
-> > >        acceptable to allocate from.
-> > >  
-> > > +  alloc-bottom-up:
-> > > +    type: boolean
-> > > +    description: >
-> > > +      Specifies that the memory region should be preferably allocated
-> > > +      at the lowest available address within the "alloc-ranges" region.
-> > > +
-> > > +  alloc-top-down:
-> > > +    type: boolean
-> > > +    description: >
-> > > +      Specifies that the memory region should be preferably allocated
-> > > +      at the highest available address within the "alloc-ranges" region.
-> > 
-> > What happens when both are set?
-> > 
-> 
-> They are not meant to be both set. I should have added an if statement
-> for this, sorry about that.
+We do not interact directly with PM8350B or PM8550B but with pmic_glink who
+does the work work for use, and this is platform specific.
 
-Ideally, you define the properties in a way to avoid that situation 
-rather than relying on schema checks. For example, a single property 
-with values defined for top-down and bottom-up.
+Neil
 
-Rob
+> 
+> Best regards,
+> Krzysztof
+> 
+
