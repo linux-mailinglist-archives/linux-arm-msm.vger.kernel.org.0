@@ -2,83 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 90DF872DCAB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 10:38:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D0A3272DD14
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 10:54:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241567AbjFMIiD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 04:38:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46626 "EHLO
+        id S239128AbjFMIyS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 04:54:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241444AbjFMIhr (ORCPT
+        with ESMTP id S241835AbjFMIyK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 04:37:47 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02EC1170C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 01:37:35 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id 4fb4d7f45d1cf-5149aafef44so7448639a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 01:37:34 -0700 (PDT)
+        Tue, 13 Jun 2023 04:54:10 -0400
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E2D813A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 01:54:08 -0700 (PDT)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f7368126a6so38489285e9.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 01:54:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686645453; x=1689237453;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eieFDOWGVlPEoV+uu02UIa/Flz5UfVj5E0AU8iFp47Q=;
-        b=Dib4/U5h901JbAgTHrHwuRc/BP64q/6tXhACQawjYuM0GJ+r7DRohI2n5/ghXOCQez
-         SUYhlc27QWItVo+B54UX8JxiV/yD64tVrGPdr/MoDjOThUDupsIHWIcKXJWcKloDtPrd
-         w2ccx9w0Vj/A6lM9D33GPkD683D4Gb/k0UIIMAmpkdddAsrNw49AvW5S5XvsadI/bjeU
-         EYJFU+q9vkoc2wHSBbx2CBFbrHscNcZoY8G+1vnqVxTYPCC5bCwGn0g0qoA/2vCmywwp
-         1HrjLTx8yiaPEnBOR+VtEPbMwOoiGR+exjyJp3NTFigxRD1DeekED/E6ECFRVolcG7ja
-         l3qg==
+        d=linaro.org; s=google; t=1686646447; x=1689238447;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=NDiNhm2Y6nRuk/DDc8nzD8Q/rYbk+v+INjp84dQ4Gsk=;
+        b=jOtPBGa+GRY0pIqESl8Ji3GBrr+XDllWpqEsa7or8ljLDZwrpneARdDnvSnZC34rQn
+         fcI2uF7QFFzG9XIJNe6ffH4f4mr+7oj7frdUPNbE5wdgAnrg2Fe9K8JPs6OW3PMfWDUX
+         FFJ7ZmSXqtcA5EJjAa5JaAVkRRATKlpNU4qk2NLXoZq1wviRUy9tgXMXbCZnZApnWiCu
+         zViBQtFFxm3EMCpB1tXHZK74SgWz4DHIwbxWoU9KtNTisc60umEcb7iR7mlMtAo0qAOk
+         koi5vJN8M9RU16ER7rOXW5KEqFiWy+a2sIcqcYi7e/yYyfMC5opqD7VuXpI+MkHcna3F
+         eTkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686645453; x=1689237453;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eieFDOWGVlPEoV+uu02UIa/Flz5UfVj5E0AU8iFp47Q=;
-        b=AJzSQqFavN5awU2WwtCIDe1xS1Uterg043+ZTL/LSh90uIxgZjMh0FXvpJm/Rzkkfs
-         1f2Kgxja4IDZraavQ2oVBI7eAyEaMuX6PbEWzGA9RyJ8x5J88zrdJ4ZpcSVnodS8q1tK
-         oBVV0orwYhcq8GGxveR0A0VmHc2id9WVNedLB/DJ1ZBhWi6GvA52dDM3KlWVq8/38AFG
-         uZb8M4miQk+GtBA7PYC8hnJ+3Ph5KQQsB0xZLz8mrpWunhhsw/WUe8whRAcuuO8RVG3+
-         BLeS+vUR5Noa3AXYGmgy3/D9b4Kzhn2drsNOCnO9mwUw1e5/f9AlVK5pPqA9bPTNI+c1
-         YhkQ==
-X-Gm-Message-State: AC+VfDzZrYCeyxVmjMI5rY+o3o3vvxs4rn70i6yi+yxtTmin6TiUXflq
-        ZBmDnd/eyO58uxxzqcktZtGURQ==
-X-Google-Smtp-Source: ACHHUZ6R/7AEBNtcMlokSBYRLlWvEbeqRO5/L5a6JXMT0ObKEPPU5MFom5uiOFEtB2qwpbj2npnOcg==
-X-Received: by 2002:aa7:cd10:0:b0:514:9e81:9068 with SMTP id b16-20020aa7cd10000000b005149e819068mr6407877edw.13.1686645453527;
-        Tue, 13 Jun 2023 01:37:33 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id m8-20020a056402050800b005149cb5ee2dsm6105361edv.82.2023.06.13.01.37.31
+        d=1e100.net; s=20221208; t=1686646447; x=1689238447;
+        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
+         :content-language:subject:reply-to:from:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NDiNhm2Y6nRuk/DDc8nzD8Q/rYbk+v+INjp84dQ4Gsk=;
+        b=AT9D7zyuwpHCBPKZ/SJoy+QVPnRyt4cBWV+lsIQ9z4CYEnFrB6JQbnf6mWur9Z9PEf
+         fnrFP9FxcWFSYKjQwQndxVVYY1d7FWCPtbEZRGGM7lNSyrsr+WLsYG7SZZGMTdFWxFAR
+         XTboezIL8wwSeLdfO9ibVPRT/In5FZ6203Y45/XglXo1JUXoe4C5u6D31+PLgxI7hisU
+         crhoDoFDjXCokccfcqiVj3qg4lKFpsv2RFXuTWS2+zEaJW42glZJoCwq6zMu/UBURF6f
+         s26/MddCZFPxtYYnc5PYYYwkad6xMnslabAFFnP7KYYPdVKbzvu+MSLBRLjyNAIIDfxt
+         8+YQ==
+X-Gm-Message-State: AC+VfDwxO6H5NNTZZ9zCR1rwj/muqp2ov4Ed7s7zIBSuB/8vzQf9ihqZ
+        N8XE+n8vJv66APhL1nmsVtpJRw==
+X-Google-Smtp-Source: ACHHUZ45G18QLIN7+wDdZTsNEbpK70h739qxBNPbqmKWAndC1h4UuqNPazu8rDUPziKR7UcgGS2Mcw==
+X-Received: by 2002:a05:600c:22cc:b0:3f8:153b:a521 with SMTP id 12-20020a05600c22cc00b003f8153ba521mr4718978wmg.26.1686646446774;
+        Tue, 13 Jun 2023 01:54:06 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:982:cbb0:48b:b939:c60e:e1ba? ([2a01:e0a:982:cbb0:48b:b939:c60e:e1ba])
+        by smtp.gmail.com with ESMTPSA id r11-20020a05600c2c4b00b003f7eb5375ddsm13829675wmg.15.2023.06.13.01.54.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jun 2023 01:37:33 -0700 (PDT)
-Message-ID: <feebd8cd-7713-f086-356b-cc2657a9708e@linaro.org>
-Date:   Tue, 13 Jun 2023 10:37:30 +0200
+        Tue, 13 Jun 2023 01:54:06 -0700 (PDT)
+Message-ID: <cfa788c3-be57-5109-73df-b82099dd17a0@linaro.org>
+Date:   Tue, 13 Jun 2023 10:54:05 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH V4 0/4] Add camera clock controller support for SM8550
+ Thunderbird/102.11.2
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: neil.armstrong@linaro.org
+Subject: Re: [PATCH v3 1/8] dt-bindings: connector: usb-connector: add a gpio
+ used to determine the Type-C port plug orientation
 Content-Language: en-US
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc:     Bjorn Andersson <andersson@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20230609115058.9059-1-quic_jkona@quicinc.com>
- <09ccfa54-5ada-8dff-03a2-b2ffb07a58c1@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <09ccfa54-5ada-8dff-03a2-b2ffb07a58c1@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org
+References: <20230601-topic-sm8550-upstream-type-c-v3-0-22c9973012b6@linaro.org>
+ <20230601-topic-sm8550-upstream-type-c-v3-1-22c9973012b6@linaro.org>
+ <e26878e5-fedc-b2fb-2213-5afd8479de4f@linaro.org>
+Organization: Linaro Developer Services
+In-Reply-To: <e26878e5-fedc-b2fb-2213-5afd8479de4f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
@@ -90,20 +90,35 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/06/2023 04:25, Bryan O'Donoghue wrote:
-> On 09/06/2023 12:50, Jagadeesh Kona wrote:
->> Add bindings, driver and devicetree node for camera clock controller on
->> SM8550.
+On 13/06/2023 10:13, Krzysztof Kozlowski wrote:
+> On 13/06/2023 09:55, Neil Armstrong wrote:
+>> On some platforms, the Type-C plug orientation is given on a GPIO line.
+>>
+>> Document this optional Type-C connector property, and take the
+>> assumption an active level represents an inverted/flipped orientation.
+>>
+>> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 > 
-> This is very confusing.
+> Rob had here objections as these are bindings for the connector, not
+> PMIC glink/altmode. I still doubt that Qualcomm USB Type-C connectors
+> have such pin exposed. If you open the schematics, the GPIO is actually
+> coming out from PMIC and is nowhere around the connector. Please drop my
+> Ack.
 > 
-> Your cover letter doesn't detail any changes and your individual patches 
-> all say "no changes since v3", "no changes since v2"
-> 
-> If this is a RESEND then mark it as a RESEND.
+> This however could be a pin of the PMIC because it clearly is on the
+> schematics.
 
-That's indeed odd. Three versions without changes...
+Yes it comes from the PMIC, but this part of the PMIC is handled by
+the PMIC_GLINK firmware service, so the logical place would be into
+the pmic_glink node with a gpio array in order to handle multi-ports.
 
-Best regards,
-Krzysztof
+Thanks,
+Neil
+
+> 
+> 
+> 
+> Best regards,
+> Krzysztof
+> 
 
