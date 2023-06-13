@@ -2,234 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7837372DB98
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 09:54:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 61C3C72DBA6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 09:56:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240551AbjFMHxI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 03:53:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48262 "EHLO
+        id S239633AbjFMH42 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 03:56:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50020 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239614AbjFMHxH (ORCPT
+        with ESMTP id S233791AbjFMH4R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 03:53:07 -0400
-Received: from mail-vk1-xa2a.google.com (mail-vk1-xa2a.google.com [IPv6:2607:f8b0:4864:20::a2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A78910CE
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:53:05 -0700 (PDT)
-Received: by mail-vk1-xa2a.google.com with SMTP id 71dfb90a1353d-46288dcacb5so1692123e0c.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:53:05 -0700 (PDT)
+        Tue, 13 Jun 2023 03:56:17 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43CF210E2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:56:08 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-4f640e48bc3so6271185e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:56:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1686642784; x=1689234784;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ksmnYzaAZG4SFOtuZwLT0Gj07ow0mCiA7tlTY9FP1/Y=;
-        b=d/XOUvzXq7CkULBNjOF5cPQ9T8PQ4GUN2VTUb4tV5GYUOU/bcCMFJER5wRcTiOAxaO
-         VEqeTPG5/GSimPhYdVoDC/uqRBqssvbhFmMqZ2UPpATKuDu0zcPmCBugjzLiimaHg+0O
-         9wZ1rW7T5SAVt/6r/SykeSUB1kSjjeu1v/QF9yZNVYeWYL/CqPipZS2RqbveG9GDYWQl
-         3yZcujcboW/sNqe2RjBd/XPxGCpKyPsA5S0Wt8H20ztGP/P8e2a+LHAM1iWQz7y5UEUU
-         byzRaCp7blF315uAiXD/wO22ggP+a/pLSa4fq9EoyeAoPW6lXUTFE4Oe4EeVpTJurQyN
-         Z0bw==
+        d=linaro.org; s=google; t=1686642966; x=1689234966;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qt6DO4eTqgm1PKgstjuXoKWvYLzLs/3RIwW59uXSJfE=;
+        b=XAAAvbiX1KmTs/nZ4eapF5OhkbIGZBHGMn4WJpPangVsSU+eXKkd+sfCNhXXAgCJec
+         WAeFmGIDntrCMQry2+idiO2BkwKFIdW4x8AEO0ewV/aIqlEnVBbtggSMtR1sLK5DiU1n
+         0nCGtOu9f3/+Nh42TTsrantfCKyeQ9cgmUuMFWf9llvkTGk/2AD8YysiAXuUEfYsJKSV
+         /uxjWkVg4tCJVShhf/8lMCEcwLaDTdnbktkwHyCkQjwdPSfckW4+VIgIQKiTgB3dVV5C
+         S0PPA3T/IK8Qf6rT90HQpfgVwxBhwqaqmGrJ46dGUoSB12xjD+kH3G8Al/vbu7nQudNy
+         8Sog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686642784; x=1689234784;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ksmnYzaAZG4SFOtuZwLT0Gj07ow0mCiA7tlTY9FP1/Y=;
-        b=hx6PfVODgPqAYgtHQpkTI6urmlLEcbMofm8c0xbvFFA9cBa+mMe21QNCaLLnWuOc9i
-         22vYa1lsd0fIHnkb9OtsMVRynNoNXfUF3jchaGTgp58+UjhgFD9zy822kwBzxrmAsE4b
-         eRJfPBiKr34DA8/sF6/KQ6mzoTk/QqqfdppBevAvB+yS2DJ2OlBfMj9RdqzUVYWl99Hh
-         xmNz7Gm9HBUb0iuEBKtA8KDsEQCJRpEsVfOvwE9pUTSx8Qpb0EabEvEoOQYJsjVOFUpF
-         mTBaLY6wYJH/H7b4y7gPCj8MlI4IPam23/GN+CTKeKrUQtgkan01BrAYv7XxEBIRRPf7
-         lGhQ==
-X-Gm-Message-State: AC+VfDwf9X9p/x5fSKR9ziMixTkORR9EWIiTwnLiVSiIU19IfCBrJdmb
-        nOIKIsHDDP9muIxWukiAu/raA8gp7IILbIqnlrXUYQ==
-X-Google-Smtp-Source: ACHHUZ7i+EBDY2WITwEIRgKogtaSChdc3S4PwWz2Qp9PZP5xCpoeIGDCpD2gClqT3kwLonr4MotjvY3YKsBM2PtVtCk=
-X-Received: by 2002:a1f:bd58:0:b0:46d:fd21:76fb with SMTP id
- n85-20020a1fbd58000000b0046dfd2176fbmr580943vkf.10.1686642784529; Tue, 13 Jun
- 2023 00:53:04 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686642966; x=1689234966;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Qt6DO4eTqgm1PKgstjuXoKWvYLzLs/3RIwW59uXSJfE=;
+        b=hbkuZtMEyl1/+4ZQsv+xmVB8D6Yo9sIul6arEig+WA1AYBh+WFbtxRYo+Zqwom0gWE
+         la+Qn+lbTXZKw/kmK8hoAJgXpon0bdAC9746E7cWFmnUmJlsZQyqVth6sT9+olMk5ghx
+         r2i1TuD8kGEF3gB2oH61fCJFSPO54xpqMuvdJ+6e0X0CVzPsw5TYTmOyAqgg/aZEPJdJ
+         snaiOFjMAgdB/3GCoKM3leloVTm75zdBMijgY3qa4dG12gFjaqZU18+R7ustkKBxfe4A
+         uw2hYS3z53DRV707pMYsr7OqHKZ+vC62WRNIIKNP0boc05KvSVUM6dPjZAGTHXm1I8i9
+         E4Kw==
+X-Gm-Message-State: AC+VfDwZ2/GFxPCk+q9cTdmD8gkPRaQpc5DHlBHSDESYrMMdqnkGKs1r
+        5rfe1s94cMYE4eN5DYF56u9XZg==
+X-Google-Smtp-Source: ACHHUZ5fW3ryKdvd83gwTbTkCIF0OxVrYv/7x/9Sz1zAv0fCZAcv6Fkgq85atuOhvfwTZUaZLcdY8g==
+X-Received: by 2002:a19:5e58:0:b0:4f4:d324:8b14 with SMTP id z24-20020a195e58000000b004f4d3248b14mr5035114lfi.14.1686642966390;
+        Tue, 13 Jun 2023 00:56:06 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:982:cbb0:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id k20-20020a05600c0b5400b003f4266965fbsm13662316wmr.5.2023.06.13.00.56.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jun 2023 00:56:05 -0700 (PDT)
+From:   Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH v3 0/8] arm64: qcom: add Type-C Altmode support
+Date:   Tue, 13 Jun 2023 09:55:53 +0200
+Message-Id: <20230601-topic-sm8550-upstream-type-c-v3-0-22c9973012b6@linaro.org>
 MIME-Version: 1.0
-References: <20230612092355.87937-1-brgl@bgdev.pl> <20230612092355.87937-13-brgl@bgdev.pl>
- <20230612203255.72t52ucry7zzq3em@halaney-x13s>
-In-Reply-To: <20230612203255.72t52ucry7zzq3em@halaney-x13s>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Tue, 13 Jun 2023 09:52:53 +0200
-Message-ID: <CAMRc=MfmzWDZuXpb4ySxi0Xu6EWVuEZ4ReaEYbo4KCMme-+G4A@mail.gmail.com>
-Subject: Re: [PATCH 12/26] net: stmmac: dwmac-qcom-ethqos: add support for the
- optional serdes phy
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAkhiGQC/5WOvQ6CMBRGX8V09ppCqaCT72Ec+nOBJtA2LTQSw
+ rtb2Nx0PN9wzreSiMFgJPfTSgImE42zGdj5RFQvbIdgdGZS0pLRKy1gct4oiGPDOYXZxymgGGF
+ aPIICbLis9K0uKk5JVkgREWQQVvVZYudhyKMP2Jr30Xy+MvcmTi4sx4VU7OuPtVQABb33crSRQ
+ j4GY0VwFxc6sptT+Y+tzDYmpW5ZzWuu2Jdt27YPAPDoxywBAAA=
+To:     Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2787;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=BHAgQ+UG5MLHVgrLY9X0OW+HponTfcnibfbTbfKXYaA=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBkiCEQVetVQxGQVm3pW63K5GgAgaxaLOJ7YEzbEf5B
+ N3P1GEmJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCZIghEAAKCRB33NvayMhJ0cpIEA
+ CnECPB9irgAv5XQjvhHw9vJwqUoXarSQrXfjhw5aFN6kz8JINuGWFRzeU6XPoWh/QEZfEcnWiC9KPX
+ zDtZ1gdeLQFiK5vgBMVlTVDJ+9QvCPmRxs5lYa8Qrud6f9G+ggV8GfDHJT8oGO5HEWG194gyLlpl2C
+ GQnk3WiWkaGIY69Buxer6uW7Y82u4nJSqzoRaFSg4KWEnqvoud5o7rbJ04jWdhcnhi6LxINgEFgmwj
+ OG2yxBDpwYwjODnVf3HWI4O6IRggNIuUGyCCwzLEK0oL1273DiveTp+SH3qqJl18uChHCcVug6FkUX
+ 8uz81i2Rys/tRFGlKB9XBXiCfkRmaRiqJq07S2uQklV+seYdKQG5AkQHIsTU94gTJiAOMDYZ1wznem
+ GJ+PA65DvsqodMpNU0kWQ8x5JzVmAOJRGruR7mkvPL757qm/BWO74lQ6CVIj9yV73A/VYvjIKvDlQo
+ DXZGHwg+Q0kecXzu/uW8TmFsDCouIVkkhJo62bjyoCD+6XekjHdbAZbS3BMVWSduhh1WIkPlaYtxNl
+ tnXUppyM0oQBj0zh+NLZMwRjYWX+VD2Ig/R5cu+z8+R03pNncBu58mAtSupSPcniiE7H+55Bn0wm8Z
+ y+gZp+yo6xaGBgqlCrsJ8jTILvksYJmg/f/vwCs6xtEd0KQnxtV1FReW+mRQ==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 12, 2023 at 10:33=E2=80=AFPM Andrew Halaney <ahalaney@redhat.co=
-m> wrote:
->
-> On Mon, Jun 12, 2023 at 11:23:41AM +0200, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > On sa8775p platforms, there's a SGMII SerDes PHY between the MAC and
-> > external PHY that we need to enable and configure.
-> >
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > ---
-> >  .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 37 +++++++++++++++++++
-> >  1 file changed, 37 insertions(+)
-> >
-> > diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/=
-drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> > index 8ed05f29fe8b..3438b6229351 100644
-> > --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> > +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> > @@ -6,6 +6,7 @@
-> >  #include <linux/of_device.h>
-> >  #include <linux/platform_device.h>
-> >  #include <linux/phy.h>
-> > +#include <linux/phy/phy.h>
-> >  #include <linux/property.h>
-> >
-> >  #include "stmmac.h"
-> > @@ -93,6 +94,7 @@ struct qcom_ethqos {
-> >
-> >       unsigned int rgmii_clk_rate;
-> >       struct clk *rgmii_clk;
-> > +     struct phy *serdes_phy;
-> >       unsigned int speed;
-> >
-> >       const struct ethqos_emac_por *por;
-> > @@ -566,6 +568,30 @@ static void ethqos_fix_mac_speed(void *priv, unsig=
-ned int speed)
-> >       ethqos_configure(ethqos);
-> >  }
-> >
-> > +static int qcom_ethqos_serdes_powerup(struct net_device *ndev, void *p=
-riv)
-> > +{
-> > +     struct qcom_ethqos *ethqos =3D priv;
-> > +     int ret;
-> > +
-> > +     ret =3D phy_set_speed(ethqos->serdes_phy, ethqos->speed);
-> > +     if (ret)
-> > +             return ret;
-> > +
-> > +     ret =3D phy_init(ethqos->serdes_phy);
-> > +     if (ret)
-> > +             return ret;
-> > +
-> > +     return phy_power_on(ethqos->serdes_phy);
->
-> The docs say (phy.rst):
->
->     The general order of calls should be::
->
->         [devm_][of_]phy_get()
->         phy_init()
->         phy_power_on()
->         [phy_set_mode[_ext]()]
->         ...
->         phy_power_off()
->         phy_exit()
->         [[of_]phy_put()]
->
->     Some PHY drivers may not implement :c:func:`phy_init` or :c:func:`phy=
-_power_on`,
->     but controllers should always call these functions to be compatible w=
-ith other
->     PHYs. Some PHYs may require :c:func:`phy_set_mode <phy_set_mode_ext>`=
-, while
->     others may use a default mode (typically configured via devicetree or=
- other
->     firmware). For compatibility, you should always call this function if=
- you know
->     what mode you will be using. Generally, this function should be calle=
-d after
->     :c:func:`phy_power_on`, although some PHY drivers may allow it at any=
- time.
->
-> Not really dictating you need to do that order, but if possible I think
-> calling phy_set_speed after init + power_on is more generic. Not sure if
-> that plays nice with the phy driver in this series or not.
->
-> Otherwise, I think this looks good.
->
+This adds the missing bits to support the USB-C Altmode
+support on SM8550.
 
-I had to rework the PHY driver code a bit for this order to work but
-it'll be good now in v2.
+These are the following changes since the previous SM8450 SoC:
+- No more GLINK altmode events for USB only changes, only DP
+- Type-C orientation is available on a PMIC signal connected
+  to a GPIO line
+- When altmode is disconnected, an 0xff mode event is sent.
 
-Thanks!
-Bart
+In order to handle those changes, a new orientation-gpios property
+is added to the usb-c connector bindings.
+The 0xff altomode is translated as a SAFE type-c mux mode.
 
-> > +}
-> > +
-> > +static void qcom_ethqos_serdes_powerdown(struct net_device *ndev, void=
- *priv)
-> > +{
-> > +     struct qcom_ethqos *ethqos =3D priv;
-> > +
-> > +     phy_power_off(ethqos->serdes_phy);
-> > +     phy_exit(ethqos->serdes_phy);
-> > +}
-> > +
-> >  static int ethqos_clks_config(void *priv, bool enabled)
-> >  {
-> >       struct qcom_ethqos *ethqos =3D priv;
-> > @@ -651,6 +677,12 @@ static int qcom_ethqos_probe(struct platform_devic=
-e *pdev)
-> >       if (ret)
-> >               goto out_config_dt;
-> >
-> > +     ethqos->serdes_phy =3D devm_phy_optional_get(dev, "serdes");
-> > +     if (IS_ERR(ethqos->serdes_phy)) {
-> > +             ret =3D PTR_ERR(ethqos->serdes_phy);
-> > +             goto out_config_dt;
-> > +     }
-> > +
-> >       ethqos->speed =3D SPEED_1000;
-> >       ethqos_update_rgmii_clk(ethqos, SPEED_1000);
-> >       ethqos_set_func_clk_en(ethqos);
-> > @@ -666,6 +698,11 @@ static int qcom_ethqos_probe(struct platform_devic=
-e *pdev)
-> >       if (of_device_is_compatible(np, "qcom,qcs404-ethqos"))
-> >               plat_dat->rx_clk_runs_in_lpi =3D 1;
-> >
-> > +     if (ethqos->serdes_phy) {
-> > +             plat_dat->serdes_powerup =3D qcom_ethqos_serdes_powerup;
-> > +             plat_dat->serdes_powerdown  =3D qcom_ethqos_serdes_powerd=
-own;
-> > +     }
-> > +
-> >       ret =3D stmmac_dvr_probe(dev, plat_dat, &stmmac_res);
-> >       if (ret)
-> >               goto out_config_dt;
-> > --
-> > 2.39.2
-> >
->
+And in order to handle such info, we tie this to the UCSI connector
+events to propagate the orientation to Type-C switches.
+
+Redriver driver & bindings dependency at [1].
+
+[1] https://lore.kernel.org/all/20230601-topic-sm8x50-upstream-redriver-v2-0-dda89b22b1c0@linaro.org/
+
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v3:
+- Fix fsa node names in both QRD amd MTP nodes
+- Add missing orientation-gpios in MTP dt
+- Remove invalid svid property
+- Link to v2: https://lore.kernel.org/r/20230601-topic-sm8550-upstream-type-c-v2-0-3bbdf37575c3@linaro.org
+
+Changes in v2:
+- Updated redriver node to use retimer-switch on QRD
+- Fixed redriver data-lane according to v2 bindings
+- Added review/ack tags
+- Added new change to handle retimer-switch in pmic-glink altmode driver
+- Link to v1: https://lore.kernel.org/r/20230601-topic-sm8550-upstream-type-c-v1-0-d4d97b4d8bab@linaro.org
+
+---
+Neil Armstrong (8):
+      dt-bindings: connector: usb-connector: add a gpio used to determine the Type-C port plug orientation
+      soc: qcom: pmic_glink_altmode: handle safe mode when disconnect
+      usb: ucsi: glink: use the connector orientation GPIO to provide switch events
+      qcom: pmic_glink_altmode: add retimer-switch support
+      qcom: pmic_glink: enable altmode for SM8550
+      arm64: dts: qcom: sm8550: add ports subnodes in usb/dp qmpphy node
+      arm64: dts: qcom: sm8550-mtp: add pmic glink port/endpoints
+      arm64: dts: qcom: sm8550-qrd: add pmic glink port/endpoints
+
+ .../bindings/connector/usb-connector.yaml          |  5 ++
+ arch/arm64/boot/dts/qcom/sm8550-mtp.dts            | 67 ++++++++++++++-
+ arch/arm64/boot/dts/qcom/sm8550-qrd.dts            | 99 +++++++++++++++++++++-
+ arch/arm64/boot/dts/qcom/sm8550.dtsi               | 26 ++++++
+ drivers/soc/qcom/pmic_glink.c                      |  6 +-
+ drivers/soc/qcom/pmic_glink_altmode.c              | 61 ++++++++++++-
+ drivers/usb/typec/ucsi/ucsi_glink.c                | 52 +++++++++++-
+ 7 files changed, 305 insertions(+), 11 deletions(-)
+---
+base-commit: e8bab25f2afdf2f74359f6c743b21fafc9cdb03e
+change-id: 20230601-topic-sm8550-upstream-type-c-e85b4d971450
+
+Best regards,
+-- 
+Neil Armstrong <neil.armstrong@linaro.org>
+
