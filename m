@@ -2,98 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 5263B72ED2C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 22:39:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2254F72ED56
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 22:51:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239588AbjFMUjL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 16:39:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44980 "EHLO
+        id S239077AbjFMUv2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 16:51:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49744 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233808AbjFMUjK (ORCPT
+        with ESMTP id S240059AbjFMUv1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 16:39:10 -0400
-Received: from mo4-p02-ob.smtp.rzone.de (mo4-p02-ob.smtp.rzone.de [85.215.255.83])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1B56B8;
-        Tue, 13 Jun 2023 13:39:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1686688747; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=a/JWKGm11zhcb5nFHenvxaldcANs6IvdoFtpe4pmKFyLYgGd0RYN+rgY+mzYdRyeg1
-    w7ZUez9tN9wsqA1ioQJnEqEXV/SCbuMMHzkUHf915Gu745Jf+AgBbXhGNhroz8P8gShV
-    f+uq//dZQWVrESKR7sWM9Q0jyNDv/a8xnXfTCw5ZtZFPueqZvGfYOfel816PAXWQU6xq
-    DK2T/WaPd02Soh40neY2eUyKsRshkEbtjOU6ymDEpvhsmsF52ZAXvEsrLZMNuymi0gDl
-    ouCj8wtndBgFqPJ1G9URE3RrZryXN7lNXJqLwrkf0iCq0LCBoj+2GbMTZZDiHShVj5Db
-    XBnw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1686688747;
-    s=strato-dkim-0002; d=strato.com;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=hy7FRYIzYsOPwgbepFyiaiot8JFsm4Zkz9w3L4U2mzo=;
-    b=eMsGoBuCF8z9SlrJnJeWL3Itpb4yPHA2X9mlWHroytHEwKDdSrMY1t77ccVwFGfgdn
-    swIO/FdxghqHmkqWBbg3xvitzShy6SbZKfc7vXrodlEfygFSpYJjzvXpyO655OAGHIcL
-    jJwKC6OJD7JMNyiEMrHMZDDY6Yn/TQy3Hi+ZBU5ZMh89z7SbqDQDs+RTvEV/dhgnlyWy
-    /7IIfTBYVTfRFgmUrhE8gtiPhPXETiR03jhJn+BJ8kQAwfReGyCo7Ze4DOvzkZW4Ee+t
-    8m1D8DNNhEZPxnS29KPL6J/ewugAcYy8BRVWafPdZGJLp1uzJu9YlyewJ/hYHlroYjpd
-    qnDQ==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo02
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1686688747;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=hy7FRYIzYsOPwgbepFyiaiot8JFsm4Zkz9w3L4U2mzo=;
-    b=Ap0/aJTUv/o31aFP5t8fPvUo8WKNAxhWIbGPXQa6mc1Ky+f31wzk56ng0QqHGBZACS
-    GNtGDykKRzhafmeuVK5x/43izrpkad1yGGtrFOyqLLCCFfCrqe4w73EJRR9Unc/+kB8/
-    VC8FfOYhsQmfHOqSeveKSoHSBDzRq/GQCR1R4HNq6/Bd6jho1Djt62RefPtnmpX70oeP
-    gQRK02ShWvFbUvpA6Fx4bSMJxeyJu0Z409XHrwGas9v3g5vV3YgiCVcd4dhGUBosBWuC
-    NSWwz2UDqBdG8naOerlSybLdI2PbUzOCbIeU10L76lArvM8nIGPZq+Bpy29CmphNvYs6
-    QJIA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1686688747;
-    s=strato-dkim-0003; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=hy7FRYIzYsOPwgbepFyiaiot8JFsm4Zkz9w3L4U2mzo=;
-    b=uhwja9ofWSp2loylTSe1vZmg1mQm+iK/RNjeqEBUCADp1B1JuNTjJmeFLrxuSQ7ZcR
-    CZGXww4Kv0GPZ3QKjHBQ==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8Z3h"
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 49.5.3 DYNA|AUTH)
-    with ESMTPSA id Z82ec2z5DKd6a9o
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Tue, 13 Jun 2023 22:39:06 +0200 (CEST)
-Date:   Tue, 13 Jun 2023 22:39:05 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Konrad Dybcio <konrad.dybcio@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 17/22] interconnect: qcom: icc-rpm: Control bus rpmcc
- from icc
-Message-ID: <ZIjT6U24iwkBkqHW@gerhold.net>
-References: <20230526-topic-smd_icc-v4-0-5ba82b6fbba2@linaro.org>
- <20230526-topic-smd_icc-v4-17-5ba82b6fbba2@linaro.org>
- <ZIjTPyOfuVM7S1O1@gerhold.net>
+        Tue, 13 Jun 2023 16:51:27 -0400
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C09561BE5;
+        Tue, 13 Jun 2023 13:51:23 -0700 (PDT)
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35DKZ9uP017928;
+        Tue, 13 Jun 2023 20:51:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=/Av4fBGeoNH4wHA4MSFyZ2nuNzk8vnseeHEMbqvMOEU=;
+ b=IFvu/mkW/D3OHiwHX4jrjsFjW9zaLbZw9mlJWK350JVnR2IHy09ufUZVFuMbvz+d5/r7
+ 8nsFIWs4JetMKF28B0txG2PW/fs0FD+RtvMALUevxxxDpLu5FOa6WiVq2+kRLW9HT3a2
+ CVMZRsVVBsDXWAiZo6ZN43TQM2QoU2H6H7tCU5QYfLfQJBuN/q29tF6c+HJSHs6TAAbg
+ fRb29zAoeD1RQI7x+soYp0KPykpn2jAQcTZDSgjhGnz1qD6RvYj5NahdUG6TSbAoI/ks
+ 2APdfzsiEWaiZk0+s1zmUwKmh+5qulxxHnjEor+qh35ShfXjE2Iu3ZLErDAxPwopPPli Zg== 
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r6f7a28v2-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 13 Jun 2023 20:51:09 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA03.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35DKp8Io030667
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 13 Jun 2023 20:51:08 GMT
+Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 13 Jun
+ 2023 13:51:07 -0700
+Message-ID: <6ee95128-e97d-a1b6-8fed-c022479853de@quicinc.com>
+Date:   Tue, 13 Jun 2023 13:51:06 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZIjTPyOfuVM7S1O1@gerhold.net>
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_PASS,SPF_NONE,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] drm/msm/dp: Drop aux devices together with DP controller
+Content-Language: en-US
+To:     Doug Anderson <dianders@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+CC:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        "Kuogee Hsieh" <quic_khsieh@quicinc.com>,
+        Johan Hovold <johan+linaro@kernel.org>,
+        "Sean Paul" <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Polimera <quic_vpolimer@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
+        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+        Sankeerth Billakanti <quic_sbillaka@quicinc.com>
+References: <20230612220106.1884039-1-quic_bjorande@quicinc.com>
+ <c31ee9e4-1878-c0ae-70e6-42af5fd838c7@linaro.org>
+ <CAD=FV=Whn3GDDMQiJGYbSK8LF-OO247m69Sqcf7dMw6HFthgqw@mail.gmail.com>
+From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
+In-Reply-To: <CAD=FV=Whn3GDDMQiJGYbSK8LF-OO247m69Sqcf7dMw6HFthgqw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: VwJ2nj-aj5Ee-POqtHBF_Fl6Mdjtxe27
+X-Proofpoint-ORIG-GUID: VwJ2nj-aj5Ee-POqtHBF_Fl6Mdjtxe27
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-13_22,2023-06-12_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ mlxlogscore=800 clxscore=1015 priorityscore=1501 phishscore=0 adultscore=0
+ impostorscore=0 bulkscore=0 malwarescore=0 mlxscore=0 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306130181
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_MSPIKE_H2,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
         autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -101,42 +92,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 13, 2023 at 10:36:15PM +0200, Stephan Gerhold wrote:
-> Not even compile tested this time!
+Hi Doug
 
-Would have probably been worth it, sigh:
+On 6/13/2023 12:33 PM, Doug Anderson wrote:
+> Hi,
+> 
+> On Mon, Jun 12, 2023 at 3:40 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+>>
+>> On 13/06/2023 01:01, Bjorn Andersson wrote:
+>>> Using devres to depopulate the aux bus made sure that upon a probe
+>>> deferral the EDP panel device would be destroyed and recreated upon next
+>>> attempt.
+>>>
+>>> But the struct device which the devres is tied to is the DPUs
+>>> (drm_dev->dev), which may be happen after the DP controller is torn
+>>> down.
+>>>
+>>> Indications of this can be seen in the commonly seen EDID-hexdump full
+>>> of zeros in the log, or the occasional/rare KASAN fault where the
+>>> panel's attempt to read the EDID information causes a use after free on
+>>> DP resources.
+>>>
+>>> It's tempting to move the devres to the DP controller's struct device,
+>>> but the resources used by the device(s) on the aux bus are explicitly
+>>> torn down in the error path.
+>>
+>> I hoped that proper usage of of_dp_aux_populate_bus(), with the callback
+>> function being non-NULL would have solved at least this part. But it
+>> seems I'll never see this patch.
+> 
+> Agreed. This has been pending for > 1 year now with no significant
+> progress. Abhinav: Is there anything that can be done about this? Not
+> following up on agreed-to cleanups in a timely manner doesn't set a
+> good precedent. Next time the Qualcomm display wants to land something
+> and promises to land a followup people will be less likely to believe
+> them...
+> 
 
-> 
-> 	/*
-> 	 * Downstream checks whether the requested rate is zero, but it makes little sense
-> 	 * to vote for a value that's below the lower threshold, so let's not do so.
-> 	 */
-> 	if (qp->keep_alive)
-> 		agg_clk_rate[QCOM_SMD_RPM_ACTIVE_STATE]
-> 			= max(ICC_BUS_CLK_MIN_RATE, agg_clk_rate[QCOM_SMD_RPM_ACTIVE_STATE]);
-> 
-> 	/* Some providers have a non-RPM-owned bus clock - convert kHz->Hz for the CCF */
-> 	if (qp->bus_clk) {
-> 		rate = max_t(u64, agg_clk_rate[QCOM_SMD_RPM_ACTIVE_STATE],
-> 			     agg_clk_rate[QCOM_SMD_RPM_SLEEP_STATE]);
-> 		/* ARM32 caps clk_set_rate arg to u32.. Nothing we can do about that! */
-> 		reate = min_t(u64, 1000ULL * rate, ULONG_MAX);
-> 		return clk_set_rate(qp->bus_clk, rate);
-> 	}
-> 
-> 	for (i = 0; i < QCOM_SMD_RPM_STATE_NUM; i++) {
-> 		/* RPM only accepts <=INT_MAX rates */
-> 		rate = min_t(u64, active_rate, INT_MAX);
+Both QC and Google know there were other factors which delayed this last 
+3-4 months.
 
-->		rate = min_t(u64, agg_clk_rate[i], INT_MAX);
+But, I do not have any concrete justification to give you for the delays 
+before that apart from perhaps other higher priority chrome and upstream 
+bugs which kept cropping up.
 
-> 		if (rate == qp->bus_clk_rate[i])
-> 			continue;
-> 
-> 		ret = qcom_icc_rpm_set_bus_rate(qp->bus_clk_desc, rate, i);
-> 		if (ret)
-> 			return ret;
-> 
-> 		/* Cache the rate after we've successfully commited it to RPM */
-> 		qp->bus_clk_rate[i] = rate;
-> 	}
+Hence, all I can offer is my apologies for the delay.
+
+After seeing this patch on the list, we have revived this effort now and 
+re-assigned this within our team to take over from where that was left 
+off. It will need some time to transition but this will see the end of 
+the tunnel soon.
+
+Thanks
+
+Abhinav
