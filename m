@@ -2,144 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 31D3672EB76
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 21:03:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE73672EB83
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 21:05:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240421AbjFMTCe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 15:02:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48926 "EHLO
+        id S240471AbjFMTEL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 15:04:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49836 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233925AbjFMTCa (ORCPT
+        with ESMTP id S240425AbjFMTEI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 15:02:30 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0842E1BEA
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 12:02:29 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b1a7e31dcaso71597221fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 12:02:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686682947; x=1689274947;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=2EVZcCPFB1GTJ+QWap3KhHJTy/gr52NKGXQAEAB4e6g=;
-        b=d1DaQKWjqf0ITS2F+w4PLAzozKd3B2kVEP+nM0xGjvFWXaDuKQZ5/EBkiiIvK/g5d3
-         nk37E0ZroYqpL3NOw6Jmo6h44Ub5TLb2ZtLRE5aBNmEF8tkGfpyYppmg7E/RbH1egjVM
-         RrRDPmZGgVucBOsBf3vDDqLEP9HfwjfY5nIyldccS02j3inZljQJzsS3LGP6CF/0K+4C
-         XYR6RxrUel3RHQ79ZDG4oa5w3twaAUZjKzjYngWvvIv3yRxhVQpGMpo99U1sQNKHcdQ6
-         F1j8bxAgKZXNk55/5sf5pnSVplpGCeBIaRlFhKN+m4y73YOPLFXxip8YhQWc7vLnfnyr
-         sppQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686682947; x=1689274947;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2EVZcCPFB1GTJ+QWap3KhHJTy/gr52NKGXQAEAB4e6g=;
-        b=TwaU24jFWAFukeliXtXiLNrFkLvdHR/C/xwvHN1AQpTNU0P7mPG1BV/a7w59njJnVR
-         mf4744ZRsJvpRieXu4OCjNJ7+hB/rSgNkGVA5866T0EoQrbEeklqrwQTmlnzdIRC6Zxf
-         3o4q3hjf5pjQU8totE+Xk54W4uX8txp1icl/WIW5tz0kADCW3UmE/UmpKHc6vKdlppoj
-         OAS4ZVifnDXJsMntmeiftKjwyTY0Muej5DUbn7qHLEVFwoVcS9Hu8JRe2HLPUzlhOCPX
-         yd6N+CMPAIbVPv7pjj1d+FSzyGd3UzaGR2NmyWOAgOmsU6H4uvkCJg3WrF5EqxnGQQF/
-         3w5g==
-X-Gm-Message-State: AC+VfDz4c9L76NeqkHCy6V34OMwFKuL0Kz6P4TmiczILrtwye2tgKfgl
-        2RSgUtDalNCzhkT35mbL8hr2Fw==
-X-Google-Smtp-Source: ACHHUZ6DjJpRPOvESX58e85nO9sR6PlnFNzsWTps7zd03Gu0DU4gLGE7Uf0OlVChY2Jv6wdXtQcFjQ==
-X-Received: by 2002:a2e:9096:0:b0:2b2:16:45e3 with SMTP id l22-20020a2e9096000000b002b2001645e3mr5023381ljg.53.1686682947178;
-        Tue, 13 Jun 2023 12:02:27 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id d7-20020a2e96c7000000b002b1ad0e7357sm2258898ljj.51.2023.06.13.12.02.24
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jun 2023 12:02:26 -0700 (PDT)
-Message-ID: <0a57a9ad-67ab-cf1a-9bb7-c645de833450@linaro.org>
-Date:   Tue, 13 Jun 2023 21:02:23 +0200
+        Tue, 13 Jun 2023 15:04:08 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5DF77ED
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 12:04:06 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 6FF473F203;
+        Tue, 13 Jun 2023 21:04:03 +0200 (CEST)
+Date:   Tue, 13 Jun 2023 21:04:01 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v6 4/6] drm/msm/dpu: Set DATA_COMPRESS on command mode
+ for DCE/DSC 1.2
+Message-ID: <uwwybxxx2hq6paewdumg7be7o6u4y5nrw2h6guk67ugt3gc2h4@azwe4ez6zuju>
+References: <20230405-add-dsc-support-v6-0-95eab864d1b6@quicinc.com>
+ <20230405-add-dsc-support-v6-4-95eab864d1b6@quicinc.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH 24/26] arm64: dts: qcom: sa8775p-ride: enable the SerDes
- PHY
-Content-Language: en-US
-To:     Bartosz Golaszewski <brgl@bgdev.pl>, Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>
-Cc:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20230612092355.87937-1-brgl@bgdev.pl>
- <20230612092355.87937-25-brgl@bgdev.pl>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <20230612092355.87937-25-brgl@bgdev.pl>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230405-add-dsc-support-v6-4-95eab864d1b6@quicinc.com>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 12.06.2023 11:23, Bartosz Golaszewski wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On 2023-06-09 15:57:16, Jessica Zhang wrote:
+> Add a DPU INTF op to set the DCE_DATA_COMPRESS bit to enable the
+> DCE/DSC 1.2 datapath
 > 
-> Enable the internal PHY on sa8775p-ride.
+> Note: For now, this op is called for command mode encoders only. Changes to
+> set DATA_COMPRESS for video mode encoders will be posted along with DSC
+> v1.2 support for DP.
 > 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
 > ---
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-
----
-
-Bjorn, Krzysztof.. I was thinking whether we should even be disabling
-such hardware by default..
-
-Things that reside on the SoC and have no external dependencies could
-be left enabled:
-
-pros:
-- less fluff
-- we'd probably very quickly fix the missing PM calls
-- possibly less fw_devlink woes if we fail to get rid of references to
-  the disabled component?
-
-cons:
-- boot times
-- slightly more memory usage
-
-Konrad
->  arch/arm64/boot/dts/qcom/sa8775p-ride.dts | 4 ++++
->  1 file changed, 4 insertions(+)
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c |  3 +++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c          | 13 +++++++++++++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h          |  3 +++
+>  3 files changed, 19 insertions(+)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> index ab767cfa51ff..7754788ea775 100644
-> --- a/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> +++ b/arch/arm64/boot/dts/qcom/sa8775p-ride.dts
-> @@ -355,6 +355,10 @@ &qupv3_id_2 {
->  	status = "okay";
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> index 63ba0082b6ee..b856c6286c85 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> @@ -67,6 +67,9 @@ static void _dpu_encoder_phys_cmd_update_intf_cfg(
+>  		phys_enc->hw_intf->ops.bind_pingpong_blk(
+>  				phys_enc->hw_intf,
+>  				phys_enc->hw_pp->idx);
+> +
+> +	if (intf_cfg.dsc != 0 && phys_enc->hw_intf->ops.enable_compression)
+> +		phys_enc->hw_intf->ops.enable_compression(phys_enc->hw_intf);
+
+It was probably not necessary to drop this after adding dsc!=0:
+
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+
+>  }
+>  
+>  static void dpu_encoder_phys_cmd_pp_tx_done_irq(void *arg, int irq_idx)
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> index 530f82e34c1e..5b0f6627e29b 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
+> @@ -91,6 +91,7 @@
+>  
+>  #define INTF_CFG2_DATABUS_WIDEN	BIT(0)
+>  #define INTF_CFG2_DATA_HCTL_EN	BIT(4)
+> +#define INTF_CFG2_DCE_DATA_COMPRESS     BIT(12)
+>  
+>  
+>  static void dpu_hw_intf_setup_timing_engine(struct dpu_hw_intf *ctx,
+> @@ -512,6 +513,15 @@ static void dpu_hw_intf_disable_autorefresh(struct dpu_hw_intf *intf,
+>  
+>  }
+>  
+> +static void dpu_hw_intf_enable_compression(struct dpu_hw_intf *ctx)
+> +{
+> +	u32 intf_cfg2 = DPU_REG_READ(&ctx->hw, INTF_CONFIG2);
+> +
+> +	intf_cfg2 |= INTF_CFG2_DCE_DATA_COMPRESS;
+> +
+> +	DPU_REG_WRITE(&ctx->hw, INTF_CONFIG2, intf_cfg2);
+> +}
+> +
+>  static void _setup_intf_ops(struct dpu_hw_intf_ops *ops,
+>  		unsigned long cap)
+>  {
+> @@ -532,6 +542,9 @@ static void _setup_intf_ops(struct dpu_hw_intf_ops *ops,
+>  		ops->vsync_sel = dpu_hw_intf_vsync_sel;
+>  		ops->disable_autorefresh = dpu_hw_intf_disable_autorefresh;
+>  	}
+> +
+> +	if (cap & BIT(DPU_INTF_DATA_COMPRESS))
+> +		ops->enable_compression = dpu_hw_intf_enable_compression;
+>  }
+>  
+>  struct dpu_hw_intf *dpu_hw_intf_init(const struct dpu_intf_cfg *cfg,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> index 33895eca1211..99e21c4137f9 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
+> @@ -70,6 +70,7 @@ struct intf_status {
+>   * @get_autorefresh:            Retrieve autorefresh config from hardware
+>   *                              Return: 0 on success, -ETIMEDOUT on timeout
+>   * @vsync_sel:                  Select vsync signal for tear-effect configuration
+> + * @enable_compression:         Enable data compression
+>   */
+>  struct dpu_hw_intf_ops {
+>  	void (*setup_timing_gen)(struct dpu_hw_intf *intf,
+> @@ -106,6 +107,8 @@ struct dpu_hw_intf_ops {
+>  	 * Disable autorefresh if enabled
+>  	 */
+>  	void (*disable_autorefresh)(struct dpu_hw_intf *intf, uint32_t encoder_id, u16 vdisplay);
+> +
+> +	void (*enable_compression)(struct dpu_hw_intf *intf);
 >  };
 >  
-> +&serdes_phy {
-> +	status = "okay";
-> +};
-> +
->  &sleep_clk {
->  	clock-frequency = <32764>;
->  };
+>  struct dpu_hw_intf {
+> 
+> -- 
+> 2.40.1
+> 
