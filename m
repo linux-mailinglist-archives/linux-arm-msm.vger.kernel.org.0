@@ -2,157 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2ABAE72EA59
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 19:58:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DCFB372EA8A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 20:09:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229469AbjFMR5p (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 13:57:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45336 "EHLO
+        id S231401AbjFMSJJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 14:09:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50566 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239299AbjFMR5o (ORCPT
+        with ESMTP id S230295AbjFMSJJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 13:57:44 -0400
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25CB613E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 10:57:43 -0700 (PDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-9788faaca2dso956205766b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 10:57:43 -0700 (PDT)
+        Tue, 13 Jun 2023 14:09:09 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9767A19B1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 11:09:07 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f762b3227dso280663e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 11:09:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1686679061; x=1689271061;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ucwpoQAK13prSY87pdp529JG6f/Yd6pwjydVL0f7ZAE=;
-        b=g6QycsEa60HrU6oWp4C6SFMy1pdFd652snvvf0ntl1GhXQjWP/LV8GkoyTAc38GwR9
-         gS+Z/pm5AdbpUeGjsZ6eSgABpd1orEbn4k0e7PXtz6D35bbOgg2MPqt6ZaiL+KjiCPvE
-         NpGL9cGrMRH1KbKPW3XsirNVR3ujXqd6O7ccY=
+        d=linaro.org; s=google; t=1686679746; x=1689271746;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=lEVb9IU/qLN25isZtE62j5+X+b1dacmJcTX7I3nYwwo=;
+        b=jMYpcRoe2VA1OzbxShNcKcjRqDuFHxYqSWYKbv0bQUgDmAvOIeQcVsq7xrDOW7sWYz
+         4Kn39Czmrx5xvHyOSOLDINxyKGy/2P80piuCDUkfx4tzfWku4ULcCQvEdZFTMzjvzJx2
+         XbxKXrVbtPVSTtTRaIr/fEhYaresDQQZ/y1CijE8D1OK8PpJiqNlHS316vi5sSNSIDNv
+         nX669Qkp3h67TNGI0a0OCO8pqLRXdhGeULu2lxxg1m3JrFzFrPX//8Y0q0o45KqHUnX7
+         dferSCjen1bXnndvLANifVpew8Ul1eK2UrRPQ1fsgt2vTZl1IGA06p6yQNojtqFYPX1v
+         tOIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686679061; x=1689271061;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ucwpoQAK13prSY87pdp529JG6f/Yd6pwjydVL0f7ZAE=;
-        b=ibAdH/S510fvNnN3HkcOJWRXrk4lIqfv2m1oKxjRKwjvRcxXL0AFaCCv+2q8vDWbGR
-         1IAehQ4cEaj6T131p3uvs6zo1OvDO8EE/E4rJ9Kte2Ir2GgjCNyc9rJVrdgO50iFumEQ
-         h9WYy1uZAD8AhD6roF5ek8mnPQAP4zzTM2380MtF3aBL9zXj3XY0aOSW8oawA+1zsMgB
-         Nx89DZI0KRjELjlrTh8NJsj6K0LoWx42pkQSPa6DAAry9LPTSJM7kF/6+2SbZ50fwb/q
-         l7jHpqtXdrafGEcQgXpM0cT3LJg6Rbx0h4XP2VIkcoDq2AYAKcbcTX3BWpfcyoQ4xziZ
-         Pagw==
-X-Gm-Message-State: AC+VfDyOpsPnz1Wo7Ln274NtOPoJN+LL4mDlagieGVktTxSIDTSWtlCZ
-        YNbRJYJdtpMU5Yih9lCIzqCpuWXLKqiKZ5zTDj1C7OSL
-X-Google-Smtp-Source: ACHHUZ5CUAQBUzUvdEqDWf0Q8T2Fq0LOzEMiZSueqZe/6M+bf2WsEZfvYvy0uhg8DsKPCXDAV65xuw==
-X-Received: by 2002:a17:907:6ea0:b0:973:ff35:a9b8 with SMTP id sh32-20020a1709076ea000b00973ff35a9b8mr15297685ejc.62.1686679060759;
-        Tue, 13 Jun 2023 10:57:40 -0700 (PDT)
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com. [209.85.208.49])
-        by smtp.gmail.com with ESMTPSA id k7-20020a17090627c700b00977da9d4ef9sm7089429ejc.18.2023.06.13.10.57.39
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jun 2023 10:57:39 -0700 (PDT)
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-513ea2990b8so1417a12.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 10:57:39 -0700 (PDT)
-X-Received: by 2002:a50:ab0b:0:b0:514:95d4:c2bb with SMTP id
- s11-20020a50ab0b000000b0051495d4c2bbmr2429edc.2.1686679059461; Tue, 13 Jun
- 2023 10:57:39 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686679746; x=1689271746;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lEVb9IU/qLN25isZtE62j5+X+b1dacmJcTX7I3nYwwo=;
+        b=D2L4U1/RBCwPEm+v65w7wAyYuZ0V8h/COJxnfOyOTWV2wOyDfahFomfYeRbCaHIUUL
+         /3vV1cVr7jpxF2lX6+Knz3xUS6s2DXa9yHqMAkPBZHCZYhri6XpXWuvRN7Pv/QiRGIUQ
+         b6HAOI+gIclrqaQM2Sy9t16+mn/30stCGyHAT6Gzt9c+gTpqd23X5q/JRUCS5JQ7UuOp
+         t3taUBIwpl0ur7ud4Y/318M6h5mwV/G1OOrUmp8+NZ6ck3NDusMsH4XG6VpMtLeCh9zX
+         /3Sn1HssP13ThjOyWT5APlYYEUFMBQADYALoOmIdvU2aU2y7YSqinWvPUH5tXjU7rxYs
+         c4vA==
+X-Gm-Message-State: AC+VfDxuIppdMnPsiBK7hrUtZiN9NtjHS3LDVbbjPvMWuhdYSY4dusfj
+        bYVA9pKuxw1YEbbS2cXa7BSRhg==
+X-Google-Smtp-Source: ACHHUZ4Txu8rmkV8rAox0K2Jc9y2jvZqt1cpxRVy8Q++mlVFHUoK9t8ymQBvu5/3rvE/UoNnd6FGHA==
+X-Received: by 2002:a19:770e:0:b0:4eb:e8e:4139 with SMTP id s14-20020a19770e000000b004eb0e8e4139mr4117966lfc.2.1686679745827;
+        Tue, 13 Jun 2023 11:09:05 -0700 (PDT)
+Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
+        by smtp.gmail.com with ESMTPSA id x12-20020a19f60c000000b004efe8991806sm1842899lfe.6.2023.06.13.11.09.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jun 2023 11:09:05 -0700 (PDT)
+From:   Konrad Dybcio <konrad.dybcio@linaro.org>
+Date:   Tue, 13 Jun 2023 20:09:00 +0200
+Subject: [PATCH] arm64: dts: qcom: qrb4210-rb2: Enable on-board buttons
 MIME-Version: 1.0
-References: <1685729609-26871-1-git-send-email-quic_vnivarth@quicinc.com>
- <CAD=FV=Uy=ELwg2jhtFSrpndw-GxUO=0NTKotNymi3sqwG=ggnQ@mail.gmail.com>
- <af4c131a-b97d-a8e8-957d-77c31d3c816a@quicinc.com> <02dabcc8-2340-2188-f6a8-51513b147e7c@quicinc.com>
-In-Reply-To: <02dabcc8-2340-2188-f6a8-51513b147e7c@quicinc.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Tue, 13 Jun 2023 10:57:24 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WwcpyvMem08rOXrBMUWW_7ADgfGZGEnEFDky+96pSdpQ@mail.gmail.com>
-Message-ID: <CAD=FV=WwcpyvMem08rOXrBMUWW_7ADgfGZGEnEFDky+96pSdpQ@mail.gmail.com>
-Subject: Re: [PATCH] soc: qcom: geni-se: Do not bother about enable/disable of
- interrupts in secondary sequencer for non-uart modes
-To:     Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-Cc:     agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_msavaliy@quicinc.com, mka@chromium.org, swboyd@chromium.org,
-        quic_vtanuku@quicinc.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
-        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20230613-topic-rb2_-v1-1-696cd7dbda28@linaro.org>
+X-B4-Tracking: v=1; b=H4sIALuwiGQC/x2N0QqDMAwAf0XyvIBt1Yf9yhijjdkMSJV0ilD8d
+ 4OPd3BchcIqXODZVFDepciSDdyjAZpi/jHKaAy+9aEdXMD/sgqhJv/BfiR2PQWXugEsSLEwJo2
+ ZJkvyNs8mV+WvHPfh9T7PC1dpEGxxAAAA
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+X-Mailer: b4 0.12.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1686679744; l=1716;
+ i=konrad.dybcio@linaro.org; s=20230215; h=from:subject:message-id;
+ bh=/X0tAGEydFCfBkn2TuDyVWHG8ilu9psIXgXCnXJLL14=;
+ b=hhTmXGpcfJqAOkPldbPkbIpOLeq3jmpYU8AhaQpOrw279OvsgxGLUaetpPkrUGMpapw11Oj6o
+ 1v8esRZNCusCUE5YfBakoUvRleHt/2TWYuLjGWRVBQdlOkOQBqFsT5z
+X-Developer-Key: i=konrad.dybcio@linaro.org; a=ed25519;
+ pk=iclgkYvtl2w05SSXO5EjjSYlhFKsJ+5OSZBjOkQuEms=
+X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Enable the PMIC GPIO- and RESIN-connected buttons on the board.
 
-On Tue, Jun 13, 2023 at 9:07=E2=80=AFAM Vijaya Krishna Nivarthi
-<quic_vnivarth@quicinc.com> wrote:
->
-> Hi,
->
->
-> On 6/12/2023 7:09 PM, Vijaya Krishna Nivarthi wrote:
-> > Hi,
-> >
-> > Thank you very much for the review...
-> >
-> >
-> > On 6/7/2023 9:41 PM, Doug Anderson wrote:
-> >> Hi,
-> >>
-> >> On Fri, Jun 2, 2023 at 11:13=E2=80=AFAM Vijaya Krishna Nivarthi
-> >> <quic_vnivarth@quicinc.com> wrote:
-> >>> The select_fifo/dma_mode() functions in geni driver enable/disable
-> >>> interrupts (secondary included) conditionally for non-uart modes, whi=
-le
-> >>> uart is supposed to manage this internally.
-> >>> However, only uart uses secondary IRQs while spi, i2c do not care abo=
-ut
-> >>> these at all making their enablement (or disablement) totally
-> >>> unnecessary
-> >>> for these protos.
-> >>>
-> >>> Drop enabling/disabling secondary IRQs for non-uart modes.
-> >>> This doesn't solve any observed problem but only gets rid of code
-> >>> pieces
-> >>> that are not required.
-> >>>
-> >>> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-> >>> ---
-> >>>   drivers/soc/qcom/qcom-geni-se.c | 24 ++++--------------------
-> >>>   1 file changed, 4 insertions(+), 20 deletions(-)
-> >> This seems like a nice cleanup to me. It's still odd that the general
-> >> code has a special case for UART, but I guess the alternative is to
-> >> duplicate the exact same logic for both the i2c and SPI drivers. I
-> >> won't insist on that, though I wouldn't be opposed to it either.
-> >>
-> >> I guess one comment, though: should we also remove the code that
-> >> messes with "SE_GENI_S_IRQ_EN" in geni_se_select_gpi_mode()?
-> >
-> >
-> > Right now we have gpi-dma mode support for i2c and spi but not for uart=
-.
-> >
-> > Even when gpi-dma support is added, uart driver's interrupt handler
-> > would not be invoked so I believe it would be safe to drop that code
-> > from geni_se_select_gpi_mode() too.
-> >
-> > I will post v2 dropping same after some more lookup.
->
->
-> Looking at this once again, I am more inclined towards leaving alone
-> gpi_mode() for now.
->
-> It probably needs cleanup but we want to take that up at a later time.
->
-> Meanwhile its not causing much harm as we don't switch modes dynamically
-> for gpi case, so we are not losing much time there reading from and
-> writing to registers.
->
-> Please let know your thoughts.
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 37 ++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-It's not really about the time needed for the extra register writes,
-but just someone trying to understand the code who might be trying to
-figure out what bits are relevant. The bits related to the secondary
-sequencer's interrupts don't do anything useful when we're using the
-controller for i2c/spi, so why not delete them?
+diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+index 39597277343c..e23a0406eacc 100644
+--- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
++++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+@@ -7,6 +7,7 @@
+ 
+ #include <dt-bindings/leds/common.h>
+ #include "sm4250.dtsi"
++#include "pm6125.dtsi"
+ 
+ / {
+ 	model = "Qualcomm Technologies, Inc. QRB4210 RB2";
+@@ -28,6 +29,23 @@ clk40M: can-clk {
+ 		};
+ 	};
+ 
++	gpio-keys {
++		compatible = "gpio-keys";
++		label = "gpio-keys";
++
++		pinctrl-0 = <&kypd_vol_up_n>;
++		pinctrl-names = "default";
++
++		key-volume-up {
++			label = "Volume Up";
++			linux,code = <KEY_VOLUMEUP>;
++			gpios = <&pm6125_gpios 5 GPIO_ACTIVE_LOW>;
++			debounce-interval = <15>;
++			linux,can-disable;
++			wakeup-source;
++		};
++	};
++
+ 	hdmi-connector {
+ 		compatible = "hdmi-connector";
+ 		type = "a";
+@@ -219,6 +237,25 @@ &mdss_dsi0_phy {
+ 	status = "okay";
+ };
+ 
++&pm6125_gpios {
++	kypd_vol_up_n: kypd-vol-up-n-state {
++		pins = "gpio5";
++		function = "normal";
++		power-source = <0>;
++		bias-pull-up;
++		input-enable;
++	};
++};
++
++&pon_pwrkey {
++	status = "okay";
++};
++
++&pon_resin {
++	linux,code = <KEY_VOLUMEDOWN>;
++	status = "okay";
++};
++
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
 
--Doug
+---
+base-commit: 1f6ce8392d6ff486af5ca96df9ded5882c4b6977
+change-id: 20230613-topic-rb2_-5dce15c31b46
+
+Best regards,
+-- 
+Konrad Dybcio <konrad.dybcio@linaro.org>
+
