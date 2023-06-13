@@ -2,149 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id DB19C72DEA7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 12:01:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 71FE472DF15
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 12:19:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237627AbjFMKAl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 06:00:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40428 "EHLO
+        id S239883AbjFMKT0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 06:19:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50816 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242103AbjFMJ7x (ORCPT
+        with ESMTP id S240118AbjFMKTS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 05:59:53 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57C281701;
-        Tue, 13 Jun 2023 02:59:37 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35D9wFh6003963;
-        Tue, 13 Jun 2023 09:59:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=ufUPbiatUXptd6DIdwAP3dnQZDjpTKViqvSPQwOlxfY=;
- b=efPv+J726zLy04AjXMbJInbK2jlr+h481+rAIRCXnT975ko1FYgob9TgBE50REP2OYcB
- XVb9K91zCmjSNnJxU3wcwD5JduzPBPbljTsAYvmjBkzFrVWKRFS/BVV42E4DgbHCrGu6
- tkY/u6zY7mladxaVBi2clr5K7tf3/pA7oDF3ErpSj/sC7TceLYpOB1uGwgLrzwMg6tPY
- Igwpxha6QhFuE9VNBxA9id3k401mwmzZfFIWrHOrO8eC1joOWGfXnVePCW9zDebsq9HI
- O8OFUYZ7k4xfbpXVCMvE10XA1rqHOJRZFGpfrRw57/6wjHU9f+XeELd7ml1k2Ait5xla ZQ== 
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r690q1c35-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Jun 2023 09:59:33 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA01.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35D9xVdP012700
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Jun 2023 09:59:31 GMT
-Received: from [10.218.22.90] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 13 Jun
- 2023 02:59:25 -0700
-Message-ID: <cc4e1339-f1d5-58e5-ba41-7bd5085f3c89@quicinc.com>
-Date:   Tue, 13 Jun 2023 15:29:22 +0530
+        Tue, 13 Jun 2023 06:19:18 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E90F31B4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 03:19:15 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f6255ad8aeso6571627e87.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 03:19:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686651554; x=1689243554;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=gdr35NVvZt5grZEtwTcOPCBT+aQqpwrBlFz/EyaAZAY=;
+        b=MT0jfmQ3GaGeOaRdULj4v+tzEv/qyqc7kkboNHxFk95UTYxahYr1Wu/ReM1jUPq7Y7
+         5PnBXZMc96XvR2x5cF5Mo4g9VQzuxuve1smXA/x1s28HNaT0qoVmHkCdJF7zlce98Yah
+         Vaz6sEnoempjBHWeWrMDdGTGYwd16RzI8vGSIoX30PXPM8N1PCsjDICvwfsV33xxQ+bM
+         3PnDWmo4w56mPiOZQCh1PHZLXr662z+H0LyPnJ7YST9C+8Z8gHzx5BPW6C5bxnqP8edq
+         V+sYD+GUUs+oixU+TF6PE9SL7pob/GuO+3XieGjKuBrvD4M3luTpfPbY6LVciutjW5jy
+         DfQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686651554; x=1689243554;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gdr35NVvZt5grZEtwTcOPCBT+aQqpwrBlFz/EyaAZAY=;
+        b=cbwsQXaSQ8VvBH0+BgVihPO3PqI8SI++Mc0M4WdhRNB1S24OLrf1c8s+V0Gtm3zIgp
+         ECtcBmYqJLX9idy/i2N21R3oJQjViZs0nv/qZSbYLpnLgUscca1xIJVeDwJsqy05bpjG
+         82Uu4T01lN7HAyGMRkXfF3HOywpUuvsrZ02v+K0e7ZV+BD53r3UIdIW/4MixTnhW93L5
+         ATgN5ln4hmC37pDQCCvvKU5gwkvDtlPqAWOOB6DhOIFQzwL1GKE1sJZ3TEbL9HzwxVj1
+         hWUlcnCxNpPJpwDAlxoZdQW6WNq4f9+Wtergqdf6oMggNYRNIMjAiyseKigF76tFgIXJ
+         XOmw==
+X-Gm-Message-State: AC+VfDzjhvtnzuVcyZ2ZCXmjX6eoKfNqxliV1Hs8NRESzH1W19egSq7h
+        ovd72Ur8K+mmZp7ZOLAgsVvq4w==
+X-Google-Smtp-Source: ACHHUZ6PKN8jwmaGHls2F2gl2akc40go/8ljLq7Qwlu5jF0CTKmMviLXMRWLeIbs9+JRw390KY37Rg==
+X-Received: by 2002:ac2:5b9a:0:b0:4f3:9136:9cd0 with SMTP id o26-20020ac25b9a000000b004f391369cd0mr5734769lfn.44.1686651553968;
+        Tue, 13 Jun 2023 03:19:13 -0700 (PDT)
+Received: from ?IPV6:2a05:6e02:1041:c10:d6bf:b78b:2fff:653a? ([2a05:6e02:1041:c10:d6bf:b78b:2fff:653a])
+        by smtp.googlemail.com with ESMTPSA id n6-20020a7bcbc6000000b003f6f6a6e769sm13838413wmi.17.2023.06.13.03.19.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Jun 2023 03:19:13 -0700 (PDT)
+Message-ID: <16e72927-b3b0-7191-e05c-74acb5a77859@linaro.org>
+Date:   Tue, 13 Jun 2023 12:19:12 +0200
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [PATCH V4 0/4] Add camera clock controller support for SM8550
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>
-CC:     Bjorn Andersson <andersson@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Taniya Das <quic_tdas@quicinc.com>,
-        "Satya Priya Kakitapalli" <quic_skakitap@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-References: <20230609115058.9059-1-quic_jkona@quicinc.com>
- <09ccfa54-5ada-8dff-03a2-b2ffb07a58c1@linaro.org>
- <feebd8cd-7713-f086-356b-cc2657a9708e@linaro.org>
-From:   Jagadeesh Kona <quic_jkona@quicinc.com>
-In-Reply-To: <feebd8cd-7713-f086-356b-cc2657a9708e@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: _ikaCyHA4kUCNX8BpdkQ7iSBoggDETUa
-X-Proofpoint-GUID: _ikaCyHA4kUCNX8BpdkQ7iSBoggDETUa
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-13_04,2023-06-12_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=999 priorityscore=1501 spamscore=0 lowpriorityscore=0
- suspectscore=0 clxscore=1015 bulkscore=0 adultscore=0 phishscore=0
- malwarescore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306130087
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [RESEND 1/9] thermal/hwmon: Add error information printing for
+ devm_thermal_add_hwmon_sysfs()
+Content-Language: en-US
+To:     Yangtao Li <frank.li@vivo.com>, glaroque@baylibre.com,
+        rafael@kernel.org, amitk@kernel.org, rui.zhang@intel.com,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        festevam@gmail.com, linux-imx@nxp.com, thara.gopinath@gmail.com,
+        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
+        anarsoul@gmail.com, tiny.windzz@gmail.com, wens@csie.org,
+        jernej.skrabec@gmail.com, samuel@sholland.org,
+        thierry.reding@gmail.com, jonathanh@nvidia.com,
+        edubezval@gmail.com, j-keerthy@ti.com, f.fainelli@gmail.com
+Cc:     linux-pm@vger.kernel.org, linux-amlogic@lists.infradead.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-sunxi@lists.linux.dev,
+        linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org
+References: <20230613095624.78789-1-frank.li@vivo.com>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+In-Reply-To: <20230613095624.78789-1-frank.li@vivo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
-        autolearn_force=no version=3.4.6
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/13/2023 2:07 PM, Krzysztof Kozlowski wrote:
-> On 12/06/2023 04:25, Bryan O'Donoghue wrote:
->> On 09/06/2023 12:50, Jagadeesh Kona wrote:
->>> Add bindings, driver and devicetree node for camera clock controller on
->>> SM8550.
->>
->> This is very confusing.
->>
->> Your cover letter doesn't detail any changes and your individual patches
->> all say "no changes since v3", "no changes since v2"
->>
->> If this is a RESEND then mark it as a RESEND.
+On 13/06/2023 11:56, Yangtao Li wrote:
+> Ensure that all error handling branches print error information. In this
+> way, when this function fails, the upper-layer functions can directly
+> return an error code without missing debugging information. Otherwise,
+> the error message will be printed redundantly or missing.
 > 
-> That's indeed odd. Three versions without changes...
+> Signed-off-by: Yangtao Li <frank.li@vivo.com>
+> ---
+> Resend patchset so that the changes to thermal/hwmon.c are copied to everyone.
+>   drivers/thermal/thermal_hwmon.c | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
 > 
-> Best regards,
-> Krzysztof
-> 
+> diff --git a/drivers/thermal/thermal_hwmon.c b/drivers/thermal/thermal_hwmon.c
+> index fbe55509e307..a580add5a2f6 100644
+> --- a/drivers/thermal/thermal_hwmon.c
+> +++ b/drivers/thermal/thermal_hwmon.c
+> @@ -271,11 +271,14 @@ int devm_thermal_add_hwmon_sysfs(struct device *dev, struct thermal_zone_device
+>   
+>   	ptr = devres_alloc(devm_thermal_hwmon_release, sizeof(*ptr),
+>   			   GFP_KERNEL);
+> -	if (!ptr)
+> +	if (!ptr) {
+> +		dev_err(dev, "Failed to allocate device resource data\n");
+>   		return -ENOMEM;
+> +	}
 
-This is not a RESEND, actually there were changes from each version to 
-next version and change details were updated in respective patches. But 
-the patches in which changes were present were dropped in v4 based on 
-review comments. Will take care of updating cover letter as well with 
-changes across versions if we push the next series.
+When an allocation fails, there is a callstack showed. It is not 
+necessary to print an error in this case.
 
-Please find the summary of changes across versions till v4.
+>   
+>   	ret = thermal_add_hwmon_sysfs(tz);
+>   	if (ret) {
+> +		dev_err(dev, "Failed to add hwmon sysfs attributes\n");
+>   		devres_free(ptr);
+>   		return ret;
+>   	}
 
-Changes in v4:
-  - Dropped the extra patches added in v2, since the review comments on 
-v3 recommended an alternate solution.
+That should not display an error. The call site will take care of that.
 
-Changes in v3:
-  - Squashed 2 extra patches added in v2 into single patch as per review 
-comments
-  - Link to v3: 
-https://patchwork.kernel.org/project/linux-clk/list/?series=753150
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
-Changes in v2:
-  - Took care of review comments from v1
-  - Added 2 extra patches updating L configuration value across chipsets 
-to include CAL_L and RINGOSC_CAL_L fields and removed setting CAL_L 
-field in clk_lucid_evo_pll_configure().
-  - Link to v2: 
-https://patchwork.kernel.org/project/linux-clk/list/?series=751058
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
 
-v1:
-  - Initial CAMCC changes for SM8550
-  - Link to v1: 
-https://patchwork.kernel.org/project/linux-clk/list/?series=749294
-
-Thanks,
-Jagadeesh
