@@ -2,143 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A29172DBD2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 10:00:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 36D6772DC1C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 10:13:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240833AbjFMIAR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 04:00:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51160 "EHLO
+        id S239334AbjFMINw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 04:13:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32990 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241188AbjFMH76 (ORCPT
+        with ESMTP id S239227AbjFMINu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 03:59:58 -0400
-Received: from mail-vs1-xe36.google.com (mail-vs1-xe36.google.com [IPv6:2607:f8b0:4864:20::e36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 87B193C3A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:58:57 -0700 (PDT)
-Received: by mail-vs1-xe36.google.com with SMTP id ada2fe7eead31-43b87490a27so311483137.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 00:58:57 -0700 (PDT)
+        Tue, 13 Jun 2023 04:13:50 -0400
+Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D8D6E7D
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 01:13:48 -0700 (PDT)
+Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-5169f920a9dso10703851a12.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 01:13:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1686643135; x=1689235135;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UsJLNzamcvflvt39bJ653iKfbKKP5ytmbnffadMCPyM=;
-        b=NzCmxWBnfmLYJE9eX8SGkh9EhG7MM+9AO4XxEFNdYE36a5jCujth0fxlxzD/WRlvI8
-         wwHufGE06Z+3m94N+4rDADqMOC4ANpUJorLdPwiUD00X2QXZznGT46ZEvMM0nF5r7Hri
-         9GXJltOAClw2tO8tc9BIcNcAmC/T/tpq50YHo40fVChd+g0FeBMUbytkvo7nId5TBP0R
-         1L0PMHqcFc6yCQ9/WNDJ5GubKrmAIjPco7+TvVkVgtJNRwxw658g7/AUVJ8UH0JCOH2P
-         tjKwFbEn3WJEakotGAE6Gq3ferV6U8Sae8+CLPLCZsmps1TPLgesfq6pbt4z12KWyPjJ
-         ekjQ==
+        d=linaro.org; s=google; t=1686644027; x=1689236027;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=D3OpJMeBVyPepT6y+19D62Yik2MazC7XQyqeriZ2hjI=;
+        b=r8Y8fjt5fMiHz0pISTvJKANp2ZgWGUj3gwCQO9RiTQ/TSc3u81Cz4Ekt1bsA3Ykyaq
+         qDqe2Sf2ngfh/66GS+6ERaOT5UghxXPlrRXlHXAHrx7TDrKG/YHB8aKlkyU9t82HBNXy
+         8WK4ydHiUV/ox6uAteG+4U6EJLgi4+enxOhzTiMlk2NAqM3z7kIHZYbcNKaFrJwum/xs
+         kOThqg3Hk4OnrqNEy73i84g5Pc9x10011n7RUUJxxroRMM839rv2sA/Mnig8qtT6jEZl
+         UZcdKLmtxB+M8F8nltlbwIuBEOL64SRPiK+a/LsMi+wiX5A25LjIuj9h0llzctdYIE0X
+         RhUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686643135; x=1689235135;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=UsJLNzamcvflvt39bJ653iKfbKKP5ytmbnffadMCPyM=;
-        b=e4fAs479Vj9A3GDgS0qCZP5rRKE6UUpYDXBlqNUyqEJ/dE+S62oDiKmq6Ai1cx+ywQ
-         +HpxnYta0dTHF12C4/AEiGXjdyB8i881oQpPFzjSec5jHGIrTo96OL78sA+8p17d8kYu
-         BcYUKwnliJM85WvtHW3r8O3whRTDh6/Xg1JBbQEZvS9EkChggkjKw98OrrKEzmmWuhBm
-         9ibGUoM+VP5CdiH0DEykq5ypArTl4sMUsNnaEKyUqNaTn8s++nbMT+XLnect31xB6lAD
-         7THimHwXqLE2PruFthYDzxoZRwiY+fjHccBvlyejR3UeG+Id9G4Ahe642RxDwf0xI9bP
-         aGZg==
-X-Gm-Message-State: AC+VfDwi1mQ5Qdnl1nHXPk57p6k5CT9Kzjzv1f3WvJjnOXqe4JZfM8fZ
-        W/3A4b3NOzHOojGaqd83gY8CRLvmFcG+oYt9tdDM1g==
-X-Google-Smtp-Source: ACHHUZ6UD0q4lBsFYRt1iBzo8nMQl6CBXd1e25IrTyG7lfVFArPC+BBaQLENtHQYb5mOM3DJ18qcoESm5mZWq4y4/aI=
-X-Received: by 2002:a67:f610:0:b0:43b:398c:b251 with SMTP id
- k16-20020a67f610000000b0043b398cb251mr6161345vso.5.1686643135653; Tue, 13 Jun
- 2023 00:58:55 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686644027; x=1689236027;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=D3OpJMeBVyPepT6y+19D62Yik2MazC7XQyqeriZ2hjI=;
+        b=PVFznurml8viSgHAmaWDBOZge/8FGRI9cmR7H2GyxJF1cJ9zkI69pniLVBd0b6G6X9
+         8ZG29yjTWItaK21QszkXbFiT7JFcFB2XtjwgSrE6+Y8EfjrQL2vkE5mW6uhdQRTYP6gJ
+         o+sEDALVUXEqm1VX9la3fRPTspCgQaztUvyFHsMenCSRanCLWeHc1mjm8q8Od5zzvIlq
+         bTBEt+OLFoHA8ohcVavi3FyiunlGiMgdauUFJyTblRYcExPRKXRcSMom+BvP6oau3WJl
+         bDHFMTvUtAxIk6ec5Xrnh29ncGH0xwgvebQXUq9eVDu4z+EJ5FVnik/ml8loH5laWxna
+         tU1w==
+X-Gm-Message-State: AC+VfDyRB5Wmx/XWmm1Aflr7uEUdO8hL95pIzMlfB407wbF9lhn8MQFe
+        ZuZbonuj9PGgmnCzuR929GKnEg==
+X-Google-Smtp-Source: ACHHUZ5Zn9o91CfqxYX0+GVqhAXFnI/K40JMaG31uTxV1T+b4dB4r9CiuDfNCCG6VyFuo99I52jvyg==
+X-Received: by 2002:aa7:d6d5:0:b0:516:2dcf:d027 with SMTP id x21-20020aa7d6d5000000b005162dcfd027mr8192013edr.10.1686644027155;
+        Tue, 13 Jun 2023 01:13:47 -0700 (PDT)
+Received: from [192.168.1.20] ([178.197.219.26])
+        by smtp.gmail.com with ESMTPSA id z4-20020aa7cf84000000b005187a57fba1sm146765edx.77.2023.06.13.01.13.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 13 Jun 2023 01:13:46 -0700 (PDT)
+Message-ID: <e26878e5-fedc-b2fb-2213-5afd8479de4f@linaro.org>
+Date:   Tue, 13 Jun 2023 10:13:44 +0200
 MIME-Version: 1.0
-References: <20230612092355.87937-1-brgl@bgdev.pl> <20230612092355.87937-14-brgl@bgdev.pl>
- <20230612204042.litbbv23zdb3u5k7@halaney-x13s>
-In-Reply-To: <20230612204042.litbbv23zdb3u5k7@halaney-x13s>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Tue, 13 Jun 2023 09:58:44 +0200
-Message-ID: <CAMRc=MeFnbcpjxNb537t0nb8Gd4ZsGVWZn2j+yHusWjmQQge4w@mail.gmail.com>
-Subject: Re: [PATCH 13/26] net: stmmac: dwmac-qcom-ethqos: make the rgmii
- clock optional
-To:     Andrew Halaney <ahalaney@redhat.com>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH v3 1/8] dt-bindings: connector: usb-connector: add a gpio
+ used to determine the Type-C port plug orientation
+Content-Language: en-US
+To:     Neil Armstrong <neil.armstrong@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
-        version=3.4.6
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org
+References: <20230601-topic-sm8550-upstream-type-c-v3-0-22c9973012b6@linaro.org>
+ <20230601-topic-sm8550-upstream-type-c-v3-1-22c9973012b6@linaro.org>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20230601-topic-sm8550-upstream-type-c-v3-1-22c9973012b6@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jun 12, 2023 at 10:40=E2=80=AFPM Andrew Halaney <ahalaney@redhat.co=
-m> wrote:
->
-> On Mon, Jun 12, 2023 at 11:23:42AM +0200, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > On sa8775p there's no RGMII clock so make it optional in the driver.
-> >
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > ---
-> >  drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/=
-drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> > index 3438b6229351..252dca400071 100644
-> > --- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> > +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-> > @@ -663,7 +663,7 @@ static int qcom_ethqos_probe(struct platform_device=
- *pdev)
-> >       ethqos->rgmii_config_loopback_en =3D data->rgmii_config_loopback_=
-en;
-> >       ethqos->has_emac3 =3D data->has_emac3;
-> >
-> > -     ethqos->rgmii_clk =3D devm_clk_get(dev, "rgmii");
-> > +     ethqos->rgmii_clk =3D devm_clk_get_optional(dev, "rgmii");
->
-> This makes it optional for older platforms too, but as far as I know on
-> those platforms it is mandatory.
->
-> This can be enforced in dt-binding checks, but should we also enforce
-> that in the driver still? Honestly I feel like yes, but there's probably
-> some precedent maintainers follow on this front that I don't know of.
->
+On 13/06/2023 09:55, Neil Armstrong wrote:
+> On some platforms, the Type-C plug orientation is given on a GPIO line.
+> 
+> Document this optional Type-C connector property, and take the
+> assumption an active level represents an inverted/flipped orientation.
+> 
+> Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-While my gut feeling is that enforcing the clock list on the DT
-binding lever is enough, we can also do a different thing: rename the
-clock from rgmii_clk to link_clk or something similar and just
-determine the name based on the HW variant ("rgmii" or "phyaux"). Or
-even get the clock by its index? this way we could fold the next patch
-in the series into this one and simplify the code.
+Rob had here objections as these are bindings for the connector, not
+PMIC glink/altmode. I still doubt that Qualcomm USB Type-C connectors
+have such pin exposed. If you open the schematics, the GPIO is actually
+coming out from PMIC and is nowhere around the connector. Please drop my
+Ack.
 
-Bart
+This however could be a pin of the PMIC because it clearly is on the
+schematics.
 
->
-> >       if (IS_ERR(ethqos->rgmii_clk)) {
-> >               ret =3D PTR_ERR(ethqos->rgmii_clk);
-> >               goto out_config_dt;
-> > --
-> > 2.39.2
-> >
->
+
+
+Best regards,
+Krzysztof
+
