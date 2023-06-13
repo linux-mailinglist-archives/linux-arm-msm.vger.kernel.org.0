@@ -2,128 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 45D8772E47E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 15:45:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 56F9272E486
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 15:46:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242505AbjFMNnb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 09:43:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46966 "EHLO
+        id S239339AbjFMNqW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 09:46:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49384 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242480AbjFMNna (ORCPT
+        with ESMTP id S240124AbjFMNqV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 09:43:30 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F1F01171C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 06:43:25 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id ffacd0b85a97d-30ae95c4e75so5473300f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 06:43:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686663804; x=1689255804;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=GzQXlDHLRtYFXz6SgNSRR4StIWNnj8KrmIpcoKcJ1zQ=;
-        b=oIv8P/hYeEA2OYCa0ZnKRFcNVjJ09UrvD8kE3ZGaxmR7VnCXYAwRDcwYF4xjuljD5e
-         hJ0awvvtwmd4bl97i0/nplfyZs4BZaQV61W9iQAG3qg2K7zF9Pr/Inm02/FZsPqBQ5aG
-         TqzKpVHbxHqTcAEQY0+TOY8Q2H0FYWGgGlUbflSUNDJhYziIU2dhoN3D/yw+EFhDMqGE
-         V/IljPUl9YmVvyXd52ajDzZ92OJhgLV4cxkRWnIfbmhwFfQTMb3mnAXu4vxgvp6H+FjL
-         cWY5GStQwNlwp3kO0Zpn21nGdWH7NwNhQjsUbYknImowdJKksK8u+4PpVVIHiPWS/t24
-         Kydw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686663804; x=1689255804;
-        h=content-transfer-encoding:in-reply-to:organization:references:cc:to
-         :content-language:subject:reply-to:from:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GzQXlDHLRtYFXz6SgNSRR4StIWNnj8KrmIpcoKcJ1zQ=;
-        b=jAbC9U08Yue4WKOWYgdMsUcN6HnlLHOpUW4EMvCa0dLkm9awMoIZofmZr/GTcQYulm
-         5CYgr8zv3LA7uv7e36rNjWcqhyaEni3YFtLukaRUcrPaTAJZE6oiNpe86T7m7GQ3gxX3
-         jjbZxbo71aU1c+dzby6rHNWc+jYJTHzWLoue14xgOB1JFqUN1S27ZZ0M1TVe5zIQee7N
-         jQZqUenzAxxdc1cI6Q+lB6IqOqzYy+qjzZuXJZ+3/AP82PtohfRz4AiPLx5nSCNwvOqB
-         STwWvew2O2YeET1Vt0DFm2dgAngCBqhYwC68T8RpnK5JGcLamKlpgcfThiD1ofrGV3XV
-         yEvw==
-X-Gm-Message-State: AC+VfDxHIqXA11FXtPbWSuAEFkFhMukRlljem2qsJvyl+ErWUj/xXjz0
-        Q+0Vnp2uiSevm36Fp/gc1ufK+Q==
-X-Google-Smtp-Source: ACHHUZ7H2fb9GHz/G51cRdvfLQ6nxUPvVSuWF46e3FT1GPqNUTe4bl7FcKJ9MD6OZGFdEqIitR+Qtw==
-X-Received: by 2002:a05:6000:196e:b0:30e:5729:b5a5 with SMTP id da14-20020a056000196e00b0030e5729b5a5mr7324551wrb.38.1686663804450;
-        Tue, 13 Jun 2023 06:43:24 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:982:cbb0:48b:b939:c60e:e1ba? ([2a01:e0a:982:cbb0:48b:b939:c60e:e1ba])
-        by smtp.gmail.com with ESMTPSA id t15-20020a1c770f000000b003f8d0308604sm1560415wmi.9.2023.06.13.06.43.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jun 2023 06:43:23 -0700 (PDT)
-Message-ID: <8f9c549a-e37b-2877-be74-f25304a476fd@linaro.org>
-Date:   Tue, 13 Jun 2023 15:43:22 +0200
+        Tue, 13 Jun 2023 09:46:21 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20CCBAC;
+        Tue, 13 Jun 2023 06:46:20 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 43DEC62E96;
+        Tue, 13 Jun 2023 13:46:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A59D1C433F0;
+        Tue, 13 Jun 2023 13:46:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686663978;
+        bh=0rLyJ7Um8xHPNMu03OwaG3r7b8np6OjbkMb9kt0aihQ=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=iM+rcbROLB5JB/ybOayIqTBFWRea5VRToEaYbL7v/gTfVtFBx+lzMIaSVUSe/fcml
+         mDgb6VM1iRjtbcjMLqXsnSVO9LkEZmDlmiC3YZ2W05mijUgwOCvovA4SjuQHwFKM3Y
+         Jv9yrcViXVcndpEEH8y2D5oByRKcU1Qju4ILu1rOw/dePVRdDfb0fj6QfIMzsQJMG+
+         xLrGpqTC2Zz2kFpnNFbAniPV6W8fqPA6q6c5gDMBsR5wV+Qh6MYLQxSQp6GKhBta8C
+         i2XbGrCRBn0+WJIDynCpUNjIZtsrhfTHUkUKePbADlUAsC1phPYqi/JHHe1Xq+5Xc2
+         Hhs2pnXa8zStA==
+Received: by mail-lj1-f169.google.com with SMTP id 38308e7fff4ca-2b2f9f47256so42792081fa.1;
+        Tue, 13 Jun 2023 06:46:18 -0700 (PDT)
+X-Gm-Message-State: AC+VfDxicfrVknVkrozVwQvQvYdGmSruaz8wmpjRgpFK7ANpqeEw5jcK
+        VxBzbu23sz9f3nBEkVNubc7sBstWHpMl5OoXYg==
+X-Google-Smtp-Source: ACHHUZ6WmyAIhsvQmsDE0BVCAxrCpRVVRL5HwS87Mu9fv5OxAQFMDCIxNRznw/fOYZNggQvJaqHC522pRJwlOweV5/A=
+X-Received: by 2002:a2e:3c0c:0:b0:2af:25cf:92ae with SMTP id
+ j12-20020a2e3c0c000000b002af25cf92aemr5357006lja.22.1686663976708; Tue, 13
+ Jun 2023 06:46:16 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-From:   Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: neil.armstrong@linaro.org
-Subject: Re: [PATCH v3 5/8] qcom: pmic_glink: enable altmode for SM8550
-Content-Language: en-US
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
+References: <20230418150606.1528107-1-robh@kernel.org> <b8a062a0-10e9-bf17-c109-f6986f9dd02c@linaro.org>
+In-Reply-To: <b8a062a0-10e9-bf17-c109-f6986f9dd02c@linaro.org>
+From:   Rob Herring <robh@kernel.org>
+Date:   Tue, 13 Jun 2023 07:46:04 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJvmN7824Q0vnWpnO3a_Fdo5Ybc2tcGnJZAfDLM=-1Apg@mail.gmail.com>
+Message-ID: <CAL_JsqJvmN7824Q0vnWpnO3a_Fdo5Ybc2tcGnJZAfDLM=-1Apg@mail.gmail.com>
+Subject: Re: [PATCH] dt-bindings: pinctrl: qcom,pmic-mpp: Fix schema for "qcom,paired"
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org
-References: <20230601-topic-sm8550-upstream-type-c-v3-0-22c9973012b6@linaro.org>
- <20230601-topic-sm8550-upstream-type-c-v3-5-22c9973012b6@linaro.org>
- <5851627e-2972-f860-e965-dc8e73b01225@linaro.org>
-Organization: Linaro Developer Services
-In-Reply-To: <5851627e-2972-f860-e965-dc8e73b01225@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        Linus Walleij <linus.walleij@linaro.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/06/2023 13:54, Krzysztof Kozlowski wrote:
-> On 13/06/2023 09:55, Neil Armstrong wrote:
->> Altmode is also supported for SM8550, allow it.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   drivers/soc/qcom/pmic_glink.c | 6 +-----
->>   1 file changed, 1 insertion(+), 5 deletions(-)
->>
->> diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
->> index c87056769ebd..8af06bdc6f5a 100644
->> --- a/drivers/soc/qcom/pmic_glink.c
->> +++ b/drivers/soc/qcom/pmic_glink.c
->> @@ -342,13 +342,9 @@ static const unsigned long pmic_glink_sm8450_client_mask = BIT(PMIC_GLINK_CLIENT
->>   							   BIT(PMIC_GLINK_CLIENT_ALTMODE) |
->>   							   BIT(PMIC_GLINK_CLIENT_UCSI);
->>   
->> -/* Do not handle altmode for now on those platforms */
->> -static const unsigned long pmic_glink_sm8550_client_mask = BIT(PMIC_GLINK_CLIENT_BATT) |
->> -							   BIT(PMIC_GLINK_CLIENT_UCSI);
->> -
->>   static const struct of_device_id pmic_glink_of_match[] = {
->>   	{ .compatible = "qcom,sm8450-pmic-glink", .data = &pmic_glink_sm8450_client_mask },
-> 
-> Orientation and maybe all of the USB-related properties do not look like
-> sm8450 specific, but PM8350B. That's where CC_OUT pin is. I don't think
-> we represented this correctly, but rather copy-pasted downstream solution...
+On Tue, Jun 13, 2023 at 12:50=E2=80=AFAM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 18/04/2023 17:06, Rob Herring wrote:
+> > The "qcom,paired" schema is all wrong. First, it's a list rather than a=
+n
+> > object(dictionary). Second, it is missing a required type. The meta-sch=
+ema
+> > normally catches this, but schemas under "$defs" was not getting checke=
+d.
+> > A fix for that is pending.
+> >
+> > Signed-off-by: Rob Herring <robh@kernel.org>
+> > ---
+>
+> Linus,
+> Could you take it for current fixes? The code was wrong and dtschema is
+> warning now about this.
 
-We do not interact directly with PM8350B or PM8550B but with pmic_glink who
-does the work work for use, and this is platform specific.
+I have other things ready for 6.4, so I'll add this one.
 
-Neil
+Thanks,
+Rob
 
-> 
+>
+> Fixes: f9a06b810951 ("dt-bindings: pinctrl: qcom,pmic-mpp: Convert qcom
+> pmic mpp bindings to YAML")
+>
+>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+>
 > Best regards,
 > Krzysztof
-> 
-
+>
