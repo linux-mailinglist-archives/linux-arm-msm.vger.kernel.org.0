@@ -2,192 +2,245 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F5F472E259
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 13:58:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41EB872E271
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 14:06:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239617AbjFML56 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 07:57:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49124 "EHLO
+        id S235648AbjFMMG0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 08:06:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233858AbjFML55 (ORCPT
+        with ESMTP id S234648AbjFMMGZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 07:57:57 -0400
-Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01on2109.outbound.protection.outlook.com [40.107.117.109])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D76E6C5;
-        Tue, 13 Jun 2023 04:57:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=hvmfr2mf3bPyIOxkxgOKIk530/J9m31E7x9ImA31Y0t40VXqWLVmkC1lOFg7IYhMTJFWQClXWsnJSPCNYIOZ1u9o99BbxALvcCufMQbZRBfkW3/ecEiACheLdxw9DcnA6FwId4fjpAs5i2xvRQhNJKHN/TEM6j3zSvRovFcjAF8uwXUK10Q/N+ulvH/VYPdHnBmlZzn9Vq+yzc3JZayiIAgZZWZ91sJphxIHGAYp0PLxrVvT2JwScQ5+WOLFFvd+rmf+xP4eF83FiyXXU+7jZZDZyIoLhKURt7QdJspdYltZ4MwKo/1Upflbg6IrqJuiURwl37J3e1X4DiP2ehhH/g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RYSFrsSD46dy/ks1gp3MVL0PADZFYMRoXvs5cJizewA=;
- b=KrG+JkDYrwWakAESJlbEP+Cy+Iim1m/i0aeXy7NQGy8aY0lJSX4ATLk9Quh6NMjSk2vDyt5VR+FhaUTOflUtR3WcmSVhtRyaqorZyE1/E2a8zHWya1kMCL8nDbzyZzfJc9qmB8QBT3C8cgqlfmQYSBEGeUbu0FEp6sozkbssxHhoG+4zkn8YF00vjw+4SjvH8/4LJ+SWvSOjX7+6gzLEVxqbg8Nhx2mE2P/Pax5pNLthnIc4YosycQr9In4xHlWpDHtD8ouE6ERBcAPYRl15lNLDvo5t5jU+NNPyfn0LOTYfJL4j6Y9nuBZDuEbYaNDVBV7KDNiYxe5vs0aZHNv/Tg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
- dkim=pass header.d=vivo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RYSFrsSD46dy/ks1gp3MVL0PADZFYMRoXvs5cJizewA=;
- b=RGT1mfOtGErPAxKVOBX81tlT0NbdSPUYZ2Jm74tGBmx1FoLwOva6BBDP3xTGNgz9TMPlB/fJfx4StzweAnjKA8fU4d8Avn/lka/j0raTs0XNadDUieZ48/eMcPGDL3CzXnJQq/VFYOeoIebP8iQVoJkFe+8LkT4DyyH3jsUjgW+2JHhrvlMKlqUxflObfae4XRBcMJHtdV+rFXPar5TvJLF0kg5JRnZHQU2eSq3nw6QJHBYz2IRj2QeHwMjAv1nH50VQUMqx/s0IjaxsmvooQc/ZUEdpFEd7mdhib1oZ4cHSJ7oYwmJwgEQzEJYkTwe6QOQbE1gFYIEtYZBMNY6HoQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=vivo.com;
-Received: from SEZPR06MB5269.apcprd06.prod.outlook.com (2603:1096:101:78::6)
- by SEYPR06MB6009.apcprd06.prod.outlook.com (2603:1096:101:db::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6455.44; Tue, 13 Jun
- 2023 11:57:50 +0000
-Received: from SEZPR06MB5269.apcprd06.prod.outlook.com
- ([fe80::76d6:4828:7e80:2965]) by SEZPR06MB5269.apcprd06.prod.outlook.com
- ([fe80::76d6:4828:7e80:2965%3]) with mapi id 15.20.6455.039; Tue, 13 Jun 2023
- 11:57:50 +0000
-Message-ID: <1431a1a9-6ce2-664e-080f-42483aa2b124@vivo.com>
-Date:   Tue, 13 Jun 2023 19:57:23 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.1
-Subject: Re: [RESEND 1/9] thermal/hwmon: Add error information printing for
- devm_thermal_add_hwmon_sysfs()
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>, glaroque@baylibre.com,
-        rafael@kernel.org, amitk@kernel.org, rui.zhang@intel.com,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
-        festevam@gmail.com, linux-imx@nxp.com, thara.gopinath@gmail.com,
-        agross@kernel.org, andersson@kernel.org, konrad.dybcio@linaro.org,
-        anarsoul@gmail.com, tiny.windzz@gmail.com, wens@csie.org,
-        jernej.skrabec@gmail.com, samuel@sholland.org,
-        thierry.reding@gmail.com, jonathanh@nvidia.com,
-        edubezval@gmail.com, j-keerthy@ti.com, f.fainelli@gmail.com
-Cc:     linux-pm@vger.kernel.org, linux-amlogic@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, linux-sunxi@lists.linux.dev,
-        linux-tegra@vger.kernel.org, linux-omap@vger.kernel.org
-References: <20230613095624.78789-1-frank.li@vivo.com>
- <3ab066e3-97f5-8bd1-eaae-3d790432fb6f@linaro.org>
-From:   Yangtao Li <frank.li@vivo.com>
-In-Reply-To: <3ab066e3-97f5-8bd1-eaae-3d790432fb6f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SGXP274CA0012.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b8::24)
- To SEZPR06MB5269.apcprd06.prod.outlook.com (2603:1096:101:78::6)
+        Tue, 13 Jun 2023 08:06:25 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75888C5;
+        Tue, 13 Jun 2023 05:06:24 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 037276200B;
+        Tue, 13 Jun 2023 12:06:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5685C433EF;
+        Tue, 13 Jun 2023 12:06:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686657983;
+        bh=BIozQFeKN2aJ2jZ8p8QET0oaMrJoGdkmGxw7siSplFg=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=OkR4DKQ0GbOQL2zHAL3MwYkCx8Z06jPZxzdYzUjNUfgLdd8hdRv3F2M0ytfUApHAE
+         isEoOaYSdyvNDdEf8lvBBirbqd7P7N6drBz6wAB/xuXD/Mcb5JFutURj8ZLagV9wYi
+         k1f983F/a4l32CQzltJbP9wyAxhUpSkEZXlED73KePN7e1xNwTBpjtSA2O312iDzb1
+         7hoNLZYBbNaNmdCLFEA+9mPbHz0vQCrpNQgoXvZRgD8YROuDpaxhh40KLNA0pNKPCE
+         KQDe3cxh0+li6i7tTY9CR/xZZ59de+lv7wXvTcfFT+8CDa/w5X4NDszYWZGH7526sg
+         foa38RB5gH6GQ==
+Date:   Tue, 13 Jun 2023 14:06:20 +0200
+From:   Maxime Ripard <mripard@kernel.org>
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Jiri Kosina <jikos@kernel.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        dri-devel@lists.freedesktop.org,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        linux-input@vger.kernel.org, Daniel Vetter <daniel@ffwll.ch>,
+        linux-kernel@vger.kernel.org, hsinyi@google.com,
+        cros-qcom-dts-watchers@chromium.org, devicetree@vger.kernel.org,
+        yangcong5@huaqin.corp-partner.google.com,
+        linux-arm-msm@vger.kernel.org,
+        Chris Morgan <macroalpha82@gmail.com>
+Subject: Re: [PATCH v2 00/10] drm/panel and i2c-hid: Allow panels and
+ touchscreens to power sequence together
+Message-ID: <boqzlmbrp5rvepmckkqht4h5auspjlbt5leam4xivy7a4bqxnj@iuxxhooxcphk>
+References: <20230607215224.2067679-1-dianders@chromium.org>
+ <jehxiy3z4aieop5qgzmlon4u76n7gvt3kc6knxhb5yqkiz3rsp@mx27m75sx43r>
+ <CAD=FV=Wr7Xatw1LsofiZ5Xx7WBvAuMMdq4D5Po1yJUC1VdtZdg@mail.gmail.com>
+ <z7wi4z4lxpkhvooqhihlkpubyvueb37gvrpmwk6v7xwj2lm6jn@b7rwyr5ic5x5>
+ <CAD=FV=XnANRM=+2D9+DzcXx9Gw6iKKQsgkAiq8=izNEN-91f_Q@mail.gmail.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SEZPR06MB5269:EE_|SEYPR06MB6009:EE_
-X-MS-Office365-Filtering-Correlation-Id: a52f53fc-6599-4b91-d5c5-08db6c05698a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: FNj6uT98/xwcYnFEBYk34ValRfGY69kbgOcM+M80K6EDhRtOv2qpFjp1FVuuEafG4wHl13IE0SH4hqvzDwXTAW9lctSggztwLHTkNULbDCpORHONlwOTE/xoxw25VOI/i4uUGktoA/3oOF3kuGJF0mRx4sOopeKk25t0RdahWkC3WdCZwTxlEMYJgt62nHl+CNUx0TDe/mscxx2Lfj0AuAHcy1odbfOI0fumeUSG2Iy6zBeumAjIcAr5ACIONsOda9J5DZoni5UE+tWZITymPckvU0Z2nRcajoOmWCytnC0oepO4XA+p9gklDEyTJJnRZ9kWcTBnu/j6cptk3e2KCQ5ZjAG5M0SzKgrwUWRRblYOtf6oUOzVW2Nteel8ZQrgqHYF/WfPNg5L9I5sY81Nfdr5kvlKTPxM8J67l0NkQroblreOok4oQZWvn1tuFFzvLIciufe6v0h1TRLjKvDOdrdx+iylXI9147qipLx1iRTv5RvlIPABIBMlp0fZN1fvhb7UeSTNBiafibptWf+64cGXCsrg7foHSQtwe2rQfGzCtqQcUGXtppb6E3/wT/BhVQNN+770ezuzvGe8SnrH8H4K+0fMAF8TVZnQ/8QOnUi7ayjzut9ZbOhZVi3ekmkufRcVJ5RBWtFvyqbcPE35nss+3ZpoaAlfSfZqUglrD3qU4BNAxkK0gFs+epF2UfdX
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR06MB5269.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(346002)(376002)(396003)(39860400002)(136003)(366004)(451199021)(4326008)(66556008)(66946007)(316002)(7406005)(7416002)(66476007)(31686004)(84970400001)(41300700001)(186003)(2906002)(478600001)(8676002)(8936002)(5660300002)(6666004)(966005)(52116002)(6486002)(6512007)(6506007)(53546011)(26005)(921005)(83380400001)(36756003)(86362001)(2616005)(31696002)(38100700002)(38350700002)(45980500001)(43740500002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aCtYRDBUdXBRVy9VZkEzVGNKNm5qeE8rSEVkRGorYjBCQTBGRzEyT2g0Y2tE?=
- =?utf-8?B?dEdKd0M0bTBGL1lpNFJJRllJcjBEaFhsMUgyTlMzNUxFK29QSHpSVG5XZ3Bl?=
- =?utf-8?B?YkVocDFaVGh0b2JYRmZIVHJGajdZTi8zNStKNW5CY1h5NzYzSlZwWmo5VzV1?=
- =?utf-8?B?QmNSeHkxSlg1TFlOMlg4VWdzSHRWRDIvK3YyWWpGWDBmeEFScUdOTnVTakw1?=
- =?utf-8?B?QjZEU1c0QXIyRVJ2TmFKckczdnVSbVhVUXFZOHZqU0pRWUtsMGp4WWZlenNK?=
- =?utf-8?B?MDRvazhrVmNXRXcrdzRiKzM0cGFjV3dtWFpxVkVTV2NGY08wWDY5VzVqd0JY?=
- =?utf-8?B?THArYlpiR3AxWmgzUHVpVFRyWTRkYlhIN2VZVHZaM01UMHBGRGVxS1ZIV2hD?=
- =?utf-8?B?NzFKNnhvRnJCS0UrTTl5SjBaQTR5OU81YjJ4TE5KSEtTUHF0VnV3Q1BlYzAy?=
- =?utf-8?B?WTRBaW0rYXpWaXdQRTJwSHhBZXB4cmxKZDZJSXpHRWZaRm1aY0dMSHZWMG1B?=
- =?utf-8?B?Q2FUSjJqRHh0ZG9rRzlnRDRKVnlNb3RVUGpoanlQRTBEdjl3NkFTbTB4YjNH?=
- =?utf-8?B?R3dSL0JhemROcVhwOW9pM1BXUWJ3eVVrS0ltOWFoY0poT0N5bytKRk5uZDlJ?=
- =?utf-8?B?NkxPU3JLMDE1cGVHZmtsMTRRWENuOURYbXNVNlpET1pqN09Na21qNGtjL2hR?=
- =?utf-8?B?QklTanErb3NOTnlicGwyd3NBUGY4OVZUbUlNalZMTm9MVTV2MTVwcm5hU25G?=
- =?utf-8?B?WDl3c0VqNUNRRzNMZ2h2Yy82dmtidHltb2hBSG10OUxIcEtzSGN2ZTZDNkI5?=
- =?utf-8?B?ejJ3ZXJtRkdNRlJjd3ZVaC93WjN4dXNmeEFvSGRERnhPVWpIZGNQUzIvaEVZ?=
- =?utf-8?B?emhFWThSRnVnZmN2NjVQYjA3czRzWGpJRXI1Z1d3VGdoV1dROTgyTzEzd0tw?=
- =?utf-8?B?VnRYYndocENEVTZqQmJ3alc0YldwWVdtZkJYU3ZGUTNlZUVDZEJhSmFxbU1Q?=
- =?utf-8?B?c3hKRG9xY3RWOWtSdGZ2NDNlZlFaNW9ZNlJESVRDRzF3cngxcXFZSGRUQTFF?=
- =?utf-8?B?VjFnOFA3Z0RuT3NJNUhoQm9iYmtKUHg3anZiQTFEdTJ2d1I3RlAwNlNOVWdE?=
- =?utf-8?B?bDh2NzBSMWNmdTR5TG95NExaQnRWbmhncHJmVlhsa25Ta0NNWC9wWGJ0aFA5?=
- =?utf-8?B?Mk1lZUFNYVBDKy9JRUhobE5CUDRTZWIzWlRxc0h4L01GUlAvRUlWTGs0Mk4r?=
- =?utf-8?B?N1NUSjNscytBWHY1NFJmdFJpTWlqbHFFL1k1UkVPUTk0dEFtbGtrVmo5cDIy?=
- =?utf-8?B?SzN6VnlIcE5OdkkvTHI1NkZ0akU4WTJGTElaQUFYT1BMTG04aUpXb0ZGNGlL?=
- =?utf-8?B?M2ViZ0MxRnZURjFEWG9rYzFVRW1EYjhFZnFhdXVxUUJqUWZGQlpGcXFGaEFo?=
- =?utf-8?B?TDdiREo4ZU9zTDNRNk0rRC9PbnE3bHZENEZISTE4Y05ZdHIva0J5eDRRZGZj?=
- =?utf-8?B?aTlzblZXOGlKZDUwMytXbUp1MUxTRy9Ob2hkZko0VnlrbTFvRlBKZXRzSXF3?=
- =?utf-8?B?SjJyYXhKNG9OdWdPdjk4WVFFWEsxaUY4ZS85Y3hsdVFQYzM4MDFZeVIyV3hT?=
- =?utf-8?B?Wk90NUFvUkViUlNNZUk5VmdTNlV4akNJL3kvQWFPUmVwZ2U3b091RkZ2Z0pO?=
- =?utf-8?B?Z3dRZ1hId1JVRWhiTkRYTmpYaUtHbFJwckk5MGtjZWxjSkZ0bkY1MDk2Z1cz?=
- =?utf-8?B?eWVkaDEzdjhvTzJwUCtMS3ZTdHhVM25Xay82YWtPYzJsc0thMm8yUU5qUnJq?=
- =?utf-8?B?eHR3N1liNzhId21oZkZwaXlKUTB3Tmc1MmtHa256RWZkQXF6bWxnUjBlV21T?=
- =?utf-8?B?VGhEaEs4elVXcVpNdDRzdUsveDJiUE01STNoU0NjSDZBSUJJSkllY0wzZ2RZ?=
- =?utf-8?B?UjdjUTBtWEpPcVZ1Q0xwTGszWlpRdFlZbVNEaUdoTXFINlcyNnNjc1NpVW9z?=
- =?utf-8?B?Zm92MjR2SFFiVm1VYmxrZWRrMTU3NE1weDdZMEZpN2FWMWFSMWQ1cWwwZkdq?=
- =?utf-8?B?Qmo2Y25VR2N0dE4wWm5hdEFHdU9sWThlOWdpTHVyZTFSZWF1R2NiY1FIT3ds?=
- =?utf-8?Q?KKKnUSrJaGGVl0zsVowkUxxS9?=
-X-OriginatorOrg: vivo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a52f53fc-6599-4b91-d5c5-08db6c05698a
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB5269.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jun 2023 11:57:50.6351
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4l2J6ICqbOOnX6EGrDVjjScwdXOqFLWif6gDxFo3/BRNeEuFJrBPri5/aoS57Bipl0nhkG29Gt1YEBo/D7PLjg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB6009
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        RCVD_IN_MSPIKE_H2,SPF_HELO_PASS,SPF_PASS,T_SCC_BODY_TEXT_LINE,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="yl5nvno6lnks7ke3"
+Content-Disposition: inline
+In-Reply-To: <CAD=FV=XnANRM=+2D9+DzcXx9Gw6iKKQsgkAiq8=izNEN-91f_Q@mail.gmail.com>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2023/6/13 18:20, Daniel Lezcano wrote:
 
-> On 13/06/2023 11:56, Yangtao Li wrote:
->> Ensure that all error handling branches print error information. In this
->> way, when this function fails, the upper-layer functions can directly
->> return an error code without missing debugging information. Otherwise,
->> the error message will be printed redundantly or missing.
->>
->> Signed-off-by: Yangtao Li <frank.li@vivo.com>
->> ---
->> Resend patchset so that the changes to thermal/hwmon.c are copied to 
->> everyone.
->>   drivers/thermal/thermal_hwmon.c | 5 ++++-
->>   1 file changed, 4 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/thermal/thermal_hwmon.c 
->> b/drivers/thermal/thermal_hwmon.c
->> index fbe55509e307..a580add5a2f6 100644
->> --- a/drivers/thermal/thermal_hwmon.c
->> +++ b/drivers/thermal/thermal_hwmon.c
->> @@ -271,11 +271,14 @@ int devm_thermal_add_hwmon_sysfs(struct device 
->> *dev, struct thermal_zone_device
->>         ptr = devres_alloc(devm_thermal_hwmon_release, sizeof(*ptr),
->>                  GFP_KERNEL);
->> -    if (!ptr)
->> +    if (!ptr) {
->> +        dev_err(dev, "Failed to allocate device resource data\n");
->>           return -ENOMEM;
->> +    }
->>         ret = thermal_add_hwmon_sysfs(tz);
->>       if (ret) {
->> +        dev_err(dev, "Failed to add hwmon sysfs attributes\n");
->>           devres_free(ptr);
->>           return ret;
->>       }
->
-> Sorry, I commented to quickly this patch. Please discard my last 
-> comment. I think it is a good improvement.
->
-> Can you replace the dev_err to dev_warn ?
+--yl5nvno6lnks7ke3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Based on the thermal/tuxsuite branch of daniel.lezcano/linux.git, patch 
-v3 was sent.
+On Mon, Jun 12, 2023 at 02:13:46PM -0700, Doug Anderson wrote:
+> Hi,
+>=20
+> On Mon, Jun 12, 2023 at 9:03=E2=80=AFAM Maxime Ripard <mripard@kernel.org=
+> wrote:
+> >
+> > > > I guess we can have
+> > > > something much simpler with a bunch of helpers that would register a
+> > > > i2c-hid device and would be called by the panel driver itself.
+> > > >
+> > > > And then, since everything is self-contained managing the power sta=
+te
+> > > > becomes easier as well.
+> > >
+> > > Can you give me more details about how you think this would work?
+> > >
+> > > When you say that the panel would register an i2c-hid device itself,
+> > > do you mean that we'd do something like give a phandle to the i2c bus
+> > > to the panel and then the panel would manually instantiate the i2c-hid
+> > > device on it? ...and I guess it would need to be a "subclass" of
+> > > i2c-hid that knew about the connection to the panel code? This
+> > > subclass and the panel code would communicate with each other about
+> > > power sequencing needs through some private API (like MFD devices
+> > > usually do?). Assuming I'm understanding correctly, I think that could
+> > > work.
+> >
+> > I guess what I had in mind is to do something similar to what we're
+> > doing with hdmi-codec already for example.
+>=20
+> By this you mean "rockchip,hdmi-codec" and "mediatek,hdmi-codec", right?
 
-Included [1] for cleanup thermal-generic-adc.
+No, sorry it was a bit ambiguous. I meant how we instantiate the
+hdmi-codec driver here for example:
 
-[1] 
-https://patchwork.kernel.org/project/linux-pm/patch/20230613093054.2067340-1-wenst@chromium.org/
+https://elixir.bootlin.com/linux/v6.3.7/source/drivers/gpu/drm/exynos/exyno=
+s_hdmi.c#L1665
+https://elixir.bootlin.com/linux/v6.3.7/source/drivers/gpu/drm/vc4/vc4_hdmi=
+=2Ec#L2539
+https://elixir.bootlin.com/linux/v6.3.7/source/drivers/gpu/drm/tegra/hdmi.c=
+#L1525
 
+> > We have several logical components already, in separate drivers, that
+> > still need some cooperation.
+> >
+> > If the panel and touchscreen are on the same i2c bus, I think we could
+> > even just get a reference to the panel i2c adapter, get a reference, and
+> > pass that to i2c-hid (with a nice layer of helpers).
+>=20
+> Just for reference: the panel and touchscreen aren't on the same i2c
+> bus. In the cases that I've looked at the panel is either controlled
+> entirely by eDP or MIPI signals and isn't on any i2c bus at all. The
+> touchscreen is on the i2c bus in the cases I've looked at, though I
+> suppose I could imagine one that used a different bus.
 
-Thx,
+Ok, so we would indeed need a phandle to the i2c controller
 
-Yangtao
+> > What I'm trying to say is: could we just make it work by passing a bunch
+> > of platform_data, 2-3 callbacks and a device registration from the panel
+> > driver directly?
+>=20
+> I think I'm still confused about what you're proposing. Sorry! :( Let
+> me try rephrasing why I'm confused and perhaps we can get on the same
+> page. :-)
+>=20
+> First, I guess I'm confused about how you have one of these devices
+> "register" the other device.
+>=20
+> I can understand how one device might "register" its sub-devices in
+> the MFD case. To make it concrete, we can look at a PMIC like
+> max77686.c. The parent MFD device gets probed and then it's in charge
+> of creating all of its sub-devices. These sub-devices are intimately
+> tied to one another. They have shared data structures and can
+> coordinate power sequencing and whatnot. All good.
 
+We don't necessarily need to use MFD, but yeah, we could just register a
+device for the i2c-hid driver to probe from (using
+i2c_new_client_device?)
 
-> Thanks
->
+> ...but here, we really have something different in two fundamental ways:
+>=20
+> a) In this case, the two components (panel and touchscreen) both use
+> separate primary communication methods. In DT the primary
+> communication method determines where the device is described in the
+> hierarchy. For eDP, this means that the DT node for the panel should
+> be under the eDP controller. For an i2c touchscreen, this means that
+> the DT node for the touchscreen should be under the i2c controller.
+> Describing things like this causes the eDP controller to "register"
+> the panel and the i2c controller to "register" the touchscreen. If we
+> wanted the panel driver to "register" the touchscreen then it would
+> get really awkward. Do we leave the touchscreen DT node under the i2c
+> controller but somehow tell the i2c subsytem not to register it? Do we
+> try to dynamically construct the touchscreen i2c node? Do we make a
+> fake i2c controller under our panel DT node and somehow tell the i2c
+> core to look at it?
+
+I would expect not to have any DT node for the touchscreen, but we would
+register a new i2c device on the bus that it's connected to.
+
+In essence, it's also fairly similar to what we're doing with
+i2c_new_ancillary_device() on some bridges. Except the primary device
+isn't necessarily controlled through the I2C bus (but could be, I'm
+pretty sure we have that situation for RGB or LVDS panels too).
+
+The plus side would also be that we don't really need a DT to make it
+work either. We just need the panel driver to probe somehow and a
+pointer to the i2c_adapter.
+
+> b) Things are different because the two devices here are not nearly as
+> intimately tied to one another. At least in the case of "homestar",
+> the only reason that the devices were tied to one another was because
+> the board designers chose to share power rails, but otherwise the
+> drivers were both generic.
+
+Yeah, and that's fine I guess?
+
+> In any case, is there any chance that we're in violent agreement
+
+Is it even violent? Sorry if it came across that way, it's really isn't
+on my end.
+
+> and that if you dig into my design more you might like it? Other than
+> the fact that the panel doesn't "register" the touchscreen device, it
+> kinda sounds as if what my patches are already doing is roughly what
+> you're describing. The touchscreen and panel driver are really just
+> coordinating with each other through a shared data structure (struct
+> drm_panel_follower) that has a few callback functions. Just like with
+> "hdmi-codec", the devices probe separately but find each other through
+> a phandle. The coordination between the two happens through a few
+> simple helper functions.
+
+I guess we very much agree on the end-goal, and I'd really like to get
+this addressed somehow. There's a couple of things I'm not really
+sold on with your proposal though:
+
+ - It creates a ad-hoc KMS API for some problem that looks fairly
+   generic. It's also redundant with the notifier mechanism without
+   using it (probably for the best though).
+
+ - MIPI-DSI panel probe sequence is already fairly complex and fragile
+   (See https://www.kernel.org/doc/html/latest/gpu/drm-kms-helpers.html#spe=
+cial-care-with-mipi-dsi-bridges).
+   I'd rather avoid creating a new dependency in that graph.
+
+ - And yeah, to some extent it's inconsistent with how we dealt with
+   secondary devices in KMS so far.
+
+Maxime
+
+--yl5nvno6lnks7ke3
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZIhbvAAKCRDj7w1vZxhR
+xXIAAQCiA6UpybaCLDHQkulMGBLH5FKxWq5xq17fc71pttcy+AEA8RVO666uTh5l
+w20OfxJELeyiCmUVWLP2lpv8iqIY9Q4=
+=cOpc
+-----END PGP SIGNATURE-----
+
+--yl5nvno6lnks7ke3--
