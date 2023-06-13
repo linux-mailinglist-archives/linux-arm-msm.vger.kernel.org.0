@@ -2,157 +2,254 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 09BA072E7DA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 18:07:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE69172E7C8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 18:05:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235640AbjFMQHe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 12:07:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39718 "EHLO
+        id S240364AbjFMQEM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 12:04:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37928 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235686AbjFMQHN (ORCPT
+        with ESMTP id S243010AbjFMQEB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 12:07:13 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 34BDAA0;
-        Tue, 13 Jun 2023 09:07:10 -0700 (PDT)
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35DAkVw4004535;
-        Tue, 13 Jun 2023 16:07:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=rOkfD0VbuvCThFWC0VDMkt5Me6BqDMFsKBlBpWGcBE0=;
- b=LMB/LvOBUlhHfn1VzUhUjPwJK5AGFIj9Yeasfy/xMfnzdihWWvdVxulgsRHqRIzxjLXl
- D+qf7d7XhWLYNExo8BtGJ78CKWyBDZZLt/lvJ6ZUrxp1DDOxitvA2kLutDAG6YLFKCx4
- jpJ7nIHIWf8NpCc0dobXcqbpc4/59rvQXhE6ISPkh+2O9IH3wQO7kzj8VpXarJr/h9ps
- fb1+OhN6C8SoQOv/jbCS0MPkv74IY2Z1l4YlTayGCQTrTJdLb56iMgb7KUOfWFeMT4K3
- 0hpx2qP2QyiPXno2yXKvH+Ahu8i3JyCgWbjkv1xwgAwvl3Mla0ySZccijHwXM2Y6h5iN zQ== 
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r68x9a7fw-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Jun 2023 16:07:05 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35DG74A9002280
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Tue, 13 Jun 2023 16:07:04 GMT
-Received: from [10.216.12.219] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 13 Jun
- 2023 09:07:00 -0700
-Message-ID: <02dabcc8-2340-2188-f6a8-51513b147e7c@quicinc.com>
-Date:   Tue, 13 Jun 2023 21:36:41 +0530
+        Tue, 13 Jun 2023 12:04:01 -0400
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE0EF172A;
+        Tue, 13 Jun 2023 09:03:59 -0700 (PDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id BE07B63805;
+        Tue, 13 Jun 2023 16:03:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6505EC4AF5C;
+        Tue, 13 Jun 2023 16:03:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1686672237;
+        bh=hRs/09I3nVePGyq7+ZAJUlWdpGWIbMI1XEr6/Yow+u8=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=tVbpwH2fLHIWbej7jYshdnJlpjWYAHpIevTgNAUXsmMojFrbopyryR+rfDUL8xCv1
+         /X96DIpLwGVYwA9TQPDXiz5IWgsOEPpoHu9Qb7yYylwZyRSU2GXXbqK4P6BSZ4uwv1
+         qVGi9XqLxwx35wynCx2Qvsnm3jgctojsLBxG/O+7c8FnkGePCFlMH27pUGGAHjo9y9
+         zR+HJHoMVB1dd4NOoHwvZ5E0EAvHUR9Fwf76b/ER8ZhpuSz8miIPlaMasDVR5sTZPI
+         cWGnxa0BQnrC1BULZIN4vUjbBFGUN9oKFlTk6O0llidTzw5w5qgMWGpQuAAMI9UqxY
+         62P++rDdTFT+A==
+Date:   Tue, 13 Jun 2023 09:07:20 -0700
+From:   Bjorn Andersson <andersson@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Jessica Zhang <quic_jesszhan@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dpu: Configure DP INTF/PHY selector
+Message-ID: <20230613160720.2a6ouut5qn3cewqd@ripper>
+References: <20230612221047.1886709-1-quic_bjorande@quicinc.com>
+ <435dd068-fbf2-10cf-4f78-377e689abb2c@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH] soc: qcom: geni-se: Do not bother about enable/disable of
- interrupts in secondary sequencer for non-uart modes
-Content-Language: en-CA
-From:   Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
-To:     Doug Anderson <dianders@chromium.org>
-CC:     <agross@kernel.org>, <andersson@kernel.org>,
-        <konrad.dybcio@linaro.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_msavaliy@quicinc.com>,
-        <mka@chromium.org>, <swboyd@chromium.org>,
-        <quic_vtanuku@quicinc.com>
-References: <1685729609-26871-1-git-send-email-quic_vnivarth@quicinc.com>
- <CAD=FV=Uy=ELwg2jhtFSrpndw-GxUO=0NTKotNymi3sqwG=ggnQ@mail.gmail.com>
- <af4c131a-b97d-a8e8-957d-77c31d3c816a@quicinc.com>
-In-Reply-To: <af4c131a-b97d-a8e8-957d-77c31d3c816a@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: 5qZaDfeNdUiV3yIX0wyNFaWxOn7w0Dyf
-X-Proofpoint-ORIG-GUID: 5qZaDfeNdUiV3yIX0wyNFaWxOn7w0Dyf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-13_18,2023-06-12_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_spam policy=outbound score=95 phishscore=0 priorityscore=1501
- lowpriorityscore=0 impostorscore=0 spamscore=95 suspectscore=0
- mlxlogscore=-127 mlxscore=95 adultscore=0 malwarescore=0 clxscore=1015
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306130142
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
-        SPF_HELO_NONE,T_SCC_BODY_TEXT_LINE,T_SPF_TEMPERROR,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <435dd068-fbf2-10cf-4f78-377e689abb2c@linaro.org>
+X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
+        DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Tue, Jun 13, 2023 at 01:31:40AM +0300, Dmitry Baryshkov wrote:
+> On 13/06/2023 01:10, Bjorn Andersson wrote:
+> > From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > 
+> > Some platforms provides a mechanism for configuring the mapping between
+> > (one or two) DisplayPort intfs and their PHYs.
+> > 
+> > In particular SC8180X provides this functionality, without a default
+> > configuration, resulting in no connection between its two external
+> > DisplayPort controllers and any PHYs.
+> > 
+> > The change implements the logic for optionally configuring which phy
+> > each of the intfs should be connected to, provides a new entry in the
+> > DPU catalog for specifying how many intfs to configure and marks the
+> > SC8180X DPU to program 2 entries.
+> > 
+> > For now the request is simply to program the mapping 1:1, any support
+> > for alternative mappings is left until the use case arrise.
+> > 
+> > Note that e.g. msm-4.14 unconditionally maps intf 0 to phy 0 on all
+> > rlatforms, so perhaps this is needed in order to get DisplayPort working
+> > on some other platforms as well.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > ---
+> >   .../msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h   |  1 +
+> >   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h    |  2 ++
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c    | 23 +++++++++++++++++++
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h    |  8 +++++++
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h      |  1 +
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 10 ++++++++
+> >   6 files changed, 45 insertions(+)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> > index 8ed2b263c5ea..9da952692a69 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_5_1_sc8180x.h
+> > @@ -19,6 +19,7 @@ static const struct dpu_caps sc8180x_dpu_caps = {
+> >   	.pixel_ram_size = DEFAULT_PIXEL_RAM_SIZE,
+> >   	.max_hdeci_exp = MAX_HORZ_DECIMATION,
+> >   	.max_vdeci_exp = MAX_VERT_DECIMATION,
+> > +	.num_dp_intf_sel = 2,
+> >   };
+> >   static const struct dpu_ubwc_cfg sc8180x_ubwc_cfg = {
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> > index ac4a9e73705c..4cb8d096d8ec 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> > @@ -357,6 +357,7 @@ struct dpu_rotation_cfg {
+> >    * @pixel_ram_size     size of latency hiding and de-tiling buffer in bytes
+> >    * @max_hdeci_exp      max horizontal decimation supported (max is 2^value)
+> >    * @max_vdeci_exp      max vertical decimation supported (max is 2^value)
+> > + * @num_dp_intf_sel    number of DP intfs to configure PHY selection for
+> >    */
+> >   struct dpu_caps {
+> >   	u32 max_mixer_width;
+> > @@ -371,6 +372,7 @@ struct dpu_caps {
+> >   	u32 pixel_ram_size;
+> >   	u32 max_hdeci_exp;
+> >   	u32 max_vdeci_exp;
+> > +	u32 num_dp_intf_sel;
+> >   };
+> >   /**
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> > index 963bdb5e0252..5afa99cb148c 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.c
+> > @@ -250,6 +250,27 @@ static void dpu_hw_intf_audio_select(struct dpu_hw_mdp *mdp)
+> >   	DPU_REG_WRITE(c, HDMI_DP_CORE_SELECT, 0x1);
+> >   }
+> > +static void dpu_hw_dp_phy_intf_sel(struct dpu_hw_mdp *mdp, unsigned int *phys,
+> > +				   unsigned int num_intfs)
+> > +{
+> > +	struct dpu_hw_blk_reg_map *c = &mdp->hw;
+> > +	unsigned int intf;
+> > +	u32 sel = 0;
+> > +
+> > +	if (!num_intfs)
+> > +		return;
+> > +
+> > +	for (intf = 0; intf < num_intfs; intf++) {
+> > +		/* Specify the PHY (1-indexed) for @intf */
+> > +		sel |= (phys[intf] + 1) << (intf * 3);
+> > +
+> > +		/* Specify the @intf (1-indexed) of targeted PHY */
+> > +		sel |= (intf + 1) << (6 + phys[intf] * 3);
+> 
+> From what I can see, phys[intf] is const. What about defining indexed masks
+> instead?
+> 
 
+intf is the loop variable. What am I missing?
 
-On 6/12/2023 7:09 PM, Vijaya Krishna Nivarthi wrote:
-> Hi,
->
-> Thank you very much for the review...
->
->
-> On 6/7/2023 9:41 PM, Doug Anderson wrote:
->> Hi,
->>
->> On Fri, Jun 2, 2023 at 11:13 AM Vijaya Krishna Nivarthi
->> <quic_vnivarth@quicinc.com> wrote:
->>> The select_fifo/dma_mode() functions in geni driver enable/disable
->>> interrupts (secondary included) conditionally for non-uart modes, while
->>> uart is supposed to manage this internally.
->>> However, only uart uses secondary IRQs while spi, i2c do not care about
->>> these at all making their enablement (or disablement) totally 
->>> unnecessary
->>> for these protos.
->>>
->>> Drop enabling/disabling secondary IRQs for non-uart modes.
->>> This doesn't solve any observed problem but only gets rid of code 
->>> pieces
->>> that are not required.
->>>
->>> Signed-off-by: Vijaya Krishna Nivarthi <quic_vnivarth@quicinc.com>
->>> ---
->>>   drivers/soc/qcom/qcom-geni-se.c | 24 ++++--------------------
->>>   1 file changed, 4 insertions(+), 20 deletions(-)
->> This seems like a nice cleanup to me. It's still odd that the general
->> code has a special case for UART, but I guess the alternative is to
->> duplicate the exact same logic for both the i2c and SPI drivers. I
->> won't insist on that, though I wouldn't be opposed to it either.
->>
->> I guess one comment, though: should we also remove the code that
->> messes with "SE_GENI_S_IRQ_EN" in geni_se_select_gpi_mode()?
->
->
-> Right now we have gpi-dma mode support for i2c and spi but not for uart.
->
-> Even when gpi-dma support is added, uart driver's interrupt handler 
-> would not be invoked so I believe it would be safe to drop that code 
-> from geni_se_select_gpi_mode() too.
->
-> I will post v2 dropping same after some more lookup.
+> > +	}
+> > +
+> > +	DPU_REG_WRITE(c, DP_PHY_INTF_SEL, sel);
+> > +}
+> > +
+> >   static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
+> >   		unsigned long cap)
+> >   {
+> > @@ -264,6 +285,8 @@ static void _setup_mdp_ops(struct dpu_hw_mdp_ops *ops,
+> >   	ops->get_safe_status = dpu_hw_get_safe_status;
+> > +	ops->dp_phy_intf_sel = dpu_hw_dp_phy_intf_sel;
+> 
+> Should this be gated for DPU < 4.0? Or 5.0?
+> 
+> > +
+> >   	if (cap & BIT(DPU_MDP_AUDIO_SELECT))
+> >   		ops->intf_audio_select = dpu_hw_intf_audio_select;
+> >   }
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
+> > index a1a9e44bed36..8446d74d59b0 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_top.h
+> > @@ -125,6 +125,14 @@ struct dpu_hw_mdp_ops {
+> >   	void (*get_safe_status)(struct dpu_hw_mdp *mdp,
+> >   			struct dpu_danger_safe_status *status);
+> > +	/**
+> > +	 * dp_phy_intf_sel - configure intf to phy mapping
+> > +	 * @mdp: mdp top context driver
+> > +	 * @phys: list of phys the @num_intfs intfs should be connected to
+> > +	 * @num_intfs: number of intfs to configure
+> > +	 */
+> > +	void (*dp_phy_intf_sel)(struct dpu_hw_mdp *mdp, unsigned int *phys,
+> > +			        unsigned int num_intfs);
+> >   	/**
+> >   	 * intf_audio_select - select the external interface for audio
+> >   	 * @mdp: mdp top context driver
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
+> > index 5acd5683d25a..6d31bdc7269c 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hwio.h
+> > @@ -59,6 +59,7 @@
+> >   #define MDP_WD_TIMER_4_CTL2             0x444
+> >   #define MDP_WD_TIMER_4_LOAD_VALUE       0x448
+> >   #define DCE_SEL                         0x450
+> > +#define DP_PHY_INTF_SEL                 0x460
+> 
+> MDP_DP_PHY_INTF_SEL, if you don't mind.
+> 
 
+I don't mind.
 
-Looking at this once again, I am more inclined towards leaving alone 
-gpi_mode() for now.
+> >   #define MDP_PERIPH_TOP0			MDP_WD_TIMER_0_CTL
+> >   #define MDP_PERIPH_TOP0_END		CLK_CTRL3
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > index aa8499de1b9f..5dbe5d164c01 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> > @@ -1011,6 +1011,14 @@ unsigned long dpu_kms_get_clk_rate(struct dpu_kms *dpu_kms, char *clock_name)
+> >   	return clk_get_rate(clk);
+> >   }
+> > +static void dpu_kms_dp_phy_intf_sel(struct dpu_kms *dpu_kms)
+> > +{
+> > +	const unsigned int num_intfs = dpu_kms->catalog->caps->num_dp_intf_sel;
+> > +	static unsigned int phy_map[] = {0, 1, 2};
+> 
+> Please move this to dp_phy_intf_sel() and make it const.
+> 
 
-It probably needs cleanup but we want to take that up at a later time.
+There's a possible use case for passing a phy_map of {0, 2} or {2, 1} on
+SC8180X. While this is left to someone in the future to have that use
+case, as split dp_phy_intf_sel() would handle such variations.
 
-Meanwhile its not causing much harm as we don't switch modes dynamically 
-for gpi case, so we are not losing much time there reading from and 
-writing to registers.
+That said, per the layout of the DP_PHY_INTF_SEL, num_intfs can not be
+more than 2, so this list shouldn't have 3 elements.
 
-Please let know your thoughts.
+Regards,
+Bjorn
 
-Thank you,
-
-Vijay/
-
-
->
-> -Vijay/
->
->
->>
->> -Doug
+> > +
+> > +	dpu_kms->hw_mdp->ops.dp_phy_intf_sel(dpu_kms->hw_mdp, phy_map, num_intfs);
+> > +}
+> > +
+> >   static int dpu_kms_hw_init(struct msm_kms *kms)
+> >   {
+> >   	struct dpu_kms *dpu_kms;
+> > @@ -1122,6 +1130,8 @@ static int dpu_kms_hw_init(struct msm_kms *kms)
+> >   		goto perf_err;
+> >   	}
+> > +	dpu_kms_dp_phy_intf_sel(dpu_kms);
+> > +
+> >   	dpu_kms->hw_intr = dpu_hw_intr_init(dpu_kms->mmio, dpu_kms->catalog);
+> >   	if (IS_ERR_OR_NULL(dpu_kms->hw_intr)) {
+> >   		rc = PTR_ERR(dpu_kms->hw_intr);
+> 
+> -- 
+> With best wishes
+> Dmitry
+> 
