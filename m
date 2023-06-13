@@ -2,81 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E72772E4B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 15:58:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD02572E4BF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 16:00:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240492AbjFMN6m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 09:58:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55382 "EHLO
+        id S240917AbjFMN76 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 09:59:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56098 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239868AbjFMN6m (ORCPT
+        with ESMTP id S242669AbjFMN7u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 09:58:42 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B59F2E3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 06:58:39 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b1c30a1653so68108111fa.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 06:58:39 -0700 (PDT)
+        Tue, 13 Jun 2023 09:59:50 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33A06E7A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 06:59:46 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f62b512fe2so7106360e87.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 06:59:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686664718; x=1689256718;
+        d=linaro.org; s=google; t=1686664784; x=1689256784;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=eYEjJGS1UUCjJyusiKu9spXvZVC2LuJOiUk5VQb5qBg=;
-        b=uNjYiaaXwGbisnriVGiyDPW7ZI45SzlN8FOVeTNbbxQb4PXZ+AuM66H4Yerp0ztmPX
-         01S78XYRrc7zNj88Pxcc1yV1tTzr3QBXuGBkzGMuS5uOyENuRaUoUFwpH+pm9eLJ7JcF
-         nWUUkS/MhD+1NGnKuogt5np26PCxhwF8tUjQehy+RMFNIpeT8xZ7TNB5Yyfs31jl2spX
-         eQ4xds7UIgd9KNJZNU/vGmbBV0mM0Uo+h6hq5N6tBa+uN2xA+BUbCVCu9DHBrde3BGKR
-         tUWBvko6KywEIxeFVBGndQm556lwHleld9lw81gVJE6FplEQBzWSvAPE/dAPBGTeHwL2
-         sc6Q==
+        bh=1mADjsfDJkxGtcZrymPiSVSjnbcrh9hAWcbKAPmnEZQ=;
+        b=qSj+Zzh+c/VNrK7C4xUDmWi8Y/IduuZfs8jbMeytG/zqUhhLarGebfdUBgdowRfEJH
+         INkNeHnxHZ8scsWNNCbjFfME+AmhdXSi9EvSk4l+cpPMyr+4PRDqYUV/c2ergH6l3Dbt
+         krQ37YSWEYl3tIiPtLUQuOq+5Zon4bW+n33IW4QlCTdsJ7iyDwOQQv85vZJajl93oO5D
+         D1UaRC2pyAOrcLUzYXj7G+Qu+Y3/oRf2wnF0s4W60fFinEv8h9h4jbtox+iGFZffRade
+         vcMmLI6/BoBYKVRTDAdKuJV9DrjYheFneCAvNQmktwSZYlSTAt+IBTZ3vyxo7zOZ00nA
+         4hgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686664718; x=1689256718;
+        d=1e100.net; s=20221208; t=1686664784; x=1689256784;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eYEjJGS1UUCjJyusiKu9spXvZVC2LuJOiUk5VQb5qBg=;
-        b=lSXv9vwBOECuKCsxpWQfME3tf63MMdWJhWufT89+2MfeOkj79HrBhUTscwbGG3gdNG
-         oPNSHFW7ITeUz0lvzmkvOoycizMunpwIpGEL2np1I71Xwm7ozc9hbvzYiY5gqsSwSUf6
-         s4cRC0ylVFPVZPalvQJyT0evi6KT9iTQEqNwSm0rgnqCKKWIUcr4e86k7NP27QzuB0FY
-         e8w4A/I/iXxkjpkcfqaNAM2XoBPAvoBrbJN2xg/0W/CKzUWf23QYK1/HXMtcqcUYOSVH
-         P/kwPm96fxxNyCCsRvsRhYgCvoUzvac/IB/oOqVV8wyhVs7pHvsoW8mFoAnVkRRfe6hD
-         LXjQ==
-X-Gm-Message-State: AC+VfDypOoKW53NwEV7Ecu83jmdrAAE7izXstwJHBcEHAvQfotGDAihV
-        5lGYd8rs6+CHnNAKADK0rT32YQ==
-X-Google-Smtp-Source: ACHHUZ4SeTgZwVp9xbt9r8WkNO8LW+MR7fA9doV9DSkOr/bC5m6r+nBHbjgHbz+tZM+MSk/aawBhBw==
-X-Received: by 2002:a2e:88d8:0:b0:2af:c9d8:87b4 with SMTP id a24-20020a2e88d8000000b002afc9d887b4mr4444624ljk.29.1686664717906;
-        Tue, 13 Jun 2023 06:58:37 -0700 (PDT)
+        bh=1mADjsfDJkxGtcZrymPiSVSjnbcrh9hAWcbKAPmnEZQ=;
+        b=FJynwX/EI9rhRZXYCV784V7orN0n+CgyYpOKA/k52pEMF2jai0bahrwxSp2EZptGwe
+         JCNEIInXUcRZ0BXzr3YEYKmtwOD3rWoyDvZPRaQcmIeTqygQ6+WbGuoq8Lrp0IIKlUC+
+         Bmp24EsynrNWRNoR12Vs8RqLGopwlnpKRE8n2jV/ToAe8ha1XjnqsyssA8yl3RFp+uTm
+         xfEc9+qf0zeiMuA06VJ1eYMAM3LIZtwDTxFzsKYh0wbFsdxPbxaZgSyDb9KfkqeBHkOI
+         3lGrUoEr9ZohF5Wuht4ieW+g+ufkbGnkssR/TRfOGT8xfty/a4Nh8h7VkhQWM0tLf0qK
+         Reqw==
+X-Gm-Message-State: AC+VfDzpKQzCyJB5HMUIXh9liorXx32gKxCFsD5RjCsDzV2Wdz40auMN
+        skWL+HgUJpvp9l2C+Ebox5PeUA==
+X-Google-Smtp-Source: ACHHUZ7riD3zaD6lw0pGI8tv6DWzKltKqyB2z9V2gdqksMlF5U3hUTpQIGJAMLjSLqp5WgCqwHpHTw==
+X-Received: by 2002:a19:6446:0:b0:4e8:5e39:6234 with SMTP id b6-20020a196446000000b004e85e396234mr5437012lfj.16.1686664784348;
+        Tue, 13 Jun 2023 06:59:44 -0700 (PDT)
 Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id z6-20020a2e3506000000b002adb98fdf81sm2162821ljz.7.2023.06.13.06.58.36
+        by smtp.gmail.com with ESMTPSA id k12-20020ac2456c000000b004f60d782682sm1777815lfm.220.2023.06.13.06.59.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jun 2023 06:58:37 -0700 (PDT)
-Message-ID: <9c3db237-9bec-36e0-8b0c-28062c631068@linaro.org>
-Date:   Tue, 13 Jun 2023 15:58:35 +0200
+        Tue, 13 Jun 2023 06:59:44 -0700 (PDT)
+Message-ID: <4f2e7e6a-31fa-f35b-ca51-7374580931c9@linaro.org>
+Date:   Tue, 13 Jun 2023 15:59:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH v3 5/8] qcom: pmic_glink: enable altmode for SM8550
+Subject: Re: [PATCH] arm64: dts: qcom: qrb5165-rb5: fix thermal zone conflict
 Content-Language: en-US
-To:     neil.armstrong@linaro.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Rob Herring <robh@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org
-References: <20230601-topic-sm8550-upstream-type-c-v3-0-22c9973012b6@linaro.org>
- <20230601-topic-sm8550-upstream-type-c-v3-5-22c9973012b6@linaro.org>
- <5851627e-2972-f860-e965-dc8e73b01225@linaro.org>
- <8f9c549a-e37b-2877-be74-f25304a476fd@linaro.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+References: <20230613131224.666668-1-dmitry.baryshkov@linaro.org>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <8f9c549a-e37b-2877-be74-f25304a476fd@linaro.org>
+In-Reply-To: <20230613131224.666668-1-dmitry.baryshkov@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
@@ -89,45 +81,39 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 13.06.2023 15:43, Neil Armstrong wrote:
-> On 13/06/2023 13:54, Krzysztof Kozlowski wrote:
->> On 13/06/2023 09:55, Neil Armstrong wrote:
->>> Altmode is also supported for SM8550, allow it.
->>>
->>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>> ---
->>>   drivers/soc/qcom/pmic_glink.c | 6 +-----
->>>   1 file changed, 1 insertion(+), 5 deletions(-)
->>>
->>> diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
->>> index c87056769ebd..8af06bdc6f5a 100644
->>> --- a/drivers/soc/qcom/pmic_glink.c
->>> +++ b/drivers/soc/qcom/pmic_glink.c
->>> @@ -342,13 +342,9 @@ static const unsigned long pmic_glink_sm8450_client_mask = BIT(PMIC_GLINK_CLIENT
->>>                                  BIT(PMIC_GLINK_CLIENT_ALTMODE) |
->>>                                  BIT(PMIC_GLINK_CLIENT_UCSI);
->>>   -/* Do not handle altmode for now on those platforms */
->>> -static const unsigned long pmic_glink_sm8550_client_mask = BIT(PMIC_GLINK_CLIENT_BATT) |
->>> -                               BIT(PMIC_GLINK_CLIENT_UCSI);
->>> -
->>>   static const struct of_device_id pmic_glink_of_match[] = {
->>>       { .compatible = "qcom,sm8450-pmic-glink", .data = &pmic_glink_sm8450_client_mask },
->>
->> Orientation and maybe all of the USB-related properties do not look like
->> sm8450 specific, but PM8350B. That's where CC_OUT pin is. I don't think
->> we represented this correctly, but rather copy-pasted downstream solution...
+On 13.06.2023 15:12, Dmitry Baryshkov wrote:
+> The commit 3a786086c6f8 ("arm64: dts: qcom: Add missing "-thermal"
+> suffix for thermal zones") renamed the thermal zone in the pm8150l.dtsi
+> file to comply with the schema. However this resulted in a clash with
+> the RB5 board file, which already contained the pm8150l-thermal zone for
+> the on-board sensor. This resulted in the board file definition
+> overriding the thermal zone defined in the PMIC include file (and thus
+> the on-die PMIC temp alarm was not probing at all).
 > 
-> We do not interact directly with PM8350B or PM8550B but with pmic_glink who
-> does the work work for use, and this is platform specific.
-Yep, pmic_glink is totally a firmware construct and not all platforms with
-pm8350b or so implement it.
+> Rename the thermal zone in qcom/qrb5165-rb5.dts to remove this override.
+> 
+> Fixes: 3a786086c6f8 ("arm64: dts: qcom: Add missing "-thermal" suffix for thermal zones")
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+Wonder if one can add some sort of non-label override warnings in
+dtc.. That would be useful!
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
 Konrad
+>  arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> Neil
-> 
->>
->> Best regards,
->> Krzysztof
->>
-> 
+> diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> index dd924331b0ee..ec066a89436a 100644
+> --- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> +++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+> @@ -121,7 +121,7 @@ active-config0 {
+>  			};
+>  		};
+>  
+> -		pm8150l-thermal {
+> +		pm8150l-pcb-thermal {
+>  			polling-delay-passive = <0>;
+>  			polling-delay = <0>;
+>  			thermal-sensors = <&pm8150l_adc_tm 1>;
