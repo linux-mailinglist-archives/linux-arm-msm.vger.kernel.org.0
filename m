@@ -2,88 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 8358972EF99
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 00:41:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AAE4E72EFC2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 01:03:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231839AbjFMWlK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 18:41:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42468 "EHLO
+        id S231651AbjFMXDK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 19:03:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50118 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234100AbjFMWlJ (ORCPT
+        with ESMTP id S230179AbjFMXDI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 18:41:09 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89E0410F3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 15:41:07 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-4f640e48bc3so7575942e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 15:41:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686696066; x=1689288066;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mM2+93Chwu7bwUwshRRZL1JMaegUn5yKzga2WzqyZzI=;
-        b=rtI5EpOAy3camCvRJE8ovAjNX2hMd20MLGU+rC8tbMqtbmb7qlZ9uunnMKzmAjWzP9
-         n3UzZyEDBBv4lS5vJi2cXN2JDzL4Cb1eh+IJZKn8EWWEEuNiO3a3ywaR6GUTt/Cu3lmY
-         gvlqHFd/RgXYdu0HpQE0KPUYVp7atrtx8VHl/uWSdz9oT8zEH0TnCzwEnU7wIUrHm/77
-         e38RU2H2qPVe41PYtLJ/QMkCzGt8Zuf/wwtCdoATm2IF/1HF3ztDGEoEgY91Xmqk7Plh
-         XeSQ2gjRox/flrYotHz6esVkP4rwgIVCFzKMfmT36NnG/8o2Cr/QtiRzrre+uNk55ykF
-         2xPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686696066; x=1689288066;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mM2+93Chwu7bwUwshRRZL1JMaegUn5yKzga2WzqyZzI=;
-        b=kpwEoavtjn9gxrmhkEnbLb769812Iu16c19lxj4i6vPzZbORSk8dqpG/zS1HXpgo9Y
-         0tolmUYZf1FmprSzoI4Pm4A/BNknwp7JupdLHFlQA4GtLfcdLN3xYpgPjU1F6Bxgrjbe
-         xQ6RyZYZM+HrRmEm3HkcT0k6DsdQVvHu3lep9yk8QhPjuFPpCIkpWSNlYN27+oWNzmRi
-         OHdqhzt0pNFPnbBoBO8yFql5/CgU0MXJ9Uoep4N5hS02LCj5/IDN9xwEeA8Ks0988zdy
-         N8vktgfdxylx6qtI0oaF5stztuxAZ7ppL3An1Dg6MkE24EmFK9hyEr0xjFvbWsvQZmAI
-         Az6Q==
-X-Gm-Message-State: AC+VfDwL+g5JbS++Y+pfkCXZz2dxkTKYgs/X+ZQ+hxpaTBFxhEMZ0INx
-        aI6fD1CkWCYRjWnypaQuGbis3g==
-X-Google-Smtp-Source: ACHHUZ43oO1BCBYbrneX5Pa5lN5HOMz0cCRafq3HWi4SGTpLsQJ08prrNngm4wYYitPJEJ+jgI/8Og==
-X-Received: by 2002:a05:6512:539:b0:4f6:1462:9985 with SMTP id o25-20020a056512053900b004f614629985mr6327871lfc.21.1686696065284;
-        Tue, 13 Jun 2023 15:41:05 -0700 (PDT)
-Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id w13-20020a05651204cd00b004eefdd8b37fsm1885609lfq.194.2023.06.13.15.41.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jun 2023 15:41:04 -0700 (PDT)
-Message-ID: <ad3b3233-b1d6-781e-16e5-9faaaf14fc7a@linaro.org>
-Date:   Wed, 14 Jun 2023 00:41:03 +0200
+        Tue, 13 Jun 2023 19:03:08 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F48B92;
+        Tue, 13 Jun 2023 16:03:07 -0700 (PDT)
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35DN0FTC009891;
+        Tue, 13 Jun 2023 23:02:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=qcppdkim1;
+ bh=JTfzK7S8mdVGYUr4XV81z94QYAI7a8mH2QpQq9pzvvc=;
+ b=PJ2M/zUnSa+6eTGliFALCRvxWvZ8Yp4/Pri06aVPmB6Sytb7ACpMaEND8nOldN0cG2As
+ FnsqYzWEQ4u4fVq6e8Pd3NiAYynO4md1PjYaBYceC//EhcjPt1K4i/dh5WIc/pBsEG/i
+ filO9QeCqOTyHUaoinI5zM80XgeKYCczu387DoVmBNeb+FU1nrzCnF3oZ0q7Eg9g3Azx
+ scQakFmreFvp+zxIlrY7dgoDDLNY8H1K0vwe/Zcjx0C2HEd7vjIyBjRiR8tUrgwqvliA
+ zNHtjF9vJhgVBcZe2KAiNm7nKIafnTzp0QTc7yqfsLB+Aj9v23h4LovhGDSTqVjQQMUP wQ== 
+Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r6t0bs4eh-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 13 Jun 2023 23:02:50 +0000
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35DN2nip023532
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Tue, 13 Jun 2023 23:02:49 GMT
+Received: from [10.71.108.253] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Tue, 13 Jun
+ 2023 16:02:48 -0700
+Message-ID: <660807fe-d97c-cb7b-852e-7ad0eb93e0b4@quicinc.com>
+Date:   Tue, 13 Jun 2023 16:02:48 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.11.2
-Subject: Re: [PATCH v4 08/22] interconnect: qcom: smd-rpm: Add rpmcc handling
- skeleton code
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v13 00/24] Drivers for Gunyah hypervisor
 Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
+To:     =?UTF-8?Q?Alex_Benn=c3=a9e?= <alex.bennee@linaro.org>
+CC:     Alex Elder <elder@linaro.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Murali Nalajala <quic_mnalajal@quicinc.com>,
+        Trilok Soni <quic_tsoni@quicinc.com>,
+        "Srivatsa Vaddagiri" <quic_svaddagi@quicinc.com>,
+        Carl van Schaik <quic_cvanscha@quicinc.com>,
+        Prakruthi Deepak Heragu <quic_pheragu@quicinc.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230526-topic-smd_icc-v4-0-5ba82b6fbba2@linaro.org>
- <20230526-topic-smd_icc-v4-8-5ba82b6fbba2@linaro.org>
- <ZIjNLJQwYQGj3piA@gerhold.net>
-From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZIjNLJQwYQGj3piA@gerhold.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Bagas Sanjaya <bagasdotme@gmail.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-doc@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>
+References: <20230509204801.2824351-1-quic_eberman@quicinc.com>
+ <87cz2pveam.fsf@linaro.org>
+From:   Elliot Berman <quic_eberman@quicinc.com>
+In-Reply-To: <87cz2pveam.fsf@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: GfQNPEhEcubL0UND4S72NOH9iL4Fgu1S
+X-Proofpoint-ORIG-GUID: GfQNPEhEcubL0UND4S72NOH9iL4Fgu1S
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-13_22,2023-06-12_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
+ priorityscore=1501 clxscore=1011 mlxlogscore=350 spamscore=0
+ lowpriorityscore=0 suspectscore=0 adultscore=0 impostorscore=0
+ phishscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2305260000 definitions=main-2306130202
+X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -92,92 +102,40 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 13.06.2023 22:10, Stephan Gerhold wrote:
-> On Tue, Jun 13, 2023 at 04:03:08PM +0200, Konrad Dybcio wrote:
->> Introduce qcom_icc_rpm_set_bus_rate() in preparation for handling RPM
->> clock resources within the interconnect framework. This lets us greatly
->> simplify all of the code handling, as setting the rate comes down to:
->>
->> u32 rate_khz = max(clk.sleep_rate, clk.active_rate, clk_a.active_rate)
->> write_to_rpm(clock.description, rate_khz);
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
->> ---
->>  drivers/interconnect/qcom/icc-rpm.h | 15 +++++++++++++++
->>  drivers/interconnect/qcom/smd-rpm.c | 22 ++++++++++++++++++++++
->>  2 files changed, 37 insertions(+)
->>
->> diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
->> index 9ec90e13bfbd..13ca0818ffbd 100644
->> --- a/drivers/interconnect/qcom/icc-rpm.h
->> +++ b/drivers/interconnect/qcom/icc-rpm.h
->> @@ -22,6 +22,18 @@ enum qcom_icc_type {
->>  	QCOM_ICC_QNOC,
->>  };
->>  
->> +/**
->> + * struct rpm_clk_resource - RPM bus clock resource
->> + * @resource_type: RPM resource type of the clock resource
->> + * @clock_id: index of the clock resource of a specific resource type
->> + * @branch: whether the resource represents a branch clock
->> +*/
->> +struct rpm_clk_resource {
->> +	u32 resource_type;
->> +	u32 clock_id;
->> +	bool branch;
->> +};
->> +
->>  #define NUM_BUS_CLKS	2
->>  
->>  /**
->> @@ -47,6 +59,7 @@ struct qcom_icc_provider {
->>  	unsigned int qos_offset;
->>  	u64 bus_clk_rate[NUM_BUS_CLKS];
->>  	struct clk_bulk_data bus_clks[NUM_BUS_CLKS];
->> +	const struct rpm_clk_resource *bus_clk_desc;
->>  	struct clk_bulk_data *intf_clks;
->>  	bool keep_alive;
->>  	bool is_on;
->> @@ -104,6 +117,7 @@ struct qcom_icc_desc {
->>  	struct qcom_icc_node * const *nodes;
->>  	size_t num_nodes;
->>  	const char * const *bus_clocks;
->> +	const struct rpm_clk_resource *bus_clk_desc;
->>  	const char * const *intf_clocks;
->>  	size_t num_intf_clocks;
->>  	bool keep_alive;
->> @@ -125,5 +139,6 @@ int qnoc_remove(struct platform_device *pdev);
->>  
->>  bool qcom_icc_rpm_smd_available(void);
->>  int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u32 val);
->> +int qcom_icc_rpm_set_bus_rate(const struct rpm_clk_resource *clk, u32 rate, bool set_active);
->>  
->>  #endif
->> diff --git a/drivers/interconnect/qcom/smd-rpm.c b/drivers/interconnect/qcom/smd-rpm.c
->> index b0183262ba66..c5ab00051447 100644
->> --- a/drivers/interconnect/qcom/smd-rpm.c
->> +++ b/drivers/interconnect/qcom/smd-rpm.c
->> @@ -16,6 +16,7 @@
->>  #include "icc-rpm.h"
->>  
->>  #define RPM_KEY_BW		0x00007762
->> +#define QCOM_RPM_SMD_KEY_RATE	0x007a484b
->>  
->>  static struct qcom_smd_rpm *icc_smd_rpm;
->>  
->> @@ -44,6 +45,27 @@ int qcom_icc_rpm_smd_send(int ctx, int rsc_type, int id, u32 val)
->>  }
->>  EXPORT_SYMBOL_GPL(qcom_icc_rpm_smd_send);
->>  
->> +int qcom_icc_rpm_set_bus_rate(const struct rpm_clk_resource *clk, u32 rate, bool set_active)
->> +{
->> +	int state = set_active ? QCOM_SMD_RPM_ACTIVE_STATE : QCOM_SMD_RPM_SLEEP_STATE;
+On 5/24/2023 10:13 AM, Alex Bennée wrote:
 > 
-> Why not just pass in the ctx/state directly as parameter instead of this
-> boolean? That's what the function directly above does.
-Ooohh.. obviously...
+> Elliot Berman <quic_eberman@quicinc.com> writes:
+> 
 
-Konrad
+
+snip
+
+>    Applying: mailbox: pcc: Use mbox_bind_client
 > 
-> Thanks,
-> Stephan
+> 
+> <snip>
+>>
+>> Elliot Berman (24):
+> <snip>
+> 
+>>    mailbox: Add Gunyah message queue mailbox
+> 
+> This patch touches a file that isn't in mainline which makes me wonder
+> if I've missed another pre-requisite patch?
+> 
+
+The v13 series had missed out on this patch: 
+https://lore.kernel.org/all/20230613172054.3959700-2-quic_eberman@quicinc.com/ 
+(which was present in every recent series). Apologies about that!
+
+The v14 series applies cleanly on v6.4-rc6 (and should also apply on 
+other recent tags, too).
+
+b4 am 
+https://lore.kernel.org/all/20230613172054.3959700-1-quic_eberman@quicinc.com/
+
+
+> <snip>
+>>   Documentation/virt/gunyah/message-queue.rst   |   8 +
+> <snip>
+> 
