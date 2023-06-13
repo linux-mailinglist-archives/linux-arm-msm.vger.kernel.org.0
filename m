@@ -2,88 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C39472E28D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 14:13:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F98772E2EF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jun 2023 14:28:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240451AbjFMMNH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 08:13:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54738 "EHLO
+        id S242477AbjFMM2M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 08:28:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35874 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239885AbjFMMNG (ORCPT
+        with ESMTP id S242430AbjFMM15 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 08:13:06 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0B4AE5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 05:13:01 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4f61735676fso6765595e87.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 05:13:01 -0700 (PDT)
+        Tue, 13 Jun 2023 08:27:57 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 02CCE19BA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 05:27:05 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2b1b084620dso67800141fa.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 05:27:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686658380; x=1689250380;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6CMlQba2o43/QiP5kbF00C5SMM+pc3bqKwMdZ4o71Wg=;
-        b=jM2BdMoNCbF74BgGgRDVYE6LKUcsY3HAYxwagM7IqNQFDHyA50WMO364I8ZuLvp9v2
-         qGs2ogbEf4zfjDoEPz0k4SbACIKnBKeIiIbl2KvH80pi+vzd5qOkPP5s4xlkhj+omVsY
-         Fda5TdW3CDeMJ1S+ETpk01VHjri3rDZvXPmReSFUWb3CKvBXoQ7CHvP0ADadNSMQvNXq
-         GHb7DJ5uGPve8Yb61BMTRIQgCsLJzAsT7XypLTm7vQOIfHTMUGXr8V4TRJHEUupLOi5z
-         Sy7JgxGVPqzsucyCgYlz42JPFMkpeynHYwsNMvKT/PqSPAfou+yAxlxlLZKOFub+XpaR
-         1eAA==
+        d=linaro.org; s=google; t=1686659224; x=1689251224;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EnIHsMOer6yxwn2k9SpYfq75p+EkWRLUz3RHm/gg720=;
+        b=b18DruWzsZolYaqZznZdkfTu68KIPQsuP2GNFxglUtDVf5AVQfkl09rD/TCiiAPvdj
+         4/y7kZfN11uk9XdRfRX65J6bwFCf28k9EtcDIKXKAzhCP4uzN/PcZ52goPSI58Pamupu
+         H0wil4DyGC02brKQeBq38RWnC4p4vHELAGn4LqTkzw+sU6TuobpfDdlh/fpHe3GUJrGy
+         lss4ZFPB9VFviDZaAsPlERxHlVGNG9BvBjZ/TdKPb8Gn80a1RmiAQcZNnZIiZTwWlBw2
+         O1tnCDt7sMg2udiKqgpXVyINwL3GFr1FHyAG7gtxyzKZ9tDzxuzoiHC+CDHZ1NscV+qg
+         Cdkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686658380; x=1689250380;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20221208; t=1686659224; x=1689251224;
+        h=content-transfer-encoding:in-reply-to:subject:from:references:cc:to
+         :content-language:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6CMlQba2o43/QiP5kbF00C5SMM+pc3bqKwMdZ4o71Wg=;
-        b=QNiHrXfdz0nHO1OEGiIx3ujGs33HOekZjyM8mtjGVBGpXvu5v1NX54gtJvdH1iphle
-         nvG3cCXejhqooYz8VvsEnXwmUOOIvwaPESbEXMo0dDMLInKPTJxHvF2zQafuE5IObwKa
-         fMPYrJX/bGCLIAlh+Vcvl/7uPOf8ZQs/ZnjBpx8S6Qo+LUQjJJksFZ1iPxzdjQwuq1Z+
-         WOAk09ib/zv0xgfTvExgNZ4kPnAupkfl+BegFm6yRm2k1+duCIS/yOymi4iaQPrPlj6J
-         itsg7oF/sGSeYAHkGDgALkWfc/N5WjdOZ66o38QKLbqWLwjYMRVvkmoKoQgNwn4/bRHT
-         vYdg==
-X-Gm-Message-State: AC+VfDy8YDBXlx8SrPOhMc/qmtVUZfg8Ar/Nslgit4Gz4jgbiTOhnpTN
-        Y6EeAJDbD6aXwUnSYBAo8qwefA==
-X-Google-Smtp-Source: ACHHUZ7v2g+t0UCuMLHeHfZftjO5zEOcIpmanWsJpdQFoH7LGbqE71Kf4m1iAu+cL1lUPxg/TiXWWg==
-X-Received: by 2002:ac2:5b83:0:b0:4f7:5a42:6af with SMTP id o3-20020ac25b83000000b004f75a4206afmr1024268lfn.37.1686658379752;
-        Tue, 13 Jun 2023 05:12:59 -0700 (PDT)
+        bh=EnIHsMOer6yxwn2k9SpYfq75p+EkWRLUz3RHm/gg720=;
+        b=YNHVgDV993wUIC6qWeOUWnXyDu7ViSICYRU0h6myDNx2NBttXOgfd4mmUH2h9xsKfE
+         OrcHgJBjG2xYfRhlaQeUVz2HmPOYBg//ir4cWykt9znYoxTjNbWFNokiI8niLvpt6ZrY
+         INSCqqrO9lT+7qdnMgg+VBIw6SuDIOIuaq6wB71+ku6EtfpqowpK5vIzwdXZh1iSBVHz
+         5fWsovd5N0XOuofYf5IaW2rSvYVIWvoWAIG5dNXl3WPRheTMM+Nt4GTHW5jrUiqY+otI
+         do6GQrL0NV8yoRhsCeJ0I3lAVji+7xyIzBt7XexPrqgXCHjf+yfSBHYN8NcajB/6CYRN
+         LzFQ==
+X-Gm-Message-State: AC+VfDxEbWBtNg/8rCtH46M3re9swdvrOgLqFnxdWz20Q1Y406lYkTXk
+        KGk4sFTGhaswZZBtm8u4Dzb4Lw==
+X-Google-Smtp-Source: ACHHUZ5yPxfMBP2bj0B5CauySCl/eaKnaBhn1CKtZiZFvx2XOhZvmtfPlz255MpUQtywzrWG/w9zyw==
+X-Received: by 2002:a05:651c:22a:b0:2b1:a874:34c9 with SMTP id z10-20020a05651c022a00b002b1a87434c9mr5328357ljn.22.1686659224045;
+        Tue, 13 Jun 2023 05:27:04 -0700 (PDT)
 Received: from [192.168.1.101] (abyj190.neoplus.adsl.tpnet.pl. [83.9.29.190])
-        by smtp.gmail.com with ESMTPSA id w28-20020ac2599c000000b004f61a57797fsm1759751lfn.60.2023.06.13.05.12.58
+        by smtp.gmail.com with ESMTPSA id p26-20020a2ea41a000000b002adbedc9962sm2144582ljn.46.2023.06.13.05.27.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 13 Jun 2023 05:12:59 -0700 (PDT)
-Message-ID: <a04f8089-0117-7c22-c6cc-97f5bd42a7d8@linaro.org>
-Date:   Tue, 13 Jun 2023 14:12:57 +0200
+        Tue, 13 Jun 2023 05:27:03 -0700 (PDT)
+Message-ID: <d39df510-c0d0-97c2-4a35-e28829ddd761@linaro.org>
+Date:   Tue, 13 Jun 2023 14:27:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.2
-Subject: Re: [PATCH v3 07/23] interconnect: qcom: icc-rpm: Allow negative QoS
- offset
 Content-Language: en-US
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Leo Yan <leo.yan@linaro.org>,
-        Evan Green <evgreen@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20230526-topic-smd_icc-v3-0-5fb7d39b874f@linaro.org>
- <20230526-topic-smd_icc-v3-7-5fb7d39b874f@linaro.org>
- <ZId_qIAL8dvJOwai@gerhold.net>
+To:     Praveen Talari <quic_ptalari@quicinc.com>, agross@kernel.org,
+        andersson@kernel.org, broonie@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+        quic_vnivarth@quicinc.com, quic_arandive@quicinc.com
+References: <20230613065229.5619-1-quic_ptalari@quicinc.com>
+ <20230613065229.5619-3-quic_ptalari@quicinc.com>
 From:   Konrad Dybcio <konrad.dybcio@linaro.org>
-In-Reply-To: <ZId_qIAL8dvJOwai@gerhold.net>
+Subject: Re: [PATCH 2/2] spi: spi-geni-qcom: Add SPI SLAVE mode support for
+ GENI based QuPv3
+In-Reply-To: <20230613065229.5619-3-quic_ptalari@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
         DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        autolearn=ham autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
@@ -92,70 +82,159 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 12.06.2023 22:27, Stephan Gerhold wrote:
-> On Mon, Jun 12, 2023 at 08:24:24PM +0200, Konrad Dybcio wrote:
->> In some very very very very unfortunate cases, the correct offset of
->> the QoS registers will be.. negative. One such case is MSM8998, where
->> The DDR BWMON occupies what-would-be-the-BIMC-base which we usually
->> take into account with the register calculation, making the actual
->> BIMC node start at what-would-be-the-BIMC-base+0x300.
->>
->> In order to keep the calculation code sane, the simplest - however
->> ugly it may be - solution is to allow the offset to be negative.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+On 13.06.2023 08:52, Praveen Talari wrote:
+> Add SPI SLAVE mode support for GENI based QuPv3.
 > 
-> I'm a bit confused why this patch is part of this series. It doesn't
-> seem to be directly related.
+Copying the commit title in the commit message is a bit lackluster for
+adding new functionality.
+
+> Signed-off-by: Praveen Talari <quic_ptalari@quicinc.com>
+> ---
+>  drivers/spi/spi-geni-qcom.c | 55 +++++++++++++++++++++++++++++++++----
+>  1 file changed, 49 insertions(+), 6 deletions(-)
 > 
-> Can you send it as part of the series that adds the MSM8998 interconnect
-> driver?
-Ack
+> diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
+> index 206cc04bb1ed..2e3ae29e79e0 100644
+> --- a/drivers/spi/spi-geni-qcom.c
+> +++ b/drivers/spi/spi-geni-qcom.c
+> @@ -12,6 +12,7 @@
+>  #include <linux/platform_device.h>
+>  #include <linux/pm_opp.h>
+>  #include <linux/pm_runtime.h>
+> +#include <linux/property.h>
+>  #include <linux/soc/qcom/geni-se.h>
+>  #include <linux/spi/spi.h>
+>  #include <linux/spinlock.h>
+> @@ -52,6 +53,9 @@
+>  #define SPI_CS_CLK_DELAY_MSK		GENMASK(19, 10)
+>  #define SPI_CS_CLK_DELAY_SHFT		10
+>  
+> +#define SE_SPI_SLAVE_EN				(0x2BC)
+> +#define SPI_SLAVE_EN				BIT(0)
+> +
+>  /* M_CMD OP codes for SPI */
+>  #define SPI_TX_ONLY		1
+>  #define SPI_RX_ONLY		2
+> @@ -99,6 +103,24 @@ struct spi_geni_master {
+>  	int cur_xfer_mode;
+>  };
+>  
+> +static struct spi_master *get_spi_master(struct device *dev)
+> +{
+> +	struct platform_device *pdev = to_platform_device(dev);
+> +	struct spi_master *spi = platform_get_drvdata(pdev);
+> +
+> +	return spi;
+> +}
+> +
+> +static void spi_slv_setup(struct spi_geni_master *mas)
+> +{
+> +	struct geni_se *se = &mas->se;
+> +
+> +	writel(SPI_SLAVE_EN, se->base + SE_SPI_SLAVE_EN);
+> +	writel(GENI_IO_MUX_0_EN, se->base + GENI_OUTPUT_CTRL);
+> +	writel(START_TRIGGER, se->base + SE_GENI_CFG_SEQ_START);
+> +	dev_info(mas->dev, "spi slave setup done\n");
+dev_dbg
+
+> +}
+> +
+>  static int get_spi_clk_cfg(unsigned int speed_hz,
+>  			struct spi_geni_master *mas,
+>  			unsigned int *clk_idx,
+> @@ -140,12 +162,18 @@ static void handle_se_timeout(struct spi_master *spi,
+>  	const struct spi_transfer *xfer;
+>  
+>  	spin_lock_irq(&mas->lock);
+> -	reinit_completion(&mas->cancel_done);
+>  	if (mas->cur_xfer_mode == GENI_SE_FIFO)
+>  		writel(0, se->base + SE_GENI_TX_WATERMARK_REG);
+>  
+>  	xfer = mas->cur_xfer;
+>  	mas->cur_xfer = NULL;
+> +
+> +	if (spi->slave) {
+> +		spin_unlock_irq(&mas->lock);
+> +		goto unmap_if_dma;
+> +	}
+> +
+> +	reinit_completion(&mas->cancel_done);
+Moving reiniting cancel_done after possibly writing the register
+for both mas/slv cases sounds like a separate change - is it
+necessary?
+
+>  	geni_se_cancel_m_cmd(se);
+>  	spin_unlock_irq(&mas->lock);
+>  
+> @@ -541,6 +569,8 @@ static bool geni_can_dma(struct spi_controller *ctlr,
+>  
+>  	if (mas->cur_xfer_mode == GENI_GPI_DMA)
+>  		return true;
+> +	if (ctlr->slave)
+> +		return true;
+Regardless of the xfer mode?
+
+>  
+>  	len = get_xfer_len_in_words(xfer, mas);
+>  	fifo_size = mas->tx_fifo_depth * mas->fifo_width_bits / mas->cur_bits_per_word;
+> @@ -619,6 +649,7 @@ static void spi_geni_release_dma_chan(struct spi_geni_master *mas)
+>  
+>  static int spi_geni_init(struct spi_geni_master *mas)
+>  {
+> +	struct spi_master *spi = get_spi_master(mas->dev);
+>  	struct geni_se *se = &mas->se;
+>  	unsigned int proto, major, minor, ver;
+>  	u32 spi_tx_cfg, fifo_disable;
+> @@ -627,7 +658,14 @@ static int spi_geni_init(struct spi_geni_master *mas)
+>  	pm_runtime_get_sync(mas->dev);
+>  
+>  	proto = geni_se_read_proto(se);
+> -	if (proto != GENI_SE_SPI) {
+> +
+> +	if (spi->slave) {
+> +		if (proto != GENI_SE_SPI_SLAVE) {
+> +			dev_err(mas->dev, "Invalid proto %d\n", proto);
+> +			goto out_pm;
+> +		}
+> +		spi_slv_setup(mas);
+> +	} else if (proto != GENI_SE_SPI) {
+>  		dev_err(mas->dev, "Invalid proto %d\n", proto);
+>  		goto out_pm;
+>  	}
+> @@ -677,9 +715,11 @@ static int spi_geni_init(struct spi_geni_master *mas)
+>  	}
+>  
+>  	/* We always control CS manually */
+> -	spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
+> -	spi_tx_cfg &= ~CS_TOGGLE;
+> -	writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
+> +	if (!spi->slave) {
+> +		spi_tx_cfg = readl(se->base + SE_SPI_TRANS_CFG);
+> +		spi_tx_cfg &= ~CS_TOGGLE;
+> +		writel(spi_tx_cfg, se->base + SE_SPI_TRANS_CFG);
+> +	}
+>  
+>  out_pm:
+>  	pm_runtime_put(mas->dev);
+> @@ -1072,6 +1112,9 @@ static int spi_geni_probe(struct platform_device *pdev)
+>  	pm_runtime_set_autosuspend_delay(&pdev->dev, 250);
+>  	pm_runtime_enable(dev);
+>  
+> +	if (device_property_read_bool(&pdev->dev, "qcom,slv-ctrl"))
+> +		spi->slave = true;
+Missing dt-bindings
 
 Konrad
-> 
-> Thanks,
-> Stephan
-> 
->> ---
->>  drivers/interconnect/qcom/icc-rpm.h | 6 +++---
->>  1 file changed, 3 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/interconnect/qcom/icc-rpm.h b/drivers/interconnect/qcom/icc-rpm.h
->> index d2c04c400cad..ba840a436cc0 100644
->> --- a/drivers/interconnect/qcom/icc-rpm.h
->> +++ b/drivers/interconnect/qcom/icc-rpm.h
->> @@ -29,10 +29,10 @@ enum qcom_icc_type {
->>   * @num_intf_clks: the total number of intf_clks clk_bulk_data entries
->>   * @type: the ICC provider type
->>   * @regmap: regmap for QoS registers read/write access
->> - * @qos_offset: offset to QoS registers
->>   * @bus_clk_rate: bus clock rate in Hz
->>   * @bus_clks: the clk_bulk_data table of bus clocks
->>   * @intf_clks: a clk_bulk_data array of interface clocks
->> + * @qos_offset: offset to QoS registers
->>   * @keep_alive: whether to always keep a minimum vote on the bus clocks
->>   * @is_on: whether the bus is powered on
->>   */
->> @@ -42,7 +42,7 @@ struct qcom_icc_provider {
->>  	int num_intf_clks;
->>  	enum qcom_icc_type type;
->>  	struct regmap *regmap;
->> -	unsigned int qos_offset;
->> +	int qos_offset;
->>  	u64 bus_clk_rate[NUM_BUS_CLKS];
->>  	struct clk_bulk_data bus_clks[NUM_BUS_CLKS];
->>  	struct clk_bulk_data *intf_clks;
->> @@ -108,7 +108,7 @@ struct qcom_icc_desc {
->>  	bool no_clk_scaling;
->>  	enum qcom_icc_type type;
->>  	const struct regmap_config *regmap_cfg;
->> -	unsigned int qos_offset;
->> +	int qos_offset;
->>  };
->>  
->>  /* Valid for all bus types */
->>
->> -- 
->> 2.41.0
->>
+> +
+>  	ret = geni_icc_get(&mas->se, NULL);
+>  	if (ret)
+>  		goto spi_geni_probe_runtime_disable;
+> @@ -1092,7 +1135,7 @@ static int spi_geni_probe(struct platform_device *pdev)
+>  	 * for dma (gsi) mode, the gsi will set cs based on params passed in
+>  	 * TRE
+>  	 */
+> -	if (mas->cur_xfer_mode == GENI_SE_FIFO)
+> +	if (!spi->slave && mas->cur_xfer_mode == GENI_SE_FIFO)`
+>  		spi->set_cs = spi_geni_set_cs;
+>  
+>  	ret = request_irq(mas->irq, geni_spi_isr, 0, dev_name(dev), spi);
