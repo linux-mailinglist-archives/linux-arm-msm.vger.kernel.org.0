@@ -2,54 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 53A5D72F084
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 01:47:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9667072F088
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 01:47:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241616AbjFMXrl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 19:47:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38240 "EHLO
+        id S231905AbjFMXrp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 19:47:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240820AbjFMXrW (ORCPT
+        with ESMTP id S231926AbjFMXrX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 19:47:22 -0400
+        Tue, 13 Jun 2023 19:47:23 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 27CDD2D45;
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4742A2D46;
         Tue, 13 Jun 2023 16:46:28 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 4C3836353D;
-        Tue, 13 Jun 2023 23:45:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0AB9C433CC;
-        Tue, 13 Jun 2023 23:45:37 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 30DF863C80;
+        Tue, 13 Jun 2023 23:45:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9921C433C8;
+        Tue, 13 Jun 2023 23:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686699938;
-        bh=qesurF4toa3MGEAJJCumXKvdmGx/hbsiVL5/FEtac7Q=;
+        s=k20201202; t=1686699939;
+        bh=gi9VwfohvAu8uIbRR1YC83biv422tk7wrtlzmAaldZo=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=CgnBTgOnvG+2gOjPC2oBWX+HjSinI+03orQ5/AifJjsgRC37AvN+dFn4Z56a3xftm
-         I+7yo5rHk6EHZaNagEDXuvrQ0ljCFAFS49o6OIRPMrWxe7X2Q+JthuXOIWgzK92HT0
-         n4CDzckTlJJdCX8NqcnDBIOvMtuaBqYBOAw8W7oqJZUrFEMJme4gbzVx5e+3+ZbMXt
-         Bp7UNGt7frhTWKUKLkcE2j5FtFfos9NunJupr7O16nbX7KWjr+ay7u9N2u6UbMIebS
-         ENFoVf5nSRcjQr5yYN8VzrR4Z6SPYDiWW9EGcz0w509rhW85cCb1uBrQuEGJSPx4dy
-         zqei5LH+Z/5CA==
+        b=FHqqWp9uQ0SqOJtd9G+9kc4DBpO+4qbDjwEcpg4mshKzl1atsfaX7T9unA9AXboqU
+         STOVtYK7NL6r/psgt25GPXsFFYl06hqvfjXICeOh/fKv1Ao84Gn9/SNP/slqOdDrqY
+         K//fE0Aa3B2NN7bxMMIIVLqwl6X0Y/zxY8OxDXY++U+SKRLYoFclKRzNbLZe2ykUPo
+         43Q1GS9wbr6wiJ8UZaWN34FhEYSaohPRzIHP7z6r3+XvrIjf1cD2g+y7yVPI4BnBPl
+         pnPW4Je8WjLzOJoN2o5dSwPN3tNgBbwPpjdzmt5RGFeCR02NpLhkgb+7QUdHOVkwr3
+         Kn78R4Do3hqTw==
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Arnd Bergmann <arnd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+To:     Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Robert Marko <robimarko@gmail.com>
-Cc:     Mantas Pucka <mantas@8devices.com>, Arnd Bergmann <arnd@arndb.de>,
-        linux-kernel@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH] clk: qcom: gcc-ipq6018: remove duplicate initializers
-Date:   Tue, 13 Jun 2023 16:48:42 -0700
-Message-Id: <168670013502.1400697.3131204181371880058.b4-ty@kernel.org>
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: (subset) [PATCH 00/14] arm/arm64: dts: qcom: MDSS nodes cleanup
+Date:   Tue, 13 Jun 2023 16:48:43 -0700
+Message-Id: <168670013503.1400697.5591337352533649379.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230601213416.3373599-1-arnd@kernel.org>
-References: <20230601213416.3373599-1-arnd@kernel.org>
+In-Reply-To: <20230531011623.3808538-1-dmitry.baryshkov@linaro.org>
+References: <20230531011623.3808538-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -63,25 +60,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 1 Jun 2023 23:34:12 +0200, Arnd Bergmann wrote:
-> From: Arnd Bergmann <arnd@arndb.de>
+On Wed, 31 May 2023 04:16:09 +0300, Dmitry Baryshkov wrote:
+> Conclude several ongoing cleanups of display-related nodes for Qualcomm
+> platforms:
 > 
-> A recent change added new initializers for .config_ctl_val and
-> .config_ctl_hi_val but left the old values in place:
-> 
-> drivers/clk/qcom/gcc-ipq6018.c:4155:27: error: initialized field overwritten [-Werror=override-init]
->  4155 |         .config_ctl_val = 0x240d4828,
->       |                           ^~~~~~~~~~
-> drivers/clk/qcom/gcc-ipq6018.c:4156:30: error: initialized field overwritten [-Werror=override-init]
->  4156 |         .config_ctl_hi_val = 0x6,
->       |                              ^~~
+> - Don't disable MDP/DPU node, it is enough to disable MDSS device itself
+> - Remove useless mdss_mdp enablements
+> - Change labels for DSI and HDMI nodes to start with mdss_ prefix
 > 
 > [...]
 
 Applied, thanks!
 
-[1/1] clk: qcom: gcc-ipq6018: remove duplicate initializers
-      commit: 5ae7899765607e97e5eb34486336898c8d9ec654
+[14/14] ARM: dts: qcom: msm8974: rename labels for DSI nodes
+        commit: d59b294874c7f51317dc7edfc12ff950260ed2b9
 
 Best regards,
 -- 
