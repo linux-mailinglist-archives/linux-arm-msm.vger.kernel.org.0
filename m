@@ -2,174 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id A1AE772F64E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 09:29:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5FA972F6C1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 09:50:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234403AbjFNH3D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 03:29:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47222 "EHLO
+        id S243444AbjFNHtm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 03:49:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233802AbjFNH3B (ORCPT
+        with ESMTP id S235262AbjFNHtk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 03:29:01 -0400
-Received: from mail-vs1-xe30.google.com (mail-vs1-xe30.google.com [IPv6:2607:f8b0:4864:20::e30])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1936C11B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 00:29:00 -0700 (PDT)
-Received: by mail-vs1-xe30.google.com with SMTP id ada2fe7eead31-43dc3f77accso782679137.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 00:29:00 -0700 (PDT)
+        Wed, 14 Jun 2023 03:49:40 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E7C5D1721
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 00:49:37 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b344476595so4485201fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 00:49:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20221208.gappssmtp.com; s=20221208; t=1686727739; x=1689319739;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5CRRGmdvDVbIEVTAFye64zUK3XOXIsv8ssMpfcABwlc=;
-        b=Nf0/wLoZ38LsOopYbyo0ezI8LUQxgJTAFLkmLtgB++4Cqtqg95I3NTpGl9TXnYDDkY
-         wQhNpaGtN+5iKwyxA/Sc3yKL4QWEEoRYv1tUv0/rZ1jPqpc9h2liqXzIFsH7Mk0PzJ2D
-         8Dt9l/8xaaR/qGP/pxdKD42jgFfMPgpFD59+6wt7ykOg3xU4OOQOIVjAB7xnsarGe2xV
-         S1QJ6zDt5NlO/4rFM4tBxEctZeiRwHUUbqReFG2sT+6YQbOdFDmCmmmOhAPgpwdAefLP
-         SOVujR+y+Jx1AZxSFRB5PTZR3D5aXGCdsLrtMDajNAzKERlzusmNmNlP39Tdtw7fIp0C
-         Jqdg==
+        d=linaro.org; s=google; t=1686728973; x=1689320973;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=27eyuKXLzSmxU9wIv8izarpbo1JvKOXSZvqxo5m+b6E=;
+        b=k7VCtEuvdXGbXRk5tm0RLthsEKEjNKDNUg9gFhXpAhEyMFq3PBJfYBfczX+OoBEhzZ
+         ydSI3Dq8EqUoW3zeQOL8l+gT6P08zgtyp7fXFrORwquAbS7V1m+r1gU9/iEvZ2BMb+XL
+         G3bmJi0XuPYhI0MIaj9pQz/aMCvRmgxG0fhTABtNWOzOufk0H+p2g2X/P1Ra5tWj/FjE
+         Mbzd9hLJk0uSEbYFu/hb+UqzdoQefvUawpoAITm7JtlTBlfM3OPyBOyH+NTst81zJR45
+         OZW3gZc66a6gq/HFamdHB0vsEsSFJtoSBt+bHzPjSqaXX8fHzjt2mci26IXpOazaOlbz
+         UXMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686727739; x=1689319739;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5CRRGmdvDVbIEVTAFye64zUK3XOXIsv8ssMpfcABwlc=;
-        b=K04yTp6rXWWKs8yuHMqgykhGFexxKYigwMVrY0p5T/5uHLocJlq2WvuIf4h6Hgag3t
-         bFfJp59OxI3fq9AJ7mUnuGQ23rlwXLuUnoNbvaCMB8uqeMl6KB/Oq9NzuUkBB0WqBOHX
-         CJF+kmt+ow7LyHMLvIRJnAy6KznBQ0WQfgODX46bYPT0OLWT9D6rSGxR1/dBX9guaJOa
-         7fv2WiOVJacZPU/iwINCza1rRiIhDZI9JY+YXjIeeoeujv/zyv/fNZo/emHK4x9wbGp9
-         NeySji5DXRAAZr0PtV1QQPEoXvHjBxXXBAvEkDuQO9Vk+16keW5K4etEfBUl1C9hTWDo
-         WP7g==
-X-Gm-Message-State: AC+VfDysoov+4Z+7WEga6Zou0q5ATF+dO0ebQluHtTg2LaCIqs7h7N1+
-        KFJK+FmpZ9v1u80XoJVUcPzHxja1AH7uZY8/qA+inQ==
-X-Google-Smtp-Source: ACHHUZ5IOUv06tiZXv2OeC2IVs2JPsy0d5AliyorYz0hKnjFQVcPktvrX5L1vFgxFRciusLts8S8bofr4NgaMAhMxQo=
-X-Received: by 2002:a05:6102:ca:b0:43d:54e9:35fb with SMTP id
- u10-20020a05610200ca00b0043d54e935fbmr7796848vsp.14.1686727739229; Wed, 14
- Jun 2023 00:28:59 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686728973; x=1689320973;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=27eyuKXLzSmxU9wIv8izarpbo1JvKOXSZvqxo5m+b6E=;
+        b=RiuyQLQUCshkEefxvUBvqFDgkOZX7Dze+c38hkf42QZhvoJJ88ZoMdSn4vRwp6n+p8
+         sERJlOQXt1rBou+t+kk+ypmwhbB0L/t8VqKrj9iC3UFpU9IX8CsOShDEOC5+S1NTVzfB
+         QhhDFoHndJGN1k6rMGzW3owTy4F67hs1yPrI43Wxhrcp+SS0Rwc331cELj303aTWt+4N
+         ORAVJ9A7jtLTBlESNaSTE78l5m6YUnxSApPA4b4+b/mvw0tG2lHjYDnZ49MCq9Hkr8dw
+         MejjXo7YeX0b98J+1C5QG7FiTPZaTMWQ93WUY3tmmLb3vE4rhN8l94xrBRkwgYKWMz0e
+         699g==
+X-Gm-Message-State: AC+VfDyF2EBVjtXF8uE0ep7ga6NaPycqzBIfpxY+bxJ56whu51W+n190
+        w8IDk8b/byRagocUpqBoyozyAw==
+X-Google-Smtp-Source: ACHHUZ4tX1Lru/h/k7uXYdfmiypu/83JXDIzBpvoNKDLfhESReO/fJd0wkNKt6JjhYVZuJXm0Wf8fg==
+X-Received: by 2002:a2e:83d6:0:b0:2af:8635:96a1 with SMTP id s22-20020a2e83d6000000b002af863596a1mr5395683ljh.33.1686728973188;
+        Wed, 14 Jun 2023 00:49:33 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id v2-20020a2e7a02000000b002a9eba29c39sm2430936ljc.91.2023.06.14.00.49.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Jun 2023 00:49:32 -0700 (PDT)
+Message-ID: <3a6cc492-6b54-2c70-402e-995c0b003c01@linaro.org>
+Date:   Wed, 14 Jun 2023 10:49:31 +0300
 MIME-Version: 1.0
-References: <20230612092355.87937-1-brgl@bgdev.pl> <20230612092355.87937-21-brgl@bgdev.pl>
- <712b2650-f0c1-088a-612c-ef6d6bcc1eb0@linaro.org>
-In-Reply-To: <712b2650-f0c1-088a-612c-ef6d6bcc1eb0@linaro.org>
-From:   Bartosz Golaszewski <brgl@bgdev.pl>
-Date:   Wed, 14 Jun 2023 09:28:48 +0200
-Message-ID: <CAMRc=McvVwk_HGU_cRzJ_qsCriHKfq61qL7bbe10evr-Sp6YSA@mail.gmail.com>
-Subject: Re: [PATCH 20/26] dt-bindings: net: qcom,ethqos: add description for sa8775p
-To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        "David S . Miller" <davem@davemloft.net>,
-        Eric Dumazet <edumazet@google.com>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Paolo Abeni <pabeni@redhat.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Giuseppe Cavallaro <peppe.cavallaro@st.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Jose Abreu <joabreu@synopsys.com>, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-stm32@st-md-mailman.stormreply.com,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,RCVD_IN_DNSWL_NONE,SPF_HELO_NONE,SPF_NONE,
-        T_SCC_BODY_TEXT_LINE autolearn=ham autolearn_force=no version=3.4.6
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH 3/3] drm/msm/dsi: Enable DATABUS_WIDEN for DSI command
+ mode
+Content-Language: en-GB
+To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     quic_abhinavk@quicinc.com, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
+ <20230525-add-widebus-support-v1-3-c7069f2efca1@quicinc.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <20230525-add-widebus-support-v1-3-c7069f2efca1@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 14, 2023 at 9:25=E2=80=AFAM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 12/06/2023 11:23, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > Add the compatible for the MAC controller on sa8775p platforms. This MA=
-C
-> > works with a single interrupt so add minItems to the interrupts propert=
-y.
-> > The fourth clock's name is different here so change it. Enable relevant
-> > PHY properties.
-> >
->
-> I think the patch should be squashed with previous. Adding compatible to
-> common snps,dwmac binding does not make sense on its own. It makes sense
-> with adding compatible here.
->
-> > Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> > ---
-> >  .../devicetree/bindings/net/qcom,ethqos.yaml       | 14 +++++++++++++-
-> >  1 file changed, 13 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml b/D=
-ocumentation/devicetree/bindings/net/qcom,ethqos.yaml
-> > index 60a38044fb19..b20847c275ce 100644
-> > --- a/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-> > +++ b/Documentation/devicetree/bindings/net/qcom,ethqos.yaml
-> > @@ -20,6 +20,7 @@ properties:
-> >    compatible:
-> >      enum:
-> >        - qcom,qcs404-ethqos
-> > +      - qcom,sa8775p-ethqos
-> >        - qcom,sc8280xp-ethqos
-> >        - qcom,sm8150-ethqos
-> >
-> > @@ -32,11 +33,13 @@ properties:
-> >        - const: rgmii
-> >
-> >    interrupts:
-> > +    minItems: 1
-> >      items:
-> >        - description: Combined signal for various interrupt events
-> >        - description: The interrupt that occurs when Rx exits the LPI s=
-tate
-> >
-> >    interrupt-names:
-> > +    minItems: 1
-> >      items:
-> >        - const: macirq
-> >        - const: eth_lpi
-> > @@ -49,11 +52,20 @@ properties:
-> >        - const: stmmaceth
-> >        - const: pclk
-> >        - const: ptp_ref
-> > -      - const: rgmii
-> > +      - enum:
-> > +          - rgmii
-> > +          - phyaux
-> >
-> >    iommus:
-> >      maxItems: 1
-> >
-> > +  phys: true
-> > +
-> > +  phy-supply: true
->
-> Isn't this property of the phy?
->
+On 14/06/2023 04:57, Jessica Zhang wrote:
+> DSI 6G v2.5.x+ supports a data-bus widen mode that allows DSI to send
+> 48 bits of compressed data per pclk instead of 24.
+> 
+> For all chipsets that support this mode, enable it whenever DSC is
+> enabled as recommend by the hardware programming guide.
+> 
+> Only enable this for command mode as we are currently unable to validate
+> it for video mode.
+> 
+> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
+> ---
+> 
+> Note: The dsi.xml.h changes were generated using the headergen2 script in
+> envytools [1], but the changes to the copyright and rules-ng-ng source file
+> paths were dropped.
+> 
+> [1] https://github.com/freedreno/envytools/
+> 
+>   drivers/gpu/drm/msm/dsi/dsi.xml.h  |  1 +
+>   drivers/gpu/drm/msm/dsi/dsi_host.c | 19 ++++++++++++++++++-
+>   2 files changed, 19 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h b/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> index a4a154601114..2a7d980e12c3 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> +++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
+> @@ -664,6 +664,7 @@ static inline uint32_t DSI_CMD_MODE_MDP_CTRL2_INPUT_RGB_SWAP(enum dsi_rgb_swap v
+>   	return ((val) << DSI_CMD_MODE_MDP_CTRL2_INPUT_RGB_SWAP__SHIFT) & DSI_CMD_MODE_MDP_CTRL2_INPUT_RGB_SWAP__MASK;
+>   }
+>   #define DSI_CMD_MODE_MDP_CTRL2_BURST_MODE			0x00010000
+> +#define DSI_CMD_MODE_MDP_CTRL2_DATABUS_WIDEN			0x00100000
+> 
+>   #define REG_DSI_CMD_MODE_MDP_STREAM2_CTRL			0x000001b8
+>   #define DSI_CMD_MODE_MDP_STREAM2_CTRL_DATA_TYPE__MASK		0x0000003f
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 5d7b4409e4e9..1da5238e7105 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -927,6 +927,9 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>   	u32 hdisplay = mode->hdisplay;
+>   	u32 wc;
+>   	int ret;
+> +	bool widebus_supported = msm_host->cfg_hnd->major == MSM_DSI_VER_MAJOR_6G &&
+> +			msm_host->cfg_hnd->minor >= MSM_DSI_6G_VER_MINOR_V2_5_0;
+> +
+> 
+>   	DBG("");
+> 
+> @@ -973,8 +976,15 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>   		 *
+>   		 * hdisplay will be divided by 3 here to account for the fact
+>   		 * that DPU sends 3 bytes per pclk cycle to DSI.
+> +		 *
+> +		 * If widebus is supported, set DATABUS_WIDEN register and divide hdisplay by 6
+> +		 * instead of 3
 
-It is, and as discussed elsewhere with Andrew, I will move it to the
-SerDes PHY driver.
+This is useless, it is already obvious from the code below. Instead 
+there should be something like "wide bus extends that to 6 bytes per 
+pclk cycle"
 
-Bart
+>   		 */
+> -		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
+> +		if (!(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) && widebus_supported)
+> +			hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 6);
+> +		else
+> +			hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
+> +
+>   		h_total += hdisplay;
+>   		ha_end = ha_start + hdisplay;
+>   	}
+> @@ -1027,6 +1037,13 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>   		dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_TOTAL,
+>   			DSI_CMD_MDP_STREAM0_TOTAL_H_TOTAL(hdisplay) |
+>   			DSI_CMD_MDP_STREAM0_TOTAL_V_TOTAL(mode->vdisplay));
+> +
+> +		if (msm_host->dsc && widebus_supported) {
+> +			u32 mdp_ctrl2 = dsi_read(msm_host, REG_DSI_CMD_MODE_MDP_CTRL2);
+> +
+> +			mdp_ctrl2 |= DSI_CMD_MODE_MDP_CTRL2_DATABUS_WIDEN;
+> +			dsi_write(msm_host, REG_DSI_CMD_MODE_MDP_CTRL2, mdp_ctrl2);
 
-> > +
-> > +  phy-names:
-> > +    const: serdes
->
-> Keep the phy-names after phys.
->
->
-> Best regards,
-> Krzysztof
->
+Is widebus applicable only to the CMD mode, or video mode can employ it too?
+
+> +		}
+>   	}
+>   }
+> 
+> 
+> --
+> 2.40.1
+> 
+
+-- 
+With best wishes
+Dmitry
+
