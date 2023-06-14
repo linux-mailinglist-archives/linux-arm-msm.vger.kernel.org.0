@@ -2,165 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 3BF1E7308D8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 21:55:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8A447308F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 22:11:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231713AbjFNTzN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 15:55:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40720 "EHLO
+        id S231975AbjFNULZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 16:11:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45396 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236189AbjFNTzD (ORCPT
+        with ESMTP id S236185AbjFNULT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 15:55:03 -0400
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28872122;
-        Wed, 14 Jun 2023 12:55:02 -0700 (PDT)
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35EJbqLB002607;
-        Wed, 14 Jun 2023 19:54:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=message-id : date :
- mime-version : subject : from : to : cc : references : in-reply-to :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=3cDVGjI7IF7WuWk6MxgOMFp5nbwzmi1UtW/rdaVNM5k=;
- b=eCQ+tsa+l5gwvxMueEE+hf+p9LaZJhiT1e5AQPWbnRSVsATAhbVbfZMd2JzfwEtsssWn
- 0aN++bfPA+sd4obJzef5xmhXmmzCOegR+4HiWpxjmzRmesaG835z6x1MACnkP1zIIvsG
- xr2RVINjnYhTzUEYtgjKqRLNuf4T90NtrRLoqw2vIpC8OLr3UiiAC2NfKQ3E4rjUU3jc
- +RZLn5hD9HRAFWbSlR1V8CA7EO8JVN+H+0sAUb4QDjIOnx+XT7qkve8OssQbLb2v5dbU
- XJ6b06iOj/wXtQhsPnQu310F+p0BeyIsI3Izt7DNQ5pvTpKpYCuyz3WbgExgcH/KomVF mg== 
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r6t0bujwf-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Jun 2023 19:54:56 +0000
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-        by NALASPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35EJstSX011821
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Jun 2023 19:54:55 GMT
-Received: from [10.134.70.142] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42; Wed, 14 Jun
- 2023 12:54:55 -0700
-Message-ID: <c5cfc132-effb-8269-ac5d-ed8c988d1a16@quicinc.com>
-Date:   Wed, 14 Jun 2023 12:54:54 -0700
+        Wed, 14 Jun 2023 16:11:19 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BBB92103
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 13:11:17 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id 38308e7fff4ca-2b1c30a1653so16331281fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 13:11:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1686773475; x=1689365475;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=POY0ce7wWbwfbzD7JE6CSS9GHiPnt327xrkIS29uLi8=;
+        b=jORvPwymCYV5GjMtAC9SjTWv11dPTRLUEfaKnWn9iU5Ynaz2mF3qkCf769+oBfRLi9
+         OVht5oqqxk+k++5MKfqyIaS4R1shrZr3fCkCdnSZUMxmthUyj6GziH1FFr/oGcdE0Tyz
+         +15D77IhxIp1cFW0wNWB9c1b6zAhl1/Mi8FrNTKafl2XwRYf+lcjc2ihqdkdF9ZkAl7r
+         xTcvuvvS1sQ4K0paPJnkDURGLDUvW7ZLLcuRpJ8W3B8DhVGx15e9UBr7LphGeUd60XFT
+         IdcvYV7/tzrU1ge3B2NrAqrndjgoMmCtBL7xUhLNZ/TryRzfhzVQ08vFta0KNym10Aiz
+         Zn3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686773475; x=1689365475;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=POY0ce7wWbwfbzD7JE6CSS9GHiPnt327xrkIS29uLi8=;
+        b=jzJY5lHqA6E8FuYcYTP/5fxr3Zcs9DTwbId9wesQLA7iXdpuPYmgLebqmt27qf6R57
+         9d/xFOPrNPgPT6rHMVWuygeaZsmrVhGC72AQrX5M8DWMnAc1GpJczJ0fb3NYdAmgNVM3
+         6SabmpmhmHAy1Xkj4HnWw5+oxpGNIpVNwFqHX1KYfES0Ot3Qa4tXwMNGjMHVrdbmE4ju
+         ZRp3+EneCo266+MAvPbHeyusDIV8OnJ9SSh2PgGCSxkZ/dMIe8iachyisi265eVzNmcW
+         n8ZXJ/BX2p7r4+CP24j18TCL3gbP3uCUcneuKoH4MWLiJph6k7Sg91JlUz7MSmAQwmHu
+         PFCA==
+X-Gm-Message-State: AC+VfDyauoRlcBPHVdJ8ydk1BJwXK9WVvjukxM2ClpFQDmUvOpda8PoU
+        AzlrBcIUSFKe/kA8l/gOaJoKoA==
+X-Google-Smtp-Source: ACHHUZ7lux0NZKiXoqw6xpxgceYsRJYfelW/Q3xaVMgdjmssULE780vQO2/2t2SlpUASJd7IHLBtCw==
+X-Received: by 2002:a19:e345:0:b0:4f4:c973:c97d with SMTP id c5-20020a19e345000000b004f4c973c97dmr8552770lfk.25.1686773475433;
+        Wed, 14 Jun 2023 13:11:15 -0700 (PDT)
+Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
+        by smtp.gmail.com with ESMTPSA id h25-20020a197019000000b004f80f03d990sm76844lfc.259.2023.06.14.13.11.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Jun 2023 13:11:14 -0700 (PDT)
+Message-ID: <678a3750-0a89-aedf-b5cf-e68da003f4a0@linaro.org>
+Date:   Wed, 14 Jun 2023 23:11:14 +0300
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH 1/3] drm/msm/dpu: Add DPU_INTF_DATABUS_WIDEN feature flag
- for DPU >= 5.0
-Content-Language: en-US
-From:   Abhinav Kumar <quic_abhinavk@quicinc.com>
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-CC:     <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>, <linux-arm-msm@vger.kernel.org>,
-        "Jessica Zhang" <quic_jesszhan@quicinc.com>,
-        Sean Paul <sean@poorly.run>
-References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
- <20230525-add-widebus-support-v1-1-c7069f2efca1@quicinc.com>
- <wpjxrnhbcanbc5iatxnff25yrrdfrtmgb24sgwyo457dz2oyjz@e2docpcb6337>
- <f4fb042c-1458-6077-3c49-8cc02638b27c@linaro.org>
- <ycgei43x4kfmjk7g7gbeglehtiiinfbqmrjbdzcy56frxbtd2z@yk2f5kgrkbrt>
- <e23de804-060d-3278-5045-1ed03f0de80d@quicinc.com>
-In-Reply-To: <e23de804-060d-3278-5045-1ed03f0de80d@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: YTAxfKl1WlLCNc2S7B99tQO4PnOkS3R4
-X-Proofpoint-ORIG-GUID: YTAxfKl1WlLCNc2S7B99tQO4PnOkS3R4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-14_14,2023-06-14_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 bulkscore=0
- priorityscore=1501 clxscore=1015 mlxlogscore=999 spamscore=0
- lowpriorityscore=0 suspectscore=0 adultscore=0 impostorscore=0
- phishscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2305260000 definitions=main-2306140175
-X-Spam-Status: No, score=-2.9 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_LOW,
+Subject: Re: [PATCH 01/18] dt-bindings: opp: opp-v2-kryo-cpu: support Qualcomm
+ Krait SoCs
+Content-Language: en-GB
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>
+References: <20230612053922.3284394-1-dmitry.baryshkov@linaro.org>
+ <20230612053922.3284394-2-dmitry.baryshkov@linaro.org>
+ <5c750c6a-a0f8-c6f7-64fe-716da434d819@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+In-Reply-To: <5c750c6a-a0f8-c6f7-64fe-716da434d819@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=ham autolearn_force=no version=3.4.6
+        autolearn=unavailable autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 6/14/2023 12:35 PM, Abhinav Kumar wrote:
-> 
-> 
-> On 6/14/2023 5:23 AM, Marijn Suijten wrote:
->> On 2023-06-14 15:01:59, Dmitry Baryshkov wrote:
->>> On 14/06/2023 14:42, Marijn Suijten wrote:
->>>> On 2023-06-13 18:57:11, Jessica Zhang wrote:
->>>>> DPU 5.x+ supports a databus widen mode that allows more data to be 
->>>>> sent
->>>>> per pclk. Enable this feature flag on all relevant chipsets.
->>>>>
->>>>> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
->>>>> ---
->>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 3 ++-
->>>>>    drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 2 ++
->>>>>    2 files changed, 4 insertions(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c 
->>>>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->>>>> index 36ba3f58dcdf..0be7bf0bfc41 100644
->>>>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->>>>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->>>>> @@ -103,7 +103,8 @@
->>>>>        (BIT(DPU_INTF_INPUT_CTRL) | \
->>>>>         BIT(DPU_INTF_TE) | \
->>>>>         BIT(DPU_INTF_STATUS_SUPPORTED) | \
->>>>> -     BIT(DPU_DATA_HCTL_EN))
->>>>> +     BIT(DPU_DATA_HCTL_EN) | \
->>>>> +     BIT(DPU_INTF_DATABUS_WIDEN))
->>>>
->>>> This doesn't work.  DPU 5.0.0 is SM8150, which has DSI 6G 2.3.  In the
->>>> last patch for DSI you state and enable widebus for DSI 6G 2.5+ only,
->>>> meaning DPU and DSI are now desynced, and the output is completely
->>>> corrupted.
+On 14/06/2023 19:01, Krzysztof Kozlowski wrote:
+> On 12/06/2023 07:39, Dmitry Baryshkov wrote:
+>> Exted the opp-v2-kryo-cpu.yaml to support defining OPP tables for the
+>> previous generation of Qualcomm CPUs, 32-bit Krait-based platforms.
 >>
->> Tested this on SM8350 which actually has DSI 2.5, and it is also
->> corrupted with this series so something else on this series might be
->> broken.
+>> It makes no sense to use 'operating-points-v2-kryo-cpu' compatibility
+>> node for the Krait cores. Add support for the Krait-specific
+>> 'operating-points-v2-krait-cpu' compatibility string and the relevant
+>> opp-microvolt subclasses properties.
 >>
-
-Missed this response. That seems strange.
-
-This series was tested on SM8350 HDK with a command mode panel.
-
-We will fix the DPU-DSI handshake and post a v2 but your issue needs 
-investigation in parallel.
-
-So another bug to track that would be great.
-
->>>> Is the bound in dsi_host wrong, or do DPU and DSI need to communicate
->>>> when widebus will be enabled, based on DPU && DSI supporting it?
->>>
->>> I'd prefer to follow the second approach, as we did for DP. DPU asks the
->>> actual video output driver if widebus is to be enabled.
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   .../devicetree/bindings/opp/opp-v2-kryo-cpu.yaml      | 11 +++++++----
+>>   1 file changed, 7 insertions(+), 4 deletions(-)
 >>
+>> diff --git a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
+>> index bbbad31ae4ca..93ec778bf333 100644
+>> --- a/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
+>> +++ b/Documentation/devicetree/bindings/opp/opp-v2-kryo-cpu.yaml
+>> @@ -26,7 +26,9 @@ description: |
+>>   
+>>   properties:
+>>     compatible:
+>> -    const: operating-points-v2-kryo-cpu
+>> +    enum:
+>> +      - operating-points-v2-krait-cpu
+>> +      - operating-points-v2-kryo-cpu
+>>   
+>>     nvmem-cells:
+>>       description: |
+>> @@ -63,14 +65,15 @@ patternProperties:
+>>             5:  MSM8996SG, speedbin 1
+>>             6:  MSM8996SG, speedbin 2
+>>             7-31:  unused
+>> -        enum: [0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7,
+>> -               0x9, 0xd, 0xe, 0xf,
+>> -               0x10, 0x20, 0x30, 0x70]
 > 
-> I was afraid of this. This series was made on an assumption that the DPU 
-> version of widebus and DSI version of widebus would be compatible but 
-> looks like already SM8150 is an outlier.
+> Why?
 > 
-> Yes, I think we have to go with second approach.
+>> +        $ref: /schemas/types.yaml#/definitions/uint32
 > 
-> DPU queries DSI if it supports widebus and enables it.
+> You are changing the type. No. It should be fixed instead (enum applies
+> to items).
+
+Currenlty this bindings are only usable for msm8996/msm8996pro. As such 
+we listed opp-supported-hw values that are applicable to this platform. 
+This series adds support for apq8064 platform, which will add new items 
+to this enum. I think it is not very sensible to list all of them here.
+
+However granted there is already a good enough base type definition, I 
+think it would be better to drop the $ref, drop the enum, add ': true' 
+(is it necessary if we have a description already?) and expand 
+documentation.
+
 > 
-> Thanks for your responses. We will post a v2.
+>>   
+>>         clock-latency-ns: true
+>>   
+>>         required-opps: true
+>>   
+>> +    patternProperties:
+>> +      '^opp-microvolt-speed[0-9]+-pvs[0-9]+$': true
 > 
->> Doesn't it seem very strange that DPU 5.x+ comes with a widebus feature,
->> but the DSI does not until two revisions later?  Or is this available on
->> every interface, but only for a different (probably DP) encoder block?
->>
+> I don't think it is a common property, so it needs description and
+> specific type. Specifically "pvs[0-9]" something entirely new.
+
+Ack.
+
 > 
-> Yes its strange.
 > 
->> - Marijn
+> 
+> Best regards,
+> Krzysztof
+> 
+
+-- 
+With best wishes
+Dmitry
+
