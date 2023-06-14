@@ -2,73 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id ABAE3730AEB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 00:45:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F680730AF8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 00:50:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230301AbjFNWpL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 18:45:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40780 "EHLO
+        id S234207AbjFNWuI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 18:50:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42762 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231129AbjFNWpJ (ORCPT
+        with ESMTP id S234231AbjFNWtu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 18:45:09 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 443F5268B
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 15:45:05 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f762b3227dso225931e87.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 15:45:05 -0700 (PDT)
+        Wed, 14 Jun 2023 18:49:50 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F3DE1FFA
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 15:49:48 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2b344476595so18507441fa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 15:49:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686782703; x=1689374703;
+        d=linaro.org; s=google; t=1686782987; x=1689374987;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=pFmEys4UP/BgwQm19UOfZJrlXyJD3pmyho65CpiqnbY=;
-        b=P0xkljwPwEIx9AiLfTQ52OF2brfwDB4iX2e7Jv+LzXTgBkI/ZnBRbTtlAc7Bh4YMqO
-         EEXq38ZzvaHMHJqQFYknBcSu1UmHdfOedsuvIeYhAjrX2BUHKUhF4JKDySzJ2dpDa4O1
-         STA9E2hLePlmYiY0a091mZSsm6CrsqbcOEAoUMjJrGOKOxZwID0WFgNlrlrZuv+7hxBp
-         nSnm2wB/3L1FKvBLMexFx0C69lhhJjibpN6Ovyg7JgXz9G6RI9jBkY8tWtHIPelfdvEb
-         aFmtko2M4jIJNuyG5LafYw9GiVLS0Be1FFpoHkLSH1Xi/ZnAWrbMpv21T9t3/VmELmeO
-         +GZA==
+        bh=SLDzJSxQZskr0Cl4XkH1ZSWbdavJeb1yjH9huK60JGU=;
+        b=iFNpS9TkjHbDcvpZX8+Kh6A/ZKdU0v8OccZXmYrctkpTbWirXpm74PxldYCTNEf79q
+         uBI/OPJQjWU+k6qvYvOEaAuWfmX+8h2K5+mJgxmVqXlT0oWB++ZgFmSU92hg6z708TDD
+         fRpAvQErMSVxFiED7s2t3lVr1jd/y3Je4i7GrLmBmqpzH5AOyvwaJX3mA+2IdMxq/+D0
+         Gpz7t/6DsFpARW3dGvjihmwJUGxkuZwwYIzhzUB6USvtbyjoSzRU11XuN5QNB6VJl+SB
+         t3PM0Cdbq3yAHMcMrXFucWy4yjAyPI1lvlGmKR5fJJ+PmyHvSH0US8YV+Cy0YH+PkLMh
+         taOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686782703; x=1689374703;
+        d=1e100.net; s=20221208; t=1686782987; x=1689374987;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pFmEys4UP/BgwQm19UOfZJrlXyJD3pmyho65CpiqnbY=;
-        b=a0MWdd9hS1qsSGn4ZtLgr8hqP4DBBSQxAnKFO48WCIdI2RiyEVohyCCWTHltozbP09
-         Q+xcV6/wxgtWx13i+3Hpv0D99QK8DsCy/pUPqFyzhlsox+eioFBJZ2YxVspOyVmLf3Kw
-         bNYCRoEq5iAJh78mQhuSOV5y8gZj0j/hJcdnVgmY1KBMzc0ijaZgwPudnk9+mBNB6mhb
-         +grEqRXdsfDkQKccpKoHUH0SbqKdQtkNWDjETBAJkw09JAjMaNVkuRx6Va62u4H4j2Xz
-         WGQlSG++I1mMlI8BzHNywHPC9apr+Suag9QjNCwLunes5xSvBkcM8tXZKalcHUskj7lM
-         4r6A==
-X-Gm-Message-State: AC+VfDxYtYXck6xvXyifn1R9GMIxRmBRP9gK905vrPxR/g7XPFKKfCfq
-        Rhm0Pg+dGKcKrrKWYarrHlsX6w==
-X-Google-Smtp-Source: ACHHUZ41d/xGmuzPjif6jwX/W74Tm1loth6hzxERHcbhrFmHVvv22kop8/IE1XX6TbWVmyC2w1FOkQ==
-X-Received: by 2002:a05:6512:45a:b0:4f6:5473:7bf0 with SMTP id y26-20020a056512045a00b004f654737bf0mr1184339lfk.21.1686782703414;
-        Wed, 14 Jun 2023 15:45:03 -0700 (PDT)
+        bh=SLDzJSxQZskr0Cl4XkH1ZSWbdavJeb1yjH9huK60JGU=;
+        b=jjcqzeH0kD6qBwXTQtncvQvynzsqkF+/6bSD/lU1H+jhmxqKHhnXyUdKUXRVrn8QK8
+         3qhmOHAy+ALd1+HQ66J+d4Avd3GUy2/TcL5nn9pSsaAaoYW5398OAyaThBEGZvCzsIgu
+         19eKwfOoCFegqv/HIskeDSgS4byBymE4eJpv0nzLIqPSGla2ML+hvT+XndfZmq9dFLr3
+         DUx2MlJhZPPcDEycn4ukEOUXET7dzf3kAs8pmvgv1onJE4lAIpUZapP6dW93DsOlhNzQ
+         wEhLGrHFtnIVVcjk9Co/eevG9t0f8DVvPYt75o5yuK6vP7Pqa73bRfOrBes//JF1utKK
+         DVbQ==
+X-Gm-Message-State: AC+VfDySQnuxphvdc2s9vFuszNvRZQigCRO4jSbdHrSi+364MwQ5emDq
+        ZM0mJBMp8Vlm7HnV/fXp/ojGpA==
+X-Google-Smtp-Source: ACHHUZ4+0MirKpPxCOYertoARVhJCSV5Rvf1vp9RpZH7q+j92Tud1zhaLDAPPNMsAEIXsHfR0m5mcw==
+X-Received: by 2002:a2e:3305:0:b0:2af:2466:1c18 with SMTP id d5-20020a2e3305000000b002af24661c18mr7682604ljc.18.1686782986787;
+        Wed, 14 Jun 2023 15:49:46 -0700 (PDT)
 Received: from ?IPV6:2001:14ba:a0db:1f00::8a5? (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id r23-20020ac252b7000000b004f2ce4b0f2esm2288991lfm.168.2023.06.14.15.45.02
+        by smtp.gmail.com with ESMTPSA id j14-20020a2e824e000000b002b1a4238c96sm2765969ljh.128.2023.06.14.15.49.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jun 2023 15:45:02 -0700 (PDT)
-Message-ID: <a1322d43-d1e6-059d-6428-f0da843a00b1@linaro.org>
-Date:   Thu, 15 Jun 2023 01:45:01 +0300
+        Wed, 14 Jun 2023 15:49:45 -0700 (PDT)
+Message-ID: <e70520a9-6c97-07b3-326a-6fa80aad0d6a@linaro.org>
+Date:   Thu, 15 Jun 2023 01:49:45 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.11.0
-Subject: Re: [PATCH] drm/msm/dsi: Enable BURST_MODE for command mode for DSI
- 6G v1.3+
+Subject: Re: [PATCH 03/18] dt-bindings: soc: qcom: qcom,saw2: define optional
+ regulator node
 Content-Language: en-GB
-To:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     quic_abhinavk@quicinc.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-References: <20230608-b4-add-burst-mode-v1-1-55dfbcfada55@quicinc.com>
+To:     Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Christian Marangi <ansuelsmth@gmail.com>
+References: <20230612053922.3284394-1-dmitry.baryshkov@linaro.org>
+ <20230612053922.3284394-4-dmitry.baryshkov@linaro.org>
+ <e48f6153-0485-9fb9-5fe0-145251a8b367@linaro.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230608-b4-add-burst-mode-v1-1-55dfbcfada55@quicinc.com>
+In-Reply-To: <e48f6153-0485-9fb9-5fe0-145251a8b367@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -81,47 +90,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/06/2023 02:37, Jessica Zhang wrote:
-> During a frame transfer in command mode, there could be frequent
-> LP11 <-> HS transitions when multiple DCS commands are sent mid-frame or
-> if the DSI controller is running on slow clock and is throttled. To
-> minimize frame latency due to these transitions, it is recommended to
-> send the frame in a single burst.
+On 14/06/2023 19:05, Krzysztof Kozlowski wrote:
+> On 12/06/2023 07:39, Dmitry Baryshkov wrote:
+>> The SAW2 device can optionally provide a voltage regulator supplying the
+>> CPU core, cluster or L2 cache. Describe it in the device bindings.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>   .../devicetree/bindings/soc/qcom/qcom,saw2.yaml | 17 +++++++++++++++++
+>>   1 file changed, 17 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+>> index a016242367b9..b809a9cc0916 100644
+>> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
+>> @@ -47,6 +47,10 @@ properties:
+>>         - description: Base address and size of the alias register region
+>>       minItems: 1
+>>   
+>> +  regulator:
+>> +    $ref: /schemas/regulator/regulator.yaml#
 > 
-> This feature is supported for DSI 6G 1.3 and above, thus enable burst
-> mode if supported.
-> 
-> Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-> ---
->   drivers/gpu/drm/msm/dsi/dsi_host.c | 5 +++++
->   1 file changed, 5 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 744f2398a6d6..8254b06dca85 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -994,6 +994,11 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->   		dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_TOTAL,
->   			DSI_CMD_MDP_STREAM0_TOTAL_H_TOTAL(hdisplay) |
->   			DSI_CMD_MDP_STREAM0_TOTAL_V_TOTAL(mode->vdisplay));
-> +
-> +		if (msm_host->cfg_hnd->major == MSM_DSI_VER_MAJOR_6G &&
-> +				msm_host->cfg_hnd->minor >= MSM_DSI_6G_VER_MINOR_V1_3)
-> +			dsi_write(msm_host, REG_DSI_CMD_MODE_MDP_CTRL2,
-> +					DSI_CMD_MODE_MDP_CTRL2_BURST_MODE);
+> There was such property in the binding (and DTS!) but a bool. Previous
+> patch silently dropped it, so re-introducing it with different type is
+> confusing.
 
-Please move this to dsi_ctrl_config(), the place where we set all the 
-configs. Also please change this to RMW cycle.
-
->   	}
->   }
->   
-> 
-> ---
-> base-commit: dd969f852ba4c66938c71889e826aa8e5300d2f2
-> change-id: 20230608-b4-add-burst-mode-a5bb144069fa
-> 
-> Best regards,
+Could you please propose a better name here? saw-regulator? Or maybe 
+regulator-saw? (as we might get regulator-avs at some point).
 
 -- 
 With best wishes
