@@ -2,53 +2,54 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 927FE730AE1
+	by mail.lfdr.de (Postfix) with ESMTP id DEAC1730AE2
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jun 2023 00:44:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231151AbjFNWoK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 18:44:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40186 "EHLO
+        id S229868AbjFNWoL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 18:44:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236965AbjFNWoI (ORCPT
+        with ESMTP id S235305AbjFNWoJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 18:44:08 -0400
+        Wed, 14 Jun 2023 18:44:09 -0400
 Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 231152101
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8D6101FCE
         for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 15:44:07 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f63006b4e3so9548100e87.1
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-4f629ccb8ebso9385595e87.1
         for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 15:44:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686782645; x=1689374645;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=AC35kDbj6ySmemert7/iRfIceZyirU887BhY5EsoBY0=;
-        b=hXG52HqnIpdkGQuwJp2XG/WhHpGSW2X8YJ7wRGzqSbvDi5DogyuX5DYcdP7KZIldr9
-         DeU4ZRXJT+c8u0Z5DG3UEJMSU65yIOgCiTKuYdkY27vmolZPGHMjkoxWLUv/sdJeQ3uK
-         btYHk+vZm4kQeDWGC83FMN0TtDm2jWZqlwJW7DuKgYb7aOeF9iiQgCfRWGmZka/P2FDz
-         xC0eDuQgiz64HSNxquDOOynIKns/FJDzC/naJZPaZgpRQoxtjIjuxnBx9rB1vu6S86XR
-         QtCh6eiOw07pMTxwmWAqoy8a0/tQsYjq6u3K/5HvCELbEzE0WwhpWae5nUOCC7hTEU1/
-         oTgA==
+        d=linaro.org; s=google; t=1686782646; x=1689374646;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=p4TeQ2gX03YG5PIrvF0SIkzbh/hc2Hi8ju+1wWJts90=;
+        b=mejd0PgojRgTibQo1NDO1zLnL/YJsWUZ6RDOgpGRjulWpfTej0tGMWIppnOZyCyckj
+         6b+b9/fWlJf6CeriG5ixL0Ig1nDxRIPAu4bNZfnanSYC/GWmb4BPXjA6MsnOymj5SreU
+         2bsHPKSQc0JVWUnJh34Zw+c5yt4T7HAJgPcTkzJbEzoydR040QEfP8cesF12I58MdPc8
+         8nPPL2f0EpRIpIck2Om4QzUV7deYmQY/dCxn2D5Mt9fB6SvKF12JEAJdAyczOjJmCE/A
+         G7msGmNwIKE2O3p1NaaJFx2Yte7Cr48HRd6lpjVcrVDS8+XC+8lSMNNx21Vf5au9gBFY
+         ZqYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686782645; x=1689374645;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=AC35kDbj6ySmemert7/iRfIceZyirU887BhY5EsoBY0=;
-        b=NLVSCtyDbVLT6d1V/dKtAkBmCMjdgsvw2kJsZJ1bisr6nZTsD5nyTRtgvpRUVg1HB/
-         mnyJPqlgTfAz4qf67YmqCX2gCPdKmiUrQIkZUXauzWx2nHUTuua4j2XdsH15Op94CT/P
-         BLkTzn2yq2CU3tDrhE/HjUPczB4W+rPYs3VmqZHEZVfTj8E4BXEX/iV9QdRWh4BMxLry
-         sib42rzjR03qVBFFk7jJTA2tcscb20Hkigb5a92hzg7egQkr8xgpPQMIn2YXI1dRdzab
-         s4YaX72UE3vSaDg9ay7mZecDe21rSA4x5cSJ+9kxsDDkKlCM5V/qd0cowi/pcQZJr6/Y
-         XFuA==
-X-Gm-Message-State: AC+VfDwjizKPK0YxYdAwN+WVMuOTU1tHl2U0yRsaQT0JprGJ6MPNGFMJ
-        jbt8NefD7EPwwag89i+FzYXMuQ==
-X-Google-Smtp-Source: ACHHUZ4dw/+61k2ZzEwroW2qmQVzfEyETzh2vxioPG+C1jcksXinkjZ6FbgE76zzqP9NLubv6XahYQ==
-X-Received: by 2002:a05:6512:68:b0:4f3:a99f:1ea7 with SMTP id i8-20020a056512006800b004f3a99f1ea7mr8129826lfo.55.1686782644756;
-        Wed, 14 Jun 2023 15:44:04 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1686782646; x=1689374646;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=p4TeQ2gX03YG5PIrvF0SIkzbh/hc2Hi8ju+1wWJts90=;
+        b=Veyd28sn9ZbhMjW7YmhJyxgk1rFaV4qm8YRjbJeT62kMdWmclbquFj6naWXoIwFAUt
+         yn5KG9UkhYB8pLR0lUD5Xs3OnHti6WEhW4HLpzfniK25VewEhd/maQjzoO/ErLqYxUJ0
+         gUiMKcBOUPzyqtFDYeL4tXOHVziP3MNpI4LjIbNmfry1dK4odwcYOig/v4k5X8izq2YL
+         ftFTKZBv6cUAMkoMkusHxFJckbHCKntsjPhmCwJAxarizGKBynyr1gzXR191IdkqVmfS
+         DcS89lkL3gACFUgk9fofB4APrkqwKQgEZLOrCa+C2pZcaHMFoqjpnP2Gy0hrGmGfhNGs
+         L1TQ==
+X-Gm-Message-State: AC+VfDxtziCpiI3ceDRzaGEyIBQaweQ03B78q1bKEWMjwiRWzw/afi+v
+        HjDusAVOV88AvYXXc4chPmSyUg==
+X-Google-Smtp-Source: ACHHUZ4pJcmQKm4s+0vsfF9XrGooeI1io0wm57LzsKmlwXycybu69XZDRdyXWGWiYbJ0TTkGHAJU1g==
+X-Received: by 2002:a19:5619:0:b0:4f3:8196:80cb with SMTP id k25-20020a195619000000b004f3819680cbmr8397374lfb.41.1686782645905;
+        Wed, 14 Jun 2023 15:44:05 -0700 (PDT)
 Received: from eriador.lan (dzdqv0yyyyyyyyyyybcwt-3.rev.dnainternet.fi. [2001:14ba:a0db:1f00::8a5])
-        by smtp.gmail.com with ESMTPSA id q2-20020ac24a62000000b004edd2dc9a09sm2295866lfp.258.2023.06.14.15.44.03
+        by smtp.gmail.com with ESMTPSA id q2-20020ac24a62000000b004edd2dc9a09sm2295866lfp.258.2023.06.14.15.44.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jun 2023 15:44:03 -0700 (PDT)
+        Wed, 14 Jun 2023 15:44:05 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Abhinav Kumar <quic_abhinavk@quicinc.com>,
@@ -59,10 +60,12 @@ Cc:     Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <andersson@kernel.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH 1/2] drm/msm/dsi: dsi_host: drop unused clocks
-Date:   Thu, 15 Jun 2023 01:44:01 +0300
-Message-Id: <20230614224402.296825-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 2/2] drm/msm/dsi: split dsi_ctrl_config() function
+Date:   Thu, 15 Jun 2023 01:44:02 +0300
+Message-Id: <20230614224402.296825-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230614224402.296825-1-dmitry.baryshkov@linaro.org>
+References: <20230614224402.296825-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
@@ -75,78 +78,72 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Several source clocks are not used anymore, so stop handling them.
+It makes no sense to pass NULL parameters to dsi_ctrl_config() in the
+disable case. Split dsi_ctrl_config() into enable and disable parts and
+drop unused params.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 33 ------------------------------
- 1 file changed, 33 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index fb1d3a25765f..eaee621aa6c8 100644
+index eaee621aa6c8..3f6dfb4f9d5a 100644
 --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
 +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -118,8 +118,6 @@ struct msm_dsi_host {
- 	struct clk *byte_clk;
- 	struct clk *esc_clk;
- 	struct clk *pixel_clk;
--	struct clk *byte_clk_src;
--	struct clk *pixel_clk_src;
- 	struct clk *byte_intf_clk;
- 
- 	unsigned long byte_clk_rate;
-@@ -129,8 +127,6 @@ struct msm_dsi_host {
- 
- 	/* DSI v2 specific clocks */
- 	struct clk *src_clk;
--	struct clk *esc_clk_src;
--	struct clk *dsi_clk_src;
- 
- 	unsigned long src_clk_rate;
- 
-@@ -267,21 +263,6 @@ int dsi_clk_init_v2(struct msm_dsi_host *msm_host)
- 		return ret;
+@@ -705,7 +705,12 @@ static inline enum dsi_cmd_dst_format dsi_get_cmd_fmt(
  	}
- 
--	msm_host->esc_clk_src = clk_get_parent(msm_host->esc_clk);
--	if (!msm_host->esc_clk_src) {
--		ret = -ENODEV;
--		pr_err("%s: can't get esc clock parent. ret=%d\n",
--			__func__, ret);
--		return ret;
--	}
--
--	msm_host->dsi_clk_src = clk_get_parent(msm_host->src_clk);
--	if (!msm_host->dsi_clk_src) {
--		ret = -ENODEV;
--		pr_err("%s: can't get src clock parent. ret=%d\n",
--			__func__, ret);
--	}
--
- 	return ret;
  }
  
-@@ -346,20 +327,6 @@ static int dsi_clk_init(struct msm_dsi_host *msm_host)
- 		goto exit;
+-static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
++static void dsi_ctrl_disable(struct msm_dsi_host *msm_host)
++{
++	dsi_write(msm_host, REG_DSI_CTRL, 0);
++}
++
++static void dsi_ctrl_enable(struct msm_dsi_host *msm_host,
+ 			struct msm_dsi_phy_shared_timings *phy_shared_timings, struct msm_dsi_phy *phy)
+ {
+ 	u32 flags = msm_host->mode_flags;
+@@ -713,11 +718,6 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
+ 	const struct msm_dsi_cfg_handler *cfg_hnd = msm_host->cfg_hnd;
+ 	u32 data = 0, lane_ctrl = 0;
+ 
+-	if (!enable) {
+-		dsi_write(msm_host, REG_DSI_CTRL, 0);
+-		return;
+-	}
+-
+ 	if (flags & MIPI_DSI_MODE_VIDEO) {
+ 		if (flags & MIPI_DSI_MODE_VIDEO_HSE)
+ 			data |= DSI_VID_CFG0_PULSE_MODE_HSA_HE;
+@@ -802,7 +802,7 @@ static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool enable,
+ 	if (!(flags & MIPI_DSI_CLOCK_NON_CONTINUOUS)) {
+ 		lane_ctrl = dsi_read(msm_host, REG_DSI_LANE_CTRL);
+ 
+-		if (msm_dsi_phy_set_continuous_clock(phy, enable))
++		if (msm_dsi_phy_set_continuous_clock(phy, true))
+ 			lane_ctrl &= ~DSI_LANE_CTRL_HS_REQ_SEL_PHY;
+ 
+ 		dsi_write(msm_host, REG_DSI_LANE_CTRL,
+@@ -2358,7 +2358,7 @@ int msm_dsi_host_power_on(struct mipi_dsi_host *host,
+ 
+ 	dsi_timing_setup(msm_host, is_bonded_dsi);
+ 	dsi_sw_reset(msm_host);
+-	dsi_ctrl_config(msm_host, true, phy_shared_timings, phy);
++	dsi_ctrl_enable(msm_host, phy_shared_timings, phy);
+ 
+ 	if (msm_host->disp_en_gpio)
+ 		gpiod_set_value(msm_host->disp_en_gpio, 1);
+@@ -2390,7 +2390,7 @@ int msm_dsi_host_power_off(struct mipi_dsi_host *host)
+ 		goto unlock_ret;
  	}
  
--	msm_host->byte_clk_src = clk_get_parent(msm_host->byte_clk);
--	if (IS_ERR(msm_host->byte_clk_src)) {
--		ret = PTR_ERR(msm_host->byte_clk_src);
--		pr_err("%s: can't find byte_clk clock. ret=%d\n", __func__, ret);
--		goto exit;
--	}
--
--	msm_host->pixel_clk_src = clk_get_parent(msm_host->pixel_clk);
--	if (IS_ERR(msm_host->pixel_clk_src)) {
--		ret = PTR_ERR(msm_host->pixel_clk_src);
--		pr_err("%s: can't find pixel_clk clock. ret=%d\n", __func__, ret);
--		goto exit;
--	}
--
- 	if (cfg_hnd->ops->clk_init_ver)
- 		ret = cfg_hnd->ops->clk_init_ver(msm_host);
- exit:
+-	dsi_ctrl_config(msm_host, false, NULL, NULL);
++	dsi_ctrl_disable(msm_host);
+ 
+ 	if (msm_host->disp_en_gpio)
+ 		gpiod_set_value(msm_host->disp_en_gpio, 0);
 -- 
 2.39.2
 
