@@ -2,117 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A16273048F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 18:06:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BF6D7304B0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 18:16:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229630AbjFNQGA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 12:06:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57534 "EHLO
+        id S232550AbjFNQQA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 12:16:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230029AbjFNQF7 (ORCPT
+        with ESMTP id S230411AbjFNQP7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 12:05:59 -0400
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com [IPv6:2a00:1450:4864:20::52d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC5611FCA
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 09:05:57 -0700 (PDT)
-Received: by mail-ed1-x52d.google.com with SMTP id 4fb4d7f45d1cf-51496f57e59so9617142a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 09:05:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686758756; x=1689350756;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=tBboY0bdYrdeQOHKC09XaZuxefgFR2fXkH5uFS/N1UM=;
-        b=T9YRgaE3TfN/AeQZJiFg6Yuvsr5a9iZoRVG51qhPhFGE0a7pV4BoLDSY205XjZgpo9
-         WSW1sBJJnHCzDV2YDNdzeFtfEdqfHNUlEKVSRcYOrv+LjRwAwI/Z8fcvi6Sqo4KktxE6
-         ZslN1klEOjK2WilOFUtS63YxPYY5PXpqmM7UHsAcMEguGCeZxQUpJFwmjwQ5fnXIZwzx
-         MKX1B0EP+dBt5S0B3v4eN32/aqaBOhW9YoO2ZtQF3GmiG0aY0NMjP9k3oyiuw6hfzX9K
-         TXn4tlXSsg+F/jnBLJDerXWyh1mIlMefS64HJU1G93r2UxWo/LX3PMrGkI0wnbSfFRUC
-         +whg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686758756; x=1689350756;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tBboY0bdYrdeQOHKC09XaZuxefgFR2fXkH5uFS/N1UM=;
-        b=goOg46rLoNA1IvJ46nO1YDaosZ42leCVrb+L2698LkTMrden3E7y542nq3CCA7iI5E
-         Xs0pHYeJ+sxrVeq9PycfCrQJRaEZgHNkUBrK9QeygYvMADlWaiNAFwBVHOjboUT2u05h
-         /ZrRvNIaM4yt8Jp9+FqxWehcmvdVB3f7aS3QPiyKftZ4ZBq5FKTzZVGy4opKZI3bclIb
-         TZGMh8SePaZsvqneHrUPisuQ1orYBzjFXJA1it8K+EMZcYNKTXmdfw/pPcmOWIVvQvHF
-         8jJOsFNfXMmJyZ2bKHBQcOBjTZ3wevUVa4iscs99SVgL+NMTpI8eGvnFWwlaMTkH3xto
-         DXiA==
-X-Gm-Message-State: AC+VfDyDItRYAtoBcS+ZoBe1uPywb5j9Uer9tqSWdnhdlaG0jU3reReK
-        N/uiJxGuZWX/ZnsKRp59szpP6g==
-X-Google-Smtp-Source: ACHHUZ6xxmoCev7+3moOInDw8sUm78Icrrw6bYb9TBUSDdgK8VTZNEi6AcPSCY8OEDpi+iU+SjvFqg==
-X-Received: by 2002:a05:6402:1147:b0:50b:c085:1991 with SMTP id g7-20020a056402114700b0050bc0851991mr9018172edw.19.1686758756213;
-        Wed, 14 Jun 2023 09:05:56 -0700 (PDT)
-Received: from [192.168.1.20] ([178.197.219.26])
-        by smtp.gmail.com with ESMTPSA id z4-20020aa7cf84000000b005187a57fba1sm1964383edx.77.2023.06.14.09.05.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jun 2023 09:05:55 -0700 (PDT)
-Message-ID: <e48f6153-0485-9fb9-5fe0-145251a8b367@linaro.org>
-Date:   Wed, 14 Jun 2023 18:05:52 +0200
+        Wed, 14 Jun 2023 12:15:59 -0400
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B4C671FFF;
+        Wed, 14 Jun 2023 09:15:58 -0700 (PDT)
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35EFGRid006379;
+        Wed, 14 Jun 2023 16:15:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
+ subject : date : message-id : mime-version : content-type :
+ content-transfer-encoding; s=qcppdkim1;
+ bh=Cxu80qYLWBN6CGaM9a2GrYS5uFWXPH5qjpPWb0qWyWk=;
+ b=ComPqdflkC/tVcHLZshoOE+t0MDAkUSB+Nrh452o3CNQZq0+kTtKh1sQbRTNomQJGmQ/
+ 2RX/rs7l0AzlutwIdE8oAwjdOeQpACV0J3sTtKG9+aDtGcPoZOrMmpGaZiskMVFiau6K
+ 9llkGNjNhr0WoTl4DAhvS/Tv/R+Cy6/8VJf19jWfL2om5zWtkgh9dschObIvQcKEfMtS
+ 5KhFiJGq0hoVkZrCwxnScghXuDN+YkMTHSeHR25XpP4aHvCL0xLwslgZGEWwSOouU4r+
+ F6YyONm5POqxLNSs7TbPYrNCJpWyVxRLtmabhIjnizgVVUYDBc31jJYVhZjolpD65wKO qA== 
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r7fae89n8-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Jun 2023 16:15:47 +0000
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+        by NALASPPMTA04.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35EGFkIZ030883
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+        Wed, 14 Jun 2023 16:15:46 GMT
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.42; Wed, 14 Jun 2023 09:15:45 -0700
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+To:     <quic_carlv@quicinc.com>, <quic_pkanojiy@quicinc.com>,
+        <christian.koenig@amd.com>, <sukrut.bellary@linux.com>,
+        <sumit.semwal@linaro.org>
+CC:     <ogabbay@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <kernel-janitors@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <dri-devel@lists.freedesktop.org>,
+        <linaro-mm-sig@lists.linaro.org>, <linux-media@vger.kernel.org>,
+        Jeffrey Hugo <quic_jhugo@quicinc.com>
+Subject: [PATCH] accel/qaic: Call DRM helper function to destroy prime GEM
+Date:   Wed, 14 Jun 2023 10:15:28 -0600
+Message-ID: <20230614161528.11710-1-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.40.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH 03/18] dt-bindings: soc: qcom: qcom,saw2: define optional
- regulator node
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Ilia Lin <ilia.lin@kernel.org>,
-        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Christian Marangi <ansuelsmth@gmail.com>
-References: <20230612053922.3284394-1-dmitry.baryshkov@linaro.org>
- <20230612053922.3284394-4-dmitry.baryshkov@linaro.org>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20230612053922.3284394-4-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Spam-Status: No, score=-2.2 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: _TxUpOz9a1M8vH5LZlHsuEqnI2pQAC2f
+X-Proofpoint-GUID: _TxUpOz9a1M8vH5LZlHsuEqnI2pQAC2f
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-06-14_11,2023-06-14_02,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
+ spamscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0 adultscore=0
+ impostorscore=0 suspectscore=0 phishscore=0 mlxscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2305260000
+ definitions=main-2306140142
+X-Spam-Status: No, score=-2.8 required=5.0 tests=BAYES_00,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_LOW,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+        autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/06/2023 07:39, Dmitry Baryshkov wrote:
-> The SAW2 device can optionally provide a voltage regulator supplying the
-> CPU core, cluster or L2 cache. Describe it in the device bindings.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  .../devicetree/bindings/soc/qcom/qcom,saw2.yaml | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
-> index a016242367b9..b809a9cc0916 100644
-> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,saw2.yaml
-> @@ -47,6 +47,10 @@ properties:
->        - description: Base address and size of the alias register region
->      minItems: 1
->  
-> +  regulator:
-> +    $ref: /schemas/regulator/regulator.yaml#
+From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
 
-There was such property in the binding (and DTS!) but a bool. Previous
-patch silently dropped it, so re-introducing it with different type is
-confusing.
+smatch warning:
+	drivers/accel/qaic/qaic_data.c:620 qaic_free_object() error:
+		dereferencing freed memory 'obj->import_attach'
 
-Best regards,
-Krzysztof
+obj->import_attach is detached and freed using dma_buf_detach().
+But used after free to decrease the dmabuf ref count using
+dma_buf_put().
+
+drm_prime_gem_destroy() handles this issue and performs the proper clean
+up instead of open coding it in the driver.
+
+Fixes: ff13be830333 ("accel/qaic: Add datapath")
+Reported-by: Sukrut Bellary <sukrut.bellary@linux.com>
+Closes: https://lore.kernel.org/all/20230610021200.377452-1-sukrut.bellary@linux.com/
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+Reviewed-by: Carl Vanderlip <quic_carlv@quicinc.com>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+---
+ drivers/accel/qaic/qaic_data.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+index e42c1f9ffff8..e9a1cb779b30 100644
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -23,6 +23,7 @@
+ #include <linux/wait.h>
+ #include <drm/drm_file.h>
+ #include <drm/drm_gem.h>
++#include <drm/drm_prime.h>
+ #include <drm/drm_print.h>
+ #include <uapi/drm/qaic_accel.h>
+ 
+@@ -616,8 +617,7 @@ static void qaic_free_object(struct drm_gem_object *obj)
+ 
+ 	if (obj->import_attach) {
+ 		/* DMABUF/PRIME Path */
+-		dma_buf_detach(obj->import_attach->dmabuf, obj->import_attach);
+-		dma_buf_put(obj->import_attach->dmabuf);
++		drm_prime_gem_destroy(obj, NULL);
+ 	} else {
+ 		/* Private buffer allocation path */
+ 		qaic_free_sgt(bo->sgt);
+-- 
+2.40.1
 
