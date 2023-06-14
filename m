@@ -2,83 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 97F4B72F252
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 03:58:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F369772F270
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 04:06:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231937AbjFNB6P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jun 2023 21:58:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52478 "EHLO
+        id S232022AbjFNCGn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jun 2023 22:06:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55392 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241664AbjFNB6N (ORCPT
+        with ESMTP id S229499AbjFNCGm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jun 2023 21:58:13 -0400
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 620611BF9;
-        Tue, 13 Jun 2023 18:58:00 -0700 (PDT)
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-        by mx0a-0031df01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35E1s1lI030547;
-        Wed, 14 Jun 2023 01:57:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=from : to : cc :
- subject : date : message-id : in-reply-to : references : mime-version :
- content-type : content-transfer-encoding; s=qcppdkim1;
- bh=7IuSoxzYw9GT1ObCc/Ng+kegCxk9VlhIFuB5I2kbQ3Q=;
- b=XgcbdrvevbRN5aaN2stOACzynOrEwgKTN8c2Wy7nYD+oISBQyVPzMwaER79S3g9o40+h
- HOUsE8T3cfOc60yepif8XKWAzfLc7J3dtdZhEEv9a92W86sgtQEzs1CVx3leYUxYVMHN
- BdO0/jFd9b0hI/ZU+ucPtGB7b/31EFieqU29eb+OX5XMHIOYfuiPZZxtn5p8xv0kQCCI
- THIAKXx0T2DdolWVCysGQjyFerj5nhxSWBO3GKi9VIJN/Mmz+ewWkY18uvLzQTaEPTgQ
- 7BJ+JS8PgCzjaYJX49Sf/NNtD3RjeqVUPAUcpVzR6gyI0ZCGbZi76W01d4CHIjHIEU1v Jw== 
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 3r6s3wsgjn-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Jun 2023 01:57:54 +0000
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-        by NASANPPMTA02.qualcomm.com (8.17.1.5/8.17.1.5) with ESMTPS id 35E1vrVB002740
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 14 Jun 2023 01:57:53 GMT
-Received: from jesszhan-linux.qualcomm.com (10.80.80.8) by
- nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 13 Jun 2023 18:57:53 -0700
-From:   Jessica Zhang <quic_jesszhan@quicinc.com>
-To:     Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-CC:     Jessica Zhang <quic_jesszhan@quicinc.com>,
-        <quic_abhinavk@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
-        <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH 3/3] drm/msm/dsi: Enable DATABUS_WIDEN for DSI command mode
-Date:   Tue, 13 Jun 2023 18:57:13 -0700
-Message-ID: <20230525-add-widebus-support-v1-3-c7069f2efca1@quicinc.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
-References: <20230525-add-widebus-support-v1-0-c7069f2efca1@quicinc.com>
+        Tue, 13 Jun 2023 22:06:42 -0400
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTP id A20FF172A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jun 2023 19:06:39 -0700 (PDT)
+Received: from loongson.cn (unknown [10.20.42.43])
+        by gateway (Coremail) with SMTP id _____8DxTuutIIlklegEAA--.10442S3;
+        Wed, 14 Jun 2023 10:06:37 +0800 (CST)
+Received: from [10.20.42.43] (unknown [10.20.42.43])
+        by localhost.localdomain (Coremail) with SMTP id AQAAf8DxGOWsIIlkIQQaAA--.8995S3;
+        Wed, 14 Jun 2023 10:06:36 +0800 (CST)
+Message-ID: <4c80635b-d692-d05d-9308-62466f05310c@loongson.cn>
+Date:   Wed, 14 Jun 2023 10:06:36 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Mailer: b4 0.13-dev-c6835
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1686707625; l=3041; i=quic_jesszhan@quicinc.com; s=20230329; h=from:subject:message-id; bh=Ot5W85+n2wSTIxyhW7ySIwhaJ3NO/jx9Yep4NiTXQiA=; b=unTYKp7curlQIui91ILgtf7E8XxrRmddLFh5QbVXblSyPFSY77q7yQVlmKpdADQEchfm/ffls XekqlBYArvwBkMWQbww+HeIdL8ypjtKsGst/dF0lLJqgRW2/+qN3tl3
-X-Developer-Key: i=quic_jesszhan@quicinc.com; a=ed25519; pk=gAUCgHZ6wTJOzQa3U0GfeCDH7iZLlqIEPo4rrjfDpWE=
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [2/2] drm: Remove struct drm_driver.gem_prime_mmap
+Content-Language: en-US
+From:   Sui Jingfeng <suijingfeng@loongson.cn>
+To:     Thomas Zimmermann <tzimmermann@suse.de>, daniel@ffwll.ch,
+        airlied@gmail.com, robdclark@gmail.com, quic_abhinavk@quicinc.com,
+        sean@poorly.run
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org
+References: <20230613150441.17720-3-tzimmermann@suse.de>
+ <5fdbd4d3-76a1-c33b-fe0d-73f789b24168@loongson.cn>
+Organization: Loongson
+In-Reply-To: <5fdbd4d3-76a1-c33b-fe0d-73f789b24168@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: bY4MKNSQfFzApHCdzXE94bzKJIJ5kXWm
-X-Proofpoint-GUID: bY4MKNSQfFzApHCdzXE94bzKJIJ5kXWm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-06-13_24,2023-06-12_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- adultscore=0 mlxscore=0 mlxlogscore=706 clxscore=1015 impostorscore=0
- lowpriorityscore=0 suspectscore=0 priorityscore=1501 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306140012
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_MSPIKE_H2,SPF_HELO_NONE,
-        SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED autolearn=ham
+X-CM-TRANSID: AQAAf8DxGOWsIIlkIQQaAA--.8995S3
+X-CM-SenderInfo: xvxlyxpqjiv03j6o00pqjv00gofq/
+X-Coremail-Antispam: 1Uk129KBj9fXoWfXw1fZw47AF48uw47uF4xZrc_yoW5Jw4DGo
+        WSgw15J3WrJa1fK3sxA3ZrAF43Xr4DAwn7Cr48JrnxZFWkX3W7t3y7Jry5J3y3Jr1rCry7
+        Zw1UKry5JFy7Aa1fl-sFpf9Il3svdjkaLaAFLSUrUUUU8b8apTn2vfkv8UJUUUU8wcxFpf
+        9Il3svdxBIdaVrn0xqx4xG64xvF2IEw4CE5I8CrVC2j2Jv73VFW2AGmfu7bjvjm3AaLaJ3
+        UjIYCTnIWjp_UUUO87kC6x804xWl14x267AKxVWUJVW8JwAFc2x0x2IEx4CE42xK8VAvwI
+        8IcIk0rVWrJVCq3wAFIxvE14AKwVWUXVWUAwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xG
+        Y2AK021l84ACjcxK6xIIjxv20xvE14v26r1I6r4UM28EF7xvwVC0I7IYx2IY6xkF7I0E14
+        v26r4j6F4UM28EF7xvwVC2z280aVAFwI0_Cr1j6rxdM28EF7xvwVC2z280aVCY1x0267AK
+        xVWxJr0_GcWln4kS14v26r1Y6r17M2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12
+        xvs2x26I8E6xACxx1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r12
+        6r1DMcIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr4
+        1lc7I2V7IY0VAS07AlzVAYIcxG8wCY1x0262kKe7AKxVWUAVWUtwCF04k20xvY0x0EwIxG
+        rwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C267AKxVWUXVWUAwC20s026c02F40E14
+        v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jw0_GFylIxkG
+        c2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI
+        0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r4j6F4U
+        MIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j7BMNUUU
+        UU=
+X-Spam-Status: No, score=-2.0 required=5.0 tests=BAYES_00,NICE_REPLY_A,
+        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
         autolearn_force=no version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
@@ -86,86 +69,478 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DSI 6G v2.5.x+ supports a data-bus widen mode that allows DSI to send
-48 bits of compressed data per pclk instead of 24.
 
-For all chipsets that support this mode, enable it whenever DSC is
-enabled as recommend by the hardware programming guide.
+On 2023/6/14 01:27, Sui Jingfeng wrote:
+> Wow, so many drivers get nuked!
+>
+> On 2023/6/13 22:51, Thomas Zimmermann wrote:
+>> All drivers initialize this field with drm_gem_prime_mmap(). Call
+>> the function directly and remove the field. Simplifies the code and
+>> resolves a long-standing TODO item.
+>>
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+>
+>
+> I have tested this patch briefly with drm/amdgpu(RX560), Running 
+> glmark2, the rendered scene looks OK.
+>
+> But single driver is self-sharing.  I think I should test this more 
+> with multiple video card.
+>
+No need to test; it's equivalent to removing a wrapper.
 
-Only enable this for command mode as we are currently unable to validate
-it for video mode.
+But new DRM (un-upstreamed) drivers cannot be compiled anymore with this 
+patch applied.
 
-Signed-off-by: Jessica Zhang <quic_jesszhan@quicinc.com>
----
+This makes them all out-of-date or going to be outdated; this is 
+embarrassing!
 
-Note: The dsi.xml.h changes were generated using the headergen2 script in
-envytools [1], but the changes to the copyright and rules-ng-ng source file
-paths were dropped.
-
-[1] https://github.com/freedreno/envytools/
-
- drivers/gpu/drm/msm/dsi/dsi.xml.h  |  1 +
- drivers/gpu/drm/msm/dsi/dsi_host.c | 19 ++++++++++++++++++-
- 2 files changed, 19 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-index a4a154601114..2a7d980e12c3 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-@@ -664,6 +664,7 @@ static inline uint32_t DSI_CMD_MODE_MDP_CTRL2_INPUT_RGB_SWAP(enum dsi_rgb_swap v
- 	return ((val) << DSI_CMD_MODE_MDP_CTRL2_INPUT_RGB_SWAP__SHIFT) & DSI_CMD_MODE_MDP_CTRL2_INPUT_RGB_SWAP__MASK;
- }
- #define DSI_CMD_MODE_MDP_CTRL2_BURST_MODE			0x00010000
-+#define DSI_CMD_MODE_MDP_CTRL2_DATABUS_WIDEN			0x00100000
-
- #define REG_DSI_CMD_MODE_MDP_STREAM2_CTRL			0x000001b8
- #define DSI_CMD_MODE_MDP_STREAM2_CTRL_DATA_TYPE__MASK		0x0000003f
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 5d7b4409e4e9..1da5238e7105 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -927,6 +927,9 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 	u32 hdisplay = mode->hdisplay;
- 	u32 wc;
- 	int ret;
-+	bool widebus_supported = msm_host->cfg_hnd->major == MSM_DSI_VER_MAJOR_6G &&
-+			msm_host->cfg_hnd->minor >= MSM_DSI_6G_VER_MINOR_V2_5_0;
-+
-
- 	DBG("");
-
-@@ -973,8 +976,15 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 		 *
- 		 * hdisplay will be divided by 3 here to account for the fact
- 		 * that DPU sends 3 bytes per pclk cycle to DSI.
-+		 *
-+		 * If widebus is supported, set DATABUS_WIDEN register and divide hdisplay by 6
-+		 * instead of 3
- 		 */
--		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
-+		if (!(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) && widebus_supported)
-+			hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 6);
-+		else
-+			hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
-+
- 		h_total += hdisplay;
- 		ha_end = ha_start + hdisplay;
- 	}
-@@ -1027,6 +1037,13 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 		dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_TOTAL,
- 			DSI_CMD_MDP_STREAM0_TOTAL_H_TOTAL(hdisplay) |
- 			DSI_CMD_MDP_STREAM0_TOTAL_V_TOTAL(mode->vdisplay));
-+
-+		if (msm_host->dsc && widebus_supported) {
-+			u32 mdp_ctrl2 = dsi_read(msm_host, REG_DSI_CMD_MODE_MDP_CTRL2);
-+
-+			mdp_ctrl2 |= DSI_CMD_MODE_MDP_CTRL2_DATABUS_WIDEN;
-+			dsi_write(msm_host, REG_DSI_CMD_MODE_MDP_CTRL2, mdp_ctrl2);
-+		}
- 	}
- }
-
-
---
-2.40.1
+>
+>> ---
+>>   Documentation/gpu/todo.rst                      |  9 ---------
+>>   drivers/accel/ivpu/ivpu_drv.c                   |  1 -
+>>   drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c         |  1 -
+>>   drivers/gpu/drm/drm_fbdev_dma.c                 |  6 +-----
+>>   drivers/gpu/drm/drm_prime.c                     | 14 ++------------
+>>   drivers/gpu/drm/etnaviv/etnaviv_drv.c           |  1 -
+>>   drivers/gpu/drm/exynos/exynos_drm_drv.c         |  1 -
+>>   drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c |  1 -
+>>   drivers/gpu/drm/lima/lima_drv.c                 |  1 -
+>>   drivers/gpu/drm/mediatek/mtk_drm_drv.c          |  1 -
+>>   drivers/gpu/drm/msm/msm_drv.c                   |  1 -
+>>   drivers/gpu/drm/msm/msm_drv.h                   |  1 -
+>>   drivers/gpu/drm/msm/msm_gem_prime.c             |  5 -----
+>>   drivers/gpu/drm/nouveau/nouveau_drm.c           |  1 -
+>>   drivers/gpu/drm/panfrost/panfrost_drv.c         |  1 -
+>>   drivers/gpu/drm/pl111/pl111_drv.c               |  1 -
+>>   drivers/gpu/drm/radeon/radeon_drv.c             |  1 -
+>>   drivers/gpu/drm/renesas/rcar-du/rcar_du_drv.c   |  1 -
+>>   drivers/gpu/drm/rockchip/rockchip_drm_drv.c     |  1 -
+>>   drivers/gpu/drm/v3d/v3d_drv.c                   |  1 -
+>>   drivers/gpu/drm/virtio/virtgpu_drv.c            |  1 -
+>>   drivers/gpu/drm/xen/xen_drm_front.c             |  1 -
+>>   include/drm/drm_drv.h                           | 14 --------------
+>>   include/drm/drm_gem_dma_helper.h                |  6 ++----
+>>   include/drm/drm_gem_shmem_helper.h              |  1 -
+>>   include/drm/drm_gem_vram_helper.h               |  1 -
+>>   26 files changed, 5 insertions(+), 69 deletions(-)
+>>
+>> diff --git a/Documentation/gpu/todo.rst b/Documentation/gpu/todo.rst
+>> index 68bdafa0284f5..ca1efad8c89c3 100644
+>> --- a/Documentation/gpu/todo.rst
+>> +++ b/Documentation/gpu/todo.rst
+>> @@ -319,15 +319,6 @@ Contact: Daniel Vetter, Noralf Tronnes
+>>     Level: Advanced
+>>   -struct drm_gem_object_funcs
+>> ----------------------------
+>> -
+>> -GEM objects can now have a function table instead of having the 
+>> callbacks on the
+>> -DRM driver struct. This is now the preferred way. Callbacks in 
+>> drivers have been
+>> -converted, except for struct drm_driver.gem_prime_mmap.
+>> -
+>> -Level: Intermediate
+>> -
+>>   connector register/unregister fixes
+>>   -----------------------------------
+>>   diff --git a/drivers/accel/ivpu/ivpu_drv.c 
+>> b/drivers/accel/ivpu/ivpu_drv.c
+>> index 2df7643b843d5..9f2b9fdcc5498 100644
+>> --- a/drivers/accel/ivpu/ivpu_drv.c
+>> +++ b/drivers/accel/ivpu/ivpu_drv.c
+>> @@ -376,7 +376,6 @@ static const struct drm_driver driver = {
+>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>       .gem_prime_import = ivpu_gem_prime_import,
+>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>         .ioctls = ivpu_drm_ioctls,
+>>       .num_ioctls = ARRAY_SIZE(ivpu_drm_ioctls),
+>> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c 
+>> b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+>> index c9a41c997c6c7..7681f79f462eb 100644
+>> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+>> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+>> @@ -2809,7 +2809,6 @@ static const struct drm_driver 
+>> amdgpu_kms_driver = {
+>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>       .gem_prime_import = amdgpu_gem_prime_import,
+>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>         .name = DRIVER_NAME,
+>>       .desc = DRIVER_DESC,
+>> diff --git a/drivers/gpu/drm/drm_fbdev_dma.c 
+>> b/drivers/gpu/drm/drm_fbdev_dma.c
+>> index d86773fa8ab00..8217f1ddc0075 100644
+>> --- a/drivers/gpu/drm/drm_fbdev_dma.c
+>> +++ b/drivers/gpu/drm/drm_fbdev_dma.c
+>> @@ -54,12 +54,8 @@ static void drm_fbdev_dma_fb_destroy(struct 
+>> fb_info *info)
+>>   static int drm_fbdev_dma_fb_mmap(struct fb_info *info, struct 
+>> vm_area_struct *vma)
+>>   {
+>>       struct drm_fb_helper *fb_helper = info->par;
+>> -    struct drm_device *dev = fb_helper->dev;
+>> -
+>> -    if (drm_WARN_ON_ONCE(dev, !fb_helper->dev->driver->gem_prime_mmap))
+>> -        return -ENODEV;
+>>   -    return 
+>> fb_helper->dev->driver->gem_prime_mmap(fb_helper->buffer->gem, vma);
+>> +    return drm_gem_prime_mmap(fb_helper->buffer->gem, vma);
+>>   }
+>>     static const struct fb_ops drm_fbdev_dma_fb_ops = {
+>> diff --git a/drivers/gpu/drm/drm_prime.c b/drivers/gpu/drm/drm_prime.c
+>> index d29dafce9bb0a..6bcf324ef81c9 100644
+>> --- a/drivers/gpu/drm/drm_prime.c
+>> +++ b/drivers/gpu/drm/drm_prime.c
+>> @@ -715,8 +715,6 @@ EXPORT_SYMBOL(drm_gem_dmabuf_vunmap);
+>>    * the same codepath that is used for regular GEM buffer mapping on 
+>> the DRM fd.
+>>    * The fake GEM offset is added to vma->vm_pgoff and 
+>> &drm_driver->fops->mmap is
+>>    * called to set up the mapping.
+>> - *
+>> - * Drivers can use this as their &drm_driver.gem_prime_mmap callback.
+>>    */
+>>   int drm_gem_prime_mmap(struct drm_gem_object *obj, struct 
+>> vm_area_struct *vma)
+>>   {
+>> @@ -772,25 +770,17 @@ EXPORT_SYMBOL(drm_gem_prime_mmap);
+>>    * @vma: virtual address range
+>>    *
+>>    * Provides memory mapping for the buffer. This can be used as the
+>> - * &dma_buf_ops.mmap callback. It just forwards to 
+>> &drm_driver.gem_prime_mmap,
+>> - * which should be set to drm_gem_prime_mmap().
+>> - *
+>> - * FIXME: There's really no point to this wrapper, drivers which 
+>> need anything
+>> - * else but drm_gem_prime_mmap can roll their own &dma_buf_ops.mmap 
+>> callback.
+>> + * &dma_buf_ops.mmap callback. It just forwards to 
+>> drm_gem_prime_mmap().
+>>    *
+>>    * Returns 0 on success or a negative error code on failure.
+>>    */
+>>   int drm_gem_dmabuf_mmap(struct dma_buf *dma_buf, struct 
+>> vm_area_struct *vma)
+>>   {
+>>       struct drm_gem_object *obj = dma_buf->priv;
+>> -    struct drm_device *dev = obj->dev;
+>>         dma_resv_assert_held(dma_buf->resv);
+>>   -    if (!dev->driver->gem_prime_mmap)
+>> -        return -ENOSYS;
+>> -
+>> -    return dev->driver->gem_prime_mmap(obj, vma);
+>> +    return drm_gem_prime_mmap(obj, vma);
+>>   }
+>>   EXPORT_SYMBOL(drm_gem_dmabuf_mmap);
+>>   diff --git a/drivers/gpu/drm/etnaviv/etnaviv_drv.c 
+>> b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+>> index 31a7f59ccb49e..00223a8749092 100644
+>> --- a/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+>> +++ b/drivers/gpu/drm/etnaviv/etnaviv_drv.c
+>> @@ -484,7 +484,6 @@ static const struct drm_driver etnaviv_drm_driver 
+>> = {
+>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>       .gem_prime_import_sg_table = etnaviv_gem_prime_import_sg_table,
+>> -    .gem_prime_mmap     = drm_gem_prime_mmap,
+>>   #ifdef CONFIG_DEBUG_FS
+>>       .debugfs_init       = etnaviv_debugfs_init,
+>>   #endif
+>> diff --git a/drivers/gpu/drm/exynos/exynos_drm_drv.c 
+>> b/drivers/gpu/drm/exynos/exynos_drm_drv.c
+>> index 6b73fb7a83c3c..c9e3c88fb329c 100644
+>> --- a/drivers/gpu/drm/exynos/exynos_drm_drv.c
+>> +++ b/drivers/gpu/drm/exynos/exynos_drm_drv.c
+>> @@ -113,7 +113,6 @@ static const struct drm_driver exynos_drm_driver = {
+>>       .prime_fd_to_handle    = drm_gem_prime_fd_to_handle,
+>>       .gem_prime_import    = exynos_drm_gem_prime_import,
+>>       .gem_prime_import_sg_table    = 
+>> exynos_drm_gem_prime_import_sg_table,
+>> -    .gem_prime_mmap        = drm_gem_prime_mmap,
+>>       .ioctls            = exynos_ioctls,
+>>       .num_ioctls        = ARRAY_SIZE(exynos_ioctls),
+>>       .fops            = &exynos_drm_driver_fops,
+>> diff --git a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c 
+>> b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
+>> index 0c4aa4d9b0a77..8a98fa276e8a9 100644
+>> --- a/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
+>> +++ b/drivers/gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c
+>> @@ -63,7 +63,6 @@ static const struct drm_driver hibmc_driver = {
+>>       .debugfs_init        = drm_vram_mm_debugfs_init,
+>>       .dumb_create            = hibmc_dumb_create,
+>>       .dumb_map_offset        = drm_gem_ttm_dumb_map_offset,
+>> -    .gem_prime_mmap        = drm_gem_prime_mmap,
+>>   };
+>>     static int __maybe_unused hibmc_pm_suspend(struct device *dev)
+>> diff --git a/drivers/gpu/drm/lima/lima_drv.c 
+>> b/drivers/gpu/drm/lima/lima_drv.c
+>> index e8566211e9fa1..65c31dc38049a 100644
+>> --- a/drivers/gpu/drm/lima/lima_drv.c
+>> +++ b/drivers/gpu/drm/lima/lima_drv.c
+>> @@ -279,7 +279,6 @@ static const struct drm_driver lima_drm_driver = {
+>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>       .gem_prime_import_sg_table = drm_gem_shmem_prime_import_sg_table,
+>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>   };
+>>     struct lima_block_reader {
+>> diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c 
+>> b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+>> index 6dcb4ba2466c0..5693bb8d29ce4 100644
+>> --- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+>> +++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
+>> @@ -560,7 +560,6 @@ static const struct drm_driver mtk_drm_driver = {
+>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>       .gem_prime_import = mtk_drm_gem_prime_import,
+>>       .gem_prime_import_sg_table = mtk_gem_prime_import_sg_table,
+>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>       .fops = &mtk_drm_fops,
+>>         .name = DRIVER_NAME,
+>> diff --git a/drivers/gpu/drm/msm/msm_drv.c 
+>> b/drivers/gpu/drm/msm/msm_drv.c
+>> index 891eff8433a9c..47efa3c4492c4 100644
+>> --- a/drivers/gpu/drm/msm/msm_drv.c
+>> +++ b/drivers/gpu/drm/msm/msm_drv.c
+>> @@ -1089,7 +1089,6 @@ static const struct drm_driver msm_driver = {
+>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>       .gem_prime_import_sg_table = msm_gem_prime_import_sg_table,
+>> -    .gem_prime_mmap     = msm_gem_prime_mmap,
+>>   #ifdef CONFIG_DEBUG_FS
+>>       .debugfs_init       = msm_debugfs_init,
+>>   #endif
+>> diff --git a/drivers/gpu/drm/msm/msm_drv.h 
+>> b/drivers/gpu/drm/msm/msm_drv.h
+>> index e13a8cbd61c95..44c9e06f2dffa 100644
+>> --- a/drivers/gpu/drm/msm/msm_drv.h
+>> +++ b/drivers/gpu/drm/msm/msm_drv.h
+>> @@ -282,7 +282,6 @@ unsigned long msm_gem_shrinker_shrink(struct 
+>> drm_device *dev, unsigned long nr_t
+>>   void msm_gem_shrinker_init(struct drm_device *dev);
+>>   void msm_gem_shrinker_cleanup(struct drm_device *dev);
+>>   -int msm_gem_prime_mmap(struct drm_gem_object *obj, struct 
+>> vm_area_struct *vma);
+>>   struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object 
+>> *obj);
+>>   int msm_gem_prime_vmap(struct drm_gem_object *obj, struct iosys_map 
+>> *map);
+>>   void msm_gem_prime_vunmap(struct drm_gem_object *obj, struct 
+>> iosys_map *map);
+>> diff --git a/drivers/gpu/drm/msm/msm_gem_prime.c 
+>> b/drivers/gpu/drm/msm/msm_gem_prime.c
+>> index 2c846afe049e4..5f68e31a3e4e1 100644
+>> --- a/drivers/gpu/drm/msm/msm_gem_prime.c
+>> +++ b/drivers/gpu/drm/msm/msm_gem_prime.c
+>> @@ -11,11 +11,6 @@
+>>   #include "msm_drv.h"
+>>   #include "msm_gem.h"
+>>   -int msm_gem_prime_mmap(struct drm_gem_object *obj, struct 
+>> vm_area_struct *vma)
+>> -{
+>> -    return drm_gem_prime_mmap(obj, vma);
+>> -}
+>> -
+>>   struct sg_table *msm_gem_prime_get_sg_table(struct drm_gem_object 
+>> *obj)
+>>   {
+>>       struct msm_gem_object *msm_obj = to_msm_bo(obj);
+>> diff --git a/drivers/gpu/drm/nouveau/nouveau_drm.c 
+>> b/drivers/gpu/drm/nouveau/nouveau_drm.c
+>> index cc7c5b4a05fd8..4199b8294e6e8 100644
+>> --- a/drivers/gpu/drm/nouveau/nouveau_drm.c
+>> +++ b/drivers/gpu/drm/nouveau/nouveau_drm.c
+>> @@ -1237,7 +1237,6 @@ driver_stub = {
+>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>       .gem_prime_import_sg_table = nouveau_gem_prime_import_sg_table,
+>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>         .dumb_create = nouveau_display_dumb_create,
+>>       .dumb_map_offset = drm_gem_ttm_dumb_map_offset,
+>> diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c 
+>> b/drivers/gpu/drm/panfrost/panfrost_drv.c
+>> index 19f8cff52e533..d2916bf435473 100644
+>> --- a/drivers/gpu/drm/panfrost/panfrost_drv.c
+>> +++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
+>> @@ -542,7 +542,6 @@ static const struct drm_driver 
+>> panfrost_drm_driver = {
+>>       .prime_handle_to_fd    = drm_gem_prime_handle_to_fd,
+>>       .prime_fd_to_handle    = drm_gem_prime_fd_to_handle,
+>>       .gem_prime_import_sg_table = panfrost_gem_prime_import_sg_table,
+>> -    .gem_prime_mmap        = drm_gem_prime_mmap,
+>>   };
+>>     static int panfrost_probe(struct platform_device *pdev)
+>> diff --git a/drivers/gpu/drm/pl111/pl111_drv.c 
+>> b/drivers/gpu/drm/pl111/pl111_drv.c
+>> index 43049c8028b21..c4b8357ea9996 100644
+>> --- a/drivers/gpu/drm/pl111/pl111_drv.c
+>> +++ b/drivers/gpu/drm/pl111/pl111_drv.c
+>> @@ -227,7 +227,6 @@ static const struct drm_driver pl111_drm_driver = {
+>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>       .gem_prime_import_sg_table = pl111_gem_import_sg_table,
+>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>     #if defined(CONFIG_DEBUG_FS)
+>>       .debugfs_init = pl111_debugfs_init,
+>> diff --git a/drivers/gpu/drm/radeon/radeon_drv.c 
+>> b/drivers/gpu/drm/radeon/radeon_drv.c
+>> index e4374814f0ef6..cf1b960c4200c 100644
+>> --- a/drivers/gpu/drm/radeon/radeon_drv.c
+>> +++ b/drivers/gpu/drm/radeon/radeon_drv.c
+>> @@ -607,7 +607,6 @@ static const struct drm_driver kms_driver = {
+>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>       .gem_prime_import_sg_table = radeon_gem_prime_import_sg_table,
+>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>         .name = DRIVER_NAME,
+>>       .desc = DRIVER_DESC,
+>> diff --git a/drivers/gpu/drm/renesas/rcar-du/rcar_du_drv.c 
+>> b/drivers/gpu/drm/renesas/rcar-du/rcar_du_drv.c
+>> index ed3ee3d15baec..4280ff5fa91f2 100644
+>> --- a/drivers/gpu/drm/renesas/rcar-du/rcar_du_drv.c
+>> +++ b/drivers/gpu/drm/renesas/rcar-du/rcar_du_drv.c
+>> @@ -608,7 +608,6 @@ static const struct drm_driver rcar_du_driver = {
+>>       .prime_handle_to_fd    = drm_gem_prime_handle_to_fd,
+>>       .prime_fd_to_handle    = drm_gem_prime_fd_to_handle,
+>>       .gem_prime_import_sg_table = rcar_du_gem_prime_import_sg_table,
+>> -    .gem_prime_mmap        = drm_gem_prime_mmap,
+>>       .fops            = &rcar_du_fops,
+>>       .name            = "rcar-du",
+>>       .desc            = "Renesas R-Car Display Unit",
+>> diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_drv.c 
+>> b/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
+>> index c0ebfdf56a711..b8cf89f0cc566 100644
+>> --- a/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
+>> +++ b/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
+>> @@ -227,7 +227,6 @@ static const struct drm_driver 
+>> rockchip_drm_driver = {
+>>       .prime_handle_to_fd    = drm_gem_prime_handle_to_fd,
+>>       .prime_fd_to_handle    = drm_gem_prime_fd_to_handle,
+>>       .gem_prime_import_sg_table    = 
+>> rockchip_gem_prime_import_sg_table,
+>> -    .gem_prime_mmap        = drm_gem_prime_mmap,
+>>       .fops            = &rockchip_drm_driver_fops,
+>>       .name    = DRIVER_NAME,
+>>       .desc    = DRIVER_DESC,
+>> diff --git a/drivers/gpu/drm/v3d/v3d_drv.c 
+>> b/drivers/gpu/drm/v3d/v3d_drv.c
+>> index 71f9fdde24b41..845a36e36450d 100644
+>> --- a/drivers/gpu/drm/v3d/v3d_drv.c
+>> +++ b/drivers/gpu/drm/v3d/v3d_drv.c
+>> @@ -174,7 +174,6 @@ static const struct drm_driver v3d_drm_driver = {
+>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>>       .gem_prime_import_sg_table = v3d_prime_import_sg_table,
+>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>         .ioctls = v3d_drm_ioctls,
+>>       .num_ioctls = ARRAY_SIZE(v3d_drm_ioctls),
+>> diff --git a/drivers/gpu/drm/virtio/virtgpu_drv.c 
+>> b/drivers/gpu/drm/virtio/virtgpu_drv.c
+>> index add075681e18f..91ace7a44f2a6 100644
+>> --- a/drivers/gpu/drm/virtio/virtgpu_drv.c
+>> +++ b/drivers/gpu/drm/virtio/virtgpu_drv.c
+>> @@ -188,7 +188,6 @@ static const struct drm_driver driver = {
+>>   #endif
+>>       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
+>>       .prime_fd_to_handle = drm_gem_prime_fd_to_handle,
+>> -    .gem_prime_mmap = drm_gem_prime_mmap,
+>>       .gem_prime_import = virtgpu_gem_prime_import,
+>>       .gem_prime_import_sg_table = virtgpu_gem_prime_import_sg_table,
+>>   diff --git a/drivers/gpu/drm/xen/xen_drm_front.c 
+>> b/drivers/gpu/drm/xen/xen_drm_front.c
+>> index 90996c108146d..62c3c13b3a175 100644
+>> --- a/drivers/gpu/drm/xen/xen_drm_front.c
+>> +++ b/drivers/gpu/drm/xen/xen_drm_front.c
+>> @@ -477,7 +477,6 @@ static const struct drm_driver xen_drm_driver = {
+>>       .prime_handle_to_fd        = drm_gem_prime_handle_to_fd,
+>>       .prime_fd_to_handle        = drm_gem_prime_fd_to_handle,
+>>       .gem_prime_import_sg_table = xen_drm_front_gem_import_sg_table,
+>> -    .gem_prime_mmap            = drm_gem_prime_mmap,
+>>       .dumb_create               = xen_drm_drv_dumb_create,
+>>       .fops                      = &xen_drm_dev_fops,
+>>       .name                      = "xendrm-du",
+>> diff --git a/include/drm/drm_drv.h b/include/drm/drm_drv.h
+>> index 89e2706cac561..870278ecd8ba9 100644
+>> --- a/include/drm/drm_drv.h
+>> +++ b/include/drm/drm_drv.h
+>> @@ -343,20 +343,6 @@ struct drm_driver {
+>>                   struct drm_device *dev,
+>>                   struct dma_buf_attachment *attach,
+>>                   struct sg_table *sgt);
+>> -    /**
+>> -     * @gem_prime_mmap:
+>> -     *
+>> -     * mmap hook for GEM drivers, used to implement dma-buf mmap in the
+>> -     * PRIME helpers.
+>> -     *
+>> -     * This hook only exists for historical reasons. Drivers must use
+>> -     * drm_gem_prime_mmap() to implement it.
+>> -     *
+>> -     * FIXME: Convert all drivers to implement mmap in struct
+>> -     * &drm_gem_object_funcs and inline drm_gem_prime_mmap() into
+>> -     * its callers. This hook should be removed afterwards.
+>> -     */
+>> -    int (*gem_prime_mmap)(struct drm_gem_object *obj, struct 
+>> vm_area_struct *vma);
+>>         /**
+>>        * @dumb_create:
+>> diff --git a/include/drm/drm_gem_dma_helper.h 
+>> b/include/drm/drm_gem_dma_helper.h
+>> index 8a043235dad81..61da596780b64 100644
+>> --- a/include/drm/drm_gem_dma_helper.h
+>> +++ b/include/drm/drm_gem_dma_helper.h
+>> @@ -169,8 +169,7 @@ drm_gem_dma_prime_import_sg_table(struct 
+>> drm_device *dev,
+>>       .dumb_create        = (dumb_create_func), \
+>>       .prime_handle_to_fd    = drm_gem_prime_handle_to_fd, \
+>>       .prime_fd_to_handle    = drm_gem_prime_fd_to_handle, \
+>> -    .gem_prime_import_sg_table = drm_gem_dma_prime_import_sg_table, \
+>> -    .gem_prime_mmap        = drm_gem_prime_mmap
+>> +    .gem_prime_import_sg_table = drm_gem_dma_prime_import_sg_table
+>>     /**
+>>    * DRM_GEM_DMA_DRIVER_OPS - DMA GEM driver operations
+>> @@ -207,8 +206,7 @@ drm_gem_dma_prime_import_sg_table(struct 
+>> drm_device *dev,
+>>       .dumb_create        = dumb_create_func, \
+>>       .prime_handle_to_fd    = drm_gem_prime_handle_to_fd, \
+>>       .prime_fd_to_handle    = drm_gem_prime_fd_to_handle, \
+>> -    .gem_prime_import_sg_table = 
+>> drm_gem_dma_prime_import_sg_table_vmap, \
+>> -    .gem_prime_mmap        = drm_gem_prime_mmap
+>> +    .gem_prime_import_sg_table = drm_gem_dma_prime_import_sg_table_vmap
+>>     /**
+>>    * DRM_GEM_DMA_DRIVER_OPS_VMAP - DMA GEM driver operations ensuring 
+>> a virtual
+>> diff --git a/include/drm/drm_gem_shmem_helper.h 
+>> b/include/drm/drm_gem_shmem_helper.h
+>> index 5994fed5e3278..46eb46e690630 100644
+>> --- a/include/drm/drm_gem_shmem_helper.h
+>> +++ b/include/drm/drm_gem_shmem_helper.h
+>> @@ -293,7 +293,6 @@ int drm_gem_shmem_dumb_create(struct drm_file 
+>> *file, struct drm_device *dev,
+>>       .prime_handle_to_fd    = drm_gem_prime_handle_to_fd, \
+>>       .prime_fd_to_handle    = drm_gem_prime_fd_to_handle, \
+>>       .gem_prime_import_sg_table = 
+>> drm_gem_shmem_prime_import_sg_table, \
+>> -    .gem_prime_mmap        = drm_gem_prime_mmap, \
+>>       .dumb_create        = drm_gem_shmem_dumb_create
+>>     #endif /* __DRM_GEM_SHMEM_HELPER_H__ */
+>> diff --git a/include/drm/drm_gem_vram_helper.h 
+>> b/include/drm/drm_gem_vram_helper.h
+>> index f4aab64411d82..6b265cb9f45a4 100644
+>> --- a/include/drm/drm_gem_vram_helper.h
+>> +++ b/include/drm/drm_gem_vram_helper.h
+>> @@ -160,7 +160,6 @@ void drm_gem_vram_simple_display_pipe_cleanup_fb(
+>>       .debugfs_init             = drm_vram_mm_debugfs_init, \
+>>       .dumb_create          = drm_gem_vram_driver_dumb_create, \
+>>       .dumb_map_offset      = drm_gem_ttm_dumb_map_offset, \
+>> -    .gem_prime_mmap          = drm_gem_prime_mmap, \
+>>       .prime_handle_to_fd      = drm_gem_prime_handle_to_fd, \
+>>       .prime_fd_to_handle      = drm_gem_prime_fd_to_handle
+>
+-- 
+Jingfeng
 
