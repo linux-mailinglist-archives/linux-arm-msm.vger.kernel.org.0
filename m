@@ -2,58 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id EB64D72FE25
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 14:15:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB2CB72FE3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 14:17:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235509AbjFNMPv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 08:15:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51498 "EHLO
+        id S244127AbjFNMRo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 08:17:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235751AbjFNMPu (ORCPT
+        with ESMTP id S243913AbjFNMRn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 08:15:50 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CEE0519A5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:15:47 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id 3f1490d57ef6-bc40d4145feso527816276.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:15:47 -0700 (PDT)
+        Wed, 14 Jun 2023 08:17:43 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8FF81BF3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:17:41 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-bd77424c886so627508276.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:17:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686744947; x=1689336947;
+        d=linaro.org; s=google; t=1686745061; x=1689337061;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=55/nVUjAe3kftXKJEUpN7nG2cfw0uKndOnoUPQSV6Gw=;
-        b=VyuXxjV076FsT93Sunqcst/aAc+DFYWlyu/IMsraar/EkbmiC6v+LZ3/F+TGTmqw5x
-         ZwEDkC6qEUzri9juUGjpFIK4n7cHOYTZjz4/iqr/eSV4Mqn/lQIgG0lYBj0VAMBsBvGb
-         U6y1UpgDlLXZQkzFkF081qoIr+ktd0GjF8A1wYpqqmnuJuFY/paV+FXkx8a323qgYxNm
-         JLI4TRszNXqkNer3sEiv5nIPmM5MCqNC05nlQW4KJaFE4MSKR0QB+4up8Y8eg0gmHgmI
-         N2Miq4X4kvGhthFClR0LHk6xx6ljchVHIb6Xy/++1TjcNvCAD7JbtyC/0OUMB6z8wPfV
-         zlmQ==
+        bh=bwFHPYhlT3RfthlTjpPS85ddabPhpew1qG/qUrIvT/E=;
+        b=ZE7z0PBOhTN7OCLEZIYRfVxCFCP7jG7T5T8l+rJ9PWQ9FnIaqiMIQYrUHb0OS7jD5B
+         XOOz90b2gjuTDdRo5Nuxv3QNpBX19NxZAlEKkee6NhTOj3+owBXQLBKDQuKePHVIqHWH
+         Zr5cIMCeDt3B8/1TsIrIj6TJYAGcoJGmKXOCWdf1Cvx6830cJiJxOS3SzH1ydfcLAXWw
+         lrI7XOfbmOhRloHyBDgHy+iyWFCJeCZ1WmUG3UII6zFBjFJsthXvv+TGBjQ2Qr4fpV39
+         D05laDWul/NKId+FKRUgIrvvzMzs+qb1vAal5rERfMpdfxTnfpBS4rOlN5x1D5BbaMCv
+         dhAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686744947; x=1689336947;
+        d=1e100.net; s=20221208; t=1686745061; x=1689337061;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=55/nVUjAe3kftXKJEUpN7nG2cfw0uKndOnoUPQSV6Gw=;
-        b=S6f7HMOcMpjtin+j5pRSmCr6YZNggyy7YPk7DIzO768sxXNq+GCsxTLyBWdAHluMfv
-         UMmDg2rXJCzaNqhzSxRvvdarUU9kQbJZuBpoWatGpFTRzNX7V5qltNT3J2TgvUdUrLkq
-         JBVMHXJBl/sqG5f99AJIbZLrjCYoK9uiXI0kO5PZvP41bBQBADWZoQy/J/TeDhfH1kEA
-         YuOmS+WEVx3/lu639V9D2T0a6avMoKhrWHsAvWPrsO567PjKGWNwjnME+IVsbAFX8UoN
-         wnGjInUmeNxzTlrBgScxAXFr7xXlyraXakXDkAAyAxjDh1cnvULff0XpqXGVIZlmqzbS
-         9huA==
-X-Gm-Message-State: AC+VfDxQGzh8OgGjNahopVbya8Vlc9hKMQYud4zQE7cA+6MY+qiUcGg5
-        XUZt/Hd2holNqweF3Hws5ezrMc7CxWtUxyyMNN+mnw==
-X-Google-Smtp-Source: ACHHUZ7uBPqKPm97WjovXTHOVSFF4sbT9v4QmyWMXZhio5KMprW1Ik1o/gsrgR0jbFtxLEartKsgvGUD8Y2pd1SiSr0=
-X-Received: by 2002:a25:6911:0:b0:bc7:afaf:539b with SMTP id
- e17-20020a256911000000b00bc7afaf539bmr1634780ybc.43.1686744947043; Wed, 14
- Jun 2023 05:15:47 -0700 (PDT)
+        bh=bwFHPYhlT3RfthlTjpPS85ddabPhpew1qG/qUrIvT/E=;
+        b=FlIy94ujeKl9sMEV1eZiBDnkRjMsu5rzCrRjOYr33oLOGn5kJ5VVhOmvw2Ttpcn0v4
+         c6gZ8DiqqjdJ7tdlFWQskimUC6zfBDm8WGWM/h4INttSwA7hwZyYL2k5C9hdMi06br6y
+         TzDhCFfd5ucuSPwXw3jc7BOpN+UHcC0/VbA8Eh0Xz6wGznmA8GLDqdgGP6PLAMMkXlFm
+         FnRfa3IudSNbJnjO37QrW5H5eV+qXqYdpz3Ct+cOJNHx9EnqnJA/FP6yEls69YW9tlsy
+         kuNxP55wZtLDIOEu1EgQdrnelRo3RLnUyoczSqsit3j1tEfIxNoGjPxZiMIlmMczr128
+         4JMA==
+X-Gm-Message-State: AC+VfDz5iU37A1EOGFfThlafv8Q61RiOcvVstpttqT4ndQyDxtFTDq5b
+        cuPkYIcpSmZW8I9GBMCWfwOif2ZnpbGnz+6iQoYtMw==
+X-Google-Smtp-Source: ACHHUZ7BbfR2gwme9IAt2E/2MfRJmNQkjtnOv8ERZreRKQ3CY+OoH6bRLuIYMYRdkWELrelaMW6I2ZCXGS5utx7/bSk=
+X-Received: by 2002:a25:44c3:0:b0:bad:bb0:4d37 with SMTP id
+ r186-20020a2544c3000000b00bad0bb04d37mr1968881yba.31.1686745060842; Wed, 14
+ Jun 2023 05:17:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230609115058.9059-1-quic_jkona@quicinc.com> <20230609115058.9059-5-quic_jkona@quicinc.com>
- <8d1ead23-8361-7943-baba-baf20d16cbe5@linaro.org> <a3652f67-3e48-db33-1dd2-c17abdbdae41@quicinc.com>
-In-Reply-To: <a3652f67-3e48-db33-1dd2-c17abdbdae41@quicinc.com>
+References: <20230609115058.9059-1-quic_jkona@quicinc.com> <88b41c0f-e515-ce94-e4fd-befbeef53781@linaro.org>
+ <65fd51f1-56d9-7b7b-7757-229cbb65051d@quicinc.com>
+In-Reply-To: <65fd51f1-56d9-7b7b-7757-229cbb65051d@quicinc.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 14 Jun 2023 15:15:36 +0300
-Message-ID: <CAA8EJpqjAkdnU+WXoPJs2m4OSZQe10D=Y8nUAofEoEfV139VjA@mail.gmail.com>
-Subject: Re: [PATCH V4 4/4] arm64: dts: qcom: sm8550: Add camera clock controller
+Date:   Wed, 14 Jun 2023 15:17:30 +0300
+Message-ID: <CAA8EJpoLWm4=1J2QTfh9N55U-FjuYA7CwJeoG=Zv4mOhC1nytQ@mail.gmail.com>
+Subject: Re: [PATCH V4 0/4] Add camera clock controller support for SM8550
 To:     Jagadeesh Kona <quic_jkona@quicinc.com>
 Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -81,83 +81,47 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 14 Jun 2023 at 14:56, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
+On Wed, 14 Jun 2023 at 14:58, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
 >
 >
 >
-> On 6/9/2023 6:22 PM, Konrad Dybcio wrote:
+> On 6/9/2023 6:24 PM, Konrad Dybcio wrote:
 > >
 > >
 > > On 9.06.2023 13:50, Jagadeesh Kona wrote:
-> >> Add device node for camera clock controller on Qualcomm
-> >> SM8550 platform.
+> >> Add bindings, driver and devicetree node for camera clock controller on
+> >> SM8550.
 > >>
-> >> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> >> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> >> ---
-> >> Changes since V3:
-> >>   - No changes
-> >> Changes since V2:
-> >>   - No changes
-> >> Changes since V1:
-> >>   - Padded non-zero address part to 8 hex digits
-> >>
-> >>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 15 +++++++++++++++
-> >>   1 file changed, 15 insertions(+)
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> >> index 75cd374943eb..4d2d610fc66a 100644
-> >> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> >> @@ -5,6 +5,7 @@
-> >>
-> >>   #include <dt-bindings/clock/qcom,rpmh.h>
-> >>   #include <dt-bindings/clock/qcom,sm8450-videocc.h>
-> >> +#include <dt-bindings/clock/qcom,sm8550-camcc.h>
-> >>   #include <dt-bindings/clock/qcom,sm8550-gcc.h>
-> >>   #include <dt-bindings/clock/qcom,sm8550-gpucc.h>
-> >>   #include <dt-bindings/clock/qcom,sm8550-tcsr.h>
-> >> @@ -2419,6 +2420,20 @@ videocc: clock-controller@aaf0000 {
-> >>                      #power-domain-cells = <1>;
-> >>              };
-> >>
-> >> +            camcc: clock-controller@ade0000 {
-> >> +                    compatible = "qcom,sm8550-camcc";
-> >> +                    reg = <0 0x0ade0000 0 0x20000>;
-> >> +                    clocks = <&gcc GCC_CAMERA_AHB_CLK>,
-> >> +                             <&bi_tcxo_div2>,
-> >> +                             <&bi_tcxo_ao_div2>,
-> >> +                             <&sleep_clk>;
-> >> +                    power-domains = <&rpmhpd SM8550_MMCX>;
-> > I see that both MMCX ("mmcx.lvl") and MXC ("mxc.lvl") (and MX, FWIW)
-> > are consumed on msm-5.15, with the latter one powering camcc PLLs..
-> >
-> > How are they related? Is that resolved internally or does it need
-> > manual intervention?
+> >> Jagadeesh Kona (4):
+> >>    dt-bindings: clock: qcom: Add SM8550 camera clock controller
+> >>    clk: qcom: camcc-sm8550: Add camera clock controller driver for SM8550
+> >>    clk: qcom: camcc-sm8550: Add support for qdss, sleep and xo clocks
+> >>    arm64: dts: qcom: sm8550: Add camera clock controller
+> > What's the final verdict on RINGOSC_L etc.?
 > >
 > > Konrad
 >
-> These are just different voltage rails, camcc clocks are powered by MMCX
-> rail and camcc pll's are powered by MXC rail. Consumer drivers need to
-> take care of voting on these rails properly based on the frequency of
-> clocks requested.
+> We would like to pass RINGOSC_CAL_L field directly in config->l value
+> itself and reuse existing code rather than adding a separate function
+> for lucid ole pll configure.
 
-Which rail powers registers of the camcc? Which rail is required to
-read PLL registers?
+As I wrote in another email, it doesn't sound like a good approach.
 
 >
 > Thanks,
 > Jagadeesh
 >
-> >> +                    required-opps = <&rpmhpd_opp_low_svs>;
-> >> +                    #clock-cells = <1>;
-> >> +                    #reset-cells = <1>;
-> >> +                    #power-domain-cells = <1>;
-> >> +            };
-> >> +
-> >>              mdss: display-subsystem@ae00000 {
-> >>                      compatible = "qcom,sm8550-mdss";
-> >>                      reg = <0 0x0ae00000 0 0x1000>;
+> >>
+> >>   .../bindings/clock/qcom,sm8450-camcc.yaml     |    8 +-
+> >>   arch/arm64/boot/dts/qcom/sm8550.dtsi          |   15 +
+> >>   drivers/clk/qcom/Kconfig                      |    7 +
+> >>   drivers/clk/qcom/Makefile                     |    1 +
+> >>   drivers/clk/qcom/camcc-sm8550.c               | 3585 +++++++++++++++++
+> >>   include/dt-bindings/clock/qcom,sm8550-camcc.h |  187 +
+> >>   6 files changed, 3801 insertions(+), 2 deletions(-)
+> >>   create mode 100644 drivers/clk/qcom/camcc-sm8550.c
+> >>   create mode 100644 include/dt-bindings/clock/qcom,sm8550-camcc.h
+> >>
 
 
 
