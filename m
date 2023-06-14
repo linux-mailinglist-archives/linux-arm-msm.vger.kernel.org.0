@@ -2,53 +2,59 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id 7778573042E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 17:51:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2BF6D730445
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 17:55:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244644AbjFNPvf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 11:51:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47844 "EHLO
+        id S245420AbjFNPz3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 11:55:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235239AbjFNPve (ORCPT
+        with ESMTP id S245202AbjFNPzD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 11:51:34 -0400
+        Wed, 14 Jun 2023 11:55:03 -0400
 Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E59B713E;
-        Wed, 14 Jun 2023 08:51:32 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 81F0B193;
+        Wed, 14 Jun 2023 08:55:02 -0700 (PDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by dfw.source.kernel.org (Postfix) with ESMTPS id 771BF64192;
-        Wed, 14 Jun 2023 15:51:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237F1C433C8;
-        Wed, 14 Jun 2023 15:51:31 +0000 (UTC)
+        by dfw.source.kernel.org (Postfix) with ESMTPS id 1EBD9615D1;
+        Wed, 14 Jun 2023 15:55:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76027C433C0;
+        Wed, 14 Jun 2023 15:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1686757891;
-        bh=N8tBiky8IfN3dUZtLUSLP/8QzGTyYd+6D2QGSP7HKSw=;
+        s=k20201202; t=1686758101;
+        bh=iI6igqMT60w7P/l0QhFqDEyNg7+YVbD5N8OO3TanF+w=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZEb+Ec8VbChLocTLWlIWsy9gLYvTx5iAt4lhXMUShZAjooaTjotx1gVwK/rZdTFZx
-         v5mQWzEFWmsz9cS5uLWAFmirB3DHuvQltRZC6l8XO3OcJO45gI4hFyFmLSgBQ/rAx+
-         ps42+ScGEBKcQHNOTLL+V4V0P2Bl7VZf6Xg2UnnTmIE4D5KFrDo6xEXMI7xnf7xNRG
-         lDLyFFjwve9RMBSEbi0YNTXKoOEC21HOxV3RQayu+ZIIOJecJyueYJvdEabwsMxLEy
-         yQfRXGybcHi7pmjtGcxXqG9+2WW3HWji2t2caMFTEupWav5E09dn7GD3vySlfwvDrF
-         2xlzS+A388Ukw==
-Date:   Wed, 14 Jun 2023 08:54:53 -0700
+        b=e48oeFwLHdIUlSFKmZpuhvaZIc6XX120LrcMPSpyEqB7BWuDFDEx67h7VG5wuG+/V
+         MZ55YvNovcv/mJkjYdv4qw/Fg9V8aUml9KglqAzDpQnFQJj6WBmgLjZINSWGrPOFKW
+         A4UJyJrm6EZnGRqzlethKgCNm6OmbCct4vFCZC3ztZhnngSbp8pzXo4cyHdNGZkwXz
+         gmGqY4U4493FBCFLe1W+p6/yZ9AorFfR4Az6A8Ax6LKC06sOmpk/gWKymf+QLeQbmI
+         v+58d1tk96zhctkcv00QPrklqa/1YQT9XY3e8vW+P2TBoD2h3BSqXYCgybGS7H+ljv
+         vnyDkW6WNMmCA==
+Date:   Wed, 14 Jun 2023 08:58:23 -0700
 From:   Bjorn Andersson <andersson@kernel.org>
-To:     Sarannya S <quic_sarannya@quicinc.com>
-Cc:     quic_bjorande@quicinc.com, arnaud.pouliquen@foss.st.com,
-        swboyd@chromium.org, quic_clew@quicinc.com,
-        mathieu.poirier@linaro.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Deepak Kumar Singh <quic_deesin@quicinc.com>
-Subject: Re: [PATCH V7 1/3] rpmsg: core: Add signal API support
-Message-ID: <20230614155453.dywcrntfjddxojfv@ripper>
-References: <1682160127-18103-1-git-send-email-quic_sarannya@quicinc.com>
- <1682160127-18103-2-git-send-email-quic_sarannya@quicinc.com>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Bjorn Andersson <quic_bjorande@quicinc.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Akhil P Oommen <quic_akhilpo@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, freedreno@lists.freedesktop.org,
+        johan@kernel.org, mani@kernel.org,
+        Steev Klimaszewski <steev@kali.org>,
+        Johan Hovold <johan+linaro@kernel.org>
+Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: sc8280xp: Enable GPU related
+ nodes
+Message-ID: <20230614155823.g7xfgxff3eopukwh@ripper>
+References: <20230614142204.2675653-1-quic_bjorande@quicinc.com>
+ <20230614142204.2675653-3-quic_bjorande@quicinc.com>
+ <8f8d5e09-50a6-a83f-d4bb-3d7bc8c07162@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1682160127-18103-2-git-send-email-quic_sarannya@quicinc.com>
+In-Reply-To: <8f8d5e09-50a6-a83f-d4bb-3d7bc8c07162@linaro.org>
 X-Spam-Status: No, score=-7.1 required=5.0 tests=BAYES_00,DKIMWL_WL_HIGH,
         DKIM_SIGNED,DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_HI,
         SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=ham
@@ -59,171 +65,99 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Apr 22, 2023 at 04:12:05PM +0530, Sarannya S wrote:
-> From: Deepak Kumar Singh <quic_deesin@quicinc.com>
+On Wed, Jun 14, 2023 at 05:27:24PM +0200, Konrad Dybcio wrote:
+> On 14.06.2023 16:22, Bjorn Andersson wrote:
+> > From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > 
+> > Add memory reservation for the zap-shader and enable the Adreno SMMU,
+> > GPU clock controller, GMU and the GPU nodes for the SC8280XP CRD and the
+> > Lenovo ThinkPad X13s.
+> > 
+> > Tested-by: Steev Klimaszewski <steev@kali.org>
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > Tested-by: Johan Hovold <johan+linaro@kernel.org>
+> > Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+> > ---
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 > 
-> Some transports like Glink support the state notifications between
-> clients using flow control signals similar to serial protocol signals.
-> Local glink client drivers can send and receive flow control status
-> to glink clients running on remote processors.
+
+Thanks.
+
+> one question below
+> >  arch/arm64/boot/dts/qcom/sc8280xp-crd.dts          | 14 ++++++++++++++
+> >  .../dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts     | 14 ++++++++++++++
+> >  2 files changed, 28 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> > index cd7e0097d8bc..b566e403d1db 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-crd.dts
+> > @@ -210,6 +210,11 @@ vreg_wwan: regulator-wwan {
+> >  	};
+> >  
+> >  	reserved-memory {
+> > +		gpu_mem: gpu-mem@8bf00000 {
+> Is it ever going to differ on other platforms, including the automotive ones?
 > 
-> Add APIs to support sending and receiving of flow control status by
-> rpmsg clients.
-> 
-> Signed-off-by: Deepak Kumar Singh <quic_deesin@quicinc.com>
-> Signed-off-by: Sarannya S <quic_sarannya@quicinc.com>
-> ---
->  drivers/rpmsg/rpmsg_core.c     | 21 +++++++++++++++++++++
->  drivers/rpmsg/rpmsg_internal.h |  2 ++
->  include/linux/rpmsg.h          | 15 +++++++++++++++
->  3 files changed, 38 insertions(+)
-> 
-> diff --git a/drivers/rpmsg/rpmsg_core.c b/drivers/rpmsg/rpmsg_core.c
-> index a2207c0..e8bbe05 100644
-> --- a/drivers/rpmsg/rpmsg_core.c
-> +++ b/drivers/rpmsg/rpmsg_core.c
-> @@ -331,6 +331,25 @@ int rpmsg_trysend_offchannel(struct rpmsg_endpoint *ept, u32 src, u32 dst,
->  EXPORT_SYMBOL(rpmsg_trysend_offchannel);
->  
->  /**
-> + * rpmsg_set_flow_control() - sets/clears serial flow control signals
-> + * @ept:	the rpmsg endpoint
-> + * @enable:	pause/resume incoming data flow	
 
-As shown in the discussion, it's still not clear what true/false means.
-Also, let's try to clarify that it's a request for the other side to do
-something:
-
-* rpmsg_set_flow_control() - request remote to pause/resume transmission
-* ...
-* @enable: flow restricted
-* ...
-
-
-PS. There's a stray space at the end of the line.
-
-> + * @dst:	destination address of the endpoint
-> + *
-> + * Return: 0 on success and an appropriate error value on failure.
-> + */
-> +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable, u32 dst)
-> +{
-> +	if (WARN_ON(!ept))
-> +		return -EINVAL;
-> +	if (!ept->ops->set_flow_control)
-> +		return -ENXIO;
-> +
-> +	return ept->ops->set_flow_control(ept, enable, dst);
-> +}
-> +EXPORT_SYMBOL_GPL(rpmsg_set_flow_control);
-> +
-> +/**
->   * rpmsg_get_mtu() - get maximum transmission buffer size for sending message.
->   * @ept: the rpmsg endpoint
->   *
-> @@ -539,6 +558,8 @@ static int rpmsg_dev_probe(struct device *dev)
->  
->  		rpdev->ept = ept;
->  		rpdev->src = ept->addr;
-> +
-> +		ept->flow_cb = rpdrv->flowcontrol;
->  	}
->  
->  	err = rpdrv->probe(rpdev);
-> diff --git a/drivers/rpmsg/rpmsg_internal.h b/drivers/rpmsg/rpmsg_internal.h
-> index 39b646d..b6efd3e 100644
-> --- a/drivers/rpmsg/rpmsg_internal.h
-> +++ b/drivers/rpmsg/rpmsg_internal.h
-> @@ -55,6 +55,7 @@ struct rpmsg_device_ops {
->   * @trysendto:		see @rpmsg_trysendto(), optional
->   * @trysend_offchannel:	see @rpmsg_trysend_offchannel(), optional
->   * @poll:		see @rpmsg_poll(), optional
-> + * @set_flow_control:	see @rpmsg_set_flow_control(), optional
->   * @get_mtu:		see @rpmsg_get_mtu(), optional
->   *
->   * Indirection table for the operations that a rpmsg backend should implement.
-> @@ -75,6 +76,7 @@ struct rpmsg_endpoint_ops {
->  			     void *data, int len);
->  	__poll_t (*poll)(struct rpmsg_endpoint *ept, struct file *filp,
->  			     poll_table *wait);
-> +	int (*set_flow_control)(struct rpmsg_endpoint *ept, bool enable, u32 dst);
->  	ssize_t (*get_mtu)(struct rpmsg_endpoint *ept);
->  };
->  
-> diff --git a/include/linux/rpmsg.h b/include/linux/rpmsg.h
-> index 523c98b..a0e9d38 100644
-> --- a/include/linux/rpmsg.h
-> +++ b/include/linux/rpmsg.h
-> @@ -64,12 +64,14 @@ struct rpmsg_device {
->  };
->  
->  typedef int (*rpmsg_rx_cb_t)(struct rpmsg_device *, void *, int, void *, u32);
-> +typedef int (*rpmsg_flowcontrol_cb_t)(struct rpmsg_device *, void *, bool);
->  
->  /**
->   * struct rpmsg_endpoint - binds a local rpmsg address to its user
->   * @rpdev: rpmsg channel device
->   * @refcount: when this drops to zero, the ept is deallocated
->   * @cb: rx callback handler
-> + * @flow_cb: remote flow control callback handler
->   * @cb_lock: must be taken before accessing/changing @cb
->   * @addr: local rpmsg address
->   * @priv: private data for the driver's use
-> @@ -92,6 +94,7 @@ struct rpmsg_endpoint {
->  	struct rpmsg_device *rpdev;
->  	struct kref refcount;
->  	rpmsg_rx_cb_t cb;
-> +	rpmsg_flowcontrol_cb_t flow_cb;
->  	struct mutex cb_lock;
->  	u32 addr;
->  	void *priv;
-> @@ -106,6 +109,7 @@ struct rpmsg_endpoint {
->   * @probe: invoked when a matching rpmsg channel (i.e. device) is found
->   * @remove: invoked when the rpmsg channel is removed
->   * @callback: invoked when an inbound message is received on the channel
-> + * @flowcontrol: invoked when remote side flow control status is received
-
-s/status/request/
+The memory maps for the two live different lives.
 
 Regards,
 Bjorn
 
->   */
->  struct rpmsg_driver {
->  	struct device_driver drv;
-> @@ -113,6 +117,7 @@ struct rpmsg_driver {
->  	int (*probe)(struct rpmsg_device *dev);
->  	void (*remove)(struct rpmsg_device *dev);
->  	int (*callback)(struct rpmsg_device *, void *, int, void *, u32);
-> +	int (*flowcontrol)(struct rpmsg_device *, void *, bool);
->  };
->  
->  static inline u16 rpmsg16_to_cpu(struct rpmsg_device *rpdev, __rpmsg16 val)
-> @@ -192,6 +197,8 @@ __poll_t rpmsg_poll(struct rpmsg_endpoint *ept, struct file *filp,
->  
->  ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept);
->  
-> +int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable, u32 dst);
-> +
->  #else
->  
->  static inline int rpmsg_register_device_override(struct rpmsg_device *rpdev,
-> @@ -316,6 +323,14 @@ static inline ssize_t rpmsg_get_mtu(struct rpmsg_endpoint *ept)
->  	return -ENXIO;
->  }
->  
-> +static inline int rpmsg_set_flow_control(struct rpmsg_endpoint *ept, bool enable, u32 dst)
-> +{
-> +	/* This shouldn't be possible */
-> +	WARN_ON(1);
-> +
-> +	return -ENXIO;
-> +}
-> +
->  #endif /* IS_ENABLED(CONFIG_RPMSG) */
->  
->  /* use a macro to avoid include chaining to get THIS_MODULE */
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+> Konrad
+> > +			reg = <0 0x8bf00000 0 0x2000>;
+> > +			no-map;
+> > +		};
+> > +
+> >  		linux,cma {
+> >  			compatible = "shared-dma-pool";
+> >  			size = <0x0 0x8000000>;
+> > @@ -390,6 +395,15 @@ &dispcc0 {
+> >  	status = "okay";
+> >  };
+> >  
+> > +&gpu {
+> > +	status = "okay";
+> > +
+> > +	zap-shader {
+> > +		memory-region = <&gpu_mem>;
+> > +		firmware-name = "qcom/sc8280xp/qcdxkmsuc8280.mbn";
+> > +	};
+> > +};
+> > +
+> >  &mdss0 {
+> >  	status = "okay";
+> >  };
+> > diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > index 5ae057ad6438..7cc3028440b6 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
+> > @@ -264,6 +264,11 @@ vreg_wwan: regulator-wwan {
+> >  	};
+> >  
+> >  	reserved-memory {
+> > +		gpu_mem: gpu-mem@8bf00000 {
+> > +			reg = <0 0x8bf00000 0 0x2000>;
+> > +			no-map;
+> > +		};
+> > +
+> >  		linux,cma {
+> >  			compatible = "shared-dma-pool";
+> >  			size = <0x0 0x8000000>;
+> > @@ -518,6 +523,15 @@ &dispcc0 {
+> >  	status = "okay";
+> >  };
+> >  
+> > +&gpu {
+> > +	status = "okay";
+> > +
+> > +	zap-shader {
+> > +		memory-region = <&gpu_mem>;
+> > +		firmware-name = "qcom/sc8280xp/LENOVO/21BX/qcdxkmsuc8280.mbn";
+> > +	};
+> > +};
+> > +
+> >  &mdss0 {
+> >  	status = "okay";
+> >  };
