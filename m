@@ -2,222 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from out1.vger.email (out1.vger.email [IPv6:2620:137:e000::1:20])
-	by mail.lfdr.de (Postfix) with ESMTP id D76BD72FE9A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 14:27:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B49DF72FE96
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jun 2023 14:27:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244386AbjFNM1L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jun 2023 08:27:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60674 "EHLO
+        id S244112AbjFNM1I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jun 2023 08:27:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244263AbjFNM1L (ORCPT
+        with ESMTP id S243263AbjFNM1H (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jun 2023 08:27:11 -0400
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B59E51FD0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:27:08 -0700 (PDT)
-Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-bad0c4f6f50so888578276.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:27:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1686745628; x=1689337628;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=j5x6fr5aZlli+8WO85UDIDTo8toG3HYLiO6e7zSPWtQ=;
-        b=TwSw2mYy1UhWSZa59w/UT+RjmuJ5V2JXMKBFXyaE14MoUY9/MBG5t6EBp6ereoGpMy
-         /+pjca7tW7curhpkDrra70X/0XBVdKQaYzebnhHUTGAW+uUKfzsMqn5rn5Hf6tCHwNc/
-         ZNc1jMuiR3r2lLecNC4cFkE4GRjNU4z0hW0TjgUyhUS/hIc7tLu2WB79S7MJydb/PZLD
-         on/9GBLMcykD09LU3y+K0gbs0xmHUTdAbyiSf5WPSKXG+SvIilnxJYA5fdNttehNbsQ/
-         DZNcpMtNskwmg56bnRBxZQJKJ5xqPlkbV4w7WXzmKDbAToS0CZjMUI1piOge6x9a6VXW
-         Hdkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686745628; x=1689337628;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=j5x6fr5aZlli+8WO85UDIDTo8toG3HYLiO6e7zSPWtQ=;
-        b=IRRBGxQVyU7qyZA0sGDUDUoM3wCwyKqk3kFrjBX6JmDYARrj/dMd48mrVnbdPCz3BC
-         jcQ4qRQF7I5o9GPD2yCGvaIKq34+00Dy0jv//f1zTrYEIfXGNmRQ6PjmbURN4wi8xar/
-         8VJi+G5jbmf1fPY2MB366J+5lKk0XgcNTE0LXLrmnihMw3o7vyXU7DbfIHM89jBMi9Nc
-         3ngTRI3HJN4+JEscu4M230GmgFDIagJc0DZ4Dkq7/PqMb8+v8YDR5Y8XVHCn0tksq/5x
-         Vo6MZwEabFqPfAhy5u0UqPmFyi1L2EGRaLb6VPKb0hWJgpswEv+1Cjqs7+mq6EsHWFNW
-         aePw==
-X-Gm-Message-State: AC+VfDw/GJyKSSmaIzpszOXpA5qwquZIV/fOiglDB+q2cPlod9q9tEkE
-        WzjSUPTA8QRIubaBi2ZhE+bPLnlZUgtPcCp2V1AIM8Z2dglJw6dd
-X-Google-Smtp-Source: ACHHUZ6Yz+yPX5k278RwB3vcRO1kIw8EQgvzRzZBfwAKXe6a0M2y+j79oylUsXuqJq8MYmGoMr/2m72G97EvieneTXI=
-X-Received: by 2002:a25:7484:0:b0:bb3:9001:e2fe with SMTP id
- p126-20020a257484000000b00bb39001e2femr2049141ybc.13.1686745627812; Wed, 14
- Jun 2023 05:27:07 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230525172142.9039-1-quic_jkona@quicinc.com> <20230525172142.9039-4-quic_jkona@quicinc.com>
- <6e1d098d-03b9-aa63-a0bf-6cf748a0db0d@linaro.org> <7074f718-a3d5-8a03-3830-77a5a0b15500@linaro.org>
- <df7ab6f7-6c5e-9a7d-8d9b-09ff32da34d6@quicinc.com> <c60bb4d9-1b53-6c60-8b9d-13069bdff882@linaro.org>
- <1a6d46e4-7ec4-262c-dc3b-fc9c988f979e@quicinc.com> <CAA8EJprx6=QztOHi_18uqcGK9WnhkQJ_WP9TyKrsOT=WgKdRaw@mail.gmail.com>
- <695d7b39-2759-690d-5ff8-5aff6b37e39c@quicinc.com>
-In-Reply-To: <695d7b39-2759-690d-5ff8-5aff6b37e39c@quicinc.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 14 Jun 2023 15:26:57 +0300
-Message-ID: <CAA8EJpp5_qG2eMQEoHqzboyi8xEbEmx2e1WsKsVQ3d6no0pp5g@mail.gmail.com>
-Subject: Re: [PATCH V2 3/6] clk: qcom: clk-alpha-pll: Remove explicit CAL_L
- configuration for EVO PLL
-To:     Jagadeesh Kona <quic_jkona@quicinc.com>
-Cc:     Konrad Dybcio <konrad.dybcio@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
+        Wed, 14 Jun 2023 08:27:07 -0400
+Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7168710EC
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jun 2023 05:27:06 -0700 (PDT)
+Received: from SoMainline.org (94-211-6-86.cable.dynamic.v4.ziggo.nl [94.211.6.86])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 015143F21C;
+        Wed, 14 Jun 2023 14:27:03 +0200 (CEST)
+Date:   Wed, 14 Jun 2023 14:27:02 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Konrad Dybcio <konrad.dybcio@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Taniya Das <quic_tdas@quicinc.com>,
-        Satya Priya Kakitapalli <quic_skakitap@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Ajit Pandey <quic_ajipan@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
-X-Spam-Status: No, score=-2.1 required=5.0 tests=BAYES_00,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,RCVD_IN_DNSWL_NONE,
-        SPF_HELO_NONE,SPF_PASS,T_SCC_BODY_TEXT_LINE,URIBL_BLOCKED
-        autolearn=unavailable autolearn_force=no version=3.4.6
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm8250-edo: Rectify gpio-keys
+Message-ID: <i6rvfbq4dl2qqjgm2k6ofkbbj5gugpj6jxpgacxawgcmhg2vp3@xux66b3lqfvb>
+References: <20230614-topic-edo_pinsgpiopmic-v1-0-cf88a0bac26c@linaro.org>
+ <20230614-topic-edo_pinsgpiopmic-v1-4-cf88a0bac26c@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230614-topic-edo_pinsgpiopmic-v1-4-cf88a0bac26c@linaro.org>
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,SPF_HELO_NONE,
+        SPF_PASS,T_SCC_BODY_TEXT_LINE autolearn=unavailable autolearn_force=no
+        version=3.4.6
 X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
         lindbergh.monkeyblade.net
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 14 Jun 2023 at 14:53, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
->
->
->
-> On 6/9/2023 5:55 PM, Dmitry Baryshkov wrote:
-> > On Fri, 9 Jun 2023 at 14:50, Jagadeesh Kona <quic_jkona@quicinc.com> wrote:
-> >>
-> >> Hi Dmitry,
-> >>
-> >> Thanks for your review!
-> >>
-> >> On 6/1/2023 8:13 PM, Dmitry Baryshkov wrote:
-> >>> On 01/06/2023 17:33, Jagadeesh Kona wrote:
-> >>>> Hi Dmitry, Konrad,
-> >>>>
-> >>>> On 5/26/2023 9:23 PM, Dmitry Baryshkov wrote:
-> >>>>> On 26/05/2023 12:33, Konrad Dybcio wrote:
-> >>>>>>
-> >>>>>>
-> >>>>>> On 25.05.2023 19:21, Jagadeesh Kona wrote:
-> >>>>>>> In lucid evo pll, the CAL_L field is part of L value register
-> >>>>>>> itself, and
-> >>>>>>> the l value configuration passed from clock controller driver includes
-> >>>>>>> CAL_L and L values as well. Hence remove explicit configuration of
-> >>>>>>> CAL_L
-> >>>>>>> for evo pll.
-> >>>>>>>
-> >>>>>>> Fixes: 260e36606a03 ("clk: qcom: clk-alpha-pll: add Lucid EVO PLL
-> >>>>>>> configuration interfaces")
-> >>>>>>> Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-> >>>>>>> Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-> >>>>>>> ---
-> >>>>>> Oh that isn't obvious at first sight, nice find!
-> >>>>>>
-> >>>>>> I'd suggest a different solution though:
-> >>>>>>
-> >>>>>> #define LUCID_EVO_PLL_L_LVAL    GENMASK(..
-> >>>>>> #define LUCID_EVO_PLL_L_CAL_L    GENMASK(..
-> >>>>>>
-> >>>>>> lval = FIELD_PREP(LUCID_EVO_PLL_L_LVAL, config->l) |
-> >>>>>>          FIELD_PREP(LUCID_EVO_PLL_L_CAL_L, config->cal_l);
-> >>>>>>
-> >>>>>> This would make the separation between the two parts more explicit
-> >>>>>>
-> >>>>>> however
-> >>>>>>
-> >>>>>> config->l would then represent the L value and not the end value
-> >>>>>> written to the L register
-> >>>>>
-> >>>>> Yes. I think there should be separate config->l and config->cal_l
-> >>>>> values (and probably ringosc_cal_l, basing on the comment in the
-> >>>>> source).
-> >>>>> Thanks for your suggestions. In all recent chipsets, L & CAL_L fields
-> >>>> are encapsulated in the same register, so we feel it is better to
-> >>>> directly pass the combined configuration value in config->l itself and
-> >>>> program it directly into register without any additional handling
-> >>>> required in pll driver code.
-> >>>
-> >>> My feeling is that it is better to split it, since these are the
-> >>> different fields. The value .l = 0x4444003e doesn't mean anything per se.
-> >>>
-> >>> Three values are much more meaningful:
-> >>> .l = 0x3e,
-> >>> .cal_l = 0x44,
-> >>> .ringosc_cal_l = 0x44,
-> >>>
-> >>> Not to mention that this way you don't have to touch pll configuration
-> >>> for the existing Lucid EVO PLL. Not to mention that for the Lucid ole
-> >>> PLLs the cal_l and ringosc_cal_l values seem to be static (0x44), so
-> >>> there is no need to put them to the variable data.
-> >>>
-> >>
-> >> Sure, will keep the existing code as is and will remove this patch in
-> >> the next series.
-> >>
-> >>>>
-> >>>> Also the evo pll code is currently reused for both lucid evo and ole
-> >>>> pll's. Lucid ole PLL has an additional RINGOSC_CAL_L field along with
-> >>>> L, CAL_L fields in the same L register. By passing combined
-> >>>> configuration value in config->l itself, we feel we can avoid all the
-> >>>> additional handling required in PLL code.
-> >>>>
-> >>>>> Just a question: is camcc-sm8550 using the same PLL type or is it
-> >>>>> some kind of subtype of lucid_evo PLL?
-> >>>>>
-> >>>> No, it is not the same lucid evo PLL. It uses lucid ole PLL.
-> >>>
-> >>> Then please don't reuse the clk_lucid_evo_pll_configure() call.
-> >>> You can add a new one, which will handle L/CAL_L/RINGOSC_CAL_L differences.
-> >>>
-> >>
-> >> The only difference between evo and ole pll configure is extra
-> >> RINGOSC_CAL_L programming needed only for ole pll. We can achieve the
-> >> same with clk_lucid_evo_pll_configure() itself by directly including
-> >> RINGOSC_CAL_L field in L configuration for OLE PLL's.
-> >
-> > Please don't, that's all I can say. Those are different fields. By
-> > looking at the config->l one can calculate PLL rate. If you overload
-> > the config->l with CAL_L and RINGOSC_CAL_L, the purpose of this field
-> > is gone.
-> >
-> > As the CAL_L and RINGOSC_CAL_L fields are static, just move them to
-> > the clk_lucid_ole_pll_configure().
-> >
->
-> We feel it is better to include them in config->l and reuse existing
-> code than adding separate function for lucid ole pll configure. Even the
-> other pll configurations(like .user_ctl_val) contains multiple fields
-> but are passed as a single value from driver.
+On 2023-06-14 14:11:49, Konrad Dybcio wrote:
+> Set up the corresponding GPIOs properly and add the leftover hardware
+> buttons to mark this piece of the puzzle complete.
+> 
+> Fixes: 69cdb97ef652 ("arm64: dts: qcom: sm8250: Add support for SONY Xperia 1 II / 5 II (Edo platform)")
 
-I suppose it was done this way because these fields are pretty much
-not documented in the openly published data. And sometimes this
-strikes, one can not easily check PLL's configuration. Or tune
-it.There was a discussion whether we should start handling PLL outputs
-properly (in CCF) rather than configuring them in a static way.
+This commit did not add any keys, did you mean:
 
-Also mentioned registers differ from PLL to PLL. For the RISCOSC_CAL_L
-and CAL_L the value is static, if I'm not mistaken. Having them in the
-configurable field doesn't sound correct.
+Fixes: 46e14907c716 ("arm64: dts: qcom: sm8250-edo: Add hardware keys")
 
-Last, but not least. We are already handling CAL_L value completely in
-the clock-alpha-pll.c for triton, lucid and lucid evo PLLs. What would
-be the _reason_ to change that?
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 
->
-> We also added a comment in code stating all the fields included in
-> config->l value, so user will be aware while calculating PLL frequency.
->
-> Thanks,
-> Jagadeesh
+The patch itself has been working fine on both devices for a very long
+time:
 
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-
--- 
-With best wishes
-Dmitry
+> ---
+>  .../dts/qcom/sm8250-sony-xperia-edo-pdx206.dts     | 10 ++++
+>  .../boot/dts/qcom/sm8250-sony-xperia-edo.dtsi      | 54 +++++++++++++++++++---
+>  2 files changed, 58 insertions(+), 6 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
+> index ea4571bf4fbf..58a521046f5f 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dts
+> @@ -20,6 +20,8 @@ &framebuffer {
+>  };
+>  
+>  &gpio_keys {
+> +	pinctrl-0 = <&focus_n &snapshot_n &vol_down_n &g_assist_n>;
+> +
+>  	g-assist-key {
+>  		label = "Google Assistant Key";
+>  		linux,code = <KEY_LEFTMETA>;
+> @@ -48,6 +50,14 @@ &pm8150_gpios {
+>  			  "SP_ARI_PWR_ALARM",
+>  			  "NC",
+>  			  "NC"; /* GPIO_10 */
+> +
+> +	g_assist_n: g-assist-n-state {
+> +		pins = "gpio6";
+> +		function = "normal";
+> +		power-source = <1>;
+> +		bias-pull-up;
+> +		input-enable;
+> +	};
+>  };
+>  
+>  &pm8150b_gpios {
+> diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+> index 9f9e7e9784fe..e55a94e5ff08 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+> @@ -50,12 +50,26 @@ framebuffer: framebuffer@9c000000 {
+>  	gpio_keys: gpio-keys {
+>  		compatible = "gpio-keys";
+>  
+> -		/*
+> -		 * Camera focus (light press) and camera snapshot (full press)
+> -		 * seem not to work properly.. Adding the former one stalls the CPU
+> -		 * and the latter kills the volume down key for whatever reason. In any
+> -		 * case, they are both on &pm8150b_gpios: camera focus(2), camera snapshot(1).
+> -		 */
+> +		pinctrl-0 = <&focus_n &snapshot_n &vol_down_n>;
+> +		pinctrl-names = "default";
+> +
+> +		key-camera-focus {
+> +			label = "Camera Focus";
+> +			linux,code = <KEY_CAMERA_FOCUS>;
+> +			gpios = <&pm8150b_gpios 2 GPIO_ACTIVE_LOW>;
+> +			debounce-interval = <15>;
+> +			linux,can-disable;
+> +			gpio-key,wakeup;
+> +		};
+> +
+> +		key-camera-snapshot {
+> +			label = "Camera Snapshot";
+> +			linux,code = <KEY_CAMERA>;
+> +			gpios = <&pm8150b_gpios 1 GPIO_ACTIVE_LOW>;
+> +			debounce-interval = <15>;
+> +			linux,can-disable;
+> +			gpio-key,wakeup;
+> +		};
+>  
+>  		key-vol-down {
+>  			label = "Volume Down";
+> @@ -543,6 +557,34 @@ &pcie2_phy {
+>  	vdda-pll-supply = <&vreg_l9a_1p2>;
+>  };
+>  
+> +&pm8150_gpios {
+> +	vol_down_n: vol-down-n-state {
+> +		pins = "gpio1";
+> +		function = "normal";
+> +		power-source = <0>;
+> +		bias-pull-up;
+> +		input-enable;
+> +	};
+> +};
+> +
+> +&pm8150b_gpios {
+> +	snapshot_n: snapshot-n-state {
+> +		pins = "gpio1";
+> +		function = "normal";
+> +		power-source = <0>;
+> +		bias-pull-up;
+> +		input-enable;
+> +	};
+> +
+> +	focus_n: focus-n-state {
+> +		pins = "gpio2";
+> +		function = "normal";
+> +		power-source = <0>;
+> +		bias-pull-up;
+> +		input-enable;
+> +	};
+> +};
+> +
+>  &pon_pwrkey {
+>  	status = "okay";
+>  };
+> 
+> -- 
+> 2.41.0
+> 
